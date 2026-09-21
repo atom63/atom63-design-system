@@ -1,5 +1,13 @@
 # @atom63/ui-react
 
+## 0.2.0-beta.1
+
+### Patch Changes
+
+- Replace workspace protocol dependencies in the published React package manifest
+  with registry-safe Atom63 beta versions so external consumers can install from
+  npm.
+
 ## 0.2.0-beta.0
 
 ### Minor Changes
