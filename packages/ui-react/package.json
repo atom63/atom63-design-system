@@ -142,8 +142,8 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@atom63/styles": "0.1.0-beta.0",
-    "@atom63/ui-foundation": "0.1.1-beta.0",
+    "@atom63/styles": "workspace:*",
+    "@atom63/ui-foundation": "workspace:*",
     "@base-ui/react": "^1.6.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.4.0",
