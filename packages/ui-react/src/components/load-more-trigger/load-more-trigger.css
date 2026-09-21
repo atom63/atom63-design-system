@@ -1,0 +1,109 @@
+/*
+ * LoadMoreTrigger recipe — the infinite-scroll sentinel row, ported from prod
+ * @atom63/ui. Colors resolve from --a63-* semantics at the use-site; the three
+ * message variants only change size/emphasis (minimal = smaller, prominent =
+ * a muted pill).
+ */
+
+.a63-LoadMoreTrigger {
+  --load-more-accent: var(--a63-text-secondary);
+
+  display: flex;
+  justify-content: center;
+  padding-block: calc(var(--a63-space-unit) * 8);
+}
+
+.a63-LoadMoreTrigger[data-tone='info'] {
+  --load-more-accent: var(--a63-status-info);
+}
+
+.a63-LoadMoreTrigger[data-tone='success'] {
+  --load-more-accent: var(--a63-status-success);
+}
+
+.a63-LoadMoreTrigger[data-tone='warning'] {
+  --load-more-accent: var(--a63-status-warning);
+}
+
+.a63-LoadMoreTrigger[data-tone='error'] {
+  --load-more-accent: var(--a63-action-danger);
+}
+
+/* The message form reserves a minimum height so the observer target keeps a
+   stable hit area as it swaps between idle + loading copy. */
+.a63-LoadMoreTrigger[data-has-message] {
+  min-height: calc(var(--a63-space-unit) * 16);
+}
+
+.a63-LoadMoreTrigger-message {
+  display: flex;
+  align-items: center;
+  gap: var(--a63-space-2);
+  color: var(--a63-text-secondary);
+  font-family: var(--a63-control-font-family);
+  font-size: var(--a63-control-font-size-md);
+}
+
+.a63-LoadMoreTrigger-message[data-variant='minimal'] {
+  font-size: var(--a63-control-font-size-sm);
+}
+
+.a63-LoadMoreTrigger-message[data-variant='prominent'] {
+  padding: var(--a63-space-4);
+  border-radius: var(--radius-sm);
+  background-color: color-mix(in oklch, var(--a63-surface-muted) 50%, transparent);
+  font-weight: 500;
+}
+
+.a63-LoadMoreTrigger-spinner {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  transform-origin: center;
+  animation: a63-load-more-spin 0.8s linear infinite;
+  color: var(--load-more-accent);
+}
+
+.a63-LoadMoreTrigger-icon {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  color: var(--load-more-accent);
+}
+
+.a63-LoadMoreTrigger-spinner svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.a63-LoadMoreTrigger-action {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--load-more-accent);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.a63-LoadMoreTrigger-action:focus-visible {
+  border-radius: var(--radius-sm);
+  outline: 2px solid var(--load-more-accent);
+  outline-offset: 2px;
+}
+
+@keyframes a63-load-more-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-LoadMoreTrigger-spinner {
+    animation: none;
+  }
+}

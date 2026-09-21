@@ -1,0 +1,99 @@
+/*
+ * Breadcrumb recipe — a hierarchical nav trail. Faithful to prod @atom63/ui:
+ * a muted <ol> of items, links that darken to the primary text on hover, a
+ * non-interactive current page, small chevron separators, and a collapsed
+ * ellipsis. Colors from --a63-* semantics; sizing tracks the control font.
+ */
+
+.a63-Breadcrumb-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--a63-space-1_5);
+  row-gap: var(--a63-space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--a63-text-secondary);
+  font-family: var(--a63-control-font-family);
+  font-size: var(--a63-control-font-size-sm);
+  word-break: break-word;
+}
+
+.a63-Breadcrumb-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--a63-space-1);
+  min-width: 0;
+}
+
+.a63-Breadcrumb-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--a63-control-min-target);
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+@media (hover: hover) {
+  .a63-Breadcrumb-link:hover {
+    color: var(--a63-text-primary);
+  }
+}
+.a63-Breadcrumb-link:focus-visible {
+  outline: none;
+  border-radius: var(--radius-sm, 0.25rem);
+  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+}
+
+.a63-Breadcrumb-page {
+  font-weight: 400;
+  color: var(--a63-text-primary);
+}
+
+.a63-Breadcrumb-separator {
+  display: inline-flex;
+  align-items: center;
+}
+.a63-Breadcrumb-separator-glyph {
+  width: var(--a63-control-icon-size-sm);
+  height: var(--a63-control-icon-size-sm);
+}
+/* Mirror the default chevron separator under dir="rtl" so the trail points the
+   correct way, matching prod's `cn-rtl-flip` affordance on the separator glyph.
+   Scoped to the default glyph so a custom separator (children) isn't flipped. */
+:where([dir='rtl']) .a63-Breadcrumb-separator-glyph {
+  transform: scaleX(-1);
+}
+
+.a63-Breadcrumb-ellipsis {
+  display: flex;
+  width: var(--a63-space-5);
+  height: var(--a63-space-5);
+  align-items: center;
+  justify-content: center;
+}
+.a63-Breadcrumb-ellipsis-glyph {
+  width: var(--a63-control-icon-size-md);
+  height: var(--a63-control-icon-size-md);
+}
+
+.a63-Breadcrumb-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Breadcrumb-link {
+    transition: none;
+  }
+}

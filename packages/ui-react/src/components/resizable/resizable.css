@@ -1,0 +1,99 @@
+/*
+ * Resizable recipe — the DS port of the react-resizable-panels wrapper. The
+ * group flexes full-size (column when vertical); the handle is a hairline
+ * separator (--a63-border-subtle) with a wider invisible hit area (::after) and
+ * a token focus ring, flipping its axis via data-panel-group-direction. The
+ * optional grip is a small bordered chip (rotated 90deg when vertical).
+ */
+
+.a63-Resizable-group {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+.a63-Resizable-group[data-panel-group-direction='vertical'] {
+  flex-direction: column;
+}
+
+/* ── Handle (Separator) ───────────────────────────────────────────────────── */
+.a63-Resizable-handle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1px;
+  background-color: var(--a63-border-subtle);
+  cursor: col-resize;
+  outline: none;
+  touch-action: none;
+  user-select: none;
+  transition: background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-Resizable-handle[data-panel-group-direction='vertical'] {
+  width: 100%;
+  height: 1px;
+  cursor: row-resize;
+}
+
+/* Widen the grab target beyond the hairline without changing its look. */
+.a63-Resizable-handle::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  left: 50%;
+  width: max(0.75rem, var(--a63-control-min-target));
+  translate: -50% 0;
+}
+.a63-Resizable-handle[data-panel-group-direction='vertical']::after {
+  inset-block: auto;
+  inset-inline: 0;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: max(0.75rem, var(--a63-control-min-target));
+  translate: 0 -50%;
+}
+
+.a63-Resizable-handle:focus-visible {
+  background-color: var(--a63-action-primary);
+  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+}
+
+.a63-Resizable-handle[data-resize-handle-active] {
+  background-color: var(--a63-action-primary);
+}
+@media (hover: hover) {
+  .a63-Resizable-handle:hover {
+    background-color: var(--a63-action-primary);
+  }
+}
+
+/* ── Grip (withHandle) ────────────────────────────────────────────────────── */
+.a63-Resizable-handle-grip {
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.75rem;
+  height: 1rem;
+  border: var(--a63-control-border-width) solid var(--a63-border-subtle);
+  border-radius: var(--radius-xs);
+  background-color: var(--a63-surface-control);
+  color: var(--a63-text-secondary);
+}
+.a63-Resizable-handle[data-panel-group-direction='vertical'] .a63-Resizable-handle-grip {
+  rotate: 90deg;
+}
+
+.a63-Resizable-handle-grip-icon {
+  width: 0.625rem;
+  height: 0.625rem;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Resizable-handle {
+    transition: none;
+  }
+}

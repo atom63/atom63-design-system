@@ -1,0 +1,57 @@
+/*
+ * CopyButton recipe — a DS Button whose copy/check states share one grid cell,
+ * scaling the glyph on hover/press of the whole button. Ported from prod
+ * @atom63/ui (Tailwind `group/copy` + `grid place-items-center` + the
+ * hover/active scale) onto a token-driven recipe. The Button chrome,
+ * dimensions, text size, gap, and icon size all come from `.a63-Button`.
+ */
+
+/* Keep both states in one cell so the wider label reserves the intrinsic width. */
+.a63-CopyButton-swap {
+  display: grid;
+  place-items: center;
+}
+.a63-CopyButton-swap > * {
+  grid-area: 1 / 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .a63-CopyButton-icon,
+  .a63-CopyButton-check {
+    transition: scale 150ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .a63-CopyButton:active :is(.a63-CopyButton-icon, .a63-CopyButton-check) {
+    scale: 0.98;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .a63-CopyButton:hover :is(.a63-CopyButton-icon, .a63-CopyButton-check) {
+    scale: 1.02;
+  }
+}
+
+.a63-CopyButton-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--button-gap);
+}
+
+.a63-CopyButton-icon,
+.a63-CopyButton-check {
+  display: block;
+  width: var(--button-icon-size);
+  height: var(--button-icon-size);
+  transform-origin: center;
+}
+
+/* Prod tinted the drawn check green-600; use the DS success semantic. */
+.a63-CopyButton-check {
+  color: var(--a63-status-success);
+}
+
+.a63-CopyButton-check[data-animate='true'] .a63-AnimatedCheck-path {
+  animation-delay: 120ms;
+}

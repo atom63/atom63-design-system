@@ -1,0 +1,122 @@
+/*
+ * Textarea recipe — the multiline RECESSED control, the inset counterpart to the
+ * raised Button and the block sibling of Input. Faithful to prod @atom63/ui
+ * textarea.tsx (two-part anatomy, field-sizing:content auto-grow, min-height),
+ * but the chrome resolves from --a63-* field tokens at the use-site (so mode /
+ * theme / brand reshape it) exactly like .a63-Input.
+ */
+
+.a63-Textarea:not([data-unstyled]) {
+  /* Resolve the axis-dependent tokens HERE (the use-site), not at :root, so their
+     var()s pick up the field's own mode/theme/brand (the resolve-at-declaration
+     trap). Mirrors .a63-Input. */
+  --field-background: var(--a63-field-background, var(--a63-surface-control));
+  --field-border: var(--a63-field-border, var(--a63-border-control));
+  --field-radius: var(--a63-field-radius, var(--a63-control-radius));
+  --field-shadow: var(--a63-field-shadow);
+  --field-focus-ring: var(--a63-field-focus-ring, var(--a63-focus-ring));
+  --field-focus-border: var(
+    --a63-field-focus-border,
+    color-mix(in oklch, var(--a63-action-primary) 62%, var(--a63-border-control))
+  );
+  --field-padding-inline: var(--a63-control-padding-inline-md);
+  --field-padding-block: var(--a63-space-2, 0.5rem);
+  --field-font-size: var(--a63-control-font-size-md);
+  --field-min-height: calc(var(--a63-control-height-md) + var(--a63-space-6, 1.5rem));
+
+  display: inline-flex;
+  min-width: 0;
+  width: 100%;
+  padding: var(--field-padding-block) var(--field-padding-inline);
+  border: var(--a63-control-border-width) solid var(--field-border);
+  border-radius: var(--field-radius);
+  background-color: var(--field-background);
+  box-shadow: var(--field-shadow);
+  color: var(--a63-text-primary);
+  font-family: var(--a63-control-font-family);
+  font-size: max(var(--field-font-size), var(--a63-editable-font-size-min, 0px));
+  cursor: text;
+  transition:
+    border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+/* Chrome-less field for nesting: the wrapper collapses so the inner <textarea>
+   participates directly in the parent's layout. */
+.a63-Textarea[data-unstyled] {
+  display: contents;
+}
+
+.a63-Textarea-field {
+  flex: 1 1 auto;
+  field-sizing: content;
+  min-width: 0;
+  min-height: var(--field-min-height);
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: 1.4;
+  resize: vertical;
+  outline: none;
+}
+
+.a63-Textarea-field::placeholder {
+  color: var(--a63-text-secondary);
+  opacity: 1;
+}
+
+/* ── States ────────────────────────────────────────────────────────────── */
+
+.a63-Textarea:not([data-unstyled]):hover {
+  border-color: color-mix(in oklch, var(--field-border), var(--a63-text-primary) 18%);
+}
+
+.a63-Textarea:not([data-unstyled]):focus-within {
+  border-color: var(--field-focus-border);
+  box-shadow:
+    var(--field-shadow),
+    0 0 0 var(--a63-control-focus-ring-width) var(--field-focus-ring);
+}
+
+.a63-Textarea[data-invalid] {
+  --field-border: color-mix(in oklch, var(--a63-action-danger) 62%, transparent);
+  --field-focus-border: var(--a63-action-danger);
+  --field-focus-ring: color-mix(in oklch, var(--a63-action-danger) 35%, transparent);
+}
+
+.a63-Textarea[data-shadow='false'] {
+  --field-shadow: 0 0 #0000;
+}
+
+.a63-Textarea[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+.a63-Textarea[data-disabled] .a63-Textarea-field {
+  cursor: not-allowed;
+  resize: none;
+}
+
+.a63-Textarea[data-size='sm']:not([data-unstyled]) {
+  --field-padding-inline: var(--a63-control-padding-inline-sm);
+  --field-padding-block: var(--a63-space-1_5, 0.375rem);
+  --field-font-size: var(--a63-control-font-size-sm);
+  --field-min-height: calc(var(--a63-control-height-sm) + var(--a63-space-5, 1.25rem));
+}
+
+.a63-Textarea[data-size='lg']:not([data-unstyled]) {
+  --field-padding-inline: var(--a63-control-padding-inline-lg);
+  --field-padding-block: var(--a63-space-2_5, 0.625rem);
+  --field-font-size: var(--a63-control-font-size-lg);
+  --field-min-height: calc(var(--a63-control-height-lg) + var(--a63-space-6, 1.5rem));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Textarea:not([data-unstyled]) {
+    transition: none;
+  }
+}

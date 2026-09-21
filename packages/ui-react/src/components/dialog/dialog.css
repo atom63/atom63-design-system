@@ -1,0 +1,221 @@
+/*
+ * Dialog recipe — the OVERLAY archetype in its centered modal form. Faithful
+ * port of prod @atom63/ui dialog.tsx. Base UI sets data-open/data-closed +
+ * data-starting-style/data-ending-style on the Backdrop/Popup; the recipe keys
+ * its entrance/exit off those. Chrome reads a63 tokens: the popup is a raised
+ * overlay surface (--a63-surface-overlay + --a63-overlay-shadow +
+ * --a63-border-subtle), the backdrop scrim + stacking read the
+ * --z-layer-scrim / --z-layer-modal foundation. No new --a63-* tokens.
+ */
+
+.a63-Dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-layer-scrim, 500);
+  background-color: var(--a63-scrim);
+  backdrop-filter: blur(4px);
+  transition:
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    backdrop-filter var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-Dialog-backdrop[data-starting-style],
+.a63-Dialog-backdrop[data-ending-style] {
+  opacity: 0;
+}
+
+.a63-Dialog-viewport {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-layer-modal, 600);
+  display: grid;
+  grid-template-rows: 1fr auto 3fr;
+  justify-items: center;
+  block-size: var(--a63-viewport-height, 100vh);
+  max-block-size: var(--a63-viewport-height, 100vh);
+  padding-block: max(var(--a63-space-4), var(--a63-safe-area-top, 0px))
+    max(var(--a63-space-4), var(--a63-safe-area-bottom, 0px));
+  padding-inline: max(var(--a63-space-4), var(--a63-safe-area-left, 0px))
+    max(var(--a63-space-4), var(--a63-safe-area-right, 0px));
+}
+
+.a63-Dialog-popup {
+  --dialog-close-size: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+
+  position: relative;
+  grid-row-start: 2;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  max-width: 32rem;
+  max-height: 100%;
+  min-height: 0;
+  transform-origin: center;
+  border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
+  border-radius: var(--a63-overlay-radius, var(--radius-2xl));
+  background-color: var(--a63-surface-overlay);
+  background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
+  background-blend-mode: normal, var(--a63-overlay-texture-blend);
+  backdrop-filter: var(--a63-overlay-backdrop);
+  box-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow);
+  color: var(--a63-text-primary);
+  outline: none;
+  transition:
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-Dialog-popup[data-size='sm'] {
+  max-width: 24rem;
+}
+.a63-Dialog-popup[data-size='lg'] {
+  max-width: 40rem;
+}
+.a63-Dialog-popup[data-starting-style],
+.a63-Dialog-popup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+/* ── Mobile: stick the sheet to the bottom edge (prod bottomStickOnMobile) ── */
+@media (max-width: 639px) {
+  .a63-Dialog-viewport[data-mobile-placement='bottom'] {
+    grid-template-rows: 1fr auto;
+    padding: max(3rem, var(--a63-safe-area-top, 0px)) 0 0;
+  }
+  .a63-Dialog-popup[data-stick-bottom] {
+    max-width: none;
+    transform-origin: bottom;
+    border-inline-width: 0;
+    border-block-end-width: 0;
+    border-radius: 0;
+    padding-bottom: var(--a63-safe-area-bottom, 0px);
+  }
+  .a63-Dialog-popup[data-stick-bottom][data-starting-style],
+  .a63-Dialog-popup[data-stick-bottom][data-ending-style] {
+    transform: translateY(1rem);
+  }
+  .a63-Dialog-footer > :where(button, [role='button']) {
+    width: 100%;
+  }
+}
+
+/* ── Close button ──────────────────────────────────────────────────────── */
+.a63-Dialog-close-button {
+  position: absolute;
+  inset-inline-end: var(--a63-space-2);
+  top: var(--a63-space-2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dialog-close-size);
+  height: var(--dialog-close-size);
+  border: none;
+  border-radius: var(--a63-radius-control);
+  background: transparent;
+  color: var(--a63-text-secondary);
+  cursor: pointer;
+  outline: none;
+}
+.a63-Dialog-close-button svg {
+  width: var(--a63-control-icon-size-sm);
+  height: var(--a63-control-icon-size-sm);
+}
+@media (hover: hover) {
+  .a63-Dialog-close-button:hover {
+    background: var(--a63-surface-control-hover);
+    color: var(--a63-text-primary);
+  }
+}
+.a63-Dialog-close-button:focus-visible {
+  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+}
+
+/* ── Header / footer / title / description / panel ─────────────────────── */
+.a63-Dialog-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-2);
+  padding: var(--a63-space-5);
+}
+.a63-Dialog-popup:has(.a63-Dialog-close-button) .a63-Dialog-header {
+  padding-inline-end: calc(var(--a63-space-4) + var(--dialog-close-size));
+}
+/* Collapse the header's bottom padding when a scrolling panel follows it
+   (prod in-[[data-slot=dialog-popup]:has([data-slot=dialog-panel])]:pb-3). */
+.a63-Dialog-popup:has(.a63-Dialog-panel) .a63-Dialog-header {
+  padding-bottom: var(--a63-space-3);
+}
+@media (max-width: 639px) {
+  .a63-Dialog-header {
+    padding-bottom: var(--a63-space-4);
+  }
+}
+
+.a63-Dialog-footer {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--a63-space-2);
+  padding-inline: var(--a63-space-5);
+}
+.a63-Dialog-footer[data-variant='default'] {
+  padding-block: var(--a63-space-3);
+  border-top: var(--a63-control-border-width) solid var(--a63-border-subtle);
+  background: color-mix(in oklch, var(--a63-surface-muted) 72%, transparent);
+}
+.a63-Dialog-footer[data-variant='bare'] {
+  padding-top: var(--a63-space-3);
+  padding-bottom: var(--a63-space-5);
+}
+/* A bare footer sitting under a scrolling panel tightens its top padding
+   (prod bare-footer in-[…:has([data-slot=dialog-panel])]:pt-3). */
+.a63-Dialog-popup:has(.a63-Dialog-panel) .a63-Dialog-footer[data-variant='bare'] {
+  padding-top: var(--a63-space-3);
+}
+@media (min-width: 640px) {
+  .a63-Dialog-footer {
+    flex-direction: row;
+    justify-content: flex-end;
+    border-end-start-radius: calc(var(--a63-overlay-radius, var(--radius-2xl)) - 1px);
+    border-end-end-radius: calc(var(--a63-overlay-radius, var(--radius-2xl)) - 1px);
+  }
+}
+
+.a63-Dialog-title {
+  font-weight: 600;
+  font-size: var(--typography-xl-font-size);
+  line-height: var(--typography-xl-line-height);
+  color: var(--a63-text-primary);
+}
+
+.a63-Dialog-description {
+  font-size: var(--a63-control-font-size-sm);
+  line-height: var(--typography-sm-line-height);
+  color: var(--a63-text-secondary);
+}
+
+.a63-Dialog-panel {
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--a63-space-5);
+}
+/* When the panel is composed with a header and/or a borderless (bare) footer,
+   collapse the abutting padding so sections don't double their gaps (prod
+   in-[…:has([data-slot=dialog-header])]:pt-1 /
+   in-[…:has([data-slot=dialog-footer]:not(.border-t))]:pb-1). */
+.a63-Dialog-popup:has(.a63-Dialog-header) .a63-Dialog-panel {
+  padding-top: var(--a63-space-1);
+}
+.a63-Dialog-popup:has(.a63-Dialog-footer[data-variant='bare']) .a63-Dialog-panel {
+  padding-bottom: var(--a63-space-1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Dialog-backdrop,
+  .a63-Dialog-popup {
+    transition: none;
+  }
+}

@@ -1,0 +1,149 @@
+/*
+ * Switch recipe — the selection archetype (bistable on/off). `.a63-Switch` is the
+ * track, `.a63-Switch-thumb` the knob. Checked = the brand-accent fill (shared
+ * --a63-selection-* tokens) + the thumb slides right; a press squishes the thumb.
+ *
+ * Geometry is driven by --a63-switch-thumb-size, so design language reshapes it for
+ * free (iOS enlarges the token → a bigger pill). With border-box + 1px border + 2px
+ * padding, the content box is exactly thumb·2 wide and thumb tall, so the checked
+ * travel is a clean translateX(thumb).
+ *
+ * Axis-dependent selection tokens resolve HERE (the use-site) via
+ * var(--a63-selection-X, <live semantic>), so mode/theme/brand read from the
+ * switch's own scope — never frozen through a :root indirection.
+ *
+ * Color overrides (consumers): set `--switch-track`, `--switch-accent`,
+ * `--switch-border`, and/or `--switch-focus-ring` on the root. Thumb fill/ink
+ * default to `--a63-selection-thumb` / `--a63-selection-thumb-fg` (white knob +
+ * dark icon — mode-independent). Override with `--switch-thumb-bg` / `--switch-thumb-fg`.
+ */
+
+.a63-Switch {
+  --switch-thumb: var(--a63-switch-thumb-size);
+  --switch-track: var(--a63-selection-track-off, var(--a63-surface-muted));
+  --switch-border: var(--a63-selection-border, var(--a63-border-control));
+  --switch-accent: var(--a63-selection-accent, var(--a63-action-primary));
+  --switch-focus-ring: var(--a63-selection-focus-ring, var(--a63-focus-ring));
+  --switch-thumb-bg: var(--a63-selection-thumb);
+  --switch-thumb-fg: var(--a63-selection-thumb-fg, color-mix(in oklch, black 78%, transparent));
+  --switch-shadow: var(--a63-choice-box-shadow, none);
+  --switch-shadow-checked: var(--a63-choice-box-shadow-checked, var(--switch-shadow));
+  --switch-current-shadow: var(--switch-shadow);
+  --switch-gloss-checked: var(--a63-choice-indicator-gloss, none);
+
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  width: calc(var(--switch-thumb) * 2 + 6px);
+  height: calc(var(--switch-thumb) + 6px);
+  padding: 2px;
+  border: 1px solid var(--switch-border);
+  border-radius: var(--radius-full);
+  background-color: var(--switch-track);
+  background-image: none;
+  box-shadow: var(--switch-current-shadow);
+  cursor: pointer;
+  outline: none;
+  transition:
+    background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+/* Interaction floor, using the same pattern as Checkbox/Radio/Button. The old
+   arithmetic form (`inset: calc((min-target - track-height) / -2)`) subtracted
+   the border-box track height, but an absolutely positioned pseudo-element is
+   laid out against the PADDING box, so the 1px borders were double-counted and
+   the target resolved to 42px instead of 44px. Sizing the pseudo directly can't
+   drift. */
+.a63-Switch::after {
+  content: '';
+  position: absolute;
+  inset: 50%;
+  min-width: var(--a63-control-min-target);
+  min-height: var(--a63-control-min-target);
+  translate: -50% -50%;
+}
+
+.a63-Switch-thumb {
+  --thumb-x: 0;
+  --thumb-sx: 1;
+
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  height: 100%;
+  aspect-ratio: 1;
+  border: 1px solid color-mix(in oklch, black 8%, transparent);
+  border-radius: var(--radius-full);
+  background: var(--switch-thumb-bg);
+  color: var(--switch-thumb-fg);
+  box-shadow: 0 1px 2px color-mix(in oklch, black 20%, transparent);
+  transform: translateX(var(--thumb-x)) scaleX(var(--thumb-sx));
+  transform-origin: left center;
+  transition:
+    transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+  overflow: hidden;
+}
+
+/* Keep thumb children optically round when the press squash runs on the knob. */
+.a63-Switch-thumb > * {
+  display: grid;
+  place-items: center;
+  transform: scaleX(calc(1 / var(--thumb-sx)));
+  transition: transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+/* ── States ────────────────────────────────────────────────────────────── */
+
+.a63-Switch[data-checked] {
+  --switch-current-shadow: var(--switch-shadow-checked);
+
+  background-color: var(--switch-accent);
+  background-image: var(--switch-gloss-checked);
+  border-color: var(--switch-accent);
+}
+
+.a63-Switch[data-checked] .a63-Switch-thumb {
+  --thumb-x: var(--switch-thumb);
+
+  transform-origin: right center;
+}
+
+.a63-Switch:hover:not([data-disabled]):not([data-checked]) {
+  border-color: color-mix(in oklch, var(--switch-border), var(--a63-text-primary) 20%);
+}
+
+.a63-Switch:active:not([data-disabled]) .a63-Switch-thumb {
+  --thumb-sx: 1.12;
+}
+
+.a63-Switch:focus-visible {
+  box-shadow:
+    var(--switch-current-shadow),
+    0 0 0 var(--a63-control-focus-ring-width) var(--switch-focus-ring);
+}
+
+.a63-Switch[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+/* ── Sizes (md is the base rule above) ─────────────────────────────────── */
+
+.a63-Switch[data-size='sm'] {
+  --switch-thumb: calc(var(--a63-switch-thumb-size) * 0.8);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Switch,
+  .a63-Switch-thumb,
+  .a63-Switch-thumb > * {
+    transition: none;
+  }
+}

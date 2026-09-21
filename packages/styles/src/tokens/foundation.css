@@ -1,0 +1,15 @@
+/*
+ * Copied foundation layer.
+ *
+ * Seeded from the current production @atom63/tokens package so the parallel
+ * style system can evolve by adding/removing only what the new architecture
+ * needs.
+ */
+@import './foundation/primitives.css';
+@import './foundation/palette.css';
+@import './foundation/aliases.css';
+@import './foundation/effects.css';
+@import './foundation/radius.css';
+@import './foundation/fonts.css';
+@import './foundation/typography.css';
+@import './foundation/motion.css';

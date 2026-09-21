@@ -1,0 +1,19 @@
+{
+  "name": "@atom63/vite-config",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./shared-app-config.ts"
+  },
+  "dependencies": {
+    "@mdx-js/rollup": "^3.1.1",
+    "rehype-pretty-code": "^0.14.4",
+    "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.1",
+    "remark-mdx-frontmatter": "^5.2.0"
+  },
+  "devDependencies": {
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}

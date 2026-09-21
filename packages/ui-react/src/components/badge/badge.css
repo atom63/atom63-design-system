@@ -1,0 +1,223 @@
+/*
+ * Badge recipe — a small labeled chip, the MARKER archetype's second consumer
+ * (after Kbd). The chip shape + keycap bevel come from the --a63-marker-shadow
+ * lever + --a63-control-radius + --a63-control-font-family; each variant only
+ * recolors bg/fg from semantics at the use-site (reusing Button's vocabulary).
+ * No new tokens.
+ */
+
+.a63-Badge {
+  --badge-height: 1.25rem;
+  --badge-padding-inline: 0.4375rem;
+  --badge-font-size: var(--a63-control-font-size-xs);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--a63-space-1);
+  height: var(--badge-height);
+  min-width: var(--badge-height);
+  padding-inline: var(--badge-padding-inline);
+  border: var(--a63-control-border-width) solid transparent;
+  border-radius: var(--a63-control-radius);
+  background-color: var(--badge-bg, var(--a63-action-neutral));
+  box-shadow: var(--a63-marker-shadow);
+  color: var(--badge-fg, var(--a63-action-neutral-foreground));
+  font-family: var(--a63-control-font-family);
+  font-size: var(--badge-font-size);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.a63-Badge svg {
+  flex-shrink: 0;
+  width: 0.875em;
+  height: 0.875em;
+  opacity: 0.8;
+  pointer-events: none;
+}
+.a63-Badge [data-slot='spinner'] {
+  width: 0.875em;
+  height: 0.875em;
+}
+
+.a63-Badge:disabled,
+.a63-Badge[aria-disabled='true'] {
+  opacity: 0.64;
+  pointer-events: none;
+}
+
+/* ── Sizes ─────────────────────────────────────────────────────────────── */
+.a63-Badge[data-size='sm'] {
+  --badge-height: 1rem;
+  --badge-padding-inline: 0.3125rem;
+  --badge-font-size: calc(var(--a63-control-font-size-xs) - 1px);
+}
+.a63-Badge[data-size='lg'] {
+  --badge-height: 1.5rem;
+  --badge-padding-inline: 0.5rem;
+  /* +1px keeps the ramp monotonic even where -xs and -sm resolve equal. */
+  --badge-font-size: calc(var(--a63-control-font-size-xs) + 1px);
+}
+
+/* ── Variants (bg/fg only — shape/bevel is the marker archetype) ───────── */
+.a63-Badge[data-variant='primary'] {
+  --badge-bg: var(--a63-action-primary);
+  --badge-fg: var(--a63-action-primary-foreground);
+}
+.a63-Badge[data-variant='secondary'] {
+  --badge-bg: var(--a63-surface-control);
+  --badge-fg: var(--a63-text-primary);
+}
+.a63-Badge[data-variant='outline'] {
+  --badge-bg: transparent;
+  --badge-fg: var(--a63-text-primary);
+  border-color: var(--a63-border-control);
+}
+/* glass = translucent surface with a visible hairline (prod border-border/50 bg-secondary). */
+.a63-Badge[data-variant='glass'] {
+  --badge-bg: color-mix(in oklch, var(--a63-surface-control) 70%, transparent);
+  --badge-fg: var(--a63-text-primary);
+  border-color: var(--a63-border-subtle);
+}
+.a63-Badge[data-variant='muted'] {
+  --badge-bg: var(--a63-surface-muted);
+  --badge-fg: var(--a63-text-secondary);
+}
+.a63-Badge[data-variant='accent'] {
+  --badge-bg: var(--a63-surface-control-hover);
+  --badge-fg: var(--a63-text-primary);
+}
+.a63-Badge[data-variant='destructive'] {
+  --badge-bg: var(--a63-action-danger);
+  --badge-fg: var(--a63-action-danger-foreground);
+}
+.a63-Badge[data-variant='error'] {
+  --badge-bg: color-mix(in oklch, var(--a63-action-danger) 12%, transparent);
+  --badge-fg: var(--a63-action-danger);
+}
+.a63-Badge[data-variant='info'] {
+  --badge-bg: color-mix(in oklch, var(--a63-status-info) 14%, transparent);
+  --badge-fg: var(--a63-status-info);
+}
+.a63-Badge[data-variant='success'] {
+  --badge-bg: color-mix(in oklch, var(--a63-status-success) 14%, transparent);
+  --badge-fg: var(--a63-status-success);
+}
+.a63-Badge[data-variant='warning'] {
+  --badge-bg: color-mix(in oklch, var(--a63-status-warning) 14%, transparent);
+  --badge-fg: var(--a63-status-warning);
+}
+
+/* ── Palette variants (category hues via --a63-badge-* contract) ───────── */
+/* Tonal chip: low-alpha accent + mode-aware foreground from styles contract. */
+.a63-Badge[data-variant='red'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-red-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-red-foreground);
+}
+.a63-Badge[data-variant='orange'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-orange-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-orange-foreground);
+}
+.a63-Badge[data-variant='amber'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-amber-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-amber-foreground);
+}
+.a63-Badge[data-variant='yellow'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-yellow-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-yellow-foreground);
+}
+.a63-Badge[data-variant='lime'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-lime-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-lime-foreground);
+}
+.a63-Badge[data-variant='green'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-green-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-green-foreground);
+}
+.a63-Badge[data-variant='emerald'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-emerald-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-emerald-foreground);
+}
+.a63-Badge[data-variant='teal'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-teal-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-teal-foreground);
+}
+.a63-Badge[data-variant='cyan'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-cyan-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-cyan-foreground);
+}
+.a63-Badge[data-variant='sky'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-sky-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-sky-foreground);
+}
+.a63-Badge[data-variant='blue'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-blue-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-blue-foreground);
+}
+.a63-Badge[data-variant='indigo'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-indigo-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-indigo-foreground);
+}
+.a63-Badge[data-variant='violet'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-violet-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-violet-foreground);
+}
+.a63-Badge[data-variant='purple'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-purple-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-purple-foreground);
+}
+.a63-Badge[data-variant='fuchsia'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-fuchsia-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-fuchsia-foreground);
+}
+.a63-Badge[data-variant='pink'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-pink-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-pink-foreground);
+}
+.a63-Badge[data-variant='rose'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-rose-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-rose-foreground);
+}
+.a63-Badge[data-variant='neutral'] {
+  --badge-bg: color-mix(in oklch, var(--a63-badge-neutral-accent) 15%, transparent);
+  --badge-fg: var(--a63-badge-neutral-foreground);
+}
+
+/* Interactive badges (rendered as button/a) get a pointer + hover feedback. */
+.a63-Badge:is(button, a) {
+  margin: max(0px, calc((var(--a63-control-min-target) - var(--badge-height)) / 2));
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+@media (hover: hover) {
+  .a63-Badge:is(button, a):hover {
+    background-color: color-mix(
+      in oklch,
+      var(--badge-bg, var(--a63-action-neutral)) 88%,
+      transparent
+    );
+  }
+}
+
+/* Expand the hit target to the active input minimum without growing the chip. */
+.a63-Badge:is(button, a)::after {
+  content: '';
+  position: absolute;
+  inset: 50%;
+  min-width: var(--a63-control-min-target);
+  min-height: var(--a63-control-min-target);
+  translate: -50% -50%;
+}
+
+.a63-Badge:focus-visible {
+  outline: none;
+  box-shadow:
+    var(--a63-marker-shadow),
+    0 0 0 var(--a63-control-focus-ring-width)
+      var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+}

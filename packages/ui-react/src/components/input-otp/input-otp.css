@@ -1,0 +1,145 @@
+/*
+ * InputOTP recipe — a segmented one-time-password field, ported faithfully from
+ * production. `.a63-InputOTP` is the flex container the `input-otp` primitive
+ * lays its hidden input into; `.a63-InputOTP-group` clusters the visible slots
+ * and `.a63-InputOTP-slot` is one box. Slots share the recessed-field vocabulary
+ * (--a63-field-* → --a63-surface-control / --a63-border-control / --a63-control-radius),
+ * fuse into a single pill by collapsing inner borders, and the active slot lifts
+ * with the brand accent + focus ring. Caret blink is a local keyframe. No new tokens.
+ */
+
+.a63-InputOTP {
+  display: flex;
+  align-items: center;
+  gap: var(--a63-space-2, 0.5rem);
+}
+
+.a63-InputOTP:has(:disabled),
+.a63-InputOTP:has([data-disabled]) {
+  opacity: 0.5;
+}
+
+/* The primitive's single hidden input — inherits the not-allowed cursor. */
+.a63-InputOTP-input:disabled {
+  cursor: not-allowed;
+}
+
+.a63-InputOTP-group {
+  display: flex;
+  align-items: center;
+}
+
+.a63-InputOTP-slot {
+  --otp-border: var(--a63-field-border, var(--a63-border-control));
+  --otp-accent: var(--a63-selection-accent, var(--a63-action-primary));
+
+  position: relative;
+  display: flex;
+  /* Content floor — see button.css. Square slot, so both axes come from one
+     value; flooring height alone would desquare it. */
+  --otp-slot-size: max(
+    calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size),
+    calc(var(--typography-sm-line-height) + 2 * var(--a63-space-0_5))
+  );
+
+  align-items: center;
+  justify-content: center;
+  width: var(--otp-slot-size);
+  height: var(--otp-slot-size);
+  border: var(--a63-control-border-width) solid var(--otp-border);
+  /* Collapse inner borders so the group fuses into one pill. */
+  border-inline-start-width: 0;
+  background-color: var(--a63-field-background, var(--a63-surface-control));
+  box-shadow: var(--a63-field-shadow);
+  color: var(--a63-text-primary);
+  font-family: var(--a63-control-font-family);
+  font-size: max(var(--a63-control-font-size-md), var(--a63-editable-font-size-min, 0px));
+  outline: none;
+  transition:
+    border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+/* Rounded outer corners + the missing leading border on the first slot. */
+.a63-InputOTP-slot:first-child {
+  border-inline-start-width: var(--a63-control-border-width);
+  border-start-start-radius: var(--a63-control-radius);
+  border-end-start-radius: var(--a63-control-radius);
+}
+.a63-InputOTP-slot:last-child {
+  border-start-end-radius: var(--a63-control-radius);
+  border-end-end-radius: var(--a63-control-radius);
+}
+
+/* Active slot lifts above its neighbors, adopts the accent border + focus ring. */
+.a63-InputOTP-slot[data-active='true'] {
+  z-index: 1;
+  border-color: var(--otp-accent);
+  box-shadow:
+    var(--a63-field-shadow),
+    0 0 0 var(--a63-control-focus-ring-width)
+      var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+}
+
+/* Invalid state — recolor the border + active ring to danger. */
+.a63-InputOTP-slot[aria-invalid='true'],
+.a63-InputOTP:has(.a63-InputOTP-input[aria-invalid='true']) .a63-InputOTP-slot {
+  --otp-border: color-mix(in oklch, var(--a63-action-danger) 62%, transparent);
+}
+.a63-InputOTP-slot[aria-invalid='true'][data-active='true'],
+.a63-InputOTP:has(.a63-InputOTP-input[aria-invalid='true']) .a63-InputOTP-slot[data-active='true'] {
+  border-color: var(--a63-action-danger);
+  box-shadow:
+    var(--a63-field-shadow),
+    0 0 0 var(--a63-control-focus-ring-width)
+      color-mix(in oklch, var(--a63-action-danger) 35%, transparent);
+}
+
+/* Fake caret — a blinking hairline centered in the active empty slot. */
+.a63-InputOTP-caretWrap {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.a63-InputOTP-caret {
+  width: 1px;
+  height: 1rem;
+  background-color: var(--a63-text-primary);
+  animation: a63-input-otp-caret-blink 1s step-end infinite;
+}
+
+/* Separator (e.g. between OTP groups) — a muted glyph. */
+.a63-InputOTP-separator {
+  display: inline-flex;
+  align-items: center;
+  color: var(--a63-text-secondary);
+}
+.a63-InputOTP-separator :where(svg) {
+  width: 1em;
+  height: 1em;
+}
+
+@keyframes a63-input-otp-caret-blink {
+  0%,
+  70%,
+  100% {
+    opacity: 1;
+  }
+  20%,
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-InputOTP-slot {
+    transition: none;
+  }
+  .a63-InputOTP-caret {
+    animation: none;
+  }
+}

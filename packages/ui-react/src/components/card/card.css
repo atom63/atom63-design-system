@@ -1,0 +1,421 @@
+/*
+ * Card recipe — the SURFACE archetype's rich consumer, ported from the site's
+ * base-card. Resting elevation reads the --a63-surface-shadow lever; bg/border/
+ * radius/text resolve from semantics at the use-site. Variants (default/ghost/
+ * interactive/overlay) + a padding scale + media/text/footer slots mirror
+ * base-card. Media radius stays concentric via calc(card-radius - card-pad) — the
+ * root publishes both custom props and children inherit them (no JS chrome ctx).
+ */
+
+.a63-Card {
+  --a63-card-radius: var(--radius-3xl);
+  --a63-card-pad: 0.375rem;
+
+  position: relative;
+  /* Establish a query container so content/footer padding can respond to the
+     card's own width (the { base, sm } responsive padding form). */
+  container: a63-card / inline-size;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: var(--a63-card-pad);
+  border: var(--a63-surface-border-width) var(--a63-surface-border-style) var(--a63-border-subtle);
+  border-radius: var(--a63-surface-radius, var(--a63-card-radius));
+  background-color: var(--a63-surface-panel);
+  background-image: var(--a63-surface-gloss), var(--a63-surface-texture-image);
+  background-blend-mode: normal, var(--a63-surface-texture-blend);
+  backdrop-filter: var(--a63-surface-backdrop);
+  box-shadow: var(--a63-surface-inner-shadow, none), var(--a63-surface-shadow);
+  color: var(--a63-text-primary);
+}
+
+/* ── Padding scale (root chrome inset that drives concentric media) ─────── */
+.a63-Card[data-padding='none'] {
+  --a63-card-pad: 0;
+}
+.a63-Card[data-padding='sm'] {
+  --a63-card-pad: 0.25rem;
+}
+.a63-Card[data-padding='md'] {
+  --a63-card-pad: 0.375rem;
+}
+.a63-Card[data-padding='lg'] {
+  --a63-card-pad: 0.75rem;
+}
+
+/* ── Variants ──────────────────────────────────────────────────────────── */
+.a63-Card[data-variant='overlay'] {
+  --a63-card-radius: var(--radius-2xl);
+}
+
+/* interactive + overlay: lift on hover (z-boost so it paints above grid siblings) */
+.a63-Card[data-variant='interactive'],
+.a63-Card[data-variant='overlay'] {
+  cursor: pointer;
+  transition:
+    transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-Card[data-variant='interactive']:hover,
+.a63-Card[data-variant='overlay']:hover {
+  z-index: 10;
+  transform: translateY(-4px);
+  border-color: var(--a63-border-control);
+  box-shadow:
+    var(--a63-surface-shadow),
+    0 12px 24px -8px color-mix(in oklch, black 22%, transparent);
+}
+
+/* ghost: no shell — a scaled pseudo hover wash instead */
+.a63-Card[data-variant='ghost'] {
+  border-color: transparent;
+  background-color: transparent;
+  box-shadow: none;
+  isolation: isolate;
+}
+
+.a63-Card[data-variant='ghost']::before {
+  content: '';
+  position: absolute;
+  inset: -0.25rem;
+  z-index: -1;
+  border-radius: var(--radius-2xl);
+  background-color: color-mix(in oklch, var(--a63-surface-muted) 50%, transparent);
+  opacity: 0;
+  transform: scale(0.9);
+  transition:
+    transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+  pointer-events: none;
+}
+
+.a63-Card[data-variant='ghost']:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.a63-Card[data-variant='ghost']:active::before {
+  transform: scale(0.97);
+}
+
+/* ── Header ────────────────────────────────────────────────────────────── */
+.a63-Card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--a63-space-1);
+  padding: var(--a63-space-4);
+}
+.a63-Card-header[data-padding='none'] {
+  padding: 0;
+}
+.a63-Card-header[data-padding='sm'] {
+  padding: var(--a63-space-3);
+}
+.a63-Card-header[data-padding='md'] {
+  padding: var(--a63-space-4);
+}
+.a63-Card-header[data-padding='lg'] {
+  padding: var(--a63-space-5);
+}
+
+.a63-Card-label {
+  color: var(--a63-text-primary);
+  font-size: 0.875rem;
+}
+
+/* ── Media frame (concentric radius) ───────────────────────────────────── */
+.a63-Card-media {
+  width: 100%;
+  overflow: hidden;
+  border-radius: calc(var(--a63-card-radius) - var(--a63-card-pad));
+  background-color: color-mix(in oklch, var(--a63-surface-muted) 50%, transparent);
+}
+.a63-Card-media > img,
+.a63-Card-media > video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Media overlay family ──────────────────────────────────────────────── */
+.a63-Card-media-overlay {
+  position: relative;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.a63-Card-media-overlay:not([data-aspect]) {
+  flex: 1;
+  height: 100%;
+}
+
+.a63-Card-media-overlay-image {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.a63-Card-media-overlay-image > img,
+.a63-Card-media-overlay-image > video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.a63-Card-media-overlay-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    color-mix(in oklch, black 75%, transparent),
+    color-mix(in oklch, black 25%, transparent) 50%,
+    transparent
+  );
+}
+
+.a63-Card-media-overlay-top-right {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  z-index: 10;
+}
+
+.a63-Card-media-overlay-bottom {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--a63-space-3);
+  padding: var(--a63-space-4);
+}
+
+.a63-Card-media-overlay-icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-full);
+  background-color: color-mix(in oklch, white 10%, transparent);
+  color: white;
+  backdrop-filter: blur(4px);
+}
+.a63-Card-media-overlay-icon-button svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* ── Content / text ────────────────────────────────────────────────────── */
+.a63-Card-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-3);
+  padding: var(--a63-space-4);
+}
+.a63-Card-content[data-padding='none'] {
+  gap: var(--a63-space-3);
+  padding: 0;
+}
+.a63-Card-content[data-padding='xs'] {
+  gap: var(--a63-space-1);
+  padding: var(--a63-space-2);
+}
+.a63-Card-content[data-padding='sm'] {
+  gap: var(--a63-space-1);
+  padding: var(--a63-space-3);
+}
+.a63-Card-content[data-padding='md'] {
+  gap: var(--a63-space-2);
+  padding: var(--a63-space-4);
+}
+.a63-Card-content[data-padding='lg'] {
+  gap: 0.875rem;
+  padding: var(--a63-space-5);
+}
+
+.a63-Card-title {
+  color: var(--a63-text-primary);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.a63-Card-description {
+  color: var(--a63-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.a63-Card-title[data-line-clamp],
+.a63-Card-description[data-line-clamp] {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+}
+.a63-Card-title[data-line-clamp='1'],
+.a63-Card-description[data-line-clamp='1'] {
+  -webkit-line-clamp: 1;
+}
+.a63-Card-title[data-line-clamp='2'],
+.a63-Card-description[data-line-clamp='2'] {
+  -webkit-line-clamp: 2;
+}
+.a63-Card-title[data-line-clamp='3'],
+.a63-Card-description[data-line-clamp='3'] {
+  -webkit-line-clamp: 3;
+}
+
+.a63-Card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+/* ── Footer / action ───────────────────────────────────────────────────── */
+.a63-Card-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--a63-space-2);
+  margin-top: auto;
+  padding: var(--a63-space-4);
+  padding-top: 0;
+}
+.a63-Card-footer[data-padding='none'] {
+  padding: 0;
+}
+.a63-Card-footer[data-padding='xs'] {
+  padding: var(--a63-space-2);
+  padding-top: 0;
+}
+.a63-Card-footer[data-padding='sm'] {
+  padding: var(--a63-space-3);
+  padding-top: 0;
+}
+.a63-Card-footer[data-padding='md'] {
+  padding: var(--a63-space-4);
+  padding-top: 0;
+}
+.a63-Card-footer[data-padding='lg'] {
+  padding: var(--a63-space-5);
+  padding-top: 0;
+}
+
+.a63-Card-action {
+  display: flex;
+  align-items: center;
+  gap: var(--a63-space-2);
+  margin-left: auto;
+}
+
+/* ── Link wrapper (unclipped so interactive lift isn't cut off) ────────── */
+.a63-CardLink {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-3xl);
+  color: var(--a63-text-primary);
+  text-decoration: none;
+  outline: none;
+}
+.a63-CardLink:focus-visible {
+  box-shadow: 0 0 0 2px var(--a63-focus-ring);
+}
+
+/* Responsive padding: once the CARD is wide enough, the `sm` step wins
+   (padding={{ base, sm }}). Container-driven, so a card in a narrow grid
+   cell keeps its base padding regardless of viewport. */
+@container a63-card (min-width: 24rem) {
+  .a63-Card-content[data-padding-sm='none'] {
+    gap: var(--a63-space-3);
+    padding: 0;
+  }
+  .a63-Card-content[data-padding-sm='xs'] {
+    gap: var(--a63-space-1);
+    padding: var(--a63-space-2);
+  }
+  .a63-Card-content[data-padding-sm='sm'] {
+    gap: var(--a63-space-1);
+    padding: var(--a63-space-3);
+  }
+  .a63-Card-content[data-padding-sm='md'] {
+    gap: var(--a63-space-2);
+    padding: var(--a63-space-4);
+  }
+  .a63-Card-content[data-padding-sm='lg'] {
+    gap: 0.875rem;
+    padding: var(--a63-space-5);
+  }
+  .a63-Card-footer[data-padding-sm='none'] {
+    padding: 0;
+  }
+  .a63-Card-footer[data-padding-sm='xs'] {
+    padding: var(--a63-space-2);
+    padding-top: 0;
+  }
+  .a63-Card-footer[data-padding-sm='sm'] {
+    padding: var(--a63-space-3);
+    padding-top: 0;
+  }
+  .a63-Card-footer[data-padding-sm='md'] {
+    padding: var(--a63-space-4);
+    padding-top: 0;
+  }
+  .a63-Card-footer[data-padding-sm='lg'] {
+    padding: var(--a63-space-5);
+    padding-top: 0;
+  }
+}
+
+/* ── Media hover-scale (CardMedia hoverScale) ──────────────────────────── */
+.a63-Card-media[data-hover-scale] > * {
+  transition: transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-Card:hover .a63-Card-media[data-hover-scale] > * {
+  transform: scale(1.03);
+}
+
+/* ── Cursor label (pointer-following pill) ─────────────────────────────── */
+/* Position from the --a63-card-cursor-x/y custom props the `useCardCursor` hook
+   writes; visible only while the card is [data-cursor-active]. System cursor
+   hidden so the pill reads as the cursor. */
+.a63-Card[data-cursor-active] {
+  cursor: none;
+}
+.a63-Card-cursor-label {
+  position: absolute;
+  left: var(--a63-card-cursor-x, 50%);
+  top: var(--a63-card-cursor-y, 50%);
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--a63-space-1);
+  padding: var(--a63-space-1) var(--a63-space-2);
+  border-radius: var(--radius-full);
+  background-color: var(--a63-text-primary);
+  color: var(--a63-surface-page);
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none;
+  translate: -50% -50%;
+}
+.a63-Card-cursor-label svg {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Card[data-variant='interactive'],
+  .a63-Card[data-variant='overlay'],
+  .a63-Card[data-variant='ghost']::before,
+  .a63-Card-media[data-hover-scale] > * {
+    transition: none;
+  }
+}

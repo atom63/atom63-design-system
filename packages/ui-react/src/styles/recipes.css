@@ -1,0 +1,70 @@
+/*
+ * All DS component recipes (the `.a63-*` class styles), WITHOUT the @atom63/styles
+ * foundation or reset. Consumers that already load the foundation (e.g. atom63.io
+ * loads @atom63/styles in its own entry) import THIS to get every recipe in one
+ * shot — so a new primitive's recipe propagates automatically, no hand-kept list.
+ * The full `@atom63/ui-react/styles.css` = @atom63/styles + reset + this file.
+ */
+@import '../components/alert/alert.css' layer(components);
+@import '../components/badge/badge.css' layer(components);
+@import '../components/button/button.css' layer(components);
+@import '../components/card/card.css' layer(components);
+@import '../components/carousel/carousel.css' layer(components);
+@import '../components/checkbox/checkbox.css' layer(components);
+@import '../components/collapsible/collapsible.css' layer(components);
+@import '../components/command/command.css' layer(components);
+@import '../components/connected-panel/connected-panel.css' layer(components);
+@import '../components/menu/menu.css' layer(components);
+@import '../components/drawer/drawer.css' layer(components);
+@import '../components/feedback-state/feedback-state.css' layer(components);
+@import '../components/frame/frame.css' layer(components);
+@import '../components/load-more-trigger/load-more-trigger.css' layer(components);
+@import '../components/hover-card/hover-card.css' layer(components);
+@import '../components/input-otp/input-otp.css' layer(components);
+@import '../components/input/input.css' layer(components);
+@import '../components/kbd/kbd.css' layer(components);
+@import '../components/label/label.css' layer(components);
+@import '../components/radio/radio.css' layer(components);
+@import '../components/scroll-area/scroll-area.css' layer(components);
+@import '../components/popover/popover.css' layer(components);
+@import '../components/scrollable-list/scrollable-list.css' layer(components);
+@import '../components/segmented-control/segmented-control.css' layer(components);
+@import '../components/select/select.css' layer(components);
+@import '../components/separator/separator.css' layer(components);
+@import '../components/sheet/sheet.css' layer(components);
+@import '../components/slider/slider.css' layer(components);
+@import '../components/skeleton/skeleton.css' layer(components);
+@import '../components/switch/switch.css' layer(components);
+@import '../components/tabs/tabs.css' layer(components);
+@import '../components/text-ticker/text-ticker.css' layer(components);
+@import '../components/textarea/textarea.css' layer(components);
+@import '../components/toggle/toggle.css' layer(components);
+@import '../components/tooltip/tooltip.css' layer(components);
+@import '../components/toggle-group/toggle-group.css' layer(components);
+@import '../components/alert-dialog/alert-dialog.css' layer(components);
+@import '../components/avatar/avatar.css' layer(components);
+@import '../components/breadcrumb/breadcrumb.css' layer(components);
+@import '../components/button-group/button-group.css' layer(components);
+@import '../components/copy-button/copy-button.css' layer(components);
+@import '../components/dialog/dialog.css' layer(components);
+@import '../components/empty/empty.css' layer(components);
+@import '../components/item/item.css' layer(components);
+@import '../components/marquee/marquee.css' layer(components);
+@import '../components/pagination/pagination.css' layer(components);
+@import '../components/progress/progress.css' layer(components);
+@import '../components/table/table.css' layer(components);
+@import '../components/accordion/accordion.css' layer(components);
+@import '../components/autocomplete/autocomplete.css' layer(components);
+@import '../components/calendar/calendar.css' layer(components);
+@import '../components/field/field.css' layer(components);
+@import '../components/form/form.css' layer(components);
+@import '../components/menubar/menubar.css' layer(components);
+@import '../components/navigation-menu/navigation-menu.css' layer(components);
+@import '../components/panel-setting-button/panel-setting-button.css' layer(components);
+@import '../components/preview-card/preview-card.css' layer(components);
+@import '../components/resizable/resizable.css' layer(components);
+@import '../components/sidebar/sidebar.css' layer(components);
+@import '../components/sidebar-nav-tree/sidebar-nav-tree.css' layer(components);
+/* Document-level ::view-transition pseudos — deliberately unlayered so they are
+   not outranked by an app's own transition rules. */
+@import '../media/media-lightbox/media-lightbox.css';

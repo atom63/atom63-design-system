@@ -1,0 +1,102 @@
+/*
+ * ToggleGroup recipe — ALWAYS a joined/welded segmented bar (Figma 432:1335).
+ * Each item owns its gel fill/border; the group welds seams + first/last radii.
+ * Gapped independent toggles are composed as standalone `Toggle`s, not a group.
+ */
+
+.a63-ToggleGroup {
+  display: inline-flex;
+  gap: var(--a63-segment-gap, 0);
+  border-radius: var(--a63-segment-radius, var(--radius-md));
+  background: transparent;
+  box-shadow: none;
+}
+
+.a63-ToggleGroup[data-orientation='vertical'] {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Joined cell chrome — segment gel tokens (aqua mid-line, retro bevel, …). */
+.a63-ToggleGroup .a63-Toggle {
+  border-radius: 0;
+  border-color: var(--a63-segment-track-border, var(--a63-border-subtle));
+  background-color: var(--a63-segment-background, var(--a63-surface-muted));
+  background-image: var(--a63-segment-gloss, none);
+  color: var(--a63-segment-foreground, var(--a63-text-secondary));
+  filter: none;
+}
+
+.a63-ToggleGroup .a63-Toggle-content {
+  filter: drop-shadow(0 1px 0 color-mix(in oklch, black 5%, transparent));
+}
+
+.a63-ToggleGroup .a63-Toggle:hover:not([data-pressed]):not([data-disabled]) {
+  background-color: var(--a63-segment-background, var(--a63-surface-muted));
+  color: var(--a63-segment-hover-foreground, var(--a63-text-primary));
+}
+
+.a63-ToggleGroup .a63-Toggle[data-pressed][data-tone='neutral'] {
+  background-color: var(--a63-segment-selected-background, var(--a63-surface-overlay));
+  background-image: var(--a63-segment-selected-gloss, none);
+  box-shadow: var(--a63-segment-selected-shadow, none);
+  color: var(--a63-segment-selected-foreground, var(--a63-text-primary));
+}
+
+.a63-ToggleGroup .a63-Toggle[data-pressed][data-tone='accent'] {
+  background-color: var(--a63-segment-primary-background, var(--a63-action-primary));
+  background-image: var(--a63-segment-selected-gloss, none);
+  box-shadow: var(--a63-segment-primary-shadow, var(--a63-segment-selected-shadow, none));
+  color: var(--a63-segment-primary-foreground, var(--a63-action-primary-foreground));
+}
+
+.a63-ToggleGroup .a63-Toggle:focus-visible {
+  box-shadow:
+    var(--a63-segment-selected-shadow, none),
+    0 0 0 var(--a63-control-focus-ring-width)
+      var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+}
+
+.a63-ToggleGroup[data-orientation='horizontal'] .a63-Toggle:first-child {
+  border-start-start-radius: var(--a63-segment-radius, var(--radius-md));
+  border-end-start-radius: var(--a63-segment-radius, var(--radius-md));
+}
+
+.a63-ToggleGroup[data-orientation='horizontal'] .a63-Toggle:last-child {
+  border-start-end-radius: var(--a63-segment-radius, var(--radius-md));
+  border-end-end-radius: var(--a63-segment-radius, var(--radius-md));
+}
+
+.a63-ToggleGroup[data-orientation='horizontal'] .a63-Toggle:not(:first-child) {
+  border-inline-start-width: 0;
+}
+
+.a63-ToggleGroup[data-orientation='vertical'] .a63-Toggle:first-child {
+  border-start-start-radius: var(--a63-segment-radius, var(--radius-md));
+  border-start-end-radius: var(--a63-segment-radius, var(--radius-md));
+}
+
+.a63-ToggleGroup[data-orientation='vertical'] .a63-Toggle:last-child {
+  border-end-start-radius: var(--a63-segment-radius, var(--radius-md));
+  border-end-end-radius: var(--a63-segment-radius, var(--radius-md));
+}
+
+.a63-ToggleGroup[data-orientation='vertical'] .a63-Toggle:not(:first-child) {
+  border-block-start-width: 0;
+}
+
+/* ── Separator ─────────────────────────────────────────────────────────── */
+
+.a63-ToggleGroup-separator {
+  flex: none;
+  align-self: stretch;
+  background-color: var(--a63-segment-seam, var(--a63-border-subtle));
+}
+
+.a63-ToggleGroup-separator[data-orientation='vertical'] {
+  width: var(--a63-toggle-border-width, var(--a63-control-border-width));
+}
+
+.a63-ToggleGroup-separator[data-orientation='horizontal'] {
+  height: var(--a63-toggle-border-width, var(--a63-control-border-width));
+}

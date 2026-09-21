@@ -1,0 +1,57 @@
+{
+  "name": "@atom63/ui-foundation",
+  "version": "0.1.0",
+  "description": "Platform-neutral TypeScript contracts and environment types for Atom63 UI renderers",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ATOM63/atom63-vite.git",
+    "directory": "packages/ui-foundation"
+  },
+  "homepage": "https://github.com/ATOM63/atom63-vite/tree/main/packages/ui-foundation#readme",
+  "bugs": {
+    "url": "https://github.com/ATOM63/atom63-vite/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "atom63",
+    "design-system",
+    "typescript",
+    "ui-contracts",
+    "cross-platform",
+    "headless-ui"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "typescript": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "generate:contracts": "node ../../scripts/generate-cross-renderer-contracts.mjs",
+    "check:contracts": "node ../../scripts/generate-cross-renderer-contracts.mjs --check",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --cache --max-warnings 0"
+  },
+  "devDependencies": {
+    "@atom63/eslint-config": "workspace:*",
+    "@atom63/tsconfig": "workspace:*",
+    "eslint": "10.7.0",
+    "tsup": "^8.3.5",
+    "typescript": "catalog:"
+  }
+}

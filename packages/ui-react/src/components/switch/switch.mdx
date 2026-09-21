@@ -1,0 +1,31 @@
+import { Controls, Meta, Primary, Stories, Title } from '@storybook/addon-docs/blocks'
+
+import * as SwitchStories from './switch.stories'
+
+<Meta of={SwitchStories} />
+
+<Title />
+
+The **selection** archetype (bistate on/off) — the sharpest iOS-vs-web design-language showcase. Two-part anatomy (mirrors production `@atom63/ui`): `Switch.Root` is the track, `Switch.Thumb` the knob.
+
+## Anatomy
+
+- Root `.a63-Switch` — `data-slot="switch"`, carries `data-size`; Base UI stamps `data-checked` / `data-disabled`.
+- Thumb `.a63-Switch-thumb` — `data-slot="switch-thumb"`. Optional `children` render centered inside the thumb (icons, glyphs). See **WithThumbIcon** / **WithThumbIconColorOverride** stories to validate package root styling vs `--switch-*` overrides.
+
+## Contract
+
+- **Sizes:** `sm` `md` (default `md`).
+- Source of truth: `@atom63/ui-foundation` → `switch/switch-contract.ts`. Shares `contracts/selection.css` (`--a63-selection-*`) with future Checkbox/Radio.
+
+## Tokens it reads
+
+Track geometry is driven by `--a63-switch-thumb-size` — the `[data-a63-design-language=ios]` axis enlarges it (1rem → 1.375rem) for a bigger iOS pill from the *same* component. Checked fill = `--a63-selection-accent` = `--a63-action-primary`, so it follows brand and each theme's primary for free.
+
+**Local color overrides** (set on the Switch root): `--switch-track`, `--switch-accent`, `--switch-border`, `--switch-focus-ring`, `--switch-thumb-bg`, `--switch-thumb-fg`. Thumb ink defaults to `--a63-selection-thumb-fg` (dark on the white knob) — not mode `--a63-text-primary`, which disappears in dark mode.
+
+<Primary />
+
+<Controls />
+
+<Stories />

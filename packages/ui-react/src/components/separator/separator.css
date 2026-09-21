@@ -1,0 +1,43 @@
+/*
+ * Separator recipe — a visual divider. Faithful to prod @atom63/ui separator.tsx:
+ * a solid 1px hairline (default) or a soft edge-to-edge gradient fade, in either
+ * orientation. Base UI sets `data-orientation`; we recolor with --a63-* tokens.
+ */
+
+.a63-Separator {
+  flex-shrink: 0;
+  border: none;
+  background-color: var(--a63-border-subtle);
+}
+
+/* ── Orientation (solid) ───────────────────────────────────────────────── */
+.a63-Separator[data-orientation='horizontal'] {
+  width: 100%;
+  height: 1px;
+}
+.a63-Separator[data-orientation='vertical'] {
+  align-self: stretch;
+  width: 1px;
+  height: 100%;
+}
+
+/* ── Gradient fade ─────────────────────────────────────────────────────── */
+.a63-Separator[data-variant='gradient'] {
+  background-color: transparent;
+}
+.a63-Separator[data-variant='gradient'][data-orientation='horizontal'] {
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    color-mix(in oklch, var(--a63-border-subtle) 60%, transparent),
+    transparent
+  );
+}
+.a63-Separator[data-variant='gradient'][data-orientation='vertical'] {
+  background-image: linear-gradient(
+    to bottom,
+    transparent,
+    color-mix(in oklch, var(--a63-border-subtle) 60%, transparent),
+    transparent
+  );
+}

@@ -1,0 +1,5298 @@
+{
+  "schemaVersion": 1,
+  "inputs": {
+    "css": ["packages/styles/src/tokens/**/*.css", "packages/styles/src/contracts/**/*.css"],
+    "presetGenerator": "apps/figma-plugin/scripts/generate-atom63-preset.ts",
+    "generatedPreset": "apps/figma-plugin/src/generated/atom63-preset.json",
+    "handlers": "apps/figma-plugin/src/handlers/*.ts",
+    "capabilityEvidence": [
+      "apps/figma-plugin/src/pages/StyleguidePage.tsx",
+      "apps/figma-plugin/src/code.ts",
+      "apps/figma-plugin/src/libraries/rebind-matching.ts"
+    ]
+  },
+  "summary": {
+    "cssSourceFiles": 36,
+    "cssTokenSourceFiles": 18,
+    "cssContractSourceFiles": 18,
+    "uniqueCssVariables": 1015,
+    "generatedPresetEntries": 359,
+    "generatedPresetCssNames": 150,
+    "cssVariablesWithoutPreset": 871,
+    "presetEntriesWithoutCssDeclaration": 6,
+    "presetEntriesWithoutSourceFiles": 0,
+    "capabilitiesPresent": 5,
+    "capabilitiesAudited": 5,
+    "hardcodedFallbackCandidates": 63
+  },
+  "tokenCategories": {
+    "cssSourceCategories": {
+      "token/brand": 16,
+      "token/font": 1,
+      "token/foundation/aliases": 24,
+      "token/foundation/effects": 14,
+      "token/foundation/fonts": 4,
+      "token/foundation/motion": 11,
+      "token/foundation/palette": 242,
+      "token/foundation/primitives": 416,
+      "token/foundation/radius": 13,
+      "token/foundation/typography": 27,
+      "token/foundation": 0,
+      "token/index": 0,
+      "token/motion": 9,
+      "token/radius": 3,
+      "token/semantics": 22,
+      "token/space": 11,
+      "token/surface": 25,
+      "token/type-scale": 1,
+      "contract/action": 13,
+      "contract/badge": 36,
+      "contract/choice": 10,
+      "contract/control": 40,
+      "contract/environment": 42,
+      "contract/field": 1,
+      "contract/index": 0,
+      "contract/marker": 1,
+      "contract/menu": 11,
+      "contract/overlay": 11,
+      "contract/segment": 2,
+      "contract/selection": 3,
+      "contract/skeleton": 2,
+      "contract/surface": 10,
+      "contract/toggle": 8,
+      "contract/track": 1,
+      "contract/trigger": 9,
+      "contract/widget": 30
+    },
+    "generatedPresetCategories": {
+      "color": 119,
+      "effect": 145,
+      "radius": 21,
+      "size": 36,
+      "spacing": 34,
+      "typography": 4
+    }
+  },
+  "generator": {
+    "path": "apps/figma-plugin/scripts/generate-atom63-preset.ts",
+    "generatedFrom": [
+      "packages/styles/generated/atom63.tokens.json",
+      "apps/figma-plugin/scripts/generate-atom63-preset.ts#compat"
+    ],
+    "sourceMentionsCompatibilityTokens": true
+  },
+  "cssSources": [
+    {
+      "path": "packages/styles/src/tokens/brand.css",
+      "layer": "token",
+      "category": "token/brand",
+      "declarationCount": 82,
+      "uniqueVariableCount": 16
+    },
+    {
+      "path": "packages/styles/src/tokens/font.css",
+      "layer": "token",
+      "category": "token/font",
+      "declarationCount": 5,
+      "uniqueVariableCount": 1
+    },
+    {
+      "path": "packages/styles/src/tokens/foundation/aliases.css",
+      "layer": "token",
+      "category": "token/foundation/aliases",
+      "declarationCount": 24,
+      "uniqueVariableCount": 24
+    },
+    {
+      "path": "packages/styles/src/tokens/foundation/effects.css",
+      "layer": "token",
+      "category": "token/foundation/effects",
+      "declarationCount": 14,
+      "uniqueVariableCount": 14
+    },
+    {
+      "path": "packages/styles/src/tokens/foundation/fonts.css",
+      "layer": "token",
+      "category": "token/foundation/fonts",
+      "declarationCount": 4,
+      "uniqueVariableCount": 4
+    },
+    {
+      "path": "packages/styles/src/tokens/foundation/motion.css",
+      "layer": "token",
+      "category": "token/foundation/motion",
+      "declarationCount": 11,
+      "uniqueVariableCount": 11
+    },
+    {
+      "path": "packages/styles/src/tokens/foundation/palette.css",
+      "layer": "token",
+      "category": "token/foundation/palette",
+      "declarationCount": 242,
+      "uniqueVariableCount": 242
+    },
+    {
+      "path": "packages/styles/src/tokens/foundation/primitives.css",
+      "layer": "token",
+      "category": "token/foundation/primitives",
+      "declarationCount": 416,
+      "uniqueVariableCount": 416
+    },
+    {
+      "path": "packages/styles/src/tokens/foundation/radius.css",
+      "layer": "token",
+      "category": "token/foundation/radius",
+      "declarationCount": 13,
+      "uniqueVariableCount": 13
+    },
+    {
+      "path": "packages/styles/src/tokens/foundation/typography.css",
+      "layer": "token",
+      "category": "token/foundation/typography",
+      "declarationCount": 144,
+      "uniqueVariableCount": 27
+    },
+    {
+      "path": "packages/styles/src/tokens/foundation.css",
+      "layer": "token",
+      "category": "token/foundation",
+      "declarationCount": 0,
+      "uniqueVariableCount": 0
+    },
+    {
+      "path": "packages/styles/src/tokens/index.css",
+      "layer": "token",
+      "category": "token/index",
+      "declarationCount": 0,
+      "uniqueVariableCount": 0
+    },
+    {
+      "path": "packages/styles/src/tokens/motion.css",
+      "layer": "token",
+      "category": "token/motion",
+      "declarationCount": 13,
+      "uniqueVariableCount": 9
+    },
+    {
+      "path": "packages/styles/src/tokens/radius.css",
+      "layer": "token",
+      "category": "token/radius",
+      "declarationCount": 10,
+      "uniqueVariableCount": 3
+    },
+    {
+      "path": "packages/styles/src/tokens/semantics.css",
+      "layer": "token",
+      "category": "token/semantics",
+      "declarationCount": 35,
+      "uniqueVariableCount": 22
+    },
+    {
+      "path": "packages/styles/src/tokens/space.css",
+      "layer": "token",
+      "category": "token/space",
+      "declarationCount": 11,
+      "uniqueVariableCount": 11
+    },
+    {
+      "path": "packages/styles/src/tokens/surface.css",
+      "layer": "token",
+      "category": "token/surface",
+      "declarationCount": 145,
+      "uniqueVariableCount": 25
+    },
+    {
+      "path": "packages/styles/src/tokens/type-scale.css",
+      "layer": "token",
+      "category": "token/type-scale",
+      "declarationCount": 4,
+      "uniqueVariableCount": 1
+    },
+    {
+      "path": "packages/styles/src/contracts/action.css",
+      "layer": "contract",
+      "category": "contract/action",
+      "declarationCount": 13,
+      "uniqueVariableCount": 13
+    },
+    {
+      "path": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "category": "contract/badge",
+      "declarationCount": 54,
+      "uniqueVariableCount": 36
+    },
+    {
+      "path": "packages/styles/src/contracts/choice.css",
+      "layer": "contract",
+      "category": "contract/choice",
+      "declarationCount": 10,
+      "uniqueVariableCount": 10
+    },
+    {
+      "path": "packages/styles/src/contracts/control.css",
+      "layer": "contract",
+      "category": "contract/control",
+      "declarationCount": 40,
+      "uniqueVariableCount": 40
+    },
+    {
+      "path": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "category": "contract/environment",
+      "declarationCount": 67,
+      "uniqueVariableCount": 42
+    },
+    {
+      "path": "packages/styles/src/contracts/field.css",
+      "layer": "contract",
+      "category": "contract/field",
+      "declarationCount": 1,
+      "uniqueVariableCount": 1
+    },
+    {
+      "path": "packages/styles/src/contracts/index.css",
+      "layer": "contract",
+      "category": "contract/index",
+      "declarationCount": 0,
+      "uniqueVariableCount": 0
+    },
+    {
+      "path": "packages/styles/src/contracts/marker.css",
+      "layer": "contract",
+      "category": "contract/marker",
+      "declarationCount": 1,
+      "uniqueVariableCount": 1
+    },
+    {
+      "path": "packages/styles/src/contracts/menu.css",
+      "layer": "contract",
+      "category": "contract/menu",
+      "declarationCount": 13,
+      "uniqueVariableCount": 11
+    },
+    {
+      "path": "packages/styles/src/contracts/overlay.css",
+      "layer": "contract",
+      "category": "contract/overlay",
+      "declarationCount": 11,
+      "uniqueVariableCount": 11
+    },
+    {
+      "path": "packages/styles/src/contracts/segment.css",
+      "layer": "contract",
+      "category": "contract/segment",
+      "declarationCount": 2,
+      "uniqueVariableCount": 2
+    },
+    {
+      "path": "packages/styles/src/contracts/selection.css",
+      "layer": "contract",
+      "category": "contract/selection",
+      "declarationCount": 3,
+      "uniqueVariableCount": 3
+    },
+    {
+      "path": "packages/styles/src/contracts/skeleton.css",
+      "layer": "contract",
+      "category": "contract/skeleton",
+      "declarationCount": 3,
+      "uniqueVariableCount": 2
+    },
+    {
+      "path": "packages/styles/src/contracts/surface.css",
+      "layer": "contract",
+      "category": "contract/surface",
+      "declarationCount": 10,
+      "uniqueVariableCount": 10
+    },
+    {
+      "path": "packages/styles/src/contracts/toggle.css",
+      "layer": "contract",
+      "category": "contract/toggle",
+      "declarationCount": 8,
+      "uniqueVariableCount": 8
+    },
+    {
+      "path": "packages/styles/src/contracts/track.css",
+      "layer": "contract",
+      "category": "contract/track",
+      "declarationCount": 1,
+      "uniqueVariableCount": 1
+    },
+    {
+      "path": "packages/styles/src/contracts/trigger.css",
+      "layer": "contract",
+      "category": "contract/trigger",
+      "declarationCount": 9,
+      "uniqueVariableCount": 9
+    },
+    {
+      "path": "packages/styles/src/contracts/widget.css",
+      "layer": "contract",
+      "category": "contract/widget",
+      "declarationCount": 58,
+      "uniqueVariableCount": 30
+    }
+  ],
+  "cssVariablesWithoutPreset": [
+    {
+      "name": "--a63-action-control-border-width",
+      "sourceFiles": ["packages/styles/src/contracts/action.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-action-control-focus-ring-width",
+      "sourceFiles": ["packages/styles/src/contracts/action.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-action-control-gap",
+      "sourceFiles": ["packages/styles/src/contracts/action.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-action-control-gloss",
+      "sourceFiles": ["packages/styles/src/contracts/action.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-action-control-highlight",
+      "sourceFiles": ["packages/styles/src/contracts/action.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-action-control-press-transform",
+      "sourceFiles": ["packages/styles/src/contracts/action.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-action-control-radius",
+      "sourceFiles": ["packages/styles/src/contracts/action.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-action-control-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/action.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-action-control-shadow-active",
+      "sourceFiles": ["packages/styles/src/contracts/action.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-action-control-shadow-flat",
+      "sourceFiles": ["packages/styles/src/contracts/action.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-action-control-shadow-tint",
+      "sourceFiles": ["packages/styles/src/contracts/action.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-action-control-text-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/action.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-action-disabled-opacity",
+      "sourceFiles": ["packages/styles/src/contracts/action.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-amber-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-amber-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-blue-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-blue-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-cyan-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-cyan-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-emerald-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-emerald-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-fuchsia-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-fuchsia-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-green-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-green-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-indigo-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-indigo-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-lime-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-lime-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-neutral-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-neutral-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-orange-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-orange-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-pink-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-pink-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-purple-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-purple-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-red-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-red-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-rose-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-rose-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-sky-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-sky-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-teal-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-teal-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-violet-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-violet-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-yellow-accent",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-badge-yellow-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/badge.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-choice-border-width",
+      "sourceFiles": ["packages/styles/src/contracts/choice.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-choice-box-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/choice.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-choice-box-shadow-checked",
+      "sourceFiles": ["packages/styles/src/contracts/choice.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-choice-feedback-duration",
+      "sourceFiles": ["packages/styles/src/contracts/choice.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-choice-feedback-ease",
+      "sourceFiles": ["packages/styles/src/contracts/choice.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-choice-focus-ring-width",
+      "sourceFiles": ["packages/styles/src/contracts/choice.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-choice-indicator-gloss",
+      "sourceFiles": ["packages/styles/src/contracts/choice.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-choice-switch-thumb-size",
+      "sourceFiles": ["packages/styles/src/contracts/choice.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-choice-thumb",
+      "sourceFiles": ["packages/styles/src/contracts/choice.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-choice-thumb-fg",
+      "sourceFiles": ["packages/styles/src/contracts/choice.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-border-width",
+      "sourceFiles": ["packages/styles/src/contracts/control.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-feedback-duration",
+      "sourceFiles": ["packages/styles/src/contracts/control.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-feedback-ease",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-focus-ring-color",
+      "sourceFiles": ["packages/styles/src/contracts/control.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-focus-ring-width",
+      "sourceFiles": ["packages/styles/src/contracts/control.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-font-family",
+      "sourceFiles": ["packages/styles/src/contracts/control.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-font-size-lg",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-font-size-md",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-font-size-sm",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-font-size-xl",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-font-size-xs",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-font-weight",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-gap",
+      "sourceFiles": ["packages/styles/src/contracts/control.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-gloss",
+      "sourceFiles": ["packages/styles/src/contracts/control.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-height-lg",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-height-md",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-height-sm",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-height-xl",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-height-xs",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-highlight",
+      "sourceFiles": ["packages/styles/src/contracts/control.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-icon-size-lg",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-icon-size-md",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-icon-size-sm",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-icon-size-xl",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-icon-size-xs",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-min-size",
+      "sourceFiles": ["packages/styles/src/contracts/environment.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-min-size-lg",
+      "sourceFiles": ["packages/styles/src/contracts/environment.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-min-size-xl",
+      "sourceFiles": ["packages/styles/src/contracts/environment.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-min-target",
+      "sourceFiles": ["packages/styles/src/contracts/environment.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-min-target-lg",
+      "sourceFiles": ["packages/styles/src/contracts/environment.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-min-target-xl",
+      "sourceFiles": ["packages/styles/src/contracts/environment.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-padding-inline-lg",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-padding-inline-md",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-padding-inline-sm",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-padding-inline-xl",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-padding-inline-xs",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-press-transform",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-radius",
+      "sourceFiles": ["packages/styles/src/contracts/control.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/control.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-shadow-active",
+      "sourceFiles": ["packages/styles/src/contracts/control.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-shadow-flat",
+      "sourceFiles": ["packages/styles/src/contracts/control.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-shadow-tint",
+      "sourceFiles": ["packages/styles/src/contracts/control.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-control-text-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/control.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-density-scale",
+      "sourceFiles": ["packages/styles/src/contracts/environment.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-editable-font-size-min",
+      "sourceFiles": ["packages/styles/src/contracts/environment.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-field-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/field.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-font-app",
+      "sourceFiles": ["packages/styles/src/tokens/font.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-marker-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/marker.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-menu-disabled-opacity",
+      "sourceFiles": ["packages/styles/src/contracts/menu.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-menu-gap",
+      "sourceFiles": ["packages/styles/src/contracts/menu.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-menu-highlight-gloss",
+      "sourceFiles": ["packages/styles/src/contracts/menu.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-menu-highlight-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/menu.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-menu-item-font-size",
+      "sourceFiles": ["packages/styles/src/contracts/menu.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-menu-item-gap",
+      "sourceFiles": ["packages/styles/src/contracts/menu.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-menu-item-inset",
+      "sourceFiles": ["packages/styles/src/contracts/menu.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-menu-item-padding-block",
+      "sourceFiles": ["packages/styles/src/contracts/menu.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-menu-item-padding-inline",
+      "sourceFiles": ["packages/styles/src/contracts/menu.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-menu-item-radius",
+      "sourceFiles": ["packages/styles/src/contracts/menu.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-menu-popup-padding",
+      "sourceFiles": ["packages/styles/src/contracts/menu.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-motion-control-feedback-duration",
+      "sourceFiles": ["packages/styles/src/tokens/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-motion-duration-fast",
+      "sourceFiles": ["packages/styles/src/tokens/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-motion-duration-overlay",
+      "sourceFiles": ["packages/styles/src/tokens/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-motion-duration-swipe-dismiss",
+      "sourceFiles": ["packages/styles/src/tokens/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-motion-ease-emphasized",
+      "sourceFiles": ["packages/styles/src/tokens/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-motion-ease-overlay",
+      "sourceFiles": ["packages/styles/src/tokens/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-motion-ease-scrim",
+      "sourceFiles": ["packages/styles/src/tokens/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-motion-ease-standard",
+      "sourceFiles": ["packages/styles/src/tokens/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-motion-skeleton-shimmer-duration",
+      "sourceFiles": ["packages/styles/src/tokens/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-overlay-backdrop",
+      "sourceFiles": ["packages/styles/src/contracts/overlay.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-overlay-border-style",
+      "sourceFiles": ["packages/styles/src/contracts/overlay.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-overlay-border-width",
+      "sourceFiles": ["packages/styles/src/contracts/overlay.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-overlay-drag-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/overlay.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-overlay-gloss",
+      "sourceFiles": ["packages/styles/src/contracts/overlay.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-overlay-highlight",
+      "sourceFiles": ["packages/styles/src/contracts/overlay.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-overlay-highlight-opacity",
+      "sourceFiles": ["packages/styles/src/contracts/overlay.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-overlay-inner-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/overlay.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-overlay-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/overlay.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-overlay-texture-blend",
+      "sourceFiles": ["packages/styles/src/contracts/overlay.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-overlay-texture-image",
+      "sourceFiles": ["packages/styles/src/contracts/overlay.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-row-min-size",
+      "sourceFiles": ["packages/styles/src/contracts/environment.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-row-padding-block-md",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-row-padding-block-sm",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-row-padding-block-xs",
+      "sourceFiles": [
+        "packages/styles/src/contracts/control.css",
+        "packages/styles/src/contracts/environment.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-safe-area-bottom",
+      "sourceFiles": ["packages/styles/src/contracts/environment.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-safe-area-left",
+      "sourceFiles": ["packages/styles/src/contracts/environment.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-safe-area-right",
+      "sourceFiles": ["packages/styles/src/contracts/environment.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-safe-area-top",
+      "sourceFiles": ["packages/styles/src/contracts/environment.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-segment-border-width",
+      "sourceFiles": ["packages/styles/src/contracts/segment.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-segment-gap",
+      "sourceFiles": ["packages/styles/src/contracts/segment.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-selection-thumb",
+      "sourceFiles": ["packages/styles/src/contracts/selection.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-selection-thumb-fg",
+      "sourceFiles": ["packages/styles/src/contracts/selection.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-skeleton-base",
+      "sourceFiles": ["packages/styles/src/contracts/skeleton.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-skeleton-highlight",
+      "sourceFiles": ["packages/styles/src/contracts/skeleton.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-space-0_5",
+      "sourceFiles": ["packages/styles/src/tokens/space.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-space-1",
+      "sourceFiles": ["packages/styles/src/tokens/space.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-space-1_5",
+      "sourceFiles": ["packages/styles/src/tokens/space.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-space-2",
+      "sourceFiles": ["packages/styles/src/tokens/space.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-space-2_5",
+      "sourceFiles": ["packages/styles/src/tokens/space.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-space-3",
+      "sourceFiles": ["packages/styles/src/tokens/space.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-space-3_5",
+      "sourceFiles": ["packages/styles/src/tokens/space.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-space-4",
+      "sourceFiles": ["packages/styles/src/tokens/space.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-space-5",
+      "sourceFiles": ["packages/styles/src/tokens/space.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-space-6",
+      "sourceFiles": ["packages/styles/src/tokens/space.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--a63-space-unit",
+      "sourceFiles": [
+        "packages/styles/src/contracts/environment.css",
+        "packages/styles/src/tokens/space.css"
+      ],
+      "layers": ["contract", "token"]
+    },
+    {
+      "name": "--a63-surface-backdrop",
+      "sourceFiles": ["packages/styles/src/contracts/surface.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-surface-border-style",
+      "sourceFiles": ["packages/styles/src/contracts/surface.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-surface-border-width",
+      "sourceFiles": ["packages/styles/src/contracts/surface.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-surface-gloss",
+      "sourceFiles": ["packages/styles/src/contracts/surface.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-surface-highlight",
+      "sourceFiles": ["packages/styles/src/contracts/surface.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-surface-highlight-opacity",
+      "sourceFiles": ["packages/styles/src/contracts/surface.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-surface-inner-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/surface.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-surface-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/surface.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-surface-texture-blend",
+      "sourceFiles": ["packages/styles/src/contracts/surface.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-surface-texture-image",
+      "sourceFiles": ["packages/styles/src/contracts/surface.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-switch-thumb-size",
+      "sourceFiles": [
+        "packages/styles/src/contracts/environment.css",
+        "packages/styles/src/contracts/selection.css"
+      ],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-toggle-border-width",
+      "sourceFiles": ["packages/styles/src/contracts/toggle.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-toggle-disabled-opacity",
+      "sourceFiles": ["packages/styles/src/contracts/toggle.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-toggle-gap",
+      "sourceFiles": ["packages/styles/src/contracts/toggle.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-toggle-group-gap",
+      "sourceFiles": ["packages/styles/src/contracts/toggle.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-toggle-radius",
+      "sourceFiles": ["packages/styles/src/contracts/toggle.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-toggle-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/toggle.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-toggle-shadow-active",
+      "sourceFiles": ["packages/styles/src/contracts/toggle.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-toggle-text-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/toggle.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-track-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/track.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-trigger-border-width",
+      "sourceFiles": ["packages/styles/src/contracts/trigger.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-trigger-feedback-duration",
+      "sourceFiles": ["packages/styles/src/contracts/trigger.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-trigger-feedback-ease",
+      "sourceFiles": ["packages/styles/src/contracts/trigger.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-trigger-focus-ring-width",
+      "sourceFiles": ["packages/styles/src/contracts/trigger.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-trigger-gap",
+      "sourceFiles": ["packages/styles/src/contracts/trigger.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-trigger-indicator-size",
+      "sourceFiles": ["packages/styles/src/contracts/trigger.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-trigger-open-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/trigger.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-trigger-radius",
+      "sourceFiles": ["packages/styles/src/contracts/trigger.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-trigger-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/trigger.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-viewport-height",
+      "sourceFiles": ["packages/styles/src/contracts/environment.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-weather-backdrop",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-weather-background-blend",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-weather-background-color",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-weather-border-color",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-weather-condition-background-image",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-weather-condition-color-strength",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-weather-condition-end",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-weather-condition-mode-color",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-weather-condition-start",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-weather-divider-color",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-weather-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-weather-muted-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-weather-text-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-widget-backdrop",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-widget-background-blend",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-widget-background-color",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-widget-background-image",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-widget-border-color",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-widget-border-style",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-widget-border-width",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-widget-foreground",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-widget-media-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-widget-media-shadow-raised",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-widget-radius",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-widget-rim-backdrop",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-widget-rim-border-color",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-widget-rim-color",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-widget-rim-image",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-widget-rim-width",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--a63-widget-shadow",
+      "sourceFiles": ["packages/styles/src/contracts/widget.css"],
+      "layers": ["contract"]
+    },
+    {
+      "name": "--blur-2xl",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/effects.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--blur-3xl",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/effects.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--blur-lg",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/effects.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--blur-md",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/effects.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--blur-sm",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/effects.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--blur-xl",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/effects.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--blur-xs",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/effects.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-amber-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-amber-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-amber-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-amber-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-amber-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-amber-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-amber-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-amber-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-amber-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-amber-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-amber-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b1-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b1-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b1-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b1-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b1-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b1-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b1-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b1-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b1-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b1-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b1-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b2-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b2-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b2-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b2-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b2-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b2-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b2-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b2-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b2-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b2-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b2-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b3-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b3-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b3-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b3-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b3-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b3-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b3-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b3-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b3-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b3-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b3-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b4-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b4-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b4-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b4-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b4-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b4-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b4-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b4-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b4-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b4-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b4-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b5-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b5-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b5-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b5-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b5-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b5-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b5-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b5-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b5-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b5-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b5-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b6-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b6-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b6-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b6-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b6-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b6-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b6-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b6-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b6-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b6-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-b6-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-black-0",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-black-10",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-black-20",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-black-30",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-black-40",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-black-5",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-black-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-black-60",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-black-70",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-black-80",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-black-90",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-blue-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-blue-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-blue-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-blue-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-blue-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-blue-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-blue-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-blue-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-blue-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-blue-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-blue-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-cyan-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-cyan-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-cyan-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-cyan-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-cyan-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-cyan-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-cyan-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-cyan-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-cyan-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-cyan-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-cyan-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-danger-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-danger-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-danger-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-danger-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-danger-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-danger-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-danger-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-danger-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-danger-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-danger-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-danger-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-emerald-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-emerald-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-emerald-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-emerald-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-emerald-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-emerald-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-emerald-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-emerald-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-emerald-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-emerald-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-emerald-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-fuchsia-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-fuchsia-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-fuchsia-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-fuchsia-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-fuchsia-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-fuchsia-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-fuchsia-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-fuchsia-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-fuchsia-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-fuchsia-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-fuchsia-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-gray-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-gray-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-gray-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-gray-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-gray-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-gray-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-gray-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-gray-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-gray-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-gray-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-gray-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-green-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-green-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-green-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-green-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-green-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-green-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-green-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-green-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-green-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-green-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-green-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-indigo-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-indigo-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-indigo-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-indigo-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-indigo-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-indigo-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-indigo-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-indigo-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-indigo-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-indigo-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-indigo-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-info-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-info-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-info-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-info-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-info-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-info-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-info-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-info-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-info-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-info-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-info-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-lime-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-lime-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-lime-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-lime-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-lime-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-lime-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-lime-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-lime-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-lime-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-lime-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-lime-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-dark-1",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-dark-10",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-dark-11",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-dark-12",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-dark-2",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-dark-3",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-dark-4",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-dark-5",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-dark-6",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-dark-7",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-dark-8",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-dark-9",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-light-1",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-light-10",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-light-11",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-light-12",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-light-2",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-light-3",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-light-4",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-light-5",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-light-6",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-light-7",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-light-8",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n1-light-9",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-dark-1",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-dark-10",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-dark-11",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-dark-12",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-dark-2",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-dark-3",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-dark-4",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-dark-5",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-dark-6",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-dark-7",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-dark-8",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-dark-9",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-light-1",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-light-10",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-light-11",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-light-12",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-light-2",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-light-3",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-light-4",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-light-5",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-light-6",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-light-7",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-light-8",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n2-light-9",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-dark-1",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-dark-10",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-dark-11",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-dark-12",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-dark-2",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-dark-3",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-dark-4",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-dark-5",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-dark-6",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-dark-7",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-dark-8",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-dark-9",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-light-1",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-light-10",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-light-11",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-light-12",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-light-2",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-light-3",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-light-4",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-light-5",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-light-6",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-light-7",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-light-8",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n3-light-9",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-dark-1",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-dark-10",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-dark-11",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-dark-12",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-dark-2",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-dark-3",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-dark-4",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-dark-5",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-dark-6",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-dark-7",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-dark-8",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-dark-9",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-light-1",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-light-10",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-light-11",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-light-12",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-light-2",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-light-3",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-light-4",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-light-5",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-light-6",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-light-7",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-light-8",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n4-light-9",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-dark-1",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-dark-10",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-dark-11",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-dark-12",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-dark-2",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-dark-3",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-dark-4",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-dark-5",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-dark-6",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-dark-7",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-dark-8",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-dark-9",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-light-1",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-light-10",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-light-11",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-light-12",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-light-2",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-light-3",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-light-4",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-light-5",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-light-6",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-light-7",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-light-8",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n5-light-9",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-dark-1",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-dark-10",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-dark-11",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-dark-12",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-dark-2",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-dark-3",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-dark-4",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-dark-5",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-dark-6",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-dark-7",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-dark-8",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-dark-9",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-light-1",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-light-10",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-light-11",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-light-12",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-light-2",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-light-3",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-light-4",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-light-5",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-light-6",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-light-7",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-light-8",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-n6-light-9",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-neutral-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-neutral-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-neutral-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-neutral-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-neutral-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-neutral-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-neutral-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-neutral-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-neutral-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-neutral-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-neutral-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-orange-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-orange-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-orange-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-orange-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-orange-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-orange-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-orange-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-orange-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-orange-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-orange-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-orange-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-pink-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-pink-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-pink-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-pink-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-pink-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-pink-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-pink-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-pink-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-pink-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-pink-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-pink-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-purple-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-purple-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-purple-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-purple-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-purple-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-purple-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-purple-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-purple-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-purple-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-purple-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-purple-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-red-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-red-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-red-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-red-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-red-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-red-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-red-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-red-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-red-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-red-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-red-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-rose-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-rose-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-rose-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-rose-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-rose-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-rose-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-rose-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-rose-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-rose-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-rose-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-rose-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-sky-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-sky-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-sky-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-sky-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-sky-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-sky-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-sky-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-sky-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-sky-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-sky-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-sky-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-slate-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-slate-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-slate-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-slate-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-slate-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-slate-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-slate-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-slate-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-slate-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-slate-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-slate-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-stone-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-stone-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-stone-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-stone-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-stone-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-stone-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-stone-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-stone-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-stone-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-stone-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-stone-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-success-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-success-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-success-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-success-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-success-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-success-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-success-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-success-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-success-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-success-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-success-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-teal-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-teal-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-teal-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-teal-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-teal-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-teal-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-teal-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-teal-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-teal-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-teal-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-teal-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-violet-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-violet-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-violet-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-violet-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-violet-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-violet-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-violet-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-violet-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-violet-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-violet-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-violet-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-warning-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-warning-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-warning-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-warning-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-warning-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-warning-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-warning-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-warning-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-warning-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-warning-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-warning-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-white-0",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-white-10",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-white-20",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-white-30",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-white-40",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-white-5",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-white-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-white-60",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-white-70",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-white-80",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-white-90",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-yellow-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-yellow-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-yellow-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-yellow-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-yellow-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-yellow-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-yellow-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-yellow-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-yellow-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-yellow-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-yellow-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-zinc-100",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-zinc-200",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-zinc-300",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-zinc-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-zinc-50",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-zinc-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-zinc-600",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-zinc-700",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-zinc-800",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-zinc-900",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--color-zinc-950",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/palette.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--container-2xl",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--container-2xs",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--container-3xl",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--container-3xs",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--container-4xl",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--container-5xl",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--container-6xl",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--container-7xl",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--container-lg",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--container-md",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--container-sm",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--container-xl",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--container-xs",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--corner-radius",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/radius.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-1000",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-150",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-1500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-167",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-250",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-333",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-400",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-450",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-500",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-667",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-83",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-fast",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-instant",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-none",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-normal",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-overlay",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-slow",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-slower",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--duration-swipe-dismiss",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--ease-emphasized",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--ease-fast",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--ease-inout",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--ease-linear",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--ease-overlay",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--ease-pointtopoint",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--ease-scrim",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--ease-soft",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--ease-spring",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--ease-standard",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/motion.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--effect-shadow-2xl",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/effects.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--effect-shadow-2xs",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/effects.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--effect-shadow-lg",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/effects.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--effect-shadow-md",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/effects.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--effect-shadow-sm",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/effects.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--effect-shadow-xl",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/effects.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--effect-shadow-xs",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/effects.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--font-family-mono",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/fonts.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--font-family-pixel",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/fonts.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--font-family-sans",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/fonts.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--font-family-serif",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/fonts.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--radius",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/radius.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--radius-2xl",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/radius.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--radius-2xs",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/radius.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--radius-3xl",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/radius.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--radius-4xl",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/radius.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--radius-full",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/radius.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--radius-lg",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/radius.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--radius-md",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/radius.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--radius-sm",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/radius.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--radius-xl",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/radius.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--radius-xs",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/radius.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--rounded-default",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--screen-ipad-pro-11",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--screen-iphone-16-pro",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--screen-macbook-air",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--screen-macbook-pro-16",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-2xl-font-size",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-2xl-line-height",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-3xl-font-size",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-3xl-line-height",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-4xl-font-size",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-4xl-line-height",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-5xl-font-size",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-5xl-line-height",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-6xl-font-size",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-6xl-line-height",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-7xl-font-size",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-7xl-line-height",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-8xl-font-size",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-8xl-line-height",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-9xl-font-size",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-9xl-line-height",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-base-font-size",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-base-line-height",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-lg-font-size",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-lg-line-height",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-sm-font-size",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-sm-line-height",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-xl-font-size",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-xl-line-height",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-xs-font-size",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--typography-xs-line-height",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/typography.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-base",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-below",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-boot",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-default",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-dock",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-drawer",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-flyout",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-header",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-launcher",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-lock",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-menu",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-modal",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-overlay",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-overview-backdrop",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-overview-label",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-overview-window",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-popover",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-raised",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-scrim",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-snap-preview",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-sticky",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-switcher",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-toast",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-tooltip",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-window",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-window-ceiling",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    },
+    {
+      "name": "--z-layer-window-overlay",
+      "sourceFiles": ["packages/styles/src/tokens/foundation/primitives.css"],
+      "layers": ["token"]
+    }
+  ],
+  "presetEntriesWithoutCssDeclaration": [
+    {
+      "category": "size",
+      "cssName": "--size-2_5",
+      "figmaName": "size/2_5",
+      "sourceFile": "apps/figma-plugin/scripts/generate-atom63-preset.ts#compat"
+    },
+    {
+      "category": "size",
+      "cssName": "--size-3_5",
+      "figmaName": "size/3_5",
+      "sourceFile": "apps/figma-plugin/scripts/generate-atom63-preset.ts#compat"
+    },
+    {
+      "category": "size",
+      "cssName": "--size-45",
+      "figmaName": "size/45",
+      "sourceFile": "apps/figma-plugin/scripts/generate-atom63-preset.ts#compat"
+    },
+    {
+      "category": "size",
+      "cssName": "--size-50",
+      "figmaName": "size/50",
+      "sourceFile": "apps/figma-plugin/scripts/generate-atom63-preset.ts#compat"
+    },
+    {
+      "category": "size",
+      "cssName": "--size-px",
+      "figmaName": "size/px",
+      "sourceFile": "apps/figma-plugin/scripts/generate-atom63-preset.ts#compat"
+    },
+    {
+      "category": "size",
+      "cssName": "--size-switch/default/height",
+      "figmaName": "size/switch/default/height",
+      "sourceFile": "apps/figma-plugin/scripts/generate-atom63-preset.ts#compat"
+    }
+  ],
+  "presetEntriesWithoutSourceFiles": [],
+  "capabilities": {
+    "import": {
+      "present": true,
+      "evidence": [
+        "apps/figma-plugin/src/handlers/import-handler.ts#createVariablesFromTokens",
+        "apps/figma-plugin/src/handlers/import-handler.ts#importStylesFromTokens"
+      ]
+    },
+    "export": {
+      "present": true,
+      "evidence": [
+        "apps/figma-plugin/src/handlers/export-handler.ts#exportVariablesAsTokens",
+        "apps/figma-plugin/src/handlers/export-handler.ts#exportStylesAsTokens"
+      ]
+    },
+    "styleguide": {
+      "present": true,
+      "evidence": [
+        "apps/figma-plugin/src/pages/StyleguidePage.tsx#StyleguidePage",
+        "apps/figma-plugin/src/handlers/component-generator.ts#generateComponentPrimitives"
+      ]
+    },
+    "componentGeneration": {
+      "present": true,
+      "evidence": [
+        "apps/figma-plugin/src/handlers/component-generator.ts#generateComponentPrimitives"
+      ]
+    },
+    "rebind": {
+      "present": true,
+      "evidence": [
+        "apps/figma-plugin/src/code.ts#scan-rebind",
+        "apps/figma-plugin/src/code.ts#apply-rebind",
+        "apps/figma-plugin/src/libraries/rebind-matching.ts"
+      ]
+    }
+  },
+  "componentGeneratorHardcodedFallbacks": [
+    {
+      "kind": "color",
+      "name": "border",
+      "value": "{ r: 0.82, g: 0.84, b: 0.88 }",
+      "line": 205,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "color",
+      "name": "card",
+      "value": "{ r: 1, g: 1, b: 1 }",
+      "line": 206,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "color",
+      "name": "destructive",
+      "value": "{ r: 0.86, g: 0.15, b: 0.15 }",
+      "line": 207,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "color",
+      "name": "muted",
+      "value": "{ r: 0.95, g: 0.96, b: 0.98 }",
+      "line": 208,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "color",
+      "name": "primary",
+      "value": "{ r: 0.16, g: 0.37, b: 0.91 }",
+      "line": 209,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "color",
+      "name": "primaryForeground",
+      "value": "{ r: 1, g: 1, b: 1 }",
+      "line": 210,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "color",
+      "name": "secondary",
+      "value": "{ r: 0.95, g: 0.96, b: 0.98 }",
+      "line": 211,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "color",
+      "name": "secondaryForeground",
+      "value": "{ r: 0.08, g: 0.09, b: 0.11 }",
+      "line": 212,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "color",
+      "name": "text",
+      "value": "{ r: 0.08, g: 0.09, b: 0.11 }",
+      "line": 213,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "baseline-variable",
+      "name": "size/px",
+      "value": "1",
+      "line": 217,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "baseline-variable",
+      "name": "size/2_5",
+      "value": "10",
+      "line": 218,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "baseline-variable",
+      "name": "size/3_5",
+      "value": "14",
+      "line": 219,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "baseline-variable",
+      "name": "size/45",
+      "value": "180",
+      "line": 220,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "baseline-variable",
+      "name": "size/50",
+      "value": "200",
+      "line": 221,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "baseline-variable",
+      "name": "size/switch/default/height",
+      "value": "18.4",
+      "line": 222,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "baseline-variable",
+      "name": "spacing/0_5",
+      "value": "2",
+      "line": 223,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "baseline-variable",
+      "name": "spacing/1_5",
+      "value": "6",
+      "line": 224,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "baseline-variable",
+      "name": "spacing/2_5",
+      "value": "10",
+      "line": 225,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "baseline-variable",
+      "name": "rounded/none",
+      "value": "0",
+      "line": 226,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "baseline-variable",
+      "name": "rounded/sm",
+      "value": "6",
+      "line": 227,
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "'Inter'",
+      "line": 1553,
+      "expression": "family: options.fontFamily ?? 'Inter',",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "'Regular'",
+      "line": 1554,
+      "expression": "style: options.fontWeight ?? 'Regular',",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "14",
+      "line": 1569,
+      "expression": "node.fontSize = options.fontSize ?? 14",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "'Inter'",
+      "line": 1585,
+      "expression": "fallbackFamily: options.fontFamily ?? 'Inter',",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "'Regular'",
+      "line": 1586,
+      "expression": "fallbackStyle: options.fontWeight ?? 'Regular',",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "8",
+      "line": 1682,
+      "expression": "node.itemSpacing = options.gap ?? 8",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "240",
+      "line": 2543,
+      "expression": "node.resize(inputSpec.dimensions?.width?.value ?? 240, inputSpec.dimensions?.height?.value ?? 36)",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "36",
+      "line": 2543,
+      "expression": "node.resize(inputSpec.dimensions?.width?.value ?? 240, inputSpec.dimensions?.height?.value ?? 36)",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "240",
+      "line": 2611,
+      "expression": "node.resize(inputSpec.dimensions?.width?.value ?? 240, inputSpec.dimensions?.height?.value ?? 36)",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "36",
+      "line": 2611,
+      "expression": "node.resize(inputSpec.dimensions?.width?.value ?? 240, inputSpec.dimensions?.height?.value ?? 36)",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "288",
+      "line": 2667,
+      "expression": "const width = cardSpec.dimensions?.width?.value ?? 288",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "16",
+      "line": 2719,
+      "expression": "fontSize: titleSpec.fontSize?.value ?? 16,",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "24",
+      "line": 2723,
+      "expression": "lineHeight: titleSpec.lineHeight?.value ?? 24,",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "320",
+      "line": 2764,
+      "expression": "const width = alertSpec.dimensions?.width?.value ?? 320",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "320",
+      "line": 2869,
+      "expression": "const width = aspectRatioSpec.dimensions?.width?.value ?? 320",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "180",
+      "line": 2870,
+      "expression": "const height = aspectRatioSpec.dimensions?.height?.value ?? 180",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "320",
+      "line": 3095,
+      "expression": "const width = emptySpec.dimensions?.width?.value ?? 320",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "320",
+      "line": 3180,
+      "expression": "const width = markerSpec.dimensions?.width?.value ?? 320",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "320",
+      "line": 3330,
+      "expression": "const width = itemSpec.dimensions?.width?.value ?? 320",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "240",
+      "line": 3448,
+      "expression": "const width = nativeSelectSpec.dimensions?.width?.value ?? 240",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "8",
+      "line": 3465,
+      "expression": "fallback: sizeSpec.radius?.value ?? 8,",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "240",
+      "line": 3531,
+      "expression": "const width = sliderSpec.dimensions?.width?.value ?? 240",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "4",
+      "line": 3532,
+      "expression": "const trackHeight = sliderSpec.dimensions?.height?.value ?? 4",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "96",
+      "line": 3533,
+      "expression": "const rangeWidth = sliderSpec.dimensions?.indicatorWidth?.value ?? 96",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "12",
+      "line": 3534,
+      "expression": "const thumbSize = sizeSpec.thumbSize?.value ?? 12",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "320",
+      "line": 3809,
+      "expression": "const width = fieldSpec.dimensions?.width?.value ?? 320",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "320",
+      "line": 3898,
+      "expression": "const width = inputGroupSpec.dimensions?.width?.value ?? 320",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "320",
+      "line": 4169,
+      "expression": "const width = tabsSpec.dimensions?.width?.value ?? 320",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "240",
+      "line": 4506,
+      "expression": "const width = textareaSpec.dimensions?.width?.value ?? 240",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "8",
+      "line": 4651,
+      "expression": "const indicatorSize = radioGroupSpec.dimensions?.indicatorSize?.value ?? 8",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "2",
+      "line": 4739,
+      "expression": "const checkedInset = sizeSpec.checkedInset?.value ?? 2",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "8",
+      "line": 4840,
+      "expression": "const radiusFallback = sizeSpec.radius?.value ?? 8",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "160",
+      "line": 4936,
+      "expression": "isHorizontal ? (separatorSpec.dimensions?.width?.value ?? 160) : 1,",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "40",
+      "line": 4937,
+      "expression": "isHorizontal ? 1 : (separatorSpec.dimensions?.height?.value ?? 40)",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "160",
+      "line": 4972,
+      "expression": "skeletonSpec.dimensions?.width?.value ?? 160,",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "20",
+      "line": 4973,
+      "expression": "skeletonSpec.dimensions?.height?.value ?? 20",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "160",
+      "line": 5000,
+      "expression": "const width = progressSpec.dimensions?.width?.value ?? 160",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "384",
+      "line": 5251,
+      "expression": "const width = tableSpec.dimensions?.width?.value ?? 384",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "240",
+      "line": 5419,
+      "expression": "const width = scrollAreaSpec.dimensions?.width?.value ?? 240",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "160",
+      "line": 5420,
+      "expression": "const height = scrollAreaSpec.dimensions?.height?.value ?? 160",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "10",
+      "line": 5421,
+      "expression": "const barSize = scrollAreaSpec.dimensions?.indicatorSize?.value ?? 10",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "384",
+      "line": 5529,
+      "expression": "const width = toastSpec.dimensions?.width?.value ?? 384",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    },
+    {
+      "kind": "inline-literal",
+      "value": "240",
+      "line": 5822,
+      "expression": "const width = selectSpec.dimensions?.width?.value ?? 240",
+      "sourceFile": "apps/figma-plugin/src/handlers/component-generator.ts"
+    }
+  ]
+}

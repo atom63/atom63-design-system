@@ -1,0 +1,67 @@
+/*
+ * Menubar recipe — a horizontal bar of menu buttons (Base UI Menubar). The bar
+ * is the page surface (prod bg-background → --a63-surface-page); each trigger is a
+ * compact button that highlights on hover/open with the muted fill (prod
+ * hover:bg-muted / data-open:bg-muted → --a63-surface-muted). The popup, item,
+ * sub-menu, separator, label and shortcut chrome is inherited from the
+ * DropdownMenu recipe (a63-DropdownMenu-*), so only the bar shell + trigger are
+ * declared here. No new --a63-* tokens.
+ */
+
+.a63-Menubar {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: stretch;
+  gap: var(--a63-space-0_5);
+  width: fit-content;
+  max-width: 100%;
+  min-height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+  padding: var(--a63-space-0_5);
+  border: var(--a63-control-border-width) solid var(--a63-border-subtle);
+  border-radius: var(--a63-surface-radius, var(--radius-lg));
+  background: var(--a63-surface-page);
+  font-family: var(--a63-control-font-family);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+  touch-action: pan-x;
+}
+.a63-Menubar::-webkit-scrollbar {
+  display: none;
+}
+
+.a63-Menubar-trigger {
+  display: flex;
+  align-items: center;
+  padding: var(--a63-space-1) var(--a63-space-2);
+  border-radius: var(--a63-control-radius);
+  color: var(--a63-text-primary);
+  font-size: var(--a63-control-font-size-sm);
+  font-weight: var(--a63-control-font-weight);
+  line-height: 1.2;
+  white-space: nowrap;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  cursor: default;
+  user-select: none;
+  outline: none;
+  transition: background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-Menubar-trigger[data-popup-open] {
+  background: var(--a63-surface-muted);
+}
+@media (hover: hover) {
+  .a63-Menubar-trigger:hover {
+    background: var(--a63-surface-muted);
+  }
+}
+
+.a63-Menubar-trigger:focus-visible {
+  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+}

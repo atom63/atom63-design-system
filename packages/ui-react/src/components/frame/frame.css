@@ -1,0 +1,115 @@
+/*
+ * Frame recipe — OS-style window/flyout chrome, the SURFACE archetype's
+ * container consumer. Faithful port of prod @atom63/ui frame.tsx: an outer tray
+ * wrapping inner panels, with a shared border weight. Prod's Tailwind surfaces
+ * map onto the a63 semantic surfaces:
+ *   muted → --a63-surface-muted,  card → --a63-surface-panel,
+ *   background → --a63-surface-page
+ * The flush/lift/bevel treatment reads the --a63-surface-shadow lever; radius,
+ * border and text resolve from semantics at the use-site. No new tokens.
+ */
+
+.a63-Frame {
+  --a63-frame-radius: var(--radius-2xl);
+  --a63-frame-pad: 0.25rem;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--a63-frame-pad);
+  /* prod frame ring is a skin lever: a retro/terminal skin can restyle it
+   * (e.g. double/outset borders) via --a63-frame-border-style/-width; fall
+   * back to a plain control-width solid ring when unset. */
+  border-width: var(--a63-frame-border-width, var(--a63-control-border-width));
+  border-style: var(--a63-frame-border-style, solid);
+  border-color: transparent;
+  border-radius: var(--a63-surface-radius, var(--a63-frame-radius));
+  background-image: var(--a63-surface-gloss), var(--a63-surface-texture-image);
+  background-blend-mode: normal, var(--a63-surface-texture-blend);
+  backdrop-filter: var(--a63-surface-backdrop);
+  box-shadow: var(--a63-surface-inner-shadow, none), var(--a63-surface-shadow);
+  color: var(--a63-text-primary);
+}
+
+/* Sibling panels get a gap between them (prod adjacent-panel margin). */
+.a63-Frame > .a63-Frame-panel + .a63-Frame-panel {
+  margin-top: var(--a63-frame-pad);
+}
+
+/* ── Tray surfaces ─────────────────────────────────────────────────────── */
+.a63-Frame[data-frame-tray='muted'] {
+  background-color: var(--a63-surface-muted);
+}
+.a63-Frame[data-frame-tray='card'] {
+  background-color: var(--a63-surface-panel);
+}
+.a63-Frame[data-frame-tray='background'] {
+  background-color: var(--a63-surface-page);
+}
+
+/* ── Inner panel ───────────────────────────────────────────────────────── */
+/* Inner radius = outer − tray padding, for concentric corners (prod calc). */
+.a63-Frame-panel {
+  position: relative;
+  padding: var(--a63-space-5);
+  /* Same skin lever as the tray ring (see .a63-Frame). */
+  border-width: var(--a63-frame-border-width, var(--a63-control-border-width));
+  border-style: var(--a63-frame-border-style, solid);
+  border-color: transparent;
+  border-radius: calc(var(--a63-surface-radius, var(--radius-2xl)) - var(--a63-frame-pad));
+  background-clip: padding-box;
+  background-image: var(--a63-surface-gloss), var(--a63-surface-texture-image);
+  background-blend-mode: normal, var(--a63-surface-texture-blend);
+  backdrop-filter: var(--a63-surface-backdrop);
+  box-shadow: var(--a63-surface-inner-shadow, none), var(--a63-surface-shadow);
+  color: var(--a63-text-primary);
+}
+.a63-Frame-panel[data-frame-surface='background'] {
+  background-color: var(--a63-surface-page);
+}
+.a63-Frame-panel[data-frame-surface='card'] {
+  background-color: var(--a63-surface-panel);
+}
+.a63-Frame-panel[data-frame-surface='muted'] {
+  background-color: var(--a63-surface-muted);
+}
+
+/* ── Border weight (Frame-level, inherited by panels) ──────────────────── */
+/* off = no ring; subtle = faint hairline; strong = full control border.
+ * Only the ring COLOR varies by weight here — its style/width come from the
+ * --a63-frame-border-style/-width skin lever set on .a63-Frame / -panel. */
+.a63-Frame[data-frame-border='off'],
+.a63-Frame-panel[data-frame-border='off'] {
+  border-color: transparent;
+}
+.a63-Frame[data-frame-border='subtle'],
+.a63-Frame-panel[data-frame-border='subtle'] {
+  /* prod: border-border/20 */
+  border-color: color-mix(in oklch, var(--a63-border-subtle) 20%, transparent);
+}
+.a63-Frame[data-frame-border='strong'],
+.a63-Frame-panel[data-frame-border='strong'] {
+  border-color: var(--a63-border-subtle);
+}
+
+/* ── Panel sub-parts (header / title / description / footer) ────────────── */
+.a63-Frame-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-1);
+  padding: var(--a63-space-4) var(--a63-space-5);
+}
+.a63-Frame-title {
+  font-weight: 600;
+  font-size: var(--a63-control-font-size-sm);
+  color: var(--a63-text-primary);
+  line-height: var(--typography-sm-line-height);
+}
+.a63-Frame-description {
+  font-size: var(--a63-control-font-size-sm);
+  color: var(--a63-text-secondary);
+  line-height: var(--typography-sm-line-height);
+}
+.a63-Frame-footer {
+  padding: var(--a63-space-4) var(--a63-space-5);
+}

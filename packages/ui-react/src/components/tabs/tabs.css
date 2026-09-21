@@ -1,0 +1,416 @@
+/*
+ * Tabs recipe — a single-select tab set with a sliding active indicator
+ * (Base UI Tabs), faithful to prod @atom63/ui. Three variants:
+ *   default  — a recessed pill TRACK (--a63-surface-control + --a63-track-shadow)
+ *              with a raised sliding pill (--a63-surface-overlay + control shadow),
+ *              reusing the SegmentedControl/track vocabulary.
+ *   underline— a flat row with a brand-accent underline bar as the indicator.
+ *   attached — folder tabs (bordered pills on a muted surface, no indicator); the
+ *              active tab rises onto the panel surface and merges into the body.
+ * Geometry reuses the --a63-control-* ramp; all fills are theme-overridden
+ * semantics, so the 4 themes restyle it for free. No new --a63-* tokens.
+ */
+
+.a63-Tabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-3);
+}
+
+.a63-Tabs[data-orientation='vertical'] {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--a63-space-4);
+}
+
+/* ── List (shell) ──────────────────────────────────────────────────────── */
+
+.a63-Tabs-list {
+  /* Content floor — see button.css for the full rationale. The list is a SHELL
+     whose items sit inside `--tabs-inset`, but its floor uses the SAME pad as
+     every other control rather than the inset: keying it to the inset made the
+     list 4.5px taller than a Button or SegmentedControl beside it at
+     `large` x `compact` (35.59 vs 31.09), which is exactly the cross-component
+     misalignment the floor exists to prevent. SegmentedControl is the same
+     shape and uses the same formula. */
+  --tabs-content-lh: var(--typography-sm-line-height);
+  --tabs-content-floor: calc(var(--tabs-content-lh) + 2 * var(--a63-space-0_5));
+  --tabs-shell-floor: var(--tabs-content-floor);
+  --tabs-height: max(
+    calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size),
+    var(--tabs-shell-floor)
+  );
+  --tabs-inset: var(--a63-space-0_5);
+  --tabs-radius: var(--a63-control-radius);
+  --tabs-active-radius: max(0px, calc(var(--tabs-radius) - var(--tabs-inset)));
+  --tabs-item-padding: var(--a63-control-padding-inline-md);
+  --tabs-font-size: var(--a63-control-font-size-md);
+
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+  scroll-snap-type: inline proximity;
+  touch-action: pan-x;
+}
+.a63-Tabs-list::-webkit-scrollbar {
+  display: none;
+}
+
+.a63-Tabs-list[data-orientation='vertical'] {
+  flex-direction: column;
+  align-items: stretch;
+  max-width: none;
+  overflow: visible;
+  scroll-snap-type: none;
+  touch-action: auto;
+}
+
+/* default: quiet filled track with a raised active plate */
+.a63-Tabs-list[data-variant='default'] {
+  gap: var(--a63-space-0_5);
+  height: var(--tabs-height);
+  padding: var(--tabs-inset);
+  border: 0;
+  border-radius: var(--tabs-radius);
+  background-color: var(--a63-surface-muted);
+  box-shadow: var(--a63-track-shadow);
+}
+
+/* underline: a flat row with a bottom hairline */
+.a63-Tabs-list[data-variant='underline'] {
+  gap: 0;
+  border-bottom: 1px solid var(--a63-border-subtle);
+}
+.a63-Tabs-list[data-variant='underline'][data-orientation='vertical'] {
+  border-bottom: 0;
+  border-inline-end: 1px solid var(--a63-border-subtle);
+}
+
+/* attached: folder tabs that sit flush on a connected card panel below (ports
+   the legacy --theme-tabs-attached-* contract). The list touches the panel
+   (container gap 0) so the active tab can merge into it. */
+.a63-Tabs-list[data-variant='attached'] {
+  gap: 0.125rem;
+  width: 100%;
+  justify-content: flex-start;
+  /* The tab strip sits directly above the panel. */
+  position: relative;
+  z-index: 1;
+  margin-bottom: 0;
+}
+.a63-Tabs:has(> .a63-Tabs-list[data-variant='attached']) {
+  gap: 0;
+}
+
+/* ── Tab (item) ────────────────────────────────────────────────────────── */
+
+.a63-Tabs-tab {
+  /* Re-declared here, not just on the list: a `calc()` in a custom property
+     resolves on the element it is DECLARED on and then inherits as a resolved
+     value, so a `--tabs-content-lh` override on a standalone tab would never
+     reach a floor computed up on the list. Same rule as brand-derived tokens in
+     docs/design-system/personalization-axes.md — declare derived tokens on the
+     scope that changes them. */
+  --tabs-content-lh: var(--typography-sm-line-height);
+  --tabs-content-floor: calc(var(--tabs-content-lh) + 2 * var(--a63-space-0_5));
+
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--a63-control-gap);
+  min-width: var(--a63-control-min-target);
+  height: var(--tabs-height, 2.25rem);
+  padding-inline: var(--tabs-item-padding, var(--a63-control-padding-inline-md));
+  border: var(--a63-control-border-width) solid transparent;
+  border-radius: var(--tabs-active-radius, var(--a63-control-radius));
+  background: transparent;
+  color: var(--a63-text-secondary);
+  font-family: var(--a63-control-font-family);
+  font-size: var(--tabs-font-size, var(--a63-control-font-size-md));
+  font-weight: var(--a63-control-font-weight);
+  line-height: 1;
+  white-space: nowrap;
+  appearance: none;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  transition:
+    color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+  scroll-snap-align: start;
+}
+
+.a63-Tabs-list[data-variant='default'] .a63-Tabs-tab::after {
+  content: '';
+  position: absolute;
+  inset-block: calc(var(--tabs-inset) * -1);
+  inset-inline: 0;
+}
+
+.a63-Tabs-list[data-orientation='vertical'] .a63-Tabs-tab {
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.a63-Tabs-tab svg {
+  flex-shrink: 0;
+  width: 1.05em;
+  height: 1.05em;
+  opacity: 0.7;
+  pointer-events: none;
+}
+.a63-Tabs-tab[data-active] svg {
+  opacity: 1;
+}
+
+/* Resting tabs lift their text on hover without introducing another plate. */
+@media (hover: hover) {
+  .a63-Tabs-tab:hover:not([data-disabled]):not([data-active]) {
+    color: var(--a63-text-primary);
+  }
+  .a63-Tabs-list[data-variant='attached']
+    .a63-Tabs-tab:hover:not([data-disabled]):not([data-active]) {
+    background: color-mix(in oklch, var(--a63-surface-panel) 60%, var(--a63-surface-muted));
+    color: var(--a63-text-primary);
+  }
+}
+
+.a63-Tabs-tab[data-active] {
+  color: var(--a63-text-primary);
+}
+
+.a63-Tabs-tab:focus-visible {
+  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+}
+
+.a63-Tabs-tab[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+/* default: pill items must fit INSIDE the padded track (height − 2×inset) so
+   the raised sliding indicator insets evenly on all four sides. Without this
+   the tab takes the full track height and overflows the top/bottom inset. */
+.a63-Tabs-list[data-variant='default'] .a63-Tabs-tab {
+  height: calc(var(--tabs-height) - 2 * var(--tabs-inset));
+}
+
+/* underline: transparent items, active reads primary text */
+.a63-Tabs-list[data-variant='underline'] .a63-Tabs-tab {
+  height: auto;
+  min-height: var(--tabs-height);
+  padding: var(--a63-space-2) var(--tabs-item-padding);
+  border-radius: 0;
+}
+@media (hover: hover) {
+  .a63-Tabs-list[data-variant='underline'] .a63-Tabs-tab:hover:not([data-disabled]) {
+    color: var(--a63-text-primary);
+  }
+}
+.a63-Tabs-list[data-variant='underline'] .a63-Tabs-tab[data-active] {
+  color: var(--a63-text-primary);
+}
+
+/* every attached tab is a folder pill: top-rounded, bordered, on a muted
+   surface (legacy --theme-tabs-attached-inactive-*). */
+.a63-Tabs-list[data-variant='attached'] .a63-Tabs-tab {
+  min-height: var(--tabs-height);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  border-color: var(--a63-border-subtle);
+  background: var(--a63-surface-muted);
+}
+/* The active tab uses the primary gel treatment and connects to the accent edge
+   of the panel below. */
+.a63-Tabs-list[data-variant='attached'] .a63-Tabs-tab[data-active] {
+  border-color: var(--a63-action-primary);
+  background-color: var(--a63-action-primary);
+  background-image: var(--a63-control-gloss);
+  box-shadow: var(--a63-control-shadow);
+  color: var(--a63-action-primary-foreground);
+  font-weight: 600;
+}
+
+/* ── Sliding indicator ─────────────────────────────────────────────────── */
+
+.a63-Tabs-indicator {
+  position: absolute;
+  z-index: 0;
+  box-sizing: border-box;
+  pointer-events: none;
+  transition:
+    transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    width var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    height var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+/* default: raised pill sliding under the active tab */
+.a63-Tabs-list[data-variant='default'] .a63-Tabs-indicator {
+  top: 50%;
+  left: 0;
+  width: var(--active-tab-width);
+  height: var(--active-tab-height);
+  border-radius: var(--tabs-active-radius);
+  background: var(--a63-surface-overlay);
+  box-shadow: var(--a63-control-shadow);
+  transform: translateX(var(--active-tab-left)) translateY(-50%);
+}
+
+/* underline: a brand-accent bar pinned to the bottom edge */
+.a63-Tabs-list[data-variant='underline'] .a63-Tabs-indicator {
+  bottom: -1px;
+  left: 0;
+  width: var(--active-tab-width);
+  height: 2px;
+  border-radius: var(--radius-full);
+  background: var(--a63-action-primary);
+  transform: translateX(var(--active-tab-left));
+}
+.a63-Tabs-list[data-variant='underline'][data-orientation='vertical'] .a63-Tabs-indicator {
+  inset-inline-end: -1px;
+  bottom: auto;
+  top: 0;
+  width: 2px;
+  height: var(--active-tab-height);
+  transform: translateY(var(--active-tab-top));
+}
+
+/* ── Panel ─────────────────────────────────────────────────────────────── */
+
+.a63-Tabs-panel {
+  flex: 1;
+  outline: none;
+}
+
+/* attached: the panel is the folder BODY — a card surface bordered on all sides
+   with rounded bottom corners; its flat top edge meets the tab row above, and
+   the active tab merges into it. (Legacy --theme-tabs-attached-panel-* contract.)
+   Matched via :has() so it reaches the panel through ANY nesting (scroll areas,
+   wrappers) — Base UI keeps the panels as siblings of the list, so a sibling
+   selector can't. No consumer opt-in, no component change. */
+.a63-Tabs:has(.a63-Tabs-list[data-variant='attached']) .a63-Tabs-panel {
+  padding: var(--a63-space-4);
+  border: var(--a63-surface-border-width) var(--a63-surface-border-style) var(--a63-border-subtle);
+  /* Accent seam bar: the panel's top edge is the brand-accent connector the tab
+     strip sits on — the active primary tab flows into it, inactive tabs sit above
+     it, and it shows through the tab gaps as one continuous line. No tab overlap,
+     so it stays a clean line between the tabs and the content (not crossing them). */
+  border-top: 2px solid var(--a63-action-primary);
+  border-radius: var(--a63-surface-radius, 0 0 var(--radius-md) var(--radius-md));
+  background-color: var(--a63-surface-panel);
+  background-image: var(--a63-surface-gloss), var(--a63-surface-texture-image);
+  background-blend-mode: normal, var(--a63-surface-texture-blend);
+  backdrop-filter: var(--a63-surface-backdrop);
+  /* Read the surface contract's flush/lift/bevel lever so the folder body gets
+     each theme's static-surface treatment (like Card/Frame), not a flat box. */
+  box-shadow: var(--a63-surface-inner-shadow, none), var(--a63-surface-shadow);
+}
+
+.a63-Tabs-panel[data-animated] {
+  animation: a63-tabs-panel-in var(--duration-normal) var(--a63-control-feedback-ease);
+}
+
+@keyframes a63-tabs-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Sizes (reuse the control ramp) ────────────────────────────────────── */
+
+.a63-Tabs-list[data-size='xs'] {
+  --tabs-content-lh: var(--typography-xs-line-height);
+  --tabs-height: max(
+    calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size),
+    var(--tabs-shell-floor)
+  );
+  --tabs-inset: 2px;
+  --tabs-item-padding: var(--a63-control-padding-inline-sm);
+  --tabs-font-size: var(--a63-control-font-size-xs);
+}
+.a63-Tabs-tab[data-size='xs'] {
+  --tabs-content-lh: var(--typography-xs-line-height);
+  --tabs-height: max(
+    calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size),
+    var(--tabs-content-floor)
+  );
+  --tabs-item-padding: var(--a63-control-padding-inline-sm);
+  --tabs-font-size: var(--a63-control-font-size-xs);
+}
+
+.a63-Tabs-list[data-size='sm'] {
+  --tabs-content-lh: var(--typography-xs-line-height);
+  --tabs-height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size),
+    var(--tabs-shell-floor)
+  );
+  --tabs-inset: 2px;
+  --tabs-item-padding: var(--a63-control-padding-inline-sm);
+  --tabs-font-size: var(--a63-control-font-size-sm);
+}
+.a63-Tabs-tab[data-size='sm'] {
+  --tabs-content-lh: var(--typography-xs-line-height);
+  --tabs-height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size),
+    var(--tabs-content-floor)
+  );
+  --tabs-item-padding: var(--a63-control-padding-inline-sm);
+  --tabs-font-size: var(--a63-control-font-size-sm);
+}
+
+.a63-Tabs-list[data-size='lg'] {
+  --tabs-content-lh: var(--typography-base-line-height);
+  --tabs-height: max(
+    calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size-lg, var(--a63-control-min-size)),
+    var(--tabs-shell-floor)
+  );
+  --tabs-inset: 4px;
+  --tabs-item-padding: var(--a63-control-padding-inline-lg);
+  --tabs-font-size: var(--a63-control-font-size-lg);
+}
+.a63-Tabs-list[data-size='lg'] .a63-Tabs-tab {
+  min-width: var(--a63-control-min-target-lg, var(--a63-control-min-target));
+}
+.a63-Tabs-tab[data-size='lg'] {
+  --tabs-content-lh: var(--typography-base-line-height);
+  --tabs-height: max(
+    calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size-lg, var(--a63-control-min-size)),
+    var(--tabs-content-floor)
+  );
+  --tabs-item-padding: var(--a63-control-padding-inline-lg);
+  --tabs-font-size: var(--a63-control-font-size-lg);
+  min-width: var(--a63-control-min-target-lg, var(--a63-control-min-target));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Tabs-tab,
+  .a63-Tabs-indicator {
+    transition: none;
+  }
+  .a63-Tabs-panel[data-animated] {
+    animation: none;
+  }
+}

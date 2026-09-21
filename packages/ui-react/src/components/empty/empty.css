@@ -1,0 +1,145 @@
+/*
+ * Empty recipe — the empty/error-state layout parts (a centered, dashed,
+ * low-emphasis surface + header/media/title/description/content + a collapsible
+ * error detail with a CopyButton). Ported faithfully from prod @atom63/ui
+ * (Tailwind) onto --a63-* semantics; EmptyMedia's `default`/`icon` axis is a
+ * data-attr (no cva). No new tokens.
+ */
+
+.a63-Empty {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--a63-space-4);
+  padding: var(--a63-space-6);
+  border: var(--a63-surface-border-width) dashed var(--a63-border-subtle);
+  border-radius: var(--a63-surface-radius, var(--radius-xl));
+  background-color: color-mix(in oklch, var(--a63-surface-panel) 38%, transparent);
+  background-image: var(--a63-surface-gloss), var(--a63-surface-texture-image);
+  background-blend-mode: normal, var(--a63-surface-texture-blend);
+  backdrop-filter: var(--a63-surface-backdrop);
+  box-shadow: var(--a63-surface-inner-shadow, none);
+  color: var(--a63-text-primary);
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* ── Header (max-w-sm centered column, gap-2) ──────────────────────────── */
+.a63-Empty-header {
+  display: flex;
+  max-width: 24rem;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--a63-space-2);
+}
+
+/* ── Media ─────────────────────────────────────────────────────────────── */
+.a63-Empty-media {
+  display: flex;
+  margin-bottom: var(--a63-space-2);
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+.a63-Empty-media svg {
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+/* `icon` variant: a rounded muted chip (prod size-8 rounded-lg bg-muted). */
+.a63-Empty-media[data-variant='icon'] {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--radius-lg);
+  background-color: var(--a63-surface-muted);
+  color: var(--a63-text-primary);
+}
+/* Icons without an explicit size get 1rem (prod [&_svg:not([class*='size-'])]:size-4). */
+.a63-Empty-media[data-variant='icon'] svg:not([class*='size-']) {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* ── Title ─────────────────────────────────────────────────────────────── */
+.a63-Empty-title {
+  /* Prod title is `font-heading` — render in the heading face, gracefully
+     falling back to the app font when no heading token is skinned. */
+  font-family: var(--a63-font-heading, var(--a63-font-app));
+  font-size: var(--typography-base-font-size);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: var(--typography-base-line-height);
+}
+
+/* ── Description ───────────────────────────────────────────────────────── */
+.a63-Empty-description {
+  color: var(--a63-text-secondary);
+  font-size: var(--typography-sm-font-size);
+  line-height: var(--typography-sm-line-height);
+}
+.a63-Empty-description a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.a63-Empty-description a:hover {
+  color: var(--a63-action-primary);
+}
+
+/* ── Content ───────────────────────────────────────────────────────────── */
+.a63-Empty-content {
+  display: flex;
+  width: 100%;
+  max-width: 24rem;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.875rem;
+  text-wrap: balance;
+}
+
+/* ── Error detail (collapsible, with a CopyButton) ─────────────────────── */
+.a63-Empty-errorDetail {
+  display: flex;
+  width: 100%;
+  max-width: 24rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.a63-Empty-errorToggle.a63-Button {
+  color: color-mix(in oklch, var(--a63-text-secondary) 60%, transparent);
+  font-size: var(--a63-control-font-size-xs);
+}
+.a63-Empty-errorToggle.a63-Button:hover {
+  color: var(--a63-text-secondary);
+}
+
+.a63-Empty-errorBox {
+  position: relative;
+  width: 100%;
+  padding: var(--a63-space-3) calc(var(--a63-space-5) + var(--a63-control-min-target))
+    var(--a63-space-3) var(--a63-space-3);
+  border-radius: var(--radius-md);
+  background-color: color-mix(in oklch, var(--a63-surface-muted) 50%, transparent);
+  text-align: left;
+}
+
+.a63-Empty-errorText {
+  overflow-x: auto;
+  color: var(--a63-text-secondary);
+  font-size: 0.75rem;
+  line-height: 1.625;
+  text-wrap: wrap;
+}
+
+.a63-Empty-errorCopy {
+  position: absolute;
+  top: 0.375rem;
+  right: 0.375rem;
+}

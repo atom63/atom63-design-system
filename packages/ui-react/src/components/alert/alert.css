@@ -1,0 +1,189 @@
+/*
+ * Alert recipe — a status callout. Faithful to prod @atom63/ui alert.tsx: a
+ * bordered status surface that re-flows its columns for a leading icon slot and
+ * a trailing action slot. The default variant is neutral; four semantic tones
+ * (error/info/success/warning) recolor border/bg/icon from --a63-status-* +
+ * --a63-action-danger. It uses the SURFACE contract for wrapper treatment;
+ * controls inside the action slot keep their own action/control styling.
+ */
+
+.a63-Alert {
+  --alert-action-inset: var(--a63-space-2);
+  --alert-action-reserve: calc(var(--a63-space-6) * 3);
+  --alert-gap-x: var(--a63-space-2);
+  --alert-gap-y: var(--a63-space-0_5);
+  --alert-icon-size: var(--a63-space-4);
+  --alert-padding-block: var(--a63-space-3);
+  --alert-padding-inline: 0.875rem;
+  --alert-accent: var(--a63-text-secondary);
+  --alert-action-foreground: var(--a63-text-primary);
+  --alert-action-hover-background: color-mix(
+    in oklch,
+    var(--a63-surface-control-hover) 72%,
+    transparent
+  );
+
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: var(--alert-gap-y) var(--alert-gap-x);
+  width: 100%;
+  padding: var(--alert-padding-block) var(--alert-padding-inline);
+  border: var(--a63-surface-border-width) var(--a63-surface-border-style) var(--a63-border-subtle);
+  border-radius: var(--a63-surface-radius, var(--radius-lg));
+  background-color: transparent;
+  background-image: var(--a63-surface-gloss), var(--a63-surface-texture-image);
+  background-blend-mode: normal, var(--a63-surface-texture-blend);
+  backdrop-filter: var(--a63-surface-backdrop);
+  box-shadow: var(--a63-surface-inner-shadow, none), var(--a63-surface-shadow, none);
+  color: var(--a63-text-primary);
+  font-family: var(--a63-font-app, var(--font-family-sans));
+  font-size: var(--typography-sm-font-size);
+}
+
+/* Leading icon: reserve a fixed first column. Direct-child SVG is kept as a
+   compatibility path; prefer AlertIcon. */
+.a63-Alert:has(> [data-slot='alert-icon']),
+.a63-Alert:has(> svg) {
+  grid-template-columns: var(--alert-icon-size) 1fr;
+}
+
+.a63-Alert:has(> [data-slot='alert-action']) {
+  padding-inline-end: max(var(--alert-padding-inline), var(--alert-action-reserve));
+}
+
+.a63-Alert-icon {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: var(--alert-icon-size);
+  height: 1lh;
+  color: var(--a63-text-secondary);
+  pointer-events: none;
+}
+
+.a63-Alert-icon > svg {
+  width: var(--alert-icon-size);
+  height: 1lh;
+}
+
+.a63-Alert > svg {
+  width: var(--alert-icon-size);
+  height: 1lh;
+  color: var(--a63-text-secondary);
+  pointer-events: none;
+}
+
+/* ── Slots ─────────────────────────────────────────────────────────────── */
+.a63-Alert-title {
+  font-weight: 500;
+  line-height: 1.4;
+}
+/* When an icon precedes the title, keep title in the content column. */
+.a63-Alert > [data-slot='alert-icon'] ~ .a63-Alert-title,
+.a63-Alert > svg ~ .a63-Alert-title {
+  grid-column-start: 2;
+}
+
+.a63-Alert-description {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  color: var(--a63-text-secondary);
+  line-height: 1.4;
+}
+.a63-Alert > [data-slot='alert-icon'] ~ .a63-Alert-description,
+.a63-Alert > svg ~ .a63-Alert-description {
+  grid-column-start: 2;
+}
+
+.a63-Alert-action {
+  position: absolute;
+  top: var(--alert-action-inset);
+  right: var(--alert-action-inset);
+  display: flex;
+  gap: var(--a63-space-1);
+}
+
+.a63-Alert .a63-Alert-action .a63-Button[data-variant='ghost'],
+.a63-Alert .a63-Alert-action .a63-Button[data-variant='link'] {
+  --button-background: transparent;
+  --button-border-color: transparent;
+  --button-focus-ring: var(--alert-accent);
+  --button-foreground: var(--alert-action-foreground);
+  --button-gloss: none;
+  --button-highlight: none;
+  --button-shadow: 0 0 #0000;
+  --button-state-active-background: var(--alert-action-hover-background);
+  --button-state-active-border-color: transparent;
+  --button-state-hover-background: var(--alert-action-hover-background);
+  --button-state-hover-border-color: transparent;
+  --button-tint-drop: 0 0 transparent;
+}
+
+/* ── Variants (default is the neutral base above) ──────────────────────── */
+/* Default tone gets a faint fill in dark mode (prod dark:bg-input/32). */
+:is(.dark, [data-a63-mode='dark']) .a63-Alert[data-variant='default'] {
+  background-color: color-mix(in oklch, var(--a63-surface-control) 32%, transparent);
+}
+
+.a63-Alert[data-variant='error'] {
+  --alert-accent: var(--a63-action-danger);
+  --alert-action-foreground: var(--a63-action-danger);
+  --alert-action-hover-background: color-mix(in oklch, var(--a63-action-danger) 10%, transparent);
+
+  border-color: color-mix(in oklch, var(--a63-action-danger) 32%, transparent);
+  background-color: color-mix(in oklch, var(--a63-action-danger) 4%, transparent);
+}
+.a63-Alert[data-variant='error'] > svg {
+  color: var(--a63-action-danger);
+}
+.a63-Alert[data-variant='error'] > [data-slot='alert-icon'] {
+  color: var(--a63-action-danger);
+}
+
+.a63-Alert[data-variant='info'] {
+  --alert-accent: var(--a63-status-info);
+  --alert-action-foreground: var(--a63-status-info);
+  --alert-action-hover-background: color-mix(in oklch, var(--a63-status-info) 10%, transparent);
+
+  border-color: color-mix(in oklch, var(--a63-status-info) 32%, transparent);
+  background-color: color-mix(in oklch, var(--a63-status-info) 4%, transparent);
+}
+.a63-Alert[data-variant='info'] > svg {
+  color: var(--a63-status-info);
+}
+.a63-Alert[data-variant='info'] > [data-slot='alert-icon'] {
+  color: var(--a63-status-info);
+}
+
+.a63-Alert[data-variant='success'] {
+  --alert-accent: var(--a63-status-success);
+  --alert-action-foreground: var(--a63-status-success);
+  --alert-action-hover-background: color-mix(in oklch, var(--a63-status-success) 10%, transparent);
+
+  border-color: color-mix(in oklch, var(--a63-status-success) 32%, transparent);
+  background-color: color-mix(in oklch, var(--a63-status-success) 4%, transparent);
+}
+.a63-Alert[data-variant='success'] > svg {
+  color: var(--a63-status-success);
+}
+.a63-Alert[data-variant='success'] > [data-slot='alert-icon'] {
+  color: var(--a63-status-success);
+}
+
+.a63-Alert[data-variant='warning'] {
+  --alert-accent: var(--a63-status-warning);
+  --alert-action-foreground: var(--a63-status-warning);
+  --alert-action-hover-background: color-mix(in oklch, var(--a63-status-warning) 12%, transparent);
+
+  border-color: color-mix(in oklch, var(--a63-status-warning) 32%, transparent);
+  background-color: color-mix(in oklch, var(--a63-status-warning) 4%, transparent);
+}
+.a63-Alert[data-variant='warning'] > svg {
+  color: var(--a63-status-warning);
+}
+.a63-Alert[data-variant='warning'] > [data-slot='alert-icon'] {
+  color: var(--a63-status-warning);
+}

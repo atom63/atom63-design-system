@@ -1,0 +1,196 @@
+/*
+ * Accordion recipe — a stack of collapsible sections (Base UI Accordion),
+ * faithful to prod @atom63/ui. Visually this is a static surface stack with
+ * disclosure triggers: item separators read --a63-border-subtle, while the
+ * clickable header uses the TRIGGER contract for hover/open/focus timing instead
+ * of the Button/Action contract. The indicator glyph reads --a63-text-secondary
+ * and rotates/cross-fades on open. The panel height animates via Base UI's
+ * --accordion-panel-height.
+ */
+
+.a63-Accordion {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--a63-control-font-family);
+  color: var(--a63-text-primary);
+}
+
+/* ── Item ──────────────────────────────────────────────────────────────── */
+
+.a63-Accordion-item {
+  border-bottom: 1px solid color-mix(in oklch, var(--a63-border-subtle) 70%, transparent);
+}
+
+.a63-Accordion-item:last-child {
+  border-bottom: 0;
+}
+
+/* ── Header + Trigger ──────────────────────────────────────────────────── */
+
+.a63-Accordion-header {
+  display: flex;
+  margin: 0;
+}
+
+.a63-Accordion-trigger {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--a63-space-4);
+  padding: var(--a63-space-4) var(--a63-space-2);
+  border: 0;
+  border-radius: var(--a63-trigger-radius, var(--radius-md));
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: var(--a63-control-font-size-md);
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: start;
+  cursor: pointer;
+  outline: none;
+  transition:
+    background-color var(--a63-trigger-feedback-duration) var(--a63-trigger-feedback-ease),
+    box-shadow var(--a63-trigger-feedback-duration) var(--a63-trigger-feedback-ease),
+    color var(--a63-trigger-feedback-duration) var(--a63-trigger-feedback-ease);
+}
+
+.a63-Accordion-item .a63-Accordion-trigger {
+  border-radius: 0;
+}
+
+.a63-Accordion-trigger:hover {
+  background: var(
+    --a63-trigger-hover-background,
+    color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)
+  );
+}
+
+.a63-Accordion-trigger[data-panel-open] {
+  background: var(
+    --a63-trigger-open-background,
+    color-mix(in oklch, var(--a63-surface-control-hover) 40%, transparent)
+  );
+  box-shadow: var(--a63-trigger-open-shadow);
+}
+
+.a63-Accordion-trigger:focus-visible {
+  box-shadow:
+    var(--a63-trigger-open-shadow),
+    0 0 0 var(--a63-trigger-focus-ring-width)
+      var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+}
+
+.a63-Accordion-trigger[data-disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* ── Indicator ─────────────────────────────────────────────────────────── */
+
+.a63-Accordion-indicator {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  translate: 0 0.125rem;
+  color: var(--a63-text-secondary);
+}
+
+.a63-Accordion-indicator svg {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  pointer-events: none;
+}
+
+/* chevron: rotates 180° on open */
+.a63-Accordion-indicator-chevron {
+  display: inline-flex;
+  transition: rotate 0.2s var(--a63-control-feedback-ease);
+}
+.a63-Accordion-trigger[data-panel-open][data-icon='chevron'] .a63-Accordion-indicator-chevron {
+  rotate: 180deg;
+}
+
+/* plus/minus: cross-fade + rotate on open */
+.a63-Accordion-indicator-plus,
+.a63-Accordion-indicator-minus {
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    opacity 0.2s var(--a63-control-feedback-ease),
+    scale 0.2s var(--a63-control-feedback-ease),
+    rotate 0.2s var(--a63-control-feedback-ease);
+}
+.a63-Accordion-indicator-minus {
+  opacity: 0;
+  scale: 0;
+}
+.a63-Accordion-trigger[data-panel-open] .a63-Accordion-indicator-plus {
+  opacity: 0;
+  scale: 0;
+  rotate: 90deg;
+}
+.a63-Accordion-trigger[data-panel-open] .a63-Accordion-indicator-minus {
+  opacity: 1;
+  scale: 1;
+}
+
+/* ── Panel ─────────────────────────────────────────────────────────────── */
+
+.a63-Accordion-panel {
+  overflow: hidden;
+  font-size: var(--a63-control-font-size-md);
+  color: var(--a63-text-secondary);
+}
+
+.a63-Accordion-panel[data-open] {
+  animation: a63-accordion-down 0.2s var(--a63-control-feedback-ease);
+}
+.a63-Accordion-panel[data-closed] {
+  animation: a63-accordion-up 0.2s var(--a63-control-feedback-ease);
+}
+
+.a63-Accordion-content-inner {
+  padding: var(--a63-space-2) var(--a63-space-2) var(--a63-space-4);
+}
+
+@keyframes a63-accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--accordion-panel-height);
+  }
+}
+
+@keyframes a63-accordion-up {
+  from {
+    height: var(--accordion-panel-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Accordion-indicator-chevron,
+  .a63-Accordion-indicator-plus,
+  .a63-Accordion-indicator-minus,
+  .a63-Accordion-trigger {
+    transition: none;
+  }
+  .a63-Accordion-panel[data-open],
+  .a63-Accordion-panel[data-closed] {
+    animation: none;
+  }
+}

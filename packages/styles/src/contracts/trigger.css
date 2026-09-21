@@ -1,0 +1,28 @@
+/*
+ * Trigger contract — controls whose main job is to open another surface.
+ *
+ * Covers DropdownMenuTrigger, PopoverTrigger, SelectTrigger, NavigationMenu
+ * trigger, Menubar trigger, and disclosure-style triggers. A trigger can render
+ * as button-like, field-like, or navigation-like, but it needs an explicit open
+ * state so "pressed" is not confused with Button's momentary press.
+ *
+ * Axis-dependent hooks resolve at the recipe use-site:
+ *   --a63-trigger-background       -> transparent / field background / action fill
+ *   --a63-trigger-foreground       -> var(--a63-text-primary)
+ *   --a63-trigger-hover-background -> var(--a63-surface-control-hover)
+ *   --a63-trigger-open-background  -> var(--a63-surface-control-hover)
+ */
+
+:root {
+  --a63-trigger-border-width: var(--a63-control-border-width);
+  --a63-trigger-focus-ring-width: var(--a63-control-focus-ring-width);
+  --a63-trigger-gap: var(--a63-control-gap);
+  --a63-trigger-indicator-size: 1em;
+  --a63-trigger-radius: var(--a63-control-radius);
+  /* `0 0 #0000` not `none` — composed into comma-separated box-shadow lists
+     alongside the focus ring, where `none` invalidates the declaration. */
+  --a63-trigger-shadow: 0 0 #0000;
+  --a63-trigger-open-shadow: var(--a63-trigger-shadow);
+  --a63-trigger-feedback-duration: var(--a63-control-feedback-duration);
+  --a63-trigger-feedback-ease: var(--a63-control-feedback-ease);
+}

@@ -1,0 +1,3435 @@
+{
+  "schemaVersion": 1,
+  "inputs": [
+    "packages/ui-react/src/index.ts",
+    "packages/ui-react/package.json"
+  ],
+  "rootExportSource": "packages/ui-react/src/index.ts",
+  "tierSource": "docs/design-system/ui-react-root-api-audit.md",
+  "tierDefinitions": {
+    "beta-supported-core": "Recommended beta-supported primitives and core components.",
+    "beta-supported-composition-conditional": "Recommended beta support conditional on documentation and focused tests.",
+    "monitor-high-risk": "High-risk API to monitor before promising compatibility.",
+    "preview-experimental-candidate": "Candidate for a preview or experimental boundary if export changes are approved later."
+  },
+  "counts": {
+    "rootValueExports": 425,
+    "rootTypeExports": 172,
+    "packageExportKeys": 70,
+    "cssExportKeys": 65
+  },
+  "packageExportKeys": [
+    ".",
+    "./layout",
+    "./media",
+    "./media/lightbox",
+    "./recipes.css",
+    "./recipes/accordion.css",
+    "./recipes/alert-dialog.css",
+    "./recipes/alert.css",
+    "./recipes/autocomplete.css",
+    "./recipes/avatar.css",
+    "./recipes/badge.css",
+    "./recipes/breadcrumb.css",
+    "./recipes/button-group.css",
+    "./recipes/button.css",
+    "./recipes/calendar.css",
+    "./recipes/card.css",
+    "./recipes/carousel.css",
+    "./recipes/checkbox.css",
+    "./recipes/collapsible.css",
+    "./recipes/command.css",
+    "./recipes/connected-panel.css",
+    "./recipes/context-menu.css",
+    "./recipes/copy-button.css",
+    "./recipes/dialog.css",
+    "./recipes/drawer.css",
+    "./recipes/dropdown-menu.css",
+    "./recipes/empty.css",
+    "./recipes/feedback-state.css",
+    "./recipes/field.css",
+    "./recipes/form.css",
+    "./recipes/frame.css",
+    "./recipes/hover-card.css",
+    "./recipes/input-otp.css",
+    "./recipes/input.css",
+    "./recipes/item.css",
+    "./recipes/kbd.css",
+    "./recipes/label.css",
+    "./recipes/load-more-trigger.css",
+    "./recipes/marquee.css",
+    "./recipes/media-lightbox.css",
+    "./recipes/menubar.css",
+    "./recipes/navigation-menu.css",
+    "./recipes/pagination.css",
+    "./recipes/panel-setting-button.css",
+    "./recipes/popover.css",
+    "./recipes/preview-card.css",
+    "./recipes/progress.css",
+    "./recipes/radio.css",
+    "./recipes/resizable.css",
+    "./recipes/scroll-area.css",
+    "./recipes/scrollable-list.css",
+    "./recipes/segmented-control.css",
+    "./recipes/select.css",
+    "./recipes/separator.css",
+    "./recipes/sheet.css",
+    "./recipes/sidebar-nav-tree.css",
+    "./recipes/sidebar.css",
+    "./recipes/skeleton.css",
+    "./recipes/slider.css",
+    "./recipes/switch.css",
+    "./recipes/table.css",
+    "./recipes/tabs.css",
+    "./recipes/text-ticker.css",
+    "./recipes/textarea.css",
+    "./recipes/toggle-group.css",
+    "./recipes/toggle.css",
+    "./recipes/tooltip.css",
+    "./reset.css",
+    "./styles.css",
+    "./theme"
+  ],
+  "cssExportKeys": [
+    "./recipes.css",
+    "./recipes/accordion.css",
+    "./recipes/alert-dialog.css",
+    "./recipes/alert.css",
+    "./recipes/autocomplete.css",
+    "./recipes/avatar.css",
+    "./recipes/badge.css",
+    "./recipes/breadcrumb.css",
+    "./recipes/button-group.css",
+    "./recipes/button.css",
+    "./recipes/calendar.css",
+    "./recipes/card.css",
+    "./recipes/carousel.css",
+    "./recipes/checkbox.css",
+    "./recipes/collapsible.css",
+    "./recipes/command.css",
+    "./recipes/connected-panel.css",
+    "./recipes/context-menu.css",
+    "./recipes/copy-button.css",
+    "./recipes/dialog.css",
+    "./recipes/drawer.css",
+    "./recipes/dropdown-menu.css",
+    "./recipes/empty.css",
+    "./recipes/feedback-state.css",
+    "./recipes/field.css",
+    "./recipes/form.css",
+    "./recipes/frame.css",
+    "./recipes/hover-card.css",
+    "./recipes/input-otp.css",
+    "./recipes/input.css",
+    "./recipes/item.css",
+    "./recipes/kbd.css",
+    "./recipes/label.css",
+    "./recipes/load-more-trigger.css",
+    "./recipes/marquee.css",
+    "./recipes/media-lightbox.css",
+    "./recipes/menubar.css",
+    "./recipes/navigation-menu.css",
+    "./recipes/pagination.css",
+    "./recipes/panel-setting-button.css",
+    "./recipes/popover.css",
+    "./recipes/preview-card.css",
+    "./recipes/progress.css",
+    "./recipes/radio.css",
+    "./recipes/resizable.css",
+    "./recipes/scroll-area.css",
+    "./recipes/scrollable-list.css",
+    "./recipes/segmented-control.css",
+    "./recipes/select.css",
+    "./recipes/separator.css",
+    "./recipes/sheet.css",
+    "./recipes/sidebar-nav-tree.css",
+    "./recipes/sidebar.css",
+    "./recipes/skeleton.css",
+    "./recipes/slider.css",
+    "./recipes/switch.css",
+    "./recipes/table.css",
+    "./recipes/tabs.css",
+    "./recipes/text-ticker.css",
+    "./recipes/textarea.css",
+    "./recipes/toggle-group.css",
+    "./recipes/toggle.css",
+    "./recipes/tooltip.css",
+    "./reset.css",
+    "./styles.css"
+  ],
+  "packageExports": [
+    {
+      "subpath": ".",
+      "kind": "module",
+      "target": {
+        "development": "./src/index.ts",
+        "import": "./dist/index.js",
+        "types": "./dist/index.d.ts",
+        "typescript": "./src/index.ts"
+      }
+    },
+    {
+      "subpath": "./layout",
+      "kind": "module",
+      "target": {
+        "development": "./src/layout/index.ts",
+        "import": "./dist/layout/index.js",
+        "types": "./dist/layout/index.d.ts",
+        "typescript": "./src/layout/index.ts"
+      }
+    },
+    {
+      "subpath": "./media",
+      "kind": "module",
+      "target": {
+        "development": "./src/media/index.ts",
+        "import": "./dist/media/index.js",
+        "types": "./dist/media/index.d.ts",
+        "typescript": "./src/media/index.ts"
+      }
+    },
+    {
+      "subpath": "./media/lightbox",
+      "kind": "module",
+      "target": {
+        "development": "./src/media/media-lightbox/parts/index.ts",
+        "import": "./dist/media/media-lightbox/parts/index.js",
+        "types": "./dist/media/media-lightbox/parts/index.d.ts",
+        "typescript": "./src/media/media-lightbox/parts/index.ts"
+      }
+    },
+    {
+      "subpath": "./recipes.css",
+      "kind": "css",
+      "target": "./src/styles/recipes.css"
+    },
+    {
+      "subpath": "./recipes/accordion.css",
+      "kind": "css",
+      "target": "./src/components/accordion/accordion.css"
+    },
+    {
+      "subpath": "./recipes/alert-dialog.css",
+      "kind": "css",
+      "target": "./src/components/alert-dialog/alert-dialog.css"
+    },
+    {
+      "subpath": "./recipes/alert.css",
+      "kind": "css",
+      "target": "./src/components/alert/alert.css"
+    },
+    {
+      "subpath": "./recipes/autocomplete.css",
+      "kind": "css",
+      "target": "./src/components/autocomplete/autocomplete.css"
+    },
+    {
+      "subpath": "./recipes/avatar.css",
+      "kind": "css",
+      "target": "./src/components/avatar/avatar.css"
+    },
+    {
+      "subpath": "./recipes/badge.css",
+      "kind": "css",
+      "target": "./src/components/badge/badge.css"
+    },
+    {
+      "subpath": "./recipes/breadcrumb.css",
+      "kind": "css",
+      "target": "./src/components/breadcrumb/breadcrumb.css"
+    },
+    {
+      "subpath": "./recipes/button-group.css",
+      "kind": "css",
+      "target": "./src/components/button-group/button-group.css"
+    },
+    {
+      "subpath": "./recipes/button.css",
+      "kind": "css",
+      "target": "./src/components/button/button.css"
+    },
+    {
+      "subpath": "./recipes/calendar.css",
+      "kind": "css",
+      "target": "./src/components/calendar/calendar.css"
+    },
+    {
+      "subpath": "./recipes/card.css",
+      "kind": "css",
+      "target": "./src/components/card/card.css"
+    },
+    {
+      "subpath": "./recipes/carousel.css",
+      "kind": "css",
+      "target": "./src/components/carousel/carousel.css"
+    },
+    {
+      "subpath": "./recipes/checkbox.css",
+      "kind": "css",
+      "target": "./src/components/checkbox/checkbox.css"
+    },
+    {
+      "subpath": "./recipes/collapsible.css",
+      "kind": "css",
+      "target": "./src/components/collapsible/collapsible.css"
+    },
+    {
+      "subpath": "./recipes/command.css",
+      "kind": "css",
+      "target": "./src/components/command/command.css"
+    },
+    {
+      "subpath": "./recipes/connected-panel.css",
+      "kind": "css",
+      "target": "./src/components/connected-panel/connected-panel.css"
+    },
+    {
+      "subpath": "./recipes/context-menu.css",
+      "kind": "css",
+      "target": "./src/components/menu/menu.css"
+    },
+    {
+      "subpath": "./recipes/copy-button.css",
+      "kind": "css",
+      "target": "./src/components/copy-button/copy-button.css"
+    },
+    {
+      "subpath": "./recipes/dialog.css",
+      "kind": "css",
+      "target": "./src/components/dialog/dialog.css"
+    },
+    {
+      "subpath": "./recipes/drawer.css",
+      "kind": "css",
+      "target": "./src/components/drawer/drawer.css"
+    },
+    {
+      "subpath": "./recipes/dropdown-menu.css",
+      "kind": "css",
+      "target": "./src/components/menu/menu.css"
+    },
+    {
+      "subpath": "./recipes/empty.css",
+      "kind": "css",
+      "target": "./src/components/empty/empty.css"
+    },
+    {
+      "subpath": "./recipes/feedback-state.css",
+      "kind": "css",
+      "target": "./src/components/feedback-state/feedback-state.css"
+    },
+    {
+      "subpath": "./recipes/field.css",
+      "kind": "css",
+      "target": "./src/components/field/field.css"
+    },
+    {
+      "subpath": "./recipes/form.css",
+      "kind": "css",
+      "target": "./src/components/form/form.css"
+    },
+    {
+      "subpath": "./recipes/frame.css",
+      "kind": "css",
+      "target": "./src/components/frame/frame.css"
+    },
+    {
+      "subpath": "./recipes/hover-card.css",
+      "kind": "css",
+      "target": "./src/components/hover-card/hover-card.css"
+    },
+    {
+      "subpath": "./recipes/input-otp.css",
+      "kind": "css",
+      "target": "./src/components/input-otp/input-otp.css"
+    },
+    {
+      "subpath": "./recipes/input.css",
+      "kind": "css",
+      "target": "./src/components/input/input.css"
+    },
+    {
+      "subpath": "./recipes/item.css",
+      "kind": "css",
+      "target": "./src/components/item/item.css"
+    },
+    {
+      "subpath": "./recipes/kbd.css",
+      "kind": "css",
+      "target": "./src/components/kbd/kbd.css"
+    },
+    {
+      "subpath": "./recipes/label.css",
+      "kind": "css",
+      "target": "./src/components/label/label.css"
+    },
+    {
+      "subpath": "./recipes/load-more-trigger.css",
+      "kind": "css",
+      "target": "./src/components/load-more-trigger/load-more-trigger.css"
+    },
+    {
+      "subpath": "./recipes/marquee.css",
+      "kind": "css",
+      "target": "./src/components/marquee/marquee.css"
+    },
+    {
+      "subpath": "./recipes/media-lightbox.css",
+      "kind": "css",
+      "target": "./src/media/media-lightbox/media-lightbox.css"
+    },
+    {
+      "subpath": "./recipes/menubar.css",
+      "kind": "css",
+      "target": "./src/components/menubar/menubar.css"
+    },
+    {
+      "subpath": "./recipes/navigation-menu.css",
+      "kind": "css",
+      "target": "./src/components/navigation-menu/navigation-menu.css"
+    },
+    {
+      "subpath": "./recipes/pagination.css",
+      "kind": "css",
+      "target": "./src/components/pagination/pagination.css"
+    },
+    {
+      "subpath": "./recipes/panel-setting-button.css",
+      "kind": "css",
+      "target": "./src/components/panel-setting-button/panel-setting-button.css"
+    },
+    {
+      "subpath": "./recipes/popover.css",
+      "kind": "css",
+      "target": "./src/components/popover/popover.css"
+    },
+    {
+      "subpath": "./recipes/preview-card.css",
+      "kind": "css",
+      "target": "./src/components/preview-card/preview-card.css"
+    },
+    {
+      "subpath": "./recipes/progress.css",
+      "kind": "css",
+      "target": "./src/components/progress/progress.css"
+    },
+    {
+      "subpath": "./recipes/radio.css",
+      "kind": "css",
+      "target": "./src/components/radio/radio.css"
+    },
+    {
+      "subpath": "./recipes/resizable.css",
+      "kind": "css",
+      "target": "./src/components/resizable/resizable.css"
+    },
+    {
+      "subpath": "./recipes/scroll-area.css",
+      "kind": "css",
+      "target": "./src/components/scroll-area/scroll-area.css"
+    },
+    {
+      "subpath": "./recipes/scrollable-list.css",
+      "kind": "css",
+      "target": "./src/components/scrollable-list/scrollable-list.css"
+    },
+    {
+      "subpath": "./recipes/segmented-control.css",
+      "kind": "css",
+      "target": "./src/components/segmented-control/segmented-control.css"
+    },
+    {
+      "subpath": "./recipes/select.css",
+      "kind": "css",
+      "target": "./src/components/select/select.css"
+    },
+    {
+      "subpath": "./recipes/separator.css",
+      "kind": "css",
+      "target": "./src/components/separator/separator.css"
+    },
+    {
+      "subpath": "./recipes/sheet.css",
+      "kind": "css",
+      "target": "./src/components/sheet/sheet.css"
+    },
+    {
+      "subpath": "./recipes/sidebar-nav-tree.css",
+      "kind": "css",
+      "target": "./src/components/sidebar-nav-tree/sidebar-nav-tree.css"
+    },
+    {
+      "subpath": "./recipes/sidebar.css",
+      "kind": "css",
+      "target": "./src/components/sidebar/sidebar.css"
+    },
+    {
+      "subpath": "./recipes/skeleton.css",
+      "kind": "css",
+      "target": "./src/components/skeleton/skeleton.css"
+    },
+    {
+      "subpath": "./recipes/slider.css",
+      "kind": "css",
+      "target": "./src/components/slider/slider.css"
+    },
+    {
+      "subpath": "./recipes/switch.css",
+      "kind": "css",
+      "target": "./src/components/switch/switch.css"
+    },
+    {
+      "subpath": "./recipes/table.css",
+      "kind": "css",
+      "target": "./src/components/table/table.css"
+    },
+    {
+      "subpath": "./recipes/tabs.css",
+      "kind": "css",
+      "target": "./src/components/tabs/tabs.css"
+    },
+    {
+      "subpath": "./recipes/text-ticker.css",
+      "kind": "css",
+      "target": "./src/components/text-ticker/text-ticker.css"
+    },
+    {
+      "subpath": "./recipes/textarea.css",
+      "kind": "css",
+      "target": "./src/components/textarea/textarea.css"
+    },
+    {
+      "subpath": "./recipes/toggle-group.css",
+      "kind": "css",
+      "target": "./src/components/toggle-group/toggle-group.css"
+    },
+    {
+      "subpath": "./recipes/toggle.css",
+      "kind": "css",
+      "target": "./src/components/toggle/toggle.css"
+    },
+    {
+      "subpath": "./recipes/tooltip.css",
+      "kind": "css",
+      "target": "./src/components/tooltip/tooltip.css"
+    },
+    {
+      "subpath": "./reset.css",
+      "kind": "css",
+      "target": "./src/styles/reset.css"
+    },
+    {
+      "subpath": "./styles.css",
+      "kind": "css",
+      "target": "./src/styles/index.css"
+    },
+    {
+      "subpath": "./theme",
+      "kind": "module",
+      "target": {
+        "development": "./src/theme/index.ts",
+        "import": "./dist/theme/index.js",
+        "types": "./dist/theme/index.d.ts",
+        "typescript": "./src/theme/index.ts"
+      }
+    }
+  ],
+  "rootExports": [
+    {
+      "source": "./components/accordion",
+      "values": [
+        {
+          "name": "Accordion",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AccordionContent",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AccordionItem",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AccordionTrigger",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "AccordionProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AccordionTriggerProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/alert",
+      "values": [
+        {
+          "name": "Alert",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertAction",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertDescription",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertIcon",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertTitle",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "AlertProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/alert-dialog",
+      "values": [
+        {
+          "name": "AlertDialog",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertDialogAction",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertDialogBackdrop",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertDialogCancel",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertDialogClose",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertDialogContent",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertDialogCreateHandle",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "AlertDialogDescription",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertDialogFooter",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertDialogHeader",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertDialogMedia",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertDialogOverlay",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertDialogPopup",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertDialogPortal",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertDialogPrimitive",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "AlertDialogTitle",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertDialogTrigger",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AlertDialogViewport",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": []
+    },
+    {
+      "source": "./components/animated-check",
+      "values": [
+        {
+          "name": "AnimatedCheck",
+          "proposedTier": "monitor-high-risk"
+        }
+      ],
+      "types": [
+        {
+          "name": "AnimatedCheckProps",
+          "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./components/autocomplete",
+      "values": [
+        {
+          "name": "Autocomplete",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "AutocompleteClear",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "AutocompleteCollection",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "AutocompleteEmpty",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "AutocompleteGroup",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "AutocompleteGroupLabel",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "AutocompleteInput",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "AutocompleteItem",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "AutocompleteList",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "AutocompletePopup",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "AutocompletePrimitive",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "AutocompleteRow",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "AutocompleteSeparator",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "AutocompleteStatus",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "AutocompleteTrigger",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "AutocompleteValue",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "useAutocompleteFilter",
+          "proposedTier": "monitor-high-risk"
+        }
+      ],
+      "types": [
+        {
+          "name": "AutocompleteInputProps",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "AutocompletePopupProps",
+          "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./components/avatar",
+      "values": [
+        {
+          "name": "Avatar",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AvatarBadge",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AvatarFallback",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AvatarGroup",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AvatarGroupCount",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AvatarImage",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AvatarPrimitive",
+          "proposedTier": "preview-experimental-candidate"
+        }
+      ],
+      "types": [
+        {
+          "name": "AvatarProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AvatarSize",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/badge",
+      "values": [
+        {
+          "name": "Badge",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "BadgeProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/breadcrumb",
+      "values": [
+        {
+          "name": "Breadcrumb",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "BreadcrumbEllipsis",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "BreadcrumbItem",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "BreadcrumbLink",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "BreadcrumbList",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "BreadcrumbPage",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "BreadcrumbSeparator",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "BreadcrumbLinkProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/button",
+      "values": [
+        {
+          "name": "Button",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "ButtonProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/button-group",
+      "values": [
+        {
+          "name": "ButtonGroup",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ButtonGroupProvider",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "ButtonGroupSeparator",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ButtonGroupText",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "useButtonGroupContext",
+          "proposedTier": "preview-experimental-candidate"
+        }
+      ],
+      "types": [
+        {
+          "name": "ButtonGroupProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ButtonGroupSeparatorProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/calendar",
+      "values": [
+        {
+          "name": "Calendar",
+          "proposedTier": "monitor-high-risk"
+        }
+      ],
+      "types": [
+        {
+          "name": "CalendarProps",
+          "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./components/card",
+      "values": [
+        {
+          "name": "Card",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardAction",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardContent",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardCursorLabel",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "CardDescription",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardFooter",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardHeader",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardLabel",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "cardLinkClassName",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "CardMedia",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardMediaOverlay",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardMediaOverlayBottom",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardMediaOverlayIconButton",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardMediaOverlayImage",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardMediaOverlayScrim",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardMediaOverlayTopRight",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardTags",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardTitle",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "useCardCursor",
+          "proposedTier": "monitor-high-risk"
+        }
+      ],
+      "types": [
+        {
+          "name": "CardContentProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardCursorBinding",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "CardDescriptionProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardFooterProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardHeaderProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardMediaOverlayProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardMediaProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardResponsivePadding",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardTitleProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "UseCardCursorOptions",
+          "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./components/carousel",
+      "values": [
+        {
+          "name": "Carousel",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "CarouselContent",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "CarouselItem",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "CarouselNext",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "CarouselPrevious",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "useCarousel",
+          "proposedTier": "monitor-high-risk"
+        }
+      ],
+      "types": [
+        {
+          "name": "CarouselApi",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "CarouselProps",
+          "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./components/checkbox",
+      "values": [
+        {
+          "name": "Checkbox",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "CheckboxProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/collapsible",
+      "values": [
+        {
+          "name": "Collapsible",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CollapsibleContent",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CollapsibleIndicator",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CollapsibleTrigger",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "CollapsibleContentProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CollapsibleProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CollapsibleTriggerProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/command",
+      "values": [
+        {
+          "name": "Command",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "CommandCollection",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "CommandCreateHandle",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "CommandDialog",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "CommandDialogBackdrop",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "CommandDialogPopup",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "CommandDialogPortal",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "CommandDialogTrigger",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "CommandDialogViewport",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "CommandEmpty",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "CommandFooter",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "CommandGroup",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "CommandGroupLabel",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "CommandInput",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "CommandItem",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "CommandList",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "CommandPanel",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "CommandSeparator",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "CommandShortcut",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ],
+      "types": []
+    },
+    {
+      "source": "./components/connected-panel",
+      "values": [
+        {
+          "name": "ConnectedPanel",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ConnectedPanelBody",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ConnectedPanelContent",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ConnectedPanelDescription",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ConnectedPanelFooter",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ConnectedPanelHeader",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ConnectedPanelTitle",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ConnectedPanelTrigger",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ],
+      "types": [
+        {
+          "name": "ConnectedPanelContentProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ConnectedPanelProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ConnectedPanelTriggerProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ConnectedPanelVariant",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ]
+    },
+    {
+      "source": "./components/context-menu",
+      "values": [
+        {
+          "name": "ContextMenu",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuCheckboxItem",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuContent",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuGroup",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuItem",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuLabel",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuPortal",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuRadioGroup",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuRadioItem",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuSeparator",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuShortcut",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuSub",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuSubContent",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuSubTrigger",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuTrigger",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ],
+      "types": [
+        {
+          "name": "ContextMenuContentProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuItemProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuLabelProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuSubContentProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ContextMenuSubTriggerProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ]
+    },
+    {
+      "source": "./components/copy-button",
+      "values": [
+        {
+          "name": "CopyButton",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "CopyButtonFeedback",
+          "proposedTier": "monitor-high-risk"
+        }
+      ],
+      "types": [
+        {
+          "name": "CopyButtonFeedbackProps",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "CopyButtonProps",
+          "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./components/destination-link",
+      "values": [
+        {
+          "name": "DestinationIndicator",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "DestinationLink",
+          "proposedTier": "monitor-high-risk"
+        }
+      ],
+      "types": [
+        {
+          "name": "DestinationKind",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "DestinationLinkProps",
+          "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./components/dialog",
+      "values": [
+        {
+          "name": "Dialog",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DialogBackdrop",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DialogClose",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DialogContent",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DialogCreateHandle",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "DialogDescription",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DialogFooter",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DialogHeader",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DialogOverlay",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DialogPanel",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DialogPopup",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DialogPortal",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DialogPrimitive",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "DialogTitle",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DialogTrigger",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DialogViewport",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "DialogFooterVariant",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DialogMobilePlacement",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DialogSize",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/drawer",
+      "values": [
+        {
+          "name": "Drawer",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DrawerBody",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DrawerClose",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DrawerContent",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DrawerDescription",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DrawerFooter",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DrawerHandle",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DrawerHeader",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DrawerOverlay",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DrawerPortal",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DrawerTitle",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DrawerTrigger",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "DrawerCloseProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DrawerTriggerProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/dropdown-menu",
+      "values": [
+        {
+          "name": "DropdownMenu",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuCheckboxItem",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuContent",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuGroup",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuItem",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuLabel",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuPortal",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuRadioGroup",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuRadioItem",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuSeparator",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuShortcut",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuSub",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuSubContent",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuSubTrigger",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuTrigger",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ],
+      "types": [
+        {
+          "name": "DropdownMenuContentProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuItemProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuLabelProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuSubContentProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "DropdownMenuSubTriggerProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ]
+    },
+    {
+      "source": "./components/empty",
+      "values": [
+        {
+          "name": "Empty",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "EmptyContent",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "EmptyDescription",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "EmptyErrorDetail",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "EmptyHeader",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "EmptyMedia",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "EmptyTitle",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ],
+      "types": [
+        {
+          "name": "EmptyMediaVariant",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ]
+    },
+    {
+      "source": "./components/feedback-state",
+      "values": [
+        {
+          "name": "FeedbackState",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ],
+      "types": [
+        {
+          "name": "FeedbackStateAction",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "FeedbackStateKind",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "FeedbackStateProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "FeedbackStateSize",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ]
+    },
+    {
+      "source": "./components/field",
+      "values": [
+        {
+          "name": "Field",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldContent",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldDescription",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldError",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldGroup",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldLabel",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldLegend",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldSeparator",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldSet",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldTitle",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "FieldContentProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldDescriptionProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldErrorProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldGroupProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldLabelProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldLegendProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldOrientation",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldSeparatorProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldSetProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FieldTitleProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/form",
+      "values": [
+        {
+          "name": "Form",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FormControl",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FormDescription",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FormField",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FormItem",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FormLabel",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FormMessage",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "useFormField",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": []
+    },
+    {
+      "source": "./components/frame",
+      "values": [
+        {
+          "name": "Frame",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "FrameDescription",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "FrameFooter",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "FrameHeader",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "FramePanel",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "FrameTitle",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ],
+      "types": [
+        {
+          "name": "FramePanelProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "FrameProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ]
+    },
+    {
+      "source": "./components/hover-card",
+      "values": [
+        {
+          "name": "HoverCard",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "HoverCardContent",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "HoverCardTrigger",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ],
+      "types": [
+        {
+          "name": "HoverCardContentProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ]
+    },
+    {
+      "source": "./components/input",
+      "values": [
+        {
+          "name": "Input",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "InputGroup",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "InputGroupAddon",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "InputGroupButton",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "InputGroupInput",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "InputGroupText",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "InputGroupTextarea",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "InputPrimitive",
+          "proposedTier": "preview-experimental-candidate"
+        }
+      ],
+      "types": [
+        {
+          "name": "InputGroupAddonAlign",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "InputGroupAddonProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "InputGroupAlign",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "InputGroupButtonProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "InputGroupInputProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "InputGroupProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "InputGroupTextareaProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "InputGroupTextProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "InputProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/input-otp",
+      "values": [
+        {
+          "name": "InputOTP",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "InputOTPGroup",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "InputOTPSeparator",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "InputOTPSlot",
+          "proposedTier": "monitor-high-risk"
+        }
+      ],
+      "types": []
+    },
+    {
+      "source": "./components/item",
+      "values": [
+        {
+          "name": "Item",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ItemActions",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ItemContent",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ItemDescription",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ItemFooter",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ItemGroup",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ItemHeader",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ItemMedia",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ItemSeparator",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ItemTitle",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ],
+      "types": [
+        {
+          "name": "ItemMediaProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ItemProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ItemSeparatorProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ]
+    },
+    {
+      "source": "./components/kbd",
+      "values": [
+        {
+          "name": "Kbd",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "KbdGroup",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "KbdProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/label",
+      "values": [
+        {
+          "name": "Label",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "LabelProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/load-more-trigger",
+      "values": [
+        {
+          "name": "LoadMoreTrigger",
+          "proposedTier": "monitor-high-risk"
+        }
+      ],
+      "types": [
+        {
+          "name": "LoadMoreTriggerProps",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "LoadMoreTriggerState",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "LoadMoreTriggerVariant",
+          "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./components/marquee",
+      "values": [
+        {
+          "name": "Marquee",
+          "proposedTier": "monitor-high-risk"
+        }
+      ],
+      "types": [
+        {
+          "name": "MarqueeProps",
+          "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./components/menubar",
+      "values": [
+        {
+          "name": "Menubar",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "MenubarCheckboxItem",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "MenubarContent",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "MenubarGroup",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "MenubarItem",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "MenubarLabel",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "MenubarMenu",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "MenubarPortal",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "MenubarRadioGroup",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "MenubarRadioItem",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "MenubarSeparator",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "MenubarShortcut",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "MenubarSub",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "MenubarSubContent",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "MenubarSubTrigger",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "MenubarTrigger",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ],
+      "types": [
+        {
+          "name": "MenubarCheckboxItemProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "MenubarRadioItemProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ]
+    },
+    {
+      "source": "./components/navigation-menu",
+      "values": [
+        {
+          "name": "NavigationMenu",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "NavigationMenuContent",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "NavigationMenuIndicator",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "NavigationMenuItem",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "NavigationMenuLink",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "NavigationMenuList",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "NavigationMenuPositioner",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "NavigationMenuTrigger",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "navigationMenuTriggerStyle",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "NavigationMenuViewport",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ],
+      "types": [
+        {
+          "name": "NavigationMenuPositionerProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "NavigationMenuProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ]
+    },
+    {
+      "source": "./components/pagination",
+      "values": [
+        {
+          "name": "Pagination",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PaginationContent",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PaginationEllipsis",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PaginationItem",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PaginationLink",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PaginationNext",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PaginationPrevious",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "PaginationContentProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PaginationEllipsisProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PaginationItemProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PaginationLinkProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PaginationNextProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PaginationPreviousProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PaginationProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/panel-setting-button",
+      "values": [
+        {
+          "name": "PanelSettingButton",
+          "proposedTier": "monitor-high-risk"
+        }
+      ],
+      "types": [
+        {
+          "name": "PanelSettingButtonProps",
+          "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./components/popover",
+      "values": [
+        {
+          "name": "Popover",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PopoverAnchor",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PopoverClose",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PopoverContent",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PopoverDescription",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PopoverHeader",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PopoverPortal",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PopoverTitle",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PopoverTrigger",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "PopoverContentProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/portal-container",
+      "values": [
+        {
+          "name": "PortalContainerProvider",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "usePortalContainer",
+          "proposedTier": "monitor-high-risk"
+        }
+      ],
+      "types": [
+        {
+          "name": "PortalContainer",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "PortalContainerProviderProps",
+          "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./components/preview-card",
+      "values": [
+        {
+          "name": "PreviewCard",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "PreviewCardPopup",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "PreviewCardTrigger",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ],
+      "types": [
+        {
+          "name": "PreviewCardPopupProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ]
+    },
+    {
+      "source": "./components/progress",
+      "values": [
+        {
+          "name": "Progress",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ProgressIndicator",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ProgressLabel",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ProgressPrimitive",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "ProgressTrack",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ProgressValue",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": []
+    },
+    {
+      "source": "./components/progressive-blur",
+      "values": [
+        {
+          "name": "ProgressiveBlur",
+          "proposedTier": "monitor-high-risk"
+        }
+      ],
+      "types": [
+        {
+          "name": "ProgressiveBlurPosition",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "ProgressiveBlurProps",
+          "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./components/radio",
+      "values": [
+        {
+          "name": "Radio",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "RadioGroup",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "RadioGroupItem",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "RadioGroupProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "RadioProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/resizable",
+      "values": [
+        {
+          "name": "ResizableHandle",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ResizablePanel",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ResizablePanelGroup",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "ResizableHandleProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ResizablePanelGroupProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ResizablePanelProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/scroll-area",
+      "values": [
+        {
+          "name": "ScrollArea",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ScrollBar",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": []
+    },
+    {
+      "source": "./components/scrollable-list",
+      "values": [
+        {
+          "name": "ScrollableList",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "scrollableListControlClassNames",
+          "proposedTier": "preview-experimental-candidate"
+        }
+      ],
+      "types": [
+        {
+          "name": "ScrollableListProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/search-field",
+      "values": [
+        {
+          "name": "SearchField",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "SearchFieldProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/segmented-control",
+      "values": [
+        {
+          "name": "SegmentedControl",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "SegmentedControlItem",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SegmentedControlProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/select",
+      "values": [
+        {
+          "name": "Select",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SelectContent",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SelectGroup",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SelectGroupLabel",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SelectItem",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SelectPopup",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SelectSeparator",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SelectTrigger",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "selectTriggerDefaultClassName",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "SelectValue",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "SelectPopupProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SelectTriggerProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/separator",
+      "values": [
+        {
+          "name": "Separator",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SeparatorPrimitive",
+          "proposedTier": "preview-experimental-candidate"
+        }
+      ],
+      "types": [
+        {
+          "name": "SeparatorProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/sheet",
+      "values": [
+        {
+          "name": "Sheet",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetBackdrop",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetClose",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetContent",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetDescription",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetFooter",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetHeader",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetOverlay",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetPanel",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetPopup",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetPortal",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetPrimitive",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "SheetTitle",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetTrigger",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetViewport",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "SheetFooterProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetPanelProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetPopupProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetSide",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetVariant",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SheetViewportProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/sidebar",
+      "values": [
+        {
+          "name": "Sidebar",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarContent",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarFooter",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarGroup",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarGroupAction",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarGroupContent",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarGroupLabel",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarHeader",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarInput",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarInset",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarMenu",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarMenuAction",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarMenuBadge",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarMenuButton",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarMenuItem",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarMenuSkeleton",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarMenuSub",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarMenuSubButton",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarMenuSubItem",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarProvider",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarRail",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarSeparator",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarTrigger",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "useSidebar",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ],
+      "types": [
+        {
+          "name": "SidebarMenuButtonProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarMenuSubButtonProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarProviderProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ]
+    },
+    {
+      "source": "./components/sidebar-nav-tree",
+      "values": [
+        {
+          "name": "SidebarNavCollapsibleItem",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarNavGroup",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarNavLinkItem",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarNavSubLinkItem",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarNavSubList",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ],
+      "types": [
+        {
+          "name": "SidebarNavCollapsibleItemProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarNavGroupProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarNavLinkItemProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarNavSubLinkItemProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarNavSubListProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ]
+    },
+    {
+      "source": "./components/skeleton",
+      "values": [
+        {
+          "name": "Skeleton",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": []
+    },
+    {
+      "source": "./components/slider",
+      "values": [
+        {
+          "name": "Slider",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SliderValue",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "SliderProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/spinner",
+      "values": [
+        {
+          "name": "Spinner",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": []
+    },
+    {
+      "source": "./components/switch",
+      "values": [
+        {
+          "name": "Switch",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "SwitchProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/table",
+      "values": [
+        {
+          "name": "Table",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableBody",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableCaption",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableCell",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableFooter",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableHead",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableHeader",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableRow",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "TableBodyProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableCaptionProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableCellProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableFooterProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableHeaderProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableHeadProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableRowProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/tabs",
+      "values": [
+        {
+          "name": "Tabs",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TabsContent",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TabsList",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TabsPanel",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TabsTab",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TabsTrigger",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "TabsListProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TabsPanelProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TabsTabProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/text-ticker",
+      "values": [
+        {
+          "name": "TextTicker",
+          "proposedTier": "monitor-high-risk"
+        }
+      ],
+      "types": [
+        {
+          "name": "TextTickerProps",
+          "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./components/textarea",
+      "values": [
+        {
+          "name": "Textarea",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "TextareaProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/toaster",
+      "values": [
+        {
+          "name": "Toaster",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "ToasterProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/toggle",
+      "values": [
+        {
+          "name": "Toggle",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "ToggleProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/toggle-group",
+      "values": [
+        {
+          "name": "ToggleGroup",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ToggleGroupItem",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ToggleGroupSeparator",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "ToggleGroupItemProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ToggleGroupProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ToggleGroupSeparatorProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/tooltip",
+      "values": [
+        {
+          "name": "Tooltip",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TooltipContent",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TooltipCreateHandle",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "TooltipPopup",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TooltipPrimitive",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "TooltipProvider",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TooltipTrigger",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "TooltipContentProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TooltipPopupProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./conformance",
+      "values": [
+        {
+          "name": "getReactRendererConformance",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "reactRendererConformance",
+          "proposedTier": "preview-experimental-candidate"
+        }
+      ],
+      "types": [
+        {
+          "name": "ReactRendererConformanceEvidence",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "ReactVerifiedContractId",
+          "proposedTier": "preview-experimental-candidate"
+        }
+      ]
+    },
+    {
+      "source": "./hooks/use-extract-color",
+      "values": [
+        {
+          "name": "useExtractColor",
+          "proposedTier": "monitor-high-risk"
+        }
+      ],
+      "types": [
+        {
+          "name": "UseExtractColorOptions",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "UseExtractColorReturn",
+          "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./lib/extract-color",
+      "values": [
+        {
+          "name": "capColorForContrast",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "colorCacheKey",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "extractColorFromImage",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "extractColorFromLoadedImage",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "getCachedColor",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "loadAndExtractColor",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "TINT_MAX_LUMINANCE",
+          "proposedTier": "monitor-high-risk"
+        }
+      ],
+      "types": [
+        {
+          "name": "ColorSampleRegion",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "ExtractColorOptions",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "ExtractedColor",
+          "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./lib/motion",
+      "values": [
+        {
+          "name": "ATOM63_FLYOUT_TRANSITION",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "ATOM63_FLYOUT_TRANSITION_CSS",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "ATOM63_MOTION_EASE",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "ATOM63_MOTION_EASE_CSS",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "ATOM63_OVERLAY_MOTION_DURATION_CSS",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "ATOM63_OVERLAY_MOTION_DURATION_MS",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "ATOM63_OVERLAY_MOTION_EASE",
+          "proposedTier": "preview-experimental-candidate"
+        },
+        {
+          "name": "ATOM63_OVERLAY_MOTION_EASE_CSS",
+          "proposedTier": "preview-experimental-candidate"
+        }
+      ],
+      "types": []
+    },
+    {
+      "source": "./provider",
+      "values": [
+        {
+          "name": "UIProvider",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "useUIEnvironment",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "Density",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DesignLanguage",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "Mode",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "PointerInput",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "Theme",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "UIEnvironment",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "UIProviderProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "sonner",
+      "values": [
+        {
+          "name": "toast",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": []
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+/*
+ * Label recipe — a form field label. Faithful to prod @atom63/ui label.tsx
+ * (flex row, gap, medium weight, non-selectable) but recolored/spaced with
+ * --a63-* semantic tokens. Dims itself when the adjacent peer control is
+ * disabled or when it sits inside a `[data-disabled="true"]` group.
+ */
+
+.a63-Label {
+  display: flex;
+  align-items: center;
+  gap: var(--a63-space-2, 0.5rem);
+  color: var(--a63-text-primary);
+  font-family: var(--a63-control-font-family);
+  font-size: var(--a63-control-font-size-md);
+  font-weight: 500;
+  line-height: 1.2;
+  user-select: none;
+}
+
+/* Follow the associated control's disabled state (prod peer-disabled). */
+.peer:disabled ~ .a63-Label,
+.a63-Label:has(~ :disabled),
+.a63-Label:has(~ [data-disabled]:not([data-disabled='false'])) {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Dim + disable inside a disabled group (prod group-data-[disabled=true]). */
+[data-disabled]:not([data-disabled='false']) .a63-Label {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* Field owns semantic invalid color; Label must not mask that inheritance. */
+[data-invalid]:not([data-invalid='false']) .a63-Label {
+  color: inherit;
+}

@@ -1,0 +1,23 @@
+/*
+ * Marker contract — the tiny NON-interactive labeled chip (keycap, badge, chip,
+ * tag, inline code). Presentational; no state.
+ *
+ * Lean by design (see the taxonomy spec): semantics carry the whole look — the
+ * recipe reads --a63-surface-muted (bg), --a63-text-secondary (fg),
+ * --a63-border-subtle (border), --a63-control-radius (radius) and
+ * --a63-control-font-family (→ terminal-mono for free) at the use-site. The ONE
+ * thing themes vary distinctly for a keycap is its BEVEL, so that is the only
+ * contract token here.
+ *
+ * --a63-marker-shadow is a static keycap shadow (mode-independent), so it's safe
+ * to default at :root. Default is `none` — modern and terminal are flat pills
+ * (spec: "terminal none"); aqua and retro give it keycap character.
+ */
+
+:root {
+  /* `0 0 #0000` rather than `none`: recipes compose this into comma-separated
+     box-shadow lists (e.g. `var(--a63-marker-shadow), <focus ring>`), and `none`
+     is only legal as the sole value — it would invalidate the whole declaration
+     and silently drop the focus ring. This paints nothing. */
+  --a63-marker-shadow: 0 0 #0000;
+}

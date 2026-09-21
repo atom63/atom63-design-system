@@ -1,0 +1,6 @@
+# Vitest browser mode writes screenshots on test failure into the source tree;
+# these are debug artifacts, never source.
+__screenshots__/
+
+# Vitest browser failure dumps (not __screenshots__/)
+.vitest-attachments/

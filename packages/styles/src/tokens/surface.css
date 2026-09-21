@@ -1,0 +1,184 @@
+/*
+ * Surface (neutral) axis.
+ *
+ * Two personalization knobs for the neutrals:
+ *   1. PALETTE — [data-a63-surface="n1".."n6"] remaps the neutral ramp
+ *      (--surface-light-* / --surface-dark-*) to one of the six neutral palettes.
+ *   2. TINT    — --a63-surface-tint (0%..100%) bends the neutrals toward the brand
+ *      hue. Rather than mixing all 24 raw ramp stops (as a Tailwind app would), we
+ *      mix only the ~6 SEMANTIC surface/border tokens the system actually consumes,
+ *      in tokens/semantics.css, each toward a lightness-matched --a63-brand-* step.
+ *      That's ~12 color-mixes instead of 144, and it "just works" because those
+ *      tokens sit at the mode scope, co-located with surface + brand + tint on the
+ *      personalization root. Themes that fully re-skin surfaces (aqua/terminal)
+ *      define their own surface identity and do not receive the brand tint.
+ *
+ * n1 is the default palette (matches tokens/foundation/aliases.css); tint 0 = neutral.
+ */
+
+:root {
+  --a63-surface-tint: 0%;
+}
+
+:root,
+[data-a63-surface='n1'] {
+  --surface-light-1: var(--color-n1-light-1);
+  --surface-light-2: var(--color-n1-light-2);
+  --surface-light-3: var(--color-n1-light-3);
+  --surface-light-4: var(--color-n1-light-4);
+  --surface-light-5: var(--color-n1-light-5);
+  --surface-light-6: var(--color-n1-light-6);
+  --surface-light-7: var(--color-n1-light-7);
+  --surface-light-8: var(--color-n1-light-8);
+  --surface-light-9: var(--color-n1-light-9);
+  --surface-light-10: var(--color-n1-light-10);
+  --surface-light-11: var(--color-n1-light-11);
+  --surface-light-12: var(--color-n1-light-12);
+  --surface-dark-1: var(--color-n1-dark-1);
+  --surface-dark-2: var(--color-n1-dark-2);
+  --surface-dark-3: var(--color-n1-dark-3);
+  --surface-dark-4: var(--color-n1-dark-4);
+  --surface-dark-5: var(--color-n1-dark-5);
+  --surface-dark-6: var(--color-n1-dark-6);
+  --surface-dark-7: var(--color-n1-dark-7);
+  --surface-dark-8: var(--color-n1-dark-8);
+  --surface-dark-9: var(--color-n1-dark-9);
+  --surface-dark-10: var(--color-n1-dark-10);
+  --surface-dark-11: var(--color-n1-dark-11);
+  --surface-dark-12: var(--color-n1-dark-12);
+}
+
+[data-a63-surface='n2'] {
+  --surface-light-1: var(--color-n2-light-1);
+  --surface-light-2: var(--color-n2-light-2);
+  --surface-light-3: var(--color-n2-light-3);
+  --surface-light-4: var(--color-n2-light-4);
+  --surface-light-5: var(--color-n2-light-5);
+  --surface-light-6: var(--color-n2-light-6);
+  --surface-light-7: var(--color-n2-light-7);
+  --surface-light-8: var(--color-n2-light-8);
+  --surface-light-9: var(--color-n2-light-9);
+  --surface-light-10: var(--color-n2-light-10);
+  --surface-light-11: var(--color-n2-light-11);
+  --surface-light-12: var(--color-n2-light-12);
+  --surface-dark-1: var(--color-n2-dark-1);
+  --surface-dark-2: var(--color-n2-dark-2);
+  --surface-dark-3: var(--color-n2-dark-3);
+  --surface-dark-4: var(--color-n2-dark-4);
+  --surface-dark-5: var(--color-n2-dark-5);
+  --surface-dark-6: var(--color-n2-dark-6);
+  --surface-dark-7: var(--color-n2-dark-7);
+  --surface-dark-8: var(--color-n2-dark-8);
+  --surface-dark-9: var(--color-n2-dark-9);
+  --surface-dark-10: var(--color-n2-dark-10);
+  --surface-dark-11: var(--color-n2-dark-11);
+  --surface-dark-12: var(--color-n2-dark-12);
+}
+
+[data-a63-surface='n3'] {
+  --surface-light-1: var(--color-n3-light-1);
+  --surface-light-2: var(--color-n3-light-2);
+  --surface-light-3: var(--color-n3-light-3);
+  --surface-light-4: var(--color-n3-light-4);
+  --surface-light-5: var(--color-n3-light-5);
+  --surface-light-6: var(--color-n3-light-6);
+  --surface-light-7: var(--color-n3-light-7);
+  --surface-light-8: var(--color-n3-light-8);
+  --surface-light-9: var(--color-n3-light-9);
+  --surface-light-10: var(--color-n3-light-10);
+  --surface-light-11: var(--color-n3-light-11);
+  --surface-light-12: var(--color-n3-light-12);
+  --surface-dark-1: var(--color-n3-dark-1);
+  --surface-dark-2: var(--color-n3-dark-2);
+  --surface-dark-3: var(--color-n3-dark-3);
+  --surface-dark-4: var(--color-n3-dark-4);
+  --surface-dark-5: var(--color-n3-dark-5);
+  --surface-dark-6: var(--color-n3-dark-6);
+  --surface-dark-7: var(--color-n3-dark-7);
+  --surface-dark-8: var(--color-n3-dark-8);
+  --surface-dark-9: var(--color-n3-dark-9);
+  --surface-dark-10: var(--color-n3-dark-10);
+  --surface-dark-11: var(--color-n3-dark-11);
+  --surface-dark-12: var(--color-n3-dark-12);
+}
+
+[data-a63-surface='n4'] {
+  --surface-light-1: var(--color-n4-light-1);
+  --surface-light-2: var(--color-n4-light-2);
+  --surface-light-3: var(--color-n4-light-3);
+  --surface-light-4: var(--color-n4-light-4);
+  --surface-light-5: var(--color-n4-light-5);
+  --surface-light-6: var(--color-n4-light-6);
+  --surface-light-7: var(--color-n4-light-7);
+  --surface-light-8: var(--color-n4-light-8);
+  --surface-light-9: var(--color-n4-light-9);
+  --surface-light-10: var(--color-n4-light-10);
+  --surface-light-11: var(--color-n4-light-11);
+  --surface-light-12: var(--color-n4-light-12);
+  --surface-dark-1: var(--color-n4-dark-1);
+  --surface-dark-2: var(--color-n4-dark-2);
+  --surface-dark-3: var(--color-n4-dark-3);
+  --surface-dark-4: var(--color-n4-dark-4);
+  --surface-dark-5: var(--color-n4-dark-5);
+  --surface-dark-6: var(--color-n4-dark-6);
+  --surface-dark-7: var(--color-n4-dark-7);
+  --surface-dark-8: var(--color-n4-dark-8);
+  --surface-dark-9: var(--color-n4-dark-9);
+  --surface-dark-10: var(--color-n4-dark-10);
+  --surface-dark-11: var(--color-n4-dark-11);
+  --surface-dark-12: var(--color-n4-dark-12);
+}
+
+[data-a63-surface='n5'] {
+  --surface-light-1: var(--color-n5-light-1);
+  --surface-light-2: var(--color-n5-light-2);
+  --surface-light-3: var(--color-n5-light-3);
+  --surface-light-4: var(--color-n5-light-4);
+  --surface-light-5: var(--color-n5-light-5);
+  --surface-light-6: var(--color-n5-light-6);
+  --surface-light-7: var(--color-n5-light-7);
+  --surface-light-8: var(--color-n5-light-8);
+  --surface-light-9: var(--color-n5-light-9);
+  --surface-light-10: var(--color-n5-light-10);
+  --surface-light-11: var(--color-n5-light-11);
+  --surface-light-12: var(--color-n5-light-12);
+  --surface-dark-1: var(--color-n5-dark-1);
+  --surface-dark-2: var(--color-n5-dark-2);
+  --surface-dark-3: var(--color-n5-dark-3);
+  --surface-dark-4: var(--color-n5-dark-4);
+  --surface-dark-5: var(--color-n5-dark-5);
+  --surface-dark-6: var(--color-n5-dark-6);
+  --surface-dark-7: var(--color-n5-dark-7);
+  --surface-dark-8: var(--color-n5-dark-8);
+  --surface-dark-9: var(--color-n5-dark-9);
+  --surface-dark-10: var(--color-n5-dark-10);
+  --surface-dark-11: var(--color-n5-dark-11);
+  --surface-dark-12: var(--color-n5-dark-12);
+}
+
+[data-a63-surface='n6'] {
+  --surface-light-1: var(--color-n6-light-1);
+  --surface-light-2: var(--color-n6-light-2);
+  --surface-light-3: var(--color-n6-light-3);
+  --surface-light-4: var(--color-n6-light-4);
+  --surface-light-5: var(--color-n6-light-5);
+  --surface-light-6: var(--color-n6-light-6);
+  --surface-light-7: var(--color-n6-light-7);
+  --surface-light-8: var(--color-n6-light-8);
+  --surface-light-9: var(--color-n6-light-9);
+  --surface-light-10: var(--color-n6-light-10);
+  --surface-light-11: var(--color-n6-light-11);
+  --surface-light-12: var(--color-n6-light-12);
+  --surface-dark-1: var(--color-n6-dark-1);
+  --surface-dark-2: var(--color-n6-dark-2);
+  --surface-dark-3: var(--color-n6-dark-3);
+  --surface-dark-4: var(--color-n6-dark-4);
+  --surface-dark-5: var(--color-n6-dark-5);
+  --surface-dark-6: var(--color-n6-dark-6);
+  --surface-dark-7: var(--color-n6-dark-7);
+  --surface-dark-8: var(--color-n6-dark-8);
+  --surface-dark-9: var(--color-n6-dark-9);
+  --surface-dark-10: var(--color-n6-dark-10);
+  --surface-dark-11: var(--color-n6-dark-11);
+  --surface-dark-12: var(--color-n6-dark-12);
+}

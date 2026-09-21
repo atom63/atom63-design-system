@@ -1,0 +1,35 @@
+/*
+ * Radius contract.
+ *
+ * A stable intent name over the radius anchor/multiplier model for executable UI
+ * recipes. Raw --radius-* primitives remain available for other needs.
+ */
+
+:root {
+  --a63-avatar-radius: 50%;
+  --a63-radius-control: var(--radius-lg);
+}
+
+/*
+ * Radius personalization axis.
+ *
+ * [data-a63-radius] sets the multiplier the whole --radius-* scale (foundation/
+ * radius.css) already multiplies by, so one attribute rescales every corner.
+ * `default` = 1 restates the foundation default so a subtree can override back.
+ */
+[data-a63-radius='none'] {
+  --a63-avatar-radius: 0;
+  --radius-multiplier: 0;
+}
+[data-a63-radius='subtle'] {
+  --a63-avatar-radius: var(--radius-full);
+  --radius-multiplier: 0.5;
+}
+[data-a63-radius='default'] {
+  --a63-avatar-radius: 50%;
+  --radius-multiplier: 1;
+}
+[data-a63-radius='round'] {
+  --a63-avatar-radius: 50%;
+  --radius-multiplier: 1.5;
+}

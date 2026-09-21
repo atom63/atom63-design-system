@@ -1,0 +1,89 @@
+/*
+ * Popover recipe — the OVERLAY archetype as a click-activated content panel,
+ * a sibling of the Select popup + Tooltip. Its elevation reads the
+ * --a63-overlay-shadow lever; bg (--a63-surface-overlay), border
+ * (--a63-border-subtle), radius (--radius-lg), stacking (--z-layer-popover) and
+ * entrance motion (--a63-control-feedback-*) resolve from semantics/foundation
+ * at the use-site. No new --a63-* tokens.
+ *
+ * Open/close motion mirrors prod @atom63/ui: fade + zoom (~0.95) with a short
+ * side-aware slide (slide-in-from-* equivalents).
+ */
+
+.a63-Popover-positioner {
+  z-index: var(--z-layer-popover, 999);
+}
+
+.a63-Popover-popup {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-2_5);
+  width: 18rem;
+  max-width: var(--available-width);
+  padding: var(--a63-space-2_5);
+  border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
+  border-radius: var(--a63-overlay-radius, var(--radius-lg));
+  background-color: var(--a63-surface-overlay);
+  background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
+  background-blend-mode: normal, var(--a63-overlay-texture-blend);
+  backdrop-filter: var(--a63-overlay-backdrop);
+  box-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow);
+  color: var(--a63-text-primary);
+  font-family: var(--a63-control-font-family);
+  font-size: var(--a63-control-font-size-sm);
+  transform-origin: var(--transform-origin);
+  outline: none;
+  transition:
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-Popover-popup[data-starting-style],
+.a63-Popover-popup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.a63-Popover-popup[data-starting-style][data-side='bottom'],
+.a63-Popover-popup[data-ending-style][data-side='bottom'] {
+  transform: translateY(-0.5rem) scale(0.95);
+}
+
+.a63-Popover-popup[data-starting-style][data-side='top'],
+.a63-Popover-popup[data-ending-style][data-side='top'] {
+  transform: translateY(0.5rem) scale(0.95);
+}
+
+.a63-Popover-popup[data-starting-style][data-side='left'],
+.a63-Popover-popup[data-ending-style][data-side='left'] {
+  transform: translateX(0.5rem) scale(0.95);
+}
+
+.a63-Popover-popup[data-starting-style][data-side='right'],
+.a63-Popover-popup[data-ending-style][data-side='right'] {
+  transform: translateX(-0.5rem) scale(0.95);
+}
+
+.a63-Popover-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-0_5);
+}
+
+.a63-Popover-title {
+  color: var(--a63-text-primary);
+  font-weight: 500;
+  line-height: var(--typography-sm-line-height);
+}
+
+.a63-Popover-description {
+  color: var(--a63-text-secondary);
+  line-height: var(--typography-sm-line-height);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Popover-popup {
+    transition: none;
+  }
+}

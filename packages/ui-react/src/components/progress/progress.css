@@ -1,0 +1,70 @@
+/*
+ * Progress recipe — a horizontal determinate/indeterminate bar. Faithful to
+ * prod @atom63/ui: a recessed track (the field/track inset shadow + a hairline
+ * border) with a filled primary indicator that animates its width, plus
+ * optional Label / Value rows. Track inset = --a63-track-shadow; indicator
+ * sheen = --a63-control-gloss (theme-driven, `none` on flat themes). No new
+ * tokens.
+ */
+
+.a63-Progress {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: var(--a63-space-2);
+}
+
+.a63-Progress-label {
+  font-family: var(--a63-control-font-family);
+  font-size: var(--a63-control-font-size-sm);
+  font-weight: 500;
+  color: var(--a63-text-primary);
+}
+
+.a63-Progress-track {
+  display: block;
+  width: 100%;
+  height: 0.375rem;
+  overflow: hidden;
+  border: var(--a63-control-border-width) solid var(--a63-border-subtle);
+  border-radius: var(--radius-lg);
+  background-color: var(--a63-field-background, var(--a63-border-control));
+  box-shadow: var(--a63-track-shadow);
+}
+
+.a63-Progress-indicator {
+  height: 100%;
+  background-color: var(--a63-action-primary);
+  background-image: var(--a63-control-gloss, none);
+  transition:
+    transform var(--duration-slow) var(--a63-motion-ease-standard),
+    width var(--duration-slow) var(--a63-motion-ease-standard);
+}
+
+.a63-Progress-indicator[data-indeterminate] {
+  width: 40%;
+  animation: a63-progress-indeterminate var(--duration-slower) linear infinite;
+}
+
+.a63-Progress-value {
+  font-family: var(--a63-control-font-family);
+  font-size: var(--a63-control-font-size-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--a63-text-primary);
+}
+
+@keyframes a63-progress-indeterminate {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(250%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Progress-indicator {
+    animation: none;
+    transition: none;
+  }
+}

@@ -1,0 +1,34 @@
+import { Controls, Meta, Primary, Stories, Title } from '@storybook/addon-docs/blocks'
+
+import * as CheckboxStories from './checkbox.stories'
+
+<Meta of={CheckboxStories} />
+
+<Title />
+
+A checkbox — the **selection** archetype (bistate + indeterminate), the second consumer of the shared `--a63-selection-*` contract after Switch. Built on Base UI `checkbox`; the check/minus icons are inline SVG (no icon dependency).
+
+## Anatomy
+
+- `Checkbox` → `<button class="a63-Checkbox" data-slot="checkbox" data-size role="checkbox">` — the box.
+- The `Checkbox.Indicator` → `<span class="a63-Checkbox-indicator" data-slot="checkbox-indicator">` — the accent fill + icon overlay (check, or minus when indeterminate).
+
+## Contract
+
+- **Archetype:** selection — reads `--a63-selection-accent` / `-border` / `-focus-ring` at the use-site (same tokens as Switch), so the checked fill is the brand primary and follows brand + theme + mode for free.
+- **Sizes:** `sm` / `md` (default). **States:** unchecked · checked · indeterminate · disabled · invalid (`aria-invalid`).
+- Source of truth: `@atom63/ui-foundation` → `checkbox/checkbox-contract.ts`.
+
+## Theme sheet
+
+No per-theme checkbox code: checked = `--a63-selection-accent` (= `--a63-action-primary`), so aqua/retro/terminal/modern × light/dark all recolor via the brand/theme axes. The box uses `--radius-sm` (a small rounded square, deliberately not `--a63-control-radius` which some themes bump toward a pill).
+
+## Tokens it reads
+
+`--a63-selection-accent`(→`--a63-action-primary`) · `--a63-selection-border`(→`--a63-border-control`) · `--a63-selection-focus-ring`(→`--a63-focus-ring`) · `--a63-surface-control` (box) · `--a63-action-primary-foreground` (icon) · `--radius-sm` · `--a63-action-danger` (invalid) · `--a63-control-*` (border-width, feedback, focus-ring-width). No new tokens.
+
+<Primary />
+
+<Controls />
+
+<Stories />

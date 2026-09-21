@@ -1,0 +1,78 @@
+@layer components {
+  * {
+    scrollbar-color: color-mix(in srgb, var(--a63-text-primary), transparent 50%)
+      var(--a63-border-subtle);
+    scrollbar-width: thin;
+  }
+
+  *::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: var(--a63-border-subtle);
+    border-radius: 9999px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--a63-text-primary), transparent 50%);
+    border-radius: 9999px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--a63-text-primary), transparent 30%);
+  }
+
+  *::-webkit-scrollbar-corner {
+    background: var(--a63-border-subtle);
+  }
+}
+
+.scrollbar-none,
+.no-scrollbar {
+  scrollbar-width: none;
+
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/*
+ * scrollbar-reveal — hover-revealed scrollbar (matches ScrollArea look).
+ * Use on overflow containers where ScrollArea is not appropriate.
+ */
+.scrollbar-reveal {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 9999px;
+    transition: background-color 0.15s ease 0.3s;
+  }
+
+  &:hover {
+    scrollbar-color: color-mix(in srgb, var(--a63-text-primary), transparent 80%) transparent;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--a63-text-primary), transparent 80%);
+    transition: background-color 0.1s ease 0s;
+  }
+
+  &:hover::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in srgb, var(--a63-text-primary), transparent 60%);
+  }
+}

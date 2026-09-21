@@ -1,0 +1,216 @@
+/*
+ * Item recipe — a flexible list/row primitive (media · content · actions).
+ * Faithful to prod @atom63/ui: a rounded row with variant chrome
+ * (default/outline/muted) + a size ramp (default/sm/xs), an ItemMedia lockup
+ * (default/icon/image), stacked ItemContent (Title + Description), trailing
+ * Actions, and Header/Footer bands. Interactive rendered rows get a muted hover.
+ * ItemGroup lays rows out in a gapped column; ItemSeparator divides them.
+ * Colors + focus ring from --a63-* tokens.
+ */
+
+/* ── Group ──────────────────────────────────────────────────────────────── */
+.a63-ItemGroup {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: var(--a63-space-4);
+}
+.a63-ItemGroup:has([data-size='sm']) {
+  gap: 0.625rem;
+}
+.a63-ItemGroup:has([data-size='xs']) {
+  gap: var(--a63-space-2);
+}
+
+.a63-ItemSeparator {
+  margin-block: var(--a63-space-2);
+}
+
+/* ── Item container ─────────────────────────────────────────────────────── */
+.a63-Item {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  border: var(--a63-control-border-width) solid transparent;
+  border-radius: var(--radius-lg);
+  color: inherit;
+  font-family: var(--a63-control-font-family);
+  font-size: var(--a63-control-font-size-sm);
+  text-decoration: none;
+  outline: none;
+  transition: background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-Item:focus-visible {
+  border-color: var(--a63-focus-ring);
+  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+    color-mix(in oklch, var(--a63-focus-ring) 50%, transparent);
+}
+/* Interaction belongs to the rendered semantic element, never to a static row. */
+:where(a, button, [role='button'], [role='link']).a63-Item {
+  min-height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+  cursor: pointer;
+}
+/* Each size sits on its own rung — they all read `sm` before, so `default` and
+   `xs` rows were floored by the wrong one. */
+:where(a, button, [role='button'], [role='link']).a63-Item[data-size='default'] {
+  min-height: max(
+    calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+}
+:where(a, button, [role='button'], [role='link']).a63-Item[data-size='xs'] {
+  min-height: max(
+    calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+}
+:where(a, button, [role='button'], [role='link']).a63-Item:hover {
+  background-color: var(--a63-surface-muted);
+}
+
+/* Variants (border/fill only) */
+.a63-Item[data-variant='default'] {
+  border-color: transparent;
+}
+.a63-Item[data-variant='outline'] {
+  border-color: var(--a63-border-subtle);
+}
+.a63-Item[data-variant='muted'] {
+  border-color: transparent;
+  background-color: color-mix(in oklch, var(--a63-surface-muted) 50%, transparent);
+}
+
+/* Sizes (gap + padding). Block padding comes from the row contract so the
+   design-language axis can retune row density; inline padding stays local. */
+.a63-Item[data-size='default'] {
+  gap: var(--a63-space-4);
+  padding: var(--a63-row-padding-block-md) var(--a63-space-4);
+}
+.a63-Item[data-size='sm'] {
+  gap: 0.625rem;
+  padding: var(--a63-row-padding-block-sm) var(--a63-space-4);
+}
+.a63-Item[data-size='xs'] {
+  gap: var(--a63-space-2);
+  padding-inline: 0.625rem;
+  padding-block: var(--a63-row-padding-block-xs);
+}
+/* xs rows nested in a menu content shed their padding. */
+[data-slot='dropdown-menu-content'] .a63-Item[data-size='xs'] {
+  padding: 0;
+}
+
+/* ── Media lockup ───────────────────────────────────────────────────────── */
+.a63-ItemMedia {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--a63-space-2);
+}
+.a63-ItemMedia svg {
+  pointer-events: none;
+}
+/* When paired with a description the media aligns to the top, nudged down. */
+.a63-Item:has([data-slot='item-description']) .a63-ItemMedia {
+  align-self: flex-start;
+  transform: translateY(0.125rem);
+}
+
+.a63-ItemMedia[data-variant='default'] {
+  background: transparent;
+}
+.a63-ItemMedia[data-variant='icon'] svg:not([class*='size-']) {
+  width: 1rem;
+  height: 1rem;
+}
+.a63-ItemMedia[data-variant='image'] {
+  width: 2.5rem;
+  height: 2.5rem;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+}
+.a63-Item[data-size='sm'] .a63-ItemMedia[data-variant='image'] {
+  width: 2rem;
+  height: 2rem;
+}
+.a63-Item[data-size='xs'] .a63-ItemMedia[data-variant='image'] {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.a63-ItemMedia[data-variant='image'] img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Content / Title / Description ──────────────────────────────────────── */
+.a63-ItemContent {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--a63-space-unit);
+}
+.a63-Item[data-size='xs'] .a63-ItemContent {
+  gap: 0;
+}
+/* A second content column doesn't grow. */
+.a63-ItemContent + .a63-ItemContent {
+  flex: none;
+}
+
+.a63-ItemTitle {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: var(--a63-space-2);
+  font-size: var(--a63-control-font-size-sm);
+  font-weight: 500;
+  line-height: 1.375;
+  text-underline-offset: 4px;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.a63-ItemDescription {
+  color: var(--a63-text-secondary);
+  font-size: var(--a63-control-font-size-sm);
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.a63-Item[data-size='xs'] .a63-ItemDescription {
+  font-size: var(--a63-control-font-size-xs);
+}
+.a63-ItemDescription a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.a63-ItemDescription a:hover {
+  color: var(--a63-action-primary);
+}
+
+/* ── Actions / Header / Footer ──────────────────────────────────────────── */
+.a63-ItemActions {
+  display: flex;
+  align-items: center;
+  gap: var(--a63-space-2);
+}
+.a63-ItemHeader,
+.a63-ItemFooter {
+  display: flex;
+  flex-basis: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--a63-space-2);
+}

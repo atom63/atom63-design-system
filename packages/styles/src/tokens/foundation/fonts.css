@@ -1,0 +1,11 @@
+/* Fonts — family choices and font-family aliases */
+
+:root {
+  --font-family-sans:
+    'Geist', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  --font-family-serif: 'Brawler', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-family-mono:
+    'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+  --font-family-pixel: 'Doto', 'Geist Mono', ui-monospace, monospace;
+}

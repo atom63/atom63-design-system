@@ -1,0 +1,44 @@
+import { Controls, Meta, Primary, Stories, Title } from '@storybook/addon-docs/blocks'
+
+import * as CardStories from './card.stories'
+
+<Meta of={CardStories} />
+
+<Title />
+
+A static, in-flow container — the **surface** archetype. The anatomy is ported from the site's real `base-card`: a shell with `variant` (default / ghost / interactive / overlay) and a `padding` scale, plus a full slot family for media, text, tags, and actions. Every part is polymorphic via the Base UI `render` prop. App-coupled runtime (motion cursor-label, `Image`/`Video`, Tailwind) is intentionally NOT part of the foundation component — media slots are chrome-only containers you fill.
+
+## Anatomy
+
+- `Card` → `<div class="a63-Card" data-slot="card" data-variant data-padding>` — the surface shell.
+- `CardHeader` · `CardLabel` — the top layout row + leading label.
+- `CardMedia` — an aspect-ratio media frame; its radius stays **concentric** with the card corner via `calc(card-radius − card-pad)`. Drop an `<img>`/`<video>` inside.
+- `CardMediaOverlay` (+ `Image` / `Scrim` / `TopRight` / `Bottom` / `IconButton`) — full-bleed media with a gradient scrim and absolutely-positioned slots.
+- `CardContent` → `CardTitle` (`lineClamp`) + `CardDescription` (`lineClamp`) + `CardTags`.
+- `CardFooter` · `CardAction` — bottom row + right-pinned actions.
+- `CardCursorLabel` + `useCardCursor()` — base-card's link affordance, DS-style: the hook tracks the pointer (motion-free, no re-render — position written to `--a63-card-cursor-x/y`), `CardCursorLabel` is the pill shown while `[data-cursor-active]`. Pass `onMove` to the hook to wire your own motion lib (spring smoothing) — the DS stays motion-free.
+- `cardLinkClassName` — an unclipped `<a>` wrapper class so the interactive lift/shadow aren't cut off.
+
+`CardMedia` opts into a subtle `hoverScale` zoom on card hover by default (`hoverScale={false}` to opt out). `CardTitle` defaults to a 2-line clamp, `CardDescription` to 3 — override with `lineClamp`.
+
+## Contract
+
+- **Archetype:** surface (static, no z-elevation at rest — the in-flow counterpart to overlay).
+- **Variants:** `default` (bordered panel) · `ghost` (no shell, pseudo hover wash) · `interactive` (hover lift) · `overlay` (rounded-2xl, hover lift; padding defaults to `none`).
+- **Padding presets:** `Card` + `CardHeader` take `none`/`sm`/`md`/`lg`; `CardContent`/`CardFooter` add `xs` and also accept a **responsive** form `padding={{ base, sm }}` — the `sm` step applies once the **card's own width** crosses ~24rem (a CSS `@container` query on the root, so a card in a narrow grid cell keeps its base padding regardless of viewport). `lineClamp`: 1–3.
+- **Composition (header · content · footer):** every slot is optional — compose what the layout needs. `CardHeader` and `CardFooter` are flex rows and each can carry a trailing `CardAction` (`margin-inline-start: auto`), so an action can live in the header *and* the footer; `CardLabel` is the leading header label, `CardTags` the wrap row in content. The footer sits **flush** (`padding-top: 0`) under the content block. See the **Compositions** story (full "composable slots" card + article / ghost-list / stat variations). The root `padding` also sets the concentric media radius, so `CardMedia` corners always nest inside the card corner.
+- Source of truth: `@atom63/ui-foundation` → `card/card-contract.ts`.
+
+## Theme sheet
+
+Resting elevation is the one `--a63-surface-shadow` lever — modern soft-flush, aqua glassy lift, retro Win98 bevel, terminal phosphor edge — so each theme × mode reskins the Card for free. `interactive`/`overlay` layer a hover-lift on top.
+
+## Tokens it reads
+
+`--a63-surface-shadow` (theme lever) · `--a63-surface-panel` / `--a63-surface-muted` (fills) · `--a63-border-subtle` / `--a63-border-control` (border, hover) · `--radius-3xl` / `--radius-2xl` / `--radius-full` (radii) · `--a63-text-primary` / `--a63-text-secondary` (text) · `--a63-focus-ring` (link focus) · `--a63-control-feedback-*` (transitions). No new tokens.
+
+<Primary />
+
+<Controls />
+
+<Stories />

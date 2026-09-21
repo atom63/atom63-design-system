@@ -1,0 +1,29 @@
+import { Controls, Meta, Primary, Stories, Title } from '@storybook/addon-docs/blocks'
+
+import * as InputStories from './input.stories'
+
+<Meta of={InputStories} />
+
+<Title />
+
+The recessed **entry** archetype, and its composable **InputGroup**. Two-part anatomy (mirrors production `@atom63/ui`): an `input-control` wrapper owns the field chrome (border, recessed `--a63-field-shadow`, `:focus-within` ring); the inner Base UI input is the transparent field.
+
+## Anatomy
+
+- `Input` → `<span class="a63-Input" data-slot="input-control">` wrapping `<input class="a63-Input-field" data-slot="input">`. Carries `data-size`, and `data-invalid` / `data-disabled` / `data-unstyled` when set.
+- `InputGroup` owns the chrome and provides `{ size, disabled, invalid }` context to `InputGroupInput` or `InputGroupTextarea` (rendered `unstyled`), `InputGroupAddon` (inline or block alignment), `InputGroupButton`, and `InputGroupText`.
+
+## Contract
+
+- **Sizes:** `sm` `md` `lg` (default `md`). **States:** rest / hover / focus / disabled / invalid.
+- Source of truth: `@atom63/ui-foundation` → `input/input-contract.ts`.
+
+## Tokens it reads
+
+At the use-site the recipe resolves `--a63-field-*` (background, border, radius, focus ring, `--a63-field-shadow`) with live semantic fallbacks, so mode/theme/brand overrides win per field scope. `invalid` stays semantic red across every theme.
+
+<Primary />
+
+<Controls />
+
+<Stories />

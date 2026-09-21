@@ -1,0 +1,275 @@
+/*
+ * NavigationMenu recipe — a horizontal navigation bar whose items reveal a
+ * shared, animated content panel (Base UI NavigationMenu), faithful to prod
+ * @atom63/ui. Triggers + links highlight with the muted fill (prod hover:bg-muted
+ * / focus:bg-muted / data-open|data-active → --a63-surface-muted); the shared popup is the OVERLAY archetype
+ * (--a63-surface-overlay + --a63-overlay-shadow + --a63-border-subtle, radius
+ * --radius-lg, stacking --z-layer-menu). The popup width/height morph between
+ * items via Base UI's --popup-width/--popup-height. All fills are
+ * theme-overridden semantics, so the 4 themes restyle it for free. No new
+ * --a63-* tokens.
+ */
+
+.a63-NavigationMenu {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  width: 100%;
+  max-width: max-content;
+  font-family: var(--a63-control-font-family);
+}
+
+.a63-NavigationMenu-list {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+  touch-action: pan-x;
+}
+.a63-NavigationMenu-list::-webkit-scrollbar {
+  display: none;
+}
+
+.a63-NavigationMenu-item {
+  position: relative;
+}
+
+/* ── Trigger ───────────────────────────────────────────────────────────── */
+
+.a63-NavigationMenu-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--a63-space-1);
+  width: max-content;
+  min-height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+  padding-inline: var(--a63-control-padding-inline-sm);
+  border: 0;
+  border-radius: var(--a63-control-radius);
+  background: transparent;
+  color: var(--a63-text-primary);
+  font-family: inherit;
+  font-size: var(--a63-control-font-size-sm);
+  font-weight: var(--a63-control-font-weight);
+  line-height: 1;
+  white-space: nowrap;
+  appearance: none;
+  cursor: pointer;
+  outline: none;
+  transition:
+    background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-NavigationMenu-trigger:focus-visible,
+.a63-NavigationMenu-trigger[data-popup-open] {
+  background: var(--a63-surface-muted);
+}
+@media (hover: hover) {
+  .a63-NavigationMenu-trigger:hover {
+    background: var(--a63-surface-muted);
+  }
+}
+
+.a63-NavigationMenu-trigger:focus-visible {
+  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+}
+
+.a63-NavigationMenu-trigger[data-disabled] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.a63-NavigationMenu-trigger-icon {
+  position: relative;
+  top: 1px;
+  flex-shrink: 0;
+  transition: rotate var(--duration-normal) var(--a63-motion-ease-emphasized, ease);
+}
+.a63-NavigationMenu-trigger[data-popup-open] .a63-NavigationMenu-trigger-icon {
+  rotate: 180deg;
+}
+
+/* ── Content (per-item slice inside the shared viewport) ───────────────── */
+
+.a63-NavigationMenu-content {
+  width: auto;
+  height: 100%;
+  padding: var(--a63-space-1);
+  transition:
+    opacity var(--duration-normal) var(--a63-motion-ease-emphasized),
+    transform var(--duration-normal) var(--a63-motion-ease-emphasized);
+}
+
+.a63-NavigationMenu-content[data-starting-style],
+.a63-NavigationMenu-content[data-ending-style] {
+  opacity: 0;
+}
+.a63-NavigationMenu-content[data-starting-style][data-activation-direction='left'] {
+  transform: translateX(-50%);
+}
+.a63-NavigationMenu-content[data-starting-style][data-activation-direction='right'] {
+  transform: translateX(50%);
+}
+.a63-NavigationMenu-content[data-ending-style][data-activation-direction='left'] {
+  transform: translateX(50%);
+}
+.a63-NavigationMenu-content[data-ending-style][data-activation-direction='right'] {
+  transform: translateX(-50%);
+}
+
+/* ── Positioner + shared popup ─────────────────────────────────────────── */
+
+.a63-NavigationMenu-positioner {
+  isolation: isolate;
+  z-index: var(--z-layer-menu, var(--z-layer-popover, 999));
+  width: var(--positioner-width);
+  height: var(--positioner-height);
+  max-width: var(--available-width);
+  transition:
+    top var(--duration-normal) var(--a63-motion-ease-emphasized),
+    left var(--duration-normal) var(--a63-motion-ease-emphasized),
+    right var(--duration-normal) var(--a63-motion-ease-emphasized),
+    bottom var(--duration-normal) var(--a63-motion-ease-emphasized);
+}
+.a63-NavigationMenu-positioner[data-instant] {
+  transition: none;
+}
+
+.a63-NavigationMenu-popup {
+  position: relative;
+  width: var(--popup-width);
+  height: var(--popup-height);
+  max-width: calc(
+    100dvw - var(--a63-safe-area-left, 0px) - var(--a63-safe-area-right, 0px) - 2 *
+      var(--a63-space-4)
+  );
+  max-height: min(var(--available-height), calc(var(--a63-viewport-height, 100vh) * 0.72));
+  border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
+  border-radius: var(--a63-overlay-radius, var(--radius-lg));
+  background-color: var(--a63-surface-overlay);
+  background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
+  background-blend-mode: normal, var(--a63-overlay-texture-blend);
+  backdrop-filter: var(--a63-overlay-backdrop);
+  box-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow);
+  color: var(--a63-text-primary);
+  transform-origin: var(--transform-origin);
+  outline: none;
+  transition:
+    opacity var(--duration-normal) var(--a63-motion-ease-emphasized),
+    transform var(--duration-normal) var(--a63-motion-ease-emphasized),
+    width var(--duration-normal) var(--a63-motion-ease-emphasized),
+    height var(--duration-normal) var(--a63-motion-ease-emphasized);
+}
+
+.a63-NavigationMenu-popup[data-starting-style],
+.a63-NavigationMenu-popup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+.a63-NavigationMenu-viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+@media (max-width: 40rem) {
+  .a63-NavigationMenu-viewport {
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+/* ── Link ──────────────────────────────────────────────────────────────── */
+
+.a63-NavigationMenu-link {
+  display: flex;
+  align-items: center;
+  gap: var(--a63-space-2);
+  min-height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+  padding: var(--a63-space-2);
+  border-radius: var(--a63-control-radius);
+  color: var(--a63-text-primary);
+  font-size: var(--a63-control-font-size-sm);
+  text-decoration: none;
+  outline: none;
+  transition:
+    background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-NavigationMenu-link:focus-visible,
+.a63-NavigationMenu-link[data-active] {
+  background: var(--a63-surface-muted);
+}
+@media (hover: hover) {
+  .a63-NavigationMenu-link:hover {
+    background: var(--a63-surface-muted);
+  }
+}
+
+.a63-NavigationMenu-link svg {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+}
+
+/* ── Indicator (arrow) ─────────────────────────────────────────────────── */
+
+.a63-NavigationMenu-indicator {
+  top: 100%;
+  z-index: var(--z-layer-raised, 1);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 0.375rem;
+  overflow: hidden;
+  transition: opacity var(--duration-fast) var(--a63-control-feedback-ease);
+}
+.a63-NavigationMenu-indicator[data-state='hidden'] {
+  opacity: 0;
+}
+.a63-NavigationMenu-indicator[data-state='visible'] {
+  opacity: 1;
+}
+
+.a63-NavigationMenu-indicator-arrow {
+  position: relative;
+  top: 60%;
+  width: 0.5rem;
+  height: 0.5rem;
+  rotate: 45deg;
+  border-top-left-radius: var(--radius-xs);
+  background: var(--a63-border-subtle);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-NavigationMenu-trigger,
+  .a63-NavigationMenu-trigger-icon,
+  .a63-NavigationMenu-content,
+  .a63-NavigationMenu-positioner,
+  .a63-NavigationMenu-popup,
+  .a63-NavigationMenu-link,
+  .a63-NavigationMenu-indicator {
+    transition: none;
+  }
+}

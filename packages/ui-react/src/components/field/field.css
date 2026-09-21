@@ -1,0 +1,260 @@
+/*
+ * Field recipe — layout/label/description/error scaffolding for form controls.
+ * Faithful to prod @atom63/ui field.tsx (flex column stacks, orientation
+ * variants, invalid-state recolor, muted description, destructive error) but
+ * spaced/colored with --a63-* semantic tokens. No new tokens: muted text →
+ * --a63-text-secondary, destructive → --a63-action-danger, container-query
+ * responsive orientation keyed off .a63-FieldGroup as the @container.
+ */
+
+/* ── FieldSet ──────────────────────────────────────────────────────────── */
+.a63-FieldSet {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-4, 1rem);
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-inline-size: 0;
+}
+/* prod: tighter gap around grouped selection controls */
+.a63-FieldSet:has(> [data-slot='checkbox-group']),
+.a63-FieldSet:has(> [data-slot='radio-group']) {
+  gap: var(--a63-space-3, 0.75rem);
+}
+
+/* ── FieldLegend ───────────────────────────────────────────────────────── */
+.a63-FieldLegend {
+  margin-bottom: var(--a63-space-1_5, 0.375rem);
+  color: var(--a63-text-primary);
+  font-family: var(--a63-control-font-family);
+  font-weight: 500;
+  line-height: 1.2;
+}
+.a63-FieldLegend[data-variant='legend'] {
+  font-size: var(--a63-control-font-size-md);
+}
+.a63-FieldLegend[data-variant='label'] {
+  font-size: var(--a63-control-font-size-sm);
+}
+
+/* ── FieldGroup ────────────────────────────────────────────────────────── */
+.a63-FieldGroup {
+  container: field-group / inline-size;
+  display: flex;
+  inline-size: 100%;
+  /* Size containment for @container would otherwise report min-content as 0 and
+     let flex/grid parents collapse the group (narrow Storybook Themes rows). */
+  min-inline-size: 0;
+  flex-direction: column;
+  gap: var(--a63-space-5, 1.25rem);
+}
+.a63-FieldGroup[data-slot='checkbox-group'],
+.a63-FieldGroup[data-slot='radio-group'] {
+  gap: var(--a63-space-3, 0.75rem);
+}
+.a63-FieldGroup > .a63-FieldGroup,
+.a63-FieldGroup > [data-slot='field-group'] {
+  gap: var(--a63-space-4, 1rem);
+}
+.a63-FieldGroup[data-variant='outline'] .a63-FieldSeparator {
+  margin-bottom: calc(var(--a63-space-2, 0.5rem) * -1);
+}
+
+/* ── Field ─────────────────────────────────────────────────────────────── */
+.a63-Field {
+  display: flex;
+  /* Column is the default orientation — set it on the base rule so a missing
+     data-orientation never falls through to row (collapsed inputs + wrapped errors). */
+  flex-direction: column;
+  inline-size: 100%;
+  min-inline-size: 0;
+  gap: var(--a63-space-2, 0.5rem);
+  color: var(--a63-text-primary);
+}
+.a63-Field[data-invalid='true'] {
+  color: var(--a63-action-danger);
+}
+
+/* orientation: vertical (default) — stretch controls to the field width */
+.a63-Field[data-orientation='vertical'] > *,
+.a63-Field:not([data-orientation]) > * {
+  inline-size: 100%;
+}
+.a63-Field[data-orientation='vertical'] > .sr-only,
+.a63-Field:not([data-orientation]) > .sr-only {
+  inline-size: auto;
+}
+
+/* orientation: horizontal */
+.a63-Field[data-orientation='horizontal'] {
+  flex-direction: row;
+  align-items: center;
+}
+.a63-Field[data-orientation='horizontal']:has(> [data-slot='field-content']) {
+  align-items: flex-start;
+}
+.a63-Field[data-orientation='horizontal'] > [data-slot='field-label'] {
+  flex: 1 1 auto;
+}
+/* prod: nudge checkbox/radio to the first text line when content stacks beside them */
+.a63-Field[data-orientation='horizontal']:has(> [data-slot='field-content']) > [role='checkbox'],
+.a63-Field[data-orientation='horizontal']:has(> [data-slot='field-content']) > [role='radio'] {
+  margin-top: 1px;
+}
+
+/* orientation: responsive — stacks below the field-group @container md break */
+.a63-Field[data-orientation='responsive'] {
+  flex-direction: column;
+}
+.a63-Field[data-orientation='responsive'] > * {
+  inline-size: 100%;
+}
+.a63-Field[data-orientation='responsive'] > .sr-only {
+  inline-size: auto;
+}
+@container field-group (min-width: 28rem) {
+  .a63-Field[data-orientation='responsive'] {
+    flex-direction: row;
+    align-items: center;
+  }
+  .a63-Field[data-orientation='responsive'] > * {
+    inline-size: auto;
+  }
+  .a63-Field[data-orientation='responsive']:has(> [data-slot='field-content']) {
+    align-items: flex-start;
+  }
+  .a63-Field[data-orientation='responsive'] > [data-slot='field-label'] {
+    flex: 1 1 auto;
+  }
+  .a63-Field[data-orientation='responsive']:has(> [data-slot='field-content']) > [role='checkbox'],
+  .a63-Field[data-orientation='responsive']:has(> [data-slot='field-content']) > [role='radio'] {
+    margin-top: 1px;
+  }
+}
+
+/* ── FieldContent ──────────────────────────────────────────────────────── */
+.a63-FieldContent {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: 0.125rem;
+  line-height: 1.35;
+}
+
+/* ── FieldLabel ────────────────────────────────────────────────────────── */
+.a63-FieldLabel {
+  display: flex;
+  inline-size: fit-content;
+  gap: var(--a63-space-2, 0.5rem);
+  line-height: 1.35;
+}
+/* dim inside a disabled field (prod group-data-[disabled=true]/field) */
+.a63-Field[data-disabled='true'] .a63-FieldLabel {
+  opacity: 0.5;
+}
+/* selection-card label wrapping a nested field (prod checked-card treatment) */
+.a63-FieldLabel:has(> [data-slot='field']) {
+  inline-size: 100%;
+  flex-direction: column;
+  border: var(--a63-control-border-width) solid transparent;
+  border-radius: var(--radius-lg);
+}
+.a63-FieldLabel:has([data-checked]) {
+  border-color: color-mix(in oklch, var(--a63-action-primary) 30%, transparent);
+  background-color: color-mix(in oklch, var(--a63-action-primary) 5%, transparent);
+}
+/* prod darkens the tint + lightens the border in dark mode
+ * (dark:has-data-checked:border-primary/20 dark:…:bg-primary/10) */
+:is(.dark, [data-a63-mode='dark']) .a63-FieldLabel:has([data-checked]) {
+  border-color: color-mix(in oklch, var(--a63-action-primary) 20%, transparent);
+  background-color: color-mix(in oklch, var(--a63-action-primary) 10%, transparent);
+}
+.a63-FieldLabel [data-slot='field'] {
+  padding: 0.625rem;
+}
+
+/* ── FieldTitle ────────────────────────────────────────────────────────── */
+.a63-FieldTitle {
+  display: flex;
+  inline-size: fit-content;
+  align-items: center;
+  gap: var(--a63-space-2, 0.5rem);
+  font-size: var(--a63-control-font-size-sm);
+  font-weight: 500;
+}
+.a63-Field[data-disabled='true'] .a63-FieldTitle {
+  opacity: 0.5;
+}
+
+/* ── FieldDescription ──────────────────────────────────────────────────── */
+.a63-FieldDescription {
+  margin: 0;
+  text-align: left;
+  color: var(--a63-text-secondary);
+  font-family: var(--a63-control-font-family);
+  font-size: var(--a63-control-font-size-sm);
+  font-weight: 400;
+  line-height: 1.5;
+}
+/* prod group-has-data-horizontal/field:text-balance — balance beside controls */
+.a63-Field[data-orientation='horizontal'] .a63-FieldDescription,
+.a63-Field[data-orientation='responsive'] .a63-FieldDescription {
+  text-wrap: balance;
+}
+/* nudge tight against a preceding legend (prod [[data-variant=legend]+&]) */
+[data-variant='legend'] + .a63-FieldDescription {
+  margin-top: -0.375rem;
+}
+.a63-FieldDescription:last-child {
+  margin-top: 0;
+}
+/* prod nth-last-2:-mt-1 — tighten when description sits above a trailing control/error */
+.a63-FieldDescription:nth-last-child(2) {
+  margin-top: -0.25rem;
+}
+.a63-FieldDescription a {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.a63-FieldDescription a:hover {
+  color: var(--a63-action-primary);
+}
+
+/* ── FieldSeparator ────────────────────────────────────────────────────── */
+.a63-FieldSeparator {
+  position: relative;
+  margin-block: calc(var(--a63-space-2, 0.5rem) * -1);
+  block-size: 1.25rem;
+  font-size: var(--a63-control-font-size-sm);
+}
+.a63-FieldSeparator-line {
+  position: absolute;
+  inset: 0;
+  top: 50%;
+}
+.a63-FieldSeparator-content {
+  position: relative;
+  display: block;
+  inline-size: fit-content;
+  margin-inline: auto;
+  padding-inline: var(--a63-space-2, 0.5rem);
+  background-color: var(--a63-surface-page);
+  color: var(--a63-text-secondary);
+}
+
+/* ── FieldError ────────────────────────────────────────────────────────── */
+.a63-FieldError {
+  color: var(--a63-action-danger);
+  font-family: var(--a63-control-font-family);
+  font-size: var(--a63-control-font-size-sm);
+  font-weight: 400;
+}
+.a63-FieldError-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-1);
+  margin: 0;
+  margin-inline-start: var(--a63-space-4);
+  list-style: disc;
+}

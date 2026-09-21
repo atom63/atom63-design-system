@@ -1,0 +1,79 @@
+/*
+ * Marquee recipe — an infinitely scrolling strip. The container clips overflow
+ * and lays out `repeat` duplicate tracks; each track scrolls one --gap-adjusted
+ * span via the a63-marquee keyframes (prod's animate-marquee). data-orientation
+ * switches axis; reverse/paused/pauseOnHover drive the animation play-state.
+ * Animation is suppressed under prefers-reduced-motion.
+ */
+
+.a63-Marquee {
+  --gap: 1rem;
+  --duration: 40s;
+
+  display: flex;
+  gap: var(--gap);
+  padding: var(--a63-space-2);
+  overflow: hidden;
+}
+.a63-Marquee[data-orientation='horizontal'] {
+  flex-direction: row;
+}
+.a63-Marquee[data-orientation='vertical'] {
+  flex-direction: column;
+}
+
+.a63-Marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: space-around;
+  gap: var(--gap);
+}
+.a63-Marquee-track[data-orientation='horizontal'] {
+  flex-direction: row;
+  animation: a63-marquee var(--duration) linear infinite;
+}
+.a63-Marquee-track[data-orientation='vertical'] {
+  flex-direction: column;
+  animation: a63-marquee-vertical var(--duration) linear infinite;
+}
+
+.a63-Marquee-track[data-reverse] {
+  animation-direction: reverse;
+}
+.a63-Marquee-track[data-paused] {
+  animation-play-state: paused;
+}
+.a63-Marquee:hover .a63-Marquee-track[data-pause-on-hover],
+.a63-Marquee:focus-within .a63-Marquee-track[data-pause-on-hover] {
+  animation-play-state: paused;
+}
+
+@keyframes a63-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+
+@keyframes a63-marquee-vertical {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(calc(-100% - var(--gap)));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Marquee {
+    overflow: auto;
+  }
+  .a63-Marquee-track {
+    animation: none;
+  }
+  .a63-Marquee-track:not(:first-child) {
+    display: none;
+  }
+}

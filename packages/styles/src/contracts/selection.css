@@ -1,0 +1,21 @@
+/*
+ * Selection contract — shared value tokens for bistate/selection controls
+ * (Switch now; Checkbox + Radio next). The "on" fill is the brand primary, so a
+ * checked control follows the brand axis AND each theme's primary for free.
+ *
+ * The axis-dependent hooks (--a63-selection-accent / -track-off / -border /
+ * -focus-ring, which reference mode/theme/brand semantics) are resolved at the
+ * recipe USE-SITE via `var(--a63-selection-X, <live semantic>)` — declaring them
+ * at :root would freeze their var()s to the root's mode/theme (the
+ * resolve-at-declaration trap, learned on Input). So only the axis-independent
+ * defaults live here: the knob colour and the switch geometry driver.
+ */
+
+:root {
+  /* The knob — always white (an iOS switch thumb is white in light AND dark). */
+  --a63-selection-thumb: white;
+  /* Ink on the white knob — fixed dark, never mode text (which washes out in dark). */
+  --a63-selection-thumb-fg: color-mix(in oklch, black 78%, transparent);
+  /* Drives the switch track geometry; iOS enlarges it in environment.css. */
+  --a63-switch-thumb-size: 1rem;
+}

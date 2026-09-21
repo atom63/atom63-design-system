@@ -1,0 +1,139 @@
+/*
+ * TextTicker recipe — an overflow-aware, optionally-marquee text line. A faithful
+ * port of the production text-ticker: the container clips + fades its edges only
+ * while active, a static truncated copy sits under a scrolling marquee layer that
+ * cross-fades in on hover/focus (or always, when [data-autoplay]). The gap +
+ * timing come from per-instance custom props set on the element. No new tokens.
+ */
+
+.a63-TextTicker {
+  display: block;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.a63-TextTicker--marquee {
+  --a63-text-ticker-gap: 1.5rem;
+  --a63-text-ticker-mask-size: 1rem;
+
+  position: relative;
+}
+
+/* Edge fade — only while the marquee is active (overflowing + hover/focus/auto). */
+.a63-TextTicker--marquee[data-overflowing][data-autoplay],
+.a63-TextTicker--marquee[data-overflowing]:hover,
+.a63-TextTicker--marquee[data-overflowing]:focus-visible,
+.a63-TextTicker--marquee[data-overflowing]:focus-within {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--a63-text-ticker-mask-size),
+    black calc(100% - var(--a63-text-ticker-mask-size)),
+    transparent
+  );
+}
+
+/* Hidden probe used to measure the natural content width against the container. */
+.a63-TextTicker-measure {
+  position: absolute;
+  height: 0;
+  max-width: none;
+  overflow: visible;
+  visibility: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Static truncated copy — the resting state. */
+.a63-TextTicker-content {
+  display: block;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-TextTicker--marquee[data-overflowing]:hover .a63-TextTicker-content,
+.a63-TextTicker--marquee[data-overflowing]:focus-within .a63-TextTicker-content,
+.a63-TextTicker--marquee[data-overflowing][data-autoplay] .a63-TextTicker-content {
+  opacity: 0;
+}
+
+/* Scrolling layer — cross-fades in over the static copy. */
+.a63-TextTicker-marqueeLayer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-TextTicker--marquee[data-overflowing]:hover .a63-TextTicker-marqueeLayer,
+.a63-TextTicker--marquee[data-overflowing]:focus-within .a63-TextTicker-marqueeLayer,
+.a63-TextTicker--marquee[data-overflowing][data-autoplay] .a63-TextTicker-marqueeLayer {
+  opacity: 1;
+}
+
+.a63-TextTicker-marqueeTrack {
+  display: flex;
+  width: max-content;
+  flex-shrink: 0;
+  align-items: center;
+  transform: translateX(0);
+}
+
+.a63-TextTicker-marqueeCopy {
+  flex-shrink: 0;
+}
+
+.a63-TextTicker-marqueeCopy + .a63-TextTicker-marqueeCopy {
+  margin-inline-start: var(--a63-text-ticker-gap);
+}
+
+/* Animate the track only while active — same activation selectors as the fade. */
+.a63-TextTicker--marquee[data-overflowing][data-autoplay] .a63-TextTicker-marqueeTrack,
+.a63-TextTicker--marquee[data-overflowing]:hover .a63-TextTicker-marqueeTrack,
+.a63-TextTicker--marquee[data-overflowing]:focus-visible .a63-TextTicker-marqueeTrack,
+.a63-TextTicker--marquee[data-overflowing]:focus-within .a63-TextTicker-marqueeTrack {
+  animation: a63-text-ticker-marquee var(--a63-text-ticker-duration, 24s) linear
+    var(--a63-text-ticker-delay, 0ms) infinite;
+}
+
+@keyframes a63-text-ticker-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - var(--a63-text-ticker-gap) / 2));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Match the activation selectors' specificity so this wins without !important. */
+  .a63-TextTicker--marquee[data-overflowing][data-autoplay] .a63-TextTicker-marqueeTrack,
+  .a63-TextTicker--marquee[data-overflowing]:hover .a63-TextTicker-marqueeTrack,
+  .a63-TextTicker--marquee[data-overflowing]:focus-visible .a63-TextTicker-marqueeTrack,
+  .a63-TextTicker--marquee[data-overflowing]:focus-within .a63-TextTicker-marqueeTrack {
+    animation: none;
+  }
+
+  /* With motion off, keep the static copy legible and hide the marquee layer. */
+  .a63-TextTicker--marquee[data-overflowing][data-autoplay] .a63-TextTicker-content {
+    opacity: 1;
+  }
+  .a63-TextTicker--marquee[data-overflowing][data-autoplay] .a63-TextTicker-marqueeLayer {
+    opacity: 0;
+  }
+
+  .a63-TextTicker-content,
+  .a63-TextTicker-marqueeLayer {
+    transition: none;
+  }
+}

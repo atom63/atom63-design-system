@@ -1,0 +1,158 @@
+/*
+ * Environment dimensions.
+ *
+ * Each dimension owns a distinct slice (see packages/styles/README.md — the
+ * dimension-ownership table):
+ *   - Design Language → component sizing/proportions + interaction feedback
+ *   - Input           → ergonomics (min touch target)
+ *   - Density         → proportional rhythm
+ *
+ * Radius, color, and shadow are NOT design-language concerns — they belong to
+ * the semantic ramp + theme (personalization). Design language never sets radius.
+ */
+
+:root {
+  --a63-density-scale: 1;
+  --a63-editable-font-size-min: 0px;
+  --a63-safe-area-top: env(safe-area-inset-top, 0px);
+  --a63-safe-area-right: env(safe-area-inset-right, 0px);
+  --a63-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --a63-safe-area-left: env(safe-area-inset-left, 0px);
+  --a63-viewport-height: 100vh;
+  /* Two different numbers, deliberately separate:
+     - min-size   = RENDERED geometry floor. WCAG 2.5.8 pointer minimum (24px).
+                    Touch raises it only to 32px — the smallest rendered control
+                    observed in shipping iOS apps (measured 30.6–31.5pt across two
+                    apps). Apple's Accessibility page publishes an iOS
+                    *minimum control size* of 28x28pt, so a 32pt rendered floor
+                    sits above the documented minimum and below the 44pt default.
+                    https://developer.apple.com/design/human-interface-guidelines/accessibility
+     - min-target = INTERACTION floor. Touch raises it to 44px per Apple HIG.
+     Recipes must floor their height ramp with min-size and expand the touch
+     region with min-target. Flooring rendered height with min-target is what
+     collapses the xs/sm/md ramp to a single 44px rung on every phone.
+     See docs/design-system/web-ios-token-parity.md. */
+  --a63-control-min-size: 1.5rem;
+  --a63-control-min-size-lg: var(--a63-control-min-size);
+  --a63-control-min-size-xl: var(--a63-control-min-size);
+  --a63-control-min-target: 1.5rem;
+  --a63-control-min-target-lg: var(--a63-control-min-target);
+  /* Rendered floor for a full-width ROW (a list/panel row whose whole width is
+     the target), as opposed to a compact control sitting inside one. A row
+     cannot borrow the pseudo-element trick: rows live in clipping containers
+     (rounded panels, scroll areas) that cut an overhanging pseudo off, so the
+     row's own height has to BE the target. 44px on touch — Apple's HIG default,
+     and our own measurement of shipping iOS apps put primary rows and
+     full-width controls at 42.4-44.1pt (docs/design-system/web-ios-token-parity.md).
+     Equal to min-size on fine pointers, so desktop is unchanged. */
+  --a63-row-min-size: var(--a63-control-min-size);
+}
+
+@supports (height: 100dvh) {
+  :root {
+    --a63-viewport-height: 100dvh;
+  }
+}
+
+/* Prevent focus zoom in mobile Safari without inflating non-editable control
+   labels. Editable recipes combine this floor with their normal type token. */
+@media (max-width: 40rem) {
+  :root {
+    --a63-editable-font-size-min: 1rem;
+  }
+}
+
+/* Density — proportional rhythm */
+:is([data-a63-density='compact'], [data-density='compact']) {
+  --a63-density-scale: 0.9;
+  --a63-space-unit: calc(var(--spacing-1) * 0.875);
+}
+
+:is([data-a63-density='comfortable'], [data-density='comfortable']) {
+  --a63-density-scale: 1;
+  --a63-space-unit: var(--spacing-1);
+}
+
+/* Auto-detect coarse pointers. Without this, touch ergonomics only apply when an
+   app explicitly passes `input` to UIProvider — an opt-in almost nothing does, so
+   controls stay at their 24px floor on phones. Declared before the attribute
+   rules below (equal specificity) so an explicit data-a63-input always wins. */
+@media (pointer: coarse) {
+  :root {
+    --a63-control-min-size: 2rem;
+    --a63-control-min-size-lg: var(--a63-control-min-size);
+    --a63-control-min-size-xl: var(--a63-control-min-size);
+    --a63-control-min-target: 2.75rem;
+    --a63-control-min-target-lg: 3rem;
+    --a63-control-min-target-xl: 3.25rem;
+    --a63-row-min-size: 2.75rem;
+  }
+}
+
+/* Input — ergonomics (touch target). Independent of design language. */
+:is([data-a63-input='touch'], [data-input='touch']) {
+  --a63-control-min-size: 2rem;
+  --a63-control-min-size-lg: var(--a63-control-min-size);
+  --a63-control-min-size-xl: var(--a63-control-min-size);
+  --a63-control-min-target: 2.75rem;
+  --a63-control-min-target-lg: 3rem;
+  --a63-control-min-target-xl: 3.25rem;
+  --a63-row-min-size: 2.75rem;
+}
+
+/* Explicit fine-pointer choices override coarse auto-detection (hybrid devices,
+   or a user who picked "pointer" in the appearance panel on a touchscreen). */
+:is(
+  [data-a63-input='pointer'],
+  [data-input='pointer'],
+  [data-a63-input='keyboard'],
+  [data-input='keyboard']
+) {
+  --a63-control-min-size: 1.5rem;
+  --a63-control-min-size-lg: var(--a63-control-min-size);
+  --a63-control-min-size-xl: var(--a63-control-min-size);
+  --a63-control-min-target: 1.5rem;
+  --a63-control-min-target-lg: var(--a63-control-min-target);
+  --a63-control-min-target-xl: var(--a63-control-min-target);
+  --a63-row-min-size: var(--a63-control-min-size);
+}
+
+/*
+ * Design language — component sizing/proportions + interaction feedback only.
+ * The base :root (control.css) is the web default; iOS overrides sizing + feel.
+ * No radius, color, or touch-target here.
+ */
+:is([data-a63-design-language='ios'], [data-design-language='ios']) {
+  --a63-control-height-xs: calc(var(--a63-space-unit) * 9);
+  --a63-control-height-sm: calc(var(--a63-space-unit) * 10);
+  --a63-control-height-md: calc(var(--a63-space-unit) * 11);
+  --a63-control-height-lg: calc(var(--a63-space-unit) * 12);
+  --a63-control-height-xl: calc(var(--a63-space-unit) * 13);
+  --a63-control-padding-inline-xs: var(--a63-space-3);
+  --a63-control-padding-inline-sm: var(--a63-space-3_5);
+  --a63-control-padding-inline-md: var(--a63-space-4);
+  --a63-control-padding-inline-lg: var(--a63-space-5);
+  --a63-control-padding-inline-xl: var(--a63-space-6);
+  --a63-control-font-weight: 600;
+  --a63-control-font-size-xs: var(--typography-xs-font-size);
+  --a63-control-font-size-sm: var(--typography-sm-font-size);
+  --a63-control-font-size-md: var(--typography-base-font-size);
+  --a63-control-font-size-lg: var(--typography-lg-font-size);
+  --a63-control-font-size-xl: var(--typography-lg-font-size);
+  --a63-control-icon-size-xs: 0.875rem;
+  --a63-control-icon-size-sm: 1rem;
+  --a63-control-icon-size-md: 1.125rem;
+  --a63-control-icon-size-lg: 1.25rem;
+  --a63-control-icon-size-xl: 1.375rem;
+  --a63-control-press-transform: scale(0.97);
+  --a63-control-feedback-ease: var(--a63-motion-ease-emphasized);
+  /* Rows stop padding their way to height and let the control ramp floor them,
+     so a single-line row lands on 44pt and a two-line row on ~59pt, instead of
+     52pt and 75pt. Targets are from our measurement study, not a published
+     Apple row height — there isn't one. */
+  --a63-row-padding-block-xs: var(--a63-space-1);
+  --a63-row-padding-block-sm: var(--a63-space-1_5);
+  --a63-row-padding-block-md: var(--a63-space-2);
+  /* Larger, iconic iOS pill switch (web default is 1rem in selection.css). */
+  --a63-switch-thumb-size: 1.375rem;
+}

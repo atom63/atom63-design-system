@@ -1,0 +1,34 @@
+import { Controls, Meta, Primary, Stories, Title } from '@storybook/addon-docs/blocks'
+
+import * as RadioStories from './radio.stories'
+
+<Meta of={RadioStories} />
+
+<Title />
+
+A radio group — the **selection** archetype (single choice), the third consumer of the shared `--a63-selection-*` contract after Switch and Checkbox. Built on Base UI `radio-group` + `radio`. Structurally it's the Checkbox made **circular** with a centered **dot** indicator instead of a checkmark.
+
+## Anatomy
+
+- `RadioGroup` → `<div class="a63-RadioGroup" data-slot="radio-group" role="radiogroup">` — stacks its items (column).
+- `Radio` (aka `RadioGroupItem`) → `<button class="a63-Radio" data-slot="radio" role="radio">` — the circular box, with `Radio.Indicator` (`.a63-Radio-indicator`) as the accent fill + centered dot.
+
+## Contract
+
+- **Archetype:** selection — reads `--a63-selection-accent` / `-border` / `-focus-ring` at the use-site (same tokens as Switch/Checkbox), so the checked fill is the brand primary and follows brand + theme + mode for free.
+- **Sizes:** `sm` / `md` (default). **States:** unchecked · checked · disabled · invalid (`aria-invalid`).
+- Source of truth: `@atom63/ui-foundation` → `radio/radio-contract.ts`; the shared selection tokens live in `selection/selection-contract.ts`.
+
+## Theme sheet
+
+No per-theme radio recipe code: checked = `--a63-selection-accent` (= `--a63-action-primary`), while the circular well and checked fill consume the shared `--a63-choice-*` material hooks. Aqua, Retro, Terminal, and Modern therefore vary color, depth, and gloss through the theme layer. The box is a full circle (`--radius-full`); the dot is `--a63-action-primary-foreground`.
+
+## Tokens it reads
+
+`--a63-selection-accent`(→`--a63-action-primary`) · `--a63-selection-border`(→`--a63-border-control`) · `--a63-selection-focus-ring`(→`--a63-focus-ring`) · `--a63-surface-control` (box) · `--a63-action-primary-foreground` (dot) · `--radius-full` · `--a63-action-danger` (invalid) · `--a63-control-*`. No new tokens.
+
+<Primary />
+
+<Controls />
+
+<Stories />

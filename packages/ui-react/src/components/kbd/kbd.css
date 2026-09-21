@@ -1,0 +1,72 @@
+/*
+ * Kbd recipe — a quiet, recessed keyboard-key cap composed from existing
+ * semantics (muted surface + secondary text) — the MARKER archetype. Its keycap
+ * bevel comes from the one contract lever --a63-marker-shadow. Presentational.
+ */
+
+.a63-Kbd {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--a63-space-1);
+  height: 1.375rem;
+  min-width: 1.375rem;
+  padding-inline: var(--a63-space-1_5);
+  border: var(--a63-control-border-width) solid var(--a63-border-subtle);
+  /* rounded-sm (prod parity) — the full --a63-control-radius reads too round on a
+     small keycap (esp. Modern); --radius-sm keeps the corner tight + theme-aware. */
+  border-radius: var(--radius-sm);
+  background-color: var(--a63-surface-muted);
+  box-shadow: var(--a63-marker-shadow);
+  color: var(--a63-text-secondary);
+  font-family: var(--a63-control-font-family);
+  font-size: var(--a63-control-font-size-xs);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+}
+
+.a63-Kbd[data-size='sm'] {
+  height: 1.125rem;
+  min-width: 1.125rem;
+  padding-inline: var(--a63-space-1);
+  font-size: var(--a63-control-font-size-xs);
+}
+
+.a63-Kbd svg {
+  width: 0.75em;
+  height: 0.75em;
+}
+
+/*
+ * Inside a Tooltip the keycap inverts to read on the overlay's darker surface:
+ * a translucent page-surface fill + page-surface text (mirrors prod's
+ * in-data-[slot=tooltip-content]:bg-background/20 / text-background, with the
+ * dark-mode fill dropping to /10). Border melts away so the cap reads as a chip.
+ */
+[data-slot='tooltip-popup'] .a63-Kbd {
+  border-color: transparent;
+  background-color: color-mix(in oklch, var(--a63-surface-page) 20%, transparent);
+  box-shadow: none;
+  color: var(--a63-surface-page);
+}
+
+/*
+ * Dark mode is not the light rule with a lighter fill. The tooltip's overlay
+ * surface sits *above* the page here, so page-surface text lands darker than
+ * the panel it prints on and the keycap disappears. It follows the tooltip's
+ * own foreground instead.
+ */
+:is(.dark, [data-a63-mode='dark']) [data-slot='tooltip-popup'] .a63-Kbd {
+  background-color: color-mix(in oklch, var(--a63-text-primary) 10%, transparent);
+  color: var(--a63-text-primary);
+}
+
+.a63-KbdGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--a63-space-1);
+}

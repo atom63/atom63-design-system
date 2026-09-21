@@ -1,0 +1,32 @@
+/*
+ * Form recipe — react-hook-form field wrappers. Faithful to prod @atom63/ui
+ * form.tsx (grid item stack, error-recolored label, muted description,
+ * destructive message) recolored/spaced with --a63-* semantic tokens. No new
+ * tokens: muted → --a63-text-secondary, destructive → --a63-action-danger.
+ */
+
+.a63-FormItem {
+  display: grid;
+  gap: var(--a63-space-2, 0.5rem);
+}
+
+/* FormLabel wraps Label (.a63-Label); flip to danger when the field errors. */
+.a63-FormLabel[data-error='true'] {
+  color: var(--a63-action-danger);
+}
+
+.a63-FormDescription {
+  margin: 0;
+  color: var(--a63-text-secondary);
+  font-family: var(--a63-control-font-family);
+  font-size: var(--a63-control-font-size-sm);
+  line-height: var(--typography-sm-line-height);
+}
+
+.a63-FormMessage {
+  margin: 0;
+  color: var(--a63-action-danger);
+  font-family: var(--a63-control-font-family);
+  font-size: var(--a63-control-font-size-sm);
+  line-height: var(--typography-sm-line-height);
+}

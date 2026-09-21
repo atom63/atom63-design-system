@@ -1,0 +1,41 @@
+@utility scroll-mask-t-from-* {
+  --scroll-mask-fade-from-t: --spacing(--value(integer));
+  --scroll-mask-fade-from-t: --value(percentage);
+  --scroll-mask-fade-from-t: --value([length], [percentage]);
+}
+
+@utility scroll-mask-b-from-* {
+  --scroll-mask-fade-from-b: --spacing(--value(integer));
+  --scroll-mask-fade-from-b: --value(percentage);
+  --scroll-mask-fade-from-b: --value([length], [percentage]);
+}
+
+@utility scroll-mask-y-from-* {
+  --scroll-mask-fade-from-t: --spacing(--value(integer));
+  --scroll-mask-fade-from-t: --value(percentage);
+  --scroll-mask-fade-from-t: --value([length], [percentage]);
+  --scroll-mask-fade-from-b: --spacing(--value(integer));
+  --scroll-mask-fade-from-b: --value(percentage);
+  --scroll-mask-fade-from-b: --value([length], [percentage]);
+}
+
+@utility scroll-mask-l-from-* {
+  --scroll-mask-fade-from-l: --spacing(--value(integer));
+  --scroll-mask-fade-from-l: --value(percentage);
+  --scroll-mask-fade-from-l: --value([length], [percentage]);
+}
+
+@utility scroll-mask-r-from-* {
+  --scroll-mask-fade-from-r: --spacing(--value(integer));
+  --scroll-mask-fade-from-r: --value(percentage);
+  --scroll-mask-fade-from-r: --value([length], [percentage]);
+}
+
+@utility scroll-mask-x-from-* {
+  --scroll-mask-fade-from-l: --spacing(--value(integer));
+  --scroll-mask-fade-from-l: --value(percentage);
+  --scroll-mask-fade-from-l: --value([length], [percentage]);
+  --scroll-mask-fade-from-r: --spacing(--value(integer));
+  --scroll-mask-fade-from-r: --value(percentage);
+  --scroll-mask-fade-from-r: --value([length], [percentage]);
+}

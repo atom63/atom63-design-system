@@ -1,0 +1,35 @@
+/**
+ * Syntax highlighting for rehype-pretty-code / Shiki (MDX docs, prose).
+ */
+
+/* Shiki dual-theme token colors */
+pre[data-theme*=' '] span,
+pre[data-theme*=' '] code span {
+  color: var(--shiki-light);
+}
+
+:is(.dark, [data-a63-mode='dark']) pre[data-theme*=' '] span,
+:is(.dark, [data-a63-mode='dark']) pre[data-theme*=' '] code span {
+  color: var(--shiki-dark);
+}
+
+pre > code {
+  display: block;
+}
+
+/* Line highlighting */
+[data-highlighted-line] {
+  background-color: color-mix(in srgb, var(--a63-text-primary) 5%, transparent);
+  border-left: 2px solid var(--a63-action-primary);
+  padding-left: calc(1rem - 2px);
+  margin-left: -1rem;
+  margin-right: -1rem;
+  padding-right: 1rem;
+}
+
+/* Inline highlighted words */
+[data-highlighted-chars] {
+  background-color: color-mix(in srgb, var(--a63-action-primary) 15%, transparent);
+  border-radius: 0.25rem;
+  padding: 0.1em 0.2em;
+}

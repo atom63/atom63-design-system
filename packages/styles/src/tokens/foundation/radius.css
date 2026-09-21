@@ -1,0 +1,36 @@
+/*
+ * Radius foundation.
+ *
+ * The anchor (--corner-radius) and --radius-multiplier drive a derived scale.
+ * These are plain custom properties so the default, Tailwind-free build owns a
+ * complete radius scale; the Tailwind adapter (tailwind/theme.css) only
+ * re-exposes them as theme values, matching every other token category.
+ */
+:root {
+  --corner-radius: 10px;
+  --radius-multiplier: 1;
+
+  /* Tailwind default: `rounded` class (matches md) */
+  --radius: calc(var(--corner-radius) * 0.8 * var(--radius-multiplier));
+
+  /* Lower scale */
+  --radius-2xs: calc(var(--corner-radius) * 0.2 * var(--radius-multiplier));
+  --radius-xs: calc(var(--corner-radius) * 0.4 * var(--radius-multiplier));
+  --radius-sm: calc(var(--corner-radius) * 0.6 * var(--radius-multiplier));
+  --radius-md: calc(var(--corner-radius) * 0.8 * var(--radius-multiplier));
+
+  /* The anchor */
+  --radius-lg: calc(var(--corner-radius) * var(--radius-multiplier));
+
+  /* Upper scale */
+  --radius-xl: calc(var(--corner-radius) * 1.4 * var(--radius-multiplier));
+  --radius-2xl: calc(var(--corner-radius) * 1.8 * var(--radius-multiplier));
+  --radius-3xl: calc(var(--corner-radius) * 2.2 * var(--radius-multiplier));
+  --radius-4xl: calc(var(--corner-radius) * 2.6 * var(--radius-multiplier));
+  /*
+   * Soft “full” = 2× md (already includes the multiplier). Stays on the same
+   * personalization curve as the rest of the scale instead of a fixed 9999px
+   * pill that ignores subtle/none/round wrap.
+   */
+  --radius-full: calc(var(--radius-xl) * 2);
+}

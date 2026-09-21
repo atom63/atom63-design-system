@@ -1,0 +1,34 @@
+import { Controls, Meta, Primary, Stories, Title } from '@storybook/addon-docs/blocks'
+
+import * as BadgeStories from './badge.stories'
+
+<Meta of={BadgeStories} />
+
+<Title />
+
+A small labeled chip — the **marker** archetype's second consumer (after Kbd). Its chip shape + keycap bevel come from the marker contract; each variant only recolors the fill. Renders a `<span>` by default; pass `render={<a />}` / `render={<button />}` for an interactive badge (e.g. a filterable tag).
+
+## Anatomy
+
+- `Badge` → `<span class="a63-Badge" data-slot="badge" data-variant data-size>`.
+
+## Contract
+
+- **Archetype:** marker (reads `--a63-marker-shadow` + `--a63-control-radius` + `--a63-control-font-family`).
+- **Variants:** solid/surface (faithful to prod `@atom63/ui` badge) — `default` · `primary` · `secondary` · `destructive` · `outline` · `glass` · `muted` · `accent`; semantic (tonal) — `error` · `info` · `success` · `warning`; **palette** — the full Tailwind hue scale (`red`…`rose` + `neutral`) as tonal chips, backed by the foundation `--color-*` tokens so category/tag colors work **without Tailwind**.
+- **Sizes:** `sm` / `md` (default) / `lg`.
+- Source of truth: `@atom63/ui-foundation` → `badge/badge-contract.ts`.
+
+## Theme sheet
+
+The keycap bevel is the shared marker lever `--a63-marker-shadow` — retro Win98 bevel, aqua glass, modern/terminal flat — so all badges pick up their theme's chip character for free. Variant fills reuse Button's token vocabulary (`--a63-action-*`, `--a63-status-*`, `--a63-surface-muted`), so they recolor per brand + theme + mode.
+
+## Tokens it reads
+
+`--a63-marker-shadow` (keycap bevel) · `--a63-control-radius` / `--a63-control-font-family` / `--a63-control-font-size-xs`/`-sm` (chip shape) · variant fills: `--a63-action-neutral`(+fg) / `--a63-action-primary`(+fg) / `--a63-action-danger`(+fg) / `--a63-status-info`/`-success`/`-warning` / `--a63-surface-muted` / `--a63-text-primary`/`-secondary` / `--a63-border-control` · `--a63-focus-ring` (focus). No new tokens.
+
+<Primary />
+
+<Controls />
+
+<Stories />

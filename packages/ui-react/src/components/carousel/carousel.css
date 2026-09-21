@@ -1,0 +1,163 @@
+/*
+ * Carousel recipe — an embla-backed slider. Faithful port of prod @atom63/ui
+ * carousel.tsx: the track shifts a negative gutter that each item pads back
+ * (prod -ml-4 / pl-4 for horizontal, -mt-4 / pt-4 for vertical). The nav buttons
+ * are round OVERLAY-surface controls (--a63-surface-overlay + --a63-overlay-shadow
+ * + --a63-border-subtle) absolutely centered on the leading/trailing edge, keyed
+ * off data-orientation. The optional cursorIndicator overlay (.a63-Carousel-cursor)
+ * reuses the same overlay-surface pill. Local --carousel-* vars only; no new tokens.
+ */
+
+.a63-Carousel {
+  --carousel-gutter: 1rem;
+  --carousel-nav-size: max(2.5rem, var(--a63-control-min-target));
+
+  position: relative;
+}
+
+.a63-Carousel-viewport {
+  overflow: hidden;
+}
+
+.a63-Carousel-track {
+  display: flex;
+}
+.a63-Carousel-track[data-orientation='horizontal'] {
+  margin-left: calc(var(--carousel-gutter) * -1);
+}
+.a63-Carousel-track[data-orientation='vertical'] {
+  flex-direction: column;
+  margin-top: calc(var(--carousel-gutter) * -1);
+}
+
+.a63-Carousel-item {
+  min-width: 0;
+  flex: 0 0 100%;
+}
+.a63-Carousel-item[data-orientation='horizontal'] {
+  padding-left: var(--carousel-gutter);
+}
+.a63-Carousel-item[data-orientation='vertical'] {
+  padding-top: var(--carousel-gutter);
+}
+
+/* ── Nav buttons (overlay-surface pills) ───────────────────────────────── */
+.a63-Carousel-nav {
+  position: absolute;
+  z-index: var(--z-layer-base, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--carousel-nav-size);
+  height: var(--carousel-nav-size);
+  border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
+  border-radius: var(--a63-overlay-radius, var(--radius-full, 9999px));
+  background-color: var(--a63-surface-overlay);
+  background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
+  background-blend-mode: normal, var(--a63-overlay-texture-blend);
+  backdrop-filter: var(--a63-overlay-backdrop);
+  box-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow);
+  color: var(--a63-text-primary);
+  cursor: pointer;
+  appearance: none;
+  outline: none;
+  transition:
+    background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-Carousel-nav:hover:not(:disabled) {
+  background: var(--a63-surface-control-hover);
+}
+
+.a63-Carousel-nav:focus-visible {
+  box-shadow:
+    var(--a63-overlay-inner-shadow, none),
+    var(--a63-overlay-shadow),
+    0 0 0 var(--a63-control-focus-ring-width)
+      var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+}
+
+.a63-Carousel-nav:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Placement — leading/trailing edge per orientation (prod insets). */
+.a63-Carousel-nav[data-orientation='horizontal'][data-direction='prev'] {
+  top: 50%;
+  left: 0.75rem;
+  transform: translateY(-50%);
+}
+.a63-Carousel-nav[data-orientation='horizontal'][data-direction='next'] {
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+}
+.a63-Carousel-nav[data-orientation='vertical'][data-direction='prev'] {
+  top: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%) rotate(90deg);
+}
+.a63-Carousel-nav[data-orientation='vertical'][data-direction='next'] {
+  bottom: 0.75rem;
+  left: 50%;
+  transform: translateX(-50%) rotate(90deg);
+}
+
+/* ── Cursor indicator (pointer-following prev/next affordance) ─────────────
+ * Faithful port of prod's motion overlay: a round OVERLAY-surface pill that
+ * tracks the pointer inside the viewport. The system cursor is hidden while the
+ * indicator is active; the pill dims (data-disabled) when it can't navigate.
+ */
+.a63-Carousel--cursor-indicator {
+  position: relative;
+}
+
+.a63-Carousel--cursor-hidden {
+  cursor: none;
+}
+
+.a63-Carousel-cursor {
+  pointer-events: none;
+  position: absolute;
+  z-index: var(--z-layer-header, 50);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--carousel-nav-size);
+  height: var(--carousel-nav-size);
+  border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
+  border-radius: var(--a63-overlay-radius, var(--radius-full, 9999px));
+  background-color: var(--a63-surface-overlay);
+  background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
+  background-blend-mode: normal, var(--a63-overlay-texture-blend);
+  backdrop-filter: var(--a63-overlay-backdrop);
+  box-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow);
+  color: var(--a63-text-primary);
+}
+
+.a63-Carousel-cursor-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.a63-Carousel-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Carousel-nav {
+    transition: none;
+  }
+}

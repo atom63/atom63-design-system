@@ -1,0 +1,9 @@
+/**
+ * Shared UI utilities — scrollbars, MDX code blocks, theme view transitions.
+ * Imported by default from `@atom63/styles`. Opt into debug via
+ * `@atom63/styles/utils/debug`.
+ */
+@import './scroll-bar.css';
+@import './scroll-mask.css';
+@import './code-highlighting.css';
+@import './view-transition.css';

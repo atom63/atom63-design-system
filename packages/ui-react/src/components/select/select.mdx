@@ -1,0 +1,31 @@
+import { Controls, Meta, Primary, Stories, Title } from '@storybook/addon-docs/blocks'
+
+import * as SelectStories from './select.stories'
+
+<Meta of={SelectStories} />
+
+<Title />
+
+A dropdown select (Base UI Select) — the DS's first overlay component. Composable: `Select` (root) › `SelectTrigger` + `SelectValue` › `SelectPopup` › `SelectItem`. The trigger is field-shaped (matches Input); the popup is a portaled overlay.
+
+## Anatomy
+
+- `SelectTrigger` → `<button class="a63-Select-trigger" data-slot="select-trigger" data-size>` + a chevron `SelectIcon`.
+- `SelectValue` → the selected label (muted when `data-placeholder`).
+- `SelectPopup` → Portal › Positioner › `a63-Select-popup` (overlay surface) › `a63-Select-list` (scrolls).
+- `SelectItem` → grid `[check-indicator | text]`; `data-highlighted` on keyboard/hover, check + slightly heavier text when selected.
+
+## Contract
+
+- **Sizes:** `sm` `md` `lg` (default `md`).
+- Source of truth: `@atom63/ui-foundation` → `select/select-contract.ts`.
+
+## Tokens it reads
+
+Trigger reuses the complete field treatment (`--a63-field-background`, border, radius, shadow, focus border/ring) and resolves height, minimum target, padding, type, gap, and icon size from the shared control ramp for every supported size. Popup = shared overlay and menu contracts. Selected items use the menu indicator token. No new theme tokens.
+
+<Primary />
+
+<Controls />
+
+<Stories />

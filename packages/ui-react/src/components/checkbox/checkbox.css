@@ -1,0 +1,113 @@
+/*
+ * Checkbox recipe — the SELECTION archetype's 2nd consumer (after Switch).
+ * `.a63-Checkbox` is the box; `.a63-Checkbox-indicator` is the accent fill + icon
+ * overlay. Checked/indeterminate fill with the shared --a63-selection-accent
+ * (= --a63-action-primary at the use-site → follows brand + theme). Axis-dependent
+ * selection tokens resolve here via var(--a63-selection-X, <semantic>).
+ */
+
+.a63-Checkbox {
+  --checkbox-size: 1.125rem;
+  --checkbox-accent: var(--a63-selection-accent, var(--a63-action-primary));
+  --checkbox-border: var(--a63-selection-border, var(--a63-border-control));
+  --checkbox-focus-ring: var(--a63-selection-focus-ring, var(--a63-focus-ring));
+  --checkbox-shadow: var(--a63-choice-box-shadow, none);
+  --checkbox-shadow-checked: var(--a63-choice-box-shadow-checked, var(--checkbox-shadow));
+  --checkbox-indicator-gloss: var(--a63-choice-indicator-gloss, none);
+
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  margin: max(0px, calc((var(--a63-control-min-target) - var(--checkbox-size)) / 2));
+  border: var(--a63-control-border-width) solid var(--checkbox-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--a63-surface-control);
+  box-shadow: var(--checkbox-shadow);
+  cursor: pointer;
+  outline: none;
+  transition:
+    background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-Checkbox::after {
+  content: '';
+  position: absolute;
+  inset: 50%;
+  min-width: var(--a63-control-min-target);
+  min-height: var(--a63-control-min-target);
+  translate: -50% -50%;
+}
+
+.a63-Checkbox-indicator {
+  position: absolute;
+  inset: -1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+  color: var(--a63-action-primary-foreground);
+}
+.a63-Checkbox-indicator[data-unchecked] {
+  display: none;
+}
+.a63-Checkbox-indicator svg {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+/* ── States ────────────────────────────────────────────────────────────── */
+/* Prod fills the box (accent bg + accent border + white icon) ONLY when
+ * checked. Indeterminate stays an outlined neutral box with a foreground-
+ * colored dash (transparent indicator, no accent border). */
+.a63-Checkbox[data-checked] {
+  border-color: var(--checkbox-accent);
+  box-shadow: var(--checkbox-shadow-checked);
+}
+.a63-Checkbox[data-checked] .a63-Checkbox-indicator {
+  background-color: var(--checkbox-accent);
+  background-image: var(--checkbox-indicator-gloss);
+}
+.a63-Checkbox[data-indeterminate] .a63-Checkbox-indicator {
+  color: var(--a63-text-primary);
+}
+
+@media (hover: hover) {
+  .a63-Checkbox:hover:not([data-disabled]):not([data-checked]):not([data-indeterminate]) {
+    border-color: color-mix(in oklch, var(--checkbox-border), var(--a63-text-primary) 20%);
+  }
+}
+
+.a63-Checkbox:focus-visible {
+  box-shadow: 0 0 0 var(--a63-control-focus-ring-width) var(--checkbox-focus-ring);
+}
+
+.a63-Checkbox[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+.a63-Checkbox[aria-invalid='true'] {
+  border-color: color-mix(in oklch, var(--a63-action-danger) 62%, transparent);
+}
+
+/* ── Sizes (md is the base rule above) ─────────────────────────────────── */
+.a63-Checkbox[data-size='sm'] {
+  --checkbox-size: 1rem;
+}
+.a63-Checkbox[data-size='sm'] .a63-Checkbox-indicator svg {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Checkbox {
+    transition: none;
+  }
+}

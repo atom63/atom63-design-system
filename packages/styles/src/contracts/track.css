@@ -1,0 +1,26 @@
+/*
+ * Track contract — the RECESSED rail that holds raised cells/thumbs
+ * (segmented-control track, slider rail, tabs list). Distinct from FIELD (holds
+ * text, not interactive cells) and from CONTROL (raised). The ACTIVE cell/thumb
+ * that rides in the track reuses the CONTROL contract (e.g. the segmented
+ * indicator reads --a63-control-shadow); the track itself is the sunken well.
+ *
+ * Lean by design (see the taxonomy spec): semantics carry the default look — the
+ * recipe reads --a63-surface-control (bg), --a63-control-radius (radius) and its
+ * inset/gap constants at the use-site. The ONE thing themes vary distinctly for a
+ * recessed rail is its INSET-WELL depth, so that is the only contract token here.
+ *
+ * --a63-track-shadow is a static inset (mode-independent, like --a63-field-shadow),
+ * so it's safe to default at :root and let each theme override it on its shell
+ * (modern faint inset, aqua deeper sunken gel, retro Win98 inset well, terminal
+ * faint phosphor inset).
+ *
+ * NOTE: the joined-ToggleGroup bar is intentionally a RAISED control (it reads the
+ * CONTROL contract — aqua gel / retro bevel), NOT a track. "Segmented set" has two
+ * valid archetype expressions: recessed-well (SegmentedControl) vs raised-bar
+ * (joined ToggleGroup). Only the recessed one is `track`.
+ */
+
+:root {
+  --a63-track-shadow: inset 0 1px 1px color-mix(in oklch, black 6%, transparent);
+}

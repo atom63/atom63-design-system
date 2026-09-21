@@ -1,0 +1,56 @@
+/*
+ * Surface contract — the STATIC, in-flow container/panel (cards, panels,
+ * frames, sections, accordion containers, windows). The counterpart to OVERLAY:
+ * same "grouped surface" idea, but no z-stacking / elevation-above-page — it
+ * sits IN the flow.
+ *
+ * Lean by design (see the taxonomy spec): semantics carry the default look — the
+ * recipe reads --a63-surface-panel (bg), --a63-border-subtle (border),
+ * --radius-* (radius), --a63-text-* (text) at the use-site. The ONE thing themes
+ * vary distinctly for a static surface is its FLUSH-vs-LIFT-vs-BEVEL treatment,
+ * so that is the only contract token here.
+ *
+ * --a63-surface-shadow is a drop/bevel (mode-independent), so it's safe to
+ * default at :root and let each theme override it on its shell (modern soft-flush,
+ * aqua subtle glassy lift, retro hard Win98 frame bevel, terminal phosphor edge).
+ *
+ * The contract now carries the full treatment vocabulary
+ * (gloss/highlight/backdrop/border/texture/inner-shadow), not just the shadow.
+ */
+
+:root {
+  /* Outer elevation — flush · bevel · drop · glow (existing lever, unchanged). */
+  --a63-surface-shadow:
+    0 1px 2px color-mix(in oklch, black 6%, transparent),
+    0 1px 1px color-mix(in oklch, black 4%, transparent);
+
+  /* Recessed/inset treatment (sunken well). `0 0 #0000` = flat.
+     NOT `none`: this token is composed into comma-separated box-shadow lists
+     (`var(--a63-surface-inner-shadow), var(--a63-surface-shadow)`), and `none`
+     is only legal as the sole value — it invalidates the whole declaration and
+     silently drops the surface's elevation. */
+  --a63-surface-inner-shadow: 0 0 #0000;
+
+  /* Top-half sheen gradient (background-image layer). none = no sheen. */
+  --a63-surface-gloss: none;
+
+  /* Rim/edge specular highlight (recipe ::after or an inset shadow layer). */
+  --a63-surface-highlight: none;
+  --a63-surface-highlight-opacity: 1;
+
+  /* backdrop-filter (blur/saturate) for translucent glass. none = opaque. */
+  --a63-surface-backdrop: none;
+
+  /* Bevel controls. */
+  --a63-surface-border-style: solid;
+  --a63-surface-border-width: 1px;
+
+  /* Texture layer: an extra background-image (scanline/pinstripe) + its blend. */
+  --a63-surface-texture-image: none;
+  --a63-surface-texture-blend: normal;
+
+  /* Radius is intentionally NOT defaulted here — recipes read
+     var(--a63-surface-radius, <own default>); a theme sets it to square all
+     surfaces (retro → 0). Declaring it here would flatten per-recipe radii, so
+     it stays unset at :root. */
+}

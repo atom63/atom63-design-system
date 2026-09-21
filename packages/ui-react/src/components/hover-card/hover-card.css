@@ -1,0 +1,80 @@
+/*
+ * HoverCard recipe — the OVERLAY archetype (a hover-triggered preview popover),
+ * the overlay contract's consumer alongside the Select popup. Its elevation reads
+ * the --a63-overlay-shadow lever; bg (--a63-surface-overlay), border
+ * (--a63-border-subtle), radius (--radius-md to match prod @atom63/ui), stacking
+ * (--z-layer-popover) and entrance motion (--a63-control-feedback-*) resolve from
+ * semantics/foundation at the use-site.
+ *
+ * Open/close motion mirrors prod: fade + zoom (~0.95) with a short side-aware
+ * slide (slide-in-from-* equivalents).
+ */
+
+.a63-HoverCard-positioner {
+  z-index: var(--z-layer-popover, 999);
+}
+
+.a63-HoverCard-trigger {
+  touch-action: manipulation;
+}
+
+.a63-HoverCard-popup {
+  box-sizing: border-box;
+  width: 16rem;
+  max-width: min(
+    var(--available-width),
+    calc(
+      100dvw - var(--a63-safe-area-left, 0px) - var(--a63-safe-area-right, 0px) - 2 *
+        var(--a63-space-4)
+    )
+  );
+  max-height: min(var(--available-height), calc(var(--a63-viewport-height, 100vh) * 0.72));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--a63-space-4);
+  border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
+  border-radius: var(--a63-overlay-radius, var(--radius-md));
+  background-color: var(--a63-surface-overlay);
+  background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
+  background-blend-mode: normal, var(--a63-overlay-texture-blend);
+  backdrop-filter: var(--a63-overlay-backdrop);
+  box-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow);
+  color: var(--a63-text-primary);
+  transform-origin: var(--transform-origin);
+  outline: none;
+  transition:
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-HoverCard-popup[data-starting-style],
+.a63-HoverCard-popup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.a63-HoverCard-popup[data-starting-style][data-side='bottom'],
+.a63-HoverCard-popup[data-ending-style][data-side='bottom'] {
+  transform: translateY(-0.5rem) scale(0.95);
+}
+
+.a63-HoverCard-popup[data-starting-style][data-side='top'],
+.a63-HoverCard-popup[data-ending-style][data-side='top'] {
+  transform: translateY(0.5rem) scale(0.95);
+}
+
+.a63-HoverCard-popup[data-starting-style][data-side='left'],
+.a63-HoverCard-popup[data-ending-style][data-side='left'] {
+  transform: translateX(0.5rem) scale(0.95);
+}
+
+.a63-HoverCard-popup[data-starting-style][data-side='right'],
+.a63-HoverCard-popup[data-ending-style][data-side='right'] {
+  transform: translateX(-0.5rem) scale(0.95);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-HoverCard-popup {
+    transition: none;
+  }
+}

@@ -1,0 +1,209 @@
+/*
+ * Sheet recipe — a Base UI Dialog rendered as a slide-in panel, the OVERLAY
+ * archetype in its edge-anchored modal form. Faithful port of prod @atom63/ui
+ * sheet.tsx (whose chrome was Tailwind). Base UI sets data-open/data-closed +
+ * data-starting-style/data-ending-style on Backdrop/Popup; the recipe keys the
+ * per-side insets/translates off the SheetPopup's `data-side`. Chrome reads a63
+ * tokens (mirrors Drawer): raised overlay surface (--a63-surface-overlay +
+ * --a63-overlay-shadow), scrim + stacking read --z-layer-* / --a63-scrim.
+ * No new tokens.
+ */
+
+/* ── Backdrop / scrim ──────────────────────────────────────────────────── */
+.a63-Sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-layer-scrim, 40);
+  background-color: var(--a63-scrim);
+  backdrop-filter: blur(2px);
+  transition:
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    backdrop-filter var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-Sheet-backdrop[data-starting-style],
+.a63-Sheet-backdrop[data-ending-style] {
+  opacity: 0;
+}
+
+/* ── Viewport — positions the popup at the requested edge ──────────────── */
+.a63-Sheet-viewport {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-layer-modal, 50);
+  display: grid;
+  block-size: var(--a63-viewport-height, 100vh);
+  max-block-size: var(--a63-viewport-height, 100vh);
+}
+.a63-Sheet-viewport[data-side='bottom'] {
+  grid-template-rows: 1fr auto;
+  padding-top: max(3rem, var(--a63-safe-area-top, 0px));
+}
+.a63-Sheet-viewport[data-side='top'] {
+  grid-template-rows: auto 1fr;
+  padding-bottom: max(3rem, var(--a63-safe-area-bottom, 0px));
+}
+.a63-Sheet-viewport[data-side='left'] {
+  display: flex;
+  justify-content: flex-start;
+}
+.a63-Sheet-viewport[data-side='right'] {
+  display: flex;
+  justify-content: flex-end;
+}
+@media (min-width: 640px) {
+  .a63-Sheet-viewport[data-variant='inset'] {
+    padding: var(--a63-space-4);
+  }
+}
+
+/* ── Popup — the raised overlay surface ────────────────────────────────── */
+.a63-Sheet-popup {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 100%;
+  min-width: 0;
+  width: 100%;
+  border: 0 solid var(--a63-border-subtle);
+  background-color: var(--a63-surface-overlay);
+  background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
+  background-blend-mode: normal, var(--a63-overlay-texture-blend);
+  backdrop-filter: var(--a63-overlay-backdrop);
+  box-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow);
+  color: var(--a63-text-primary);
+  transition:
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    translate var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+  will-change: transform;
+}
+.a63-Sheet-popup[data-starting-style],
+.a63-Sheet-popup[data-ending-style] {
+  opacity: 0;
+}
+
+/* ── Per-side anchoring + entrance/exit translate ──────────────────────── */
+.a63-Sheet-popup[data-side='bottom'] {
+  grid-row-start: 2;
+  padding-bottom: var(--a63-safe-area-bottom, 0px);
+  border-top-width: var(--a63-control-border-width);
+}
+.a63-Sheet-popup[data-side='bottom'][data-starting-style],
+.a63-Sheet-popup[data-side='bottom'][data-ending-style] {
+  translate: 0 2rem;
+}
+.a63-Sheet-popup[data-side='top'] {
+  padding-top: var(--a63-safe-area-top, 0px);
+  border-bottom-width: var(--a63-control-border-width);
+}
+.a63-Sheet-popup[data-side='top'][data-starting-style],
+.a63-Sheet-popup[data-side='top'][data-ending-style] {
+  translate: 0 -2rem;
+}
+.a63-Sheet-popup[data-side='left'] {
+  width: calc(100% - 3rem);
+  max-width: 28rem;
+  padding-left: var(--a63-safe-area-left, 0px);
+  border-inline-end-width: var(--a63-control-border-width);
+}
+.a63-Sheet-popup[data-side='left'][data-starting-style],
+.a63-Sheet-popup[data-side='left'][data-ending-style] {
+  translate: -2rem 0;
+}
+.a63-Sheet-popup[data-side='right'] {
+  grid-column-start: 2;
+  width: calc(100% - 3rem);
+  max-width: 28rem;
+  padding-right: var(--a63-safe-area-right, 0px);
+  border-inline-start-width: var(--a63-control-border-width);
+}
+.a63-Sheet-popup[data-side='right'][data-starting-style],
+.a63-Sheet-popup[data-side='right'][data-ending-style] {
+  translate: 2rem 0;
+}
+
+/* Inset variant — a floating rounded card away from the edges (>=640px). */
+@media (min-width: 640px) {
+  .a63-Sheet-popup[data-variant='inset'] {
+    border-width: var(--a63-control-border-width);
+    border-radius: var(--radius-2xl);
+  }
+}
+
+/* ── Close button ──────────────────────────────────────────────────────── */
+.a63-Sheet-close-button {
+  position: absolute;
+  inset-inline-end: var(--a63-space-2);
+  top: var(--a63-space-2);
+}
+
+/* ── Header / footer / title / description / panel ─────────────────────── */
+.a63-Sheet-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-2);
+  padding: var(--a63-space-6);
+}
+/* Tighten the header's bottom padding when a panel follows it. */
+[data-slot='sheet-popup']:has([data-slot='sheet-panel']) .a63-Sheet-header {
+  padding-bottom: var(--a63-space-3);
+}
+
+.a63-Sheet-footer {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--a63-space-2);
+  padding-inline: var(--a63-space-6);
+}
+.a63-Sheet-footer[data-variant='default'] {
+  margin-top: auto;
+  border-top: var(--a63-control-border-width) solid var(--a63-border-subtle);
+  background-color: color-mix(in oklch, var(--a63-surface-muted) 72%, transparent);
+  padding-block: var(--a63-space-4);
+}
+.a63-Sheet-popup[data-variant='inset'] > .a63-Sheet-footer[data-variant='default'] {
+  border-end-start-radius: calc(var(--radius-2xl) - var(--a63-control-border-width));
+  border-end-end-radius: calc(var(--radius-2xl) - var(--a63-control-border-width));
+  background-clip: padding-box;
+}
+.a63-Sheet-footer[data-variant='bare'] {
+  padding-top: var(--a63-space-4);
+  padding-bottom: var(--a63-space-6);
+}
+@media (min-width: 640px) {
+  .a63-Sheet-footer {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+.a63-Sheet-title {
+  font-weight: 600;
+  font-size: var(--typography-lg-font-size, 1.25rem);
+  line-height: var(--typography-lg-line-height);
+  color: var(--a63-text-primary);
+}
+.a63-Sheet-description {
+  font-size: var(--typography-base-font-size);
+  line-height: var(--typography-base-line-height);
+  color: var(--a63-text-secondary);
+}
+
+.a63-Sheet-panel {
+  padding: var(--a63-space-6);
+}
+.a63-Sheet-popup > .a63-ScrollArea {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+[data-slot='sheet-popup']:has([data-slot='sheet-header']) .a63-Sheet-panel {
+  padding-top: var(--a63-space-1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Sheet-backdrop,
+  .a63-Sheet-popup {
+    transition: none;
+  }
+}

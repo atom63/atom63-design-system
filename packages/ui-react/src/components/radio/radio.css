@@ -1,0 +1,115 @@
+/*
+ * Radio recipe — the SELECTION archetype's 3rd consumer (after Switch + Checkbox).
+ * `.a63-Radio` is the circular box; `.a63-Radio-indicator` fills with the shared
+ * --a63-selection-accent and shows a centered dot. Circular (`--radius-full`) with a
+ * dot is the only difference from Checkbox. `.a63-RadioGroup` stacks items.
+ * Axis-dependent selection tokens resolve here via var(--a63-selection-X, <semantic>).
+ */
+
+.a63-RadioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-3);
+}
+
+.a63-Radio {
+  --radio-size: 1.125rem;
+  --radio-accent: var(--a63-selection-accent, var(--a63-action-primary));
+  --radio-border: var(--a63-selection-border, var(--a63-border-control));
+  --radio-focus-ring: var(--a63-selection-focus-ring, var(--a63-focus-ring));
+  --radio-shadow: var(--a63-choice-box-shadow, none);
+  --radio-shadow-checked: var(--a63-choice-box-shadow-checked, var(--radio-shadow));
+  --radio-indicator-gloss: var(--a63-choice-indicator-gloss, none);
+
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--radio-size);
+  height: var(--radio-size);
+  margin: max(0px, calc((var(--a63-control-min-target) - var(--radio-size)) / 2));
+  border: var(--a63-control-border-width) solid var(--radio-border);
+  border-radius: var(--radius-full);
+  background-color: var(--a63-surface-control);
+  box-shadow: var(--radio-shadow);
+  cursor: pointer;
+  outline: none;
+  transition:
+    background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-Radio::after {
+  content: '';
+  position: absolute;
+  inset: 50%;
+  min-width: var(--a63-control-min-target);
+  min-height: var(--a63-control-min-target);
+  translate: -50% -50%;
+}
+
+.a63-Radio-indicator {
+  position: absolute;
+  inset: -1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+}
+.a63-Radio-indicator[data-unchecked] {
+  display: none;
+}
+.a63-Radio-indicator::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-full);
+  background-color: var(--a63-action-primary-foreground);
+}
+
+/* ── States ────────────────────────────────────────────────────────────── */
+.a63-Radio[data-checked] {
+  border-color: var(--radio-accent);
+  box-shadow: var(--radio-shadow-checked);
+}
+.a63-Radio[data-checked] .a63-Radio-indicator {
+  background-color: var(--radio-accent);
+  background-image: var(--radio-indicator-gloss);
+}
+
+@media (hover: hover) {
+  .a63-Radio:hover:not([data-disabled]):not([data-checked]) {
+    border-color: color-mix(in oklch, var(--radio-border), var(--a63-text-primary) 20%);
+  }
+}
+
+.a63-Radio:focus-visible {
+  box-shadow: 0 0 0 var(--a63-control-focus-ring-width) var(--radio-focus-ring);
+}
+
+.a63-Radio[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+.a63-Radio[aria-invalid='true'] {
+  border-color: color-mix(in oklch, var(--a63-action-danger) 62%, transparent);
+}
+
+/* ── Sizes (md is the base rule above) ─────────────────────────────────── */
+.a63-Radio[data-size='sm'] {
+  --radio-size: 1rem;
+}
+.a63-Radio[data-size='sm'] .a63-Radio-indicator::before {
+  width: 0.4375rem;
+  height: 0.4375rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Radio {
+    transition: none;
+  }
+}

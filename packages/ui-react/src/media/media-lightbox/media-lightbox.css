@@ -1,0 +1,171 @@
+/*
+ * Controls that float on top of the photo.
+ *
+ * The photo's colors are unknowable, and — now that the backdrop follows the
+ * theme too — so is whatever sits behind the letterboxing gutter these
+ * controls can also land on. Tinting a translucent surface off of "whatever
+ * is behind it" (the first cut of this) fails the moment that backing is
+ * light: a white tint on a light backdrop is a white smudge. These controls
+ * carry their own opaque-enough backplate instead, dark regardless of theme
+ * or photo, so contrast never depends on what they're floating over.
+ */
+[data-slot='media-lightbox'] {
+  --a63-lightbox-on-media-fg: #fff;
+  --a63-lightbox-on-media-surface: rgb(0 0 0 / 0.55);
+  --a63-lightbox-on-media-surface-hover: rgb(0 0 0 / 0.7);
+  --a63-lightbox-on-media-border: rgb(255 255 255 / 0.16);
+  --a63-lightbox-on-media-ring: rgb(255 255 255 / 0.85);
+}
+
+/*
+ * The glass-tone controls in the top-right cluster, and the capsule the zoom
+ * pair shares. Same overlay-contract material as
+ * `.a63-media-lightbox-zoom-cursor` — border, gloss, blur, shadow — so a dark scrim still reads as an object
+ * sitting on a dark photo or a near-black dark-theme backdrop, not a flat
+ * smudge. Background-color (not `background`) so Tailwind's `bg-*` never has
+ * to out-specificity this for the disabled/hover states, which stay on the
+ * class the rest of the button's utilities already share.
+ */
+.a63-media-lightbox-on-media {
+  border: var(--a63-overlay-border-width) var(--a63-overlay-border-style)
+    var(--a63-lightbox-on-media-border);
+  background-color: var(--a63-lightbox-on-media-surface);
+  background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
+  background-blend-mode: normal, var(--a63-overlay-texture-blend);
+  backdrop-filter: var(--a63-overlay-backdrop);
+  box-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow);
+  color: var(--a63-lightbox-on-media-fg);
+}
+
+.a63-media-lightbox-on-media:hover {
+  background-color: var(--a63-lightbox-on-media-surface-hover);
+}
+
+/*
+ * MediaLightbox — view-transition morph.
+ *
+ * Scoped to `.a63-media-lightbox-vt`, which the lightbox puts on <html> only for
+ * the duration of its own transition, so route and theme transitions keep their
+ * own timing. `*-in` / `*-out` split open from close: the same UA snapshots
+ * mean opposite things on the way back.
+ */
+
+.a63-media-lightbox-vt::view-transition-group(root) {
+  animation: none;
+}
+
+.a63-media-lightbox-vt::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/*
+ * Opening: hide the outgoing page so it cannot plus-lighter-zoom under the
+ * photo. Closing: fade the lightbox overlay out over the morph — snapping it
+ * off (`display: none`) left a hitch where the dim was gone and the tile had
+ * not arrived yet.
+ */
+.a63-media-lightbox-vt-in::view-transition-old(root) {
+  display: none;
+}
+
+.a63-media-lightbox-vt-out::view-transition-old(root) {
+  animation-duration: var(--a63-lightbox-vt-duration, 360ms);
+  animation-timing-function: var(
+    --a63-lightbox-vt-easing,
+    var(--a63-motion-ease-emphasized, cubic-bezier(0.32, 0.72, 0, 1))
+  );
+  mix-blend-mode: normal;
+}
+
+.a63-media-lightbox-vt::view-transition-group(a63-media-lightbox-media) {
+  overflow: clip;
+  animation-duration: var(--a63-lightbox-vt-duration, 360ms);
+  animation-timing-function: var(
+    --a63-lightbox-vt-easing,
+    var(--a63-motion-ease-emphasized, cubic-bezier(0.32, 0.72, 0, 1))
+  );
+  z-index: 1;
+}
+
+.a63-media-lightbox-vt-out::view-transition-group(a63-media-lightbox-media) {
+  border-radius: var(--a63-lightbox-morph-radius, var(--radius-lg, 8px));
+}
+
+.a63-media-lightbox-vt::view-transition-image-pair(a63-media-lightbox-media) {
+  isolation: isolate;
+}
+
+.a63-media-lightbox-vt::view-transition-old(a63-media-lightbox-media),
+.a63-media-lightbox-vt::view-transition-new(a63-media-lightbox-media) {
+  height: 100%;
+  width: 100%;
+  mix-blend-mode: normal;
+  object-position: center;
+}
+
+/*
+ * Open: tile (cover) uncrops into the frame (contain).
+ * Close: the frame (contain) recrops into the tile (cover). Using the open
+ * pairing on the way back recropped the large photo mid-flight.
+ */
+.a63-media-lightbox-vt-in::view-transition-old(a63-media-lightbox-media),
+.a63-media-lightbox-vt-out::view-transition-new(a63-media-lightbox-media) {
+  object-fit: cover;
+}
+
+.a63-media-lightbox-vt-in::view-transition-new(a63-media-lightbox-media),
+.a63-media-lightbox-vt-out::view-transition-old(a63-media-lightbox-media) {
+  object-fit: contain;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-media-lightbox-vt::view-transition-group(a63-media-lightbox-media),
+  .a63-media-lightbox-vt::view-transition-old(a63-media-lightbox-media),
+  .a63-media-lightbox-vt::view-transition-new(a63-media-lightbox-media),
+  .a63-media-lightbox-vt-out::view-transition-old(root) {
+    animation: none;
+  }
+}
+
+/*
+ * Name isolation. `startViewTransition` snapshots the whole document, so any
+ * element that already carries a `view-transition-name` — a route transition,
+ * a theme swap, a widget morph — would be captured as its own group and paint
+ * over the lightbox. While the lightbox owns the transition, nothing else does.
+ */
+.a63-media-lightbox-vt *:not([data-a63-morph-target]) {
+  view-transition-name: none;
+}
+
+.a63-media-lightbox-vt [data-a63-morph-target] {
+  view-transition-name: a63-media-lightbox-media !important;
+}
+
+/*
+ * Pointer-following plus on the enlarge target — same overlay surface as
+ * Carousel's cursorIndicator, instead of the system zoom cursor.
+ */
+[data-zoom-cursor-active] {
+  cursor: none;
+}
+
+.a63-media-lightbox-zoom-cursor {
+  pointer-events: none;
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  width: max(2.5rem, var(--a63-control-min-target, 2.75rem));
+  height: max(2.5rem, var(--a63-control-min-target, 2.75rem));
+  transform: translate(-50%, -50%);
+  align-items: center;
+  justify-content: center;
+  border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
+  border-radius: var(--a63-overlay-radius, var(--radius-full, 9999px));
+  background-color: var(--a63-surface-overlay);
+  background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
+  background-blend-mode: normal, var(--a63-overlay-texture-blend);
+  backdrop-filter: var(--a63-overlay-backdrop);
+  box-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow);
+  color: var(--a63-text-primary);
+}

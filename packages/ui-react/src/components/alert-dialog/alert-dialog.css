@@ -1,0 +1,205 @@
+/*
+ * AlertDialog recipe — the OVERLAY archetype in its dismiss-guarded modal form.
+ * Faithful port of prod @atom63/ui alert-dialog.tsx. Base UI sets
+ * data-open/data-closed + data-starting-style/data-ending-style on the
+ * Backdrop/Popup; the recipe keys its entrance/exit off those. Chrome reads a63
+ * tokens: the popup is a raised overlay surface (--a63-surface-overlay +
+ * --a63-overlay-shadow + --a63-border-subtle), the backdrop scrim + stacking
+ * read the --z-layer-scrim / --z-layer-modal foundation. The five popup
+ * variants (default/destructive/info/success/warning) tint the media chip via
+ * a local --alert-dialog-accent. No new global --a63-* tokens.
+ */
+
+.a63-AlertDialog-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-layer-scrim, 500);
+  background-color: var(--a63-scrim);
+  backdrop-filter: blur(4px);
+  transition:
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    backdrop-filter var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-AlertDialog-backdrop[data-starting-style],
+.a63-AlertDialog-backdrop[data-ending-style] {
+  opacity: 0;
+}
+
+.a63-AlertDialog-viewport {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-layer-modal, 600);
+  display: grid;
+  grid-template-rows: 1fr auto 3fr;
+  justify-items: center;
+  block-size: var(--a63-viewport-height, 100vh);
+  max-block-size: var(--a63-viewport-height, 100vh);
+  padding-block: max(var(--a63-space-4), var(--a63-safe-area-top, 0px))
+    max(var(--a63-space-4), var(--a63-safe-area-bottom, 0px));
+  padding-inline: max(var(--a63-space-4), var(--a63-safe-area-left, 0px))
+    max(var(--a63-space-4), var(--a63-safe-area-right, 0px));
+}
+
+.a63-AlertDialog-popup {
+  --alert-dialog-accent: var(--a63-action-primary);
+
+  position: relative;
+  grid-row-start: 2;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  max-width: 32rem;
+  max-height: 100%;
+  min-height: 0;
+  transform-origin: center;
+  border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
+  border-radius: var(--a63-overlay-radius, var(--radius-2xl));
+  background-color: var(--a63-surface-overlay);
+  background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
+  background-blend-mode: normal, var(--a63-overlay-texture-blend);
+  backdrop-filter: var(--a63-overlay-backdrop);
+  box-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow);
+  color: var(--a63-text-primary);
+  outline: none;
+  transition:
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-AlertDialog-popup[data-size='sm'] {
+  max-width: 24rem;
+}
+.a63-AlertDialog-popup[data-starting-style],
+.a63-AlertDialog-popup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+/* ── Per-variant accent (drives the media chip tint) ─────────────────────
+   default = brand action; destructive = danger; feedback variants map to the
+   canonical status tokens (NOT action-primary) so the media chip reads with the
+   correct semantic hue. */
+.a63-AlertDialog-popup[data-variant='default'] {
+  --alert-dialog-accent: var(--a63-action-primary);
+}
+.a63-AlertDialog-popup[data-variant='destructive'] {
+  --alert-dialog-accent: var(--a63-action-danger);
+}
+.a63-AlertDialog-popup[data-variant='info'] {
+  --alert-dialog-accent: var(--a63-status-info);
+}
+.a63-AlertDialog-popup[data-variant='success'] {
+  --alert-dialog-accent: var(--a63-status-success);
+}
+.a63-AlertDialog-popup[data-variant='warning'] {
+  --alert-dialog-accent: var(--a63-status-warning);
+}
+
+/* ── Mobile: stick the sheet to the bottom edge ────────────────────────── */
+@media (max-width: 639px) {
+  .a63-AlertDialog-viewport[data-stick-bottom] {
+    grid-template-rows: 1fr auto;
+    padding: max(3rem, var(--a63-safe-area-top, 0px)) 0 0;
+  }
+  .a63-AlertDialog-popup[data-stick-bottom] {
+    max-width: none;
+    transform-origin: bottom;
+    border-inline-width: 0;
+    border-block-end-width: 0;
+    border-radius: 0;
+    padding-bottom: var(--a63-safe-area-bottom, 0px);
+  }
+  .a63-AlertDialog-popup[data-stick-bottom][data-starting-style],
+  .a63-AlertDialog-popup[data-stick-bottom][data-ending-style] {
+    transform: translateY(1rem);
+  }
+}
+
+/* ── Header / footer / media / title / description ─────────────────────── */
+.a63-AlertDialog-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-2);
+  padding: var(--a63-space-5);
+  text-align: center;
+}
+@media (max-width: 639px) {
+  .a63-AlertDialog-header {
+    padding-bottom: var(--a63-space-4);
+  }
+}
+@media (min-width: 640px) {
+  .a63-AlertDialog-header {
+    text-align: left;
+  }
+}
+
+.a63-AlertDialog-footer {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--a63-space-2);
+  padding-inline: var(--a63-space-5);
+}
+.a63-AlertDialog-footer[data-variant='default'] {
+  padding-block: var(--a63-space-3);
+  border-top: var(--a63-control-border-width) solid var(--a63-border-subtle);
+  background: color-mix(in oklch, var(--a63-surface-muted) 72%, transparent);
+}
+.a63-AlertDialog-footer[data-variant='bare'] {
+  padding-bottom: var(--a63-space-5);
+}
+@media (max-width: 639px) {
+  .a63-AlertDialog-footer > [data-slot] {
+    width: 100%;
+  }
+}
+@media (min-width: 640px) {
+  .a63-AlertDialog-footer {
+    flex-direction: row;
+    justify-content: flex-end;
+    border-end-start-radius: calc(var(--radius-2xl) - 1px);
+    border-end-end-radius: calc(var(--radius-2xl) - 1px);
+  }
+}
+
+.a63-AlertDialog-media {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin: 0 auto var(--a63-space-2);
+  border-radius: var(--a63-radius-control);
+  border: var(--a63-control-border-width) solid
+    color-mix(in oklch, var(--alert-dialog-accent) 32%, transparent);
+  background: color-mix(in oklch, var(--alert-dialog-accent) 8%, transparent);
+  color: var(--alert-dialog-accent);
+}
+.a63-AlertDialog-media svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+@media (min-width: 640px) {
+  .a63-AlertDialog-media {
+    margin-inline: 0;
+  }
+}
+
+.a63-AlertDialog-title {
+  font-weight: 600;
+  font-size: var(--typography-xl-font-size);
+  line-height: 1;
+  color: var(--a63-text-primary);
+}
+
+.a63-AlertDialog-description {
+  font-size: var(--typography-sm-font-size);
+  color: var(--a63-text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-AlertDialog-backdrop,
+  .a63-AlertDialog-popup {
+    transition: none;
+  }
+}

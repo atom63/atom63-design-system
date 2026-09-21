@@ -1,0 +1,261 @@
+/*
+ * Select recipe — field-shaped trigger + menu-backed option popup.
+ *
+ * Popup chrome is the shared MENU recipe (`.a63-Menu-popup` on the surface;
+ * `.a63-Menu-item` / label / separator on rows). Select keeps only structural
+ * deltas: field trigger, scroll arrows, and the grid check-indicator item.
+ */
+
+.a63-Select-trigger {
+  --select-background: var(--a63-field-background, var(--a63-surface-control));
+  --select-border: var(--a63-field-border, var(--a63-border-control));
+  --select-radius: var(--a63-field-radius, var(--a63-control-radius));
+  --select-shadow: var(--a63-field-shadow);
+  --select-focus-ring: var(--a63-field-focus-ring, var(--a63-focus-ring));
+  --select-focus-border: var(
+    --a63-field-focus-border,
+    color-mix(in oklch, var(--a63-action-primary) 62%, var(--a63-border-control))
+  );
+  /* Content floor — see button.css for the full rationale. */
+  --select-content-lh: var(--typography-sm-line-height);
+  --select-content-floor: calc(var(--select-content-lh) + 2 * var(--a63-space-0_5));
+  --select-height: max(
+    calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size),
+    var(--select-content-floor)
+  );
+  --select-padding-inline: var(--a63-control-padding-inline-md);
+  --select-font-size: var(--a63-control-font-size-md);
+  --select-icon-size: var(--a63-control-icon-size-md);
+  --select-gap: var(--a63-control-gap);
+
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--select-gap);
+  width: 100%;
+  min-width: 9rem;
+  height: var(--select-height);
+  min-height: var(--select-height);
+  padding-inline: var(--select-padding-inline);
+  border: var(--a63-control-border-width) solid var(--select-border);
+  border-radius: var(--select-radius);
+  background: var(--select-background);
+  box-shadow: var(--select-shadow);
+  color: var(--a63-text-primary);
+  font-family: var(--a63-control-font-family);
+  font-size: max(var(--select-font-size), var(--a63-editable-font-size-min, 0px));
+  font-weight: var(--a63-control-font-weight);
+  line-height: 1;
+  text-align: start;
+  appearance: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  outline: none;
+  transition:
+    border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .a63-Select-trigger:hover:not([data-disabled]) {
+    border-color: color-mix(in oklch, var(--select-border), var(--a63-text-primary) 18%);
+  }
+}
+
+.a63-Select-trigger:focus-visible {
+  border-color: var(--select-focus-border);
+  box-shadow:
+    var(--select-shadow),
+    0 0 0 var(--a63-control-focus-ring-width) var(--select-focus-ring);
+}
+
+.a63-Select-trigger[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+.a63-Select-trigger[data-size='sm'] {
+  --select-content-lh: var(--typography-xs-line-height);
+  --select-height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size),
+    var(--select-content-floor)
+  );
+  --select-padding-inline: var(--a63-control-padding-inline-sm);
+  --select-font-size: var(--a63-control-font-size-sm);
+  --select-icon-size: var(--a63-control-icon-size-sm);
+  --select-gap: var(--a63-space-1_5);
+}
+
+.a63-Select-trigger[data-size='lg'] {
+  --select-content-lh: var(--typography-base-line-height);
+  --select-height: max(
+    calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size-lg, var(--a63-control-min-size)),
+    var(--select-content-floor)
+  );
+  --select-padding-inline: var(--a63-control-padding-inline-lg);
+  --select-font-size: var(--a63-control-font-size-lg);
+  --select-icon-size: var(--a63-control-icon-size-lg);
+}
+
+.a63-Select-value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.a63-Select-value[data-placeholder] {
+  color: var(--a63-text-secondary);
+}
+
+.a63-Select-icon {
+  display: inline-flex;
+  flex: none;
+  color: var(--a63-text-secondary);
+}
+
+.a63-Select-icon svg {
+  width: var(--select-icon-size);
+  height: var(--select-icon-size);
+}
+
+/* ── Popup shell (motion + arrows; paint is on .a63-Menu-popup surface) ── */
+
+.a63-Select-positioner {
+  z-index: var(--z-layer-menu, var(--z-layer-popover, 999));
+}
+
+.a63-Select-popup {
+  box-sizing: border-box;
+  /* No overflow:hidden — the surface owns clipping; clipping here would cut
+     the shared Menu-popup elevation (box-shadow) on the child plate. */
+  transform-origin: var(--transform-origin);
+  transition:
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-Select-popup[data-starting-style],
+.a63-Select-popup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+/*
+ * Surface hosts `.a63-Menu-popup` for shared menu chrome (padding, gap, paint).
+ * Only override scroll ownership — the List scrolls; arrows stay outside.
+ */
+.a63-Select-surface.a63-Menu-popup {
+  position: relative;
+  max-height: var(--available-height);
+  min-width: var(--anchor-width);
+  overflow: hidden;
+}
+
+.a63-Select-scroll-arrow {
+  z-index: var(--z-layer-menu, var(--z-layer-popover, 999));
+  display: flex;
+  width: 100%;
+  height: max(
+    calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+  align-items: center;
+  justify-content: center;
+  color: var(--a63-menu-label-foreground, var(--a63-text-secondary));
+  cursor: default;
+}
+
+.a63-Select-scroll-arrow[data-direction='up'] {
+  top: 0;
+}
+
+.a63-Select-scroll-arrow[data-direction='down'] {
+  bottom: 0;
+}
+
+.a63-Select-scroll-arrow svg {
+  width: 1em;
+  height: 1em;
+}
+
+/* List scrolls inside the padded Menu surface — no second padding inset. */
+.a63-Select-list {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--a63-menu-gap, 0.125rem);
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+/* ── Item (grid check column; chrome from .a63-Menu-item) ──────────────── */
+
+.a63-Select-item {
+  display: grid;
+  grid-template-columns: 1rem 1fr;
+  gap: var(--a63-menu-item-gap, var(--a63-space-2));
+  /* Menu-item uses flex; Select needs the indicator column. */
+  align-items: center;
+  padding-inline-end: var(--a63-space-4);
+  cursor: pointer;
+}
+
+.a63-Select-item[data-selected] {
+  font-weight: 500;
+}
+
+.a63-Select-item-indicator {
+  display: inline-flex;
+  grid-column: 1;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* Beat `.a63-Menu-item svg` so the check keeps the selected-indicator tone. */
+.a63-Select-item-indicator,
+.a63-Select-item-indicator svg {
+  width: 0.875rem;
+  height: 0.875rem;
+  color: var(--a63-menu-selected-indicator, var(--a63-action-primary));
+}
+
+.a63-Select-item-text {
+  grid-column: 2;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.a63-Select-item[data-highlighted] .a63-Select-item-indicator,
+.a63-Select-item[data-highlighted] .a63-Select-item-indicator svg {
+  color: var(--a63-menu-highlight-foreground, var(--a63-text-primary));
+}
+
+.a63-Menu-popup[data-tone='primary'] .a63-Select-item[data-highlighted] .a63-Select-item-indicator,
+.a63-Menu-popup[data-tone='primary']
+  .a63-Select-item[data-highlighted]
+  .a63-Select-item-indicator
+  svg {
+  color: var(--a63-menu-highlight-primary-foreground, var(--a63-action-primary-foreground));
+}
+
+/* Group label / separator: Menu recipe owns chrome; Select keeps the slot class. */
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Select-popup {
+    transition: none;
+  }
+}

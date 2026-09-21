@@ -1,0 +1,34 @@
+import { Controls, Meta, Primary, Stories, Title } from '@storybook/addon-docs/blocks'
+
+import * as SegmentedControlStories from './segmented-control.stories'
+
+<Meta of={SegmentedControlStories} />
+
+<Title />
+
+A single-select segmented control — a recessed track with a raised pill that slides to the active segment (Base UI Tabs). Driven by an `items` array; the active pill and track read theme-overridden semantics, so the four themes restyle it for free.
+
+## Anatomy
+
+- Root `.a63-SegmentedControl` — `data-slot="segmented-control"`, carries `data-size`, `data-variant`, `data-tone`.
+- Track `.a63-SegmentedControl-track` — the recessed well.
+- Item `.a63-SegmentedControl-item` — a segment; Base UI stamps `data-active` on the selected one, `data-disabled` on disabled items.
+- Indicator `.a63-SegmentedControl-indicator` — the sliding raised pill (Base UI `--active-tab-*`).
+
+## Contract
+
+- **Sizes:** `sm` `md` `lg` (default `md`).
+- **Variants:** `icon` (square segments) · `label` (text + optional leading icon). Default `label`.
+- **Tones (active pill):** `neutral` (raised surface, default) · `accent` (brand primary). Aligns with the Toggle `tone` axis.
+- Per-item `disabled?: boolean`.
+- Source of truth: `@atom63/ui-foundation` → `segmented-control/segmented-control-contract.ts`.
+
+## Tokens it reads
+
+Track `--a63-surface-control`; pill `--a63-surface-page` + `--a63-control-shadow` (accent: `--a63-action-primary` + `--a63-action-primary-foreground`); text `--a63-text-secondary`/`primary`; geometry from the `--a63-control-*` ramp. No new tokens.
+
+<Primary />
+
+<Controls />
+
+<Stories />

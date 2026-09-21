@@ -1,0 +1,100 @@
+/*
+ * Menu contract — the actionable MENU archetype: DropdownMenu, ContextMenu,
+ * Select, Autocomplete, and Menubar menus. One token set so every menu surface
+ * reads the SAME item / popup treatment (spacing, radius, highlight,
+ * destructive), consumed by the shared `.a63-Menu-*` recipe (including Select /
+ * Autocomplete surfaces + items). The popup *surface* treatment (gel / bevel /
+ * backdrop / elevation) comes from the OVERLAY contract — this contract only
+ * adds the menu-specific item + chrome vocabulary.
+ *
+ * ── TWO tonal styles for the HIGHLIGHTED item (mirrors `segment`) ───────────
+ *   1. neutral (default) — a quiet hover fill (--a63-surface-control-hover).
+ *   2. primary           — the accent fill (the classic macOS menu highlight).
+ *   Selected by a tone flag / theme default; the RESTING + destructive treatment
+ *   is shared by both tones.
+ *
+ * ── AXIS TRAP (see selection.css) ──────────────────────────────────────────
+ *   Colour hooks reference mode/theme/brand semantics, so they are NOT declared
+ *   at :root (a var(--a63-action-*) resolved at :root freezes to the root mode).
+ *   They are consumed at the recipe USE-SITE with the live-semantic fallback in
+ *   the API block below, and a theme overrides them under [data-a63-theme].
+ *   Only axis-independent geometry + treatment defaults live at :root here.
+ */
+
+:root {
+  /* ── Popup box metrics (surface treatment = OVERLAY contract) ──────────── */
+  --a63-menu-popup-padding: var(--a63-space-1);
+
+  /*
+   * NOTE: --a63-menu-popup-radius and --a63-menu-item-radius are NOT declared
+   * here. Radius is a THEME-VARYING axis (themes set --a63-overlay-radius /
+   * --a63-control-radius), so declaring them at :root would freeze them to the
+   * root (modern) value and inherit it into every theme — the same resolve-at-
+   * declaration trap as the colour hooks. They are read at the recipe use-site:
+   *   popup  -> var(--a63-menu-popup-radius, var(--a63-overlay-radius, --radius-lg))
+   *   item   -> popup radius - popup border - popup padding (concentric inset)
+   * A theme MAY set --a63-menu-*-radius under [data-a63-theme] to override.
+   */
+
+  /* ── Item geometry ─────────────────────────────────────────────────────── */
+  --a63-menu-item-padding-block: var(--a63-space-1_5);
+  --a63-menu-item-padding-inline: var(--a63-space-2);
+  --a63-menu-item-gap: var(--a63-space-2); /* icon <-> label gap WITHIN an item */
+  --a63-menu-gap: var(--a63-space-0_5); /* vertical gap BETWEEN items/rows */
+  --a63-menu-item-font-size: var(--a63-control-font-size-sm);
+  --a63-menu-item-inset: 2rem; /* checkbox / radio / inset indent */
+
+  /* ── Highlight treatment (theme-varying gel / glow; none at :root = flat) ── */
+  --a63-menu-highlight-gloss: none;
+  --a63-menu-highlight-shadow: none;
+
+  /* ── Disabled fade (foreground-only intent, like Button) ───────────────── */
+  --a63-menu-disabled-opacity: 0.56;
+}
+
+/*
+ * Menu spacing follows item shape. At the 'none' radius scale, rows become square
+ * and the menu collapses to a flat, flush list: no inter-item gap and no popup
+ * inset, so highlighted rows span edge-to-edge — the dense CRT / Win98 menu.
+ * At every other radius scale (subtle/default/round), the inset/gapped rhythm is
+ * restored for rounded highlights.
+ */
+[data-a63-radius='none'] {
+  --a63-menu-gap: 0;
+  --a63-menu-item-radius: 0;
+  --a63-menu-popup-padding: 0;
+}
+
+/*
+ * ── COLOUR API ──────────────────────────────────────────────────────────────
+ * Consume each at the recipe USE-SITE with the live-semantic fallback shown, e.g.
+ *   background: var(--a63-menu-highlight-background, var(--a63-surface-control-hover));
+ * A theme overrides any of these under [data-a63-theme='…'] (non-:root, resolves
+ * in context). NEVER declare these at :root.
+ *
+ *   Item (resting) — shared by both tones:
+ *     --a63-menu-item-foreground              → var(--a63-text-primary)
+ *     --a63-menu-item-icon                    → var(--a63-text-secondary)
+ *
+ *   Highlighted item — NEUTRAL tone (default):
+ *     --a63-menu-highlight-background          → var(--a63-surface-control-hover)
+ *     --a63-menu-highlight-foreground          → var(--a63-text-primary)
+ *
+ *   Highlighted item — PRIMARY tone ([data-tone='primary'] or a themed default):
+ *     --a63-menu-highlight-primary-background  → var(--a63-action-primary)
+ *     --a63-menu-highlight-primary-foreground  → var(--a63-action-primary-foreground)
+ *
+ *   Destructive item:
+ *     --a63-menu-destructive-foreground        → var(--a63-action-danger)
+ *     --a63-menu-destructive-highlight-background
+ *                                              → color-mix(in oklch, var(--a63-action-danger) 10%, transparent)
+ *
+ *   Chrome:
+ *     --a63-menu-popup-background             → var(--a63-surface-overlay)
+ *     --a63-menu-popup-gloss                  → var(--a63-overlay-gloss)
+ *     --a63-menu-label-foreground              → var(--a63-text-secondary)
+ *     --a63-menu-separator                     → var(--a63-border-subtle)
+ *     --a63-menu-shortcut-foreground           → var(--a63-text-secondary)
+ *     --a63-menu-indicator                     → var(--a63-text-primary)    (check/radio mark)
+ *     --a63-menu-selected-indicator            → var(--a63-action-primary)  (Select current-value check)
+ */

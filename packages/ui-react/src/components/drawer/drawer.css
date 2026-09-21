@@ -1,0 +1,265 @@
+/*
+ * Drawer recipe — a Base UI-backed drawer, the OVERLAY archetype in its
+ * full-bleed modal form. Base UI provides Root/Portal/Backdrop/Viewport/Popup/
+ * Content and swipe CSS variables; this recipe supplies Atom63 chrome, placement,
+ * and motion tokens.
+ */
+
+.a63-Drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-layer-scrim, 500);
+  background-color: var(--a63-scrim);
+  opacity: max(var(--drawer-overlay-min-opacity, 0), calc(1 - var(--drawer-swipe-progress, 0)));
+  backdrop-filter: blur(4px);
+  transition:
+    opacity var(--a63-motion-duration-overlay) var(--a63-motion-ease-scrim),
+    backdrop-filter var(--a63-motion-duration-overlay) var(--a63-motion-ease-scrim);
+}
+
+.a63-Drawer-overlay[data-starting-style],
+.a63-Drawer-overlay[data-ending-style] {
+  opacity: 0;
+}
+
+.a63-Drawer-overlay[data-ending-style] {
+  pointer-events: none;
+  transition-duration: calc(
+    var(--drawer-swipe-strength, 1) * var(--a63-motion-duration-swipe-dismiss)
+  );
+}
+
+.a63-Drawer-overlay[data-swiping] {
+  transition-duration: 0ms;
+}
+
+.a63-Drawer-viewport {
+  /* Screen edge the sheet must never occupy, so a top/bottom drawer always
+     leaves the opposite edge visible. Reserved as viewport padding below, and
+     exposed as a variable so a host sizing its own sheet can subtract it
+     instead of guessing at it. */
+  --a63-drawer-viewport-gutter: 6rem;
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-layer-modal, 600);
+  display: grid;
+  block-size: var(--a63-viewport-height, 100vh);
+  max-block-size: var(--a63-viewport-height, 100vh);
+  pointer-events: none;
+}
+
+.a63-Drawer-viewport[data-side='top'] {
+  grid-template-rows: auto 1fr;
+  padding-bottom: var(--a63-drawer-viewport-gutter);
+}
+
+.a63-Drawer-viewport[data-side='bottom'] {
+  grid-template-rows: 1fr auto;
+  padding-top: var(--a63-drawer-viewport-gutter);
+}
+
+.a63-Drawer-viewport[data-side='left'],
+.a63-Drawer-viewport[data-side='right'] {
+  display: flex;
+}
+
+.a63-Drawer-viewport[data-side='left'] {
+  justify-content: flex-start;
+}
+
+.a63-Drawer-viewport[data-side='right'] {
+  justify-content: flex-end;
+}
+
+.a63-Drawer-content {
+  --a63-drawer-closed-transform: translate3d(0, calc(100% + 2px), 0);
+  --a63-drawer-translate-x: 0px;
+  --a63-drawer-translate-y: 0px;
+
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  min-width: 0;
+  min-height: 0;
+  border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
+  background-color: var(--a63-surface-overlay);
+  background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
+  background-blend-mode: normal, var(--a63-overlay-texture-blend);
+  backdrop-filter: var(--a63-overlay-backdrop);
+  box-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow);
+  color: var(--a63-text-primary);
+  outline: none;
+  pointer-events: auto;
+  transform: translate3d(var(--a63-drawer-translate-x), var(--a63-drawer-translate-y), 0);
+  transition:
+    transform var(--a63-motion-duration-overlay) var(--a63-motion-ease-overlay),
+    height var(--a63-motion-duration-overlay) var(--a63-motion-ease-overlay),
+    opacity var(--a63-motion-duration-overlay) var(--a63-motion-ease-overlay),
+    filter var(--a63-motion-duration-overlay) var(--a63-motion-ease-overlay);
+  will-change: transform;
+}
+
+.a63-Drawer-content:focus,
+.a63-Drawer-content:focus-visible {
+  outline: none;
+}
+
+.a63-Drawer-contentInner {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+}
+
+/* Per-direction placement. */
+.a63-Drawer-content[data-side='top'] {
+  grid-row-start: 1;
+  max-height: min(
+    80dvh,
+    calc(var(--a63-viewport-height, 100vh) - var(--a63-safe-area-bottom, 0px))
+  );
+  padding-top: var(--a63-safe-area-top, 0px);
+  border-radius: 0 0 var(--a63-overlay-radius, var(--radius-2xl))
+    var(--a63-overlay-radius, var(--radius-2xl));
+  transform-origin: top;
+  --a63-drawer-closed-transform: translate3d(0, calc(-100% - 2px), 0);
+  --a63-drawer-translate-y: var(--drawer-swipe-movement-y, 0px);
+}
+
+.a63-Drawer-content[data-side='bottom'] {
+  grid-row-start: 2;
+  max-height: min(80dvh, calc(var(--a63-viewport-height, 100vh) - var(--a63-safe-area-top, 0px)));
+  padding-bottom: var(--a63-safe-area-bottom, 0px);
+  border-radius: var(--a63-overlay-radius, var(--radius-2xl))
+    var(--a63-overlay-radius, var(--radius-2xl)) 0 0;
+  transform-origin: bottom;
+  --a63-drawer-closed-transform: translate3d(0, calc(100% + 2px), 0);
+  --a63-drawer-translate-y: calc(
+    var(--drawer-snap-point-offset, 0px) + var(--drawer-swipe-movement-y, 0px)
+  );
+}
+
+.a63-Drawer-content[data-side='right'] {
+  width: min(calc(100% - 3rem), 24rem);
+  min-height: 100%;
+  padding-right: var(--a63-safe-area-right, 0px);
+  transform-origin: right;
+  --a63-drawer-closed-transform: translate3d(calc(100% + 2px), 0, 0);
+  --a63-drawer-translate-x: var(--drawer-swipe-movement-x, 0px);
+}
+
+.a63-Drawer-content[data-side='left'] {
+  width: min(calc(100% - 3rem), 24rem);
+  min-height: 100%;
+  padding-left: var(--a63-safe-area-left, 0px);
+  transform-origin: left;
+  --a63-drawer-closed-transform: translate3d(calc(-100% - 2px), 0, 0);
+  --a63-drawer-translate-x: var(--drawer-swipe-movement-x, 0px);
+}
+
+.a63-Drawer-content[data-starting-style] {
+  transform: var(--a63-drawer-closed-transform);
+}
+
+.a63-Drawer-content[data-ending-style] {
+  opacity: 0.9999;
+  transform: var(--a63-drawer-closed-transform);
+  transition-duration: calc(
+    var(--drawer-swipe-strength, 1) * var(--a63-motion-duration-swipe-dismiss)
+  );
+}
+
+.a63-Drawer-content[data-swiping] {
+  transition-duration: 0ms;
+}
+
+/* Grab handle — bottom drawer only. */
+.a63-Drawer-handle {
+  display: none;
+  flex-shrink: 0;
+  width: 2.5rem;
+  height: 0.25rem;
+  margin: var(--a63-space-2) auto 0;
+  border-radius: var(--radius-full);
+  background-color: var(--a63-surface-control-hover);
+}
+
+.a63-Drawer-content[data-side='bottom'] .a63-Drawer-handle {
+  display: block;
+}
+
+/* Header / footer / title / description. */
+.a63-Drawer-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-2);
+  padding: var(--a63-space-5);
+}
+
+.a63-Drawer-content[data-side='bottom'] .a63-Drawer-header,
+.a63-Drawer-content[data-side='top'] .a63-Drawer-header {
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .a63-Drawer-header {
+    text-align: left;
+  }
+}
+
+.a63-Drawer-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 var(--a63-space-5) var(--a63-space-5);
+}
+
+.a63-Drawer-footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-2);
+  margin-top: auto;
+  padding-inline: var(--a63-space-5);
+}
+
+.a63-Drawer-footer[data-variant='default'] {
+  padding-block: var(--a63-space-3);
+  border-top: var(--a63-control-border-width) solid var(--a63-border-subtle);
+  background: color-mix(in oklch, var(--a63-surface-muted) 72%, transparent);
+}
+
+.a63-Drawer-footer[data-variant='bare'] {
+  padding-top: var(--a63-space-3);
+  padding-bottom: var(--a63-space-5);
+}
+
+.a63-Drawer-title {
+  font-weight: 600;
+  font-size: var(--typography-xl-font-size);
+  line-height: var(--typography-xl-line-height);
+  color: var(--a63-text-primary);
+}
+
+.a63-Drawer-description {
+  font-size: var(--a63-control-font-size-sm);
+  line-height: var(--typography-sm-line-height);
+  color: var(--a63-text-secondary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Drawer-overlay,
+  .a63-Drawer-content {
+    transition: none;
+  }
+
+  .a63-Drawer-overlay[data-starting-style],
+  .a63-Drawer-overlay[data-ending-style],
+  .a63-Drawer-content[data-starting-style],
+  .a63-Drawer-content[data-ending-style] {
+    opacity: 1;
+    transform: none;
+  }
+}

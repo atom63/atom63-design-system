@@ -1,0 +1,26 @@
+/*
+ * Toggle contract — persistent on/off controls.
+ *
+ * Covers standalone Toggle. ToggleGroup is always a joined segmented bar and
+ * reads the segment contract for cell chrome; it does not use a layout variant.
+ *
+ * Colour hooks resolve at recipe use-sites:
+ *   --a63-toggle-background           -> transparent
+ *   --a63-toggle-foreground           -> var(--a63-text-primary)
+ *   --a63-toggle-hover-background     -> var(--a63-surface-control-hover)
+ *   --a63-toggle-on-background        -> var(--a63-surface-muted)
+ *   --a63-toggle-on-foreground        -> var(--a63-text-primary)
+ *   --a63-toggle-primary-background   -> var(--a63-action-primary)
+ *   --a63-toggle-primary-foreground   -> var(--a63-action-primary-foreground)
+ */
+
+:root {
+  --a63-toggle-border-width: var(--a63-segment-border-width);
+  --a63-toggle-gap: var(--a63-control-gap);
+  --a63-toggle-group-gap: var(--a63-segment-gap);
+  --a63-toggle-radius: var(--a63-control-radius);
+  --a63-toggle-shadow: none;
+  --a63-toggle-shadow-active: none;
+  --a63-toggle-text-shadow: none;
+  --a63-toggle-disabled-opacity: 0.56;
+}

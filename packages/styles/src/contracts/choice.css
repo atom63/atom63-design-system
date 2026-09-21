@@ -1,0 +1,32 @@
+/*
+ * Choice contract — form controls that expose checked/selected value state.
+ *
+ * Covers Checkbox, Radio, and Switch. This is the visual home for indicators,
+ * dots, thumbs, and on/off tracks. It aliases the older `selection` namespace so
+ * current recipes keep working while new recipes can use the clearer name.
+ *
+ * Axis-dependent colour hooks are resolved at the recipe use-site:
+ *   --a63-choice-accent       -> var(--a63-action-primary)
+ *   --a63-choice-border       -> var(--a63-border-control)
+ *   --a63-choice-track-off    -> var(--a63-surface-control)
+ *   --a63-choice-focus-ring   -> var(--a63-focus-ring)
+ *
+ * Material hooks are axis-independent defaults. Themes override them to express
+ * glass, bevel, or phosphor treatment without making choice controls inherit the
+ * full Button chrome. Switch maps the box shadows to its track and the indicator
+ * gloss to its checked fill; Checkbox and Radio use the same hooks on their
+ * boxes and indicators.
+ */
+
+:root {
+  --a63-choice-thumb: var(--a63-selection-thumb);
+  --a63-choice-thumb-fg: var(--a63-selection-thumb-fg);
+  --a63-choice-switch-thumb-size: var(--a63-switch-thumb-size);
+  --a63-choice-border-width: var(--a63-control-border-width);
+  --a63-choice-focus-ring-width: var(--a63-control-focus-ring-width);
+  --a63-choice-feedback-duration: var(--a63-control-feedback-duration);
+  --a63-choice-feedback-ease: var(--a63-control-feedback-ease);
+  --a63-choice-box-shadow: none;
+  --a63-choice-box-shadow-checked: none;
+  --a63-choice-indicator-gloss: none;
+}

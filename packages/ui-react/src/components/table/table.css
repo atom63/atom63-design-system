@@ -1,0 +1,183 @@
+/*
+ * Table recipe — the tabular-data set. Faithful port of prod @atom63/ui Table.
+ * The container scrolls horizontally with a thin themed scrollbar; the base
+ * table is a full-width, small-text grid with a header underline, hover/selected
+ * row surfaces, and muted head text. A `frame` ancestor (data-slot="frame")
+ * switches on the bordered-card treatment: separated borders, rounded outer
+ * corners, and a hairline body outline.
+ *
+ * Token notes: prod's app-level --theme-row-hover/selected-background /
+ * -foreground vars map to canonical DS semantics — row hover to
+ * --a63-surface-control-hover, selected row to the brand accent
+ * (--a63-action-primary + -foreground). text-muted-foreground ->
+ * --a63-text-secondary, bg-background -> --a63-surface-page, borders ->
+ * --a63-border-subtle.
+ */
+
+.a63-Table-container {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.a63-Table-container::-webkit-scrollbar {
+  display: block;
+  height: 0.375rem;
+}
+.a63-Table-container::-webkit-scrollbar-track {
+  border-radius: 9999px;
+  background: var(--a63-surface-muted);
+}
+.a63-Table-container::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+  background: color-mix(in oklch, var(--a63-text-secondary) 30%, transparent);
+}
+.a63-Table-container:hover::-webkit-scrollbar-thumb {
+  background: color-mix(in oklch, var(--a63-text-secondary) 50%, transparent);
+}
+
+.a63-Table {
+  width: 100%;
+  caption-side: bottom;
+  font-size: var(--a63-control-font-size-sm);
+}
+
+/* ── Header ────────────────────────────────────────────────────────────── */
+.a63-Table-header .a63-Table-row {
+  border-bottom: 1px solid var(--a63-border-subtle);
+}
+
+/* ── Head cells ────────────────────────────────────────────────────────── */
+.a63-Table-head {
+  height: 2.5rem;
+  padding-inline: 0.625rem;
+  text-align: left;
+  vertical-align: middle;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--a63-text-secondary);
+}
+.a63-Table-head:has([role='checkbox']) {
+  width: 1px;
+  padding-inline-end: 0;
+}
+
+/* ── Body cells ────────────────────────────────────────────────────────── */
+.a63-Table-cell {
+  padding: 0.625rem;
+  vertical-align: middle;
+  line-height: 1;
+  white-space: nowrap;
+}
+.a63-Table-cell:has([role='checkbox']) {
+  padding-inline-end: 0;
+}
+
+.a63-Table-body .a63-Table-row:last-child {
+  border-bottom: 0;
+}
+
+/* ── Rows ──────────────────────────────────────────────────────────────── */
+.a63-Table-row {
+  border-bottom: 1px solid var(--a63-border-subtle);
+  transition: background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-Table-row:hover {
+  background: var(--a63-surface-control-hover);
+}
+.a63-Table-row[data-state='selected'] {
+  background: var(--a63-action-primary);
+  color: var(--a63-action-primary-foreground);
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
+.a63-Table-footer {
+  border-top: 1px solid var(--a63-border-subtle);
+  background: color-mix(in oklch, var(--a63-surface-muted) 72%, transparent);
+  font-weight: 500;
+}
+.a63-Table-footer .a63-Table-row:last-child {
+  border-bottom: 0;
+}
+
+/* ── Caption ───────────────────────────────────────────────────────────── */
+.a63-Table-caption {
+  margin-top: var(--a63-space-4);
+  font-size: var(--a63-control-font-size-sm);
+  color: var(--a63-text-secondary);
+}
+
+/* ── Frame variant (bordered-card treatment) ──────────────────────────────
+   Enabled when the table sits inside an element with data-slot="frame". */
+[data-slot='frame'] .a63-Table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+[data-slot='frame'] .a63-Table-header .a63-Table-head {
+  height: 2.25rem;
+}
+[data-slot='frame'] .a63-Table-header .a63-Table-row {
+  border-bottom: 0;
+}
+[data-slot='frame'] .a63-Table-header .a63-Table-row:hover {
+  background: transparent;
+}
+
+[data-slot='frame'] .a63-Table-body {
+  position: relative;
+  border-radius: calc(var(--radius-2xl) - 0.25rem);
+}
+[data-slot='frame'] .a63-Table-body .a63-Table-row {
+  border-bottom: 0;
+}
+[data-slot='frame'] .a63-Table-body .a63-Table-row:hover {
+  background: transparent;
+}
+[data-slot='frame'] .a63-Table-body .a63-Table-row[data-state='selected'] {
+  background: transparent;
+}
+[data-slot='frame'] .a63-Table-body .a63-Table-cell {
+  border-bottom: 1px solid var(--a63-border-subtle);
+  background: var(--a63-surface-page);
+  background-clip: padding-box;
+}
+[data-slot='frame'] .a63-Table-body .a63-Table-cell:first-child {
+  border-inline-start: 1px solid var(--a63-border-subtle);
+}
+[data-slot='frame'] .a63-Table-body .a63-Table-cell:last-child {
+  border-inline-end: 1px solid var(--a63-border-subtle);
+}
+[data-slot='frame'] .a63-Table-body .a63-Table-row:first-child .a63-Table-cell {
+  border-top: 1px solid var(--a63-border-subtle);
+}
+[data-slot='frame'] .a63-Table-body .a63-Table-row:first-child .a63-Table-cell:first-child {
+  border-start-start-radius: calc(var(--radius-2xl) - 0.25rem);
+}
+[data-slot='frame'] .a63-Table-body .a63-Table-row:first-child .a63-Table-cell:last-child {
+  border-start-end-radius: calc(var(--radius-2xl) - 0.25rem);
+}
+[data-slot='frame'] .a63-Table-body .a63-Table-row:last-child .a63-Table-cell:first-child {
+  border-end-start-radius: calc(var(--radius-2xl) - 0.25rem);
+}
+[data-slot='frame'] .a63-Table-body .a63-Table-row:last-child .a63-Table-cell:last-child {
+  border-end-end-radius: calc(var(--radius-2xl) - 0.25rem);
+}
+
+[data-slot='frame'] .a63-Table-footer {
+  border-top: 0;
+  background: transparent;
+}
+[data-slot='frame'] .a63-Table-footer .a63-Table-row:hover {
+  background: transparent;
+}
+
+[data-slot='frame'] .a63-Table-caption {
+  margin-block: var(--a63-space-4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Table-row {
+    transition: none;
+  }
+}

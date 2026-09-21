@@ -1,0 +1,16 @@
+html[data-theme-transitioning] *,
+html[data-theme-transitioning] *::before,
+html[data-theme-transitioning] *::after {
+  transition: none !important;
+  animation-duration: 0s !important;
+}
+
+@layer utilities {
+  .no-theme-transition {
+    transition: none !important;
+  }
+
+  .no-theme-transition * {
+    transition: none !important;
+  }
+}

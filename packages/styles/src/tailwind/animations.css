@@ -1,0 +1,8 @@
+@import 'tw-animate-css';
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-in,
+  .animate-out {
+    animation-duration: 0.01ms !important;
+  }
+}

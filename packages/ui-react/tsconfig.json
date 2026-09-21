@@ -1,0 +1,14 @@
+{
+  "extends": "@atom63/tsconfig/react-package.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src"
+  },
+  "include": ["src"],
+  // Stories depend on Storybook tooling owned by @atom63/storybook, not this
+  // library; the Storybook app compiles them, so exclude from the lib typecheck.
+  // recipes.test.ts is a NODE-based registry check (reads the recipe files via
+  // node:fs) that vitest runs — it isn't shipped lib code, and pulling node
+  // globals into a browser UI library's typecheck would be wrong.
+  "exclude": ["**/*.stories.tsx", "**/*.mdx", "src/styles/recipes.test.ts"]
+}

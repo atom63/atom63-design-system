@@ -1,0 +1,124 @@
+/*
+ * Slider recipe — a single-thumb value control. The rail is a recessed track
+ * (track archetype: --a63-track-shadow inset well over --a63-surface-muted); the
+ * filled portion is the brand accent; the thumb is a raised control that reads the
+ * CONTROL archetype shadow. Geometry via local --slider-* constants.
+ */
+
+.a63-Slider {
+  --slider-rail: 0.25rem;
+  --slider-thumb: var(--a63-control-icon-size-md);
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--a63-space-2);
+  width: 100%;
+  height: var(--slider-thumb);
+  min-height: var(--a63-control-min-target);
+  touch-action: none;
+  user-select: none;
+}
+
+.a63-Slider-control {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.a63-Slider-track {
+  position: relative;
+  width: 100%;
+  height: var(--slider-rail);
+  border-radius: var(--radius-full);
+  background-color: var(--a63-surface-muted);
+  box-shadow: var(--a63-track-shadow);
+}
+
+.a63-Slider-indicator {
+  position: absolute;
+  height: 100%;
+  border-radius: var(--radius-full);
+  background-color: var(--a63-action-primary);
+}
+
+.a63-Slider-thumb {
+  position: relative;
+  box-sizing: border-box;
+  width: var(--slider-thumb);
+  height: var(--slider-thumb);
+  border: 1px solid var(--a63-border-control);
+  border-radius: var(--radius-full);
+  background-color: var(--a63-surface-overlay);
+  box-shadow:
+    var(--a63-control-shadow),
+    0 1px 2px color-mix(in oklch, black 20%, transparent);
+  outline: none;
+  transition:
+    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    scale var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+/* Interaction floor, using the same pattern as Checkbox/Radio/Switch/Button.
+   The old arithmetic form (`inset: calc((min-target - thumb) / -2)`) subtracted
+   the thumb's border-box size, but an absolutely positioned pseudo-element is
+   laid out against the PADDING box, so the 1px border was double-counted and the
+   target measured 42px instead of 44px. Sizing the pseudo directly can't drift. */
+.a63-Slider-thumb::after {
+  content: '';
+  position: absolute;
+  inset: 50%;
+  min-width: var(--a63-control-min-target);
+  min-height: var(--a63-control-min-target);
+  translate: -50% -50%;
+}
+
+.a63-Slider-thumb:focus-visible {
+  box-shadow: 0 0 0 var(--a63-control-focus-ring-width) var(--a63-focus-ring);
+}
+
+.a63-Slider-thumb[data-dragging] {
+  scale: 1.2;
+  box-shadow: 0 0 0 var(--a63-control-focus-ring-width) var(--a63-focus-ring);
+}
+
+.a63-Slider-value {
+  display: flex;
+  flex: none;
+  justify-content: flex-end;
+  font-size: var(--a63-control-font-size-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.a63-Slider[data-disabled] {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+.a63-Slider[data-orientation='vertical'] {
+  flex-direction: column;
+  width: var(--slider-thumb);
+  min-width: var(--a63-control-min-target);
+  height: 100%;
+}
+.a63-Slider[data-orientation='vertical'] .a63-Slider-control {
+  flex-direction: column;
+  min-height: 0;
+}
+.a63-Slider[data-orientation='vertical'] .a63-Slider-track {
+  width: var(--slider-rail);
+  height: 100%;
+}
+.a63-Slider[data-orientation='vertical'] .a63-Slider-indicator {
+  width: 100%;
+  height: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Slider-thumb {
+    transition: none;
+  }
+}

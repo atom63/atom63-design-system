@@ -1,0 +1,59 @@
+/*
+ * Collapsible recipe — an expandable content section with an animated height
+ * reveal (Base UI Collapsible). Base UI measures the panel and exposes
+ * --collapsible-panel-height; the content animates that height (+ opacity) on
+ * open/close using the --a63-control-feedback-* motion levers. No new --a63-*
+ * tokens; visible chrome is left to the consumer.
+ */
+
+.a63-Collapsible-trigger {
+  cursor: pointer;
+}
+
+.a63-Collapsible-trigger[data-disabled] {
+  cursor: not-allowed;
+}
+
+.a63-Collapsible-indicator {
+  display: inline-flex;
+  flex: none;
+  width: var(--a63-control-icon-size-md);
+  height: var(--a63-control-icon-size-md);
+  transition: transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-Collapsible-indicator > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.a63-Collapsible-trigger[data-panel-open] .a63-Collapsible-indicator {
+  transform: rotate(180deg);
+}
+
+.a63-Collapsible-content {
+  overflow: hidden;
+  transition:
+    height var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-Collapsible-content[data-starting-style],
+.a63-Collapsible-content[data-ending-style] {
+  height: 0;
+  opacity: 0;
+}
+
+.a63-Collapsible-content[data-open] {
+  height: var(--collapsible-panel-height);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Collapsible-content {
+    transition: none;
+  }
+
+  .a63-Collapsible-indicator {
+    transition: none;
+  }
+}

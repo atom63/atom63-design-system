@@ -1,0 +1,216 @@
+/*
+ * Menu recipe — SHARED actionable-menu chrome for DropdownMenu, ContextMenu,
+ * Menubar, Select, and Autocomplete (Select/Autocomplete mount `.a63-Menu-popup`
+ * on their surface and `.a63-Menu-item` on rows; they keep only structural
+ * deltas). One recipe so a menu fix/state lands in ONE place. Popup surface
+ * treatment reads the OVERLAY contract; item/chrome values read the MENU
+ * contract (contracts/menu.css).
+ */
+
+.a63-Menu-trigger {
+  touch-action: manipulation;
+}
+
+.a63-Menu-positioner {
+  z-index: var(--z-layer-menu, var(--z-layer-popover, 999));
+}
+
+.a63-Menu-popup {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-menu-gap, 0.125rem);
+  max-height: var(--available-height);
+  min-width: 8rem;
+  padding: var(--a63-menu-popup-padding, 0.25rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
+  border-radius: var(--a63-menu-popup-radius, var(--a63-overlay-radius, var(--radius-lg)));
+  background-color: var(--a63-menu-popup-background, var(--a63-surface-overlay));
+  background-clip: padding-box;
+  background-image:
+    var(--a63-menu-popup-gloss, var(--a63-overlay-gloss)), var(--a63-overlay-texture-image);
+  background-blend-mode: normal, var(--a63-overlay-texture-blend);
+  backdrop-filter: var(--a63-overlay-backdrop);
+  box-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow);
+  color: var(--a63-text-primary);
+  font-family: var(--a63-control-font-family);
+  outline: none;
+  transform-origin: var(--transform-origin);
+  transition:
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-Menu-popup[data-starting-style],
+.a63-Menu-popup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+/* ── Item ──────────────────────────────────────────────────────────────── */
+
+.a63-Menu-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--a63-menu-item-gap, 0.5rem);
+  min-height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+  padding: var(--a63-menu-item-padding-block, 0.375rem) var(--a63-menu-item-padding-inline, 0.5rem);
+  border-radius: var(
+    --a63-menu-item-radius,
+    max(
+      0px,
+      calc(
+        var(--a63-menu-popup-radius, var(--a63-overlay-radius, var(--radius-lg))) -
+          var(--a63-overlay-border-width) - var(--a63-menu-popup-padding, 0.25rem)
+      )
+    )
+  );
+  color: var(--a63-menu-item-foreground, var(--a63-text-primary));
+  font-size: var(--a63-menu-item-font-size, var(--a63-control-font-size-sm));
+  line-height: 1.2;
+  cursor: default;
+  user-select: none;
+  outline: none;
+}
+
+.a63-Menu-item[data-inset] {
+  padding-inline-start: var(--a63-menu-item-inset, 2rem);
+}
+
+.a63-Menu-item svg {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  color: var(--a63-menu-item-icon, var(--a63-text-secondary));
+  pointer-events: none;
+}
+
+/* Highlighted — NEUTRAL tone (default). The gloss/shadow handles let a theme add
+   an aqua gel / phosphor glow to the active row. */
+.a63-Menu-item[data-highlighted] {
+  background-color: var(--a63-menu-highlight-background, var(--a63-surface-control-hover));
+  background-image: var(--a63-menu-highlight-gloss);
+  box-shadow: var(--a63-menu-highlight-shadow);
+  color: var(--a63-menu-highlight-foreground, var(--a63-text-primary));
+}
+
+/* Highlighted — PRIMARY tone (opt-in: [data-tone='primary'] on the popup) —
+   the classic macOS accent highlight. */
+.a63-Menu-popup[data-tone='primary'] .a63-Menu-item[data-highlighted] {
+  background-color: var(--a63-menu-highlight-primary-background, var(--a63-action-primary));
+  color: var(--a63-menu-highlight-primary-foreground, var(--a63-action-primary-foreground));
+}
+.a63-Menu-popup[data-tone='primary'] .a63-Menu-item[data-highlighted] svg {
+  color: var(--a63-menu-highlight-primary-foreground, var(--a63-action-primary-foreground));
+}
+
+.a63-Menu-item[data-disabled] {
+  pointer-events: none;
+  opacity: var(--a63-menu-disabled-opacity);
+}
+
+.a63-Menu-item[data-variant='destructive'] {
+  color: var(--a63-menu-destructive-foreground, var(--a63-action-danger));
+}
+.a63-Menu-item[data-variant='destructive'] svg {
+  color: var(--a63-menu-destructive-foreground, var(--a63-action-danger));
+}
+.a63-Menu-item[data-variant='destructive'] .a63-Menu-shortcut {
+  color: currentColor;
+}
+.a63-Menu-item[data-variant='destructive'][data-highlighted] {
+  background-color: var(
+    --a63-menu-destructive-highlight-background,
+    color-mix(in oklch, var(--a63-action-danger) 10%, transparent)
+  );
+  color: var(--a63-menu-destructive-foreground, var(--a63-action-danger));
+}
+
+/* ── Item indicator (checkbox / radio marker) ──────────────────────────── */
+
+.a63-Menu-item--indicator {
+  padding-inline-start: var(--a63-menu-item-inset, 2rem);
+}
+
+.a63-Menu-item-indicator {
+  position: absolute;
+  inset-inline-start: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.875rem;
+  height: 0.875rem;
+  color: var(--a63-menu-selected-indicator, var(--a63-action-primary));
+  pointer-events: none;
+}
+
+/* ── Submenu trigger ───────────────────────────────────────────────────── */
+
+.a63-Menu-sub-trigger[data-popup-open] {
+  background-color: var(--a63-menu-highlight-background, var(--a63-surface-control-hover));
+  background-image: var(--a63-menu-highlight-gloss);
+  box-shadow: var(--a63-menu-highlight-shadow);
+  color: var(--a63-menu-highlight-foreground, var(--a63-text-primary));
+}
+.a63-Menu-popup[data-tone='primary'] .a63-Menu-sub-trigger[data-popup-open] {
+  background-color: var(--a63-menu-highlight-primary-background, var(--a63-action-primary));
+  color: var(--a63-menu-highlight-primary-foreground, var(--a63-action-primary-foreground));
+}
+.a63-Menu-popup[data-tone='primary'] .a63-Menu-sub-trigger[data-popup-open] svg {
+  color: var(--a63-menu-highlight-primary-foreground, var(--a63-action-primary-foreground));
+}
+
+.a63-Menu-sub-icon {
+  display: inline-flex;
+  margin-inline-start: auto;
+  padding-inline-start: var(--a63-menu-item-gap, 0.5rem);
+  color: var(--a63-menu-item-icon, var(--a63-text-secondary));
+}
+
+/* ── Label ─────────────────────────────────────────────────────────────── */
+
+.a63-Menu-label {
+  padding: var(--a63-menu-item-padding-block, 0.375rem) var(--a63-menu-item-padding-inline, 0.5rem);
+  color: var(--a63-menu-label-foreground, var(--a63-text-secondary));
+  font-size: var(--a63-control-font-size-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  line-height: 1;
+  opacity: 0.75;
+}
+
+.a63-Menu-label[data-inset] {
+  padding-inline-start: var(--a63-menu-item-inset, 2rem);
+}
+
+/* ── Separator ─────────────────────────────────────────────────────────── */
+
+.a63-Menu-separator {
+  height: 1px;
+  margin-block: 0;
+  margin-inline: calc(-1 * var(--a63-menu-popup-padding, 0.25rem));
+  background-color: var(--a63-menu-separator, var(--a63-border-subtle));
+}
+
+/* ── Shortcut ──────────────────────────────────────────────────────────── */
+
+.a63-Menu-shortcut {
+  margin-inline-start: auto;
+  padding-inline-start: var(--a63-space-4);
+  color: var(--a63-menu-shortcut-foreground, var(--a63-text-secondary));
+  font-size: var(--a63-control-font-size-xs);
+  letter-spacing: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Menu-popup {
+    transition: none;
+  }
+}

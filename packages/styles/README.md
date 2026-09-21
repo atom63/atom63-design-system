@@ -1,0 +1,233 @@
+# @atom63/styles
+
+## What this package is
+
+The executable style foundation for the React-first design system. Plain CSS
+custom properties — **no Tailwind dependency in the core**. Tailwind and shadcn
+are opt-in adapters, never required.
+
+This is the canonical executable style layer used by `@atom63/ui-react` and the
+Atom63 apps. See `docs/design-system/react-first-executable-design-system.md`
+for the architecture that established it.
+
+Built by You Zhang through Hermes Agent
+
+## Quickstart
+
+### Install
+
+The package name is `@atom63/styles`. Public npm availability is not promised
+yet: the currently verified paths are a workspace dependency or a locally
+packed tarball. Public publishing requires YZ approval and confirmation of the
+npm organization policy.
+
+After an approved public release, install by package name:
+
+```sh
+pnpm add @atom63/styles
+```
+
+Until then, use the workspace dependency:
+
+```json
+{
+  "dependencies": {
+    "@atom63/styles": "workspace:*"
+  }
+}
+```
+
+For a non-workspace consumer, pack the package and install the generated
+`atom63-styles-*.tgz` file by path.
+
+### Minimum setup
+
+Load the default entry once. No JavaScript provider or runtime initialization is
+required.
+
+### CSS imports
+
+Import the foundation once from your application CSS or JavaScript entry:
+
+```css
+@import "@atom63/styles";
+```
+
+This default entry includes tokens, contracts, themes, OS styles, animations,
+and utilities. It does not include the Tailwind or shadcn adapters.
+
+### First contract usage
+
+Use semantic variables for intent and shared scale variables for dimensions in
+application CSS:
+
+```css
+.product-panel {
+  color: var(--a63-text-primary);
+  background: var(--a63-surface-panel);
+  border: 1px solid var(--a63-border-subtle);
+  border-radius: var(--radius-lg);
+}
+```
+
+### Theming
+
+The default import includes the `modern`, `aqua`, `retro`, and `terminal`
+themes. Set theme and mode on a shared ancestor, normally `<html>`:
+
+```html
+<html class="dark" data-a63-mode="dark" data-a63-theme="aqua">
+```
+
+Use `light` or `dark` for mode and one theme value at a time. Tailwind v4 users
+can additionally import `@atom63/styles/tailwind`; Atom63 apps that need shadcn
+variable names can import `@atom63/styles/compat/shadcn`.
+
+### Stable vs preview
+
+The production consumption path is verified by `pnpm check:ds-pack-smoke`
+against packed tarballs. Public publishing still requires YZ approval and npm
+organization policy. Some token, adapter, and package surfaces may remain
+preview while API hardening continues; do not infer stability from an export
+alone.
+
+### Docs
+
+- [Design system handbook](../../docs/design-system/README.md)
+- [Authoring surfaces](../../docs/design-system/authoring-surfaces.md)
+- [Production readiness audit](../../docs/design-system/production-readiness-audit.md)
+
+**Authoring (where to edit):** start at [`docs/design-system/README.md`](../../docs/design-system/README.md), then [`authoring-surfaces.md`](../../docs/design-system/authoring-surfaces.md) —
+foundation owns **shared** dictionaries; themes may own skin-private material
+under `[data-a63-theme]`; semantics/contracts/adapters alias or remap.
+Tailwind/shadcn names are the day-to-day design surface. Shared-scale drift
+(deferred): [`foundation-value-drift.md`](../../docs/design-system/foundation-value-drift.md).
+
+```css
+@import "@atom63/styles";
+```
+
+## Layer model
+
+Default entry `@atom63/styles` (`src/index.css`) imports **tokens → contracts →
+themes → os → animations → utils only** — never `tailwind/`, never `compat/`.
+
+| Layer | Path | Purpose | May reference |
+| --- | --- | --- | --- |
+| **Foundation** | `tokens/foundation/*` | **Shared dictionaries** — palette, spacing, sizes, z, radius, fonts, typography, generic shadow/blur scales, motion | nothing (literals) or other foundation |
+| **Semantic** (canonical) | `tokens/semantics.css` + `tokens/brand.css` | `--a63-*` intent roles (surface/text/border/status; primary + focus in brand). Alias/compose foundation; light/dark resolution lives here | foundation |
+| **Scale bridges** | `tokens/{space,radius,type-scale,font,motion}.css` | `--a63-*` semantic scale aliases over the foundation | foundation |
+| **Contract** | `contracts/*` | Shared component-family contracts (`control`, `field`, `overlay`, `badge`, …) + environment dimensions (`environment.css`) | semantic + scale bridges |
+| **Theme** | `themes/*` | Skin character under `[data-a63-theme]` — assigns contracts; **may** own theme-private material (gel/bevel/CRT). No new shared scales; never structure | semantic + foundation |
+| **OS** | `os/*` | Chrome **structure** + chrome-specific paint tokens that compose from semantics (`--a63-os-*`) under `[data-a63-os]` — peer of theme | foundation + semantic |
+| **Animations** | `animations/*` | Generic executable CSS (keyframes) | foundation |
+| **Utils** | `utils/*` | Reusable utilities (scrollbars, masks, code highlighting, view transitions, debug) | semantic + foundation |
+| **Adapters** (opt-in) | `tailwind/*`, `compat/*` | Re-expose the canonical layer to Tailwind v4 and shadcn/MDX consumers | canonical values (re-reference only) |
+
+Component **recipes** (variants/states/local overrides) live with the renderer
+(`@atom63/ui-react/.../recipes/*.css`), not here. They consume `--a63-*`
+semantic + contract tokens.
+
+## Precedence chain (north-star)
+
+```
+Primitive → Semantic (--a63-*) → Design Language → Mode → Theme → OS → Variant → State → Local Override
+```
+
+- **Primitive / Semantic** — `tokens/foundation/*`, `tokens/semantics.css`
+- **Design Language / Input / Density** — `contracts/environment.css`
+  (`[data-a63-design-language]`, `[data-a63-input]`, `[data-a63-density]`)
+- **Mode** — `.light` / `.dark` (`[data-a63-mode]`) on the semantic layer
+- **Theme** — `themes/*.css` under `[data-a63-theme]` (visual skin / paint)
+- **OS** — `os/*.css` under `[data-a63-os]` (chrome structure + chrome paint
+  tokens that resolve through semantics; peer of theme)
+- **Variant / State / Local** — renderer recipes
+
+Each dimension is a **personalization axis** with its own values, default, and
+token ownership — see [Personalization axes](../../docs/design-system/personalization-axes.md)
+(single source of truth: `@atom63/ui-foundation` → `personalizationAxes`).
+
+## The mirror rule (invariant)
+
+**Every token category keeps its real values in a plain `:root` layer. Adapters
+(`tailwind/`, `compat/`) only _re-reference_ those values — they never
+recompute.** Violating this silently breaks the default, adapter-free path,
+because the adapter layers are not imported by `src/index.css`.
+
+> **Cautionary example.** The derived `--radius-*` scale (and later `--blur-*`)
+> once lived only inside `tailwind/theme.css` (`@theme inline`). Every other
+> category mirrored a plain `:root` var; those were the exceptions. Result: on
+> the default path the tokens were undefined. Fixed by moving the scales into
+> `tokens/foundation/{radius,effects}.css` and making Tailwind re-reference them.
+
+A `find … -not -path "*/tailwind/*" -not -path "*/compat/*"` resolver that checks
+every `var(--x)` on the default path resolves to a definition catches this class
+of bug; run it after touching the token layers.
+
+## Canonical `--a63-*` semantic tokens
+
+Surfaces, text, borders, danger/status, and scrim are defined in
+`tokens/semantics.css` (`:root, .light` + `.dark` overrides). Primary action and
+focus ring are brand-derived in `tokens/brand.css` (scoped to
+`:root, [data-a63-brand]` so they re-resolve per ramp). Together these are the
+single source of semantic truth.
+
+| Group | Tokens | Home |
+| --- | --- | --- |
+| Surface | `--a63-surface-page`, `--a63-surface-panel`, `--a63-surface-overlay`, `--a63-surface-muted`, `--a63-surface-control`, `--a63-surface-control-hover` | `semantics.css` |
+| Text | `--a63-text-primary`, `--a63-text-secondary` | `semantics.css` |
+| Border | `--a63-border-subtle`, `--a63-border-control` | `semantics.css` |
+| Action | `--a63-action-primary` (+ `-hover`, `-foreground`), `--a63-action-danger` (+ `-hover`, `-foreground`), `--a63-action-neutral` (+ `-foreground`) | primary/focus in `brand.css`; danger/neutral in `semantics.css` |
+| Status | `--a63-status-info`, `--a63-status-success`, `--a63-status-warning` (+ `-foreground`) | `semantics.css` |
+| Focus | `--a63-focus-ring` | `brand.css` |
+| Scrim | `--a63-scrim` | `semantics.css` |
+
+Contract tokens (`--a63-control-*`, `--a63-field-*`, `--a63-overlay-*`,
+`--a63-badge-*`, `--a63-space-*`, `--a63-radius-*`, `--a63-motion-*`,
+`--a63-platform-*`, `--a63-density-scale`) build on these; see `contracts/*` and
+the `tokens/*` bridges.
+
+## shadcn compatibility (opt-in bridges)
+
+Two **opposite** adapters — pick one direction per app, never both:
+
+| Import | Direction | Use when |
+| --- | --- | --- |
+| `@atom63/styles/compat/shadcn` | `--a63-*` → shadcn names (`--background`, …) | Atom63 apps that load `@atom63/styles` (canonical) |
+| `@atom63/styles/compat/a63-from-shadcn` | shadcn → `--a63-*` (+ flat control defaults) | External shadcn hosts that render `@atom63/ui-react` without the Atom63 foundation |
+
+`@atom63/styles/compat` (barrel) loads **mdx + forward shadcn only** — not the reverse bridge.
+
+### Forward map (`compat/shadcn`)
+
+Aliases the shadcn vocabulary back onto `--a63-*`. Import only if you consume
+shadcn-named variables; not part of the default bundle.
+
+| shadcn | canonical |
+| --- | --- |
+| `--background` | `--a63-surface-page` |
+| `--foreground` | `--a63-text-primary` |
+| `--card` / `--card-foreground` | `--a63-surface-panel` / `--a63-text-primary` |
+| `--popover` / `--popover-foreground` | `--a63-surface-overlay` / `--a63-text-primary` |
+| `--muted` / `--muted-foreground` | `--a63-surface-muted` / `--a63-text-secondary` |
+| `--secondary` / `--secondary-foreground` | `--a63-surface-muted` / `--a63-text-secondary` |
+| `--accent` / `--accent-foreground` | `--a63-surface-control-hover` / `--a63-text-primary` |
+| `--border` / `--input` | `--a63-border-subtle` / `--a63-border-control` |
+| `--ring` | `--a63-focus-ring` |
+| `--primary` / `--primary-foreground` | `--a63-action-primary` / `--a63-action-primary-foreground` |
+| `--destructive` | `--a63-action-danger` |
+| `--info` / `--success` / `--warning` | `--a63-status-*` |
+| `--sidebar-*` | derived from the `--a63-*` above |
+
+The Tailwind adapter (`@atom63/styles/tailwind`) maps its `--color-*` theme keys
+onto the same canonical `--a63-*` layer.
+
+## Entry points
+
+- `@atom63/styles` — default, Tailwind- and shadcn-free foundation.
+- `@atom63/styles/tailwind` — Tailwind v4 `@theme` adapter (opt-in).
+- `@atom63/styles/compat/shadcn` — shadcn variable names from `--a63-*` (Atom63 apps).
+- `@atom63/styles/compat/a63-from-shadcn` — `--a63-*` from shadcn (external hosts only; do not combine with `compat/shadcn`).
+- `@atom63/styles/compat/mdx` — `@atom63/mdx` motion names (opt-in).
+- Granular `./tokens/*`, `./contracts/*`, `./themes/*`, `./utils/*` exports for
+  targeted imports.

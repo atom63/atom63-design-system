@@ -1,0 +1,31 @@
+import { Controls, Meta, Primary, Stories, Title } from '@storybook/addon-docs/blocks'
+
+import * as ButtonStories from './button.stories'
+
+<Meta of={ButtonStories} />
+
+<Title />
+
+The raised **action** archetype. Renders a `<button>` (or any element via `render`) styled by the `@atom63/styles` `--a63-control-*` recipe, reacting to the environment axes on the nearest `UIProvider` (mode / theme / brand / design-language).
+
+## Anatomy
+
+- Root `.a63-Button` — `data-slot="button"`, carries `data-variant`, `data-size`, and (when loading) `data-loading` + `aria-busy`.
+- Label `.a63-Button-label` — `data-slot="button-label"`, wraps children.
+- Spinner `.a63-Button-spinner` — `data-slot="button-spinner"`, present when `loading`; label text is transparent and the spinner centers over the button.
+
+## Contract
+
+- **Variants:** `default` `primary` `secondary` `destructive` `destructive-outline` `outline` `ghost` `link` `overlay` `glass` (default `default`).
+- **Sizes:** `xs` `sm` `md` `lg` `xl` + `icon-xs` `icon-sm` `icon` `icon-lg` `icon-xl` (default `md`).
+- Source of truth: `@atom63/ui-foundation` → `button/button-contract.ts`.
+
+## Tokens it reads
+
+`--a63-action-*` (fill/foreground per variant), `--a63-control-*` (height/padding/font/radius/shadow ramps), and theme capability tokens (`--a63-control-gloss`, `--a63-control-highlight`, `--a63-control-shadow-active`, `--a63-control-shadow-tint`). Themes recolor purely by overriding those tokens — the recipe holds no literals.
+
+<Primary />
+
+<Controls />
+
+<Stories />

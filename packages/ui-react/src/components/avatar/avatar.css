@@ -1,0 +1,147 @@
+/*
+ * Avatar recipe — a round user/entity image with a graceful fallback. Faithful
+ * to prod @atom63/ui: a circular frame with an inner hairline ring (an ::after
+ * blended border), three sizes, an optional status Badge pinned to the corner,
+ * and a group stack that overlaps + rings each face against the page. Geometry
+ * and colors resolve from the shared spacing, radius, and semantic token scales.
+ */
+
+.a63-Avatar {
+  --avatar-size: calc(var(--a63-space-unit) * 8);
+
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  border-radius: var(--a63-avatar-radius, var(--radius-full));
+  user-select: none;
+}
+
+.a63-Avatar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: var(--a63-control-border-width) solid var(--a63-border-subtle);
+  border-radius: var(--a63-avatar-radius, var(--radius-full));
+  pointer-events: none;
+}
+
+.a63-Avatar[data-size='sm'] {
+  --avatar-size: calc(var(--a63-space-unit) * 6);
+}
+.a63-Avatar[data-size='lg'] {
+  --avatar-size: calc(var(--a63-space-unit) * 10);
+}
+
+.a63-Avatar-image {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--a63-avatar-radius, var(--radius-full));
+  object-fit: cover;
+}
+
+.a63-Avatar-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--a63-avatar-radius, var(--radius-full));
+  background-color: var(--a63-surface-muted);
+  color: var(--a63-text-secondary);
+  font-size: var(--a63-control-font-size-sm);
+}
+.a63-Avatar[data-size='sm'] .a63-Avatar-fallback {
+  font-size: var(--a63-control-font-size-xs);
+}
+
+/* ── Status badge (pinned to the bottom-right, ringed against the page) ──── */
+.a63-Avatar-badge {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--a63-avatar-radius, var(--radius-full));
+  background-color: var(--a63-action-primary);
+  color: var(--a63-action-primary-foreground);
+  box-shadow: 0 0 0 calc(var(--a63-control-border-width) * 2)
+    var(--a63-avatar-badge-ring, var(--a63-surface-page));
+  user-select: none;
+}
+.a63-Avatar[data-size='sm'] .a63-Avatar-badge {
+  width: var(--a63-space-2);
+  height: var(--a63-space-2);
+}
+.a63-Avatar[data-size='sm'] .a63-Avatar-badge > svg {
+  display: none;
+}
+.a63-Avatar[data-size='default'] .a63-Avatar-badge {
+  width: var(--a63-space-2_5);
+  height: var(--a63-space-2_5);
+}
+.a63-Avatar[data-size='default'] .a63-Avatar-badge > svg {
+  width: var(--a63-space-2);
+  height: var(--a63-space-2);
+}
+.a63-Avatar[data-size='lg'] .a63-Avatar-badge {
+  width: var(--a63-space-3);
+  height: var(--a63-space-3);
+}
+.a63-Avatar[data-size='lg'] .a63-Avatar-badge > svg {
+  width: var(--a63-space-2);
+  height: var(--a63-space-2);
+}
+
+/* ── Group stack ────────────────────────────────────────────────────────── */
+.a63-Avatar-group {
+  display: flex;
+}
+.a63-Avatar-group > * + * {
+  margin-inline-start: calc(-1 * var(--a63-space-2));
+}
+.a63-Avatar-group > [data-slot='avatar'] {
+  box-shadow: 0 0 0 calc(var(--a63-control-border-width) * 2)
+    var(--a63-avatar-group-ring, var(--a63-surface-page));
+}
+
+.a63-Avatar-group-count {
+  position: relative;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--a63-space-unit) * 8);
+  height: calc(var(--a63-space-unit) * 8);
+  border-radius: var(--a63-avatar-radius, var(--radius-full));
+  background-color: var(--a63-surface-muted);
+  box-shadow: 0 0 0 calc(var(--a63-control-border-width) * 2)
+    var(--a63-avatar-group-ring, var(--a63-surface-page));
+  color: var(--a63-text-secondary);
+  font-size: var(--a63-control-font-size-sm);
+}
+.a63-Avatar-group-count > svg {
+  width: var(--a63-space-4);
+  height: var(--a63-space-4);
+}
+/* Group count follows the group's stated size (sibling avatars carry data-size). */
+.a63-Avatar-group:has([data-size='sm']) .a63-Avatar-group-count {
+  width: calc(var(--a63-space-unit) * 6);
+  height: calc(var(--a63-space-unit) * 6);
+}
+.a63-Avatar-group:has([data-size='sm']) .a63-Avatar-group-count > svg {
+  width: var(--a63-space-3);
+  height: var(--a63-space-3);
+}
+.a63-Avatar-group:has([data-size='lg']) .a63-Avatar-group-count {
+  width: calc(var(--a63-space-unit) * 10);
+  height: calc(var(--a63-space-unit) * 10);
+}
+.a63-Avatar-group:has([data-size='lg']) .a63-Avatar-group-count > svg {
+  width: var(--a63-space-5);
+  height: var(--a63-space-5);
+}

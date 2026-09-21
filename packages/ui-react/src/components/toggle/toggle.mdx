@@ -1,0 +1,30 @@
+import { Controls, Meta, Primary, Stories, Title } from '@storybook/addon-docs/blocks'
+
+import * as ToggleStories from './toggle.stories'
+
+<Meta of={ToggleStories} />
+
+<Title />
+
+A quiet bistate pressable (Base UI Toggle) — stays pressed without borrowing Button chrome. Geometry reuses the `--a63-control-*` ramp; active fill uses `tone`. For a welded segmented bar, use `ToggleGroup`. For a gapped row, compose individual `Toggle`s.
+
+## Anatomy
+
+- Root `.a63-Toggle` — `data-slot="toggle"`, carries `data-size`, `data-tone`; Base UI stamps `data-pressed` / `data-disabled`.
+- Content `.a63-Toggle-content` — `data-slot="toggle-content"`, the press-scale wrapper.
+
+## Contract
+
+- **Sizes:** `sm` `md` `lg` (default `md`).
+- **Tones (active fill):** `neutral` (muted/selected surface) · `accent` (brand primary).
+- Source of truth: `@atom63/ui-foundation` → `toggle/toggle-contract.ts`.
+
+## Tokens it reads
+
+Geometry from `--a63-control-*`. Pressed fills from `--a63-toggle-*` / `--a63-segment-*`. Focus uses `--a63-focus-ring`.
+
+<Primary />
+
+<Controls />
+
+<Stories />

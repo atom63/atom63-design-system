@@ -1,0 +1,13 @@
+/*
+ * MDX compatibility bridge.
+ *
+ * Keep MDX-prefixed variables out of the generic token foundation. Consumers
+ * that still need the @atom63/mdx CSS motion names can opt into this adapter.
+ */
+:root {
+  --mdx-motion-fast: var(--duration-fast);
+  --mdx-motion-base: var(--duration-normal);
+  --mdx-motion-slow: var(--duration-slow);
+  --mdx-ease-standard: var(--ease-standard);
+  --mdx-ease-emphasized: var(--ease-emphasized);
+}

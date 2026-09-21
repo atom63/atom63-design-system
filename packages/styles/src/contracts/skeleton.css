@@ -1,0 +1,14 @@
+/*
+ * Skeleton appearance contract.
+ *
+ * Renderers may use different masking primitives, but the base surface and
+ * highlight emphasis remain shared design semantics.
+ */
+:root {
+  --a63-skeleton-base: var(--a63-surface-muted);
+  --a63-skeleton-highlight: var(--color-white-60);
+}
+
+:is(.dark, [data-a63-mode='dark']) {
+  --a63-skeleton-highlight: var(--color-white-10);
+}

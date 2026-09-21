@@ -1,0 +1,226 @@
+/*
+ * Command recipe — a command palette, the OVERLAY archetype in its modal (⌘K)
+ * form. Faithful port of prod @atom63/ui command.tsx. The dialog scrim + centered
+ * viewport read the --z-layer-scrim / --z-layer-modal foundation; the popup + the
+ * inner panel are raised overlay/surface panels (--a63-surface-overlay +
+ * --a63-overlay-shadow + --a63-border-subtle + --radius-2xl). Items recolor their
+ * highlight from the shared MENU contract while keeping command-palette row scale.
+ * Local --command-* vars only; no new tokens.
+ */
+
+/* ── Dialog scrim + viewport ───────────────────────────────────────────── */
+.a63-Command-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-layer-scrim, 40);
+  background: var(--a63-scrim);
+  backdrop-filter: blur(2px);
+  transition: opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-Command-backdrop[data-starting-style],
+.a63-Command-backdrop[data-ending-style] {
+  opacity: 0;
+}
+
+.a63-Command-viewport {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-layer-modal, 50);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: max(1rem, 4vh) var(--a63-space-4);
+}
+@media (min-width: 640px) {
+  .a63-Command-viewport {
+    padding-block: 10vh;
+  }
+}
+
+/* ── Popup shell ───────────────────────────────────────────────────────── */
+.a63-Command-popup {
+  --command-text-font-size: var(--a63-command-text-font-size, var(--a63-control-font-size-lg));
+  --command-panel-background: var(--a63-command-panel-background, var(--a63-surface-muted));
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  max-width: 36rem;
+  max-height: 26rem;
+  min-height: 0;
+  border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
+  border-radius: var(--a63-overlay-radius, var(--radius-2xl));
+  background-color: var(--a63-surface-overlay);
+  background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
+  background-blend-mode: normal, var(--a63-overlay-texture-blend);
+  backdrop-filter: var(--a63-overlay-backdrop);
+  box-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow);
+  color: var(--a63-text-primary);
+  outline: none;
+  transition:
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+:is(.dark, [data-a63-mode='dark']) .a63-Command-popup {
+  --command-panel-background: var(--a63-command-panel-background, var(--a63-surface-page));
+}
+.a63-Command-popup[data-starting-style],
+.a63-Command-popup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+/* ── Input ─────────────────────────────────────────────────────────────── */
+.a63-Command-input-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--a63-space-2);
+  padding: 0.625rem 0.875rem;
+}
+.a63-Command-input-icon {
+  display: inline-flex;
+  flex: none;
+  color: var(--a63-text-secondary);
+}
+.a63-Command-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  color: var(--a63-text-primary);
+  font-family: var(--a63-control-font-family);
+  font-size: max(var(--command-text-font-size), var(--a63-editable-font-size-min, 0px));
+  line-height: 1.5;
+  outline: none;
+  appearance: none;
+}
+.a63-Command-input::placeholder {
+  color: var(--a63-text-secondary);
+}
+
+/* ── Panel (scroll region) ─────────────────────────────────────────────── */
+/* Framed inner tray: retain the shared surface frame anatomy while allowing
+   Command to tune only the fill colour for dense result rows. */
+.a63-Command-panel {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  margin: 0 var(--a63-space-2) var(--a63-space-2);
+  border: var(--a63-surface-border-width) var(--a63-surface-border-style)
+    color-mix(in oklch, var(--a63-border-subtle) 24%, transparent);
+  border-radius: var(--a63-surface-radius, calc(var(--radius-2xl) - 0.5rem));
+  background-color: var(--command-panel-background);
+  background-clip: padding-box;
+  background-image: var(--a63-surface-gloss), var(--a63-surface-texture-image);
+  background-blend-mode: normal, var(--a63-surface-texture-blend);
+  backdrop-filter: var(--a63-surface-backdrop);
+  box-shadow: var(--a63-surface-inner-shadow, none), var(--a63-surface-shadow);
+}
+
+/* The ScrollArea recipe hard-sets `width: 100%`; with the card's inline margin
+   that overflowed the popup by the margins. Compound selector (beats the single
+   `.a63-ScrollArea`) resets to auto so flex-stretch + margin inset it cleanly. */
+.a63-Command-panel.a63-ScrollArea {
+  width: auto;
+}
+
+.a63-Command-list:not(:empty) {
+  padding: var(--a63-space-2);
+  scroll-padding-block: 0.5rem;
+}
+
+.a63-Command-empty:not(:empty) {
+  padding: var(--a63-space-6) var(--a63-space-2);
+  text-align: center;
+  color: var(--a63-menu-label-foreground, var(--a63-text-secondary));
+  font-size: var(--a63-control-font-size-sm);
+}
+
+/* ── Group ─────────────────────────────────────────────────────────────── */
+.a63-Command-group + .a63-Command-group,
+[role='group'] + .a63-Command-group {
+  margin-top: 0.375rem;
+}
+.a63-Command-group-label {
+  padding: 0.375rem var(--a63-space-2);
+  color: var(--a63-menu-label-foreground, var(--a63-text-secondary));
+  font-family: var(--a63-control-font-family);
+  font-size: var(--a63-control-font-size-xs);
+  font-weight: 500;
+}
+
+/* ── Item ──────────────────────────────────────────────────────────────── */
+.a63-Command-item {
+  display: flex;
+  align-items: center;
+  gap: var(--a63-space-2);
+  /* Comfortable desktop row that floors to the 44px touch target on
+     [data-a63-input="touch"] — the palette stays tappable + readable on mobile. */
+  min-height: max(
+    calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+  padding: var(--a63-space-2);
+  border-radius: var(--a63-menu-item-radius, var(--a63-radius-control));
+  background-image: none;
+  box-shadow: none;
+  color: var(--a63-menu-item-foreground, var(--a63-text-primary));
+  font-family: var(--a63-control-font-family);
+  font-size: var(--command-text-font-size);
+  cursor: default;
+  user-select: none;
+  outline: none;
+}
+.a63-Command-item[data-highlighted] {
+  background-color: var(--a63-menu-highlight-background, var(--a63-surface-control-hover));
+  background-image: var(--a63-menu-highlight-gloss, none);
+  box-shadow: var(--a63-menu-highlight-shadow, none);
+  color: var(--a63-menu-highlight-foreground, var(--a63-text-primary));
+}
+.a63-Command-item[data-disabled] {
+  pointer-events: none;
+  opacity: var(--a63-menu-disabled-opacity, 0.56);
+}
+
+/* ── Separator ─────────────────────────────────────────────────────────── */
+.a63-Command-separator {
+  height: 1px;
+  margin: var(--a63-space-2) var(--a63-space-2);
+  background: var(--a63-menu-separator, var(--a63-border-subtle));
+}
+.a63-Command-separator:last-child {
+  display: none;
+}
+
+/* ── Shortcut ──────────────────────────────────────────────────────────── */
+.a63-Command-shortcut {
+  margin-inline-start: auto;
+  color: var(--a63-menu-shortcut-foreground, var(--a63-text-secondary));
+  font-family: var(--a63-control-font-family);
+  font-size: var(--a63-control-font-size-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────── */
+.a63-Command-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--a63-space-2);
+  /* No flush divider — the inset framed panel above already separates it. */
+  padding: var(--a63-space-2) var(--a63-space-5) var(--a63-space-3);
+  border-radius: 0 0 var(--radius-2xl) var(--radius-2xl);
+  color: var(--a63-text-secondary);
+  font-size: var(--a63-control-font-size-xs);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Command-backdrop,
+  .a63-Command-popup {
+    transition: none;
+  }
+}

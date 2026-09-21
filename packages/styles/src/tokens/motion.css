@@ -1,0 +1,27 @@
+/*
+ * Motion contract.
+ *
+ * The interaction-timing intents the system uses. Raw --duration-* / --ease-*
+ * primitives remain available for anything else.
+ */
+
+:root {
+  --a63-motion-duration-fast: var(--duration-fast);
+  --a63-motion-duration-overlay: var(--duration-overlay);
+  --a63-motion-duration-swipe-dismiss: var(--duration-swipe-dismiss);
+  --a63-motion-ease-overlay: var(--ease-overlay);
+  --a63-motion-ease-scrim: var(--ease-scrim);
+  --a63-motion-ease-standard: var(--ease-standard);
+  --a63-motion-ease-emphasized: var(--ease-emphasized);
+  --a63-motion-control-feedback-duration: var(--a63-motion-duration-fast);
+  --a63-motion-skeleton-shimmer-duration: var(--duration-1500);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --a63-motion-control-feedback-duration: 0ms;
+    --a63-motion-duration-overlay: 0ms;
+    --a63-motion-duration-swipe-dismiss: 0ms;
+    --a63-motion-skeleton-shimmer-duration: 0ms;
+  }
+}

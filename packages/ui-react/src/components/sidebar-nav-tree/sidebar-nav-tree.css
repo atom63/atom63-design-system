@@ -1,0 +1,179 @@
+/*
+ * SidebarNavTree recipe — restyle of prod @atom63/ui sidebar-nav-tree.tsx's
+ * Tailwind utilities to --a63-* tokens. It leans on the Sidebar recipe's local
+ * aliases (--sidebar-accent / --sidebar-border / --sidebar-ring), which are
+ * declared on .a63-Sidebar-wrapper, so these rows inherit the same vocabulary.
+ */
+
+.a63-SidebarNavTree-ticker,
+.a63-SidebarNavTree-ticker-inner {
+  min-width: 0;
+  flex: 1;
+}
+.a63-SidebarNavTree-ticker-inner {
+  flex: unset;
+}
+
+.a63-SidebarNavTree-group-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: color-mix(in oklch, var(--sidebar-fg) 40%, transparent);
+}
+
+.a63-SidebarNavTree-group-content {
+  margin-block-start: var(--a63-space-0_5);
+}
+
+.a63-SidebarNavTree-list {
+  gap: var(--a63-space-0_5);
+}
+
+/* Nav rows: transparent by default, tinted accent on hover, primary when active. */
+.a63-SidebarNavTree-item {
+  /* Content floor — see button.css. */
+  --nav-row-content-floor: calc(var(--typography-xs-line-height) + 2 * var(--a63-space-0_5));
+
+  height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size),
+    var(--nav-row-content-floor)
+  );
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background-color: transparent;
+  font-size: var(--a63-control-font-size-sm);
+  color: var(--sidebar-fg);
+}
+.a63-SidebarNavTree-item:hover {
+  background-color: color-mix(in oklch, var(--sidebar-accent) 50%, transparent);
+  color: var(--sidebar-fg);
+}
+.a63-SidebarNavTree-item[data-active='true'] {
+  background-color: transparent;
+  font-weight: 500;
+  color: var(--a63-action-primary);
+}
+.a63-SidebarNavTree-item[data-active='true']:hover {
+  background-color: color-mix(in oklch, var(--sidebar-accent) 50%, transparent);
+  color: var(--a63-action-primary);
+}
+.a63-SidebarNavTree-item > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* The rendered row is sm-sized, but a coarse pointer still needs a full target.
+ * Both sidebar part classes are named so this outranks their own height rules. */
+@media (pointer: coarse) {
+  .a63-Sidebar-menu-button.a63-SidebarNavTree-item,
+  .a63-Sidebar-menu-sub-button.a63-SidebarNavTree-item {
+    height: max(
+      calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+      var(--a63-control-min-target),
+      var(--nav-row-content-floor)
+    );
+  }
+}
+
+/* Collapsible row: link + expand toggle share a hover surface. */
+.a63-SidebarNavTree-row {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  gap: var(--a63-space-0_5);
+  padding-inline-end: var(--a63-space-0_5);
+  border-radius: var(--radius-md);
+  transition: background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-SidebarNavTree-row:hover,
+.a63-SidebarNavTree-row:focus-within {
+  background-color: color-mix(in oklch, var(--sidebar-accent) 50%, transparent);
+}
+.a63-SidebarNavTree-row-item {
+  min-width: 0;
+  flex: 1;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.a63-SidebarNavTree-row-item:hover {
+  background-color: transparent;
+}
+.a63-SidebarNavTree-row:hover .a63-SidebarNavTree-row-item {
+  color: var(--sidebar-fg);
+}
+.a63-SidebarNavTree-row-item[data-active='true'] {
+  background-color: transparent;
+}
+.a63-SidebarNavTree-row:hover .a63-SidebarNavTree-row-item[data-active='true'] {
+  color: var(--a63-action-primary);
+}
+
+/* Trigger-only row: the section has no page, so the whole row is one control. */
+.a63-SidebarNavTree-row-trigger {
+  gap: var(--a63-space-0_5);
+}
+.a63-SidebarNavTree-row-trigger .a63-SidebarNavTree-chevron {
+  flex-shrink: 0;
+  color: color-mix(in oklch, var(--sidebar-fg) 65%, transparent);
+}
+
+.a63-SidebarNavTree-toggle {
+  position: relative;
+  display: flex;
+  width: var(--a63-control-min-target);
+  height: var(--a63-control-min-target);
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: var(--radius-sm);
+  color: color-mix(in oklch, var(--sidebar-fg) 65%, transparent);
+  outline: none;
+  transition: background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+@media (hover: hover) {
+  .a63-SidebarNavTree-toggle:hover {
+    background-color: var(--sidebar-accent);
+    color: color-mix(in oklch, var(--sidebar-fg) 70%, transparent);
+  }
+}
+.a63-SidebarNavTree-toggle:focus-visible {
+  box-shadow: 0 0 0 2px var(--sidebar-ring);
+}
+/* Hide the expand toggle when the sidebar is collapsed to the icon rail. */
+.a63-Sidebar-root[data-collapsible='icon'] .a63-SidebarNavTree-toggle,
+.a63-Sidebar-root[data-collapsible='icon']
+  .a63-SidebarNavTree-row-trigger
+  .a63-SidebarNavTree-chevron {
+  display: none;
+}
+
+.a63-SidebarNavTree-chevron {
+  width: 0.75rem;
+  height: 0.75rem;
+  transition: transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-SidebarNavTree-chevron--open {
+  rotate: 180deg;
+}
+
+.a63-SidebarNavTree-sub-list {
+  gap: var(--a63-space-0_5);
+  margin-inline: var(--a63-space-2) 0;
+  border-left-color: color-mix(in oklch, var(--sidebar-border) 70%, transparent);
+  padding-inline: var(--a63-space-2) 0;
+  padding-block: var(--a63-space-0_5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-SidebarNavTree-row,
+  .a63-SidebarNavTree-toggle,
+  .a63-SidebarNavTree-chevron {
+    transition: none;
+  }
+}

@@ -1,0 +1,412 @@
+/*
+ * ButtonGroup recipe — always a joined/welded segmented bar, matching ToggleGroup
+ * (Figma 432:1335 cell chrome via --a63-segment-*). Members flatten elevation;
+ * resting cells paint segment gloss/fill; data-pressed / aria-pressed read as
+ * the selected plate. Momentary :active uses the selected inset. Mixed slots
+ * (input/select/text) still weld; size ramp is unchanged.
+ */
+
+.a63-ButtonGroup {
+  --button-group-radius: var(--a63-segment-radius, var(--radius-md));
+  --button-group-seam: var(--a63-segment-seam, var(--a63-border-subtle));
+  --button-group-height: max(
+    calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: stretch;
+  gap: var(--a63-segment-gap, 0);
+  border-radius: var(--button-group-radius);
+  background: transparent;
+  box-shadow: none;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+  touch-action: pan-x;
+}
+.a63-ButtonGroup::-webkit-scrollbar {
+  display: none;
+}
+.a63-ButtonGroup[data-orientation='vertical'] {
+  overflow: visible;
+  touch-action: auto;
+}
+
+/* Nested groups (a group of groups) get breathing room instead of welding. */
+.a63-ButtonGroup:has(> [data-slot='button-group']) {
+  gap: var(--a63-space-2);
+}
+
+.a63-ButtonGroup[data-orientation='vertical'] {
+  flex-direction: column;
+}
+
+/* Focused member floats above its neighbours so the ring isn't clipped. */
+.a63-ButtonGroup > *:focus-visible {
+  position: relative;
+  z-index: 1;
+}
+
+.a63-ButtonGroup > [data-slot] {
+  position: relative;
+}
+
+/* ── Welded member geometry ────────────────────────────────────────────── */
+
+.a63-ButtonGroup > [data-button],
+.a63-ButtonGroup > [data-slot='button'],
+.a63-ButtonGroup > [data-slot='input-control'],
+.a63-ButtonGroup > [data-slot='select-trigger'],
+.a63-ButtonGroup > .a63-ButtonGroup-text {
+  --button-radius: var(--button-group-radius);
+  border-radius: 0;
+  height: var(--button-group-height);
+}
+
+/* Flat cells: drop per-member raised chrome so the run is one bar. */
+.a63-ButtonGroup > [data-button],
+.a63-ButtonGroup > [data-slot='button'] {
+  --button-shadow: 0 0 #0000;
+  --button-shadow-active: 0 0 #0000;
+  --button-tint: transparent;
+  --button-tint-drop: 0 0 0 transparent;
+  --button-highlight: none;
+  --button-highlight-opacity: 0;
+  --button-motion-press: none;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+/*
+ * Quiet variants (ghost/link/secondary/outline) adopt ToggleGroup resting cells:
+ * segment fill + gloss + border. Loud variants (primary/destructive/…) keep
+ * their fills but still weld.
+ */
+.a63-ButtonGroup > [data-slot='button'][data-variant='ghost'],
+.a63-ButtonGroup > [data-slot='button'][data-variant='link'],
+.a63-ButtonGroup > [data-slot='button'][data-variant='secondary'],
+.a63-ButtonGroup > [data-slot='button'][data-variant='outline'],
+.a63-ButtonGroup > [data-button][data-variant='ghost'],
+.a63-ButtonGroup > [data-button][data-variant='link'],
+.a63-ButtonGroup > [data-button][data-variant='secondary'],
+.a63-ButtonGroup > [data-button][data-variant='outline'] {
+  --button-background: var(--a63-segment-background, var(--a63-surface-muted));
+  --button-foreground: var(--a63-segment-foreground, var(--a63-text-secondary));
+  --button-border-color: var(--a63-segment-track-border, var(--a63-border-subtle));
+  --button-gloss: var(--a63-segment-gloss, none);
+  --button-state-hover-background: var(--a63-segment-background, var(--a63-surface-muted));
+  --button-state-hover-border-color: var(--a63-segment-track-border, var(--a63-border-subtle));
+  --button-state-active-background: var(
+    --a63-segment-selected-background,
+    var(--a63-surface-overlay)
+  );
+  --button-state-active-border-color: var(--a63-segment-track-border, var(--a63-border-subtle));
+  background-color: var(--button-background);
+  background-image: var(--button-gloss);
+  border-color: var(--button-border-color);
+  color: var(--button-foreground);
+  text-decoration: none;
+}
+
+.a63-ButtonGroup
+  > [data-slot='button'][data-variant='ghost']:hover:not(:disabled):not([data-disabled]),
+.a63-ButtonGroup
+  > [data-slot='button'][data-variant='link']:hover:not(:disabled):not([data-disabled]),
+.a63-ButtonGroup
+  > [data-slot='button'][data-variant='secondary']:hover:not(:disabled):not([data-disabled]),
+.a63-ButtonGroup
+  > [data-slot='button'][data-variant='outline']:hover:not(:disabled):not([data-disabled]),
+.a63-ButtonGroup > [data-button][data-variant='ghost']:hover:not(:disabled):not([data-disabled]),
+.a63-ButtonGroup > [data-button][data-variant='link']:hover:not(:disabled):not([data-disabled]),
+.a63-ButtonGroup
+  > [data-button][data-variant='secondary']:hover:not(:disabled):not([data-disabled]),
+.a63-ButtonGroup > [data-button][data-variant='outline']:hover:not(:disabled):not([data-disabled]) {
+  color: var(--a63-segment-hover-foreground, var(--a63-text-primary));
+  background-image: var(--button-gloss);
+}
+
+/* Momentary press = pressed-in selected plate (ToggleGroup selected shadow). */
+.a63-ButtonGroup > [data-slot='button']:active:not(:disabled):not([data-disabled]),
+.a63-ButtonGroup > [data-button]:active:not(:disabled):not([data-disabled]) {
+  box-shadow: var(--a63-segment-selected-shadow, none);
+}
+
+/*
+ * Sticky pressed (Finder view-mode, aria-pressed toolbars) = selected cell.
+ * Matches ToggleGroup [data-pressed] treatment.
+ */
+.a63-ButtonGroup > [data-slot='button'][data-pressed],
+.a63-ButtonGroup > [data-slot='button'][aria-pressed='true'],
+.a63-ButtonGroup > [data-button][data-pressed],
+.a63-ButtonGroup > [data-button][aria-pressed='true'] {
+  --button-background: var(--a63-segment-selected-background, var(--a63-surface-overlay));
+  --button-foreground: var(--a63-segment-selected-foreground, var(--a63-text-primary));
+  --button-gloss: var(--a63-segment-selected-gloss, none);
+  --button-shadow: var(--a63-segment-selected-shadow, none);
+  background-color: var(--button-background);
+  background-image: var(--button-gloss);
+  box-shadow: var(--button-shadow);
+  color: var(--button-foreground);
+}
+
+.a63-ButtonGroup > [data-slot='input-control'] {
+  flex: 1;
+}
+
+/* ── Horizontal: outer radii + collapse inner start borders ────────────── */
+
+.a63-ButtonGroup[data-orientation='horizontal']
+  > [data-slot]:first-child:not([data-slot='button-group-separator']) {
+  border-start-start-radius: var(--button-group-radius);
+  border-end-start-radius: var(--button-group-radius);
+}
+
+.a63-ButtonGroup[data-orientation='horizontal']
+  > [data-slot]:last-child:not([data-slot='button-group-separator']) {
+  border-start-end-radius: var(--button-group-radius);
+  border-end-end-radius: var(--button-group-radius);
+}
+
+.a63-ButtonGroup[data-orientation='horizontal']
+  > [data-slot]:not(:first-child):not([data-slot='button-group-separator']) {
+  border-inline-start-width: 0;
+}
+
+/* ── Vertical: outer radii + collapse inner block-start borders ────────── */
+
+.a63-ButtonGroup[data-orientation='vertical']
+  > [data-slot]:first-child:not([data-slot='button-group-separator']) {
+  border-start-start-radius: var(--button-group-radius);
+  border-start-end-radius: var(--button-group-radius);
+}
+
+.a63-ButtonGroup[data-orientation='vertical']
+  > [data-slot]:last-child:not([data-slot='button-group-separator']) {
+  border-end-start-radius: var(--button-group-radius);
+  border-end-end-radius: var(--button-group-radius);
+}
+
+.a63-ButtonGroup[data-orientation='vertical']
+  > [data-slot]:not(:first-child):not([data-slot='button-group-separator']) {
+  border-block-start-width: 0;
+}
+
+/* ── Text / label cell ──────────────────────────────────────────────────── */
+
+.a63-ButtonGroup-text {
+  display: flex;
+  align-items: center;
+  gap: var(--a63-space-2);
+  padding-inline: 0.625rem;
+  border: var(--a63-control-border-width) solid
+    var(--a63-segment-track-border, var(--a63-border-subtle));
+  background-color: var(--a63-segment-background, var(--a63-surface-muted));
+  background-image: var(--a63-segment-gloss, none);
+  color: var(--a63-segment-foreground, var(--a63-text-secondary));
+  font-family: var(--a63-control-font-family);
+  font-size: var(--a63-control-font-size-sm);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.a63-ButtonGroup-text svg {
+  pointer-events: none;
+}
+
+.a63-ButtonGroup-text svg:not([class*='size-']) {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* ── Separator ──────────────────────────────────────────────────────────── */
+
+.a63-ButtonGroup-separator {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  background: var(--button-group-seam);
+}
+
+.a63-ButtonGroup-separator[data-orientation='vertical'] {
+  width: var(--a63-control-border-width);
+  align-self: stretch;
+  height: auto;
+}
+
+.a63-ButtonGroup-separator[data-orientation='horizontal'] {
+  width: auto;
+  height: var(--a63-control-border-width);
+}
+
+/* ── Size ramp ──────────────────────────────────────────────────────────── */
+
+.a63-ButtonGroup[data-size='xs'],
+.a63-ButtonGroup[data-size='icon-xs'] {
+  --button-group-height: max(
+    calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+}
+
+.a63-ButtonGroup[data-size='sm'],
+.a63-ButtonGroup[data-size='icon-sm'] {
+  --button-group-height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+}
+
+.a63-ButtonGroup[data-size='default'],
+.a63-ButtonGroup[data-size='icon'] {
+  --button-group-height: max(
+    calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+}
+
+.a63-ButtonGroup[data-size='lg'],
+.a63-ButtonGroup[data-size='icon-lg'] {
+  --button-group-height: max(
+    calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size-lg, var(--a63-control-min-size))
+  );
+}
+.a63-ButtonGroup[data-size='lg'] > :is([data-button], [data-slot='button']) {
+  min-width: var(--a63-control-min-target-lg, var(--a63-control-min-target));
+}
+
+.a63-ButtonGroup[data-size='xl'],
+.a63-ButtonGroup[data-size='icon-xl'] {
+  --button-group-height: max(
+    calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size-xl, var(--a63-control-min-size))
+  );
+}
+.a63-ButtonGroup[data-size='xl'] > :is([data-button], [data-slot='button']) {
+  min-width: var(--a63-control-min-target-xl, var(--a63-control-min-target));
+}
+
+/* Icon sizes: square members (width == effective height, including min-target). */
+.a63-ButtonGroup[data-size='icon-xs'] > [data-button],
+.a63-ButtonGroup[data-size='icon-xs'] > [data-slot='button'],
+.a63-ButtonGroup[data-size='icon-sm'] > [data-button],
+.a63-ButtonGroup[data-size='icon-sm'] > [data-slot='button'],
+.a63-ButtonGroup[data-size='icon'] > [data-button],
+.a63-ButtonGroup[data-size='icon'] > [data-slot='button'],
+.a63-ButtonGroup[data-size='icon-lg'] > [data-button],
+.a63-ButtonGroup[data-size='icon-lg'] > [data-slot='button'],
+.a63-ButtonGroup[data-size='icon-xl'] > [data-button],
+.a63-ButtonGroup[data-size='icon-xl'] > [data-slot='button'] {
+  --button-group-member-size: var(--button-group-height);
+
+  flex: none;
+  width: var(--button-group-member-size);
+  min-width: var(--button-group-member-size);
+  height: var(--button-group-member-size);
+  min-height: var(--button-group-member-size);
+  padding-inline: 0;
+  aspect-ratio: 1;
+}
+
+/*
+ * Endcap hardening — keep grouped radii stable after Button/ButtonGroup size
+ * recipes and composed trigger classes have settled. `data-button` is the
+ * stable marker for Button, even when DropdownMenu/Tooltip/Popover merge their
+ * own trigger slot attributes onto it.
+ */
+.a63-ButtonGroup[data-orientation='horizontal']
+  > :is(
+    [data-button],
+    [data-slot='input-control'],
+    [data-slot='select-trigger'],
+    .a63-ButtonGroup-text
+  ):first-child {
+  border-start-start-radius: var(--button-group-radius);
+  border-end-start-radius: var(--button-group-radius);
+}
+
+.a63-ButtonGroup[data-orientation='horizontal']
+  > :is(
+    [data-button],
+    [data-slot='input-control'],
+    [data-slot='select-trigger'],
+    .a63-ButtonGroup-text
+  ):not(
+    :has(
+      ~ :is(
+        [data-button],
+        [data-slot='input-control'],
+        [data-slot='select-trigger'],
+        .a63-ButtonGroup-text
+      )
+    )
+  ) {
+  border-start-end-radius: var(--button-group-radius);
+  border-end-end-radius: var(--button-group-radius);
+}
+
+.a63-ButtonGroup[data-orientation='horizontal']
+  > :is(
+    [data-button],
+    [data-slot='input-control'],
+    [data-slot='select-trigger'],
+    .a63-ButtonGroup-text
+  )
+  ~ :is(
+    [data-button],
+    [data-slot='input-control'],
+    [data-slot='select-trigger'],
+    .a63-ButtonGroup-text
+  ) {
+  border-inline-start-width: 0;
+}
+
+.a63-ButtonGroup[data-orientation='vertical']
+  > :is(
+    [data-button],
+    [data-slot='input-control'],
+    [data-slot='select-trigger'],
+    .a63-ButtonGroup-text
+  ):first-child {
+  border-start-start-radius: var(--button-group-radius);
+  border-start-end-radius: var(--button-group-radius);
+}
+
+.a63-ButtonGroup[data-orientation='vertical']
+  > :is(
+    [data-button],
+    [data-slot='input-control'],
+    [data-slot='select-trigger'],
+    .a63-ButtonGroup-text
+  ):not(
+    :has(
+      ~ :is(
+        [data-button],
+        [data-slot='input-control'],
+        [data-slot='select-trigger'],
+        .a63-ButtonGroup-text
+      )
+    )
+  ) {
+  border-end-start-radius: var(--button-group-radius);
+  border-end-end-radius: var(--button-group-radius);
+}
+
+.a63-ButtonGroup[data-orientation='vertical']
+  > :is(
+    [data-button],
+    [data-slot='input-control'],
+    [data-slot='select-trigger'],
+    .a63-ButtonGroup-text
+  )
+  ~ :is(
+    [data-button],
+    [data-slot='input-control'],
+    [data-slot='select-trigger'],
+    .a63-ButtonGroup-text
+  ) {
+  border-block-start-width: 0;
+}

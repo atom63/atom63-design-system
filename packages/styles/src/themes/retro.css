@@ -1,0 +1,112 @@
+/*
+ * Retro theme — early-web / Windows-98 chrome: thick beveled edges and hard
+ * offset shadows.
+ *
+ * Value-overrides only. Bevel stacks are theme-private under this selector.
+ * Boxier radius and chunky borders complete the physical look.
+ */
+
+[data-a63-theme='retro'] {
+  /* Theme-private helpers reused across contract knobs. */
+  --retro-bevel-drop: 2px 2px 0 color-mix(in oklch, black 30%, transparent);
+  --retro-bevel-drop-md: 3px 3px 0 color-mix(in oklch, black 30%, transparent);
+  --retro-bevel-drop-lg: 4px 4px 0 color-mix(in oklch, black 34%, transparent);
+  --retro-bevel-drop-soft: 2px 2px 0 color-mix(in oklch, black 16%, transparent);
+
+  --a63-control-gloss: none;
+  --a63-control-radius: var(--radius-sm);
+  --a63-control-border-width: 2px;
+  --a63-control-focus-ring-width: 2px;
+  --a63-control-shadow:
+    inset 2px 2px 0 color-mix(in oklch, white 55%, transparent),
+    inset -2px -2px 0 color-mix(in oklch, black 28%, transparent), var(--retro-bevel-drop);
+  /* Pressed: the bevel inverts (recessed) and the hard drop collapses — the
+     button physically pushes in. Pairs with the default translateY(1px) press. */
+  --a63-control-shadow-active:
+    inset 2px 2px 0 color-mix(in oklch, black 30%, transparent),
+    inset -1px -1px 0 color-mix(in oklch, white 22%, transparent);
+  --a63-field-shadow:
+    inset 2px 2px 0 color-mix(in oklch, black 22%, transparent),
+    inset -1px -1px 0 color-mix(in oklch, white 40%, transparent);
+  --a63-overlay-shadow:
+    inset 1px 1px 0 color-mix(in oklch, white 50%, transparent),
+    inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), var(--retro-bevel-drop-md);
+  /* Win98 bevel as real geometry: light on top + left, dark on bottom + right.
+     Per-side BORDER colors, so the bevel mitres around the corner arc and holds
+     at any radius — radius is a personalization axis, not a per-theme constant.
+     Order: top right bottom left. */
+  --a63-widget-rim-width: 2px;
+  --a63-widget-rim-backdrop: none;
+  --a63-widget-rim-border-color: color-mix(in oklch, white 50%, transparent)
+    color-mix(in oklch, black 22%, transparent) color-mix(in oklch, black 22%, transparent)
+    color-mix(in oklch, white 50%, transparent);
+  /* Bevel moved to the rim; keep only the hard drop. */
+  --a63-widget-shadow: var(--retro-bevel-drop-md);
+  /* Opaque face. The contract's 82% default lets the rim gradient bleed through,
+     which turns the bevel's hard diagonal stop into a seam across the whole card.
+     Win98 plastic is not glass — the face should be solid regardless. */
+  --a63-widget-background-color: var(--a63-surface-overlay);
+  --a63-surface-shadow:
+    inset 1px 1px 0 color-mix(in oklch, white 55%, transparent),
+    inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), var(--retro-bevel-drop-soft);
+  /* Retro surfaces/overlays are chunky beveled frames: 2px outset border, hard
+     square corners via the radius personalization axis (not hardcoded here). */
+  --a63-surface-border-style: outset;
+  --a63-overlay-border-style: outset;
+  --a63-surface-border-width: 2px;
+  --a63-overlay-border-width: 2px;
+  --a63-overlay-drag-shadow:
+    inset 1px 1px 0 color-mix(in oklch, white 50%, transparent),
+    inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), var(--retro-bevel-drop-lg);
+  --a63-track-shadow:
+    inset 1px 1px 0 color-mix(in oklch, black 22%, transparent),
+    inset -1px -1px 0 color-mix(in oklch, white 40%, transparent);
+  --a63-marker-shadow:
+    inset 1px 1px 0 color-mix(in oklch, white 50%, transparent),
+    inset -1px -1px 0 color-mix(in oklch, black 20%, transparent),
+    1px 1px 0 color-mix(in oklch, black 15%, transparent);
+  --a63-choice-box-shadow:
+    inset 1px 1px 0 color-mix(in oklch, black 24%, transparent),
+    inset -1px -1px 0 color-mix(in oklch, white 42%, transparent);
+  --a63-choice-box-shadow-checked:
+    inset 1px 1px 0 color-mix(in oklch, white 38%, transparent),
+    inset -1px -1px 0 color-mix(in oklch, black 24%, transparent);
+  --a63-choice-indicator-gloss: none;
+  /* Segmented controls — welded Win98 cells; selected = pressed-in bevel. */
+  --a63-segment-track-background: var(--a63-surface-panel);
+  --a63-segment-track-border: var(--a63-border-control);
+  --a63-segment-background: var(--a63-surface-panel);
+  --a63-segment-foreground: var(--a63-text-secondary);
+  --a63-segment-gloss: none;
+  --a63-segment-selected-background: var(--a63-surface-muted);
+  --a63-segment-selected-foreground: var(--a63-text-primary);
+  --a63-segment-selected-gloss: none;
+  --a63-segment-selected-shadow: var(--a63-control-shadow-active);
+  --a63-segment-primary-background: var(--a63-action-primary);
+  --a63-segment-primary-foreground: var(--a63-action-primary-foreground);
+  --a63-segment-primary-shadow: var(--a63-control-shadow-active);
+  --a63-weather-foreground: white;
+  --a63-weather-muted-foreground: color-mix(in oklch, white 76%, transparent);
+  --a63-weather-divider-color: color-mix(in oklch, white 32%, transparent);
+  --a63-weather-text-shadow: 1px 1px 0 color-mix(in oklch, black 34%, transparent);
+  --a63-weather-border-color: color-mix(
+    in oklch,
+    var(--a63-action-primary) 44%,
+    var(--a63-border-subtle)
+  );
+  --a63-weather-background-color: color-mix(
+    in oklch,
+    var(--a63-action-primary) 48%,
+    var(--a63-surface-panel)
+  );
+  --a63-weather-background-image:
+    linear-gradient(135deg, color-mix(in oklch, white 22%, transparent), transparent 44%),
+    linear-gradient(
+      135deg,
+      color-mix(in oklch, var(--a63-action-primary) 58%, var(--a63-surface-panel)),
+      color-mix(in oklch, var(--a63-action-primary) 68%, var(--a63-text-primary))
+    );
+  /* No --a63-weather-shadow: the retro weather tile throws the same hard drop
+     as every other retro widget, and the bevel edge lives on the rim. */
+  --a63-weather-backdrop: none;
+}

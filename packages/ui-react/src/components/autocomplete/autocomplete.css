@@ -1,0 +1,240 @@
+/*
+ * Autocomplete recipe — field input + menu-backed suggestion popup.
+ *
+ * Popup chrome is the shared MENU recipe (`.a63-Menu-popup` on the surface;
+ * `.a63-Menu-item` / label / separator on rows). Autocomplete keeps only
+ * structural deltas: field input, ScrollArea list, empty/status copy.
+ */
+
+.a63-Autocomplete-input-group {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  color: var(--a63-text-primary);
+  font-family: var(--a63-control-font-family);
+}
+.a63-Autocomplete-input-group:has(:disabled) {
+  opacity: 0.64;
+}
+
+/* ── Input (field) ─────────────────────────────────────────────────────── */
+
+.a63-Autocomplete-input {
+  /* Content floor — see button.css. */
+  --autocomplete-content-lh: var(--typography-sm-line-height);
+  --autocomplete-content-floor: calc(var(--autocomplete-content-lh) + 2 * var(--a63-space-0_5));
+
+  box-sizing: border-box;
+  width: 100%;
+  height: max(
+    calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size),
+    var(--autocomplete-content-floor)
+  );
+  padding-inline: var(--a63-control-padding-inline-md);
+  border: var(--a63-control-border-width) solid var(--a63-border-control);
+  border-radius: var(--a63-control-radius);
+  background: var(--a63-surface-control);
+  box-shadow: var(--a63-field-shadow);
+  color: inherit;
+  font-family: inherit;
+  font-size: max(var(--a63-control-font-size-md), var(--a63-editable-font-size-min, 0px));
+  line-height: 1;
+  appearance: none;
+  outline: none;
+  transition:
+    border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-Autocomplete-input::placeholder {
+  color: var(--a63-text-secondary);
+}
+
+.a63-Autocomplete-input:focus-visible {
+  border-color: var(--a63-action-primary);
+  box-shadow:
+    var(--a63-field-shadow),
+    0 0 0 var(--a63-control-focus-ring-width)
+      var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+}
+
+.a63-Autocomplete-input[data-has-start-addon] {
+  padding-inline-start: 2.25rem;
+}
+
+/* trailing adornment reserves room */
+.a63-Autocomplete-input-group:has(.a63-Autocomplete-adornment) .a63-Autocomplete-input {
+  padding-inline-end: 2rem;
+}
+
+.a63-Autocomplete-input-group[data-size='sm'] .a63-Autocomplete-input {
+  --autocomplete-content-lh: var(--typography-xs-line-height);
+  height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size),
+    var(--autocomplete-content-floor)
+  );
+  padding-inline: var(--a63-control-padding-inline-sm);
+  font-size: max(var(--a63-control-font-size-sm), var(--a63-editable-font-size-min, 0px));
+}
+.a63-Autocomplete-input-group[data-size='lg'] .a63-Autocomplete-input {
+  --autocomplete-content-lh: var(--typography-base-line-height);
+  height: max(
+    calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size-lg, var(--a63-control-min-size)),
+    var(--autocomplete-content-floor)
+  );
+  padding-inline: var(--a63-control-padding-inline-lg);
+  font-size: max(var(--a63-control-font-size-lg), var(--a63-editable-font-size-min, 0px));
+}
+
+/* ── Addons (start icon, trigger, clear) ───────────────────────────────── */
+
+.a63-Autocomplete-start-addon {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0.625rem;
+  z-index: var(--z-layer-base, 1);
+  display: flex;
+  align-items: center;
+  color: var(--a63-text-secondary);
+  pointer-events: none;
+}
+.a63-Autocomplete-start-addon svg {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.a63-Autocomplete-adornment {
+  position: absolute;
+  inset-inline-end: 0.125rem;
+  top: 50%;
+  translate: 0 -50%;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+  height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--a63-text-secondary);
+  opacity: 0.8;
+  cursor: pointer;
+  outline: none;
+  transition:
+    color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-Autocomplete-adornment:hover {
+  opacity: 1;
+}
+.a63-Autocomplete-adornment svg {
+  width: 1rem;
+  height: 1rem;
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+/* ── Positioner + popup ────────────────────────────────────────────────── */
+
+.a63-Autocomplete-positioner {
+  z-index: var(--z-layer-menu, var(--z-layer-popover, 999));
+  user-select: none;
+}
+
+/*
+ * Surface hosts `.a63-Menu-popup` for shared menu chrome. Keep Menu padding /
+ * gap / paint; only override scroll (ScrollArea owns it) and max width.
+ */
+.a63-Autocomplete-surface.a63-Menu-popup {
+  position: relative;
+  display: flex;
+  max-height: 100%;
+  min-width: var(--anchor-width);
+  max-width: var(--available-width);
+  overflow: hidden;
+}
+
+.a63-Autocomplete-popup {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  max-height: min(var(--available-height), 23rem);
+  min-width: 0;
+  /* Surface owns Menu padding — don't double-inset. */
+  padding: 0;
+  gap: 0;
+}
+
+.a63-Autocomplete-popup[data-starting-style],
+.a63-Autocomplete-popup[data-ending-style] {
+  opacity: 0;
+  scale: 0.98;
+}
+
+.a63-Autocomplete-popup .a63-ScrollArea {
+  --scroll-area-gutter: var(--a63-menu-popup-padding, 0.25rem);
+
+  flex: 1 1 auto;
+  min-height: 0;
+  /* Surface already insets; ScrollArea only scrolls + scrollbar gutter. */
+  padding: 0;
+}
+
+/* ── List + items ──────────────────────────────────────────────────────── */
+
+.a63-Autocomplete-list:not(:empty) {
+  display: grid;
+  gap: var(--a63-menu-gap, 0.125rem);
+  padding: 0;
+  scroll-padding-block: var(--a63-menu-popup-padding, 0.25rem);
+}
+
+/* Chrome from `.a63-Menu-item`; Autocomplete only needs the slot class today. */
+
+.a63-Autocomplete-group {
+  display: grid;
+  gap: var(--a63-menu-gap, 0.125rem);
+}
+
+/* ── Empty / Status (Autocomplete-only copy slots) ─────────────────────── */
+
+.a63-Autocomplete-empty:not(:empty) {
+  padding: calc(var(--a63-menu-item-padding-block, 0.375rem) * 1.5)
+    var(--a63-menu-item-padding-inline, 0.5rem);
+  color: var(--a63-menu-label-foreground, var(--a63-text-secondary));
+  font-size: var(--a63-menu-item-font-size, var(--a63-control-font-size-sm));
+  text-align: center;
+}
+
+.a63-Autocomplete-status {
+  padding: var(--a63-menu-item-padding-block, 0.375rem) var(--a63-menu-item-padding-inline, 0.5rem);
+  color: var(--a63-menu-label-foreground, var(--a63-text-secondary));
+  font-size: var(--a63-control-font-size-xs);
+  font-weight: 500;
+}
+.a63-Autocomplete-status:empty {
+  margin: 0;
+  padding: 0;
+}
+
+.a63-Autocomplete-separator:last-child {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Autocomplete-input,
+  .a63-Autocomplete-adornment,
+  .a63-Autocomplete-surface {
+    transition: none;
+  }
+}

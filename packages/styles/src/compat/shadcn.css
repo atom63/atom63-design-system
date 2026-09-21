@@ -1,0 +1,52 @@
+/*
+ * shadcn/ui compatibility bridge (opt-in).
+ *
+ * Aliases the shadcn token vocabulary back onto the canonical --a63-* semantic
+ * layer, so shadcn-based components keep working without making those names part
+ * of the core foundation. Import via `@atom63/styles/compat/shadcn`; NOT part of
+ * the default bundle. Light/dark is handled by the --a63-* layer, so these are
+ * mode-agnostic alias-backs except where shadcn intentionally diverged (sidebar).
+ */
+
+:root {
+  --background: var(--a63-surface-page);
+  --foreground: var(--a63-text-primary);
+  --card: var(--a63-surface-panel);
+  --card-foreground: var(--a63-text-primary);
+  --popover: var(--a63-surface-overlay);
+  --popover-foreground: var(--a63-text-primary);
+  --muted: var(--a63-surface-muted);
+  --muted-foreground: var(--a63-text-secondary);
+  --secondary: var(--a63-surface-muted);
+  --secondary-foreground: var(--a63-text-secondary);
+  --accent: var(--a63-surface-control-hover);
+  --accent-foreground: var(--a63-text-primary);
+  --border: var(--a63-border-subtle);
+  --input: var(--a63-border-control);
+  --ring: var(--a63-focus-ring);
+  --primary: var(--a63-action-primary);
+  --primary-foreground: var(--a63-action-primary-foreground);
+  --destructive: var(--a63-action-danger);
+  --info: var(--a63-status-info);
+  --success: var(--a63-status-success);
+  --warning: var(--a63-status-warning);
+
+  /* Fixed mode references (adapter-local) */
+  --light: var(--surface-light-1);
+  --dark: var(--surface-dark-1);
+
+  /* Sidebar */
+  --sidebar: var(--a63-surface-muted);
+  --sidebar-foreground: var(--a63-text-primary);
+  --sidebar-accent: var(--a63-surface-control-hover);
+  --sidebar-accent-foreground: var(--a63-text-primary);
+  --sidebar-border: var(--a63-border-subtle);
+  --sidebar-primary: var(--a63-action-primary);
+  --sidebar-primary-foreground: var(--a63-action-primary-foreground);
+  --sidebar-ring: var(--a63-focus-ring);
+}
+
+.dark {
+  /* shadcn's dark sidebar collapses onto the page surface. */
+  --sidebar: var(--a63-surface-page);
+}

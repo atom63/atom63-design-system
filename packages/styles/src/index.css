@@ -1,0 +1,17 @@
+/*
+ * Atom63 executable style-system contract.
+ *
+ * This package is the canonical token, contract, theme, and OS style layer.
+ */
+@import './tokens/index.css';
+/* Contracts (archetype defaults) MUST load before themes: a theme overrides an
+   archetype token (e.g. --a63-control-shadow) at the SAME specificity as the
+   contract's :root default, so source order decides — themes must come last to
+   win. Loading contracts after themes silently killed every theme's tactile
+   character (all controls looked identical across themes). */
+@import './contracts/index.css';
+@import './themes/index.css';
+/* OS is a peer of themes: chrome structure under [data-a63-os], not paint. */
+@import './os/index.css';
+@import './animations/index.css';
+@import './utils/index.css';

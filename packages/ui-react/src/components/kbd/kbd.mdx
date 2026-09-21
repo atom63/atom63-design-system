@@ -1,0 +1,29 @@
+import { Controls, Meta, Primary, Stories, Title } from '@storybook/addon-docs/blocks'
+
+import * as KbdStories from './kbd.stories'
+
+<Meta of={KbdStories} />
+
+<Title />
+
+A presentational keyboard-key cap, plus `KbdGroup` to lay out a sequence (e.g. ⌘ + K). Quiet and recessed — a muted surface with secondary text.
+
+## Anatomy
+
+- `Kbd` → `<kbd class="a63-Kbd" data-slot="kbd" data-size>`.
+- `KbdGroup` → `<div class="a63-KbdGroup" data-slot="kbd-group">` with inline-flex layout.
+
+## Contract
+
+- **Sizes:** `sm` `md` (default `md`).
+- Source of truth: `@atom63/ui-foundation` → `kbd/kbd-contract.ts`.
+
+## Tokens it reads
+
+`--a63-surface-muted` (cap fill), `--a63-text-secondary` (glyph), `--a63-border-subtle`, `--a63-control-radius`, and the control font ramp. No state, no new tokens.
+
+<Primary />
+
+<Controls />
+
+<Stories />

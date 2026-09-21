@@ -1,0 +1,36 @@
+import { Controls, Meta, Primary, Stories, Title } from '@storybook/addon-docs/blocks'
+
+import * as ToggleGroupStories from './toggle-group.stories'
+
+<Meta of={ToggleGroupStories} />
+
+<Title />
+
+A joined/welded segmented bar (Base UI toggle-group) — always joined. Single-select by default; `multiple` allows several pressed at once. Items are `ToggleGroupItem` (our `Toggle`); the group owns the special per-cell gel chrome. For a gapped row of independent toggles, compose standalone `Toggle`s instead.
+
+## Anatomy
+
+- `ToggleGroup` → `<div class="a63-ToggleGroup" data-slot="toggle-group" data-orientation data-size data-tone>`, provides `{ size, tone }` context.
+- `ToggleGroupItem` → renders a `Toggle` (`data-slot="toggle-group-item"`), reading group context; its own `size`/`tone` override the group.
+- `ToggleGroupSeparator` → `<div class="a63-ToggleGroup-separator" data-slot="toggle-group-separator">`, a hairline divider between item runs.
+
+## Contract
+
+- **Selection:** single (default) · `multiple`.
+- **Orientation:** `horizontal` (default) · `vertical`.
+- **Size / tone:** reuse the Toggle axes (`sm`/`md`/`lg`, `neutral`/`accent`), propagated via context.
+- Source of truth: `@atom63/ui-foundation` → `toggle-group/toggle-group-contract.ts` (+ the toggle contract for size/tone).
+
+## Theme sheet (joined cells)
+
+Each cell reads `--a63-segment-*` (resting gloss/fill, selected gloss + inset/raise shadow, primary fill). Themes express aqua gel, retro bevel, terminal phosphor, or modern quiet raise without a separate group variant.
+
+## Tokens it reads
+
+`--a63-segment-*` (cell chrome) · `--a63-segment-radius` (outer corners) · `--a63-border-subtle` (separator). Geometry comes from the child `Toggle` control ramp.
+
+<Primary />
+
+<Controls />
+
+<Stories />

@@ -1,0 +1,54 @@
+/*
+ * macOS OS sheet — chrome *structure* for [data-a63-os='macos'].
+ *
+ * Peer of themes/*: themes own visual skin (paint); OS owns window/launcher
+ * geometry. Defaults also apply on :root so unset roots behave like macOS.
+ *
+ * Canonical tokens are --a63-os-*. Legacy --os-window-* / --os-launcher-*
+ * aliases keep OS63 chrome working until recipes migrate.
+ */
+
+:root,
+[data-a63-os='macos'] {
+  /* Window titlebar + traffic lights */
+  --a63-os-window-titlebar-height: 2.75rem;
+  --a63-os-window-action-size: 1.5rem;
+  --a63-os-window-action-width: 1.5rem;
+  --a63-os-window-action-height: 1.5rem;
+  --a63-os-window-action-gap: 0.5rem;
+  --a63-os-window-action-indicator-size: 0.875rem;
+  --a63-os-window-action-icon-size: 1rem;
+  --a63-os-control-side: left;
+  --a63-os-window-control-style: traffic;
+
+  /* Dock-ish launcher structure (apps often override height/item size inline) */
+  --a63-os-launcher-height: 3.5rem;
+  --a63-os-launcher-item-size: 3rem;
+  --a63-os-launcher-icon-size: 100%;
+  --a63-os-launcher-taskbar-padding-block: 0.25rem;
+  --a63-os-launcher-taskbar-padding-inline: 0.5rem;
+  --a63-os-launcher-indicator-width-active: 0.25rem;
+  --a63-os-launcher-indicator-width-inactive: 0.25rem;
+  --a63-os-launcher-indicator-height: 0.25rem;
+
+  /* Apps / flyout (Windows start-menu width is OS-specific; macOS stays unset) */
+  --a63-os-flyout-width-start-menu: unset;
+
+  /* Compat aliases — OS63 window + dock/taskbar consumers */
+  --os-window-titlebar-height: var(--a63-os-window-titlebar-height);
+  --os-window-action-size: var(--a63-os-window-action-size);
+  --os-window-action-width: var(--a63-os-window-action-width);
+  --os-window-action-height: var(--a63-os-window-action-height);
+  --os-window-action-gap: var(--a63-os-window-action-gap);
+  --os-window-action-indicator-size: var(--a63-os-window-action-indicator-size);
+  --os-window-action-icon-size: var(--a63-os-window-action-icon-size);
+  --os-launcher-height: var(--a63-os-launcher-height);
+  --os-launcher-item-size: var(--a63-os-launcher-item-size);
+  --os-launcher-icon-size: var(--a63-os-launcher-icon-size);
+  --os-launcher-taskbar-padding-block: var(--a63-os-launcher-taskbar-padding-block);
+  --os-launcher-taskbar-padding-inline: var(--a63-os-launcher-taskbar-padding-inline);
+  --os-launcher-indicator-width-active: var(--a63-os-launcher-indicator-width-active);
+  --os-launcher-indicator-width-inactive: var(--a63-os-launcher-indicator-width-inactive);
+  --os-launcher-indicator-height: var(--a63-os-launcher-indicator-height);
+  --os-flyout-width-start-menu: var(--a63-os-flyout-width-start-menu);
+}

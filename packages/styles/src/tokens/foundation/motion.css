@@ -1,0 +1,19 @@
+/*
+ * Motion foundation.
+ *
+ * Raw duration primitives live in primitives.css. This layer chooses the lean
+ * timing ramp and easing vocabulary shared by semantic motion contracts.
+ */
+:root {
+  --duration-instant: var(--duration-none);
+  --duration-fast: var(--duration-150);
+  --duration-normal: var(--duration-250);
+  --duration-overlay: var(--duration-450);
+  --duration-swipe-dismiss: var(--duration-400);
+  --duration-slow: var(--duration-500);
+  --duration-slower: var(--duration-1000);
+  --ease-overlay: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-scrim: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.3, 0, 0, 1);
+}

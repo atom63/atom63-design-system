@@ -1,0 +1,31 @@
+/*
+ * Action contract — momentary controls that perform an action now.
+ *
+ * Covers Button, IconButton, SplitButton, and ButtonGroup. Action controls share
+ * the physical CONTROL substrate (height, padding, focus ring, press feedback),
+ * but get their own namespace so momentary "pressed" styling never has to stand
+ * in for persistent selected/on styling (Toggle/Segment).
+ *
+ * Axis-dependent colour hooks are intentionally not declared at :root. Recipes
+ * should consume them at the use-site with live semantic fallbacks, e.g.
+ *   --a63-action-control-background -> var(--a63-action-neutral)
+ *   --a63-action-control-foreground -> var(--a63-action-neutral-foreground)
+ *   --a63-action-primary-background -> var(--a63-action-primary)
+ *   --a63-action-danger-background  -> var(--a63-action-danger)
+ */
+
+:root {
+  --a63-action-control-border-width: var(--a63-control-border-width);
+  --a63-action-control-focus-ring-width: var(--a63-control-focus-ring-width);
+  --a63-action-control-gap: var(--a63-control-gap);
+  --a63-action-control-gloss: var(--a63-control-gloss);
+  --a63-action-control-highlight: var(--a63-control-highlight);
+  --a63-action-control-press-transform: var(--a63-control-press-transform);
+  --a63-action-control-radius: var(--a63-control-radius);
+  --a63-action-control-shadow: var(--a63-control-shadow);
+  --a63-action-control-shadow-active: var(--a63-control-shadow-active);
+  --a63-action-control-shadow-flat: var(--a63-control-shadow-flat);
+  --a63-action-control-shadow-tint: var(--a63-control-shadow-tint);
+  --a63-action-control-text-shadow: var(--a63-control-text-shadow);
+  --a63-action-disabled-opacity: 0.56;
+}

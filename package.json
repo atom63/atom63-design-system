@@ -1,0 +1,59 @@
+{
+  "name": "atom63-design-system",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "packageManager": "pnpm@10.29.2",
+  "engines": {
+    "pnpm": ">=10"
+  },
+  "scripts": {
+    "build:example:vite-basic": "pnpm --filter atom63-vite-basic-example build",
+    "check:ui-react-exports": "node scripts/design-system/audit-ui-react-exports.mjs",
+    "check:ds-pack-smoke": "node scripts/design-system/smoke-packed-ui-react.mjs",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish",
+    "format:check": "prettier --check --cache ."
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "1.0.0",
+    "@changesets/cli": "3.0.1",
+    "@tailwindcss/vite": "catalog:",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "catalog:",
+    "clsx": "^2.1.1",
+    "eslint": "10.7.0",
+    "eslint-plugin-jsx-a11y": "6.10.2",
+    "eslint-plugin-react-compiler": "19.1.0-rc.2",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "globals": "^16.4.0",
+    "jsdom": "catalog:",
+    "lucide-react": "1.34.0",
+    "playwright": "1.61.1",
+    "prettier": "^3.9.4",
+    "prettier-plugin-tailwindcss": "0.8.1",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "react-hook-form": "7.81.0",
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss": "catalog:",
+    "tsup": "^8.3.5",
+    "typescript": "catalog:",
+    "typescript-eslint": "8.64.0",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  },
+  "pnpm": {
+    "overrides": {
+      "react": "19.2.7",
+      "react-dom": "19.2.7",
+      "@types/react": "19.2.17",
+      "@types/react-dom": "19.2.3",
+      "input-otp": "1.4.2",
+      "lucide-react": "1.34.0",
+      "react-hook-form": "7.81.0"
+    }
+  }
+}

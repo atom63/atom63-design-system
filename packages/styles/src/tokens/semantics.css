@@ -1,0 +1,157 @@
+/*
+ * Canonical semantic layer.
+ *
+ * This is the single source of semantic truth for the new system. Values are
+ * sourced directly from the token foundation (surface aliases + primitives),
+ * with .dark overrides where the mode differs. shadcn (--background/--primary…)
+ * and Tailwind are opt-in adapters that re-reference THESE names — never the
+ * reverse. See packages/styles/README.md (the mirror rule).
+ */
+
+:root,
+.light,
+[data-a63-mode='light'] {
+  /* Surfaces — neutral, optionally bent toward the brand hue by --a63-surface-tint
+     (0% = pure neutral). Each mixes with a lightness-matched --a63-brand-* step. */
+  --a63-surface-page: color-mix(
+    in oklch,
+    var(--surface-light-2) calc(100% - var(--a63-surface-tint)),
+    var(--a63-brand-100) var(--a63-surface-tint)
+  );
+  --a63-surface-panel: color-mix(
+    in oklch,
+    var(--surface-light-1) calc(100% - var(--a63-surface-tint)),
+    var(--a63-brand-50) var(--a63-surface-tint)
+  );
+  --a63-surface-overlay: color-mix(
+    in oklch,
+    var(--surface-light-1) calc(100% - var(--a63-surface-tint)),
+    var(--a63-brand-50) var(--a63-surface-tint)
+  );
+  --a63-surface-muted: color-mix(
+    in oklch,
+    var(--surface-light-3) calc(100% - var(--a63-surface-tint)),
+    var(--a63-brand-200) var(--a63-surface-tint)
+  );
+  /* Recessed input surface (the field fill). Brightest surface in light mode so a
+     field reads as a clean well recessed into its panel via --a63-field-shadow. */
+  --a63-surface-control: color-mix(
+    in oklch,
+    var(--surface-light-1) calc(100% - var(--a63-surface-tint)),
+    var(--a63-brand-50) var(--a63-surface-tint)
+  );
+  /* Translucent hover plate. The BASE bends toward the brand hue by the surface
+     tint (same surface-4 -> brand-300 step as --a63-border-subtle) so it stays in
+     family on tinted themes instead of reading as a raw neutral grey; the outer
+     mix keeps the 20% translucency (value-identical at tint 0). */
+  --a63-surface-control-hover: color-mix(
+    in srgb,
+    color-mix(
+      in oklch,
+      var(--surface-light-4) calc(100% - var(--a63-surface-tint)),
+      var(--a63-brand-300) var(--a63-surface-tint)
+    ),
+    transparent 20%
+  );
+
+  /* Text */
+  --a63-text-primary: var(--surface-light-12);
+  --a63-text-secondary: var(--surface-light-11);
+
+  /* Border */
+  --a63-border-subtle: color-mix(
+    in oklch,
+    var(--surface-light-4) calc(100% - var(--a63-surface-tint)),
+    var(--a63-brand-300) var(--a63-surface-tint)
+  );
+  --a63-border-control: color-mix(
+    in oklch,
+    var(--surface-light-5) calc(100% - var(--a63-surface-tint)),
+    var(--a63-brand-400) var(--a63-surface-tint)
+  );
+
+  /* Action — primary + focus ring live in tokens/brand.css (brand-ramp scoped).
+     Neutral = the default variant's fill; sourced from surfaces (NOT --a63-text-*)
+     so a theme can recolor text without turning the default button into a fill. */
+  --a63-action-neutral: var(--surface-light-12);
+  --a63-action-neutral-foreground: var(--surface-light-2);
+  --a63-action-danger: var(--color-danger-600);
+  --a63-action-danger-hover: color-mix(in oklch, var(--a63-action-danger) 90%, transparent);
+  --a63-action-danger-foreground: white;
+
+  /* Status (danger's status role is served by --a63-action-danger). The base is
+     the accent used for tinted callouts (bg = mix toward transparent, text/border
+     = the accent); -foreground is the text/icon color ON a SOLID status fill. */
+  --a63-status-info: var(--color-info-500);
+  --a63-status-info-foreground: white;
+  --a63-status-success: var(--color-success-500);
+  --a63-status-success-foreground: white;
+  --a63-status-warning: var(--color-warning-500);
+  --a63-status-warning-foreground: white;
+}
+
+/* Mode-agnostic semantics — same veil in light + dark, so declared once at :root
+   (the .dark block below never overrides them). */
+:root {
+  /* Scrim — the modal/drawer/sheet backdrop veil behind overlays. */
+  --a63-scrim: color-mix(in oklch, black 40%, transparent);
+}
+
+:is(.dark, [data-a63-mode='dark']) {
+  --a63-surface-page: color-mix(
+    in oklch,
+    var(--surface-dark-1) calc(100% - var(--a63-surface-tint)),
+    var(--a63-brand-950) var(--a63-surface-tint)
+  );
+  --a63-surface-panel: color-mix(
+    in oklch,
+    var(--surface-dark-2) calc(100% - var(--a63-surface-tint)),
+    var(--a63-brand-900) var(--a63-surface-tint)
+  );
+  --a63-surface-overlay: color-mix(
+    in oklch,
+    var(--surface-dark-4) calc(100% - var(--a63-surface-tint)),
+    var(--a63-brand-800) var(--a63-surface-tint)
+  );
+  --a63-surface-muted: color-mix(
+    in oklch,
+    var(--surface-dark-3) calc(100% - var(--a63-surface-tint)),
+    var(--a63-brand-800) var(--a63-surface-tint)
+  );
+  /* Recessed input surface — darkest surface in dark mode, so a field reads as a
+     sunken well relative to its panel. */
+  --a63-surface-control: color-mix(
+    in oklch,
+    var(--surface-dark-1) calc(100% - var(--a63-surface-tint)),
+    var(--a63-brand-950) var(--a63-surface-tint)
+  );
+  /* Tint-aware translucent hover plate (dark) — surface-6 -> brand-600, matching
+     --a63-border-subtle; outer mix keeps the 20% translucency. */
+  --a63-surface-control-hover: color-mix(
+    in srgb,
+    color-mix(
+      in oklch,
+      var(--surface-dark-6) calc(100% - var(--a63-surface-tint)),
+      var(--a63-brand-600) var(--a63-surface-tint)
+    ),
+    transparent 20%
+  );
+
+  --a63-text-primary: var(--surface-dark-12);
+  --a63-text-secondary: var(--surface-dark-11);
+
+  --a63-border-subtle: color-mix(
+    in oklch,
+    var(--surface-dark-6) calc(100% - var(--a63-surface-tint)),
+    var(--a63-brand-600) var(--a63-surface-tint)
+  );
+  --a63-border-control: color-mix(
+    in oklch,
+    var(--surface-dark-7) calc(100% - var(--a63-surface-tint)),
+    var(--a63-brand-500) var(--a63-surface-tint)
+  );
+
+  --a63-action-neutral: var(--surface-dark-12);
+  --a63-action-neutral-foreground: var(--surface-dark-1);
+  --a63-action-danger-hover: color-mix(in oklch, var(--a63-action-danger) 82%, white 8%);
+}

@@ -1,0 +1,437 @@
+/*
+ * ConnectedPanel recipe — an expand/collapse surface whose collapsed pill morphs
+ * (width + corner radius, animated in JS via motion) into an expanded panel. The
+ * panel is in flow, so its frame consumes the SURFACE contract rather than the
+ * OVERLAY contract. Internal dividers read --a63-border-subtle/70. The radius
+ * morph uses local --connected-panel-* vars set inline by the component.
+ */
+
+.a63-ConnectedPanel {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  border: var(--a63-surface-border-width) var(--a63-surface-border-style) var(--a63-border-subtle);
+  border-radius: var(--connected-panel-collapsed-radius, var(--radius-lg));
+  background-color: var(--a63-surface-panel);
+  background-image: var(--a63-surface-gloss), var(--a63-surface-texture-image);
+  background-blend-mode: normal, var(--a63-surface-texture-blend);
+  backdrop-filter: var(--a63-surface-backdrop);
+  box-shadow: var(--a63-surface-inner-shadow, none), var(--a63-surface-shadow);
+  color: var(--a63-text-primary);
+  transition:
+    border-color var(--connected-panel-transition-duration, 320ms)
+      var(--connected-panel-transition-ease, ease),
+    box-shadow var(--connected-panel-transition-duration, 320ms)
+      var(--connected-panel-transition-ease, ease);
+}
+
+.a63-ConnectedPanel-anchor {
+  display: inline-flex;
+  max-width: 100%;
+}
+
+.a63-ConnectedPanel-anchor[data-align='center'] {
+  justify-content: center;
+}
+
+.a63-ConnectedPanel-anchor[data-align='end'] {
+  justify-content: flex-end;
+}
+
+/* A split trigger row keeps ButtonGroup's segmented interaction model while the
+   outer ConnectedPanel remains the single morphing surface. */
+.a63-ConnectedPanel[data-variant='button-group'] {
+  --connected-panel-inner-radius: max(
+    0px,
+    calc(
+      var(--connected-panel-collapsed-radius, var(--radius-lg)) - var(--a63-surface-border-width)
+    )
+  );
+}
+
+.a63-ConnectedPanel[data-variant='button-group']:not([data-open]) {
+  border-color: var(--a63-border-control);
+  background-color: var(--a63-surface-panel);
+  background-image: none;
+  box-shadow: var(--a63-control-shadow-flat, none);
+}
+
+.a63-ConnectedPanel[data-variant='button-group'][data-open] {
+  --connected-panel-inner-radius: max(
+    0px,
+    calc(
+      var(--connected-panel-expanded-radius, var(--radius-md)) - var(--a63-space-1) -
+        var(--a63-surface-border-width)
+    )
+  );
+
+  border-color: color-mix(in oklch, var(--a63-border-subtle) 55%, transparent);
+  background-color: var(--a63-surface-muted);
+  box-shadow: none;
+}
+
+.a63-ConnectedPanel[data-variant='button-group'] > .a63-ButtonGroup {
+  --button-group-radius: var(--connected-panel-inner-radius);
+
+  width: 100%;
+  max-width: none;
+  flex-shrink: 0;
+  overflow: visible;
+  border-radius: 0;
+}
+
+.a63-ConnectedPanel[data-variant='button-group'] > .a63-ButtonGroup > .a63-ConnectedPanel-trigger {
+  flex: 1;
+  width: auto;
+  border-inline-end: var(--a63-control-border-width) solid
+    color-mix(in oklch, var(--a63-segment-seam, var(--a63-border-subtle)) 45%, transparent);
+  transition:
+    background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-ConnectedPanel[data-variant='button-group']:not([data-open])
+  > .a63-ButtonGroup
+  > [data-button] {
+  --button-background: var(--a63-surface-panel);
+  --button-border-color: var(--a63-border-control);
+  --button-foreground: var(--a63-text-primary);
+  --button-state-hover-background: color-mix(
+    in oklch,
+    var(--a63-surface-control-hover) 50%,
+    transparent
+  );
+  --button-state-hover-border-color: var(--a63-border-subtle);
+  --button-state-active-background: var(--button-state-hover-background);
+  --button-state-active-border-color: var(--button-state-hover-border-color);
+
+  background-color: var(--button-background);
+  background-image: none;
+  color: var(--button-foreground);
+}
+
+.a63-ConnectedPanel[data-variant='button-group']:not([data-open])
+  > .a63-ButtonGroup
+  > .a63-ConnectedPanel-trigger {
+  border-inline-end-color: color-mix(in oklch, var(--a63-border-control) 65%, transparent);
+}
+
+:is(.dark, [data-a63-mode='dark'])
+  .a63-ConnectedPanel[data-variant='button-group']:not([data-open])
+  > .a63-ButtonGroup
+  > [data-button] {
+  --button-background: color-mix(in oklch, var(--a63-border-control) 32%, transparent);
+  --button-state-hover-background: color-mix(in oklch, var(--a63-border-control) 64%, transparent);
+  --button-state-hover-border-color: var(--a63-border-control);
+  --button-state-active-background: var(--button-state-hover-background);
+  --button-state-active-border-color: var(--button-state-hover-border-color);
+}
+
+.a63-ConnectedPanel[data-variant='button-group']:not([data-open])
+  > .a63-ButtonGroup
+  > [data-button]:is(:hover, :active, [data-popup-open]):not(:disabled):not([data-disabled]) {
+  background-color: var(--button-state-hover-background);
+  background-image: none;
+  box-shadow: none;
+  color: var(--a63-text-primary);
+}
+
+.a63-ConnectedPanel[data-variant='button-group'] > .a63-ButtonGroup > [data-button] {
+  border-block-width: 0;
+}
+
+.a63-ConnectedPanel[data-variant='button-group'] > .a63-ButtonGroup > [data-button]:first-child {
+  border-inline-start-width: 0;
+}
+
+.a63-ConnectedPanel[data-variant='button-group'] > .a63-ButtonGroup > [data-button]:last-child {
+  border-inline-end-width: 0;
+}
+
+/* ── Trigger ───────────────────────────────────────────────────────────────
+ * The Trigger IS a DS Button (variant="ghost"); this recipe flattens its chrome
+ * into the connected surface — square (radius 0), edge-to-edge (full width,
+ * justify-start), no gloss/shadow, compact control row — mirroring prod's inline
+ * className overrides on the Button while preserving endpoint minimum targets.
+ * The Button wraps its children in an inner
+ * .a63-Button-label span (data-slot="button-label"); the icon/text/chevron flex
+ * layout therefore lives on that wrapper, not the button root. */
+
+.a63-ConnectedPanel-trigger {
+  --button-radius: 0px;
+  --button-shadow: 0 0 #0000;
+  --button-shadow-active: 0 0 #0000;
+  --button-tint-drop: 0 0 #0000;
+  --button-gloss: none;
+  --button-highlight: none;
+  /* A full-width panel row, not a compact control: the whole row is the target,
+     and the panel's `overflow: hidden` (for its rounded corners) clips the
+     button recipe's hit-area pseudo-element, so the row's own height has to
+     reach the floor. --a63-row-min-size is 44px on touch and equal to
+     --a63-control-min-size on fine pointers, so desktop is unchanged. */
+  --button-height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-row-min-size, var(--a63-control-min-size)),
+    var(--button-content-floor)
+  );
+  /* Matches `sm`, and must be restated: this rule REPLACES the button recipe's
+     own `--button-height`, so without carrying the content floor through, a
+     Button inside a ConnectedPanel would be the one place in the system that
+     can still end up shorter than its own label. */
+  --button-content-lh: var(--typography-xs-line-height);
+  --button-icon-size: var(--a63-control-icon-size-sm);
+  --button-padding-inline: 0;
+  /* prod's withMotion={false}: the trigger stays flat (no press dip). */
+  --button-motion-press: none;
+
+  position: relative;
+  justify-content: flex-start;
+  width: 100%;
+  min-width: 0;
+  padding-inline: var(--a63-space-3);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--a63-text-primary);
+  font-size: var(--a63-control-font-size-sm);
+  text-align: start;
+  transition: background var(--connected-panel-transition-duration, 320ms)
+    var(--connected-panel-transition-ease, ease);
+}
+
+/* The DS Button paints its gloss/reflection on ::after; suppress it so the ghost
+   trigger reads flat against the panel surface. ::before is NOT included: since
+   the button recipe moved its 44px interaction floor onto that pseudo-element,
+   hiding it would silently drop this trigger below the touch target. It paints
+   nothing, so there is nothing to suppress. */
+.a63-ConnectedPanel-trigger::after {
+  display: none;
+}
+
+.a63-ConnectedPanel:not([data-variant='button-group']) > .a63-ConnectedPanel-trigger:hover {
+  background: color-mix(in oklch, var(--a63-surface-control-hover) 70%, transparent);
+}
+
+.a63-ConnectedPanel[data-variant='button-group'][data-open] > .a63-ButtonGroup > [data-button] {
+  --button-state-hover-background: color-mix(
+    in oklch,
+    var(--a63-surface-control-hover) 60%,
+    transparent
+  );
+
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  color: var(--a63-text-secondary);
+}
+
+.a63-ConnectedPanel[data-variant='button-group'][data-open]
+  > .a63-ButtonGroup
+  > [data-button]:hover:not(:disabled):not([data-disabled]) {
+  background-color: color-mix(in oklch, var(--a63-surface-control-hover) 60%, transparent);
+  background-image: none;
+  box-shadow: none;
+  color: var(--a63-text-primary);
+}
+
+.a63-ConnectedPanel[data-variant='button-group'][data-open] > .a63-ButtonGroup > [data-popup-open] {
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  color: var(--a63-text-secondary);
+}
+
+.a63-ConnectedPanel[data-variant='button-group']
+  > .a63-ButtonGroup
+  > [data-button]:active:not(:disabled):not([data-disabled]) {
+  background-color: var(--button-state-hover-background);
+  background-image: none;
+  box-shadow: none;
+  color: var(--a63-text-primary);
+}
+
+.a63-ConnectedPanel-trigger:focus-visible {
+  box-shadow: inset 0 0 0 var(--a63-control-focus-ring-width)
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+}
+
+/* Icon / text / chevron row lives inside the Button's label wrapper. */
+.a63-ConnectedPanel-trigger [data-slot='button-label'] {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--a63-space-2);
+  width: 100%;
+  min-width: 0;
+}
+
+.a63-ConnectedPanel-trigger-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--a63-text-secondary);
+}
+
+.a63-ConnectedPanel[data-variant='button-group']
+  .a63-ConnectedPanel-trigger
+  :is(.a63-ConnectedPanel-trigger-icon, .a63-ConnectedPanel-trigger-label) {
+  color: inherit;
+}
+
+.a63-ConnectedPanel-trigger-icon svg,
+.a63-ConnectedPanel-trigger-chevron svg {
+  width: var(--button-icon-size);
+  height: var(--button-icon-size);
+}
+
+.a63-ConnectedPanel-trigger-text {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  height: 1.25rem;
+  min-width: 0;
+  overflow: hidden;
+  text-align: start;
+  white-space: nowrap;
+}
+
+.a63-ConnectedPanel-trigger-text-inner {
+  position: absolute;
+  inset-inline: 0;
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.a63-ConnectedPanel-trigger-label {
+  color: var(--a63-text-secondary);
+}
+
+.a63-ConnectedPanel-trigger-sep {
+  padding-inline: 0.375rem;
+  color: var(--a63-text-secondary);
+  opacity: 0.6;
+}
+
+.a63-ConnectedPanel-trigger-chevron {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: var(--a63-text-secondary);
+}
+
+/* ── Content ───────────────────────────────────────────────────────────── */
+
+.a63-ConnectedPanel-content {
+  min-width: 0;
+  flex-shrink: 0;
+  overflow: hidden;
+  border-top: 1px solid var(--a63-border-subtle);
+}
+
+.a63-ConnectedPanel-content[data-state='closed'] {
+  border-top-width: 0;
+}
+
+.a63-ConnectedPanel[data-variant='button-group'] > .a63-ConnectedPanel-content {
+  border-top-width: 0;
+}
+
+.a63-ConnectedPanel-content-clip {
+  box-sizing: border-box;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.a63-ConnectedPanel-content-inner {
+  box-sizing: border-box;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.a63-ConnectedPanel-content-inner[data-align='start'] {
+  transform-origin: top left;
+}
+
+.a63-ConnectedPanel-content-inner[data-align='center'] {
+  transform-origin: top;
+}
+
+.a63-ConnectedPanel-content-inner[data-align='end'] {
+  transform-origin: top right;
+}
+
+.a63-ConnectedPanel[data-variant='button-group']
+  > .a63-ConnectedPanel-content
+  > .a63-ConnectedPanel-content-clip
+  > .a63-ConnectedPanel-content-inner {
+  padding-block-start: var(--a63-space-1);
+}
+
+.a63-ConnectedPanel[data-variant='button-group']
+  > .a63-ConnectedPanel-content
+  > .a63-ConnectedPanel-content-clip
+  > .a63-ConnectedPanel-content-inner
+  > .a63-ConnectedPanel-body {
+  border-radius: var(--connected-panel-inner-radius);
+  background-color: var(--a63-surface-page);
+  box-shadow: none;
+}
+
+/* ── Header / Title / Description ──────────────────────────────────────── */
+
+.a63-ConnectedPanel-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-1);
+  min-width: 0;
+  padding: var(--a63-space-3) var(--a63-space-4);
+  overflow: hidden;
+  border-bottom: 1px solid color-mix(in oklch, var(--a63-border-subtle) 70%, transparent);
+}
+
+.a63-ConnectedPanel-title {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--a63-text-primary);
+  font-weight: 500;
+  font-size: var(--a63-control-font-size-sm);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.a63-ConnectedPanel-description {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--a63-text-secondary);
+  font-size: var(--a63-control-font-size-sm);
+}
+
+/* ── Body / Footer ─────────────────────────────────────────────────────── */
+
+.a63-ConnectedPanel-body {
+  min-width: 0;
+  flex-shrink: 0;
+  padding: var(--a63-space-3);
+  overflow: hidden;
+}
+
+.a63-ConnectedPanel-footer {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--a63-space-2);
+  min-width: 0;
+  padding: var(--a63-space-2) var(--a63-space-3);
+  overflow: hidden;
+  border-top: 1px solid color-mix(in oklch, var(--a63-border-subtle) 70%, transparent);
+}

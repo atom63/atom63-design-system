@@ -1,0 +1,86 @@
+/*
+ * Pagination recipe — the page-navigation cluster. Layout-only chrome: the nav
+ * centers a horizontal list of items; interactive controls inherit their look
+ * from the DS Button (outline/ghost). The Prev/Next labels hide on narrow
+ * viewports (prod's `hidden sm:block`); the ellipsis is a fixed square.
+ */
+
+.a63-Pagination {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-inline: auto;
+}
+
+.a63-Pagination-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--a63-space-1, 0.25rem);
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+  scroll-snap-type: inline proximity;
+  touch-action: pan-x;
+}
+.a63-Pagination-content::-webkit-scrollbar {
+  display: none;
+}
+.a63-Pagination-content > * {
+  flex: none;
+  scroll-snap-align: center;
+}
+
+/* Prev/Next: a little internal gap + roomier inline padding than an icon cell. */
+.a63-Pagination-nav-link {
+  gap: var(--a63-space-1, 0.25rem);
+  padding-inline: var(--a63-control-padding-inline-md);
+}
+
+/* Labels appear from the `sm` breakpoint up (prod hidden sm:block). */
+.a63-Pagination-nav-label {
+  display: none;
+}
+@media (min-width: 40rem) {
+  .a63-Pagination-nav-label {
+    display: block;
+  }
+}
+
+.a63-Pagination-ellipsis {
+  /* Content floor — see button.css. Square cell, so the floor has to drive BOTH
+     axes from one value: flooring height alone would quietly turn these into
+     rectangles. */
+  --pagination-size: max(
+    calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size),
+    calc(var(--typography-sm-line-height) + 2 * var(--a63-space-0_5))
+  );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--pagination-size);
+  height: var(--pagination-size);
+}
+
+.a63-Pagination-ellipsis-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.a63-Pagination-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

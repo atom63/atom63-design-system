@@ -1,0 +1,141 @@
+/*
+ * Reverse compat: --a63-* FROM shadcn (opt-in).
+ *
+ * The INVERSE of compat/shadcn.css. For external shadcn apps that DON'T load the
+ * @atom63/styles foundation but render @atom63/ui-react components, this defines
+ * the canonical --a63-* layer in terms of shadcn tokens those apps already
+ * provide (--background/--card/--popover/--primary/…), plus flat defaults for
+ * the tactile archetype tokens the DS foundation would otherwise supply.
+ *
+ * Load this + `@atom63/ui-react/recipes.css` in a shadcn app to render DS
+ * components with a clean, flat, shadcn-matching look. Import via
+ * `@atom63/styles/compat/a63-from-shadcn`; NOT part of the default bundle.
+ */
+
+:root {
+  /* ── Semantic surfaces / text / border (from shadcn) ─────────────────── */
+  --a63-surface-page: var(--background);
+  --a63-surface-panel: var(--card);
+  --a63-surface-overlay: var(--popover);
+  --a63-surface-muted: var(--muted);
+  --a63-surface-control: var(--background);
+  --a63-surface-control-hover: var(--accent);
+  --a63-text-primary: var(--foreground);
+  --a63-text-secondary: var(--muted-foreground);
+  --a63-border-subtle: var(--border);
+  --a63-border-control: var(--input);
+
+  /* ── Action / status ─────────────────────────────────────────────────── */
+  --a63-action-primary: var(--primary);
+  --a63-action-primary-foreground: var(--primary-foreground);
+  --a63-action-primary-hover: color-mix(in oklch, var(--primary) 90%, transparent);
+  --a63-action-danger: var(--destructive);
+  --a63-action-danger-foreground: var(--destructive-foreground, white);
+  --a63-action-danger-hover: color-mix(in oklch, var(--destructive) 90%, transparent);
+  --a63-action-neutral: var(--foreground);
+  --a63-action-neutral-foreground: var(--background);
+  --a63-status-info: var(--info, oklch(0.6 0.14 250));
+  --a63-status-info-foreground: white;
+  --a63-status-success: var(--success, oklch(0.65 0.16 150));
+  --a63-status-success-foreground: white;
+  --a63-status-warning: var(--warning, oklch(0.75 0.15 80));
+  --a63-status-warning-foreground: white;
+
+  --a63-scrim: color-mix(in oklch, black 40%, transparent);
+  --a63-focus-ring: var(--ring);
+
+  /* ── Tactile archetype tokens → FLAT (shadcn has no bevel/gloss system) ── */
+  --a63-control-shadow: 0 0 #0000;
+  --a63-control-shadow-active: 0 0 #0000;
+  --a63-control-shadow-flat: 0 0 #0000;
+  --a63-control-gloss: none;
+  --a63-control-highlight: transparent;
+  --a63-surface-shadow: 0 0 #0000;
+  --a63-track-shadow: 0 0 #0000;
+  --a63-field-shadow: 0 0 #0000;
+  --a63-marker-shadow: 0 0 #0000;
+  --a63-overlay-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --a63-control-focus-ring-color: var(--ring);
+  --a63-control-focus-ring-width: 2px;
+  --a63-control-border-width: 1px;
+
+  /* ── Geometry / type ramp (fixed, standard-control values) ───────────── */
+  --a63-radius-control: var(--radius, 0.5rem);
+  --a63-control-radius: var(--radius, 0.5rem);
+  --a63-control-gap: 0.5rem;
+  --a63-control-font-family: inherit;
+  --a63-control-font-weight: 500;
+  --a63-control-font-size-xs: 0.75rem;
+  --a63-control-font-size-sm: 0.75rem;
+  --a63-control-font-size-md: 0.875rem;
+  --a63-control-font-size-lg: 1rem;
+  --a63-control-font-size-xl: 1.125rem;
+  --a63-control-height-xs: 1.5rem;
+  --a63-control-height-sm: 2rem;
+  --a63-control-height-md: 2.25rem;
+  --a63-control-height-lg: 2.5rem;
+  --a63-control-height-xl: 2.75rem;
+  --a63-control-padding-inline-xs: 0.5rem;
+  --a63-control-padding-inline-sm: 0.625rem;
+  --a63-control-padding-inline-md: 0.75rem;
+  --a63-control-padding-inline-lg: 0.875rem;
+  --a63-control-padding-inline-xl: 1rem;
+  --a63-control-min-size: 1.5rem;
+  --a63-control-min-size-lg: var(--a63-control-min-size);
+  --a63-control-min-size-xl: var(--a63-control-min-size);
+  --a63-control-min-target: 2.25rem;
+  --a63-control-min-target-lg: var(--a63-control-min-target);
+  --a63-control-min-target-xl: var(--a63-control-min-target);
+  --a63-density-scale: 1;
+  --a63-editable-font-size-min: 0px;
+  --a63-safe-area-top: env(safe-area-inset-top, 0px);
+  --a63-safe-area-right: env(safe-area-inset-right, 0px);
+  --a63-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --a63-safe-area-left: env(safe-area-inset-left, 0px);
+  --a63-viewport-height: 100vh;
+
+  --a63-space-unit: 0.25rem;
+  --a63-space-0: 0;
+  --a63-space-1: 0.25rem;
+  --a63-space-2: 0.5rem;
+  --a63-space-3: 0.75rem;
+  --a63-space-4: 1rem;
+  --a63-space-5: 1.25rem;
+  --a63-space-6: 1.5rem;
+
+  /* Brand ramp → derive from --primary so DS brand-tinted bits read as accent. */
+  --a63-brand-500: var(--primary);
+  --a63-brand-50: color-mix(in oklch, var(--primary) 8%, var(--background));
+  --a63-brand-100: color-mix(in oklch, var(--primary) 14%, var(--background));
+  --a63-brand-200: color-mix(in oklch, var(--primary) 26%, var(--background));
+  --a63-brand-300: color-mix(in oklch, var(--primary) 40%, var(--background));
+  --a63-brand-400: color-mix(in oklch, var(--primary) 68%, var(--background));
+  --a63-brand-600: color-mix(in oklch, var(--primary) 88%, black);
+  --a63-brand-700: color-mix(in oklch, var(--primary) 74%, black);
+  --a63-brand-800: color-mix(in oklch, var(--primary) 60%, black);
+  --a63-brand-900: color-mix(in oklch, var(--primary) 46%, black);
+  --a63-brand-950: color-mix(in oklch, var(--primary) 34%, black);
+}
+
+@media (pointer: coarse) {
+  :root {
+    --a63-control-min-size: 2rem;
+    --a63-control-min-size-lg: var(--a63-control-min-size);
+    --a63-control-min-size-xl: var(--a63-control-min-size);
+    --a63-control-min-target: 2.75rem;
+    --a63-control-min-target-lg: 3rem;
+    --a63-control-min-target-xl: 3.25rem;
+  }
+}
+
+@supports (height: 100dvh) {
+  :root {
+    --a63-viewport-height: 100dvh;
+  }
+}
+
+@media (max-width: 40rem) {
+  :root {
+    --a63-editable-font-size-min: 1rem;
+  }
+}

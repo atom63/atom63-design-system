@@ -1,0 +1,100 @@
+/*
+ * Segment contract — the SELECTABLE / GROUPED action-control archetype.
+ *
+ * Covers the controls that present a SET of options where a resting cell flips to
+ * a SELECTED cell: Toggle, ToggleGroup, SegmentedControl, Tabs, and other option
+ * / group-action rows. These are NOT single call-to-action buttons (that is the
+ * `control` archetype) — so they get their OWN namespace and never borrow the
+ * Button's control chrome. This is the token home for "secondary action controls."
+ *
+ * ── TWO authored tonal styles for the SELECTED cell ────────────────────────
+ *   1. neutral (default) — a quiet neutral fill (the segmented-control default).
+ *   2. primary           — the brand-accent fill (radio-like emphasis / a
+ *                          highlighted current selection).
+ *   The recipe picks one via a tone flag, e.g. [data-tone='primary'].
+ *   The RESTING + HOVER treatment is shared by both tones — only the selected
+ *   cell differs between neutral and primary.
+ *
+ * ── AXIS TRAP (learned on Input/Switch — see selection.css) ────────────────
+ *   Tokens whose value references mode/theme/brand semantics — every COLOUR here
+ *   (the fills + foregrounds, e.g. --a63-action-neutral is mode-split light/dark,
+ *   --a63-action-primary follows the brand axis) — must NOT be declared at :root.
+ *   A var(--a63-action-*) resolved at :root freezes to the root's mode/theme and
+ *   inherits that frozen value into .dark / [data-a63-theme] subtrees.
+ *   So: the COLOUR hooks are consumed at the recipe USE-SITE with the live-semantic
+ *   fallback shown in the API block below, and a THEME overrides them under its
+ *   own [data-a63-theme='…'] scope (never :root). Only axis-INDEPENDENT geometry
+ *   + treatment defaults are declared at :root here.
+ */
+
+:root {
+  /* ── Geometry (axis-independent, safe at :root) ──────────────────────── */
+  --a63-segment-border-width: var(--a63-control-border-width);
+  --a63-segment-gap: 0; /* welded by default; a gapped variant overrides */
+
+  /*
+   * RADIUS is read at the recipe USE-SITE, NOT declared here. It's multiplier-
+   * dependent (--radius-md/-sm), so a :root declaration would freeze to the root
+   * multiplier and ignore the radius axis (the same trap fixed in menu.css):
+   *   bar / outer cell -> var(--a63-segment-radius, var(--radius-md))
+   *   inset selected   -> var(--a63-segment-selected-radius, var(--radius-sm))
+   * Grouped/segmented controls stay TIGHTER than a standalone control pill (they
+   * do NOT read --a63-control-radius, which a theme can inflate to a pill).
+   *
+   * TREATMENT (track/selected gloss + shadow) is likewise read at the use-site,
+   * bridging to the control archetype until a theme/Figma sets a segment value:
+   *   track    -> var(--a63-segment-track-gloss,    var(--a63-control-gloss))
+   *               var(--a63-segment-track-shadow,   var(--a63-control-shadow))
+   *   selected -> var(--a63-segment-selected-gloss, var(--a63-control-gloss))
+   *               var(--a63-segment-selected-shadow,var(--a63-control-shadow))
+   * A theme/Figma overrides any of these under [data-a63-theme='…'] to give
+   * segments their OWN character instead of borrowing the button's.
+   */
+}
+
+/*
+ * ── COLOUR API ─────────────────────────────────────────────────────────────
+ * Consume each at the recipe USE-SITE with the live-semantic fallback shown, e.g.
+ *   background: var(--a63-segment-selected-background, var(--a63-action-neutral));
+ * Themes override any of these under [data-a63-theme='…'] (a non-:root scope, so
+ * the value resolves in context, not frozen). Do NOT declare these at :root.
+ *
+ *   Track (the grouped container / bar):
+ *     --a63-segment-track-background      → transparent
+ *     --a63-segment-track-border          → var(--a63-border-subtle)
+ *     --a63-segment-seam                  → var(--a63-border-subtle)   (divider between cells)
+ *
+ *   Resting cell (unselected) — shared by BOTH tones:
+ *     --a63-segment-foreground            → var(--a63-text-secondary)
+ *     --a63-segment-background            → transparent (or a muted fill)
+ *     --a63-segment-gloss                 → none  (aqua: soft mid-line gel + card→muted)
+ *     --a63-segment-hover-background      → var(--a63-surface-control-hover)
+ *     --a63-segment-hover-foreground      → var(--a63-text-primary)
+ *
+ *   Selected cell — NEUTRAL tone (default):
+ *     --a63-segment-selected-background   → var(--a63-action-neutral)
+ *     --a63-segment-selected-foreground   → var(--a63-action-neutral-foreground)
+ *     --a63-segment-selected-gloss        → var(--a63-control-gloss)
+ *     --a63-segment-selected-shadow       → var(--a63-control-shadow)
+ *       (aqua Toggle: inset pressed-in; SegmentedControl indicator uses control shadow)
+ *
+ *   Selected cell — PRIMARY / accent tone:
+ *     --a63-segment-primary-background    → var(--a63-action-primary)
+ *     --a63-segment-primary-foreground    → var(--a63-action-primary-foreground)
+ *     --a63-segment-primary-shadow        → (optional deeper inset; falls back to selected)
+ *
+ *   Disabled foreground fade (matches Button — foreground only, fill intact):
+ *     --a63-segment-disabled-opacity      → 0.56 (aqua ToggleGroup: 0.4 per Figma)
+ *
+ * ── TRANSITIONAL FALLBACKS (Toggle/ToggleGroup wired 2026-07-21) ───────────────
+ * The fallbacks ABOVE are the target intent. To land the Toggle/ToggleGroup
+ * rewire value-preservingly, the recipes currently fall back to the PRE-EXISTING
+ * toggle values (the tokens are unset, so these apply until a theme/Figma sets a
+ * --a63-segment-* value). Differences to retune in Figma:
+ *   - resting foreground: recipe falls back to --a63-text-primary (intent above =
+ *     --a63-text-secondary, i.e. quieter unselected cells).
+ *   - NEUTRAL selected: standalone Toggle falls back to --a63-surface-muted (the
+ *     quiet pressed pill), while a welded ToggleGroup cell falls back to
+ *     --a63-action-neutral (the loud inverted segmented-cell). Same token, two
+ *     use-site fallbacks — Figma decides whether to unify or split (muted vs loud).
+ */

@@ -1,0 +1,271 @@
+/*
+ * Calendar recipe — the DS port of the react-day-picker DayPicker wrapper. rdp's
+ * classNames are fully replaced by these a63-Calendar-* classes (so rdp's base
+ * style.css is NOT imported — DS convention: no side-effect CSS). Layout mirrors
+ * the prod Tailwind: a fixed --cell-size grid, a centered month caption with
+ * absolute prev/next nav, muted weekdays, a brand-primary selected fill, a today
+ * dot, and connected range ends. Every colour/space/radius reads --a63-* tokens.
+ */
+
+.a63-Calendar {
+  --cell-size: max(
+    calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+
+  width: fit-content;
+  color: var(--a63-text-primary);
+  font-family: var(--a63-control-font-family);
+}
+
+/* ── Month layout ─────────────────────────────────────────────────────────── */
+.a63-Calendar-months {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-2);
+}
+@media (min-width: 40rem) {
+  .a63-Calendar-months {
+    flex-direction: row;
+  }
+}
+
+.a63-Calendar-month {
+  width: 100%;
+}
+
+.a63-Calendar-month-caption {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--cell-size);
+  margin-inline: var(--cell-size);
+  margin-bottom: var(--a63-space-1);
+  padding-inline: var(--a63-space-1);
+}
+
+.a63-Calendar-caption-label {
+  display: flex;
+  align-items: center;
+  gap: var(--a63-space-2);
+  height: 100%;
+  font-size: var(--a63-control-font-size-sm);
+  font-weight: 500;
+}
+
+/* ── Nav (absolute prev/next over the caption row) ────────────────────────── */
+.a63-Calendar-nav {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Nav buttons mimic the DS Button (neutral, ghost-ish): a small square control
+   with the control radius, hover surface, and a token focus ring. */
+.a63-Calendar-nav-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  padding: 0;
+  border: var(--a63-control-border-width) solid transparent;
+  border-radius: var(--a63-control-radius);
+  appearance: none;
+  background-color: transparent;
+  color: var(--a63-text-primary);
+  cursor: pointer;
+  outline: none;
+  transition:
+    background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-Calendar-nav-button:not(:disabled):hover {
+  background-color: var(--a63-surface-control-hover);
+}
+.a63-Calendar-nav-button:disabled {
+  pointer-events: none;
+  opacity: 0.64;
+}
+.a63-Calendar-nav-button:focus-visible {
+  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+}
+
+.a63-Calendar-chevron {
+  width: var(--a63-control-icon-size-md);
+  height: var(--a63-control-icon-size-md);
+  flex-shrink: 0;
+  pointer-events: none;
+}
+:where([dir='rtl']) .a63-Calendar-nav-button .a63-Calendar-chevron {
+  transform: rotate(180deg);
+}
+
+/* ── Caption dropdowns (captionLayout="dropdown") ─────────────────────────── */
+.a63-Calendar-dropdowns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--a63-space-1);
+  width: 100%;
+  height: var(--cell-size);
+  font-size: var(--a63-control-font-size-sm);
+}
+.a63-Calendar-dropdowns span {
+  font-weight: 500;
+}
+
+.a63-Calendar-dropdown-root {
+  /* Content floor — see button.css. */
+  --calendar-dropdown-floor: calc(var(--typography-xs-line-height) + 2 * var(--a63-space-0_5));
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size),
+    var(--calendar-dropdown-floor)
+  );
+  padding-inline: calc(var(--a63-space-3) - 1px);
+  border: var(--a63-control-border-width) solid var(--a63-border-control);
+  border-radius: var(--a63-control-radius);
+}
+.a63-Calendar-dropdown-root:has(:focus) {
+  border-color: var(--a63-focus-ring);
+  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+}
+.a63-Calendar-dropdown-root .a63-Calendar-chevron {
+  margin-inline-end: -0.25rem;
+}
+
+/* The native select overlays the styled label transparently. */
+.a63-Calendar-dropdown {
+  position: absolute;
+  inset: 0;
+  background-color: var(--a63-surface-overlay);
+  opacity: 0;
+}
+
+/* ── Weekdays + grid ──────────────────────────────────────────────────────── */
+.a63-Calendar-weekday,
+.a63-Calendar-week-number {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  padding: 0;
+  font-size: var(--a63-control-font-size-xs);
+  font-weight: 500;
+  color: color-mix(in oklch, var(--a63-text-secondary) 72%, transparent);
+}
+
+.a63-Calendar-day {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  padding: 1px 0;
+  font-size: var(--a63-control-font-size-sm);
+  text-align: center;
+}
+
+/* ── Day button — the interactive cell ────────────────────────────────────── */
+.a63-Calendar-day-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border: 0;
+  border-radius: var(--a63-control-radius);
+  appearance: none;
+  background-color: transparent;
+  color: var(--a63-text-primary);
+  cursor: pointer;
+  font: inherit;
+  outline: none;
+  transition:
+    color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    border-radius var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+/* Hover on any non-selected day. */
+.a63-Calendar-day:not([data-selected]) .a63-Calendar-day-button:hover {
+  background-color: var(--a63-surface-control-hover);
+}
+
+/* Selected fill = brand primary. */
+.a63-Calendar-day[data-selected] .a63-Calendar-day-button {
+  background-color: var(--a63-action-primary);
+  color: var(--a63-action-primary-foreground);
+}
+
+/* Range: connected ends, tinted middle. */
+.a63-Calendar-day.range-middle .a63-Calendar-day-button {
+  border-radius: 0;
+  background-color: var(--a63-surface-control-hover);
+  color: var(--a63-text-primary);
+}
+.a63-Calendar-day.range-start:not(.range-end) .a63-Calendar-day-button {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+.a63-Calendar-day.range-end:not(.range-start) .a63-Calendar-day-button {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+/* Outside + disabled days read as muted; disabled dates strike through. */
+.a63-Calendar-outside .a63-Calendar-day-button,
+.a63-Calendar-day[data-disabled] .a63-Calendar-day-button {
+  color: color-mix(in oklch, var(--a63-text-secondary) 72%, transparent);
+}
+.a63-Calendar-day[data-selected].a63-Calendar-outside .a63-Calendar-day-button {
+  color: var(--a63-action-primary-foreground);
+}
+.a63-Calendar-day[data-disabled] .a63-Calendar-day-button {
+  pointer-events: none;
+  text-decoration: line-through;
+}
+
+.a63-Calendar-day-button:focus-visible {
+  z-index: 1;
+  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+    color-mix(in oklch, var(--a63-focus-ring) 50%, transparent);
+}
+
+/* ── Today — a small dot under the number ─────────────────────────────────── */
+.a63-Calendar-today > .a63-Calendar-day-button::after {
+  content: '';
+  position: absolute;
+  bottom: 0.25rem;
+  left: 50%;
+  z-index: 1;
+  width: 3px;
+  height: 3px;
+  translate: -50% 0;
+  border-radius: 9999px;
+  background-color: var(--a63-action-primary);
+  pointer-events: none;
+  transition: background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-Calendar-today[data-selected]:not(.range-middle) > .a63-Calendar-day-button::after {
+  background-color: var(--a63-surface-page);
+}
+.a63-Calendar-today[data-disabled] > .a63-Calendar-day-button::after {
+  background-color: color-mix(in oklch, var(--a63-text-primary) 30%, transparent);
+}
+
+/* rdp's utility for hidden filler cells. */
+.a63-Calendar-hidden {
+  visibility: hidden;
+}

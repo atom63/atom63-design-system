@@ -1,0 +1,24 @@
+/*
+ * Font personalization axis.
+ *
+ * --a63-font-app is the active application font stack; a consumer applies it on
+ * the app root (e.g. `font-family: var(--a63-font-app)` on body). [data-a63-font]
+ * remaps it to one of the four foundation family stacks (foundation/fonts.css).
+ * Defaults to the sans stack.
+ */
+:root {
+  --a63-font-app: var(--font-family-sans);
+}
+
+[data-a63-font='sans'] {
+  --a63-font-app: var(--font-family-sans);
+}
+[data-a63-font='serif'] {
+  --a63-font-app: var(--font-family-serif);
+}
+[data-a63-font='mono'] {
+  --a63-font-app: var(--font-family-mono);
+}
+[data-a63-font='pixel'] {
+  --a63-font-app: var(--font-family-pixel);
+}

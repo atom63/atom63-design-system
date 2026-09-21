@@ -1,0 +1,144 @@
+/*
+ * ScrollableList recipe — a horizontal scroll container with edge chevron
+ * controls. The frame stacks the ScrollArea and two absolutely-positioned
+ * chevron controls; each control fades via opacity keyed on a data-visible attr
+ * (toggled from the canScroll* state) using the shared --a63-control-feedback-*
+ * timing — no motion library. The chevron itself is a DS Button (secondary,
+ * icon-lg) made round at the use-site. Local --scrollable-list-* vars only.
+ */
+
+.a63-ScrollableList {
+  --scrollable-list-gap: 0.5rem;
+  --scrollable-list-inset: 0.5rem;
+  /* Offset chevrons from the frame edge. Full-bleed scrollers set this to the
+     grid-rail inset so controls stay in-column while the track spans the viewport. */
+  --scrollable-list-control-inset: 0px;
+  /* Inline pad on the flex track (not the scroll root) so first/last items
+     align with a narrower reading column without shrinking the viewport. */
+  --scrollable-list-content-pad: 0px;
+}
+
+.a63-ScrollableList-frame {
+  position: relative;
+  isolation: isolate;
+}
+
+/* Frame height comes from the row; don't let % height collapse the viewport. */
+.a63-ScrollableList-frame > .a63-ScrollArea {
+  height: auto;
+}
+
+.a63-ScrollableList-content {
+  display: flex;
+  gap: var(--scrollable-list-gap);
+  /* Grow to the items (plus optional content-pad) so the ScrollArea gets a
+     real overflow width. A stretched `width: 100%` flex row with padding can
+     clip children without expanding scrollWidth — scrolling appears "dead". */
+  width: max-content;
+  min-width: 100%;
+  padding-inline: var(--scrollable-list-content-pad);
+  box-sizing: border-box;
+}
+
+/* ── Drag-to-scroll ────────────────────────────────────────────────────── */
+/* `draggable` grabs the viewport; while a drag is active the viewport gets a
+   data-dragging flag (set by the pointer handlers) → grabbing cursor + no text
+   selection so the pull reads clean. */
+.a63-ScrollableList[data-draggable] [data-slot='scroll-area-viewport'] {
+  cursor: grab;
+}
+.a63-ScrollableList[data-disabled] [data-slot='scroll-area-viewport'] {
+  cursor: default;
+}
+.a63-ScrollableList[data-draggable] [data-slot='scroll-area-viewport'][data-dragging='true'] {
+  cursor: grabbing;
+  user-select: none;
+}
+
+/* Wrap layout (past breakpoint) reuses the content class with wrapping. */
+.a63-ScrollableList > .a63-ScrollableList-content {
+  flex-wrap: wrap;
+}
+
+/* ── Edge chevron controls ─────────────────────────────────────────────── */
+
+.a63-ScrollableList-control {
+  position: absolute;
+  top: 50%;
+  z-index: var(--z-layer-base, 1);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-50%);
+  transition: opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-ScrollableList-control[data-side='left'] {
+  left: var(--scrollable-list-control-inset);
+  justify-content: flex-start;
+  padding-inline-start: var(--scrollable-list-inset);
+}
+
+.a63-ScrollableList-control[data-side='right'] {
+  right: var(--scrollable-list-control-inset);
+  justify-content: flex-end;
+  padding-inline-end: var(--scrollable-list-inset);
+}
+
+.a63-ScrollableList-control[data-visible] {
+  opacity: 1;
+}
+
+/* A control that isn't visible must never be clickable — the DS Button inside
+   keeps pointer-events:auto, so gate interaction on the wrapper's visible attr
+   (prod mounts no control at all when disabled; this backstops that invariant). */
+.a63-ScrollableList-control:not([data-visible]) {
+  pointer-events: none;
+}
+
+/* Co-class (`.a63-Button.a63-ScrollableList-controlButton`, 0,2,0) so the
+   `--button-*` overrides below beat the variant selector
+   `.a63-Button[data-variant='secondary']` (also 0,2,0) — ties on specificity,
+   wins on source order since this file imports after button.css in the same
+   @layer. A single-class selector here loses and the glass never applies. */
+.a63-Button.a63-ScrollableList-controlButton {
+  pointer-events: auto;
+  /* Round the control into a circle (its icon-lg size already picks up the
+     shape-fitting Aqua gloss from button.css). */
+  border-radius: var(--a63-overlay-radius, var(--radius-full, 9999px));
+  /* Frosted-glass SURFACE (macOS/Aqua vibrancy). The plain `secondary` chip
+     blended because it was translucent WITHOUT enough blur/edge to define it;
+     this earns its figure/ground: blur+saturate frosts busy content behind it
+     into a calm backdrop, a hairline ring + drop shadow crisp the edge. Tune the
+     two mix percentages up toward opaque if it reads weak on the darkest tiles.
+     Driven through the DS Button's own `--button-*` levers so hover/active stay
+     glassy without a `.a63-Button:hover` specificity fight. */
+  --button-background: color-mix(in oklch, var(--a63-surface-overlay) 70%, transparent);
+  --button-border-color: var(--a63-border-subtle);
+  --button-state-hover-background: color-mix(in oklch, var(--a63-surface-overlay) 84%, transparent);
+  --button-state-hover-border-color: var(--a63-border-subtle);
+  /* Keep the ring crisp on the round edge rather than bleeding under it. */
+  background-clip: padding-box;
+  /* All-literal layers: a `none`-valued contract token (modern) as a shadow
+     layer is invalid and would drop the whole shadow. The inset rim follows the
+     border-radius, so it hugs the circle. */
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.14),
+    0 1px 2px rgb(0 0 0 / 0.08),
+    0 6px 18px rgb(0 0 0 / 0.18);
+  /* Literal blur + saturate for the frost (the --a63-overlay-backdrop handle
+     defaults to none, which would drop the glass entirely). */
+  backdrop-filter: blur(14px) saturate(1.6);
+}
+
+.a63-ScrollableList-controlIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-ScrollableList-control {
+    transition: none;
+  }
+}

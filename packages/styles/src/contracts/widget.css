@@ -1,0 +1,196 @@
+/*
+ * Widget contract — a persistent floating surface hosted on a desktop, card
+ * flow, or agent surface. Defaults compose the overlay archetype; widget kinds
+ * can specialize the material without replacing surface anatomy.
+ */
+
+:root {
+  --a63-widget-background-color: color-mix(in oklch, var(--a63-surface-overlay) 82%, transparent);
+  --a63-widget-background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
+  --a63-widget-background-blend: normal, var(--a63-overlay-texture-blend);
+  --a63-widget-foreground: var(--a63-text-primary);
+  --a63-widget-border-color: var(--a63-border-subtle);
+  --a63-widget-border-style: var(--a63-overlay-border-style);
+  /* No border by default: the rim IS the tile's edge. A hairline on the face
+     inside a 4px rim reads as a second concentric ring. */
+  --a63-widget-border-width: 0px;
+  --a63-widget-radius: var(--a63-overlay-radius, var(--radius-xl));
+  /* Flat by default: the 4px rim already separates the tile from the page, so a
+     drop shadow on top of it reads as a second edge rather than as height. The
+     shadow stays available as a STATE — sticky-note focus and drag both raise
+     it — and each skin still opts into its own resting elevation (retro's hard
+     offset, terminal's phosphor glow, aqua's gel drop) on its theme scope.
+     `none` is safe as the sole value here; it would only be invalid if composed
+     into a comma-separated list. */
+  --a63-widget-shadow: none;
+  --a63-widget-backdrop: var(--a63-overlay-backdrop);
+
+  /* Rim = the padded outer shell between the tile edge and the card face. A
+     padded rim can carry a gradient across the whole frame; a box-shadow inset
+     cannot. Themes fill it via --a63-widget-rim-image. */
+  --a63-widget-rim-width: 4px;
+  --a63-widget-rim-color: var(--a63-border-subtle);
+  --a63-widget-rim-image: none;
+  --a63-widget-rim-backdrop: none;
+  /* Per-side rim color. The rim is a border, so this mitres around the corner
+     arc at ANY radius — which is how a bevel theme lights top+left and darkens
+     bottom+right without breaking when the radius axis is turned up. Transparent
+     by default so gradient rims show through from --a63-widget-rim-image. */
+  --a63-widget-rim-border-color: transparent;
+
+  /* Weather defaults preserve live condition color in the neutral theme. */
+  --a63-weather-background-color: transparent;
+  /* --a63-weather-background-image is intentionally optional. When a theme
+     leaves it unset, the weather element resolves its local condition image. */
+  --a63-weather-background-blend: normal;
+  --a63-weather-foreground: white;
+  --a63-weather-muted-foreground: rgb(255 255 255 / 0.7);
+  --a63-weather-divider-color: rgb(255 255 255 / 0.2);
+  --a63-weather-text-shadow: none;
+  --a63-weather-border-color: transparent;
+  /* No --a63-weather-shadow knob: weather specializes the FACE only. Outer
+     chrome (rim + drop) stays on the shared widget system so every tile reads as
+     one desktop — see the weather case in widget-chrome-signature.browser.test. */
+  --a63-weather-backdrop: none;
+  --a63-weather-condition-mode-color: transparent;
+  --a63-weather-condition-color-strength: 100%;
+}
+
+/*
+ * Raised media sitting ON a widget face — poster-fan prints, stacked cards.
+ *
+ * Deliberately heavier than --a63-widget-shadow: the tile floats above the
+ * desktop, but this is print stock resting on the tile, so it needs a near
+ * contact throw plus a far soft one to read as a physical object rather than a
+ * second pane. `-raised` is the focused/centered print; the base token is the
+ * resting one.
+ *
+ * Each stack carries its own hairline rim and specular inset, so the consumer
+ * paints ONE box-shadow. A separate `ring` utility is composed into box-shadow
+ * as well, so it would clobber the whole stack rather than sit beside it.
+ *
+ * Mode-split like semantics.css: the throw is far stronger on a dark face, and
+ * the hairline rim flips from a white specular edge to a dark hairline.
+ */
+:root,
+.light,
+[data-a63-mode='light'] {
+  --a63-widget-media-shadow:
+    0 0 0 1px color-mix(in oklch, black 8%, transparent),
+    0 1px 0 color-mix(in oklch, white 45%, transparent) inset,
+    0 10px 16px -10px color-mix(in oklch, black 22%, transparent),
+    0 22px 34px -16px color-mix(in oklch, black 26%, transparent);
+  --a63-widget-media-shadow-raised:
+    0 0 0 1px color-mix(in oklch, black 12%, transparent),
+    0 1px 0 color-mix(in oklch, white 60%, transparent) inset,
+    0 1px 1px color-mix(in oklch, black 12%, transparent),
+    0 14px 22px -10px color-mix(in oklch, black 26%, transparent),
+    0 32px 48px -18px color-mix(in oklch, black 30%, transparent);
+}
+
+:is(.dark, [data-a63-mode='dark']) {
+  --a63-widget-media-shadow:
+    0 0 0 1px color-mix(in oklch, white 10%, transparent),
+    0 1px 0 color-mix(in oklch, white 8%, transparent) inset,
+    0 10px 16px -10px color-mix(in oklch, black 50%, transparent),
+    0 22px 34px -16px color-mix(in oklch, black 62%, transparent);
+  --a63-widget-media-shadow-raised:
+    0 0 0 1px color-mix(in oklch, white 16%, transparent),
+    0 1px 0 color-mix(in oklch, white 12%, transparent) inset,
+    0 1px 1px color-mix(in oklch, black 35%, transparent),
+    0 14px 22px -10px color-mix(in oklch, black 58%, transparent),
+    0 32px 48px -18px color-mix(in oklch, black 72%, transparent);
+}
+
+/*
+ * Weather FACE material — shared by the weather tile and by Location when it
+ * carries a condition tone. Outer chrome (rim + drop shadow) stays on the
+ * shared widget defaults so every tile reads as one system; only the face
+ * fill / foreground specialize.
+ */
+[data-widget-kind='weather'],
+[data-widget-kind='location'][data-weather-tone] {
+  --a63-widget-background-color: var(--a63-weather-background-color);
+  --a63-widget-background-image: var(
+    --a63-weather-background-image,
+    var(--a63-weather-condition-background-image)
+  );
+  --a63-widget-background-blend: var(--a63-weather-background-blend);
+  --a63-widget-foreground: var(--a63-weather-foreground);
+  --a63-widget-backdrop: var(--a63-weather-backdrop);
+  --a63-weather-condition-background-image: linear-gradient(
+    135deg,
+    color-mix(
+      in oklch,
+      var(--a63-weather-condition-start) var(--a63-weather-condition-color-strength),
+      var(--a63-weather-condition-mode-color)
+    ),
+    color-mix(
+      in oklch,
+      var(--a63-weather-condition-end) var(--a63-weather-condition-color-strength),
+      var(--a63-weather-condition-mode-color)
+    )
+  );
+}
+
+[data-weather-tone='clear-day'] {
+  --a63-weather-condition-start: var(--color-sky-400);
+  --a63-weather-condition-end: var(--color-blue-500);
+}
+
+[data-weather-tone='clear-night'] {
+  --a63-weather-condition-start: var(--color-indigo-800);
+  --a63-weather-condition-end: var(--color-slate-800);
+}
+
+[data-weather-tone='partly-cloudy-day'] {
+  --a63-weather-condition-start: var(--color-sky-300);
+  --a63-weather-condition-end: var(--color-blue-400);
+}
+
+[data-weather-tone='partly-cloudy-night'] {
+  --a63-weather-condition-start: var(--color-indigo-700);
+  --a63-weather-condition-end: var(--color-slate-700);
+}
+
+[data-weather-tone='overcast'] {
+  --a63-weather-condition-start: var(--color-slate-400);
+  --a63-weather-condition-end: var(--color-slate-500);
+}
+
+[data-weather-tone='fog'] {
+  --a63-weather-condition-start: var(--color-gray-400);
+  --a63-weather-condition-end: var(--color-gray-500);
+}
+
+[data-weather-tone='rain'] {
+  --a63-weather-condition-start: var(--color-slate-500);
+  --a63-weather-condition-end: var(--color-blue-600);
+}
+
+[data-weather-tone='snow'] {
+  --a63-weather-condition-start: var(--color-slate-300);
+  --a63-weather-condition-end: var(--color-blue-300);
+}
+
+[data-weather-tone='storm'] {
+  --a63-weather-condition-start: var(--color-slate-600);
+  --a63-weather-condition-end: var(--color-slate-800);
+}
+
+:where(.light, [data-a63-mode='light']) [data-weather-tone] {
+  --a63-weather-condition-mode-color: white;
+  --a63-weather-condition-color-strength: 82%;
+}
+
+:where(.dark, [data-a63-mode='dark']) [data-weather-tone] {
+  --a63-weather-condition-mode-color: black;
+  --a63-weather-condition-color-strength: 88%;
+}
+
+/* Sticky note focus: lift the shared rim shadow while editing. The variable
+   lives on the shell (where box-shadow is painted), so it must be set there —
+   a face-only className cannot reach it. */
+[data-widget-kind='sticky-note'][data-focused] {
+  --a63-widget-shadow: var(--a63-overlay-drag-shadow);
+}

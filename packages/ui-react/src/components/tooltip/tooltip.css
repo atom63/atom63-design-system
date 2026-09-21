@@ -1,0 +1,133 @@
+/*
+ * Tooltip recipe — the OVERLAY archetype (a hover/focus-activated label popup),
+ * a consumer of the overlay contract alongside the Select popup + HoverCard. Its
+ * elevation reads the --a63-overlay-shadow lever; bg (--a63-surface-overlay),
+ * border (--a63-border-subtle), radius (--radius-md), stacking (--z-layer-tooltip
+ * → --z-layer-popover) and entrance motion (--a63-control-feedback-*) resolve
+ * from semantics/foundation at the use-site. No new --a63-* tokens.
+ *
+ * Positioner + viewport keep prod @atom63/ui handle behavior: sized to floating
+ * vars, animated reposition between adjacent triggers, and previous/current
+ * content crossfade when TooltipCreateHandle swaps labels.
+ */
+
+.a63-Tooltip-positioner {
+  z-index: var(--z-layer-tooltip, var(--z-layer-popover, 999));
+  width: var(--positioner-width);
+  max-width: var(--available-width);
+  height: var(--positioner-height);
+  transition:
+    top var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    left var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    right var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    bottom var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-Tooltip-positioner[data-instant] {
+  transition: none;
+}
+
+[data-slot='tooltip-trigger'] {
+  touch-action: manipulation;
+}
+
+.a63-Tooltip-popup {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  width: var(--popup-width, auto);
+  max-width: min(
+    18rem,
+    var(--available-width),
+    calc(
+      100dvw - var(--a63-safe-area-left, 0px) - var(--a63-safe-area-right, 0px) - 2 *
+        var(--a63-space-4)
+    )
+  );
+  height: var(--popup-height, auto);
+  border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
+  border-radius: var(--a63-overlay-radius, var(--radius-md));
+  background-color: var(--a63-surface-overlay);
+  background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
+  background-clip: padding-box;
+  background-blend-mode: normal, var(--a63-overlay-texture-blend);
+  backdrop-filter: var(--a63-overlay-backdrop);
+  box-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow);
+  color: var(--a63-text-primary);
+  font-family: var(--a63-control-font-family);
+  font-size: var(--a63-control-font-size-sm);
+  line-height: 1.35;
+  text-align: start;
+  text-wrap: balance;
+  transform-origin: var(--transform-origin);
+  transition:
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    width var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    height var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-Tooltip-popup[data-starting-style],
+.a63-Tooltip-popup[data-ending-style] {
+  opacity: 0;
+  transform: scale(0.98);
+}
+
+.a63-Tooltip-popup[data-instant] {
+  transition: none;
+}
+
+.a63-Tooltip-viewport {
+  --a63-tooltip-viewport-inline-padding: var(--a63-space-2);
+
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding-block: var(--a63-space-unit);
+  padding-inline: var(--a63-tooltip-viewport-inline-padding);
+  overflow: clip;
+  overflow-wrap: anywhere;
+}
+
+.a63-Tooltip-viewport[data-instant] {
+  transition: none;
+}
+
+/* Handle swaps: keep outgoing/incoming label widths aligned while crossfading. */
+.a63-Tooltip-viewport [data-previous],
+.a63-Tooltip-viewport [data-current] {
+  width: calc(
+    var(--popup-width) - 2 * var(--a63-tooltip-viewport-inline-padding) -
+      var(--a63-overlay-border-width) - var(--a63-overlay-border-width)
+  );
+  opacity: 1;
+  transition: opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-Tooltip-viewport [data-previous] {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.a63-Tooltip-viewport [data-current][data-starting-style],
+.a63-Tooltip-viewport [data-current][data-ending-style],
+.a63-Tooltip-viewport [data-previous][data-starting-style],
+.a63-Tooltip-viewport [data-previous][data-ending-style] {
+  opacity: 0;
+}
+
+.a63-Tooltip-viewport p {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Tooltip-positioner,
+  .a63-Tooltip-popup,
+  .a63-Tooltip-viewport [data-previous],
+  .a63-Tooltip-viewport [data-current] {
+    transition: none;
+  }
+}
