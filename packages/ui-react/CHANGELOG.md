@@ -1,5 +1,24 @@
 # @atom63/ui-react
 
+## 0.2.0-beta.0
+
+### Minor Changes
+
+- [`0b6b2ac`](https://github.com/atom63/atom63-design-system/commit/0b6b2ac97f618e6c42d2e9aef7f400b7e2aa85c8) Thanks [@atom63](https://github.com/atom63)! - Prepare the first-wave Atom63 design-system packages for a coordinated public
+  beta. Expose the CSS foundation and renderer contracts, publish the React
+  runtime with `lucide-react` defaults instead of a hard `@atom63/icons`
+  dependency, and document the tiered support policy for the broad React root.
+
+  This Changeset is release-preparation metadata only. Exact prerelease versions
+  must be reviewed in a final Changesets dry-run before versioning, and the first
+  publication must use the npm `beta` dist-tag.
+
+### Patch Changes
+
+- Updated dependencies [[`0b6b2ac`](https://github.com/atom63/atom63-design-system/commit/0b6b2ac97f618e6c42d2e9aef7f400b7e2aa85c8)]:
+  - @atom63/styles@0.1.0-beta.0
+  - @atom63/ui-foundation@0.1.1-beta.0
+
 ## 0.1.1
 
 ### Patch Changes

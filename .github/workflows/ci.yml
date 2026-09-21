@@ -61,4 +61,10 @@ jobs:
         run: pnpm --filter @atom63/ui-react test
 
       - name: Check Changesets status
-        run: pnpm changeset status --verbose
+        run: |
+          if [ -f .changeset/pre.json ]; then
+            echo "Prerelease version commit detected; pending changeset status is not expected."
+            cat .changeset/pre.json
+          else
+            pnpm changeset status --verbose
+          fi
