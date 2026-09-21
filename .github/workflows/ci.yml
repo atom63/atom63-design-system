@@ -45,6 +45,9 @@ jobs:
       - name: Build the Vite example
         run: pnpm build:example:vite-basic
 
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+
       - name: Test styles
         run: pnpm --filter @atom63/styles test
 
