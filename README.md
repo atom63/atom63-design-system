@@ -60,9 +60,9 @@ pnpm changeset status --verbose
 
 ## Repository status
 
-This repository is a local-only extraction. It has no Git remote, and no versioning,
-publishing, or GitHub repository creation is authorized. See
-[the extracted-repository status](./docs/design-system/extracted-repo-status.md) for
-the current boundary and intended follow-up.
+This repository is the extracted Atom63 Design System workspace. It is prepared for
+public GitHub visibility, but npm versioning and publishing still require a separate
+approval. See [the extracted-repository status](./docs/design-system/extracted-repo-status.md)
+for the current package boundary and intended follow-up.
 
 Built by You Zhang through Hermes Agent.

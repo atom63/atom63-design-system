@@ -21,7 +21,7 @@ This report records first-wave metadata evidence. YZ subsequently approved expli
 - Version: `0.0.1`
 - Private: `false`
 - License: `MIT`
-- Repository: `git+https://github.com/ATOM63/atom63-vite.git`; directory: `packages/styles`
+- Repository: `git+https://github.com/ATOM63/atom63-design-system.git`; directory: `packages/styles`
 - `files`: `["generated", "src"]`
 - `sideEffects`: `["*.css"]`
 - Runtime dependencies: `tw-animate-css`
@@ -106,7 +106,7 @@ This report records first-wave metadata evidence. YZ subsequently approved expli
 - Version: `0.1.0`
 - Private: `false`
 - License: `MIT`
-- Repository: `git+https://github.com/ATOM63/atom63-vite.git`; directory: `packages/ui-foundation`
+- Repository: `git+https://github.com/ATOM63/atom63-design-system.git`; directory: `packages/ui-foundation`
 - `files`: `["dist"]`
 - `sideEffects`: `false`
 - Runtime dependencies: none
@@ -135,7 +135,7 @@ This report records first-wave metadata evidence. YZ subsequently approved expli
 - Version: `0.1.1`
 - Private: `false`
 - License: `MIT`
-- Repository: `git+https://github.com/ATOM63/atom63-vite.git`; directory: `packages/ui-react`
+- Repository: `git+https://github.com/ATOM63/atom63-design-system.git`; directory: `packages/ui-react`
 - `files`: `["dist", "src/**/*.css"]`
 - `sideEffects`: `["*.css", "**/*.css"]`
 - Runtime dependencies: `@atom63/styles`, `@atom63/ui-foundation`, `@base-ui/react`, `clsx`, `date-fns`, `embla-carousel-react`, `input-otp`, `lucide-react`, `motion`, `react-day-picker`, `react-hook-form`, `react-resizable-panels`, `sonner`, `tailwind-merge`

@@ -5,12 +5,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ATOM63/atom63-vite.git",
+    "url": "git+https://github.com/ATOM63/atom63-design-system.git",
     "directory": "packages/ui-foundation"
   },
-  "homepage": "https://github.com/ATOM63/atom63-vite/tree/main/packages/ui-foundation#readme",
+  "homepage": "https://github.com/ATOM63/atom63-design-system/tree/main/packages/ui-foundation#readme",
   "bugs": {
-    "url": "https://github.com/ATOM63/atom63-vite/issues"
+    "url": "https://github.com/ATOM63/atom63-design-system/issues"
   },
   "publishConfig": {
     "access": "public"

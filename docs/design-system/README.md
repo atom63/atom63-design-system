@@ -4,7 +4,7 @@
 
 Executable styles package: [`packages/styles/README.md`](../../packages/styles/README.md).
 Runnable adopter example: [`examples/vite-basic`](../../examples/vite-basic).
-For this extracted workspace's local-only scope and first-wave package boundary, see
+For this extracted workspace's public repo scope and first-wave package boundary, see
 [extracted-repo-status.md](./extracted-repo-status.md).
 
 ## What this system is
