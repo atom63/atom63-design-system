@@ -1,6 +1,6 @@
 {
   "name": "@atom63/ui-react",
-  "version": "0.2.0-beta.1",
+  "version": "0.2.0-beta.2",
   "description": "React components, layout primitives, media, and theme controls for the Atom63 design system",
   "license": "MIT",
   "repository": {

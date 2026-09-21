@@ -1,5 +1,11 @@
 # @atom63/ui-react
 
+## 0.2.0-beta.2
+
+### Patch Changes
+
+- Pin `@base-ui/react` to the beta-validated version so public adopters do not resolve a newer Base UI release with incompatible Tooltip types.
+
 ## 0.2.0-beta.1
 
 ### Patch Changes
