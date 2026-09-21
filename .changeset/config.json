@@ -3,13 +3,13 @@
   "changelog": [
     "@changesets/changelog-github",
     {
-      "repo": "ATOM63/atom63-vite"
+      "repo": "ATOM63/atom63-design-system"
     }
   ],
   "commit": false,
   "fixed": [],
   "linked": [],
-  "access": "restricted",
+  "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
   "ignore": [
