@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable pnpm with Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check React exports
+        run: pnpm check:ui-react-exports
+
+      - name: Check tokens
+        run: pnpm --filter @atom63/styles check:tokens
+
+      - name: Build UI foundation
+        run: pnpm --filter @atom63/ui-foundation build
+
+      - name: Build React UI
+        run: pnpm --filter @atom63/ui-react build
+
+      - name: Smoke-test packed packages
+        run: pnpm check:ds-pack-smoke
+
+      - name: Build the Vite example
+        run: pnpm build:example:vite-basic
+
+      - name: Test styles
+        run: pnpm --filter @atom63/styles test
+
+      - name: Typecheck UI foundation
+        run: pnpm --filter @atom63/ui-foundation typecheck
+
+      - name: Typecheck React UI
+        run: pnpm --filter @atom63/ui-react typecheck
+
+      - name: Test React UI
+        run: pnpm --filter @atom63/ui-react test
+
+      - name: Check Changesets status
+        run: pnpm changeset status --verbose

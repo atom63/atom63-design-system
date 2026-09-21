@@ -2,26 +2,22 @@
 
 **Start here** if you are joining the team, reviewing a PR, or an agent about to change tokens, themes, contracts, or shared UI.
 
-Live browsable docs: `pnpm dev:ds` → System → Architecture / Foundation / Theme.  
-Executable styles package: [`packages/styles/README.md`](../../packages/styles/README.md).  
-Consumer import map: [`USAGE.md`](../../USAGE.md) (root).
+Executable styles package: [`packages/styles/README.md`](../../packages/styles/README.md).
+Runnable adopter example: [`examples/vite-basic`](../../examples/vite-basic).
+For this extracted workspace's local-only scope and first-wave package boundary, see
+[extracted-repo-status.md](./extracted-repo-status.md).
 
 ## What this system is
 
-Four packages own the shared UI stack:
+Three first-wave packages own the extracted public-beta surface:
 
 | Package | Role |
 | --- | --- |
 | `@atom63/styles` | CSS: shared scales, semantic roles, contracts, themes, OS chrome styles, adapters |
 | `@atom63/ui-foundation` | TypeScript contracts + personalization axis SSOT (`axes.ts`) |
-| `@atom63/ui-react` | React renderer, recipes, Storybook, appearance UI |
-| `Atom63UI` (`packages/ui-ios`) | Native SwiftUI renderer generated from the shared foundation |
+| `@atom63/ui-react` | React renderer, recipes, layout/media/theme subpaths, and appearance UI |
 
-Apps (`atom63.io`, `os63`, `design-system`, …) compose these. They do not redefine the token dictionary.
-The iOS demo in `apps/ios-demo` consumes `Atom63UI` through a local Swift Package dependency.
-Its URLSession and SwiftData layers remain app-owned, then map outcomes into
-the shared feedback intents (`loading`, `empty`, `error`, `stale`, `offline`)
-before rendering Atom63UI feedback patterns.
+Product apps such as `atom63-vite` should eventually consume these packages from the published npm beta instead of redefining or importing their source workspace directly.
 
 ## Mental model (5 minutes)
 
@@ -42,13 +38,14 @@ Full policy: [authoring-surfaces.md](./authoring-surfaces.md) ← **canonical fo
 ### Humans (new teammate)
 
 1. This page
-2. [authoring-surfaces.md](./authoring-surfaces.md) — where to edit
-3. Design-system site: Architecture → Overview, then Foundation → Designing in code
-4. [cross-renderer-contracts.md](./cross-renderer-contracts.md) for React/SwiftUI parity
-5. [theme-authoring.md](./theme-authoring.md) if you touch skins
-6. [personalization-axes.md](./personalization-axes.md) if you touch `data-a63-*`
-7. [package-governance.md](./package-governance.md) + [ui-react-component-review.md](./ui-react-component-review.md) when shipping components
-8. [publish-boundary-rfc.md](./publish-boundary-rfc.md), [ui-react-root-api-audit.md](./ui-react-root-api-audit.md), [changesets-beta-plan.md](./changesets-beta-plan.md), [extraction-rehearsal.md](./extraction-rehearsal.md), [publish-approval-packet.md](./publish-approval-packet.md), then [changesets-backlog-isolation.md](./changesets-backlog-isolation.md), before executing any public package release
+2. [extracted-repo-status.md](./extracted-repo-status.md) — current repository boundary
+3. [authoring-surfaces.md](./authoring-surfaces.md) — where to edit
+4. Design-system site: Architecture → Overview, then Foundation → Designing in code
+5. [cross-renderer-contracts.md](./cross-renderer-contracts.md) for React/SwiftUI parity
+6. [theme-authoring.md](./theme-authoring.md) if you touch skins
+7. [personalization-axes.md](./personalization-axes.md) if you touch `data-a63-*`
+8. [package-governance.md](./package-governance.md) + [ui-react-component-review.md](./ui-react-component-review.md) when shipping components
+9. [publish-boundary-rfc.md](./publish-boundary-rfc.md), [ui-react-root-api-audit.md](./ui-react-root-api-audit.md), [changesets-beta-plan.md](./changesets-beta-plan.md), [extraction-rehearsal.md](./extraction-rehearsal.md), [publish-approval-packet.md](./publish-approval-packet.md), then [changesets-backlog-isolation.md](./changesets-backlog-isolation.md), before executing any public package release
 
 ### Agents / AI
 
@@ -106,6 +103,7 @@ Web ↔ iOS component-token gap (including two commands above that are documente
 
 | Doc | Use for |
 | --- | --- |
+| [extracted-repo-status.md](./extracted-repo-status.md) | Local-only status, first-wave boundary, and `atom63-vite` follow-up |
 | [authoring-surfaces.md](./authoring-surfaces.md) | Where to edit / value ownership |
 | [theme-authoring.md](./theme-authoring.md) | Theme file guardrails |
 | [personalization-axes.md](./personalization-axes.md) | `data-a63-*` ownership |
