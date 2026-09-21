@@ -13,8 +13,8 @@ release preparation and external-consumer verification.
 
 ## Install
 
-The packages are not published yet. After an approved beta release, install them
-from the npm `beta` dist-tag:
+The first-wave packages are available as a public npm beta. Install from the
+`beta` dist-tag:
 
 ```bash
 pnpm add @atom63/styles@beta @atom63/ui-foundation@beta @atom63/ui-react@beta
@@ -26,7 +26,8 @@ Install only the packages a consumer needs, for example:
 pnpm add @atom63/styles@beta @atom63/ui-react@beta
 ```
 
-Do not copy these commands into production setup until the beta packages exist.
+See [beta release notes](./docs/design-system/beta-release-notes.md) for current
+versions, adopter evidence, and stable-readiness blockers.
 
 ## Local development
 
