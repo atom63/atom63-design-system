@@ -1,0 +1,130 @@
+name: Release beta
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publish unpublished package versions to npm beta. Leave false for dry-run/preflight."
+        required: true
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    name: Release preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      unpublished_count: ${{ steps.unpublished.outputs.count }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Enable pnpm with Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check React exports
+        run: pnpm check:ui-react-exports
+
+      - name: Check tokens
+        run: pnpm --filter @atom63/styles check:tokens
+
+      - name: Build UI foundation
+        run: pnpm --filter @atom63/ui-foundation build
+
+      - name: Build React UI
+        run: pnpm --filter @atom63/ui-react build
+
+      - name: Smoke-test packed packages
+        run: pnpm check:ds-pack-smoke
+
+      - name: Build the Vite example
+        run: pnpm build:example:vite-basic
+
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Test styles
+        run: pnpm --filter @atom63/styles test
+
+      - name: Typecheck UI foundation
+        run: pnpm --filter @atom63/ui-foundation typecheck
+
+      - name: Typecheck React UI
+        run: pnpm --filter @atom63/ui-react typecheck
+
+      - name: Test React UI
+        run: pnpm --filter @atom63/ui-react test
+
+      - name: Check Changesets prerelease mode
+        run: |
+          test -f .changeset/pre.json
+          node -e "const pre=require('./.changeset/pre.json'); if (pre.mode !== 'pre' || pre.tag !== 'beta') { throw new Error('Expected Changesets prerelease mode with tag beta') }"
+
+      - name: Check unpublished first-wave versions
+        id: unpublished
+        run: |
+          set -euo pipefail
+          count=0
+          for dir in packages/styles packages/ui-foundation packages/ui-react; do
+            name=$(node -p "require('./${dir}/package.json').name")
+            version=$(node -p "require('./${dir}/package.json').version")
+            echo "Checking ${name}@${version}"
+            if npm view "${name}@${version}" version >/dev/null 2>&1; then
+              echo "published: ${name}@${version}"
+            else
+              echo "unpublished: ${name}@${version}"
+              count=$((count + 1))
+            fi
+          done
+          echo "count=${count}" >> "$GITHUB_OUTPUT"
+          if [ "${{ inputs.publish }}" = "true" ] && [ "$count" -eq 0 ]; then
+            echo "publish=true but no unpublished first-wave versions were found" >&2
+            exit 1
+          fi
+
+  publish:
+    name: Publish beta
+    needs: preflight
+    if: ${{ inputs.publish == true }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: npm-publish
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Enable pnpm with Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Publish with npm provenance
+        run: pnpm release
+        env:
+          NPM_CONFIG_PROVENANCE: "true"
+          NPM_CONFIG_ACCESS: public

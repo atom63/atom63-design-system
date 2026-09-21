@@ -45,7 +45,7 @@ Full policy: [authoring-surfaces.md](./authoring-surfaces.md) ← **canonical fo
 6. [theme-authoring.md](./theme-authoring.md) if you touch skins
 7. [personalization-axes.md](./personalization-axes.md) if you touch `data-a63-*`
 8. [package-governance.md](./package-governance.md) + [ui-react-component-review.md](./ui-react-component-review.md) when shipping components
-9. [beta-release-notes.md](./beta-release-notes.md), [publish-boundary-rfc.md](./publish-boundary-rfc.md), [ui-react-root-api-audit.md](./ui-react-root-api-audit.md), [changesets-beta-plan.md](./changesets-beta-plan.md), [extraction-rehearsal.md](./extraction-rehearsal.md), [publish-approval-packet.md](./publish-approval-packet.md), then [changesets-backlog-isolation.md](./changesets-backlog-isolation.md), before executing any public package release
+9. [beta-release-notes.md](./beta-release-notes.md), [release-automation.md](./release-automation.md), [publish-boundary-rfc.md](./publish-boundary-rfc.md), [ui-react-root-api-audit.md](./ui-react-root-api-audit.md), [changesets-beta-plan.md](./changesets-beta-plan.md), [extraction-rehearsal.md](./extraction-rehearsal.md), [publish-approval-packet.md](./publish-approval-packet.md), then [changesets-backlog-isolation.md](./changesets-backlog-isolation.md), before executing any public package release
 
 ### Agents / AI
 
@@ -114,6 +114,7 @@ Web ↔ iOS component-token gap (including two commands above that are documente
 | [ui-react-component-review.md](./ui-react-component-review.md) | Component PR checklist |
 | [package-governance.md](./package-governance.md) | Package boundaries |
 | [beta-release-notes.md](./beta-release-notes.md) | Current public beta versions, npm dist-tags, adopter evidence, and stable-readiness checklist |
+| [release-automation.md](./release-automation.md) | Manual GitHub Actions beta release workflow, trusted-publisher setup, and release steps |
 | [publish-boundary-rfc.md](./publish-boundary-rfc.md) | Proposed public beta boundary and pre-publish approval gates |
 | [ui-react-root-api-audit.md](./ui-react-root-api-audit.md) | Proposed support tiers for the broad `@atom63/ui-react` root and public subpaths |
 | [package-metadata-audit.md](./package-metadata-audit.md) | First-wave package metadata and packed-content gaps |

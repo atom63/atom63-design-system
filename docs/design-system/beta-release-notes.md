@@ -115,8 +115,9 @@ Browser/visual sanity was performed against the `atom63.io` preview with `A63_US
 
 Before promoting any package to stable/latest:
 
-- [ ] Decide npm `latest` policy and release automation so prereleases do not accidentally become default installs.
-- [ ] Add trusted publishing / GitHub Actions release workflow.
+- [ ] Finish npm `latest` policy and stable promotion plan so prereleases do not accidentally become default installs.
+- [x] Add a manual GitHub Actions beta release workflow scaffold for trusted publishing / npm provenance.
+- [ ] Configure npm trusted publishers and GitHub `npm-publish` environment reviewers before running `publish=true`.
 - [ ] Keep `@base-ui/react` and other type-visible dependencies under an explicit dependency policy.
 - [ ] Run clean external registry install/build smoke after publish.
 - [ ] Keep `atom63-vite` adopter smoke green without root override workarounds.
