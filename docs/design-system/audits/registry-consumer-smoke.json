@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "consumer": "clean-external-vite-react",
+  "registry": "https://registry.npmjs.org/",
+  "packages": [
+    {
+      "name": "@atom63/styles",
+      "requested": "beta",
+      "resolved": "0.1.0-beta.0",
+      "manifest": "node_modules/@atom63/styles/package.json"
+    },
+    {
+      "name": "@atom63/ui-foundation",
+      "requested": "beta",
+      "resolved": "0.1.1-beta.0",
+      "manifest": "node_modules/@atom63/ui-foundation/package.json"
+    },
+    {
+      "name": "@atom63/ui-react",
+      "requested": "beta",
+      "resolved": "0.2.0-beta.2",
+      "manifest": "node_modules/@atom63/ui-react/package.json"
+    }
+  ],
+  "requestedSpecs": {
+    "dependencies": {
+      "@atom63/styles": "beta",
+      "@atom63/ui-foundation": "beta",
+      "@atom63/ui-react": "beta",
+      "react": "19.2.7",
+      "react-dom": "19.2.7"
+    },
+    "devDependencies": {
+      "@types/react": "19.2.17",
+      "@types/react-dom": "19.2.3",
+      "@vitejs/plugin-react": "6.1.0",
+      "typescript": "5.8.3",
+      "vite": "8.1.4"
+    }
+  },
+  "commands": [
+    "pnpm install --ignore-workspace --registry=https://registry.npmjs.org/ --no-frozen-lockfile",
+    "pnpm exec tsc --noEmit",
+    "pnpm exec vite build"
+  ],
+  "imports": [
+    "@atom63/styles",
+    "@atom63/ui-react/styles.css",
+    "@atom63/ui-react",
+    "@atom63/ui-foundation"
+  ],
+  "verification": {
+    "temporaryConsumerOutsideRepository": "passed",
+    "registryOnlyDependencySpecs": "passed",
+    "installedManifestsFromNodeModules": "passed",
+    "installedPackageRuntimeSpecsRegistryCompatible": "passed",
+    "typescriptNoEmit": "passed",
+    "viteProductionBuild": "passed"
+  }
+}

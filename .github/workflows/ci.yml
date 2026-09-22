@@ -56,6 +56,9 @@ jobs:
       - name: Smoke-test packed packages
         run: pnpm check:ds-pack-smoke
 
+      - name: Smoke-test registry packages
+        run: pnpm check:ds-registry-smoke
+
       - name: Build the Vite example
         run: pnpm build:example:vite-basic
 

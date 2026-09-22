@@ -59,6 +59,14 @@ pnpm check:ds-pack-smoke
 pnpm build:example:vite-basic
 ```
 
+Registry-only consumer evidence is now generated from a clean temporary Vite/React app outside the repository. The smoke requests all three first-wave packages through the public npm `beta` dist-tag, rejects local dependency protocols, reads the resolved versions from the consumer's `node_modules`, then runs `tsc --noEmit` and `vite build`:
+
+```bash
+pnpm check:ds-registry-smoke
+```
+
+The deterministic readback is checked in at [audits/registry-consumer-smoke.json](./audits/registry-consumer-smoke.json). CI and beta release preflight rerun the registry-only smoke and fail if the published resolutions or verification evidence drift. After an approved publish, refresh the readback explicitly with `pnpm check:ds-registry-smoke -- --write`.
+
 Verified npm read-back:
 
 ```bash
@@ -120,7 +128,8 @@ Before promoting any package to stable/latest:
 - [x] Add a manual GitHub Actions beta release workflow scaffold for trusted publishing / npm provenance.
 - [x] Configure npm trusted publishers and GitHub `npm-publish` environment reviewers before running `publish=true`.
 - [ ] Keep `@base-ui/react` and other type-visible dependencies under an explicit dependency policy.
-- [ ] Run clean external registry install/build smoke after publish.
+- [x] Run a clean external registry install, typecheck, and production-build smoke for the current first-wave beta packages; CI and beta release preflight now enforce the checked-in registry readback.
+- [ ] Keep the registry smoke green after every approved beta or stable publish and add a stable/latest readback when stable promotion is approved.
 - [ ] Keep `atom63-vite` adopter smoke green without root override workarounds.
 - [x] Audit `@atom63/ui-react` root exports and define beta support tiers in `docs/design-system/ui-react-support-policy.json`; CI now checks the generated export inventory for drift.
 - [x] Generate a stable/latest action matrix for `@atom63/ui-react` root exports and public subpaths in `docs/design-system/ui-react-stable-action-matrix.md`; CI now checks it for drift.

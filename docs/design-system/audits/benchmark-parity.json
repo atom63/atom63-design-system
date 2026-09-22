@@ -38,13 +38,12 @@
   "summary": {
     "totalDimensions": 11,
     "byGate": {
-      "blocker": 8,
-      "warning": 2,
+      "blocker": 7,
+      "warning": 3,
       "done": 1
     },
     "dimensionIdsByGate": {
       "blocker": [
-        "package-install-hygiene",
         "api-stability-preview-policy",
         "dependency-peer-version-policy",
         "component-accessibility-interaction",
@@ -53,7 +52,11 @@
         "release-automation-provenance",
         "figma-design-tool-parity"
       ],
-      "warning": ["docs-ia-quickstart", "governance-support-policy"],
+      "warning": [
+        "package-install-hygiene",
+        "docs-ia-quickstart",
+        "governance-support-policy"
+      ],
       "done": ["token-theme-css-contract"]
     },
     "stableReady": false
@@ -79,21 +82,28 @@
           "reference": "https://github.com/facebook/astryx/wiki/Distribution"
         }
       ],
-      "atom63Status": "Package manifests, export maps, packed contents, and a local packed-consumer smoke are audited in CI. A clean install/build against the public registry after the next approved publish is not yet recorded.",
+      "atom63Status": "Package manifests, export maps, packed contents, and both packed and registry-only external consumer smokes are checked in CI and beta release preflight for the published first-wave beta packages.",
       "currentEvidence": {
         "docs": [
           "docs/design-system/package-metadata-audit.md",
           "docs/design-system/audits/package-surface.json",
+          "docs/design-system/audits/registry-consumer-smoke.json",
+          "docs/design-system/README.md",
+          "docs/design-system/quickstart.md",
           "docs/design-system/extraction-rehearsal.md"
         ],
-        "commands": ["pnpm check:package-surface", "pnpm check:ds-pack-smoke"]
+        "commands": [
+          "pnpm check:package-surface",
+          "pnpm check:ds-pack-smoke",
+          "pnpm check:ds-registry-smoke"
+        ]
       },
       "gaps": [
-        "Run a clean external registry install/build smoke after an approved beta publish.",
-        "Confirm the install path works without workspace overrides."
+        "Rerun and approve the registry readback after every future beta or stable publish so the evidence remains sustained, not point-in-time.",
+        "The stable/latest registry install path is not approved or continuously verified yet."
       ],
-      "stableGate": "blocker",
-      "nextAction": "Record a clean external consumer install, import, CSS, render, and production-build smoke using only registry packages.",
+      "stableGate": "warning",
+      "nextAction": "Keep the registry-only smoke green for each approved beta or stable publish, then add a stable/latest registry readback when stable promotion is approved.",
       "ownerLane": "release-engineering"
     },
     {
@@ -278,24 +288,25 @@
           "reference": "https://www.npmjs.com/package/frosted-ui"
         }
       ],
-      "atom63Status": "A Vite example builds in CI, packed packages are smoke-tested locally, and an adopter branch has beta evidence. The main adopter still defaults to workspace packages and the clean registry-only path is not continuously proven.",
+      "atom63Status": "A Vite example and clean registry-only consumer build in CI, packed packages are smoke-tested locally, and an adopter branch has beta evidence. The main product adopter still defaults to workspace packages.",
       "currentEvidence": {
         "docs": [
           "examples/vite-basic/README.md",
           "docs/design-system/extraction-rehearsal.md",
-          "docs/design-system/beta-release-notes.md"
+          "docs/design-system/beta-release-notes.md",
+          "docs/design-system/audits/registry-consumer-smoke.json"
         ],
         "commands": [
           "pnpm check:ds-pack-smoke",
+          "pnpm check:ds-registry-smoke",
           "pnpm build:example:vite-basic"
         ]
       },
       "gaps": [
-        "Keep the product adopter green without root dependency overrides.",
-        "Add a repeatable registry-only consumer smoke after publish."
+        "Keep the product adopter green without root dependency overrides."
       ],
       "stableGate": "blocker",
-      "nextAction": "Promote the published-package adopter path to a repeatable smoke and record a clean registry-only build before stable.",
+      "nextAction": "Promote the product adopter's published-package path to a repeatable smoke without root dependency overrides before stable.",
       "ownerLane": "adopter-validation"
     },
     {
