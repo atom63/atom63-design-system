@@ -1,0 +1,467 @@
+{
+  "schemaVersion": 1,
+  "status": "human-authored-stable-readiness-source",
+  "releasePosition": "Atom63 remains a public beta, not a stable/latest contract.",
+  "benchmarkSystems": [
+    {
+      "id": "frosted-ui",
+      "label": "Frosted UI",
+      "url": "https://github.com/whopio/frosted-ui"
+    },
+    {
+      "id": "radix-themes",
+      "label": "Radix Themes",
+      "url": "https://www.radix-ui.com/themes/docs/overview/getting-started"
+    },
+    {
+      "id": "shopify-polaris",
+      "label": "Shopify Polaris",
+      "url": "https://github.com/Shopify/polaris"
+    },
+    {
+      "id": "github-primer",
+      "label": "GitHub Primer",
+      "url": "https://primer.style/"
+    },
+    {
+      "id": "fluent-ui",
+      "label": "Fluent UI",
+      "url": "https://github.com/microsoft/fluentui"
+    },
+    {
+      "id": "meta-astryx",
+      "label": "Meta Astryx",
+      "url": "https://github.com/facebook/astryx"
+    }
+  ],
+  "dimensions": [
+    {
+      "id": "package-install-hygiene",
+      "label": "Package/install ergonomics and published tarball hygiene",
+      "benchmarkSignals": [
+        {
+          "system": "frosted-ui",
+          "signal": "Provides a short package install, a single global CSS import, and a root Theme setup.",
+          "reference": "https://www.npmjs.com/package/frosted-ui"
+        },
+        {
+          "system": "radix-themes",
+          "signal": "Documents package installation, CSS import, and root Theme placement as one first-use path.",
+          "reference": "https://www.radix-ui.com/themes/docs/overview/getting-started"
+        },
+        {
+          "system": "meta-astryx",
+          "signal": "Documents the core package, theme package, required peer dependencies, and precompiled CSS distribution together.",
+          "reference": "https://github.com/facebook/astryx/wiki/Distribution"
+        }
+      ],
+      "atom63Status": "Package manifests, export maps, packed contents, and a local packed-consumer smoke are audited in CI. A clean install/build against the public registry after the next approved publish is not yet recorded.",
+      "currentEvidence": {
+        "docs": [
+          "docs/design-system/package-metadata-audit.md",
+          "docs/design-system/audits/package-surface.json",
+          "docs/design-system/extraction-rehearsal.md"
+        ],
+        "commands": ["pnpm check:package-surface", "pnpm check:ds-pack-smoke"]
+      },
+      "gaps": [
+        "Run a clean external registry install/build smoke after an approved beta publish.",
+        "Confirm the install path works without workspace overrides."
+      ],
+      "stableGate": "blocker",
+      "nextAction": "Record a clean external consumer install, import, CSS, render, and production-build smoke using only registry packages.",
+      "ownerLane": "release-engineering"
+    },
+    {
+      "id": "api-stability-preview-policy",
+      "label": "Root/subpath API stability and preview/experimental policy",
+      "benchmarkSignals": [
+        {
+          "system": "fluent-ui",
+          "signal": "Keeps preview components in separately named preview packages and excludes them from the stable suite until promotion.",
+          "reference": "https://github.com/microsoft/fluentui/wiki/new-release-process---v9-packages"
+        },
+        {
+          "system": "frosted-ui",
+          "signal": "Uses a dedicated helper subpath for a large generated emoji-color lookup instead of expanding the package root.",
+          "reference": "https://www.npmjs.com/package/frosted-ui"
+        },
+        {
+          "system": "radix-themes",
+          "signal": "Treats changes to public theme tokens as breaking changes.",
+          "reference": "https://www.radix-ui.com/themes/docs/overview/styling"
+        }
+      ],
+      "atom63Status": "The root and public subpaths are inventoried, support tiers are machine-readable, and a preview subpath plus migration guidance exist. The beta root is still broader than the intended stable contract.",
+      "currentEvidence": {
+        "docs": [
+          "docs/design-system/ui-react-support-policy.json",
+          "docs/design-system/ui-react-stable-action-matrix.md",
+          "docs/design-system/ui-react-preview-migration.md"
+        ],
+        "commands": [
+          "pnpm check:ui-react-exports",
+          "pnpm check:ui-react-stable-actions"
+        ]
+      },
+      "gaps": [
+        "Resolve every P0 root family and public subpath decision.",
+        "Approve stable root narrowing without changing the beta root in this slice."
+      ],
+      "stableGate": "blocker",
+      "nextAction": "Complete the P0 stable action matrix and approve which APIs move to preview, remain stable, or become private.",
+      "ownerLane": "api-governance"
+    },
+    {
+      "id": "dependency-peer-version-policy",
+      "label": "Dependency/peer/version policy",
+      "benchmarkSignals": [
+        {
+          "system": "meta-astryx",
+          "signal": "Declares React 19+ as a peer requirement and versions its public packages together through a Changesets fixed group.",
+          "reference": "https://github.com/facebook/astryx/wiki/Distribution"
+        },
+        {
+          "system": "fluent-ui",
+          "signal": "Tests cross-React compatibility and uses an explicit release lifecycle for preview and stable packages.",
+          "reference": "https://github.com/microsoft/fluentui/blob/master/docs/workflows/testing.md"
+        },
+        {
+          "system": "shopify-polaris",
+          "signal": "Maintains installable packages in a public monorepo with release notes and migration documentation.",
+          "reference": "https://github.com/Shopify/polaris"
+        }
+      ],
+      "atom63Status": "React peers and first-wave package relationships are declared, and a Base UI incompatibility is pinned for beta. There is no complete policy for type-visible dependencies, supported React ranges, coordinated versions, or stable semver changes.",
+      "currentEvidence": {
+        "docs": [
+          "docs/design-system/beta-release-notes.md",
+          "docs/design-system/package-metadata-audit.md",
+          "docs/design-system/changesets-beta-plan.md"
+        ],
+        "commands": [
+          "pnpm --filter @atom63/ui-react typecheck",
+          "pnpm --filter @atom63/ui-react test"
+        ]
+      },
+      "gaps": [
+        "Define ownership and update rules for type-visible runtime dependencies.",
+        "Define supported React versions and a compatibility test matrix.",
+        "Define stable semver and coordinated-package version policy."
+      ],
+      "stableGate": "blocker",
+      "nextAction": "Publish a dependency and version policy, then add compatibility checks for every supported React and type-visible dependency range.",
+      "ownerLane": "package-governance"
+    },
+    {
+      "id": "token-theme-css-contract",
+      "label": "Token/theme contract and CSS entry clarity",
+      "benchmarkSignals": [
+        {
+          "system": "radix-themes",
+          "signal": "Exposes the CSS variables that power components and documents theme configuration as the supported customization contract.",
+          "reference": "https://www.radix-ui.com/themes/docs/theme/overview"
+        },
+        {
+          "system": "frosted-ui",
+          "signal": "Documents one global stylesheet import and a Theme root as the minimum setup.",
+          "reference": "https://www.npmjs.com/package/frosted-ui"
+        },
+        {
+          "system": "meta-astryx",
+          "signal": "Ships precompiled CSS and theme packages whose CSS custom properties customize the system without requiring StyleX in consumer builds.",
+          "reference": "https://github.com/facebook/astryx"
+        }
+      ],
+      "atom63Status": "Token ownership, semantic roles, theme attributes, component contracts, CSS subpaths, and compatibility adapters are documented and covered by generated/token tests.",
+      "currentEvidence": {
+        "docs": [
+          "docs/design-system/authoring-surfaces.md",
+          "docs/design-system/theme-authoring.md",
+          "docs/design-system/component-theme-contract.md",
+          "packages/styles/README.md",
+          "packages/ui-react/README.md"
+        ],
+        "commands": [
+          "pnpm --filter @atom63/styles check:tokens",
+          "pnpm --filter @atom63/styles test"
+        ]
+      },
+      "gaps": [],
+      "stableGate": "done",
+      "nextAction": "Keep token generation, CSS entry points, and authored theme-contract tests green through stable promotion.",
+      "ownerLane": "tokens-and-theming"
+    },
+    {
+      "id": "component-accessibility-interaction",
+      "label": "Component accessibility/interaction evidence",
+      "benchmarkSignals": [
+        {
+          "system": "radix-themes",
+          "signal": "Builds on primitives that follow WAI-ARIA patterns and test focus management, keyboard navigation, browsers, and assistive technologies.",
+          "reference": "https://www.radix-ui.com/primitives/docs/overview/accessibility"
+        },
+        {
+          "system": "fluent-ui",
+          "signal": "Requires behavior, keyboard, focus, ARIA, conformance, E2E, SSR, and cross-React test layers.",
+          "reference": "https://github.com/microsoft/fluentui/blob/master/docs/workflows/testing.md"
+        },
+        {
+          "system": "github-primer",
+          "signal": "Publishes component accessibility guidance and a formal accessibility conformance report for its docs experience.",
+          "reference": "https://accessibility.github.com/conformance/primer-docs/"
+        }
+      ],
+      "atom63Status": "Unit tests and partial evidence packets exist, but high-risk form, media, portal, motion, and overlay families still lack the required browser, mobile, keyboard, and assistive-technology evidence.",
+      "currentEvidence": {
+        "docs": [
+          "docs/design-system/ui-react-monitor-evidence-matrix.md",
+          "docs/design-system/ui-react-forms-evidence.md",
+          "docs/design-system/ui-react-media-evidence.md",
+          "docs/design-system/ui-react-portal-evidence.md"
+        ],
+        "commands": [
+          "pnpm check:ui-react-monitor-evidence",
+          "pnpm --filter @atom63/ui-react test"
+        ]
+      },
+      "gaps": [
+        "Complete real-browser keyboard, focus, pointer, touch, and reduced-motion checks for high-risk families.",
+        "Record screen-reader and mobile assistive-technology evidence for stable candidates.",
+        "Resolve every monitor-high-risk stable decision."
+      ],
+      "stableGate": "blocker",
+      "nextAction": "Execute the monitor evidence matrix in real browsers and assistive technology, then record pass/fail evidence per family.",
+      "ownerLane": "accessibility-and-interactions"
+    },
+    {
+      "id": "examples-adopter-smoke",
+      "label": "Examples/adopter smoke",
+      "benchmarkSignals": [
+        {
+          "system": "shopify-polaris",
+          "signal": "Pairs package documentation with a getting-started path and tutorials that exercise the system in real app workflows.",
+          "reference": "https://polaris.shopify.com/getting-started"
+        },
+        {
+          "system": "meta-astryx",
+          "signal": "Maintains example apps, a documentation site, Storybook, and a sandbox alongside published packages.",
+          "reference": "https://github.com/facebook/astryx"
+        },
+        {
+          "system": "frosted-ui",
+          "signal": "Links Storybook, a Figma kit, and source from its package entry and documents runnable first-use setup.",
+          "reference": "https://www.npmjs.com/package/frosted-ui"
+        }
+      ],
+      "atom63Status": "A Vite example builds in CI, packed packages are smoke-tested locally, and an adopter branch has beta evidence. The main adopter still defaults to workspace packages and the clean registry-only path is not continuously proven.",
+      "currentEvidence": {
+        "docs": [
+          "examples/vite-basic/README.md",
+          "docs/design-system/extraction-rehearsal.md",
+          "docs/design-system/beta-release-notes.md"
+        ],
+        "commands": [
+          "pnpm check:ds-pack-smoke",
+          "pnpm build:example:vite-basic"
+        ]
+      },
+      "gaps": [
+        "Keep the product adopter green without root dependency overrides.",
+        "Add a repeatable registry-only consumer smoke after publish."
+      ],
+      "stableGate": "blocker",
+      "nextAction": "Promote the published-package adopter path to a repeatable smoke and record a clean registry-only build before stable.",
+      "ownerLane": "adopter-validation"
+    },
+    {
+      "id": "docs-ia-quickstart",
+      "label": "Docs IA / first-use quickstart",
+      "benchmarkSignals": [
+        {
+          "system": "radix-themes",
+          "signal": "Presents installation, CSS import, Theme setup, customization, and component docs in a short ordered path.",
+          "reference": "https://www.radix-ui.com/themes/docs/overview/getting-started"
+        },
+        {
+          "system": "shopify-polaris",
+          "signal": "Separates design resources, development resources, tutorials, foundations, and component guidance in its getting-started IA.",
+          "reference": "https://polaris.shopify.com/getting-started"
+        },
+        {
+          "system": "github-primer",
+          "signal": "Organizes guidance into getting started, foundations, UI patterns, components, accessibility, and contribution routes.",
+          "reference": "https://primer.style/"
+        }
+      ],
+      "atom63Status": "Package READMEs and an internal handbook exist, but a public adopter must traverse planning and audit documents to assemble install, CSS, theming, component, preview, and migration guidance.",
+      "currentEvidence": {
+        "docs": [
+          "docs/design-system/README.md",
+          "packages/styles/README.md",
+          "packages/ui-react/README.md",
+          "docs/design-system/ui-react-preview-migration.md"
+        ],
+        "commands": []
+      },
+      "gaps": [
+        "Create one public first-use route from install through first themed component.",
+        "Separate adopter guidance from internal release-planning material.",
+        "Make preview and migration policy discoverable from component/API docs."
+      ],
+      "stableGate": "blocker",
+      "nextAction": "Create a public quickstart and reorganize the doc index around install, theme, components, accessibility, migration, and support.",
+      "ownerLane": "documentation"
+    },
+    {
+      "id": "visual-qa-matrix",
+      "label": "Visual QA matrix",
+      "benchmarkSignals": [
+        {
+          "system": "fluent-ui",
+          "signal": "Runs Storybook-based visual regression tests in CI and reviews screenshot diffs on pull requests.",
+          "reference": "https://github.com/microsoft/fluentui/blob/master/docs/workflows/testing.md"
+        },
+        {
+          "system": "meta-astryx",
+          "signal": "Requires design review across component states and uses a component hardening/audit rubric as promotion evidence.",
+          "reference": "https://github.com/facebook/astryx/wiki/Design-Conventions"
+        },
+        {
+          "system": "github-primer",
+          "signal": "Publishes documented component states and foundations across a dedicated design-system site and preview environments.",
+          "reference": "https://github.com/primer/design"
+        }
+      ],
+      "atom63Status": "A limited homepage and DS-lab sanity pass is recorded. There is no complete, repeatable matrix for component states, viewports, themes, color schemes, focus, or reduced motion.",
+      "currentEvidence": {
+        "docs": [
+          "docs/design-system/beta-release-notes.md",
+          "docs/design-system/ui-react-component-review.md"
+        ],
+        "commands": []
+      },
+      "gaps": [
+        "Cover the component gallery and stable candidates across mobile and desktop.",
+        "Cover light/dark, all supported themes, keyboard/focus states, and reduced motion.",
+        "Store reviewable evidence and define baseline-update ownership."
+      ],
+      "stableGate": "blocker",
+      "nextAction": "Define and execute a versioned visual QA matrix, then attach deterministic screenshots or approved visual-diff evidence.",
+      "ownerLane": "visual-quality"
+    },
+    {
+      "id": "release-automation-provenance",
+      "label": "Release automation/provenance",
+      "benchmarkSignals": [
+        {
+          "system": "meta-astryx",
+          "signal": "Documents package grouping, versioning, source/dist contents, and a repeatable release process.",
+          "reference": "https://github.com/facebook/astryx/wiki/Distribution"
+        },
+        {
+          "system": "fluent-ui",
+          "signal": "Uses explicit preview-to-stable lifecycle phases and automated change/release tooling.",
+          "reference": "https://github.com/microsoft/fluentui/wiki/new-release-process---v9-packages"
+        },
+        {
+          "system": "shopify-polaris",
+          "signal": "Publishes release notes and migration guidance from a public package monorepo.",
+          "reference": "https://github.com/Shopify/polaris/releases"
+        }
+      ],
+      "atom63Status": "A manual beta workflow has dry-run preflight, guardrails, an environment boundary, trusted-publisher intent, and npm provenance. Stable/latest dist-tag policy and a stable promotion workflow are not decided.",
+      "currentEvidence": {
+        "docs": [
+          "docs/design-system/release-automation.md",
+          "docs/design-system/publish-approval-packet.md",
+          ".github/workflows/release-beta.yml"
+        ],
+        "commands": ["pnpm changeset status --verbose"]
+      },
+      "gaps": [
+        "Resolve npm latest/dist-tag policy before stable promotion.",
+        "Define stable promotion, rollback, and registry verification steps.",
+        "Keep publish execution manually approved; this board is a dry-run guardrail only."
+      ],
+      "stableGate": "blocker",
+      "nextAction": "Approve the stable/latest dist-tag and rollback policy, then add a no-publish stable promotion preflight.",
+      "ownerLane": "release-engineering"
+    },
+    {
+      "id": "figma-design-tool-parity",
+      "label": "Figma/design-tool parity gate",
+      "benchmarkSignals": [
+        {
+          "system": "github-primer",
+          "signal": "Distributes public Figma libraries whose components and variables are intended to match developer component implementations.",
+          "reference": "https://primer-docs-preview.github.com/product/getting-started/figma/"
+        },
+        {
+          "system": "shopify-polaris",
+          "signal": "Provides component, style, and icon design resources alongside development resources from its getting-started path.",
+          "reference": "https://polaris.shopify.com/getting-started"
+        },
+        {
+          "system": "frosted-ui",
+          "signal": "Links its Figma UI kit alongside Storybook and source code from the package documentation.",
+          "reference": "https://www.npmjs.com/package/frosted-ui"
+        }
+      ],
+      "atom63Status": "Figma token output and token-surface audit artifacts exist, but variables sync, styleguide generation, component parity, and idempotent reruns have not completed manual QA.",
+      "currentEvidence": {
+        "docs": [
+          "docs/design-system/audits/token-figma-surface.json",
+          "docs/design-system/beta-release-notes.md"
+        ],
+        "commands": ["node scripts/design-system/audit-token-figma-surface.mjs"]
+      },
+      "gaps": [
+        "Run and record variables sync and styleguide generation.",
+        "Prove an idempotent rerun with no unexpected design-file drift.",
+        "Define which stable components and variants require design-tool parity."
+      ],
+      "stableGate": "blocker",
+      "nextAction": "Execute the Figma manual QA packet, record idempotence evidence, and map stable code components to maintained design assets.",
+      "ownerLane": "design-tooling"
+    },
+    {
+      "id": "governance-support-policy",
+      "label": "Governance/support policy",
+      "benchmarkSignals": [
+        {
+          "system": "meta-astryx",
+          "signal": "Documents contribution scope, RFCs, decision authority, component lifecycle, conventions, and an evidence-based audit rubric.",
+          "reference": "https://github.com/facebook/astryx/wiki/Contributing"
+        },
+        {
+          "system": "github-primer",
+          "signal": "Publishes contribution routes, issue reporting, accessibility guidance, and component documentation standards.",
+          "reference": "https://github.com/primer/design"
+        },
+        {
+          "system": "fluent-ui",
+          "signal": "Encodes API conformance, testing expectations, preview lifecycle, and package change requirements in repository guidance and CI.",
+          "reference": "https://github.com/microsoft/fluentui/blob/master/docs/workflows/testing.md"
+        }
+      ],
+      "atom63Status": "Package boundaries, component review, beta support tiers, and named owner lanes are documented. Public contribution, maintenance, deprecation, security, browser-support, and support-response policies are incomplete.",
+      "currentEvidence": {
+        "docs": [
+          "docs/design-system/package-governance.md",
+          "docs/design-system/ui-react-component-review.md",
+          "docs/design-system/ui-react-support-policy.json"
+        ],
+        "commands": []
+      },
+      "gaps": [
+        "Define maintainers and decision authority for stable API changes.",
+        "Publish deprecation, browser support, security reporting, and support-response policies.",
+        "Define the evidence and approval required to promote or retire a component."
+      ],
+      "stableGate": "blocker",
+      "nextAction": "Create a public governance and support policy with maintainers, compatibility scope, deprecation windows, security reporting, and promotion criteria.",
+      "ownerLane": "design-system-governance"
+    }
+  ]
+}

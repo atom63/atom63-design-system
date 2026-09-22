@@ -1,0 +1,112 @@
+# Atom63 benchmark-parity stable-readiness board
+
+**Status:** generated docs/guardrail artifact; no release, version, publish, or root-export change.
+
+**Release position:** Atom63 remains a public beta, not a stable/latest contract.
+
+**Source of truth:** `docs/design-system/benchmark-parity-source.json`
+
+## Summary
+
+- Dimensions: **11**.
+- Stable blockers: **10**.
+- Warnings: **0**.
+- Done: **1**.
+- Stable ready: **no**.
+
+A `done` row has complete evidence for this dimension today. A `warning` needs an explicit decision or follow-up but does not independently block stable. A `blocker` must be resolved before stable/latest promotion.
+
+## Board
+
+| Dimension                                                  | Gate      | Atom63 status                                                                                                                                                                                                                                       | Current evidence                                                                                                                                                                                                                                                                                      | Gaps                                                                                                                                                                                                                                                       | Owner lane                       |
+| ---------------------------------------------------------- | --------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| Package/install ergonomics and published tarball hygiene   | `blocker` | Package manifests, export maps, packed contents, and a local packed-consumer smoke are audited in CI. A clean install/build against the public registry after the next approved publish is not yet recorded.                                        | `docs/design-system/package-metadata-audit.md`<br>`docs/design-system/audits/package-surface.json`<br>`docs/design-system/extraction-rehearsal.md`<br>`pnpm check:package-surface`<br>`pnpm check:ds-pack-smoke`                                                                                      | `Run a clean external registry install/build smoke after an approved beta publish.`<br>`Confirm the install path works without workspace overrides.`                                                                                                       | `release-engineering`            |
+| Root/subpath API stability and preview/experimental policy | `blocker` | The root and public subpaths are inventoried, support tiers are machine-readable, and a preview subpath plus migration guidance exist. The beta root is still broader than the intended stable contract.                                            | `docs/design-system/ui-react-support-policy.json`<br>`docs/design-system/ui-react-stable-action-matrix.md`<br>`docs/design-system/ui-react-preview-migration.md`<br>`pnpm check:ui-react-exports`<br>`pnpm check:ui-react-stable-actions`                                                             | `Resolve every P0 root family and public subpath decision.`<br>`Approve stable root narrowing without changing the beta root in this slice.`                                                                                                               | `api-governance`                 |
+| Dependency/peer/version policy                             | `blocker` | React peers and first-wave package relationships are declared, and a Base UI incompatibility is pinned for beta. There is no complete policy for type-visible dependencies, supported React ranges, coordinated versions, or stable semver changes. | `docs/design-system/beta-release-notes.md`<br>`docs/design-system/package-metadata-audit.md`<br>`docs/design-system/changesets-beta-plan.md`<br>`pnpm --filter @atom63/ui-react typecheck`<br>`pnpm --filter @atom63/ui-react test`                                                                   | `Define ownership and update rules for type-visible runtime dependencies.`<br>`Define supported React versions and a compatibility test matrix.`<br>`Define stable semver and coordinated-package version policy.`                                         | `package-governance`             |
+| Token/theme contract and CSS entry clarity                 | `done`    | Token ownership, semantic roles, theme attributes, component contracts, CSS subpaths, and compatibility adapters are documented and covered by generated/token tests.                                                                               | `docs/design-system/authoring-surfaces.md`<br>`docs/design-system/theme-authoring.md`<br>`docs/design-system/component-theme-contract.md`<br>`packages/styles/README.md`<br>`packages/ui-react/README.md`<br>`pnpm --filter @atom63/styles check:tokens`<br>`pnpm --filter @atom63/styles test`       | None                                                                                                                                                                                                                                                       | `tokens-and-theming`             |
+| Component accessibility/interaction evidence               | `blocker` | Unit tests and partial evidence packets exist, but high-risk form, media, portal, motion, and overlay families still lack the required browser, mobile, keyboard, and assistive-technology evidence.                                                | `docs/design-system/ui-react-monitor-evidence-matrix.md`<br>`docs/design-system/ui-react-forms-evidence.md`<br>`docs/design-system/ui-react-media-evidence.md`<br>`docs/design-system/ui-react-portal-evidence.md`<br>`pnpm check:ui-react-monitor-evidence`<br>`pnpm --filter @atom63/ui-react test` | `Complete real-browser keyboard, focus, pointer, touch, and reduced-motion checks for high-risk families.`<br>`Record screen-reader and mobile assistive-technology evidence for stable candidates.`<br>`Resolve every monitor-high-risk stable decision.` | `accessibility-and-interactions` |
+| Examples/adopter smoke                                     | `blocker` | A Vite example builds in CI, packed packages are smoke-tested locally, and an adopter branch has beta evidence. The main adopter still defaults to workspace packages and the clean registry-only path is not continuously proven.                  | `examples/vite-basic/README.md`<br>`docs/design-system/extraction-rehearsal.md`<br>`docs/design-system/beta-release-notes.md`<br>`pnpm check:ds-pack-smoke`<br>`pnpm build:example:vite-basic`                                                                                                        | `Keep the product adopter green without root dependency overrides.`<br>`Add a repeatable registry-only consumer smoke after publish.`                                                                                                                      | `adopter-validation`             |
+| Docs IA / first-use quickstart                             | `blocker` | Package READMEs and an internal handbook exist, but a public adopter must traverse planning and audit documents to assemble install, CSS, theming, component, preview, and migration guidance.                                                      | `docs/design-system/README.md`<br>`packages/styles/README.md`<br>`packages/ui-react/README.md`<br>`docs/design-system/ui-react-preview-migration.md`                                                                                                                                                  | `Create one public first-use route from install through first themed component.`<br>`Separate adopter guidance from internal release-planning material.`<br>`Make preview and migration policy discoverable from component/API docs.`                      | `documentation`                  |
+| Visual QA matrix                                           | `blocker` | A limited homepage and DS-lab sanity pass is recorded. There is no complete, repeatable matrix for component states, viewports, themes, color schemes, focus, or reduced motion.                                                                    | `docs/design-system/beta-release-notes.md`<br>`docs/design-system/ui-react-component-review.md`                                                                                                                                                                                                       | `Cover the component gallery and stable candidates across mobile and desktop.`<br>`Cover light/dark, all supported themes, keyboard/focus states, and reduced motion.`<br>`Store reviewable evidence and define baseline-update ownership.`                | `visual-quality`                 |
+| Release automation/provenance                              | `blocker` | A manual beta workflow has dry-run preflight, guardrails, an environment boundary, trusted-publisher intent, and npm provenance. Stable/latest dist-tag policy and a stable promotion workflow are not decided.                                     | `docs/design-system/release-automation.md`<br>`docs/design-system/publish-approval-packet.md`<br>`.github/workflows/release-beta.yml`<br>`pnpm changeset status --verbose`                                                                                                                            | `Resolve npm latest/dist-tag policy before stable promotion.`<br>`Define stable promotion, rollback, and registry verification steps.`<br>`Keep publish execution manually approved; this board is a dry-run guardrail only.`                              | `release-engineering`            |
+| Figma/design-tool parity gate                              | `blocker` | Figma token output and token-surface audit artifacts exist, but variables sync, styleguide generation, component parity, and idempotent reruns have not completed manual QA.                                                                        | `docs/design-system/audits/token-figma-surface.json`<br>`docs/design-system/beta-release-notes.md`<br>`node scripts/design-system/audit-token-figma-surface.mjs`                                                                                                                                      | `Run and record variables sync and styleguide generation.`<br>`Prove an idempotent rerun with no unexpected design-file drift.`<br>`Define which stable components and variants require design-tool parity.`                                               | `design-tooling`                 |
+| Governance/support policy                                  | `blocker` | Package boundaries, component review, beta support tiers, and named owner lanes are documented. Public contribution, maintenance, deprecation, security, browser-support, and support-response policies are incomplete.                             | `docs/design-system/package-governance.md`<br>`docs/design-system/ui-react-component-review.md`<br>`docs/design-system/ui-react-support-policy.json`                                                                                                                                                  | `Define maintainers and decision authority for stable API changes.`<br>`Publish deprecation, browser support, security reporting, and support-response policies.`<br>`Define the evidence and approval required to promote or retire a component.`         | `design-system-governance`       |
+
+## Benchmark signals
+
+### Package/install ergonomics and published tarball hygiene
+
+[Frosted UI](https://www.npmjs.com/package/frosted-ui): Provides a short package install, a single global CSS import, and a root Theme setup.<br><br>[Radix Themes](https://www.radix-ui.com/themes/docs/overview/getting-started): Documents package installation, CSS import, and root Theme placement as one first-use path.<br><br>[Meta Astryx](https://github.com/facebook/astryx/wiki/Distribution): Documents the core package, theme package, required peer dependencies, and precompiled CSS distribution together.
+
+### Root/subpath API stability and preview/experimental policy
+
+[Fluent UI](https://github.com/microsoft/fluentui/wiki/new-release-process---v9-packages): Keeps preview components in separately named preview packages and excludes them from the stable suite until promotion.<br><br>[Frosted UI](https://www.npmjs.com/package/frosted-ui): Uses a dedicated helper subpath for a large generated emoji-color lookup instead of expanding the package root.<br><br>[Radix Themes](https://www.radix-ui.com/themes/docs/overview/styling): Treats changes to public theme tokens as breaking changes.
+
+### Dependency/peer/version policy
+
+[Meta Astryx](https://github.com/facebook/astryx/wiki/Distribution): Declares React 19+ as a peer requirement and versions its public packages together through a Changesets fixed group.<br><br>[Fluent UI](https://github.com/microsoft/fluentui/blob/master/docs/workflows/testing.md): Tests cross-React compatibility and uses an explicit release lifecycle for preview and stable packages.<br><br>[Shopify Polaris](https://github.com/Shopify/polaris): Maintains installable packages in a public monorepo with release notes and migration documentation.
+
+### Token/theme contract and CSS entry clarity
+
+[Radix Themes](https://www.radix-ui.com/themes/docs/theme/overview): Exposes the CSS variables that power components and documents theme configuration as the supported customization contract.<br><br>[Frosted UI](https://www.npmjs.com/package/frosted-ui): Documents one global stylesheet import and a Theme root as the minimum setup.<br><br>[Meta Astryx](https://github.com/facebook/astryx): Ships precompiled CSS and theme packages whose CSS custom properties customize the system without requiring StyleX in consumer builds.
+
+### Component accessibility/interaction evidence
+
+[Radix Themes](https://www.radix-ui.com/primitives/docs/overview/accessibility): Builds on primitives that follow WAI-ARIA patterns and test focus management, keyboard navigation, browsers, and assistive technologies.<br><br>[Fluent UI](https://github.com/microsoft/fluentui/blob/master/docs/workflows/testing.md): Requires behavior, keyboard, focus, ARIA, conformance, E2E, SSR, and cross-React test layers.<br><br>[GitHub Primer](https://accessibility.github.com/conformance/primer-docs/): Publishes component accessibility guidance and a formal accessibility conformance report for its docs experience.
+
+### Examples/adopter smoke
+
+[Shopify Polaris](https://polaris.shopify.com/getting-started): Pairs package documentation with a getting-started path and tutorials that exercise the system in real app workflows.<br><br>[Meta Astryx](https://github.com/facebook/astryx): Maintains example apps, a documentation site, Storybook, and a sandbox alongside published packages.<br><br>[Frosted UI](https://www.npmjs.com/package/frosted-ui): Links Storybook, a Figma kit, and source from its package entry and documents runnable first-use setup.
+
+### Docs IA / first-use quickstart
+
+[Radix Themes](https://www.radix-ui.com/themes/docs/overview/getting-started): Presents installation, CSS import, Theme setup, customization, and component docs in a short ordered path.<br><br>[Shopify Polaris](https://polaris.shopify.com/getting-started): Separates design resources, development resources, tutorials, foundations, and component guidance in its getting-started IA.<br><br>[GitHub Primer](https://primer.style/): Organizes guidance into getting started, foundations, UI patterns, components, accessibility, and contribution routes.
+
+### Visual QA matrix
+
+[Fluent UI](https://github.com/microsoft/fluentui/blob/master/docs/workflows/testing.md): Runs Storybook-based visual regression tests in CI and reviews screenshot diffs on pull requests.<br><br>[Meta Astryx](https://github.com/facebook/astryx/wiki/Design-Conventions): Requires design review across component states and uses a component hardening/audit rubric as promotion evidence.<br><br>[GitHub Primer](https://github.com/primer/design): Publishes documented component states and foundations across a dedicated design-system site and preview environments.
+
+### Release automation/provenance
+
+[Meta Astryx](https://github.com/facebook/astryx/wiki/Distribution): Documents package grouping, versioning, source/dist contents, and a repeatable release process.<br><br>[Fluent UI](https://github.com/microsoft/fluentui/wiki/new-release-process---v9-packages): Uses explicit preview-to-stable lifecycle phases and automated change/release tooling.<br><br>[Shopify Polaris](https://github.com/Shopify/polaris/releases): Publishes release notes and migration guidance from a public package monorepo.
+
+### Figma/design-tool parity gate
+
+[GitHub Primer](https://primer-docs-preview.github.com/product/getting-started/figma/): Distributes public Figma libraries whose components and variables are intended to match developer component implementations.<br><br>[Shopify Polaris](https://polaris.shopify.com/getting-started): Provides component, style, and icon design resources alongside development resources from its getting-started path.<br><br>[Frosted UI](https://www.npmjs.com/package/frosted-ui): Links its Figma UI kit alongside Storybook and source code from the package documentation.
+
+### Governance/support policy
+
+[Meta Astryx](https://github.com/facebook/astryx/wiki/Contributing): Documents contribution scope, RFCs, decision authority, component lifecycle, conventions, and an evidence-based audit rubric.<br><br>[GitHub Primer](https://github.com/primer/design): Publishes contribution routes, issue reporting, accessibility guidance, and component documentation standards.<br><br>[Fluent UI](https://github.com/microsoft/fluentui/blob/master/docs/workflows/testing.md): Encodes API conformance, testing expectations, preview lifecycle, and package change requirements in repository guidance and CI.
+
+## Next actions
+
+### Blocker
+
+- **Package/install ergonomics and published tarball hygiene** — Record a clean external consumer install, import, CSS, render, and production-build smoke using only registry packages. Owner: `release-engineering`.
+- **Root/subpath API stability and preview/experimental policy** — Complete the P0 stable action matrix and approve which APIs move to preview, remain stable, or become private. Owner: `api-governance`.
+- **Dependency/peer/version policy** — Publish a dependency and version policy, then add compatibility checks for every supported React and type-visible dependency range. Owner: `package-governance`.
+- **Component accessibility/interaction evidence** — Execute the monitor evidence matrix in real browsers and assistive technology, then record pass/fail evidence per family. Owner: `accessibility-and-interactions`.
+- **Examples/adopter smoke** — Promote the published-package adopter path to a repeatable smoke and record a clean registry-only build before stable. Owner: `adopter-validation`.
+- **Docs IA / first-use quickstart** — Create a public quickstart and reorganize the doc index around install, theme, components, accessibility, migration, and support. Owner: `documentation`.
+- **Visual QA matrix** — Define and execute a versioned visual QA matrix, then attach deterministic screenshots or approved visual-diff evidence. Owner: `visual-quality`.
+- **Release automation/provenance** — Approve the stable/latest dist-tag and rollback policy, then add a no-publish stable promotion preflight. Owner: `release-engineering`.
+- **Figma/design-tool parity gate** — Execute the Figma manual QA packet, record idempotence evidence, and map stable code components to maintained design assets. Owner: `design-tooling`.
+- **Governance/support policy** — Create a public governance and support policy with maintainers, compatibility scope, deprecation windows, security reporting, and promotion criteria. Owner: `design-system-governance`.
+
+### Warning
+
+None.
+
+### Done
+
+- **Token/theme contract and CSS entry clarity** — Keep token generation, CSS entry points, and authored theme-contract tests green through stable promotion. Owner: `tokens-and-theming`.
+
+## How to update
+
+Edit the human-authored source, then regenerate:
+
+```bash
+pnpm check:benchmark-parity --write
+```
+
+CI and the beta release dry-run run the same command without `--write` and fail when either generated artifact drifts. This check does not publish, version packages, or change package exports.

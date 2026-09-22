@@ -13,6 +13,7 @@
     "check:ui-react-exports": "node scripts/design-system/audit-ui-react-exports.mjs",
     "check:ui-react-stable-actions": "node scripts/design-system/audit-ui-react-stable-actions.mjs",
     "check:ui-react-monitor-evidence": "node scripts/design-system/audit-ui-react-monitor-evidence.mjs",
+    "check:benchmark-parity": "node scripts/design-system/audit-benchmark-parity.mjs",
     "check:ds-pack-smoke": "node scripts/design-system/smoke-packed-ui-react.mjs",
     "changeset": "changeset",
     "version-packages": "changeset version",

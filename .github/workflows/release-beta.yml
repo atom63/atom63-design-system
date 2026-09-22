@@ -45,6 +45,9 @@ jobs:
       - name: Check React monitor evidence matrix
         run: pnpm check:ui-react-monitor-evidence
 
+      - name: Check benchmark parity board
+        run: pnpm check:benchmark-parity
+
       - name: Check package surface audit
         run: |
           pnpm check:package-surface

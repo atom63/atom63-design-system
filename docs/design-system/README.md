@@ -114,6 +114,8 @@ Web ↔ iOS component-token gap (including two commands above that are documente
 | [ui-react-component-review.md](./ui-react-component-review.md) | Component PR checklist |
 | [package-governance.md](./package-governance.md) | Package boundaries |
 | [beta-release-notes.md](./beta-release-notes.md) | Current public beta versions, npm dist-tags, adopter evidence, and stable-readiness checklist |
+| [benchmark-parity.md](./benchmark-parity.md) | Generated benchmark-parity board for stable-readiness gates, evidence, gaps, owners, and next actions |
+| [benchmark-parity-source.json](./benchmark-parity-source.json) | Human-authored machine-readable source for the benchmark-parity board |
 | [ui-react-support-policy.json](./ui-react-support-policy.json) | Machine-readable `@atom63/ui-react` beta support tiers, symbol overrides, public subpath policy, and stable blockers |
 | [ui-react-stable-action-matrix.md](./ui-react-stable-action-matrix.md) | Stable/latest action matrix for broad `@atom63/ui-react` root exports and public subpaths |
 | [ui-react-monitor-evidence-matrix.md](./ui-react-monitor-evidence-matrix.md) | Stable-readiness evidence matrix for monitor/high-risk `@atom63/ui-react` families |
