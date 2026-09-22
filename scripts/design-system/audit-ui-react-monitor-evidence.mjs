@@ -49,6 +49,8 @@ const familyPlans = {
     ],
     stableDecision:
       "Promote only after focused interaction tests and browser evidence cover the combobox contract.",
+    status: "partial-evidence-recorded",
+    evidenceReference: "docs/design-system/ui-react-forms-evidence.md",
   },
   "components/calendar": {
     owner: "design-system-forms",
@@ -63,6 +65,8 @@ const familyPlans = {
     qa: ["single month", "keyboard", "disabled dates", "mobile", "light/dark"],
     stableDecision:
       "Promote only with dependency pin policy and date interaction evidence.",
+    status: "partial-evidence-recorded",
+    evidenceReference: "docs/design-system/ui-react-forms-evidence.md",
   },
   "components/card": {
     owner: "design-system-surfaces",
@@ -136,6 +140,8 @@ const familyPlans = {
     qa: ["paste full code", "backspace", "mobile", "disabled", "invalid state"],
     stableDecision:
       "Promote only with dependency policy and mobile/paste evidence.",
+    status: "partial-evidence-recorded",
+    evidenceReference: "docs/design-system/ui-react-forms-evidence.md",
   },
   "components/load-more-trigger": {
     owner: "design-system-data-display",
@@ -285,7 +291,10 @@ function buildRows(monitorGroups) {
       requiredEvidence: plan.evidence,
       qaMatrix: plan.qa,
       stableDecision: plan.stableDecision,
-      status: "blocked-until-evidence-recorded",
+      status: plan.status ?? "blocked-until-evidence-recorded",
+      ...(plan.evidenceReference
+        ? { evidenceReference: plan.evidenceReference }
+        : {}),
     };
   });
 }
@@ -329,12 +338,15 @@ function renderMarkdown(matrix) {
   p.push("## Evidence checklist by family");
   p.push("");
   p.push(
-    "| Family | Risk | Owner lane | Symbols | Required evidence | QA matrix | Stable decision |",
+    "| Family | Risk | Owner lane | Symbols | Evidence status | Required evidence | QA matrix | Stable decision |",
   );
-  p.push("| --- | --- | --- | ---: | --- | --- | --- |");
+  p.push("| --- | --- | --- | ---: | --- | --- | --- | --- |");
   for (const row of matrix.rows) {
+    const status = row.evidenceReference
+      ? `[\`${row.status}\`](./${row.evidenceReference.replace("docs/design-system/", "")})`
+      : `\`${row.status}\``;
     p.push(
-      `| \`${row.family}\` | ${row.riskLevel} | \`${row.owner}\` | ${row.symbolCount} | ${row.requiredEvidence.map((item) => `\`${item}\``).join("<br>")} | ${row.qaMatrix.map((item) => `\`${item}\``).join("<br>")} | ${row.stableDecision} |`,
+      `| \`${row.family}\` | ${row.riskLevel} | \`${row.owner}\` | ${row.symbolCount} | ${status} | ${row.requiredEvidence.map((item) => `\`${item}\``).join("<br>")} | ${row.qaMatrix.map((item) => `\`${item}\``).join("<br>")} | ${row.stableDecision} |`,
     );
   }
   p.push("");
@@ -346,6 +358,12 @@ function renderMarkdown(matrix) {
     p.push(`- Owner lane: \`${row.owner}\``);
     p.push(`- Risk: **${row.riskLevel}**`);
     p.push(`- User value: ${row.userValue}`);
+    p.push(`- Evidence status: \`${row.status}\``);
+    if (row.evidenceReference) {
+      p.push(
+        `- Evidence packet: [${row.evidenceReference}](./${row.evidenceReference.replace("docs/design-system/", "")})`,
+      );
+    }
     p.push("- Symbols:");
     for (const symbol of row.symbols) p.push(`  - \`${symbol}\``);
     p.push("");

@@ -100,7 +100,8 @@
         "no-results state"
       ],
       "stableDecision": "Promote only after focused interaction tests and browser evidence cover the combobox contract.",
-      "status": "blocked-until-evidence-recorded"
+      "status": "partial-evidence-recorded",
+      "evidenceReference": "docs/design-system/ui-react-forms-evidence.md"
     },
     {
       "source": "./components/calendar",
@@ -126,7 +127,8 @@
         "light/dark"
       ],
       "stableDecision": "Promote only with dependency pin policy and date interaction evidence.",
-      "status": "blocked-until-evidence-recorded"
+      "status": "partial-evidence-recorded",
+      "evidenceReference": "docs/design-system/ui-react-forms-evidence.md"
     },
     {
       "source": "./components/card",
@@ -270,7 +272,8 @@
         "invalid state"
       ],
       "stableDecision": "Promote only with dependency policy and mobile/paste evidence.",
-      "status": "blocked-until-evidence-recorded"
+      "status": "partial-evidence-recorded",
+      "evidenceReference": "docs/design-system/ui-react-forms-evidence.md"
     },
     {
       "source": "./components/load-more-trigger",
