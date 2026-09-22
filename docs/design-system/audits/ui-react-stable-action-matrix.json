@@ -76,24 +76,24 @@
     }
   },
   "summary": {
-    "sourceFamilies": 74,
-    "sourceExports": 597,
+    "sourceFamilies": 75,
+    "sourceExports": 600,
     "sourceTierCounts": {
       "monitor-high-risk": 76,
       "preview-experimental-candidate": 31,
-      "beta-supported-core": 311,
+      "beta-supported-core": 314,
       "beta-supported-composition-conditional": 179
     },
     "sourceActionCounts": {
       "assign-owner-and-evidence": 16,
       "move-to-preview-or-approve": 15,
       "document-before-stable": 12,
-      "keep-stable-candidate": 31
+      "keep-stable-candidate": 32
     },
     "sourcePriorityCounts": {
       "P0": 31,
       "P1": 12,
-      "P2": 31
+      "P2": 32
     },
     "packageSubpaths": 71,
     "subpathActionCounts": {
@@ -1523,6 +1523,29 @@
         "SidebarNavSubListProps"
       ],
       "policyNote": "Needs authored composition guidance or equivalent usage docs before stable."
+    },
+    {
+      "source": "./atom63-theme",
+      "family": "atom63-theme",
+      "kind": "module",
+      "totalExports": 3,
+      "valueExports": 1,
+      "typeExports": 2,
+      "tierCounts": {
+        "beta-supported-core": 3
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["Atom63Theme", "Atom63ThemeMode", "Atom63ThemeProps"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
     },
     {
       "source": "./components/accordion",

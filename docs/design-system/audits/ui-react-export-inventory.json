@@ -44,8 +44,8 @@
     ]
   },
   "counts": {
-    "rootValueExports": 425,
-    "rootTypeExports": 172,
+    "rootValueExports": 426,
+    "rootTypeExports": 174,
     "packageExportKeys": 71,
     "cssExportKeys": 65
   },
@@ -577,6 +577,25 @@
     }
   ],
   "rootExports": [
+    {
+      "source": "./atom63-theme",
+      "values": [
+        {
+          "name": "Atom63Theme",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "Atom63ThemeMode",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "Atom63ThemeProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
     {
       "source": "./components/accordion",
       "values": [

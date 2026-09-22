@@ -8,7 +8,7 @@
 
 ## Summary
 
-- Root export symbols: **597** across **74** source families.
+- Root export symbols: **600** across **75** source families.
 - Package export-map subpaths: **71**.
 - P0 root/source families: **31**.
 - P1 root/source families: **12**.
@@ -28,7 +28,7 @@
 ### Root export tier counts
 
 - `beta-supported-composition-conditional`: 179
-- `beta-supported-core`: 311
+- `beta-supported-core`: 314
 - `monitor-high-risk`: 76
 - `preview-experimental-candidate`: 31
 
