@@ -124,7 +124,8 @@ Before promoting any package to stable/latest:
 - [x] Audit `@atom63/ui-react` root exports and define beta support tiers in `docs/design-system/ui-react-support-policy.json`; CI now checks the generated export inventory for drift.
 - [x] Generate a stable/latest action matrix for `@atom63/ui-react` root exports and public subpaths in `docs/design-system/ui-react-stable-action-matrix.md`; CI now checks it for drift.
 - [x] Draft preview-symbol cleanup plan for `Primitive` aliases, imperative handles, internal helpers, conformance evidence, and raw motion constants.
-- [ ] Implement preview cleanup Slice A/B: add `@atom63/ui-react/preview`, document migration, and keep root unchanged until stable narrowing is explicitly approved.
+- [x] Implement preview cleanup Slice A: add `@atom63/ui-react/preview`, keep root unchanged, and add packed-consumer preview import coverage.
+- [ ] Implement preview cleanup Slice B: document root-to-preview migration examples and deprecation language before stable narrowing is explicitly approved.
 - [x] Audit published file lists for CSS, dist output, and accidental test/internal files; CI now regenerates `docs/design-system/audits/package-surface.json` and fails on drift.
 - [ ] Run a full visual QA matrix: homepage, `/ds-lab`, component gallery, mobile/desktop, light/dark, theme variants, keyboard/focus states, reduced motion.
 - [ ] Complete Figma manual QA: variables sync, styleguide generation, idempotent rerun.

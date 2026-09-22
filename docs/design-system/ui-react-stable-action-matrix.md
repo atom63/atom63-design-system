@@ -7,10 +7,10 @@
 ## Summary
 
 - Root export symbols: **597** across **74** source families.
-- Package export-map subpaths: **70**.
+- Package export-map subpaths: **71**.
 - P0 root/source families: **31**.
 - P1 root/source families: **12**.
-- P0 package subpaths: **2**.
+- P0 package subpaths: **3**.
 - P1 package subpaths: **2**.
 
 ### Root export tier counts
@@ -58,10 +58,11 @@
 
 ### P0 public subpaths
 
-| Subpath            | Kind   | Priority | Action                                 | Stable decision                                                                                   |
-| ------------------ | ------ | -------- | -------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `./media`          | module | P0       | `keep-preview-subpath-or-add-evidence` | Do not promise stable compatibility without browser/media lifecycle evidence or preview labeling. |
-| `./media/lightbox` | module | P0       | `keep-preview-subpath-or-add-evidence` | Do not promise stable compatibility without browser/media lifecycle evidence or preview labeling. |
+| Subpath            | Kind   | Priority | Action                                 | Stable decision                                                                                         |
+| ------------------ | ------ | -------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `./media`          | module | P0       | `keep-preview-subpath-or-add-evidence` | Do not promise stable compatibility without browser/media lifecycle evidence or preview labeling.       |
+| `./media/lightbox` | module | P0       | `keep-preview-subpath-or-add-evidence` | Do not promise stable compatibility without browser/media lifecycle evidence or preview labeling.       |
+| `./preview`        | module | P0       | `keep-preview-labeled`                 | Keep public only as a preview boundary; do not treat its symbols as stable root compatibility promises. |
 
 ## P1: document or prove before stable/latest
 

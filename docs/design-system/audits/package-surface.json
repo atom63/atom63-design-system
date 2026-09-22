@@ -216,6 +216,12 @@
           "types": "./dist/media/media-lightbox/parts/index.d.ts",
           "import": "./dist/media/media-lightbox/parts/index.js"
         },
+        "./preview": {
+          "development": "./src/preview/index.ts",
+          "typescript": "./src/preview/index.ts",
+          "types": "./dist/preview/index.d.ts",
+          "import": "./dist/preview/index.js"
+        },
         "./recipes.css": "./src/styles/recipes.css",
         "./recipes/media-lightbox.css": "./src/media/media-lightbox/media-lightbox.css",
         "./recipes/accordion.css": "./src/components/accordion/accordion.css",
@@ -293,6 +299,7 @@
         "./layout",
         "./media",
         "./media/lightbox",
+        "./preview",
         "./recipes.css",
         "./recipes/accordion.css",
         "./recipes/alert-dialog.css",

@@ -93,6 +93,7 @@
     "./layout": "Support high-level layout primitives after responsive/docs evidence; monitor style helpers, constants, chrome internals, and hooks.",
     "./media": "High risk. Needs browser/media lifecycle evidence before stable compatibility.",
     "./media/lightbox": "Preview unless the headless composition/state/context contract is intentionally supported.",
+    "./preview": "Public preview boundary; exports are not covered by the stable compatibility promise.",
     "./theme": "Document appearance UI; monitor controller factories, auto-color internals, option tables, and personalization utilities.",
     "css": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
   },

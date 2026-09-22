@@ -275,6 +275,14 @@ import { buttonContract, type ButtonContract } from '@atom63/ui-foundation'
 import { Container, type ContainerProps } from '@atom63/ui-react/layout'
 import { Image, type ImageProps } from '@atom63/ui-react/media'
 import { Lightbox, type LightboxState } from '@atom63/ui-react/media/lightbox'
+import {
+  ATOM63_MOTION_EASE,
+  ButtonGroupProvider,
+  DialogPrimitive,
+  getReactRendererConformance,
+  type ReactRendererConformanceEvidence,
+  type ReactVerifiedContractId,
+} from '@atom63/ui-react/preview'
 import { MODE_OPTIONS, type ThemeMode } from '@atom63/ui-react/theme'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
@@ -291,15 +299,22 @@ const publicApiReferences = {
   InputOTP,
   Lightbox,
   MODE_OPTIONS,
+  ATOM63_MOTION_EASE,
+  ButtonGroupProvider,
+  DialogPrimitive,
+  getReactRendererConformance,
   useAutocompleteFilter,
   useCardCursor,
   useCarousel,
 }
 type PublicApiTypes = [CarouselApi, ContainerProps, DialogSize, ImageProps, LightboxState, ThemeMode]
+type PreviewApiTypes = [ReactRendererConformanceEvidence, ReactVerifiedContractId]
 const publicApiTypes: PublicApiTypes | undefined = undefined
+const previewApiTypes: PreviewApiTypes | undefined = undefined
 void foundationContract
 void publicApiReferences
 void publicApiTypes
+void previewApiTypes
 
 function App() {
   return (

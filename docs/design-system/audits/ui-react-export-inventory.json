@@ -43,7 +43,7 @@
   "counts": {
     "rootValueExports": 425,
     "rootTypeExports": 172,
-    "packageExportKeys": 70,
+    "packageExportKeys": 71,
     "cssExportKeys": 65
   },
   "packageExportKeys": [
@@ -51,6 +51,7 @@
     "./layout",
     "./media",
     "./media/lightbox",
+    "./preview",
     "./recipes.css",
     "./recipes/accordion.css",
     "./recipes/alert-dialog.css",
@@ -224,6 +225,16 @@
         "import": "./dist/media/media-lightbox/parts/index.js",
         "types": "./dist/media/media-lightbox/parts/index.d.ts",
         "typescript": "./src/media/media-lightbox/parts/index.ts"
+      }
+    },
+    {
+      "subpath": "./preview",
+      "kind": "module",
+      "target": {
+        "development": "./src/preview/index.ts",
+        "import": "./dist/preview/index.js",
+        "types": "./dist/preview/index.d.ts",
+        "typescript": "./src/preview/index.ts"
       }
     },
     {

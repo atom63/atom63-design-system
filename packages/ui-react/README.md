@@ -111,8 +111,10 @@ publishing still requires YZ approval and npm organization policy.
 For the first public beta, the package keeps the current broad root export to
 avoid pre-release churn, but the support promise is tiered. Core controls are the
 primary compatibility surface; monitor/preview-candidate exports may remain
-importable while their evidence and API shape harden. See the design-system
-handbook's root API audit before treating a less common export as stable.
+importable while their evidence and API shape harden. Preview candidates are also
+available from `@atom63/ui-react/preview`; that subpath is public but is not a
+stable-compatibility promise. See the design-system handbook's root API audit
+before treating a less common export as stable.
 
 ## Docs
 

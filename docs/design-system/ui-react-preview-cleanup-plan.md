@@ -1,6 +1,6 @@
 # @atom63/ui-react Preview-symbol Cleanup Plan
 
-**Status:** stable-readiness execution plan; no export changes in this document.
+**Status:** Slice A implemented; the non-breaking `@atom63/ui-react/preview` boundary is available while current root exports remain unchanged.
 
 **Scope:** `preview-experimental-candidate` root exports from `docs/design-system/ui-react-support-policy.json` and `docs/design-system/audits/ui-react-export-inventory.json`.
 
@@ -95,6 +95,8 @@ These should become styles/tokens or stay private implementation details rather 
 ## Proposed implementation slices
 
 ### Slice A — add preview boundary without narrowing root
+
+**Implemented:** all 31 preview candidates are available from `@atom63/ui-react/preview`; packed-consumer coverage verifies representative values and types. The broad beta root remains unchanged.
 
 Files likely involved:
 

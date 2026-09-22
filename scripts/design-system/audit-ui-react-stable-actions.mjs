@@ -149,7 +149,12 @@ function buildSubpathRows(inventory, supportPolicy) {
       policyNote =
         supportPolicy.subpathPolicy[entry.subpath] ??
         "Root package API or public JavaScript subpath.";
-      if (["./media", "./media/lightbox"].includes(entry.subpath)) {
+      if (entry.subpath === "./preview") {
+        recommendedAction = "keep-preview-labeled";
+        priority = "P0";
+        stableDecision =
+          "Keep public only as a preview boundary; do not treat its symbols as stable root compatibility promises.";
+      } else if (["./media", "./media/lightbox"].includes(entry.subpath)) {
         recommendedAction = "keep-preview-subpath-or-add-evidence";
         priority = "P0";
         stableDecision =
