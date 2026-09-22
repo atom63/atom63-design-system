@@ -9,6 +9,7 @@
   },
   "scripts": {
     "build:example:vite-basic": "pnpm --filter atom63-vite-basic-example build",
+    "check:package-surface": "node scripts/design-system/audit-package-surface.mjs",
     "check:ui-react-exports": "node scripts/design-system/audit-ui-react-exports.mjs",
     "check:ds-pack-smoke": "node scripts/design-system/smoke-packed-ui-react.mjs",
     "changeset": "changeset",

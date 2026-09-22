@@ -30,6 +30,11 @@ jobs:
       - name: Check React exports
         run: pnpm check:ui-react-exports
 
+      - name: Check package surface audit
+        run: |
+          pnpm check:package-surface
+          git diff --exit-code -- docs/design-system/audits/package-surface.json
+
       - name: Check tokens
         run: pnpm --filter @atom63/styles check:tokens
 

@@ -117,12 +117,12 @@ Before promoting any package to stable/latest:
 
 - [ ] Finish npm `latest` policy and stable promotion plan so prereleases do not accidentally become default installs.
 - [x] Add a manual GitHub Actions beta release workflow scaffold for trusted publishing / npm provenance.
-- [ ] Configure npm trusted publishers and GitHub `npm-publish` environment reviewers before running `publish=true`.
+- [x] Configure npm trusted publishers and GitHub `npm-publish` environment reviewers before running `publish=true`.
 - [ ] Keep `@base-ui/react` and other type-visible dependencies under an explicit dependency policy.
 - [ ] Run clean external registry install/build smoke after publish.
 - [ ] Keep `atom63-vite` adopter smoke green without root override workarounds.
 - [ ] Audit `@atom63/ui-react` root exports and define stable support tiers.
-- [ ] Audit published file lists for CSS, dist output, and accidental test/internal files.
+- [x] Audit published file lists for CSS, dist output, and accidental test/internal files; CI now regenerates `docs/design-system/audits/package-surface.json` and fails on drift.
 - [ ] Run a full visual QA matrix: homepage, `/ds-lab`, component gallery, mobile/desktop, light/dark, theme variants, keyboard/focus states, reduced motion.
 - [ ] Complete Figma manual QA: variables sync, styleguide generation, idempotent rerun.
 - [ ] Clean docs IA so beta/stable users can find install, theming, component, and migration guidance without reading internal planning docs.

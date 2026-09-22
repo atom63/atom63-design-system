@@ -3,26 +3,23 @@
   "inputs": [
     "packages/styles/package.json",
     "packages/ui-foundation/package.json",
-    "packages/ui-react/package.json",
-    "apps/design-system/package.json",
-    "apps/figma-plugin/package.json",
-    "apps/storybook/package.json"
+    "packages/ui-react/package.json"
   ],
   "summary": {
-    "packageCount": 6,
+    "packageCount": 3,
     "publishableCount": 3,
-    "privateCount": 3,
+    "privateCount": 0,
     "packagesWithExports": 3,
     "packagesWithFilesWhitelist": 3,
     "packagesWithPeerDependencies": 1,
-    "packagesWithPublishAccess": 0
+    "packagesWithPublishAccess": 3
   },
   "packages": [
     {
       "directory": "packages/styles",
       "manifestPath": "packages/styles/package.json",
       "name": "@atom63/styles",
-      "version": "0.0.1",
+      "version": "0.1.0-beta.0",
       "private": false,
       "exports": {
         ".": "./src/index.css",
@@ -155,14 +152,16 @@
         "lint": "eslint . --cache --max-warnings 0",
         "test": "vitest run"
       },
-      "publishConfig": null,
-      "publishAccess": null
+      "publishConfig": {
+        "access": "public"
+      },
+      "publishAccess": "public"
     },
     {
       "directory": "packages/ui-foundation",
       "manifestPath": "packages/ui-foundation/package.json",
       "name": "@atom63/ui-foundation",
-      "version": "0.1.0",
+      "version": "0.1.1-beta.0",
       "private": false,
       "exports": {
         ".": {
@@ -181,14 +180,16 @@
         "lint": "eslint . --cache --max-warnings 0",
         "typecheck": "tsc --noEmit"
       },
-      "publishConfig": null,
-      "publishAccess": null
+      "publishConfig": {
+        "access": "public"
+      },
+      "publishAccess": "public"
     },
     {
       "directory": "packages/ui-react",
       "manifestPath": "packages/ui-react/package.json",
       "name": "@atom63/ui-react",
-      "version": "0.1.1",
+      "version": "0.2.0-beta.2",
       "private": false,
       "exports": {
         ".": {
@@ -372,67 +373,10 @@
         "test:watch": "vitest",
         "typecheck": "tsc --noEmit"
       },
-      "publishConfig": null,
-      "publishAccess": null
-    },
-    {
-      "directory": "apps/design-system",
-      "manifestPath": "apps/design-system/package.json",
-      "name": "@atom63/design-system",
-      "version": "0.1.0",
-      "private": true,
-      "exports": null,
-      "exportKeys": [],
-      "files": null,
-      "sideEffects": null,
-      "peerDependencies": {},
-      "qualityScripts": {
-        "build": "tsc -b && vite build",
-        "lint": "eslint . --cache --max-warnings 1",
-        "test": "vitest run",
-        "typecheck": "tsc -b --pretty false"
+      "publishConfig": {
+        "access": "public"
       },
-      "publishConfig": null,
-      "publishAccess": null
-    },
-    {
-      "directory": "apps/figma-plugin",
-      "manifestPath": "apps/figma-plugin/package.json",
-      "name": "@atom63/figma-plugin",
-      "version": "0.0.0",
-      "private": true,
-      "exports": null,
-      "exportKeys": [],
-      "files": null,
-      "sideEffects": null,
-      "peerDependencies": {},
-      "qualityScripts": {
-        "build": "pnpm preset:atom63 && node build.js",
-        "lint": "eslint . --cache --max-warnings 937",
-        "test:fonts": "tsx scripts/test-font-pipeline.ts",
-        "typecheck": "tsc --noEmit"
-      },
-      "publishConfig": null,
-      "publishAccess": null
-    },
-    {
-      "directory": "apps/storybook",
-      "manifestPath": "apps/storybook/package.json",
-      "name": "@atom63/storybook",
-      "version": "0.0.0",
-      "private": true,
-      "exports": null,
-      "exportKeys": [],
-      "files": null,
-      "sideEffects": null,
-      "peerDependencies": {},
-      "qualityScripts": {
-        "build": "storybook build",
-        "lint": "eslint . --cache --max-warnings 2",
-        "typecheck": "tsc --noEmit"
-      },
-      "publishConfig": null,
-      "publishAccess": null
+      "publishAccess": "public"
     }
   ]
 }
