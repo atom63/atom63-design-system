@@ -1,0 +1,489 @@
+{
+  "schemaVersion": 1,
+  "status": "stable-api-promotion-decision-register",
+  "packageName": "@atom63/ui-react",
+  "matrix": "docs/design-system/audits/ui-react-stable-action-matrix.json",
+  "scope": {
+    "rootSourcePriorities": ["P0"],
+    "publicSubpathPriorities": ["P0", "P1"],
+    "betaRootPolicy": "keep-unchanged-until-stable-approval"
+  },
+  "decisions": [
+    {
+      "id": "source:./components/animated-check",
+      "rowType": "root-source-family",
+      "source": "./components/animated-check",
+      "ownerLane": "component-quality",
+      "status": "monitor-until-evidence",
+      "decision": "keep-beta-root-unchanged-and-monitor",
+      "rationale": "AnimatedCheck remains public in beta, but its monitor-high-risk tier is not a stable compatibility approval.",
+      "requiredBeforeStable": [
+        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
+        "Approve an evidenced stable root contract or move or remove the family from the stable root with migration notes."
+      ]
+    },
+    {
+      "id": "source:./components/autocomplete",
+      "rowType": "root-source-family",
+      "source": "./components/autocomplete",
+      "ownerLane": "forms-quality",
+      "status": "monitor-until-evidence",
+      "decision": "keep-beta-root-unchanged-and-monitor",
+      "tierDecisions": {
+        "monitor-high-risk": "monitor-until-evidence",
+        "preview-experimental-candidate": "preview-only-pending-root-removal-before-stable"
+      },
+      "rationale": "Autocomplete remains public in beta while browser, mobile, keyboard, and assistive-technology evidence is incomplete; AutocompletePrimitive remains preview-only pending root removal before stable.",
+      "requiredBeforeStable": [
+        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
+        "Approve an evidenced stable root contract or move or remove the family from the stable root with migration notes."
+      ]
+    },
+    {
+      "id": "source:./components/calendar",
+      "rowType": "root-source-family",
+      "source": "./components/calendar",
+      "ownerLane": "forms-quality",
+      "status": "monitor-until-evidence",
+      "decision": "keep-beta-root-unchanged-and-monitor",
+      "rationale": "Calendar remains public in beta while browser, mobile, keyboard, and assistive-technology evidence is incomplete.",
+      "requiredBeforeStable": [
+        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
+        "Approve an evidenced stable root contract or move or remove the family from the stable root with migration notes."
+      ]
+    },
+    {
+      "id": "source:./components/card",
+      "rowType": "root-source-family",
+      "source": "./components/card",
+      "ownerLane": "component-quality",
+      "status": "monitor-until-evidence",
+      "decision": "keep-beta-root-unchanged-and-monitor",
+      "tierDecisions": {
+        "monitor-high-risk": "monitor-until-evidence",
+        "preview-experimental-candidate": "preview-only-pending-root-removal-before-stable"
+      },
+      "rationale": "Card cursor helpers remain public in beta, but their monitor-high-risk tier is not a stable compatibility approval; cardLinkClassName remains preview-only pending root removal before stable.",
+      "requiredBeforeStable": [
+        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
+        "Approve an evidenced stable root contract or move or remove the monitored helpers from the stable root with migration notes."
+      ]
+    },
+    {
+      "id": "source:./components/carousel",
+      "rowType": "root-source-family",
+      "source": "./components/carousel",
+      "ownerLane": "media-quality",
+      "status": "monitor-until-evidence",
+      "decision": "keep-beta-root-unchanged-and-monitor",
+      "rationale": "Carousel remains public in beta while real-browser gesture, motion, responsive, and assistive-technology evidence is incomplete.",
+      "requiredBeforeStable": [
+        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
+        "Approve an evidenced stable root contract or move or remove the family from the stable root with migration notes."
+      ]
+    },
+    {
+      "id": "source:./components/copy-button",
+      "rowType": "root-source-family",
+      "source": "./components/copy-button",
+      "ownerLane": "component-quality",
+      "status": "monitor-until-evidence",
+      "decision": "keep-beta-root-unchanged-and-monitor",
+      "rationale": "CopyButton remains public in beta, but clipboard and feedback behavior still require stable-support evidence.",
+      "requiredBeforeStable": [
+        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
+        "Approve an evidenced stable root contract or move or remove the family from the stable root with migration notes."
+      ]
+    },
+    {
+      "id": "source:./components/destination-link",
+      "rowType": "root-source-family",
+      "source": "./components/destination-link",
+      "ownerLane": "component-quality",
+      "status": "monitor-until-evidence",
+      "decision": "keep-beta-root-unchanged-and-monitor",
+      "rationale": "DestinationLink remains public in beta, but its monitor-high-risk tier is not a stable compatibility approval.",
+      "requiredBeforeStable": [
+        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
+        "Approve an evidenced stable root contract or move or remove the family from the stable root with migration notes."
+      ]
+    },
+    {
+      "id": "source:./components/input-otp",
+      "rowType": "root-source-family",
+      "source": "./components/input-otp",
+      "ownerLane": "forms-quality",
+      "status": "monitor-until-evidence",
+      "decision": "keep-beta-root-unchanged-and-monitor",
+      "rationale": "InputOTP remains public in beta while mobile, paste, autofill, and assistive-technology evidence is incomplete.",
+      "requiredBeforeStable": [
+        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
+        "Approve an evidenced stable root contract or move or remove the family from the stable root with migration notes."
+      ]
+    },
+    {
+      "id": "source:./components/load-more-trigger",
+      "rowType": "root-source-family",
+      "source": "./components/load-more-trigger",
+      "ownerLane": "component-quality",
+      "status": "monitor-until-evidence",
+      "decision": "keep-beta-root-unchanged-and-monitor",
+      "rationale": "LoadMoreTrigger remains public in beta, but observer, loading, and accessibility behavior still require stable-support evidence.",
+      "requiredBeforeStable": [
+        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
+        "Approve an evidenced stable root contract or move or remove the family from the stable root with migration notes."
+      ]
+    },
+    {
+      "id": "source:./components/marquee",
+      "rowType": "root-source-family",
+      "source": "./components/marquee",
+      "ownerLane": "motion-quality",
+      "status": "monitor-until-evidence",
+      "decision": "keep-beta-root-unchanged-and-monitor",
+      "rationale": "Marquee remains public in beta, but reduced-motion and runtime behavior still require stable-support evidence.",
+      "requiredBeforeStable": [
+        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
+        "Approve an evidenced stable root contract or move or remove the family from the stable root with migration notes."
+      ]
+    },
+    {
+      "id": "source:./components/panel-setting-button",
+      "rowType": "root-source-family",
+      "source": "./components/panel-setting-button",
+      "ownerLane": "component-quality",
+      "status": "monitor-until-evidence",
+      "decision": "keep-beta-root-unchanged-and-monitor",
+      "rationale": "PanelSettingButton remains public in beta, but its monitor-high-risk tier is not a stable compatibility approval.",
+      "requiredBeforeStable": [
+        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
+        "Approve an evidenced stable root contract or move or remove the family from the stable root with migration notes."
+      ]
+    },
+    {
+      "id": "source:./components/portal-container",
+      "rowType": "root-source-family",
+      "source": "./components/portal-container",
+      "ownerLane": "infrastructure-quality",
+      "status": "monitor-until-evidence",
+      "decision": "keep-beta-root-unchanged-and-monitor",
+      "rationale": "PortalContainer remains public in beta while real-browser overlay, Shadow DOM, and SSR or hydration evidence is incomplete.",
+      "requiredBeforeStable": [
+        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
+        "Approve an evidenced stable root contract or move or remove the family from the stable root with migration notes."
+      ]
+    },
+    {
+      "id": "source:./components/progressive-blur",
+      "rowType": "root-source-family",
+      "source": "./components/progressive-blur",
+      "ownerLane": "visual-quality",
+      "status": "monitor-until-evidence",
+      "decision": "keep-beta-root-unchanged-and-monitor",
+      "rationale": "ProgressiveBlur remains public in beta, but cross-browser rendering and performance still require stable-support evidence.",
+      "requiredBeforeStable": [
+        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
+        "Approve an evidenced stable root contract or move or remove the family from the stable root with migration notes."
+      ]
+    },
+    {
+      "id": "source:./components/text-ticker",
+      "rowType": "root-source-family",
+      "source": "./components/text-ticker",
+      "ownerLane": "motion-quality",
+      "status": "monitor-until-evidence",
+      "decision": "keep-beta-root-unchanged-and-monitor",
+      "rationale": "TextTicker remains public in beta, but reduced-motion, overflow, and runtime behavior still require stable-support evidence.",
+      "requiredBeforeStable": [
+        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
+        "Approve an evidenced stable root contract or move or remove the family from the stable root with migration notes."
+      ]
+    },
+    {
+      "id": "source:./hooks/use-extract-color",
+      "rowType": "root-source-family",
+      "source": "./hooks/use-extract-color",
+      "ownerLane": "media-quality",
+      "status": "monitor-until-evidence",
+      "decision": "keep-beta-root-unchanged-and-monitor",
+      "rationale": "useExtractColor remains public in beta while CORS, canvas, image lifecycle, and performance evidence is incomplete.",
+      "requiredBeforeStable": [
+        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
+        "Approve an evidenced stable root contract or move or remove the family from the stable root with migration notes."
+      ]
+    },
+    {
+      "id": "source:./lib/extract-color",
+      "rowType": "root-source-family",
+      "source": "./lib/extract-color",
+      "ownerLane": "media-quality",
+      "status": "monitor-until-evidence",
+      "decision": "keep-beta-root-unchanged-and-monitor",
+      "rationale": "Extract-color utilities remain public in beta while CORS, canvas, image lifecycle, cache, and performance evidence is incomplete.",
+      "requiredBeforeStable": [
+        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
+        "Approve an evidenced stable root contract or move or remove the family from the stable root with migration notes."
+      ]
+    },
+    {
+      "id": "source:./components/alert-dialog",
+      "rowType": "root-source-family",
+      "source": "./components/alert-dialog",
+      "ownerLane": "api-governance",
+      "status": "preview-only-pending-root-removal-before-stable",
+      "decision": "keep-beta-root-unchanged-preview-only",
+      "rationale": "AlertDialog primitive aliases and create-handle exports are preview candidates, not approved stable root API.",
+      "requiredBeforeStable": [
+        "Execute the documented beta-to-stable root removal or move to preview with migration notes.",
+        "Alternatively record YZ or design-engineering approval plus stable-support evidence before changing this decision to stable-approved."
+      ]
+    },
+    {
+      "id": "source:./components/avatar",
+      "rowType": "root-source-family",
+      "source": "./components/avatar",
+      "ownerLane": "api-governance",
+      "status": "preview-only-pending-root-removal-before-stable",
+      "decision": "keep-beta-root-unchanged-preview-only",
+      "rationale": "AvatarPrimitive is a preview candidate, not an approved stable root API.",
+      "requiredBeforeStable": [
+        "Execute the documented beta-to-stable root removal or move to preview with migration notes.",
+        "Alternatively record YZ or design-engineering approval plus stable-support evidence before changing this decision to stable-approved."
+      ]
+    },
+    {
+      "id": "source:./components/button-group",
+      "rowType": "root-source-family",
+      "source": "./components/button-group",
+      "ownerLane": "api-governance",
+      "status": "preview-only-pending-root-removal-before-stable",
+      "decision": "keep-beta-root-unchanged-preview-only",
+      "rationale": "ButtonGroup context internals are preview candidates, not approved stable root API.",
+      "requiredBeforeStable": [
+        "Execute the documented beta-to-stable root removal or move to preview with migration notes.",
+        "Alternatively record YZ or design-engineering approval plus stable-support evidence before changing this decision to stable-approved."
+      ]
+    },
+    {
+      "id": "source:./components/command",
+      "rowType": "root-source-family",
+      "source": "./components/command",
+      "ownerLane": "api-governance",
+      "status": "preview-only-pending-root-removal-before-stable",
+      "decision": "keep-beta-root-unchanged-preview-only",
+      "rationale": "CommandCreateHandle is a preview candidate, not an approved stable root API.",
+      "requiredBeforeStable": [
+        "Execute the documented beta-to-stable root removal or move to preview with migration notes.",
+        "Alternatively record YZ or design-engineering approval plus stable-support evidence before changing this decision to stable-approved."
+      ]
+    },
+    {
+      "id": "source:./components/dialog",
+      "rowType": "root-source-family",
+      "source": "./components/dialog",
+      "ownerLane": "api-governance",
+      "status": "preview-only-pending-root-removal-before-stable",
+      "decision": "keep-beta-root-unchanged-preview-only",
+      "rationale": "Dialog primitive aliases and create-handle exports are preview candidates, not approved stable root API.",
+      "requiredBeforeStable": [
+        "Execute the documented beta-to-stable root removal or move to preview with migration notes.",
+        "Alternatively record YZ or design-engineering approval plus stable-support evidence before changing this decision to stable-approved."
+      ]
+    },
+    {
+      "id": "source:./components/input",
+      "rowType": "root-source-family",
+      "source": "./components/input",
+      "ownerLane": "api-governance",
+      "status": "preview-only-pending-root-removal-before-stable",
+      "decision": "keep-beta-root-unchanged-preview-only",
+      "rationale": "InputPrimitive is a preview candidate, not an approved stable root API.",
+      "requiredBeforeStable": [
+        "Execute the documented beta-to-stable root removal or move to preview with migration notes.",
+        "Alternatively record YZ or design-engineering approval plus stable-support evidence before changing this decision to stable-approved."
+      ]
+    },
+    {
+      "id": "source:./components/navigation-menu",
+      "rowType": "root-source-family",
+      "source": "./components/navigation-menu",
+      "ownerLane": "api-governance",
+      "status": "preview-only-pending-root-removal-before-stable",
+      "decision": "keep-beta-root-unchanged-preview-only",
+      "rationale": "navigationMenuTriggerStyle is a preview candidate, not an approved stable root API.",
+      "requiredBeforeStable": [
+        "Execute the documented beta-to-stable root removal or move to preview with migration notes.",
+        "Alternatively record YZ or design-engineering approval plus stable-support evidence before changing this decision to stable-approved."
+      ]
+    },
+    {
+      "id": "source:./components/progress",
+      "rowType": "root-source-family",
+      "source": "./components/progress",
+      "ownerLane": "api-governance",
+      "status": "preview-only-pending-root-removal-before-stable",
+      "decision": "keep-beta-root-unchanged-preview-only",
+      "rationale": "ProgressPrimitive is a preview candidate, not an approved stable root API.",
+      "requiredBeforeStable": [
+        "Execute the documented beta-to-stable root removal or move to preview with migration notes.",
+        "Alternatively record YZ or design-engineering approval plus stable-support evidence before changing this decision to stable-approved."
+      ]
+    },
+    {
+      "id": "source:./components/scrollable-list",
+      "rowType": "root-source-family",
+      "source": "./components/scrollable-list",
+      "ownerLane": "api-governance",
+      "status": "preview-only-pending-root-removal-before-stable",
+      "decision": "keep-beta-root-unchanged-preview-only",
+      "rationale": "Scrollable-list internal class-name exports are preview candidates, not approved stable root API.",
+      "requiredBeforeStable": [
+        "Execute the documented beta-to-stable root removal or move to preview with migration notes.",
+        "Alternatively record YZ or design-engineering approval plus stable-support evidence before changing this decision to stable-approved."
+      ]
+    },
+    {
+      "id": "source:./components/select",
+      "rowType": "root-source-family",
+      "source": "./components/select",
+      "ownerLane": "api-governance",
+      "status": "preview-only-pending-root-removal-before-stable",
+      "decision": "keep-beta-root-unchanged-preview-only",
+      "rationale": "Select internal class-name exports are preview candidates, not approved stable root API.",
+      "requiredBeforeStable": [
+        "Execute the documented beta-to-stable root removal or move to preview with migration notes.",
+        "Alternatively record YZ or design-engineering approval plus stable-support evidence before changing this decision to stable-approved."
+      ]
+    },
+    {
+      "id": "source:./components/separator",
+      "rowType": "root-source-family",
+      "source": "./components/separator",
+      "ownerLane": "api-governance",
+      "status": "preview-only-pending-root-removal-before-stable",
+      "decision": "keep-beta-root-unchanged-preview-only",
+      "rationale": "SeparatorPrimitive is a preview candidate, not an approved stable root API.",
+      "requiredBeforeStable": [
+        "Execute the documented beta-to-stable root removal or move to preview with migration notes.",
+        "Alternatively record YZ or design-engineering approval plus stable-support evidence before changing this decision to stable-approved."
+      ]
+    },
+    {
+      "id": "source:./components/sheet",
+      "rowType": "root-source-family",
+      "source": "./components/sheet",
+      "ownerLane": "api-governance",
+      "status": "preview-only-pending-root-removal-before-stable",
+      "decision": "keep-beta-root-unchanged-preview-only",
+      "rationale": "SheetPrimitive is a preview candidate, not an approved stable root API.",
+      "requiredBeforeStable": [
+        "Execute the documented beta-to-stable root removal or move to preview with migration notes.",
+        "Alternatively record YZ or design-engineering approval plus stable-support evidence before changing this decision to stable-approved."
+      ]
+    },
+    {
+      "id": "source:./components/tooltip",
+      "rowType": "root-source-family",
+      "source": "./components/tooltip",
+      "ownerLane": "api-governance",
+      "status": "preview-only-pending-root-removal-before-stable",
+      "decision": "keep-beta-root-unchanged-preview-only",
+      "rationale": "Tooltip primitive aliases and create-handle exports are preview candidates, not approved stable root API.",
+      "requiredBeforeStable": [
+        "Execute the documented beta-to-stable root removal or move to preview with migration notes.",
+        "Alternatively record YZ or design-engineering approval plus stable-support evidence before changing this decision to stable-approved."
+      ]
+    },
+    {
+      "id": "source:./conformance",
+      "rowType": "root-source-family",
+      "source": "./conformance",
+      "ownerLane": "api-governance",
+      "status": "preview-only-pending-root-removal-before-stable",
+      "decision": "keep-beta-root-unchanged-preview-only",
+      "rationale": "Renderer conformance evidence is a preview or tooling surface, not an approved stable root API.",
+      "requiredBeforeStable": [
+        "Execute the documented beta-to-stable root removal or move to preview with migration notes.",
+        "Alternatively record YZ or design-engineering approval plus stable-support evidence before changing this decision to stable-approved."
+      ]
+    },
+    {
+      "id": "source:./lib/motion",
+      "rowType": "root-source-family",
+      "source": "./lib/motion",
+      "ownerLane": "api-governance",
+      "status": "preview-only-pending-root-removal-before-stable",
+      "decision": "keep-beta-root-unchanged-preview-only",
+      "rationale": "Raw motion constants are preview candidates, not approved stable root API.",
+      "requiredBeforeStable": [
+        "Execute the documented beta-to-stable root removal or move to preview with migration notes.",
+        "Alternatively record YZ or design-engineering approval plus stable-support evidence before changing this decision to stable-approved."
+      ]
+    },
+    {
+      "id": "subpath:./media",
+      "rowType": "public-subpath",
+      "subpath": "./media",
+      "ownerLane": "media-quality",
+      "status": "preview-only-pending-evidence",
+      "decision": "keep-public-preview-subpath",
+      "rationale": "The beta media subpath remains public without becoming a stable compatibility promise while browser and media lifecycle evidence is incomplete.",
+      "requiredBeforeStable": [
+        "Document the preview-only contract and migration expectations for the media subpath.",
+        "Record browser, media lifecycle, keyboard, and assistive-technology evidence or approve a continuing preview label for the stable release."
+      ]
+    },
+    {
+      "id": "subpath:./media/lightbox",
+      "rowType": "public-subpath",
+      "subpath": "./media/lightbox",
+      "ownerLane": "media-quality",
+      "status": "preview-only-pending-evidence",
+      "decision": "keep-public-preview-subpath",
+      "rationale": "The beta lightbox subpath remains public without becoming a stable compatibility promise while browser and media lifecycle evidence is incomplete.",
+      "requiredBeforeStable": [
+        "Document the preview-only contract and migration expectations for the lightbox subpath.",
+        "Record browser, media lifecycle, keyboard, and assistive-technology evidence or approve a continuing preview label for the stable release."
+      ]
+    },
+    {
+      "id": "subpath:./preview",
+      "rowType": "public-subpath",
+      "subpath": "./preview",
+      "ownerLane": "api-governance",
+      "status": "preview-contract-documented",
+      "decision": "keep-public-preview-subpath",
+      "rationale": "The explicitly named preview boundary may remain public while its exports stay outside stable root compatibility promises.",
+      "requiredBeforeStable": [
+        "Keep preview labeling, support limits, and migration guidance explicit in public documentation.",
+        "Confirm stable release notes do not present preview-subpath exports as stable-approved."
+      ]
+    },
+    {
+      "id": "subpath:./layout",
+      "rowType": "public-subpath",
+      "subpath": "./layout",
+      "ownerLane": "api-governance",
+      "status": "subpath-contract-pending-documentation",
+      "decision": "keep-public-subpath-pending-contract",
+      "rationale": "The layout subpath remains public in beta while its supported high-level APIs and monitored helpers are not yet a documented stable contract.",
+      "requiredBeforeStable": [
+        "Document which layout exports are stable-supported and which remain monitored or preview.",
+        "Record approval of that subpath contract before stable promotion."
+      ]
+    },
+    {
+      "id": "subpath:./theme",
+      "rowType": "public-subpath",
+      "subpath": "./theme",
+      "ownerLane": "api-governance",
+      "status": "subpath-contract-pending-documentation",
+      "decision": "keep-public-subpath-pending-contract",
+      "rationale": "The theme subpath remains public in beta while its supported high-level APIs and monitored helpers are not yet a documented stable contract.",
+      "requiredBeforeStable": [
+        "Document which theme exports are stable-supported and which remain monitored or preview.",
+        "Record approval of that subpath contract before stable promotion."
+      ]
+    }
+  ]
+}

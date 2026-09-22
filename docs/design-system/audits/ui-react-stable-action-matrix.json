@@ -4,12 +4,33 @@
   "packageName": "@atom63/ui-react",
   "inputs": [
     "docs/design-system/audits/ui-react-export-inventory.json",
-    "docs/design-system/ui-react-support-policy.json"
+    "docs/design-system/ui-react-support-policy.json",
+    "docs/design-system/ui-react-stable-promotion-decisions.json"
   ],
   "generatedFrom": {
     "inventorySchemaVersion": 1,
     "supportPolicySchemaVersion": 1,
-    "supportPolicyEffectiveFrom": "0.2.0-beta.2"
+    "supportPolicyEffectiveFrom": "0.2.0-beta.2",
+    "decisionRegisterSchemaVersion": 1
+  },
+  "decisionRegister": {
+    "path": "docs/design-system/ui-react-stable-promotion-decisions.json",
+    "status": "stable-api-promotion-decision-register",
+    "betaRootPolicy": "keep-unchanged-until-stable-approval"
+  },
+  "decisionCoverage": {
+    "required": 36,
+    "decided": 36,
+    "missing": 0,
+    "rootSourceFamilies": 31,
+    "publicSubpaths": 5,
+    "byStatus": {
+      "monitor-until-evidence": 16,
+      "preview-only-pending-root-removal-before-stable": 15,
+      "preview-only-pending-evidence": 2,
+      "preview-contract-documented": 1,
+      "subpath-contract-pending-documentation": 2
+    }
   },
   "actionDefinitions": {
     "beta-supported-core": {
@@ -110,7 +131,13 @@
         "migration policy if kept public"
       ],
       "notableSymbols": ["AnimatedCheck", "AnimatedCheckProps"],
-      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
+      "promotionDecision": {
+        "id": "source:./components/animated-check",
+        "ownerLane": "component-quality",
+        "status": "monitor-until-evidence",
+        "decision": "keep-beta-root-unchanged-and-monitor"
+      }
     },
     {
       "source": "./components/autocomplete",
@@ -148,7 +175,13 @@
         "AutocompleteRow",
         "AutocompleteSeparator"
       ],
-      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
+      "promotionDecision": {
+        "id": "source:./components/autocomplete",
+        "ownerLane": "forms-quality",
+        "status": "monitor-until-evidence",
+        "decision": "keep-beta-root-unchanged-and-monitor"
+      }
     },
     {
       "source": "./components/calendar",
@@ -172,7 +205,13 @@
         "migration policy if kept public"
       ],
       "notableSymbols": ["Calendar", "CalendarProps"],
-      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
+      "promotionDecision": {
+        "id": "source:./components/calendar",
+        "ownerLane": "forms-quality",
+        "status": "monitor-until-evidence",
+        "decision": "keep-beta-root-unchanged-and-monitor"
+      }
     },
     {
       "source": "./components/card",
@@ -203,7 +242,13 @@
         "CardCursorBinding",
         "UseCardCursorOptions"
       ],
-      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
+      "promotionDecision": {
+        "id": "source:./components/card",
+        "ownerLane": "component-quality",
+        "status": "monitor-until-evidence",
+        "decision": "keep-beta-root-unchanged-and-monitor"
+      }
     },
     {
       "source": "./components/carousel",
@@ -236,7 +281,13 @@
         "CarouselApi",
         "CarouselProps"
       ],
-      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
+      "promotionDecision": {
+        "id": "source:./components/carousel",
+        "ownerLane": "media-quality",
+        "status": "monitor-until-evidence",
+        "decision": "keep-beta-root-unchanged-and-monitor"
+      }
     },
     {
       "source": "./components/copy-button",
@@ -265,7 +316,13 @@
         "CopyButtonFeedbackProps",
         "CopyButtonProps"
       ],
-      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
+      "promotionDecision": {
+        "id": "source:./components/copy-button",
+        "ownerLane": "component-quality",
+        "status": "monitor-until-evidence",
+        "decision": "keep-beta-root-unchanged-and-monitor"
+      }
     },
     {
       "source": "./components/destination-link",
@@ -294,7 +351,13 @@
         "DestinationKind",
         "DestinationLinkProps"
       ],
-      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
+      "promotionDecision": {
+        "id": "source:./components/destination-link",
+        "ownerLane": "component-quality",
+        "status": "monitor-until-evidence",
+        "decision": "keep-beta-root-unchanged-and-monitor"
+      }
     },
     {
       "source": "./components/input-otp",
@@ -323,7 +386,13 @@
         "InputOTPSeparator",
         "InputOTPSlot"
       ],
-      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
+      "promotionDecision": {
+        "id": "source:./components/input-otp",
+        "ownerLane": "forms-quality",
+        "status": "monitor-until-evidence",
+        "decision": "keep-beta-root-unchanged-and-monitor"
+      }
     },
     {
       "source": "./components/load-more-trigger",
@@ -352,7 +421,13 @@
         "LoadMoreTriggerState",
         "LoadMoreTriggerVariant"
       ],
-      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
+      "promotionDecision": {
+        "id": "source:./components/load-more-trigger",
+        "ownerLane": "component-quality",
+        "status": "monitor-until-evidence",
+        "decision": "keep-beta-root-unchanged-and-monitor"
+      }
     },
     {
       "source": "./components/marquee",
@@ -376,7 +451,13 @@
         "migration policy if kept public"
       ],
       "notableSymbols": ["Marquee", "MarqueeProps"],
-      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
+      "promotionDecision": {
+        "id": "source:./components/marquee",
+        "ownerLane": "motion-quality",
+        "status": "monitor-until-evidence",
+        "decision": "keep-beta-root-unchanged-and-monitor"
+      }
     },
     {
       "source": "./components/panel-setting-button",
@@ -400,7 +481,13 @@
         "migration policy if kept public"
       ],
       "notableSymbols": ["PanelSettingButton", "PanelSettingButtonProps"],
-      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
+      "promotionDecision": {
+        "id": "source:./components/panel-setting-button",
+        "ownerLane": "component-quality",
+        "status": "monitor-until-evidence",
+        "decision": "keep-beta-root-unchanged-and-monitor"
+      }
     },
     {
       "source": "./components/portal-container",
@@ -429,7 +516,13 @@
         "PortalContainer",
         "PortalContainerProviderProps"
       ],
-      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
+      "promotionDecision": {
+        "id": "source:./components/portal-container",
+        "ownerLane": "infrastructure-quality",
+        "status": "monitor-until-evidence",
+        "decision": "keep-beta-root-unchanged-and-monitor"
+      }
     },
     {
       "source": "./components/progressive-blur",
@@ -457,7 +550,13 @@
         "ProgressiveBlurPosition",
         "ProgressiveBlurProps"
       ],
-      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
+      "promotionDecision": {
+        "id": "source:./components/progressive-blur",
+        "ownerLane": "visual-quality",
+        "status": "monitor-until-evidence",
+        "decision": "keep-beta-root-unchanged-and-monitor"
+      }
     },
     {
       "source": "./components/text-ticker",
@@ -481,7 +580,13 @@
         "migration policy if kept public"
       ],
       "notableSymbols": ["TextTicker", "TextTickerProps"],
-      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
+      "promotionDecision": {
+        "id": "source:./components/text-ticker",
+        "ownerLane": "motion-quality",
+        "status": "monitor-until-evidence",
+        "decision": "keep-beta-root-unchanged-and-monitor"
+      }
     },
     {
       "source": "./hooks/use-extract-color",
@@ -509,7 +614,13 @@
         "UseExtractColorOptions",
         "UseExtractColorReturn"
       ],
-      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
+      "promotionDecision": {
+        "id": "source:./hooks/use-extract-color",
+        "ownerLane": "media-quality",
+        "status": "monitor-until-evidence",
+        "decision": "keep-beta-root-unchanged-and-monitor"
+      }
     },
     {
       "source": "./lib/extract-color",
@@ -544,7 +655,13 @@
         "ExtractColorOptions",
         "ExtractedColor"
       ],
-      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
+      "promotionDecision": {
+        "id": "source:./lib/extract-color",
+        "ownerLane": "media-quality",
+        "status": "monitor-until-evidence",
+        "decision": "keep-beta-root-unchanged-and-monitor"
+      }
     },
     {
       "source": "./components/alert-dialog",
@@ -568,7 +685,13 @@
         "preview boundary docs if retained publicly"
       ],
       "notableSymbols": ["AlertDialogCreateHandle", "AlertDialogPrimitive"],
-      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+      "policyNote": "Not stable-eligible without explicit design-engineering approval.",
+      "promotionDecision": {
+        "id": "source:./components/alert-dialog",
+        "ownerLane": "api-governance",
+        "status": "preview-only-pending-root-removal-before-stable",
+        "decision": "keep-beta-root-unchanged-preview-only"
+      }
     },
     {
       "source": "./components/avatar",
@@ -592,7 +715,13 @@
         "preview boundary docs if retained publicly"
       ],
       "notableSymbols": ["AvatarPrimitive"],
-      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+      "policyNote": "Not stable-eligible without explicit design-engineering approval.",
+      "promotionDecision": {
+        "id": "source:./components/avatar",
+        "ownerLane": "api-governance",
+        "status": "preview-only-pending-root-removal-before-stable",
+        "decision": "keep-beta-root-unchanged-preview-only"
+      }
     },
     {
       "source": "./components/button-group",
@@ -616,7 +745,13 @@
         "preview boundary docs if retained publicly"
       ],
       "notableSymbols": ["ButtonGroupProvider", "useButtonGroupContext"],
-      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+      "policyNote": "Not stable-eligible without explicit design-engineering approval.",
+      "promotionDecision": {
+        "id": "source:./components/button-group",
+        "ownerLane": "api-governance",
+        "status": "preview-only-pending-root-removal-before-stable",
+        "decision": "keep-beta-root-unchanged-preview-only"
+      }
     },
     {
       "source": "./components/command",
@@ -640,7 +775,13 @@
         "preview boundary docs if retained publicly"
       ],
       "notableSymbols": ["CommandCreateHandle"],
-      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+      "policyNote": "Not stable-eligible without explicit design-engineering approval.",
+      "promotionDecision": {
+        "id": "source:./components/command",
+        "ownerLane": "api-governance",
+        "status": "preview-only-pending-root-removal-before-stable",
+        "decision": "keep-beta-root-unchanged-preview-only"
+      }
     },
     {
       "source": "./components/dialog",
@@ -664,7 +805,13 @@
         "preview boundary docs if retained publicly"
       ],
       "notableSymbols": ["DialogCreateHandle", "DialogPrimitive"],
-      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+      "policyNote": "Not stable-eligible without explicit design-engineering approval.",
+      "promotionDecision": {
+        "id": "source:./components/dialog",
+        "ownerLane": "api-governance",
+        "status": "preview-only-pending-root-removal-before-stable",
+        "decision": "keep-beta-root-unchanged-preview-only"
+      }
     },
     {
       "source": "./components/input",
@@ -688,7 +835,13 @@
         "preview boundary docs if retained publicly"
       ],
       "notableSymbols": ["InputPrimitive"],
-      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+      "policyNote": "Not stable-eligible without explicit design-engineering approval.",
+      "promotionDecision": {
+        "id": "source:./components/input",
+        "ownerLane": "api-governance",
+        "status": "preview-only-pending-root-removal-before-stable",
+        "decision": "keep-beta-root-unchanged-preview-only"
+      }
     },
     {
       "source": "./components/navigation-menu",
@@ -712,7 +865,13 @@
         "preview boundary docs if retained publicly"
       ],
       "notableSymbols": ["navigationMenuTriggerStyle"],
-      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+      "policyNote": "Not stable-eligible without explicit design-engineering approval.",
+      "promotionDecision": {
+        "id": "source:./components/navigation-menu",
+        "ownerLane": "api-governance",
+        "status": "preview-only-pending-root-removal-before-stable",
+        "decision": "keep-beta-root-unchanged-preview-only"
+      }
     },
     {
       "source": "./components/progress",
@@ -736,7 +895,13 @@
         "preview boundary docs if retained publicly"
       ],
       "notableSymbols": ["ProgressPrimitive"],
-      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+      "policyNote": "Not stable-eligible without explicit design-engineering approval.",
+      "promotionDecision": {
+        "id": "source:./components/progress",
+        "ownerLane": "api-governance",
+        "status": "preview-only-pending-root-removal-before-stable",
+        "decision": "keep-beta-root-unchanged-preview-only"
+      }
     },
     {
       "source": "./components/scrollable-list",
@@ -760,7 +925,13 @@
         "preview boundary docs if retained publicly"
       ],
       "notableSymbols": ["scrollableListControlClassNames"],
-      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+      "policyNote": "Not stable-eligible without explicit design-engineering approval.",
+      "promotionDecision": {
+        "id": "source:./components/scrollable-list",
+        "ownerLane": "api-governance",
+        "status": "preview-only-pending-root-removal-before-stable",
+        "decision": "keep-beta-root-unchanged-preview-only"
+      }
     },
     {
       "source": "./components/select",
@@ -784,7 +955,13 @@
         "preview boundary docs if retained publicly"
       ],
       "notableSymbols": ["selectTriggerDefaultClassName"],
-      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+      "policyNote": "Not stable-eligible without explicit design-engineering approval.",
+      "promotionDecision": {
+        "id": "source:./components/select",
+        "ownerLane": "api-governance",
+        "status": "preview-only-pending-root-removal-before-stable",
+        "decision": "keep-beta-root-unchanged-preview-only"
+      }
     },
     {
       "source": "./components/separator",
@@ -808,7 +985,13 @@
         "preview boundary docs if retained publicly"
       ],
       "notableSymbols": ["SeparatorPrimitive"],
-      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+      "policyNote": "Not stable-eligible without explicit design-engineering approval.",
+      "promotionDecision": {
+        "id": "source:./components/separator",
+        "ownerLane": "api-governance",
+        "status": "preview-only-pending-root-removal-before-stable",
+        "decision": "keep-beta-root-unchanged-preview-only"
+      }
     },
     {
       "source": "./components/sheet",
@@ -832,7 +1015,13 @@
         "preview boundary docs if retained publicly"
       ],
       "notableSymbols": ["SheetPrimitive"],
-      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+      "policyNote": "Not stable-eligible without explicit design-engineering approval.",
+      "promotionDecision": {
+        "id": "source:./components/sheet",
+        "ownerLane": "api-governance",
+        "status": "preview-only-pending-root-removal-before-stable",
+        "decision": "keep-beta-root-unchanged-preview-only"
+      }
     },
     {
       "source": "./components/tooltip",
@@ -856,7 +1045,13 @@
         "preview boundary docs if retained publicly"
       ],
       "notableSymbols": ["TooltipCreateHandle", "TooltipPrimitive"],
-      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+      "policyNote": "Not stable-eligible without explicit design-engineering approval.",
+      "promotionDecision": {
+        "id": "source:./components/tooltip",
+        "ownerLane": "api-governance",
+        "status": "preview-only-pending-root-removal-before-stable",
+        "decision": "keep-beta-root-unchanged-preview-only"
+      }
     },
     {
       "source": "./conformance",
@@ -884,7 +1079,13 @@
         "ReactRendererConformanceEvidence",
         "ReactVerifiedContractId"
       ],
-      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+      "policyNote": "Not stable-eligible without explicit design-engineering approval.",
+      "promotionDecision": {
+        "id": "source:./conformance",
+        "ownerLane": "api-governance",
+        "status": "preview-only-pending-root-removal-before-stable",
+        "decision": "keep-beta-root-unchanged-preview-only"
+      }
     },
     {
       "source": "./lib/motion",
@@ -916,7 +1117,13 @@
         "ATOM63_OVERLAY_MOTION_EASE",
         "ATOM63_OVERLAY_MOTION_EASE_CSS"
       ],
-      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+      "policyNote": "Not stable-eligible without explicit design-engineering approval.",
+      "promotionDecision": {
+        "id": "source:./lib/motion",
+        "ownerLane": "api-governance",
+        "status": "preview-only-pending-root-removal-before-stable",
+        "decision": "keep-beta-root-unchanged-preview-only"
+      }
     },
     {
       "source": "./components/connected-panel",
@@ -2191,7 +2398,13 @@
       "recommendedAction": "keep-preview-subpath-or-add-evidence",
       "priority": "P0",
       "stableDecision": "Do not promise stable compatibility without browser/media lifecycle evidence or preview labeling.",
-      "policyNote": "High risk. Needs browser/media lifecycle evidence before stable compatibility."
+      "policyNote": "High risk. Needs browser/media lifecycle evidence before stable compatibility.",
+      "promotionDecision": {
+        "id": "subpath:./media",
+        "ownerLane": "media-quality",
+        "status": "preview-only-pending-evidence",
+        "decision": "keep-public-preview-subpath"
+      }
     },
     {
       "subpath": "./media/lightbox",
@@ -2205,7 +2418,13 @@
       "recommendedAction": "keep-preview-subpath-or-add-evidence",
       "priority": "P0",
       "stableDecision": "Do not promise stable compatibility without browser/media lifecycle evidence or preview labeling.",
-      "policyNote": "Preview unless the headless composition/state/context contract is intentionally supported."
+      "policyNote": "Preview unless the headless composition/state/context contract is intentionally supported.",
+      "promotionDecision": {
+        "id": "subpath:./media/lightbox",
+        "ownerLane": "media-quality",
+        "status": "preview-only-pending-evidence",
+        "decision": "keep-public-preview-subpath"
+      }
     },
     {
       "subpath": "./preview",
@@ -2219,7 +2438,13 @@
       "recommendedAction": "keep-preview-labeled",
       "priority": "P0",
       "stableDecision": "Keep public only as a preview boundary; do not treat its symbols as stable root compatibility promises.",
-      "policyNote": "Public preview boundary; exports are not covered by the stable compatibility promise."
+      "policyNote": "Public preview boundary; exports are not covered by the stable compatibility promise.",
+      "promotionDecision": {
+        "id": "subpath:./preview",
+        "ownerLane": "api-governance",
+        "status": "preview-contract-documented",
+        "decision": "keep-public-preview-subpath"
+      }
     },
     {
       "subpath": "./layout",
@@ -2233,7 +2458,13 @@
       "recommendedAction": "document-subpath-contract",
       "priority": "P1",
       "stableDecision": "Keep public, but document supported high-level APIs versus monitored helpers before stable.",
-      "policyNote": "Support high-level layout primitives after responsive/docs evidence; monitor style helpers, constants, chrome internals, and hooks."
+      "policyNote": "Support high-level layout primitives after responsive/docs evidence; monitor style helpers, constants, chrome internals, and hooks.",
+      "promotionDecision": {
+        "id": "subpath:./layout",
+        "ownerLane": "api-governance",
+        "status": "subpath-contract-pending-documentation",
+        "decision": "keep-public-subpath-pending-contract"
+      }
     },
     {
       "subpath": "./theme",
@@ -2247,7 +2478,13 @@
       "recommendedAction": "document-subpath-contract",
       "priority": "P1",
       "stableDecision": "Keep public, but document supported high-level APIs versus monitored helpers before stable.",
-      "policyNote": "Document appearance UI; monitor controller factories, auto-color internals, option tables, and personalization utilities."
+      "policyNote": "Document appearance UI; monitor controller factories, auto-color internals, option tables, and personalization utilities.",
+      "promotionDecision": {
+        "id": "subpath:./theme",
+        "ownerLane": "api-governance",
+        "status": "subpath-contract-pending-documentation",
+        "decision": "keep-public-subpath-pending-contract"
+      }
     },
     {
       "subpath": "./recipes.css",

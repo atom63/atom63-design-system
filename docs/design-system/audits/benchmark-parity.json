@@ -38,13 +38,12 @@
   "summary": {
     "totalDimensions": 11,
     "byGate": {
-      "blocker": 7,
-      "warning": 3,
+      "blocker": 6,
+      "warning": 4,
       "done": 1
     },
     "dimensionIdsByGate": {
       "blocker": [
-        "api-stability-preview-policy",
         "dependency-peer-version-policy",
         "component-accessibility-interaction",
         "examples-adopter-smoke",
@@ -54,6 +53,7 @@
       ],
       "warning": [
         "package-install-hygiene",
+        "api-stability-preview-policy",
         "docs-ia-quickstart",
         "governance-support-policy"
       ],
@@ -126,10 +126,12 @@
           "reference": "https://www.radix-ui.com/themes/docs/overview/styling"
         }
       ],
-      "atom63Status": "The root and public subpaths are inventoried, support tiers are machine-readable, and a preview subpath plus migration guidance exist. The beta root is still broader than the intended stable contract.",
+      "atom63Status": "The root and public subpaths are inventoried, support tiers are machine-readable, and a preview subpath plus migration guidance exist. A checked decision register now covers all 31 P0 root/source families and all 5 P0/P1 public subpaths without changing the beta root. The beta root is still broader than the intended stable contract.",
       "currentEvidence": {
         "docs": [
           "docs/design-system/ui-react-support-policy.json",
+          "docs/design-system/ui-react-stable-promotion-decisions.json",
+          "docs/design-system/audits/ui-react-stable-action-matrix.json",
           "docs/design-system/ui-react-stable-action-matrix.md",
           "docs/design-system/ui-react-preview-migration.md"
         ],
@@ -139,11 +141,12 @@
         ]
       },
       "gaps": [
-        "Resolve every P0 root family and public subpath decision.",
-        "Approve stable root narrowing without changing the beta root in this slice."
+        "Execute or explicitly approve the preview-candidate root removals before stable; the beta root remains intentionally unchanged.",
+        "Complete required evidence and approval for monitor-high-risk root families before treating them as stable-supported.",
+        "Document and approve the layout, theme, media, and lightbox subpath contracts required by the register."
       ],
-      "stableGate": "blocker",
-      "nextAction": "Complete the P0 stable action matrix and approve which APIs move to preview, remain stable, or become private.",
+      "stableGate": "warning",
+      "nextAction": "Use the enforced register to complete evidence and subpath contracts, then obtain approval and execute the beta-to-stable root narrowing before stable/latest promotion.",
       "ownerLane": "api-governance"
     },
     {

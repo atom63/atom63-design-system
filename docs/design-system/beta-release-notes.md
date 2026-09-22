@@ -133,6 +133,7 @@ Before promoting any package to stable/latest:
 - [ ] Keep `atom63-vite` adopter smoke green without root override workarounds.
 - [x] Audit `@atom63/ui-react` root exports and define beta support tiers in `docs/design-system/ui-react-support-policy.json`; CI now checks the generated export inventory for drift.
 - [x] Generate a stable/latest action matrix for `@atom63/ui-react` root exports and public subpaths in `docs/design-system/ui-react-stable-action-matrix.md`; CI now checks it for drift.
+- [x] Record and enforce non-breaking stable-promotion decisions for every P0 root/source family and P0/P1 public subpath; beta root exports remain unchanged pending stable approval.
 - [x] Draft preview-symbol cleanup plan for `Primitive` aliases, imperative handles, internal helpers, conformance evidence, and raw motion constants.
 - [x] Implement preview cleanup Slice A: add `@atom63/ui-react/preview`, keep root unchanged, and add packed-consumer preview import coverage.
 - [x] Implement preview cleanup Slice B: document root-to-preview migration examples and deprecation language before stable narrowing is explicitly approved.

@@ -131,6 +131,7 @@ Web ↔ iOS component-token gap (including two commands above that are documente
 | [benchmark-parity.md](./benchmark-parity.md) | Generated benchmark-parity board for stable-readiness gates, evidence, gaps, owners, and next actions |
 | [benchmark-parity-source.json](./benchmark-parity-source.json) | Human-authored machine-readable source for the benchmark-parity board |
 | [ui-react-support-policy.json](./ui-react-support-policy.json) | Machine-readable `@atom63/ui-react` beta support tiers, symbol overrides, public subpath policy, and stable blockers |
+| [ui-react-stable-promotion-decisions.json](./ui-react-stable-promotion-decisions.json) | Human-authored stable API decision register for every P0 root/source family and P0/P1 public subpath; keeps the beta root unchanged |
 | [ui-react-stable-action-matrix.md](./ui-react-stable-action-matrix.md) | Stable/latest action matrix for broad `@atom63/ui-react` root exports and public subpaths |
 | [ui-react-monitor-evidence-matrix.md](./ui-react-monitor-evidence-matrix.md) | Stable-readiness evidence matrix for monitor/high-risk `@atom63/ui-react` families |
 | [ui-react-forms-evidence.md](./ui-react-forms-evidence.md) | Partial stable-readiness evidence packet for Autocomplete, Calendar, and InputOTP |
