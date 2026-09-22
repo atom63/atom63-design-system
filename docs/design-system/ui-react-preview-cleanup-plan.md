@@ -1,6 +1,6 @@
 # @atom63/ui-react Preview-symbol Cleanup Plan
 
-**Status:** Slice A implemented; the non-breaking `@atom63/ui-react/preview` boundary is available while current root exports remain unchanged.
+**Status:** Slice A/B implemented; the non-breaking `@atom63/ui-react/preview` boundary is available while current root exports remain unchanged, and migration language is documented in [`ui-react-preview-migration.md`](./ui-react-preview-migration.md).
 
 **Scope:** `preview-experimental-candidate` root exports from `docs/design-system/ui-react-support-policy.json` and `docs/design-system/audits/ui-react-export-inventory.json`.
 
@@ -124,6 +124,8 @@ pnpm build:example:vite-basic
 ```
 
 ### Slice B — add migration docs and deprecation language
+
+**Implemented:** root-to-preview examples and stable/latest decision language are documented in [`ui-react-preview-migration.md`](./ui-react-preview-migration.md). Preview candidates are not stable-root-eligible by default unless explicitly promoted.
 
 Files likely involved:
 

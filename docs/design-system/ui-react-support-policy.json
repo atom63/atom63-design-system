@@ -24,7 +24,9 @@
     "preview-experimental-candidate": {
       "label": "Preview / experimental candidate",
       "supportPromise": "Importable in the broad beta root but should move behind an approved preview/experimental boundary or become private before stable unless YZ explicitly approves support.",
-      "stableEligibility": "Not stable-eligible without explicit design-engineering approval."
+      "stableEligibility": "Not stable-eligible without explicit design-engineering approval.",
+      "rootStableEligibility": "not-stable-root-eligible-by-default",
+      "preferredBoundary": "@atom63/ui-react/preview"
     }
   },
   "defaultTier": "beta-supported-core",
@@ -99,8 +101,21 @@
   },
   "stableBlockers": [
     "Move or explicitly approve preview-experimental-candidate symbols before stable/latest.",
+    "Document root-to-preview migration guidance for preview-experimental-candidate symbols.",
     "Assign owners and evidence requirements for monitor-high-risk symbols.",
     "Document conditional composition families before promising stable compatibility.",
     "Keep the generated export inventory in sync with this policy in CI."
-  ]
+  ],
+  "previewMigration": {
+    "previewSubpath": "./preview",
+    "rootPolicy": "The broad beta root remains importable, but preview-experimental-candidate symbols are not stable-root-eligible by default.",
+    "preferredImport": "@atom63/ui-react/preview",
+    "stableDecisionRequired": [
+      "keep-preview-only",
+      "promote-to-stable-root",
+      "make-private-or-remove",
+      "move-to-better-boundary"
+    ],
+    "migrationDoc": "docs/design-system/ui-react-preview-migration.md"
+  }
 }

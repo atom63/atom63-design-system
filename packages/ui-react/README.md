@@ -116,8 +116,19 @@ available from `@atom63/ui-react/preview`; that subpath is public but is not a
 stable-compatibility promise. See the design-system handbook's root API audit
 before treating a less common export as stable.
 
+Preview escape hatches should use the explicit preview subpath:
+
+```tsx
+import { DialogPrimitive } from '@atom63/ui-react/preview'
+```
+
+The broad beta root still exports those names today, but stable/latest may narrow
+the root. Treat `@atom63/ui-react/preview` as the safer import path for APIs that
+are not part of the stable root promise.
+
 ## Docs
 
 - [Design system handbook](../../docs/design-system/README.md)
+- [Preview migration guidance](../../docs/design-system/ui-react-preview-migration.md)
 - [Component review and stability criteria](../../docs/design-system/ui-react-component-review.md)
 - [Production readiness audit](../../docs/design-system/production-readiness-audit.md)

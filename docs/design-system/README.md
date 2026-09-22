@@ -117,6 +117,7 @@ Web ↔ iOS component-token gap (including two commands above that are documente
 | [ui-react-support-policy.json](./ui-react-support-policy.json) | Machine-readable `@atom63/ui-react` beta support tiers, symbol overrides, public subpath policy, and stable blockers |
 | [ui-react-stable-action-matrix.md](./ui-react-stable-action-matrix.md) | Stable/latest action matrix for broad `@atom63/ui-react` root exports and public subpaths |
 | [ui-react-preview-cleanup-plan.md](./ui-react-preview-cleanup-plan.md) | Preview-symbol cleanup plan for root exports that should move to preview/private before stable |
+| [ui-react-preview-migration.md](./ui-react-preview-migration.md) | Root-to-preview import guidance for beta adopters and stable/latest root narrowing |
 | [release-automation.md](./release-automation.md) | GitHub Actions beta release workflow and npm trusted publishing setup notes |
 | [publish-boundary-rfc.md](./publish-boundary-rfc.md) | Proposed public beta boundary and pre-publish approval gates |
 | [ui-react-root-api-audit.md](./ui-react-root-api-audit.md) | Proposed support tiers for the broad `@atom63/ui-react` root and public subpaths |
