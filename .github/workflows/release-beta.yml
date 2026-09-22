@@ -42,6 +42,9 @@ jobs:
       - name: Check React stable action matrix
         run: pnpm check:ui-react-stable-actions
 
+      - name: Check React monitor evidence matrix
+        run: pnpm check:ui-react-monitor-evidence
+
       - name: Check package surface audit
         run: |
           pnpm check:package-surface

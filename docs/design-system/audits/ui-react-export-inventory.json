@@ -38,7 +38,7 @@
     "stableBlockers": [
       "Move or explicitly approve preview-experimental-candidate symbols before stable/latest.",
       "Document root-to-preview migration guidance for preview-experimental-candidate symbols.",
-      "Assign owners and evidence requirements for monitor-high-risk symbols.",
+      "Assign owners and evidence requirements for monitor-high-risk symbols in docs/design-system/ui-react-monitor-evidence-matrix.md.",
       "Document conditional composition families before promising stable compatibility.",
       "Keep the generated export inventory in sync with this policy in CI."
     ]

@@ -126,6 +126,7 @@ Before promoting any package to stable/latest:
 - [x] Draft preview-symbol cleanup plan for `Primitive` aliases, imperative handles, internal helpers, conformance evidence, and raw motion constants.
 - [x] Implement preview cleanup Slice A: add `@atom63/ui-react/preview`, keep root unchanged, and add packed-consumer preview import coverage.
 - [x] Implement preview cleanup Slice B: document root-to-preview migration examples and deprecation language before stable narrowing is explicitly approved.
+- [x] Generate a monitor-high-risk evidence matrix for Autocomplete, Calendar, Carousel, media/color extraction, and other high-risk `@atom63/ui-react` APIs.
 - [x] Audit published file lists for CSS, dist output, and accidental test/internal files; CI now regenerates `docs/design-system/audits/package-surface.json` and fails on drift.
 - [ ] Run a full visual QA matrix: homepage, `/ds-lab`, component gallery, mobile/desktop, light/dark, theme variants, keyboard/focus states, reduced motion.
 - [ ] Complete Figma manual QA: variables sync, styleguide generation, idempotent rerun.

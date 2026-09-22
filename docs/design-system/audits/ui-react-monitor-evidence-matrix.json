@@ -1,0 +1,469 @@
+{
+  "schemaVersion": 1,
+  "inputs": [
+    "docs/design-system/audits/ui-react-export-inventory.json",
+    "docs/design-system/ui-react-support-policy.json"
+  ],
+  "tier": "monitor-high-risk",
+  "policy": {
+    "label": "Monitor / high risk",
+    "supportPromise": "Importable during beta but not promised as a stable compatibility contract. API changes require release notes; stable promotion requires explicit owner and additional evidence.",
+    "stableEligibility": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+  },
+  "summary": {
+    "monitorFamilies": 16,
+    "monitorSymbols": 76,
+    "byRisk": { "medium": 9, "high": 7 },
+    "byOwner": {
+      "design-system-interactions": 1,
+      "design-system-forms": 3,
+      "design-system-surfaces": 2,
+      "design-system-media": 3,
+      "design-system-feedback": 1,
+      "design-system-navigation": 1,
+      "design-system-data-display": 1,
+      "design-system-motion": 2,
+      "design-system-settings": 1,
+      "design-system-infrastructure": 1
+    },
+    "highRiskFamilies": [
+      "components/autocomplete",
+      "components/calendar",
+      "components/carousel",
+      "components/input-otp",
+      "components/portal-container",
+      "hooks/use-extract-color",
+      "lib/extract-color"
+    ]
+  },
+  "rows": [
+    {
+      "source": "./components/animated-check",
+      "family": "components/animated-check",
+      "symbols": ["AnimatedCheck", "AnimatedCheckProps"],
+      "valueCount": 1,
+      "typeCount": 1,
+      "symbolCount": 2,
+      "owner": "design-system-interactions",
+      "riskLevel": "medium",
+      "userValue": "Animated state feedback for small success/completion moments.",
+      "requiredEvidence": [
+        "reduced-motion behavior",
+        "animation timing/snapshot test",
+        "packed render smoke"
+      ],
+      "qaMatrix": ["default", "reduced motion", "theme contrast"],
+      "stableDecision": "Promote only if motion is tokenized and reduced-motion behavior is documented.",
+      "status": "blocked-until-evidence-recorded"
+    },
+    {
+      "source": "./components/autocomplete",
+      "family": "components/autocomplete",
+      "symbols": [
+        "Autocomplete",
+        "AutocompleteClear",
+        "AutocompleteCollection",
+        "AutocompleteEmpty",
+        "AutocompleteGroup",
+        "AutocompleteGroupLabel",
+        "AutocompleteInput",
+        "AutocompleteInputProps",
+        "AutocompleteItem",
+        "AutocompleteList",
+        "AutocompletePopup",
+        "AutocompletePopupProps",
+        "AutocompleteRow",
+        "AutocompleteSeparator",
+        "AutocompleteStatus",
+        "AutocompleteTrigger",
+        "AutocompleteValue",
+        "useAutocompleteFilter"
+      ],
+      "valueCount": 16,
+      "typeCount": 2,
+      "symbolCount": 18,
+      "owner": "design-system-forms",
+      "riskLevel": "high",
+      "userValue": "Combobox/search suggestion patterns for product forms and command surfaces.",
+      "requiredEvidence": [
+        "keyboard navigation",
+        "filter behavior",
+        "empty/loading states",
+        "Base UI type policy",
+        "mobile viewport QA"
+      ],
+      "qaMatrix": [
+        "mouse",
+        "keyboard",
+        "screen reader labels",
+        "mobile popover",
+        "no-results state"
+      ],
+      "stableDecision": "Promote only after focused interaction tests and browser evidence cover the combobox contract.",
+      "status": "blocked-until-evidence-recorded"
+    },
+    {
+      "source": "./components/calendar",
+      "family": "components/calendar",
+      "symbols": ["Calendar", "CalendarProps"],
+      "valueCount": 1,
+      "typeCount": 1,
+      "symbolCount": 2,
+      "owner": "design-system-forms",
+      "riskLevel": "high",
+      "userValue": "Date picking and calendar display patterns.",
+      "requiredEvidence": [
+        "date-fns/react-day-picker dependency policy",
+        "keyboard navigation",
+        "locale/date boundary tests",
+        "mobile viewport QA"
+      ],
+      "qaMatrix": [
+        "single month",
+        "keyboard",
+        "disabled dates",
+        "mobile",
+        "light/dark"
+      ],
+      "stableDecision": "Promote only with dependency pin policy and date interaction evidence.",
+      "status": "blocked-until-evidence-recorded"
+    },
+    {
+      "source": "./components/card",
+      "family": "components/card",
+      "symbols": [
+        "CardCursorBinding",
+        "CardCursorLabel",
+        "useCardCursor",
+        "UseCardCursorOptions"
+      ],
+      "valueCount": 2,
+      "typeCount": 2,
+      "symbolCount": 4,
+      "owner": "design-system-surfaces",
+      "riskLevel": "medium",
+      "userValue": "Cursor-follow/card affordance helpers used by rich cards.",
+      "requiredEvidence": [
+        "pointer behavior",
+        "reduced-motion fallback",
+        "touch/no-pointer fallback"
+      ],
+      "qaMatrix": ["desktop pointer", "touch viewport", "reduced motion"],
+      "stableDecision": "Keep core Card stable; promote cursor helpers only if documented as an intentional card interaction API.",
+      "status": "blocked-until-evidence-recorded"
+    },
+    {
+      "source": "./components/carousel",
+      "family": "components/carousel",
+      "symbols": [
+        "Carousel",
+        "CarouselApi",
+        "CarouselContent",
+        "CarouselItem",
+        "CarouselNext",
+        "CarouselPrevious",
+        "CarouselProps",
+        "useCarousel"
+      ],
+      "valueCount": 6,
+      "typeCount": 2,
+      "symbolCount": 8,
+      "owner": "design-system-media",
+      "riskLevel": "high",
+      "userValue": "Carousel composition and controls for galleries/content rails.",
+      "requiredEvidence": [
+        "Embla dependency policy",
+        "keyboard controls",
+        "loop/disabled state tests",
+        "mobile swipe QA"
+      ],
+      "qaMatrix": [
+        "previous/next",
+        "keyboard",
+        "mobile swipe",
+        "short item count",
+        "RTL/focus if supported"
+      ],
+      "stableDecision": "Promote only after gesture, focus, and dependency behavior are locked.",
+      "status": "blocked-until-evidence-recorded"
+    },
+    {
+      "source": "./components/copy-button",
+      "family": "components/copy-button",
+      "symbols": [
+        "CopyButton",
+        "CopyButtonFeedback",
+        "CopyButtonFeedbackProps",
+        "CopyButtonProps"
+      ],
+      "valueCount": 2,
+      "typeCount": 2,
+      "symbolCount": 4,
+      "owner": "design-system-feedback",
+      "riskLevel": "medium",
+      "userValue": "Clipboard action with feedback states.",
+      "requiredEvidence": [
+        "clipboard success/failure tests",
+        "aria-live feedback",
+        "permission failure behavior"
+      ],
+      "qaMatrix": ["success", "failure", "keyboard", "screen reader label"],
+      "stableDecision": "Promote if clipboard failure and feedback semantics are documented.",
+      "status": "blocked-until-evidence-recorded"
+    },
+    {
+      "source": "./components/destination-link",
+      "family": "components/destination-link",
+      "symbols": [
+        "DestinationIndicator",
+        "DestinationKind",
+        "DestinationLink",
+        "DestinationLinkProps"
+      ],
+      "valueCount": 2,
+      "typeCount": 2,
+      "symbolCount": 4,
+      "owner": "design-system-navigation",
+      "riskLevel": "medium",
+      "userValue": "External/internal destination indicator and link treatment.",
+      "requiredEvidence": [
+        "routing/link semantics",
+        "icon override policy",
+        "accessible name behavior"
+      ],
+      "qaMatrix": [
+        "internal",
+        "external",
+        "new tab",
+        "custom icon",
+        "keyboard"
+      ],
+      "stableDecision": "Promote if destination semantics and icon customization are documented.",
+      "status": "blocked-until-evidence-recorded"
+    },
+    {
+      "source": "./components/input-otp",
+      "family": "components/input-otp",
+      "symbols": [
+        "InputOTP",
+        "InputOTPGroup",
+        "InputOTPSeparator",
+        "InputOTPSlot"
+      ],
+      "valueCount": 4,
+      "typeCount": 0,
+      "symbolCount": 4,
+      "owner": "design-system-forms",
+      "riskLevel": "high",
+      "userValue": "One-time-password segmented input.",
+      "requiredEvidence": [
+        "input-otp dependency policy",
+        "paste behavior",
+        "mobile numeric keyboard",
+        "error/disabled states"
+      ],
+      "qaMatrix": [
+        "paste full code",
+        "backspace",
+        "mobile",
+        "disabled",
+        "invalid state"
+      ],
+      "stableDecision": "Promote only with dependency policy and mobile/paste evidence.",
+      "status": "blocked-until-evidence-recorded"
+    },
+    {
+      "source": "./components/load-more-trigger",
+      "family": "components/load-more-trigger",
+      "symbols": [
+        "LoadMoreTrigger",
+        "LoadMoreTriggerProps",
+        "LoadMoreTriggerState",
+        "LoadMoreTriggerVariant"
+      ],
+      "valueCount": 1,
+      "typeCount": 3,
+      "symbolCount": 4,
+      "owner": "design-system-data-display",
+      "riskLevel": "medium",
+      "userValue": "Incremental pagination/load-more affordance.",
+      "requiredEvidence": [
+        "loading/disabled contract",
+        "intersection/manual trigger behavior",
+        "empty/end state"
+      ],
+      "qaMatrix": ["idle", "loading", "end reached", "keyboard"],
+      "stableDecision": "Promote if loading state model and pagination semantics are documented.",
+      "status": "blocked-until-evidence-recorded"
+    },
+    {
+      "source": "./components/marquee",
+      "family": "components/marquee",
+      "symbols": ["Marquee", "MarqueeProps"],
+      "valueCount": 1,
+      "typeCount": 1,
+      "symbolCount": 2,
+      "owner": "design-system-motion",
+      "riskLevel": "medium",
+      "userValue": "Ambient moving content strip.",
+      "requiredEvidence": [
+        "reduced-motion fallback",
+        "overflow behavior",
+        "performance sanity"
+      ],
+      "qaMatrix": ["default", "reduced motion", "long content", "mobile"],
+      "stableDecision": "Promote only if reduced-motion and performance constraints are explicit.",
+      "status": "blocked-until-evidence-recorded"
+    },
+    {
+      "source": "./components/panel-setting-button",
+      "family": "components/panel-setting-button",
+      "symbols": ["PanelSettingButton", "PanelSettingButtonProps"],
+      "valueCount": 1,
+      "typeCount": 1,
+      "symbolCount": 2,
+      "owner": "design-system-settings",
+      "riskLevel": "medium",
+      "userValue": "Panel-setting affordance used by configuration surfaces.",
+      "requiredEvidence": [
+        "button semantics",
+        "icon override policy",
+        "compact hit target QA"
+      ],
+      "qaMatrix": ["default", "disabled", "keyboard", "mobile hit target"],
+      "stableDecision": "Promote if it is generalized beyond one product setting surface.",
+      "status": "blocked-until-evidence-recorded"
+    },
+    {
+      "source": "./components/portal-container",
+      "family": "components/portal-container",
+      "symbols": [
+        "PortalContainer",
+        "PortalContainerProvider",
+        "PortalContainerProviderProps",
+        "usePortalContainer"
+      ],
+      "valueCount": 2,
+      "typeCount": 2,
+      "symbolCount": 4,
+      "owner": "design-system-infrastructure",
+      "riskLevel": "high",
+      "userValue": "Shared portal target management for overlays.",
+      "requiredEvidence": [
+        "SSR/client behavior",
+        "nested provider behavior",
+        "overlay integration tests"
+      ],
+      "qaMatrix": ["dialog", "popover", "nested provider", "missing container"],
+      "stableDecision": "Promote only if portal ownership and SSR constraints are documented.",
+      "status": "blocked-until-evidence-recorded"
+    },
+    {
+      "source": "./components/progressive-blur",
+      "family": "components/progressive-blur",
+      "symbols": [
+        "ProgressiveBlur",
+        "ProgressiveBlurPosition",
+        "ProgressiveBlurProps"
+      ],
+      "valueCount": 1,
+      "typeCount": 2,
+      "symbolCount": 3,
+      "owner": "design-system-surfaces",
+      "riskLevel": "medium",
+      "userValue": "Edge blur affordance for scroll/media surfaces.",
+      "requiredEvidence": [
+        "CSS support/fallback",
+        "performance sanity",
+        "theme contrast"
+      ],
+      "qaMatrix": ["top", "bottom", "light/dark", "mobile"],
+      "stableDecision": "Promote if CSS fallback and supported positions are documented.",
+      "status": "blocked-until-evidence-recorded"
+    },
+    {
+      "source": "./components/text-ticker",
+      "family": "components/text-ticker",
+      "symbols": ["TextTicker", "TextTickerProps"],
+      "valueCount": 1,
+      "typeCount": 1,
+      "symbolCount": 2,
+      "owner": "design-system-motion",
+      "riskLevel": "medium",
+      "userValue": "Ticker-style text motion for dynamic labels.",
+      "requiredEvidence": [
+        "reduced-motion fallback",
+        "content change behavior",
+        "layout stability"
+      ],
+      "qaMatrix": ["short", "long", "changed text", "reduced motion"],
+      "stableDecision": "Promote only with reduced-motion and layout stability evidence.",
+      "status": "blocked-until-evidence-recorded"
+    },
+    {
+      "source": "./hooks/use-extract-color",
+      "family": "hooks/use-extract-color",
+      "symbols": [
+        "useExtractColor",
+        "UseExtractColorOptions",
+        "UseExtractColorReturn"
+      ],
+      "valueCount": 1,
+      "typeCount": 2,
+      "symbolCount": 3,
+      "owner": "design-system-media",
+      "riskLevel": "high",
+      "userValue": "React hook for deriving dominant/tint colors from images.",
+      "requiredEvidence": [
+        "CORS/error behavior",
+        "cache behavior",
+        "loading states",
+        "contrast cap policy"
+      ],
+      "qaMatrix": [
+        "same-origin",
+        "cross-origin failure",
+        "cached",
+        "dark/light surface"
+      ],
+      "stableDecision": "Promote only if browser image-loading failures and cache semantics are documented.",
+      "status": "blocked-until-evidence-recorded"
+    },
+    {
+      "source": "./lib/extract-color",
+      "family": "lib/extract-color",
+      "symbols": [
+        "capColorForContrast",
+        "colorCacheKey",
+        "ColorSampleRegion",
+        "extractColorFromImage",
+        "extractColorFromLoadedImage",
+        "ExtractColorOptions",
+        "ExtractedColor",
+        "getCachedColor",
+        "loadAndExtractColor",
+        "TINT_MAX_LUMINANCE"
+      ],
+      "valueCount": 7,
+      "typeCount": 3,
+      "symbolCount": 10,
+      "owner": "design-system-media",
+      "riskLevel": "high",
+      "userValue": "Lower-level color extraction utilities backing media theming.",
+      "requiredEvidence": [
+        "algorithm determinism",
+        "contrast caps",
+        "cache key compatibility",
+        "browser canvas/CORS behavior"
+      ],
+      "qaMatrix": [
+        "fixture images",
+        "transparent image",
+        "dark image",
+        "CORS failure"
+      ],
+      "stableDecision": "Prefer keeping low-level utilities monitor/internal unless a stable color-extraction API is intentionally designed.",
+      "status": "blocked-until-evidence-recorded"
+    }
+  ]
+}
