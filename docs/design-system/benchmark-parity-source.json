@@ -294,9 +294,10 @@
           "reference": "https://primer.style/"
         }
       ],
-      "atom63Status": "Package READMEs and an internal handbook exist, but a public adopter must traverse planning and audit documents to assemble install, CSS, theming, component, preview, and migration guidance.",
+      "atom63Status": "A public quickstart now links beta installation, CSS imports, theme and mode attributes, a first component, preview policy, verification, and next-step references. Full component, accessibility, and governance documentation IA is not yet stable-complete.",
       "currentEvidence": {
         "docs": [
+          "docs/design-system/quickstart.md",
           "docs/design-system/README.md",
           "packages/styles/README.md",
           "packages/ui-react/README.md",
@@ -305,12 +306,12 @@
         "commands": []
       },
       "gaps": [
-        "Create one public first-use route from install through first themed component.",
-        "Separate adopter guidance from internal release-planning material.",
-        "Make preview and migration policy discoverable from component/API docs."
+        "Add navigable component reference documentation for the stable candidate surface.",
+        "Add public accessibility guidance tied to component behavior and evidence.",
+        "Add public governance and support documentation without requiring adopters to read internal planning artifacts."
       ],
-      "stableGate": "blocker",
-      "nextAction": "Create a public quickstart and reorganize the doc index around install, theme, components, accessibility, migration, and support.",
+      "stableGate": "warning",
+      "nextAction": "Build the stable docs IA around component reference pages, accessibility guidance, and public governance/support documentation.",
       "ownerLane": "documentation"
     },
     {

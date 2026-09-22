@@ -26,8 +26,10 @@ Install only the packages a consumer needs, for example:
 pnpm add @atom63/styles@beta @atom63/ui-react@beta
 ```
 
-See [beta release notes](./docs/design-system/beta-release-notes.md) for current
-versions, adopter evidence, and stable-readiness blockers.
+Start with the [public beta quickstart](./docs/design-system/quickstart.md) for
+CSS imports, theme and mode attributes, a first component, preview policy, and
+consumer verification. See [beta release notes](./docs/design-system/beta-release-notes.md)
+for current versions, adopter evidence, and stable-readiness blockers.
 
 ## Local development
 
@@ -62,8 +64,9 @@ pnpm changeset status --verbose
 ## Repository status
 
 This repository is the extracted Atom63 Design System workspace. It is prepared for
-public GitHub visibility, but npm versioning and publishing still require a separate
-approval. See [the extracted-repository status](./docs/design-system/extracted-repo-status.md)
+public GitHub visibility, and the first-wave packages are published on npm under
+the `beta` tag. Further versioning and publishing require separate approval. See
+[the extracted-repository status](./docs/design-system/extracted-repo-status.md)
 for the current package boundary and intended follow-up.
 
 Built by You Zhang through Hermes Agent.

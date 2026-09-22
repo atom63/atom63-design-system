@@ -16,29 +16,16 @@ Built by You Zhang through Hermes Agent
 
 ### Install
 
-The package name is `@atom63/styles`. Public npm availability is not promised
-yet: the currently verified paths are a workspace dependency or a locally
-packed tarball. Public publishing requires YZ approval and confirmation of the
-npm organization policy.
-
-After an approved public release, install by package name:
+`@atom63/styles` is available as a public npm beta. It is not yet a stable API,
+so install from the explicit `beta` dist-tag:
 
 ```sh
-pnpm add @atom63/styles
+pnpm add @atom63/styles@beta
 ```
 
-Until then, use the workspace dependency:
-
-```json
-{
-  "dependencies": {
-    "@atom63/styles": "workspace:*"
-  }
-}
-```
-
-For a non-workspace consumer, pack the package and install the generated
-`atom63-styles-*.tgz` file by path.
+React adopters should start with the
+[public beta quickstart](../../docs/design-system/quickstart.md), which covers
+both `@atom63/styles` and `@atom63/ui-react`.
 
 ### Minimum setup
 
@@ -86,13 +73,13 @@ variable names can import `@atom63/styles/compat/shadcn`.
 ### Stable vs preview
 
 The production consumption path is verified by `pnpm check:ds-pack-smoke`
-against packed tarballs. Public publishing still requires YZ approval and npm
-organization policy. Some token, adapter, and package surfaces may remain
-preview while API hardening continues; do not infer stability from an export
-alone.
+against packed tarballs. The package is publicly available under the `beta`
+tag, but some token, adapter, and package surfaces may remain preview while API
+hardening continues; do not infer stability from an export alone.
 
 ### Docs
 
+- [Public beta quickstart](../../docs/design-system/quickstart.md)
 - [Design system handbook](../../docs/design-system/README.md)
 - [Authoring surfaces](../../docs/design-system/authoring-surfaces.md)
 - [Production readiness audit](../../docs/design-system/production-readiness-audit.md)

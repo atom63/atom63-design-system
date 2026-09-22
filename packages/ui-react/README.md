@@ -11,32 +11,16 @@ Built by You Zhang through Hermes Agent
 ## Install
 
 The package name is `@atom63/ui-react`, with React 19 and React DOM 19 as peer
-dependencies. Public npm availability is not promised yet: the currently
-verified paths are workspace dependencies or locally packed tarballs. Public
-publishing requires YZ approval and confirmation of the npm organization policy.
-
-After an approved public release, install by package name:
+dependencies. It is available as a public npm beta, not a stable API. Install
+the explicit `beta` tags:
 
 ```sh
-pnpm add @atom63/ui-react @atom63/styles react react-dom
+pnpm add @atom63/styles@beta @atom63/ui-react@beta
 ```
 
-Until then, use workspace dependencies:
-
-```json
-{
-  "dependencies": {
-    "@atom63/styles": "workspace:*",
-    "@atom63/ui-react": "workspace:*",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
-  }
-}
-```
-
-For a non-workspace consumer, use the packed artifacts for `@atom63/ui-react`
-and its Atom63 package dependencies. The repository smoke test exercises that
-exact installation shape before building a fresh Vite consumer.
+Add React 19 and React DOM 19 if the app does not already provide them. For the
+complete external-consumer path, start with the
+[public beta quickstart](../../docs/design-system/quickstart.md).
 
 ## Minimum setup
 
@@ -105,8 +89,9 @@ documentation.
 ## Stable vs preview
 
 The production consumption path is verified by `pnpm check:ds-pack-smoke`
-against packed tarballs, including the CSS imports and components above. Public
-publishing still requires YZ approval and npm organization policy.
+against packed tarballs, including the CSS imports and components above. The
+package is publicly available under the `beta` tag, but it is not yet a
+stable/latest compatibility promise.
 
 For the first public beta, the package keeps the current broad root export to
 avoid pre-release churn, but the support promise is tiered. Core controls are the
@@ -128,6 +113,7 @@ are not part of the stable root promise.
 
 ## Docs
 
+- [Public beta quickstart](../../docs/design-system/quickstart.md)
 - [Design system handbook](../../docs/design-system/README.md)
 - [Preview migration guidance](../../docs/design-system/ui-react-preview-migration.md)
 - [Component review and stability criteria](../../docs/design-system/ui-react-component-review.md)

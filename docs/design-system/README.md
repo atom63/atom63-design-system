@@ -1,6 +1,10 @@
 # Design system handbook
 
-**Start here** if you are joining the team, reviewing a PR, or an agent about to change tokens, themes, contracts, or shared UI.
+**Public adopters:** start with the [public beta quickstart](./quickstart.md) for
+install, CSS, theming, a first component, preview policy, and verification.
+
+**Contributors:** start here if you are joining the team, reviewing a PR, or an
+agent about to change tokens, themes, contracts, or shared UI.
 
 Executable styles package: [`packages/styles/README.md`](../../packages/styles/README.md).
 Runnable adopter example: [`examples/vite-basic`](../../examples/vite-basic).
@@ -34,6 +38,13 @@ Skin character   → themes/*.css              gel / bevel / CRT under [data-a63
 Full policy: [authoring-surfaces.md](./authoring-surfaces.md) ← **canonical for where to edit**.
 
 ## Reading order
+
+### Public adopters
+
+1. [quickstart.md](./quickstart.md) — install through first themed component
+2. [`@atom63/styles` package guide](../../packages/styles/README.md) or [`@atom63/ui-react` package guide](../../packages/ui-react/README.md) — package details
+3. [ui-react-preview-migration.md](./ui-react-preview-migration.md) and [ui-react-support-policy.json](./ui-react-support-policy.json) — beta API boundaries
+4. [beta-release-notes.md](./beta-release-notes.md) and [benchmark-parity.md](./benchmark-parity.md) — current status and stable-readiness gaps
 
 ### Humans (new teammate)
 
@@ -103,6 +114,7 @@ Web ↔ iOS component-token gap (including two commands above that are documente
 
 | Doc | Use for |
 | --- | --- |
+| [quickstart.md](./quickstart.md) | Public beta install, CSS, theme/mode, first component, preview policy, and consumer verification |
 | [extracted-repo-status.md](./extracted-repo-status.md) | Local-only status, first-wave boundary, and `atom63-vite` follow-up |
 | [authoring-surfaces.md](./authoring-surfaces.md) | Where to edit / value ownership |
 | [theme-authoring.md](./theme-authoring.md) | Theme file guardrails |

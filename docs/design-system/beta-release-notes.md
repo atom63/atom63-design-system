@@ -134,4 +134,5 @@ Before promoting any package to stable/latest:
 - [x] Audit published file lists for CSS, dist output, and accidental test/internal files; CI now regenerates `docs/design-system/audits/package-surface.json` and fails on drift.
 - [ ] Run a full visual QA matrix: homepage, `/ds-lab`, component gallery, mobile/desktop, light/dark, theme variants, keyboard/focus states, reduced motion.
 - [ ] Complete Figma manual QA: variables sync, styleguide generation, idempotent rerun.
-- [ ] Clean docs IA so beta/stable users can find install, theming, component, and migration guidance without reading internal planning docs.
+- [x] Create a public adopter [quickstart](./quickstart.md) covering beta install, CSS, theme/mode, a first component, preview policy, and consumer verification.
+- [ ] Complete stable docs IA with component reference pages, accessibility guidance, and public governance/support documentation.
