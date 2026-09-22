@@ -114,6 +114,7 @@ are not part of the stable root promise.
 ## Docs
 
 - [Public beta quickstart](../../docs/design-system/quickstart.md)
+- [Support and governance policy](../../docs/design-system/support-governance.md)
 - [Design system handbook](../../docs/design-system/README.md)
 - [Preview migration guidance](../../docs/design-system/ui-react-preview-migration.md)
 - [Component review and stability criteria](../../docs/design-system/ui-react-component-review.md)

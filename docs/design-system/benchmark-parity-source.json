@@ -294,11 +294,12 @@
           "reference": "https://primer.style/"
         }
       ],
-      "atom63Status": "A public quickstart now links beta installation, CSS imports, theme and mode attributes, a first component, preview policy, verification, and next-step references. Full component, accessibility, and governance documentation IA is not yet stable-complete.",
+      "atom63Status": "A public quickstart now links beta installation, CSS imports, theme and mode attributes, a first component, preview policy, verification, support/governance policy, and next-step references. Component and accessibility documentation IA is not yet stable-complete.",
       "currentEvidence": {
         "docs": [
           "docs/design-system/quickstart.md",
           "docs/design-system/README.md",
+          "docs/design-system/support-governance.md",
           "packages/styles/README.md",
           "packages/ui-react/README.md",
           "docs/design-system/ui-react-preview-migration.md"
@@ -307,11 +308,10 @@
       },
       "gaps": [
         "Add navigable component reference documentation for the stable candidate surface.",
-        "Add public accessibility guidance tied to component behavior and evidence.",
-        "Add public governance and support documentation without requiring adopters to read internal planning artifacts."
+        "Add public accessibility guidance tied to component behavior and evidence."
       ],
       "stableGate": "warning",
-      "nextAction": "Build the stable docs IA around component reference pages, accessibility guidance, and public governance/support documentation.",
+      "nextAction": "Build the stable docs IA around component reference pages and accessibility guidance tied to recorded evidence.",
       "ownerLane": "documentation"
     },
     {
@@ -446,22 +446,24 @@
           "reference": "https://github.com/microsoft/fluentui/blob/master/docs/workflows/testing.md"
         }
       ],
-      "atom63Status": "Package boundaries, component review, beta support tiers, and named owner lanes are documented. Public contribution, maintenance, deprecation, security, browser-support, and support-response policies are incomplete.",
+      "atom63Status": "A public support and governance policy now defines beta scope, decision authority, compatibility tiers, contribution and private security routes, deprecation, browser/runtime targets, component lifecycle evidence, and human release gates. Stable still needs enforcement, sustained adoption, and a final tested support matrix.",
       "currentEvidence": {
         "docs": [
+          "docs/design-system/support-governance.md",
           "docs/design-system/package-governance.md",
           "docs/design-system/ui-react-component-review.md",
-          "docs/design-system/ui-react-support-policy.json"
+          "docs/design-system/ui-react-support-policy.json",
+          "docs/design-system/release-automation.md"
         ],
         "commands": []
       },
       "gaps": [
-        "Define maintainers and decision authority for stable API changes.",
-        "Publish deprecation, browser support, security reporting, and support-response policies.",
-        "Define the evidence and approval required to promote or retire a component."
+        "Enforce support-tier and recorded human-approval boundaries in release and public API change checks.",
+        "Adopt and maintain the final stable React, browser, SSR/hydration, and assistive-technology support matrix.",
+        "Demonstrate sustained maintainer adoption of the promotion, retirement, deprecation, and private security-reporting routes."
       ],
-      "stableGate": "blocker",
-      "nextAction": "Create a public governance and support policy with maintainers, compatibility scope, deprecation windows, security reporting, and promotion criteria.",
+      "stableGate": "warning",
+      "nextAction": "Add enforcement checks for support-tier and recorded approval changes, then approve and publish the versioned stable support matrix before stable promotion.",
       "ownerLane": "design-system-governance"
     }
   ]

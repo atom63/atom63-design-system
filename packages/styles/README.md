@@ -80,6 +80,7 @@ hardening continues; do not infer stability from an export alone.
 ### Docs
 
 - [Public beta quickstart](../../docs/design-system/quickstart.md)
+- [Support and governance policy](../../docs/design-system/support-governance.md)
 - [Design system handbook](../../docs/design-system/README.md)
 - [Authoring surfaces](../../docs/design-system/authoring-surfaces.md)
 - [Production readiness audit](../../docs/design-system/production-readiness-audit.md)

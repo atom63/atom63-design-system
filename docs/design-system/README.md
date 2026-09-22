@@ -43,8 +43,9 @@ Full policy: [authoring-surfaces.md](./authoring-surfaces.md) ← **canonical fo
 
 1. [quickstart.md](./quickstart.md) — install through first themed component
 2. [`@atom63/styles` package guide](../../packages/styles/README.md) or [`@atom63/ui-react` package guide](../../packages/ui-react/README.md) — package details
-3. [ui-react-preview-migration.md](./ui-react-preview-migration.md) and [ui-react-support-policy.json](./ui-react-support-policy.json) — beta API boundaries
-4. [beta-release-notes.md](./beta-release-notes.md) and [benchmark-parity.md](./benchmark-parity.md) — current status and stable-readiness gaps
+3. [support-governance.md](./support-governance.md) — support scope, compatibility, reporting, deprecation, and approval policy
+4. [ui-react-preview-migration.md](./ui-react-preview-migration.md) and [ui-react-support-policy.json](./ui-react-support-policy.json) — beta API boundaries
+5. [beta-release-notes.md](./beta-release-notes.md) and [benchmark-parity.md](./benchmark-parity.md) — current status and stable-readiness gaps
 
 ### Humans (new teammate)
 
@@ -115,6 +116,7 @@ Web ↔ iOS component-token gap (including two commands above that are documente
 | Doc | Use for |
 | --- | --- |
 | [quickstart.md](./quickstart.md) | Public beta install, CSS, theme/mode, first component, preview policy, and consumer verification |
+| [support-governance.md](./support-governance.md) | Public support tiers, compatibility scope, reporting routes, deprecation rules, lifecycle gates, and release authority |
 | [extracted-repo-status.md](./extracted-repo-status.md) | Local-only status, first-wave boundary, and `atom63-vite` follow-up |
 | [authoring-surfaces.md](./authoring-surfaces.md) | Where to edit / value ownership |
 | [theme-authoring.md](./theme-authoring.md) | Theme file guardrails |

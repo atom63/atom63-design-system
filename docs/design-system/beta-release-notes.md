@@ -135,4 +135,6 @@ Before promoting any package to stable/latest:
 - [ ] Run a full visual QA matrix: homepage, `/ds-lab`, component gallery, mobile/desktop, light/dark, theme variants, keyboard/focus states, reduced motion.
 - [ ] Complete Figma manual QA: variables sync, styleguide generation, idempotent rerun.
 - [x] Create a public adopter [quickstart](./quickstart.md) covering beta install, CSS, theme/mode, a first component, preview policy, and consumer verification.
-- [ ] Complete stable docs IA with component reference pages, accessibility guidance, and public governance/support documentation.
+- [x] Publish the public [support and governance policy](./support-governance.md) covering beta scope, compatibility tiers, deprecation, reporting, lifecycle evidence, and human release gates.
+- [ ] Enforce support-tier and human-approval boundaries in release and API-change checks, and adopt the final stable browser/runtime/assistive-technology support matrix.
+- [ ] Complete stable docs IA with component reference pages and accessibility guidance.

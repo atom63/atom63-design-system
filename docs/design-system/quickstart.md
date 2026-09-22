@@ -96,6 +96,7 @@ Use the equivalent package-filtered commands if the consumer is a monorepo.
 
 - [`@atom63/styles` package guide](../../packages/styles/README.md)
 - [`@atom63/ui-react` package guide](../../packages/ui-react/README.md)
+- [Support and governance policy](./support-governance.md)
 - [Preview migration guidance](./ui-react-preview-migration.md)
 - [`@atom63/ui-react` beta support policy](./ui-react-support-policy.json)
 - [Beta release notes](./beta-release-notes.md)

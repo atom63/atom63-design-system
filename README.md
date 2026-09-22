@@ -29,7 +29,10 @@ pnpm add @atom63/styles@beta @atom63/ui-react@beta
 Start with the [public beta quickstart](./docs/design-system/quickstart.md) for
 CSS imports, theme and mode attributes, a first component, preview policy, and
 consumer verification. See [beta release notes](./docs/design-system/beta-release-notes.md)
-for current versions, adopter evidence, and stable-readiness blockers.
+for current versions, adopter evidence, and stable-readiness blockers. The
+[support and governance policy](./docs/design-system/support-governance.md)
+defines the beta support scope, compatibility tiers, reporting routes, and
+human approval gates.
 
 ## Local development
 
