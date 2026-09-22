@@ -129,6 +129,7 @@ Before promoting any package to stable/latest:
 - [x] Generate a monitor-high-risk evidence matrix for Autocomplete, Calendar, Carousel, media/color extraction, and other high-risk `@atom63/ui-react` APIs.
 - [x] Record partial forms-lane evidence for Autocomplete, Calendar, and InputOTP; keep all three monitor-high-risk pending browser, mobile, and assistive-technology QA.
 - [x] Record partial media-lane evidence for Carousel, useExtractColor, and extract-color; keep all three monitor-high-risk pending real-browser gesture, CORS/canvas, performance, and assistive-technology QA. See [ui-react-media-evidence.md](./ui-react-media-evidence.md).
+- [x] Record partial infrastructure-lane evidence for PortalContainer, completing partial evidence for all 7/7 high-risk families; keep it monitor-high-risk pending real-browser overlay, Shadow DOM, and SSR/hydration QA. See [ui-react-portal-evidence.md](./ui-react-portal-evidence.md).
 - [x] Audit published file lists for CSS, dist output, and accidental test/internal files; CI now regenerates `docs/design-system/audits/package-surface.json` and fails on drift.
 - [ ] Run a full visual QA matrix: homepage, `/ds-lab`, component gallery, mobile/desktop, light/dark, theme variants, keyboard/focus states, reduced motion.
 - [ ] Complete Figma manual QA: variables sync, styleguide generation, idempotent rerun.

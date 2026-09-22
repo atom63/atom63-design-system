@@ -119,6 +119,7 @@ Web ↔ iOS component-token gap (including two commands above that are documente
 | [ui-react-monitor-evidence-matrix.md](./ui-react-monitor-evidence-matrix.md) | Stable-readiness evidence matrix for monitor/high-risk `@atom63/ui-react` families |
 | [ui-react-forms-evidence.md](./ui-react-forms-evidence.md) | Partial stable-readiness evidence packet for Autocomplete, Calendar, and InputOTP |
 | [ui-react-media-evidence.md](./ui-react-media-evidence.md) | Partial stable-readiness evidence packet for Carousel, useExtractColor, and extract-color |
+| [ui-react-portal-evidence.md](./ui-react-portal-evidence.md) | Partial stable-readiness evidence packet for PortalContainer |
 | [ui-react-preview-cleanup-plan.md](./ui-react-preview-cleanup-plan.md) | Preview-symbol cleanup plan for root exports that should move to preview/private before stable |
 | [ui-react-preview-migration.md](./ui-react-preview-migration.md) | Root-to-preview import guidance for beta adopters and stable/latest root narrowing |
 | [release-automation.md](./release-automation.md) | GitHub Actions beta release workflow and npm trusted publishing setup notes |

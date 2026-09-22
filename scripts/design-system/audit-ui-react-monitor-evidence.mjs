@@ -196,6 +196,8 @@ const familyPlans = {
     qa: ["dialog", "popover", "nested provider", "missing container"],
     stableDecision:
       "Promote only if portal ownership and SSR constraints are documented.",
+    status: "partial-evidence-recorded",
+    evidenceReference: "docs/design-system/ui-react-portal-evidence.md",
   },
   "components/progressive-blur": {
     owner: "design-system-surfaces",

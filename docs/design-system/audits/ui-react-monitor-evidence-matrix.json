@@ -360,7 +360,8 @@
       ],
       "qaMatrix": ["dialog", "popover", "nested provider", "missing container"],
       "stableDecision": "Promote only if portal ownership and SSR constraints are documented.",
-      "status": "blocked-until-evidence-recorded"
+      "status": "partial-evidence-recorded",
+      "evidenceReference": "docs/design-system/ui-react-portal-evidence.md"
     },
     {
       "source": "./components/progressive-blur",
