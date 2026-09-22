@@ -13,6 +13,7 @@ describe('@atom63/ui-react public barrel', () => {
     expect(api.InputGroupInput).toBeTypeOf('function')
     expect(api.InputGroupText).toBeTypeOf('function')
     expect(api.UIProvider).toBeTypeOf('function')
+    expect(api.Atom63Theme).toBeTypeOf('function')
     expect(api.useUIEnvironment).toBeTypeOf('function')
     expect(api.Kbd).toBeTypeOf('function')
     expect(api.KbdGroup).toBeTypeOf('function')

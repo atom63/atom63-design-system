@@ -633,6 +633,8 @@ export {
 } from './lib/extract-color'
 export type { ColorSampleRegion, ExtractColorOptions, ExtractedColor } from './lib/extract-color'
 export { UIProvider, useUIEnvironment } from './provider'
+export { Atom63Theme } from './atom63-theme'
+export type { Atom63ThemeMode, Atom63ThemeProps } from './atom63-theme'
 export type {
   Density,
   DesignLanguage,

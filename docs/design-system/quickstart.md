@@ -17,56 +17,71 @@ them if the app does not already provide them.
 
 ## 2. Load the CSS
 
-Import the foundation and React component recipes once in the application
-entry:
+Import the React stylesheet once in the application entry:
 
 ```tsx
-import '@atom63/styles'
 import '@atom63/ui-react/styles.css'
 ```
 
-The first import makes the token dependency explicit. The React stylesheet also
-includes the foundation and reset, so do not add either import in multiple app
-entry points.
+The stylesheet includes the Atom63 foundation, reset, and component recipes.
+Keep `@atom63/styles` installed because it is a package dependency, but the
+standard React setup needs only this CSS import.
 
 ## 3. Set theme and mode
 
-Set the attributes on `<html>` so every component inherits them:
+Wrap the application with `Atom63Theme`:
 
-```html
-<html class="light" data-a63-mode="light" data-a63-theme="modern">
+```tsx
+import { Atom63Theme } from '@atom63/ui-react'
+
+export function Root() {
+  return (
+    <Atom63Theme mode="light" theme="modern">
+      <App />
+    </Atom63Theme>
+  )
+}
 ```
 
 Modes are `light` and `dark`. Bundled themes are `modern`, `aqua`, `retro`, and
-`terminal`. Keep the class and `data-a63-mode` value in sync.
+`terminal`. The wrapper keeps the mode class and attributes in sync. It renders
+a `div` by default and accepts the package-standard `render` prop for a custom
+wrapper.
 
 ## 4. Render a component
 
 Core controls come from the package root:
 
 ```tsx
-import { Badge, Button, Card, CardContent, CardHeader, CardTitle, Input } from '@atom63/ui-react'
+import {
+  Atom63Theme,
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Input,
+} from '@atom63/ui-react'
 
 export function InviteCard() {
   return (
-    <Card>
-      <CardHeader>
-        <Badge>Beta</Badge>
-        <CardTitle>Invite a collaborator</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <label htmlFor="invite-email">Email address</label>
-        <Input id="invite-email" name="email" type="email" />
-        <Button type="button">Send invite</Button>
-      </CardContent>
-    </Card>
+    <Atom63Theme mode="light" theme="modern">
+      <Card>
+        <CardHeader>
+          <Badge>Beta</Badge>
+          <CardTitle>Invite a collaborator</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <label htmlFor="invite-email">Email address</label>
+          <Input id="invite-email" name="email" type="email" />
+          <Button type="button">Send invite</Button>
+        </CardContent>
+      </Card>
+    </Atom63Theme>
   )
 }
 ```
-
-If the app uses Tailwind v4 or shadcn variables, optional adapters are available
-from `@atom63/styles/tailwind` and `@atom63/styles/compat/shadcn`. They are not
-required for Atom63 components.
 
 ## 5. Use preview APIs intentionally
 

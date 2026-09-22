@@ -229,11 +229,11 @@ async function writeHarness(harnessDirectory, packedPackages) {
     include: ["src"],
   };
 
-  const source = `import '@atom63/styles'
-import '@atom63/ui-react/styles.css'
+  const source = `import '@atom63/ui-react/styles.css'
 import '@atom63/ui-react/recipes/media-lightbox.css'
 
 import {
+  Atom63Theme,
   Autocomplete,
   Badge,
   Button,
@@ -318,46 +318,48 @@ void previewApiTypes
 
 function App() {
   return (
-    <Container>
-      <Card>
-        <CardHeader>
-          <CardTitle>Atom63 package smoke</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Badge>External consumer</Badge>
-          <Label htmlFor="packed-name">Name</Label>
-          <Input id="packed-name" />
-          <Textarea aria-label="Notes" />
-          <Checkbox aria-label="Include details" defaultChecked />
-          <Switch aria-label="Enable updates" />
-          <Select defaultValue="one">
-            <SelectTrigger aria-label="Packed choice">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="one">One</SelectItem>
-              <SelectItem value="two">Two</SelectItem>
-            </SelectContent>
-          </Select>
-          <Tabs defaultValue="summary">
-            <TabsList>
-              <TabsTrigger value="summary">Summary</TabsTrigger>
-              <TabsTrigger value="details">Details</TabsTrigger>
-            </TabsList>
-            <TabsContent value="summary">Packed root exports resolve.</TabsContent>
-            <TabsContent value="details">
-              <Empty>
-                <EmptyHeader>
-                  <EmptyTitle>No missing exports</EmptyTitle>
-                  <EmptyDescription>Core and composition APIs typecheck.</EmptyDescription>
-                </EmptyHeader>
-              </Empty>
-            </TabsContent>
-          </Tabs>
-          <Button type="button">Built from tarballs</Button>
-        </CardContent>
-      </Card>
-    </Container>
+    <Atom63Theme mode="light" theme="modern">
+      <Container>
+        <Card>
+          <CardHeader>
+            <CardTitle>Atom63 package smoke</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Badge>External consumer</Badge>
+            <Label htmlFor="packed-name">Name</Label>
+            <Input id="packed-name" />
+            <Textarea aria-label="Notes" />
+            <Checkbox aria-label="Include details" defaultChecked />
+            <Switch aria-label="Enable updates" />
+            <Select defaultValue="one">
+              <SelectTrigger aria-label="Packed choice">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="one">One</SelectItem>
+                <SelectItem value="two">Two</SelectItem>
+              </SelectContent>
+            </Select>
+            <Tabs defaultValue="summary">
+              <TabsList>
+                <TabsTrigger value="summary">Summary</TabsTrigger>
+                <TabsTrigger value="details">Details</TabsTrigger>
+              </TabsList>
+              <TabsContent value="summary">Packed root exports resolve.</TabsContent>
+              <TabsContent value="details">
+                <Empty>
+                  <EmptyHeader>
+                    <EmptyTitle>No missing exports</EmptyTitle>
+                    <EmptyDescription>Core and composition APIs typecheck.</EmptyDescription>
+                  </EmptyHeader>
+                </Empty>
+              </TabsContent>
+            </Tabs>
+            <Button type="button">Built from tarballs</Button>
+          </CardContent>
+        </Card>
+      </Container>
+    </Atom63Theme>
   )
 }
 

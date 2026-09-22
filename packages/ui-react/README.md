@@ -6,8 +6,6 @@ The primary React renderer for Atom63. It provides accessible components,
 layout primitives, media, and theme controls backed by `@atom63/ui-foundation`
 contracts and `@atom63/styles` tokens.
 
-Built by You Zhang through Hermes Agent
-
 ## Install
 
 The package name is `@atom63/ui-react`, with React 19 and React DOM 19 as peer
@@ -24,26 +22,26 @@ complete external-consumer path, start with the
 
 ## Minimum setup
 
-Load the shared CSS once, then render components from the root entry point.
+Load the shared CSS once, wrap your app with `Atom63Theme`, then render
+components from the root entry point.
 
 ## CSS imports
 
-Import the Atom63 foundation and the React recipe bundle once from the
-application entry:
+Import the React stylesheet once from the application entry:
 
 ```tsx
-import '@atom63/styles'
 import '@atom63/ui-react/styles.css'
 ```
 
-The full React stylesheet also includes the foundation and reset; the explicit
-foundation import is retained here because it is the verified package smoke
-path and makes the token dependency visible.
+The stylesheet includes the Atom63 foundation, reset, and component recipes.
+Keep `@atom63/styles` installed because it is a package dependency, but no
+second CSS import is needed for the standard React setup.
 
 ## First component
 
 ```tsx
 import {
+  Atom63Theme,
   Badge,
   Button,
   Card,
@@ -55,18 +53,20 @@ import {
 
 export function Example() {
   return (
-    <Card>
-      <CardHeader>
-        <Badge>Preview</Badge>
-        <CardTitle>Invite a collaborator</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <Input aria-label="Email address" placeholder="you@example.com" type="email" />
-        <Button type="button" variant="primary">
-          Send invite
-        </Button>
-      </CardContent>
-    </Card>
+    <Atom63Theme mode="light" theme="modern">
+      <Card>
+        <CardHeader>
+          <Badge>Preview</Badge>
+          <CardTitle>Invite a collaborator</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Input aria-label="Email address" placeholder="you@example.com" type="email" />
+          <Button type="button" variant="primary">
+            Send invite
+          </Button>
+        </CardContent>
+      </Card>
+    </Atom63Theme>
   )
 }
 ```
@@ -75,10 +75,14 @@ These imports match the packed-package smoke path and the package root exports.
 
 ## Theming
 
-Set theme and mode on a shared ancestor, normally `<html>`:
+`Atom63Theme` sets `data-a63-mode`, `data-a63-theme`, and the matching `light`
+or `dark` class on its wrapper. It renders a `div` by default; use the `render`
+prop when a different wrapper is needed.
 
-```html
-<html class="dark" data-a63-mode="dark" data-a63-theme="modern">
+```tsx
+<Atom63Theme mode="dark" render={<main />} theme="modern">
+  <App />
+</Atom63Theme>
 ```
 
 The bundled themes are `modern`, `aqua`, `retro`, and `terminal`. Use `light` or
