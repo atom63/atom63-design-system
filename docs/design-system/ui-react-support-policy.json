@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "packageName": "@atom63/ui-react",
+  "scope": "root exports and package export-map subpaths",
+  "status": "beta-policy",
+  "effectiveFrom": "0.2.0-beta.2",
+  "summary": "The current beta keeps the broad root import surface, but the compatibility promise is tiered. Stable/latest promotion requires an approved narrowing or explicit support commitment for monitor and preview surfaces.",
+  "tiers": {
+    "beta-supported-core": {
+      "label": "Beta-supported core",
+      "supportPromise": "Documented components, props, exported public types, composition behavior, accessibility semantics, and CSS import paths should remain compatible through beta except for approved breaking changes with migration notes.",
+      "stableEligibility": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    "beta-supported-composition-conditional": {
+      "label": "Beta-supported composition / product primitives",
+      "supportPromise": "Importable and beta-supported while their Storybook/autodocs, focused tests, and packed-consumer coverage remain green. Missing evidence should downgrade the family before stable/latest.",
+      "stableEligibility": "Needs authored composition guidance or equivalent usage docs before stable."
+    },
+    "monitor-high-risk": {
+      "label": "Monitor / high risk",
+      "supportPromise": "Importable during beta but not promised as a stable compatibility contract. API changes require release notes; stable promotion requires explicit owner and additional evidence.",
+      "stableEligibility": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    "preview-experimental-candidate": {
+      "label": "Preview / experimental candidate",
+      "supportPromise": "Importable in the broad beta root but should move behind an approved preview/experimental boundary or become private before stable unless YZ explicitly approves support.",
+      "stableEligibility": "Not stable-eligible without explicit design-engineering approval."
+    }
+  },
+  "defaultTier": "beta-supported-core",
+  "sourceModuleTiers": {
+    "./components/command": "beta-supported-composition-conditional",
+    "./components/connected-panel": "beta-supported-composition-conditional",
+    "./components/context-menu": "beta-supported-composition-conditional",
+    "./components/dropdown-menu": "beta-supported-composition-conditional",
+    "./components/empty": "beta-supported-composition-conditional",
+    "./components/feedback-state": "beta-supported-composition-conditional",
+    "./components/frame": "beta-supported-composition-conditional",
+    "./components/hover-card": "beta-supported-composition-conditional",
+    "./components/item": "beta-supported-composition-conditional",
+    "./components/menubar": "beta-supported-composition-conditional",
+    "./components/navigation-menu": "beta-supported-composition-conditional",
+    "./components/preview-card": "beta-supported-composition-conditional",
+    "./components/sidebar": "beta-supported-composition-conditional",
+    "./components/sidebar-nav-tree": "beta-supported-composition-conditional",
+    "./components/animated-check": "monitor-high-risk",
+    "./components/autocomplete": "monitor-high-risk",
+    "./components/calendar": "monitor-high-risk",
+    "./components/carousel": "monitor-high-risk",
+    "./components/copy-button": "monitor-high-risk",
+    "./components/destination-link": "monitor-high-risk",
+    "./components/input-otp": "monitor-high-risk",
+    "./components/load-more-trigger": "monitor-high-risk",
+    "./components/marquee": "monitor-high-risk",
+    "./components/panel-setting-button": "monitor-high-risk",
+    "./components/portal-container": "monitor-high-risk",
+    "./components/progressive-blur": "monitor-high-risk",
+    "./components/text-ticker": "monitor-high-risk",
+    "./hooks/use-extract-color": "monitor-high-risk",
+    "./lib/extract-color": "monitor-high-risk",
+    "./conformance": "preview-experimental-candidate",
+    "./lib/motion": "preview-experimental-candidate"
+  },
+  "symbolTiers": {
+    "AlertDialogCreateHandle": "preview-experimental-candidate",
+    "AlertDialogPrimitive": "preview-experimental-candidate",
+    "AutocompletePrimitive": "preview-experimental-candidate",
+    "AvatarPrimitive": "preview-experimental-candidate",
+    "ButtonGroupProvider": "preview-experimental-candidate",
+    "CommandCreateHandle": "preview-experimental-candidate",
+    "DialogCreateHandle": "preview-experimental-candidate",
+    "DialogPrimitive": "preview-experimental-candidate",
+    "InputPrimitive": "preview-experimental-candidate",
+    "ProgressPrimitive": "preview-experimental-candidate",
+    "SeparatorPrimitive": "preview-experimental-candidate",
+    "SheetPrimitive": "preview-experimental-candidate",
+    "TooltipCreateHandle": "preview-experimental-candidate",
+    "TooltipPrimitive": "preview-experimental-candidate",
+    "cardLinkClassName": "preview-experimental-candidate",
+    "navigationMenuTriggerStyle": "preview-experimental-candidate",
+    "scrollableListControlClassNames": "preview-experimental-candidate",
+    "selectTriggerDefaultClassName": "preview-experimental-candidate",
+    "useButtonGroupContext": "preview-experimental-candidate",
+    "CardCursorBinding": "monitor-high-risk",
+    "CardCursorLabel": "monitor-high-risk",
+    "UseCardCursorOptions": "monitor-high-risk",
+    "useCardCursor": "monitor-high-risk"
+  },
+  "symbolPrefixTiers": {
+    "ATOM63_": "preview-experimental-candidate"
+  },
+  "subpathPolicy": {
+    "./layout": "Support high-level layout primitives after responsive/docs evidence; monitor style helpers, constants, chrome internals, and hooks.",
+    "./media": "High risk. Needs browser/media lifecycle evidence before stable compatibility.",
+    "./media/lightbox": "Preview unless the headless composition/state/context contract is intentionally supported.",
+    "./theme": "Document appearance UI; monitor controller factories, auto-color internals, option tables, and personalization utilities.",
+    "css": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+  },
+  "stableBlockers": [
+    "Move or explicitly approve preview-experimental-candidate symbols before stable/latest.",
+    "Assign owners and evidence requirements for monitor-high-risk symbols.",
+    "Document conditional composition families before promising stable compatibility.",
+    "Keep the generated export inventory in sync with this policy in CI."
+  ]
+}

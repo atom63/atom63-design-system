@@ -114,7 +114,8 @@ Web ↔ iOS component-token gap (including two commands above that are documente
 | [ui-react-component-review.md](./ui-react-component-review.md) | Component PR checklist |
 | [package-governance.md](./package-governance.md) | Package boundaries |
 | [beta-release-notes.md](./beta-release-notes.md) | Current public beta versions, npm dist-tags, adopter evidence, and stable-readiness checklist |
-| [release-automation.md](./release-automation.md) | Manual GitHub Actions beta release workflow, trusted-publisher setup, and release steps |
+| [ui-react-support-policy.json](./ui-react-support-policy.json) | Machine-readable `@atom63/ui-react` beta support tiers, symbol overrides, public subpath policy, and stable blockers |
+| [release-automation.md](./release-automation.md) | GitHub Actions beta release workflow and npm trusted publishing setup notes |
 | [publish-boundary-rfc.md](./publish-boundary-rfc.md) | Proposed public beta boundary and pre-publish approval gates |
 | [ui-react-root-api-audit.md](./ui-react-root-api-audit.md) | Proposed support tiers for the broad `@atom63/ui-react` root and public subpaths |
 | [package-metadata-audit.md](./package-metadata-audit.md) | First-wave package metadata and packed-content gaps |

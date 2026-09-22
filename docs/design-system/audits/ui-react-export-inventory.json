@@ -2,15 +2,43 @@
   "schemaVersion": 1,
   "inputs": [
     "packages/ui-react/src/index.ts",
-    "packages/ui-react/package.json"
+    "packages/ui-react/package.json",
+    "docs/design-system/ui-react-support-policy.json"
   ],
   "rootExportSource": "packages/ui-react/src/index.ts",
-  "tierSource": "docs/design-system/ui-react-root-api-audit.md",
+  "tierSource": "docs/design-system/ui-react-support-policy.json",
   "tierDefinitions": {
-    "beta-supported-core": "Recommended beta-supported primitives and core components.",
-    "beta-supported-composition-conditional": "Recommended beta support conditional on documentation and focused tests.",
-    "monitor-high-risk": "High-risk API to monitor before promising compatibility.",
-    "preview-experimental-candidate": "Candidate for a preview or experimental boundary if export changes are approved later."
+    "beta-supported-core": {
+      "label": "Beta-supported core",
+      "supportPromise": "Documented components, props, exported public types, composition behavior, accessibility semantics, and CSS import paths should remain compatible through beta except for approved breaking changes with migration notes.",
+      "stableEligibility": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    "beta-supported-composition-conditional": {
+      "label": "Beta-supported composition / product primitives",
+      "supportPromise": "Importable and beta-supported while their Storybook/autodocs, focused tests, and packed-consumer coverage remain green. Missing evidence should downgrade the family before stable/latest.",
+      "stableEligibility": "Needs authored composition guidance or equivalent usage docs before stable."
+    },
+    "monitor-high-risk": {
+      "label": "Monitor / high risk",
+      "supportPromise": "Importable during beta but not promised as a stable compatibility contract. API changes require release notes; stable promotion requires explicit owner and additional evidence.",
+      "stableEligibility": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    "preview-experimental-candidate": {
+      "label": "Preview / experimental candidate",
+      "supportPromise": "Importable in the broad beta root but should move behind an approved preview/experimental boundary or become private before stable unless YZ explicitly approves support.",
+      "stableEligibility": "Not stable-eligible without explicit design-engineering approval."
+    }
+  },
+  "tierPolicy": {
+    "status": "beta-policy",
+    "effectiveFrom": "0.2.0-beta.2",
+    "defaultTier": "beta-supported-core",
+    "stableBlockers": [
+      "Move or explicitly approve preview-experimental-candidate symbols before stable/latest.",
+      "Assign owners and evidence requirements for monitor-high-risk symbols.",
+      "Document conditional composition families before promising stable compatibility.",
+      "Keep the generated export inventory in sync with this policy in CI."
+    ]
   },
   "counts": {
     "rootValueExports": 425,

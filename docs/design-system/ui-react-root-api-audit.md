@@ -6,11 +6,13 @@
 
 **Inspected:** `packages/ui-react/src/index.ts` and the `exports` map in `packages/ui-react/package.json` on 2026-09-20.
 
-**Machine-readable inventory:** [`audits/ui-react-export-inventory.json`](./audits/ui-react-export-inventory.json). Run `pnpm check:ui-react-exports` to detect drift, or `pnpm check:ui-react-exports --write` to regenerate it after an intentional export change.
+**Machine-readable policy:** [`ui-react-support-policy.json`](./ui-react-support-policy.json) defines the beta support tiers, per-module defaults, symbol overrides, public subpath policy, and stable blockers.
+
+**Machine-readable inventory:** [`audits/ui-react-export-inventory.json`](./audits/ui-react-export-inventory.json). Run `pnpm check:ui-react-exports` to detect drift, or `pnpm check:ui-react-exports --write` to regenerate it after an intentional export or policy change.
 
 ## Conclusion
 
-Adopt a broad-root beta policy for the first public beta: keep the current root export available to avoid pre-release churn, but make the support promise tiered. The inventory can resolve and typecheck the broad surface; compatibility guarantees should concentrate on beta-supported core and documented composition families.
+Adopt a broad-root beta policy for the first public beta: keep the current root export available to avoid pre-release churn, but make the support promise tiered. The policy file is the source of truth for machine checks; this document explains the rationale. The inventory can resolve and typecheck the broad surface; compatibility guarantees should concentrate on beta-supported core and documented composition families.
 
 The current root is probably too broad for a tight stable support promise. It combines mature component families with product-specific compositions, upstream primitive pass-throughs, imperative handles, style helpers, hooks, motion constants, color-extraction utilities, and conformance evidence. Publishing the current root under the RFC's beta policy makes those names importable, but not all equally stable.
 
