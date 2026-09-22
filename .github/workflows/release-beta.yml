@@ -39,6 +39,9 @@ jobs:
       - name: Check React exports
         run: pnpm check:ui-react-exports
 
+      - name: Check React stable action matrix
+        run: pnpm check:ui-react-stable-actions
+
       - name: Check package surface audit
         run: |
           pnpm check:package-surface

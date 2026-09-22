@@ -1,0 +1,2837 @@
+{
+  "schemaVersion": 1,
+  "status": "stable-readiness-action-matrix",
+  "packageName": "@atom63/ui-react",
+  "inputs": [
+    "docs/design-system/audits/ui-react-export-inventory.json",
+    "docs/design-system/ui-react-support-policy.json"
+  ],
+  "generatedFrom": {
+    "inventorySchemaVersion": 1,
+    "supportPolicySchemaVersion": 1,
+    "supportPolicyEffectiveFrom": "0.2.0-beta.2"
+  },
+  "actionDefinitions": {
+    "beta-supported-core": {
+      "action": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ]
+    },
+    "beta-supported-composition-conditional": {
+      "action": "document-before-stable",
+      "priority": "P1",
+      "stableDecision": "Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable.",
+      "requiredEvidence": [
+        "composition usage docs or authored guidance",
+        "focused interaction tests",
+        "packed-consumer import/render smoke for a representative path"
+      ]
+    },
+    "monitor-high-risk": {
+      "action": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
+      "requiredEvidence": [
+        "named owner",
+        "adopter use case or internal retention rationale",
+        "browser/interaction evidence where relevant",
+        "migration policy if kept public"
+      ]
+    },
+    "preview-experimental-candidate": {
+      "action": "move-to-preview-or-approve",
+      "priority": "P0",
+      "stableDecision": "Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.",
+      "requiredEvidence": [
+        "YZ/design-engineering approval if kept in stable root",
+        "migration notes if moved or removed",
+        "preview boundary docs if retained publicly"
+      ]
+    }
+  },
+  "summary": {
+    "sourceFamilies": 74,
+    "sourceExports": 597,
+    "sourceTierCounts": {
+      "monitor-high-risk": 76,
+      "preview-experimental-candidate": 31,
+      "beta-supported-core": 311,
+      "beta-supported-composition-conditional": 179
+    },
+    "sourceActionCounts": {
+      "assign-owner-and-evidence": 16,
+      "move-to-preview-or-approve": 15,
+      "document-before-stable": 12,
+      "keep-stable-candidate": 31
+    },
+    "sourcePriorityCounts": {
+      "P0": 31,
+      "P1": 12,
+      "P2": 31
+    },
+    "packageSubpaths": 70,
+    "subpathActionCounts": {
+      "keep-preview-subpath-or-add-evidence": 2,
+      "document-subpath-contract": 2,
+      "keep-import-path-stable": 66
+    },
+    "subpathPriorityCounts": {
+      "P0": 2,
+      "P1": 2,
+      "P2": 66
+    }
+  },
+  "sourceActions": [
+    {
+      "source": "./components/animated-check",
+      "family": "components/animated-check",
+      "kind": "component-family",
+      "totalExports": 2,
+      "valueExports": 1,
+      "typeExports": 1,
+      "tierCounts": {
+        "monitor-high-risk": 2
+      },
+      "dominantTier": "monitor-high-risk",
+      "blockingTier": "monitor-high-risk",
+      "recommendedAction": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
+      "requiredEvidence": [
+        "named owner",
+        "adopter use case or internal retention rationale",
+        "browser/interaction evidence where relevant",
+        "migration policy if kept public"
+      ],
+      "notableSymbols": ["AnimatedCheck", "AnimatedCheckProps"],
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    {
+      "source": "./components/autocomplete",
+      "family": "components/autocomplete",
+      "kind": "component-family",
+      "totalExports": 19,
+      "valueExports": 17,
+      "typeExports": 2,
+      "tierCounts": {
+        "monitor-high-risk": 18,
+        "preview-experimental-candidate": 1
+      },
+      "dominantTier": "monitor-high-risk",
+      "blockingTier": "monitor-high-risk",
+      "recommendedAction": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
+      "requiredEvidence": [
+        "named owner",
+        "adopter use case or internal retention rationale",
+        "browser/interaction evidence where relevant",
+        "migration policy if kept public"
+      ],
+      "notableSymbols": [
+        "Autocomplete",
+        "AutocompleteClear",
+        "AutocompleteCollection",
+        "AutocompleteEmpty",
+        "AutocompleteGroup",
+        "AutocompleteGroupLabel",
+        "AutocompleteInput",
+        "AutocompleteItem",
+        "AutocompleteList",
+        "AutocompletePopup",
+        "AutocompleteRow",
+        "AutocompleteSeparator"
+      ],
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    {
+      "source": "./components/calendar",
+      "family": "components/calendar",
+      "kind": "component-family",
+      "totalExports": 2,
+      "valueExports": 1,
+      "typeExports": 1,
+      "tierCounts": {
+        "monitor-high-risk": 2
+      },
+      "dominantTier": "monitor-high-risk",
+      "blockingTier": "monitor-high-risk",
+      "recommendedAction": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
+      "requiredEvidence": [
+        "named owner",
+        "adopter use case or internal retention rationale",
+        "browser/interaction evidence where relevant",
+        "migration policy if kept public"
+      ],
+      "notableSymbols": ["Calendar", "CalendarProps"],
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    {
+      "source": "./components/card",
+      "family": "components/card",
+      "kind": "component-family",
+      "totalExports": 30,
+      "valueExports": 19,
+      "typeExports": 11,
+      "tierCounts": {
+        "beta-supported-core": 25,
+        "monitor-high-risk": 4,
+        "preview-experimental-candidate": 1
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "monitor-high-risk",
+      "recommendedAction": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
+      "requiredEvidence": [
+        "named owner",
+        "adopter use case or internal retention rationale",
+        "browser/interaction evidence where relevant",
+        "migration policy if kept public"
+      ],
+      "notableSymbols": [
+        "CardCursorLabel",
+        "useCardCursor",
+        "CardCursorBinding",
+        "UseCardCursorOptions"
+      ],
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    {
+      "source": "./components/carousel",
+      "family": "components/carousel",
+      "kind": "component-family",
+      "totalExports": 8,
+      "valueExports": 6,
+      "typeExports": 2,
+      "tierCounts": {
+        "monitor-high-risk": 8
+      },
+      "dominantTier": "monitor-high-risk",
+      "blockingTier": "monitor-high-risk",
+      "recommendedAction": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
+      "requiredEvidence": [
+        "named owner",
+        "adopter use case or internal retention rationale",
+        "browser/interaction evidence where relevant",
+        "migration policy if kept public"
+      ],
+      "notableSymbols": [
+        "Carousel",
+        "CarouselContent",
+        "CarouselItem",
+        "CarouselNext",
+        "CarouselPrevious",
+        "useCarousel",
+        "CarouselApi",
+        "CarouselProps"
+      ],
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    {
+      "source": "./components/copy-button",
+      "family": "components/copy-button",
+      "kind": "component-family",
+      "totalExports": 4,
+      "valueExports": 2,
+      "typeExports": 2,
+      "tierCounts": {
+        "monitor-high-risk": 4
+      },
+      "dominantTier": "monitor-high-risk",
+      "blockingTier": "monitor-high-risk",
+      "recommendedAction": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
+      "requiredEvidence": [
+        "named owner",
+        "adopter use case or internal retention rationale",
+        "browser/interaction evidence where relevant",
+        "migration policy if kept public"
+      ],
+      "notableSymbols": [
+        "CopyButton",
+        "CopyButtonFeedback",
+        "CopyButtonFeedbackProps",
+        "CopyButtonProps"
+      ],
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    {
+      "source": "./components/destination-link",
+      "family": "components/destination-link",
+      "kind": "component-family",
+      "totalExports": 4,
+      "valueExports": 2,
+      "typeExports": 2,
+      "tierCounts": {
+        "monitor-high-risk": 4
+      },
+      "dominantTier": "monitor-high-risk",
+      "blockingTier": "monitor-high-risk",
+      "recommendedAction": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
+      "requiredEvidence": [
+        "named owner",
+        "adopter use case or internal retention rationale",
+        "browser/interaction evidence where relevant",
+        "migration policy if kept public"
+      ],
+      "notableSymbols": [
+        "DestinationIndicator",
+        "DestinationLink",
+        "DestinationKind",
+        "DestinationLinkProps"
+      ],
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    {
+      "source": "./components/input-otp",
+      "family": "components/input-otp",
+      "kind": "component-family",
+      "totalExports": 4,
+      "valueExports": 4,
+      "typeExports": 0,
+      "tierCounts": {
+        "monitor-high-risk": 4
+      },
+      "dominantTier": "monitor-high-risk",
+      "blockingTier": "monitor-high-risk",
+      "recommendedAction": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
+      "requiredEvidence": [
+        "named owner",
+        "adopter use case or internal retention rationale",
+        "browser/interaction evidence where relevant",
+        "migration policy if kept public"
+      ],
+      "notableSymbols": [
+        "InputOTP",
+        "InputOTPGroup",
+        "InputOTPSeparator",
+        "InputOTPSlot"
+      ],
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    {
+      "source": "./components/load-more-trigger",
+      "family": "components/load-more-trigger",
+      "kind": "component-family",
+      "totalExports": 4,
+      "valueExports": 1,
+      "typeExports": 3,
+      "tierCounts": {
+        "monitor-high-risk": 4
+      },
+      "dominantTier": "monitor-high-risk",
+      "blockingTier": "monitor-high-risk",
+      "recommendedAction": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
+      "requiredEvidence": [
+        "named owner",
+        "adopter use case or internal retention rationale",
+        "browser/interaction evidence where relevant",
+        "migration policy if kept public"
+      ],
+      "notableSymbols": [
+        "LoadMoreTrigger",
+        "LoadMoreTriggerProps",
+        "LoadMoreTriggerState",
+        "LoadMoreTriggerVariant"
+      ],
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    {
+      "source": "./components/marquee",
+      "family": "components/marquee",
+      "kind": "component-family",
+      "totalExports": 2,
+      "valueExports": 1,
+      "typeExports": 1,
+      "tierCounts": {
+        "monitor-high-risk": 2
+      },
+      "dominantTier": "monitor-high-risk",
+      "blockingTier": "monitor-high-risk",
+      "recommendedAction": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
+      "requiredEvidence": [
+        "named owner",
+        "adopter use case or internal retention rationale",
+        "browser/interaction evidence where relevant",
+        "migration policy if kept public"
+      ],
+      "notableSymbols": ["Marquee", "MarqueeProps"],
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    {
+      "source": "./components/panel-setting-button",
+      "family": "components/panel-setting-button",
+      "kind": "component-family",
+      "totalExports": 2,
+      "valueExports": 1,
+      "typeExports": 1,
+      "tierCounts": {
+        "monitor-high-risk": 2
+      },
+      "dominantTier": "monitor-high-risk",
+      "blockingTier": "monitor-high-risk",
+      "recommendedAction": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
+      "requiredEvidence": [
+        "named owner",
+        "adopter use case or internal retention rationale",
+        "browser/interaction evidence where relevant",
+        "migration policy if kept public"
+      ],
+      "notableSymbols": ["PanelSettingButton", "PanelSettingButtonProps"],
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    {
+      "source": "./components/portal-container",
+      "family": "components/portal-container",
+      "kind": "component-family",
+      "totalExports": 4,
+      "valueExports": 2,
+      "typeExports": 2,
+      "tierCounts": {
+        "monitor-high-risk": 4
+      },
+      "dominantTier": "monitor-high-risk",
+      "blockingTier": "monitor-high-risk",
+      "recommendedAction": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
+      "requiredEvidence": [
+        "named owner",
+        "adopter use case or internal retention rationale",
+        "browser/interaction evidence where relevant",
+        "migration policy if kept public"
+      ],
+      "notableSymbols": [
+        "PortalContainerProvider",
+        "usePortalContainer",
+        "PortalContainer",
+        "PortalContainerProviderProps"
+      ],
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    {
+      "source": "./components/progressive-blur",
+      "family": "components/progressive-blur",
+      "kind": "component-family",
+      "totalExports": 3,
+      "valueExports": 1,
+      "typeExports": 2,
+      "tierCounts": {
+        "monitor-high-risk": 3
+      },
+      "dominantTier": "monitor-high-risk",
+      "blockingTier": "monitor-high-risk",
+      "recommendedAction": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
+      "requiredEvidence": [
+        "named owner",
+        "adopter use case or internal retention rationale",
+        "browser/interaction evidence where relevant",
+        "migration policy if kept public"
+      ],
+      "notableSymbols": [
+        "ProgressiveBlur",
+        "ProgressiveBlurPosition",
+        "ProgressiveBlurProps"
+      ],
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    {
+      "source": "./components/text-ticker",
+      "family": "components/text-ticker",
+      "kind": "component-family",
+      "totalExports": 2,
+      "valueExports": 1,
+      "typeExports": 1,
+      "tierCounts": {
+        "monitor-high-risk": 2
+      },
+      "dominantTier": "monitor-high-risk",
+      "blockingTier": "monitor-high-risk",
+      "recommendedAction": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
+      "requiredEvidence": [
+        "named owner",
+        "adopter use case or internal retention rationale",
+        "browser/interaction evidence where relevant",
+        "migration policy if kept public"
+      ],
+      "notableSymbols": ["TextTicker", "TextTickerProps"],
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    {
+      "source": "./hooks/use-extract-color",
+      "family": "hooks/use-extract-color",
+      "kind": "hook",
+      "totalExports": 3,
+      "valueExports": 1,
+      "typeExports": 2,
+      "tierCounts": {
+        "monitor-high-risk": 3
+      },
+      "dominantTier": "monitor-high-risk",
+      "blockingTier": "monitor-high-risk",
+      "recommendedAction": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
+      "requiredEvidence": [
+        "named owner",
+        "adopter use case or internal retention rationale",
+        "browser/interaction evidence where relevant",
+        "migration policy if kept public"
+      ],
+      "notableSymbols": [
+        "useExtractColor",
+        "UseExtractColorOptions",
+        "UseExtractColorReturn"
+      ],
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    {
+      "source": "./lib/extract-color",
+      "family": "lib/extract-color",
+      "kind": "library-utility",
+      "totalExports": 10,
+      "valueExports": 7,
+      "typeExports": 3,
+      "tierCounts": {
+        "monitor-high-risk": 10
+      },
+      "dominantTier": "monitor-high-risk",
+      "blockingTier": "monitor-high-risk",
+      "recommendedAction": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
+      "requiredEvidence": [
+        "named owner",
+        "adopter use case or internal retention rationale",
+        "browser/interaction evidence where relevant",
+        "migration policy if kept public"
+      ],
+      "notableSymbols": [
+        "capColorForContrast",
+        "colorCacheKey",
+        "extractColorFromImage",
+        "extractColorFromLoadedImage",
+        "getCachedColor",
+        "loadAndExtractColor",
+        "TINT_MAX_LUMINANCE",
+        "ColorSampleRegion",
+        "ExtractColorOptions",
+        "ExtractedColor"
+      ],
+      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy."
+    },
+    {
+      "source": "./components/alert-dialog",
+      "family": "components/alert-dialog",
+      "kind": "component-family",
+      "totalExports": 18,
+      "valueExports": 18,
+      "typeExports": 0,
+      "tierCounts": {
+        "beta-supported-core": 16,
+        "preview-experimental-candidate": 2
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "preview-experimental-candidate",
+      "recommendedAction": "move-to-preview-or-approve",
+      "priority": "P0",
+      "stableDecision": "Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.",
+      "requiredEvidence": [
+        "YZ/design-engineering approval if kept in stable root",
+        "migration notes if moved or removed",
+        "preview boundary docs if retained publicly"
+      ],
+      "notableSymbols": ["AlertDialogCreateHandle", "AlertDialogPrimitive"],
+      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+    },
+    {
+      "source": "./components/avatar",
+      "family": "components/avatar",
+      "kind": "component-family",
+      "totalExports": 9,
+      "valueExports": 7,
+      "typeExports": 2,
+      "tierCounts": {
+        "beta-supported-core": 8,
+        "preview-experimental-candidate": 1
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "preview-experimental-candidate",
+      "recommendedAction": "move-to-preview-or-approve",
+      "priority": "P0",
+      "stableDecision": "Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.",
+      "requiredEvidence": [
+        "YZ/design-engineering approval if kept in stable root",
+        "migration notes if moved or removed",
+        "preview boundary docs if retained publicly"
+      ],
+      "notableSymbols": ["AvatarPrimitive"],
+      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+    },
+    {
+      "source": "./components/button-group",
+      "family": "components/button-group",
+      "kind": "component-family",
+      "totalExports": 7,
+      "valueExports": 5,
+      "typeExports": 2,
+      "tierCounts": {
+        "beta-supported-core": 5,
+        "preview-experimental-candidate": 2
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "preview-experimental-candidate",
+      "recommendedAction": "move-to-preview-or-approve",
+      "priority": "P0",
+      "stableDecision": "Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.",
+      "requiredEvidence": [
+        "YZ/design-engineering approval if kept in stable root",
+        "migration notes if moved or removed",
+        "preview boundary docs if retained publicly"
+      ],
+      "notableSymbols": ["ButtonGroupProvider", "useButtonGroupContext"],
+      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+    },
+    {
+      "source": "./components/command",
+      "family": "components/command",
+      "kind": "component-family",
+      "totalExports": 19,
+      "valueExports": 19,
+      "typeExports": 0,
+      "tierCounts": {
+        "beta-supported-composition-conditional": 18,
+        "preview-experimental-candidate": 1
+      },
+      "dominantTier": "beta-supported-composition-conditional",
+      "blockingTier": "preview-experimental-candidate",
+      "recommendedAction": "move-to-preview-or-approve",
+      "priority": "P0",
+      "stableDecision": "Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.",
+      "requiredEvidence": [
+        "YZ/design-engineering approval if kept in stable root",
+        "migration notes if moved or removed",
+        "preview boundary docs if retained publicly"
+      ],
+      "notableSymbols": ["CommandCreateHandle"],
+      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+    },
+    {
+      "source": "./components/dialog",
+      "family": "components/dialog",
+      "kind": "component-family",
+      "totalExports": 19,
+      "valueExports": 16,
+      "typeExports": 3,
+      "tierCounts": {
+        "beta-supported-core": 17,
+        "preview-experimental-candidate": 2
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "preview-experimental-candidate",
+      "recommendedAction": "move-to-preview-or-approve",
+      "priority": "P0",
+      "stableDecision": "Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.",
+      "requiredEvidence": [
+        "YZ/design-engineering approval if kept in stable root",
+        "migration notes if moved or removed",
+        "preview boundary docs if retained publicly"
+      ],
+      "notableSymbols": ["DialogCreateHandle", "DialogPrimitive"],
+      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+    },
+    {
+      "source": "./components/input",
+      "family": "components/input",
+      "kind": "component-family",
+      "totalExports": 17,
+      "valueExports": 8,
+      "typeExports": 9,
+      "tierCounts": {
+        "beta-supported-core": 16,
+        "preview-experimental-candidate": 1
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "preview-experimental-candidate",
+      "recommendedAction": "move-to-preview-or-approve",
+      "priority": "P0",
+      "stableDecision": "Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.",
+      "requiredEvidence": [
+        "YZ/design-engineering approval if kept in stable root",
+        "migration notes if moved or removed",
+        "preview boundary docs if retained publicly"
+      ],
+      "notableSymbols": ["InputPrimitive"],
+      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+    },
+    {
+      "source": "./components/navigation-menu",
+      "family": "components/navigation-menu",
+      "kind": "component-family",
+      "totalExports": 12,
+      "valueExports": 10,
+      "typeExports": 2,
+      "tierCounts": {
+        "beta-supported-composition-conditional": 11,
+        "preview-experimental-candidate": 1
+      },
+      "dominantTier": "beta-supported-composition-conditional",
+      "blockingTier": "preview-experimental-candidate",
+      "recommendedAction": "move-to-preview-or-approve",
+      "priority": "P0",
+      "stableDecision": "Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.",
+      "requiredEvidence": [
+        "YZ/design-engineering approval if kept in stable root",
+        "migration notes if moved or removed",
+        "preview boundary docs if retained publicly"
+      ],
+      "notableSymbols": ["navigationMenuTriggerStyle"],
+      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+    },
+    {
+      "source": "./components/progress",
+      "family": "components/progress",
+      "kind": "component-family",
+      "totalExports": 6,
+      "valueExports": 6,
+      "typeExports": 0,
+      "tierCounts": {
+        "beta-supported-core": 5,
+        "preview-experimental-candidate": 1
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "preview-experimental-candidate",
+      "recommendedAction": "move-to-preview-or-approve",
+      "priority": "P0",
+      "stableDecision": "Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.",
+      "requiredEvidence": [
+        "YZ/design-engineering approval if kept in stable root",
+        "migration notes if moved or removed",
+        "preview boundary docs if retained publicly"
+      ],
+      "notableSymbols": ["ProgressPrimitive"],
+      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+    },
+    {
+      "source": "./components/scrollable-list",
+      "family": "components/scrollable-list",
+      "kind": "component-family",
+      "totalExports": 3,
+      "valueExports": 2,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 2,
+        "preview-experimental-candidate": 1
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "preview-experimental-candidate",
+      "recommendedAction": "move-to-preview-or-approve",
+      "priority": "P0",
+      "stableDecision": "Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.",
+      "requiredEvidence": [
+        "YZ/design-engineering approval if kept in stable root",
+        "migration notes if moved or removed",
+        "preview boundary docs if retained publicly"
+      ],
+      "notableSymbols": ["scrollableListControlClassNames"],
+      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+    },
+    {
+      "source": "./components/select",
+      "family": "components/select",
+      "kind": "component-family",
+      "totalExports": 12,
+      "valueExports": 10,
+      "typeExports": 2,
+      "tierCounts": {
+        "beta-supported-core": 11,
+        "preview-experimental-candidate": 1
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "preview-experimental-candidate",
+      "recommendedAction": "move-to-preview-or-approve",
+      "priority": "P0",
+      "stableDecision": "Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.",
+      "requiredEvidence": [
+        "YZ/design-engineering approval if kept in stable root",
+        "migration notes if moved or removed",
+        "preview boundary docs if retained publicly"
+      ],
+      "notableSymbols": ["selectTriggerDefaultClassName"],
+      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+    },
+    {
+      "source": "./components/separator",
+      "family": "components/separator",
+      "kind": "component-family",
+      "totalExports": 3,
+      "valueExports": 2,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 2,
+        "preview-experimental-candidate": 1
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "preview-experimental-candidate",
+      "recommendedAction": "move-to-preview-or-approve",
+      "priority": "P0",
+      "stableDecision": "Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.",
+      "requiredEvidence": [
+        "YZ/design-engineering approval if kept in stable root",
+        "migration notes if moved or removed",
+        "preview boundary docs if retained publicly"
+      ],
+      "notableSymbols": ["SeparatorPrimitive"],
+      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+    },
+    {
+      "source": "./components/sheet",
+      "family": "components/sheet",
+      "kind": "component-family",
+      "totalExports": 21,
+      "valueExports": 15,
+      "typeExports": 6,
+      "tierCounts": {
+        "beta-supported-core": 20,
+        "preview-experimental-candidate": 1
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "preview-experimental-candidate",
+      "recommendedAction": "move-to-preview-or-approve",
+      "priority": "P0",
+      "stableDecision": "Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.",
+      "requiredEvidence": [
+        "YZ/design-engineering approval if kept in stable root",
+        "migration notes if moved or removed",
+        "preview boundary docs if retained publicly"
+      ],
+      "notableSymbols": ["SheetPrimitive"],
+      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+    },
+    {
+      "source": "./components/tooltip",
+      "family": "components/tooltip",
+      "kind": "component-family",
+      "totalExports": 9,
+      "valueExports": 7,
+      "typeExports": 2,
+      "tierCounts": {
+        "beta-supported-core": 7,
+        "preview-experimental-candidate": 2
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "preview-experimental-candidate",
+      "recommendedAction": "move-to-preview-or-approve",
+      "priority": "P0",
+      "stableDecision": "Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.",
+      "requiredEvidence": [
+        "YZ/design-engineering approval if kept in stable root",
+        "migration notes if moved or removed",
+        "preview boundary docs if retained publicly"
+      ],
+      "notableSymbols": ["TooltipCreateHandle", "TooltipPrimitive"],
+      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+    },
+    {
+      "source": "./conformance",
+      "family": "conformance",
+      "kind": "conformance-evidence",
+      "totalExports": 4,
+      "valueExports": 2,
+      "typeExports": 2,
+      "tierCounts": {
+        "preview-experimental-candidate": 4
+      },
+      "dominantTier": "preview-experimental-candidate",
+      "blockingTier": "preview-experimental-candidate",
+      "recommendedAction": "move-to-preview-or-approve",
+      "priority": "P0",
+      "stableDecision": "Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.",
+      "requiredEvidence": [
+        "YZ/design-engineering approval if kept in stable root",
+        "migration notes if moved or removed",
+        "preview boundary docs if retained publicly"
+      ],
+      "notableSymbols": [
+        "getReactRendererConformance",
+        "reactRendererConformance",
+        "ReactRendererConformanceEvidence",
+        "ReactVerifiedContractId"
+      ],
+      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+    },
+    {
+      "source": "./lib/motion",
+      "family": "lib/motion",
+      "kind": "library-utility",
+      "totalExports": 8,
+      "valueExports": 8,
+      "typeExports": 0,
+      "tierCounts": {
+        "preview-experimental-candidate": 8
+      },
+      "dominantTier": "preview-experimental-candidate",
+      "blockingTier": "preview-experimental-candidate",
+      "recommendedAction": "move-to-preview-or-approve",
+      "priority": "P0",
+      "stableDecision": "Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.",
+      "requiredEvidence": [
+        "YZ/design-engineering approval if kept in stable root",
+        "migration notes if moved or removed",
+        "preview boundary docs if retained publicly"
+      ],
+      "notableSymbols": [
+        "ATOM63_FLYOUT_TRANSITION",
+        "ATOM63_FLYOUT_TRANSITION_CSS",
+        "ATOM63_MOTION_EASE",
+        "ATOM63_MOTION_EASE_CSS",
+        "ATOM63_OVERLAY_MOTION_DURATION_CSS",
+        "ATOM63_OVERLAY_MOTION_DURATION_MS",
+        "ATOM63_OVERLAY_MOTION_EASE",
+        "ATOM63_OVERLAY_MOTION_EASE_CSS"
+      ],
+      "policyNote": "Not stable-eligible without explicit design-engineering approval."
+    },
+    {
+      "source": "./components/connected-panel",
+      "family": "components/connected-panel",
+      "kind": "component-family",
+      "totalExports": 12,
+      "valueExports": 8,
+      "typeExports": 4,
+      "tierCounts": {
+        "beta-supported-composition-conditional": 12
+      },
+      "dominantTier": "beta-supported-composition-conditional",
+      "blockingTier": "beta-supported-composition-conditional",
+      "recommendedAction": "document-before-stable",
+      "priority": "P1",
+      "stableDecision": "Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable.",
+      "requiredEvidence": [
+        "composition usage docs or authored guidance",
+        "focused interaction tests",
+        "packed-consumer import/render smoke for a representative path"
+      ],
+      "notableSymbols": [
+        "ConnectedPanel",
+        "ConnectedPanelBody",
+        "ConnectedPanelContent",
+        "ConnectedPanelDescription",
+        "ConnectedPanelFooter",
+        "ConnectedPanelHeader",
+        "ConnectedPanelTitle",
+        "ConnectedPanelTrigger",
+        "ConnectedPanelContentProps",
+        "ConnectedPanelProps",
+        "ConnectedPanelTriggerProps",
+        "ConnectedPanelVariant"
+      ],
+      "policyNote": "Needs authored composition guidance or equivalent usage docs before stable."
+    },
+    {
+      "source": "./components/context-menu",
+      "family": "components/context-menu",
+      "kind": "component-family",
+      "totalExports": 20,
+      "valueExports": 15,
+      "typeExports": 5,
+      "tierCounts": {
+        "beta-supported-composition-conditional": 20
+      },
+      "dominantTier": "beta-supported-composition-conditional",
+      "blockingTier": "beta-supported-composition-conditional",
+      "recommendedAction": "document-before-stable",
+      "priority": "P1",
+      "stableDecision": "Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable.",
+      "requiredEvidence": [
+        "composition usage docs or authored guidance",
+        "focused interaction tests",
+        "packed-consumer import/render smoke for a representative path"
+      ],
+      "notableSymbols": [
+        "ContextMenu",
+        "ContextMenuCheckboxItem",
+        "ContextMenuContent",
+        "ContextMenuGroup",
+        "ContextMenuItem",
+        "ContextMenuLabel",
+        "ContextMenuPortal",
+        "ContextMenuRadioGroup",
+        "ContextMenuRadioItem",
+        "ContextMenuSeparator",
+        "ContextMenuShortcut",
+        "ContextMenuSub"
+      ],
+      "policyNote": "Needs authored composition guidance or equivalent usage docs before stable."
+    },
+    {
+      "source": "./components/dropdown-menu",
+      "family": "components/dropdown-menu",
+      "kind": "component-family",
+      "totalExports": 20,
+      "valueExports": 15,
+      "typeExports": 5,
+      "tierCounts": {
+        "beta-supported-composition-conditional": 20
+      },
+      "dominantTier": "beta-supported-composition-conditional",
+      "blockingTier": "beta-supported-composition-conditional",
+      "recommendedAction": "document-before-stable",
+      "priority": "P1",
+      "stableDecision": "Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable.",
+      "requiredEvidence": [
+        "composition usage docs or authored guidance",
+        "focused interaction tests",
+        "packed-consumer import/render smoke for a representative path"
+      ],
+      "notableSymbols": [
+        "DropdownMenu",
+        "DropdownMenuCheckboxItem",
+        "DropdownMenuContent",
+        "DropdownMenuGroup",
+        "DropdownMenuItem",
+        "DropdownMenuLabel",
+        "DropdownMenuPortal",
+        "DropdownMenuRadioGroup",
+        "DropdownMenuRadioItem",
+        "DropdownMenuSeparator",
+        "DropdownMenuShortcut",
+        "DropdownMenuSub"
+      ],
+      "policyNote": "Needs authored composition guidance or equivalent usage docs before stable."
+    },
+    {
+      "source": "./components/empty",
+      "family": "components/empty",
+      "kind": "component-family",
+      "totalExports": 8,
+      "valueExports": 7,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-composition-conditional": 8
+      },
+      "dominantTier": "beta-supported-composition-conditional",
+      "blockingTier": "beta-supported-composition-conditional",
+      "recommendedAction": "document-before-stable",
+      "priority": "P1",
+      "stableDecision": "Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable.",
+      "requiredEvidence": [
+        "composition usage docs or authored guidance",
+        "focused interaction tests",
+        "packed-consumer import/render smoke for a representative path"
+      ],
+      "notableSymbols": [
+        "Empty",
+        "EmptyContent",
+        "EmptyDescription",
+        "EmptyErrorDetail",
+        "EmptyHeader",
+        "EmptyMedia",
+        "EmptyTitle",
+        "EmptyMediaVariant"
+      ],
+      "policyNote": "Needs authored composition guidance or equivalent usage docs before stable."
+    },
+    {
+      "source": "./components/feedback-state",
+      "family": "components/feedback-state",
+      "kind": "component-family",
+      "totalExports": 5,
+      "valueExports": 1,
+      "typeExports": 4,
+      "tierCounts": {
+        "beta-supported-composition-conditional": 5
+      },
+      "dominantTier": "beta-supported-composition-conditional",
+      "blockingTier": "beta-supported-composition-conditional",
+      "recommendedAction": "document-before-stable",
+      "priority": "P1",
+      "stableDecision": "Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable.",
+      "requiredEvidence": [
+        "composition usage docs or authored guidance",
+        "focused interaction tests",
+        "packed-consumer import/render smoke for a representative path"
+      ],
+      "notableSymbols": [
+        "FeedbackState",
+        "FeedbackStateAction",
+        "FeedbackStateKind",
+        "FeedbackStateProps",
+        "FeedbackStateSize"
+      ],
+      "policyNote": "Needs authored composition guidance or equivalent usage docs before stable."
+    },
+    {
+      "source": "./components/frame",
+      "family": "components/frame",
+      "kind": "component-family",
+      "totalExports": 8,
+      "valueExports": 6,
+      "typeExports": 2,
+      "tierCounts": {
+        "beta-supported-composition-conditional": 8
+      },
+      "dominantTier": "beta-supported-composition-conditional",
+      "blockingTier": "beta-supported-composition-conditional",
+      "recommendedAction": "document-before-stable",
+      "priority": "P1",
+      "stableDecision": "Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable.",
+      "requiredEvidence": [
+        "composition usage docs or authored guidance",
+        "focused interaction tests",
+        "packed-consumer import/render smoke for a representative path"
+      ],
+      "notableSymbols": [
+        "Frame",
+        "FrameDescription",
+        "FrameFooter",
+        "FrameHeader",
+        "FramePanel",
+        "FrameTitle",
+        "FramePanelProps",
+        "FrameProps"
+      ],
+      "policyNote": "Needs authored composition guidance or equivalent usage docs before stable."
+    },
+    {
+      "source": "./components/hover-card",
+      "family": "components/hover-card",
+      "kind": "component-family",
+      "totalExports": 4,
+      "valueExports": 3,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-composition-conditional": 4
+      },
+      "dominantTier": "beta-supported-composition-conditional",
+      "blockingTier": "beta-supported-composition-conditional",
+      "recommendedAction": "document-before-stable",
+      "priority": "P1",
+      "stableDecision": "Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable.",
+      "requiredEvidence": [
+        "composition usage docs or authored guidance",
+        "focused interaction tests",
+        "packed-consumer import/render smoke for a representative path"
+      ],
+      "notableSymbols": [
+        "HoverCard",
+        "HoverCardContent",
+        "HoverCardTrigger",
+        "HoverCardContentProps"
+      ],
+      "policyNote": "Needs authored composition guidance or equivalent usage docs before stable."
+    },
+    {
+      "source": "./components/item",
+      "family": "components/item",
+      "kind": "component-family",
+      "totalExports": 13,
+      "valueExports": 10,
+      "typeExports": 3,
+      "tierCounts": {
+        "beta-supported-composition-conditional": 13
+      },
+      "dominantTier": "beta-supported-composition-conditional",
+      "blockingTier": "beta-supported-composition-conditional",
+      "recommendedAction": "document-before-stable",
+      "priority": "P1",
+      "stableDecision": "Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable.",
+      "requiredEvidence": [
+        "composition usage docs or authored guidance",
+        "focused interaction tests",
+        "packed-consumer import/render smoke for a representative path"
+      ],
+      "notableSymbols": [
+        "Item",
+        "ItemActions",
+        "ItemContent",
+        "ItemDescription",
+        "ItemFooter",
+        "ItemGroup",
+        "ItemHeader",
+        "ItemMedia",
+        "ItemSeparator",
+        "ItemTitle",
+        "ItemMediaProps",
+        "ItemProps"
+      ],
+      "policyNote": "Needs authored composition guidance or equivalent usage docs before stable."
+    },
+    {
+      "source": "./components/menubar",
+      "family": "components/menubar",
+      "kind": "component-family",
+      "totalExports": 18,
+      "valueExports": 16,
+      "typeExports": 2,
+      "tierCounts": {
+        "beta-supported-composition-conditional": 18
+      },
+      "dominantTier": "beta-supported-composition-conditional",
+      "blockingTier": "beta-supported-composition-conditional",
+      "recommendedAction": "document-before-stable",
+      "priority": "P1",
+      "stableDecision": "Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable.",
+      "requiredEvidence": [
+        "composition usage docs or authored guidance",
+        "focused interaction tests",
+        "packed-consumer import/render smoke for a representative path"
+      ],
+      "notableSymbols": [
+        "Menubar",
+        "MenubarCheckboxItem",
+        "MenubarContent",
+        "MenubarGroup",
+        "MenubarItem",
+        "MenubarLabel",
+        "MenubarMenu",
+        "MenubarPortal",
+        "MenubarRadioGroup",
+        "MenubarRadioItem",
+        "MenubarSeparator",
+        "MenubarShortcut"
+      ],
+      "policyNote": "Needs authored composition guidance or equivalent usage docs before stable."
+    },
+    {
+      "source": "./components/preview-card",
+      "family": "components/preview-card",
+      "kind": "component-family",
+      "totalExports": 4,
+      "valueExports": 3,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-composition-conditional": 4
+      },
+      "dominantTier": "beta-supported-composition-conditional",
+      "blockingTier": "beta-supported-composition-conditional",
+      "recommendedAction": "document-before-stable",
+      "priority": "P1",
+      "stableDecision": "Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable.",
+      "requiredEvidence": [
+        "composition usage docs or authored guidance",
+        "focused interaction tests",
+        "packed-consumer import/render smoke for a representative path"
+      ],
+      "notableSymbols": [
+        "PreviewCard",
+        "PreviewCardPopup",
+        "PreviewCardTrigger",
+        "PreviewCardPopupProps"
+      ],
+      "policyNote": "Needs authored composition guidance or equivalent usage docs before stable."
+    },
+    {
+      "source": "./components/sidebar",
+      "family": "components/sidebar",
+      "kind": "component-family",
+      "totalExports": 28,
+      "valueExports": 24,
+      "typeExports": 4,
+      "tierCounts": {
+        "beta-supported-composition-conditional": 28
+      },
+      "dominantTier": "beta-supported-composition-conditional",
+      "blockingTier": "beta-supported-composition-conditional",
+      "recommendedAction": "document-before-stable",
+      "priority": "P1",
+      "stableDecision": "Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable.",
+      "requiredEvidence": [
+        "composition usage docs or authored guidance",
+        "focused interaction tests",
+        "packed-consumer import/render smoke for a representative path"
+      ],
+      "notableSymbols": [
+        "Sidebar",
+        "SidebarContent",
+        "SidebarFooter",
+        "SidebarGroup",
+        "SidebarGroupAction",
+        "SidebarGroupContent",
+        "SidebarGroupLabel",
+        "SidebarHeader",
+        "SidebarInput",
+        "SidebarInset",
+        "SidebarMenu",
+        "SidebarMenuAction"
+      ],
+      "policyNote": "Needs authored composition guidance or equivalent usage docs before stable."
+    },
+    {
+      "source": "./components/sidebar-nav-tree",
+      "family": "components/sidebar-nav-tree",
+      "kind": "component-family",
+      "totalExports": 10,
+      "valueExports": 5,
+      "typeExports": 5,
+      "tierCounts": {
+        "beta-supported-composition-conditional": 10
+      },
+      "dominantTier": "beta-supported-composition-conditional",
+      "blockingTier": "beta-supported-composition-conditional",
+      "recommendedAction": "document-before-stable",
+      "priority": "P1",
+      "stableDecision": "Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable.",
+      "requiredEvidence": [
+        "composition usage docs or authored guidance",
+        "focused interaction tests",
+        "packed-consumer import/render smoke for a representative path"
+      ],
+      "notableSymbols": [
+        "SidebarNavCollapsibleItem",
+        "SidebarNavGroup",
+        "SidebarNavLinkItem",
+        "SidebarNavSubLinkItem",
+        "SidebarNavSubList",
+        "SidebarNavCollapsibleItemProps",
+        "SidebarNavGroupProps",
+        "SidebarNavLinkItemProps",
+        "SidebarNavSubLinkItemProps",
+        "SidebarNavSubListProps"
+      ],
+      "policyNote": "Needs authored composition guidance or equivalent usage docs before stable."
+    },
+    {
+      "source": "./components/accordion",
+      "family": "components/accordion",
+      "kind": "component-family",
+      "totalExports": 6,
+      "valueExports": 4,
+      "typeExports": 2,
+      "tierCounts": {
+        "beta-supported-core": 6
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "Accordion",
+        "AccordionContent",
+        "AccordionItem",
+        "AccordionTrigger",
+        "AccordionProps",
+        "AccordionTriggerProps"
+      ],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/alert",
+      "family": "components/alert",
+      "kind": "component-family",
+      "totalExports": 6,
+      "valueExports": 5,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 6
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "Alert",
+        "AlertAction",
+        "AlertDescription",
+        "AlertIcon",
+        "AlertTitle",
+        "AlertProps"
+      ],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/badge",
+      "family": "components/badge",
+      "kind": "component-family",
+      "totalExports": 2,
+      "valueExports": 1,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 2
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["Badge", "BadgeProps"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/breadcrumb",
+      "family": "components/breadcrumb",
+      "kind": "component-family",
+      "totalExports": 8,
+      "valueExports": 7,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 8
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "Breadcrumb",
+        "BreadcrumbEllipsis",
+        "BreadcrumbItem",
+        "BreadcrumbLink",
+        "BreadcrumbList",
+        "BreadcrumbPage",
+        "BreadcrumbSeparator",
+        "BreadcrumbLinkProps"
+      ],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/button",
+      "family": "components/button",
+      "kind": "component-family",
+      "totalExports": 2,
+      "valueExports": 1,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 2
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["Button", "ButtonProps"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/checkbox",
+      "family": "components/checkbox",
+      "kind": "component-family",
+      "totalExports": 2,
+      "valueExports": 1,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 2
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["Checkbox", "CheckboxProps"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/collapsible",
+      "family": "components/collapsible",
+      "kind": "component-family",
+      "totalExports": 7,
+      "valueExports": 4,
+      "typeExports": 3,
+      "tierCounts": {
+        "beta-supported-core": 7
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "Collapsible",
+        "CollapsibleContent",
+        "CollapsibleIndicator",
+        "CollapsibleTrigger",
+        "CollapsibleContentProps",
+        "CollapsibleProps",
+        "CollapsibleTriggerProps"
+      ],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/drawer",
+      "family": "components/drawer",
+      "kind": "component-family",
+      "totalExports": 14,
+      "valueExports": 12,
+      "typeExports": 2,
+      "tierCounts": {
+        "beta-supported-core": 14
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "Drawer",
+        "DrawerBody",
+        "DrawerClose",
+        "DrawerContent",
+        "DrawerDescription",
+        "DrawerFooter",
+        "DrawerHandle",
+        "DrawerHeader",
+        "DrawerOverlay",
+        "DrawerPortal",
+        "DrawerTitle",
+        "DrawerTrigger"
+      ],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/field",
+      "family": "components/field",
+      "kind": "component-family",
+      "totalExports": 21,
+      "valueExports": 10,
+      "typeExports": 11,
+      "tierCounts": {
+        "beta-supported-core": 21
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "Field",
+        "FieldContent",
+        "FieldDescription",
+        "FieldError",
+        "FieldGroup",
+        "FieldLabel",
+        "FieldLegend",
+        "FieldSeparator",
+        "FieldSet",
+        "FieldTitle",
+        "FieldContentProps",
+        "FieldDescriptionProps"
+      ],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/form",
+      "family": "components/form",
+      "kind": "component-family",
+      "totalExports": 8,
+      "valueExports": 8,
+      "typeExports": 0,
+      "tierCounts": {
+        "beta-supported-core": 8
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "Form",
+        "FormControl",
+        "FormDescription",
+        "FormField",
+        "FormItem",
+        "FormLabel",
+        "FormMessage",
+        "useFormField"
+      ],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/kbd",
+      "family": "components/kbd",
+      "kind": "component-family",
+      "totalExports": 3,
+      "valueExports": 2,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 3
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["Kbd", "KbdGroup", "KbdProps"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/label",
+      "family": "components/label",
+      "kind": "component-family",
+      "totalExports": 2,
+      "valueExports": 1,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 2
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["Label", "LabelProps"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/pagination",
+      "family": "components/pagination",
+      "kind": "component-family",
+      "totalExports": 14,
+      "valueExports": 7,
+      "typeExports": 7,
+      "tierCounts": {
+        "beta-supported-core": 14
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "Pagination",
+        "PaginationContent",
+        "PaginationEllipsis",
+        "PaginationItem",
+        "PaginationLink",
+        "PaginationNext",
+        "PaginationPrevious",
+        "PaginationContentProps",
+        "PaginationEllipsisProps",
+        "PaginationItemProps",
+        "PaginationLinkProps",
+        "PaginationNextProps"
+      ],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/popover",
+      "family": "components/popover",
+      "kind": "component-family",
+      "totalExports": 10,
+      "valueExports": 9,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 10
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "Popover",
+        "PopoverAnchor",
+        "PopoverClose",
+        "PopoverContent",
+        "PopoverDescription",
+        "PopoverHeader",
+        "PopoverPortal",
+        "PopoverTitle",
+        "PopoverTrigger",
+        "PopoverContentProps"
+      ],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/radio",
+      "family": "components/radio",
+      "kind": "component-family",
+      "totalExports": 5,
+      "valueExports": 3,
+      "typeExports": 2,
+      "tierCounts": {
+        "beta-supported-core": 5
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "Radio",
+        "RadioGroup",
+        "RadioGroupItem",
+        "RadioGroupProps",
+        "RadioProps"
+      ],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/resizable",
+      "family": "components/resizable",
+      "kind": "component-family",
+      "totalExports": 6,
+      "valueExports": 3,
+      "typeExports": 3,
+      "tierCounts": {
+        "beta-supported-core": 6
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "ResizableHandle",
+        "ResizablePanel",
+        "ResizablePanelGroup",
+        "ResizableHandleProps",
+        "ResizablePanelGroupProps",
+        "ResizablePanelProps"
+      ],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/scroll-area",
+      "family": "components/scroll-area",
+      "kind": "component-family",
+      "totalExports": 2,
+      "valueExports": 2,
+      "typeExports": 0,
+      "tierCounts": {
+        "beta-supported-core": 2
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["ScrollArea", "ScrollBar"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/search-field",
+      "family": "components/search-field",
+      "kind": "component-family",
+      "totalExports": 2,
+      "valueExports": 1,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 2
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["SearchField", "SearchFieldProps"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/segmented-control",
+      "family": "components/segmented-control",
+      "kind": "component-family",
+      "totalExports": 3,
+      "valueExports": 1,
+      "typeExports": 2,
+      "tierCounts": {
+        "beta-supported-core": 3
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "SegmentedControl",
+        "SegmentedControlItem",
+        "SegmentedControlProps"
+      ],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/skeleton",
+      "family": "components/skeleton",
+      "kind": "component-family",
+      "totalExports": 1,
+      "valueExports": 1,
+      "typeExports": 0,
+      "tierCounts": {
+        "beta-supported-core": 1
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["Skeleton"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/slider",
+      "family": "components/slider",
+      "kind": "component-family",
+      "totalExports": 3,
+      "valueExports": 2,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 3
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["Slider", "SliderValue", "SliderProps"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/spinner",
+      "family": "components/spinner",
+      "kind": "component-family",
+      "totalExports": 1,
+      "valueExports": 1,
+      "typeExports": 0,
+      "tierCounts": {
+        "beta-supported-core": 1
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["Spinner"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/switch",
+      "family": "components/switch",
+      "kind": "component-family",
+      "totalExports": 2,
+      "valueExports": 1,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 2
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["Switch", "SwitchProps"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/table",
+      "family": "components/table",
+      "kind": "component-family",
+      "totalExports": 16,
+      "valueExports": 8,
+      "typeExports": 8,
+      "tierCounts": {
+        "beta-supported-core": 16
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "Table",
+        "TableBody",
+        "TableCaption",
+        "TableCell",
+        "TableFooter",
+        "TableHead",
+        "TableHeader",
+        "TableRow",
+        "TableBodyProps",
+        "TableCaptionProps",
+        "TableCellProps",
+        "TableFooterProps"
+      ],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/tabs",
+      "family": "components/tabs",
+      "kind": "component-family",
+      "totalExports": 9,
+      "valueExports": 6,
+      "typeExports": 3,
+      "tierCounts": {
+        "beta-supported-core": 9
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "Tabs",
+        "TabsContent",
+        "TabsList",
+        "TabsPanel",
+        "TabsTab",
+        "TabsTrigger",
+        "TabsListProps",
+        "TabsPanelProps",
+        "TabsTabProps"
+      ],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/textarea",
+      "family": "components/textarea",
+      "kind": "component-family",
+      "totalExports": 2,
+      "valueExports": 1,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 2
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["Textarea", "TextareaProps"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/toaster",
+      "family": "components/toaster",
+      "kind": "component-family",
+      "totalExports": 2,
+      "valueExports": 1,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 2
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["Toaster", "ToasterProps"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/toggle",
+      "family": "components/toggle",
+      "kind": "component-family",
+      "totalExports": 2,
+      "valueExports": 1,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 2
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["Toggle", "ToggleProps"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/toggle-group",
+      "family": "components/toggle-group",
+      "kind": "component-family",
+      "totalExports": 6,
+      "valueExports": 3,
+      "typeExports": 3,
+      "tierCounts": {
+        "beta-supported-core": 6
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "ToggleGroup",
+        "ToggleGroupItem",
+        "ToggleGroupSeparator",
+        "ToggleGroupItemProps",
+        "ToggleGroupProps",
+        "ToggleGroupSeparatorProps"
+      ],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./provider",
+      "family": "provider",
+      "kind": "module",
+      "totalExports": 9,
+      "valueExports": 2,
+      "typeExports": 7,
+      "tierCounts": {
+        "beta-supported-core": 9
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "UIProvider",
+        "useUIEnvironment",
+        "Density",
+        "DesignLanguage",
+        "Mode",
+        "PointerInput",
+        "Theme",
+        "UIEnvironment",
+        "UIProviderProps"
+      ],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "sonner",
+      "family": "sonner",
+      "kind": "module",
+      "totalExports": 1,
+      "valueExports": 1,
+      "typeExports": 0,
+      "tierCounts": {
+        "beta-supported-core": 1
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["toast"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    }
+  ],
+  "subpathActions": [
+    {
+      "subpath": "./media",
+      "kind": "module",
+      "target": {
+        "development": "./src/media/index.ts",
+        "import": "./dist/media/index.js",
+        "types": "./dist/media/index.d.ts",
+        "typescript": "./src/media/index.ts"
+      },
+      "recommendedAction": "keep-preview-subpath-or-add-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility without browser/media lifecycle evidence or preview labeling.",
+      "policyNote": "High risk. Needs browser/media lifecycle evidence before stable compatibility."
+    },
+    {
+      "subpath": "./media/lightbox",
+      "kind": "module",
+      "target": {
+        "development": "./src/media/media-lightbox/parts/index.ts",
+        "import": "./dist/media/media-lightbox/parts/index.js",
+        "types": "./dist/media/media-lightbox/parts/index.d.ts",
+        "typescript": "./src/media/media-lightbox/parts/index.ts"
+      },
+      "recommendedAction": "keep-preview-subpath-or-add-evidence",
+      "priority": "P0",
+      "stableDecision": "Do not promise stable compatibility without browser/media lifecycle evidence or preview labeling.",
+      "policyNote": "Preview unless the headless composition/state/context contract is intentionally supported."
+    },
+    {
+      "subpath": "./layout",
+      "kind": "module",
+      "target": {
+        "development": "./src/layout/index.ts",
+        "import": "./dist/layout/index.js",
+        "types": "./dist/layout/index.d.ts",
+        "typescript": "./src/layout/index.ts"
+      },
+      "recommendedAction": "document-subpath-contract",
+      "priority": "P1",
+      "stableDecision": "Keep public, but document supported high-level APIs versus monitored helpers before stable.",
+      "policyNote": "Support high-level layout primitives after responsive/docs evidence; monitor style helpers, constants, chrome internals, and hooks."
+    },
+    {
+      "subpath": "./theme",
+      "kind": "module",
+      "target": {
+        "development": "./src/theme/index.ts",
+        "import": "./dist/theme/index.js",
+        "types": "./dist/theme/index.d.ts",
+        "typescript": "./src/theme/index.ts"
+      },
+      "recommendedAction": "document-subpath-contract",
+      "priority": "P1",
+      "stableDecision": "Keep public, but document supported high-level APIs versus monitored helpers before stable.",
+      "policyNote": "Document appearance UI; monitor controller factories, auto-color internals, option tables, and personalization utilities."
+    },
+    {
+      "subpath": "./recipes.css",
+      "kind": "css",
+      "target": "./src/styles/recipes.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/accordion.css",
+      "kind": "css",
+      "target": "./src/components/accordion/accordion.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/alert-dialog.css",
+      "kind": "css",
+      "target": "./src/components/alert-dialog/alert-dialog.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/alert.css",
+      "kind": "css",
+      "target": "./src/components/alert/alert.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/autocomplete.css",
+      "kind": "css",
+      "target": "./src/components/autocomplete/autocomplete.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/avatar.css",
+      "kind": "css",
+      "target": "./src/components/avatar/avatar.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/badge.css",
+      "kind": "css",
+      "target": "./src/components/badge/badge.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/breadcrumb.css",
+      "kind": "css",
+      "target": "./src/components/breadcrumb/breadcrumb.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/button-group.css",
+      "kind": "css",
+      "target": "./src/components/button-group/button-group.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/button.css",
+      "kind": "css",
+      "target": "./src/components/button/button.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/calendar.css",
+      "kind": "css",
+      "target": "./src/components/calendar/calendar.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/card.css",
+      "kind": "css",
+      "target": "./src/components/card/card.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/carousel.css",
+      "kind": "css",
+      "target": "./src/components/carousel/carousel.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/checkbox.css",
+      "kind": "css",
+      "target": "./src/components/checkbox/checkbox.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/collapsible.css",
+      "kind": "css",
+      "target": "./src/components/collapsible/collapsible.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/command.css",
+      "kind": "css",
+      "target": "./src/components/command/command.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/connected-panel.css",
+      "kind": "css",
+      "target": "./src/components/connected-panel/connected-panel.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/context-menu.css",
+      "kind": "css",
+      "target": "./src/components/menu/menu.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/copy-button.css",
+      "kind": "css",
+      "target": "./src/components/copy-button/copy-button.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/dialog.css",
+      "kind": "css",
+      "target": "./src/components/dialog/dialog.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/drawer.css",
+      "kind": "css",
+      "target": "./src/components/drawer/drawer.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/dropdown-menu.css",
+      "kind": "css",
+      "target": "./src/components/menu/menu.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/empty.css",
+      "kind": "css",
+      "target": "./src/components/empty/empty.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/feedback-state.css",
+      "kind": "css",
+      "target": "./src/components/feedback-state/feedback-state.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/field.css",
+      "kind": "css",
+      "target": "./src/components/field/field.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/form.css",
+      "kind": "css",
+      "target": "./src/components/form/form.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/frame.css",
+      "kind": "css",
+      "target": "./src/components/frame/frame.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/hover-card.css",
+      "kind": "css",
+      "target": "./src/components/hover-card/hover-card.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/input-otp.css",
+      "kind": "css",
+      "target": "./src/components/input-otp/input-otp.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/input.css",
+      "kind": "css",
+      "target": "./src/components/input/input.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/item.css",
+      "kind": "css",
+      "target": "./src/components/item/item.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/kbd.css",
+      "kind": "css",
+      "target": "./src/components/kbd/kbd.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/label.css",
+      "kind": "css",
+      "target": "./src/components/label/label.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/load-more-trigger.css",
+      "kind": "css",
+      "target": "./src/components/load-more-trigger/load-more-trigger.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/marquee.css",
+      "kind": "css",
+      "target": "./src/components/marquee/marquee.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/media-lightbox.css",
+      "kind": "css",
+      "target": "./src/media/media-lightbox/media-lightbox.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/menubar.css",
+      "kind": "css",
+      "target": "./src/components/menubar/menubar.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/navigation-menu.css",
+      "kind": "css",
+      "target": "./src/components/navigation-menu/navigation-menu.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/pagination.css",
+      "kind": "css",
+      "target": "./src/components/pagination/pagination.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/panel-setting-button.css",
+      "kind": "css",
+      "target": "./src/components/panel-setting-button/panel-setting-button.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/popover.css",
+      "kind": "css",
+      "target": "./src/components/popover/popover.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/preview-card.css",
+      "kind": "css",
+      "target": "./src/components/preview-card/preview-card.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/progress.css",
+      "kind": "css",
+      "target": "./src/components/progress/progress.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/radio.css",
+      "kind": "css",
+      "target": "./src/components/radio/radio.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/resizable.css",
+      "kind": "css",
+      "target": "./src/components/resizable/resizable.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/scroll-area.css",
+      "kind": "css",
+      "target": "./src/components/scroll-area/scroll-area.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/scrollable-list.css",
+      "kind": "css",
+      "target": "./src/components/scrollable-list/scrollable-list.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/segmented-control.css",
+      "kind": "css",
+      "target": "./src/components/segmented-control/segmented-control.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/select.css",
+      "kind": "css",
+      "target": "./src/components/select/select.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/separator.css",
+      "kind": "css",
+      "target": "./src/components/separator/separator.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/sheet.css",
+      "kind": "css",
+      "target": "./src/components/sheet/sheet.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/sidebar-nav-tree.css",
+      "kind": "css",
+      "target": "./src/components/sidebar-nav-tree/sidebar-nav-tree.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/sidebar.css",
+      "kind": "css",
+      "target": "./src/components/sidebar/sidebar.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/skeleton.css",
+      "kind": "css",
+      "target": "./src/components/skeleton/skeleton.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/slider.css",
+      "kind": "css",
+      "target": "./src/components/slider/slider.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/switch.css",
+      "kind": "css",
+      "target": "./src/components/switch/switch.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/table.css",
+      "kind": "css",
+      "target": "./src/components/table/table.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/tabs.css",
+      "kind": "css",
+      "target": "./src/components/tabs/tabs.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/text-ticker.css",
+      "kind": "css",
+      "target": "./src/components/text-ticker/text-ticker.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/textarea.css",
+      "kind": "css",
+      "target": "./src/components/textarea/textarea.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/toggle-group.css",
+      "kind": "css",
+      "target": "./src/components/toggle-group/toggle-group.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/toggle.css",
+      "kind": "css",
+      "target": "./src/components/toggle/toggle.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/tooltip.css",
+      "kind": "css",
+      "target": "./src/components/tooltip/tooltip.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./reset.css",
+      "kind": "css",
+      "target": "./src/styles/reset.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./styles.css",
+      "kind": "css",
+      "target": "./src/styles/index.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": ".",
+      "kind": "module",
+      "target": {
+        "development": "./src/index.ts",
+        "import": "./dist/index.js",
+        "types": "./dist/index.d.ts",
+        "typescript": "./src/index.ts"
+      },
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Root package API or public JavaScript subpath."
+    }
+  ]
+}
