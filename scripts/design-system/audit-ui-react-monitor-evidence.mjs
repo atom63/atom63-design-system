@@ -100,6 +100,8 @@ const familyPlans = {
     ],
     stableDecision:
       "Promote only after gesture, focus, and dependency behavior are locked.",
+    status: "partial-evidence-recorded",
+    evidenceReference: "docs/design-system/ui-react-media-evidence.md",
   },
   "components/copy-button": {
     owner: "design-system-feedback",
@@ -230,6 +232,8 @@ const familyPlans = {
     qa: ["same-origin", "cross-origin failure", "cached", "dark/light surface"],
     stableDecision:
       "Promote only if browser image-loading failures and cache semantics are documented.",
+    status: "partial-evidence-recorded",
+    evidenceReference: "docs/design-system/ui-react-media-evidence.md",
   },
   "lib/extract-color": {
     owner: "design-system-media",
@@ -244,6 +248,8 @@ const familyPlans = {
     qa: ["fixture images", "transparent image", "dark image", "CORS failure"],
     stableDecision:
       "Prefer keeping low-level utilities monitor/internal unless a stable color-extraction API is intentionally designed.",
+    status: "partial-evidence-recorded",
+    evidenceReference: "docs/design-system/ui-react-media-evidence.md",
   },
 };
 

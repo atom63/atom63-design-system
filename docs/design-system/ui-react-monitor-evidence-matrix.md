@@ -18,7 +18,7 @@
 | `components/autocomplete`         | high   | `design-system-forms`          |      18 | [`partial-evidence-recorded`](./ui-react-forms-evidence.md) | `keyboard navigation`<br>`filter behavior`<br>`empty/loading states`<br>`Base UI type policy`<br>`mobile viewport QA`          | `mouse`<br>`keyboard`<br>`screen reader labels`<br>`mobile popover`<br>`no-results state`         | Promote only after focused interaction tests and browser evidence cover the combobox contract.                      |
 | `components/calendar`             | high   | `design-system-forms`          |       2 | [`partial-evidence-recorded`](./ui-react-forms-evidence.md) | `date-fns/react-day-picker dependency policy`<br>`keyboard navigation`<br>`locale/date boundary tests`<br>`mobile viewport QA` | `single month`<br>`keyboard`<br>`disabled dates`<br>`mobile`<br>`light/dark`                      | Promote only with dependency pin policy and date interaction evidence.                                              |
 | `components/card`                 | medium | `design-system-surfaces`       |       4 | `blocked-until-evidence-recorded`                           | `pointer behavior`<br>`reduced-motion fallback`<br>`touch/no-pointer fallback`                                                 | `desktop pointer`<br>`touch viewport`<br>`reduced motion`                                         | Keep core Card stable; promote cursor helpers only if documented as an intentional card interaction API.            |
-| `components/carousel`             | high   | `design-system-media`          |       8 | `blocked-until-evidence-recorded`                           | `Embla dependency policy`<br>`keyboard controls`<br>`loop/disabled state tests`<br>`mobile swipe QA`                           | `previous/next`<br>`keyboard`<br>`mobile swipe`<br>`short item count`<br>`RTL/focus if supported` | Promote only after gesture, focus, and dependency behavior are locked.                                              |
+| `components/carousel`             | high   | `design-system-media`          |       8 | [`partial-evidence-recorded`](./ui-react-media-evidence.md) | `Embla dependency policy`<br>`keyboard controls`<br>`loop/disabled state tests`<br>`mobile swipe QA`                           | `previous/next`<br>`keyboard`<br>`mobile swipe`<br>`short item count`<br>`RTL/focus if supported` | Promote only after gesture, focus, and dependency behavior are locked.                                              |
 | `components/copy-button`          | medium | `design-system-feedback`       |       4 | `blocked-until-evidence-recorded`                           | `clipboard success/failure tests`<br>`aria-live feedback`<br>`permission failure behavior`                                     | `success`<br>`failure`<br>`keyboard`<br>`screen reader label`                                     | Promote if clipboard failure and feedback semantics are documented.                                                 |
 | `components/destination-link`     | medium | `design-system-navigation`     |       4 | `blocked-until-evidence-recorded`                           | `routing/link semantics`<br>`icon override policy`<br>`accessible name behavior`                                               | `internal`<br>`external`<br>`new tab`<br>`custom icon`<br>`keyboard`                              | Promote if destination semantics and icon customization are documented.                                             |
 | `components/input-otp`            | high   | `design-system-forms`          |       4 | [`partial-evidence-recorded`](./ui-react-forms-evidence.md) | `input-otp dependency policy`<br>`paste behavior`<br>`mobile numeric keyboard`<br>`error/disabled states`                      | `paste full code`<br>`backspace`<br>`mobile`<br>`disabled`<br>`invalid state`                     | Promote only with dependency policy and mobile/paste evidence.                                                      |
@@ -28,8 +28,8 @@
 | `components/portal-container`     | high   | `design-system-infrastructure` |       4 | `blocked-until-evidence-recorded`                           | `SSR/client behavior`<br>`nested provider behavior`<br>`overlay integration tests`                                             | `dialog`<br>`popover`<br>`nested provider`<br>`missing container`                                 | Promote only if portal ownership and SSR constraints are documented.                                                |
 | `components/progressive-blur`     | medium | `design-system-surfaces`       |       3 | `blocked-until-evidence-recorded`                           | `CSS support/fallback`<br>`performance sanity`<br>`theme contrast`                                                             | `top`<br>`bottom`<br>`light/dark`<br>`mobile`                                                     | Promote if CSS fallback and supported positions are documented.                                                     |
 | `components/text-ticker`          | medium | `design-system-motion`         |       2 | `blocked-until-evidence-recorded`                           | `reduced-motion fallback`<br>`content change behavior`<br>`layout stability`                                                   | `short`<br>`long`<br>`changed text`<br>`reduced motion`                                           | Promote only with reduced-motion and layout stability evidence.                                                     |
-| `hooks/use-extract-color`         | high   | `design-system-media`          |       3 | `blocked-until-evidence-recorded`                           | `CORS/error behavior`<br>`cache behavior`<br>`loading states`<br>`contrast cap policy`                                         | `same-origin`<br>`cross-origin failure`<br>`cached`<br>`dark/light surface`                       | Promote only if browser image-loading failures and cache semantics are documented.                                  |
-| `lib/extract-color`               | high   | `design-system-media`          |      10 | `blocked-until-evidence-recorded`                           | `algorithm determinism`<br>`contrast caps`<br>`cache key compatibility`<br>`browser canvas/CORS behavior`                      | `fixture images`<br>`transparent image`<br>`dark image`<br>`CORS failure`                         | Prefer keeping low-level utilities monitor/internal unless a stable color-extraction API is intentionally designed. |
+| `hooks/use-extract-color`         | high   | `design-system-media`          |       3 | [`partial-evidence-recorded`](./ui-react-media-evidence.md) | `CORS/error behavior`<br>`cache behavior`<br>`loading states`<br>`contrast cap policy`                                         | `same-origin`<br>`cross-origin failure`<br>`cached`<br>`dark/light surface`                       | Promote only if browser image-loading failures and cache semantics are documented.                                  |
+| `lib/extract-color`               | high   | `design-system-media`          |      10 | [`partial-evidence-recorded`](./ui-react-media-evidence.md) | `algorithm determinism`<br>`contrast caps`<br>`cache key compatibility`<br>`browser canvas/CORS behavior`                      | `fixture images`<br>`transparent image`<br>`dark image`<br>`CORS failure`                         | Prefer keeping low-level utilities monitor/internal unless a stable color-extraction API is intentionally designed. |
 
 ## Symbol inventory
 
@@ -98,7 +98,8 @@
 - Owner lane: `design-system-media`
 - Risk: **high**
 - User value: Carousel composition and controls for galleries/content rails.
-- Evidence status: `blocked-until-evidence-recorded`
+- Evidence status: `partial-evidence-recorded`
+- Evidence packet: [docs/design-system/ui-react-media-evidence.md](./ui-react-media-evidence.md)
 - Symbols:
   - `Carousel`
   - `CarouselApi`
@@ -216,7 +217,8 @@
 - Owner lane: `design-system-media`
 - Risk: **high**
 - User value: React hook for deriving dominant/tint colors from images.
-- Evidence status: `blocked-until-evidence-recorded`
+- Evidence status: `partial-evidence-recorded`
+- Evidence packet: [docs/design-system/ui-react-media-evidence.md](./ui-react-media-evidence.md)
 - Symbols:
   - `useExtractColor`
   - `UseExtractColorOptions`
@@ -227,7 +229,8 @@
 - Owner lane: `design-system-media`
 - Risk: **high**
 - User value: Lower-level color extraction utilities backing media theming.
-- Evidence status: `blocked-until-evidence-recorded`
+- Evidence status: `partial-evidence-recorded`
+- Evidence packet: [docs/design-system/ui-react-media-evidence.md](./ui-react-media-evidence.md)
 - Symbols:
   - `capColorForContrast`
   - `colorCacheKey`

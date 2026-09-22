@@ -187,7 +187,8 @@
         "RTL/focus if supported"
       ],
       "stableDecision": "Promote only after gesture, focus, and dependency behavior are locked.",
-      "status": "blocked-until-evidence-recorded"
+      "status": "partial-evidence-recorded",
+      "evidenceReference": "docs/design-system/ui-react-media-evidence.md"
     },
     {
       "source": "./components/copy-button",
@@ -430,7 +431,8 @@
         "dark/light surface"
       ],
       "stableDecision": "Promote only if browser image-loading failures and cache semantics are documented.",
-      "status": "blocked-until-evidence-recorded"
+      "status": "partial-evidence-recorded",
+      "evidenceReference": "docs/design-system/ui-react-media-evidence.md"
     },
     {
       "source": "./lib/extract-color",
@@ -466,7 +468,8 @@
         "CORS failure"
       ],
       "stableDecision": "Prefer keeping low-level utilities monitor/internal unless a stable color-extraction API is intentionally designed.",
-      "status": "blocked-until-evidence-recorded"
+      "status": "partial-evidence-recorded",
+      "evidenceReference": "docs/design-system/ui-react-media-evidence.md"
     }
   ]
 }
