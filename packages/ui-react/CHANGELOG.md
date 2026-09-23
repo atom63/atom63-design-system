@@ -1,5 +1,11 @@
 # @atom63/ui-react
 
+## 0.2.0-beta.5
+
+### Patch Changes
+
+- [`90e3bd8`](https://github.com/atom63/atom63-design-system/commit/90e3bd8efb37e43cb6c85fc99a33c3ab93438b49) Thanks [@atom63](https://github.com/atom63)! - `@atom63/ui-react/styles.css` now includes the Tailwind utility classes the components render (layout, media, toaster, and appearance controls), compiled against the Atom63 Tailwind theme. Consumers without Tailwind no longer get unstyled layouts, unsized toast icons, or a spinner that does not spin; Tailwind consumers get harmless duplicates.
+
 ## 0.2.0-beta.4
 
 ### Patch Changes

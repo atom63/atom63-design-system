@@ -30,7 +30,7 @@
     },
     {
       "name": "@atom63/ui-react",
-      "version": "0.2.0-beta.4",
+      "version": "0.2.0-beta.5",
       "dir": "packages/ui-react",
       "peerDependencies": { "react": "^19.1.0", "react-dom": "^19.1.0" },
       "dependencies": {
