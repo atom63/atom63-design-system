@@ -139,7 +139,9 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --cache --max-warnings 31",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "generate:utilities": "node scripts/generate-utilities-css.mjs",
+    "check:utilities": "node scripts/generate-utilities-css.mjs --check"
   },
   "dependencies": {
     "@atom63/styles": "workspace:*",
@@ -167,6 +169,7 @@
     "@eslint/js": "10.0.1",
     "@storybook/addon-docs": "^10.5.0",
     "@storybook/react-vite": "^10.5.0",
+    "@tailwindcss/cli": "catalog:",
     "@testing-library/jest-dom": "catalog:",
     "@testing-library/react": "catalog:",
     "@testing-library/user-event": "catalog:",
@@ -180,6 +183,7 @@
     "jsdom": "catalog:",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "tailwindcss": "catalog:",
     "tsup": "^8.3.5",
     "typescript": "catalog:",
     "typescript-eslint": "8.64.0",

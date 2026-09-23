@@ -1,0 +1,13 @@
+/*
+ * Input for scripts/generate-utilities-css.mjs. Compiles the Tailwind utility
+ * classes @atom63/ui-react components use, against the Atom63 Tailwind theme,
+ * so consumers without Tailwind get them from styles.css.
+ */
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities) source(none);
+@import '@atom63/styles/tailwind';
+
+@source '../src';
+@source not '../src/**/*.test.tsx';
+@source not '../src/**/*.stories.tsx';
+@source not '../src/test';
