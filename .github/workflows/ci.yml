@@ -68,6 +68,9 @@ jobs:
       - name: Test styles
         run: pnpm --filter @atom63/styles test
 
+      - name: Check Figma sync model
+        run: pnpm --filter @atom63/styles check:figma
+
       - name: Typecheck UI foundation
         run: pnpm --filter @atom63/ui-foundation typecheck
 
