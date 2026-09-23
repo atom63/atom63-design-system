@@ -8,6 +8,7 @@
  */
 :root {
   --a63-font-app: var(--font-family-sans);
+  --font-weight-medium: 500;
 }
 
 [data-a63-font='sans'] {

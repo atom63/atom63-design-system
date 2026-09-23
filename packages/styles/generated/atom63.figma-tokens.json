@@ -14872,6 +14872,20 @@
       "scope": ":root"
     },
     {
+      "name": "font-weight-medium",
+      "cssVar": "--font-weight-medium",
+      "type": "typography",
+      "value": "500",
+      "sourceFile": "packages/styles/src/tokens/font.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "font/weight/medium"
+      },
+      "lifecycle": "preview",
+      "scope": ":root"
+    },
+    {
       "name": "radius",
       "cssVar": "--radius",
       "type": "radius",

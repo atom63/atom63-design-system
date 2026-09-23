@@ -101,8 +101,9 @@ describe('type scale axis', () => {
 })
 
 describe('font family axis', () => {
-  it('defaults --a63-font-app to the sans stack', () => {
+  it('defaults --a63-font-app to the sans stack and publishes medium weight', () => {
     expect(cssVar('--a63-font-app')).toContain('Geist')
+    expect(cssVar('--font-weight-medium')).toBe('500')
   })
 
   it('remaps --a63-font-app per [data-a63-font]', () => {

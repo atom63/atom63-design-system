@@ -41,9 +41,9 @@
   ],
   "summary": {
     "sourceFiles": 36,
-    "declarations": 1477,
-    "uniqueCssVariables": 1015,
-    "figmaMappedDeclarations": 1456
+    "declarations": 1478,
+    "uniqueCssVariables": 1016,
+    "figmaMappedDeclarations": 1457
   },
   "entries": [
     {
@@ -15126,6 +15126,20 @@
       "figma": {
         "collection": "Atom63 Foundation",
         "path": "font/family/serif"
+      },
+      "lifecycle": "preview",
+      "scope": ":root"
+    },
+    {
+      "name": "font-weight-medium",
+      "cssVar": "--font-weight-medium",
+      "type": "typography",
+      "value": "500",
+      "sourceFile": "packages/styles/src/tokens/font.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "font/weight/medium"
       },
       "lifecycle": "preview",
       "scope": ":root"
