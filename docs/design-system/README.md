@@ -127,6 +127,7 @@ Web ↔ iOS component-token gap (including two commands above that are documente
 | [web-ios-token-parity.md](./web-ios-token-parity.md) | Assessment: where the iOS renderer diverges from the web component-token layer |
 | [ui-react-component-review.md](./ui-react-component-review.md) | Component PR checklist |
 | [package-governance.md](./package-governance.md) | Package boundaries |
+| [dependency-version-policy.json](./dependency-version-policy.json) | Machine-readable React peer, runtime dependency, type-visible dependency, and stable semver policy |
 | [beta-release-notes.md](./beta-release-notes.md) | Current public beta versions, npm dist-tags, adopter evidence, and stable-readiness checklist |
 | [benchmark-parity.md](./benchmark-parity.md) | Generated benchmark-parity board for stable-readiness gates, evidence, gaps, owners, and next actions |
 | [benchmark-parity-source.json](./benchmark-parity-source.json) | Human-authored machine-readable source for the benchmark-parity board |

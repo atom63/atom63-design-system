@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "status": "beta-policy-active-stable-pending",
+  "supportedReact": {
+    "peerRange": "^19.1.0",
+    "testedVersion": "19.2.7",
+    "packages": ["@atom63/ui-react"]
+  },
+  "coordinatedPackages": [
+    "@atom63/styles",
+    "@atom63/ui-foundation",
+    "@atom63/ui-react"
+  ],
+  "workspaceDependencyPolicy": {
+    "publishedPackagesMustUseExactPublishedVersionsBeforeStable": true,
+    "allowedWorkspaceDependenciesDuringBeta": [
+      "@atom63/styles",
+      "@atom63/ui-foundation"
+    ]
+  },
+  "typeVisibleDependencies": {
+    "@atom63/ui-react": [
+      {
+        "name": "@base-ui/react",
+        "currentRange": "1.6.0",
+        "policy": "pin-exact-through-beta",
+        "reason": "Base UI component types and composition semantics are visible through several React component APIs."
+      },
+      {
+        "name": "react-hook-form",
+        "currentRange": "^7.81.0",
+        "policy": "monitor-minor-compatible-range",
+        "reason": "Form integration types may appear in typed examples and component composition."
+      },
+      {
+        "name": "react-day-picker",
+        "currentRange": "^10.0.1",
+        "policy": "monitor-minor-compatible-range",
+        "reason": "Calendar/date-picker types and behavior can affect public component contracts."
+      },
+      {
+        "name": "lucide-react",
+        "currentRange": "^1.34.0",
+        "policy": "default-icon-implementation-not-required-contract",
+        "reason": "The package provides default icons but must keep user-provided icon systems possible."
+      }
+    ]
+  },
+  "runtimeDependencyPolicy": {
+    "@atom63/styles": {
+      "tw-animate-css": "pin-or-reviewed-minor-before-stable"
+    },
+    "@atom63/ui-foundation": {},
+    "@atom63/ui-react": {
+      "@atom63/styles": "workspace-beta-internal; exact-published-before-stable",
+      "@atom63/ui-foundation": "workspace-beta-internal; exact-published-before-stable",
+      "@base-ui/react": "pin-exact-through-beta",
+      "clsx": "compatible-range-ok",
+      "date-fns": "compatible-range-ok",
+      "embla-carousel-react": "monitor-minor-compatible-range",
+      "input-otp": "pin-via-root-override-through-beta",
+      "lucide-react": "compatible-range-ok-user-replaceable-icons",
+      "motion": "monitor-minor-compatible-range",
+      "react-day-picker": "monitor-minor-compatible-range",
+      "react-hook-form": "monitor-minor-compatible-range",
+      "react-resizable-panels": "monitor-minor-compatible-range",
+      "sonner": "monitor-minor-compatible-range",
+      "tailwind-merge": "compatible-range-ok"
+    }
+  },
+  "stableSemverPolicy": {
+    "breakingChanges": [
+      "removing or renaming exported components, hooks, types, CSS entry points, or public subpaths",
+      "changing public component prop meaning, required props, emitted DOM semantics, focus behavior, or ARIA semantics",
+      "changing token names, CSS custom property names, theme attributes, or documented CSS contracts",
+      "raising required React, browser, or dependency major versions"
+    ],
+    "minorChanges": [
+      "adding documented stable components, props, tokens, subpaths, or theme options without changing existing behavior",
+      "expanding supported examples or adopter checks"
+    ],
+    "patchChanges": [
+      "bug fixes, documentation corrections, and internal refactors that preserve documented behavior"
+    ]
+  }
+}

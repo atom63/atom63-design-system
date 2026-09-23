@@ -15,6 +15,7 @@
     "check:ui-react-monitor-evidence": "node scripts/design-system/audit-ui-react-monitor-evidence.mjs",
     "check:benchmark-parity": "node scripts/design-system/audit-benchmark-parity.mjs",
     "check:stable-release-preflight": "node scripts/design-system/audit-stable-release-preflight.mjs",
+    "check:dependency-version-policy": "node scripts/design-system/audit-dependency-version-policy.mjs",
     "check:ds-pack-smoke": "node scripts/design-system/smoke-packed-ui-react.mjs",
     "check:ds-registry-smoke": "node scripts/design-system/smoke-registry-ui-react.mjs",
     "changeset": "changeset",

@@ -121,7 +121,7 @@ Before promoting any package to stable/latest:
 - [ ] Finish npm `latest` policy and stable promotion plan so prereleases do not accidentally become default installs.
 - [x] Add a manual GitHub Actions beta release workflow scaffold for trusted publishing / npm provenance.
 - [x] Configure npm trusted publishers and GitHub `npm-publish` environment reviewers before running `publish=true`.
-- [ ] Keep `@base-ui/react` and other type-visible dependencies under an explicit dependency policy.
+- [x] Keep `@base-ui/react` and other type-visible dependencies under an explicit dependency policy; `pnpm check:dependency-version-policy` now audits React peers, runtime dependencies, type-visible dependency ranges, and stable semver categories.
 - [x] Run a clean external registry install, typecheck, and production-build smoke for the current first-wave beta packages; CI and beta release preflight now enforce the checked-in registry readback.
 - [ ] Keep the registry smoke green after every approved beta or stable publish and add a stable/latest readback when stable promotion is approved.
 - [x] Keep `atom63-vite` adopter smoke green without root override workarounds; PR [#416](https://github.com/atom63/atom63-vite/pull/416) added fixture, resolver, and website temp-repo published DS checks.

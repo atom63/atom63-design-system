@@ -142,25 +142,28 @@
           "reference": "https://github.com/Shopify/polaris"
         }
       ],
-      "atom63Status": "React peers and first-wave package relationships are declared, and a Base UI incompatibility is pinned for beta. There is no complete policy for type-visible dependencies, supported React ranges, coordinated versions, or stable semver changes.",
+      "atom63Status": "React peers, first-wave package coordination, runtime dependency ownership, type-visible dependency ranges, and stable semver categories are now recorded in a machine-readable policy with a generated audit. The beta policy pins @base-ui/react exactly, records the React 19 peer/tested versions, and keeps workspace dependency exact-version replacement as a before-stable requirement. Stable still needs a broader React compatibility matrix and final exact-version replacement before latest promotion.",
       "currentEvidence": {
         "docs": [
+          "docs/design-system/dependency-version-policy.json",
+          "docs/design-system/audits/dependency-version-policy.json",
           "docs/design-system/beta-release-notes.md",
           "docs/design-system/package-metadata-audit.md",
           "docs/design-system/changesets-beta-plan.md"
         ],
         "commands": [
+          "pnpm check:dependency-version-policy",
           "pnpm --filter @atom63/ui-react typecheck",
           "pnpm --filter @atom63/ui-react test"
         ]
       },
       "gaps": [
-        "Define ownership and update rules for type-visible runtime dependencies.",
-        "Define supported React versions and a compatibility test matrix.",
-        "Define stable semver and coordinated-package version policy."
+        "Run and record a broader React compatibility matrix before stable/latest promotion.",
+        "Replace beta workspace dependency ranges with exact published first-wave package versions before stable/latest promotion.",
+        "Sustain dependency-policy audits as type-visible dependency versions change."
       ],
-      "stableGate": "blocker",
-      "nextAction": "Publish a dependency and version policy, then add compatibility checks for every supported React and type-visible dependency range.",
+      "stableGate": "warning",
+      "nextAction": "Keep the dependency/version policy audit green, add the stable React compatibility matrix, and replace workspace ranges with exact published package versions before stable/latest promotion.",
       "ownerLane": "package-governance"
     },
     {
