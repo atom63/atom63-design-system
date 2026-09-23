@@ -1,0 +1,71 @@
+# Page layout
+
+`Page`, `Container`, and `Section` separate three decisions that otherwise drift together: the document landmark, the content frame, and the rhythm between page regions. They are composable defaults, not a required wrapper stack for every product shell.
+
+## Responsibilities
+
+| Primitive | Actual contract | Use when |
+|-----------|-----------------|----------|
+| `Page` | Renders `<main>`, fills the available height, and adds `pt-8 pb-20` unless `noPadding` is set | The route does not already have a main landmark |
+| `Container` | Centers a named max-width, adds a fixed `gap-8` between direct children, and applies `p-6`, `px-6`, or no padding | Content needs a shared measure or inline inset |
+| `Section` | Renders `<section>`, applies a spacing preset, and optionally spaces direct children | A real page region needs repeatable vertical rhythm |
+
+`Container` padding is not responsive: `padding="all"` is `p-6`, while `padding="x"` is `px-6`. `Section` owns breakpoint-dependent vertical padding. `tight` stays `py-8`; `default` stays `py-16`; `loose` changes from `py-16` to `py-20` at 768px. `generous` progresses from `py-20` to `py-28` at 640px and `py-32` at 768px; `spacious` progresses from `py-24` to `py-32` and `py-40`. Its default `removeTopSpacing` is `true`, so a section keeps its bottom padding but removes only the top padding at every breakpoint; set it to `false` for an opening region that needs the preset on both sides.
+
+## Default composition
+
+```tsx
+import { Container, Page, Section, SectionHeader } from '@atom63/ui-react/layout'
+
+<Page>
+  <Container maxWidth="wide" padding="x">
+    <Section removeTopSpacing={false} spacing="loose">
+      <SectionHeader
+        title="Projects"
+        description="Selected product systems and interface work."
+        variant="primary"
+      />
+    </Section>
+
+    <Section>
+      <ProjectGrid />
+    </Section>
+  </Container>
+</Page>
+```
+
+The first section opts into top spacing. The second uses the default top removal because the container gap and preceding section already establish separation.
+
+## Shell-owned layout
+
+Do not add wrappers only to match the diagram. Current consumers deliberately stop at different layers:
+
+- Design-system and Learn routes render `Page noPadding` because their app shells own the outer frame, then use `Container` and `Section` for reading layout.
+- atom63.io route screens commonly let `SiteShellLayout` own the route surface and compose `Container > Section` inside it.
+- Full-bleed desktops, split panes, and other application shells should use their own layout rather than force a document-page pattern.
+
+```tsx
+<Page noPadding>
+  <Container maxWidth="widest" padding="none">
+    <Section gap={false} spacing="tight">
+      <ReaderLayout>{content}</ReaderLayout>
+    </Section>
+  </Container>
+</Page>
+```
+
+## Choose the layout owner
+
+| Decision | Owner |
+|----------|-------|
+| Main landmark and route inset | `Page` or the app shell, never both |
+| Maximum width and outer padding | `Container` |
+| Space around a page region | `Section` |
+| Gap between cards or controls | The local grid, stack, or component |
+| Card padding and control internals | The component |
+
+Nested containers are valid when a region intentionally changes measure. Otherwise they usually indicate that page and component spacing have been mixed together.
+
+## Accessibility boundary
+
+`Page` always renders `<main>`, so use it at most once in a document. `Section` always renders `<section>`; give the region an accessible heading rather than using it as a generic spacing wrapper. The primitives provide structure, but they do not infer a heading outline.

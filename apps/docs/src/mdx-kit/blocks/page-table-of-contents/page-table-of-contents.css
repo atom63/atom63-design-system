@@ -1,0 +1,73 @@
+/* PageTableOfContents recipe — link/inline/rail/title/progress chrome. */
+@layer components {
+  .mdx-toc-link {
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-toc-link:focus-visible {
+    box-shadow: 0 0 0 2px var(--a63-focus-ring);
+  }
+
+  /* inline variant */
+  .mdx-toc-link-inline {
+    border-radius: var(--radius-md);
+  }
+
+  @media (hover: hover) {
+    .mdx-toc-link-inline:hover {
+      background-color: color-mix(in oklab, var(--a63-surface-control-hover) 60%, transparent);
+      color: var(--a63-text-primary);
+    }
+  }
+
+  .mdx-toc-link-inline:focus-visible {
+    background-color: color-mix(in oklab, var(--a63-surface-control-hover) 60%, transparent);
+  }
+
+  .mdx-toc-link-inline[data-active='true'] {
+    background-color: var(--a63-surface-control-hover);
+    color: var(--a63-text-primary);
+  }
+
+  .mdx-toc-link-inline[data-active='false'] {
+    color: color-mix(in oklab, var(--a63-text-primary) 60%, transparent);
+  }
+
+  /* rail variant */
+  @media (hover: hover) {
+    .mdx-toc-link-rail:hover {
+      color: var(--a63-text-primary);
+    }
+  }
+
+  .mdx-toc-link-rail:focus-visible {
+    border-radius: var(--radius-sm);
+    box-shadow:
+      0 0 0 2px var(--a63-surface-page),
+      0 0 0 4px var(--a63-focus-ring);
+  }
+
+  .mdx-toc-link-rail[data-active='true'] {
+    color: var(--a63-action-primary);
+  }
+
+  .mdx-toc-link-rail[data-active='false'] {
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-toc-link-rail[data-active='false'][data-depth='3'] {
+    color: color-mix(in oklab, var(--a63-text-secondary) 75%, transparent);
+  }
+
+  .mdx-toc-title {
+    color: var(--a63-text-primary);
+  }
+
+  .mdx-toc-icon {
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-toc-progress {
+    background-color: var(--a63-action-primary);
+  }
+}

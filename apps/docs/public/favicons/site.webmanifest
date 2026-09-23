@@ -1,0 +1,31 @@
+{
+  "name": "ATOM63 (You Zhang)",
+  "short_name": "ATOM63",
+  "description": "Hi, I'm You Zhang — a Motion Designer and Design Engineer blending storytelling with systems thinking.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicons/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicons/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}

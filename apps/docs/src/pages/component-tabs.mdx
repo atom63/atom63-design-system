@@ -1,0 +1,115 @@
+import { DocExample } from '../mdx-kit/blocks'
+import { Tabs, TabsList, TabsPanel, TabsTab } from '@atom63/ui-react'
+
+# Tabs
+
+Tabs organize related panels without leaving the current task. The component owns orientation, keyboard behavior, indicator placement, and panel relationships; the theme owns the material values behind those states.
+
+## When to use
+
+Use Tabs for peer panels inside one task or surface. Use navigation links when each destination has its own URL, should appear in browser history, or needs to remain directly addressable.
+
+Give each `TabsList` an accessible name with `aria-label` or `aria-labelledby`; otherwise assistive technology announces an unnamed tab list. Base UI supplies keyboard movement and tab-panel relationships, but it cannot infer the group's purpose.
+
+## Variants
+
+| Variant | Intent |
+|---------|--------|
+| `default` | Contained switcher with a moving active plate. |
+| `underline` | Navigation-like tabs where active state is an edge marker. |
+| `attached` | Tabs and panel form one connected surface. |
+
+<DocExample
+  align="left"
+  title="Three variants, one contract"
+  code={`import { Tabs, TabsList, TabsPanel, TabsTab } from '@atom63/ui-react'
+
+<Tabs defaultValue="tokens">
+  <TabsList aria-label="Implementation layer" variant="default">
+    <TabsTab value="tokens">Tokens</TabsTab>
+    <TabsTab value="recipe">Recipe</TabsTab>
+    <TabsTab value="usage">Usage</TabsTab>
+  </TabsList>
+  <TabsPanel value="tokens">Semantic roles resolve here.</TabsPanel>
+  <TabsPanel value="recipe">The component recipe consumes them.</TabsPanel>
+  <TabsPanel value="usage">Product code sees only the API.</TabsPanel>
+</Tabs>`}
+>
+  <div className="flex w-full max-w-lg flex-col gap-8">
+    <Tabs defaultValue="tokens">
+      <TabsList aria-label="Implementation layer" variant="default">
+        <TabsTab value="tokens">Tokens</TabsTab>
+        <TabsTab value="recipe">Recipe</TabsTab>
+        <TabsTab value="usage">Usage</TabsTab>
+      </TabsList>
+      <TabsPanel className="pt-3 text-sm" value="tokens">
+        Semantic roles resolve here.
+      </TabsPanel>
+      <TabsPanel className="pt-3 text-sm" value="recipe">
+        The component recipe consumes them.
+      </TabsPanel>
+      <TabsPanel className="pt-3 text-sm" value="usage">
+        Product code sees only the API.
+      </TabsPanel>
+    </Tabs>
+
+    <Tabs defaultValue="tokens">
+      <TabsList aria-label="Implementation layer" variant="underline">
+        <TabsTab value="tokens">Tokens</TabsTab>
+        <TabsTab value="recipe">Recipe</TabsTab>
+        <TabsTab value="usage">Usage</TabsTab>
+      </TabsList>
+      <TabsPanel className="pt-3 text-sm" value="tokens">
+        Underline reads as content navigation.
+      </TabsPanel>
+      <TabsPanel className="pt-3 text-sm" value="recipe">
+        The edge marker stays out of the page's way.
+      </TabsPanel>
+      <TabsPanel className="pt-3 text-sm" value="usage">
+        Same API, different emphasis.
+      </TabsPanel>
+    </Tabs>
+
+    <Tabs defaultValue="tokens">
+      <TabsList aria-label="Implementation layer" variant="attached">
+        <TabsTab value="tokens">Tokens</TabsTab>
+        <TabsTab value="recipe">Recipe</TabsTab>
+      </TabsList>
+      <TabsPanel className="border-border bg-card rounded-b-lg border border-t-0 p-4 text-sm" value="tokens">
+        Attached tabs and their panel are one object.
+      </TabsPanel>
+      <TabsPanel className="border-border bg-card rounded-b-lg border border-t-0 p-4 text-sm" value="recipe">
+        The selected tab merges into the panel edge.
+      </TabsPanel>
+    </Tabs>
+  </div>
+</DocExample>
+
+## Contract shape
+
+Tabs combine several archetypes instead of inventing a theme namespace.
+
+| Part | Contract |
+|------|----------|
+| Default tab track | `--a63-surface-muted` plus `--a63-track-shadow`. |
+| Active plate | `--a63-surface-overlay`, `--a63-action-primary`, and `--a63-control-shadow`. |
+| Attached panel | `--a63-surface-*` and the surface contract. |
+| Text and focus | `--a63-text-*`, `--a63-control-focus-ring-*`. |
+
+## Design decisions
+
+### Attached tabs are one object
+
+Attached tabs are not a tab row sitting above a card. The selected tab and the panel need to visually merge, while inactive tabs remain lower-emphasis. The recipe handles that connection through panel surface tokens and active overlap.
+
+### Underline is intentionally restrained
+
+Underline tabs are for content navigation. A full plate would compete with the page; an edge marker gives enough orientation without turning the control into a toolbar.
+
+### Orientation is component behavior
+
+Horizontal and vertical tabs use the same semantic contract. A theme should not patch orientation with bespoke spacing fixes; the recipe's size and indicator variables should keep the active marker aligned.
+
+## Review cues
+
+When reviewing Tabs, check that the active state is obvious in light and dark mode, the panel connection does not double its border, disabled tabs stay readable, and the active indicator remains aligned across density and radius axes.

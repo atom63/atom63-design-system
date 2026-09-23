@@ -1,0 +1,16 @@
+/* CreditsBlock recipe — trigger/label/icon/role/value chrome. */
+@layer components {
+  .mdx-credits-trigger::before {
+    background-color: color-mix(in oklab, var(--a63-surface-control-hover) 50%, transparent);
+  }
+
+  .mdx-credits-label,
+  .mdx-credits-icon,
+  .mdx-credits-role {
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-credits-value {
+    color: var(--a63-text-primary);
+  }
+}

@@ -1,0 +1,853 @@
+@import 'tailwindcss';
+/* DS-native token stack. --a63-* is the source of truth; compat/shadcn derives
+   legacy/shadcn aliases FROM it for older docs/MDX blocks that still consume
+   bg-background, text-foreground, etc. */
+@import '@atom63/styles';
+@import '@atom63/styles/tailwind';
+@import '@atom63/styles/compat/shadcn';
+@import '@atom63/styles/utils/debug';
+@import '../mdx-kit/styles/a63.css';
+@import '@atom63/ui-react/recipes.css';
+@import './os-theme-preview.css';
+@plugin '@tailwindcss/typography';
+
+@source '../**/*.{ts,tsx,mdx}';
+@source '../../../../packages/agent/src/**/*.{ts,tsx}';
+/* Inform surfaces are rendered live in the pattern-inform-* pages, so their
+   Tailwind classes must be generated here. Without this the package's own
+   utilities only appear when this app happens to emit the same class from its
+   own source — which silently fails the moment a package uses one this app
+   does not, such as an arbitrary `gap-[var(--a63-space-2)]`. */
+@source '../../../../packages/inform/src/**/*.{ts,tsx}';
+@source '../../../../packages/ui-react/src/**/*.{ts,tsx}';
+@source '../../../../packages/widgets/src/**/*.{ts,tsx}';
+
+@font-face {
+  font-family: 'Geist';
+  src: url('../../../../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2')
+    format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../../../../node_modules/geist/dist/fonts/geist-mono/GeistMono-Variable.woff2')
+    format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Pixel Square';
+  src: url('../../../../node_modules/geist/dist/fonts/geist-pixel/GeistPixel-Square.woff2')
+    format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@custom-variant light (&:not(.dark *));
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-inset: var(--surface-inset);
+  --color-overlay: var(--overlay);
+}
+
+@layer base {
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--border, currentColor);
+  }
+
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply h-full overflow-hidden overscroll-none;
+  }
+
+  #root {
+    @apply h-dvh overflow-hidden overscroll-none;
+  }
+
+  body {
+    @apply bg-background text-foreground h-full overflow-hidden overscroll-none font-sans;
+  }
+}
+
+@keyframes motion-reference-slide {
+  from {
+    left: 0;
+    transform: translateY(-50%);
+  }
+
+  to {
+    left: var(--motion-reference-distance, calc(100% - 0.625rem));
+    transform: translateY(-50%);
+  }
+}
+
+[data-motion-reference-dot] {
+  animation-delay: var(--motion-reference-delay, -360ms);
+  animation-direction: alternate;
+  animation-duration: var(--motion-reference-duration, 900ms);
+  animation-iteration-count: infinite;
+  animation-name: motion-reference-slide;
+  animation-timing-function: var(--motion-reference-easing, cubic-bezier(0, 0, 0, 1));
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-motion-reference-dot] {
+    animation: none !important;
+  }
+}
+
+/* Geist is a variable font with fine stems, and the DS is dark-first. Default
+   subpixel smoothing renders light-on-dark text noticeably heavier than the
+   weight actually set, so the whole UI reads a step bolder than designed. */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+ * Documentation chrome
+ *
+ * The docs shell uses the same system vocabulary as the products, but gives
+ * structural dividers and bordered surfaces distinct jobs. The shell owns a
+ * quiet, square frame; cards and controls own the clearer rounded border.
+ */
+:root {
+  --docs-grid-line: color-mix(in oklch, var(--a63-border-subtle) 34%, transparent);
+  --docs-surface-border: var(--a63-border-subtle);
+}
+
+:root:not(.dark) {
+  --docs-grid-line: color-mix(in oklch, var(--a63-border-subtle) 52%, transparent);
+}
+
+.docs-shell {
+  --docs-chrome-surface: var(--a63-surface-page);
+  --docs-reading-surface: color-mix(
+    in oklch,
+    var(--a63-surface-panel) 76%,
+    var(--a63-surface-page)
+  );
+  background-color: var(--docs-chrome-surface);
+}
+
+.docs-shell .a63-Sidebar-wrapper {
+  --sidebar-bg: var(--docs-chrome-surface);
+  --sidebar-border: var(--docs-grid-line);
+  background-color: var(--docs-chrome-surface);
+}
+
+.docs-header {
+  position: relative;
+  z-index: var(--z-layer-sticky);
+  border-bottom: 1px solid var(--docs-grid-line);
+}
+
+.docs-header-frame {
+  position: relative;
+  isolation: isolate;
+}
+
+.docs-header-frame::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline: 1px;
+  z-index: -1;
+  background-color: color-mix(in oklch, var(--docs-chrome-surface) 80%, transparent);
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  backdrop-filter: blur(var(--blur-md));
+}
+
+.docs-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.docs-body {
+  position: relative;
+}
+
+.docs-body .docs-sidebar {
+  position: sticky;
+  top: 0;
+  height: calc(100svh - var(--header-height));
+  border-right: 0;
+}
+
+.docs-header-nav-link::after {
+  content: '';
+  position: absolute;
+  right: var(--a63-space-2);
+  bottom: -0.375rem;
+  left: var(--a63-space-2);
+  height: 2px;
+  border-radius: var(--radius-full);
+  background-color: var(--a63-action-primary);
+  opacity: 0;
+  transform: scaleX(0.4);
+  transition:
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.docs-header-nav-link[data-active='true'] {
+  color: var(--a63-text-primary);
+}
+
+.docs-header-nav-link[data-active='true']::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.docs-sidebar [data-slot='sidebar-inner'] {
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background-color: var(--docs-chrome-surface);
+  box-shadow: none;
+}
+
+.docs-sidebar-content {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
+.docs-sidebar-scroll-viewport {
+  overscroll-behavior: contain;
+}
+
+.docs-sidebar .a63-SidebarNavTree-group-label {
+  color: color-mix(in oklch, var(--sidebar-fg) 58%, transparent);
+  letter-spacing: 0.015em;
+}
+
+.docs-sidebar .a63-SidebarNavTree-item {
+  position: relative;
+  border-radius: var(--radius-sm);
+}
+
+.docs-sidebar .a63-SidebarNavTree-item::before {
+  content: '';
+  position: absolute;
+  top: var(--a63-space-1_5);
+  bottom: var(--a63-space-1_5);
+  left: 0;
+  width: 2px;
+  border-radius: var(--radius-full);
+  background-color: var(--a63-action-primary);
+  opacity: 0;
+  transform: scaleY(0.4);
+  transition:
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.docs-sidebar .a63-SidebarNavTree-item[data-active='true'] {
+  background-color: color-mix(in oklch, var(--a63-action-primary) 8%, transparent);
+  color: var(--a63-text-primary);
+}
+
+.docs-sidebar .a63-SidebarNavTree-item[data-active='true']::before {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.docs-reading-canvas {
+  background-color: var(--docs-chrome-surface);
+}
+
+.docs-document-section {
+  min-height: calc(100svh - var(--header-height));
+  padding: 0;
+}
+
+.docs-reader-layout {
+  gap: 0;
+  min-height: calc(100svh - var(--header-height));
+  padding-right: 0;
+}
+
+.docs-reader-column {
+  display: flex;
+  min-width: 0;
+  padding: var(--a63-space-6);
+}
+
+.docs-reader-surface {
+  --docs-reader-inline-padding: var(--a63-space-6);
+  --border: var(--docs-surface-border);
+
+  position: relative;
+  min-width: 0;
+  flex: 1;
+  border: 1px solid var(--docs-surface-border);
+  border-radius: var(--radius-xl);
+  padding: var(--docs-reader-inline-padding);
+  background-color: var(--docs-reading-surface);
+  box-shadow:
+    var(--a63-surface-inner-shadow, none), var(--effect-shadow-sm, var(--a63-surface-shadow));
+}
+
+.docs-page-breadcrumb {
+  min-width: 0;
+}
+
+.docs-page-meta {
+  display: flex;
+  min-height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-target)
+  );
+  align-items: center;
+  gap: var(--a63-space-2) var(--a63-space-4);
+}
+
+.docs-page-flow {
+  min-width: 0;
+}
+
+.docs-page-actions {
+  position: sticky;
+  top: var(--a63-space-3);
+  z-index: var(--z-layer-sticky);
+  display: flex;
+  flex: none;
+  height: 0;
+  align-items: flex-start;
+  justify-content: flex-end;
+  pointer-events: none;
+}
+
+.docs-page-actions-default {
+  display: none;
+  pointer-events: auto;
+}
+
+.docs-page-actions-tablet {
+  display: block;
+  position: relative;
+  width: 11rem;
+  height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-target)
+  );
+  overflow: visible;
+  pointer-events: auto;
+}
+
+.docs-page-toc-panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: var(--z-layer-popover);
+  max-width: none;
+}
+
+.docs-page-aside {
+  position: relative;
+  padding: var(--a63-space-6) 0 var(--a63-space-6) var(--a63-space-6);
+}
+
+.docs-agent-rail {
+  border-left: 1px solid var(--docs-grid-line);
+}
+
+.docs-agent-panel[data-slot='agent-side-panel'] {
+  border-left: 0;
+}
+
+@media (min-width: 768px) {
+  .docs-header-frame,
+  .docs-workspace {
+    border-right: 1px solid var(--docs-grid-line);
+    border-left: 1px solid var(--docs-grid-line);
+  }
+
+  .docs-workspace {
+    grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  }
+
+  .docs-workspace::before,
+  .docs-workspace::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    width: 1px;
+    pointer-events: none;
+    background-color: var(--docs-grid-line);
+  }
+
+  .docs-workspace::before {
+    left: var(--sidebar-width);
+  }
+
+  .docs-workspace::after {
+    display: none;
+  }
+}
+
+@media (min-width: 1280px) {
+  .docs-workspace::after {
+    right: 16rem;
+    display: block;
+  }
+
+  .docs-page-actions {
+    top: var(--a63-space-8, 2rem);
+  }
+
+  .docs-page-actions-default {
+    display: inline-flex;
+  }
+
+  .docs-page-actions-tablet {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .docs-reader-layout {
+    gap: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .docs-reader-column {
+    padding: 0;
+  }
+
+  .docs-reader-surface {
+    border-width: 0;
+    border-radius: 0;
+    --docs-reader-inline-padding: var(--a63-space-4);
+    padding: 0 var(--docs-reader-inline-padding) var(--a63-space-6);
+    box-shadow: none;
+  }
+
+  .docs-page-meta {
+    flex-wrap: nowrap;
+  }
+
+  .docs-page-breadcrumb {
+    flex: 1 1 auto;
+    overflow: hidden;
+  }
+
+  .docs-page-breadcrumb ol {
+    flex-wrap: nowrap;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .docs-page-breadcrumb li:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/*
+ * Changelog
+ *
+ * Release data follows the same document rhythm as the surrounding MDX. The
+ * only custom treatment is compact metadata and native disclosure styling.
+ */
+.changelog-timeline {
+  margin-block-start: var(--a63-space-10);
+  color: var(--a63-text-primary);
+}
+
+.changelog-group {
+  margin-block-start: var(--a63-space-10);
+}
+
+.changelog-group-header {
+  padding-block-end: var(--a63-space-4);
+  border-bottom: 1px solid var(--docs-surface-border);
+}
+
+.changelog-group-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--a63-space-2) var(--a63-space-3);
+}
+
+.changelog-group-header h2,
+.changelog-release-package h3,
+.changelog-release-section h4 {
+  margin: 0;
+}
+
+.changelog-group-header h2 {
+  font-size: var(--typography-3xl-font-size);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.025em;
+  line-height: var(--typography-3xl-line-height);
+}
+
+.changelog-group-title > span {
+  color: var(--a63-text-secondary);
+  font-size: var(--typography-xs-font-size);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--typography-xs-line-height);
+}
+
+.changelog-group-header > p {
+  max-width: 44rem;
+  margin: var(--a63-space-2) 0 0;
+  color: var(--a63-text-secondary);
+  font-size: var(--typography-sm-font-size);
+  line-height: 1.6;
+}
+
+.changelog-entry {
+  padding-block: var(--a63-space-5);
+  border-bottom: 1px solid var(--docs-surface-border);
+}
+
+.changelog-package-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--a63-space-1) var(--a63-space-3);
+  margin: 0 0 var(--a63-space-2);
+  padding: 0;
+  list-style: none;
+}
+
+.changelog-package {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: var(--a63-space-1);
+  color: var(--a63-text-secondary);
+  font-size: var(--typography-xs-font-size);
+  line-height: var(--typography-xs-line-height);
+}
+
+.changelog-package code {
+  overflow: hidden;
+  color: var(--a63-text-primary);
+  font-size: inherit;
+  font-weight: var(--font-weight-medium);
+  text-overflow: ellipsis;
+}
+
+.changelog-package > span:not([aria-hidden]) {
+  color: var(--a63-text-tertiary, var(--a63-text-secondary));
+}
+
+.changelog-markdown {
+  min-width: 0;
+  max-width: 60ch;
+  color: var(--a63-text-secondary);
+  font-size: var(--typography-base-font-size);
+  line-height: 1.75;
+}
+
+.changelog-markdown > :first-child {
+  margin-block-start: 0;
+}
+
+.changelog-markdown > :last-child {
+  margin-block-end: 0;
+}
+
+.changelog-markdown :is(p, ul, ol) {
+  margin-block: 0 var(--a63-space-3);
+}
+
+.changelog-markdown :is(ul, ol) {
+  padding-inline-start: var(--a63-space-5);
+}
+
+.changelog-markdown li + li {
+  margin-block-start: var(--a63-space-1_5);
+}
+
+.changelog-markdown a {
+  color: var(--a63-text-primary);
+  text-decoration-color: color-mix(in oklch, currentColor 38%, transparent);
+  text-decoration-line: underline;
+  text-underline-offset: 0.18em;
+}
+
+.changelog-markdown a:hover {
+  text-decoration-color: currentColor;
+}
+
+.changelog-markdown code,
+.changelog-release-package h3 code {
+  font-size: 0.92em;
+}
+
+.changelog-release-list {
+  display: grid;
+}
+
+.changelog-release-package {
+  padding-block: var(--a63-space-6);
+  border-bottom: 1px solid var(--docs-surface-border);
+}
+
+.changelog-release-package > header {
+  padding-block-end: var(--a63-space-3);
+}
+
+.changelog-release-package > header h3 {
+  font-size: var(--typography-base-font-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--typography-base-line-height);
+}
+
+.changelog-release-package > header p {
+  margin: var(--a63-space-1) 0 0;
+  color: var(--a63-text-secondary);
+  font-size: var(--typography-sm-font-size);
+  line-height: 1.6;
+}
+
+.changelog-release-disclosure {
+  border-top: 1px solid var(--docs-surface-border);
+}
+
+.changelog-release-disclosure summary {
+  display: grid;
+  grid-template-columns: minmax(4.5rem, auto) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--a63-space-3);
+  min-height: max(var(--a63-control-height-md), var(--a63-control-min-target));
+  border-radius: var(--radius-sm);
+  color: var(--a63-text-secondary);
+  cursor: pointer;
+  font-size: var(--typography-xs-font-size);
+  list-style: none;
+}
+
+.changelog-release-disclosure summary:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: -2px;
+}
+
+.changelog-release-disclosure summary::-webkit-details-marker {
+  display: none;
+}
+
+.changelog-release-disclosure summary > svg {
+  width: var(--a63-space-4);
+  height: var(--a63-space-4);
+  color: var(--a63-text-tertiary, var(--a63-text-secondary));
+  transition: transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.changelog-release-disclosure[open] summary > svg {
+  transform: rotate(180deg);
+}
+
+.changelog-release-disclosure summary > span:first-child {
+  color: var(--a63-text-primary);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.changelog-release-body {
+  display: grid;
+  gap: var(--a63-space-6);
+  padding: var(--a63-space-4) 0 var(--a63-space-6);
+}
+
+.changelog-release-section h4 {
+  margin-block-end: var(--a63-space-2);
+  color: var(--a63-text-primary);
+  font-size: var(--typography-sm-font-size);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--typography-sm-line-height);
+}
+
+.changelog-release-section > .changelog-markdown > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.changelog-empty {
+  margin: 0;
+  padding-block: var(--a63-space-6);
+  border-bottom: 1px solid var(--docs-surface-border);
+  color: var(--a63-text-secondary);
+  font-size: var(--typography-sm-font-size);
+}
+
+@media (max-width: 639px) {
+  .changelog-timeline {
+    margin-block-start: var(--a63-space-8);
+  }
+
+  .changelog-group-header h2 {
+    font-size: var(--typography-2xl-font-size);
+    line-height: var(--typography-2xl-line-height);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .docs-header-nav-link::after,
+  .docs-sidebar .a63-SidebarNavTree-item::before,
+  .changelog-release-disclosure summary > svg {
+    transition: none;
+  }
+}
+
+/* Docs headings are short and land in a narrow measure, where the last line
+   regularly drops a single orphaned word. Balance only runs on a few lines, so
+   it is cheap here and is scoped to article headings rather than every h1-h3. */
+article :is(h1, h2, h3) {
+  text-wrap: balance;
+}
+
+/* Docs nav items step up from the compressed desktop control ramp (12px) to the
+   base step. contracts/control.css intentionally collapses xs and sm to
+   --typography-xs; benchmark docs rails run 14-16px, so 12px read too small here.
+   Scoped to the item list, which excludes SidebarGroupLabel, so group labels keep
+   the smaller ramp and the size hierarchy survives. SidebarNavLinkItem hardcodes
+   size="sm" internally, so the token is the only seam. */
+.a63-SidebarNavTree-list {
+  --a63-control-font-size-xs: var(--typography-base-font-size);
+  --a63-control-font-size-sm: var(--typography-base-font-size);
+}
+
+/* Menu-family group labels sit one step further back than --a63-text-secondary so
+   item titles read as the primary rank. Set through the menu contract, so command,
+   menu, select, and autocomplete stay consistent. 90% is the muting ceiling: the
+   label is 12px, so it needs AA 4.5:1, and light mode starts from a lower baseline
+   (5.77:1 vs dark's 6.92:1) — 85% would drop light to 4.24:1. Both operands are
+   mode-aware tokens, so this follows the theme. */
+:root {
+  --a63-menu-label-foreground: color-mix(
+    in oklch,
+    var(--a63-text-secondary) 90%,
+    var(--a63-surface-overlay)
+  );
+}
+
+/* DS-only preview effect rules — outside Tailwind layers so utilities cannot win the cascade.
+   These are local demo knobs, not the public theme contract. */
+[data-preview-root='true'] {
+  position: relative;
+  --ds-preview-border-width: var(--a63-surface-border-width, 1px);
+  --ds-preview-border-style: var(--a63-surface-border-style, solid);
+  --ds-preview-surface-opacity: 100%;
+  --ds-preview-backdrop-blur: 0px;
+  --ds-preview-scanline-size: 4px;
+  --ds-preview-scanline-opacity: 0.08;
+}
+
+[data-preview-effect-surface='true'] {
+  border-width: var(--ds-preview-border-width);
+  border-style: var(--ds-preview-border-style);
+  background-color: color-mix(
+    in srgb,
+    var(--a63-surface-panel) var(--ds-preview-surface-opacity),
+    transparent
+  );
+  backdrop-filter: blur(var(--ds-preview-backdrop-blur));
+}
+
+[data-preview-root='true']
+  :where(
+    [data-slot='button'],
+    [data-slot='card'],
+    [data-slot='card-frame'],
+    [data-slot='input-control'],
+    [data-slot='input-group'],
+    [data-slot='popover-content'],
+    [data-slot='select-trigger'],
+    [data-slot='tooltip-popup']
+  ) {
+  border-width: var(--ds-preview-border-width);
+  border-style: var(--ds-preview-border-style);
+}
+
+[data-preview-root='true']
+  :where(
+    [data-slot='card'],
+    [data-slot='card-frame'],
+    [data-slot='popover-content'],
+    [data-slot='tooltip-popup']
+  ),
+[data-preview-portal-root='true']
+  :where([data-slot='popover-content'], [data-slot='tooltip-popup']) {
+  backdrop-filter: blur(var(--ds-preview-backdrop-blur));
+}
+
+[data-preview-effect='terminal'] :where([data-preview-effect-surface='true'], [data-slot]) {
+  --tw-shadow: 0 0 transparent;
+  --tw-inset-shadow: 0 0 transparent;
+  box-shadow: none;
+}
+
+[data-preview-effect='beveled'] [data-preview-effect-surface='true'] {
+  box-shadow: var(--effect-shadow-lg);
+}
+
+[data-preview-effect='beveled']
+  :where(
+    [data-slot='button'],
+    [data-slot='card'],
+    [data-slot='card-frame'],
+    [data-slot='input-control'],
+    [data-slot='input-group'],
+    [data-slot='popover-content'],
+    [data-slot='select-trigger'],
+    [data-slot='tooltip-popup']
+  ) {
+  box-shadow: var(--effect-shadow-xs);
+}
+
+[data-preview-root='true']
+  [data-slot='input-group']
+  :where([data-slot='button'], [data-slot='input-control'], [data-slot='input-group-control']) {
+  --tw-shadow: 0 0 transparent;
+  --tw-inset-shadow: 0 0 transparent;
+  border-width: 0;
+  box-shadow: none;
+}
+
+[data-preview-effect='beveled'] [data-slot='input-group'] {
+  box-shadow: var(--effect-shadow-xs);
+}
+
+[data-preview-effect='terminal'] [data-slot='input-group'] {
+  box-shadow: none;
+}
+
+[data-preview-effect='terminal'][data-preview-root='true']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent calc(var(--ds-preview-scanline-size) / 2),
+    rgb(0 0 0 / var(--ds-preview-scanline-opacity)) calc(var(--ds-preview-scanline-size) / 2),
+    rgb(0 0 0 / var(--ds-preview-scanline-opacity)) var(--ds-preview-scanline-size)
+  );
+}

@@ -1,0 +1,50 @@
+/* DemoStage recipe — quiet framed stage for live demos and centerpiece visuals. */
+@layer components {
+  .mdx-demo-stage {
+    background:
+      radial-gradient(
+        circle at 50% 0%,
+        color-mix(in oklab, var(--a63-action-primary) 7%, transparent),
+        transparent 42%
+      ),
+      color-mix(in oklab, var(--a63-surface-page) 74%, transparent);
+  }
+
+  .mdx-demo-config-panel {
+    --mdx-demo-config-radius: var(--radius-lg);
+
+    border-radius: var(--mdx-demo-config-radius);
+    isolation: isolate;
+  }
+
+  .mdx-demo-config-panel--sheet {
+    --mdx-demo-config-radius: 0;
+  }
+
+  .mdx-demo-config-panel,
+  .mdx-demo-config-panel__scroll,
+  .mdx-demo-config-panel__viewport,
+  .mdx-demo-config-panel__sheet-panel {
+    overflow: hidden;
+  }
+
+  .mdx-demo-config-panel__scroll,
+  .mdx-demo-config-panel__viewport,
+  .mdx-demo-config-panel__sheet-panel {
+    border-radius: inherit;
+  }
+
+  .mdx-demo-config-panel .dialkit-panel,
+  .mdx-demo-config-panel .dialkit-panel[data-mode='inline'],
+  .mdx-demo-config-panel .dialkit-panel-wrapper,
+  .mdx-demo-config-panel .dialkit-panel-inline,
+  .mdx-demo-config-panel .dialkit-panel-inner {
+    border-radius: var(--mdx-demo-config-radius);
+    overflow: hidden;
+  }
+
+  .mdx-demo-config-panel .dialkit-panel[data-mode='inline'],
+  .mdx-demo-config-panel .dialkit-panel-inline {
+    max-height: inherit;
+  }
+}

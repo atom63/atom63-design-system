@@ -83,6 +83,13 @@ jobs:
       - name: Check React UI utilities CSS
         run: pnpm --filter @atom63/ui-react check:utilities
 
+      - name: Check docs site
+        run: |
+          pnpm --filter @atom63/docs typecheck
+          pnpm --filter @atom63/docs lint
+          pnpm --filter @atom63/docs test
+          pnpm --filter @atom63/docs build
+
       - name: Check Figma plugin
         run: |
           pnpm --filter @atom63/figma-plugin typecheck

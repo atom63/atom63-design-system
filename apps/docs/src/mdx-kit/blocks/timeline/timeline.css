@@ -1,0 +1,12 @@
+/* Timeline recipe — date/dot chrome. */
+@layer components {
+  .mdx-timeline-date {
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-timeline-dot {
+    border-color: var(--a63-surface-page);
+    background-color: var(--a63-text-primary);
+    box-shadow: 0 0 0 1px var(--a63-border-subtle);
+  }
+}

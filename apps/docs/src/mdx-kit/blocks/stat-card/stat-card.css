@@ -1,0 +1,18 @@
+@layer components {
+  .mdx-stat-card-label,
+  .mdx-stat-card-change-neutral {
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-stat-card-value {
+    color: var(--a63-text-primary);
+  }
+
+  .mdx-stat-card-change-up {
+    color: var(--a63-status-success);
+  }
+
+  .mdx-stat-card-change-down {
+    color: var(--a63-action-danger);
+  }
+}

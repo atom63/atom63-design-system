@@ -1,0 +1,14 @@
+/* Compare recipe — block-level heading tweaks. Panel/tone chrome lives in frame foundation. */
+@layer components {
+  .mdx-compare-header {
+    padding-block-end: var(--a63-space-1_5);
+  }
+
+  .mdx-compare-title {
+    color: var(--a63-text-primary);
+  }
+
+  .mdx-compare-description {
+    color: var(--a63-text-secondary);
+  }
+}

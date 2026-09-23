@@ -1,0 +1,124 @@
+import { DocExample } from '../mdx-kit/blocks'
+import { Button, ButtonGroup, ButtonGroupSeparator, ButtonGroupText } from '@atom63/ui-react'
+import { AlignCenter, AlignLeft, AlignRight, ChevronDown } from 'lucide-react'
+
+# Button Group
+
+Button Group turns adjacent controls into one welded segment. It is not a row with smaller gaps; it is a composition contract for shared edges, seams, radius, and selected state.
+
+<DocExample
+  title="Welded runs"
+  code={`import { Button, ButtonGroup, ButtonGroupSeparator, ButtonGroupText } from '@atom63/ui-react'
+
+<ButtonGroup aria-label="Time range">
+  <Button variant="outline">Day</Button>
+  <Button variant="outline">Week</Button>
+  <Button variant="outline">Month</Button>
+</ButtonGroup>
+
+<ButtonGroup aria-label="Text alignment" size="icon">
+  <Button aria-label="Align left" variant="outline"><AlignLeft /></Button>
+  <Button aria-label="Align center" variant="outline"><AlignCenter /></Button>
+  <Button aria-label="Align right" variant="outline"><AlignRight /></Button>
+</ButtonGroup>
+
+<ButtonGroup aria-label="Branch actions">
+  <ButtonGroupText>Branch</ButtonGroupText>
+  <ButtonGroupSeparator />
+  <Button variant="outline">main <ChevronDown /></Button>
+</ButtonGroup>`}
+>
+  <div className="flex flex-col items-center gap-4">
+    <ButtonGroup aria-label="Time range">
+      <Button variant="outline">Day</Button>
+      <Button variant="outline">Week</Button>
+      <Button variant="outline">Month</Button>
+    </ButtonGroup>
+    <ButtonGroup aria-label="Text alignment" size="icon">
+      <Button aria-label="Align left" variant="outline">
+        <AlignLeft />
+      </Button>
+      <Button aria-label="Align center" variant="outline">
+        <AlignCenter />
+      </Button>
+      <Button aria-label="Align right" variant="outline">
+        <AlignRight />
+      </Button>
+    </ButtonGroup>
+    <ButtonGroup aria-label="Branch actions">
+      <ButtonGroupText>Branch</ButtonGroupText>
+      <ButtonGroupSeparator />
+      <Button variant="outline">
+        main
+        <ChevronDown />
+      </Button>
+    </ButtonGroup>
+  </div>
+</DocExample>
+
+## When to use
+
+Use Button Group for related adjacent actions that should read as one visual run. Use Toggle Group or Segmented Control when the group represents persistent selection instead of independent commands.
+
+The group supplies `role="group"` but cannot infer its name. Add `aria-label` or `aria-labelledby` when the surrounding context does not already identify the grouped controls.
+
+## How it works
+
+The group owns adjacency. Child Buttons keep their semantic API, but inside the group they flatten standalone elevation and read the `segment` contract.
+
+| Concern | Owner |
+|---------|-------|
+| Orientation, member sizing, edge radius, seams | Button Group recipe. |
+| Button label, loading, variant, disabled state | Button. |
+| Welded material | `--a63-segment-*`. |
+| Control height, font, padding | `--a63-control-*` plus density. |
+
+## Key tokens
+
+| Token | Purpose |
+|-------|---------|
+| `--a63-segment-track-border` | Shared outer and seam border. |
+| `--a63-segment-background` | Resting member fill. |
+| `--a63-segment-gloss` | Optional member material sheen. |
+| `--a63-segment-selected-background` | Pressed or selected member fill. |
+| `--a63-segment-selected-foreground` | Text/icon color on selected member. |
+| `--a63-segment-selected-shadow` | Pressed-in or raised selected treatment. |
+| `--a63-segment-primary-background` | Brand selected state for primary emphasis. |
+
+## Design decision
+
+Grouped buttons deliberately suppress the standalone Button shadow and highlight. If every child kept its own button chrome, the group would read as several objects colliding. The segment contract makes the group one object with internal choices.
+
+<DocExample
+  title="Grouped vs loose"
+  code={`{/* One object: shared edges, no member elevation. */}
+<ButtonGroup aria-label="Time range">
+  <Button variant="outline">Day</Button>
+  <Button variant="outline">Week</Button>
+</ButtonGroup>
+
+{/* Several objects: each keeps its own chrome. */}
+<div className="flex gap-2">
+  <Button variant="outline">Day</Button>
+  <Button variant="outline">Week</Button>
+</div>`}
+>
+  <div className="flex flex-wrap items-start justify-center gap-10">
+    <div className="flex flex-col items-center gap-2">
+      <ButtonGroup aria-label="Time range">
+        <Button variant="outline">Day</Button>
+        <Button variant="outline">Week</Button>
+      </ButtonGroup>
+      <span className="text-muted-foreground text-xs">Grouped — one object</span>
+    </div>
+    <div className="flex flex-col items-center gap-2">
+      <div className="flex gap-2">
+        <Button variant="outline">Day</Button>
+        <Button variant="outline">Week</Button>
+      </div>
+      <span className="text-muted-foreground text-xs">Loose — two objects</span>
+    </div>
+  </div>
+</DocExample>
+
+That is why Button Group shares material vocabulary with Segmented Control and Toggle Group instead of inventing `--button-group-theme-*` variables.

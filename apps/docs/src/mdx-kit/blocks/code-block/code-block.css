@@ -1,0 +1,34 @@
+/* CodeBlock recipe — line-number gutter (unlayered) + frame/panel/lang chrome. */
+
+/* Line-number gutter for code blocks — enabled by `data-numbered` on `.code-block`.
+   Targets both shiki (`.line`) and rehype-pretty-code (`[data-line]`) line spans. */
+.code-block[data-numbered] :where(code) {
+  counter-reset: line;
+}
+
+.code-block[data-numbered] :where(.line, [data-line])::before {
+  content: counter(line);
+  counter-increment: line;
+  display: inline-block;
+  width: 2ch;
+  margin-right: 1.25rem;
+  color: var(--a63-text-secondary);
+  opacity: 0.4;
+  text-align: right;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@layer components {
+  .code-block-embedded .code-block-viewport {
+    padding: 0.875rem 3rem 0.875rem var(--a63-space-4);
+  }
+
+  .mdx-code-block-panel {
+    background-color: color-mix(in oklab, var(--a63-surface-page) 80%, transparent);
+  }
+
+  .mdx-code-block-lang {
+    color: var(--a63-text-secondary);
+  }
+}

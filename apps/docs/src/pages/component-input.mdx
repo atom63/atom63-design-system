@@ -1,0 +1,103 @@
+import { DocExample } from '../mdx-kit/blocks'
+import { Input, InputGroup, InputGroupAddon, InputGroupInput, Label } from '@atom63/ui-react'
+import { Search } from 'lucide-react'
+
+# Input
+
+Input is the field archetype in React form: a readable editing surface with consistent border, focus, invalid, disabled, icon, and placeholder treatment.
+
+<DocExample
+  align="left"
+  title="Field states"
+  code={`import { Input, Label } from '@atom63/ui-react'
+
+<Label htmlFor="email">Email</Label>
+<Input id="email" placeholder="you@atom63.io" type="email" />
+
+<Input aria-describedby="email-error" defaultValue="not-an-email" invalid />
+<span id="email-error">Enter a valid email address.</span>
+<Input aria-label="Disabled field" disabled placeholder="Disabled" />`}
+>
+  <div className="flex w-full max-w-sm flex-col gap-4">
+    <div className="flex flex-col gap-1.5">
+      <Label htmlFor="docs-input-email">Email</Label>
+      <Input id="docs-input-email" placeholder="you@atom63.io" type="email" />
+    </div>
+    <div className="flex flex-col gap-1.5">
+      <Label htmlFor="docs-input-invalid">Email</Label>
+      <Input aria-describedby="docs-input-error" defaultValue="not-an-email" id="docs-input-invalid" invalid />
+      <span className="text-destructive text-xs" id="docs-input-error">Enter a valid email address.</span>
+    </div>
+    <Input aria-label="Disabled field" disabled placeholder="Disabled" />
+  </div>
+</DocExample>
+
+## When to use
+
+Use Input for free-form, single-line text. Use Textarea for multi-line content, Select when the value must come from a fixed list, and Autocomplete when typing should filter available values. Pair every field with a persistent label; placeholder text is not a label.
+
+## Why it exists
+
+Fields are where theme expression can easily damage usability. A glossy button can be expressive; a text field must stay quiet enough for typed content, autofill, placeholder text, errors, and focus to remain obvious.
+
+## Contract shape
+
+Input and Textarea consume the shared field contract. Select triggers and grouped inputs align to the same material so form surfaces feel related even when their behavior differs.
+
+| Layer | Examples |
+|-------|----------|
+| Public API | `size`, native input props, invalid/disabled state. |
+| Stable metadata | `data-slot="input-control"`, `data-slot="input"`, `data-size`. |
+| Local recipe vars | `--field-background`, `--field-border`, `--field-radius`, `--field-shadow`. |
+| System vars | `--a63-field-*`, `--a63-surface-control`, `--a63-border-control`, `--a63-control-*`. |
+
+## Key tokens
+
+| Token | Purpose |
+|-------|---------|
+| `--a63-field-background` | Optional theme override for field fill. |
+| `--a63-field-border` | Optional theme override for resting border. |
+| `--a63-field-radius` | Optional theme override for field corners. |
+| `--a63-field-shadow` | Recessed or flat field material. |
+| `--a63-field-focus-border` | Focus border color. |
+| `--a63-field-focus-ring` | Focus ring color. |
+
+## Decisions worth knowing
+
+### Fields are recessed, not raised
+
+Buttons invite action; fields invite editing. The field contract defaults to a subtle inset shadow rather than the raised control shadow. Aqua can make that a glass well; Terminal can flatten it to a crisp line.
+
+### Invalid state changes signal, not structure
+
+Invalid fields adjust border and ring through danger tokens. They do not change size, radius, or layout. The `invalid` prop sets `aria-invalid` and styling only; authors must provide a persistent label and connect explanatory text with `aria-describedby`. Error text belongs around the field, not inside the primitive.
+
+### Autofill is part of the component contract
+
+Browser autofill is real product UI. The field recipe treats it as a state to keep legible, because otherwise theme polish collapses the moment the browser helps the user.
+
+### Icons live in the group, not the field
+
+An icon inside a bare `Input` has to be positioned absolutely and then cleared with padding. `InputGroup` owns the chrome instead, so addons take real layout space and clicking the addon still focuses the field.
+
+<DocExample
+  align="left"
+  title="Input group with a leading addon"
+  code={`import { InputGroup, InputGroupAddon, InputGroupInput } from '@atom63/ui-react'
+
+<InputGroup>
+  <InputGroupAddon>
+    <Search className="size-4" />
+  </InputGroupAddon>
+  <InputGroupInput aria-label="Search documentation" placeholder="Search the docs" />
+</InputGroup>`}
+>
+  <div className="w-full max-w-sm">
+    <InputGroup>
+      <InputGroupAddon>
+        <Search aria-hidden className="size-4" />
+      </InputGroupAddon>
+      <InputGroupInput aria-label="Search documentation" placeholder="Search the docs" />
+    </InputGroup>
+  </div>
+</DocExample>

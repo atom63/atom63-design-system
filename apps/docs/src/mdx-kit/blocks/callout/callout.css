@@ -1,0 +1,16 @@
+/*
+ * Callout recipe — status-callout chrome. Foundation styling on --a63-* tokens
+ * (in @layer components so consumer utilities override). The tinted status
+ * variants (blue/yellow/red/green 50↔950) stay as Tailwind palettes on the
+ * component — no --a63-* tinted-surface equivalent yet.
+ */
+@layer components {
+  .callout {
+    border-radius: var(--radius-lg);
+    border-width: 1px;
+  }
+
+  .mdx-callout-title {
+    color: var(--a63-text-primary);
+  }
+}

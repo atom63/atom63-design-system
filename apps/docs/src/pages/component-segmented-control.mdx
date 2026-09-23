@@ -1,0 +1,80 @@
+import { DocExample } from '../mdx-kit/blocks'
+import { SegmentedControlDemo } from '../components/theme/theme-demos'
+
+# Segmented Control
+
+Segmented Control is a compact choice surface with one active value. It shares the segment archetype with Toggle Group and Button Group, but keeps its own moving indicator behavior.
+
+<DocExample
+  title="Neutral and accent tone"
+  code={`import { SegmentedControl } from '@atom63/ui-react'
+import { useState } from 'react'
+
+  export function ThemeModeControl() {
+    const [value, setValue] = useState('dark')
+
+    return (
+      <SegmentedControl
+        items={[
+          { label: 'Light', value: 'light' },
+          { label: 'Dark', value: 'dark' },
+          { label: 'Auto', value: 'auto' },
+        ]}
+        onValueChange={setValue}
+        value={value}
+      />
+    )
+  }`}
+>
+  <div className="flex flex-col items-center gap-4">
+    <SegmentedControlDemo />
+    <SegmentedControlDemo tone="accent" />
+  </div>
+</DocExample>
+
+Click between segments to watch the backplate travel. `tone="accent"` is the second row.
+
+## When to use
+
+Use Segmented Control for a small set of peer choices with one active value. In constrained containers, the default track stays on one line and scrolls horizontally while each item preserves its minimum target width. Set `fullWidth` when the track should fill its container and divide space equally; labels may then truncate. Use Tabs when the choices switch content panels.
+
+Each item label names its tab, but the current component API does not expose a name for the containing tab list. Treat group naming as an implementation gap rather than claiming a fully labeled pattern.
+
+## Contract shape
+
+Segmented Control is built on tab-like behavior. The component owns selection, indicator positioning, and item anatomy. The theme owns the track and selected material through `--a63-segment-*`.
+
+| Concern | Owner |
+|---------|-------|
+| Active value and keyboard behavior | Component / Base UI tabs behavior. |
+| Track geometry and item sizing | Segmented Control recipe. |
+| Material treatment | Segment contract tokens. |
+| Brand emphasis | `tone="accent"` mapping to `--a63-segment-primary-*`. |
+
+## Key tokens
+
+| Token | Purpose |
+|-------|---------|
+| `--a63-segment-track-background` | Recessed shell fill. |
+| `--a63-segment-track-border` | Track border. |
+| `--a63-segment-track-shadow` | Recessed well treatment. |
+| `--a63-segment-foreground` | Resting item label color. |
+| `--a63-segment-hover-foreground` | Hover item label color. |
+| `--a63-segment-selected-background` | Neutral active plate. |
+| `--a63-segment-selected-foreground` | Text/icon on neutral active plate. |
+| `--a63-segment-primary-background` | Brand active plate. |
+| `--a63-segment-primary-foreground` | Text/icon on brand active plate. |
+
+## Design decisions
+
+### Active state can be neutral or accent
+
+Most settings controls should use a neutral active plate. A product-level mode switch or high-emphasis choice can use `tone="accent"`. That choice is semantic; the theme only decides how the plate feels.
+
+### Track and plate are separate materials
+
+The track should read as a seated well; the active plate should read as the chosen item. If both are equally loud, the control becomes a row of decorations instead of a selector.
+
+### Motion is behavior, not a theme
+
+The moving backplate communicates spatial continuity between selected items. Themes do not control whether the indicator animates; consumers set `animateBackplate={false}` when a context needs a snap.

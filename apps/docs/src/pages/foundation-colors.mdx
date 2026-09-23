@@ -1,0 +1,160 @@
+import { TokenSwatch, TokenSwatchGrid } from '../components/token-swatch'
+import { BrandScaleRow, NeutralScaleRow } from '../components/foundation/brand-scale-row'
+import { SemanticColorGrid } from '../components/foundation/semantic-color-grid'
+import { SurfaceScale } from '../components/foundation/surface-scale'
+import { TokenLayerList } from '../components/foundation/token-layer-list'
+import { STATUS_PRIMITIVES } from '../foundation/token-meta'
+
+# Colors
+
+The color system is built around executable indirection. **Foundation** owns the literal palette (`tokens/foundation/*`). **Semantics** (`--a63-*`) name UI jobs. **App JSX** may sketch with Tailwind/shadcn role utilities (`bg-background`, `text-muted-foreground`) because those adapters re-reference `--a63-*`. **Shared package recipes** consume `--a63-*` (and family contracts), not primitives and not raw shadcn CSS variables.
+
+Authoring lanes: `docs/design-system/authoring-surfaces.md`.
+
+The goal is simple: components describe the job a color performs, while `@atom63/styles` owns how that job resolves across mode, brand, neutral-surface, surface-tint, and theme axes.
+
+## Design intent
+
+The Atom63-specific palette has six brand hues, six neutral families, and four status families. Foundation also carries the Tailwind named palette for fixed-hue cases. Both sit behind enough structure that changing an appearance axis does not require auditing every component:
+
+- **Foundation primitives** define stable palette material (the only place for new color dictionaries).
+- **Aliases** (brand / surface axes) select which primitive families a mood uses.
+- **Semantic roles** expose stable UI decisions through `--a63-*` variables.
+- **Themes** remap material/role resolution; they do not invent new palette ramps.
+- **Component recipes** consume those roles in React and CSS.
+
+## Layer stack
+
+Imported in order from `@atom63/styles`:
+
+<TokenLayerList />
+
+## Mental model
+
+Color moves from stable to contextual:
+
+```txt
+foundation palette -> brand/surface alias -> a63 semantic role -> component recipe
+     (values)              (which family)         (UI job)              (wiring)
+```
+
+Product theme skins (`modern` / `aqua` / …) sit beside this chain: they remap contract/semantic knobs, they are not a second palette dictionary.
+
+Each layer answers a different question:
+
+| Layer | Question | Example |
+|-------|----------|---------|
+| Foundation | What raw color exists? | `--color-b1-500`, `--color-n1-light-3` |
+| Alias | Which palette family does this mood use? | brand and surface aliases |
+| Semantic | What UI job does this color perform? | `--a63-surface-panel`, `--a63-action-primary`, `--a63-border-control` |
+| Component | How does the role appear in context? | button fill, input border, dialog surface |
+
+This is the reason component code should feel boring. A component should say "I need the primary action color" or "I need the subtle border color", not "I need this exact blue."
+
+## How the scale works
+
+### Semantic roles
+
+Components use the `--a63-*` semantic layer. These variables are the design-system API for product UI.
+
+<SemanticColorGrid />
+
+### Surface scale
+
+12-step neutral ramps (`surface-light-*` / `surface-dark-*`) form the backbone of the UI. Semantic tokens like `--a63-surface-page`, `--a63-surface-panel`, and `--a63-border-subtle` reference the appropriate steps. The default surface family is `n1`, a true neutral gray with no color cast.
+
+<SurfaceScale mode="light" />
+
+<SurfaceScale mode="dark" />
+
+### Brand primitives
+
+Six brand hues (`b1`–`b6`), each with steps `50`–`950`, provide enough range for product accents, visualization, and expressive surfaces. The default primary action resolves through the brand alias layer rather than hardcoding a primitive in a component.
+
+<BrandScaleRow />
+
+### Neutral families
+
+Six neutral palettes (`n1`–`n6`) give the system different neutral personalities without creating one-off product palettes. The `data-a63-surface` axis remaps the aliases; components keep consuming the same semantic roles. Themes may separately re-skin semantic surfaces when material character requires it.
+
+<NeutralScaleRow />
+
+### Status primitives
+
+`danger`, `success`, `warning`, and `info` carry fixed meaning. They can be tuned for contrast across modes, but they should not be repurposed as decorative brand colors.
+
+<TokenSwatchGrid>
+  {STATUS_PRIMITIVES.map(({ id, utility }) => (
+    <TokenSwatch key={id} name={id} className={utility} hint={`status family: ${id}`} />
+  ))}
+</TokenSwatchGrid>
+
+## Compatibility
+
+The shadcn vocabulary (`background`, `primary`, `muted-foreground`, …) is an **opt-in adapter** (`@atom63/styles/compat/shadcn` + Tailwind theme keys). It re-references `--a63-*`; it does not own values (mirror rule).
+
+| Surface | Prefer | Avoid |
+|---------|--------|-------|
+| App / page JSX | Tailwind utilities: `bg-background`, `text-foreground`, `bg-primary`, … | Hardcoded hex; reaching into `--a63-control-*` for sketching |
+| Shared package recipes (`ui-react`, widgets, …) | `--a63-*` roles (+ family contracts) | Baking `var(--background)` / `var(--primary)` into package CSS |
+| Third-party / copy-pasted shadcn CSS | Compat aliases OK at the consumer boundary | Treating `--primary` as the system SSOT |
+
+Canonical design-system contract for shared UI is `--a63-*`. Tailwind/shadcn names are the **human design dialect** for product screens — not “legacy only.” See Designing in code and `docs/design-system/authoring-surfaces.md`.
+
+## Decisions worth knowing
+
+### Semantic-first, not palette-first
+
+Shared components never use primitive color values directly. Not `--color-b1-500`, not `--color-n1-light-3`, and not one-off hex values. Shared UI consumes semantic roles such as `--a63-action-primary`, `--a63-text-primary`, `--a63-border-subtle`, and `--a63-surface-panel`. App JSX may use the equivalent Tailwind role utilities.
+
+The exception is deliberate brand or visualization work that needs a fixed hue regardless of theme. Those cases should be explicit and rare. **Adding** a new hue step still happens in foundation.
+
+### Six neutrals, not one
+
+Most systems ship one neutral ramp. Atom63 has six because portfolio, docs, OS, and learning surfaces can need different neutral personalities. Having six families pre-built makes theme creation alias reassignment rather than palette generation.
+
+### Contrast as a contract
+
+Every semantic foreground/background pair is designed together. `--a63-action-primary` and `--a63-action-primary-foreground` are a pair. Text roles and surface roles are reviewed together. If a component introduces a new semantic pair, the pair needs contrast review before it becomes part of the shared system.
+
+### Color should express role before personality
+
+The palette can be expressive, but role comes first. A primary button is primary because it is the main action, not because blue looks good in that location. A muted panel is muted because it is secondary to the current task, not because the screen needs another shade.
+
+## Usage guidance
+
+| Need | In app JSX | In package recipes |
+|------|------------|--------------------|
+| App surfaces | `bg-background`, `bg-card`, `bg-muted` | `--a63-surface-page`, `--a63-surface-panel`, `--a63-surface-muted` |
+| Text | `text-foreground`, `text-muted-foreground` | `--a63-text-primary`, `--a63-text-secondary` |
+| Borders | `border-border` | `--a63-border-subtle`, `--a63-border-control` |
+| Primary actions | `bg-primary`, `text-primary-foreground` | `--a63-action-primary`, `--a63-action-primary-foreground` |
+| Feedback states | `text-destructive`, status utilities | `--a63-status-*`, `--a63-action-danger` |
+| Brand moments (fixed hue) | `bg-b1-500`, … | foundation `--color-b*` only when intentional |
+
+## Anti-patterns
+
+```tsx
+// Avoid: component owns a palette decision.
+<Button style={{ backgroundColor: 'var(--color-b1-500)' }} />
+```
+
+The button now depends on one theme's brand hue and one foreground assumption.
+
+```tsx
+// Prefer: component owns a semantic role.
+<Button style={{ backgroundColor: 'var(--a63-action-primary)', color: 'var(--a63-action-primary-foreground)' }} />
+```
+
+The component can survive theme changes because the semantic pair owns contrast.
+
+## Review checklist
+
+When reviewing color usage, ask:
+
+1. Is this a semantic role (Tailwind/shadcn utility or `--a63-*`), or a foundation palette value?
+2. If adding a new literal color, does it live in `tokens/foundation/*`?
+3. Does the foreground/background pair have a contrast contract?
+4. Would this still work if the brand hue changed?
+5. Is a status color being used for real status meaning?
+6. Is color the only cue for the state?

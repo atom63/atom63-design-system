@@ -1,0 +1,45 @@
+/* ImageCompare recipe — frame/stage/handle/label chrome. */
+@layer components {
+  /* framed: the DS Frame (header/panel/footer) supplies all frame chrome. */
+
+  /* unframed: no text → render the comparison as a plain rounded image block */
+  .mdx-image-compare:not([data-framed]) .mdx-image-compare-stage {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--a63-border-subtle);
+  }
+
+  .mdx-image-compare-stage {
+    background-color: var(--a63-surface-muted);
+  }
+
+  .mdx-image-compare-skeleton {
+    background-color: var(--a63-surface-muted);
+  }
+
+  /* Frosted-glass handle bar + pill; background/foreground tinted from --a63-*. */
+  .mdx-image-compare-handle-bar {
+    background-color: color-mix(in oklab, var(--a63-surface-page) 70%, transparent);
+    box-shadow: var(--a63-surface-shadow);
+  }
+
+  .mdx-image-compare-handle-knob {
+    border: 1px solid color-mix(in oklab, var(--a63-border-subtle) 60%, transparent);
+    background-color: color-mix(in oklab, var(--a63-surface-page) 85%, transparent);
+    color: var(--a63-text-primary);
+    box-shadow: var(--a63-surface-shadow);
+  }
+
+  @media (hover: hover) {
+    .mdx-image-compare-handle-knob:hover {
+      background-color: color-mix(in oklab, var(--a63-surface-page) 95%, transparent);
+    }
+  }
+
+  .mdx-image-compare-label {
+    border-radius: var(--radius-sm);
+    border: 1px solid color-mix(in oklab, var(--a63-border-subtle) 60%, transparent);
+    background-color: color-mix(in oklab, var(--a63-surface-page) 85%, transparent);
+    color: var(--a63-text-primary);
+    box-shadow: var(--a63-surface-shadow);
+  }
+}

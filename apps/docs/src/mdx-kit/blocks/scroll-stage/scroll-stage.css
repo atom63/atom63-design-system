@@ -1,0 +1,12 @@
+/* ScrollStage recipe — prose/media chrome. */
+@layer components {
+  .mdx-scroll-stage-prose {
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-scroll-stage-media {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--a63-border-subtle);
+    background-color: var(--a63-surface-panel);
+  }
+}

@@ -1,0 +1,6 @@
+/* PageMeta recipe — eyebrow chrome. */
+@layer components {
+  .mdx-page-meta-eyebrow {
+    color: color-mix(in oklab, var(--a63-text-secondary) 70%, transparent);
+  }
+}

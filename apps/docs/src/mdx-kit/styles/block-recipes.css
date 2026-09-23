@@ -1,0 +1,21 @@
+/* Colocated MDX block recipes. Keep this import-only file ordered by block name. */
+@import '../blocks/callout/callout.css';
+@import '../blocks/code-block/code-block.css';
+@import '../blocks/color-swatch-item/color-swatch-item.css';
+@import '../blocks/compare/compare.css';
+@import '../blocks/comparison-pair/comparison-pair.css';
+@import '../blocks/credits-block/credits-block.css';
+@import '../blocks/demo-stage/demo-stage.css';
+@import '../blocks/doc-example/doc-example.css';
+@import '../blocks/image-compare/image-compare.css';
+@import '../blocks/layer-stack/layer-stack.css';
+@import '../blocks/media-placeholder/media-placeholder.css';
+@import '../blocks/mermaid-diagram/mermaid-diagram.css';
+@import '../blocks/page-meta/page-meta.css';
+@import '../blocks/page-table-of-contents/page-table-of-contents.css';
+@import '../blocks/resource-list/resource-list.css';
+@import '../blocks/scroll-stage/scroll-stage.css';
+@import '../blocks/stat-card/stat-card.css';
+@import '../blocks/steps/steps.css';
+@import '../blocks/timeline/timeline.css';
+@import '../blocks/video-block/video-block.css';

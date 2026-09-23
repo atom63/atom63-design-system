@@ -1,0 +1,20 @@
+/* Steps recipe — numbered step spine chrome. */
+@layer components {
+  .mdx-steps-number {
+    border: 1px solid var(--a63-border-subtle);
+    background-color: var(--a63-surface-page);
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-steps-spine {
+    background-color: var(--a63-border-subtle);
+  }
+
+  .mdx-steps-title {
+    color: var(--a63-text-primary);
+  }
+
+  .mdx-steps-body {
+    color: var(--a63-text-secondary);
+  }
+}

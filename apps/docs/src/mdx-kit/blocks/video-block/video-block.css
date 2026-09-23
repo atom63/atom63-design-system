@@ -1,0 +1,11 @@
+/* VideoBlock recipe — block/stage chrome. */
+@layer components {
+  .mdx-video-block {
+    border: 1px solid var(--a63-border-subtle);
+    background-color: var(--a63-surface-panel);
+  }
+
+  .mdx-video-stage {
+    background-color: var(--a63-surface-muted);
+  }
+}

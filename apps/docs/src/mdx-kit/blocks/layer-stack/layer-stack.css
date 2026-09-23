@@ -1,0 +1,28 @@
+/* LayerStack recipe — badge/row/label/term/def chrome. */
+@layer components {
+  .mdx-layer-badge {
+    border: 1px solid var(--a63-border-subtle);
+    background-color: var(--a63-surface-page);
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-layer-row:hover {
+    background-color: color-mix(in oklab, var(--a63-surface-muted) 30%, transparent);
+  }
+
+  .mdx-layer-label {
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-layer-title {
+    color: var(--a63-text-primary);
+  }
+
+  .mdx-layer-term {
+    color: var(--a63-text-primary);
+  }
+
+  .mdx-layer-def {
+    color: var(--a63-text-secondary);
+  }
+}

@@ -1,0 +1,102 @@
+import { TypographyScale } from '../components/foundation/typography-scale'
+
+# Typography
+
+The type system targets dense information interfaces rather than marketing pages. Body text starts at 15px—between compact 14px UI conventions and the browser's 16px default—to balance information density with sustained reading.
+
+## Design intent
+
+I wanted a scale that serves three very different surfaces from the same tokens: portfolio pages with expressive display type, documentation with dense readable prose, and app panels with compact controls. The solution is one responsive scale plus an independent `--typography-scale` multiplier that any subtree can adjust.
+
+The shipped scale is deliberately not fluid. It uses viewport breakpoints for pages and `data-window-size` overrides for OS windows, so a constrained window can use its own size band even on a wide viewport. The separate `data-a63-type-scale` axis adjusts the whole ramp for user preference.
+
+## Font families
+
+| CSS variable | Tailwind | Stack |
+|--------------|----------|-------|
+| `--font-family-sans` | `font-sans` | Geist, system UI |
+| `--font-family-serif` | `font-serif` | Brawler, Georgia |
+| `--font-family-mono` | `font-mono` | Geist Mono, monospace |
+
+I chose Geist because it's optimized for interfaces — generous x-height, clear at small sizes, and a mono companion that shares the same metrics. Brawler is reserved for rare editorial moments in the portfolio; the system defaults to sans everywhere.
+
+## How the scale works
+
+Thirteen steps from `xs` (12px) to `9xl` (39px at mobile, 49px at `768px+`). The scale grows at `640px` and `768px`, and `[data-window-size='xs'|'sm'|'md'|'lg'|'xl']` applies the same bands inside OS windows.
+
+<TypographyScale />
+
+## Mental model
+
+Typography has three separate jobs:
+
+| Job | What it controls | Examples |
+|-----|------------------|----------|
+| Reading | Long-form comfort | Prose, docs, descriptions |
+| Hierarchy | Relative importance | Page titles, section headers, labels |
+| Density | How much interface fits | Sidebars, tables, controls, OS windows |
+
+Do not solve all three with one heading scale. A docs page, a compact sidebar, and a portfolio hero need different hierarchy even when they share the same tokens.
+
+### Line-height strategy
+
+Body text (`xs` through `lg`) uses a ~1.5× ratio for comfortable reading. Display sizes (`xl` and above) compress to ~1.25× — tighter line-height at large sizes prevents headings from floating away from their content.
+
+### The scale multiplier
+
+`--typography-scale` defaults to `1`. The shipped `data-a63-type-scale` values map to `0.9` (`compact`), `1` (`normal`), `1.1` (`comfortable`), and `1.2` (`large`). OS window width is handled separately by `data-window-size`; the multiplier is a personalization control, not the window breakpoint mechanism.
+
+## Decisions worth knowing
+
+### 15px base, not 16px
+
+Most systems use 16px because browsers default to it. I chose 15px after testing information-dense layouts — docs tables, prop references, sidebar navigation. At 16px, content felt loose and wasted space. At 14px, extended reading got fatiguing. 15px is the sweet spot for my use cases: dense enough for tool interfaces, comfortable enough for documentation prose.
+
+### Breakpoints over fluid
+
+Fluid typography (`clamp()`) assumes the viewport is the right proxy for text size. In the OS metaphor, multiple windows have arbitrary widths on one screen. Breakpoint jumps plus `data-window-size` attributes let window content follow its container band instead of the outer viewport.
+
+### No heading-element-to-scale mapping in CSS
+
+I don't automatically map `h1` to `9xl` or `h2` to `8xl` in the base tokens. Different surfaces need different heading scales — a docs `h2` should be smaller than a portfolio `h2`. The MDX variants handle heading sizing per context, and the raw scale stays available for explicit use via `text-*` utilities.
+
+### Visual hierarchy and semantics are separate
+
+A semantic `h2` does not always need to look like the second-largest text on the page. The `SectionHeader` pattern follows this rule: `variant` controls visual scale, while `level` can control document outline. That keeps accessibility and visual rhythm from fighting each other.
+
+## Usage guidance
+
+| Surface | Typical range | Scale multiplier |
+|---------|---------------|------------------|
+| Portfolio hero | `4xl`–`9xl` | Usually `normal`; user preference still applies |
+| Documentation prose | `sm`–`xl` | `1` |
+| App panels / OS windows | `xs`–`lg` | Window-size band + active type-scale axis |
+| Code blocks | `sm` mono | `1` |
+
+## Anti-patterns
+
+```tsx
+// Avoid: viewport-sized type inside a constrained panel.
+<aside className="w-80">
+  <h2 className="text-5xl">Settings</h2>
+</aside>
+```
+
+The panel is narrow even if the viewport is wide. The text should respond to the container's role, not the browser width.
+
+```tsx
+// Prefer: choose a scale for the surface.
+<aside className="w-80">
+  <h2 className="text-lg font-semibold">Settings</h2>
+</aside>
+```
+
+## Review checklist
+
+When reviewing typography, ask:
+
+1. Is this text sized for its container, not only the viewport?
+2. Does the hierarchy still work if the content wraps?
+3. Is the line-height comfortable for the amount of reading?
+4. Are semantic heading levels valid independent of visual size?
+5. Is display type reserved for display moments?

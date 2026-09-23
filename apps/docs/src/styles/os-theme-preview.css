@@ -1,0 +1,212 @@
+/**
+ * Design-system-only OS chrome preview.
+ *
+ * This intentionally lives outside @atom63/styles because it is a teaching
+ * preview, not the OS63 runtime chrome. The real architecture is
+ * data-a63-os (structure) + data-a63-theme (material) + --a63-* contracts.
+ */
+
+[data-os-preview-theme] {
+  --os-font-ui: var(--font-family-sans);
+  --os-font-mono: var(--font-family-mono);
+  --os-desktop: color-mix(in oklch, var(--a63-surface-page) 78%, var(--a63-action-primary) 22%);
+  --os-menubar: color-mix(in oklch, var(--a63-surface-page) 86%, transparent);
+  --os-menubar-foreground: var(--a63-text-primary);
+  --os-window: color-mix(in oklch, var(--a63-surface-panel) 92%, var(--a63-action-primary) 8%);
+  --os-window-foreground: var(--a63-text-primary);
+  --os-window-border: color-mix(
+    in oklch,
+    var(--a63-border-subtle) 72%,
+    var(--a63-action-primary) 28%
+  );
+  --os-panel: color-mix(in oklch, var(--a63-surface-muted) 82%, var(--a63-action-primary) 18%);
+  --os-titlebar: linear-gradient(
+    to bottom,
+    color-mix(in oklch, var(--a63-surface-panel) 82%, white 18%),
+    color-mix(in oklch, var(--a63-surface-muted) 84%, var(--a63-action-primary) 16%)
+  );
+  --os-titlebar-foreground: var(--a63-text-primary);
+  --os-selection: var(--a63-action-primary);
+  --os-selection-foreground: var(--a63-action-primary-foreground);
+  --os-control-face: var(--a63-surface-panel);
+  --os-control-highlight: color-mix(in oklch, var(--a63-surface-panel) 82%, white 18%);
+  --os-control-shadow: color-mix(in oklch, var(--a63-border-subtle) 75%, black 25%);
+  --os-border-width: 1px;
+  --os-radius: var(--radius-lg);
+  --os-titlebar-height: 2rem;
+  --os-menubar-height: 2rem;
+  --os-window-shadow: var(--a63-overlay-shadow);
+  --os-titlebar-pattern: none;
+}
+
+.dark [data-os-preview-theme] {
+  --os-desktop: color-mix(in oklch, var(--a63-surface-page) 78%, var(--a63-action-primary) 22%);
+  --os-menubar: color-mix(in oklch, var(--a63-surface-panel) 82%, transparent);
+  --os-titlebar: linear-gradient(
+    to bottom,
+    color-mix(in oklch, var(--a63-surface-panel) 84%, var(--surface-dark-8) 16%),
+    color-mix(in oklch, var(--a63-surface-panel) 90%, black 10%)
+  );
+}
+
+[data-os-preview-theme='aqua'] {
+  --os-desktop:
+    radial-gradient(
+      circle at 24% 18%,
+      color-mix(in oklch, var(--a63-action-primary) 55%, white) 0 13rem,
+      transparent 21rem
+    ),
+    linear-gradient(
+      135deg,
+      var(--surface-light-1),
+      color-mix(in oklch, var(--a63-action-primary) 28%, var(--surface-light-4))
+    );
+  --os-menubar: linear-gradient(to bottom, rgb(255 255 255 / 0.86), rgb(218 224 232 / 0.78));
+  --os-window: color-mix(in oklch, var(--surface-light-2) 88%, white 12%);
+  --os-window-border: rgb(0 0 0 / 0.34);
+  --os-panel: color-mix(in oklch, var(--surface-light-3) 82%, white 18%);
+  --os-titlebar: linear-gradient(to bottom, #f8f8f8, #d9dde2 48%, #c5cbd3);
+  --os-selection: linear-gradient(to bottom, #6fb0ff, #2477d8);
+  --os-border-width: 0.5px;
+  --os-radius: 10px;
+  --os-window-shadow: 0 18px 48px rgb(0 0 0 / 0.32);
+}
+
+.dark [data-os-preview-theme='aqua'] {
+  --os-desktop:
+    radial-gradient(
+      circle at 24% 18%,
+      color-mix(in oklch, var(--a63-action-primary) 38%, transparent) 0 13rem,
+      transparent 21rem
+    ),
+    linear-gradient(
+      135deg,
+      var(--surface-dark-1),
+      color-mix(in oklch, var(--a63-action-primary) 20%, var(--surface-dark-3))
+    );
+  --os-menubar: linear-gradient(to bottom, rgb(51 56 64 / 0.82), rgb(24 27 31 / 0.8));
+  --os-window: color-mix(in oklch, var(--surface-dark-3) 92%, white 8%);
+  --os-window-border: rgb(255 255 255 / 0.16);
+  --os-panel: color-mix(in oklch, var(--surface-dark-4) 88%, var(--a63-action-primary) 12%);
+  --os-titlebar: linear-gradient(to bottom, #3c424b, #292e35 52%, #1e2228);
+  --os-titlebar-foreground: var(--surface-dark-12);
+}
+
+[data-os-preview-theme='system7'] {
+  --os-desktop: #b8b8b8;
+  --os-menubar: #ffffff;
+  --os-menubar-foreground: #000000;
+  --os-window: #ffffff;
+  --os-window-foreground: #000000;
+  --os-window-border: #000000;
+  --os-panel: #e3e3e3;
+  --os-titlebar: #ffffff;
+  --os-titlebar-foreground: #000000;
+  --os-selection: #000000;
+  --os-selection-foreground: #ffffff;
+  --os-control-face: #ffffff;
+  --os-control-highlight: #ffffff;
+  --os-control-shadow: #808080;
+  --os-border-width: 2px;
+  --os-radius: 0;
+  --os-titlebar-height: 1.5rem;
+  --os-window-shadow: 3px 3px 0 rgb(0 0 0 / 0.55);
+  --os-titlebar-pattern: repeating-linear-gradient(0deg, #000 0 1px, transparent 1px 3px);
+}
+
+[data-os-preview-theme='xp'] {
+  --os-desktop: linear-gradient(135deg, #3b8bdc, #7abc41);
+  --os-menubar: linear-gradient(to bottom, #3168d8, #1642a5);
+  --os-menubar-foreground: #ffffff;
+  --os-window: #ece9d8;
+  --os-window-foreground: #111111;
+  --os-window-border: #0054e3;
+  --os-panel: #f3f0df;
+  --os-titlebar: linear-gradient(to bottom, #2d86ff, #0058e6 48%, #1941a5);
+  --os-titlebar-foreground: #ffffff;
+  --os-selection: #316ac5;
+  --os-selection-foreground: #ffffff;
+  --os-control-face: #ece9d8;
+  --os-control-highlight: #ffffff;
+  --os-control-shadow: #8f8b7e;
+  --os-border-width: 3px;
+  --os-radius: 8px;
+  --os-titlebar-height: 1.875rem;
+  --os-window-shadow: 0 14px 28px rgb(0 0 0 / 0.28);
+}
+
+[data-os-preview-theme='terminal'] {
+  --os-font-ui: var(--font-family-mono);
+  --os-desktop: color-mix(in oklch, var(--surface-dark-1) 72%, black);
+  --os-menubar: color-mix(in oklch, var(--surface-dark-2) 74%, black);
+  --os-menubar-foreground: var(--a63-action-primary);
+  --os-window: color-mix(in oklch, var(--surface-dark-2) 72%, black);
+  --os-window-foreground: var(--a63-action-primary);
+  --os-window-border: color-mix(in oklch, var(--a63-action-primary) 48%, var(--surface-dark-6));
+  --os-panel: color-mix(in oklch, var(--a63-action-primary) 8%, var(--surface-dark-3));
+  --os-titlebar: color-mix(in oklch, var(--a63-action-primary) 12%, var(--surface-dark-3));
+  --os-titlebar-foreground: var(--a63-action-primary);
+  --os-selection: var(--a63-action-primary);
+  --os-selection-foreground: var(--surface-dark-1);
+  --os-control-face: transparent;
+  --os-control-highlight: var(--a63-action-primary);
+  --os-control-shadow: color-mix(in oklch, var(--a63-action-primary) 36%, transparent);
+  --os-border-width: 1px;
+  --os-radius: 0;
+  --os-titlebar-height: 1.75rem;
+  --os-window-shadow: 0 0 0 1px color-mix(in oklch, var(--a63-action-primary) 18%, transparent);
+}
+
+[data-os-preview-theme='terminal']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgb(0 0 0 / 0.16) 2px,
+    rgb(0 0 0 / 0.16) 4px
+  );
+}
+
+.os-preview-window {
+  overflow: hidden;
+  border: var(--os-border-width) solid var(--os-window-border);
+  border-radius: var(--os-radius);
+  background: var(--os-window);
+  color: var(--os-window-foreground);
+  box-shadow: var(--os-window-shadow);
+  font-family: var(--os-font-ui);
+}
+
+.os-preview-titlebar {
+  min-height: var(--os-titlebar-height);
+  background: var(--os-titlebar);
+  color: var(--os-titlebar-foreground);
+}
+
+.os-preview-titlebar-pattern {
+  background-image: var(--os-titlebar-pattern);
+  background-size: 100% 4px;
+}
+
+.os-preview-menubar {
+  min-height: var(--os-menubar-height);
+  background: var(--os-menubar);
+  color: var(--os-menubar-foreground);
+}
+
+.os-preview-button {
+  border-color: var(--os-control-shadow);
+  background:
+    linear-gradient(to bottom, var(--os-control-highlight), transparent), var(--os-control-face);
+  color: var(--os-window-foreground);
+}
+
+.os-preview-selected {
+  background: var(--os-selection);
+  color: var(--os-selection-foreground);
+}

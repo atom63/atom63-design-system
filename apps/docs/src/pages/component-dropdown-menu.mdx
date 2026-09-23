@@ -1,0 +1,110 @@
+import { DocExample } from '../mdx-kit/blocks'
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from '@atom63/ui-react'
+import { ChevronDown } from 'lucide-react'
+
+# Dropdown Menu
+
+Dropdown Menu presents a trigger-bound list of immediate commands or persistent menu choices. Use Select for a form value, links for navigation, and Dialog or Popover when the content requires reading or complex interaction.
+
+<DocExample
+  title="Menu anatomy"
+  code={`import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from '@atom63/ui-react'
+
+<DropdownMenu>
+  <DropdownMenuTrigger render={<Button variant="outline">Document <ChevronDown /></Button>} />
+  <DropdownMenuContent>
+    <DropdownMenuLabel>Document</DropdownMenuLabel>
+    <DropdownMenuItem>Rename<DropdownMenuShortcut>⌘R</DropdownMenuShortcut></DropdownMenuItem>
+    <DropdownMenuItem>Duplicate<DropdownMenuShortcut>⌘D</DropdownMenuShortcut></DropdownMenuItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>`}
+>
+  <DropdownMenu>
+    <DropdownMenuTrigger
+      render={
+        <Button variant="outline">
+          Document
+          <ChevronDown />
+        </Button>
+      }
+    />
+    <DropdownMenuContent>
+      <DropdownMenuLabel>Document</DropdownMenuLabel>
+      <DropdownMenuItem>
+        Rename
+        <DropdownMenuShortcut>⌘R</DropdownMenuShortcut>
+      </DropdownMenuItem>
+      <DropdownMenuItem>
+        Duplicate
+        <DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
+      </DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
+</DocExample>
+
+Open the menu and arrow through it: the highlight, the separator, and the destructive row are the three states every theme has to keep distinguishable.
+
+## When to use
+
+Use Dropdown Menu for a compact set of commands or choices revealed from a trigger. Use Select when choosing a form value, and use links when each destination should remain navigable by URL.
+
+A standalone `DropdownMenuLabel` is visual only. Use `DropdownMenuGroup` label wiring when the label must name a menu group. `DropdownMenuShortcut` displays supplementary text; it does not register a key handler.
+
+## Contract shape
+
+Dropdown Menu, Context Menu, Select popup, and related menu rows consume the `overlay` and `menu` contracts together.
+
+| Layer | Examples |
+|-------|----------|
+| Popup surface | `--a63-overlay-*`, `--a63-menu-popup-*`. |
+| Row geometry | `--a63-menu-item-padding-*`, `--a63-menu-item-gap`, `--a63-menu-item-radius`. |
+| Row state | `--a63-menu-highlight-*`, `--a63-menu-disabled-opacity`. |
+| Semantics | `--a63-text-*`, `--a63-action-primary`, `--a63-action-danger`. |
+
+## Key tokens
+
+| Token | Purpose |
+|-------|---------|
+| `--a63-menu-popup-background` | Popup fill, defaulting to `--a63-surface-overlay`. |
+| `--a63-menu-popup-gloss` | Menu-specific gloss layer, quieter than large overlays. |
+| `--a63-menu-popup-padding` | Interior row inset. |
+| `--a63-menu-highlight-background` | Focused or hovered row plate. |
+| `--a63-menu-highlight-primary-background` | Selected/current row fill. |
+| `--a63-menu-destructive-foreground` | Danger row text/icon color. |
+| `--a63-menu-selected-indicator` | Check/radio/current-value mark. |
+| `--a63-menu-separator` | Separator rule color. |
+
+## Design decisions
+
+### Menu rows are stateful, not decorative
+
+A menu row highlight is feedback: "this is the item you are about to choose." Themes can make the highlight glossy, phosphor, or flat, but it should remain a fast-scanning state indicator.
+
+### Popup treatment comes from overlay
+
+Menus float above the page, so the popup reads the overlay contract for border, shadow, backdrop, texture, and radius. Menu-specific tokens only adjust what overlay does not know: dense row padding, row highlights, indicators, and shortcuts.
+
+### Destructive rows stay semantic
+
+Destructive menu items use danger semantics. A theme may change the row material, but it should not make danger indistinguishable from ordinary focus.

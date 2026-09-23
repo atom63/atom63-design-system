@@ -1,0 +1,14 @@
+/**
+ * Full MDX stylesheet entry.
+ *
+ * Use when the host already provides canonical --a63-* variables and wants the
+ * shared MDX recipes plus the package Tailwind v4 source scan.
+ */
+@import './mdx-blocks.css';
+
+/* Ensure lightbox stacks above app chrome + nested media dialogs */
+.pswp {
+  z-index: 10000;
+}
+
+@source '../**/*.{ts,tsx,js,mjs}';

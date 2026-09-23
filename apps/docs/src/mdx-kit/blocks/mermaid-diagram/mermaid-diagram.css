@@ -1,0 +1,52 @@
+/* MermaidDiagram recipe — frame/panel/stage/canvas/error chrome. */
+@layer components {
+  /* Frame/panel border softened to 20% (faithful port of border-border/20). */
+  .mermaid-diagram {
+    border-color: color-mix(in oklab, var(--a63-border-subtle) 20%, transparent);
+  }
+
+  .mdx-mermaid-panel {
+    border-color: color-mix(in oklab, var(--a63-border-subtle) 20%, transparent);
+  }
+
+  .mdx-mermaid-scroll {
+    color: var(--a63-text-primary);
+  }
+
+  .mdx-mermaid-stage:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--a63-surface-page),
+      0 0 0 4px var(--a63-focus-ring);
+  }
+
+  .mdx-mermaid-canvas svg {
+    color: var(--a63-text-primary);
+  }
+
+  .mdx-mermaid-title {
+    color: var(--a63-text-primary);
+  }
+
+  .mdx-mermaid-diagram-label,
+  .mdx-mermaid-zoom {
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-mermaid-error {
+    border-top: 1px solid var(--a63-border-subtle);
+  }
+
+  .mdx-mermaid-error-text {
+    color: var(--a63-action-danger);
+  }
+
+  .mdx-mermaid-error-pre {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--a63-border-subtle);
+    background-color: color-mix(in oklab, var(--a63-surface-muted) 25%, transparent);
+  }
+
+  .mdx-mermaid-rendering {
+    color: var(--a63-text-secondary);
+  }
+}

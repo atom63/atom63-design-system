@@ -1,0 +1,358 @@
+/* ---------------------------------------------------------------------------
+ * Shared MDX recipes.
+ *
+ * These are Tailwind-independent colors, surfaces, borders, shadows, and radii
+ * for prose elements, raw JSX media, and the private MDX frame foundation.
+ * Component layout/geometry still lives in TSX className strings.
+ *
+ * Class hooks relied upon by components/consumers/tests:
+ *   .mdx  .mdx-block  .not-mdx  .callout  .mdx-table-wrapper
+ * ------------------------------------------------------------------------- */
+@layer components {
+  /* Raw JSX (<figure><video/></figure>) bypasses the component map, so it is
+     styled here via descendant selectors on the .mdx root. Mirrors the
+     mdxStyles.content.* rules so markdown syntax and raw JSX stay consistent. */
+  .mdx {
+    --mdx-measure: 42rem;
+    --mdx-measure-wide: 72rem;
+    color: var(--a63-text-primary);
+  }
+
+  /* --- MDX frame chrome --------------------------------------------------- */
+  .mdx-frame-header {
+    padding: var(--a63-space-2) var(--a63-space-3);
+  }
+
+  .mdx-frame-footer {
+    border-top: 1px solid color-mix(in oklab, var(--a63-border-subtle) 8%, transparent);
+  }
+
+  .mdx-frame-item {
+    border-color: color-mix(in oklab, var(--a63-border-subtle) 10%, transparent);
+    background-color: color-mix(in oklab, var(--a63-surface-page) 76%, transparent);
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-frame-item-negative {
+    border-color: color-mix(in oklab, var(--a63-action-danger) 12%, var(--a63-border-subtle));
+    background-color: color-mix(in oklab, var(--a63-action-danger) 3%, var(--a63-surface-page));
+    color: var(--a63-action-danger);
+  }
+
+  .mdx-frame-item-positive {
+    border-color: color-mix(in oklab, var(--a63-status-success) 12%, var(--a63-border-subtle));
+    background-color: color-mix(in oklab, var(--a63-status-success) 3%, var(--a63-surface-page));
+    color: var(--a63-status-success);
+  }
+
+  .mdx-frame-item-warning {
+    border-color: color-mix(in oklab, var(--a63-status-warning) 12%, var(--a63-border-subtle));
+    background-color: color-mix(in oklab, var(--a63-status-warning) 3%, var(--a63-surface-page));
+    color: var(--a63-status-warning);
+  }
+
+  .mdx-frame-item-neutral .mdx-frame-item-marker {
+    background-color: color-mix(in oklab, var(--a63-text-secondary) 60%, transparent);
+  }
+
+  .mdx-frame-item-negative .mdx-frame-item-marker {
+    background-color: color-mix(in oklab, var(--a63-action-danger) 70%, transparent);
+  }
+
+  .mdx-frame-item-positive .mdx-frame-item-marker {
+    background-color: color-mix(in oklab, var(--a63-status-success) 70%, transparent);
+  }
+
+  .mdx-frame-item-warning .mdx-frame-item-marker {
+    background-color: color-mix(in oklab, var(--a63-status-warning) 70%, transparent);
+  }
+
+  .mdx-frame-item-eyebrow {
+    color: color-mix(in oklab, currentColor 70%, transparent);
+  }
+
+  .mdx-frame-item-title {
+    color: var(--a63-text-primary);
+  }
+
+  .mdx-frame-item-body {
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-frame-item-body .code-block-embedded {
+    margin: var(--a63-space-3) calc(var(--a63-space-3_5, var(--a63-space-3)) * -1) 0;
+    border-top: 1px solid color-mix(in oklab, var(--a63-border-subtle) 8%, transparent);
+    background-color: color-mix(in oklab, var(--a63-surface-page) 70%, transparent);
+  }
+
+  .mdx-frame-item-body .code-block-embedded .code-block-body .a63-ScrollArea-viewport {
+    padding: var(--a63-space-3) 3.75rem var(--a63-space-3) var(--a63-space-3_5, var(--a63-space-3));
+  }
+
+  .mdx-frame-item-body .code-block-embedded:last-child {
+    margin-bottom: calc(var(--a63-space-3) * -1);
+  }
+
+  @media (min-width: 40rem) {
+    .mdx-frame-item-body .code-block-embedded {
+      margin-inline: calc(var(--a63-space-4) * -1);
+    }
+
+    .mdx-frame-item-body .code-block-embedded .code-block-body .a63-ScrollArea-viewport {
+      padding-left: var(--a63-space-4);
+    }
+  }
+
+  .mdx-frame-item-body .code-block-embedded .code-block-copy {
+    top: calc(var(--a63-space-2) + 0.125rem);
+    right: var(--a63-space-2);
+    opacity: 0.7;
+    background-color: color-mix(in oklab, var(--a63-surface-panel) 88%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--a63-border-subtle) 12%, transparent);
+  }
+
+  @media (hover: hover) {
+    .mdx-frame-item-body .code-block-embedded .code-block-copy:hover {
+      opacity: 1;
+    }
+  }
+
+  .mdx-frame-item-body p code {
+    border-radius: var(--radius-sm);
+    background-color: color-mix(in oklab, var(--a63-surface-page) 75%, transparent);
+  }
+
+  .mdx-frame-item-body pre:not(.code-block-pre):not(.shiki) {
+    border-radius: var(--radius-md);
+    border: 1px solid var(--a63-border-subtle);
+    background-color: color-mix(in oklab, var(--a63-surface-page) 90%, transparent);
+  }
+
+  /* --- MDX insight notice ------------------------------------------------ */
+  .mdx-insight-frame {
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--a63-action-primary) 7%, transparent),
+      color-mix(in oklab, var(--a63-surface-muted) 30%, transparent)
+    );
+  }
+
+  .mdx-insight-eyebrow {
+    color: var(--a63-action-primary);
+  }
+
+  .mdx-insight-title {
+    color: var(--a63-text-primary);
+  }
+
+  .mdx-insight-panel {
+    background-color: color-mix(in oklab, var(--a63-surface-page) 72%, transparent);
+  }
+
+  .mdx-insight-body {
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-insight-body strong {
+    color: var(--a63-text-primary);
+  }
+
+  .mdx figure > video {
+    margin-top: 0;
+    width: 100%;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--a63-border-subtle);
+  }
+
+  .mdx figure > img {
+    margin-top: 0;
+    width: 100%;
+    border-radius: var(--radius-xl);
+  }
+
+  .mdx figure > iframe {
+    width: 100%;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--a63-border-subtle);
+  }
+
+  .mdx figure > figcaption {
+    margin-top: 0.75rem;
+    text-align: center;
+    color: var(--a63-text-secondary);
+  }
+
+  /* --- Body typography color (component-mapped elements) ------------------- */
+  .mdx :where(p, li):not(.not-mdx *) {
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx :where(strong):not(.not-mdx *) {
+    color: var(--a63-text-primary);
+  }
+
+  .mdx-h6 {
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-text-secondary {
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx :where(del):not(.not-mdx *) {
+    color: var(--a63-text-secondary);
+  }
+
+  /* --- inline code -------------------------------------------------------- */
+  .mdx-inline-code {
+    border-radius: var(--radius-sm);
+    background-color: color-mix(in oklab, var(--a63-surface-muted) 50%, transparent);
+    color: var(--a63-text-primary);
+    box-shadow: inset 0 0 0 0.5px var(--a63-surface-control-hover);
+    /* The chip is an inline box, so a code span that wraps is split across
+       lines. Without `clone` the radius, padding and inset hairline are drawn
+       once around the whole fragment set, leaving the first line sheared off
+       flat on the right and the second missing its left edge. `clone` redraws
+       the full box on each line instead. */
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* --- code blocks (pre) -------------------------------------------------- */
+  .mdx-pre {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--a63-border-subtle);
+    background-color: var(--a63-surface-panel);
+  }
+
+  /* --- blockquote --------------------------------------------------------- */
+  .mdx-blockquote {
+    border-left: 4px solid var(--a63-border-subtle);
+    background-color: color-mix(in oklab, var(--a63-surface-muted) 50%, transparent);
+    color: var(--a63-text-secondary);
+  }
+
+  /* --- hr ----------------------------------------------------------------- */
+  .mdx-hr {
+    border-top: 1px solid var(--a63-border-subtle);
+  }
+
+  /* --- kbd ---------------------------------------------------------------- */
+  .mdx-kbd {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--a63-border-subtle);
+    background-color: var(--a63-surface-muted);
+    color: var(--a63-text-secondary);
+  }
+
+  /* --- tables ------------------------------------------------------------- */
+  .mdx-table-wrapper {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--a63-border-subtle);
+    background-color: var(--a63-surface-page);
+  }
+
+  /* Scrolling shadows on the DS Table's own scroll container (the wrapper above
+     only clips to its radius). A table wider than the column scrolls, but macOS
+     overlay scrollbars are invisible at rest, so the last column just looks cut
+     off. The two `local` layers ride the content and cover the two `scroll`
+     layers whenever that edge is flush — so the cue appears only on the side
+     that actually has more table, and nothing shows when the table fits. */
+  .mdx-table-wrapper [data-slot='table-container'] {
+    background-image:
+      linear-gradient(to right, var(--a63-surface-page), transparent 2rem),
+      linear-gradient(to left, var(--a63-surface-page), transparent 2rem),
+      linear-gradient(
+        to right,
+        color-mix(in oklab, var(--a63-text-primary) 22%, transparent),
+        transparent 1rem
+      ),
+      linear-gradient(
+        to left,
+        color-mix(in oklab, var(--a63-text-primary) 22%, transparent),
+        transparent 1rem
+      );
+    background-repeat: no-repeat;
+    background-size:
+      2.5rem 100%,
+      2.5rem 100%,
+      1rem 100%,
+      1rem 100%;
+    background-position:
+      left center,
+      right center,
+      left center,
+      right center;
+    background-attachment: local, local, scroll, scroll;
+  }
+
+  .mdx-thead {
+    background-color: var(--a63-surface-muted);
+  }
+
+  .mdx-tr {
+    border-bottom: 1px solid var(--a63-border-subtle);
+  }
+
+  .mdx-tr:hover {
+    background-color: color-mix(in oklab, var(--a63-surface-muted) 40%, transparent);
+  }
+
+  .mdx-th {
+    color: var(--a63-text-primary);
+  }
+
+  .mdx-td {
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-caption {
+    color: var(--a63-text-secondary);
+  }
+
+  /* --- media caption (component-mapped) ----------------------------------- */
+  .mdx-figcaption {
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-media-framed {
+    border: 1px solid var(--a63-border-subtle);
+  }
+
+  /* --- details / summary -------------------------------------------------- */
+  .mdx-details {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--a63-border-subtle);
+    background-color: var(--a63-surface-panel);
+  }
+
+  .mdx-summary {
+    color: var(--a63-text-primary);
+  }
+
+  /* --- misc semantics ----------------------------------------------------- */
+  .mdx-mark {
+    color: var(--a63-text-primary);
+    /* yellow highlight tint has no --a63-* surface equivalent (design gap) */
+  }
+
+  .mdx-abbr {
+    border-bottom: 1px dotted var(--a63-text-secondary);
+  }
+
+  .mdx-cite,
+  .mdx-time {
+    color: var(--a63-text-secondary);
+  }
+
+  .mdx-samp {
+    border-radius: var(--radius-lg);
+    background-color: var(--a63-surface-muted);
+  }
+
+  .mdx-output {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--a63-border-subtle);
+    background-color: var(--a63-surface-muted);
+  }
+}

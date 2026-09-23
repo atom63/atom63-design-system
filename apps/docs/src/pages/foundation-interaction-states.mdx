@@ -1,0 +1,100 @@
+# Interaction states
+
+Interaction states are the system's feedback contract. A component should make every state it supports visible without inventing a new visual language. Not every component exposes every state: loading is a first-class `Button` behavior, while invalid belongs to field-like controls.
+
+The goal is not maximum animation. The goal is legibility: users should know what can be acted on, what is currently active, what is blocked, and what changed.
+
+## State model
+
+| State | Meaning | Primary cue |
+|-------|---------|-------------|
+| Hover | Pointer is considering the target | Subtle background, border, or opacity shift |
+| Focus visible | Keyboard focus is on the target | Ring with enough contrast |
+| Pressed | The control is actively being invoked | Small motion or pressed color |
+| Selected | The option is part of current state | Persistent fill or foreground change |
+| Disabled | The target cannot be used | Opacity and disabled pointer behavior |
+| Loading | The action is in progress | Spinner plus disabled action |
+| Invalid | The value needs correction | Destructive border/ring and supporting text |
+
+State cues should be predictable across components. A pressed button, selected toggle, and active tab can differ visually, but they should feel like they belong to the same interaction grammar.
+
+## Focus is not hover
+
+Focus-visible is a keyboard navigation affordance. It should not disappear just because hover exists.
+
+Best practice:
+
+- use `focus-visible`, not plain `focus`, for keyboard rings;
+- keep focus rings outside the component's normal border contract;
+- do not replace focus with color alone;
+- ensure the ring still works on dark and tinted surfaces.
+
+Hover can be subtle. Focus cannot be invisible.
+
+## Press feedback
+
+Press feedback should confirm activation without causing layout shift.
+
+Use:
+
+- transform or icon-scale motion for tiny feedback;
+- `data-pressed` color for persistent pressed primitives;
+- `motion-reduce` safe transitions;
+- stable dimensions so the component never reflows on press.
+
+Avoid:
+
+- adding or removing borders on press;
+- changing font weight on press;
+- moving surrounding content;
+- using heavy shadows to simulate depth.
+
+This is why icon-only toggle feedback can scale the icon instead of scaling the whole control. The hit target stays stable while the inside of the control responds.
+
+## Loading states
+
+Loading is both visual and behavioral.
+
+| Rule | Reason |
+|------|--------|
+| Disable the triggering control while loading | Prevent duplicate actions |
+| Preserve the control's width | Avoid layout jump |
+| Keep the label in the accessibility tree and expose pending state | Preserve meaning for assistive tech |
+| Use a spinner only when there is actual pending work | Avoid false activity |
+
+The shipped `Button loading` implementation disables the native button, sets `aria-busy`, keeps the label in the DOM with transparent text, and overlays a spinner. That preserves width and prevents duplicate activation.
+
+## Invalid states
+
+Invalid states should be explicit and local.
+
+Use destructive border/ring styling on the control, plus nearby text that explains the problem. Do not rely on red alone. Do not put form-level error meaning inside a placeholder.
+
+For grouped controls, put the invalid cue on the group boundary when the group owns the validation state. For example, an input group should show one coherent invalid border rather than each addon inventing its own error treatment.
+
+## Disabled states
+
+Disabled components should look unavailable without becoming illegible.
+
+There is no global disabled-opacity token. Each recipe preserves enough contrast for its anatomy; for example, Button keeps its fill and border and dims only the label to `0.56`. Native `disabled` semantics are preferred where the element supports them.
+
+Do not use disabled as a loading substitute. Loading is temporary work. Disabled is unavailable intent.
+
+## Decision rules
+
+1. Start with the semantic state from the primitive: `data-pressed`, `data-selected`, `aria-invalid`, `disabled`.
+2. Pick one primary visual cue for the state.
+3. Keep size and layout stable.
+4. Preserve keyboard focus visibility.
+5. Respect reduced motion.
+
+## Review checklist
+
+When reviewing state styles, ask:
+
+1. Can keyboard users see where they are?
+2. Does hover differ from selected/pressed state?
+3. Does the component shift layout when state changes?
+4. Does disabled still read clearly?
+5. Does loading prevent duplicate action?
+6. Does invalid state include more than color alone?

@@ -1,0 +1,108 @@
+# Theme system
+
+Theme authoring is a cascade problem: establish stable semantic and family contracts, then let one scoped skin assign material values. The difficult part is preserving that boundary as axes and products compose.
+
+## IDs and selectors
+
+`@atom63/ui-foundation` → `personalizationAxes.theme` is the authoritative value registry.
+
+| ID | Selector | Source | Mode behavior |
+|----|----------|--------|---------------|
+| `modern` | `[data-a63-theme='modern']` | `themes/modern.css` | Inherits semantic light/dark paint; adds identity material. |
+| `aqua` | `[data-a63-theme='aqua']` | `themes/aqua.css` | Adds material plus explicit light/dark surface paint. |
+| `retro` | `[data-a63-theme='retro']` | `themes/retro.css` | Inherits semantic light/dark paint; adds bevel material. |
+| `terminal` | `[data-a63-theme='terminal']` | `themes/terminal.css` | Reasserts explicit light/dark phosphor surfaces and text, including nested mode scopes. |
+
+The old persisted ID `y2k` migrates to `retro`; it is not a selector or option. `[data-ui-theme]` is dead. OS63's `data-os63-ui-theme` is a temporary app-local bridge with the same IDs, not a second theme system.
+
+## How axes compose
+
+The axes are coordinates, not presets. Their ownership is intentionally uneven where a skin needs to establish a complete material:
+
+| Axis | Owns | Theme interaction |
+|------|------|-------------------|
+| Mode | Luminance and base semantic paint. | Modern and Retro inherit it. Aqua and Terminal provide explicit light/dark skin paint. |
+| Brand | Primary ramp and focus color. | Actions remain brand-driven. Terminal glow references `--a63-action-primary`; Aqua keeps its blue surface cast independent of the selected brand. |
+| Surface + tint | Neutral family and its brand bend. | Modern and Retro receive the semantic result. Aqua and Terminal intentionally replace page/panel paint, so those surfaces do not receive the generic tint mix. |
+| Radius | Multiplier across the shared radius ramp. | Themes may choose contract radius steps such as `var(--radius-sm)`; they do not replace the global radius axis with a hardcoded scale. |
+| Font + type scale | Global type personality and scale. | Terminal adds mono styling to control contracts as skin character; the global font and scale still remain independently selectable. |
+| Design language, input, density | Proportions, feedback, target size, and rhythm. | Themes do not own them. |
+| OS | Caption controls, launcher geometry, and platform-conventional chrome paint. | It is a peer coordinate: `theme=aqua × os=windows` needs no new theme file. |
+| Icon theme | React-rendered app-icon presentation. | It is not CSS theme material. |
+
+This is why an Appearance panel can place several controls together without turning every combination into a named theme.
+
+## CSS load order
+
+The default `@atom63/styles` entry imports:
+
+```text
+tokens → contracts → themes → os → animations → utils
+```
+
+Contracts must precede themes because their root defaults and theme assignments can have the same specificity. Themes must win by source order. OS follows as a peer layer with separate `--a63-os-*` ownership; it should not compete for theme contract values.
+
+Tailwind, compatibility aliases, and renderer recipes are opt-in consumer layers. Atom63 apps currently use this order:
+
+```css
+@import 'tailwindcss';
+@import '@atom63/styles';
+@import '@atom63/styles/tailwind';
+@import '@atom63/styles/compat/shadcn';
+@import '@atom63/ui-react/recipes.css';
+
+@source '../../../../packages/ui-react/src/**/*.{ts,tsx}';
+```
+
+`@atom63/styles` already includes all four skins. Import a granular `@atom63/styles/themes/<id>` export only when building a deliberately partial bundle, not in addition to the default entry. `@source` registers Tailwind source files at build time; it is not a CSS cascade layer.
+
+## Runtime stamping
+
+There are four related APIs, and their names should not be treated as interchangeable:
+
+| API | Responsibility |
+|-----|----------------|
+| `applyPersonalization(state, root?)` | Resolves `system` mode, stamps `.light` / `.dark`, mode, theme, brand, surface, type, radius, font, OS, and icon attributes, plus `--a63-surface-tint`. It always stamps `modern` explicitly. |
+| `createPersonalizationController(...)` | Adds persisted state and optional wallpaper-derived auto-brand behavior around `applyPersonalization`. Existing product stores may implement the same `PersonalizationController` interface instead. |
+| `UIProvider` | Creates a scoped subtree and stamps only supplied design-language, mode, theme, brand, input, density, and surface props. Unspecified axes inherit. Its local `mode='system'` path currently resolves to `light`; root system tracking belongs to the mode/personalization controller. |
+| `createThemeProvider(...)` | Despite the legacy name, owns color mode only. It persists `light` / `dark` / `system` and writes the root mode class; it does not select a material theme or stamp `data-a63-theme`. |
+
+`AppearancePanel` and `AppearanceMenu` are control surfaces over a controller. They do not own storage or theme CSS. The design-system app, atom63.io, and OS63 all adapt product state and then call the canonical stamper; OS63 additionally maintains bridge attributes for local variants.
+
+For a local preview, `UIProvider` can stamp only the coordinates the example needs:
+
+```tsx
+<UIProvider mode="dark" theme="aqua" brand="b1" surface="n1">
+  <Preview />
+</UIProvider>
+```
+
+The preview's recipes read semantic and family contracts. They do not branch on `aqua`.
+
+## Private material
+
+Theme files may keep scoped helpers and literal stacks that make sense only inside one skin. Current examples include `--aqua-overlay-drop`, `--retro-bevel-drop*`, and `--terminal-overlay-glow`, plus inline gel, bevel, and scanline recipes.
+
+The boundary is reuse:
+
+- keep a gel, bevel, CRT, or skin-only blur stack private while only that skin needs it
+- promote a stop into foundation when a second theme, a contract default, or an adapter needs it
+- continue assigning public `--a63-*` contracts from the private helper
+- do not create a parallel component-facing namespace inside the theme
+
+## Authoring and review workflow
+
+1. Classify the change. A shared literal belongs in foundation; a role belongs in semantics; shared family physics may belong in a contract; skin material belongs in `themes/<id>.css`; product structure belongs outside Themes.
+2. Reuse an existing family seam. Add a contract hook only when a second component or family needs it **and** a theme or design-language axis must override it.
+3. Keep every selector under `[data-a63-theme='<id>']`. Add mode selectors only when the skin actually changes semantic paint.
+4. If adding an ID, update the axis registry, UI option/type mirrors, theme index and package export, authoring harness, and only the product registries that support it.
+5. Review both modes and representative brand, surface, radius, and OS coordinates. Storybook ThemeMatrix/contact sheets are manual craft review, not a CI screenshot gate.
+6. Run `pnpm check:theme-authoring`. When contracts or recipes change, also run the affected `@atom63/styles` and `@atom63/ui-react` tests and `pnpm check:app-consumption`.
+
+## Review decisions
+
+Ask three questions:
+
+1. Is this a **role**? Put it in semantics, such as `--a63-action-primary` or `--a63-surface-panel`.
+2. Is this reusable **material physics**? Put the public seam in a family contract, such as `--a63-control-gloss` or `--a63-overlay-shadow`, and keep skin-private stacks in the theme.
+3. Is this **product or platform behavior**? Put it in the app or OS layer. Theme CSS must not decide window controls, settings policy, wallpaper behavior, or which axes a product exposes.

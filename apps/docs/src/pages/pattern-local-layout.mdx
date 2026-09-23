@@ -1,0 +1,89 @@
+# Local layout
+
+Page primitives own route measure and section rhythm. Local layout owns the relationship between children inside a toolbar, form, card body, list item, or collection.
+
+Atom63 does not currently export `Stack`, `Inline`, `Cluster`, or `Split` components from `@atom63/ui-react`. These are composition names implemented with layout utilities. Naming the relationship is still useful; pretending there is a package API is not.
+
+## Parent owns the relationship
+
+Prefer a parent `gap` over child margins:
+
+```tsx
+// Avoid: the button carries placement that only makes sense here.
+<div>
+  <Button>Save</Button>
+  <Button className="ml-2">Cancel</Button>
+</div>
+```
+
+```tsx
+// Prefer: the row owns the relationship.
+<div className="inline-flex gap-2">
+  <Button>Save</Button>
+  <Button>Cancel</Button>
+</div>
+```
+
+This keeps each child portable and makes wrapping behavior visible where it is controlled.
+
+## Choose the relationship
+
+| Pattern | Composition | Use for |
+|---------|-------------|---------|
+| Stack | `flex flex-col` or `grid` + `gap` | Forms, settings groups, card bodies |
+| Inline | `inline-flex` + `items-center` + `gap` | Icon-label pairs and fixed rows |
+| Cluster | `flex flex-wrap` + `gap` | Tags, filters, responsive action sets |
+| Split | `flex` + `justify-between` + `gap` | Title/action or label/value rows |
+| Grid | `grid` + responsive columns + `gap` | Cards, galleries, comparison layouts |
+
+```tsx
+<div className="flex flex-wrap items-center gap-2">
+  {tags.map(tag => (
+    <Badge key={tag}>{tag}</Badge>
+  ))}
+</div>
+```
+
+```tsx
+<div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
+  {projects.map(project => (
+    <ProjectCard key={project.id} project={project} />
+  ))}
+</div>
+```
+
+Both shapes are present in current product code: action and filter sets wrap as clusters, while portfolio collections change column count at a breakpoint. The responsive decision belongs to the collection, not to `Container` or `Section`.
+
+## Let components keep their contracts
+
+Some components already own local arrangement:
+
+- `Button` owns its icon, label, and loading-indicator layout.
+- `ButtonGroup` owns adjacent control grouping.
+- `InputGroup` owns addon and control placement.
+- `SectionHeader` owns title and description rhythm.
+- `Card` variants own their internal slots and padding.
+
+Do not add outside margins to repair those internals. If the same variation is needed repeatedly, make it a supported component variant or compose a parent layout around the component.
+
+## Spacing decisions
+
+Use smaller gaps for tighter relationships:
+
+| Relationship | Typical starting point |
+|--------------|------------------------|
+| Icon + label | `gap-1` or `gap-1.5` |
+| Compact controls, tags | `gap-2` |
+| Form rows, dense groups | `gap-3` |
+| Standard card or panel flow | `gap-4` |
+| Large local regions | `gap-6` |
+
+These are starting points from the shared spacing scale, not a second token system. At `gap-8` and above, check whether the relationship is actually page rhythm and belongs to `Section`.
+
+## Review rules
+
+1. If spacing separates page regions, use `Section`.
+2. If spacing is inside one reusable component, let the component own it.
+3. If spacing is between composed children, let their parent own `gap`.
+4. If wrapping changes reading or keyboard order, keep DOM order meaningful.
+5. Promote a named primitive only after the same relationship and behavior recur across consumers.

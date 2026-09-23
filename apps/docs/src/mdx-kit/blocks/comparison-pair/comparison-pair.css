@@ -1,0 +1,21 @@
+/* ComparisonPair recipe — pair/panel/badge/switch-label chrome. */
+@layer components {
+  .mdx-comparison-frame {
+    border-color: color-mix(in oklab, var(--a63-border-subtle) 20%, transparent);
+  }
+
+  .mdx-comparison-panel {
+    border-color: color-mix(in oklab, var(--a63-border-subtle) 20%, transparent);
+  }
+
+  .mdx-comparison-badge {
+    color: color-mix(in oklab, var(--a63-text-secondary) 70%, transparent);
+  }
+
+  .mdx-comparison-switch-label {
+    color: color-mix(in oklab, var(--a63-text-secondary) 60%, transparent);
+  }
+
+  /* before/after status dots keep their red/emerald palette (no --a63-* status
+     dot color pairing intended here — decorative before/after affordance). */
+}

@@ -1,0 +1,89 @@
+import { SectionHeader } from '@atom63/ui-react/layout'
+import { ExampleContainer } from '../mdx-kit/blocks'
+
+# Section header
+
+`SectionHeader` keeps visual hierarchy and document hierarchy separate. `variant` selects the type treatment; `level` selects the rendered heading element.
+
+That distinction matters when a reusable region moves. A secondary-looking heading may be an `h2` on one route and an `h3` inside a nested section without changing its visual weight.
+
+## The ramp
+
+<ExampleContainer
+  align="left"
+  description="These previews use level={3} so this catalog page keeps one valid outline."
+>
+  <div className="grid w-full gap-8">
+    <SectionHeader
+      level={3}
+      title="Display"
+      description="The rare, largest shared introduction."
+      variant="display"
+    />
+    <SectionHeader
+      level={3}
+      title="Primary"
+      description="A route or main-surface heading."
+      variant="primary"
+    />
+    <SectionHeader
+      level={3}
+      title="Secondary"
+      description="The standard treatment for repeated page sections."
+      variant="secondary"
+    />
+    <SectionHeader
+      level={3}
+      title="Muted"
+      description="A supporting region in denser UI."
+      variant="muted"
+    />
+    <SectionHeader
+      level={3}
+      title="Subtle"
+      description="A compact nested title."
+      variant="subtle"
+    />
+    <SectionHeader
+      title="Category label"
+      description="A non-heading marker by default."
+      variant="label"
+    />
+  </div>
+</ExampleContainer>
+
+| Variant | Default element | Intended rank |
+|---------|-----------------|---------------|
+| `display` | `h1` | Rare editorial or route introduction |
+| `primary` | `h1` | Main route or surface title |
+| `secondary` | `h2` | Repeated page section |
+| `muted` | `h3` | Supporting section |
+| `subtle` | `h4` | Compact nested region |
+| `label` | `p` | Category marker, not a section heading |
+
+## Set semantics from context
+
+```tsx
+<SectionHeader
+  level={2}
+  title="Featured work"
+  description="Case studies, product systems, and interface experiments."
+  variant="primary"
+/>
+```
+
+The stronger `primary` treatment does not force a second `h1`. Conversely, adding `level` to `label` turns the label into a real heading; do that only when it introduces a navigable region.
+
+The component cannot inspect the rest of the page, so heading order remains the consumer's responsibility.
+
+## Use the smallest sufficient variant
+
+- Reserve `display` for a real top-level moment.
+- Use `primary` for the main route title.
+- Use `secondary` for most reusable sections.
+- Use `muted` and `subtle` as hierarchy becomes denser.
+- Use `label` for short categories, never as a visual substitute for an unlabeled section.
+
+Current atom63.io design-system sections use `secondary` for repeated regions, while route introductions override the title classes for product-specific hero typography. That customization belongs to the consumer; it is not another shared ramp level.
+
+Prefer changing `variant` before overriding `titleClassName` or `descriptionClassName`. Override classes only when a product surface has a deliberate type direction that the shared ramp should not absorb.

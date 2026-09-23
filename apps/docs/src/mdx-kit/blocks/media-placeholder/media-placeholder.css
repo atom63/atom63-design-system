@@ -1,0 +1,11 @@
+/* MediaPlaceholder recipe — placeholder frame/icon chrome. */
+@layer components {
+  .mdx-media-placeholder {
+    border-color: var(--a63-border-subtle);
+    background-color: color-mix(in oklab, var(--a63-surface-muted) 30%, transparent);
+  }
+
+  .mdx-media-placeholder-icon {
+    color: color-mix(in oklab, var(--a63-text-secondary) 70%, transparent);
+  }
+}

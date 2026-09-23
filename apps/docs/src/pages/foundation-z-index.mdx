@@ -1,0 +1,78 @@
+import { ZLayerScale } from '../components/foundation/z-layer-scale'
+
+# Z-index
+
+Stacking across windows and shell surfaces comes from one ordered scale of `--z-layer-*` tokens. Small numeric z-index values still exist inside isolated component stacking contexts; the shared scale governs layers that must compete across surfaces.
+
+## Design intent
+
+Z-index rots fast. The moment someone writes `z-[9999]` to win one fight, the next person writes `z-[99999]`, and soon nothing is predictable. I wanted a single ordered scale where every shell surface — windows, dock, menus, modals, overlays, the lock and boot screens — has exactly one home, and where adding a new surface means slotting it into a named order rather than inventing a number.
+
+The scale is authored as CSS custom properties in `@atom63/styles` and mirrored to a typed `Z_LAYERS` object for JS consumers such as the OS63 windowing engine. CSS is the source of truth; the TypeScript mirror exists so runtime layout code can use named layers instead of raw numbers.
+
+## How the scale works
+
+The scale is banded. Each band answers a different question, which is why the numbers jump rather than increment evenly.
+
+<ZLayerScale />
+
+The bands matter more than the exact numbers:
+
+- **In-context** layers (−1 to 90) only compete inside whatever element established the stacking context — a card, a window, the desktop canvas. Their values are small and reusable because they never escape their parent.
+- The **window band** (300–399) is dynamic: focusing a window shuffles it within this range, and it compacts back down so windows never escape the ceiling.
+- **Shell** and **System** layers (400+) are global. Notifications use the system `toast` layer at 1050, between the lock screen and boot screen. This is where the order has real consequences.
+
+## Decisions worth knowing
+
+### Portaled overlays live near the top, not at `z-50`
+
+Menus, popovers, and tooltips render into a portal at `document.body`, so they stack against the whole app, not their trigger. A dropdown opened from the dock has to clear the dock. That is why `menu` (960), `popover` (970), and `tooltip` (980) sit above `dock` (900) instead of at the conventional `z-50`. The library default would have been correct only if these elements stayed inside their parent — they don't.
+
+### Shell chrome outranks windows
+
+The dock, menus, and tooltips all sit above the window band, which matches how both macOS and Windows behave: focusing a window restacks it only among other windows — it never lifts above the taskbar or a tooltip. Focus shuffling stays inside 300–399; nothing a window does pushes it past the shell.
+
+### Task view and brightness are deliberate exceptions
+
+The window overview (task view) is intentionally placed *above* the dock (905–940), because it is a full-shell mode whose scrim is meant to cover the dock. The brightness overlay sits at 990 — just under the lock screen — so dimming the display actually dims the chrome too, not just the desktop. Both were magic numbers before; tokenizing them kept the behavior while making the order legible.
+
+### `below` exists for backplates
+
+A few components paint an animated background *behind* their own content — the active-tab indicator, the segment-control backplate. Rather than scatter `-z-1`, there is one `below` (−1) token for "behind the local baseline."
+
+## Usage guidance
+
+| Surface | Token |
+|---------|-------|
+| Content lift, selected item | `base` |
+| Sticky header inside a scroll area | `header` |
+| A dialog / sheet | `modal` (with `scrim` behind) |
+| A dropdown, select, or context menu | `menu` |
+| A tooltip | `tooltip` |
+| A full-screen system overlay | `overlay` |
+
+Reach for a named Tailwind arbitrary value such as `z-[var(--z-layer-modal)]` in markup, or a named constant such as `Z_LAYERS.modal` from `@atom63/styles/z-layers` when the windowing engine needs the number.
+
+## Anti-patterns
+
+```tsx
+// Avoid: a raw number to win a stacking fight.
+<div className="z-[9999]" />
+```
+
+```tsx
+// Prefer: name the layer you actually mean.
+<div className="z-[var(--z-layer-modal)]" />
+```
+
+Raw z-index for a new cross-surface layer in shared UI, OS63, or widgets should be treated as a review failure. Named CSS tokens and `Z_LAYERS` constants preserve the global stacking order. Local backplates and sibling anatomy may use small values when their stacking context is deliberately isolated.
+
+## Review checklist
+
+When reviewing stacking, ask:
+
+1. Is the layer a named token, or a raw number that will rot?
+2. Does the surface portal to `body`? If so, it belongs in the shell bands, not `z-50`.
+3. Does a window try to outrank the dock, a menu, or a tooltip? It shouldn't.
+4. If this is a new shell surface, does it slot into the existing order, or does it overlap an existing band?
+5. For a backplate, is it using `below` rather than a fresh negative number?

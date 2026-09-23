@@ -1,0 +1,37 @@
+import { SiteAnnouncement } from '../components/site-announcement'
+import { DocsSearchLauncher } from '../components/docs-search'
+
+# Atom63 Design System
+
+Atom63 is an open-source design system with one token architecture behind every platform it ships to. The same tokens drive the React components, the SwiftUI components, and the Figma variables, so a decision made once reaches web, iOS, and design files without being restated.
+
+<DocsSearchLauncher />
+
+## What ships
+
+| Package | Platform | Role |
+| --- | --- | --- |
+| `@atom63/styles` | CSS | Tokens, themes, component contracts, and the token manifest every renderer reads |
+| `@atom63/ui-foundation` | TypeScript | Platform-neutral component contracts and personalization axes |
+| `@atom63/ui-react` | React | Components, layout, media, and theme controls |
+| `Atom63UI` | SwiftUI | Native iOS components generated from the same tokens, distributed with Swift Package Manager |
+| Figma plugin | Figma | Syncs the tokens into Figma variables, one collection per personalization axis |
+
+Install the web packages from the `beta` tag:
+
+```bash
+pnpm add @atom63/styles@beta @atom63/ui-react@beta
+```
+
+## Start here
+
+1. **[Understand the architecture](/architecture)** — how tokens, contracts, themes, and renderers fit together.
+2. **[Inspect the foundations](/foundations)** — color, type, surfaces, motion, and interaction, from raw values to semantic roles.
+3. **[Browse the components](/components)** — live examples and the contract each component follows.
+
+## Use it as a reference
+
+- **[Themes](/themes)** — skin ownership, material contracts, composition, and runtime stamping
+- **[Patterns](/patterns)** — recurring layout, hierarchy, and spacing decisions
+
+<SiteAnnouncement />

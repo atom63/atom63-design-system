@@ -1,0 +1,9 @@
+/**
+ * Public no-scan stylesheet entry.
+ *
+ * Use when a host already scans @atom63/mdx with Tailwind and only needs the
+ * Tailwind-independent MDX recipes. Most apps should import a63.css,
+ * shadcn.css, or index.css instead.
+ */
+@import './block-recipes.css';
+@import './base.css';

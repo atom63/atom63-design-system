@@ -1,0 +1,132 @@
+import { EffectsReference } from '../components/foundation/effects-reference'
+
+# Effects
+
+Shadows and blurs define depth in the system. I use them sparingly — most surfaces are flat with border separation. Shadows appear when something genuinely floats: dropdowns, dialogs, popovers, and the portfolio's OS windows.
+
+## Design intent
+
+The shadow scale exists to create consistent depth layering, not visual richness. It uses low opacity (4–14%). `shadow-2xs` is a single contact shadow; the other six steps pair a tighter contact layer with a broader ambient layer.
+
+## How the scale works
+
+<EffectsReference />
+
+## Mental model
+
+Effects answer one question: is this surface spatially above another one?
+
+| Effect | Communicates | Use when |
+|--------|--------------|----------|
+| Border | Separation | A static object needs a boundary |
+| Shadow | Elevation | A surface floats above the current layer |
+| Backdrop blur | Material | The surface intentionally samples what is behind it |
+| Opacity | Layer mixing | The product theme needs glass or translucency |
+
+If the answer is only "this looks nicer," the effect probably does not belong.
+
+### Shadows — seven steps
+
+Seven levels run from `shadow-2xs` (a 1px contact shadow at 4% opacity) to `shadow-2xl` (a 96px ambient blur at 14%). Higher levels read larger, not simply darker, so spread grows faster than opacity.
+
+| Level | Typical use |
+|-------|-------------|
+| `shadow-2xs` | Hairline contact separation |
+| `shadow-xs` / `shadow-sm` | Low lift when a surface contract calls for it |
+| `shadow-md` | Raised or sticky surfaces |
+| `shadow-lg` | Dropdowns, popovers |
+| `shadow-xl` / `shadow-2xl` | Modals, OS windows, dialogs |
+
+### Blurs — seven steps
+
+Blur tokens (`blur-xs` through `blur-3xl`, 4px to 64px) are primarily for glassmorphism effects in the portfolio — backdrop blur on panels, overlays, and the OS dock. The progression roughly doubles at each step, giving enough range for subtle frosted glass (`blur-sm`) through heavy depth-of-field effects (`blur-3xl`).
+
+Themes should reuse these shared stops when they fit (`blur(var(--blur-lg))`). A skin-only blur that is not part of the ladder (for example Aqua’s 20px gel backdrop) may live in the theme file.
+
+### Theme material
+
+Gel stacks, bevels, CRT glows, gloss, and textures live under `[data-a63-theme]` in `themes/*.css` — not in foundation. Foundation keeps the shared shadow + blur ladders. Promote a skin recipe into foundation only when a second theme or an adapter needs the same stop — see `docs/design-system/authoring-surfaces.md`.
+
+### Contract variables
+
+Product surfaces usually get depth through archetype contracts. Themes assign `--a63-*` handles (often with theme-private stacks). Shared elevation steps for Tailwind (`shadow-md`, …) still come from the foundation shadow scale.
+
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `--a63-control-shadow` | `none` | Raised control depth, when the active theme wants controls to feel tactile. |
+| `--a63-field-shadow` | subtle inset | Recessed field treatment. |
+| `--a63-surface-shadow` | subtle two-layer shadow | Static panel/card treatment. |
+| `--a63-overlay-shadow` | elevated | Floating overlay treatment. |
+| `--a63-overlay-backdrop` | `none` | Backdrop blur/saturation for glass themes. |
+| `--a63-overlay-texture-image` | `none` | Texture layer for terminal/retro-style chrome. |
+
+## Decisions worth knowing
+
+### Dual-layer shadows over single
+
+From `xs` upward, the scale uses two box-shadows per level. The tight contact layer keeps an edge legible while the diffused layer carries elevation. `2xs` stays single-layer because it is only a hairline contact cue.
+
+### Low opacity ceiling
+
+No foundation shadow layer exceeds 14% opacity. At 4–14%, shadows define spatial hierarchy without competing with content. Theme-private bevel, gel, and CRT stacks are separate recipes and may use different mixes.
+
+### Shadow is not component polish
+
+Buttons, inputs, checkboxes, radios, and select triggers are controls, not floating surfaces. Theme contracts may give them inset, bevel, or tactile shadows, but those communicate material/state rather than overlay elevation.
+
+This keeps the depth model coherent: menus and dialogs can feel elevated because ordinary controls are not also pretending to float.
+
+## Usage
+
+Combine shadows with alpha-tinted backgrounds for glass effects:
+
+```tsx
+<div className="bg-card/60 shadow-lg backdrop-blur-md rounded-xl">
+  Glass panel with depth
+</div>
+```
+
+Override a contract in a theme file when a product needs a different depth feel.
+Theme-private stacks are expected there; reuse shared `--blur-*` / `--effect-shadow-*` when they fit.
+
+```css
+[data-a63-theme='aqua'] {
+  --a63-surface-backdrop: saturate(1.4) blur(var(--blur-lg));
+  --a63-overlay-backdrop: saturate(1.6) blur(20px);
+  --a63-overlay-shadow:
+    inset 0 1px 0 color-mix(in oklch, white 60%, transparent),
+    0 12px 32px -8px color-mix(in oklch, black 30%, transparent);
+}
+
+[data-a63-theme='modern'] {
+  --a63-control-shadow: inset 0 1px 0 color-mix(in oklch, white 16%, transparent);
+  --a63-field-shadow: inset 0 1px 2px color-mix(in oklch, black 8%, transparent);
+}
+```
+
+## Anti-patterns
+
+```tsx
+// Avoid: shadow as default decoration.
+<Input className="shadow-sm" />
+<Button className="shadow-sm" />
+<Card className="shadow-md" />
+```
+
+```tsx
+// Prefer: shadow only for true elevation.
+<Input />
+<Button />
+<Card className="border border-border" />
+<PopoverContent className="shadow-lg/5" />
+```
+
+## Review checklist
+
+When reviewing effects, ask:
+
+1. Is the effect communicating elevation, material, or state?
+2. Would a border or background contrast be enough?
+3. Does the effect still work in dark mode?
+4. Is the effect consistent with the surface model?
+5. Does removing the effect make the interface harder to understand?

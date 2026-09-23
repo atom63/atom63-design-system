@@ -1,0 +1,88 @@
+import { Callout } from '../mdx-kit/blocks'
+import { SemanticAliasTable } from '../components/foundation/semantic-alias-table'
+
+# Designing in code
+
+`--a63-*` is the hardened contract. Tailwind/shadcn names are the design surface. I keep both on purpose — and I design against the familiar names first.
+
+Canonical policy (value ownership, lanes, contract growth): `docs/design-system/authoring-surfaces.md`. Drift backlog (mass migration deferred): `docs/design-system/foundation-value-drift.md`.
+
+## The friction
+
+When I sketch UI in JSX, I reach for `bg-card` and `text-muted-foreground`. Those names feel like paint even though they are roles. When I drop into a package recipe and see `var(--a63-control-gloss)`, the token stops answering "what color is this?" and starts answering "what material job does this control own under themes?"
+
+That opacity is intentional. It is also annoying while designing. The fix is not to abandon `--a63-*` — it is to stop using recipe/contract tokens as a sketching vocabulary.
+
+## Workflow
+
+```txt
+sketch in Tailwind / shadcn roles
+  → promote reusable controls into --a63-* recipes
+  → shared scales live in foundation; theme skins may own private material
+```
+
+| Stage | Write with | Why |
+|-------|------------|-----|
+| App / page / layout JSX | `bg-background`, `text-foreground`, `border-border` | Fast, familiar, already aliased onto `--a63-*` |
+| Shared component recipe (`ui-react`) | `--a63-surface-*`, `--a63-action-*`, `--a63-control-*` | Themes and axes can re-skin without rewriting anatomy |
+| Choosing / changing a **shared** value | foundation (`b1-500`, `surface-light-3`, radius/space/blur scales) | Foundation owns shared dictionaries |
+| Theme character | Assign contracts under `[data-a63-theme]` (gel/bevel/CRT OK inline) | Skin is scoped context — promote only when shared |
+
+<Callout type="info">
+  Designing a screen in Tailwind semantics is not cheating. The shadcn bridge and Tailwind theme keys re-reference the canonical `--a63-*` layer. You are speaking the adapter; the system still owns the shared values.
+</Callout>
+
+<Callout type="warning">
+  In **package recipes**, prefer bare `var(--a63-…)` — no `, white` / `, black` fallbacks that hide a missing token. Mask techniques (`#000` in CSS masks) are the exception. Attribute stamp map: `docs/design-system/attribute-runtime.md`. New **shared** hex/oklch/rem scales belong in `tokens/foundation/*`. Theme-private material belongs in `themes/*.css`.
+</Callout>
+
+## Cheat sheet
+
+Live swatches resolve in the current mode / brand / surface. Flip appearance controls to see how the same role moves.
+
+<SemanticAliasTable />
+
+Same job, three spellings:
+
+| Need | Prefer in JSX | Prefer in recipes |
+|------|---------------|-------------------|
+| Page canvas | `bg-background` | `--a63-surface-page` |
+| Card / panel | `bg-card` | `--a63-surface-panel` |
+| Secondary text | `text-muted-foreground` | `--a63-text-secondary` |
+| Brand CTA | `bg-primary` | `--a63-action-primary` |
+| Border | `border-border` | `--a63-border-subtle` |
+
+## Semantics vs contracts
+
+Not every `--a63-*` token is a color role.
+
+| Kind | Examples | Design question |
+|------|----------|-----------------|
+| Semantic role | `--a63-surface-panel`, `--a63-text-secondary` | What job does this color perform? |
+| Contract / material | `--a63-control-gloss`, `--a63-field-shadow`, `--a63-overlay-backdrop` | How does this archetype feel under a theme? |
+| Scale / geometry bridge | `--a63-radius-control`, `--a63-space-4`, `--a63-control-height-md` | What size or rhythm does the axis resolve? |
+
+Role tokens are safe for product UI. Contract tokens belong in recipes and theme files. If a token name sounds like manufacturing (gloss, bevel, texture, press-transform), you are no longer sketching — you are hardening.
+
+## Inspect resolved values
+
+Roles never encode a hex. When you need the computed color:
+
+1. **This page / [Colors](/foundations/foundation-colors)** — swatches update with the appearance panel (`Cmd/Ctrl+,`).
+2. **DevTools** — inspect an element, read the computed `background-color` / `color`, then walk the var chain (`--background` → `--a63-surface-page` → mixed surface step).
+3. **[Surface model](/foundations/foundation-surface-model)** — when the question is elevation/treatment, not fill.
+4. **[Personalization](/foundations/foundation-personalization)** — when the question is which axis owns the shift.
+
+## Decisions worth knowing
+
+### Adapters stay the design dialect
+
+I kept shadcn vocabulary (`background`, `primary`, `muted-foreground`) as the day-to-day JSX dialect because those role names are already the common JSX design vocabulary. Making `--a63-*` the only spelling would harden the architecture and slow every layout pass. The mirror rule keeps the dialect honest: adapters only re-reference; they never own values.
+
+### Recipes speak a63
+
+Once a control is shared and themeable, recipes must read `--a63-*` (and contract handles), not `--background` or a hardcoded `b1-500`. Otherwise aqua/retro/terminal cannot change material without forking the component.
+
+### Primitives are for paint decisions, not product defaults
+
+Reach for `b1-500` or `surface-light-4` when you are choosing a chart series, a one-off illustration tint, or auditing contrast — and when **adding or changing** a core value, edit `tokens/foundation/*`. Do not bake primitives into shared component defaults — that freezes a mood the axes are supposed to move. Themes and contracts should remap foundation, not invent parallel ramps (`docs/design-system/authoring-surfaces.md`).

@@ -1,0 +1,60 @@
+# Personalization
+
+Personalization is not a theme picker bolted onto the UI. It is the shape of the foundation: independent axes stamped as `data-a63-*` attributes (plus one scalar tint token), resolving through one semantic `--a63-*` layer.
+
+## Axes, not presets
+
+Presets demo well and compose badly. The moment someone wants Aqua material with a different neutral family and sharper radius, a preset model becomes a matrix of one-offs.
+
+ATOM63 uses axes instead. Each axis owns a distinct slice of the system. CSS-backed component recipes inherit the resolved tokens instead of branching on axis values; `iconTheme` is the explicit React-consumed exception.
+
+The live registry lives in `@atom63/ui-foundation` → `personalizationAxes`. The table below mirrors it:
+
+| Axis | Values | Applied as | Owns |
+|------|--------|------------|------|
+| Design language | `web` · `ios` | `data-a63-design-language` | Control proportions and interaction feedback. |
+| Mode | `light` · `dark` · `system` | `.light` / `.dark` + `data-a63-mode` | Light/dark semantic color resolution. |
+| Theme | `modern` · `aqua` · `retro` · `terminal` | `data-a63-theme` | Material values: gloss, shadow, bevel, texture, blur. |
+| Brand | `auto` · `b1`–`b6` | `data-a63-brand` | Primary tonal ramp and focus color. |
+| Surface | `n1`–`n6` | `data-a63-surface` | Neutral surface palette. |
+| Surface tint | `0%`–`100%` | `--a63-surface-tint` | Continuous brand bend on semantic surfaces. |
+| Type scale | `compact` · `normal` · `comfortable` · `large` | `data-a63-type-scale` | Global typographic scale. |
+| Radius | `none` · `subtle` · `default` · `round` | `data-a63-radius` | Corner multiplier across the radius ramp. |
+| Font | `sans` · `serif` · `mono` · `pixel` | `data-a63-font` | Active type personality. |
+| Input | `touch` · `pointer` · `keyboard` | `data-a63-input` | Hit target ergonomics. |
+| Density | `compact` · `comfortable` | `data-a63-density` | Spacing rhythm and proportional control sizing. |
+| OS | `macos` · `windows` | `data-a63-os` | Shell chrome and platform framing. |
+| Icon theme | `realistic` · `color` · `neutral` · `primary` | `data-a63-icon-theme` | Icon rendering style (React-consumed). |
+
+`UIProvider` stamps design language, mode, theme, brand, input, density, and surface when those props are supplied. `applyPersonalization` / `PersonalizationController` stamps mode, theme, brand, surface, tint, type scale, radius, font, OS, and icon theme. Together they cover every live axis; neither stamper resets dimensions it does not own. The contract is attributes (or one scalar) in, tokens out.
+
+Runtime availability and implementation completeness answer different questions: an axis can be stampable while one of its owned token groups is still expanding. The live registry in `packages/ui-foundation/src/axes.ts` is the source of truth for that implementation metadata; public documentation describes the stable contract rather than duplicating the internal backlog.
+
+## One semantic layer
+
+The rule is deliberately small:
+
+> Axes set attributes. The cascade resolves `--a63-*`. Components read `--a63-*`.
+
+That means no component writes `--primary`, `--background`, or raw `--surface-*` values inline to express personalization. Those names are either compatibility aliases or palette primitives; writing them directly freezes a value at the wrong layer.
+
+## Why surface tint is continuous
+
+Brand and surface are separate axes because color personality has two jobs: accent and neutrality. `data-a63-brand` chooses the accent ramp. `data-a63-surface` chooses the neutral family. `--a63-surface-tint` bends the semantic surfaces toward the brand hue without generating a bespoke palette for every tint value.
+
+The implementation mixes a small set of semantic surface and border roles rather than every raw ramp stop. That is the practical tradeoff: fewer computed colors, more predictable UI, and enough expressiveness for product-level personalization.
+
+## OS is not a theme
+
+Theme is material character. OS is platform structure. I split them because "Windows" should not imply one permanent visual skin, and "Terminal" should not dictate where caption controls live.
+
+This lets OS63 compose coordinates such as `theme=terminal` with `os=macos`, or `theme=aqua` with `os=windows`, without inventing new theme names.
+
+Radius, type scale, and font are also **not** theme — they are independent appearance axes so you can keep Aqua material while sharpening corners or enlarging type.
+
+## What this enables
+
+- A subtree can override one axis without resetting the others.
+- Theme work can happen in CSS without React conditionals.
+- Agents can reason from the axis table instead of guessing local conventions.
+- Public docs can explain the architecture at the same level the code enforces it.

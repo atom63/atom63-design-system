@@ -1,0 +1,52 @@
+# Component contract
+
+Shared component families in `@atom63/ui-react` combine platform-neutral vocabulary from `@atom63/ui-foundation` with executable recipe CSS backed by `@atom63/styles`.
+
+## The problem
+
+Components can look reusable while hiding product assumptions. A button can import route state. A dialog can hard-code a palette. A card can silently depend on a portfolio content model. The contract exists to catch that before the second consumer does.
+
+## How it works
+
+| Contract | Source | What it owns |
+|----------|--------|--------------|
+| Typed vocabulary | `@atom63/ui-foundation` | Variants, sizes, slots, states, visual archetypes, axis metadata. |
+| Behavior primitive | Base UI or native HTML | Keyboard interaction, focus behavior, ARIA mechanics where needed. |
+| React renderer | `@atom63/ui-react` | DOM shape, `data-slot`, `data-size`, `data-variant`, composition APIs. |
+| Recipe CSS | Component CSS + `@atom63/styles/contracts` | Mapping component slots to `--a63-*` variables. |
+
+The React layer should be boring in the best way: semantic props in, stable slots out. Theme expression lives in tokens and recipe variables.
+
+## Key decisions
+
+### Base UI as behavior, not style
+
+I use Base UI where a primitive needs robust behavior, but I do not inherit its visual language. Base UI gives keyboard and accessibility mechanics; Atom63 owns the material system through `--a63-*`.
+
+The tradeoff is that every component needs real recipe CSS. I accept that because the whole point of the system is for visuals to be token-driven instead of library-driven.
+
+### Data attributes are public surface
+
+Where a recipe relies on them, `data-slot`, `data-size`, `data-variant`, and state attributes are stable styling contracts rather than incidental markup. Not every component needs every attribute.
+
+For example, Button renders a stable root slot and mirrors any trigger-specific slot separately, so a menu trigger can still be styled as a button without lying about its anatomy.
+
+### Components read archetypes first
+
+Most primitives should not invent their own material model. Button reads the control/action archetype. Input reads the field archetype. Menu reads overlay/menu. Segmented Control and Button Group read segment. Tabs combines track, control, and surface.
+
+That makes themes broad instead of repetitive. Aqua can make controls glossy once; every component that consumes the control contract picks it up.
+
+### Product state stays out
+
+A reusable component may know `open`, `disabled`, `loading`, `invalid`, `pressed`, or `selected`. It must not know `projectSlug`, `windowId`, `agentMode`, or route-specific content. Those belong in the app or a product package.
+
+## Validation loop
+
+Before a component is treated as system-level:
+
+1. Its shared prop vocabulary exists in `@atom63/ui-foundation` when that vocabulary matters beyond React.
+2. Its recipe consumes semantic `--a63-*` variables instead of raw palette values.
+3. Its co-located Storybook stories demonstrate the states that matter for the family.
+4. The consuming app scans the package source so Tailwind and CSS classes render correctly.
+5. The public catalog provides import and usage guidance; authored docs add decision rationale when the types cannot.

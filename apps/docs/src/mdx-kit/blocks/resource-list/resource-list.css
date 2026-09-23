@@ -1,0 +1,138 @@
+/* ResourceList recipe — compact external-reference shelf. */
+@layer components {
+  .mdx-resource-list-frame,
+  .mdx-resource-list-panel {
+    overflow: hidden;
+  }
+
+  .mdx-resource-list-frame {
+    box-shadow:
+      inset 0 0 0 1px color-mix(in oklab, var(--a63-border-subtle) 8%, transparent),
+      0 10px 24px color-mix(in oklab, var(--a63-text-primary) 2%, transparent);
+  }
+
+  .mdx-resource-list-panel {
+    background-color: color-mix(in oklab, var(--a63-surface-page) 90%, var(--a63-surface-muted));
+  }
+
+  .mdx-resource-list-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--a63-space-1);
+    padding: var(--a63-space-2);
+    margin: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 40rem) {
+    .mdx-resource-list-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--a63-space-3);
+    }
+  }
+
+  .mdx-resource-item {
+    position: relative;
+    min-width: 0;
+  }
+
+  .mdx-resource-item:not(:first-child)::before {
+    position: absolute;
+    top: 0;
+    right: var(--a63-space-3);
+    left: calc(var(--a63-space-3) + (var(--a63-space-3) * 2) + var(--a63-space-3));
+    height: 1px;
+    content: '';
+    background-color: color-mix(in oklab, var(--a63-border-subtle) 4%, transparent);
+  }
+
+  @media (min-width: 40rem) {
+    .mdx-resource-item:nth-child(2)::before {
+      display: none;
+    }
+  }
+
+  .mdx-resource-row {
+    min-height: calc(var(--a63-space-6) + var(--a63-space-2));
+    padding: var(--a63-space-2) var(--a63-space-3);
+    border-radius: var(--radius-lg);
+    background-color: transparent;
+    transition-duration: var(--a63-control-feedback-duration);
+    transition-timing-function: var(--a63-control-feedback-ease);
+  }
+
+  @media (hover: hover) {
+    .mdx-resource-row:hover {
+      background-color: color-mix(
+        in oklab,
+        var(--a63-surface-control-hover) 44%,
+        var(--a63-surface-panel)
+      );
+      box-shadow: none;
+    }
+  }
+
+  .mdx-resource-row:focus-visible {
+    outline: var(--a63-control-focus-ring-width) solid
+      var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+    outline-offset: var(--a63-space-1);
+  }
+
+  .mdx-resource-favicon,
+  .mdx-resource-favicon-fallback {
+    box-sizing: border-box;
+    width: calc(var(--a63-space-3) * 2);
+    height: calc(var(--a63-space-3) * 2);
+    padding: var(--a63-space-1);
+    border-radius: var(--radius-md);
+    background-color: color-mix(in oklab, var(--a63-surface-muted) 34%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--a63-border-subtle) 6%, transparent);
+    object-fit: contain;
+  }
+
+  .mdx-resource-favicon-fallback {
+    display: block;
+    background:
+      radial-gradient(
+        circle at 35% 35%,
+        color-mix(in oklab, var(--a63-action-primary) 34%, transparent),
+        transparent 42%
+      ),
+      color-mix(in oklab, var(--a63-surface-muted) 54%, transparent);
+  }
+
+  .mdx-resource-name {
+    display: block;
+    color: var(--a63-text-primary);
+    line-height: 1.25;
+  }
+
+  .mdx-resource-title-line {
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  .mdx-resource-note {
+    display: block;
+    margin-top: calc(var(--a63-space-1) / 2);
+    color: var(--a63-text-secondary);
+    line-height: 1.35;
+  }
+
+  .mdx-resource-arrow {
+    color: color-mix(in oklab, var(--a63-text-secondary) 52%, transparent);
+    transition:
+      color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+      transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+  }
+
+  @media (hover: hover) {
+    .group\/resource:hover .mdx-resource-arrow {
+      color: color-mix(in oklab, var(--a63-text-primary) 70%, transparent);
+      transform: translate(
+        var(--a63-control-border-width),
+        calc(-1 * var(--a63-control-border-width))
+      );
+    }
+  }
+}

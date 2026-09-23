@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Production
+dist/
+build/
+.vite/
+
+# Environment
+.env*
+!.env.example
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Misc
+.DS_Store
+coverage/

@@ -1,0 +1,107 @@
+import { RadiusScale } from '../components/foundation/radius-scale'
+
+# Radius
+
+Corner radius is one of the strongest contributors to a system's visual identity, so I made it anchored and proportional rather than a bag of arbitrary values. Every radius in the system derives from a single anchor point and a multiplier.
+
+## Design intent
+
+I wanted to be able to change the "roundedness" of the entire system by adjusting one or two variables. Not per-component overrides, not theme-specific radius values for every element — one anchor that everything else scales from. This makes it trivial to go from a rounded aesthetic to a sharp one, or to let a theme push all corners slightly larger without touching component code.
+
+## How the scale works
+
+Two CSS variables control the entire radius system:
+
+| Variable | Default | Role |
+|----------|---------|------|
+| `--corner-radius` | `10px` | The anchor point, equivalent to `rounded-lg` |
+| `--radius-multiplier` | `1` | Scales every derived value proportionally |
+
+The scale uses named factors around the anchor: `0.2×`–`1×` below and `1.4×`–`2.6×` above.
+
+<RadiusScale />
+
+### The anchor model
+
+`rounded-lg` at `1.0×` (10px) is the anchor — the "default roundedness" of the system. Everything else is a fraction or multiple of it. Below the anchor: `rounded-md` at `0.8×`, `rounded-sm` at `0.6×`, down to `rounded-2xs` at `0.2×`. Above: `rounded-xl` at `1.4×` up to `rounded-4xl` at `2.6×`.
+
+This means `rounded-md` and the bare `rounded` utility both compute to `0.8×` the anchor (8px at defaults). That's intentional — `md` is the unadorned default.
+
+## Mental model
+
+Radius communicates scale and object type.
+
+| Radius feel | Meaning | Typical use |
+|-------------|---------|-------------|
+| Small | Compact, precise, inline | Badges, code, small controls |
+| Medium | Default interface object | Buttons, inputs, cards |
+| Large | Independent surface | Dialogs, sheets, large panels |
+| Soft full | Largest personalized corner | Large pills and rounded controls |
+
+`--radius-full` is not a fixed `9999px`: it is `2 × --radius-xl` (28px at defaults), so it follows the radius axis. Avatars use the separate `--a63-avatar-radius` contract (`50%` by default). The larger the object, the more radius it can carry without looking inflated.
+
+## Decisions worth knowing
+
+### Proportional over fixed
+
+Most systems define radius as a flat list: `4px, 6px, 8px, 12px, 16px`. That works until a user wants sharper or rounder corners. The `data-a63-radius` axis changes one multiplier: `none` → `0`, `subtle` → `0.5`, `default` → `1`, and `round` → `1.5`. Buttons, cards, inputs, and dialogs then adjust together. Themes do not own this axis.
+
+The tradeoff is that you can't make one radius level larger without affecting the ratio. But in practice, I haven't needed that — if everything scales together, it stays visually coherent.
+
+### 10px anchor, not 8px
+
+I anchored at 10px instead of the more common 8px because my visual language leans slightly rounder. At 8px, cards and dialogs felt too sharp against the glassmorphism effects in the portfolio. At 12px, small controls like badges and inline code looked inflated. 10px is the compromise — enough rounding to feel modern without softening small elements too much.
+
+### calc() all the way down
+
+Every derived value uses `calc(var(--corner-radius) * var(--radius-multiplier) * factor)`. This means the entire scale is live — change the anchor or radius appearance axis at runtime and every corner updates instantly. No build step, no token regeneration. It also means the inspector shows computed values, making debugging straightforward.
+
+### Nested radius should subtract border and padding
+
+When a component has an outer rounded surface and inner children, the inner radius should usually be slightly smaller. This prevents nested corners from looking like unrelated shapes.
+
+That is why several components use `calc(var(--radius-lg) - 1px)` or similar values for pseudo-elements and nested controls. The inner corner follows the outer corner instead of inventing a new shape.
+
+## Usage guidance
+
+| Element | Typical radius |
+|---------|---------------|
+| Badges, inline code | `rounded-sm` (6px) |
+| Inputs, buttons | `rounded-md` (8px) |
+| Cards, panels | `rounded-lg` (10px) |
+| Dialogs, sheets | `rounded-xl` (14px) |
+| Hero images, large containers | `rounded-2xl` (18px) |
+
+Set the appearance axis on the relevant scope:
+
+```css
+[data-a63-radius='round'] { /* runtime maps this to --radius-multiplier: 1.5 */ }
+```
+
+## Anti-patterns
+
+```tsx
+// Avoid: every layer has the same large radius.
+<div className="rounded-2xl border p-2">
+  <div className="rounded-2xl border p-4" />
+</div>
+```
+
+The inner and outer corners compete instead of relating.
+
+```tsx
+// Prefer: nested corners step down.
+<div className="rounded-2xl border p-2">
+  <div className="rounded-xl border p-4" />
+</div>
+```
+
+## Review checklist
+
+When reviewing radius, ask:
+
+1. Does the radius match the object's size?
+2. Are nested radii related to the outer surface?
+3. Does a true circle use explicit square dimensions plus the avatar/circular contract rather than assuming `rounded-full` is fixed?
+4. Would changing `--corner-radius` keep the component coherent?
+5. Is a component overriding radius because the scale is wrong, or because the component is special?

@@ -1,0 +1,105 @@
+import {
+  DurationAliasVisualization,
+  EasingCurveVisualization,
+  MotionReference,
+} from '../components/foundation/motion-reference'
+
+# Motion
+
+Motion in this system is feedback, not decoration. Every animation exists to confirm an action, show a spatial relationship, or guide attention. If removing an animation doesn't make the interface harder to understand, the animation shouldn't exist.
+
+## Design intent
+
+The shipped foundation separates raw timing values, semantic aliases, and the `--a63-motion-*` contract consumed by recipes. Most interaction timings are short; overlay and swipe-dismiss timings are longer because they explain larger spatial changes.
+
+## How the scale works
+
+<MotionReference />
+
+## Mental model
+
+Motion has three allowed jobs:
+
+| Job | Meaning | Example |
+|-----|---------|---------|
+| Feedback | Confirm an interaction happened | Button press, toggle response |
+| Continuity | Explain where something came from or went | Dialog, drawer, popover |
+| Attention | Gently guide the eye to a change | Loading pulse, new content entrance |
+
+If motion does not do one of those jobs, it is decoration. Decoration is the first thing to cut.
+
+### Duration primitives
+
+Twelve primitives ship: `0ms` plus eleven values from `83ms` to `1500ms`. Some are frame-inspired approximations (`83`, `167`, `333`, `667`); others are product-tuned overlay and dismissal values (`400`, `450`). Recipes should not infer intent from the raw number.
+
+### Duration aliases
+
+Product code should use semantic aliases, not raw primitives. The foundation aliases are `instant`, `fast`, `normal`, `swipe-dismiss`, `overlay`, `slow`, and `slower`; the narrower `--a63-motion-*` bridge exposes timings currently consumed by shared recipes.
+
+<DurationAliasVisualization />
+
+### Easing curves
+
+Six raw curves ship for general use. Four semantic curves (`standard`, `emphasized`, `overlay`, and `scrim`) sit above them for recipe intent:
+
+<EasingCurveVisualization />
+
+## Decisions worth knowing
+
+### Aliases hide mixed timing sources
+
+The primitive ramp mixes frame-inspired and product-tuned values. Semantic aliases keep recipes from coupling themselves to that history: a control asks for `fast`, while a dialog asks for `overlay`.
+
+### Spring with restraint
+
+The spring primitive (`cubic-bezier(0.13, 1.62, 0, 0.92)`) has visible overshoot. It is exported through the foundation and Tailwind adapter, but current `@atom63/ui-react` recipes do not consume it. Prefer the semantic `standard`, `emphasized`, `overlay`, and `scrim` curves in shared recipes; spring remains opt-in.
+
+### Semantic aliases over a generic scale
+
+Seven aliases cover the current intents without exposing every primitive. `fast`, `normal`, `slow`, and `slower` cover general cadence; `overlay` and `swipe-dismiss` name product behavior; `instant` provides the zero-duration endpoint.
+
+### Move the smallest meaningful thing
+
+Motion should confirm state without destabilizing layout. For example, a toggle can scale its icon instead of scaling the entire hit target. A button can use a tiny transform or pressed color while preserving its width and surrounding layout.
+
+The rule: animate the smallest thing that communicates the state change.
+
+## Reduced motion
+
+The shared motion bridge zeros control feedback, overlay, and swipe-dismiss durations under `prefers-reduced-motion: reduce`. Component recipes also provide local alternatives; meaningful activity indicators slow down rather than disappearing. Do not use a global animation kill:
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --a63-motion-control-feedback-duration: 0ms;
+    --a63-motion-duration-overlay: 0ms;
+    --a63-motion-duration-swipe-dismiss: 0ms;
+  }
+}
+```
+
+The token behavior is shipped. Complete per-component coverage remains a review requirement; the codebase does not have a single test that proves every future animation supplies an alternative.
+
+## Anti-patterns
+
+```tsx
+// Avoid: motion that changes layout rhythm.
+<button className="active:scale-95 active:px-5" />
+```
+
+The control changes size and can disturb nearby content.
+
+```tsx
+// Prefer: stable bounds, small feedback.
+<button className="active:scale-[0.98] motion-reduce:transform-none" />
+```
+
+## Review checklist
+
+When reviewing motion, ask:
+
+1. What state or spatial relationship does this motion explain?
+2. Does it use transform or opacity rather than layout-affecting properties?
+3. Does it respect `prefers-reduced-motion`?
+4. Is the duration short enough for repeated use?
+5. Is the smallest meaningful element moving?

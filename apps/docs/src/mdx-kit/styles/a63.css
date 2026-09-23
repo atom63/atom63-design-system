@@ -1,0 +1,13 @@
+/**
+ * Atom63 MDX adapter entry.
+ *
+ * Use in Atom63 apps after loading:
+ *   @import "@atom63/styles";
+ *   @import "@atom63/styles/tailwind";
+ *   @import "@atom63/styles/compat/shadcn";
+ *
+ * This maps MDX motion aliases onto the shared Atom63 motion ramp, then loads
+ * the full MDX stylesheet.
+ */
+@import '@atom63/styles/compat/mdx';
+@import './index.css';

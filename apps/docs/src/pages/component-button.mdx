@@ -1,0 +1,122 @@
+import { DocExample } from '../mdx-kit/blocks'
+import { Button } from '@atom63/ui-react'
+import { ArrowRight, Trash2 } from 'lucide-react'
+
+# Button
+
+Button is the reference action primitive for the current system: typed variants from `@atom63/ui-foundation`, Base UI-compatible rendering in `@atom63/ui-react`, and material values from the `control` and `action` contracts.
+
+<DocExample
+  title="Emphasis ladder"
+  code={`import { Button } from '@atom63/ui-react'
+
+<Button variant="primary">Save changes</Button>
+<Button>Cancel</Button>
+<Button variant="outline">Duplicate</Button>
+<Button variant="ghost">Dismiss</Button>
+<Button variant="destructive">Delete</Button>`}
+>
+  <div className="flex flex-wrap items-center justify-center gap-3">
+    <Button variant="primary">Save changes</Button>
+    <Button>Cancel</Button>
+    <Button variant="outline">Duplicate</Button>
+    <Button variant="ghost">Dismiss</Button>
+    <Button variant="destructive">Delete</Button>
+  </div>
+</DocExample>
+
+## When to use
+
+Use Button for an in-place action such as submitting, saving, confirming, or changing state. Use a link when the primary outcome is navigation. Choose emphasis from the action hierarchy rather than styling every available action as primary.
+
+## Why it exists
+
+Raw buttons are easy until they need to survive themes, density, loading, icon-only sizing, pressed states, and form safety. The shared Button exists so every product surface gets those decisions once.
+
+## Contract shape
+
+The root always renders `data-slot="button"` and carries `data-variant` and `data-size`. Trigger-specific composition can mirror a different slot through `data-trigger-slot`, while the anatomy stays a button.
+
+| Layer | Examples |
+|-------|----------|
+| Public API | `variant`, `size`, `loading`, `disabled`, `render`, `type`. |
+| Stable metadata | `data-slot="button"`, `data-size`, `data-variant`, `data-loading`, `data-disabled`. |
+| Local recipe vars | `--button-background`, `--button-foreground`, `--button-shadow`, `--button-radius`. |
+| System vars | `--a63-action-*`, `--a63-control-*`, `--a63-density-scale`, `--a63-focus-ring`. |
+
+## Variant decisions
+
+The emphasis ladder above is the useful part of the variant set: one primary action, quieter neutral alternatives, and danger only when the outcome is destructive. `overlay` is the forced-contrast option for media surfaces. `glass` remains a compatibility alias for that use case, but new work should choose `overlay` so the intent is explicit.
+
+## Sizes and icons
+
+The size ramp scales height, inline padding, gap, and icon size together through `--a63-density-scale`. Icon-only buttons use the `icon-*` steps so the control stays square. Button owns the icon gap — never add `mr-`/`ml-` margins to an icon inside one.
+
+Icon-only buttons require an accessible name. Hide decorative icons from assistive technology when the visible label already names the action.
+
+<DocExample
+  title="Size ramp and icon composition"
+  code={`<Button size="xs">Extra small</Button>
+<Button size="sm">Small</Button>
+<Button size="md">Medium</Button>
+<Button size="lg">Large</Button>
+
+<Button variant="primary">
+  Continue
+  <ArrowRight />
+</Button>
+<Button aria-label="Delete" size="icon" variant="destructive">
+  <Trash2 />
+</Button>`}
+>
+  <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-wrap items-center justify-center gap-3">
+      <Button size="xs">Extra small</Button>
+      <Button size="sm">Small</Button>
+      <Button size="md">Medium</Button>
+      <Button size="lg">Large</Button>
+    </div>
+    <div className="flex flex-wrap items-center justify-center gap-3">
+      <Button variant="primary">
+        Continue
+        <ArrowRight />
+      </Button>
+      <Button aria-label="Delete" size="icon" variant="destructive">
+        <Trash2 />
+      </Button>
+    </div>
+  </div>
+</DocExample>
+
+## Decisions worth knowing
+
+### Button sets `type="button"`
+
+I make the safe form behavior explicit. A shared Button should not accidentally submit a form because it was mounted inside one.
+
+### Loading preserves layout
+
+Loading hides the label visually and overlays a spinner rather than swapping content. That keeps button width stable and avoids a small but very noticeable layout jump.
+
+<DocExample
+  title="Loading and disabled"
+  code={`<Button loading variant="primary">Save changes</Button>
+<Button loading>Save changes</Button>
+<Button disabled variant="primary">Save changes</Button>`}
+>
+  <div className="flex flex-wrap items-center justify-center gap-3">
+    <Button loading variant="primary">
+      Save changes
+    </Button>
+    <Button loading>Save changes</Button>
+    <Button disabled variant="primary">
+      Save changes
+    </Button>
+  </div>
+</DocExample>
+
+Compare the loading and resting buttons above: the label reserves its width, so the row never reflows when a request starts.
+
+### Themes change material, not intent
+
+Aqua adds gloss and tint through `--a63-control-gloss`, `--a63-control-highlight`, and `--a63-control-shadow`. Terminal can flatten those values. The Button recipe does not branch on `theme`; it consumes the same variables in every theme.

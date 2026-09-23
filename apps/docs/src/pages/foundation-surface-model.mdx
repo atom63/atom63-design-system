@@ -1,0 +1,157 @@
+# Surface model
+
+Surfaces are the system's spatial grammar. They decide what feels like the page, what feels like a contained object, and what feels temporarily elevated above the rest of the interface.
+
+The shipped model separates static `surface` treatment from floating `overlay` treatment. Static recipes currently receive a low-lift default shadow; overlays receive a stronger elevation. The design rule is still restrained: use borders and contrast first, and reserve stronger shadows for spatially elevated UI.
+
+## Why this exists
+
+Without a surface model, every component invents its own depth:
+
+- cards get shadows because they look "nice";
+- inputs get inner shadows that fight borders;
+- dropdowns and dialogs use the same treatment as static panels;
+- dark mode turns into a stack of similar gray rectangles.
+
+The goal is to make depth meaningful. A user should be able to infer interaction from the surface treatment before reading any text.
+
+## Surface roles
+
+| Role | Canonical token | Tailwind/shadcn adapter | Typical use |
+|------|-----------------|-------------------------|-------------|
+| Page | `--a63-surface-page` | `background` | Routes, full-page layouts |
+| Object | `--a63-surface-panel` | `card` | Cards, panels, list sections |
+| Muted | `--a63-surface-muted` | `muted` | Toolbars, inactive rows, subtle fills |
+| Floating | `--a63-surface-overlay` | `popover` | Menus, popovers, dialogs |
+| Input | `--a63-surface-control` | recipe-owned (`input` is the border role) | Inputs, selects, textareas |
+| Border | `--a63-border-subtle` / `--a63-border-control` | `border` / `input` | Cards, fields, dividers |
+
+The tokens matter because they let components share intent. A dialog and a dropdown both use `--a63-surface-overlay` because they are temporary layers. A static settings panel should use `--a63-surface-panel`, even if it visually resembles one.
+
+## Elevation rules
+
+| Surface | Border | Shadow | Reason |
+|---------|--------|--------|--------|
+| Page canvas | No | No | It is the base layer |
+| Static card | Usually yes | Low lift in the shipped surface contract | It groups content without competing with overlays |
+| Input or trigger | Yes | No | The control is interactive, not elevated |
+| Popover / menu | Yes | Yes, subtle | It floats above the page |
+| Dialog / sheet | Yes | Yes | It interrupts the current layer |
+| OS window | Yes | Yes | It models an independent spatial object |
+
+Control-family shadows are separate from overlay elevation. A theme may give buttons a bevel or fields an inset, but controls still use state tokens rather than adopting the overlay shadow.
+
+## Theming the treatment: surface & overlay contracts
+
+The roles and elevation rules above describe the *default* look. Themes then reskin the **treatment** of a surface — its glass, bevel, phosphor, texture — without changing the contract's semantic role. A theme may separately remap semantic paint; color does not travel through these treatment handles. That variation runs through two contracts, mirroring the control contract:
+
+- **`surface`** — the static, in-flow container (cards, panels, frames, sections, the attached-tabs body).
+- **`overlay`** — the floating, elevated surface (popovers, menus, selects, tooltips, dialogs, sheets, drawers). Plus one overlay-only handle for drag elevation.
+
+Color is **not** part of the contract. A surface's fill still reads `--a63-surface-panel` / `--a63-surface-overlay`, its border reads `--a63-border-subtle`, its text reads `--a63-text-*` — all semantic. The contract carries only the theme-varying *treatment*, exactly like the control contract exposes gloss and shadow but not the action color.
+
+### The handle set
+
+Both archetypes expose the same core vocabulary (`X` = `surface` | `overlay`) with different `:root` defaults — a static surface has low lift, while a floating one elevates. Overlay adds a drag-shadow handle.
+
+| Handle | Purpose |
+|--------|---------|
+| `--a63-X-shadow` | Outer elevation — flush, bevel, drop, or glow |
+| `--a63-X-inner-shadow` | Recessed/inset treatment (a sunken well) |
+| `--a63-X-gloss` | Top-half sheen (a `background-image` gradient) — aqua glass |
+| `--a63-X-highlight` (+ `-opacity`) | Rim/edge specular highlight |
+| `--a63-X-backdrop` | `backdrop-filter` (blur/saturate) — glassy translucency |
+| `--a63-X-border-style` + `--a63-X-border-width` | Bevel — outset/inset/solid, 1–2px |
+| `--a63-X-texture-image` + `--a63-X-texture-blend` | A texture layer (scanline/pinstripe) and its blend mode |
+| `--a63-X-radius` | Optional family override; shipped themes leave it unset so the radius axis and recipe fallback win |
+| `--a63-overlay-drag-shadow` *(overlay only)* | Elevation while a floating surface is dragged (widgets, window frames) |
+
+Widgets and window frames are compositions over the overlay archetype. Widgets also have a specialized `widget` contract that aliases overlay handles and adds rim/weather hooks; window frames consume overlay handles directly while their geometry lives in `@atom63/os63`.
+
+### The three-layer flow
+
+Treatment resolves the same way the control contract does:
+
+1. **`:root` default** — surface and overlay shadows establish low and floating elevation. Gloss, highlight, backdrop, and texture default inert; borders default to `solid 1px`. Radius is deliberately *not* defaulted here.
+2. **Theme override** — a theme sets handles under `[data-a63-theme='…']`: Aqua adds gloss, backdrop blur, and highlights; Retro uses outset 2px borders and bevel shadows; Terminal adds a scanline texture and phosphor edges. Corner shape stays on the independent radius axis.
+3. **Recipe consumes** — a component reads the handles at its use-site, opting into as much or as little as it wants:
+
+```css
+background-image: var(--a63-surface-gloss), var(--a63-surface-texture-image);
+background-blend-mode: normal, var(--a63-surface-texture-blend);
+backdrop-filter: var(--a63-surface-backdrop);
+box-shadow: var(--a63-surface-inner-shadow, none), var(--a63-surface-shadow);
+border: var(--a63-surface-border-width) var(--a63-surface-border-style) var(--a63-border-subtle);
+border-radius: var(--a63-surface-radius, var(--radius-3xl));
+```
+
+Once a recipe references the handles, every theme reskins it for free — no per-component theme CSS.
+
+### Two rules that keep this safe
+
+- **Radius has no `:root` default.** Surface recipes have divergent radii (a card is round, a tooltip is tight), so a single contract default would flatten them. Each recipe reads `var(--a63-X-radius, <its own radius>)`; shipped themes leave this override unset, and the independent radius axis changes the fallback scale.
+- **The contract is additive.** Because every handle defaults to an inert value and every recipe reads it with a fallback to today's value, adding the contract changes nothing in the modern theme. A visible change in modern is a bug, not a feature. A surface that is glassy *by default* (a frosted control) keeps its literal `backdrop-filter` rather than consuming a handle that would default it away.
+
+## State vs elevation
+
+Do not use shadow as a generic interaction state.
+
+| Need | Prefer | Avoid |
+|------|--------|-------|
+| Hover feedback | Background or border shift | New shadow |
+| Pressed feedback | Motion, inset tone, `data-pressed` color | Drop shadow |
+| Focus feedback | Focus ring | Shadow glow |
+| Disabled state | Opacity and pointer behavior | Lowered shadow |
+| Floating layer | Popover/dialog shadow | Flat border only |
+
+State answers "what is happening to this control?" Elevation answers "where does this surface sit in space?" Mixing those two makes the interface harder to read.
+
+## Dark mode
+
+Dark mode changes the usefulness of shadows. On dark surfaces, shadows are less visible and often less useful. Border, contrast, and backdrop separation carry more of the work.
+
+Use these cues in dark mode:
+
+- border contrast for static separation;
+- background contrast for nested surfaces;
+- backdrop or overlay for modal focus;
+- subtle shadow only when a surface truly floats.
+
+## Decision rules
+
+1. Start flat.
+2. Add a border when content needs grouping.
+3. Add background contrast when a nested surface needs its own identity.
+4. Add shadow only when the object floats above the current layer.
+5. Use motion and color for state feedback, not elevation.
+
+## Anti-patterns
+
+```tsx
+// Avoid: every object asks for depth.
+<Button className="shadow-sm" />
+<Input className="shadow-sm" />
+<Card className="shadow-md" />
+```
+
+This makes static, editable, and floating elements compete for the same visual signal.
+
+```tsx
+// Prefer: depth follows spatial meaning.
+<Button />
+<Input />
+<Card className="border border-border" />
+<PopoverContent className="border border-border bg-popover shadow-lg/5" />
+```
+
+The button and input remain controls. The card remains a static object. The popover is the thing that floats.
+
+## Review checklist
+
+When reviewing a new component, ask:
+
+1. Is this surface static or floating?
+2. Is a shadow communicating depth, or just decoration?
+3. Does the treatment still work in dark mode?
+4. Is state feedback handled by state styles instead of elevation?
+5. Does this component use semantic surface tokens rather than primitive colors?

@@ -1,0 +1,101 @@
+import { AppearanceUiDemo } from '../components/appearance/appearance-ui-demo'
+
+# Appearance UI
+
+Appearance UI lives in `@atom63/ui-react/theme`. Apps choose the host surface, storage integration, and active sections; the controls, controller shape, and attribute application are shared.
+
+This keeps personalization from fragmenting across products. OS63 can expose OS-only controls, atom63.io can expose a smaller panel, and both use the same axis values as `@atom63/ui-foundation`.
+
+## Shared contract
+
+```tsx
+import {
+  AppearanceMenu,
+  AppearancePanel,
+  createPersonalizationController,
+  type AppearanceSectionId,
+  type PersonalizationController,
+  type PersonalizationState,
+} from '@atom63/ui-react/theme'
+```
+
+`AppearancePanel` is a bare body driven by a `PersonalizationController` and a `sections` allow-list. `AppearanceMenu` supplies the floating web surface, portal, trigger/shortcut, and Reset action. OS63 mounts the bare panel in Settings and opts into `os` and `iconTheme`.
+
+The available panel sections are `mode`, `theme`, `brand`, `surface`, `surfaceTint`, `typeScale`, `radius`, `font`, `os`, and `iconTheme`. Design language, input, and density are live foundation axes, but they are not currently appearance-panel sections.
+
+## Ownership
+
+| Layer | Owns |
+|-------|------|
+| `@atom63/ui-foundation` | Personalization-axis registry, values, defaults, labels, and typed environment contracts |
+| `@atom63/styles` | CSS variables, themes, recipe hooks, density/radius/material contracts |
+| `@atom63/ui-react/theme` | React controls, controller interface/helper, section composition, attribute application |
+| Product apps | Panel placement, storage key or existing-store adapter, allowed sections, wallpaper catalog, product-only settings |
+
+## Runtime model
+
+`applyPersonalization` writes state to `document.documentElement` by default (or an explicit root passed directly). It never writes shadcn aliases such as `--primary`. The optional controller factory adds localStorage persistence and auto-brand extraction; products with an existing store can implement the exported `PersonalizationController` interface instead.
+
+```tsx
+const defaultState: PersonalizationState = {
+  mode: 'system',
+  theme: 'modern',
+  brand: 'b1',
+  surface: 'n1',
+  surfaceTint: 0,
+  typeScale: 'normal',
+  radius: 'default',
+  font: 'sans',
+  os: 'macos',
+  iconTheme: 'realistic',
+  wallpaper: null,
+}
+
+const { PersonalizationProvider, usePersonalization } = createPersonalizationController({
+  storageKey: 'atom63:appearance',
+  defaultState,
+})
+```
+
+The applied state is exact:
+
+| Axis | Applied as |
+|------|------------|
+| Color mode | `.light` / `.dark` and `data-a63-mode` after resolving `system` |
+| Theme, brand, surface | `data-a63-theme`, `data-a63-brand`, `data-a63-surface` |
+| Surface tint | `--a63-surface-tint` clamped to 0–100% |
+| Type scale, radius, font | `data-a63-type-scale`, `data-a63-radius`, `data-a63-font` |
+| OS, icon theme | `data-a63-os`, `data-a63-icon-theme` |
+
+Wallpaper is consumer-defined state used by the controller's auto-brand extraction. It is not stamped as an attribute.
+
+## Product integration
+
+Use `AppearanceMenu` for a standalone web surface. Use `AppearancePanel` only when the product already supplies the container.
+
+Before mounting either control, import the shared style stack and add an `@source` scan for every rendered package that emits Tailwind classes. Appearance UI can typecheck while remaining partially unstyled when the consumer omits the `@atom63/ui-react` source tree.
+
+```tsx
+const sections: AppearanceSectionId[] = [
+  'mode',
+  'theme',
+  'brand',
+  'surface',
+  'surfaceTint',
+  'typeScale',
+  'radius',
+]
+
+function Appearance() {
+  const controller = usePersonalization()
+  return <AppearanceMenu controller={controller} sections={sections} />
+}
+```
+
+If a new axis becomes shared, add it to `@atom63/ui-foundation`, implement its runtime/style behavior, and only then decide whether it belongs in the appearance UI.
+
+Verify the integration with `pnpm check:app-consumption`, open the surface, exercise Reset, and confirm the expected `data-a63-*` attributes update on the target root.
+
+## Demo
+
+<AppearanceUiDemo />
