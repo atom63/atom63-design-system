@@ -7,19 +7,19 @@
     {
       "name": "@atom63/styles",
       "requested": "beta",
-      "resolved": "0.1.0-beta.1",
+      "resolved": "0.1.0-beta.2",
       "manifest": "node_modules/@atom63/styles/package.json"
     },
     {
       "name": "@atom63/ui-foundation",
       "requested": "beta",
-      "resolved": "0.1.1-beta.0",
+      "resolved": "0.1.1-beta.1",
       "manifest": "node_modules/@atom63/ui-foundation/package.json"
     },
     {
       "name": "@atom63/ui-react",
       "requested": "beta",
-      "resolved": "0.2.0-beta.3",
+      "resolved": "0.2.0-beta.6",
       "manifest": "node_modules/@atom63/ui-react/package.json"
     }
   ],

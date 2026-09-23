@@ -14,11 +14,11 @@ Current published beta versions:
 
 | Package | Beta version | Notes |
 | --- | --- | --- |
-| `@atom63/styles` | `0.1.0-beta.0` | CSS tokens, themes, contracts, utilities |
-| `@atom63/ui-foundation` | `0.1.1-beta.0` | Platform-neutral TypeScript contracts |
-| `@atom63/ui-react` | `0.2.0-beta.2` | React components, layout/media/theme subpaths |
+| `@atom63/styles` | `0.1.0-beta.2` | CSS tokens, themes, contracts, utilities, the token manifest (`./tokens.json`), and the Figma variable model (`./figma-sync.json`) |
+| `@atom63/ui-foundation` | `0.1.1-beta.1` | Platform-neutral TypeScript contracts |
+| `@atom63/ui-react` | `0.2.0-beta.6` | React components, layout/media/theme subpaths |
 
-`@atom63/ui-react@0.2.0-beta.2` pins `@base-ui/react` to `1.6.0` so adopters do not resolve a newer Base UI release with incompatible Tooltip types.
+These versions are the first published from GitHub Actions through npm trusted publishing, with provenance. `@atom63/ui-react@0.2.0-beta.6` resolves `vite dev` consumers to `dist`, ships the Tailwind utilities its components use in `styles.css`, and types `FeedbackState` icons. It still pins `@base-ui/react` to `1.6.0`.
 
 ## Dist-tag state
 
@@ -28,9 +28,9 @@ Current npm state:
 
 | Package | `beta` | `latest` |
 | --- | --- | --- |
-| `@atom63/styles` | `0.1.0-beta.0` | `0.1.0-beta.0` |
-| `@atom63/ui-foundation` | `0.1.1-beta.0` | `0.1.1-beta.0` |
-| `@atom63/ui-react` | `0.2.0-beta.2` | `0.2.0-beta.2` |
+| `@atom63/styles` | `0.1.0-beta.2` | `0.1.0-beta.2` |
+| `@atom63/ui-foundation` | `0.1.1-beta.1` | `0.1.1-beta.1` |
+| `@atom63/ui-react` | `0.2.0-beta.6` | `0.2.0-beta.6` |
 
 The initial npm publishes created `latest` automatically. npm currently returns `403` for deleting `latest` with the available token/session, so the mitigation is to keep `latest` synchronized with the current safe beta. Production/stable docs should still instruct consumers to install with `@beta` until a real stable release exists.
 
