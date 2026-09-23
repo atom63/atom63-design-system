@@ -45,7 +45,7 @@
   },
   "counts": {
     "rootValueExports": 426,
-    "rootTypeExports": 174,
+    "rootTypeExports": 176,
     "packageExportKeys": 71,
     "cssExportKeys": 65
   },
@@ -1759,6 +1759,14 @@
       "types": [
         {
           "name": "FeedbackStateAction",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "FeedbackStateIcon",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "FeedbackStateIconName",
           "proposedTier": "beta-supported-composition-conditional"
         },
         {

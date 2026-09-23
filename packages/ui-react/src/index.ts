@@ -275,6 +275,8 @@ export type { EmptyMediaVariant } from './components/empty'
 export { FeedbackState } from './components/feedback-state'
 export type {
   FeedbackStateAction,
+  FeedbackStateIcon,
+  FeedbackStateIconName,
   FeedbackStateKind,
   FeedbackStateProps,
   FeedbackStateSize,

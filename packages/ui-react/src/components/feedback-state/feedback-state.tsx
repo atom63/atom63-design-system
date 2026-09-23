@@ -3,7 +3,7 @@ import {
   type FeedbackStateSize,
   feedbackStateContract,
 } from '@atom63/ui-foundation'
-import { AlertTriangle, Clock, FileSearch, Inbox, SearchX, WifiOff } from 'lucide-react'
+import { AlertTriangle, Clock, FileSearch, Inbox, RefreshCw, SearchX, WifiOff } from 'lucide-react'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
@@ -13,21 +13,32 @@ import { Spinner } from '../spinner'
 
 export type { FeedbackStateKind, FeedbackStateSize }
 
-type IconName = string
-
-const feedbackIcons: Record<IconName, React.ComponentType<React.ComponentProps<'svg'>>> = {
+const feedbackIcons = {
   alertTriangle: AlertTriangle,
   clock: Clock,
   fileSearch: FileSearch,
   inbox: Inbox,
+  refreshCw: RefreshCw,
   searchX: SearchX,
   spinner: Spinner,
   wifiOff: WifiOff,
+} satisfies Record<string, React.ComponentType<React.ComponentProps<'svg'>>>
+
+/** A built-in icon name, or any element (for icons outside the built-in set). */
+export type FeedbackStateIconName = keyof typeof feedbackIcons
+export type FeedbackStateIcon = FeedbackStateIconName | React.ReactElement
+
+function renderFeedbackIcon(icon: FeedbackStateIcon | undefined): React.ReactNode {
+  if (icon === undefined) return null
+  if (typeof icon !== 'string') return icon
+  // Types reject unknown names; untyped callers get no icon rather than a crash.
+  const IconComponent = (feedbackIcons as Record<string, React.ComponentType<React.ComponentProps<'svg'>> | undefined>)[icon]
+  return IconComponent ? <IconComponent aria-hidden /> : null
 }
 
 export interface FeedbackStateAction {
   href?: string
-  icon?: IconName
+  icon?: FeedbackStateIcon
   label: string
   onClick?: () => void
   variant?: ButtonProps['variant']
@@ -38,7 +49,7 @@ export interface FeedbackStateProps {
   className?: string
   description?: string
   error?: unknown
-  icon?: IconName
+  icon?: FeedbackStateIcon
   query?: string
   showIcon?: boolean
   size?: FeedbackStateSize
@@ -84,7 +95,7 @@ const stateConfig = {
   },
 } as const satisfies Record<
   FeedbackStateKind,
-  { icon: IconName; defaultTitle: string; defaultDescription: string }
+  { icon: FeedbackStateIconName; defaultTitle: string; defaultDescription: string }
 >
 
 function getFeedbackDescription({
@@ -111,10 +122,9 @@ function getFeedbackDescription({
 }
 
 function FeedbackStateActionButton({ action }: { action: FeedbackStateAction }) {
-  const IconComponent = action.icon ? feedbackIcons[action.icon] : undefined
   const inner = (
     <>
-      {IconComponent ? <IconComponent aria-hidden /> : null}
+      {renderFeedbackIcon(action.icon)}
       {action.label}
     </>
   )
@@ -155,8 +165,7 @@ export function FeedbackState({
   const config = stateConfig[state]
   const finalDescription = getFeedbackDescription({ description, error, query, state })
   const finalTitle = title || config.defaultTitle
-  const iconName = icon || config.icon
-  const IconComponent = feedbackIcons[iconName]
+  const iconNode = renderFeedbackIcon(icon ?? config.icon)
 
   return (
     <div
@@ -169,9 +178,9 @@ export function FeedbackState({
       role={state === 'error' ? 'alert' : state === 'loading' ? 'status' : undefined}
     >
       <div className="a63-FeedbackState-header" data-slot="feedback-state-header">
-        {showIcon && IconComponent ? (
+        {showIcon && iconNode ? (
           <div className="a63-FeedbackState-media" data-slot="feedback-state-media">
-            <IconComponent aria-hidden />
+            {iconNode}
           </div>
         ) : null}
 
@@ -188,7 +197,7 @@ export function FeedbackState({
           {actions.map(action => (
             <FeedbackStateActionButton
               action={action}
-              key={`${action.label}-${action.href ?? action.icon ?? 'button'}`}
+              key={`${action.label}-${action.href ?? 'button'}`}
             />
           ))}
         </div>

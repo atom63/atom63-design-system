@@ -192,7 +192,7 @@
       "directory": "packages/ui-react",
       "manifestPath": "packages/ui-react/package.json",
       "name": "@atom63/ui-react",
-      "version": "0.2.0-beta.5",
+      "version": "0.2.0-beta.6",
       "private": false,
       "exports": {
         ".": {

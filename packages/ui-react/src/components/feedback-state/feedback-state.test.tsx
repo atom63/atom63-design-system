@@ -62,6 +62,30 @@ describe('FeedbackState', () => {
     expect(container.querySelector('[data-slot="feedback-state-media"]')).toBeNull()
   })
 
+  it('renders a built-in action icon such as refreshCw', () => {
+    const { getByRole } = render(
+      <FeedbackState actions={[{ icon: 'refreshCw', label: 'Retry', onClick: () => {} }]} state="error" />
+    )
+    expect(getByRole('button', { name: 'Retry' }).querySelector('svg')).not.toBeNull()
+  })
+
+  it('renders a custom icon element in the media slot and on actions', () => {
+    const { container, getByRole } = render(
+      <FeedbackState
+        actions={[{ icon: <svg data-testid="custom-action" />, label: 'Open' }]}
+        icon={<svg data-testid="custom-media" />}
+      />
+    )
+    expect(container.querySelector('[data-slot="feedback-state-media"] [data-testid="custom-media"]')).not.toBeNull()
+    expect(getByRole('button', { name: 'Open' }).querySelector('[data-testid="custom-action"]')).not.toBeNull()
+  })
+
+  it('rejects unknown icon names at compile time and renders no icon at runtime', () => {
+    // @ts-expect-error -- names outside the built-in set are a type error.
+    const { container } = render(<FeedbackState icon="notAnIcon" />)
+    expect(container.querySelector('[data-slot="feedback-state-media"]')).toBeNull()
+  })
+
   it('renders action buttons (onClick + href)', () => {
     const { getByRole } = render(
       <FeedbackState

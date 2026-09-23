@@ -77,12 +77,12 @@
   },
   "summary": {
     "sourceFamilies": 75,
-    "sourceExports": 600,
+    "sourceExports": 602,
     "sourceTierCounts": {
       "monitor-high-risk": 76,
       "preview-experimental-candidate": 31,
       "beta-supported-core": 314,
-      "beta-supported-composition-conditional": 179
+      "beta-supported-composition-conditional": 181
     },
     "sourceActionCounts": {
       "assign-owner-and-evidence": 16,
@@ -1269,11 +1269,11 @@
       "source": "./components/feedback-state",
       "family": "components/feedback-state",
       "kind": "component-family",
-      "totalExports": 5,
+      "totalExports": 7,
       "valueExports": 1,
-      "typeExports": 4,
+      "typeExports": 6,
       "tierCounts": {
-        "beta-supported-composition-conditional": 5
+        "beta-supported-composition-conditional": 7
       },
       "dominantTier": "beta-supported-composition-conditional",
       "blockingTier": "beta-supported-composition-conditional",
@@ -1288,6 +1288,8 @@
       "notableSymbols": [
         "FeedbackState",
         "FeedbackStateAction",
+        "FeedbackStateIcon",
+        "FeedbackStateIconName",
         "FeedbackStateKind",
         "FeedbackStateProps",
         "FeedbackStateSize"
