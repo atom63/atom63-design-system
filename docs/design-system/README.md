@@ -139,7 +139,8 @@ Web ↔ iOS component-token gap (including two commands above that are documente
 | [ui-react-portal-evidence.md](./ui-react-portal-evidence.md) | Partial stable-readiness evidence packet for PortalContainer |
 | [ui-react-preview-cleanup-plan.md](./ui-react-preview-cleanup-plan.md) | Preview-symbol cleanup plan for root exports that should move to preview/private before stable |
 | [ui-react-preview-migration.md](./ui-react-preview-migration.md) | Root-to-preview import guidance for beta adopters and stable/latest root narrowing |
-| [release-automation.md](./release-automation.md) | GitHub Actions beta release workflow and npm trusted publishing setup notes |
+| [release-automation.md](./release-automation.md) | GitHub Actions beta release workflow, stable/latest no-publish preflight, and npm trusted publishing setup notes |
+| [stable-release-policy.json](./stable-release-policy.json) | Machine-readable stable/latest dist-tag, registry readback, and rollback policy |
 | [publish-boundary-rfc.md](./publish-boundary-rfc.md) | Proposed public beta boundary and pre-publish approval gates |
 | [ui-react-root-api-audit.md](./ui-react-root-api-audit.md) | Proposed support tiers for the broad `@atom63/ui-react` root and public subpaths |
 | [package-metadata-audit.md](./package-metadata-audit.md) | First-wave package metadata and packed-content gaps |

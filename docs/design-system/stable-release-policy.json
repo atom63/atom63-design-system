@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "status": "stable-promotion-not-approved",
+  "firstWavePackages": [
+    "@atom63/styles",
+    "@atom63/ui-foundation",
+    "@atom63/ui-react"
+  ],
+  "distTags": {
+    "beta": {
+      "purpose": "Public prerelease adopter validation.",
+      "approval": "Manual approval is required before each publish=true beta run."
+    },
+    "latest": {
+      "purpose": "Stable default install channel.",
+      "approval": "Not approved. Requires explicit human approval after all stable-readiness blockers are resolved.",
+      "allowedBeforeStableReady": false
+    }
+  },
+  "stablePromotionPreflight": {
+    "publishAllowed": false,
+    "command": "pnpm check:stable-release-preflight",
+    "requiredEvidence": [
+      "all benchmark-parity blockers resolved",
+      "stable/latest dist-tag approval recorded",
+      "stable registry readback defined and passing",
+      "rollback owner and steps recorded"
+    ]
+  },
+  "registryReadback": [
+    "npm view @atom63/styles@latest name version dist-tags --json",
+    "npm view @atom63/ui-foundation@latest name version dist-tags --json",
+    "npm view @atom63/ui-react@latest name version dist-tags dependencies --json"
+  ],
+  "rollback": {
+    "owner": "release-engineering",
+    "policy": "Rollback is dist-tag first. Move latest back to the previous approved stable version or remove the accidental latest tag before considering a package republish.",
+    "commands": [
+      "npm dist-tag add <package>@<previous-stable-version> latest",
+      "npm dist-tag rm <package> latest",
+      "npm deprecate <package>@<bad-version> \"Use <previous-stable-version>; this release was withdrawn.\""
+    ],
+    "notes": [
+      "Never unpublish unless npm support and package-policy review approve it.",
+      "After rollback, rerun registry readback and adopter smoke before announcing the fix."
+    ]
+  }
+}

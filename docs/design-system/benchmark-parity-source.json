@@ -388,22 +388,27 @@
           "reference": "https://github.com/Shopify/polaris/releases"
         }
       ],
-      "atom63Status": "A manual beta workflow has dry-run preflight, guardrails, an environment boundary, trusted-publisher intent, and npm provenance. Stable/latest dist-tag policy and a stable promotion workflow are not decided.",
+      "atom63Status": "The beta workflow has dry-run preflight, guardrails, environment boundaries, trusted-publisher intent, and npm provenance. Stable/latest promotion now has a no-publish policy and machine-readable preflight that records the unapproved latest channel, registry readback, package versions, and dist-tag-first rollback steps. Stable/latest publishing remains unapproved until all blockers are resolved and the workflow is explicitly promoted from dry-run policy to an approved release path.",
       "currentEvidence": {
         "docs": [
           "docs/design-system/release-automation.md",
+          "docs/design-system/stable-release-policy.json",
+          "docs/design-system/audits/stable-release-preflight.json",
           "docs/design-system/publish-approval-packet.md",
           ".github/workflows/release-beta.yml"
         ],
-        "commands": ["pnpm changeset status --verbose"]
+        "commands": [
+          "pnpm changeset status --verbose",
+          "pnpm check:stable-release-preflight"
+        ]
       },
       "gaps": [
-        "Resolve npm latest/dist-tag policy before stable promotion.",
-        "Define stable promotion, rollback, and registry verification steps.",
-        "Keep publish execution manually approved; this board is a dry-run guardrail only."
+        "Keep publish execution manually approved; this board and stable preflight remain no-publish guardrails.",
+        "After all stable-readiness blockers are resolved, approve and test a dedicated stable/latest workflow or release runbook before assigning the latest channel.",
+        "Run stable/latest registry readback only after explicit stable promotion approval."
       ],
-      "stableGate": "blocker",
-      "nextAction": "Approve the stable/latest dist-tag and rollback policy, then add a no-publish stable promotion preflight.",
+      "stableGate": "warning",
+      "nextAction": "Keep the no-publish stable preflight green, then convert it into an approved stable/latest promotion workflow only after all remaining stable-readiness blockers are resolved.",
       "ownerLane": "release-engineering"
     },
     {

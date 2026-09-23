@@ -80,9 +80,45 @@ The workflow also references a GitHub environment named `npm-publish`. Create it
 
 9. Run external/adopter smoke.
 
+## Stable/latest promotion policy
+
+Stable/latest promotion is not approved yet. The source of truth is
+[`stable-release-policy.json`](./stable-release-policy.json), and its generated
+readback lives at [`audits/stable-release-preflight.json`](./audits/stable-release-preflight.json).
+
+Run the no-publish stable preflight before discussing a stable promotion:
+
+```bash
+pnpm check:stable-release-preflight
+```
+
+The check is intentionally conservative:
+
+- `latest` is the stable default install channel and is not allowed before all
+  stable-readiness blockers are resolved.
+- the preflight must remain `publishAllowed: false` until a separate human
+  approval records the stable/latest decision.
+- first-wave package versions are read from package manifests and recorded in a
+  generated audit artifact.
+- registry readback and rollback commands must stay documented before any
+  stable/latest release can proceed.
+
+Required stable registry readback after an approved promotion:
+
+```bash
+npm view @atom63/styles@latest name version dist-tags --json
+npm view @atom63/ui-foundation@latest name version dist-tags --json
+npm view @atom63/ui-react@latest name version dist-tags dependencies --json
+```
+
+Rollback is dist-tag first: move `latest` back to the previous approved stable
+version or remove the accidental `latest` tag, then rerun registry readback and
+adopter smoke. Do not unpublish unless npm support and package-policy review
+approve it.
+
 ## Current caveats
 
-- `latest` exists on the beta packages because the first manual npm publishes created it. The current mitigation is keeping `latest` synchronized with `beta`; stable release policy still needs a final decision.
+- `latest` exists on the beta packages because the first manual npm publishes created it. The current mitigation is keeping `latest` synchronized with `beta`; stable/latest promotion remains not approved by policy.
 - The workflow currently uses `changeset publish` through `pnpm release`. It should publish only package versions that are not already present in npm.
 - The workflow does not create release PRs yet. A future improvement can add Changesets action or a dedicated version workflow.
 - No npm token is stored in this repo. If trusted publisher is not configured in npm, `publish=true` should fail rather than falling back to a local token.
