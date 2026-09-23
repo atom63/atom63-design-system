@@ -51,7 +51,7 @@ function Gallery({ items }: { items: MediaLightboxItem[] }) {
         {items.map((item, itemIndex) => (
           <button
             aria-label={`View ${item.title}`}
-            className="bg-muted focus-visible:ring-ring relative aspect-3/2 overflow-hidden rounded-lg outline-none focus-visible:ring-2"
+            className="relative aspect-3/2 overflow-hidden rounded-lg bg-muted outline-none focus-visible:ring-2 focus-visible:ring-ring"
             key={item.id}
             onClick={event => {
               lightbox.openAt(itemIndex, event.currentTarget)
@@ -100,7 +100,7 @@ function ComposedGallery({ items }: { items: MediaLightboxItem[] }) {
         {items.map((item, itemIndex) => (
           <button
             aria-label={`View ${item.title}`}
-            className="group border-border/60 bg-card text-card-foreground focus-visible:ring-ring flex aspect-4/3 flex-col justify-end overflow-hidden rounded-2xl border p-4 text-left outline-none focus-visible:ring-2"
+            className="group flex aspect-4/3 flex-col justify-end overflow-hidden rounded-2xl border border-border/60 bg-card p-4 text-left text-card-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
             key={item.id}
             onClick={event => {
               lightbox.openAt(itemIndex, event.currentTarget)

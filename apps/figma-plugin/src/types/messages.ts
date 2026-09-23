@@ -3,7 +3,6 @@
  * Type-safe message interfaces for UI ↔ Main thread communication
  */
 
-
 // ============================================================================
 // COLLECTION & STYLE DATA TYPES
 // ============================================================================
@@ -48,12 +47,10 @@ export interface SelectedStyleGroup {
 // UI → MAIN THREAD MESSAGES
 // ============================================================================
 
-
 /** Request list of Figma variable collections */
 export interface GetCollectionsMessage {
   type: 'get-collections'
 }
-
 
 /** Figma font family plus the available styles exposed to plugins */
 export interface FontFamilyInfo {
@@ -66,17 +63,12 @@ export interface GetStylesMessage {
   type: 'get-styles'
 }
 
-
-
-
-
 /** CSS file in export result */
 export interface CSSFileInfo {
   content: string
   name: string
   variableCount: number
 }
-
 
 /** Request detailed style list for the styles manager */
 export interface GetStyleDetailsMessage {
@@ -312,7 +304,6 @@ export interface StylesEditedMessage {
   type: 'styles-edited'
 }
 
-
 /** Resize plugin window */
 export interface ResizeWindowMessage {
   data: {
@@ -480,10 +471,6 @@ export interface VariableValuesUpdatedMessage {
   type: 'variable-values-updated'
 }
 
-
-
-
-
 /** Scale numeric variable values by a factor */
 export interface ScaleVariableValuesMessage {
   data: {
@@ -506,7 +493,6 @@ export interface VariableValuesScaledMessage {
   }
   type: 'variable-values-scaled'
 }
-
 
 /** Close the plugin */
 export interface CloseMessage {
@@ -616,7 +602,6 @@ export interface ComponentGenerationFailure {
   stage: string
 }
 
-
 /** Union of all UI → Main thread messages */
 export type UIToMainMessage =
   | GetCollectionsMessage
@@ -649,8 +634,6 @@ export type UIToMainMessage =
 // MAIN THREAD → UI MESSAGES
 // ============================================================================
 
-
-
 /** List of available collections */
 export interface CollectionsListMessage {
   data: {
@@ -667,11 +650,6 @@ export interface StylesListMessage {
   }
   type: 'styles-list'
 }
-
-
-
-
-
 
 /** Progress update during long operations */
 export interface ProgressUpdateMessage {
@@ -696,7 +674,13 @@ export interface SyncPlanSummary {
     orphaned: string[]
     typeConflicts: string[]
   }[]
-  totals: { create: number; update: number; unchanged: number; orphaned: number; typeConflicts: number }
+  totals: {
+    create: number
+    update: number
+    unchanged: number
+    orphaned: number
+    typeConflicts: number
+  }
 }
 
 export interface SyncModelSummary {
@@ -746,14 +730,11 @@ export interface DependencyCheckResultMessage {
   type: 'dependency-check-result'
 }
 
-
 /** Settings loaded from clientStorage */
 export interface SettingsLoadedMessage {
   data: PluginSettings
   type: 'settings-loaded'
 }
-
-
 
 /** Union of all Main thread → UI messages */
 export type MainToUIMessage =
@@ -798,4 +779,3 @@ export type PluginMessageType = PluginMessage['type']
 /** Helper to extract data type for a specific message type */
 export type MessageDataType<T extends PluginMessageType> =
   Extract<PluginMessage, { type: T }> extends { data: infer D } ? D : never
-

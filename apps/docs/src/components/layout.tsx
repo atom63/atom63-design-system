@@ -32,10 +32,10 @@ export function Layout({ activeArea, children, activeSection, sidebar }: LayoutP
   useDocScrollRestoration(scrollKey)
 
   return (
-    <div className="docs-shell bg-background text-foreground h-dvh overflow-hidden [--header-height:calc(--spacing(14))]">
+    <div className="docs-shell h-dvh overflow-hidden bg-background text-foreground [--header-height:calc(--spacing(14))]">
       <SidebarProvider className="flex h-full overflow-hidden" defaultOpen>
         <a
-          className="focus:bg-primary focus:text-primary-foreground sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-100 focus:rounded-md focus:px-3 focus:py-2 focus:text-sm"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-100 focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-sm focus:text-primary-foreground"
           href="#design-system-main"
         >
           Skip to content
@@ -49,7 +49,7 @@ export function Layout({ activeArea, children, activeSection, sidebar }: LayoutP
             >
               <Link
                 aria-label="Atom63 design system home"
-                className="group focus-visible:ring-ring focus-visible:ring-offset-background flex size-11 shrink-0 items-center justify-center rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none lg:size-9"
+                className="group flex size-11 shrink-0 items-center justify-center rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none lg:size-9"
                 to="/"
               >
                 <AppLogo
@@ -143,7 +143,7 @@ function HeaderNavLink({
   return (
     <Link
       aria-current={isActive ? 'page' : undefined}
-      className="docs-header-nav-link focus-visible:ring-ring focus-visible:ring-offset-background text-muted-foreground hover:text-foreground relative flex h-11 items-center rounded-sm px-2.5 text-sm font-medium transition-colors duration-150 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none motion-reduce:transition-none lg:h-9 lg:px-2"
+      className="docs-header-nav-link relative flex h-11 items-center rounded-sm px-2.5 text-sm font-medium text-muted-foreground transition-colors duration-150 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:outline-none motion-reduce:transition-none lg:h-9 lg:px-2"
       data-active={isActive || undefined}
       to={to}
     >

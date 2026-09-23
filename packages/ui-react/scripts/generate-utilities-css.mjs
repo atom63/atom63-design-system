@@ -41,7 +41,9 @@ try {
   if (process.argv.includes('--check')) {
     const current = await readFile(outputPath, 'utf8').catch(() => '')
     if (current !== content) {
-      process.stderr.write('src/styles/utilities.css is stale. Run: pnpm --filter @atom63/ui-react generate:utilities\n')
+      process.stderr.write(
+        'src/styles/utilities.css is stale. Run: pnpm --filter @atom63/ui-react generate:utilities\n'
+      )
       process.exitCode = 1
     } else {
       process.stdout.write('ui-react utilities.css is current.\n')

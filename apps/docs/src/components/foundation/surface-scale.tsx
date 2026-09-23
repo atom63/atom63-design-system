@@ -57,16 +57,16 @@ export function SurfaceScale({ mode }: SurfaceScaleProps) {
         {SURFACE_STEPS.map(step => (
           <div key={step} className="min-w-0">
             <div
-              className={clsx('border-border h-5 rounded-sm border sm:h-6', bg[step])}
+              className={clsx('h-5 rounded-sm border border-border sm:h-6', bg[step])}
               title={`--${surfaceVar}-${step}`}
             />
-            <span className="text-muted-foreground mt-1 block text-center font-mono text-[9px]">
+            <span className="mt-1 block text-center font-mono text-[9px] text-muted-foreground">
               {step}
             </span>
           </div>
         ))}
       </div>
-      <p className="text-muted-foreground mt-1.5 text-[11px]">
+      <p className="mt-1.5 text-[11px] text-muted-foreground">
         Utility reference: <code>bg-{primitivePrefix}-N</code>
       </p>
     </FoundationPreviewPanel>

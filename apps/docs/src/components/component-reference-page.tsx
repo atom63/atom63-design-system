@@ -147,7 +147,7 @@ function StoryModulePreview({
 
 function PreviewUnavailable({ reason }: { reason: string }) {
   return (
-    <p className="text-muted-foreground m-0 text-sm" role="status">
+    <p className="m-0 text-sm text-muted-foreground" role="status">
       {reason}
     </p>
   )
@@ -242,10 +242,10 @@ export function ComponentPreview({
           fallback={
             <div
               aria-label="Loading representative preview"
-              className="border-border/80 bg-card/40 my-6 flex min-h-44 w-full items-center justify-center rounded-xl border"
+              className="my-6 flex min-h-44 w-full items-center justify-center rounded-xl border border-border/80 bg-card/40"
               role="status"
             >
-              <span className="bg-muted h-8 w-32 animate-pulse rounded-md motion-reduce:animate-none" />
+              <span className="h-8 w-32 animate-pulse rounded-md bg-muted motion-reduce:animate-none" />
             </div>
           }
         >
@@ -260,7 +260,7 @@ export function ComponentPreview({
 
 function StatusBadge({ status }: { status: ComponentCatalogItem['status'] }) {
   return (
-    <span className="border-border bg-muted/50 text-muted-foreground inline-flex min-h-7 items-center rounded-full border px-2.5 text-xs font-medium capitalize">
+    <span className="inline-flex min-h-7 items-center rounded-full border border-border bg-muted/50 px-2.5 text-xs font-medium text-muted-foreground capitalize">
       {status}
     </span>
   )

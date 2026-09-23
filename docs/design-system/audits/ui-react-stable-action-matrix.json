@@ -380,12 +380,7 @@
         "browser/interaction evidence where relevant",
         "migration policy if kept public"
       ],
-      "notableSymbols": [
-        "InputOTP",
-        "InputOTPGroup",
-        "InputOTPSeparator",
-        "InputOTPSlot"
-      ],
+      "notableSymbols": ["InputOTP", "InputOTPGroup", "InputOTPSeparator", "InputOTPSlot"],
       "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
       "promotionDecision": {
         "id": "source:./components/input-otp",
@@ -545,11 +540,7 @@
         "browser/interaction evidence where relevant",
         "migration policy if kept public"
       ],
-      "notableSymbols": [
-        "ProgressiveBlur",
-        "ProgressiveBlurPosition",
-        "ProgressiveBlurProps"
-      ],
+      "notableSymbols": ["ProgressiveBlur", "ProgressiveBlurPosition", "ProgressiveBlurProps"],
       "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
       "promotionDecision": {
         "id": "source:./components/progressive-blur",
@@ -609,11 +600,7 @@
         "browser/interaction evidence where relevant",
         "migration policy if kept public"
       ],
-      "notableSymbols": [
-        "useExtractColor",
-        "UseExtractColorOptions",
-        "UseExtractColorReturn"
-      ],
+      "notableSymbols": ["useExtractColor", "UseExtractColorOptions", "UseExtractColorReturn"],
       "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
       "promotionDecision": {
         "id": "source:./hooks/use-extract-color",
@@ -1981,13 +1968,7 @@
         "external packed-consumer smoke",
         "dependency and public type compatibility review"
       ],
-      "notableSymbols": [
-        "Radio",
-        "RadioGroup",
-        "RadioGroupItem",
-        "RadioGroupProps",
-        "RadioProps"
-      ],
+      "notableSymbols": ["Radio", "RadioGroup", "RadioGroupItem", "RadioGroupProps", "RadioProps"],
       "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
     },
     {
@@ -2086,11 +2067,7 @@
         "external packed-consumer smoke",
         "dependency and public type compatibility review"
       ],
-      "notableSymbols": [
-        "SegmentedControl",
-        "SegmentedControlItem",
-        "SegmentedControlProps"
-      ],
+      "notableSymbols": ["SegmentedControl", "SegmentedControlItem", "SegmentedControlProps"],
       "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
     },
     {

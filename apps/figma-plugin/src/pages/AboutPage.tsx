@@ -30,8 +30,8 @@ export function AboutPage() {
         <AnimatedLogo colored height={48} variant="vertical" />
         <span className={styles.version}>v1.0.0-beta</span>
         <p className={styles.tagline}>
-          The Figma companion for the Atom63 design system: sync its tokens into Figma variables
-          and manage them.
+          The Figma companion for the Atom63 design system: sync its tokens into Figma variables and
+          manage them.
         </p>
       </div>
 

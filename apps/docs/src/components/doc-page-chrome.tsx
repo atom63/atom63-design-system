@@ -35,10 +35,10 @@ export function DocBreadcrumb({
 
   return (
     <nav aria-label="Breadcrumb" className="docs-page-breadcrumb">
-      <ol className="text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm">
+      <ol className="flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground">
         <li>
           <Link
-            className="hover:text-foreground rounded-sm transition-colors"
+            className="rounded-sm transition-colors hover:text-foreground"
             to={pathForDoc(area)}
           >
             {DOC_AREA_LABELS[area]}
@@ -85,17 +85,17 @@ function FooterNavLink({
 
   return (
     <Link
-      className={`group focus-visible:ring-ring flex flex-col gap-1 rounded-lg border p-4 focus-visible:ring-2 focus-visible:outline-none ${docNavSurface} ${
+      className={`group flex flex-col gap-1 rounded-lg border p-4 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none ${docNavSurface} ${
         isNext ? 'sm:col-start-2 sm:items-end sm:text-right' : ''
       }`}
       to={pathForDoc(entry.area, entry.slug)}
     >
-      <span className="text-muted-foreground flex items-center gap-1.5 text-xs">
+      <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
         {isNext ? null : <ArrowLeft aria-hidden="true" className="size-3.5" />}
         {isNext ? 'Next' : 'Previous'}
         {isNext ? <ArrowRight aria-hidden="true" className="size-3.5" /> : null}
       </span>
-      <span className="text-foreground text-sm font-medium">{entry.label}</span>
+      <span className="text-sm font-medium text-foreground">{entry.label}</span>
     </Link>
   )
 }

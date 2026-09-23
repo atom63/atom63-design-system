@@ -10,14 +10,14 @@ type TokenSwatchProps = {
 
 export function TokenSwatch({ name, className, hint, variable }: TokenSwatchProps) {
   return (
-    <div className="border-border bg-background/70 flex items-center gap-3 rounded-md border p-2.5">
+    <div className="flex items-center gap-3 rounded-md border border-border bg-background/70 p-2.5">
       <div
-        className={`border-border size-8 shrink-0 rounded-sm border ${className ?? ''}`}
+        className={`size-8 shrink-0 rounded-sm border border-border ${className ?? ''}`}
         style={variable ? { backgroundColor: `var(${variable})` } : undefined}
       />
       <div>
-        <p className="text-foreground font-mono text-xs">{name}</p>
-        {hint ? <p className="text-muted-foreground text-xs">{hint}</p> : null}
+        <p className="font-mono text-xs text-foreground">{name}</p>
+        {hint ? <p className="text-xs text-muted-foreground">{hint}</p> : null}
       </div>
     </div>
   )

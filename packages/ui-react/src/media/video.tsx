@@ -67,7 +67,7 @@ const Video = forwardRef<HTMLVideoElement, VideoProps>(
             type={source.type || detectVideoType(source.src)}
           />
         ))}
-        <p className="text-muted-foreground p-4 text-center">{fallbackText}</p>
+        <p className="p-4 text-center text-muted-foreground">{fallbackText}</p>
       </video>
     )
   }

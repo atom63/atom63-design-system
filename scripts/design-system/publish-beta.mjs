@@ -24,7 +24,9 @@ const tag = 'beta'
 
 function isPublished(name, version) {
   try {
-    execFileSync('npm', ['view', `${name}@${version}`, 'version'], { stdio: ['ignore', 'pipe', 'ignore'] })
+    execFileSync('npm', ['view', `${name}@${version}`, 'version'], {
+      stdio: ['ignore', 'pipe', 'ignore'],
+    })
     return true
   } catch {
     return false
@@ -36,19 +38,30 @@ let published = 0
 try {
   for (const directory of packageDirectories) {
     const packageDir = path.join(root, directory)
-    const { name, version, private: isPrivate, files = [] } = JSON.parse(readFileSync(path.join(packageDir, 'package.json'), 'utf8'))
+    const {
+      name,
+      version,
+      private: isPrivate,
+      files = [],
+    } = JSON.parse(readFileSync(path.join(packageDir, 'package.json'), 'utf8'))
     if (isPrivate) throw new Error(`${name} is private and cannot be published`)
     if (files.includes('dist') && !existsSync(path.join(packageDir, 'dist/index.js'))) {
       throw new Error(`${name} has no dist/index.js; build it before publishing`)
     }
-    if (!/-beta\.\d+$/.test(version)) throw new Error(`${name}@${version} is not a beta version; refusing to publish it to "${tag}"`)
+    if (!/-beta\.\d+$/.test(version))
+      throw new Error(
+        `${name}@${version} is not a beta version; refusing to publish it to "${tag}"`
+      )
     if (isPublished(name, version)) {
       process.stdout.write(`skip ${name}@${version} (already on npm)\n`)
       continue
     }
 
     const before = new Set(readdirSync(outDir))
-    execFileSync('pnpm', ['pack', '--pack-destination', outDir], { cwd: packageDir, stdio: ['ignore', 'ignore', 'inherit'] })
+    execFileSync('pnpm', ['pack', '--pack-destination', outDir], {
+      cwd: packageDir,
+      stdio: ['ignore', 'ignore', 'inherit'],
+    })
     const tarball = readdirSync(outDir).find(file => !before.has(file))
     if (!tarball) throw new Error(`pnpm pack produced no tarball for ${name}`)
 
@@ -62,4 +75,6 @@ try {
   rmSync(outDir, { recursive: true, force: true })
 }
 
-process.stdout.write(`${dryRun ? 'Dry run: would publish' : 'Published'} ${published} package(s) to "${tag}".\n`)
+process.stdout.write(
+  `${dryRun ? 'Dry run: would publish' : 'Published'} ${published} package(s) to "${tag}".\n`
+)

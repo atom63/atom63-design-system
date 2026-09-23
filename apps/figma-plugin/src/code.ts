@@ -1707,7 +1707,10 @@ async function handleUIMessage(msg: UIToMainMessage) {
     case 'sync-preview': {
       try {
         const plan = planSync(syncModel, await readSnapshot(variablesApi, syncModel))
-        figma.ui.postMessage({ type: 'sync-preview-result', data: { model: syncModel.summary, plan: summarizePlan(plan) } })
+        figma.ui.postMessage({
+          type: 'sync-preview-result',
+          data: { model: syncModel.summary, plan: summarizePlan(plan) },
+        })
       } catch (error) {
         figma.ui.postMessage({ type: 'sync-error', data: { message: errorMessage(error) } })
       }
@@ -1719,7 +1722,10 @@ async function handleUIMessage(msg: UIToMainMessage) {
         const plan = planSync(syncModel, await readSnapshot(variablesApi, syncModel))
         const applied = await applyPlan(variablesApi, syncModel, plan)
         const verification = planSync(syncModel, await readSnapshot(variablesApi, syncModel))
-        figma.ui.postMessage({ type: 'sync-apply-result', data: { applied, verification: summarizePlan(verification) } })
+        figma.ui.postMessage({
+          type: 'sync-apply-result',
+          data: { applied, verification: summarizePlan(verification) },
+        })
         figma.notify(`Atom63 sync: ${applied.created} created, ${applied.updated} updated`)
       } catch (error) {
         figma.ui.postMessage({ type: 'sync-error', data: { message: errorMessage(error) } })

@@ -3,7 +3,7 @@ import { cn } from '../lib/cn'
 
 /** Minimal loading placeholder (inlined — no @atom63/ui dep). */
 function Skeleton({ className }: { className?: string }): React.ReactElement {
-  return <div className={cn('bg-muted animate-pulse rounded-md', className)} />
+  return <div className={cn('animate-pulse rounded-md bg-muted', className)} />
 }
 
 export const DEFAULT_PAGE_SKELETON_COUNT = 6

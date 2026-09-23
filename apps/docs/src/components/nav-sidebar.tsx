@@ -264,7 +264,7 @@ function DomainNavLink({
   return (
     <Link
       aria-current={isActive ? 'page' : undefined}
-      className={`focus-visible:ring-ring focus-visible:ring-offset-sidebar flex h-11 items-center rounded-md px-2 text-base font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${
+      className={`flex h-11 items-center rounded-md px-2 text-base font-medium transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-sidebar focus-visible:outline-none ${
         isActive
           ? 'bg-sidebar-accent text-sidebar-accent-foreground'
           : 'text-muted-foreground hover:bg-sidebar-accent/60 hover:text-foreground'

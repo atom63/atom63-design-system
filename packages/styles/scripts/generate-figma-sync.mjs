@@ -36,16 +36,86 @@ const layerCollections = {
 // Axis collections. `selector` recognizes the manifest scope that remaps a
 // token for one axis value; `defaultMode` is the value :root represents.
 const axes = [
-  { id: 'mode', collection: 'Atom63 Mode', attribute: 'data-a63-mode', pattern: /a63-mode=['"](\w+)['"]|\.(dark|light)\b/, modes: ['light', 'dark'], defaultMode: 'light' },
-  { id: 'brand', collection: 'Atom63 Brand', attribute: 'data-a63-brand', pattern: /a63-brand=['"](b\d)['"]/, modes: ['b1', 'b2', 'b3', 'b4', 'b5', 'b6'], defaultMode: 'b1' },
-  { id: 'surface', collection: 'Atom63 Surface', attribute: 'data-a63-surface', pattern: /a63-surface=['"](n\d)['"]/, modes: ['n1', 'n2', 'n3', 'n4', 'n5', 'n6'], defaultMode: 'n1' },
-  { id: 'design-language', collection: 'Atom63 Design Language', attribute: 'data-a63-design-language', pattern: /a63-design-language=['"](\w+)['"]/, modes: ['web', 'ios'], defaultMode: 'web' },
-  { id: 'input', collection: 'Atom63 Input', attribute: 'data-a63-input', pattern: /a63-input=['"](\w+)['"]/, modes: ['pointer', 'touch', 'keyboard'], defaultMode: 'pointer' },
-  { id: 'density', collection: 'Atom63 Density', attribute: 'data-a63-density', pattern: /a63-density=['"](\w+)['"]/, modes: ['comfortable', 'compact'], defaultMode: 'comfortable' },
-  { id: 'radius', collection: 'Atom63 Radius', attribute: 'data-a63-radius', pattern: /a63-radius=['"](\w+)['"]/, modes: ['default', 'none', 'subtle', 'round'], defaultMode: 'default' },
-  { id: 'type-scale', collection: 'Atom63 Type Scale', attribute: 'data-a63-type-scale', pattern: /a63-type-scale=['"](\w+)['"]/, modes: ['normal', 'compact', 'comfortable', 'large'], defaultMode: 'normal' },
-  { id: 'font', collection: 'Atom63 Font', attribute: 'data-a63-font', pattern: /a63-font=['"](\w+)['"]/, modes: ['sans', 'serif', 'mono', 'pixel'], defaultMode: 'sans' },
-  { id: 'window-size', collection: 'Atom63 Window Size', attribute: 'data-window-size', pattern: /window-size=['"](\w+)['"]/, modes: ['md', 'sm', 'xs'], defaultMode: 'md' },
+  {
+    id: 'mode',
+    collection: 'Atom63 Mode',
+    attribute: 'data-a63-mode',
+    pattern: /a63-mode=['"](\w+)['"]|\.(dark|light)\b/,
+    modes: ['light', 'dark'],
+    defaultMode: 'light',
+  },
+  {
+    id: 'brand',
+    collection: 'Atom63 Brand',
+    attribute: 'data-a63-brand',
+    pattern: /a63-brand=['"](b\d)['"]/,
+    modes: ['b1', 'b2', 'b3', 'b4', 'b5', 'b6'],
+    defaultMode: 'b1',
+  },
+  {
+    id: 'surface',
+    collection: 'Atom63 Surface',
+    attribute: 'data-a63-surface',
+    pattern: /a63-surface=['"](n\d)['"]/,
+    modes: ['n1', 'n2', 'n3', 'n4', 'n5', 'n6'],
+    defaultMode: 'n1',
+  },
+  {
+    id: 'design-language',
+    collection: 'Atom63 Design Language',
+    attribute: 'data-a63-design-language',
+    pattern: /a63-design-language=['"](\w+)['"]/,
+    modes: ['web', 'ios'],
+    defaultMode: 'web',
+  },
+  {
+    id: 'input',
+    collection: 'Atom63 Input',
+    attribute: 'data-a63-input',
+    pattern: /a63-input=['"](\w+)['"]/,
+    modes: ['pointer', 'touch', 'keyboard'],
+    defaultMode: 'pointer',
+  },
+  {
+    id: 'density',
+    collection: 'Atom63 Density',
+    attribute: 'data-a63-density',
+    pattern: /a63-density=['"](\w+)['"]/,
+    modes: ['comfortable', 'compact'],
+    defaultMode: 'comfortable',
+  },
+  {
+    id: 'radius',
+    collection: 'Atom63 Radius',
+    attribute: 'data-a63-radius',
+    pattern: /a63-radius=['"](\w+)['"]/,
+    modes: ['default', 'none', 'subtle', 'round'],
+    defaultMode: 'default',
+  },
+  {
+    id: 'type-scale',
+    collection: 'Atom63 Type Scale',
+    attribute: 'data-a63-type-scale',
+    pattern: /a63-type-scale=['"](\w+)['"]/,
+    modes: ['normal', 'compact', 'comfortable', 'large'],
+    defaultMode: 'normal',
+  },
+  {
+    id: 'font',
+    collection: 'Atom63 Font',
+    attribute: 'data-a63-font',
+    pattern: /a63-font=['"](\w+)['"]/,
+    modes: ['sans', 'serif', 'mono', 'pixel'],
+    defaultMode: 'sans',
+  },
+  {
+    id: 'window-size',
+    collection: 'Atom63 Window Size',
+    attribute: 'data-window-size',
+    pattern: /window-size=['"](\w+)['"]/,
+    modes: ['md', 'sm', 'xs'],
+    defaultMode: 'md',
+  },
 ]
 
 const figmaTypes = {
@@ -112,10 +182,17 @@ function resolveInPage({ attributes, tokens }) {
     probe.style.color = ''
     probe.style.color = `color(from ${value} srgb r g b / alpha)`
     if (!probe.style.color) return null
-    const match = /^color\(srgb ([-\d.e]+) ([-\d.e]+) ([-\d.e]+)(?: \/ ([-\d.e]+))?\)$/.exec(getComputedStyle(probe).color)
+    const match = /^color\(srgb ([-\d.e]+) ([-\d.e]+) ([-\d.e]+)(?: \/ ([-\d.e]+))?\)$/.exec(
+      getComputedStyle(probe).color
+    )
     if (!match) return null
     const channel = text => Math.round(Math.min(1, Math.max(0, Number(text))) * 1e6) / 1e6
-    return { r: channel(match[1]), g: channel(match[2]), b: channel(match[3]), a: channel(match[4] ?? '1') }
+    return {
+      r: channel(match[1]),
+      g: channel(match[2]),
+      b: channel(match[3]),
+      a: channel(match[4] ?? '1'),
+    }
   }
 
   function length(value) {
@@ -160,9 +237,14 @@ function resolveInPage({ attributes, tokens }) {
           : value || null
 
     let mixWeights = null
-    const mix = /^color-mix\(\s*in [^,]+,\s*var\((--[\w-]+)\)\s+(.+?),\s*var\((--[\w-]+)\)\s+(.+)\)$/s.exec(raw)
+    const mix =
+      /^color-mix\(\s*in [^,]+,\s*var\((--[\w-]+)\)\s+(.+?),\s*var\((--[\w-]+)\)\s+(.+)\)$/s.exec(
+        raw
+      )
     if (mix) {
-      const second = mix[4].replace(/var\((--[\w-]+)\)/g, (_, name) => styles.getPropertyValue(name).trim())
+      const second = mix[4].replace(/var\((--[\w-]+)\)/g, (_, name) =>
+        styles.getPropertyValue(name).trim()
+      )
       mixWeights = { second: percentage(second), firstVar: mix[1] }
     }
     results[cssVar] = { value, resolved, mixWeights }
@@ -173,7 +255,8 @@ function resolveInPage({ attributes, tokens }) {
 function aliasTarget(raw, mixWeights, synced) {
   const direct = /^var\((--[\w-]+)\)$/.exec(raw.trim())
   if (direct && synced.has(direct[1])) return direct[1]
-  if (mixWeights && mixWeights.second === 0 && synced.has(mixWeights.firstVar)) return mixWeights.firstVar
+  if (mixWeights && mixWeights.second === 0 && synced.has(mixWeights.firstVar))
+    return mixWeights.firstVar
   return null
 }
 
@@ -197,10 +280,18 @@ async function main() {
       skipped.push({ token: entry.cssVar, reason: placement.skip })
       continue
     }
-    const record = byVar.get(entry.cssVar) ?? { entry, type, axis: null, modes: new Set(), rawByMode: {} }
+    const record = byVar.get(entry.cssVar) ?? {
+      entry,
+      type,
+      axis: null,
+      modes: new Set(),
+      rawByMode: {},
+    }
     if (placement.axis) {
       if (record.axis && record.axis !== placement.axis) {
-        throw new Error(`${entry.cssVar} varies on both ${record.axis.id} and ${placement.axis.id}; Figma cannot model that`)
+        throw new Error(
+          `${entry.cssVar} varies on both ${record.axis.id} and ${placement.axis.id}; Figma cannot model that`
+        )
       }
       record.axis = placement.axis
       record.modes.add(placement.mode)
@@ -214,12 +305,14 @@ async function main() {
 
   // A token that only appears inside skipped contexts is dropped entirely.
   const synced = new Set(byVar.keys())
-  const css = await inlineCss(cssEntries[0]) + '\n' + await inlineCss(cssEntries[1])
+  const css = (await inlineCss(cssEntries[0])) + '\n' + (await inlineCss(cssEntries[1]))
 
   const browser = await chromium.launch()
   try {
     const page = await browser.newPage()
-    await page.setContent(`<!doctype html><html><head><style>${css}</style></head><body><div id="probe" style="position:absolute"></div><div style="width:1000px"><div id="pct"></div></div></body></html>`)
+    await page.setContent(
+      `<!doctype html><html><head><style>${css}</style></head><body><div id="probe" style="position:absolute"></div><div style="width:1000px"><div id="pct"></div></div></body></html>`
+    )
 
     // Percentages resolve against a 1000px container so `percentage()` works.
     await page.evaluate(() => {
@@ -254,7 +347,10 @@ async function main() {
       const result = rootValues[record.entry.cssVar]
       const value = toValue(record, record.rawByMode.default ?? '', result, synced)
       if (!value) {
-        skipped.push({ token: record.entry.cssVar, reason: `unresolvable value: ${result.value || '(empty)'}` })
+        skipped.push({
+          token: record.entry.cssVar,
+          reason: `unresolvable value: ${result.value || '(empty)'}`,
+        })
         continue
       }
       collection.variables.push(variable(record, { Value: value }))
@@ -267,7 +363,11 @@ async function main() {
       const valuesByMode = {}
       for (const mode of axis.modes) {
         for (const record of records) {
-          record.currentRaw = record.rawByMode[mode] ?? record.rawByMode.default ?? record.rawByMode[axis.defaultMode] ?? ''
+          record.currentRaw =
+            record.rawByMode[mode] ??
+            record.rawByMode.default ??
+            record.rawByMode[axis.defaultMode] ??
+            ''
         }
         // Set the attribute even for the default mode: some axes (type scale)
         // only define tokens under an explicit value, with no :root fallback.
@@ -278,8 +378,17 @@ async function main() {
         const values = {}
         let failed = null
         for (const mode of axis.modes) {
-          const value = toValue(record, record.rawByMode[mode] ?? record.rawByMode.default ?? record.rawByMode[axis.defaultMode] ?? '', valuesByMode[mode][record.entry.cssVar], synced)
-          if (!value) failed = `${mode}: ${valuesByMode[mode][record.entry.cssVar].value || '(empty)'}`
+          const value = toValue(
+            record,
+            record.rawByMode[mode] ??
+              record.rawByMode.default ??
+              record.rawByMode[axis.defaultMode] ??
+              '',
+            valuesByMode[mode][record.entry.cssVar],
+            synced
+          )
+          if (!value)
+            failed = `${mode}: ${valuesByMode[mode][record.entry.cssVar].value || '(empty)'}`
           values[mode] = value
         }
         if (failed) {
@@ -292,11 +401,16 @@ async function main() {
 
     // Drop aliases whose target was skipped, resolving them to literals is not
     // possible here, so report them instead of emitting a dangling reference.
-    const emitted = new Set([...collections.values()].flatMap(collection => collection.variables.map(v => v.token)))
+    const emitted = new Set(
+      [...collections.values()].flatMap(collection => collection.variables.map(v => v.token))
+    )
     for (const collection of collections.values()) {
       collection.variables = collection.variables.filter(item => {
-        const dangling = Object.values(item.values).find(value => value.alias && !emitted.has(value.alias))
-        if (dangling) skipped.push({ token: item.token, reason: `alias target not synced: ${dangling.alias}` })
+        const dangling = Object.values(item.values).find(
+          value => value.alias && !emitted.has(value.alias)
+        )
+        if (dangling)
+          skipped.push({ token: item.token, reason: `alias target not synced: ${dangling.alias}` })
         return !dangling
       })
       collection.variables.sort((left, right) => left.name.localeCompare(right.name))
@@ -310,7 +424,8 @@ async function main() {
         seen.add(item.name)
       }
     }
-    if (nameCollisions.length) throw new Error(`Duplicate Figma variable names: ${nameCollisions.join(', ')}`)
+    if (nameCollisions.length)
+      throw new Error(`Duplicate Figma variable names: ${nameCollisions.join(', ')}`)
 
     const ordered = [...collections.values()]
     const output = {
@@ -320,7 +435,16 @@ async function main() {
       summary: {
         collections: ordered.length,
         variables: ordered.reduce((sum, collection) => sum + collection.variables.length, 0),
-        aliasValues: ordered.reduce((sum, collection) => sum + collection.variables.reduce((count, item) => count + Object.values(item.values).filter(value => value.alias).length, 0), 0),
+        aliasValues: ordered.reduce(
+          (sum, collection) =>
+            sum +
+            collection.variables.reduce(
+              (count, item) =>
+                count + Object.values(item.values).filter(value => value.alias).length,
+              0
+            ),
+          0
+        ),
         skipped: skipped.length,
       },
       collections: ordered,
@@ -331,7 +455,9 @@ async function main() {
     if (process.argv.includes('--check')) {
       const current = await readFile(outputPath, 'utf8').catch(() => '')
       if (current !== content) {
-        process.stderr.write('generated/atom63.figma-sync.json is stale. Run: pnpm --filter @atom63/styles generate:figma\n')
+        process.stderr.write(
+          'generated/atom63.figma-sync.json is stale. Run: pnpm --filter @atom63/styles generate:figma\n'
+        )
         process.exitCode = 1
         return
       }
@@ -350,7 +476,8 @@ async function main() {
 function toValue(record, raw, result, synced) {
   const alias = aliasTarget(raw, result.mixWeights, synced)
   if (alias && alias !== record.entry.cssVar) return { alias }
-  if (result.resolved === null || result.resolved === undefined || Number.isNaN(result.resolved)) return null
+  if (result.resolved === null || result.resolved === undefined || Number.isNaN(result.resolved))
+    return null
   return { value: result.resolved }
 }
 
@@ -360,7 +487,10 @@ function toValue(record, raw, result, synced) {
  */
 function variable(record, values) {
   const literals = Object.values(values).filter(value => !value.alias)
-  const type = record.type === 'FLOAT' && literals.some(value => typeof value.value !== 'number') ? 'STRING' : record.type
+  const type =
+    record.type === 'FLOAT' && literals.some(value => typeof value.value !== 'number')
+      ? 'STRING'
+      : record.type
   if (type === 'STRING') {
     for (const value of literals) value.value = String(value.value)
   }

@@ -10,7 +10,7 @@ export function FoundationPreviewPanel({ children, className }: FoundationPrevie
   return (
     <div
       className={clsx(
-        'foundation-preview not-prose not-mdx border-border my-5 border-y py-3 text-xs',
+        'foundation-preview not-prose not-mdx my-5 border-y border-border py-3 text-xs',
         className
       )}
     >
@@ -32,8 +32,8 @@ export function FoundationPreviewHeader({
 }: FoundationPreviewHeaderProps) {
   return (
     <div className={clsx('mb-2 flex flex-wrap items-baseline justify-between gap-2', className)}>
-      <p className="text-foreground text-xs font-medium">{children}</p>
-      {caption ? <p className="text-muted-foreground font-mono text-[10px]">{caption}</p> : null}
+      <p className="text-xs font-medium text-foreground">{children}</p>
+      {caption ? <p className="font-mono text-[10px] text-muted-foreground">{caption}</p> : null}
     </div>
   )
 }

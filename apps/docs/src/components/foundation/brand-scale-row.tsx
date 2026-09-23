@@ -25,13 +25,13 @@ export function BrandScaleRow() {
       {BRAND_SCALES.map(({ id, label }) => (
         <div
           key={id}
-          className="border-border bg-background/70 flex items-center gap-3 rounded-md border p-2.5"
+          className="flex items-center gap-3 rounded-md border border-border bg-background/70 p-2.5"
         >
-          <div className={`border-border size-8 shrink-0 rounded-sm border ${BRAND_500[id]}`} />
+          <div className={`size-8 shrink-0 rounded-sm border border-border ${BRAND_500[id]}`} />
           <div>
-            <p className="text-foreground font-mono text-xs">{id}</p>
-            <p className="text-muted-foreground text-xs">{label}</p>
-            <p className="text-muted-foreground font-mono text-[10px]">color-{id}-500</p>
+            <p className="font-mono text-xs text-foreground">{id}</p>
+            <p className="text-xs text-muted-foreground">{label}</p>
+            <p className="font-mono text-[10px] text-muted-foreground">color-{id}-500</p>
           </div>
         </div>
       ))}
@@ -45,13 +45,13 @@ export function NeutralScaleRow() {
       {NEUTRAL_SCALES.map(({ id, label }) => (
         <div
           key={id}
-          className="border-border bg-background/70 flex items-center gap-3 rounded-md border p-2.5"
+          className="flex items-center gap-3 rounded-md border border-border bg-background/70 p-2.5"
         >
-          <div className={`border-border size-8 shrink-0 rounded-sm border ${NEUTRAL_9[id]}`} />
+          <div className={`size-8 shrink-0 rounded-sm border border-border ${NEUTRAL_9[id]}`} />
           <div>
-            <p className="text-foreground font-mono text-xs">{id}</p>
-            <p className="text-muted-foreground text-xs">{label}</p>
-            <p className="text-muted-foreground font-mono text-[10px]">
+            <p className="font-mono text-xs text-foreground">{id}</p>
+            <p className="text-xs text-muted-foreground">{label}</p>
+            <p className="font-mono text-[10px] text-muted-foreground">
               color-{id}-light-9 / dark-9
             </p>
           </div>

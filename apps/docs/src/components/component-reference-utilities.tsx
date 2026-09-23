@@ -49,23 +49,23 @@ function ApiSurfaceDisclosure({ exports }: { exports: ComponentExportSurface }) 
 
   return (
     <details
-      className="border-border bg-muted/20 group not-prose my-8 rounded-lg border"
+      className="group not-prose my-8 rounded-lg border border-border bg-muted/20"
       data-toc-exclude=""
     >
-      <summary className="focus-visible:ring-ring flex min-h-11 cursor-pointer list-none items-center gap-3 rounded-lg px-4 text-sm font-medium focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none lg:min-h-9 [&::-webkit-details-marker]:hidden">
-        <span className="text-foreground flex-1">API surface</span>
-        <span className="text-muted-foreground text-xs tabular-nums">
+      <summary className="flex min-h-11 cursor-pointer list-none items-center gap-3 rounded-lg px-4 text-sm font-medium focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none lg:min-h-9 [&::-webkit-details-marker]:hidden">
+        <span className="flex-1 text-foreground">API surface</span>
+        <span className="text-xs text-muted-foreground tabular-nums">
           {exportCount} {exportCount === 1 ? 'export' : 'exports'}
         </span>
         <ChevronDown
           aria-hidden
-          className="text-muted-foreground size-4 transition-transform duration-150 group-open:rotate-180 motion-reduce:transition-none"
+          className="size-4 text-muted-foreground transition-transform duration-150 group-open:rotate-180 motion-reduce:transition-none"
         />
       </summary>
-      <div className="border-border border-t px-4 pt-4 pb-5">
-        <p className="text-muted-foreground mt-0 mb-4 text-sm leading-6">
+      <div className="border-t border-border px-4 pt-4 pb-5">
+        <p className="mt-0 mb-4 text-sm leading-6 text-muted-foreground">
           Values and types assigned to this family by the root{' '}
-          <code className="text-foreground font-mono text-xs">@atom63/ui-react</code> barrel.
+          <code className="font-mono text-xs text-foreground">@atom63/ui-react</code> barrel.
           TypeScript remains the source of truth for the complete prop contract.
         </p>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -81,7 +81,7 @@ function ExportList({ label, names }: { label: string; names: readonly string[] 
   return (
     <section aria-labelledby={`component-exports-${label.toLowerCase()}`}>
       <h3
-        className="text-foreground mb-2 text-sm font-medium"
+        className="mb-2 text-sm font-medium text-foreground"
         id={`component-exports-${label.toLowerCase()}`}
       >
         {label}
@@ -90,7 +90,7 @@ function ExportList({ label, names }: { label: string; names: readonly string[] 
         <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
           {names.map(name => (
             <li
-              className="border-border bg-muted/60 rounded-md border px-2 py-1 font-mono text-xs"
+              className="rounded-md border border-border bg-muted/60 px-2 py-1 font-mono text-xs"
               key={name}
             >
               {name}
@@ -98,7 +98,7 @@ function ExportList({ label, names }: { label: string; names: readonly string[] 
           ))}
         </ul>
       ) : (
-        <p className="text-muted-foreground m-0 text-sm">None exported.</p>
+        <p className="m-0 text-sm text-muted-foreground">None exported.</p>
       )}
     </section>
   )

@@ -170,10 +170,7 @@ function componentDocArea(buckets: Record<PageSection, NavItem[]>): DocArea {
     defaultSlug,
     id: 'components',
     label: DOC_AREA_LABELS.components,
-    sections: [
-      ...sectionsWithItems('Contract', contractItems),
-      ...catalogSections,
-    ],
+    sections: [...sectionsWithItems('Contract', contractItems), ...catalogSections],
     startLabel: labelFromSlug(defaultSlug),
   }
 }

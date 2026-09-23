@@ -10,7 +10,7 @@ storybook-static/
 .turbo/
 .vite/
 .next/
-.claude/worktrees/
+.claude/
 pnpm-lock.yaml
 
 # GENERATED — the generator re-emits these, so formatting them produces churn
@@ -49,3 +49,8 @@ archive/
 # Imported Windows Shell boilerplate — owns its own Biome/ultracite formatting
 # and upstream sync. Root Prettier must not reformat it (nightly guardrails).
 apps/windows-shell/
+
+# Generator output checked byte-for-byte by the check:* scripts.
+packages/styles/generated/
+packages/ui-react/src/styles/utilities.css
+docs/design-system/audits/

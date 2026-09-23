@@ -144,18 +144,18 @@ function MotionTrack({
   } as CSSProperties
 
   return (
-    <div className={className ?? 'bg-muted relative h-1.5 rounded-full'}>
-      <span className="bg-border absolute inset-y-0 left-0 w-px" />
-      <span className="bg-border absolute inset-y-0 right-0 w-px" />
+    <div className={className ?? 'relative h-1.5 rounded-full bg-muted'}>
+      <span className="absolute inset-y-0 left-0 w-px bg-border" />
+      <span className="absolute inset-y-0 right-0 w-px bg-border" />
       {durationMs > 0 ? (
         <span
-          className="bg-primary/30 absolute top-1/2 left-0 size-2.5 rounded-full"
+          className="absolute top-1/2 left-0 size-2.5 rounded-full bg-primary/30"
           data-motion-reference-dot=""
           style={trailStyle}
         />
       ) : null}
       <span
-        className="bg-primary absolute top-1/2 left-0 size-2.5 rounded-full"
+        className="absolute top-1/2 left-0 size-2.5 rounded-full bg-primary"
         data-motion-reference-dot={durationMs > 0 ? '' : undefined}
         style={style}
       />
@@ -169,11 +169,11 @@ function DurationScale({ durationMs }: { durationMs: number }) {
 
   return (
     <div className="space-y-2">
-      <div className="bg-muted relative h-1 rounded-full">
-        <span className="bg-primary/30 absolute inset-y-0 left-0 rounded-full" style={barStyle} />
+      <div className="relative h-1 rounded-full bg-muted">
+        <span className="absolute inset-y-0 left-0 rounded-full bg-primary/30" style={barStyle} />
       </div>
       <MotionTrack
-        className="bg-muted/80 relative h-1.5 rounded-full"
+        className="relative h-1.5 rounded-full bg-muted/80"
         delayRatio={0.42}
         durationMs={durationMs}
         easing="cubic-bezier(0, 0, 0, 1)"
@@ -197,19 +197,19 @@ export function MotionReference() {
   return (
     <div className="not-prose my-6 space-y-8">
       <section>
-        <h3 className="text-foreground mb-3 text-sm font-medium">Semantic durations</h3>
+        <h3 className="mb-3 text-sm font-medium text-foreground">Semantic durations</h3>
         <table className="w-full text-left text-sm">
           <thead>
-            <tr className="border-border text-muted-foreground border-b text-xs">
+            <tr className="border-b border-border text-xs text-muted-foreground">
               <th className="py-2 pr-4 font-medium">Alias</th>
               <th className="py-2 font-medium">Maps to</th>
             </tr>
           </thead>
           <tbody>
             {DURATION_ALIASES.map(({ alias, maps }) => (
-              <tr key={alias} className="border-border border-b">
+              <tr key={alias} className="border-b border-border">
                 <td className="py-2 pr-4 font-mono text-xs">{alias}</td>
-                <td className="text-muted-foreground py-2 font-mono text-xs">{maps}</td>
+                <td className="py-2 font-mono text-xs text-muted-foreground">{maps}</td>
               </tr>
             ))}
           </tbody>
@@ -217,12 +217,12 @@ export function MotionReference() {
       </section>
 
       <section>
-        <h3 className="text-foreground mb-3 text-sm font-medium">Primitive durations</h3>
+        <h3 className="mb-3 text-sm font-medium text-foreground">Primitive durations</h3>
         <div className="flex flex-wrap gap-2">
           {DURATION_PRIMITIVES.map(({ token, ms }) => (
             <span
               key={token}
-              className="border-border bg-muted/50 rounded-md border px-2 py-1 font-mono text-xs"
+              className="rounded-md border border-border bg-muted/50 px-2 py-1 font-mono text-xs"
             >
               {token} ({ms}ms)
             </span>
@@ -231,12 +231,12 @@ export function MotionReference() {
       </section>
 
       <section>
-        <h3 className="text-foreground mb-3 text-sm font-medium">Easing</h3>
+        <h3 className="mb-3 text-sm font-medium text-foreground">Easing</h3>
         <div className="flex flex-wrap gap-2">
           {EASING_CURVES.map(name => (
             <span
               key={name}
-              className="border-border bg-muted/50 rounded-md border px-2 py-1 font-mono text-xs"
+              className="rounded-md border border-border bg-muted/50 px-2 py-1 font-mono text-xs"
             >
               {name}
             </span>
@@ -251,17 +251,17 @@ export function DurationAliasVisualization() {
   return (
     <FoundationPreviewPanel>
       <FoundationPreviewHeader caption="semantic aliases">Duration aliases</FoundationPreviewHeader>
-      <div className="divide-border/70 divide-y">
+      <div className="divide-y divide-border/70">
         {DURATION_VISUALS.map(({ alias, maps, ms, use }) => (
           <div
             className="grid gap-3 py-3 first:pt-0 last:pb-0 sm:grid-cols-[11rem_4rem_minmax(0,1fr)_12rem] sm:items-center"
             key={alias}
           >
-            <code className="bg-muted/50 text-foreground w-fit rounded-xs px-1 py-0.5 font-mono text-xs whitespace-nowrap">
+            <code className="w-fit rounded-xs bg-muted/50 px-1 py-0.5 font-mono text-xs whitespace-nowrap text-foreground">
               {alias}
             </code>
-            <span className="text-muted-foreground font-mono text-xs">{maps}</span>
-            <p className="text-muted-foreground text-xs leading-5">{use}</p>
+            <span className="font-mono text-xs text-muted-foreground">{maps}</span>
+            <p className="text-xs leading-5 text-muted-foreground">{use}</p>
             <DurationScale durationMs={ms} />
           </div>
         ))}
@@ -279,18 +279,18 @@ export function EasingCurveVisualization() {
       <div className="grid gap-x-6 sm:grid-cols-2">
         {EASING_VISUALS.map(({ character, curve, path, use, value }) => (
           <div
-            className="border-border/70 grid grid-cols-[minmax(0,1fr)_3.5rem] items-center gap-3 border-t py-3 first:border-t-0 sm:[&:nth-child(2)]:border-t-0"
+            className="grid grid-cols-[minmax(0,1fr)_3.5rem] items-center gap-3 border-t border-border/70 py-3 first:border-t-0 sm:[&:nth-child(2)]:border-t-0"
             key={curve}
           >
             <div className="min-w-0">
               <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                <code className="bg-muted/50 text-foreground rounded-xs px-1 py-0.5 font-mono text-xs">
+                <code className="rounded-xs bg-muted/50 px-1 py-0.5 font-mono text-xs text-foreground">
                   {curve}
                 </code>
-                <span className="text-muted-foreground text-xs">{value}</span>
+                <span className="text-xs text-muted-foreground">{value}</span>
               </div>
-              <p className="text-foreground mt-1 text-xs">{character}</p>
-              <p className="text-muted-foreground text-xs leading-5">{use}</p>
+              <p className="mt-1 text-xs text-foreground">{character}</p>
+              <p className="text-xs leading-5 text-muted-foreground">{use}</p>
             </div>
             <EasingCurve path={path} />
           </div>

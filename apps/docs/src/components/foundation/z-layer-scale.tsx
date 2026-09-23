@@ -35,17 +35,17 @@ export function ZLayerScale() {
                   className="grid grid-cols-[7rem_3rem_1fr] items-baseline gap-3 font-mono text-xs"
                 >
                   <span className="text-foreground">{layer.token}</span>
-                  <span className="text-muted-foreground text-right tabular-nums">
+                  <span className="text-right text-muted-foreground tabular-nums">
                     {layer.value}
                   </span>
-                  <span className="text-muted-foreground font-sans">{layer.role}</span>
+                  <span className="font-sans text-muted-foreground">{layer.role}</span>
                 </div>
               ))}
             </div>
           </FoundationPreviewPanel>
         )
       })}
-      <p className="text-muted-foreground text-xs">
+      <p className="text-xs text-muted-foreground">
         Use named CSS tokens in markup, for example{' '}
         <code className="text-foreground/90">z-[var(--z-layer-modal)]</code>, or named constants
         such as <code className="text-foreground/90">Z_LAYERS.modal</code> from{' '}

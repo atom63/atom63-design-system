@@ -85,7 +85,13 @@ export interface CollectionPlan {
 export interface SyncPlan {
   collections: CollectionPlan[]
   changes: VariableChange[]
-  totals: { create: number; update: number; unchanged: number; orphaned: number; typeConflicts: number }
+  totals: {
+    create: number
+    update: number
+    unchanged: number
+    orphaned: number
+    typeConflicts: number
+  }
 }
 
 const COLOR_EPSILON = 1e-6
@@ -98,9 +104,12 @@ export function valuesEqual(expected: SyncValue, actual: SyncValue | undefined):
   }
   const left = expected.value
   const right = actual.value
-  if (typeof left === 'number' && typeof right === 'number') return Math.abs(left - right) < FLOAT_EPSILON
+  if (typeof left === 'number' && typeof right === 'number')
+    return Math.abs(left - right) < FLOAT_EPSILON
   if (typeof left !== 'object' || typeof right !== 'object') return left === right
-  return (['r', 'g', 'b', 'a'] as const).every(channel => Math.abs(left[channel] - right[channel]) < COLOR_EPSILON)
+  return (['r', 'g', 'b', 'a'] as const).every(
+    channel => Math.abs(left[channel] - right[channel]) < COLOR_EPSILON
+  )
 }
 
 export function planSync(model: SyncModel, snapshot: SnapshotCollection[]): SyncPlan {
@@ -113,9 +122,13 @@ export function planSync(model: SyncModel, snapshot: SnapshotCollection[]): Sync
     // A collection Figma just created has one mode we can rename; an existing
     // Atom63 collection keeps its modes and only gains the missing ones.
     const renameFirstMode =
-      existing && existingModes.length === 1 && !collection.modes.includes(existingModes[0]) ? collection.modes[0] : null
+      existing && existingModes.length === 1 && !collection.modes.includes(existingModes[0])
+        ? collection.modes[0]
+        : null
     const knownModes = renameFirstMode ? [renameFirstMode] : existingModes
-    const addModes = existing ? collection.modes.filter(mode => !knownModes.includes(mode)) : collection.modes.slice(1)
+    const addModes = existing
+      ? collection.modes.filter(mode => !knownModes.includes(mode))
+      : collection.modes.slice(1)
 
     const plan: CollectionPlan = {
       name: collection.name,
@@ -129,7 +142,9 @@ export function planSync(model: SyncModel, snapshot: SnapshotCollection[]): Sync
       typeConflicts: [],
     }
 
-    const byToken = new Map(existing?.variables.filter(item => item.token).map(item => [item.token, item]) ?? [])
+    const byToken = new Map(
+      existing?.variables.filter(item => item.token).map(item => [item.token, item]) ?? []
+    )
     const byName = new Map(existing?.variables.map(item => [item.name, item]) ?? [])
     const matched = new Set<string>()
 
@@ -155,7 +170,14 @@ export function planSync(model: SyncModel, snapshot: SnapshotCollection[]): Sync
         continue
       }
       plan.update += 1
-      changes.push({ kind: 'update', collection: collection.name, variable, id: current.id, rename, modes })
+      changes.push({
+        kind: 'update',
+        collection: collection.name,
+        variable,
+        id: current.id,
+        rename,
+        modes,
+      })
     }
 
     const modelTokens = new Set(collection.variables.map(variable => variable.token))
@@ -167,7 +189,8 @@ export function planSync(model: SyncModel, snapshot: SnapshotCollection[]): Sync
     collections.push(plan)
   }
 
-  const sum = (key: 'create' | 'update' | 'unchanged') => collections.reduce((total, item) => total + item[key], 0)
+  const sum = (key: 'create' | 'update' | 'unchanged') =>
+    collections.reduce((total, item) => total + item[key], 0)
   return {
     collections,
     changes,

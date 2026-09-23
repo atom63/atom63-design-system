@@ -26,15 +26,25 @@ for (const [themeId, file] of Object.entries(themeFiles)) {
   }
 
   const documentScope = new RegExp(`(?:html|body)\\[data-a63-theme=['"]${themeId}['"]\\]`)
-  for (const match of source.matchAll(/(?<selector>[^{}]*::(?:before|after)[^{]*)\{(?<body>[^{}]*position\s*:\s*fixed[^{}]*)\}/g)) {
+  for (const match of source.matchAll(
+    /(?<selector>[^{}]*::(?:before|after)[^{]*)\{(?<body>[^{}]*position\s*:\s*fixed[^{}]*)\}/g
+  )) {
     if (!documentScope.test(match.groups?.selector ?? '')) {
       findings.push(`${file}: fixed pseudo overlay must be scoped to html/body`)
       break
     }
   }
 
-  const hasLightScope = [".light", ':root', ':not(.dark)', "[data-a63-mode='light']", '[data-a63-mode="light"]'].some(scope => source.includes(scope))
-  const hasDarkScope = ['.dark', "[data-a63-mode='dark']", '[data-a63-mode="dark"]'].some(scope => source.includes(scope))
+  const hasLightScope = [
+    '.light',
+    ':root',
+    ':not(.dark)',
+    "[data-a63-mode='light']",
+    '[data-a63-mode="light"]',
+  ].some(scope => source.includes(scope))
+  const hasDarkScope = ['.dark', "[data-a63-mode='dark']", '[data-a63-mode="dark"]'].some(scope =>
+    source.includes(scope)
+  )
   if (modeSplitThemes.has(themeId) && !(hasLightScope && hasDarkScope)) {
     findings.push(`${file}: theme CSS should define independent light/dark scopes`)
   }

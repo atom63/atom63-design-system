@@ -43,10 +43,7 @@
       "done": 1
     },
     "dimensionIdsByGate": {
-      "blocker": [
-        "component-accessibility-interaction",
-        "figma-design-tool-parity"
-      ],
+      "blocker": ["component-accessibility-interaction", "figma-design-tool-parity"],
       "warning": [
         "package-install-hygiene",
         "api-stability-preview-policy",
@@ -135,10 +132,7 @@
           "docs/design-system/ui-react-stable-action-matrix.md",
           "docs/design-system/ui-react-preview-migration.md"
         ],
-        "commands": [
-          "pnpm check:ui-react-exports",
-          "pnpm check:ui-react-stable-actions"
-        ]
+        "commands": ["pnpm check:ui-react-exports", "pnpm check:ui-react-stable-actions"]
       },
       "gaps": [
         "Execute or explicitly approve the preview-candidate root removals before stable; the beta root remains intentionally unchanged.",
@@ -260,10 +254,7 @@
           "docs/design-system/ui-react-media-evidence.md",
           "docs/design-system/ui-react-portal-evidence.md"
         ],
-        "commands": [
-          "pnpm check:ui-react-monitor-evidence",
-          "pnpm --filter @atom63/ui-react test"
-        ]
+        "commands": ["pnpm check:ui-react-monitor-evidence", "pnpm --filter @atom63/ui-react test"]
       },
       "gaps": [
         "Complete real-browser keyboard, focus, pointer, touch, and reduced-motion checks for high-risk families.",
@@ -430,10 +421,7 @@
           "docs/design-system/publish-approval-packet.md",
           ".github/workflows/release-beta.yml"
         ],
-        "commands": [
-          "pnpm changeset status --verbose",
-          "pnpm check:stable-release-preflight"
-        ]
+        "commands": ["pnpm changeset status --verbose", "pnpm check:stable-release-preflight"]
       },
       "gaps": [
         "Keep publish execution manually approved; this board and stable preflight remain no-publish guardrails.",

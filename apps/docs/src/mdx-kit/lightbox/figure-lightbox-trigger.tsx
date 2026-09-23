@@ -41,10 +41,10 @@ export function FigureLightboxTrigger({
       {children}
       <span
         aria-hidden="true"
-        className="bg-background/90 ring-border pointer-events-none absolute top-3 right-3 flex size-8 items-center justify-center rounded-full opacity-0 ring-1 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
+        className="pointer-events-none absolute top-3 right-3 flex size-8 items-center justify-center rounded-full bg-background/90 opacity-0 ring-1 ring-border transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
       >
         <svg
-          className="text-foreground size-4"
+          className="size-4 text-foreground"
           fill="none"
           stroke="currentColor"
           strokeLinecap="round"

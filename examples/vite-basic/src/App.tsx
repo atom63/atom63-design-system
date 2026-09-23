@@ -14,17 +14,17 @@ import {
   TabsList,
   TabsPanel,
   TabsTab,
-} from "@atom63/ui-react";
-import { useEffect, useState } from "react";
+} from '@atom63/ui-react'
+import { useEffect, useState } from 'react'
 
-type Mode = "dark" | "light";
-type Theme = "aqua" | "modern";
+type Mode = 'dark' | 'light'
+type Theme = 'aqua' | 'modern'
 
 const checks = [
-  ["Package exports", "12 entry points resolved"],
-  ["Token manifest", "214 semantic tokens synced"],
-  ["Consumer build", "Vite production bundle passed"],
-] as const;
+  ['Package exports', '12 entry points resolved'],
+  ['Token manifest', '214 semantic tokens synced'],
+  ['Consumer build', 'Vite production bundle passed'],
+] as const
 
 function ChoiceGroup<T extends string>({
   label,
@@ -32,53 +32,49 @@ function ChoiceGroup<T extends string>({
   options,
   value,
 }: {
-  label: string;
-  onChange: (value: T) => void;
-  options: readonly T[];
-  value: T;
+  label: string
+  onChange: (value: T) => void
+  options: readonly T[]
+  value: T
 }) {
   return (
     <div aria-label={label} className="choice-group" role="group">
       <span className="choice-label">{label}</span>
       <div className="choice-actions">
-        {options.map((option) => (
+        {options.map(option => (
           <Button
             aria-pressed={value === option}
             key={option}
             onClick={() => onChange(option)}
             size="sm"
             type="button"
-            variant={value === option ? "primary" : "ghost"}
+            variant={value === option ? 'primary' : 'ghost'}
           >
             {option}
           </Button>
         ))}
       </div>
     </div>
-  );
+  )
 }
 
 export function App() {
-  const [mode, setMode] = useState<Mode>("light");
-  const [theme, setTheme] = useState<Theme>("modern");
-  const [tag, setTag] = useState("beta");
-  const [reviewCount, setReviewCount] = useState(1);
+  const [mode, setMode] = useState<Mode>('light')
+  const [theme, setTheme] = useState<Theme>('modern')
+  const [tag, setTag] = useState('beta')
+  const [reviewCount, setReviewCount] = useState(1)
 
   useEffect(() => {
-    const root = document.documentElement;
-    root.dataset.a63Mode = mode;
-    root.dataset.a63Theme = theme;
-    root.style.colorScheme = mode;
-  }, [mode, theme]);
+    const root = document.documentElement
+    root.dataset.a63Mode = mode
+    root.dataset.a63Theme = theme
+    root.style.colorScheme = mode
+  }, [mode, theme])
 
   return (
     <div className="app-shell">
       <header className="topbar">
-        <a
-          aria-label="Atom63 example home"
-          className="wordmark"
-          href="#main-content"
-        >
+        <a aria-label="Atom63 example home" className="wordmark" href="#main-content">
           <span aria-hidden="true" className="wordmark-mark">
             A63
           </span>
@@ -89,13 +85,13 @@ export function App() {
           <ChoiceGroup
             label="Color mode"
             onChange={setMode}
-            options={["light", "dark"] as const}
+            options={['light', 'dark'] as const}
             value={mode}
           />
           <ChoiceGroup
             label="Theme"
             onChange={setTheme}
-            options={["modern", "aqua"] as const}
+            options={['modern', 'aqua'] as const}
             value={theme}
           />
         </div>
@@ -110,8 +106,8 @@ export function App() {
             </div>
             <h1 id="page-title">Ship the packages, not the promise.</h1>
             <p>
-              A focused consumer check for Atom63’s React components, executable
-              tokens, and theme contract.
+              A focused consumer check for Atom63’s React components, executable tokens, and theme
+              contract.
             </p>
           </div>
           <p className="release-id">
@@ -129,12 +125,11 @@ export function App() {
               </CardAction>
             </CardHeader>
 
-            <CardContent padding={{ base: "sm", sm: "lg" }}>
+            <CardContent padding={{ base: 'sm', sm: 'lg' }}>
               <div className="package-heading">
                 <CardTitle>@atom63/ui-react</CardTitle>
                 <CardDescription>
-                  Validate the public surface before handing it to the next
-                  application.
+                  Validate the public surface before handing it to the next application.
                 </CardDescription>
               </div>
 
@@ -142,7 +137,7 @@ export function App() {
                 <span>Registry tag</span>
                 <Input
                   id="release-tag"
-                  onChange={(event) => setTag(event.target.value)}
+                  onChange={event => setTag(event.target.value)}
                   spellCheck={false}
                   value={tag}
                 />
@@ -183,12 +178,11 @@ export function App() {
 
             <CardFooter>
               <p className="review-note" aria-live="polite">
-                Review {reviewCount} passed · publish as{" "}
-                <strong>{tag || "beta"}</strong>
+                Review {reviewCount} passed · publish as <strong>{tag || 'beta'}</strong>
               </p>
               <CardAction>
                 <Button
-                  onClick={() => setReviewCount((count) => count + 1)}
+                  onClick={() => setReviewCount(count => count + 1)}
                   type="button"
                   variant="primary"
                 >
@@ -198,20 +192,15 @@ export function App() {
             </CardFooter>
           </Card>
 
-          <aside
-            className="consumer-proof"
-            aria-labelledby="consumer-proof-title"
-          >
+          <aside className="consumer-proof" aria-labelledby="consumer-proof-title">
             <div>
               <span className="section-index">01</span>
               <p className="section-kicker">Consumer proof</p>
             </div>
-            <h2 id="consumer-proof-title">
-              This screen is the integration test.
-            </h2>
+            <h2 id="consumer-proof-title">This screen is the integration test.</h2>
             <p>
-              Every visible control comes from the workspace packages. The app
-              contributes only layout and product-specific composition.
+              Every visible control comes from the workspace packages. The app contributes only
+              layout and product-specific composition.
             </p>
             <dl>
               <div>
@@ -233,5 +222,5 @@ export function App() {
         </section>
       </main>
     </div>
-  );
+  )
 }

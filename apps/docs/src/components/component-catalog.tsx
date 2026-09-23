@@ -34,13 +34,13 @@ export function ComponentCatalog() {
           <span className="sr-only">Filter components</span>
           <Search
             aria-hidden
-            className="text-muted-foreground pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2"
+            className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground"
           />
           <input
             autoComplete="off"
             aria-controls="component-catalog-results"
             aria-describedby="component-catalog-count"
-            className="border-input bg-background text-foreground placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/40 h-11 w-full rounded-md border pr-3 pl-9 text-base outline-none focus-visible:ring-2 md:text-sm lg:h-9"
+            className="h-11 w-full rounded-md border border-input bg-background pr-3 pl-9 text-base text-foreground outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 md:text-sm lg:h-9"
             id="component-catalog-filter"
             onChange={event => setQuery(event.currentTarget.value)}
             placeholder={`Filter ${componentCatalogItems.length} components…`}
@@ -53,7 +53,7 @@ export function ComponentCatalog() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p
             aria-live="polite"
-            className="text-muted-foreground m-0 text-sm tabular-nums"
+            className="m-0 text-sm text-muted-foreground tabular-nums"
             id="component-catalog-count"
           >
             {normalizedQuery
@@ -66,7 +66,7 @@ export function ComponentCatalog() {
             <nav aria-label="Component categories" className="flex flex-wrap gap-1 xl:hidden">
               {componentCatalogGroups.map(group => (
                 <a
-                  className="text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:ring-ring inline-flex min-h-11 items-center rounded-md px-2.5 text-xs font-medium focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none lg:min-h-9 lg:px-2"
+                  className="inline-flex min-h-11 items-center rounded-md px-2.5 text-xs font-medium text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none lg:min-h-9 lg:px-2"
                   href={`#component-group-${group.id}`}
                   key={group.id}
                 >
@@ -84,36 +84,36 @@ export function ComponentCatalog() {
             <div className="mb-3 flex items-end justify-between gap-4 border-b pb-3">
               <div>
                 <h2
-                  className="text-foreground m-0 text-base font-medium"
+                  className="m-0 text-base font-medium text-foreground"
                   id={`component-group-${group.id}`}
                 >
                   {group.title}
                 </h2>
-                <p className="text-muted-foreground mt-1 mb-0 max-w-2xl text-sm leading-6">
+                <p className="mt-1 mb-0 max-w-2xl text-sm leading-6 text-muted-foreground">
                   {group.description}
                 </p>
               </div>
-              <span className="text-muted-foreground shrink-0 text-xs tabular-nums">
+              <span className="shrink-0 text-xs text-muted-foreground tabular-nums">
                 {group.items.length}
               </span>
             </div>
 
             <ul className="grid list-none gap-x-6 p-0 sm:grid-cols-2">
               {group.items.map(item => (
-                <li className="border-border/60 border-b" key={item.slug}>
+                <li className="border-b border-border/60" key={item.slug}>
                   <Link
-                    className="group/component focus-visible:ring-ring flex min-h-11 items-center gap-2.5 rounded-sm py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none lg:min-h-9 lg:py-1.5"
+                    className="group/component flex min-h-11 items-center gap-2.5 rounded-sm py-2 text-sm focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none lg:min-h-9 lg:py-1.5"
                     to={componentDocPath(item.slug)}
                   >
-                    <span className="text-foreground min-w-0 flex-1 font-medium group-hover/component:underline">
+                    <span className="min-w-0 flex-1 font-medium text-foreground group-hover/component:underline">
                       {componentLabel(item.slug)}
                     </span>
                     {item.status === 'preview' ? (
-                      <span className="text-muted-foreground text-xs">Preview</span>
+                      <span className="text-xs text-muted-foreground">Preview</span>
                     ) : null}
                     <ArrowRight
                       aria-hidden
-                      className="text-muted-foreground group-hover/component:text-foreground size-3.5 shrink-0"
+                      className="size-3.5 shrink-0 text-muted-foreground group-hover/component:text-foreground"
                     />
                   </Link>
                 </li>
@@ -123,9 +123,9 @@ export function ComponentCatalog() {
         ))}
 
         {visibleCount === 0 ? (
-          <div className="border-border bg-muted/20 flex min-h-40 flex-col items-center justify-center rounded-lg border px-6 text-center">
-            <p className="text-foreground m-0 font-medium">No components found</p>
-            <p className="text-muted-foreground mt-1 mb-0 text-sm">
+          <div className="flex min-h-40 flex-col items-center justify-center rounded-lg border border-border bg-muted/20 px-6 text-center">
+            <p className="m-0 font-medium text-foreground">No components found</p>
+            <p className="mt-1 mb-0 text-sm text-muted-foreground">
               Try a component name, category, or interaction term.
             </p>
           </div>

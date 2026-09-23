@@ -48,9 +48,9 @@ type Story = StoryObj<typeof meta>
 
 function DemoBlock({ label }: { label: string }) {
   return (
-    <div className="border-border/40 bg-card/40 rounded-md border px-4 py-6">
+    <div className="rounded-md border border-border/40 bg-card/40 px-4 py-6">
       <p className="text-sm font-medium">{label}</p>
-      <p className="text-muted-foreground mt-1 text-sm">
+      <p className="mt-1 text-sm text-muted-foreground">
         Hairline rails and crossbars frame the content column.
       </p>
     </div>
@@ -59,7 +59,7 @@ function DemoBlock({ label }: { label: string }) {
 
 export const Playground: Story = {
   render: args => (
-    <GridChrome {...args} className="bg-background min-h-dvh">
+    <GridChrome {...args} className="min-h-dvh bg-background">
       <Container chrome="grid" maxWidth={args.maxWidth} padding="x">
         <Section spacing="tight">
           <SectionHeader
@@ -81,7 +81,7 @@ export const Playground: Story = {
 export const ContainerRailsOnly: Story = {
   name: 'Container chrome=grid',
   render: () => (
-    <Page className="bg-background min-h-dvh py-10">
+    <Page className="min-h-dvh bg-background py-10">
       <Container chrome="grid" maxWidth="wide" padding="x">
         <DemoBlock label="In-flow border-x rails (no fixed overlay)" />
         <DemoBlock label="Second block" />
@@ -92,7 +92,7 @@ export const ContainerRailsOnly: Story = {
 
 export const RulesAndCrosshairs: Story = {
   render: () => (
-    <GridChrome className="bg-background min-h-dvh" maxWidth="wide">
+    <GridChrome className="min-h-dvh bg-background" maxWidth="wide">
       <Container chrome="grid" maxWidth="wide" padding="x">
         <Section spacing="tight">
           <SectionHeader title="First band" variant="secondary" />
@@ -114,7 +114,7 @@ export const RulesAndCrosshairs: Story = {
 
 export const NestedGuides: Story = {
   render: () => (
-    <GridChrome className="bg-background min-h-dvh" maxWidth="wide">
+    <GridChrome className="min-h-dvh bg-background" maxWidth="wide">
       <div className="relative">
         <GridGuides columns={3} />
         <Container chrome="grid" maxWidth="wide" padding="x">

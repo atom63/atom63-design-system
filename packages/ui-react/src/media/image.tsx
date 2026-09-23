@@ -6,7 +6,7 @@ import { useIsMobile } from './hooks/use-mobile'
 import { useReducedMotion } from './hooks/use-reduced-motion'
 
 function Skeleton({ className }: { className?: string }): React.ReactElement {
-  return <div className={cn('bg-muted animate-pulse rounded-md', className)} />
+  return <div className={cn('animate-pulse rounded-md bg-muted', className)} />
 }
 
 // Module-level cache to track which images have been animated
@@ -216,14 +216,14 @@ export const Image = ({
     return (
       <div
         className={cn(
-          'bg-muted flex items-center justify-center p-8',
+          'flex items-center justify-center bg-muted p-8',
           getAspectRatioClass(),
           containerClassName,
           className
         )}
         {...props}
       >
-        <span className="text-muted-foreground text-sm">{fallbackText}</span>
+        <span className="text-sm text-muted-foreground">{fallbackText}</span>
       </div>
     )
   }
@@ -232,14 +232,14 @@ export const Image = ({
     return (
       <div
         className={cn(
-          'bg-muted flex items-center justify-center p-8',
+          'flex items-center justify-center bg-muted p-8',
           getAspectRatioClass(),
           containerClassName,
           className
         )}
         {...props}
       >
-        <span className="text-muted-foreground text-sm">{errorText}</span>
+        <span className="text-sm text-muted-foreground">{errorText}</span>
       </div>
     )
   }

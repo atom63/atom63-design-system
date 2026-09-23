@@ -3,7 +3,14 @@
  * against the small slice of `figma.variables` it needs, so tests can run it
  * on an in-memory fake and prove a second sync plans zero changes.
  */
-import type { SnapshotCollection, SnapshotVariable, SyncModel, SyncPlan, SyncValue, SyncVariableType } from './plan'
+import type {
+  SnapshotCollection,
+  SnapshotVariable,
+  SyncModel,
+  SyncPlan,
+  SyncValue,
+  SyncVariableType,
+} from './plan'
 
 export const TOKEN_KEY = 'a63.token'
 
@@ -55,7 +62,13 @@ export interface ApplyResult {
 }
 
 function isAlias(value: unknown): value is { type: 'VARIABLE_ALIAS'; id: string } {
-  return typeof value === 'object' && value !== null && 'type' in value && value.type === 'VARIABLE_ALIAS' && 'id' in value
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'type' in value &&
+    value.type === 'VARIABLE_ALIAS' &&
+    'id' in value
+  )
 }
 
 function isColor(value: unknown): value is { r: number; g: number; b: number; a?: number } {
@@ -63,7 +76,10 @@ function isColor(value: unknown): value is { r: number; g: number; b: number; a?
 }
 
 /** The snapshot form of a stored value; values the sync never writes read as absent. */
-async function snapshotValue(raw: unknown, tokenOf: (id: string) => Promise<string>): Promise<SyncValue | undefined> {
+async function snapshotValue(
+  raw: unknown,
+  tokenOf: (id: string) => Promise<string>
+): Promise<SyncValue | undefined> {
   if (isAlias(raw)) return { alias: await tokenOf(raw.id) }
   if (isColor(raw)) return { value: { r: raw.r, g: raw.g, b: raw.b, a: raw.a ?? 1 } }
   if (typeof raw === 'number' || typeof raw === 'string') return { value: raw }
@@ -72,7 +88,9 @@ async function snapshotValue(raw: unknown, tokenOf: (id: string) => Promise<stri
 
 async function loadCollections(api: VariablesApi, model: SyncModel) {
   const names = new Set(model.collections.map(collection => collection.name))
-  const collections = (await api.getLocalVariableCollectionsAsync()).filter(collection => names.has(collection.name))
+  const collections = (await api.getLocalVariableCollectionsAsync()).filter(collection =>
+    names.has(collection.name)
+  )
   const variables = new Map<string, VariableLike>()
   for (const collection of collections) {
     for (const id of collection.variableIds) {
@@ -83,7 +101,10 @@ async function loadCollections(api: VariablesApi, model: SyncModel) {
   return { collections, variables }
 }
 
-export async function readSnapshot(api: VariablesApi, model: SyncModel): Promise<SnapshotCollection[]> {
+export async function readSnapshot(
+  api: VariablesApi,
+  model: SyncModel
+): Promise<SnapshotCollection[]> {
   const { collections, variables } = await loadCollections(api, model)
 
   const tokenOf = async (id: string) => {
@@ -109,12 +130,21 @@ export async function readSnapshot(api: VariablesApi, model: SyncModel): Promise
         values,
       })
     }
-    snapshot.push({ id: collection.id, name: collection.name, modes: collection.modes.map(mode => mode.name), variables: items })
+    snapshot.push({
+      id: collection.id,
+      name: collection.name,
+      modes: collection.modes.map(mode => mode.name),
+      variables: items,
+    })
   }
   return snapshot
 }
 
-export async function applyPlan(api: VariablesApi, model: SyncModel, plan: SyncPlan): Promise<ApplyResult> {
+export async function applyPlan(
+  api: VariablesApi,
+  model: SyncModel,
+  plan: SyncPlan
+): Promise<ApplyResult> {
   const result: ApplyResult = { createdCollections: 0, addedModes: 0, created: 0, updated: 0 }
   const { collections, variables } = await loadCollections(api, model)
   const collectionByName = new Map(collections.map(collection => [collection.name, collection]))
@@ -184,7 +214,10 @@ export async function applyPlan(api: VariablesApi, model: SyncModel, plan: SyncP
       if (!modeId || !value) continue
       if ('alias' in value) {
         const target = byToken.get(value.alias)
-        if (!target) throw new Error(`${change.variable.name}: alias target ${value.alias} is not in the document`)
+        if (!target)
+          throw new Error(
+            `${change.variable.name}: alias target ${value.alias} is not in the document`
+          )
         variable.setValueForMode(modeId, api.createVariableAlias(target))
       } else {
         variable.setValueForMode(modeId, value.value)

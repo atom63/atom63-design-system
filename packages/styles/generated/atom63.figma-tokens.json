@@ -6502,10 +6502,7 @@
         "mode": "widget-kind: weather"
       },
       "lifecycle": "preview",
-      "aliases": [
-        "--a63-weather-background-image",
-        "--a63-weather-condition-background-image"
-      ],
+      "aliases": ["--a63-weather-background-image", "--a63-weather-condition-background-image"],
       "scope": "[data-widget-kind='weather'], [data-widget-kind='location'][data-weather-tone]"
     },
     {

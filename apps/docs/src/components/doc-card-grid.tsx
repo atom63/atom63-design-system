@@ -31,14 +31,14 @@ export function DocCardGrid({ items }: DocCardGridProps) {
           return (
             <Link className={cardClassName} key={item.href} to={item.href}>
               <span className="flex min-w-0 items-center gap-2">
-                {Icon ? <Icon className="text-muted-foreground size-4 shrink-0" /> : null}
-                <span className="text-foreground min-w-0 text-sm font-medium">{item.title}</span>
+                {Icon ? <Icon className="size-4 shrink-0 text-muted-foreground" /> : null}
+                <span className="min-w-0 text-sm font-medium text-foreground">{item.title}</span>
                 <ArrowUpRight
                   aria-hidden
-                  className="text-muted-foreground group-hover:text-foreground ml-auto size-3.5 shrink-0 transition-colors"
+                  className="ml-auto size-3.5 shrink-0 text-muted-foreground transition-colors group-hover:text-foreground"
                 />
               </span>
-              <span className="text-muted-foreground text-sm leading-6">{item.description}</span>
+              <span className="text-sm leading-6 text-muted-foreground">{item.description}</span>
             </Link>
           )
         })}

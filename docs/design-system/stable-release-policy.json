@@ -1,11 +1,7 @@
 {
   "schemaVersion": 1,
   "status": "stable-promotion-not-approved",
-  "firstWavePackages": [
-    "@atom63/styles",
-    "@atom63/ui-foundation",
-    "@atom63/ui-react"
-  ],
+  "firstWavePackages": ["@atom63/styles", "@atom63/ui-foundation", "@atom63/ui-react"],
   "distTags": {
     "beta": {
       "purpose": "Public prerelease adopter validation.",

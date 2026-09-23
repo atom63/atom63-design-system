@@ -200,14 +200,14 @@ export function AppearanceMenu({
               className={`bg-muted/78 shadow-xl backdrop-blur-2xl ${panelClassName ?? ''}`}
               style={{ maxHeight: 'min(86svh, 42rem)' }}
             >
-              <FramePanel className="bg-background/84 flex min-h-0 flex-1 flex-col overflow-hidden p-0 backdrop-blur-xl">
-                <header className="border-border/80 flex items-start justify-between gap-3 border-b px-4 py-3">
+              <FramePanel className="flex min-h-0 flex-1 flex-col overflow-hidden bg-background/84 p-0 backdrop-blur-xl">
+                <header className="flex items-start justify-between gap-3 border-b border-border/80 px-4 py-3">
                   <div className="min-w-0">
                     <h2 className="text-sm font-semibold" id={titleId}>
                       {title}
                     </h2>
                     {description ? (
-                      <p className="text-muted-foreground mt-0.5 text-xs">{description}</p>
+                      <p className="mt-0.5 text-xs text-muted-foreground">{description}</p>
                     ) : null}
                   </div>
                   <Button
@@ -246,7 +246,7 @@ export function AppearanceMenu({
               </FramePanel>
 
               <FrameFooter className="flex items-center justify-between gap-3 px-4 py-3">
-                <kbd className="border-border/70 bg-background text-muted-foreground rounded border px-1.5 py-0.5 text-[11px] font-medium">
+                <kbd className="rounded border border-border/70 bg-background px-1.5 py-0.5 text-[11px] font-medium text-muted-foreground">
                   {shortcutLabel}
                 </kbd>
                 <Button onClick={controller.reset} size="sm" type="button" variant="secondary">
@@ -308,7 +308,7 @@ export function AppearanceMenuTrigger({
       {...props}
     >
       <span>{label}</span>
-      <kbd className="border-border/70 bg-background/70 text-muted-foreground hidden rounded border px-1.5 py-0.5 text-[10px] font-medium sm:inline">
+      <kbd className="hidden rounded border border-border/70 bg-background/70 px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground sm:inline">
         {shortcutLabel}
       </kbd>
     </Button>

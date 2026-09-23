@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
     inputs:
       publish:
-        description: "Publish unpublished package versions to npm beta. Leave false for dry-run/preflight."
+        description: 'Publish unpublished package versions to npm beta. Leave false for dry-run/preflight.'
         required: true
         default: false
         type: boolean
@@ -248,7 +248,7 @@ jobs:
       - name: Publish with npm provenance
         run: pnpm release
         env:
-          NPM_CONFIG_PROVENANCE: "true"
+          NPM_CONFIG_PROVENANCE: 'true'
           NPM_CONFIG_ACCESS: public
           # Verbose npm logs show the OIDC token exchange if publishing fails.
           NPM_CONFIG_LOGLEVEL: verbose

@@ -32,7 +32,9 @@ function renderFeedbackIcon(icon: FeedbackStateIcon | undefined): React.ReactNod
   if (icon === undefined) return null
   if (typeof icon !== 'string') return icon
   // Types reject unknown names; untyped callers get no icon rather than a crash.
-  const IconComponent = (feedbackIcons as Record<string, React.ComponentType<React.ComponentProps<'svg'>> | undefined>)[icon]
+  const IconComponent = (
+    feedbackIcons as Record<string, React.ComponentType<React.ComponentProps<'svg'>> | undefined>
+  )[icon]
   return IconComponent ? <IconComponent aria-hidden /> : null
 }
 

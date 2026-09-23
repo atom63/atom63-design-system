@@ -14,7 +14,10 @@ import {
 import { planSync, type SyncModel, valuesEqual } from '../src/sync/plan'
 
 const model = JSON.parse(
-  readFileSync(resolve(__dirname, '../../../packages/styles/generated/atom63.figma-sync.json'), 'utf8')
+  readFileSync(
+    resolve(__dirname, '../../../packages/styles/generated/atom63.figma-sync.json'),
+    'utf8'
+  )
 ) as SyncModel
 
 /** In-memory stand-in for the slice of `figma.variables` the sync uses. */
@@ -107,7 +110,9 @@ describe('Atom63 Figma sync', () => {
   it('writes aliases as Figma aliases to the target token variable', async () => {
     const { api, variables } = createFakeApi()
     await sync(api)
-    const byToken = new Map([...variables.values()].map(variable => [variable.getPluginData(TOKEN_KEY), variable]))
+    const byToken = new Map(
+      [...variables.values()].map(variable => [variable.getPluginData(TOKEN_KEY), variable])
+    )
     const surfacePage = byToken.get('--a63-surface-page')
     const lightModeId = Object.keys(surfacePage?.valuesByMode ?? {})[0]
     const light = surfacePage?.valuesByMode[lightModeId]
@@ -119,7 +124,9 @@ describe('Atom63 Figma sync', () => {
     const { api, collections, variables } = createFakeApi()
     await sync(api)
     const mode = collections.find(item => item.name === 'Atom63 Design Language')
-    const height = [...variables.values()].find(item => item.getPluginData(TOKEN_KEY) === '--a63-control-height-md')
+    const height = [...variables.values()].find(
+      item => item.getPluginData(TOKEN_KEY) === '--a63-control-height-md'
+    )
     const iosModeId = mode?.modes.find(item => item.name === 'ios')?.modeId ?? ''
     height?.setValueForMode(iosModeId, 40)
 
@@ -134,7 +141,9 @@ describe('Atom63 Figma sync', () => {
   it('renames a variable matched by token instead of recreating it', async () => {
     const { api, variables } = createFakeApi()
     await sync(api)
-    const spacing = [...variables.values()].find(item => item.getPluginData(TOKEN_KEY) === '--spacing-4')
+    const spacing = [...variables.values()].find(
+      item => item.getPluginData(TOKEN_KEY) === '--spacing-4'
+    )
     const originalName = spacing?.name
     if (spacing) spacing.name = 'renamed/by/designer'
 
@@ -153,7 +162,9 @@ describe('Atom63 Figma sync', () => {
 
     const plan = planSync(model, await readSnapshot(api, model))
     expect(plan.totals.orphaned).toBe(1)
-    expect(plan.collections.find(item => item.name === 'Atom63 Foundation')?.orphaned).toEqual(['retired/token'])
+    expect(plan.collections.find(item => item.name === 'Atom63 Foundation')?.orphaned).toEqual([
+      'retired/token',
+    ])
   })
 
   it('explains the Figma plan limit when a collection cannot gain modes', async () => {
@@ -162,7 +173,12 @@ describe('Atom63 Figma sync', () => {
   })
 
   it('compares colors and numbers with a small tolerance', () => {
-    expect(valuesEqual({ value: { r: 0.1, g: 0.2, b: 0.3, a: 1 } }, { value: { r: 0.1000000001, g: 0.2, b: 0.3, a: 1 } })).toBe(true)
+    expect(
+      valuesEqual(
+        { value: { r: 0.1, g: 0.2, b: 0.3, a: 1 } },
+        { value: { r: 0.1000000001, g: 0.2, b: 0.3, a: 1 } }
+      )
+    ).toBe(true)
     expect(valuesEqual({ value: 44 }, { value: 40 })).toBe(false)
     expect(valuesEqual({ alias: '--a' }, { value: 1 })).toBe(false)
   })

@@ -17,7 +17,7 @@ export function PropsTable({ rows }: PropsTableProps) {
   }
 
   return (
-    <div className="ds-api-table not-prose border-border overflow-hidden rounded-xl border">
+    <div className="ds-api-table not-prose overflow-hidden rounded-xl border border-border">
       <Table>
         <TableHeader>
           <TableRow className="hover:bg-transparent">
@@ -38,16 +38,16 @@ export function PropsTable({ rows }: PropsTableProps) {
         <TableBody>
           {rows.map(row => (
             <TableRow key={row.name}>
-              <TableCell className="text-foreground align-top font-mono text-xs">
+              <TableCell className="align-top font-mono text-xs text-foreground">
                 {row.name}
               </TableCell>
-              <TableCell className="text-muted-foreground align-top font-mono text-xs leading-relaxed">
+              <TableCell className="align-top font-mono text-xs leading-relaxed text-muted-foreground">
                 {row.type}
               </TableCell>
-              <TableCell className="text-muted-foreground align-top font-mono text-xs">
+              <TableCell className="align-top font-mono text-xs text-muted-foreground">
                 {row.defaultValue ?? '—'}
               </TableCell>
-              <TableCell className="text-muted-foreground align-top text-sm leading-relaxed">
+              <TableCell className="align-top text-sm leading-relaxed text-muted-foreground">
                 {row.description ?? '—'}
               </TableCell>
             </TableRow>

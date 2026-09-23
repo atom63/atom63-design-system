@@ -15,7 +15,10 @@ const outputPath = resolve(packageRoot, 'Sources/Atom63UI/Generated/Atom63Tokens
  */
 const manifest = JSON.parse(await readFile(manifestPath, 'utf8'))
 
-const rootBlock = { label: ':root', matches: entry => !entry.conditions && /(^|,\s*):root(\s*,|$)/.test(entry.scope) }
+const rootBlock = {
+  label: ':root',
+  matches: entry => !entry.conditions && /(^|,\s*):root(\s*,|$)/.test(entry.scope),
+}
 const iosBlock = {
   label: "[data-a63-design-language='ios']",
   matches: entry => !entry.conditions && entry.scope.includes("[data-a63-design-language='ios']"),
@@ -26,7 +29,9 @@ const coarseBlock = {
 }
 
 function blockValue(block, name) {
-  const entry = manifest.entries.find(candidate => candidate.name === name && block.matches(candidate))
+  const entry = manifest.entries.find(
+    candidate => candidate.name === name && block.matches(candidate)
+  )
   if (!entry) throw new Error(`Missing --${name} in ${block.label} of the token manifest`)
   return entry.value
 }

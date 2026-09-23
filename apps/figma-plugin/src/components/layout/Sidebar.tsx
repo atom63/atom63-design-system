@@ -1,13 +1,4 @@
-import {
-  ChevronLeft,
-  ChevronRight,
-  Info,
-  LayoutGrid,
-  RefreshCw,
-
-
-
-} from 'lucide-react'
+import { ChevronLeft, ChevronRight, Info, LayoutGrid, RefreshCw } from 'lucide-react'
 import { Separator } from '../ui'
 import styles from './Sidebar.module.css'
 

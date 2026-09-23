@@ -102,7 +102,6 @@ describe('areaForSlug', () => {
   it('maps pattern pages to patterns', () => {
     expect(areaForSlug('pattern-layout')).toBe('patterns')
   })
-
 })
 
 describe('DOC_AREAS', () => {

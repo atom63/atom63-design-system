@@ -76,7 +76,8 @@ export function SyncPage() {
   }
 
   const pending = plan ? plan.totals.create + plan.totals.update : 0
-  const verified = applied && applied.verification.totals.create + applied.verification.totals.update === 0
+  const verified =
+    applied && applied.verification.totals.create + applied.verification.totals.update === 0
 
   return (
     <ScrollArea>
@@ -88,8 +89,9 @@ export function SyncPage() {
 
         {model && (
           <p className={styles.meta}>
-            Bundled model: {model.variables} variables in {model.collections} collections, {model.aliasValues} alias values,{' '}
-            {model.skipped} tokens not representable as Figma variables.
+            Bundled model: {model.variables} variables in {model.collections} collections,{' '}
+            {model.aliasValues} alias values, {model.skipped} tokens not representable as Figma
+            variables.
           </p>
         )}
 
@@ -97,7 +99,12 @@ export function SyncPage() {
           <Button loading={status === 'previewing'} onClick={preview} variant="secondary">
             Preview changes
           </Button>
-          <Button disabled={!plan || pending === 0} loading={status === 'applying'} onClick={apply} variant="primary">
+          <Button
+            disabled={!plan || pending === 0}
+            loading={status === 'applying'}
+            onClick={apply}
+            variant="primary"
+          >
             {plan ? `Apply ${pending} changes` : 'Apply'}
           </Button>
         </div>
@@ -109,9 +116,12 @@ export function SyncPage() {
         )}
 
         {applied && (
-          <Alert title={verified ? 'In sync' : 'Sync incomplete'} variant={verified ? 'success' : 'warning'}>
-            Created {applied.applied.createdCollections} collections, {applied.applied.addedModes} modes,{' '}
-            {applied.applied.created} variables; updated {applied.applied.updated}.{' '}
+          <Alert
+            title={verified ? 'In sync' : 'Sync incomplete'}
+            variant={verified ? 'success' : 'warning'}
+          >
+            Created {applied.applied.createdCollections} collections, {applied.applied.addedModes}{' '}
+            modes, {applied.applied.created} variables; updated {applied.applied.updated}.{' '}
             {verified
               ? 'A fresh preview finds nothing left to change.'
               : `A fresh preview still finds ${applied.verification.totals.create + applied.verification.totals.update} changes.`}
@@ -120,14 +130,15 @@ export function SyncPage() {
 
         {plan && plan.totals.typeConflicts > 0 && (
           <Alert title="Type conflicts" variant="warning">
-            {plan.totals.typeConflicts} variables exist with a different type and are left untouched. Delete them to let the sync
-            recreate them.
+            {plan.totals.typeConflicts} variables exist with a different type and are left
+            untouched. Delete them to let the sync recreate them.
           </Alert>
         )}
 
         {plan && plan.totals.orphaned > 0 && (
           <Alert title="Orphaned variables" variant="info">
-            {plan.totals.orphaned} Atom63 variables are no longer in the model. They are kept; hover the count to see them.
+            {plan.totals.orphaned} Atom63 variables are no longer in the model. They are kept; hover
+            the count to see them.
           </Alert>
         )}
 

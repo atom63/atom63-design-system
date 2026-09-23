@@ -19,37 +19,37 @@ import {
   TabsList,
   TabsPanel,
   TabsTab,
-} from "@atom63/ui-react";
-import { useState } from "react";
+} from '@atom63/ui-react'
+import { useState } from 'react'
 
-type Mode = "dark" | "light";
-type Theme = "modern" | "aqua" | "terminal";
+type Mode = 'dark' | 'light'
+type Theme = 'modern' | 'aqua' | 'terminal'
 
-const navigation = ["Overview", "Components", "Evidence"] as const;
+const navigation = ['Overview', 'Components', 'Evidence'] as const
 
 const metrics = [
-  ["Surface tokens", "1,016 CSS vars"],
-  ["Public packages", "3 first-wave"],
-  ["Adopter mode", "published DS"],
-] as const;
+  ['Surface tokens', '1,016 CSS vars'],
+  ['Public packages', '3 first-wave'],
+  ['Adopter mode', 'published DS'],
+] as const
 
 const cards = [
   {
-    title: "Theme boundary",
-    body: "Atom63Theme owns the data attributes. The app owns only the product choice.",
-    tag: "runtime",
+    title: 'Theme boundary',
+    body: 'Atom63Theme owns the data attributes. The app owns only the product choice.',
+    tag: 'runtime',
   },
   {
-    title: "Recipe layer",
-    body: "Buttons, cards, tabs, inputs, and empty states compose without app-local recipes.",
-    tag: "recipes",
+    title: 'Recipe layer',
+    body: 'Buttons, cards, tabs, inputs, and empty states compose without app-local recipes.',
+    tag: 'recipes',
   },
   {
-    title: "Consumer proof",
-    body: "This example stays generic so atom63.io can remain the portfolio consumption layer.",
-    tag: "adopter",
+    title: 'Consumer proof',
+    body: 'This example stays generic so atom63.io can remain the portfolio consumption layer.',
+    tag: 'adopter',
   },
-] as const;
+] as const
 
 function SegmentedChoice<T extends string>({
   label,
@@ -57,36 +57,36 @@ function SegmentedChoice<T extends string>({
   options,
   value,
 }: {
-  label: string;
-  onChange: (value: T) => void;
-  options: readonly T[];
-  value: T;
+  label: string
+  onChange: (value: T) => void
+  options: readonly T[]
+  value: T
 }) {
   return (
     <div aria-label={label} className="segmented-choice" role="group">
       <span>{label}</span>
       <div>
-        {options.map((option) => (
+        {options.map(option => (
           <Button
             aria-pressed={value === option}
             key={option}
             onClick={() => onChange(option)}
             size="sm"
             type="button"
-            variant={value === option ? "primary" : "ghost"}
+            variant={value === option ? 'primary' : 'ghost'}
           >
             {option}
           </Button>
         ))}
       </div>
     </div>
-  );
+  )
 }
 
 export function App() {
-  const [mode, setMode] = useState<Mode>("light");
-  const [theme, setTheme] = useState<Theme>("modern");
-  const [projectName, setProjectName] = useState("Portfolio OS");
+  const [mode, setMode] = useState<Mode>('light')
+  const [theme, setTheme] = useState<Theme>('modern')
+  const [projectName, setProjectName] = useState('Portfolio OS')
 
   return (
     <Atom63Theme className="app-frame" mode={mode} theme={theme}>
@@ -96,7 +96,7 @@ export function App() {
           <strong>Product shell</strong>
         </a>
         <nav aria-label="Example sections">
-          {navigation.map((item) => (
+          {navigation.map(item => (
             <a href={`#${item.toLowerCase()}`} key={item}>
               {item}
             </a>
@@ -110,9 +110,8 @@ export function App() {
             <Badge variant="outline">DS-owned example</Badge>
             <h1>Application structure without portfolio content.</h1>
             <p>
-              A richer consumer presentation layer for Atom63 Design System. It
-              demonstrates product-shell composition while keeping atom63.io as
-              the real portfolio adopter.
+              A richer consumer presentation layer for Atom63 Design System. It demonstrates
+              product-shell composition while keeping atom63.io as the real portfolio adopter.
             </p>
           </div>
           <Card className="control-card">
@@ -126,20 +125,20 @@ export function App() {
               <SegmentedChoice
                 label="Mode"
                 onChange={setMode}
-                options={["light", "dark"] as const}
+                options={['light', 'dark'] as const}
                 value={mode}
               />
               <SegmentedChoice
                 label="Theme"
                 onChange={setTheme}
-                options={["modern", "aqua", "terminal"] as const}
+                options={['modern', 'aqua', 'terminal'] as const}
                 value={theme}
               />
               <label className="project-field" htmlFor="project-name">
                 <span>Example project</span>
                 <Input
                   id="project-name"
-                  onChange={(event) => setProjectName(event.target.value)}
+                  onChange={event => setProjectName(event.target.value)}
                   value={projectName}
                 />
               </label>
@@ -164,7 +163,7 @@ export function App() {
             <h2>Reusable app patterns, not product IA.</h2>
           </div>
           <div className="card-grid">
-            {cards.map((card) => (
+            {cards.map(card => (
               <Card key={card.title}>
                 <CardHeader>
                   <CardLabel>{card.tag}</CardLabel>
@@ -183,7 +182,7 @@ export function App() {
             <CardHeader>
               <CardLabel>Consumer contract</CardLabel>
               <CardAction>
-                <Badge variant="outline">{projectName || "Untitled"}</Badge>
+                <Badge variant="outline">{projectName || 'Untitled'}</Badge>
               </CardAction>
             </CardHeader>
             <CardContent>
@@ -195,14 +194,11 @@ export function App() {
                 <TabsPanel className="tab-panel" value="boundary">
                   <Empty>
                     <EmptyHeader>
-                      <EmptyTitle>
-                        Keep atom63.io as the real adopter.
-                      </EmptyTitle>
+                      <EmptyTitle>Keep atom63.io as the real adopter.</EmptyTitle>
                       <EmptyDescription>
-                        This example belongs to the design-system repo. The
-                        portfolio app should consume the public package surface
-                        and add only its own content, routes, and product
-                        policy.
+                        This example belongs to the design-system repo. The portfolio app should
+                        consume the public package surface and add only its own content, routes, and
+                        product policy.
                       </EmptyDescription>
                     </EmptyHeader>
                   </Empty>
@@ -221,5 +217,5 @@ export function App() {
         </section>
       </main>
     </Atom63Theme>
-  );
+  )
 }

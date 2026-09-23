@@ -8,7 +8,7 @@ export function RadiusScale() {
         {RADIUS_SCALE.map(({ token, utility, px, cssVar }) => (
           <div key={token} className="flex w-24 flex-col items-center gap-2">
             <div
-              className={clsx('border-primary/40 bg-muted size-24 border-2', utility)}
+              className={clsx('size-24 border-2 border-primary/40 bg-muted', utility)}
               style={{ borderRadius: `var(${cssVar})` }}
               title={`${cssVar} → ${px} (default)`}
             />
@@ -19,7 +19,7 @@ export function RadiusScale() {
           </div>
         ))}
       </div>
-      <p className="text-muted-foreground mt-4 text-xs">
+      <p className="mt-4 text-xs text-muted-foreground">
         Boxes use <code className="text-foreground/90">96×96px</code> and apply radius via{' '}
         <code className="text-foreground/90">var(--radius-*)</code> so token values always win over
         doc styles.

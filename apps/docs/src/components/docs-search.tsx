@@ -261,7 +261,7 @@ export function DocsSearch() {
     <>
       <Button
         aria-label="Search docs"
-        className="text-muted-foreground hover:text-foreground hidden h-9 w-auto lg:flex"
+        className="hidden h-9 w-auto text-muted-foreground hover:text-foreground lg:flex"
         onClick={openSearch}
         size="md"
         type="button"
@@ -307,8 +307,8 @@ export function DocsSearch() {
             <CommandPanel>
               <CommandEmpty>
                 <div className="flex flex-col items-center justify-center gap-2 py-6">
-                  <SearchIcon aria-hidden className="text-muted-foreground/72 size-6" />
-                  <p className="text-muted-foreground text-sm">No docs found</p>
+                  <SearchIcon aria-hidden className="size-6 text-muted-foreground/72" />
+                  <p className="text-sm text-muted-foreground">No docs found</p>
                 </div>
               </CommandEmpty>
               <CommandList>
@@ -323,12 +323,12 @@ export function DocsSearch() {
                             <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                               <span className="truncate font-medium">{item.title}</span>
                               {item.type === 'page' && item.snippet ? (
-                                <span className="text-muted-foreground line-clamp-1 text-xs">
+                                <span className="line-clamp-1 text-xs text-muted-foreground">
                                   {item.snippet}
                                 </span>
                               ) : null}
                             </span>
-                            <span className="text-muted-foreground shrink-0 text-xs">
+                            <span className="shrink-0 text-xs text-muted-foreground">
                               {item.section}
                             </span>
                             {item.shortcut ? (
@@ -383,7 +383,7 @@ export function DocsSearchLauncher() {
   return (
     <Button
       aria-label="Search documentation"
-      className="not-prose text-muted-foreground hover:text-foreground my-8 flex h-12 w-full max-w-xl justify-between px-3.5 text-sm"
+      className="not-prose my-8 flex h-12 w-full max-w-xl justify-between px-3.5 text-sm text-muted-foreground hover:text-foreground"
       onClick={openSearch}
       size="lg"
       type="button"
@@ -404,7 +404,7 @@ function ActionIcon({ icon }: { icon: DocsSearchAction['icon'] }) {
   const Icon = icon === 'moon' ? MoonIcon : SunIcon
 
   return (
-    <span className="bg-muted text-muted-foreground flex size-6 shrink-0 items-center justify-center rounded-md">
+    <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
       <Icon aria-hidden className="size-3.5" />
     </span>
   )

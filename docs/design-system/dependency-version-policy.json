@@ -6,17 +6,10 @@
     "testedVersion": "19.2.7",
     "packages": ["@atom63/ui-react"]
   },
-  "coordinatedPackages": [
-    "@atom63/styles",
-    "@atom63/ui-foundation",
-    "@atom63/ui-react"
-  ],
+  "coordinatedPackages": ["@atom63/styles", "@atom63/ui-foundation", "@atom63/ui-react"],
   "workspaceDependencyPolicy": {
     "publishedPackagesMustUseExactPublishedVersionsBeforeStable": true,
-    "allowedWorkspaceDependenciesDuringBeta": [
-      "@atom63/styles",
-      "@atom63/ui-foundation"
-    ]
+    "allowedWorkspaceDependenciesDuringBeta": ["@atom63/styles", "@atom63/ui-foundation"]
   },
   "typeVisibleDependencies": {
     "@atom63/ui-react": [

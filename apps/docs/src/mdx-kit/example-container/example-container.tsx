@@ -39,10 +39,10 @@ export function ExampleContainer({
       {(title || description) && (
         <header className={clsx('mb-3 flex flex-col gap-1', align === 'center' && 'text-center')}>
           {title ? (
-            <p className="text-foreground text-sm font-semibold tracking-tight">{title}</p>
+            <p className="text-sm font-semibold tracking-tight text-foreground">{title}</p>
           ) : null}
           {description ? (
-            <p className="text-muted-foreground text-sm leading-relaxed">{description}</p>
+            <p className="text-sm leading-relaxed text-muted-foreground">{description}</p>
           ) : null}
         </header>
       )}
