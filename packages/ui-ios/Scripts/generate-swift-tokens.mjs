@@ -3,47 +3,37 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const primitivesPath = resolve(packageRoot, '../styles/src/tokens/foundation/primitives.css')
-const motionPath = resolve(packageRoot, '../styles/src/tokens/foundation/motion.css')
-const environmentPath = resolve(packageRoot, '../styles/src/contracts/environment.css')
-const actionPath = resolve(packageRoot, '../styles/src/contracts/action.css')
+const manifestPath = resolve(packageRoot, '../styles/generated/atom63.tokens.json')
 const outputPath = resolve(packageRoot, 'Sources/Atom63UI/Generated/Atom63Tokens.generated.swift')
 
-const source = await readFile(primitivesPath, 'utf8')
-const declarations = new Map(
-  [...source.matchAll(/--([a-z0-9_-]+):\s*([^;]+);/g)].map(match => [match[1], match[2].trim()])
-)
-
-const environmentSource = await readFile(environmentPath, 'utf8')
-const motionSource = await readFile(motionPath, 'utf8')
-const actionSource = await readFile(actionPath, 'utf8')
-
 /*
- * The iOS control ramp is owned by the `[data-a63-design-language='ios']` block
- * in @atom63/styles. Parse it instead of restating the numbers in Swift — those
- * literals are exactly the drift this generator exists to prevent.
+ * Every value comes from the @atom63/styles token manifest, the one interface
+ * all renderers read. The manifest records each declaration with its selector
+ * scope and media conditions, so the iOS control ramp owned by the
+ * `[data-a63-design-language='ios']` block is looked up here instead of being
+ * restated in Swift or re-parsed from CSS.
  */
-function cssBlock(text, selector) {
-  const start = text.indexOf(selector)
-  if (start === -1) throw new Error(`Missing CSS block ${selector}`)
-  const open = text.indexOf('{', start)
-  const close = text.indexOf('\n}', open)
-  if (open === -1 || close === -1) throw new Error(`Unterminated CSS block ${selector}`)
-  return text.slice(open + 1, close)
+const manifest = JSON.parse(await readFile(manifestPath, 'utf8'))
+
+const rootBlock = { label: ':root', matches: entry => !entry.conditions && /(^|,\s*):root(\s*,|$)/.test(entry.scope) }
+const iosBlock = {
+  label: "[data-a63-design-language='ios']",
+  matches: entry => !entry.conditions && entry.scope.includes("[data-a63-design-language='ios']"),
+}
+const coarseBlock = {
+  label: '@media (pointer: coarse)',
+  matches: entry => entry.conditions?.includes('@media (pointer: coarse)') ?? false,
+}
+
+function blockValue(block, name) {
+  const entry = manifest.entries.find(candidate => candidate.name === name && block.matches(candidate))
+  if (!entry) throw new Error(`Missing --${name} in ${block.label} of the token manifest`)
+  return entry.value
 }
 
 const spaceUnitPx = Number(/^([\d.]+)px$/.exec(declaration('spacing-1'))?.[1])
 if (!Number.isFinite(spaceUnitPx)) {
   throw new Error('Expected --spacing-1 to be a pixel value')
-}
-
-const iosBlock = cssBlock(environmentSource, "[data-a63-design-language='ios']")
-const coarseBlock = cssBlock(environmentSource, '@media (pointer: coarse)')
-
-function blockValue(block, name) {
-  const match = new RegExp(`--${name}:\\s*([^;]+);`).exec(block)
-  if (!match) throw new Error(`Missing --${name} in generated-from CSS block`)
-  return match[1].trim()
 }
 
 /** `calc(var(--a63-space-unit) * 11)` → 44 */
@@ -79,7 +69,7 @@ function pressScale(block) {
 }
 
 function easing(name) {
-  const match = new RegExp(`--${name}:\\s*cubic-bezier\\(([^)]+)\\);`).exec(motionSource)
+  const match = /^cubic-bezier\(([^)]+)\)$/.exec(blockValue(rootBlock, name))
   if (!match) throw new Error(`Missing cubic-bezier --${name}`)
   const parts = match[1].split(',').map(part => Number(part.trim()))
   if (parts.length !== 4 || parts.some(part => !Number.isFinite(part))) {
@@ -99,19 +89,13 @@ const controlMinSize = rem(coarseBlock, 'a63-control-min-size')
 const controlMinTarget = rem(coarseBlock, 'a63-control-min-target')
 const controlPressScale = pressScale(iosBlock)
 const controlEase = easing('ease-emphasized')
-const actionDisabledOpacity = Number(
-  /--a63-action-disabled-opacity:\s*([\d.]+);/.exec(actionSource)?.[1]
-)
+const actionDisabledOpacity = Number(blockValue(rootBlock, 'a63-action-disabled-opacity'))
 if (!Number.isFinite(actionDisabledOpacity)) {
   throw new Error('Missing --a63-action-disabled-opacity in the action contract')
 }
 
 function declaration(name) {
-  const value = declarations.get(name)
-  if (!value) {
-    throw new Error(`Missing CSS foundation token --${name}`)
-  }
-  return value
+  return blockValue(rootBlock, name)
 }
 
 function rgba(name) {
