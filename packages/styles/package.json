@@ -5,12 +5,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ATOM63/atom63-design-system.git",
+    "url": "git+https://github.com/atom63/atom63-design-system.git",
     "directory": "packages/styles"
   },
-  "homepage": "https://github.com/ATOM63/atom63-design-system/tree/main/packages/styles#readme",
+  "homepage": "https://github.com/atom63/atom63-design-system/tree/main/packages/styles#readme",
   "bugs": {
-    "url": "https://github.com/ATOM63/atom63-design-system/issues"
+    "url": "https://github.com/atom63/atom63-design-system/issues"
   },
   "publishConfig": {
     "access": "public"

@@ -223,11 +223,12 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
+      # No registry-url here: it would write an .npmrc with an _authToken line,
+      # and trusted publishing needs npm to authenticate through OIDC alone.
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          registry-url: https://registry.npmjs.org
           package-manager-cache: false
 
       - name: Enable pnpm with Corepack
@@ -247,8 +248,7 @@ jobs:
       - name: Publish with npm provenance
         run: pnpm release
         env:
-          # setup-node writes an npmrc that can reference NODE_AUTH_TOKEN. Keep it
-          # empty so npm uses trusted-publisher OIDC instead of a stale token.
-          NODE_AUTH_TOKEN: ""
           NPM_CONFIG_PROVENANCE: "true"
           NPM_CONFIG_ACCESS: public
+          # Verbose npm logs show the OIDC token exchange if publishing fails.
+          NPM_CONFIG_LOGLEVEL: verbose
