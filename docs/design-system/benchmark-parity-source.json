@@ -264,25 +264,31 @@
           "reference": "https://www.npmjs.com/package/frosted-ui"
         }
       ],
-      "atom63Status": "A Vite example and clean registry-only consumer build in CI, packed packages are smoke-tested locally, and an adopter branch has beta evidence. The main product adopter still defaults to workspace packages.",
+      "atom63Status": "The Vite example, packed packages, registry-only consumer, and the main product adopter published-package path are all covered by repeatable beta checks. The atom63-vite product adopter now includes fixture, website resolver, and temp-repo published DS smokes merged in PR #416, plus published/default visual sanity evidence. The product app may still default to workspace packages for development, so stable promotion still needs sustained CI/readback evidence and an explicit default-consumption decision.",
       "currentEvidence": {
         "docs": [
           "examples/vite-basic/README.md",
           "docs/design-system/extraction-rehearsal.md",
           "docs/design-system/beta-release-notes.md",
-          "docs/design-system/audits/registry-consumer-smoke.json"
+          "docs/design-system/audits/registry-consumer-smoke.json",
+          "https://github.com/atom63/atom63-vite/pull/416"
         ],
         "commands": [
           "pnpm check:ds-pack-smoke",
           "pnpm check:ds-registry-smoke",
-          "pnpm build:example:vite-basic"
+          "pnpm build:example:vite-basic",
+          "pnpm check:fixture-published-ds",
+          "pnpm check:website-ds-resolution",
+          "pnpm check:website-published-ds",
+          "A63_USE_PUBLISHED_DS=1 pnpm --filter @atom63/website build"
         ]
       },
       "gaps": [
-        "Keep the product adopter green without root dependency overrides."
+        "Keep the product adopter published-package checks green after every approved beta or stable publish.",
+        "Before stable/latest, decide whether the product app default consumption path should remain workspace-first for development or switch to published packages in release verification."
       ],
-      "stableGate": "blocker",
-      "nextAction": "Promote the product adopter's published-package path to a repeatable smoke without root dependency overrides before stable.",
+      "stableGate": "warning",
+      "nextAction": "Keep the merged atom63-vite published-package adopter checks green, add stable/latest readback when stable promotion is approved, and record the default-consumption decision before stable.",
       "ownerLane": "adopter-validation"
     },
     {

@@ -88,28 +88,22 @@ Expected critical dependency values:
 
 ### Real adopter evidence
 
-Adopter branch:
+Product adopter PR:
 
 - Repo: `https://github.com/atom63/atom63-vite`
-- Branch: `chore/ds-beta-adopter`
-- Worktree used locally: `/Users/yz/Projects/atom63-vite-ds-adopter`
-
-Evidence commits:
-
-- `f177031a test: consume DS beta packages in Vite fixture`
-- `d2bd8df2 test: validate website against DS beta packages`
-- `771c2c7b test: align Base UI for DS beta adoption`
+- PR: [`#416`](https://github.com/atom63/atom63-vite/pull/416)
+- Merge commit: `9d6bad116094cc6974e8eb721938ae6f569ba457`
 
 Verified commands:
 
 ```bash
-pnpm --filter @atom63/fixture-vite typecheck
-pnpm --filter @atom63/fixture-vite build
-A63_USE_PUBLISHED_DS=1 pnpm --filter @atom63/website typecheck
+pnpm check:fixture-published-ds
+pnpm check:website-ds-resolution
+pnpm check:website-published-ds
 A63_USE_PUBLISHED_DS=1 pnpm --filter @atom63/website build
 ```
 
-Browser/visual sanity was performed against the `atom63.io` preview with `A63_USE_PUBLISHED_DS=1`; homepage and `/ds-lab` rendered normally, and YZ confirmed the visual result looked correct.
+The merged adopter checks cover a fixture published-package smoke, an `atom63.io` resolver check, and a temp-repo website smoke that consumes the published DS beta packages while keeping non-DS workspace packages local. Browser/visual sanity compared published and default DS paths across `/`, `/ds-lab`, and `/design-system` on desktop and mobile; no published-path-only visual regression was observed.
 
 ## Known beta constraints
 
@@ -117,7 +111,7 @@ Browser/visual sanity was performed against the `atom63.io` preview with `A63_US
 - Root `@atom63/ui-react` remains broad for beta ergonomics; stable should narrow or tier support.
 - `@atom63/icons` is not a required first-wave dependency. `@atom63/ui-react` defaults to `lucide-react`, and consumers may provide their own icon system.
 - `@atom63/agent`, `@atom63/widgets`, `@atom63/mdx`, `@atom63/ui-ios`, and Figma surfaces are not in the first-wave public npm runtime.
-- `atom63-vite` still uses workspace packages by default; published DS consumption is opt-in through the adopter branch and `A63_USE_PUBLISHED_DS=1`.
+- `atom63-vite` still uses workspace packages by default for local development; published DS consumption is verified through repeatable adopter checks and `A63_USE_PUBLISHED_DS=1`.
 
 ## Stable-readiness checklist
 
@@ -130,7 +124,7 @@ Before promoting any package to stable/latest:
 - [ ] Keep `@base-ui/react` and other type-visible dependencies under an explicit dependency policy.
 - [x] Run a clean external registry install, typecheck, and production-build smoke for the current first-wave beta packages; CI and beta release preflight now enforce the checked-in registry readback.
 - [ ] Keep the registry smoke green after every approved beta or stable publish and add a stable/latest readback when stable promotion is approved.
-- [ ] Keep `atom63-vite` adopter smoke green without root override workarounds.
+- [x] Keep `atom63-vite` adopter smoke green without root override workarounds; PR [#416](https://github.com/atom63/atom63-vite/pull/416) added fixture, resolver, and website temp-repo published DS checks.
 - [x] Audit `@atom63/ui-react` root exports and define beta support tiers in `docs/design-system/ui-react-support-policy.json`; CI now checks the generated export inventory for drift.
 - [x] Generate a stable/latest action matrix for `@atom63/ui-react` root exports and public subpaths in `docs/design-system/ui-react-stable-action-matrix.md`; CI now checks it for drift.
 - [x] Record and enforce non-breaking stable-promotion decisions for every P0 root/source family and P0/P1 public subpath; beta root exports remain unchanged pending stable approval.
