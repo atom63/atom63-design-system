@@ -1,0 +1,311 @@
+import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), '..')
+const sourcePath = resolve(root, 'packages/ui-foundation/contracts/cross-renderer-contracts.json')
+const typescriptPath = resolve(
+  root,
+  'packages/ui-foundation/src/conformance/cross-renderer-contracts.generated.ts'
+)
+const swiftPath = resolve(
+  root,
+  'packages/ui-ios/Sources/Atom63UI/Generated/AtomComponentContracts.generated.swift'
+)
+const skeletonCSSPath = resolve(root, 'packages/ui-react/src/components/skeleton/skeleton.css')
+const buttonCSSPath = resolve(root, 'packages/ui-react/src/components/button/button.css')
+const atomButtonPath = resolve(root, 'packages/ui-ios/Sources/Atom63UI/AtomButton.swift')
+const atomSkeletonPath = resolve(root, 'packages/ui-ios/Sources/Atom63UI/AtomSkeleton.swift')
+
+const source = JSON.parse(await readFile(sourcePath, 'utf8'))
+
+const foundationExports = {
+  accordion: ['accordionStates'],
+  alert: ['alertVariants'],
+  'alert-dialog': ['alertDialogStates'],
+  avatar: ['avatarStates'],
+  badge: ['badgeSolidVariants', 'badgeSemanticVariants', 'badgePaletteVariants'],
+  button: ['buttonStates'],
+  calendar: ['calendarStates'],
+  card: ['cardStates'],
+  dialog: ['dialogStates'],
+  'dropdown-menu': ['dropdownMenuStates'],
+  'destination-link': ['destinationLinkStates'],
+  empty: ['emptyStates'],
+  field: ['fieldStates'],
+  input: ['inputStates'],
+  'load-more-trigger': ['loadMoreTriggerStates'],
+  progress: ['progressStates'],
+  radio: ['radioStates'],
+  'search-field': ['searchFieldStates'],
+  'segmented-control': ['segmentedControlStates'],
+  select: ['selectStates'],
+  slider: ['sliderStates'],
+  skeleton: ['skeletonStates'],
+  switch: ['switchStates'],
+  tabs: ['tabsStates'],
+  textarea: ['textareaStates'],
+  toaster: ['toasterStates'],
+  toggle: ['toggleStates'],
+}
+const semanticTones = new Set(['neutral', 'info', 'success', 'warning', 'error'])
+
+if (source.version !== 2 || !Array.isArray(source.contracts)) {
+  throw new Error('Unsupported cross-renderer contract source')
+}
+
+function validateStringList(contractId, field, values) {
+  if (!Array.isArray(values) || values.length === 0) {
+    throw new Error(`${contractId} must define ${field}`)
+  }
+  if (values.some(value => typeof value !== 'string' || value.trim() === '')) {
+    throw new Error(`${contractId} has an invalid ${field} entry`)
+  }
+  if (new Set(values).size !== values.length) {
+    throw new Error(`${contractId} has duplicate ${field} entries`)
+  }
+}
+
+const ids = new Set()
+const catalogItems = new Set()
+for (const contract of source.contracts) {
+  if (ids.has(contract.id)) {
+    throw new Error(`Duplicate cross-renderer contract id: ${contract.id}`)
+  }
+  if (catalogItems.has(contract.catalogItem)) {
+    throw new Error(`Duplicate catalog item mapping: ${contract.catalogItem}`)
+  }
+  ids.add(contract.id)
+  catalogItems.add(contract.catalogItem)
+
+  if (typeof contract.intent !== 'string' || contract.intent.trim() === '') {
+    throw new Error(`${contract.id} must define a shared intent`)
+  }
+  validateStringList(contract.id, 'shared outcomes', contract.sharedOutcomes)
+  validateStringList(contract.id, 'accessibility outcomes', contract.accessibilityOutcomes)
+  validateStringList(contract.id, 'React platform adaptations', contract.platformAdaptations?.react)
+  validateStringList(
+    contract.id,
+    'SwiftUI platform adaptations',
+    contract.platformAdaptations?.swiftUI
+  )
+  if (contract.parity === 'recipe' && !contract.motion) {
+    throw new Error(`${contract.id} recipe parity requires a motion contract`)
+  }
+
+  const exportNames = foundationExports[contract.foundationContract]
+  if (!exportNames) {
+    throw new Error(`Missing foundation source mapping: ${contract.foundationContract}`)
+  }
+  const contractPath = resolve(
+    root,
+    `packages/ui-foundation/src/components/${contract.foundationContract}/${contract.foundationContract}-contract.ts`
+  )
+  const contractSource = await readFile(contractPath, 'utf8')
+  const foundationValues = new Set()
+  for (const exportName of exportNames) {
+    const match = contractSource.match(
+      new RegExp(`export const ${exportName} = \\[([\\s\\S]*?)\\] as const`)
+    )
+    if (!match) {
+      throw new Error(`Cannot read ${exportName} from ${contractPath}`)
+    }
+    for (const value of match[1].matchAll(/'([^']+)'/g)) {
+      foundationValues.add(value[1])
+    }
+  }
+  for (const state of contract.requiredStates) {
+    if (!foundationValues.has(state)) {
+      throw new Error(
+        `${contract.id} requires ${state}, which is absent from its foundation ${contract.foundationAxis}`
+      )
+    }
+  }
+  for (const [state, tone] of Object.entries(contract.stateTones ?? {})) {
+    if (!contract.requiredStates.includes(state)) {
+      throw new Error(`${contract.id} defines a tone for unknown state: ${state}`)
+    }
+    if (!semanticTones.has(tone)) {
+      throw new Error(`${contract.id} defines an unknown semantic tone: ${tone}`)
+    }
+  }
+}
+
+const typescript = `// Generated by scripts/generate-cross-renderer-contracts.mjs.
+// Source: packages/ui-foundation/contracts/cross-renderer-contracts.json.
+
+import type { CrossRendererComponentContract } from './types'
+
+export const crossRendererContracts = ${JSON.stringify(source.contracts, null, 2)} as const satisfies readonly CrossRendererComponentContract[]
+
+export type CrossRendererContractId = (typeof crossRendererContracts)[number]['id']
+export type CrossRendererContractById<Id extends CrossRendererContractId> = Extract<
+  (typeof crossRendererContracts)[number],
+  { id: Id }
+>
+
+export function getCrossRendererContract<Id extends CrossRendererContractId>(
+  id: Id,
+): CrossRendererContractById<Id> {
+  const contract = crossRendererContracts.find((candidate) => candidate.id === id)
+  if (!contract) {
+    throw new Error(\`Unknown cross-renderer contract: \${id}\`)
+  }
+  return contract as CrossRendererContractById<Id>
+}
+`
+
+function swiftString(value) {
+  return JSON.stringify(value)
+}
+
+function swiftArray(values) {
+  return `[${values.map(swiftString).join(', ')}]`
+}
+
+function swiftDictionary(values) {
+  if (!values) return '[:]'
+  return `[${Object.entries(values)
+    .map(([key, value]) => `${swiftString(key)}: ${swiftString(value)}`)
+    .join(', ')}]`
+}
+
+function swiftMotion(motion) {
+  if (!motion) return 'nil'
+  return `AtomMotionContract(kind: ${swiftString(motion.kind)}, durationToken: ${swiftString(motion.durationToken)}, easing: ${swiftString(motion.easing)}, direction: ${swiftString(motion.direction)}, reducedMotion: ${swiftString(motion.reducedMotion)})`
+}
+
+function swiftPlatformAdaptations(adaptations) {
+  return `AtomPlatformAdaptations(react: ${swiftArray(adaptations.react)}, swiftUI: ${swiftArray(adaptations.swiftUI)})`
+}
+
+function swiftParity(parity) {
+  if (parity === 'platform-adaptive') return '.platformAdaptive'
+  return `.${parity}`
+}
+
+const swiftContracts = source.contracts
+  .map(
+    contract => `    AtomComponentContract(
+      id: ${swiftString(contract.id)},
+      foundationContract: ${swiftString(contract.foundationContract)},
+      foundationAxis: ${swiftString(contract.foundationAxis)},
+      catalogItem: ${swiftString(contract.catalogItem)},
+      reactRenderer: ${swiftString(contract.reactRenderer)},
+      swiftUIRenderer: ${swiftString(contract.swiftUIRenderer)},
+      intent: ${swiftString(contract.intent)},
+      parity: ${swiftParity(contract.parity)},
+      requiredStates: ${swiftArray(contract.requiredStates)},
+      stateTones: ${swiftDictionary(contract.stateTones)},
+      sharedOutcomes: ${swiftArray(contract.sharedOutcomes)},
+      accessibilityOutcomes: ${swiftArray(contract.accessibilityOutcomes)},
+      motion: ${swiftMotion(contract.motion)},
+      platformAdaptations: ${swiftPlatformAdaptations(contract.platformAdaptations)}
+    )`
+  )
+  .join(',\n')
+
+const swift = `// Generated by scripts/generate-cross-renderer-contracts.mjs.
+// Source: packages/ui-foundation/contracts/cross-renderer-contracts.json.
+
+import Foundation
+
+public enum AtomContractParity: String, Sendable {
+  case strict
+  case recipe
+  case platformAdaptive = "platform-adaptive"
+}
+
+public struct AtomMotionContract: Equatable, Sendable {
+  public let kind: String
+  public let durationToken: String
+  public let easing: String
+  public let direction: String
+  public let reducedMotion: String
+}
+
+public struct AtomPlatformAdaptations: Equatable, Sendable {
+  public let react: [String]
+  public let swiftUI: [String]
+}
+
+public struct AtomComponentContract: Equatable, Identifiable, Sendable {
+  public let id: String
+  public let foundationContract: String
+  public let foundationAxis: String
+  public let catalogItem: String
+  public let reactRenderer: String
+  public let swiftUIRenderer: String
+  public let intent: String
+  public let parity: AtomContractParity
+  public let requiredStates: [String]
+  public let stateTones: [String: String]
+  public let sharedOutcomes: [String]
+  public let accessibilityOutcomes: [String]
+  public let motion: AtomMotionContract?
+  public let platformAdaptations: AtomPlatformAdaptations
+}
+
+public enum AtomComponentContracts {
+  public static let all: [AtomComponentContract] = [
+${swiftContracts}
+  ]
+
+  public static func contract(catalogItem: String) -> AtomComponentContract? {
+    all.first { $0.catalogItem == catalogItem }
+  }
+}
+`
+
+const outputs = [
+  [typescriptPath, typescript],
+  [swiftPath, swift],
+]
+
+if (process.argv.includes('--check')) {
+  let stale = false
+  for (const [path, expected] of outputs) {
+    const current = await readFile(path, 'utf8').catch(() => '')
+    if (current !== expected) {
+      console.error(`Generated contract is stale: ${path}`)
+      stale = true
+    }
+  }
+  async function verifyRendererRecipe(name, path, requirements) {
+    const rendererSource = await readFile(path, 'utf8')
+    for (const requirement of requirements) {
+      if (!rendererSource.includes(requirement)) {
+        console.error(`${name} renderer is missing contract recipe: ${requirement}`)
+        stale = true
+      }
+    }
+  }
+  await verifyRendererRecipe('React Skeleton', skeletonCSSPath, [
+    'var(--a63-motion-skeleton-shimmer-duration) linear infinite',
+    'var(--a63-skeleton-highlight)',
+    '@media (prefers-reduced-motion: reduce)',
+    'animation: none',
+  ])
+  await verifyRendererRecipe('React Button', buttonCSSPath, [
+    'var(--a63-control-feedback-duration)',
+    'var(--a63-control-feedback-ease)',
+    '@media (prefers-reduced-motion: reduce)',
+    'transition: none',
+  ])
+  await verifyRendererRecipe('SwiftUI Button', atomButtonPath, [
+    'AtomTokens.Motion.controlFeedback',
+    'motionPreference.resolvesReduceMotion',
+    'reduceMotion ? nil',
+  ])
+  await verifyRendererRecipe('SwiftUI Skeleton', atomSkeletonPath, [
+    'AtomTokens.Motion.skeletonShimmer',
+    'motionPreference.resolvesReduceMotion',
+    'if !effectiveReduceMotion',
+  ])
+  if (stale) process.exitCode = 1
+} else {
+  for (const [path, content] of outputs) {
+    await mkdir(dirname(path), { recursive: true })
+    await writeFile(path, content)
+  }
+}

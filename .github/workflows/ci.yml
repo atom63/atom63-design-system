@@ -85,3 +85,32 @@ jobs:
           else
             pnpm changeset status --verbose
           fi
+
+  ios:
+    runs-on: macos-15
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check generated iOS contracts and tokens
+        run: |
+          node scripts/generate-cross-renderer-contracts.mjs --check
+          node packages/ui-ios/Scripts/generate-swift-tokens.mjs --check
+
+      - name: Check iOS public API
+        working-directory: packages/ui-ios
+        run: node Scripts/check-public-api.mjs
+
+      - name: Test Swift package from the root manifest
+        run: swift test
+
+      - name: Test iOS demo app
+        working-directory: packages/ui-ios
+        run: node Scripts/run-ios-tests.mjs

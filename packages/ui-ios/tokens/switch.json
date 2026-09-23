@@ -1,0 +1,36 @@
+{
+  "$schema": "https://atom63.dev/schemas/ui-ios-switch-token-map.json",
+  "component": "Switch",
+  "platform": "ios",
+  "slots": {
+    "selection.accent": {
+      "swiftName": "onTint",
+      "valueType": "ShapeStyle"
+    },
+    "selection.accentForeground": {
+      "swiftName": "onForeground",
+      "valueType": "ShapeStyle"
+    },
+    "selection.trackOff": {
+      "swiftName": "offTint",
+      "valueType": "ShapeStyle"
+    },
+    "selection.border": {
+      "swiftName": "borderColor",
+      "valueType": "ShapeStyle"
+    },
+    "selection.thumb": {
+      "swiftName": "thumbColor",
+      "valueType": "ShapeStyle"
+    },
+    "selection.focusRing": {
+      "swiftName": "focusRing",
+      "valueType": "AtomFocusRing"
+    }
+  },
+  "thumbSize": {
+    "swiftName": "thumbSize",
+    "valueType": "CGFloat"
+  },
+  "minimumTouchTarget": 44
+}

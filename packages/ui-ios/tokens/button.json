@@ -1,0 +1,56 @@
+{
+  "$schema": "https://atom63.dev/schemas/ui-ios-button-token-map.json",
+  "component": "Button",
+  "platform": "ios",
+  "slots": {
+    "button.background": {
+      "swiftName": "background",
+      "valueType": "ShapeStyle"
+    },
+    "button.foreground": {
+      "swiftName": "foreground",
+      "valueType": "ShapeStyle"
+    },
+    "button.border.color": {
+      "swiftName": "borderColor",
+      "valueType": "ShapeStyle"
+    },
+    "button.border.width": {
+      "swiftName": "borderWidth",
+      "valueType": "CGFloat"
+    },
+    "button.radius": {
+      "swiftName": "cornerRadius",
+      "valueType": "CGFloat"
+    },
+    "button.shadow": {
+      "swiftName": "shadow",
+      "valueType": "AtomShadow"
+    },
+    "button.focusRing": {
+      "swiftName": "focusRing",
+      "valueType": "AtomFocusRing"
+    },
+    "button.height": {
+      "swiftName": "height",
+      "valueType": "CGFloat"
+    },
+    "button.paddingInline": {
+      "swiftName": "horizontalPadding",
+      "valueType": "CGFloat"
+    },
+    "button.gap": {
+      "swiftName": "contentGap",
+      "valueType": "CGFloat"
+    },
+    "button.iconSize": {
+      "swiftName": "iconSize",
+      "valueType": "CGFloat"
+    },
+    "button.motion.press": {
+      "swiftName": "pressMotion",
+      "valueType": "AtomPressMotion"
+    }
+  },
+  "minimumTouchTarget": 44
+}

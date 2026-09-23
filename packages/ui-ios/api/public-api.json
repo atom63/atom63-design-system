@@ -1,0 +1,3635 @@
+{
+  "schemaVersion": 1,
+  "module": "Atom63UI",
+  "symbolCount": 273,
+  "symbols": [
+    {
+      "id": "s:8Atom63UI10AtomAvatarV",
+      "kind": "swift.struct",
+      "path": "AtomAvatar",
+      "declaration": "struct AtomAvatar",
+      "source": "AtomAvatar.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomAvatarV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomAvatar.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomAvatar.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomAvatarV4name8imageURL4sizeACSS_10Foundation0G0VSg04CoreI07CGFloatVtcfc",
+      "kind": "swift.init",
+      "path": "AtomAvatar.init(name:imageURL:size:)",
+      "declaration": "init(name: String, imageURL: URL? = nil, size: CGFloat = 44)",
+      "source": "AtomAvatar.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomButtonV",
+      "kind": "swift.struct",
+      "path": "AtomButton",
+      "declaration": "struct AtomButton<Label> where Label : View",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomButtonV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomButton.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomButtonV7variant4size9fullWidth9isLoading25loadingAccessibilityLabel6action5labelACyxGAA0cD7VariantO_AA0C11ControlSizeOS2bSSyycxyXEtcfc",
+      "kind": "swift.init",
+      "path": "AtomButton.init(variant:size:fullWidth:isLoading:loadingAccessibilityLabel:action:label:)",
+      "declaration": "init(variant: AtomButtonVariant = .neutral, size: AtomControlSize = .regular, fullWidth: Bool = false, isLoading: Bool = false, loadingAccessibilityLabel: String = \"Loading\", action: @escaping () -> Void, @ViewBuilder label: () -> Label)",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomButtonVAA05SwiftB04TextVRszrlE_7variant4size9fullWidth9isLoading25loadingAccessibilityLabel6actionACyAFGSS_AA0cD7VariantOAA0C11ControlSizeOS2bSSyyctcfc",
+      "kind": "swift.init",
+      "path": "AtomButton.init(_:variant:size:fullWidth:isLoading:loadingAccessibilityLabel:action:)",
+      "declaration": "init(_ title: String, variant: AtomButtonVariant = .neutral, size: AtomControlSize = .regular, fullWidth: Bool = false, isLoading: Bool = false, loadingAccessibilityLabel: String = \"Loading\", action: @escaping () -> Void)",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomNoticeV",
+      "kind": "swift.struct",
+      "path": "AtomNotice",
+      "declaration": "struct AtomNotice",
+      "source": "AtomNotice.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomNoticeV_7message4tone11actionTitle0G0ACSS_SSSgAA0cD4ToneOAHyycSgtcfc",
+      "kind": "swift.init",
+      "path": "AtomNotice.init(_:message:tone:actionTitle:action:)",
+      "declaration": "init(_ title: String, message: String? = nil, tone: AtomNoticeTone = .info, actionTitle: String? = nil, action: (() -> Void)? = nil)",
+      "source": "AtomNotice.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomNoticeV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomNotice.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomNotice.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomToggleV",
+      "kind": "swift.struct",
+      "path": "AtomToggle",
+      "declaration": "struct AtomToggle",
+      "source": "AtomToggle.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomToggleV_4isOn11description23accessibilityIdentifierACSS_05SwiftB07BindingVySbGSSSgAKtcfc",
+      "kind": "swift.init",
+      "path": "AtomToggle.init(_:isOn:description:accessibilityIdentifier:)",
+      "declaration": "init(_ title: String, isOn: Binding<Bool>, description: String? = nil, accessibilityIdentifier: String? = nil)",
+      "source": "AtomToggle.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomToggleV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomToggle.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomToggle.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO",
+      "kind": "swift.enum",
+      "path": "AtomTokens",
+      "declaration": "enum AtomTokens",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "swift.enum",
+      "path": "AtomTokens.Color",
+      "declaration": "enum Color",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO10statusInfoAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.statusInfo",
+      "declaration": "static let statusInfo: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO11surfacePageAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.surfacePage",
+      "declaration": "static let surfacePage: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO11textPrimaryAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.textPrimary",
+      "declaration": "static let textPrimary: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO12actionDangerAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.actionDanger",
+      "declaration": "static let actionDanger: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO12borderSubtleAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.borderSubtle",
+      "declaration": "static let borderSubtle: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO12surfaceMutedAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.surfaceMuted",
+      "declaration": "static let surfaceMuted: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO12surfacePanelAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.surfacePanel",
+      "declaration": "static let surfacePanel: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO13actionNeutralAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.actionNeutral",
+      "declaration": "static let actionNeutral: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO13actionPrimaryAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.actionPrimary",
+      "declaration": "static let actionPrimary: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO13borderControlAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.borderControl",
+      "declaration": "static let borderControl: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO13statusSuccessAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.statusSuccess",
+      "declaration": "static let statusSuccess: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO13statusWarningAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.statusWarning",
+      "declaration": "static let statusWarning: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO13textSecondaryAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.textSecondary",
+      "declaration": "static let textSecondary: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO14selectionThumbAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.selectionThumb",
+      "declaration": "static let selectionThumb: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO14surfaceControlAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.surfaceControl",
+      "declaration": "static let surfaceControl: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO17selectionTrackOffAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.selectionTrackOff",
+      "declaration": "static let selectionTrackOff: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO17skeletonHighlightAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.skeletonHighlight",
+      "declaration": "static let skeletonHighlight: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO20actionPrimaryPressedAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.actionPrimaryPressed",
+      "declaration": "static let actionPrimaryPressed: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO22actionDangerForegroundAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.actionDangerForeground",
+      "declaration": "static let actionDangerForeground: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO23actionNeutralForegroundAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.actionNeutralForeground",
+      "declaration": "static let actionNeutralForeground: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO23actionPrimaryForegroundAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.actionPrimaryForeground",
+      "declaration": "static let actionPrimaryForeground: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5SpaceO",
+      "kind": "swift.enum",
+      "path": "AtomTokens.Space",
+      "declaration": "enum Space",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5SpaceO2x1SdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Space.x1",
+      "declaration": "static let x1: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5SpaceO2x2SdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Space.x2",
+      "declaration": "static let x2: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5SpaceO2x3SdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Space.x3",
+      "declaration": "static let x3: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5SpaceO2x4SdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Space.x4",
+      "declaration": "static let x4: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5SpaceO2x5SdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Space.x5",
+      "declaration": "static let x5: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5SpaceO2x6SdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Space.x6",
+      "declaration": "static let x6: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO6MotionO",
+      "kind": "swift.enum",
+      "path": "AtomTokens.Motion",
+      "declaration": "enum Motion",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO6MotionO15controlFeedbackSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Motion.controlFeedback",
+      "declaration": "static let controlFeedback: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO6MotionO15skeletonShimmerSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Motion.skeletonShimmer",
+      "declaration": "static let skeletonShimmer: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO6MotionO23emphasizedControlPointsSd_S3dtvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Motion.emphasizedControlPoints",
+      "declaration": "static let emphasizedControlPoints: (Double, Double, Double, Double)",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO6MotionO4fastSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Motion.fast",
+      "declaration": "static let fast: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO6MotionO8standardSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Motion.standard",
+      "declaration": "static let standard: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO6RadiusO",
+      "kind": "swift.enum",
+      "path": "AtomTokens.Radius",
+      "declaration": "enum Radius",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO6RadiusO10extraLargeSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Radius.extraLarge",
+      "declaration": "static let extraLarge: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO6RadiusO5largeSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Radius.large",
+      "declaration": "static let large: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO6RadiusO5smallSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Radius.small",
+      "declaration": "static let small: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO6RadiusO6mediumSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Radius.medium",
+      "declaration": "static let medium: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO7ControlO",
+      "kind": "swift.enum",
+      "path": "AtomTokens.Control",
+      "declaration": "enum Control",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO7ControlO10pressScaleSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Control.pressScale",
+      "declaration": "static let pressScale: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO7ControlO13PaddingInlineO",
+      "kind": "swift.enum",
+      "path": "AtomTokens.Control.PaddingInline",
+      "declaration": "enum PaddingInline",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO7ControlO13PaddingInlineO2lgSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Control.PaddingInline.lg",
+      "declaration": "static let lg: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO7ControlO13PaddingInlineO2mdSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Control.PaddingInline.md",
+      "declaration": "static let md: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO7ControlO13PaddingInlineO2smSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Control.PaddingInline.sm",
+      "declaration": "static let sm: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO7ControlO13PaddingInlineO2xlSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Control.PaddingInline.xl",
+      "declaration": "static let xl: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO7ControlO13PaddingInlineO2xsSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Control.PaddingInline.xs",
+      "declaration": "static let xs: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO7ControlO14minTouchTargetSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Control.minTouchTarget",
+      "declaration": "static let minTouchTarget: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO7ControlO15disabledOpacitySdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Control.disabledOpacity",
+      "declaration": "static let disabledOpacity: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO7ControlO6HeightO",
+      "kind": "swift.enum",
+      "path": "AtomTokens.Control.Height",
+      "declaration": "enum Height",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO7ControlO6HeightO2lgSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Control.Height.lg",
+      "declaration": "static let lg: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO7ControlO6HeightO2mdSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Control.Height.md",
+      "declaration": "static let md: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO7ControlO6HeightO2smSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Control.Height.sm",
+      "declaration": "static let sm: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO7ControlO6HeightO2xlSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Control.Height.xl",
+      "declaration": "static let xl: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO7ControlO6HeightO2xsSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Control.Height.xs",
+      "declaration": "static let xs: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO7ControlO7minSizeSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Control.minSize",
+      "declaration": "static let minSize: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI11AtomListRowV",
+      "kind": "swift.struct",
+      "path": "AtomListRow",
+      "declaration": "struct AtomListRow",
+      "source": "AtomListRow.swift"
+    },
+    {
+      "id": "s:8Atom63UI11AtomListRowV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomListRow.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomListRow.swift"
+    },
+    {
+      "id": "s:8Atom63UI11AtomListRowV5title8subtitle11systemImage5badge0J4Tone15showsDisclosureACSS_SSSgSSAjA0c5BadgeK0OSbtcfc",
+      "kind": "swift.init",
+      "path": "AtomListRow.init(title:subtitle:systemImage:badge:badgeTone:showsDisclosure:)",
+      "declaration": "init(title: String, subtitle: String? = nil, systemImage: String, badge: String? = nil, badgeTone: AtomBadgeTone = .accent, showsDisclosure: Bool = false)",
+      "source": "AtomListRow.swift"
+    },
+    {
+      "id": "s:8Atom63UI12AtomValueRowV",
+      "kind": "swift.struct",
+      "path": "AtomValueRow",
+      "declaration": "struct AtomValueRow",
+      "source": "AtomValueRow.swift"
+    },
+    {
+      "id": "s:8Atom63UI12AtomValueRowV_5value11systemImageACSS_S2SSgtcfc",
+      "kind": "swift.init",
+      "path": "AtomValueRow.init(_:value:systemImage:)",
+      "declaration": "init(_ title: String, value: String, systemImage: String? = nil)",
+      "source": "AtomValueRow.swift"
+    },
+    {
+      "id": "s:8Atom63UI12AtomValueRowV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomValueRow.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomValueRow.swift"
+    },
+    {
+      "id": "s:8Atom63UI13AtomActionBarV",
+      "kind": "swift.struct",
+      "path": "AtomActionBar",
+      "declaration": "struct AtomActionBar",
+      "source": "AtomActionBar.swift"
+    },
+    {
+      "id": "s:8Atom63UI13AtomActionBarV12primaryTitle0F7Variant16isPrimaryLoading0fD009secondaryG00lD0ACSS_AA0c6ButtonH0OSbyycSSSgyycSgtcfc",
+      "kind": "swift.init",
+      "path": "AtomActionBar.init(primaryTitle:primaryVariant:isPrimaryLoading:primaryAction:secondaryTitle:secondaryAction:)",
+      "declaration": "init(primaryTitle: String, primaryVariant: AtomButtonVariant = .primary, isPrimaryLoading: Bool = false, primaryAction: @escaping () -> Void, secondaryTitle: String? = nil, secondaryAction: (() -> Void)? = nil)",
+      "source": "AtomActionBar.swift"
+    },
+    {
+      "id": "s:8Atom63UI13AtomActionBarV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomActionBar.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomActionBar.swift"
+    },
+    {
+      "id": "s:8Atom63UI13AtomBadgeToneO",
+      "kind": "swift.enum",
+      "path": "AtomBadgeTone",
+      "declaration": "enum AtomBadgeTone",
+      "source": "AtomBadge.swift"
+    },
+    {
+      "id": "s:8Atom63UI13AtomBadgeToneO6accentyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomBadgeTone.accent",
+      "declaration": "case accent",
+      "source": "AtomBadge.swift"
+    },
+    {
+      "id": "s:8Atom63UI13AtomBadgeToneO6dangeryA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomBadgeTone.danger",
+      "declaration": "case danger",
+      "source": "AtomBadge.swift"
+    },
+    {
+      "id": "s:8Atom63UI13AtomBadgeToneO7neutralyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomBadgeTone.neutral",
+      "declaration": "case neutral",
+      "source": "AtomBadge.swift"
+    },
+    {
+      "id": "s:8Atom63UI13AtomBadgeToneO7successyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomBadgeTone.success",
+      "declaration": "case success",
+      "source": "AtomBadge.swift"
+    },
+    {
+      "id": "s:8Atom63UI13AtomBadgeToneO7warningyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomBadgeTone.warning",
+      "declaration": "case warning",
+      "source": "AtomBadge.swift"
+    },
+    {
+      "id": "s:8Atom63UI13AtomFormFieldV",
+      "kind": "swift.struct",
+      "path": "AtomFormField",
+      "declaration": "struct AtomFormField<Content> where Content : View",
+      "source": "AtomFormField.swift"
+    },
+    {
+      "id": "s:8Atom63UI13AtomFormFieldV_14supportingText12errorMessage9isFocused7contentACyxGSS_SSSgAISbxyXEtcfc",
+      "kind": "swift.init",
+      "path": "AtomFormField.init(_:supportingText:errorMessage:isFocused:content:)",
+      "declaration": "init(_ title: String, supportingText: String? = nil, errorMessage: String? = nil, isFocused: Bool = false, @ViewBuilder content: () -> Content)",
+      "source": "AtomFormField.swift"
+    },
+    {
+      "id": "s:8Atom63UI13AtomFormFieldV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomFormField.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomFormField.swift"
+    },
+    {
+      "id": "s:8Atom63UI13AtomTextFieldV",
+      "kind": "swift.struct",
+      "path": "AtomTextField",
+      "declaration": "struct AtomTextField",
+      "source": "AtomTextField.swift"
+    },
+    {
+      "id": "s:8Atom63UI13AtomTextFieldV_4text6prompt010supportingD08isSecure12errorMessageACSS_05SwiftB07BindingVySSGSSSgAMSbAMtcfc",
+      "kind": "swift.init",
+      "path": "AtomTextField.init(_:text:prompt:supportingText:isSecure:errorMessage:)",
+      "declaration": "init(_ title: String, text: Binding<String>, prompt: String? = nil, supportingText: String? = nil, isSecure: Bool = false, errorMessage: String? = nil)",
+      "source": "AtomTextField.swift"
+    },
+    {
+      "id": "s:8Atom63UI13AtomTextFieldV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomTextField.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomTextField.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomAsyncImageV",
+      "kind": "swift.struct",
+      "path": "AtomAsyncImage",
+      "declaration": "struct AtomAsyncImage",
+      "source": "AtomAsyncImage.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomAsyncImageV3url18accessibilityLabel11aspectRatioAC10Foundation3URLVSg_SS04CoreK07CGFloatVtcfc",
+      "kind": "swift.init",
+      "path": "AtomAsyncImage.init(url:accessibilityLabel:aspectRatio:)",
+      "declaration": "init(url: URL?, accessibilityLabel: String, aspectRatio: CGFloat = 16 / 9)",
+      "source": "AtomAsyncImage.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomAsyncImageV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomAsyncImage.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomAsyncImage.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomIconButtonV",
+      "kind": "swift.struct",
+      "path": "AtomIconButton",
+      "declaration": "struct AtomIconButton",
+      "source": "AtomIconButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomIconButtonV_11systemImage7variant9isLoading6actionACSS_SSAA0cE7VariantOSbyyctcfc",
+      "kind": "swift.init",
+      "path": "AtomIconButton.init(_:systemImage:variant:isLoading:action:)",
+      "declaration": "init(_ title: String, systemImage: String, variant: AtomButtonVariant = .ghost, isLoading: Bool = false, action: @escaping () -> Void)",
+      "source": "AtomIconButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomIconButtonV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomIconButton.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomIconButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomNoticeToneO",
+      "kind": "swift.enum",
+      "path": "AtomNoticeTone",
+      "declaration": "enum AtomNoticeTone",
+      "source": "AtomNotice.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomNoticeToneO4infoyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomNoticeTone.info",
+      "declaration": "case info",
+      "source": "AtomNotice.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomNoticeToneO5erroryA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomNoticeTone.error",
+      "declaration": "case error",
+      "source": "AtomNotice.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomNoticeToneO7successyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomNoticeTone.success",
+      "declaration": "case success",
+      "source": "AtomNotice.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomNoticeToneO7warningyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomNoticeTone.warning",
+      "declaration": "case warning",
+      "source": "AtomNotice.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomSyncIntentO",
+      "kind": "swift.enum",
+      "path": "AtomSyncIntent",
+      "declaration": "enum AtomSyncIntent",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomSyncIntentO10refreshingyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomSyncIntent.refreshing",
+      "declaration": "case refreshing",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomSyncIntentO12synchronizedyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomSyncIntent.synchronized",
+      "declaration": "case synchronized",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomSyncIntentO4idleyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomSyncIntent.idle",
+      "declaration": "case idle",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomSyncIntentO5staleyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomSyncIntent.stale",
+      "declaration": "case stale",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomSyncIntentO6failedyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomSyncIntent.failed",
+      "declaration": "case failed",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomSyncIntentO7offlineyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomSyncIntent.offline",
+      "declaration": "case offline",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomTextEditorV",
+      "kind": "swift.struct",
+      "path": "AtomTextEditor",
+      "declaration": "struct AtomTextEditor",
+      "source": "AtomTextEditor.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomTextEditorV_4text6prompt010supportingD012errorMessage9minHeightACSS_05SwiftB07BindingVySSGSSSgA2M14CoreFoundation7CGFloatVtcfc",
+      "kind": "swift.init",
+      "path": "AtomTextEditor.init(_:text:prompt:supportingText:errorMessage:minHeight:)",
+      "declaration": "init(_ title: String, text: Binding<String>, prompt: String? = nil, supportingText: String? = nil, errorMessage: String? = nil, minHeight: CGFloat = 112)",
+      "source": "AtomTextEditor.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomTextEditorV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomTextEditor.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomTextEditor.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomControlSizeO",
+      "kind": "swift.enum",
+      "path": "AtomControlSize",
+      "declaration": "enum AtomControlSize",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomControlSizeO4iconyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomControlSize.icon",
+      "declaration": "case icon",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomControlSizeO5largeyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomControlSize.large",
+      "declaration": "case large",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomControlSizeO7compactyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomControlSize.compact",
+      "declaration": "case compact",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomControlSizeO7regularyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomControlSize.regular",
+      "declaration": "case regular",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomFormMessageV",
+      "kind": "swift.struct",
+      "path": "AtomFormMessage",
+      "declaration": "struct AtomFormMessage",
+      "source": "AtomFormMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomFormMessageV_7message4toneACSS_SSAA0cdE4ToneOtcfc",
+      "kind": "swift.init",
+      "path": "AtomFormMessage.init(_:message:tone:)",
+      "declaration": "init(_ title: String, message: String, tone: AtomFormMessageTone = .info)",
+      "source": "AtomFormMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomFormMessageV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomFormMessage.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomFormMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomSkeletonRowV",
+      "kind": "swift.struct",
+      "path": "AtomSkeletonRow",
+      "declaration": "struct AtomSkeletonRow",
+      "source": "AtomSkeleton.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomSkeletonRowV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomSkeletonRow.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomSkeleton.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomSkeletonRowVACycfc",
+      "kind": "swift.init",
+      "path": "AtomSkeletonRow.init()",
+      "declaration": "init()",
+      "source": "AtomSkeleton.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "swift.struct",
+      "path": "AtomThemeColors",
+      "declaration": "struct AtomThemeColors",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV10statusInfoAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.statusInfo",
+      "declaration": "var statusInfo: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV11surfacePageAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.surfacePage",
+      "declaration": "var surfacePage: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV11textPrimaryAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.textPrimary",
+      "declaration": "var textPrimary: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV12actionDangerAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.actionDanger",
+      "declaration": "var actionDanger: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV12borderSubtleAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.borderSubtle",
+      "declaration": "var borderSubtle: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV12surfaceMutedAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.surfaceMuted",
+      "declaration": "var surfaceMuted: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV12surfacePanelAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.surfacePanel",
+      "declaration": "var surfacePanel: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV13actionNeutralAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.actionNeutral",
+      "declaration": "var actionNeutral: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV13actionPrimaryAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.actionPrimary",
+      "declaration": "var actionPrimary: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV13borderControlAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.borderControl",
+      "declaration": "var borderControl: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV13statusSuccessAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.statusSuccess",
+      "declaration": "var statusSuccess: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV13statusWarningAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.statusWarning",
+      "declaration": "var statusWarning: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV13textSecondaryAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.textSecondary",
+      "declaration": "var textSecondary: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV14selectionThumbAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.selectionThumb",
+      "declaration": "var selectionThumb: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV14surfaceControlAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.surfaceControl",
+      "declaration": "var surfaceControl: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV17selectionTrackOffAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.selectionTrackOff",
+      "declaration": "var selectionTrackOff: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV17skeletonHighlightAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.skeletonHighlight",
+      "declaration": "var skeletonHighlight: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV20actionPrimaryPressedAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.actionPrimaryPressed",
+      "declaration": "var actionPrimaryPressed: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV22actionDangerForegroundAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.actionDangerForeground",
+      "declaration": "var actionDangerForeground: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV23actionNeutralForegroundAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.actionNeutralForeground",
+      "declaration": "var actionNeutralForeground: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV23actionPrimaryForegroundAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.actionPrimaryForeground",
+      "declaration": "var actionPrimaryForeground: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomDynamicColorV",
+      "kind": "swift.struct",
+      "path": "AtomDynamicColor",
+      "declaration": "struct AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomDynamicColorV4darkAA0cE10ComponentsVvp",
+      "kind": "swift.property",
+      "path": "AtomDynamicColor.dark",
+      "declaration": "let dark: AtomColorComponents",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomDynamicColorV5light4darkAcA0cE10ComponentsV_AGtcfc",
+      "kind": "swift.init",
+      "path": "AtomDynamicColor.init(light:dark:)",
+      "declaration": "init(light: AtomColorComponents, dark: AtomColorComponents)",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomDynamicColorV5lightAA0cE10ComponentsVvp",
+      "kind": "swift.property",
+      "path": "AtomDynamicColor.light",
+      "declaration": "let light: AtomColorComponents",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomDynamicColorV7resolve3for05SwiftB00E0VAF0E6SchemeO_tF",
+      "kind": "swift.method",
+      "path": "AtomDynamicColor.resolve(for:)",
+      "declaration": "func resolve(for colorScheme: ColorScheme) -> Color",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomLoadMoreViewV",
+      "kind": "swift.struct",
+      "path": "AtomLoadMoreView",
+      "declaration": "struct AtomLoadMoreView",
+      "source": "AtomLoadMoreView.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomLoadMoreViewV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomLoadMoreView.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomLoadMoreView.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomLoadMoreViewV6intent04loadE0AcA0C16PaginationIntentO_yyctcfc",
+      "kind": "swift.init",
+      "path": "AtomLoadMoreView.init(intent:loadMore:)",
+      "declaration": "init(intent: AtomPaginationIntent, loadMore: @escaping () -> Void)",
+      "source": "AtomLoadMoreView.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomProgressViewV",
+      "kind": "swift.struct",
+      "path": "AtomProgressView",
+      "declaration": "struct AtomProgressView",
+      "source": "AtomProgressView.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomProgressViewV_7message5value5totalACSS_SSSgSdSgSdtcfc",
+      "kind": "swift.init",
+      "path": "AtomProgressView.init(_:message:value:total:)",
+      "declaration": "init(_ title: String, message: String? = nil, value: Double? = nil, total: Double = 1)",
+      "source": "AtomProgressView.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomProgressViewV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomProgressView.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomProgressView.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomSelectionRowV",
+      "kind": "swift.struct",
+      "path": "AtomSelectionRow",
+      "declaration": "struct AtomSelectionRow",
+      "source": "AtomSelectionRow.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomSelectionRowV_8subtitle10isSelected6actionACSS_SSSgSbyyctcfc",
+      "kind": "swift.init",
+      "path": "AtomSelectionRow.init(_:subtitle:isSelected:action:)",
+      "declaration": "init(_ title: String, subtitle: String? = nil, isSelected: Bool, action: @escaping () -> Void)",
+      "source": "AtomSelectionRow.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomSelectionRowV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomSelectionRow.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomSelectionRow.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomSemanticToneO",
+      "kind": "swift.enum",
+      "path": "AtomSemanticTone",
+      "declaration": "enum AtomSemanticTone",
+      "source": "AtomSemanticTone.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomSemanticToneO4infoyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomSemanticTone.info",
+      "declaration": "case info",
+      "source": "AtomSemanticTone.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomSemanticToneO5erroryA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomSemanticTone.error",
+      "declaration": "case error",
+      "source": "AtomSemanticTone.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomSemanticToneO7neutralyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomSemanticTone.neutral",
+      "declaration": "case neutral",
+      "source": "AtomSemanticTone.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomSemanticToneO7successyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomSemanticTone.success",
+      "declaration": "case success",
+      "source": "AtomSemanticTone.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomSemanticToneO7warningyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomSemanticTone.warning",
+      "declaration": "case warning",
+      "source": "AtomSemanticTone.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomButtonVariantO",
+      "kind": "swift.enum",
+      "path": "AtomButtonVariant",
+      "declaration": "enum AtomButtonVariant",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomButtonVariantO11destructiveyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomButtonVariant.destructive",
+      "declaration": "case destructive",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomButtonVariantO5ghostyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomButtonVariant.ghost",
+      "declaration": "case ghost",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomButtonVariantO7neutralyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomButtonVariant.neutral",
+      "declaration": "case neutral",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomButtonVariantO7outlineyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomButtonVariant.outline",
+      "declaration": "case outline",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomButtonVariantO7primaryyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomButtonVariant.primary",
+      "declaration": "case primary",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomButtonVariantO9secondaryyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomButtonVariant.secondary",
+      "declaration": "case secondary",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomSectionHeaderV",
+      "kind": "swift.struct",
+      "path": "AtomSectionHeader",
+      "declaration": "struct AtomSectionHeader",
+      "source": "AtomSectionHeader.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomSectionHeaderV_8subtitle11actionTitle0G0ACSS_SSSgAGyycSgtcfc",
+      "kind": "swift.init",
+      "path": "AtomSectionHeader.init(_:subtitle:actionTitle:action:)",
+      "declaration": "init(_ title: String, subtitle: String? = nil, actionTitle: String? = nil, action: (() -> Void)? = nil)",
+      "source": "AtomSectionHeader.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomSectionHeaderV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomSectionHeader.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomSectionHeader.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomContractParityO",
+      "kind": "swift.enum",
+      "path": "AtomContractParity",
+      "declaration": "enum AtomContractParity",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomContractParityO16platformAdaptiveyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomContractParity.platformAdaptive",
+      "declaration": "case platformAdaptive",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomContractParityO6recipeyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomContractParity.recipe",
+      "declaration": "case recipe",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomContractParityO6strictyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomContractParity.strict",
+      "declaration": "case strict",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomMotionContractV",
+      "kind": "swift.struct",
+      "path": "AtomMotionContract",
+      "declaration": "struct AtomMotionContract",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomMotionContractV07reducedD0SSvp",
+      "kind": "swift.property",
+      "path": "AtomMotionContract.reducedMotion",
+      "declaration": "let reducedMotion: String",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomMotionContractV13durationTokenSSvp",
+      "kind": "swift.property",
+      "path": "AtomMotionContract.durationToken",
+      "declaration": "let durationToken: String",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomMotionContractV4kindSSvp",
+      "kind": "swift.property",
+      "path": "AtomMotionContract.kind",
+      "declaration": "let kind: String",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomMotionContractV6easingSSvp",
+      "kind": "swift.property",
+      "path": "AtomMotionContract.easing",
+      "declaration": "let easing: String",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomMotionContractV9directionSSvp",
+      "kind": "swift.property",
+      "path": "AtomMotionContract.direction",
+      "declaration": "let direction: String",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomResourceIntentO",
+      "kind": "swift.enum",
+      "path": "AtomResourceIntent",
+      "declaration": "enum AtomResourceIntent",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomResourceIntentO5emptyyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomResourceIntent.empty",
+      "declaration": "case empty",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomResourceIntentO5erroryA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomResourceIntent.error",
+      "declaration": "case error",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomResourceIntentO7contentyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomResourceIntent.content",
+      "declaration": "case content",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomResourceIntentO7loadingyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomResourceIntent.loading",
+      "declaration": "case loading",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomSyncStatusViewV",
+      "kind": "swift.struct",
+      "path": "AtomSyncStatusView",
+      "declaration": "struct AtomSyncStatusView",
+      "source": "AtomSyncStatusView.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomSyncStatusViewV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomSyncStatusView.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomSyncStatusView.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomSyncStatusViewV6intentAcA0cD6IntentO_tcfc",
+      "kind": "swift.init",
+      "path": "AtomSyncStatusView.init(intent:)",
+      "declaration": "init(intent: AtomSyncIntent)",
+      "source": "AtomSyncStatusView.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomColorComponentsV",
+      "kind": "swift.struct",
+      "path": "AtomColorComponents",
+      "declaration": "struct AtomColorComponents",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomColorComponentsV3red5green4blue7opacityACSd_S3dtcfc",
+      "kind": "swift.init",
+      "path": "AtomColorComponents.init(red:green:blue:opacity:)",
+      "declaration": "init(red: Double, green: Double, blue: Double, opacity: Double = 1)",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomColorComponentsV3redSdvp",
+      "kind": "swift.property",
+      "path": "AtomColorComponents.red",
+      "declaration": "let red: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomColorComponentsV4blueSdvp",
+      "kind": "swift.property",
+      "path": "AtomColorComponents.blue",
+      "declaration": "let blue: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomColorComponentsV5color05SwiftB00D0Vvp",
+      "kind": "swift.property",
+      "path": "AtomColorComponents.color",
+      "declaration": "var color: Color { get }",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomColorComponentsV5greenSdvp",
+      "kind": "swift.property",
+      "path": "AtomColorComponents.green",
+      "declaration": "let green: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomColorComponentsV7opacitySdvp",
+      "kind": "swift.property",
+      "path": "AtomColorComponents.opacity",
+      "declaration": "let opacity: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomFormMessageToneO",
+      "kind": "swift.enum",
+      "path": "AtomFormMessageTone",
+      "declaration": "enum AtomFormMessageTone",
+      "source": "AtomFormMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomFormMessageToneO4infoyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomFormMessageTone.info",
+      "declaration": "case info",
+      "source": "AtomFormMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomFormMessageToneO5erroryA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomFormMessageTone.error",
+      "declaration": "case error",
+      "source": "AtomFormMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomFormMessageToneO7successyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomFormMessageTone.success",
+      "declaration": "case success",
+      "source": "AtomFormMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomContentStateToneO",
+      "kind": "swift.enum",
+      "path": "AtomContentStateTone",
+      "declaration": "enum AtomContentStateTone",
+      "source": "AtomContentStateView.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomContentStateToneO5erroryA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomContentStateTone.error",
+      "declaration": "case error",
+      "source": "AtomContentStateView.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomContentStateToneO7neutralyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomContentStateTone.neutral",
+      "declaration": "case neutral",
+      "source": "AtomContentStateView.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomContentStateViewV",
+      "kind": "swift.struct",
+      "path": "AtomContentStateView",
+      "declaration": "struct AtomContentStateView",
+      "source": "AtomContentStateView.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomContentStateViewV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomContentStateView.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomContentStateView.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomContentStateViewV5title7message11systemImage4tone11actionTitle0L0ACSS_S2SAA0cdE4ToneOSSSgyycSgtcfc",
+      "kind": "swift.init",
+      "path": "AtomContentStateView.init(title:message:systemImage:tone:actionTitle:action:)",
+      "declaration": "init(title: String, message: String, systemImage: String, tone: AtomContentStateTone = .neutral, actionTitle: String? = nil, action: (() -> Void)? = nil)",
+      "source": "AtomContentStateView.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomFormPresentationO",
+      "kind": "swift.enum",
+      "path": "AtomFormPresentation",
+      "declaration": "enum AtomFormPresentation",
+      "source": "AtomFormPresentation.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomFormPresentationO10standaloneyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomFormPresentation.standalone",
+      "declaration": "case standalone",
+      "source": "AtomFormPresentation.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomFormPresentationO5sheetyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomFormPresentation.sheet",
+      "declaration": "case sheet",
+      "source": "AtomFormPresentation.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomFormPresentationO7groupedyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomFormPresentation.grouped",
+      "declaration": "case grouped",
+      "source": "AtomFormPresentation.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomMotionPreferenceO",
+      "kind": "swift.enum",
+      "path": "AtomMotionPreference",
+      "declaration": "enum AtomMotionPreference",
+      "source": "AtomMotionPreference.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomMotionPreferenceO6systemyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomMotionPreference.system",
+      "declaration": "case system",
+      "source": "AtomMotionPreference.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomMotionPreferenceO7reducedyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomMotionPreference.reduced",
+      "declaration": "case reduced",
+      "source": "AtomMotionPreference.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomPaginationIntentO",
+      "kind": "swift.enum",
+      "path": "AtomPaginationIntent",
+      "declaration": "enum AtomPaginationIntent",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomPaginationIntentO11loadingMoreyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomPaginationIntent.loadingMore",
+      "declaration": "case loadingMore",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomPaginationIntentO12semanticToneAA0c8SemanticG0Ovp",
+      "kind": "swift.property",
+      "path": "AtomPaginationIntent.semanticTone",
+      "declaration": "var semanticTone: AtomSemanticTone { get }",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomPaginationIntentO4idleyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomPaginationIntent.idle",
+      "declaration": "case idle",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomPaginationIntentO6failedyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomPaginationIntent.failed",
+      "declaration": "case failed",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomPaginationIntentO9exhaustedyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomPaginationIntent.exhausted",
+      "declaration": "case exhausted",
+      "source": "AtomResourceIntent.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomComponentContractV",
+      "kind": "swift.struct",
+      "path": "AtomComponentContract",
+      "declaration": "struct AtomComponentContract",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomComponentContractV010foundationE0SSvp",
+      "kind": "swift.property",
+      "path": "AtomComponentContract.foundationContract",
+      "declaration": "let foundationContract: String",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomComponentContractV10stateTonesSDyS2SGvp",
+      "kind": "swift.property",
+      "path": "AtomComponentContract.stateTones",
+      "declaration": "let stateTones: [String : String]",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomComponentContractV11catalogItemSSvp",
+      "kind": "swift.property",
+      "path": "AtomComponentContract.catalogItem",
+      "declaration": "let catalogItem: String",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomComponentContractV13reactRendererSSvp",
+      "kind": "swift.property",
+      "path": "AtomComponentContract.reactRenderer",
+      "declaration": "let reactRenderer: String",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomComponentContractV14foundationAxisSSvp",
+      "kind": "swift.property",
+      "path": "AtomComponentContract.foundationAxis",
+      "declaration": "let foundationAxis: String",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomComponentContractV14requiredStatesSaySSGvp",
+      "kind": "swift.property",
+      "path": "AtomComponentContract.requiredStates",
+      "declaration": "let requiredStates: [String]",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomComponentContractV14sharedOutcomesSaySSGvp",
+      "kind": "swift.property",
+      "path": "AtomComponentContract.sharedOutcomes",
+      "declaration": "let sharedOutcomes: [String]",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomComponentContractV15swiftUIRendererSSvp",
+      "kind": "swift.property",
+      "path": "AtomComponentContract.swiftUIRenderer",
+      "declaration": "let swiftUIRenderer: String",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomComponentContractV19platformAdaptationsAA0c8PlatformG0Vvp",
+      "kind": "swift.property",
+      "path": "AtomComponentContract.platformAdaptations",
+      "declaration": "let platformAdaptations: AtomPlatformAdaptations",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomComponentContractV21accessibilityOutcomesSaySSGvp",
+      "kind": "swift.property",
+      "path": "AtomComponentContract.accessibilityOutcomes",
+      "declaration": "let accessibilityOutcomes: [String]",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomComponentContractV2idSSvp",
+      "kind": "swift.property",
+      "path": "AtomComponentContract.id",
+      "declaration": "let id: String",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomComponentContractV6intentSSvp",
+      "kind": "swift.property",
+      "path": "AtomComponentContract.intent",
+      "declaration": "let intent: String",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomComponentContractV6motionAA0c6MotionE0VSgvp",
+      "kind": "swift.property",
+      "path": "AtomComponentContract.motion",
+      "declaration": "let motion: AtomMotionContract?",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomComponentContractV6parityAA0cE6ParityOvp",
+      "kind": "swift.property",
+      "path": "AtomComponentContract.parity",
+      "declaration": "let parity: AtomContractParity",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI22AtomComponentContractsO",
+      "kind": "swift.enum",
+      "path": "AtomComponentContracts",
+      "declaration": "enum AtomComponentContracts",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI22AtomComponentContractsO3allSayAA0cD8ContractVGvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomComponentContracts.all",
+      "declaration": "static let all: [AtomComponentContract]",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI22AtomComponentContractsO8contract11catalogItemAA0cD8ContractVSgSS_tFZ",
+      "kind": "swift.type.method",
+      "path": "AtomComponentContracts.contract(catalogItem:)",
+      "declaration": "static func contract(catalogItem: String) -> AtomComponentContract?",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI23AtomPlatformAdaptationsV",
+      "kind": "swift.struct",
+      "path": "AtomPlatformAdaptations",
+      "declaration": "struct AtomPlatformAdaptations",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI23AtomPlatformAdaptationsV05swiftB0SaySSGvp",
+      "kind": "swift.property",
+      "path": "AtomPlatformAdaptations.swiftUI",
+      "declaration": "let swiftUI: [String]",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI23AtomPlatformAdaptationsV5reactSaySSGvp",
+      "kind": "swift.property",
+      "path": "AtomPlatformAdaptations.react",
+      "declaration": "let react: [String]",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI23AtomRendererConformanceO",
+      "kind": "swift.enum",
+      "path": "AtomRendererConformance",
+      "declaration": "enum AtomRendererConformance",
+      "source": "AtomRendererConformance.swift"
+    },
+    {
+      "id": "s:8Atom63UI23AtomRendererConformanceO8evidence10contractIdAA0cdE8EvidenceVSgSS_tFZ",
+      "kind": "swift.type.method",
+      "path": "AtomRendererConformance.evidence(contractId:)",
+      "declaration": "static func evidence(contractId: String) -> AtomRendererConformanceEvidence?",
+      "source": "AtomRendererConformance.swift"
+    },
+    {
+      "id": "s:8Atom63UI23AtomRendererConformanceO8verifiedSayAA0cdE8EvidenceVGvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomRendererConformance.verified",
+      "declaration": "static let verified: [AtomRendererConformanceEvidence]",
+      "source": "AtomRendererConformance.swift"
+    },
+    {
+      "id": "s:8Atom63UI31AtomRendererConformanceEvidenceV",
+      "kind": "swift.struct",
+      "path": "AtomRendererConformanceEvidence",
+      "declaration": "struct AtomRendererConformanceEvidence",
+      "source": "AtomRendererConformance.swift"
+    },
+    {
+      "id": "s:8Atom63UI31AtomRendererConformanceEvidenceV10contractIdSSvp",
+      "kind": "swift.property",
+      "path": "AtomRendererConformanceEvidence.contractId",
+      "declaration": "let contractId: String",
+      "source": "AtomRendererConformance.swift"
+    },
+    {
+      "id": "s:8Atom63UI31AtomRendererConformanceEvidenceV17implementedStatesSaySSGvp",
+      "kind": "swift.property",
+      "path": "AtomRendererConformanceEvidence.implementedStates",
+      "declaration": "let implementedStates: [String]",
+      "source": "AtomRendererConformance.swift"
+    },
+    {
+      "id": "s:8Atom63UI31AtomRendererConformanceEvidenceV20verifiesMotionRecipeSbvp",
+      "kind": "swift.property",
+      "path": "AtomRendererConformanceEvidence.verifiesMotionRecipe",
+      "declaration": "let verifiesMotionRecipe: Bool",
+      "source": "AtomRendererConformance.swift"
+    },
+    {
+      "id": "s:8Atom63UI31AtomRendererConformanceEvidenceV22verifiedSharedOutcomesSaySSGvp",
+      "kind": "swift.property",
+      "path": "AtomRendererConformanceEvidence.verifiedSharedOutcomes",
+      "declaration": "let verifiedSharedOutcomes: [String]",
+      "source": "AtomRendererConformance.swift"
+    },
+    {
+      "id": "s:8Atom63UI31AtomRendererConformanceEvidenceV29verifiedAccessibilityOutcomesSaySSGvp",
+      "kind": "swift.property",
+      "path": "AtomRendererConformanceEvidence.verifiedAccessibilityOutcomes",
+      "declaration": "let verifiedAccessibilityOutcomes: [String]",
+      "source": "AtomRendererConformance.swift"
+    },
+    {
+      "id": "s:8Atom63UI31AtomRendererConformanceEvidenceV2idSSvp",
+      "kind": "swift.property",
+      "path": "AtomRendererConformanceEvidence.id",
+      "declaration": "var id: String { get }",
+      "source": "AtomRendererConformance.swift"
+    },
+    {
+      "id": "s:8Atom63UI8AtomCardV",
+      "kind": "swift.struct",
+      "path": "AtomCard",
+      "declaration": "struct AtomCard<Content> where Content : View",
+      "source": "AtomCard.swift"
+    },
+    {
+      "id": "s:8Atom63UI8AtomCardV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomCard.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomCard.swift"
+    },
+    {
+      "id": "s:8Atom63UI8AtomCardV6action7contentACyxGyycSg_xyXEtcfc",
+      "kind": "swift.init",
+      "path": "AtomCard.init(action:content:)",
+      "declaration": "init(action: (() -> Void)? = nil, @ViewBuilder content: () -> Content)",
+      "source": "AtomCard.swift"
+    },
+    {
+      "id": "s:8Atom63UI8AtomChipV",
+      "kind": "swift.struct",
+      "path": "AtomChip",
+      "declaration": "struct AtomChip",
+      "source": "AtomChip.swift"
+    },
+    {
+      "id": "s:8Atom63UI8AtomChipV_11systemImage10isSelected6actionACSS_SSSgSbyyctcfc",
+      "kind": "swift.init",
+      "path": "AtomChip.init(_:systemImage:isSelected:action:)",
+      "declaration": "init(_ title: String, systemImage: String? = nil, isSelected: Bool = false, action: @escaping () -> Void)",
+      "source": "AtomChip.swift"
+    },
+    {
+      "id": "s:8Atom63UI8AtomChipV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomChip.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomChip.swift"
+    },
+    {
+      "id": "s:8Atom63UI9AtomBadgeV",
+      "kind": "swift.struct",
+      "path": "AtomBadge",
+      "declaration": "struct AtomBadge",
+      "source": "AtomBadge.swift"
+    },
+    {
+      "id": "s:8Atom63UI9AtomBadgeV_4toneACSS_AA0cD4ToneOtcfc",
+      "kind": "swift.init",
+      "path": "AtomBadge.init(_:tone:)",
+      "declaration": "init(_ title: String, tone: AtomBadgeTone = .neutral)",
+      "source": "AtomBadge.swift"
+    },
+    {
+      "id": "s:8Atom63UI9AtomBadgeV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomBadge.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomBadge.swift"
+    },
+    {
+      "id": "s:8Atom63UI9AtomThemeV",
+      "kind": "swift.struct",
+      "path": "AtomTheme",
+      "declaration": "struct AtomTheme",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI9AtomThemeV6colorsAA0cD6ColorsVvp",
+      "kind": "swift.property",
+      "path": "AtomTheme.colors",
+      "declaration": "var colors: AtomThemeColors",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI9AtomThemeV6colorsAcA0cD6ColorsV_tcfc",
+      "kind": "swift.init",
+      "path": "AtomTheme.init(colors:)",
+      "declaration": "init(colors: AtomThemeColors)",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI9AtomThemeV8standardACvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTheme.standard",
+      "declaration": "static let standard: AtomTheme",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI9AtomToastV",
+      "kind": "swift.struct",
+      "path": "AtomToast",
+      "declaration": "struct AtomToast",
+      "source": "AtomToast.swift"
+    },
+    {
+      "id": "s:8Atom63UI9AtomToastV11systemImageSSvp",
+      "kind": "swift.property",
+      "path": "AtomToast.systemImage",
+      "declaration": "let systemImage: String",
+      "source": "AtomToast.swift"
+    },
+    {
+      "id": "s:8Atom63UI9AtomToastV2id10Foundation4UUIDVvp",
+      "kind": "swift.property",
+      "path": "AtomToast.id",
+      "declaration": "let id: UUID",
+      "source": "AtomToast.swift"
+    },
+    {
+      "id": "s:8Atom63UI9AtomToastV2id7message11systemImageAC10Foundation4UUIDV_S2Stcfc",
+      "kind": "swift.init",
+      "path": "AtomToast.init(id:message:systemImage:)",
+      "declaration": "init(id: UUID = UUID(), message: String, systemImage: String = \"checkmark.circle.fill\")",
+      "source": "AtomToast.swift"
+    },
+    {
+      "id": "s:8Atom63UI9AtomToastV7messageSSvp",
+      "kind": "swift.property",
+      "path": "AtomToast.message",
+      "declaration": "let message: String",
+      "source": "AtomToast.swift"
+    }
+  ],
+  "relationships": [
+    {
+      "source": "s:8Atom63UI10AtomAvatarV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAvatarV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAvatarV4bodyQrvp",
+      "target": "s:8Atom63UI10AtomAvatarV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAvatarV4name8imageURL4sizeACSS_10Foundation0G0VSg04CoreI07CGFloatVtcfc",
+      "target": "s:8Atom63UI10AtomAvatarV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomButtonV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI10AtomButtonV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI10AtomButtonV4bodyQrvp",
+      "target": "s:8Atom63UI10AtomButtonV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomButtonV7variant4size9fullWidth9isLoading25loadingAccessibilityLabel6action5labelACyxGAA0cD7VariantO_AA0C11ControlSizeOS2bSSyycxyXEtcfc",
+      "target": "s:8Atom63UI10AtomButtonV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomButtonVAA05SwiftB04TextVRszrlE_7variant4size9fullWidth9isLoading25loadingAccessibilityLabel6actionACyAFGSS_AA0cD7VariantOAA0C11ControlSizeOS2bSSyyctcfc",
+      "target": "s:8Atom63UI10AtomButtonV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomNoticeV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI10AtomNoticeV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI10AtomNoticeV_7message4tone11actionTitle0G0ACSS_SSSgAA0cD4ToneOAHyycSgtcfc",
+      "target": "s:8Atom63UI10AtomNoticeV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomNoticeV4bodyQrvp",
+      "target": "s:8Atom63UI10AtomNoticeV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomToggleV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI10AtomToggleV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI10AtomToggleV_4isOn11description23accessibilityIdentifierACSS_05SwiftB07BindingVySbGSSSgAKtcfc",
+      "target": "s:8Atom63UI10AtomToggleV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomToggleV4bodyQrvp",
+      "target": "s:8Atom63UI10AtomToggleV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO",
+      "target": "s:8Atom63UI10AtomTokensO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO10statusInfoAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO11surfacePageAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO11textPrimaryAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO12actionDangerAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO12borderSubtleAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO12surfaceMutedAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO12surfacePanelAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO13actionNeutralAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO13actionPrimaryAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO13borderControlAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO13statusSuccessAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO13statusWarningAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO13textSecondaryAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO14selectionThumbAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO14surfaceControlAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO17selectionTrackOffAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO17skeletonHighlightAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO20actionPrimaryPressedAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO22actionDangerForegroundAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO23actionNeutralForegroundAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO23actionPrimaryForegroundAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5SpaceO",
+      "target": "s:8Atom63UI10AtomTokensO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5SpaceO2x1SdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5SpaceO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5SpaceO2x2SdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5SpaceO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5SpaceO2x3SdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5SpaceO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5SpaceO2x4SdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5SpaceO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5SpaceO2x5SdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5SpaceO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5SpaceO2x6SdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5SpaceO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO6MotionO",
+      "target": "s:8Atom63UI10AtomTokensO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO6MotionO15controlFeedbackSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO6MotionO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO6MotionO15skeletonShimmerSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO6MotionO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO6MotionO23emphasizedControlPointsSd_S3dtvpZ",
+      "target": "s:8Atom63UI10AtomTokensO6MotionO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO6MotionO4fastSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO6MotionO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO6MotionO8standardSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO6MotionO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO6RadiusO",
+      "target": "s:8Atom63UI10AtomTokensO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO6RadiusO10extraLargeSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO6RadiusO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO6RadiusO5largeSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO6RadiusO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO6RadiusO5smallSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO6RadiusO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO6RadiusO6mediumSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO6RadiusO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO7ControlO",
+      "target": "s:8Atom63UI10AtomTokensO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO7ControlO10pressScaleSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO7ControlO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO7ControlO13PaddingInlineO",
+      "target": "s:8Atom63UI10AtomTokensO7ControlO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO7ControlO13PaddingInlineO2lgSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO7ControlO13PaddingInlineO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO7ControlO13PaddingInlineO2mdSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO7ControlO13PaddingInlineO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO7ControlO13PaddingInlineO2smSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO7ControlO13PaddingInlineO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO7ControlO13PaddingInlineO2xlSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO7ControlO13PaddingInlineO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO7ControlO13PaddingInlineO2xsSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO7ControlO13PaddingInlineO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO7ControlO14minTouchTargetSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO7ControlO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO7ControlO15disabledOpacitySdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO7ControlO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO7ControlO6HeightO",
+      "target": "s:8Atom63UI10AtomTokensO7ControlO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO7ControlO6HeightO2lgSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO7ControlO6HeightO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO7ControlO6HeightO2mdSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO7ControlO6HeightO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO7ControlO6HeightO2smSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO7ControlO6HeightO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO7ControlO6HeightO2xlSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO7ControlO6HeightO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO7ControlO6HeightO2xsSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO7ControlO6HeightO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO7ControlO7minSizeSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO7ControlO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI11AtomListRowV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI11AtomListRowV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI11AtomListRowV4bodyQrvp",
+      "target": "s:8Atom63UI11AtomListRowV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI11AtomListRowV5title8subtitle11systemImage5badge0J4Tone15showsDisclosureACSS_SSSgSSAjA0c5BadgeK0OSbtcfc",
+      "target": "s:8Atom63UI11AtomListRowV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI12AtomValueRowV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI12AtomValueRowV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI12AtomValueRowV_5value11systemImageACSS_S2SSgtcfc",
+      "target": "s:8Atom63UI12AtomValueRowV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI12AtomValueRowV4bodyQrvp",
+      "target": "s:8Atom63UI12AtomValueRowV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI13AtomActionBarV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI13AtomActionBarV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI13AtomActionBarV12primaryTitle0F7Variant16isPrimaryLoading0fD009secondaryG00lD0ACSS_AA0c6ButtonH0OSbyycSSSgyycSgtcfc",
+      "target": "s:8Atom63UI13AtomActionBarV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI13AtomActionBarV4bodyQrvp",
+      "target": "s:8Atom63UI13AtomActionBarV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI13AtomBadgeToneO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI13AtomBadgeToneO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI13AtomBadgeToneO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI13AtomBadgeToneO6accentyA2CmF",
+      "target": "s:8Atom63UI13AtomBadgeToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI13AtomBadgeToneO6dangeryA2CmF",
+      "target": "s:8Atom63UI13AtomBadgeToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI13AtomBadgeToneO7neutralyA2CmF",
+      "target": "s:8Atom63UI13AtomBadgeToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI13AtomBadgeToneO7successyA2CmF",
+      "target": "s:8Atom63UI13AtomBadgeToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI13AtomBadgeToneO7warningyA2CmF",
+      "target": "s:8Atom63UI13AtomBadgeToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI13AtomFormFieldV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI13AtomFormFieldV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI13AtomFormFieldV_14supportingText12errorMessage9isFocused7contentACyxGSS_SSSgAISbxyXEtcfc",
+      "target": "s:8Atom63UI13AtomFormFieldV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI13AtomFormFieldV4bodyQrvp",
+      "target": "s:8Atom63UI13AtomFormFieldV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI13AtomTextFieldV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI13AtomTextFieldV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI13AtomTextFieldV_4text6prompt010supportingD08isSecure12errorMessageACSS_05SwiftB07BindingVySSGSSSgAMSbAMtcfc",
+      "target": "s:8Atom63UI13AtomTextFieldV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI13AtomTextFieldV4bodyQrvp",
+      "target": "s:8Atom63UI13AtomTextFieldV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomAsyncImageV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomAsyncImageV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomAsyncImageV3url18accessibilityLabel11aspectRatioAC10Foundation3URLVSg_SS04CoreK07CGFloatVtcfc",
+      "target": "s:8Atom63UI14AtomAsyncImageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomAsyncImageV4bodyQrvp",
+      "target": "s:8Atom63UI14AtomAsyncImageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomIconButtonV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomIconButtonV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomIconButtonV_11systemImage7variant9isLoading6actionACSS_SSAA0cE7VariantOSbyyctcfc",
+      "target": "s:8Atom63UI14AtomIconButtonV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomIconButtonV4bodyQrvp",
+      "target": "s:8Atom63UI14AtomIconButtonV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomNoticeToneO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomNoticeToneO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomNoticeToneO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomNoticeToneO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomNoticeToneO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomNoticeToneO4infoyA2CmF",
+      "target": "s:8Atom63UI14AtomNoticeToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomNoticeToneO5erroryA2CmF",
+      "target": "s:8Atom63UI14AtomNoticeToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomNoticeToneO7successyA2CmF",
+      "target": "s:8Atom63UI14AtomNoticeToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomNoticeToneO7warningyA2CmF",
+      "target": "s:8Atom63UI14AtomNoticeToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomSyncIntentO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomSyncIntentO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomSyncIntentO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomSyncIntentO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomSyncIntentO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomSyncIntentO10refreshingyA2CmF",
+      "target": "s:8Atom63UI14AtomSyncIntentO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomSyncIntentO12synchronizedyA2CmF",
+      "target": "s:8Atom63UI14AtomSyncIntentO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomSyncIntentO4idleyA2CmF",
+      "target": "s:8Atom63UI14AtomSyncIntentO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomSyncIntentO5staleyA2CmF",
+      "target": "s:8Atom63UI14AtomSyncIntentO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomSyncIntentO6failedyA2CmF",
+      "target": "s:8Atom63UI14AtomSyncIntentO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomSyncIntentO7offlineyA2CmF",
+      "target": "s:8Atom63UI14AtomSyncIntentO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomTextEditorV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomTextEditorV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomTextEditorV_4text6prompt010supportingD012errorMessage9minHeightACSS_05SwiftB07BindingVySSGSSSgA2M14CoreFoundation7CGFloatVtcfc",
+      "target": "s:8Atom63UI14AtomTextEditorV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomTextEditorV4bodyQrvp",
+      "target": "s:8Atom63UI14AtomTextEditorV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomControlSizeO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomControlSizeO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomControlSizeO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomControlSizeO4iconyA2CmF",
+      "target": "s:8Atom63UI15AtomControlSizeO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomControlSizeO5largeyA2CmF",
+      "target": "s:8Atom63UI15AtomControlSizeO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomControlSizeO7compactyA2CmF",
+      "target": "s:8Atom63UI15AtomControlSizeO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomControlSizeO7regularyA2CmF",
+      "target": "s:8Atom63UI15AtomControlSizeO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomFormMessageV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomFormMessageV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomFormMessageV_7message4toneACSS_SSAA0cdE4ToneOtcfc",
+      "target": "s:8Atom63UI15AtomFormMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomFormMessageV4bodyQrvp",
+      "target": "s:8Atom63UI15AtomFormMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomSkeletonRowV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomSkeletonRowV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomSkeletonRowV4bodyQrvp",
+      "target": "s:8Atom63UI15AtomSkeletonRowV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomSkeletonRowVACycfc",
+      "target": "s:8Atom63UI15AtomSkeletonRowV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV10statusInfoAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV11surfacePageAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV11textPrimaryAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV12actionDangerAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV12borderSubtleAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV12surfaceMutedAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV12surfacePanelAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV13actionNeutralAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV13actionPrimaryAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV13borderControlAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV13statusSuccessAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV13statusWarningAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV13textSecondaryAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV14selectionThumbAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV14surfaceControlAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV17selectionTrackOffAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV17skeletonHighlightAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV20actionPrimaryPressedAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV22actionDangerForegroundAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV23actionNeutralForegroundAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV23actionPrimaryForegroundAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomDynamicColorV",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomDynamicColorV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomDynamicColorV4darkAA0cE10ComponentsVvp",
+      "target": "s:8Atom63UI16AtomDynamicColorV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomDynamicColorV5light4darkAcA0cE10ComponentsV_AGtcfc",
+      "target": "s:8Atom63UI16AtomDynamicColorV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomDynamicColorV5lightAA0cE10ComponentsVvp",
+      "target": "s:8Atom63UI16AtomDynamicColorV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomDynamicColorV7resolve3for05SwiftB00E0VAF0E6SchemeO_tF",
+      "target": "s:8Atom63UI16AtomDynamicColorV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomLoadMoreViewV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomLoadMoreViewV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomLoadMoreViewV4bodyQrvp",
+      "target": "s:8Atom63UI16AtomLoadMoreViewV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomLoadMoreViewV6intent04loadE0AcA0C16PaginationIntentO_yyctcfc",
+      "target": "s:8Atom63UI16AtomLoadMoreViewV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomProgressViewV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomProgressViewV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomProgressViewV_7message5value5totalACSS_SSSgSdSgSdtcfc",
+      "target": "s:8Atom63UI16AtomProgressViewV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomProgressViewV4bodyQrvp",
+      "target": "s:8Atom63UI16AtomProgressViewV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomSelectionRowV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomSelectionRowV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomSelectionRowV_8subtitle10isSelected6actionACSS_SSSgSbyyctcfc",
+      "target": "s:8Atom63UI16AtomSelectionRowV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomSelectionRowV4bodyQrvp",
+      "target": "s:8Atom63UI16AtomSelectionRowV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomSemanticToneO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomSemanticToneO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomSemanticToneO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomSemanticToneO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomSemanticToneO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomSemanticToneO4infoyA2CmF",
+      "target": "s:8Atom63UI16AtomSemanticToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomSemanticToneO5erroryA2CmF",
+      "target": "s:8Atom63UI16AtomSemanticToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomSemanticToneO7neutralyA2CmF",
+      "target": "s:8Atom63UI16AtomSemanticToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomSemanticToneO7successyA2CmF",
+      "target": "s:8Atom63UI16AtomSemanticToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomSemanticToneO7warningyA2CmF",
+      "target": "s:8Atom63UI16AtomSemanticToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomButtonVariantO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomButtonVariantO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomButtonVariantO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomButtonVariantO11destructiveyA2CmF",
+      "target": "s:8Atom63UI17AtomButtonVariantO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomButtonVariantO5ghostyA2CmF",
+      "target": "s:8Atom63UI17AtomButtonVariantO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomButtonVariantO7neutralyA2CmF",
+      "target": "s:8Atom63UI17AtomButtonVariantO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomButtonVariantO7outlineyA2CmF",
+      "target": "s:8Atom63UI17AtomButtonVariantO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomButtonVariantO7primaryyA2CmF",
+      "target": "s:8Atom63UI17AtomButtonVariantO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomButtonVariantO9secondaryyA2CmF",
+      "target": "s:8Atom63UI17AtomButtonVariantO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomSectionHeaderV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomSectionHeaderV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomSectionHeaderV_8subtitle11actionTitle0G0ACSS_SSSgAGyycSgtcfc",
+      "target": "s:8Atom63UI17AtomSectionHeaderV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomSectionHeaderV4bodyQrvp",
+      "target": "s:8Atom63UI17AtomSectionHeaderV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomContractParityO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomContractParityO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomContractParityO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomContractParityO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomContractParityO16platformAdaptiveyA2CmF",
+      "target": "s:8Atom63UI18AtomContractParityO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomContractParityO6recipeyA2CmF",
+      "target": "s:8Atom63UI18AtomContractParityO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomContractParityO6strictyA2CmF",
+      "target": "s:8Atom63UI18AtomContractParityO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomMotionContractV",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomMotionContractV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomMotionContractV07reducedD0SSvp",
+      "target": "s:8Atom63UI18AtomMotionContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomMotionContractV13durationTokenSSvp",
+      "target": "s:8Atom63UI18AtomMotionContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomMotionContractV4kindSSvp",
+      "target": "s:8Atom63UI18AtomMotionContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomMotionContractV6easingSSvp",
+      "target": "s:8Atom63UI18AtomMotionContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomMotionContractV9directionSSvp",
+      "target": "s:8Atom63UI18AtomMotionContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomResourceIntentO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomResourceIntentO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomResourceIntentO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomResourceIntentO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomResourceIntentO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomResourceIntentO5emptyyA2CmF",
+      "target": "s:8Atom63UI18AtomResourceIntentO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomResourceIntentO5erroryA2CmF",
+      "target": "s:8Atom63UI18AtomResourceIntentO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomResourceIntentO7contentyA2CmF",
+      "target": "s:8Atom63UI18AtomResourceIntentO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomResourceIntentO7loadingyA2CmF",
+      "target": "s:8Atom63UI18AtomResourceIntentO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomSyncStatusViewV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomSyncStatusViewV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomSyncStatusViewV4bodyQrvp",
+      "target": "s:8Atom63UI18AtomSyncStatusViewV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomSyncStatusViewV6intentAcA0cD6IntentO_tcfc",
+      "target": "s:8Atom63UI18AtomSyncStatusViewV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI19AtomColorComponentsV",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI19AtomColorComponentsV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI19AtomColorComponentsV3red5green4blue7opacityACSd_S3dtcfc",
+      "target": "s:8Atom63UI19AtomColorComponentsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI19AtomColorComponentsV3redSdvp",
+      "target": "s:8Atom63UI19AtomColorComponentsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI19AtomColorComponentsV4blueSdvp",
+      "target": "s:8Atom63UI19AtomColorComponentsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI19AtomColorComponentsV5color05SwiftB00D0Vvp",
+      "target": "s:8Atom63UI19AtomColorComponentsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI19AtomColorComponentsV5greenSdvp",
+      "target": "s:8Atom63UI19AtomColorComponentsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI19AtomColorComponentsV7opacitySdvp",
+      "target": "s:8Atom63UI19AtomColorComponentsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI19AtomFormMessageToneO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI19AtomFormMessageToneO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI19AtomFormMessageToneO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI19AtomFormMessageToneO4infoyA2CmF",
+      "target": "s:8Atom63UI19AtomFormMessageToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI19AtomFormMessageToneO5erroryA2CmF",
+      "target": "s:8Atom63UI19AtomFormMessageToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI19AtomFormMessageToneO7successyA2CmF",
+      "target": "s:8Atom63UI19AtomFormMessageToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomContentStateToneO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomContentStateToneO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomContentStateToneO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomContentStateToneO5erroryA2CmF",
+      "target": "s:8Atom63UI20AtomContentStateToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomContentStateToneO7neutralyA2CmF",
+      "target": "s:8Atom63UI20AtomContentStateToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomContentStateViewV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomContentStateViewV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomContentStateViewV4bodyQrvp",
+      "target": "s:8Atom63UI20AtomContentStateViewV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomContentStateViewV5title7message11systemImage4tone11actionTitle0L0ACSS_S2SAA0cdE4ToneOSSSgyycSgtcfc",
+      "target": "s:8Atom63UI20AtomContentStateViewV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomFormPresentationO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomFormPresentationO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomFormPresentationO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomFormPresentationO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomFormPresentationO10standaloneyA2CmF",
+      "target": "s:8Atom63UI20AtomFormPresentationO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomFormPresentationO5sheetyA2CmF",
+      "target": "s:8Atom63UI20AtomFormPresentationO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomFormPresentationO7groupedyA2CmF",
+      "target": "s:8Atom63UI20AtomFormPresentationO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomMotionPreferenceO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomMotionPreferenceO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomMotionPreferenceO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomMotionPreferenceO6systemyA2CmF",
+      "target": "s:8Atom63UI20AtomMotionPreferenceO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomMotionPreferenceO7reducedyA2CmF",
+      "target": "s:8Atom63UI20AtomMotionPreferenceO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomPaginationIntentO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomPaginationIntentO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomPaginationIntentO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomPaginationIntentO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomPaginationIntentO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomPaginationIntentO11loadingMoreyA2CmF",
+      "target": "s:8Atom63UI20AtomPaginationIntentO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomPaginationIntentO12semanticToneAA0c8SemanticG0Ovp",
+      "target": "s:8Atom63UI20AtomPaginationIntentO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomPaginationIntentO4idleyA2CmF",
+      "target": "s:8Atom63UI20AtomPaginationIntentO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomPaginationIntentO6failedyA2CmF",
+      "target": "s:8Atom63UI20AtomPaginationIntentO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomPaginationIntentO9exhaustedyA2CmF",
+      "target": "s:8Atom63UI20AtomPaginationIntentO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI21AtomComponentContractV",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI21AtomComponentContractV",
+      "target": "external:Identifiable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI21AtomComponentContractV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI21AtomComponentContractV010foundationE0SSvp",
+      "target": "s:8Atom63UI21AtomComponentContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI21AtomComponentContractV10stateTonesSDyS2SGvp",
+      "target": "s:8Atom63UI21AtomComponentContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI21AtomComponentContractV11catalogItemSSvp",
+      "target": "s:8Atom63UI21AtomComponentContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI21AtomComponentContractV13reactRendererSSvp",
+      "target": "s:8Atom63UI21AtomComponentContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI21AtomComponentContractV14foundationAxisSSvp",
+      "target": "s:8Atom63UI21AtomComponentContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI21AtomComponentContractV14requiredStatesSaySSGvp",
+      "target": "s:8Atom63UI21AtomComponentContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI21AtomComponentContractV14sharedOutcomesSaySSGvp",
+      "target": "s:8Atom63UI21AtomComponentContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI21AtomComponentContractV15swiftUIRendererSSvp",
+      "target": "s:8Atom63UI21AtomComponentContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI21AtomComponentContractV19platformAdaptationsAA0c8PlatformG0Vvp",
+      "target": "s:8Atom63UI21AtomComponentContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI21AtomComponentContractV21accessibilityOutcomesSaySSGvp",
+      "target": "s:8Atom63UI21AtomComponentContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI21AtomComponentContractV2idSSvp",
+      "target": "s:8Atom63UI21AtomComponentContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI21AtomComponentContractV6intentSSvp",
+      "target": "s:8Atom63UI21AtomComponentContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI21AtomComponentContractV6motionAA0c6MotionE0VSgvp",
+      "target": "s:8Atom63UI21AtomComponentContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI21AtomComponentContractV6parityAA0cE6ParityOvp",
+      "target": "s:8Atom63UI21AtomComponentContractV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI22AtomComponentContractsO3allSayAA0cD8ContractVGvpZ",
+      "target": "s:8Atom63UI22AtomComponentContractsO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI22AtomComponentContractsO8contract11catalogItemAA0cD8ContractVSgSS_tFZ",
+      "target": "s:8Atom63UI22AtomComponentContractsO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI23AtomPlatformAdaptationsV",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI23AtomPlatformAdaptationsV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI23AtomPlatformAdaptationsV05swiftB0SaySSGvp",
+      "target": "s:8Atom63UI23AtomPlatformAdaptationsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI23AtomPlatformAdaptationsV5reactSaySSGvp",
+      "target": "s:8Atom63UI23AtomPlatformAdaptationsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI23AtomRendererConformanceO8evidence10contractIdAA0cdE8EvidenceVSgSS_tFZ",
+      "target": "s:8Atom63UI23AtomRendererConformanceO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI23AtomRendererConformanceO8verifiedSayAA0cdE8EvidenceVGvpZ",
+      "target": "s:8Atom63UI23AtomRendererConformanceO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI31AtomRendererConformanceEvidenceV",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI31AtomRendererConformanceEvidenceV",
+      "target": "external:Identifiable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI31AtomRendererConformanceEvidenceV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI31AtomRendererConformanceEvidenceV10contractIdSSvp",
+      "target": "s:8Atom63UI31AtomRendererConformanceEvidenceV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI31AtomRendererConformanceEvidenceV17implementedStatesSaySSGvp",
+      "target": "s:8Atom63UI31AtomRendererConformanceEvidenceV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI31AtomRendererConformanceEvidenceV20verifiesMotionRecipeSbvp",
+      "target": "s:8Atom63UI31AtomRendererConformanceEvidenceV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI31AtomRendererConformanceEvidenceV22verifiedSharedOutcomesSaySSGvp",
+      "target": "s:8Atom63UI31AtomRendererConformanceEvidenceV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI31AtomRendererConformanceEvidenceV29verifiedAccessibilityOutcomesSaySSGvp",
+      "target": "s:8Atom63UI31AtomRendererConformanceEvidenceV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI31AtomRendererConformanceEvidenceV2idSSvp",
+      "target": "s:8Atom63UI31AtomRendererConformanceEvidenceV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI8AtomCardV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI8AtomCardV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI8AtomCardV4bodyQrvp",
+      "target": "s:8Atom63UI8AtomCardV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI8AtomCardV6action7contentACyxGyycSg_xyXEtcfc",
+      "target": "s:8Atom63UI8AtomCardV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI8AtomChipV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI8AtomChipV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI8AtomChipV_11systemImage10isSelected6actionACSS_SSSgSbyyctcfc",
+      "target": "s:8Atom63UI8AtomChipV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI8AtomChipV4bodyQrvp",
+      "target": "s:8Atom63UI8AtomChipV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI9AtomBadgeV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI9AtomBadgeV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI9AtomBadgeV_4toneACSS_AA0cD4ToneOtcfc",
+      "target": "s:8Atom63UI9AtomBadgeV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI9AtomBadgeV4bodyQrvp",
+      "target": "s:8Atom63UI9AtomBadgeV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI9AtomThemeV",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI9AtomThemeV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI9AtomThemeV6colorsAA0cD6ColorsVvp",
+      "target": "s:8Atom63UI9AtomThemeV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI9AtomThemeV6colorsAcA0cD6ColorsV_tcfc",
+      "target": "s:8Atom63UI9AtomThemeV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI9AtomThemeV8standardACvpZ",
+      "target": "s:8Atom63UI9AtomThemeV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI9AtomToastV",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI9AtomToastV",
+      "target": "external:Identifiable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI9AtomToastV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI9AtomToastV11systemImageSSvp",
+      "target": "s:8Atom63UI9AtomToastV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI9AtomToastV2id10Foundation4UUIDVvp",
+      "target": "s:8Atom63UI9AtomToastV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI9AtomToastV2id7message11systemImageAC10Foundation4UUIDV_S2Stcfc",
+      "target": "s:8Atom63UI9AtomToastV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI9AtomToastV7messageSSvp",
+      "target": "s:8Atom63UI9AtomToastV",
+      "kind": "memberOf"
+    }
+  ]
+}

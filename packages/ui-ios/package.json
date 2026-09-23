@@ -1,0 +1,36 @@
+{
+  "name": "@atom63/ui-ios",
+  "version": "0.1.0",
+  "private": true,
+  "repository": "https://github.com/ATOM63/atom63-design-system",
+  "type": "module",
+  "description": "Native SwiftUI renderer for the Atom63 design system",
+  "exports": {
+    "./button-tokens.json": "./tokens/button.json",
+    "./input-tokens.json": "./tokens/input.json",
+    "./switch-tokens.json": "./tokens/switch.json"
+  },
+  "scripts": {
+    "generate:swift": "node ../../scripts/generate-cross-renderer-contracts.mjs && node Scripts/generate-swift-tokens.mjs",
+    "check:swift-tokens": "node ../../scripts/generate-cross-renderer-contracts.mjs --check && node Scripts/generate-swift-tokens.mjs --check",
+    "check:api": "node Scripts/check-public-api.mjs",
+    "check:api:write": "node Scripts/check-public-api.mjs --write",
+    "check:consumer": "node Scripts/check-consumer-smoke.mjs",
+    "test:swift": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test",
+    "test:app": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild test -project ../../examples/ios-demo/Atom63Demo.xcodeproj -scheme Atom63Demo -destination 'platform=iOS Simulator,name=iPhone 17 Pro' CODE_SIGNING_ALLOWED=NO -only-testing:Atom63DemoTests",
+    "test:ui": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild test -project ../../examples/ios-demo/Atom63Demo.xcodeproj -scheme Atom63Demo -destination 'platform=iOS Simulator,name=iPhone 17 Pro' CODE_SIGNING_ALLOWED=NO",
+    "test:ci": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer node Scripts/run-ios-tests.mjs",
+    "build:app": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project ../../examples/ios-demo/Atom63Demo.xcodeproj -scheme Atom63Demo -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build"
+  },
+  "files": [
+    "Package.swift",
+    "README.md",
+    "api",
+    "Examples",
+    "Sources",
+    "docs",
+    "tokens",
+    "Scripts"
+  ],
+  "sideEffects": false
+}

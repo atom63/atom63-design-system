@@ -12,8 +12,11 @@ The extraction contains only the first-wave public beta packages:
 - `@atom63/ui-foundation`
 - `@atom63/ui-react`
 
-Packages such as `@atom63/icons`, `@atom63/widgets`, `@atom63/agent`, `@atom63/mdx`,
-and `@atom63/ui-ios` remain outside this repository's package boundary. Some imported
+The SwiftUI renderer `Atom63UI` (`packages/ui-ios`) and its catalog app
+(`examples/ios-demo`) moved here from `atom63-vite` on 2026-09-23. SwiftPM consumers
+resolve it from the root `Package.swift`; it is not published to npm.
+
+Packages such as `@atom63/icons`, `@atom63/widgets`, `@atom63/agent`, and `@atom63/mdx` remain outside this repository's package boundary. Some imported
 planning documents and changelog history still mention those packages as historical
 context or future Layer 2 candidates; they are not source packages in this repo and
 must not be published as part of the first beta.

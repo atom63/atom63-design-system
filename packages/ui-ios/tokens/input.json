@@ -1,0 +1,44 @@
+{
+  "$schema": "https://atom63.dev/schemas/ui-ios-input-token-map.json",
+  "component": "Input",
+  "platform": "ios",
+  "slots": {
+    "field.background": {
+      "swiftName": "background",
+      "valueType": "ShapeStyle"
+    },
+    "field.border": {
+      "swiftName": "borderColor",
+      "valueType": "ShapeStyle"
+    },
+    "field.radius": {
+      "swiftName": "cornerRadius",
+      "valueType": "CGFloat"
+    },
+    "field.shadow": {
+      "swiftName": "innerShadow",
+      "valueType": "AtomShadow"
+    },
+    "field.focusRing": {
+      "swiftName": "focusRing",
+      "valueType": "AtomFocusRing"
+    },
+    "field.focusBorder": {
+      "swiftName": "focusBorderColor",
+      "valueType": "ShapeStyle"
+    },
+    "field.height": {
+      "swiftName": "height",
+      "valueType": "CGFloat"
+    },
+    "field.paddingInline": {
+      "swiftName": "horizontalPadding",
+      "valueType": "CGFloat"
+    },
+    "field.fontSize": {
+      "swiftName": "fontSize",
+      "valueType": "CGFloat"
+    }
+  },
+  "minimumTouchTarget": 44
+}

@@ -10,6 +10,7 @@ release preparation and external-consumer verification.
 | `@atom63/styles` | CSS tokens, themes, contracts, and utilities |
 | `@atom63/ui-foundation` | Platform-neutral TypeScript contracts and environment types |
 | `@atom63/ui-react` | React components, layout primitives, media, and theme controls |
+| `Atom63UI` (`packages/ui-ios`) | SwiftUI components generated from the same tokens, distributed with SwiftPM from the root `Package.swift` |
 
 ## Install
 
