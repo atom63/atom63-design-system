@@ -116,36 +116,40 @@ final class Atom63DemoUITests: XCTestCase {
     let app = launchApp()
 
     app.tabBars.buttons["Settings"].tap()
-    app.buttons["Forms and inputs"].tap()
+    let formsLink = app.buttons["Forms and inputs"]
+    XCTAssertTrue(formsLink.waitForExistence(timeout: 10))
+    formsLink.tap()
 
     XCTAssertTrue(
-      app.navigationBars["Forms and inputs"].waitForExistence(timeout: 2)
+      app.navigationBars["Forms and inputs"].waitForExistence(timeout: 10)
     )
 
+    // Each swipe waits briefly for the lazily rendered form rows to appear
+    // before deciding to swipe again; a cold CI simulator renders slowly.
     let saveButton = app.buttons["Save project"]
-    for _ in 0..<8 where !saveButton.isHittable {
+    for _ in 0..<8 where !(saveButton.waitForExistence(timeout: 1) && saveButton.isHittable) {
       app.swipeUp()
     }
     XCTAssertTrue(saveButton.isHittable)
     saveButton.tap()
 
     let validationSummary = app.staticTexts["Review 3 fields"]
-    for _ in 0..<4 where !validationSummary.exists {
+    for _ in 0..<6 where !validationSummary.waitForExistence(timeout: 1) {
       app.swipeDown()
     }
-    XCTAssertTrue(validationSummary.waitForExistence(timeout: 5))
+    XCTAssertTrue(validationSummary.waitForExistence(timeout: 10))
 
     let nameError = app.staticTexts["Error: Enter a project name"]
-    for _ in 0..<6 where !nameError.exists {
+    for _ in 0..<6 where !nameError.waitForExistence(timeout: 1) {
       app.swipeDown()
     }
-    XCTAssertTrue(nameError.waitForExistence(timeout: 2))
+    XCTAssertTrue(nameError.waitForExistence(timeout: 10))
 
     let emailError = app.staticTexts["Error: Enter a valid email address"]
-    for _ in 0..<3 where !emailError.exists {
+    for _ in 0..<4 where !emailError.waitForExistence(timeout: 1) {
       app.swipeUp()
     }
-    XCTAssertTrue(emailError.waitForExistence(timeout: 2))
+    XCTAssertTrue(emailError.waitForExistence(timeout: 10))
   }
 
   func testTabRootFormActionClearsKeyboardAndTabBar() {
