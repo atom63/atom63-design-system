@@ -1,42 +1,28 @@
 # Release automation
 
-Status: workflow scaffold added; npm trusted publisher setup is still required in npm web UI before using `publish=true`.
+Status: automated. A push to `main` opens a Version Packages pull request; merging it publishes to the npm `beta` tag through trusted publishing.
 
 ## Goals
 
 - Avoid local long-lived npm publish tokens for future beta/stable releases.
 - Publish from GitHub Actions with npm provenance/OIDC.
-- Keep release execution manual until the beta process is mature.
+- Keep one human decision per release: merging the Version Packages pull request.
 - Prevent accidental republish when all package versions already exist on npm.
 
 ## Workflow
-
-Manual workflow:
 
 ```txt
 .github/workflows/release-beta.yml
 ```
 
-Trigger from GitHub Actions with `workflow_dispatch`.
+It runs on every push to `main` and on `workflow_dispatch`:
 
-Inputs:
+1. `detect` counts pending changesets (`.changeset/*.md`) and first-wave package versions that are not on npm yet.
+2. `version-pr` runs on a push with pending changesets. It runs `pnpm release:version` (`changeset version` plus the audit regenerations the version bump requires), force-pushes the result to `changeset-release/main`, and opens or updates the **chore: version packages** pull request.
+3. `preflight` runs when there are unpublished versions (or on `workflow_dispatch`): the full DS verification gates, pack and registry smoke, and the prerelease-mode check.
+4. `publish` runs after a green preflight when there are unpublished versions on a push, or when `workflow_dispatch` sets `publish=true`. It uses `permissions.id-token: write`, runs in the `npm-publish` environment, and publishes with `NPM_CONFIG_PROVENANCE=true`.
 
-| Input | Default | Meaning |
-| --- | --- | --- |
-| `publish` | `false` | Run release preflight only. Set to `true` to publish unpublished versions. |
-
-The workflow has two jobs:
-
-1. `preflight`
-   - installs with the pinned pnpm version
-   - runs the DS verification gates
-   - confirms Changesets prerelease mode is active with `tag: beta`
-   - checks whether first-wave package versions are already published
-2. `publish`
-   - runs only when `publish=true`
-   - uses `permissions.id-token: write`
-   - runs in the `npm-publish` GitHub environment
-   - publishes with `NPM_CONFIG_PROVENANCE=true`
+`workflow_dispatch` with `publish=false` remains a dry run of the preflight.
 
 ## Required npm trusted-publisher setup
 
@@ -56,21 +42,12 @@ Recommended npm setting:
 
 The workflow also references a GitHub environment named `npm-publish`. Create it in GitHub repo settings and add required reviewers before enabling direct publishing.
 
-## How to cut a future beta
+## How to cut a beta
 
-1. Land code/docs changes on `main` with a Changeset.
-2. Run the version step locally or through a future version PR flow:
-
-   ```bash
-   pnpm changeset version
-   ```
-
-3. Review generated package versions and changelogs.
-4. Commit and push the version commit.
-5. Confirm CI is green.
-6. Run **Release beta** with `publish=false` first.
-7. If preflight is green and unpublished versions are expected, rerun **Release beta** with `publish=true`.
-8. Read back npm registry state:
+1. Land changes on `main` with a changeset.
+2. The workflow opens or updates the **chore: version packages** pull request. Review the versions and changelog entries.
+3. Merge it. The workflow runs the preflight and publishes the new versions to `beta`. If the `npm-publish` environment has required reviewers, approve the deployment.
+4. Read back npm registry state:
 
    ```bash
    npm view @atom63/styles@beta name version dist-tags --json
@@ -78,7 +55,7 @@ The workflow also references a GitHub environment named `npm-publish`. Create it
    npm view @atom63/ui-react@beta name version dist-tags dependencies --json
    ```
 
-9. Run external/adopter smoke.
+5. Keep `latest` synchronized with `beta` (see caveats) and run external/adopter smoke.
 
 ## Stable/latest promotion policy
 
@@ -120,5 +97,7 @@ approve it.
 
 - `latest` exists on the beta packages because the first manual npm publishes created it. The current mitigation is keeping `latest` synchronized with `beta`; stable/latest promotion remains not approved by policy.
 - The workflow currently uses `changeset publish` through `pnpm release`. It should publish only package versions that are not already present in npm.
-- The workflow does not create release PRs yet. A future improvement can add Changesets action or a dedicated version workflow.
+- The version pull request is created with `GITHUB_TOKEN`, so GitHub does not run CI on it. The version job regenerates every audit the checks compare, and the preflight runs again on the merge commit before anything publishes.
+- The workflow does not move `latest`; synchronize it with `npm dist-tag add` after each publish while the beta policy keeps `latest` equal to `beta`.
+- The repository setting **Allow GitHub Actions to create and approve pull requests** must be on for `version-pr` to open the pull request.
 - No npm token is stored in this repo. If trusted publisher is not configured in npm, `publish=true` should fail rather than falling back to a local token.
