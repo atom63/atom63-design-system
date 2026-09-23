@@ -3,6 +3,8 @@
 Atom63's first-wave design-system packages, extracted into a focused workspace for
 release preparation and external-consumer verification.
 
+Documentation: [system.atom63.io](https://system.atom63.io) (built from `apps/docs`).
+
 ## Packages
 
 | Package | Purpose |

@@ -15,7 +15,7 @@ const endpoints: Record<EndpointId, EndpointConfig> = {
   'design-system': {
     id: 'design-system',
     name: 'Design System | ATOM63',
-    url: 'https://ds.atom63.io',
+    url: 'https://system.atom63.io',
     description:
       'ATOM63 Design System — tokens, components, and patterns for building expressive digital interfaces.',
     keywords: ['design system', 'UI components', 'design tokens', 'component library'],
