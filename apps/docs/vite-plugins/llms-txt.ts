@@ -28,7 +28,7 @@ import { buildChangelogMarkdown } from './changelog-data'
 
 const SITE_TITLE = 'ATOM63 Design System'
 const SITE_SUMMARY =
-  'Design system, architecture, and product decision notes behind ATOM63 — a personal monorepo for portfolio, docs, OS63, and teaching surfaces.'
+  'Atom63 Design System — one token architecture rendered in React, SwiftUI, and Figma: tokens, themes, component contracts, and components.'
 
 export type DocEntry = {
   area: DocAreaId
