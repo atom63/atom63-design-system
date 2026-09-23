@@ -104,6 +104,24 @@ iOS from a mirror repository.
 4. **Open-source polish.** Public docs site, Storybook, `CONTRIBUTING.md`, theme packages, and a CLI/MCP
    for AI tools, following Astryx.
 
+## Progress (2026-09-23)
+
+Phase 1 is in progress. Done and verified in CI unless noted:
+
+- **iOS in this repo.** `packages/ui-ios` and `examples/ios-demo` moved here; the root `Package.swift` serves SwiftPM consumers. A macOS CI job checks generated contracts and Swift tokens, the frozen public API, `swift test`, and the demo app tests on the latest stable Xcode.
+- **One token interface.** The Swift token generator reads the token manifest instead of CSS; its output is byte-identical.
+- **Figma model.** `@atom63/styles/figma-sync.json` maps every personalization axis to its own Figma collection (the CSS never varies a token on two axes), keeps `var()` references as aliases, and resolves everything else in Chromium. 984 variables, 430 alias values; 278 of 278 literal colors match their CSS source.
+- **Companion plugin.** Cipher moved to `apps/figma-plugin`, lost the generic generator, component, import, and export features, and gained a Sync page that previews, applies, and re-verifies the model. Tests on an in-memory Figma API prove a second sync plans zero changes. Not yet verified in a real Figma file.
+- **Packaging fix found on the way.** 31 ui-react files rely on Tailwind utilities, so consumers without Tailwind got unstyled layouts and toasts. `styles.css` now ships those utilities precompiled.
+- **Next beta prepared.** styles `0.1.0-beta.2`, ui-foundation `0.1.1-beta.1`, ui-react `0.2.0-beta.5`; the release dry run passes. Publishing needs the npm-publish environment approval.
+
+Adjusted decisions:
+
+- **D3.** Start with `beta` only. Every publish, canary included, needs the npm-publish approval, so a canary channel would not shorten the loop yet.
+- **D2.** The docs site moved here as `apps/docs` in phase 1 rather than phase 4: it shares ui-react with mdx and widgets, so it could not stay in atom63-vite once those switch to npm. The chat agent is removed, the MDX components it uses are copied into `src/mdx-kit`, product pages are dropped, and the home and architecture pages are rewritten. It is not deployed yet; that needs a Vercel project for this repo. The atom63-vite Storybook mostly shows widgets and OS63 and stays there; the DS gets its own Storybook in phase 4.
+
+Remaining in phase 1: publish the beta, then switch atom63-vite apps and packages to the published packages and delete its stale copies (in progress on the atom63-vite branch `feat/ds-consume-published`).
+
 ---
 
 # 生产级开源 DS 规划（待拍板草案）
@@ -201,3 +219,21 @@ Tokens Studio、Style Dictionary、Terrazzo 都已支持。
 3. **DTCG 作为来源 + Figma 双向同步（4-8 周）。** 完成 D1 方案 B，再做 Figma 第二阶段。
 4. **开源打磨。** 公开文档站和 Storybook，补 `CONTRIBUTING.md`，拆出独立主题包，参考 Astryx 提供面向 AI
    工具的 CLI/MCP。
+
+## 进展（2026-09-23）
+
+第一阶段进行中。除特别注明外，以下各项均已完成并通过 CI 验证：
+
+- **iOS 已进入本仓库。** `packages/ui-ios` 和 `examples/ios-demo` 已搬入，根目录 `Package.swift` 供 SwiftPM 使用者解析。macOS CI 任务会检查生成的契约和 Swift token、冻结的公开 API，运行 `swift test`，并在最新稳定版 Xcode 上跑示例 app 测试。
+- **统一的 token 接口。** Swift token 生成器改为读取 token 清单，不再解析 CSS，输出逐字节不变。
+- **Figma 模型。** `@atom63/styles/figma-sync.json` 让每个个性化维度各成一个 Figma 集合（CSS 中没有 token 同时随两个维度变化），`var()` 引用保留为别名，其余值在 Chromium 中解析。共 984 个变量、430 个别名值；278 个字面量颜色全部与 CSS 源值一致。
+- **配套插件。** Cipher 已搬到 `apps/figma-plugin`，删掉了通用生成器、组件、导入和导出功能，新增同步页，可预览、应用并重新校验模型。基于内存 Figma API 的测试证明第二次同步零变化。尚未在真实 Figma 文件中验证。
+- **顺带发现的打包问题。** ui-react 有 31 个文件依赖 Tailwind 工具类，不用 Tailwind 的使用者会看到布局和 toast 缺样式。现在 `styles.css` 已内置预编译的工具类。
+- **新 beta 已就绪。** styles `0.1.0-beta.2`、ui-foundation `0.1.1-beta.1`、ui-react `0.2.0-beta.5`；发布试运行已通过，正式发布需要 npm-publish 环境审批。
+
+调整过的决定：
+
+- **D3。** 先只用 `beta`。包括 canary 在内的每次发布都需要 npm-publish 审批，所以 canary 渠道暂时不能缩短迭代周期。
+- **D2。** 文档站提前到第一阶段搬入本仓库，位于 `apps/docs`，没有等到第四阶段：它和 mdx、widgets 共用 ui-react，这些包一旦切到 npm，它就无法继续留在 atom63-vite。聊天 agent 已删除，用到的 MDX 组件复制到 `src/mdx-kit`，产品类页面已删除，首页和架构页已重写。目前尚未部署，需要为本仓库新建 Vercel 项目。atom63-vite 的 Storybook 主要展示 widgets 和 OS63，继续留在那边；DS 会在第四阶段拥有自己的 Storybook。
+
+第一阶段剩余工作：发布 beta，然后把 atom63-vite 的 app 和包切换到已发布的包，并删除其中的过期副本（正在 atom63-vite 的 `feat/ds-consume-published` 分支上进行）。
