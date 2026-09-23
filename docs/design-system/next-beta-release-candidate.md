@@ -1,23 +1,23 @@
 # Next beta release candidate
 
-Status: prepared for approval; no versioning or publish has been run.
+Status: versioned for approval; no publish has been run.
 
 ## Scope
 
 This candidate exists to let `atom63-vite` validate the standalone design-system packages as its first real product consumer.
 
-Planned package bumps:
+Versioned package output:
 
-| Package | Bump | Reason |
+| Package | Version | Reason |
 | --- | --- | --- |
-| `@atom63/styles` | patch prerelease | Publish `--font-weight-medium: 500` from the shared token layer so `atom63.io` does not need an app-local DS fallback. |
-| `@atom63/ui-react` | patch prerelease | Publish the first-use `Atom63Theme` boundary used by the public quickstart and website consumer path. |
+| `@atom63/styles` | `0.1.0-beta.1` | Publish `--font-weight-medium: 500` from the shared token layer so `atom63.io` does not need an app-local DS fallback. |
+| `@atom63/ui-react` | `0.2.0-beta.3` | Publish the first-use `Atom63Theme` boundary used by the public quickstart and website consumer path. |
 
 `@atom63/ui-foundation` is not intentionally changed for this candidate.
 
 ## Release gate
 
-Do not publish from this document alone. Before a real publish, confirm the exact prerelease versions after `changeset version`, registry/auth readiness, and the npm `beta` dist-tag target with YZ.
+Do not publish from this document alone. Before a real publish, confirm registry/auth readiness, the npm `beta` dist-tag target, and the exact versioned package list with YZ.
 
 No stable/`latest` promotion is approved. `docs/design-system/stable-release-policy.json` still marks stable promotion as `stable-promotion-not-approved`.
 

@@ -1,5 +1,13 @@
 # @atom63/styles
 
+## 0.1.0-beta.1
+
+### Patch Changes
+
+- [`8d6cb22`](https://github.com/atom63/atom63-design-system/commit/8d6cb2226bd72e73414536536f9a381c4c170535) Thanks [@atom63](https://github.com/atom63)! - Publish the next public beta for the Atom63 website consumer lane.
+
+  `@atom63/styles` now publishes the shared `--font-weight-medium` token so adopters do not need app-local fallback declarations. `@atom63/ui-react` includes the first-use `Atom63Theme` boundary used by the public quickstart and website consumer contract.
+
 ## 0.1.0-beta.0
 
 ### Minor Changes
