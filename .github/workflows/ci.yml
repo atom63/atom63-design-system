@@ -80,6 +80,9 @@ jobs:
       - name: Check Figma sync model
         run: pnpm --filter @atom63/styles check:figma
 
+      - name: Check z-layer output
+        run: pnpm --filter @atom63/styles check:z-layers
+
       - name: Check control size alignment
         run: pnpm check:control-alignment
 
@@ -94,6 +97,15 @@ jobs:
 
       - name: Check React UI utilities CSS
         run: pnpm --filter @atom63/ui-react check:utilities
+
+      - name: Check formatting
+        run: pnpm format:check
+
+      - name: Lint packages
+        run: |
+          pnpm --filter @atom63/styles lint
+          pnpm --filter @atom63/ui-foundation lint
+          pnpm --filter @atom63/ui-react lint
 
       - name: Check docs site
         run: |

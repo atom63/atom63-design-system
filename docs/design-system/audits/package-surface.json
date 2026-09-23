@@ -82,9 +82,8 @@
         "./utils/scroll-mask": "./src/utils/scroll-mask.css",
         "./utils/view-transition": "./src/utils/view-transition.css",
         "./z-layers": {
-          "typescript": "./src/z-layers.ts",
-          "types": "./src/z-layers.ts",
-          "default": "./src/z-layers.ts"
+          "types": "./generated/z-layers.d.ts",
+          "default": "./generated/z-layers.js"
         }
       },
       "exportKeys": [
@@ -368,7 +367,8 @@
       "sideEffects": ["*.css", "**/*.css"],
       "peerDependencies": {
         "react": "^19.1.0",
-        "react-dom": "^19.1.0"
+        "react-dom": "^19.1.0",
+        "react-hook-form": "^7.81.0"
       },
       "qualityScripts": {
         "build": "tsup",

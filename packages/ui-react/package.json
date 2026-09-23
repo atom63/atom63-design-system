@@ -154,14 +154,14 @@
     "lucide-react": "^1.34.0",
     "motion": "^13.1.1",
     "react-day-picker": "^10.0.1",
-    "react-hook-form": "^7.81.0",
     "react-resizable-panels": "^4.12.1",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.6.0"
   },
   "peerDependencies": {
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-hook-form": "^7.81.0"
   },
   "devDependencies": {
     "@atom63/eslint-config": "workspace:*",
@@ -183,6 +183,7 @@
     "jsdom": "catalog:",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
+    "react-hook-form": "^7.81.0",
     "tailwindcss": "catalog:",
     "tsup": "^8.3.5",
     "typescript": "catalog:",

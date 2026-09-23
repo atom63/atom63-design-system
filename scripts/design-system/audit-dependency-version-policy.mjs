@@ -106,7 +106,8 @@ async function main() {
     assert(isNonEmptyString(entry.policy), `${entry.name}.policy is required`)
     assert(isNonEmptyString(entry.reason), `${entry.name}.reason is required`)
     assert(
-      uiReact.dependencies?.[entry.name] === entry.currentRange,
+      (uiReact.dependencies?.[entry.name] ?? uiReact.peerDependencies?.[entry.name]) ===
+        entry.currentRange,
       `${entry.name} currentRange drifted from @atom63/ui-react manifest`
     )
   }

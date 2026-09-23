@@ -22,8 +22,8 @@
       {
         "name": "react-hook-form",
         "currentRange": "^7.81.0",
-        "policy": "monitor-minor-compatible-range",
-        "reason": "Form integration types may appear in typed examples and component composition."
+        "policy": "peer-shared-instance",
+        "reason": "Form binds to the consumer's useForm through react-hook-form context, so the consumer and ui-react must share one installed copy; it is a peer dependency."
       },
       {
         "name": "react-day-picker",
@@ -55,7 +55,6 @@
       "lucide-react": "compatible-range-ok-user-replaceable-icons",
       "motion": "monitor-minor-compatible-range",
       "react-day-picker": "monitor-minor-compatible-range",
-      "react-hook-form": "monitor-minor-compatible-range",
       "react-resizable-panels": "monitor-minor-compatible-range",
       "sonner": "monitor-minor-compatible-range",
       "tailwind-merge": "compatible-range-ok"

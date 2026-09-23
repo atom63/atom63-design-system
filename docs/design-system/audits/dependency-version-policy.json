@@ -32,7 +32,11 @@
       "name": "@atom63/ui-react",
       "version": "0.2.0-beta.6",
       "dir": "packages/ui-react",
-      "peerDependencies": { "react": "^19.1.0", "react-dom": "^19.1.0" },
+      "peerDependencies": {
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0",
+        "react-hook-form": "^7.81.0"
+      },
       "dependencies": {
         "@atom63/styles": "workspace:*",
         "@atom63/ui-foundation": "workspace:*",
@@ -44,7 +48,6 @@
         "lucide-react": "^1.34.0",
         "motion": "^13.1.1",
         "react-day-picker": "^10.0.1",
-        "react-hook-form": "^7.81.0",
         "react-resizable-panels": "^4.12.1",
         "sonner": "^2.0.7",
         "tailwind-merge": "^3.6.0"
@@ -62,8 +65,8 @@
       {
         "name": "react-hook-form",
         "currentRange": "^7.81.0",
-        "policy": "monitor-minor-compatible-range",
-        "reason": "Form integration types may appear in typed examples and component composition."
+        "policy": "peer-shared-instance",
+        "reason": "Form binds to the consumer's useForm through react-hook-form context, so the consumer and ui-react must share one installed copy; it is a peer dependency."
       },
       {
         "name": "react-day-picker",
