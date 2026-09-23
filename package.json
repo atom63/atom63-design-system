@@ -28,7 +28,7 @@
     "check:visual-qa-matrix": "node scripts/design-system/audit-visual-qa-matrix.mjs",
     "dev:docs": "pnpm --filter @atom63/docs dev",
     "format:check": "prettier --check --cache .",
-    "release": "changeset publish",
+    "release": "node scripts/design-system/publish-beta.mjs",
     "release:version": "changeset version && node scripts/design-system/audit-dependency-version-policy.mjs --write && node scripts/design-system/audit-stable-release-preflight.mjs --write && pnpm check:package-surface && node scripts/design-system/audit-ui-react-exports.mjs --write && node scripts/design-system/audit-ui-react-stable-actions.mjs --write",
     "test:scripts": "node --test \"scripts/design-system/lib/*.test.mjs\"",
     "version-packages": "changeset version"

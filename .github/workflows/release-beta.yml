@@ -236,6 +236,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build packages
+        run: |
+          pnpm --filter @atom63/ui-foundation build
+          pnpm --filter @atom63/ui-react build
+
       - name: Upgrade npm for OIDC publishing
         run: npm install -g npm@latest
 
