@@ -47,11 +47,20 @@ jobs:
       - name: Check tokens
         run: pnpm --filter @atom63/styles check:tokens
 
+      - name: Check theme authoring and token economy
+        run: |
+          pnpm test:scripts
+          pnpm check:theme-authoring
+          pnpm check:token-economy
+
       - name: Build UI foundation
         run: pnpm --filter @atom63/ui-foundation build
 
       - name: Build React UI
         run: pnpm --filter @atom63/ui-react build
+
+      - name: Check React UI bundle size
+        run: pnpm check:ui-react-size
 
       - name: Smoke-test packed packages
         run: pnpm check:ds-pack-smoke
@@ -70,6 +79,9 @@ jobs:
 
       - name: Check Figma sync model
         run: pnpm --filter @atom63/styles check:figma
+
+      - name: Check control size alignment
+        run: pnpm check:control-alignment
 
       - name: Typecheck UI foundation
         run: pnpm --filter @atom63/ui-foundation typecheck
