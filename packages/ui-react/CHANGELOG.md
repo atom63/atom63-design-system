@@ -1,5 +1,17 @@
 # @atom63/ui-react
 
+## 0.2.0-beta.7
+
+### Patch Changes
+
+- [`11eb186`](https://github.com/atom63/atom63-design-system/commit/11eb186deebc11af95a22b67ae1dfe20d6c957dc) Thanks [@atom63](https://github.com/atom63)! - `react-hook-form` is now a peer dependency instead of a bundled dependency. `Form` binds to the
+  consumer's `useForm` through react-hook-form context, so both must resolve to the same installed
+  copy; a separately installed version would give each side its own context. Install
+  `react-hook-form@^7.81.0` alongside `@atom63/ui-react` if your package manager does not add peers
+  automatically.
+- Updated dependencies [[`11eb186`](https://github.com/atom63/atom63-design-system/commit/11eb186deebc11af95a22b67ae1dfe20d6c957dc)]:
+  - @atom63/styles@0.1.0-beta.3
+
 ## 0.2.0-beta.6
 
 ### Patch Changes
