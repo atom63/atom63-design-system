@@ -1,0 +1,37 @@
+.copyButton {
+  /* no extra styles needed — inherits from Button */
+}
+
+.iconWrap {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconCopy,
+.iconCheck {
+  transition:
+    opacity 0.15s ease-out,
+    transform 0.15s ease-out;
+}
+
+.iconCheck {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  color: var(--success, var(--primary));
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.copied .iconCopy {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.copied .iconCheck {
+  opacity: 1;
+  transform: scale(1);
+}

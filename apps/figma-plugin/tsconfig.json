@@ -1,0 +1,13 @@
+{
+  "extends": "@atom63/tsconfig/react-app.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM"],
+    "resolveJsonModule": true,
+    "types": ["@figma/plugin-typings", "node"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "scripts", "build.js"]
+}

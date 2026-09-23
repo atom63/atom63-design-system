@@ -1,0 +1,452 @@
+/* Button Component - Enhanced Design */
+
+.button {
+  position: relative;
+  display: inline-flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-weight: var(--font-medium);
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+/* Auto-size SVG children */
+.button svg {
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+/* Focus state - polished ring */
+.button:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--ring);
+}
+
+/* Disabled state */
+.button:disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ============================================
+   DEFAULT - Neutral high-emphasis button
+   ============================================ */
+.default {
+  color: var(--background);
+  background-color: var(--foreground);
+  box-shadow:
+    var(--shadow-xs),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.default:hover:not(:disabled) {
+  background-color: color-mix(in oklch, var(--foreground) 90%, transparent);
+  box-shadow:
+    var(--shadow-sm),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.default:active:not(:disabled) {
+  background-color: color-mix(in oklch, var(--foreground) 85%, transparent);
+  box-shadow:
+    var(--shadow-xs),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   PRIMARY - Rich brand-colored CTA button
+   ============================================ */
+.primary {
+  color: var(--primary-foreground);
+  background-color: var(--primary);
+  box-shadow:
+    /* Inset lighting: bright top edge, dark bottom edge */
+    inset 0 1px 0.5px -0.5px color-mix(in srgb, white 18%, transparent),
+    inset 0 -2px 8px 2px color-mix(in srgb, var(--primary) 24%, transparent),
+    inset 0 -2px 8px 2px color-mix(in srgb, white 48%, transparent),
+    /* Elevation */ 0 1px 3px color-mix(in srgb, var(--foreground) 12%, transparent),
+    /* Primary glow */ 0 8px 24px -4px color-mix(in srgb, var(--primary) 40%, transparent);
+}
+
+/* Gradient overlay: bright top-left → deep bottom-right */
+.primary::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: '';
+  background:
+    /* Diagonal brightness gradient */
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba(255, 255, 255, 0.06) 40%,
+      transparent 60%,
+      rgba(0, 0, 0, 0.12) 100%
+    ),
+    /* Top-left highlight spot */
+    radial-gradient(ellipse 60% 60% at 20% 20%, rgba(255, 255, 255, 0.2), transparent 70%);
+  border-radius: inherit;
+  opacity: 1;
+  transition: opacity var(--transition);
+}
+
+/* Shine sweep on hover */
+.primary::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: '';
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  border-radius: inherit;
+  opacity: 0;
+  transform: translateX(-100%) skewX(-15deg);
+  transition:
+    transform 0.5s ease-out,
+    opacity 0.5s ease-out;
+}
+
+.primary:hover:not(:disabled)::after {
+  opacity: 1;
+  transform: translateX(100%) skewX(-15deg);
+}
+
+/* Content above overlays */
+.primary > *,
+.primary > svg {
+  position: relative;
+  z-index: 1;
+}
+
+.primary:hover:not(:disabled) {
+  background-color: color-mix(in oklch, var(--primary) 92%, black);
+  box-shadow:
+    inset 0 1px 0.5px -0.5px color-mix(in srgb, white 18%, transparent),
+    inset 0 -2px 8px 2px color-mix(in srgb, var(--primary) 24%, transparent),
+    inset 0 -2px 8px 2px color-mix(in srgb, white 48%, transparent),
+    0 2px 6px color-mix(in srgb, var(--foreground) 15%, transparent),
+    0 8px 24px -4px color-mix(in srgb, var(--primary) 40%, transparent);
+  transform: translateY(-1px);
+}
+
+.primary:hover:not(:disabled)::before {
+  opacity: 1;
+}
+
+.primary:active:not(:disabled) {
+  background-color: color-mix(in oklch, var(--primary) 85%, black);
+  box-shadow:
+    inset 0 1px 0.5px -0.5px color-mix(in srgb, white 12%, transparent),
+    inset 0 -2px 8px 2px color-mix(in srgb, var(--primary) 24%, transparent),
+    inset 0 -2px 8px 2px color-mix(in srgb, white 36%, transparent),
+    0 1px 2px color-mix(in srgb, var(--foreground) 10%, transparent),
+    0 4px 12px -4px color-mix(in srgb, var(--primary) 30%, transparent);
+  transform: translateY(1px);
+}
+
+.primary:active:not(:disabled)::before {
+  opacity: 0.7;
+}
+
+/* ============================================
+   SECONDARY - Muted action button
+   ============================================ */
+.secondary {
+  color: var(--secondary-foreground);
+  background-color: var(--secondary);
+  border-color: var(--border);
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: color-mix(in oklch, var(--secondary) 90%, var(--foreground));
+  border-color: color-mix(in oklch, var(--border) 80%, var(--foreground));
+}
+
+.secondary:active:not(:disabled) {
+  background-color: color-mix(in oklch, var(--secondary) 85%, var(--foreground));
+}
+
+/* ============================================
+   GHOST - Minimal button
+   ============================================ */
+.ghost {
+  color: var(--muted-foreground);
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.ghost:hover:not(:disabled) {
+  color: var(--accent-foreground);
+  background-color: var(--accent);
+}
+
+.ghost:active:not(:disabled) {
+  background-color: color-mix(in oklch, var(--accent) 80%, var(--foreground));
+}
+
+/* ============================================
+   DESTRUCTIVE - Danger action
+   ============================================ */
+.destructive {
+  color: var(--destructive-foreground);
+  background-color: var(--destructive);
+  box-shadow:
+    var(--shadow-xs),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.destructive:hover:not(:disabled) {
+  background-color: color-mix(in oklch, var(--destructive) 90%, black);
+  box-shadow:
+    var(--shadow-sm),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+.destructive:active:not(:disabled) {
+  background-color: color-mix(in oklch, var(--destructive) 80%, black);
+  box-shadow:
+    var(--shadow-xs),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   DESTRUCTIVE GHOST - Transparent, destructive on hover
+   ============================================ */
+.destructiveGhost {
+  color: var(--muted-foreground);
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.destructiveGhost:hover:not(:disabled) {
+  color: var(--destructive);
+  background-color: color-mix(in oklch, var(--destructive) 10%, transparent);
+}
+
+.destructiveGhost:active:not(:disabled) {
+  color: var(--destructive);
+  background-color: color-mix(in oklch, var(--destructive) 15%, transparent);
+}
+
+/* ============================================
+   DESTRUCTIVE SOFT - Muted destructive button
+   ============================================ */
+.destructiveSoft {
+  color: var(--destructive);
+  background-color: color-mix(in oklch, var(--destructive) 10%, transparent);
+  border-color: transparent;
+}
+
+.destructiveSoft:hover:not(:disabled) {
+  background-color: color-mix(in oklch, var(--destructive) 20%, transparent);
+}
+
+.destructiveSoft:active:not(:disabled) {
+  background-color: color-mix(in oklch, var(--destructive) 25%, transparent);
+}
+
+/* ============================================
+   OUTLINE - Bordered button
+   ============================================ */
+.outline {
+  color: var(--foreground);
+  background-color: var(--background);
+  border-color: var(--border);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.06);
+}
+
+.outline:hover:not(:disabled) {
+  color: var(--accent-foreground);
+  background-color: var(--accent);
+  border-color: color-mix(in oklch, var(--border) 80%, var(--foreground));
+}
+
+.outline:active:not(:disabled) {
+  background-color: color-mix(in oklch, var(--accent) 80%, var(--foreground));
+}
+
+/* ============================================
+   LINK - Text-only button
+   ============================================ */
+.link {
+  padding-right: 0;
+  padding-left: 0;
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.link:hover:not(:disabled) {
+  color: color-mix(in oklch, var(--primary) 80%, black);
+  text-decoration-thickness: 2px;
+}
+
+.link:active:not(:disabled) {
+  color: color-mix(in oklch, var(--primary) 70%, black);
+}
+
+/* ============================================
+   SOFT - Muted primary button
+   ============================================ */
+.soft {
+  color: var(--primary);
+  background-color: color-mix(in oklch, var(--primary) 15%, transparent);
+  border-color: transparent;
+}
+
+.soft:hover:not(:disabled) {
+  background-color: color-mix(in oklch, var(--primary) 25%, transparent);
+}
+
+.soft:active:not(:disabled) {
+  background-color: color-mix(in oklch, var(--primary) 30%, transparent);
+}
+
+/* ============================================
+   SIZE VARIANTS
+   ============================================ */
+.sm {
+  height: var(--size-6);
+  padding: 0 var(--spacing-md);
+  font-size: var(--text-xs);
+  border-radius: calc(var(--radius) - 2px);
+}
+
+.md {
+  height: var(--size-8);
+  padding: 0 var(--spacing-lg);
+  font-size: var(--text-sm);
+}
+
+.lg {
+  height: var(--size-10);
+  padding: 0 var(--spacing-xl);
+  font-size: var(--text-base);
+  border-radius: calc(var(--radius) + 2px);
+}
+
+.iconXs {
+  flex-shrink: 0;
+  width: var(--size-6);
+  height: var(--size-6);
+  padding: 0;
+  border-radius: calc(var(--radius) - 2px);
+}
+
+.iconXs svg {
+  width: 12px;
+  height: 12px;
+}
+
+.iconSm {
+  flex-shrink: 0;
+  width: var(--size-7, 1.75rem);
+  height: var(--size-7, 1.75rem);
+  padding: 0;
+  border-radius: calc(var(--radius) - 2px);
+}
+
+.iconSm svg {
+  width: 14px;
+  height: 14px;
+}
+
+.icon {
+  flex-shrink: 0;
+  width: var(--size-8);
+  height: var(--size-8);
+  padding: 0;
+}
+
+.icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.iconLg {
+  flex-shrink: 0;
+  width: var(--size-10);
+  height: var(--size-10);
+  padding: 0;
+}
+
+.iconLg svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ============================================
+   LOADING STATE
+   ============================================ */
+.loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.loading::before {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  content: '';
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: button-spin 0.6s linear infinite;
+}
+
+.loading .loadingContent {
+  opacity: 0;
+}
+
+.loadingContent {
+  display: inline-flex;
+  gap: inherit;
+  align-items: center;
+}
+
+@keyframes button-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+
+  .loading::before {
+    animation-duration: 1.5s;
+  }
+}

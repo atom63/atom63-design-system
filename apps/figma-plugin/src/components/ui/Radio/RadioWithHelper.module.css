@@ -1,0 +1,40 @@
+/* === Radio With Helper Text - Flowbite style === */
+.wrapper {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+/* When helper exists, align radio to top */
+.wrapper:has(.helper) {
+  align-items: flex-start;
+}
+
+.radio-align {
+  margin-top: 2px; /* Align with first line of label when helper exists */
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+.label {
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  line-height: 1.5;
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.helper {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+.wrapper:has(input:disabled) .label {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

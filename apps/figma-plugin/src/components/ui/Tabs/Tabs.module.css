@@ -1,0 +1,184 @@
+/* ============================================
+   TABS CONTAINER
+   ============================================ */
+
+.tabsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+/* ============================================
+   TAB LIST
+   ============================================ */
+
+.tabList {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  width: fit-content;
+  padding: 3px;
+  color: color-mix(in oklch, var(--muted-foreground) 72%, transparent);
+  background: color-mix(in oklch, var(--foreground) 3%, var(--muted));
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 1px 2px color-mix(in srgb, var(--foreground) 4%, transparent);
+}
+
+/* Small size list */
+.listSm {
+  gap: 2px;
+}
+
+/* ============================================
+   SLIDING INDICATOR
+   ============================================ */
+
+.indicator {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--background);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--foreground) 6%, transparent);
+  transition:
+    left var(--transition),
+    width var(--transition);
+}
+
+/* ============================================
+   TAB
+   ============================================ */
+
+.tab {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 0;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  height: var(--size-8);
+  padding: 0 calc(var(--spacing-md) - 1px);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  transition:
+    color var(--transition),
+    background-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.tab:disabled {
+  pointer-events: none;
+  opacity: 0.64;
+}
+
+.tab:hover:not(:disabled) {
+  color: var(--muted-foreground);
+}
+
+.tab:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--ring);
+}
+
+.tab.active {
+  color: var(--foreground);
+}
+
+/* ============================================
+   TAB — small size
+   ============================================ */
+
+.tabSm {
+  gap: var(--spacing-xs);
+  height: var(--size-6);
+  padding: 0 var(--spacing-sm);
+  font-size: var(--text-xs);
+}
+
+/* ============================================
+   TAB ICON & LABEL
+   ============================================ */
+
+.tabIcon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  margin: 0 -2px;
+  pointer-events: none;
+}
+
+.tabIcon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.tabSm .tabIcon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.tabLabel {
+  white-space: nowrap;
+}
+
+/* ============================================
+   CONTENT & PANELS
+   ============================================ */
+
+.tabContent {
+  display: flex;
+  flex-direction: column;
+}
+
+.tabPanel {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  outline: none;
+  animation: tabFadeIn 0.15s ease;
+}
+
+@keyframes tabFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .tab {
+    transition: none;
+  }
+
+  .indicator {
+    transition: none;
+  }
+
+  .tabPanel {
+    animation: none;
+  }
+}

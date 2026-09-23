@@ -1,0 +1,189 @@
+/* Card Component - Enhanced Design */
+
+/* ============================================
+   BASE CARD
+   ============================================ */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  color: var(--card-foreground);
+  border-radius: var(--radius-lg);
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+/* ============================================
+   CARD VARIANTS
+   ============================================ */
+
+/* Default - subtle border, no shadow */
+.default {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+}
+
+/* Muted - filled background, no border */
+.muted {
+  background-color: var(--muted);
+  border: 1px solid transparent;
+}
+
+/* Bordered - emphasized border */
+.bordered {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+}
+
+/* Outline - transparent with border */
+.outline {
+  background-color: transparent;
+  border: 1px solid var(--border);
+}
+
+/* Elevated - shadow for depth */
+.elevated {
+  background-color: var(--card);
+  border: 1px solid color-mix(in oklch, var(--border) 50%, transparent);
+  box-shadow: var(--shadow-sm);
+}
+
+.elevated:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* ============================================
+   PADDING VARIANTS
+   ============================================ */
+.padding-none {
+  padding: 0;
+}
+
+.padding-sm {
+  padding: var(--spacing-md);
+}
+
+.padding-md {
+  padding: var(--spacing-lg);
+}
+
+.padding-lg {
+  padding: var(--spacing-xl);
+}
+
+.padding-xl {
+  padding: var(--spacing-2xl);
+}
+
+/* ============================================
+   INTERACTIVE STATES
+   ============================================ */
+
+/* Hover effect - lift with shadow */
+.hover:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+/* Clickable card */
+.clickable {
+  cursor: pointer;
+  user-select: none;
+}
+
+.clickable:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.clickable:active {
+  box-shadow: var(--shadow-xs);
+  transform: scale(0.99);
+}
+
+.clickable:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--ring);
+}
+
+/* Selected state (for selectable cards) */
+.selected {
+  background-color: color-mix(in oklch, var(--primary) 10%, transparent);
+  border-color: var(--primary);
+  box-shadow:
+    0 0 0 1px var(--primary),
+    var(--shadow-sm);
+}
+
+/* ============================================
+   SUBCOMPONENTS
+   ============================================ */
+.cardHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  line-height: 1.4;
+  color: var(--card-foreground);
+  letter-spacing: -0.01em;
+}
+
+.cardDescription {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+.cardContent {
+  flex: 1;
+}
+
+.cardFooter {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  margin-top: auto;
+}
+
+/* Footer alignment variants */
+.cardFooter[data-align='start'] {
+  justify-content: flex-start;
+}
+
+.cardFooter[data-align='center'] {
+  justify-content: center;
+}
+
+.cardFooter[data-align='end'] {
+  justify-content: flex-end;
+}
+
+.cardFooter[data-align='between'] {
+  justify-content: space-between;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (max-width: 480px) {
+  .card {
+    border-radius: var(--radius-md);
+  }
+
+  .padding-lg,
+  .padding-xl {
+    padding: var(--spacing-lg);
+  }
+}

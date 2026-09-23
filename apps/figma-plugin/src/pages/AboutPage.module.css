@@ -1,0 +1,221 @@
+/* ============================================
+   ABOUT PAGE
+   ============================================ */
+
+.about {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xl);
+  align-items: center;
+  justify-content: center;
+  max-width: min(500px, 100%);
+  min-height: 100%;
+  padding: var(--spacing-3xl) var(--spacing-xl);
+  margin: 0 auto;
+}
+
+/* ============================================
+   HERO — Logo + tagline
+   ============================================ */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  align-items: center;
+  text-align: center;
+  animation: about-fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.version {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--spacing-sm);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: var(--font-medium);
+  color: var(--primary);
+  letter-spacing: 0.02em;
+  background: color-mix(in oklch, var(--primary) 8%, transparent);
+  border: 1px solid color-mix(in oklch, var(--primary) 12%, transparent);
+  border-radius: var(--radius-full);
+}
+
+.tagline {
+  max-width: 280px;
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--muted-foreground);
+  text-wrap: balance;
+}
+
+/* ============================================
+   DETAILS SECTION
+   ============================================ */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  width: 100%;
+  animation: about-fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.infoRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--text-sm);
+  transition: background-color 0.15s ease;
+}
+
+.infoRow:hover {
+  background: color-mix(in oklch, var(--foreground) 2%, transparent);
+}
+
+.infoRow + .infoRow {
+  border-top: 1px solid var(--border);
+}
+
+.infoLabel {
+  color: var(--muted-foreground);
+}
+
+.infoValue {
+  font-weight: var(--font-medium);
+  color: var(--foreground);
+}
+
+.infoLink {
+  font-weight: var(--font-semibold);
+  color: var(--primary);
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.infoLink:hover {
+  opacity: 0.8;
+}
+
+.infoLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================
+   LEGAL SECTION
+   ============================================ */
+
+.legalSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  animation: about-fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+}
+
+.legalLinks {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  justify-content: center;
+}
+
+.legalLink {
+  padding: 0;
+  font-size: var(--text-xs);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  background: none;
+  border: none;
+  opacity: 0.6;
+  transition:
+    color var(--transition),
+    opacity var(--transition);
+}
+
+.legalLink:hover {
+  color: var(--foreground);
+  opacity: 1;
+}
+
+.legalLink:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.legalLinkActive {
+  color: var(--foreground);
+  opacity: 1;
+}
+
+.legalDot {
+  width: 2px;
+  height: 2px;
+  background: var(--muted-foreground);
+  border-radius: var(--radius-full);
+  opacity: 0.4;
+}
+
+.legalContent {
+  max-height: 160px;
+  padding: var(--spacing-md);
+  background: color-mix(in oklch, var(--foreground) 2%, transparent);
+  border-radius: var(--radius-md);
+  animation: about-fade-up 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.legalText {
+  margin: 0;
+  font-size: var(--text-xs);
+  line-height: 1.7;
+  color: var(--muted-foreground);
+  white-space: pre-line;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes about-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes about-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .section,
+  .footer {
+    animation: none;
+  }
+}

@@ -1,0 +1,92 @@
+/* === Checkbox Card Component Styles === */
+
+.card {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: flex-start;
+  padding: var(--spacing-lg);
+  cursor: pointer;
+  user-select: none;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition:
+    background-color var(--transition),
+    border-color var(--transition);
+}
+
+/* Smart layout: when icon exists, content grows and checkbox moves to right */
+.card.withIcon {
+  justify-content: space-between;
+}
+
+.card.withIcon .content {
+  flex: 1;
+  margin-right: auto;
+}
+
+/* Hover state */
+.card:hover:not(.disabled) {
+  border-color: var(--primary);
+}
+
+/* Checked state */
+.card.checked {
+  background: color-mix(in oklch, var(--primary) 6%, transparent);
+  border-color: var(--primary);
+}
+
+/* Disabled state */
+.card.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.card.disabled:hover {
+  background: var(--muted);
+  border-color: var(--border);
+}
+
+/* Note: Checkbox styling is handled by the Checkbox component itself */
+
+/* Icon container */
+.icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding-top: var(--spacing-2xs); /* Optical alignment with text baseline */
+  color: var(--primary); /* Optical alignment with text baseline */
+}
+
+/* Content container */
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  min-width: 0; /* Allow text truncation */
+}
+
+/* Label text */
+.label {
+  font-size: var(--text-md);
+  font-weight: var(--font-semibold);
+  line-height: 1.4;
+  color: var(--foreground);
+}
+
+/* Description text */
+.description {
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+
+/* Focus-visible state for accessibility */
+.card:has(.checkbox:focus-visible) {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--ring);
+}

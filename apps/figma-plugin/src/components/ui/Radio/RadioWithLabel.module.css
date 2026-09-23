@@ -1,0 +1,19 @@
+/* === Radio with Label - Flowbite style === */
+.wrapper {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+}
+
+.label {
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  line-height: 1.5;
+  color: var(--foreground);
+  cursor: pointer;
+}
+
+.wrapper:has(input:disabled) .label {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

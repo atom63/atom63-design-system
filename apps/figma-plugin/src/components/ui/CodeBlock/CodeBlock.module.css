@@ -1,0 +1,58 @@
+/* ============================================
+   CODE BLOCK — CSS syntax highlighting
+   ============================================ */
+
+.pre {
+  padding: var(--spacing-md);
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+  color: var(--foreground);
+  white-space: pre;
+}
+
+.code {
+  display: block;
+}
+
+/* Token colors — subtle, monochromatic with hints of brand */
+.comment {
+  font-style: italic;
+  color: var(--muted-foreground);
+}
+
+.selector {
+  font-weight: var(--font-medium);
+  color: var(--foreground);
+}
+
+.property {
+  color: var(--primary);
+}
+
+.value {
+  color: var(--foreground);
+}
+
+.punctuation {
+  color: var(--muted-foreground);
+}
+
+.atrule {
+  font-weight: var(--font-medium);
+  color: var(--primary);
+}
+
+.function {
+  font-style: italic;
+  color: var(--muted-foreground);
+}
+
+.string {
+  color: var(--foreground);
+}
+
+.plain {
+  color: var(--foreground);
+}

@@ -1,0 +1,293 @@
+/* ============================================
+   BADGE - Enhanced Design
+   ============================================ */
+
+.badge {
+  display: inline-flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+  max-width: 100%;
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    transform var(--transition);
+}
+
+/* Pill shape */
+.pill {
+  border-radius: var(--radius-full);
+}
+
+/* ============================================
+   SIZE VARIANTS
+   ============================================ */
+
+.sm {
+  gap: var(--spacing-2xs);
+  min-height: 18px;
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  font-size: var(--text-xs);
+}
+
+.md {
+  min-height: 22px;
+  padding: var(--spacing-2xs) var(--spacing-sm);
+  font-size: var(--text-xs);
+}
+
+.lg {
+  min-height: 26px;
+  padding: var(--spacing-xs) var(--spacing-md);
+  font-size: var(--text-sm);
+}
+
+/* ============================================
+   COLOR VARIANTS
+   ============================================ */
+
+.default {
+  color: var(--primary);
+  background-color: color-mix(in oklch, var(--primary) 15%, transparent);
+}
+
+.default:hover {
+  background-color: color-mix(in oklch, var(--primary) 25%, transparent);
+}
+
+.default .dot {
+  background-color: var(--primary);
+}
+
+.secondary {
+  color: var(--muted-foreground);
+  background-color: var(--muted);
+}
+
+.secondary:hover {
+  background-color: color-mix(in oklch, var(--muted) 80%, var(--foreground));
+}
+
+.secondary .dot {
+  background-color: var(--muted-foreground);
+}
+
+.destructive {
+  color: var(--destructive);
+  background-color: color-mix(in oklch, var(--destructive) 15%, transparent);
+}
+
+.destructive:hover {
+  background-color: color-mix(in oklch, var(--destructive) 25%, transparent);
+}
+
+.destructive .dot {
+  background-color: var(--destructive);
+}
+
+.success {
+  color: var(--success);
+  background-color: color-mix(in oklch, var(--success) 15%, transparent);
+}
+
+.success:hover {
+  background-color: color-mix(in oklch, var(--success) 25%, transparent);
+}
+
+.success .dot {
+  background-color: var(--success);
+}
+
+.warning {
+  color: var(--warning);
+  background-color: color-mix(in oklch, var(--warning) 15%, transparent);
+}
+
+.warning:hover {
+  background-color: color-mix(in oklch, var(--warning) 25%, transparent);
+}
+
+.warning .dot {
+  background-color: var(--warning);
+}
+
+.info {
+  color: var(--info);
+  background-color: color-mix(in oklch, var(--info) 15%, transparent);
+}
+
+.info:hover {
+  background-color: color-mix(in oklch, var(--info) 25%, transparent);
+}
+
+.info .dot {
+  background-color: var(--info);
+}
+
+.outline {
+  color: var(--foreground);
+  background-color: transparent;
+  border-color: var(--border);
+}
+
+.outline:hover {
+  background-color: var(--accent);
+}
+
+.outline .dot {
+  background-color: var(--foreground);
+}
+
+/* ============================================
+   DOT INDICATOR
+   ============================================ */
+
+.dot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+}
+
+.dotAnimated {
+  animation: dot-pulse 2s ease-in-out 3;
+}
+
+@keyframes dot-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.sm .dot {
+  width: 5px;
+  height: 5px;
+}
+
+.lg .dot {
+  width: 7px;
+  height: 7px;
+}
+
+/* ============================================
+   ICON
+   ============================================ */
+
+.icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+.icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+.sm .icon svg {
+  width: 10px;
+  height: 10px;
+}
+
+.lg .icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ============================================
+   TEXT
+   ============================================ */
+
+.text {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================
+   REMOVE BUTTON
+   ============================================ */
+
+.removeButton {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  margin: -2px -4px -2px 0;
+  color: currentColor;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  opacity: 0.6;
+  transition:
+    opacity var(--transition),
+    background-color var(--transition);
+}
+
+.removeButton:hover {
+  background-color: color-mix(in oklch, currentColor 10%, transparent);
+  opacity: 1;
+}
+
+.removeButton:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--ring);
+  opacity: 1;
+}
+
+.removeButton:active {
+  opacity: 0.8;
+  transform: scale(0.9);
+}
+
+.sm .removeButton {
+  width: 14px;
+  height: 14px;
+  margin: -1px -3px -1px 0;
+}
+
+/* ============================================
+   COUNT BADGE
+   ============================================ */
+
+.countBadge {
+  justify-content: center;
+  min-width: 18px;
+  padding-right: var(--spacing-xs);
+  padding-left: var(--spacing-xs);
+  font-weight: var(--font-semibold);
+}
+
+/* ============================================
+   REDUCED MOTION
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  .badge {
+    transition: none;
+  }
+
+  .dot {
+    animation: none;
+  }
+
+  .removeButton {
+    transition: none;
+  }
+}

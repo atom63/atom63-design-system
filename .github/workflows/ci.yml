@@ -77,6 +77,12 @@ jobs:
       - name: Test React UI
         run: pnpm --filter @atom63/ui-react test
 
+      - name: Check Figma plugin
+        run: |
+          pnpm --filter @atom63/figma-plugin typecheck
+          pnpm --filter @atom63/figma-plugin lint
+          pnpm --filter @atom63/figma-plugin build
+
       - name: Check Changesets status
         run: |
           if [ -f .changeset/pre.json ]; then

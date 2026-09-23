@@ -1,0 +1,97 @@
+/* === Radio Card === */
+.card {
+  display: flex;
+  gap: var(--spacing-md);
+  align-items: center;
+  padding: var(--spacing-lg);
+  cursor: pointer;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+/* When description exists, align to top */
+.card.has-description {
+  align-items: flex-start;
+}
+
+.card:hover:not(.disabled) {
+  border-color: var(--primary);
+}
+
+.card.checked {
+  background: color-mix(in oklch, var(--primary) 6%, transparent);
+  border-color: var(--primary);
+}
+
+.card.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.radio-align {
+  margin-top: var(--spacing-2xs); /* Align with first line of text when description exists */
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+/* Only add gap when description exists */
+.has-description .content {
+  gap: var(--spacing-2xs);
+}
+
+.header {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  color: var(--primary);
+}
+
+.title {
+  flex: 1;
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  line-height: 1.5;
+  color: var(--foreground);
+}
+
+.badge {
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+.description {
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+/* Focus-visible state for accessibility */
+.card:focus-visible,
+.card:has(input:focus-visible) {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--ring);
+}
+
+/* Active press state */
+.card:active:not(.disabled) {
+  transform: scale(0.99);
+}

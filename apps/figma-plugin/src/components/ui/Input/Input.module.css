@@ -1,0 +1,255 @@
+/* ============================================
+   INPUT COMPONENT
+   ============================================ */
+
+/* Wrapper */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.wrapper[data-disabled='true'] {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+/* ============================================
+   LABEL
+   ============================================ */
+
+.labelWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2xs);
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  line-height: 1.4;
+  color: var(--foreground);
+}
+
+.description {
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+
+/* ============================================
+   INPUT WRAPPER (for icons)
+   ============================================ */
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    background-color var(--transition);
+}
+
+/* Size variants */
+.inputWrapper.sm {
+  height: 32px;
+  border-radius: calc(var(--radius) - 2px);
+}
+
+.inputWrapper.md {
+  height: 40px;
+}
+
+.inputWrapper.lg {
+  height: 48px;
+  border-radius: calc(var(--radius) + 2px);
+}
+
+/* Hover state */
+.inputWrapper:hover:not([data-disabled='true']) {
+  background: color-mix(in oklch, var(--foreground) 1.5%, var(--background));
+  border-color: var(--muted-foreground);
+}
+
+/* Focus state */
+.inputWrapper:focus-within {
+  background: var(--background);
+  border-color: var(--primary);
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px var(--ring);
+}
+
+/* Error state */
+.inputWrapper[data-error='true'] {
+  border-color: var(--destructive);
+}
+
+.inputWrapper[data-error='true']:focus-within {
+  border-color: var(--destructive);
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px color-mix(in oklch, var(--destructive) 25%, transparent);
+}
+
+/* Success state */
+.inputWrapper[data-success='true'] {
+  border-color: var(--success);
+}
+
+.inputWrapper[data-success='true']:focus-within {
+  border-color: var(--success);
+  box-shadow:
+    0 0 0 2px var(--background),
+    0 0 0 4px color-mix(in oklch, var(--success) 25%, transparent);
+}
+
+/* Disabled state */
+.inputWrapper[data-disabled='true'] {
+  cursor: not-allowed;
+  background: var(--muted);
+}
+
+/* ============================================
+   INPUT ELEMENT
+   ============================================ */
+
+.input {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  padding: 0 var(--spacing-md);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--foreground);
+  outline: none;
+  background: transparent;
+  border: none;
+}
+
+.input::placeholder {
+  color: var(--muted-foreground);
+  opacity: 0.5;
+}
+
+.input:disabled {
+  cursor: not-allowed;
+}
+
+/* Adjust padding when icons are present */
+.leftIcon + .input {
+  padding-left: 0;
+}
+
+.input:has(+ .rightIcon),
+.input:has(+ .stateIcon) {
+  padding-right: 0;
+}
+
+/* ============================================
+   ICONS
+   ============================================ */
+
+.leftIcon,
+.rightIcon,
+.stateIcon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted-foreground);
+  transition: color var(--transition);
+}
+
+.inputWrapper:focus-within .leftIcon {
+  color: var(--foreground);
+}
+
+.leftIcon {
+  padding-right: var(--spacing-sm);
+  padding-left: var(--spacing-md);
+}
+
+.rightIcon,
+.stateIcon {
+  padding-right: var(--spacing-md);
+  padding-left: var(--spacing-sm);
+}
+
+/* State icon colors */
+.inputWrapper[data-error='true'] .stateIcon {
+  color: var(--destructive);
+}
+
+.inputWrapper[data-success='true'] .stateIcon {
+  color: var(--success);
+}
+
+/* ============================================
+   FEEDBACK MESSAGES
+   ============================================ */
+
+.error,
+.success,
+.hint {
+  display: flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+  font-size: var(--text-xs);
+  line-height: 1.4;
+}
+
+.error {
+  color: var(--destructive);
+}
+
+.success {
+  color: var(--success);
+}
+
+.hint {
+  color: var(--muted-foreground);
+}
+
+/* ============================================
+   SIZE ADJUSTMENTS
+   ============================================ */
+
+.sm .input {
+  padding: 0 var(--spacing-sm);
+  font-size: var(--text-xs);
+}
+
+.sm .leftIcon {
+  padding-right: var(--spacing-xs);
+  padding-left: var(--spacing-sm);
+}
+
+.sm .rightIcon,
+.sm .stateIcon {
+  padding-right: var(--spacing-sm);
+  padding-left: var(--spacing-xs);
+}
+
+.lg .input {
+  padding: 0 var(--spacing-lg);
+  font-size: var(--text-base);
+}
+
+.lg .leftIcon {
+  padding-left: var(--spacing-lg);
+}
+
+.lg .rightIcon,
+.lg .stateIcon {
+  padding-right: var(--spacing-lg);
+}

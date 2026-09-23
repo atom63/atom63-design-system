@@ -1,0 +1,103 @@
+/* Toast Container - Fixed position at bottom right */
+.container {
+  position: fixed;
+  right: var(--spacing-lg);
+  bottom: var(--spacing-lg);
+  z-index: var(--z-toast, 9999);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  width: 100%;
+  max-width: min(360px, calc(100vw - 2rem));
+  pointer-events: none;
+}
+
+/* Individual Toast */
+.toast {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  pointer-events: auto;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    animation: none;
+  }
+}
+
+/* Variants */
+.info {
+  border-left: 3px solid var(--info);
+}
+
+.info .icon {
+  color: var(--info);
+}
+
+.success {
+  border-left: 3px solid var(--success);
+}
+
+.success .icon {
+  color: var(--success);
+}
+
+.warning {
+  border-left: 3px solid var(--warning);
+}
+
+.warning .icon {
+  color: var(--warning);
+}
+
+.error {
+  border-left: 3px solid var(--destructive);
+}
+
+.error .icon {
+  color: var(--destructive);
+}
+
+/* Icon */
+.icon {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+
+/* Message */
+.message {
+  flex: 1;
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  color: var(--foreground);
+  word-break: break-word;
+}
+
+/* Action Button — layout override for Button component */
+.actionButton {
+  flex-shrink: 0;
+}
+
+/* Dismiss Button — layout override for Button component */
+.dismissButton {
+  flex-shrink: 0;
+}
