@@ -38,6 +38,7 @@ No stable/`latest` promotion is approved. `docs/design-system/stable-release-pol
 - `pnpm --filter @atom63/ui-react build`
 - `pnpm check:ds-pack-smoke`
 - `pnpm build:example:vite-basic`
+- `pnpm build:example:product-shell`
 - `git diff --check`
 
 ## Adopter validation after approved publish

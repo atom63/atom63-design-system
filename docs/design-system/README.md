@@ -149,6 +149,7 @@ Web ↔ iOS component-token gap (including two commands above that are documente
 | [package-metadata-audit.md](./package-metadata-audit.md) | First-wave package metadata and packed-content gaps |
 | [changesets-beta-plan.md](./changesets-beta-plan.md) | First-wave prerelease order, coordinated unexecuted Changeset, and approval gates |
 | [extraction-rehearsal.md](./extraction-rehearsal.md) | Local external-repo tarball rehearsal evidence before versioning or publish approval |
+| [../../examples/product-shell/README.md](../../examples/product-shell/README.md) | DS-owned application presentation layer; keeps `atom63-vite` as the real portfolio consumer |
 | [publish-approval-packet.md](./publish-approval-packet.md) | Approved first-wave beta decisions, evidence, risks, preflight, and exact no-publish boundary |
 | [changesets-backlog-isolation.md](./changesets-backlog-isolation.md) | Why the current Changesets backlog must be isolated before DS beta versioning |
 | [react-first-status.md](./react-first-status.md) | Historical checkpoint (not primary policy) |

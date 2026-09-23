@@ -187,6 +187,37 @@ importers:
         specifier: 'catalog:'
         version: 8.1.4(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)
 
+  examples/product-shell:
+    dependencies:
+      '@atom63/styles':
+        specifier: workspace:*
+        version: link:../../packages/styles
+      '@atom63/ui-react':
+        specifier: workspace:*
+        version: link:../../packages/ui-react
+      react:
+        specifier: 19.2.7
+        version: 19.2.7
+      react-dom:
+        specifier: 19.2.7
+        version: 19.2.7(react@19.2.7)
+    devDependencies:
+      '@types/react':
+        specifier: 19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: 19.2.3
+        version: 19.2.3(@types/react@19.2.17)
+      '@vitejs/plugin-react':
+        specifier: 'catalog:'
+        version: 6.1.1(vite@8.1.4(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
+      typescript:
+        specifier: 'catalog:'
+        version: 5.8.3
+      vite:
+        specifier: 'catalog:'
+        version: 8.1.4(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)
+
   examples/vite-basic:
     dependencies:
       '@atom63/styles':
