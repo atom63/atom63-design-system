@@ -1,5 +1,14 @@
 # @atom63/styles
 
+## 0.1.0-beta.3
+
+### Patch Changes
+
+- [`11eb186`](https://github.com/atom63/atom63-design-system/commit/11eb186deebc11af95a22b67ae1dfe20d6c957dc) Thanks [@atom63](https://github.com/atom63)! - `@atom63/styles/z-layers` now ships compiled JavaScript with a type declaration instead of a
+  TypeScript source file, so plain JavaScript projects, Node and bundlers that do not transpile
+  `node_modules` can import `Z_LAYERS`. The values are generated from the `--z-layer-*` tokens in
+  `primitives.css` and are unchanged; the object is now frozen.
+
 ## 0.1.0-beta.2
 
 ### Minor Changes

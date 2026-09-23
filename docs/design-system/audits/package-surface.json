@@ -19,7 +19,7 @@
       "directory": "packages/styles",
       "manifestPath": "packages/styles/package.json",
       "name": "@atom63/styles",
-      "version": "0.1.0-beta.2",
+      "version": "0.1.0-beta.3",
       "private": false,
       "exports": {
         ".": "./src/index.css",
@@ -191,7 +191,7 @@
       "directory": "packages/ui-react",
       "manifestPath": "packages/ui-react/package.json",
       "name": "@atom63/ui-react",
-      "version": "0.2.0-beta.6",
+      "version": "0.2.0-beta.7",
       "private": false,
       "exports": {
         ".": {
