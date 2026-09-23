@@ -27,8 +27,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           registry-url: https://registry.npmjs.org
+          package-manager-cache: false
 
       - name: Enable pnpm with Corepack
         run: corepack enable
@@ -131,8 +132,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
           registry-url: https://registry.npmjs.org
+          package-manager-cache: false
 
       - name: Enable pnpm with Corepack
         run: corepack enable
@@ -140,8 +142,14 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Upgrade npm for OIDC publishing
+        run: npm install -g npm@latest
+
       - name: Publish with npm provenance
         run: pnpm release
         env:
+          # setup-node writes an npmrc that can reference NODE_AUTH_TOKEN. Keep it
+          # empty so npm uses trusted-publisher OIDC instead of a stale token.
+          NODE_AUTH_TOKEN: ""
           NPM_CONFIG_PROVENANCE: "true"
           NPM_CONFIG_ACCESS: public
