@@ -84,6 +84,7 @@ jobs:
         run: |
           pnpm --filter @atom63/figma-plugin typecheck
           pnpm --filter @atom63/figma-plugin lint
+          pnpm --filter @atom63/figma-plugin test
           pnpm --filter @atom63/figma-plugin build
 
       - name: Check Changesets status

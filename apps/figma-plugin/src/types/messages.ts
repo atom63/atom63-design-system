@@ -3,8 +3,6 @@
  * Type-safe message interfaces for UI ↔ Main thread communication
  */
 
-import type { ImportResults } from '../libraries/shared-types'
-import type { DesignToken, ImportUndoEntry, ParsedTokens } from './tokens'
 
 // ============================================================================
 // COLLECTION & STYLE DATA TYPES
@@ -50,26 +48,12 @@ export interface SelectedStyleGroup {
 // UI → MAIN THREAD MESSAGES
 // ============================================================================
 
-/** Parse token content (JSON or CSS) */
-export interface ParseTokensMessage {
-  data: {
-    content: string
-    format?: 'json' | 'css'
-    /** Styles data bundled alongside CSS (from ZIP with styles.json) */
-    stylesData?: any
-  }
-  type: 'parse-tokens'
-}
 
 /** Request list of Figma variable collections */
 export interface GetCollectionsMessage {
   type: 'get-collections'
 }
 
-/** Request list of available fonts from Figma */
-export interface GetAvailableFontsMessage {
-  type: 'get-available-fonts'
-}
 
 /** Figma font family plus the available styles exposed to plugins */
 export interface FontFamilyInfo {
@@ -82,47 +66,9 @@ export interface GetStylesMessage {
   type: 'get-styles'
 }
 
-/** Create Figma variables from parsed tokens */
-export interface CreateVariablesMessage {
-  data: {
-    tokens: DesignToken[]
-    collectionName?: string
-    importMode?: 'import' | 'override'
-    selectedCollections?: string[]
-    /** Styles section from combined JSON export — imported after variables */
-    stylesData?: any
-  }
-  type: 'create-variables'
-}
 
-/** Export Figma variables as tokens */
-export interface ExportVariablesMessage {
-  data: {
-    collectionIds: string[]
-    colorFormat: 'oklch' | 'hex' | 'rgba' | 'hsl'
-  }
-  type: 'export-variables'
-}
 
-/** Export Figma styles as tokens */
-export interface ExportStylesMessage {
-  data: {
-    selectedGroups: SelectedStyleGroup[]
-    colorFormat: 'oklch' | 'hex' | 'rgba' | 'hsl'
-  }
-  type: 'export-styles'
-}
 
-/** Export Figma variables as CSS custom properties */
-export interface ExportCSSMessage {
-  data: {
-    collectionIds: string[]
-    colorFormat: 'oklch' | 'hex' | 'rgba' | 'hsl'
-    includeThemeInline: boolean
-    includeColorMix: boolean
-  }
-  type: 'export-css'
-}
 
 /** CSS file in export result */
 export interface CSSFileInfo {
@@ -131,15 +77,6 @@ export interface CSSFileInfo {
   variableCount: number
 }
 
-/** CSS export complete */
-export interface CSSExportCompleteMessage {
-  data: {
-    files: CSSFileInfo[]
-    totalVariables: number
-    totalCollections: number
-  }
-  type: 'css-export-complete'
-}
 
 /** Request detailed style list for the styles manager */
 export interface GetStyleDetailsMessage {
@@ -375,15 +312,6 @@ export interface StylesEditedMessage {
   type: 'styles-edited'
 }
 
-/** Import styles from token data */
-export interface ImportStylesMessage {
-  data: {
-    stylesData: any // Flexible structure from exported styles
-    selectedGroups: SelectedStyleGroup[]
-    importMode: 'import' | 'override'
-  }
-  type: 'import-styles'
-}
 
 /** Resize plugin window */
 export interface ResizeWindowMessage {
@@ -552,40 +480,9 @@ export interface VariableValuesUpdatedMessage {
   type: 'variable-values-updated'
 }
 
-/** Undo a previous import operation */
-export interface UndoImportMessage {
-  data: {
-    entries: ImportUndoEntry[]
-  }
-  type: 'undo-import'
-}
 
-/** Import undo result */
-export interface ImportUndoneMessage {
-  data: {
-    success: number
-    failed: number
-  }
-  type: 'import-undone'
-}
 
-/** Swap all references from one variable to another */
-export interface SwapReferencesMessage {
-  data: {
-    sourceId: string
-    targetId: string
-  }
-  type: 'swap-references'
-}
 
-/** References swapped result */
-export interface ReferencesSwappedMessage {
-  data: {
-    success: number
-    failed: number
-  }
-  type: 'references-swapped'
-}
 
 /** Scale numeric variable values by a factor */
 export interface ScaleVariableValuesMessage {
@@ -610,19 +507,20 @@ export interface VariableValuesScaledMessage {
   type: 'variable-values-scaled'
 }
 
-/** Check for import conflicts (existing variables with same name) */
-export interface CheckImportConflictsMessage {
-  data: {
-    tokens: DesignToken[]
-    collectionName: string
-    selectedCollections?: string[]
-  }
-  type: 'check-import-conflicts'
-}
 
 /** Close the plugin */
 export interface CloseMessage {
   type: 'close'
+}
+
+/** Diff the Atom63 token model against the document without writing. */
+export interface SyncPreviewMessage {
+  type: 'sync-preview'
+}
+
+/** Apply the Atom63 token model, then re-plan to confirm nothing is left. */
+export interface SyncApplyMessage {
+  type: 'sync-apply'
 }
 
 /** Plugin settings stored via clientStorage */
@@ -718,27 +616,13 @@ export interface ComponentGenerationFailure {
   stage: string
 }
 
-export interface GenerateComponentsMessage {
-  data: {
-    mode?: 'auto' | 'regenerate' | 'smart-update'
-    primitives: ComponentPrimitiveId[]
-  }
-  type: 'generate-components'
-}
 
 /** Union of all UI → Main thread messages */
 export type UIToMainMessage =
-  | ParseTokensMessage
   | GetCollectionsMessage
-  | GetAvailableFontsMessage
   | GetStylesMessage
   | GetVariablesMessage
-  | CreateVariablesMessage
-  | ExportVariablesMessage
-  | ExportStylesMessage
-  | ExportCSSMessage
   | GetStyleDetailsMessage
-  | ImportStylesMessage
   | DeleteStylesMessage
   | RenameStylesMessage
   | DuplicateStylesMessage
@@ -753,34 +637,19 @@ export type UIToMainMessage =
   | ScanRebindMessage
   | ApplyRebindMessage
   | UndoRebindMessage
-  | UndoImportMessage
-  | SwapReferencesMessage
   | ScaleVariableValuesMessage
-  | CheckImportConflictsMessage
   | ResizeWindowMessage
   | LoadSettingsMessage
   | SaveSettingsMessage
-  | GenerateComponentsMessage
   | CloseMessage
+  | SyncPreviewMessage
+  | SyncApplyMessage
 
 // ============================================================================
 // MAIN THREAD → UI MESSAGES
 // ============================================================================
 
-/** Tokens have been parsed */
-export interface TokensParsedMessage {
-  data: ParsedTokens
-  type: 'tokens-parsed'
-}
 
-/** List of available fonts from Figma */
-export interface AvailableFontsMessage {
-  data: {
-    families?: FontFamilyInfo[]
-    fonts: string[]
-  }
-  type: 'available-fonts'
-}
 
 /** List of available collections */
 export interface CollectionsListMessage {
@@ -799,52 +668,10 @@ export interface StylesListMessage {
   type: 'styles-list'
 }
 
-/** Variables have been created */
-export interface VariablesCreatedMessage {
-  data: ImportResults
-  type: 'variables-created'
-}
 
-/** Import operation complete */
-export interface ImportCompleteMessage {
-  data: ImportResults
-  type: 'import-complete'
-}
 
-/** Variable export complete */
-export interface ExportCompleteMessage {
-  data: {
-    tokens: any // Token structure with $schema, $collections, tokens
-    collectionCount: number
-    variableCount: number
-    format: string
-  }
-  type: 'export-complete'
-}
 
-/** Style export complete */
-export interface StylesExportCompleteMessage {
-  data: {
-    styles: any // Style structure with $schema, $counts, styles
-    counts: {
-      paint: number
-      text: number
-      effect: number
-      grid: number
-      total: number
-    }
-    format: string
-  }
-  type: 'styles-export-complete'
-}
 
-/** Export error occurred */
-export interface ExportErrorMessage {
-  data: {
-    message: string
-  }
-  type: 'export-error'
-}
 
 /** Progress update during long operations */
 export interface ProgressUpdateMessage {
@@ -857,6 +684,47 @@ export interface ProgressUpdateMessage {
 }
 
 /** General error message */
+/** Plan without the per-variable change list, which is too large to send. */
+export interface SyncPlanSummary {
+  collections: {
+    name: string
+    exists: boolean
+    addModes: string[]
+    create: number
+    update: number
+    unchanged: number
+    orphaned: string[]
+    typeConflicts: string[]
+  }[]
+  totals: { create: number; update: number; unchanged: number; orphaned: number; typeConflicts: number }
+}
+
+export interface SyncModelSummary {
+  collections: number
+  variables: number
+  aliasValues: number
+  skipped: number
+}
+
+export interface SyncPreviewResultMessage {
+  type: 'sync-preview-result'
+  data: { model: SyncModelSummary; plan: SyncPlanSummary }
+}
+
+export interface SyncApplyResultMessage {
+  type: 'sync-apply-result'
+  data: {
+    applied: { createdCollections: number; addedModes: number; created: number; updated: number }
+    /** Plan computed after applying; a correct sync leaves nothing to create or update. */
+    verification: SyncPlanSummary
+  }
+}
+
+export interface SyncErrorMessage {
+  type: 'sync-error'
+  data: { message: string }
+}
+
 export interface ErrorMessage {
   data: {
     message: string
@@ -878,19 +746,6 @@ export interface DependencyCheckResultMessage {
   type: 'dependency-check-result'
 }
 
-/** Result of import conflict check */
-export interface ImportConflictsResultMessage {
-  data: {
-    conflicts: {
-      tokenId: string
-      existingValues: Record<string, string>
-      existingId: string
-    }[]
-    /** CSS-form name → actual Figma variable name, for fixing lossy hyphen/slash mapping */
-    nameMap?: Record<string, string>
-  }
-  type: 'import-conflicts-result'
-}
 
 /** Settings loaded from clientStorage */
 export interface SettingsLoadedMessage {
@@ -898,48 +753,19 @@ export interface SettingsLoadedMessage {
   type: 'settings-loaded'
 }
 
-export interface ComponentsGeneratedMessage {
-  data: {
-    boundVariables: number
-    created: string[]
-    failed: ComponentGenerationFailure[]
-    normalizedPrimitives?: ComponentPrimitiveId[]
-    missingBindings: ComponentBindingMiss[]
-    requestedPrimitives?: number
-    runtimeBuild?: string
-    updated: string[]
-  }
-  type: 'components-generated'
-}
 
-export interface ComponentGenerationProgressMessage {
-  data: {
-    completed: number
-    primitive: ComponentPrimitiveId
-    stage: string
-    total: number
-  }
-  type: 'component-generation-progress'
-}
 
 /** Union of all Main thread → UI messages */
 export type MainToUIMessage =
-  | TokensParsedMessage
-  | AvailableFontsMessage
   | CollectionsListMessage
   | StylesListMessage
   | VariablesListMessage
-  | VariablesCreatedMessage
   | VariablesRenamedMessage
   | VariablesDeletedMessage
   | VariablesRestoredMessage
   | VariablesMovedMessage
   | VariablesDuplicatedMessage
   | VariableValuesUpdatedMessage
-  | ImportCompleteMessage
-  | ExportCompleteMessage
-  | StylesExportCompleteMessage
-  | CSSExportCompleteMessage
   | StyleDetailsListMessage
   | StylesDeletedMessage
   | StylesRenamedMessage
@@ -948,17 +774,14 @@ export type MainToUIMessage =
   | RebindSuggestionsMessage
   | RebindAppliedMessage
   | RebindUndoneMessage
-  | ImportUndoneMessage
-  | ReferencesSwappedMessage
   | VariableValuesScaledMessage
-  | ImportConflictsResultMessage
-  | ExportErrorMessage
   | ProgressUpdateMessage
   | DependencyCheckResultMessage
   | ErrorMessage
   | SettingsLoadedMessage
-  | ComponentsGeneratedMessage
-  | ComponentGenerationProgressMessage
+  | SyncPreviewResultMessage
+  | SyncApplyResultMessage
+  | SyncErrorMessage
 
 // ============================================================================
 // UTILITY TYPES
@@ -976,89 +799,3 @@ export type PluginMessageType = PluginMessage['type']
 export type MessageDataType<T extends PluginMessageType> =
   Extract<PluginMessage, { type: T }> extends { data: infer D } ? D : never
 
-// ============================================================================
-// TYPE GUARDS
-// ============================================================================
-
-/** Check if message is a UI → Main message */
-export function isUIToMainMessage(msg: unknown): msg is UIToMainMessage {
-  if (!msg || typeof msg !== 'object') return false
-  const type = (msg as any).type
-  return [
-    'parse-tokens',
-    'get-collections',
-    'get-styles',
-    'get-variables',
-    'create-variables',
-    'export-variables',
-    'export-styles',
-    'export-css',
-    'get-style-details',
-    'import-styles',
-    'delete-styles',
-    'rename-styles',
-    'duplicate-styles',
-    'edit-styles',
-    'rename-variables',
-    'check-dependencies',
-    'delete-variables',
-    'restore-variables',
-    'move-variables',
-    'duplicate-variables',
-    'update-variable-values',
-    'scan-rebind',
-    'apply-rebind',
-    'undo-rebind',
-    'undo-import',
-    'swap-references',
-    'scale-variable-values',
-    'check-import-conflicts',
-    'resize-window',
-    'load-settings',
-    'save-settings',
-    'generate-components',
-    'close',
-  ].includes(type)
-}
-
-/** Check if message is a Main → UI message */
-export function isMainToUIMessage(msg: unknown): msg is MainToUIMessage {
-  if (!msg || typeof msg !== 'object') return false
-  const type = (msg as any).type
-  return [
-    'tokens-parsed',
-    'collections-list',
-    'styles-list',
-    'variables-list',
-    'variables-created',
-    'variables-renamed',
-    'variables-deleted',
-    'variables-restored',
-    'variables-moved',
-    'variables-duplicated',
-    'variable-values-updated',
-    'import-complete',
-    'export-complete',
-    'styles-export-complete',
-    'css-export-complete',
-    'style-details-list',
-    'styles-deleted',
-    'styles-duplicated',
-    'styles-edited',
-    'rebind-suggestions',
-    'rebind-applied',
-    'rebind-undone',
-    'import-undone',
-    'references-swapped',
-    'variable-values-scaled',
-    'import-conflicts-result',
-    'styles-renamed',
-    'dependency-check-result',
-    'export-error',
-    'progress-update',
-    'error',
-    'settings-loaded',
-    'components-generated',
-    'component-generation-progress',
-  ].includes(type)
-}

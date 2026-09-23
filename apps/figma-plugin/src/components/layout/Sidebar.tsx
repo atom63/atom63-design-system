@@ -3,6 +3,7 @@ import {
   ChevronRight,
   Info,
   LayoutGrid,
+  RefreshCw,
 
 
 
@@ -10,7 +11,7 @@ import {
 import { Separator } from '../ui'
 import styles from './Sidebar.module.css'
 
-export type PageId = 'manage' | 'about'
+export type PageId = 'sync' | 'manage' | 'about'
 
 interface MenuItem {
   enabled: boolean
@@ -28,6 +29,13 @@ interface SidebarProps {
 }
 
 const menuItems: MenuItem[] = [
+  {
+    id: 'sync',
+    label: 'Sync',
+    icon: RefreshCw,
+    enabled: true,
+    section: 'features',
+  },
   {
     id: 'manage',
     label: 'Manage',

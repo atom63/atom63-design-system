@@ -6,9 +6,11 @@
 
 /// <reference types="@figma/plugin-typings" />
 
-import { createVariablesFromTokens, importStylesFromTokens } from './handlers/import-handler'
-import type { PluginSettings, UIToMainMessage } from './types/messages'
-import { debug } from './utils/debug'
+import figmaSyncModel from '@atom63/styles/figma-sync.json'
+
+import { applyPlan, readSnapshot, type VariablesApi } from './sync/apply'
+import { planSync, type SyncModel, type SyncPlan } from './sync/plan'
+import type { PluginSettings, SyncPlanSummary, UIToMainMessage } from './types/messages'
 
 // Show the plugin UI (resizable by default)
 figma.showUI(__html__, {
@@ -55,6 +57,19 @@ async function saveSettings(partial: Partial<PluginSettings>): Promise<PluginSet
 }
 
 // Handle messages from the UI
+const syncModel = figmaSyncModel as SyncModel
+// The plugin typings' VariableCollection and Variable satisfy the sync's
+// structural interfaces; the cast only narrows createVariable's overloads.
+const variablesApi: VariablesApi = figma.variables
+
+function summarizePlan(plan: SyncPlan): SyncPlanSummary {
+  return { collections: plan.collections, totals: plan.totals }
+}
+
+function errorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : String(error)
+}
+
 figma.ui.onmessage = (msg: UIToMainMessage) => {
   void handleUIMessage(msg)
 }
@@ -1603,128 +1618,6 @@ async function handleUIMessage(msg: UIToMainMessage) {
       break
     }
 
-    case 'create-variables': {
-      const { tokens, collectionName, importMode = 'import', stylesData } = msg.data
-      debug(
-        '[create-variables] stylesData present:',
-        !!stylesData,
-        stylesData ? Object.keys(stylesData) : 'none'
-      )
-      // Note: tokens are already filtered by selected collections in the UI
-      const results = await createVariablesFromTokens(
-        tokens,
-        collectionName ?? 'tokens',
-        importMode
-      )
-
-      // If combined JSON included styles, import them after variables are created
-      // This ensures variable bindings can be resolved
-      let stylesImported = 0
-      if (stylesData) {
-        debug('[create-variables] Starting style import...', {
-          paint: stylesData.paint ? Object.keys(stylesData.paint) : 'none',
-          text: stylesData.text ? Object.keys(stylesData.text) : 'none',
-          effect: stylesData.effect ? Object.keys(stylesData.effect) : 'none',
-        })
-        try {
-          const styleResults = await importStylesFromTokens(
-            { styles: stylesData },
-            [], // import all styles — no cherry-picking
-            importMode
-          )
-          stylesImported = styleResults.success
-          debug('[create-variables] Style import done:', {
-            success: styleResults.success,
-            failed: styleResults.failed,
-            errors: styleResults.errors,
-          })
-          // Merge style results into variable results
-          results.success += styleResults.success
-          results.failed += styleResults.failed
-          results.errors.push(...styleResults.errors)
-          if (styleResults.changes) {
-            results.changes.push(...styleResults.changes)
-          }
-        } catch (e) {
-          console.warn('Style import failed:', e)
-        }
-      } else {
-        debug('[create-variables] No stylesData in message')
-      }
-
-      figma.ui.postMessage({
-        type: 'variables-created',
-        data: results,
-      })
-
-      const actionVerb = importMode === 'override' ? 'Updated' : 'Created'
-      const varCount = results.success - stylesImported
-      const styleMsg = stylesImported > 0 ? ` + ${stylesImported} styles` : ''
-      const skipMsg = results.skipped > 0 ? ` (${results.skipped} skipped)` : ''
-      const failMsg = results.failed > 0 ? ` (${results.failed} failed)` : ''
-      figma.notify(`✅ ${actionVerb} ${varCount} variables${styleMsg}${skipMsg}${failMsg}`)
-      break
-    }
-
-    case 'undo-import': {
-      const { entries } = msg.data
-      let success = 0
-      let failed = 0
-
-      // Process in reverse order: undo updates first, then delete created variables
-      // This handles reference dependencies correctly
-      const updates = entries.filter((e: any) => e.action === 'updated')
-      const created = entries.filter((e: any) => e.action === 'created')
-
-      // Restore updated variables to their previous values
-      for (const entry of updates) {
-        try {
-          const variable = await figma.variables.getVariableByIdAsync(entry.variableId)
-          if (variable && entry.previousValues) {
-            for (const [modeId, value] of Object.entries(entry.previousValues)) {
-              try {
-                variable.setValueForMode(modeId, value)
-              } catch {
-                // Mode may no longer exist
-              }
-            }
-            if (entry.previousDescription !== undefined) {
-              variable.description = entry.previousDescription
-            }
-            success++
-          } else {
-            failed++
-          }
-        } catch {
-          failed++
-        }
-      }
-
-      // Delete created variables
-      for (const entry of created) {
-        try {
-          const variable = await figma.variables.getVariableByIdAsync(entry.variableId)
-          if (variable) {
-            variable.remove()
-            success++
-          } else {
-            failed++
-          }
-        } catch {
-          failed++
-        }
-      }
-
-      figma.ui.postMessage({
-        type: 'import-undone',
-        data: { success, failed },
-      })
-      figma.notify(
-        `Undo: reverted ${success} variable${success !== 1 ? 's' : ''}${failed > 0 ? ` (${failed} failed)` : ''}`
-      )
-      break
-    }
-
     case 'scale-variable-values': {
       const { variableIds, factor, operation } = msg.data
       let success = 0
@@ -1792,22 +1685,6 @@ async function handleUIMessage(msg: UIToMainMessage) {
       break
     }
 
-    case 'import-styles': {
-      debug('📥 Import styles message received')
-      const { stylesData, selectedGroups, importMode } = msg.data
-      const results = await importStylesFromTokens(
-        stylesData,
-        selectedGroups || [],
-        importMode || 'import'
-      )
-
-      figma.ui.postMessage({
-        type: 'import-complete',
-        data: results,
-      })
-      break
-    }
-
     case 'load-settings': {
       const settings = await loadSettings()
       figma.ui.postMessage({
@@ -1824,6 +1701,29 @@ async function handleUIMessage(msg: UIToMainMessage) {
 
     case 'close': {
       figma.closePlugin()
+      break
+    }
+
+    case 'sync-preview': {
+      try {
+        const plan = planSync(syncModel, await readSnapshot(variablesApi, syncModel))
+        figma.ui.postMessage({ type: 'sync-preview-result', data: { model: syncModel.summary, plan: summarizePlan(plan) } })
+      } catch (error) {
+        figma.ui.postMessage({ type: 'sync-error', data: { message: errorMessage(error) } })
+      }
+      break
+    }
+
+    case 'sync-apply': {
+      try {
+        const plan = planSync(syncModel, await readSnapshot(variablesApi, syncModel))
+        const applied = await applyPlan(variablesApi, syncModel, plan)
+        const verification = planSync(syncModel, await readSnapshot(variablesApi, syncModel))
+        figma.ui.postMessage({ type: 'sync-apply-result', data: { applied, verification: summarizePlan(verification) } })
+        figma.notify(`Atom63 sync: ${applied.created} created, ${applied.updated} updated`)
+      } catch (error) {
+        figma.ui.postMessage({ type: 'sync-error', data: { message: errorMessage(error) } })
+      }
       break
     }
 

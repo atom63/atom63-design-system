@@ -12,11 +12,12 @@ import { useDebugMode } from './hooks/useDebugMode'
 import { useFigmaMessage, usePostMessage } from './hooks/useFigmaMessage'
 import { AboutPage } from './pages/AboutPage'
 import { ManageTabsPage } from './pages/ManageTabsPage'
+import { SyncPage } from './pages/SyncPage'
 import type { PluginSettings } from './types/messages'
 import { applyTheme } from './utils/theme'
 
 function App() {
-  const [activePage, setActivePage] = useState<PageId>('manage')
+  const [activePage, setActivePage] = useState<PageId>('sync')
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [viewMode, setViewMode] = useState<ViewMode>('default')
   const [isDark, setIsDark] = useState(false)
@@ -51,6 +52,12 @@ function App() {
 
   const renderPage = () => {
     switch (activePage) {
+      case 'sync':
+        return (
+          <PageErrorBoundary pageName="Sync">
+            <SyncPage />
+          </PageErrorBoundary>
+        )
       case 'manage':
         return (
           <PageErrorBoundary pageName="Manage">

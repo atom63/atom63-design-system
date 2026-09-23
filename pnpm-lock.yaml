@@ -135,6 +135,9 @@ importers:
 
   apps/figma-plugin:
     dependencies:
+      '@atom63/styles':
+        specifier: workspace:*
+        version: link:../../packages/styles
       lucide-react:
         specifier: 1.34.0
         version: 1.34.0(react@19.2.7)
@@ -175,6 +178,9 @@ importers:
       typescript:
         specifier: 'catalog:'
         version: 5.8.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.10(@types/node@26.6.2)(@vitest/browser-playwright@4.1.10)(jsdom@29.1.1)(vite@8.1.4(@types/node@26.6.2)(esbuild@0.27.7)(jiti@2.7.0)(sass@1.105.0)(tsx@4.23.15)(yaml@2.9.1))
 
   config/eslint-config:
     dependencies:
