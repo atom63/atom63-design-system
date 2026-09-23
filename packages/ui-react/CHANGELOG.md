@@ -1,5 +1,14 @@
 # @atom63/ui-react
 
+## 0.2.0-beta.4
+
+### Patch Changes
+
+- [`1477507`](https://github.com/atom63/atom63-design-system/commit/14775071c249baffb5d3781dcc1b4bca18b99d09) Thanks [@atom63](https://github.com/atom63)! - Fix `vite dev` consumers failing to resolve the packages. The `development` and `typescript` export conditions pointed at `src/*.ts` files that are not published; they are replaced by the repo-private `@atom63/source` condition, so consumers always resolve `dist`.
+- Updated dependencies [[`2a794e3`](https://github.com/atom63/atom63-design-system/commit/2a794e3c72c776b850252dbb3f7ace48d8a886ec), [`1477507`](https://github.com/atom63/atom63-design-system/commit/14775071c249baffb5d3781dcc1b4bca18b99d09)]:
+  - @atom63/styles@0.1.0-beta.2
+  - @atom63/ui-foundation@0.1.1-beta.1
+
 ## 0.2.0-beta.3
 
 ### Patch Changes

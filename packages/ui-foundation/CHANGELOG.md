@@ -1,5 +1,11 @@
 # @atom63/ui-foundation
 
+## 0.1.1-beta.1
+
+### Patch Changes
+
+- [`1477507`](https://github.com/atom63/atom63-design-system/commit/14775071c249baffb5d3781dcc1b4bca18b99d09) Thanks [@atom63](https://github.com/atom63)! - Fix `vite dev` consumers failing to resolve the packages. The `development` and `typescript` export conditions pointed at `src/*.ts` files that are not published; they are replaced by the repo-private `@atom63/source` condition, so consumers always resolve `dist`.
+
 ## 0.1.1-beta.0
 
 ### Patch Changes
