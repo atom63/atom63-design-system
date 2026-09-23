@@ -194,50 +194,45 @@
       "subpath": ".",
       "kind": "module",
       "target": {
-        "development": "./src/index.ts",
+        "@atom63/source": "./src/index.ts",
         "import": "./dist/index.js",
-        "types": "./dist/index.d.ts",
-        "typescript": "./src/index.ts"
+        "types": "./dist/index.d.ts"
       }
     },
     {
       "subpath": "./layout",
       "kind": "module",
       "target": {
-        "development": "./src/layout/index.ts",
+        "@atom63/source": "./src/layout/index.ts",
         "import": "./dist/layout/index.js",
-        "types": "./dist/layout/index.d.ts",
-        "typescript": "./src/layout/index.ts"
+        "types": "./dist/layout/index.d.ts"
       }
     },
     {
       "subpath": "./media",
       "kind": "module",
       "target": {
-        "development": "./src/media/index.ts",
+        "@atom63/source": "./src/media/index.ts",
         "import": "./dist/media/index.js",
-        "types": "./dist/media/index.d.ts",
-        "typescript": "./src/media/index.ts"
+        "types": "./dist/media/index.d.ts"
       }
     },
     {
       "subpath": "./media/lightbox",
       "kind": "module",
       "target": {
-        "development": "./src/media/media-lightbox/parts/index.ts",
+        "@atom63/source": "./src/media/media-lightbox/parts/index.ts",
         "import": "./dist/media/media-lightbox/parts/index.js",
-        "types": "./dist/media/media-lightbox/parts/index.d.ts",
-        "typescript": "./src/media/media-lightbox/parts/index.ts"
+        "types": "./dist/media/media-lightbox/parts/index.d.ts"
       }
     },
     {
       "subpath": "./preview",
       "kind": "module",
       "target": {
-        "development": "./src/preview/index.ts",
+        "@atom63/source": "./src/preview/index.ts",
         "import": "./dist/preview/index.js",
-        "types": "./dist/preview/index.d.ts",
-        "typescript": "./src/preview/index.ts"
+        "types": "./dist/preview/index.d.ts"
       }
     },
     {
@@ -569,10 +564,9 @@
       "subpath": "./theme",
       "kind": "module",
       "target": {
-        "development": "./src/theme/index.ts",
+        "@atom63/source": "./src/theme/index.ts",
         "import": "./dist/theme/index.js",
-        "types": "./dist/theme/index.d.ts",
-        "typescript": "./src/theme/index.ts"
+        "types": "./dist/theme/index.d.ts"
       }
     }
   ],

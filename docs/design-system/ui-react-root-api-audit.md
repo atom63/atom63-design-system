@@ -22,7 +22,7 @@ The support tiers below are the operative beta policy until YZ approves an expor
 
 ## Current export model
 
-- The package root, `.`, resolves to `src/index.ts` for the `development` and `typescript` conditions, `dist/index.d.ts` for types, and `dist/index.js` for imports.
+- The package root, `.`, resolves to `src/index.ts` only for the repo-private `@atom63/source` condition (published tarballs omit `src/*.ts`), `dist/index.d.ts` for types, and `dist/index.js` for imports.
 - JavaScript/TypeScript subpaths are `./layout`, `./media`, `./media/lightbox`, `./preview`, and `./theme`.
 - CSS entry points include `./styles.css`, `./reset.css`, `./recipes.css`, and individual `./recipes/*.css` entries, including `./recipes/media-lightbox.css`.
 - The root is broad: it exports component families and their types alongside hooks, providers, primitive aliases, imperative handles, utility functions, constants, and class-name helpers.

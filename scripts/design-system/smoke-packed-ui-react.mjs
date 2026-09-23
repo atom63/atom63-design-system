@@ -169,6 +169,24 @@ function installedVersion(packageName) {
   );
 }
 
+// `vite build` resolves the production export conditions only. The dev server
+// resolves `development`, so transform the entry through it to prove every
+// package import also resolves the way `vite dev` consumers see it.
+const devResolveSource = `import { createServer } from 'vite'
+
+const server = await createServer({
+  appType: 'custom',
+  logLevel: 'error',
+  optimizeDeps: { noDiscovery: true },
+  server: { middlewareMode: true, ws: false },
+})
+try {
+  await server.transformRequest('/src/main.tsx')
+} finally {
+  await server.close()
+}
+`;
+
 async function writeHarness(harnessDirectory, packedPackages) {
   const tarballSpec = (packageName) => {
     const packedPackage = packedPackages.find(
@@ -188,7 +206,7 @@ async function writeHarness(harnessDirectory, packedPackages) {
     type: "module",
     packageManager: "pnpm@10.29.2",
     scripts: {
-      check: "tsc --noEmit && vite build",
+      check: "tsc --noEmit && vite build && node dev-resolve.mjs",
     },
     dependencies: {
       "@atom63/styles": tarballSpec("@atom63/styles"),
@@ -390,6 +408,7 @@ createRoot(rootElement).render(
       '<!doctype html>\n<html lang="en"><head><meta charset="UTF-8" /></head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body></html>\n',
     ),
     writeFile(resolve(harnessDirectory, "src/main.tsx"), source),
+    writeFile(resolve(harnessDirectory, "dev-resolve.mjs"), devResolveSource),
   ]);
 }
 
@@ -459,7 +478,7 @@ async function main() {
     console.log(`Harness: ${harnessDirectory} (removed after success)`);
     console.log(`Tarballs: ${requiredTarballs}`);
     console.log(`Install: ${installCommand}`);
-    console.log("Command: pnpm run check (tsc --noEmit && vite build)");
+    console.log("Command: pnpm run check (tsc --noEmit && vite build && vite dev resolve)");
     succeeded = true;
   } catch (error) {
     console.error(

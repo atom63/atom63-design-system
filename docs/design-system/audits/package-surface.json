@@ -165,8 +165,7 @@
       "private": false,
       "exports": {
         ".": {
-          "development": "./src/index.ts",
-          "typescript": "./src/index.ts",
+          "@atom63/source": "./src/index.ts",
           "types": "./dist/index.d.ts",
           "import": "./dist/index.js"
         }
@@ -193,32 +192,27 @@
       "private": false,
       "exports": {
         ".": {
-          "development": "./src/index.ts",
-          "typescript": "./src/index.ts",
+          "@atom63/source": "./src/index.ts",
           "types": "./dist/index.d.ts",
           "import": "./dist/index.js"
         },
         "./layout": {
-          "development": "./src/layout/index.ts",
-          "typescript": "./src/layout/index.ts",
+          "@atom63/source": "./src/layout/index.ts",
           "types": "./dist/layout/index.d.ts",
           "import": "./dist/layout/index.js"
         },
         "./media": {
-          "development": "./src/media/index.ts",
-          "typescript": "./src/media/index.ts",
+          "@atom63/source": "./src/media/index.ts",
           "types": "./dist/media/index.d.ts",
           "import": "./dist/media/index.js"
         },
         "./media/lightbox": {
-          "development": "./src/media/media-lightbox/parts/index.ts",
-          "typescript": "./src/media/media-lightbox/parts/index.ts",
+          "@atom63/source": "./src/media/media-lightbox/parts/index.ts",
           "types": "./dist/media/media-lightbox/parts/index.d.ts",
           "import": "./dist/media/media-lightbox/parts/index.js"
         },
         "./preview": {
-          "development": "./src/preview/index.ts",
-          "typescript": "./src/preview/index.ts",
+          "@atom63/source": "./src/preview/index.ts",
           "types": "./dist/preview/index.d.ts",
           "import": "./dist/preview/index.js"
         },
@@ -288,8 +282,7 @@
         "./reset.css": "./src/styles/reset.css",
         "./styles.css": "./src/styles/index.css",
         "./theme": {
-          "development": "./src/theme/index.ts",
-          "typescript": "./src/theme/index.ts",
+          "@atom63/source": "./src/theme/index.ts",
           "types": "./dist/theme/index.d.ts",
           "import": "./dist/theme/index.js"
         }

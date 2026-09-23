@@ -29,8 +29,7 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "development": "./src/index.ts",
-      "typescript": "./src/index.ts",
+      "@atom63/source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     }
