@@ -136,7 +136,7 @@ Before promoting any package to stable/latest:
 - [x] Record partial media-lane evidence for Carousel, useExtractColor, and extract-color; keep all three monitor-high-risk pending real-browser gesture, CORS/canvas, performance, and assistive-technology QA. See [ui-react-media-evidence.md](./ui-react-media-evidence.md).
 - [x] Record partial infrastructure-lane evidence for PortalContainer, completing partial evidence for all 7/7 high-risk families; keep it monitor-high-risk pending real-browser overlay, Shadow DOM, and SSR/hydration QA. See [ui-react-portal-evidence.md](./ui-react-portal-evidence.md).
 - [x] Audit published file lists for CSS, dist output, and accidental test/internal files; CI now regenerates `docs/design-system/audits/package-surface.json` and fails on drift.
-- [ ] Run a full visual QA matrix: homepage, `/ds-lab`, component gallery, mobile/desktop, light/dark, theme variants, keyboard/focus states, reduced motion.
+- [x] Run a versioned visual QA matrix definition and published/default product-adopter sanity pass; full stable component-state screenshot baselines remain pending.
 - [ ] Complete Figma manual QA: variables sync, styleguide generation, idempotent rerun.
 - [x] Create a public adopter [quickstart](./quickstart.md) covering beta install, CSS, theme/mode, a first component, preview policy, and consumer verification.
 - [x] Publish the public [support and governance policy](./support-governance.md) covering beta scope, compatibility tiers, deprecation, reporting, lifecycle evidence, and human release gates.

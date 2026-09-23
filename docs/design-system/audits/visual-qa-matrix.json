@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "status": "visual-qa-matrix-current",
+  "matrix": "docs/design-system/visual-qa-matrix.json",
+  "generatedFrom": "scripts/design-system/audit-visual-qa-matrix.mjs",
+  "currentEvidence": {
+    "productAdopterPr": "https://github.com/atom63/atom63-vite/pull/416",
+    "routes": ["/", "/ds-lab", "/design-system"],
+    "viewports": ["desktop", "mobile"],
+    "modes": ["default workspace DS", "A63_USE_PUBLISHED_DS=1"],
+    "result": "No published-path-only visual regression observed in the product adopter sanity pass."
+  },
+  "stableCoveragePlan": {
+    "routeCount": 4,
+    "routeIds": [
+      "vite-basic",
+      "product-home",
+      "product-ds-lab",
+      "product-design-system"
+    ],
+    "viewportCount": 2,
+    "themes": ["modern", "aqua", "retro", "terminal"],
+    "colorSchemes": ["light", "dark"],
+    "interactionStates": [
+      "default",
+      "hover",
+      "focus-visible",
+      "disabled",
+      "loading",
+      "open-overlay",
+      "keyboard-navigation"
+    ],
+    "motionPreferences": ["default", "reduced-motion"]
+  },
+  "stableExitCriteria": [
+    "desktop and mobile screenshots exist for the minimal example and product adopter surfaces",
+    "light and dark modes are covered for each stable theme",
+    "focus-visible and keyboard navigation states are checked for stable candidate controls",
+    "reduced-motion rendering is checked for animated stable candidate surfaces",
+    "console errors are classified as fixed, accepted pre-existing, or unrelated external-service noise",
+    "baseline update ownership is recorded for every changed screenshot"
+  ],
+  "knownGaps": [
+    "No deterministic screenshot diff baseline is stored in this repo yet.",
+    "Component-level state coverage is not complete across all stable candidate controls.",
+    "Reduced-motion and focus-state captures need repeatable automation before stable/latest."
+  ]
+}

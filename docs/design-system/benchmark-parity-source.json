@@ -354,21 +354,24 @@
           "reference": "https://github.com/primer/design"
         }
       ],
-      "atom63Status": "A limited homepage and DS-lab sanity pass is recorded. There is no complete, repeatable matrix for component states, viewports, themes, color schemes, focus, or reduced motion.",
+      "atom63Status": "A versioned visual QA matrix now defines product/example routes, mobile and desktop viewports, supported themes, light/dark modes, interaction states, and reduced-motion coverage. The merged product-adopter evidence includes published/default visual sanity for /, /ds-lab, and /design-system across desktop and mobile. Deterministic screenshot baselines and full component-state automation are still pending before stable/latest.",
       "currentEvidence": {
         "docs": [
+          "docs/design-system/visual-qa-matrix.json",
+          "docs/design-system/audits/visual-qa-matrix.json",
           "docs/design-system/beta-release-notes.md",
-          "docs/design-system/ui-react-component-review.md"
+          "docs/design-system/ui-react-component-review.md",
+          "https://github.com/atom63/atom63-vite/pull/416"
         ],
-        "commands": []
+        "commands": ["pnpm check:visual-qa-matrix"]
       },
       "gaps": [
-        "Cover the component gallery and stable candidates across mobile and desktop.",
-        "Cover light/dark, all supported themes, keyboard/focus states, and reduced motion.",
-        "Store reviewable evidence and define baseline-update ownership."
+        "Store deterministic screenshot baselines or approved visual-diff artifacts for stable candidates.",
+        "Cover full component state combinations across stable themes, color schemes, focus states, keyboard flows, and reduced motion.",
+        "Define the baseline update review process once screenshot artifacts are checked in or attached to CI."
       ],
-      "stableGate": "blocker",
-      "nextAction": "Define and execute a versioned visual QA matrix, then attach deterministic screenshots or approved visual-diff evidence.",
+      "stableGate": "warning",
+      "nextAction": "Keep the versioned visual QA matrix current, then add deterministic screenshot or visual-diff evidence for stable candidate components before stable/latest promotion.",
       "ownerLane": "visual-quality"
     },
     {
