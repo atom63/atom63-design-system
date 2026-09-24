@@ -1,5 +1,11 @@
 /* CodeBlock recipe — line-number gutter (unlayered) + frame/panel/lang chrome. */
 
+/* Code reads left to right whatever the page direction, so the block fixes its
+   direction and the physical gutter below stays right in right-to-left pages. */
+.code-block {
+  direction: ltr;
+}
+
 /* Line-number gutter for code blocks — enabled by `data-numbered` on `.code-block`.
    Targets both shiki (`.line`) and rehype-pretty-code (`[data-line]`) line spans. */
 .code-block[data-numbered] :where(code) {
@@ -11,10 +17,10 @@
   counter-increment: line;
   display: inline-block;
   width: 2ch;
-  margin-right: 1.25rem;
+  margin-right: 1.25rem; /* craft-allow: physical-properties — code is always LTR */
   color: var(--a63-text-secondary);
   opacity: 0.4;
-  text-align: right;
+  text-align: right; /* craft-allow: physical-properties — code is always LTR */
   user-select: none;
   -webkit-user-select: none;
 }

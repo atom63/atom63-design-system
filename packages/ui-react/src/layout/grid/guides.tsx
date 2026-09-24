@@ -36,7 +36,7 @@ export function GridGuides({ className, columns = 3, ...props }: GridGuidesProps
           return (
             <span
               className={cn(
-                'absolute inset-y-0 border-l border-[color:var(--a63-grid-guide-color,var(--input,var(--a63-border-subtle)))]',
+                'absolute inset-y-0 border-s border-[color:var(--a63-grid-guide-color,var(--input,var(--a63-border-subtle)))]',
                 lineStyle === 'solid' ? 'border-solid' : 'border-dashed'
               )}
               data-slot="grid-guide"

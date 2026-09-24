@@ -252,7 +252,7 @@ export function MdxFrameItemPanel({
         </div>
         <div
           className={clsx(
-            'mdx-frame-item-body text-sm leading-relaxed text-pretty [&_.code-block]:my-3 [&_.code-block]:first:mt-0 [&_.code-block]:last:mb-0 [&_li]:mt-1.5 [&_ol]:mt-3 [&_ol]:pl-4 [&_p]:mt-2 [&_p_code]:px-1 [&_p_code]:py-0.5 [&_p_code]:font-mono [&_p_code]:text-xs [&_pre:not(.code-block-pre):not(.shiki)]:mt-4 [&_pre:not(.code-block-pre):not(.shiki)]:overflow-x-auto [&_pre:not(.code-block-pre):not(.shiki)]:p-3 [&_pre:not(.code-block-pre):not(.shiki)]:text-xs [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:pl-4 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0',
+            'mdx-frame-item-body text-sm leading-relaxed text-pretty [&_.code-block]:my-3 [&_.code-block]:first:mt-0 [&_.code-block]:last:mb-0 [&_li]:mt-1.5 [&_ol]:mt-3 [&_ol]:ps-4 [&_p]:mt-2 [&_p_code]:px-1 [&_p_code]:py-0.5 [&_p_code]:font-mono [&_p_code]:text-xs [&_pre:not(.code-block-pre):not(.shiki)]:mt-4 [&_pre:not(.code-block-pre):not(.shiki)]:overflow-x-auto [&_pre:not(.code-block-pre):not(.shiki)]:p-3 [&_pre:not(.code-block-pre):not(.shiki)]:text-xs [&_ul]:mt-3 [&_ul]:list-disc [&_ul]:ps-4 [&>*:first-child]:mt-0 [&>*:last-child]:mb-0',
             bodyClassName
           )}
         >

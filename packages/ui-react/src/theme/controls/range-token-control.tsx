@@ -27,7 +27,7 @@ export function RangeTokenControl({
     <div className="grid gap-2.5" data-slot="range-token-control">
       <div className="flex items-center justify-between gap-3">
         <span className="text-sm font-medium text-[var(--a63-text-primary)]">{label}</span>
-        <span className="min-w-10 text-right text-xs font-medium text-[var(--a63-text-secondary)] tabular-nums">
+        <span className="min-w-10 text-end text-xs font-medium text-[var(--a63-text-secondary)] tabular-nums">
           {valueLabel}
         </span>
       </div>

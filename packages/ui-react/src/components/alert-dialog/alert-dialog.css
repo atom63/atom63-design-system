@@ -130,7 +130,7 @@
 }
 @media (min-width: 640px) {
   .a63-AlertDialog-header {
-    text-align: left;
+    text-align: start;
   }
 }
 

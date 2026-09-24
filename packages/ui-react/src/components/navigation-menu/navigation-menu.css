@@ -258,6 +258,7 @@
   width: 0.5rem;
   height: 0.5rem;
   rotate: 45deg;
+  /* craft-allow: physical-properties — the corner that becomes the arrow tip after the rotation */
   border-top-left-radius: var(--radius-xs);
   background: var(--a63-border-subtle);
 }

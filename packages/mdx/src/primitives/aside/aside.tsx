@@ -10,8 +10,8 @@ export type AsideProps = {
 }
 
 const sideStyles: Record<AsideSide, string> = {
-  right: 'xl:float-right xl:clear-right xl:-mr-64 xl:ml-8 xl:w-56',
-  left: 'xl:float-left xl:clear-left xl:-ml-64 xl:mr-8 xl:w-56',
+  right: 'xl:float-right xl:clear-right xl:-me-64 xl:ms-8 xl:w-56',
+  left: 'xl:float-left xl:clear-left xl:-ms-64 xl:me-8 xl:w-56',
 }
 
 export function Aside({ children, className, side = 'right' }: AsideProps) {

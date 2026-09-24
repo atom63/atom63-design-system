@@ -104,9 +104,9 @@ function getLinkClass(item: TocItem, variant: TableOfContentsVariant) {
   return clsx(
     'mdx-toc-link relative outline-none transition-colors duration-150',
     compactList && 'mdx-toc-link-inline flex min-h-8 items-center px-2 py-1.5 text-sm',
-    variant === 'rail' && 'mdx-toc-link-rail block py-px pr-2 text-[0.8125rem] leading-[1.0625rem]',
-    compactList && item.depth === 3 && 'pl-5',
-    variant === 'rail' && item.depth === 3 && 'pl-3 text-xs leading-4'
+    variant === 'rail' && 'mdx-toc-link-rail block py-px pe-2 text-[0.8125rem] leading-[1.0625rem]',
+    compactList && item.depth === 3 && 'ps-5',
+    variant === 'rail' && item.depth === 3 && 'ps-3 text-xs leading-4'
   )
 }
 
@@ -425,7 +425,7 @@ export function PageTableOfContents({
                   href={`#${item.id}`}
                   onClick={event => handleItemClick(event, item)}
                 >
-                  <span className={clsx(item.depth === 3 && 'pl-3')}>{item.title}</span>
+                  <span className={clsx(item.depth === 3 && 'ps-3')}>{item.title}</span>
                 </a>
               }
             />
