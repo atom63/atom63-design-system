@@ -5522,7 +5522,7 @@
       "cssVar": "--a63-surface-tint",
       "type": "dimension",
       "value": "0%",
-      "sourceFile": "packages/styles/src/tokens/surface.css",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",

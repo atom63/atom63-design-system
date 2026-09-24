@@ -63,9 +63,10 @@ baselines as described in the [Storybook README](./apps/storybook/README.md).
 The foundation token layer is defined in
 [DTCG](https://www.designtokens.org/tr/2025.10/format/) files in
 `packages/styles/src/tokens/foundation/`: `primitives`, `palette`, `aliases`, `fonts` and `motion`
-(`*.tokens.json`). Edit those; their sibling `.css` files are generated. The other token layers
-(semantic roles, themes, and personalization axes) are still authored in CSS and are moving to DTCG
-one layer at a time.
+(`*.tokens.json`), plus the surface palette axis in `packages/styles/src/tokens/surface.resolver.json`
+(DTCG Resolver). Edit those; their sibling `.css` files are generated. The other token layers
+(semantic roles, themes, and the remaining personalization axes) are still authored in CSS and are
+moving to DTCG one layer at a time.
 
 Several files are generated from the tokens and checked byte for byte in CI; regenerate them
 instead of editing them by hand:

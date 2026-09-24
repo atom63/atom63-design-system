@@ -1,0 +1,657 @@
+{
+  "version": "2025.10",
+  "description": "Surface (neutral) palette axis. [data-a63-surface=\"n1\"..\"n6\"] remaps the neutral ramp\n(--surface-light-* / --surface-dark-*) to one of the six neutral palettes; n1 is the default.\nThe second surface knob, --a63-surface-tint, lives with the tokens it bends in semantics.css.",
+  "modifiers": {
+    "surface": {
+      "contexts": {
+        "n1": [
+          {
+            "surface": {
+              "light": {
+                "1": {
+                  "$type": "color",
+                  "$value": "{color.n1.light.1}"
+                },
+                "2": {
+                  "$type": "color",
+                  "$value": "{color.n1.light.2}"
+                },
+                "3": {
+                  "$type": "color",
+                  "$value": "{color.n1.light.3}"
+                },
+                "4": {
+                  "$type": "color",
+                  "$value": "{color.n1.light.4}"
+                },
+                "5": {
+                  "$type": "color",
+                  "$value": "{color.n1.light.5}"
+                },
+                "6": {
+                  "$type": "color",
+                  "$value": "{color.n1.light.6}"
+                },
+                "7": {
+                  "$type": "color",
+                  "$value": "{color.n1.light.7}"
+                },
+                "8": {
+                  "$type": "color",
+                  "$value": "{color.n1.light.8}"
+                },
+                "9": {
+                  "$type": "color",
+                  "$value": "{color.n1.light.9}"
+                },
+                "10": {
+                  "$type": "color",
+                  "$value": "{color.n1.light.10}"
+                },
+                "11": {
+                  "$type": "color",
+                  "$value": "{color.n1.light.11}"
+                },
+                "12": {
+                  "$type": "color",
+                  "$value": "{color.n1.light.12}"
+                }
+              },
+              "dark": {
+                "1": {
+                  "$type": "color",
+                  "$value": "{color.n1.dark.1}"
+                },
+                "2": {
+                  "$type": "color",
+                  "$value": "{color.n1.dark.2}"
+                },
+                "3": {
+                  "$type": "color",
+                  "$value": "{color.n1.dark.3}"
+                },
+                "4": {
+                  "$type": "color",
+                  "$value": "{color.n1.dark.4}"
+                },
+                "5": {
+                  "$type": "color",
+                  "$value": "{color.n1.dark.5}"
+                },
+                "6": {
+                  "$type": "color",
+                  "$value": "{color.n1.dark.6}"
+                },
+                "7": {
+                  "$type": "color",
+                  "$value": "{color.n1.dark.7}"
+                },
+                "8": {
+                  "$type": "color",
+                  "$value": "{color.n1.dark.8}"
+                },
+                "9": {
+                  "$type": "color",
+                  "$value": "{color.n1.dark.9}"
+                },
+                "10": {
+                  "$type": "color",
+                  "$value": "{color.n1.dark.10}"
+                },
+                "11": {
+                  "$type": "color",
+                  "$value": "{color.n1.dark.11}"
+                },
+                "12": {
+                  "$type": "color",
+                  "$value": "{color.n1.dark.12}"
+                }
+              }
+            }
+          }
+        ],
+        "n2": [
+          {
+            "surface": {
+              "light": {
+                "1": {
+                  "$type": "color",
+                  "$value": "{color.n2.light.1}"
+                },
+                "2": {
+                  "$type": "color",
+                  "$value": "{color.n2.light.2}"
+                },
+                "3": {
+                  "$type": "color",
+                  "$value": "{color.n2.light.3}"
+                },
+                "4": {
+                  "$type": "color",
+                  "$value": "{color.n2.light.4}"
+                },
+                "5": {
+                  "$type": "color",
+                  "$value": "{color.n2.light.5}"
+                },
+                "6": {
+                  "$type": "color",
+                  "$value": "{color.n2.light.6}"
+                },
+                "7": {
+                  "$type": "color",
+                  "$value": "{color.n2.light.7}"
+                },
+                "8": {
+                  "$type": "color",
+                  "$value": "{color.n2.light.8}"
+                },
+                "9": {
+                  "$type": "color",
+                  "$value": "{color.n2.light.9}"
+                },
+                "10": {
+                  "$type": "color",
+                  "$value": "{color.n2.light.10}"
+                },
+                "11": {
+                  "$type": "color",
+                  "$value": "{color.n2.light.11}"
+                },
+                "12": {
+                  "$type": "color",
+                  "$value": "{color.n2.light.12}"
+                }
+              },
+              "dark": {
+                "1": {
+                  "$type": "color",
+                  "$value": "{color.n2.dark.1}"
+                },
+                "2": {
+                  "$type": "color",
+                  "$value": "{color.n2.dark.2}"
+                },
+                "3": {
+                  "$type": "color",
+                  "$value": "{color.n2.dark.3}"
+                },
+                "4": {
+                  "$type": "color",
+                  "$value": "{color.n2.dark.4}"
+                },
+                "5": {
+                  "$type": "color",
+                  "$value": "{color.n2.dark.5}"
+                },
+                "6": {
+                  "$type": "color",
+                  "$value": "{color.n2.dark.6}"
+                },
+                "7": {
+                  "$type": "color",
+                  "$value": "{color.n2.dark.7}"
+                },
+                "8": {
+                  "$type": "color",
+                  "$value": "{color.n2.dark.8}"
+                },
+                "9": {
+                  "$type": "color",
+                  "$value": "{color.n2.dark.9}"
+                },
+                "10": {
+                  "$type": "color",
+                  "$value": "{color.n2.dark.10}"
+                },
+                "11": {
+                  "$type": "color",
+                  "$value": "{color.n2.dark.11}"
+                },
+                "12": {
+                  "$type": "color",
+                  "$value": "{color.n2.dark.12}"
+                }
+              }
+            }
+          }
+        ],
+        "n3": [
+          {
+            "surface": {
+              "light": {
+                "1": {
+                  "$type": "color",
+                  "$value": "{color.n3.light.1}"
+                },
+                "2": {
+                  "$type": "color",
+                  "$value": "{color.n3.light.2}"
+                },
+                "3": {
+                  "$type": "color",
+                  "$value": "{color.n3.light.3}"
+                },
+                "4": {
+                  "$type": "color",
+                  "$value": "{color.n3.light.4}"
+                },
+                "5": {
+                  "$type": "color",
+                  "$value": "{color.n3.light.5}"
+                },
+                "6": {
+                  "$type": "color",
+                  "$value": "{color.n3.light.6}"
+                },
+                "7": {
+                  "$type": "color",
+                  "$value": "{color.n3.light.7}"
+                },
+                "8": {
+                  "$type": "color",
+                  "$value": "{color.n3.light.8}"
+                },
+                "9": {
+                  "$type": "color",
+                  "$value": "{color.n3.light.9}"
+                },
+                "10": {
+                  "$type": "color",
+                  "$value": "{color.n3.light.10}"
+                },
+                "11": {
+                  "$type": "color",
+                  "$value": "{color.n3.light.11}"
+                },
+                "12": {
+                  "$type": "color",
+                  "$value": "{color.n3.light.12}"
+                }
+              },
+              "dark": {
+                "1": {
+                  "$type": "color",
+                  "$value": "{color.n3.dark.1}"
+                },
+                "2": {
+                  "$type": "color",
+                  "$value": "{color.n3.dark.2}"
+                },
+                "3": {
+                  "$type": "color",
+                  "$value": "{color.n3.dark.3}"
+                },
+                "4": {
+                  "$type": "color",
+                  "$value": "{color.n3.dark.4}"
+                },
+                "5": {
+                  "$type": "color",
+                  "$value": "{color.n3.dark.5}"
+                },
+                "6": {
+                  "$type": "color",
+                  "$value": "{color.n3.dark.6}"
+                },
+                "7": {
+                  "$type": "color",
+                  "$value": "{color.n3.dark.7}"
+                },
+                "8": {
+                  "$type": "color",
+                  "$value": "{color.n3.dark.8}"
+                },
+                "9": {
+                  "$type": "color",
+                  "$value": "{color.n3.dark.9}"
+                },
+                "10": {
+                  "$type": "color",
+                  "$value": "{color.n3.dark.10}"
+                },
+                "11": {
+                  "$type": "color",
+                  "$value": "{color.n3.dark.11}"
+                },
+                "12": {
+                  "$type": "color",
+                  "$value": "{color.n3.dark.12}"
+                }
+              }
+            }
+          }
+        ],
+        "n4": [
+          {
+            "surface": {
+              "light": {
+                "1": {
+                  "$type": "color",
+                  "$value": "{color.n4.light.1}"
+                },
+                "2": {
+                  "$type": "color",
+                  "$value": "{color.n4.light.2}"
+                },
+                "3": {
+                  "$type": "color",
+                  "$value": "{color.n4.light.3}"
+                },
+                "4": {
+                  "$type": "color",
+                  "$value": "{color.n4.light.4}"
+                },
+                "5": {
+                  "$type": "color",
+                  "$value": "{color.n4.light.5}"
+                },
+                "6": {
+                  "$type": "color",
+                  "$value": "{color.n4.light.6}"
+                },
+                "7": {
+                  "$type": "color",
+                  "$value": "{color.n4.light.7}"
+                },
+                "8": {
+                  "$type": "color",
+                  "$value": "{color.n4.light.8}"
+                },
+                "9": {
+                  "$type": "color",
+                  "$value": "{color.n4.light.9}"
+                },
+                "10": {
+                  "$type": "color",
+                  "$value": "{color.n4.light.10}"
+                },
+                "11": {
+                  "$type": "color",
+                  "$value": "{color.n4.light.11}"
+                },
+                "12": {
+                  "$type": "color",
+                  "$value": "{color.n4.light.12}"
+                }
+              },
+              "dark": {
+                "1": {
+                  "$type": "color",
+                  "$value": "{color.n4.dark.1}"
+                },
+                "2": {
+                  "$type": "color",
+                  "$value": "{color.n4.dark.2}"
+                },
+                "3": {
+                  "$type": "color",
+                  "$value": "{color.n4.dark.3}"
+                },
+                "4": {
+                  "$type": "color",
+                  "$value": "{color.n4.dark.4}"
+                },
+                "5": {
+                  "$type": "color",
+                  "$value": "{color.n4.dark.5}"
+                },
+                "6": {
+                  "$type": "color",
+                  "$value": "{color.n4.dark.6}"
+                },
+                "7": {
+                  "$type": "color",
+                  "$value": "{color.n4.dark.7}"
+                },
+                "8": {
+                  "$type": "color",
+                  "$value": "{color.n4.dark.8}"
+                },
+                "9": {
+                  "$type": "color",
+                  "$value": "{color.n4.dark.9}"
+                },
+                "10": {
+                  "$type": "color",
+                  "$value": "{color.n4.dark.10}"
+                },
+                "11": {
+                  "$type": "color",
+                  "$value": "{color.n4.dark.11}"
+                },
+                "12": {
+                  "$type": "color",
+                  "$value": "{color.n4.dark.12}"
+                }
+              }
+            }
+          }
+        ],
+        "n5": [
+          {
+            "surface": {
+              "light": {
+                "1": {
+                  "$type": "color",
+                  "$value": "{color.n5.light.1}"
+                },
+                "2": {
+                  "$type": "color",
+                  "$value": "{color.n5.light.2}"
+                },
+                "3": {
+                  "$type": "color",
+                  "$value": "{color.n5.light.3}"
+                },
+                "4": {
+                  "$type": "color",
+                  "$value": "{color.n5.light.4}"
+                },
+                "5": {
+                  "$type": "color",
+                  "$value": "{color.n5.light.5}"
+                },
+                "6": {
+                  "$type": "color",
+                  "$value": "{color.n5.light.6}"
+                },
+                "7": {
+                  "$type": "color",
+                  "$value": "{color.n5.light.7}"
+                },
+                "8": {
+                  "$type": "color",
+                  "$value": "{color.n5.light.8}"
+                },
+                "9": {
+                  "$type": "color",
+                  "$value": "{color.n5.light.9}"
+                },
+                "10": {
+                  "$type": "color",
+                  "$value": "{color.n5.light.10}"
+                },
+                "11": {
+                  "$type": "color",
+                  "$value": "{color.n5.light.11}"
+                },
+                "12": {
+                  "$type": "color",
+                  "$value": "{color.n5.light.12}"
+                }
+              },
+              "dark": {
+                "1": {
+                  "$type": "color",
+                  "$value": "{color.n5.dark.1}"
+                },
+                "2": {
+                  "$type": "color",
+                  "$value": "{color.n5.dark.2}"
+                },
+                "3": {
+                  "$type": "color",
+                  "$value": "{color.n5.dark.3}"
+                },
+                "4": {
+                  "$type": "color",
+                  "$value": "{color.n5.dark.4}"
+                },
+                "5": {
+                  "$type": "color",
+                  "$value": "{color.n5.dark.5}"
+                },
+                "6": {
+                  "$type": "color",
+                  "$value": "{color.n5.dark.6}"
+                },
+                "7": {
+                  "$type": "color",
+                  "$value": "{color.n5.dark.7}"
+                },
+                "8": {
+                  "$type": "color",
+                  "$value": "{color.n5.dark.8}"
+                },
+                "9": {
+                  "$type": "color",
+                  "$value": "{color.n5.dark.9}"
+                },
+                "10": {
+                  "$type": "color",
+                  "$value": "{color.n5.dark.10}"
+                },
+                "11": {
+                  "$type": "color",
+                  "$value": "{color.n5.dark.11}"
+                },
+                "12": {
+                  "$type": "color",
+                  "$value": "{color.n5.dark.12}"
+                }
+              }
+            }
+          }
+        ],
+        "n6": [
+          {
+            "surface": {
+              "light": {
+                "1": {
+                  "$type": "color",
+                  "$value": "{color.n6.light.1}"
+                },
+                "2": {
+                  "$type": "color",
+                  "$value": "{color.n6.light.2}"
+                },
+                "3": {
+                  "$type": "color",
+                  "$value": "{color.n6.light.3}"
+                },
+                "4": {
+                  "$type": "color",
+                  "$value": "{color.n6.light.4}"
+                },
+                "5": {
+                  "$type": "color",
+                  "$value": "{color.n6.light.5}"
+                },
+                "6": {
+                  "$type": "color",
+                  "$value": "{color.n6.light.6}"
+                },
+                "7": {
+                  "$type": "color",
+                  "$value": "{color.n6.light.7}"
+                },
+                "8": {
+                  "$type": "color",
+                  "$value": "{color.n6.light.8}"
+                },
+                "9": {
+                  "$type": "color",
+                  "$value": "{color.n6.light.9}"
+                },
+                "10": {
+                  "$type": "color",
+                  "$value": "{color.n6.light.10}"
+                },
+                "11": {
+                  "$type": "color",
+                  "$value": "{color.n6.light.11}"
+                },
+                "12": {
+                  "$type": "color",
+                  "$value": "{color.n6.light.12}"
+                }
+              },
+              "dark": {
+                "1": {
+                  "$type": "color",
+                  "$value": "{color.n6.dark.1}"
+                },
+                "2": {
+                  "$type": "color",
+                  "$value": "{color.n6.dark.2}"
+                },
+                "3": {
+                  "$type": "color",
+                  "$value": "{color.n6.dark.3}"
+                },
+                "4": {
+                  "$type": "color",
+                  "$value": "{color.n6.dark.4}"
+                },
+                "5": {
+                  "$type": "color",
+                  "$value": "{color.n6.dark.5}"
+                },
+                "6": {
+                  "$type": "color",
+                  "$value": "{color.n6.dark.6}"
+                },
+                "7": {
+                  "$type": "color",
+                  "$value": "{color.n6.dark.7}"
+                },
+                "8": {
+                  "$type": "color",
+                  "$value": "{color.n6.dark.8}"
+                },
+                "9": {
+                  "$type": "color",
+                  "$value": "{color.n6.dark.9}"
+                },
+                "10": {
+                  "$type": "color",
+                  "$value": "{color.n6.dark.10}"
+                },
+                "11": {
+                  "$type": "color",
+                  "$value": "{color.n6.dark.11}"
+                },
+                "12": {
+                  "$type": "color",
+                  "$value": "{color.n6.dark.12}"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "default": "n1"
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/modifiers/surface"
+    }
+  ],
+  "$extensions": {
+    "io.atom63.css": {
+      "attribute": "data-a63-surface"
+    }
+  }
+}

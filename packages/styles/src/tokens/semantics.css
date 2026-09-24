@@ -8,6 +8,18 @@
  * reverse. See packages/styles/README.md (the mirror rule).
  */
 
+/*
+ * Surface tint — --a63-surface-tint (0%..100%) bends the neutrals toward the brand
+ * hue. Rather than mixing all 24 raw ramp stops, only the semantic surface and
+ * border tokens below mix toward a lightness-matched --a63-brand-* step: about
+ * 12 color-mixes instead of 144. Themes that fully re-skin surfaces (aqua and
+ * terminal) define their own surface identity and do not receive the tint.
+ * Tint 0 is neutral.
+ */
+:root {
+  --a63-surface-tint: 0%;
+}
+
 :root,
 .light,
 [data-a63-mode='light'] {

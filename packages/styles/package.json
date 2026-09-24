@@ -84,6 +84,7 @@
     "./tokens/semantics": "./src/tokens/semantics.css",
     "./tokens/space": "./src/tokens/space.css",
     "./tokens/surface": "./src/tokens/surface.css",
+    "./tokens/surface.resolver.json": "./src/tokens/surface.resolver.json",
     "./utils": "./src/utils/index.css",
     "./utils/code-highlighting": "./src/utils/code-highlighting.css",
     "./utils/debug": "./src/utils/debug.css",

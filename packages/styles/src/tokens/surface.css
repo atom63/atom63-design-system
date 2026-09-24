@@ -1,25 +1,11 @@
 /*
- * Surface (neutral) axis.
+ * Generated from src/tokens/surface.resolver.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
  *
- * Two personalization knobs for the neutrals:
- *   1. PALETTE — [data-a63-surface="n1".."n6"] remaps the neutral ramp
- *      (--surface-light-* / --surface-dark-*) to one of the six neutral palettes.
- *   2. TINT    — --a63-surface-tint (0%..100%) bends the neutrals toward the brand
- *      hue. Rather than mixing all 24 raw ramp stops (as a Tailwind app would), we
- *      mix only the ~6 SEMANTIC surface/border tokens the system actually consumes,
- *      in tokens/semantics.css, each toward a lightness-matched --a63-brand-* step.
- *      That's ~12 color-mixes instead of 144, and it "just works" because those
- *      tokens sit at the mode scope, co-located with surface + brand + tint on the
- *      personalization root. Themes that fully re-skin surfaces (aqua/terminal)
- *      define their own surface identity and do not receive the brand tint.
- *
- * n1 is the default palette (matches tokens/foundation/aliases.css); tint 0 = neutral.
+ * Surface (neutral) palette axis. [data-a63-surface="n1".."n6"] remaps the neutral ramp
+ * (--surface-light-* / --surface-dark-*) to one of the six neutral palettes; n1 is the default.
+ * The second surface knob, --a63-surface-tint, lives with the tokens it bends in semantics.css.
  */
-
-:root {
-  --a63-surface-tint: 0%;
-}
-
 :root,
 [data-a63-surface='n1'] {
   --surface-light-1: var(--color-n1-light-1);

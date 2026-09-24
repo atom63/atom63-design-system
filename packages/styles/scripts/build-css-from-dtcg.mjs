@@ -11,6 +11,11 @@
  * becomes `var(--duration-150)`; aliases may point into any source file, and an
  * alias to a token that does not exist fails the build.
  *
+ * A `<name>.resolver.json` (DTCG Resolver Module 2025.10) with one modifier whose
+ * contexts hold inline token groups produces `<name>.css` with one rule per
+ * context, `[data-a63-<axis>='<context>']`. The default context also applies at
+ * `:root`. The attribute comes from `$extensions["io.atom63.css"].attribute`.
+ *
  * Usage: node scripts/build-css-from-dtcg.mjs [--check]
  */
 import { readdir, readFile, writeFile } from 'node:fs/promises'
@@ -122,47 +127,81 @@ async function findSources(directory) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const entryPath = path.join(directory, entry.name)
     if (entry.isDirectory()) found.push(...(await findSources(entryPath)))
-    else if (entry.name.endsWith('.tokens.json')) found.push(entryPath)
+    else if (/\.(tokens|resolver)\.json$/.test(entry.name)) found.push(entryPath)
   }
   return found.sort()
 }
 
-function render(sourcePath, document, knownNames) {
+/** Expands a source file into CSS rules: [{ selector, groups }]. */
+function toRules(sourcePath, document) {
+  if (sourcePath.endsWith('.tokens.json')) return [{ selector: ':root', groups: [document] }]
+  if (document.version !== '2025.10')
+    throw new Error(`${sourcePath}: resolver version must be 2025.10`)
+  const modifiers = Object.entries(document.modifiers ?? {})
+  if (modifiers.length !== 1) throw new Error(`${sourcePath}: expected exactly one modifier`)
+  const [[modifierName, modifier]] = modifiers
+  const attribute = document.$extensions?.['io.atom63.css']?.attribute
+  if (!attribute) throw new Error(`${sourcePath}: missing $extensions["io.atom63.css"].attribute`)
+  if (!Object.hasOwn(modifier.contexts, modifier.default)) {
+    throw new Error(
+      `${sourcePath}: default context "${modifier.default}" of "${modifierName}" is missing`
+    )
+  }
+  return Object.entries(modifier.contexts).map(([context, sources]) => {
+    const scoped = `[${attribute}='${context}']`
+    for (const source of sources) {
+      if (Object.hasOwn(source, '$ref'))
+        throw new Error(`${sourcePath}: only inline contexts are supported`)
+    }
+    return {
+      selector: context === modifier.default ? `:root,\n${scoped}` : scoped,
+      groups: sources,
+    }
+  })
+}
+
+function tokensOf(rules) {
+  return rules.flatMap(rule => rule.groups.flatMap(group => [...walk(group, [], undefined)]))
+}
+
+function render(sourcePath, document, rules, knownNames) {
   const relativeSource = path.relative(packageRoot, sourcePath)
-  const declarations = [...walk(document, [], undefined)].map(([name, type, value]) => [
-    name,
-    formatValue(type, value, name, knownNames),
-  ])
-  const description = document.$description
-    ? `\n *\n${document.$description
+  const summary = document.$description ?? document.description
+  const description = summary
+    ? `\n *\n${summary
         .split('\n')
         .map(line => ` * ${line}`.trimEnd())
         .join('\n')}`
     : ''
+  const blocks = rules.map(rule => {
+    const declarations = tokensOf([rule]).map(
+      ([name, type, value]) => `  --${name}: ${formatValue(type, value, name, knownNames)};`
+    )
+    return `${rule.selector} {\n${declarations.join('\n')}\n}\n`
+  })
   return (
     `/*\n * Generated from ${relativeSource} by scripts/build-css-from-dtcg.mjs. Do not edit;\n` +
     ` * change the DTCG source and run \`pnpm --filter @atom63/styles generate:tokens\`.${description}\n */\n` +
-    `:root {\n${declarations.map(([name, value]) => `  --${name}: ${value};`).join('\n')}\n}\n`
+    blocks.join('\n')
   )
 }
 
 const check = process.argv.includes('--check')
 const sources = []
 for (const sourcePath of await findSources(tokensRoot)) {
-  sources.push([sourcePath, JSON.parse(await readFile(sourcePath, 'utf8'))])
+  const document = JSON.parse(await readFile(sourcePath, 'utf8'))
+  sources.push([sourcePath, document, toRules(sourcePath, document)])
 }
 // Every token name across all sources, so aliases can point into any file.
-const knownNames = new Set(
-  sources.flatMap(([, document]) => [...walk(document, [], undefined)].map(([name]) => name))
-)
+const knownNames = new Set(sources.flatMap(([, , rules]) => tokensOf(rules).map(([name]) => name)))
 
 const stale = []
-for (const [sourcePath, document] of sources) {
-  const cssPath = sourcePath.replace(/\.tokens\.json$/, '.css')
+for (const [sourcePath, document, rules] of sources) {
+  const cssPath = sourcePath.replace(/\.(tokens|resolver)\.json$/, '.css')
   // Format with the repository config, like the other generators, so the output
   // passes format:check and --check compares like with like.
   const options = (await prettier.resolveConfig(cssPath)) ?? {}
-  const css = await prettier.format(render(sourcePath, document, knownNames), {
+  const css = await prettier.format(render(sourcePath, document, rules, knownNames), {
     ...options,
     filepath: cssPath,
   })
