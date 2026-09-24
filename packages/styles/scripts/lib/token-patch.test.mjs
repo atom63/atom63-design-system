@@ -12,7 +12,7 @@ const foundation = path.resolve(
 )
 const load = name => [name, JSON.parse(readFileSync(path.join(foundation, name), 'utf8'))]
 const sources = () =>
-  new Map(['primitives.tokens.json', 'palette.tokens.json', 'aliases.tokens.json'].map(load))
+  new Map(['primitives.tokens.json', 'palette.tokens.json', 'motion.tokens.json'].map(load))
 const patch = tokens => ({ format: 'atom63-token-patch', version: 1, tokens })
 const tokensRoot = path.resolve(foundation, '..')
 const withResolvers = () =>
@@ -74,7 +74,6 @@ test('keeps each token in its own color space and units', () => {
     colorSpace: 'oklch',
     components: [0.628, 0.258, 29.234],
   })
-  assert.equal(result.documents.has('aliases.tokens.json'), false)
 })
 
 test('writes nothing when any token cannot be applied', () => {
@@ -83,7 +82,7 @@ test('writes nothing when any token cannot be applied', () => {
     original,
     patch({
       '--color-b1-500': { type: 'COLOR', value: { r: 0.1, g: 0.4, b: 0.9, a: 1 } },
-      '--surface-light-1': { type: 'COLOR', value: { r: 1, g: 1, b: 1, a: 1 } },
+      '--duration-instant': { type: 'FLOAT', value: 10 },
       '--a63-action-primary': { type: 'COLOR', value: { r: 1, g: 1, b: 1, a: 1 } },
       '--spacing-4': { type: 'COLOR', value: { r: 1, g: 1, b: 1, a: 1 } },
     })
@@ -92,8 +91,8 @@ test('writes nothing when any token cannot be applied', () => {
   assert.deepEqual(result.changed, [])
   assert.deepEqual(result.errors.sort(), [
     '--a63-action-primary: not defined in a DTCG source yet',
+    '--duration-instant: an alias in the DTCG source ({duration.none}); point it at another variable instead',
     '--spacing-4: expected a FLOAT, got COLOR',
-    '--surface-light-1: an alias in the DTCG source ({color.n1.light.1}); point it at another variable instead',
   ])
   // The input documents are never mutated.
   assert.equal(original.get('primitives.tokens.json').color.b1['500'].$value.hex, '#2c7fff')
