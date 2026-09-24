@@ -38,7 +38,8 @@ async function findSources(directory) {
 }
 
 const documents = new Map()
-for (const file of await findSources(tokensRoot)) {
+const sourceRoots = [tokensRoot, path.join(packageRoot, 'src/contracts')]
+for (const file of (await Promise.all(sourceRoots.map(findSources))).flat()) {
   documents.set(file, JSON.parse(await readFile(file, 'utf8')))
 }
 

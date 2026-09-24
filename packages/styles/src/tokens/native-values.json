@@ -1,0 +1,8 @@
+{
+  "$description": "CSS-native token values: values with no DTCG type, declared by hand in *.native.css files. Each entry says why it cannot be a DTCG token. build-css-from-dtcg.mjs --check fails on an unlisted declaration or a stale entry. See docs/design-system/token-single-source.md.",
+  "values": {
+    "--a63-action-control-gloss": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
+    "--a63-action-control-highlight": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
+    "--a63-action-control-press-transform": "A CSS transform (translateY / scale); DTCG has no transform type."
+  }
+}

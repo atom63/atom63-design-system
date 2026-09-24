@@ -1,0 +1,66 @@
+{
+  "version": "2025.10",
+  "description": "Skeleton appearance contract.\n\nRenderers may use different masking primitives, but the base surface and\nhighlight emphasis remain shared design semantics.",
+  "sets": {
+    "base": {
+      "sources": [
+        {
+          "a63": {
+            "skeleton": {
+              "base": {
+                "$type": "color",
+                "$value": "{a63.surface.muted}"
+              },
+              "highlight": {
+                "$type": "color",
+                "$value": "{color.white.60}"
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":root"
+        }
+      }
+    }
+  },
+  "modifiers": {
+    "mode": {
+      "default": "light",
+      "contexts": {
+        "light": [],
+        "dark": [
+          {
+            "a63": {
+              "skeleton": {
+                "highlight": {
+                  "$type": "color",
+                  "$value": "{color.white.10}"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/base"
+    },
+    {
+      "$ref": "#/modifiers/mode"
+    }
+  ],
+  "$extensions": {
+    "io.atom63.css": {
+      "attribute": "data-a63-mode",
+      "selectors": {
+        "light": ":root,\n.light,\n[data-a63-mode='light']",
+        "dark": ":is(.dark, [data-a63-mode='dark'])"
+      }
+    }
+  }
+}

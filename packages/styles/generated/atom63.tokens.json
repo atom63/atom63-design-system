@@ -3,6 +3,7 @@
   "generatedBy": "packages/styles/scripts/generate-token-manifest.mjs",
   "generatedFrom": [
     "packages/styles/src/contracts/action.css",
+    "packages/styles/src/contracts/action.native.css",
     "packages/styles/src/contracts/badge.css",
     "packages/styles/src/contracts/choice.css",
     "packages/styles/src/contracts/control.css",
@@ -41,7 +42,7 @@
     "packages/styles/src/tokens/type-scale.css"
   ],
   "summary": {
-    "sourceFiles": 37,
+    "sourceFiles": 38,
     "declarations": 1470,
     "uniqueCssVariables": 1021,
     "figmaMappedDeclarations": 1449
@@ -97,7 +98,7 @@
       "cssVar": "--a63-action-control-gloss",
       "type": "string",
       "value": "var(--a63-control-gloss)",
-      "sourceFile": "packages/styles/src/contracts/action.css",
+      "sourceFile": "packages/styles/src/contracts/action.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "aliases": ["--a63-control-gloss"],
@@ -108,7 +109,7 @@
       "cssVar": "--a63-action-control-highlight",
       "type": "string",
       "value": "var(--a63-control-highlight)",
-      "sourceFile": "packages/styles/src/contracts/action.css",
+      "sourceFile": "packages/styles/src/contracts/action.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "aliases": ["--a63-control-highlight"],
@@ -119,7 +120,7 @@
       "cssVar": "--a63-action-control-press-transform",
       "type": "string",
       "value": "var(--a63-control-press-transform)",
-      "sourceFile": "packages/styles/src/contracts/action.css",
+      "sourceFile": "packages/styles/src/contracts/action.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "aliases": ["--a63-control-press-transform"],

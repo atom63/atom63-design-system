@@ -1,0 +1,11 @@
+/*
+ * CSS-native values of the action contract: values with no DTCG type. The rest of
+ * the contract is generated from action.tokens.json. Each declaration here is listed
+ * in native-values.json; see docs/design-system/token-single-source.md.
+ */
+
+:root {
+  --a63-action-control-gloss: var(--a63-control-gloss);
+  --a63-action-control-highlight: var(--a63-control-highlight);
+  --a63-action-control-press-transform: var(--a63-control-press-transform);
+}

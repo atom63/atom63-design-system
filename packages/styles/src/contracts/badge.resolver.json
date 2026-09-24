@@ -1,0 +1,366 @@
+{
+  "version": "2025.10",
+  "description": "Badge palette contract — category/tag hues owned by @atom63/styles.\n\nRecipes read --a63-badge-*-accent / --a63-badge-*-foreground only. Accent\nreferences foundation primitives; foreground flips for dark mode contrast.",
+  "modifiers": {
+    "mode": {
+      "default": "light",
+      "contexts": {
+        "light": [
+          {
+            "a63": {
+              "badge": {
+                "red": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.red.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.red.700}"
+                  }
+                },
+                "orange": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.orange.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.orange.800}"
+                  }
+                },
+                "amber": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.amber.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.amber.800}"
+                  }
+                },
+                "yellow": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.yellow.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.yellow.800}"
+                  }
+                },
+                "lime": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.lime.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.lime.800}"
+                  }
+                },
+                "green": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.green.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.green.800}"
+                  }
+                },
+                "emerald": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.emerald.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.emerald.800}"
+                  }
+                },
+                "teal": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.teal.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.teal.800}"
+                  }
+                },
+                "cyan": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.cyan.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.cyan.800}"
+                  }
+                },
+                "sky": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.sky.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.sky.700}"
+                  }
+                },
+                "blue": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.blue.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.blue.700}"
+                  }
+                },
+                "indigo": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.indigo.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.indigo.700}"
+                  }
+                },
+                "violet": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.violet.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.violet.700}"
+                  }
+                },
+                "purple": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.purple.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.purple.700}"
+                  }
+                },
+                "fuchsia": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.fuchsia.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.fuchsia.700}"
+                  }
+                },
+                "pink": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.pink.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.pink.700}"
+                  }
+                },
+                "rose": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.rose.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.rose.700}"
+                  }
+                },
+                "neutral": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{color.neutral.500}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.neutral.700}"
+                  }
+                },
+                "info": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.info.700}",
+                    "$description": "Status chips: the status color itself is too light for text on its tint."
+                  }
+                },
+                "success": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.success.700}"
+                  }
+                },
+                "warning": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.warning.800}"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "dark": [
+          {
+            "a63": {
+              "badge": {
+                "red": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.red.400}"
+                  }
+                },
+                "orange": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.orange.400}"
+                  }
+                },
+                "amber": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.amber.400}"
+                  }
+                },
+                "yellow": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.yellow.400}"
+                  }
+                },
+                "lime": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.lime.400}"
+                  }
+                },
+                "green": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.green.400}"
+                  }
+                },
+                "emerald": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.emerald.400}"
+                  }
+                },
+                "teal": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.teal.400}"
+                  }
+                },
+                "cyan": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.cyan.400}"
+                  }
+                },
+                "sky": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.sky.400}"
+                  }
+                },
+                "blue": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.blue.400}"
+                  }
+                },
+                "indigo": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.indigo.400}"
+                  }
+                },
+                "violet": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.violet.400}"
+                  }
+                },
+                "purple": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.purple.400}"
+                  }
+                },
+                "fuchsia": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.fuchsia.400}"
+                  }
+                },
+                "pink": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.pink.400}"
+                  }
+                },
+                "rose": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.rose.400}"
+                  }
+                },
+                "neutral": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.neutral.400}"
+                  }
+                },
+                "info": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.info.400}"
+                  }
+                },
+                "success": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.success.400}"
+                  }
+                },
+                "warning": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.warning.400}"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/modifiers/mode"
+    }
+  ],
+  "$extensions": {
+    "io.atom63.css": {
+      "attribute": "data-a63-mode",
+      "selectors": {
+        "light": ":root,\n.light,\n[data-a63-mode='light']",
+        "dark": ":is(.dark, [data-a63-mode='dark'])"
+      }
+    }
+  }
+}

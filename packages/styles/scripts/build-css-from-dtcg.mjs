@@ -1,7 +1,7 @@
 /**
  * Builds token CSS from DTCG source files (Design Tokens Format Module 2025.10).
  *
- * Each `src/tokens/**\/<name>.tokens.json` produces the sibling `<name>.css`: one
+ * Each `src/{tokens,contracts}/**\/<name>.tokens.json` produces the sibling `<name>.css`: one
  * `:root` custom property per token, named by joining the token's group path
  * with `-` (`spacing` > `1` becomes `--spacing-1`). The JSON is the source of
  * truth; the CSS is generated and must not be edited by hand.
@@ -30,6 +30,12 @@
  * placeholders in the expression become `var(--token-path)`, and each must name
  * an existing token. Example: the auto brand ramp,
  * `"var(--color-auto-50, {color.b1.50})"` over `$value` `"{color.b1.50}"`.
+ *
+ * Values with no DTCG type (transforms, `env()`, composite shadows…) live in
+ * hand-written `*.native.css` files. Every declaration there must be listed with a
+ * reason in `src/tokens/native-values.json`, and every listed entry must still
+ * exist; `--check` enforces both, so a new hand-written value needs a reviewed
+ * entry. See docs/design-system/token-single-source.md.
  *
  * Usage: node scripts/build-css-from-dtcg.mjs [--check]
  */
@@ -243,21 +249,47 @@ function render(sourcePath, document, rules, knownNames) {
     })
     return `${rule.selector} {\n${declarations.join('\n')}\n}\n`
   })
+  // A split contract keeps one entry point: its generated CSS imports the
+  // hand-written native part (`$extensions["io.atom63.css"].imports`).
+  const imports = (document.$extensions?.['io.atom63.css']?.imports ?? [])
+    .map(file => `@import '${file}';\n`)
+    .join('')
   return (
     `/*\n * Generated from ${relativeSource} by scripts/build-css-from-dtcg.mjs. Do not edit;\n` +
     ` * change the DTCG source and run \`pnpm --filter @atom63/styles generate:tokens\`.${description}\n */\n` +
+    (imports ? `${imports}\n` : '') +
     blocks.join('\n')
   )
 }
 
 const check = process.argv.includes('--check')
 const sources = []
-for (const sourcePath of await findSources(tokensRoot)) {
+const sourceRoots = [tokensRoot, path.join(packageRoot, 'src/contracts')]
+for (const sourcePath of (await Promise.all(sourceRoots.map(findSources))).flat()) {
   const document = JSON.parse(await readFile(sourcePath, 'utf8'))
   sources.push([sourcePath, document, toRules(sourcePath, document)])
 }
-// Every token name across all sources, so aliases can point into any file.
+// Every token name across all sources, so aliases can point into any file, plus
+// every custom property the package's hand-written CSS declares: while a layer is
+// migrated, a DTCG token may alias one that is still written in CSS.
 const knownNames = new Set(sources.flatMap(([, , rules]) => tokensOf(rules).map(([name]) => name)))
+async function findCss(directory) {
+  const found = []
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const entryPath = path.join(directory, entry.name)
+    if (entry.isDirectory()) found.push(...(await findCss(entryPath)))
+    else if (entry.name.endsWith('.css')) found.push(entryPath)
+  }
+  return found
+}
+const generatedCss = new Set(
+  sources.map(([sourcePath]) => sourcePath.replace(/\.(tokens|resolver)\.json$/, '.css'))
+)
+for (const file of await findCss(path.join(packageRoot, 'src'))) {
+  if (generatedCss.has(file)) continue
+  const css = (await readFile(file, 'utf8')).replaceAll(/\/\*[\s\S]*?\*\//g, '')
+  for (const [, name] of css.matchAll(/--([\w-]+)\s*:/g)) knownNames.add(name)
+}
 
 const stale = []
 for (const [sourcePath, document, rules] of sources) {
@@ -275,6 +307,39 @@ for (const [sourcePath, document, rules] of sources) {
   } else {
     await writeFile(cssPath, css)
   }
+}
+
+// CSS-native values: every declaration in a *.native.css file is listed with a reason.
+const srcRoot = path.join(packageRoot, 'src')
+async function findNative(directory) {
+  const found = []
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const entryPath = path.join(directory, entry.name)
+    if (entry.isDirectory()) found.push(...(await findNative(entryPath)))
+    else if (entry.name.endsWith('.native.css')) found.push(entryPath)
+  }
+  return found.sort()
+}
+const nativeList = JSON.parse(await readFile(path.join(tokensRoot, 'native-values.json'), 'utf8'))
+const declaredNative = new Set()
+for (const file of await findNative(srcRoot)) {
+  const css = (await readFile(file, 'utf8')).replaceAll(/\/\*[\s\S]*?\*\//g, '')
+  for (const [, name] of css.matchAll(/(--[\w-]+)\s*:/g)) declaredNative.add(name)
+}
+const unlisted = [...declaredNative].filter(name => !nativeList.values[name])
+const unused = Object.keys(nativeList.values).filter(name => !declaredNative.has(name))
+if (unlisted.length || unused.length) {
+  process.stderr.write(
+    [
+      ...unlisted.map(
+        name => `${name}: declared in a *.native.css file but not listed in native-values.json`
+      ),
+      ...unused.map(
+        name => `${name}: listed in native-values.json but no *.native.css file declares it`
+      ),
+    ].join('\n') + '\n'
+  )
+  process.exit(1)
 }
 
 if (stale.length) {
