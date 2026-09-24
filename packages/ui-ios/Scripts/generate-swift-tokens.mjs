@@ -27,6 +27,7 @@ const variablesByToken = new Map(
     collection.variables.map(variable => [variable.token, { collection, variable }])
   )
 )
+const defaultTheme = 'modern'
 const defaultModes = {
   'Atom63 Brand': 'b1',
   'Atom63 Surface': 'n1',
@@ -145,9 +146,14 @@ function resolveColor(token, mode, seen = []) {
   if (!found) throw new Error(`${token} is not in the Figma sync model`)
   if (seen.includes(token)) throw new Error(`Alias cycle: ${[...seen, token].join(' -> ')}`)
   const { collection, variable } = found
+  // The Theme collection's modes are theme × mode (`modern-dark`); iOS ships the
+  // default theme until themes are native (roadmap decision D2).
+  const themed = `${defaultTheme}-${mode}`
   const modeName = collection.modes.includes(mode)
     ? mode
-    : (defaultModes[collection.name] ?? collection.modes[0])
+    : collection.modes.includes(themed)
+      ? themed
+      : (defaultModes[collection.name] ?? collection.modes[0])
   const entry = variable.values[modeName]
   if (entry?.alias) return resolveColor(entry.alias, mode, [...seen, token])
   const value = entry?.value

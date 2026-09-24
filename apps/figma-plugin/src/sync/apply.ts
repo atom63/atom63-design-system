@@ -44,6 +44,8 @@ export interface VariableLike {
   setValueForMode(modeId: string, value: RawValue): void
   getPluginData(key: string): string
   setPluginData(key: string, value: string): void
+  /** Hides a retired variable from library publishing (Figma `Variable`). */
+  hiddenFromPublishing?: boolean
 }
 
 export interface VariablesApi {
@@ -52,6 +54,15 @@ export interface VariablesApi {
   createVariableCollection(name: string): CollectionLike
   createVariable(name: string, collection: CollectionLike, type: SyncVariableType): VariableLike
   createVariableAlias(variable: VariableLike): RawValue
+  /**
+   * Moves every binding in the document (nodes, styles, other variables' aliases)
+   * from one variable to another, and counts the bindings it could not move.
+   * Optional so tests can run without a document.
+   */
+  rebindBindings?(
+    from: VariableLike,
+    to: VariableLike
+  ): Promise<{ rebound: number; remaining: number }>
 }
 
 export interface ApplyResult {
@@ -59,7 +70,15 @@ export interface ApplyResult {
   addedModes: number
   created: number
   updated: number
+  /** Tokens moved to another collection; their old variables are retired, not deleted. */
+  moved: number
+  bindingsRebound: number
+  /** Bindings still on a retired variable; the plugin reports them. */
+  bindingsRemaining: number
 }
+
+/** Prefix of a retired variable's name: kept, so no design loses a binding. */
+export const MOVED_PREFIX = '(moved)'
 
 function isAlias(value: unknown): value is { type: 'VARIABLE_ALIAS'; id: string } {
   return (
@@ -145,7 +164,15 @@ export async function applyPlan(
   model: SyncModel,
   plan: SyncPlan
 ): Promise<ApplyResult> {
-  const result: ApplyResult = { createdCollections: 0, addedModes: 0, created: 0, updated: 0 }
+  const result: ApplyResult = {
+    createdCollections: 0,
+    addedModes: 0,
+    created: 0,
+    updated: 0,
+    moved: 0,
+    bindingsRebound: 0,
+    bindingsRemaining: 0,
+  }
   const { collections, variables } = await loadCollections(api, model)
   const collectionByName = new Map(collections.map(collection => [collection.name, collection]))
 
@@ -223,6 +250,30 @@ export async function applyPlan(
         variable.setValueForMode(modeId, value.value)
       }
     }
+  }
+
+  // Moved tokens: point everything at the new variable, then retire the old one.
+  for (const { change, variable } of targets) {
+    if (change.kind !== 'create' || !change.moveFrom) continue
+    const old =
+      variables.get(change.moveFrom.id) ?? (await api.getVariableByIdAsync(change.moveFrom.id))
+    if (!old) continue
+    for (const other of variables.values()) {
+      for (const [modeId, raw] of Object.entries(other.valuesByMode)) {
+        if (isAlias(raw) && raw.id === old.id) {
+          other.setValueForMode(modeId, api.createVariableAlias(variable))
+        }
+      }
+    }
+    if (api.rebindBindings) {
+      const { rebound, remaining } = await api.rebindBindings(old, variable)
+      result.bindingsRebound += rebound
+      result.bindingsRemaining += remaining
+    }
+    old.name = `${MOVED_PREFIX}/${old.name}`
+    old.setPluginData(TOKEN_KEY, '')
+    old.hiddenFromPublishing = true
+    result.moved += 1
   }
 
   return result

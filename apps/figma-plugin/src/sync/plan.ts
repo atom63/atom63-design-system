@@ -5,6 +5,11 @@
  *
  * Variables are matched by the `token` plugin data the sync writes, then by
  * name inside the collection, so a renamed token path updates in place.
+ *
+ * A token whose variable sits in another Atom63 collection than the model's
+ * (Figma cannot move a variable between collections) is planned as a create
+ * with `moveFrom`: apply.ts creates the new variable, moves bindings and
+ * aliases onto it, and retires the old one instead of leaving a stale copy.
  */
 
 export type SyncVariableType = 'COLOR' | 'FLOAT' | 'STRING'
@@ -56,7 +61,13 @@ export interface SnapshotCollection {
 }
 
 export type VariableChange =
-  | { kind: 'create'; collection: string; variable: SyncVariable }
+  | {
+      kind: 'create'
+      collection: string
+      variable: SyncVariable
+      /** The document variable this token moves from, in another collection. */
+      moveFrom?: { id: string; collection: string }
+    }
   | {
       kind: 'update'
       collection: string
@@ -86,6 +97,8 @@ export interface SyncPlan {
   collections: CollectionPlan[]
   changes: VariableChange[]
   totals: {
+    /** Tokens moving to another collection (counted in `create` too). */
+    move: number
     create: number
     update: number
     unchanged: number
@@ -115,6 +128,23 @@ export function valuesEqual(expected: SyncValue, actual: SyncValue | undefined):
 export function planSync(model: SyncModel, snapshot: SnapshotCollection[]): SyncPlan {
   const changes: VariableChange[] = []
   const collections: CollectionPlan[] = []
+
+  // Where each token's variable lives now, and where the model puts it.
+  const modelCollectionOf = new Map(
+    model.collections.flatMap(collection =>
+      collection.variables.map(variable => [variable.token, collection.name] as const)
+    )
+  )
+  const documentVariableOf = new Map(
+    snapshot.flatMap(collection =>
+      collection.variables
+        .filter(variable => variable.token)
+        .map(
+          variable =>
+            [variable.token as string, { id: variable.id, collection: collection.name }] as const
+        )
+    )
+  )
 
   for (const collection of model.collections) {
     const existing = snapshot.find(candidate => candidate.name === collection.name)
@@ -152,7 +182,12 @@ export function planSync(model: SyncModel, snapshot: SnapshotCollection[]): Sync
       const current = byToken.get(variable.token) ?? byName.get(variable.name)
       if (!current) {
         plan.create += 1
-        changes.push({ kind: 'create', collection: collection.name, variable })
+        const elsewhere = documentVariableOf.get(variable.token)
+        changes.push(
+          elsewhere && elsewhere.collection !== collection.name
+            ? { kind: 'create', collection: collection.name, variable, moveFrom: elsewhere }
+            : { kind: 'create', collection: collection.name, variable }
+        )
         continue
       }
       matched.add(current.id)
@@ -183,7 +218,14 @@ export function planSync(model: SyncModel, snapshot: SnapshotCollection[]): Sync
     const modelTokens = new Set(collection.variables.map(variable => variable.token))
     plan.orphaned =
       existing?.variables
-        .filter(item => item.token && !matched.has(item.id) && !modelTokens.has(item.token))
+        .filter(
+          item =>
+            item.token &&
+            !matched.has(item.id) &&
+            !modelTokens.has(item.token) &&
+            // A token the model moved to another collection is not an orphan.
+            !modelCollectionOf.has(item.token)
+        )
         .map(item => item.name) ?? []
 
     collections.push(plan)
@@ -195,6 +237,7 @@ export function planSync(model: SyncModel, snapshot: SnapshotCollection[]): Sync
     collections,
     changes,
     totals: {
+      move: changes.filter(change => change.kind === 'create' && change.moveFrom).length,
       create: sum('create'),
       update: sum('update'),
       unchanged: sum('unchanged'),

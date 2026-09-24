@@ -3,12 +3,1850 @@
   "generatedBy": "packages/styles/scripts/generate-figma-sync.mjs",
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
-    "collections": 13,
-    "variables": 989,
-    "aliasValues": 454,
-    "skipped": 119
+    "collections": 14,
+    "variables": 998,
+    "aliasValues": 571,
+    "skipped": 183
   },
   "collections": [
+    {
+      "name": "Atom63 Theme",
+      "modes": [
+        "modern-light",
+        "modern-dark",
+        "aqua-light",
+        "aqua-dark",
+        "retro-light",
+        "retro-dark",
+        "terminal-light",
+        "terminal-dark"
+      ],
+      "variables": [
+        {
+          "name": "action/neutral",
+          "token": "--a63-action-neutral",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--surface-light-12"
+            },
+            "modern-dark": {
+              "alias": "--surface-dark-12"
+            },
+            "aqua-light": {
+              "alias": "--surface-light-12"
+            },
+            "aqua-dark": {
+              "alias": "--surface-dark-12"
+            },
+            "retro-light": {
+              "alias": "--surface-light-12"
+            },
+            "retro-dark": {
+              "alias": "--surface-dark-12"
+            },
+            "terminal-light": {
+              "value": {
+                "r": 0.964615,
+                "g": 0.964621,
+                "b": 0.964679,
+                "a": 1
+              }
+            },
+            "terminal-dark": {
+              "value": {
+                "r": 0.135914,
+                "g": 0.169418,
+                "b": 0.221646,
+                "a": 1
+              }
+            }
+          }
+        },
+        {
+          "name": "action/neutral/foreground",
+          "token": "--a63-action-neutral-foreground",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--surface-light-2"
+            },
+            "modern-dark": {
+              "alias": "--surface-dark-1"
+            },
+            "aqua-light": {
+              "alias": "--surface-light-2"
+            },
+            "aqua-dark": {
+              "alias": "--surface-dark-1"
+            },
+            "retro-light": {
+              "alias": "--surface-light-2"
+            },
+            "retro-dark": {
+              "alias": "--surface-dark-1"
+            },
+            "terminal-light": {
+              "value": {
+                "r": 0.08551,
+                "g": 0.320182,
+                "b": 0.672018,
+                "a": 1
+              }
+            },
+            "terminal-dark": {
+              "alias": "--a63-text-accent"
+            }
+          }
+        },
+        {
+          "name": "border/control",
+          "token": "--a63-border-control",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--surface-light-5"
+            },
+            "modern-dark": {
+              "alias": "--surface-dark-7"
+            },
+            "aqua-light": {
+              "alias": "--surface-light-5"
+            },
+            "aqua-dark": {
+              "alias": "--surface-dark-7"
+            },
+            "retro-light": {
+              "alias": "--surface-light-5"
+            },
+            "retro-dark": {
+              "alias": "--surface-dark-7"
+            },
+            "terminal-light": {
+              "value": {
+                "r": 0.706556,
+                "g": 0.787999,
+                "b": 0.914529,
+                "a": 1
+              }
+            },
+            "terminal-dark": {
+              "value": {
+                "r": 0.019611,
+                "g": 0.364706,
+                "b": 0.82353,
+                "a": 0.42
+              }
+            }
+          }
+        },
+        {
+          "name": "border/subtle",
+          "token": "--a63-border-subtle",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--surface-light-4"
+            },
+            "modern-dark": {
+              "alias": "--surface-dark-6"
+            },
+            "aqua-light": {
+              "alias": "--surface-light-4"
+            },
+            "aqua-dark": {
+              "alias": "--surface-dark-6"
+            },
+            "retro-light": {
+              "alias": "--surface-light-4"
+            },
+            "retro-dark": {
+              "alias": "--surface-dark-6"
+            },
+            "terminal-light": {
+              "value": {
+                "r": 0.789074,
+                "g": 0.840079,
+                "b": 0.919154,
+                "a": 1
+              }
+            },
+            "terminal-dark": {
+              "value": {
+                "r": 0.019611,
+                "g": 0.364706,
+                "b": 0.82353,
+                "a": 0.22
+              }
+            }
+          }
+        },
+        {
+          "name": "choice/box/shadow",
+          "token": "--a63-choice-box-shadow",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "value": "none"
+            },
+            "modern-dark": {
+              "value": "none"
+            },
+            "aqua-light": {
+              "value": "inset 0 1px 2px color-mix(in oklch, black 14%, transparent),\n    inset 0 -1px 0 color-mix(in oklch, white 50%, transparent)"
+            },
+            "aqua-dark": {
+              "value": "inset 0 1px 2px color-mix(in oklch, black 14%, transparent),\n    inset 0 -1px 0 color-mix(in oklch, white 50%, transparent)"
+            },
+            "retro-light": {
+              "value": "inset 1px 1px 0 color-mix(in oklch, black 24%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, white 42%, transparent)"
+            },
+            "retro-dark": {
+              "value": "inset 1px 1px 0 color-mix(in oklch, black 24%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, white 42%, transparent)"
+            },
+            "terminal-light": {
+              "value": "inset 0 0 5px -2px\n    color-mix(in oklch, rgba(5, 93, 210, 1) 32%, transparent)"
+            },
+            "terminal-dark": {
+              "value": "inset 0 0 5px -2px\n    color-mix(in oklch, rgba(5, 93, 210, 1) 32%, transparent)"
+            }
+          }
+        },
+        {
+          "name": "choice/box/shadow/checked",
+          "token": "--a63-choice-box-shadow-checked",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "value": "none"
+            },
+            "modern-dark": {
+              "value": "none"
+            },
+            "aqua-light": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 34%, transparent),\n    inset 0 -1px 1px color-mix(in oklch, black 16%, transparent)"
+            },
+            "aqua-dark": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 34%, transparent),\n    inset 0 -1px 1px color-mix(in oklch, black 16%, transparent)"
+            },
+            "retro-light": {
+              "value": "inset 1px 1px 0 color-mix(in oklch, white 38%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, black 24%, transparent)"
+            },
+            "retro-dark": {
+              "value": "inset 1px 1px 0 color-mix(in oklch, white 38%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, black 24%, transparent)"
+            },
+            "terminal-light": {
+              "value": "inset 0 0 0 1px color-mix(in oklch, rgba(5, 93, 210, 1) 44%, transparent),\n    0 0 10px -4px color-mix(in oklch, rgba(5, 93, 210, 1) 55%, transparent)"
+            },
+            "terminal-dark": {
+              "value": "inset 0 0 0 1px color-mix(in oklch, rgba(5, 93, 210, 1) 44%, transparent),\n    0 0 10px -4px color-mix(in oklch, rgba(5, 93, 210, 1) 55%, transparent)"
+            }
+          }
+        },
+        {
+          "name": "control/border/width",
+          "token": "--a63-control-border-width",
+          "type": "FLOAT",
+          "values": {
+            "modern-light": {
+              "value": 1
+            },
+            "modern-dark": {
+              "value": 1
+            },
+            "aqua-light": {
+              "value": 1
+            },
+            "aqua-dark": {
+              "value": 1
+            },
+            "retro-light": {
+              "value": 2
+            },
+            "retro-dark": {
+              "value": 2
+            },
+            "terminal-light": {
+              "value": 1
+            },
+            "terminal-dark": {
+              "value": 1
+            }
+          }
+        },
+        {
+          "name": "control/focus/ring/color",
+          "token": "--a63-control-focus-ring-color",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-focus-ring"
+            },
+            "modern-dark": {
+              "alias": "--a63-focus-ring"
+            },
+            "aqua-light": {
+              "alias": "--a63-focus-ring"
+            },
+            "aqua-dark": {
+              "alias": "--a63-focus-ring"
+            },
+            "retro-light": {
+              "alias": "--a63-focus-ring"
+            },
+            "retro-dark": {
+              "alias": "--a63-focus-ring"
+            },
+            "terminal-light": {
+              "value": {
+                "r": 0.019611,
+                "g": 0.364706,
+                "b": 0.82353,
+                "a": 0.55
+              }
+            },
+            "terminal-dark": {
+              "value": {
+                "r": 0.019611,
+                "g": 0.364706,
+                "b": 0.82353,
+                "a": 0.55
+              }
+            }
+          }
+        },
+        {
+          "name": "control/focus/ring/width",
+          "token": "--a63-control-focus-ring-width",
+          "type": "FLOAT",
+          "values": {
+            "modern-light": {
+              "value": 3
+            },
+            "modern-dark": {
+              "value": 3
+            },
+            "aqua-light": {
+              "value": 4
+            },
+            "aqua-dark": {
+              "value": 4
+            },
+            "retro-light": {
+              "value": 2
+            },
+            "retro-dark": {
+              "value": 2
+            },
+            "terminal-light": {
+              "value": 3
+            },
+            "terminal-dark": {
+              "value": 3
+            }
+          }
+        },
+        {
+          "name": "control/font/family",
+          "token": "--a63-control-font-family",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "alias": "--font-family-sans"
+            },
+            "modern-dark": {
+              "alias": "--font-family-sans"
+            },
+            "aqua-light": {
+              "alias": "--font-family-sans"
+            },
+            "aqua-dark": {
+              "alias": "--font-family-sans"
+            },
+            "retro-light": {
+              "alias": "--font-family-sans"
+            },
+            "retro-dark": {
+              "alias": "--font-family-sans"
+            },
+            "terminal-light": {
+              "alias": "--font-family-mono"
+            },
+            "terminal-dark": {
+              "alias": "--font-family-mono"
+            }
+          }
+        },
+        {
+          "name": "control/radius",
+          "token": "--a63-control-radius",
+          "type": "FLOAT",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-radius-control"
+            },
+            "modern-dark": {
+              "alias": "--a63-radius-control"
+            },
+            "aqua-light": {
+              "alias": "--radius-md"
+            },
+            "aqua-dark": {
+              "alias": "--radius-md"
+            },
+            "retro-light": {
+              "alias": "--radius-sm"
+            },
+            "retro-dark": {
+              "alias": "--radius-sm"
+            },
+            "terminal-light": {
+              "alias": "--radius-sm"
+            },
+            "terminal-dark": {
+              "alias": "--radius-sm"
+            }
+          }
+        },
+        {
+          "name": "control/shadow",
+          "token": "--a63-control-shadow",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 16%, transparent)"
+            },
+            "modern-dark": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 16%, transparent)"
+            },
+            "aqua-light": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 85%, transparent),\n    inset 0 -1px 1px color-mix(in oklch, black 10%, transparent),\n    0 1px 2px color-mix(in oklch, black 18%, transparent)"
+            },
+            "aqua-dark": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 85%, transparent),\n    inset 0 -1px 1px color-mix(in oklch, black 10%, transparent),\n    0 1px 2px color-mix(in oklch, black 18%, transparent)"
+            },
+            "retro-light": {
+              "value": "inset 2px 2px 0 color-mix(in oklch, white 55%, transparent),\n    inset -2px -2px 0 color-mix(in oklch, black 28%, transparent), 2px 2px 0 color-mix(in oklch, black 30%, transparent)"
+            },
+            "retro-dark": {
+              "value": "inset 2px 2px 0 color-mix(in oklch, white 55%, transparent),\n    inset -2px -2px 0 color-mix(in oklch, black 28%, transparent), 2px 2px 0 color-mix(in oklch, black 30%, transparent)"
+            },
+            "terminal-light": {
+              "value": "inset 0 0 0 1px color-mix(in oklch, rgba(5, 93, 210, 1) 32%, transparent),\n    0 0 14px -2px color-mix(in oklch, rgba(5, 93, 210, 1) 45%, transparent)"
+            },
+            "terminal-dark": {
+              "value": "inset 0 0 0 1px color-mix(in oklch, rgba(5, 93, 210, 1) 32%, transparent),\n    0 0 14px -2px color-mix(in oklch, rgba(5, 93, 210, 1) 45%, transparent)"
+            }
+          }
+        },
+        {
+          "name": "control/shadow/active",
+          "token": "--a63-control-shadow-active",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "value": "inset 0 1px 0 color-mix(in oklch, black 8%, transparent)"
+            },
+            "modern-dark": {
+              "value": "inset 0 1px 0 color-mix(in oklch, black 8%, transparent)"
+            },
+            "aqua-light": {
+              "value": "inset 0 1px 1px color-mix(in oklch, black 14%, transparent),\n    inset 0 -1px 0 color-mix(in oklch, white 40%, transparent),\n    0 0 0 color-mix(in oklch, black 0%, transparent)"
+            },
+            "aqua-dark": {
+              "value": "inset 0 1px 1px color-mix(in oklch, black 14%, transparent),\n    inset 0 -1px 0 color-mix(in oklch, white 40%, transparent),\n    0 0 0 color-mix(in oklch, black 0%, transparent)"
+            },
+            "retro-light": {
+              "value": "inset 2px 2px 0 color-mix(in oklch, black 30%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, white 22%, transparent)"
+            },
+            "retro-dark": {
+              "value": "inset 2px 2px 0 color-mix(in oklch, black 30%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, white 22%, transparent)"
+            },
+            "terminal-light": {
+              "value": "inset 0 0 0 1px color-mix(in oklch, rgba(5, 93, 210, 1) 48%, transparent),\n    0 0 8px -2px color-mix(in oklch, rgba(5, 93, 210, 1) 55%, transparent)"
+            },
+            "terminal-dark": {
+              "value": "inset 0 0 0 1px color-mix(in oklch, rgba(5, 93, 210, 1) 48%, transparent),\n    0 0 8px -2px color-mix(in oklch, rgba(5, 93, 210, 1) 55%, transparent)"
+            }
+          }
+        },
+        {
+          "name": "control/shadow/flat",
+          "token": "--a63-control-shadow-flat",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "value": "0 0 #0000"
+            },
+            "modern-dark": {
+              "value": "0 0 #0000"
+            },
+            "aqua-light": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 52%, transparent),\n    inset 0 -1px 1px color-mix(in oklch, black 7%, transparent),\n    0 1px 2px color-mix(in oklch, black 14%, transparent)"
+            },
+            "aqua-dark": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 52%, transparent),\n    inset 0 -1px 1px color-mix(in oklch, black 7%, transparent),\n    0 1px 2px color-mix(in oklch, black 14%, transparent)"
+            },
+            "retro-light": {
+              "alias": "--a63-control-shadow"
+            },
+            "retro-dark": {
+              "alias": "--a63-control-shadow"
+            },
+            "terminal-light": {
+              "alias": "--a63-control-shadow"
+            },
+            "terminal-dark": {
+              "alias": "--a63-control-shadow"
+            }
+          }
+        },
+        {
+          "name": "control/shadow/tint",
+          "token": "--a63-control-shadow-tint",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "value": "24%"
+            },
+            "modern-dark": {
+              "value": "24%"
+            },
+            "aqua-light": {
+              "value": "40%"
+            },
+            "aqua-dark": {
+              "value": "40%"
+            },
+            "retro-light": {
+              "value": "0%"
+            },
+            "retro-dark": {
+              "value": "0%"
+            },
+            "terminal-light": {
+              "value": "0%"
+            },
+            "terminal-dark": {
+              "value": "0%"
+            }
+          }
+        },
+        {
+          "name": "control/text/shadow",
+          "token": "--a63-control-text-shadow",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "value": "none"
+            },
+            "modern-dark": {
+              "value": "none"
+            },
+            "aqua-light": {
+              "value": "none"
+            },
+            "aqua-dark": {
+              "value": "none"
+            },
+            "retro-light": {
+              "value": "none"
+            },
+            "retro-dark": {
+              "value": "none"
+            },
+            "terminal-light": {
+              "value": "0 0 6px color-mix(in oklch, rgba(5, 93, 210, 1) 45%, transparent)"
+            },
+            "terminal-dark": {
+              "value": "0 0 6px color-mix(in oklch, rgba(5, 93, 210, 1) 45%, transparent)"
+            }
+          }
+        },
+        {
+          "name": "field/shadow",
+          "token": "--a63-field-shadow",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "value": "inset 0 1px 2px color-mix(in oklch, black 8%, transparent)"
+            },
+            "modern-dark": {
+              "value": "inset 0 1px 2px color-mix(in oklch, black 8%, transparent)"
+            },
+            "aqua-light": {
+              "value": "inset 0 2px 3px color-mix(in oklch, black 16%, transparent),\n    inset 0 1px 0 color-mix(in oklch, black 10%, transparent),\n    inset 0 -1px 0 color-mix(in oklch, white 60%, transparent)"
+            },
+            "aqua-dark": {
+              "value": "inset 0 2px 3px color-mix(in oklch, black 16%, transparent),\n    inset 0 1px 0 color-mix(in oklch, black 10%, transparent),\n    inset 0 -1px 0 color-mix(in oklch, white 60%, transparent)"
+            },
+            "retro-light": {
+              "value": "inset 2px 2px 0 color-mix(in oklch, black 22%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, white 40%, transparent)"
+            },
+            "retro-dark": {
+              "value": "inset 2px 2px 0 color-mix(in oklch, black 22%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, white 40%, transparent)"
+            },
+            "terminal-light": {
+              "value": "inset 0 0 6px -2px\n    color-mix(in oklch, rgba(5, 93, 210, 1) 30%, transparent)"
+            },
+            "terminal-dark": {
+              "value": "inset 0 0 6px -2px\n    color-mix(in oklch, rgba(5, 93, 210, 1) 30%, transparent)"
+            }
+          }
+        },
+        {
+          "name": "marker/shadow",
+          "token": "--a63-marker-shadow",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "value": "0 0 #0000"
+            },
+            "modern-dark": {
+              "value": "0 0 #0000"
+            },
+            "aqua-light": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 50%, transparent),\n    0 1px 2px -1px color-mix(in oklch, black 15%, transparent)"
+            },
+            "aqua-dark": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 50%, transparent),\n    0 1px 2px -1px color-mix(in oklch, black 15%, transparent)"
+            },
+            "retro-light": {
+              "value": "inset 1px 1px 0 color-mix(in oklch, white 50%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, black 20%, transparent),\n    1px 1px 0 color-mix(in oklch, black 15%, transparent)"
+            },
+            "retro-dark": {
+              "value": "inset 1px 1px 0 color-mix(in oklch, white 50%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, black 20%, transparent),\n    1px 1px 0 color-mix(in oklch, black 15%, transparent)"
+            },
+            "terminal-light": {
+              "value": "0 0 #0000"
+            },
+            "terminal-dark": {
+              "value": "0 0 #0000"
+            }
+          }
+        },
+        {
+          "name": "overlay/border/width",
+          "token": "--a63-overlay-border-width",
+          "type": "FLOAT",
+          "values": {
+            "modern-light": {
+              "value": 1
+            },
+            "modern-dark": {
+              "value": 1
+            },
+            "aqua-light": {
+              "value": 1
+            },
+            "aqua-dark": {
+              "value": 1
+            },
+            "retro-light": {
+              "value": 2
+            },
+            "retro-dark": {
+              "value": 2
+            },
+            "terminal-light": {
+              "value": 1
+            },
+            "terminal-dark": {
+              "value": 1
+            }
+          }
+        },
+        {
+          "name": "overlay/drag/shadow",
+          "token": "--a63-overlay-drag-shadow",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-overlay-shadow"
+            },
+            "modern-dark": {
+              "alias": "--a63-overlay-shadow"
+            },
+            "aqua-light": {
+              "alias": "--a63-overlay-shadow"
+            },
+            "aqua-dark": {
+              "alias": "--a63-overlay-shadow"
+            },
+            "retro-light": {
+              "value": "inset 1px 1px 0 color-mix(in oklch, white 50%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), 4px 4px 0 color-mix(in oklch, black 34%, transparent)"
+            },
+            "retro-dark": {
+              "value": "inset 1px 1px 0 color-mix(in oklch, white 50%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), 4px 4px 0 color-mix(in oklch, black 34%, transparent)"
+            },
+            "terminal-light": {
+              "alias": "--a63-overlay-shadow"
+            },
+            "terminal-dark": {
+              "alias": "--a63-overlay-shadow"
+            }
+          }
+        },
+        {
+          "name": "overlay/highlight/opacity",
+          "token": "--a63-overlay-highlight-opacity",
+          "type": "FLOAT",
+          "values": {
+            "modern-light": {
+              "value": 1
+            },
+            "modern-dark": {
+              "value": 1
+            },
+            "aqua-light": {
+              "value": 0.75
+            },
+            "aqua-dark": {
+              "value": 0.75
+            },
+            "retro-light": {
+              "value": 1
+            },
+            "retro-dark": {
+              "value": 1
+            },
+            "terminal-light": {
+              "value": 1
+            },
+            "terminal-dark": {
+              "value": 1
+            }
+          }
+        },
+        {
+          "name": "overlay/shadow",
+          "token": "--a63-overlay-shadow",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "value": "0 8px 24px -6px color-mix(in oklch, black 22%, transparent),\n    0 2px 6px -2px color-mix(in oklch, black 12%, transparent)"
+            },
+            "modern-dark": {
+              "value": "0 8px 24px -6px color-mix(in oklch, black 22%, transparent),\n    0 2px 6px -2px color-mix(in oklch, black 12%, transparent)"
+            },
+            "aqua-light": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 60%, transparent), 0 12px 32px -8px color-mix(in oklch, black 30%, transparent),\n    0 2px 8px -3px color-mix(in oklch, black 16%, transparent)"
+            },
+            "aqua-dark": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 60%, transparent), 0 12px 32px -8px color-mix(in oklch, black 30%, transparent),\n    0 2px 8px -3px color-mix(in oklch, black 16%, transparent)"
+            },
+            "retro-light": {
+              "value": "inset 1px 1px 0 color-mix(in oklch, white 50%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), 3px 3px 0 color-mix(in oklch, black 30%, transparent)"
+            },
+            "retro-dark": {
+              "value": "inset 1px 1px 0 color-mix(in oklch, white 50%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), 3px 3px 0 color-mix(in oklch, black 30%, transparent)"
+            },
+            "terminal-light": {
+              "value": "inset 0 0 0 1px color-mix(in oklch, rgba(5, 93, 210, 1) 30%, transparent),\n    0 0 20px -4px\n    color-mix(in oklch, rgba(5, 93, 210, 1) 40%, transparent)"
+            },
+            "terminal-dark": {
+              "value": "inset 0 0 0 1px color-mix(in oklch, rgba(5, 93, 210, 1) 30%, transparent),\n    0 0 20px -4px\n    color-mix(in oklch, rgba(5, 93, 210, 1) 40%, transparent)"
+            }
+          }
+        },
+        {
+          "name": "segment/background",
+          "token": "--a63-segment-background",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-surface-muted"
+            },
+            "modern-dark": {
+              "alias": "--a63-surface-muted"
+            },
+            "aqua-light": {
+              "alias": "--a63-surface-muted"
+            },
+            "aqua-dark": {
+              "alias": "--a63-surface-muted"
+            },
+            "retro-light": {
+              "alias": "--a63-surface-panel"
+            },
+            "retro-dark": {
+              "alias": "--a63-surface-panel"
+            },
+            "terminal-light": {
+              "alias": "--a63-surface-panel"
+            },
+            "terminal-dark": {
+              "alias": "--a63-surface-panel"
+            }
+          }
+        },
+        {
+          "name": "segment/foreground",
+          "token": "--a63-segment-foreground",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-text-secondary"
+            },
+            "modern-dark": {
+              "alias": "--a63-text-secondary"
+            },
+            "aqua-light": {
+              "alias": "--a63-text-secondary"
+            },
+            "aqua-dark": {
+              "alias": "--a63-text-secondary"
+            },
+            "retro-light": {
+              "alias": "--a63-text-secondary"
+            },
+            "retro-dark": {
+              "alias": "--a63-text-secondary"
+            },
+            "terminal-light": {
+              "alias": "--a63-text-secondary"
+            },
+            "terminal-dark": {
+              "alias": "--a63-text-secondary"
+            }
+          }
+        },
+        {
+          "name": "segment/primary/background",
+          "token": "--a63-segment-primary-background",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-action-primary"
+            },
+            "modern-dark": {
+              "alias": "--a63-action-primary"
+            },
+            "aqua-light": {
+              "alias": "--a63-action-primary"
+            },
+            "aqua-dark": {
+              "alias": "--a63-action-primary"
+            },
+            "retro-light": {
+              "alias": "--a63-action-primary"
+            },
+            "retro-dark": {
+              "alias": "--a63-action-primary"
+            },
+            "terminal-light": {
+              "alias": "--a63-action-primary"
+            },
+            "terminal-dark": {
+              "alias": "--a63-action-primary"
+            }
+          }
+        },
+        {
+          "name": "segment/primary/foreground",
+          "token": "--a63-segment-primary-foreground",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-action-primary-foreground"
+            },
+            "modern-dark": {
+              "alias": "--a63-action-primary-foreground"
+            },
+            "aqua-light": {
+              "alias": "--a63-action-primary-foreground"
+            },
+            "aqua-dark": {
+              "alias": "--a63-action-primary-foreground"
+            },
+            "retro-light": {
+              "alias": "--a63-action-primary-foreground"
+            },
+            "retro-dark": {
+              "alias": "--a63-action-primary-foreground"
+            },
+            "terminal-light": {
+              "alias": "--a63-action-primary-foreground"
+            },
+            "terminal-dark": {
+              "alias": "--a63-action-primary-foreground"
+            }
+          }
+        },
+        {
+          "name": "segment/primary/shadow",
+          "token": "--a63-segment-primary-shadow",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 30%, transparent),\n    0 1px 2px color-mix(in oklch, black 16%, transparent)"
+            },
+            "modern-dark": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 30%, transparent),\n    0 1px 2px color-mix(in oklch, black 16%, transparent)"
+            },
+            "aqua-light": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 28%, transparent),\n    inset 0 2px 8px color-mix(in oklch, black 36%, transparent)"
+            },
+            "aqua-dark": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 22%, transparent),\n    inset 0 3px 10px color-mix(in oklch, black 42%, transparent)"
+            },
+            "retro-light": {
+              "alias": "--a63-control-shadow-active"
+            },
+            "retro-dark": {
+              "alias": "--a63-control-shadow-active"
+            },
+            "terminal-light": {
+              "value": "inset 0 0 0 1px color-mix(in oklch, rgba(5, 93, 210, 1) 50%, transparent),\n    0 0 10px -3px color-mix(in oklch, rgba(5, 93, 210, 1) 40%, transparent)"
+            },
+            "terminal-dark": {
+              "value": "inset 0 0 0 1px color-mix(in oklch, rgba(5, 93, 210, 1) 50%, transparent),\n    0 0 10px -3px color-mix(in oklch, rgba(5, 93, 210, 1) 40%, transparent)"
+            }
+          }
+        },
+        {
+          "name": "segment/selected/background",
+          "token": "--a63-segment-selected-background",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-surface-overlay"
+            },
+            "modern-dark": {
+              "alias": "--a63-surface-overlay"
+            },
+            "aqua-light": {
+              "alias": "--a63-surface-panel"
+            },
+            "aqua-dark": {
+              "alias": "--a63-surface-panel"
+            },
+            "retro-light": {
+              "alias": "--a63-surface-muted"
+            },
+            "retro-dark": {
+              "alias": "--a63-surface-muted"
+            },
+            "terminal-light": {
+              "alias": "--a63-surface-muted"
+            },
+            "terminal-dark": {
+              "alias": "--a63-surface-muted"
+            }
+          }
+        },
+        {
+          "name": "segment/selected/foreground",
+          "token": "--a63-segment-selected-foreground",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-text-primary"
+            },
+            "modern-dark": {
+              "alias": "--a63-text-primary"
+            },
+            "aqua-light": {
+              "alias": "--a63-text-primary"
+            },
+            "aqua-dark": {
+              "alias": "--a63-text-primary"
+            },
+            "retro-light": {
+              "alias": "--a63-text-primary"
+            },
+            "retro-dark": {
+              "alias": "--a63-text-primary"
+            },
+            "terminal-light": {
+              "alias": "--a63-text-primary"
+            },
+            "terminal-dark": {
+              "alias": "--a63-text-primary"
+            }
+          }
+        },
+        {
+          "name": "segment/selected/shadow",
+          "token": "--a63-segment-selected-shadow",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 70%, transparent),\n    0 1px 2px color-mix(in oklch, black 12%, transparent),\n    0 1px 1px color-mix(in oklch, black 6%, transparent)"
+            },
+            "modern-dark": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 70%, transparent),\n    0 1px 2px color-mix(in oklch, black 12%, transparent),\n    0 1px 1px color-mix(in oklch, black 6%, transparent)"
+            },
+            "aqua-light": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 35%, transparent),\n    inset 0 2px 6px color-mix(in oklch, black 14%, transparent)"
+            },
+            "aqua-dark": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 22%, transparent),\n    inset 0 3px 8px color-mix(in oklch, black 28%, transparent)"
+            },
+            "retro-light": {
+              "alias": "--a63-control-shadow-active"
+            },
+            "retro-dark": {
+              "alias": "--a63-control-shadow-active"
+            },
+            "terminal-light": {
+              "value": "inset 0 0 0 1px\n    color-mix(in oklch, rgba(5, 93, 210, 1) 36%, transparent)"
+            },
+            "terminal-dark": {
+              "value": "inset 0 0 0 1px\n    color-mix(in oklch, rgba(5, 93, 210, 1) 36%, transparent)"
+            }
+          }
+        },
+        {
+          "name": "segment/track/border",
+          "token": "--a63-segment-track-border",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-border-subtle"
+            },
+            "modern-dark": {
+              "alias": "--a63-border-subtle"
+            },
+            "aqua-light": {
+              "alias": "--a63-border-subtle"
+            },
+            "aqua-dark": {
+              "alias": "--a63-border-subtle"
+            },
+            "retro-light": {
+              "alias": "--a63-border-control"
+            },
+            "retro-dark": {
+              "alias": "--a63-border-control"
+            },
+            "terminal-light": {
+              "alias": "--a63-border-subtle"
+            },
+            "terminal-dark": {
+              "alias": "--a63-border-subtle"
+            }
+          }
+        },
+        {
+          "name": "surface/border/width",
+          "token": "--a63-surface-border-width",
+          "type": "FLOAT",
+          "values": {
+            "modern-light": {
+              "value": 1
+            },
+            "modern-dark": {
+              "value": 1
+            },
+            "aqua-light": {
+              "value": 1
+            },
+            "aqua-dark": {
+              "value": 1
+            },
+            "retro-light": {
+              "value": 2
+            },
+            "retro-dark": {
+              "value": 2
+            },
+            "terminal-light": {
+              "value": 1
+            },
+            "terminal-dark": {
+              "value": 1
+            }
+          }
+        },
+        {
+          "name": "surface/highlight/opacity",
+          "token": "--a63-surface-highlight-opacity",
+          "type": "FLOAT",
+          "values": {
+            "modern-light": {
+              "value": 1
+            },
+            "modern-dark": {
+              "value": 1
+            },
+            "aqua-light": {
+              "value": 0.75
+            },
+            "aqua-dark": {
+              "value": 0.75
+            },
+            "retro-light": {
+              "value": 1
+            },
+            "retro-dark": {
+              "value": 1
+            },
+            "terminal-light": {
+              "value": 1
+            },
+            "terminal-dark": {
+              "value": 1
+            }
+          }
+        },
+        {
+          "name": "surface/page",
+          "token": "--a63-surface-page",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--surface-light-2"
+            },
+            "modern-dark": {
+              "alias": "--surface-dark-1"
+            },
+            "aqua-light": {
+              "value": {
+                "r": 0.937066,
+                "g": 0.954498,
+                "b": 0.98157,
+                "a": 1
+              }
+            },
+            "aqua-dark": {
+              "value": {
+                "r": 0.076897,
+                "g": 0.090814,
+                "b": 0.112612,
+                "a": 1
+              }
+            },
+            "retro-light": {
+              "alias": "--surface-light-2"
+            },
+            "retro-dark": {
+              "alias": "--surface-dark-1"
+            },
+            "terminal-light": {
+              "value": {
+                "r": 0.992928,
+                "g": 0.992934,
+                "b": 0.992994,
+                "a": 1
+              }
+            },
+            "terminal-dark": {
+              "value": {
+                "r": 0.07333,
+                "g": 0.090934,
+                "b": 0.118323,
+                "a": 1
+              }
+            }
+          }
+        },
+        {
+          "name": "surface/panel",
+          "token": "--a63-surface-panel",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--surface-light-1"
+            },
+            "modern-dark": {
+              "alias": "--surface-dark-2"
+            },
+            "aqua-light": {
+              "value": {
+                "r": 0.956117,
+                "g": 0.970167,
+                "b": 0.991934,
+                "a": 1
+              }
+            },
+            "aqua-dark": {
+              "value": {
+                "r": 0.10685,
+                "g": 0.12133,
+                "b": 0.143993,
+                "a": 1
+              }
+            },
+            "retro-light": {
+              "alias": "--surface-light-1"
+            },
+            "retro-dark": {
+              "alias": "--surface-dark-2"
+            },
+            "terminal-light": {
+              "value": {
+                "r": 0.98586,
+                "g": 0.985866,
+                "b": 0.985926,
+                "a": 1
+              }
+            },
+            "terminal-dark": {
+              "value": {
+                "r": 0.102532,
+                "g": 0.120833,
+                "b": 0.149278,
+                "a": 1
+              }
+            }
+          }
+        },
+        {
+          "name": "surface/shadow",
+          "token": "--a63-surface-shadow",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "value": "0 1px 2px color-mix(in oklch, black 6%, transparent),\n    0 1px 1px color-mix(in oklch, black 4%, transparent)"
+            },
+            "modern-dark": {
+              "value": "0 1px 2px color-mix(in oklch, black 6%, transparent),\n    0 1px 1px color-mix(in oklch, black 4%, transparent)"
+            },
+            "aqua-light": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 55%, transparent),\n    0 6px 16px -6px color-mix(in oklch, black 22%, transparent),\n    0 1px 3px -1px color-mix(in oklch, black 12%, transparent)"
+            },
+            "aqua-dark": {
+              "value": "inset 0 1px 0 color-mix(in oklch, white 55%, transparent),\n    0 6px 16px -6px color-mix(in oklch, black 22%, transparent),\n    0 1px 3px -1px color-mix(in oklch, black 12%, transparent)"
+            },
+            "retro-light": {
+              "value": "inset 1px 1px 0 color-mix(in oklch, white 55%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), 2px 2px 0 color-mix(in oklch, black 16%, transparent)"
+            },
+            "retro-dark": {
+              "value": "inset 1px 1px 0 color-mix(in oklch, white 55%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), 2px 2px 0 color-mix(in oklch, black 16%, transparent)"
+            },
+            "terminal-light": {
+              "value": "inset 0 0 0 1px\n    color-mix(in oklch, rgba(5, 93, 210, 1) 22%, transparent)"
+            },
+            "terminal-dark": {
+              "value": "inset 0 0 0 1px\n    color-mix(in oklch, rgba(5, 93, 210, 1) 22%, transparent)"
+            }
+          }
+        },
+        {
+          "name": "text/primary",
+          "token": "--a63-text-primary",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--surface-light-12"
+            },
+            "modern-dark": {
+              "alias": "--surface-dark-12"
+            },
+            "aqua-light": {
+              "alias": "--surface-light-12"
+            },
+            "aqua-dark": {
+              "alias": "--surface-dark-12"
+            },
+            "retro-light": {
+              "alias": "--surface-light-12"
+            },
+            "retro-dark": {
+              "alias": "--surface-dark-12"
+            },
+            "terminal-light": {
+              "value": {
+                "r": 0.006727,
+                "g": 0.213731,
+                "b": 0.507508,
+                "a": 1
+              }
+            },
+            "terminal-dark": {
+              "value": {
+                "r": 0.432813,
+                "g": 0.617392,
+                "b": 0.907792,
+                "a": 1
+              }
+            }
+          }
+        },
+        {
+          "name": "text/secondary",
+          "token": "--a63-text-secondary",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--surface-light-11"
+            },
+            "modern-dark": {
+              "alias": "--surface-dark-11"
+            },
+            "aqua-light": {
+              "alias": "--surface-light-11"
+            },
+            "aqua-dark": {
+              "alias": "--surface-dark-11"
+            },
+            "retro-light": {
+              "alias": "--surface-light-11"
+            },
+            "retro-dark": {
+              "alias": "--surface-dark-11"
+            },
+            "terminal-light": {
+              "value": {
+                "r": 0.002757,
+                "g": 0.130331,
+                "b": 0.332936,
+                "a": 1
+              }
+            },
+            "terminal-dark": {
+              "value": {
+                "r": 0.600989,
+                "g": 0.730351,
+                "b": 0.849688,
+                "a": 1
+              }
+            }
+          }
+        },
+        {
+          "name": "track/shadow",
+          "token": "--a63-track-shadow",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "value": "inset 0 1px 1px color-mix(in oklch, black 6%, transparent)"
+            },
+            "modern-dark": {
+              "value": "inset 0 1px 1px color-mix(in oklch, black 6%, transparent)"
+            },
+            "aqua-light": {
+              "value": "inset 0 2px 3px color-mix(in oklch, black 14%, transparent),\n    inset 0 -1px 0 color-mix(in oklch, white 45%, transparent)"
+            },
+            "aqua-dark": {
+              "value": "inset 0 2px 3px color-mix(in oklch, black 14%, transparent),\n    inset 0 -1px 0 color-mix(in oklch, white 45%, transparent)"
+            },
+            "retro-light": {
+              "value": "inset 1px 1px 0 color-mix(in oklch, black 22%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, white 40%, transparent)"
+            },
+            "retro-dark": {
+              "value": "inset 1px 1px 0 color-mix(in oklch, black 22%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, white 40%, transparent)"
+            },
+            "terminal-light": {
+              "value": "inset 0 0 4px -1px\n    color-mix(in oklch, rgba(5, 93, 210, 1) 22%, transparent)"
+            },
+            "terminal-dark": {
+              "value": "inset 0 0 4px -1px\n    color-mix(in oklch, rgba(5, 93, 210, 1) 22%, transparent)"
+            }
+          }
+        },
+        {
+          "name": "weather/background/color",
+          "token": "--a63-weather-background-color",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "modern-dark": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "aqua-light": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "aqua-dark": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "retro-light": {
+              "value": {
+                "r": 0.553079,
+                "g": 0.69917,
+                "b": 0.927674,
+                "a": 1
+              }
+            },
+            "retro-dark": {
+              "value": {
+                "r": 0.121146,
+                "g": 0.226156,
+                "b": 0.424015,
+                "a": 1
+              }
+            },
+            "terminal-light": {
+              "value": {
+                "r": 0.685201,
+                "g": 0.791495,
+                "b": 0.956923,
+                "a": 1
+              }
+            },
+            "terminal-dark": {
+              "value": {
+                "r": 0.000209,
+                "g": 0.015059,
+                "b": 0.077369,
+                "a": 1
+              }
+            }
+          }
+        },
+        {
+          "name": "weather/border/color",
+          "token": "--a63-weather-border-color",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "modern-dark": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "aqua-light": {
+              "value": {
+                "r": 0.019611,
+                "g": 0.364706,
+                "b": 0.82353,
+                "a": 0.32
+              }
+            },
+            "aqua-dark": {
+              "value": {
+                "r": 0.99999,
+                "g": 0.999996,
+                "b": 1,
+                "a": 0.14
+              }
+            },
+            "retro-light": {
+              "value": {
+                "r": 0.501104,
+                "g": 0.696944,
+                "b": 0.879239,
+                "a": 1
+              }
+            },
+            "retro-dark": {
+              "value": {
+                "r": 0.184305,
+                "g": 0.30006,
+                "b": 0.482615,
+                "a": 1
+              }
+            },
+            "terminal-light": {
+              "value": {
+                "r": 0.482182,
+                "g": 0.640729,
+                "b": 0.889371,
+                "a": 1
+              }
+            },
+            "terminal-dark": {
+              "value": {
+                "r": 0.019611,
+                "g": 0.364706,
+                "b": 0.82353,
+                "a": 0.5632
+              }
+            }
+          }
+        },
+        {
+          "name": "weather/divider/color",
+          "token": "--a63-weather-divider-color",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "value": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 0.2
+              }
+            },
+            "modern-dark": {
+              "value": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 0.2
+              }
+            },
+            "aqua-light": {
+              "value": {
+                "r": 0.99999,
+                "g": 0.999996,
+                "b": 1,
+                "a": 0.24
+              }
+            },
+            "aqua-dark": {
+              "value": {
+                "r": 0.99999,
+                "g": 0.999996,
+                "b": 1,
+                "a": 0.24
+              }
+            },
+            "retro-light": {
+              "value": {
+                "r": 0.99999,
+                "g": 0.999996,
+                "b": 1,
+                "a": 0.32
+              }
+            },
+            "retro-dark": {
+              "value": {
+                "r": 0.99999,
+                "g": 0.999996,
+                "b": 1,
+                "a": 0.32
+              }
+            },
+            "terminal-light": {
+              "value": {
+                "r": 0.019611,
+                "g": 0.364706,
+                "b": 0.82353,
+                "a": 0.38
+              }
+            },
+            "terminal-dark": {
+              "value": {
+                "r": 0.019611,
+                "g": 0.364706,
+                "b": 0.82353,
+                "a": 0.36
+              }
+            }
+          }
+        },
+        {
+          "name": "weather/foreground",
+          "token": "--a63-weather-foreground",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "value": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 1
+              }
+            },
+            "modern-dark": {
+              "value": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 1
+              }
+            },
+            "aqua-light": {
+              "value": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 1
+              }
+            },
+            "aqua-dark": {
+              "value": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 1
+              }
+            },
+            "retro-light": {
+              "value": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 1
+              }
+            },
+            "retro-dark": {
+              "value": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 1
+              }
+            },
+            "terminal-light": {
+              "value": {
+                "r": 0.081427,
+                "g": 0.324688,
+                "b": 0.686927,
+                "a": 1
+              }
+            },
+            "terminal-dark": {
+              "value": {
+                "r": 0.758202,
+                "g": 0.840681,
+                "b": 0.968788,
+                "a": 1
+              }
+            }
+          }
+        },
+        {
+          "name": "weather/muted/foreground",
+          "token": "--a63-weather-muted-foreground",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "value": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 0.701961
+              }
+            },
+            "modern-dark": {
+              "value": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 0.701961
+              }
+            },
+            "aqua-light": {
+              "value": {
+                "r": 0.99999,
+                "g": 0.999996,
+                "b": 1,
+                "a": 0.76
+              }
+            },
+            "aqua-dark": {
+              "value": {
+                "r": 0.99999,
+                "g": 0.999996,
+                "b": 1,
+                "a": 0.76
+              }
+            },
+            "retro-light": {
+              "value": {
+                "r": 0.99999,
+                "g": 0.999996,
+                "b": 1,
+                "a": 0.76
+              }
+            },
+            "retro-dark": {
+              "value": {
+                "r": 0.99999,
+                "g": 0.999996,
+                "b": 1,
+                "a": 0.76
+              }
+            },
+            "terminal-light": {
+              "value": {
+                "r": 0.281862,
+                "g": 0.445291,
+                "b": 0.703036,
+                "a": 1
+              }
+            },
+            "terminal-dark": {
+              "value": {
+                "r": 0.71703,
+                "g": 0.867263,
+                "b": 1,
+                "a": 1
+              }
+            }
+          }
+        },
+        {
+          "name": "weather/text/shadow",
+          "token": "--a63-weather-text-shadow",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "value": "none"
+            },
+            "modern-dark": {
+              "value": "none"
+            },
+            "aqua-light": {
+              "value": "0 1px 2px color-mix(in oklch, black 42%, transparent)"
+            },
+            "aqua-dark": {
+              "value": "0 1px 2px color-mix(in oklch, black 42%, transparent)"
+            },
+            "retro-light": {
+              "value": "1px 1px 0 color-mix(in oklch, black 34%, transparent)"
+            },
+            "retro-dark": {
+              "value": "1px 1px 0 color-mix(in oklch, black 34%, transparent)"
+            },
+            "terminal-light": {
+              "value": "0 0 10px\n    color-mix(in oklch, rgba(5, 93, 210, 1) 22%, transparent)"
+            },
+            "terminal-dark": {
+              "value": "0 0 8px color-mix(in oklch, rgba(5, 93, 210, 1) 38%, transparent)"
+            }
+          }
+        },
+        {
+          "name": "widget/background/color",
+          "token": "--a63-widget-background-color",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "value": {
+                "r": 0.988225,
+                "g": 0.988231,
+                "b": 0.988291,
+                "a": 0.82
+              }
+            },
+            "modern-dark": {
+              "value": {
+                "r": 0.09801,
+                "g": 0.098046,
+                "b": 0.098069,
+                "a": 0.9
+              }
+            },
+            "aqua-light": {
+              "value": {
+                "r": 0.988225,
+                "g": 0.988231,
+                "b": 0.988291,
+                "a": 0.82
+              }
+            },
+            "aqua-dark": {
+              "value": {
+                "r": 0.164663,
+                "g": 0.164716,
+                "b": 0.164748,
+                "a": 0.82
+              }
+            },
+            "retro-light": {
+              "alias": "--a63-surface-overlay"
+            },
+            "retro-dark": {
+              "alias": "--a63-surface-overlay"
+            },
+            "terminal-light": {
+              "value": {
+                "r": 0.988225,
+                "g": 0.988231,
+                "b": 0.988291,
+                "a": 0.82
+              }
+            },
+            "terminal-dark": {
+              "value": {
+                "r": 0.164663,
+                "g": 0.164716,
+                "b": 0.164748,
+                "a": 0.82
+              }
+            }
+          }
+        },
+        {
+          "name": "widget/rim/width",
+          "token": "--a63-widget-rim-width",
+          "type": "FLOAT",
+          "values": {
+            "modern-light": {
+              "value": 4
+            },
+            "modern-dark": {
+              "value": 4
+            },
+            "aqua-light": {
+              "value": 4
+            },
+            "aqua-dark": {
+              "value": 4
+            },
+            "retro-light": {
+              "value": 2
+            },
+            "retro-dark": {
+              "value": 2
+            },
+            "terminal-light": {
+              "value": 4
+            },
+            "terminal-dark": {
+              "value": 4
+            }
+          }
+        },
+        {
+          "name": "widget/shadow",
+          "token": "--a63-widget-shadow",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "value": "none"
+            },
+            "modern-dark": {
+              "value": "none"
+            },
+            "aqua-light": {
+              "value": "0 12px 32px -8px color-mix(in oklch, black 30%, transparent),\n    0 2px 8px -3px color-mix(in oklch, black 16%, transparent)"
+            },
+            "aqua-dark": {
+              "value": "0 12px 32px -8px color-mix(in oklch, black 30%, transparent),\n    0 2px 8px -3px color-mix(in oklch, black 16%, transparent)"
+            },
+            "retro-light": {
+              "value": "3px 3px 0 color-mix(in oklch, black 30%, transparent)"
+            },
+            "retro-dark": {
+              "value": "3px 3px 0 color-mix(in oklch, black 30%, transparent)"
+            },
+            "terminal-light": {
+              "value": "0 0 20px -4px\n    color-mix(in oklch, rgba(5, 93, 210, 1) 40%, transparent)"
+            },
+            "terminal-dark": {
+              "value": "0 0 20px -4px\n    color-mix(in oklch, rgba(5, 93, 210, 1) 40%, transparent)"
+            }
+          }
+        }
+      ]
+    },
     {
       "name": "Atom63 Contract",
       "modes": [
@@ -126,26 +1964,6 @@
           }
         },
         {
-          "name": "choice/box/shadow",
-          "token": "--a63-choice-box-shadow",
-          "type": "STRING",
-          "values": {
-            "Value": {
-              "value": "none"
-            }
-          }
-        },
-        {
-          "name": "choice/box/shadow/checked",
-          "token": "--a63-choice-box-shadow-checked",
-          "type": "STRING",
-          "values": {
-            "Value": {
-              "value": "none"
-            }
-          }
-        },
-        {
           "name": "choice/feedback/duration",
           "token": "--a63-choice-feedback-duration",
           "type": "FLOAT",
@@ -206,52 +2024,12 @@
           }
         },
         {
-          "name": "control/border/width",
-          "token": "--a63-control-border-width",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 1
-            }
-          }
-        },
-        {
           "name": "control/feedback/duration",
           "token": "--a63-control-feedback-duration",
           "type": "FLOAT",
           "values": {
             "Value": {
               "alias": "--a63-motion-control-feedback-duration"
-            }
-          }
-        },
-        {
-          "name": "control/focus/ring/color",
-          "token": "--a63-control-focus-ring-color",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "alias": "--a63-focus-ring"
-            }
-          }
-        },
-        {
-          "name": "control/focus/ring/width",
-          "token": "--a63-control-focus-ring-width",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 3
-            }
-          }
-        },
-        {
-          "name": "control/font/family",
-          "token": "--a63-control-font-family",
-          "type": "STRING",
-          "values": {
-            "Value": {
-              "alias": "--font-family-sans"
             }
           }
         },
@@ -266,92 +2044,12 @@
           }
         },
         {
-          "name": "control/radius",
-          "token": "--a63-control-radius",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "alias": "--a63-radius-control"
-            }
-          }
-        },
-        {
-          "name": "control/shadow",
-          "token": "--a63-control-shadow",
-          "type": "STRING",
-          "values": {
-            "Value": {
-              "value": "0 0 #0000"
-            }
-          }
-        },
-        {
-          "name": "control/shadow/active",
-          "token": "--a63-control-shadow-active",
-          "type": "STRING",
-          "values": {
-            "Value": {
-              "alias": "--a63-control-shadow"
-            }
-          }
-        },
-        {
-          "name": "control/shadow/flat",
-          "token": "--a63-control-shadow-flat",
-          "type": "STRING",
-          "values": {
-            "Value": {
-              "alias": "--a63-control-shadow"
-            }
-          }
-        },
-        {
-          "name": "control/shadow/tint",
-          "token": "--a63-control-shadow-tint",
-          "type": "STRING",
-          "values": {
-            "Value": {
-              "value": "0%"
-            }
-          }
-        },
-        {
-          "name": "control/text/shadow",
-          "token": "--a63-control-text-shadow",
-          "type": "STRING",
-          "values": {
-            "Value": {
-              "value": "none"
-            }
-          }
-        },
-        {
           "name": "editable/font/size/min",
           "token": "--a63-editable-font-size-min",
           "type": "FLOAT",
           "values": {
             "Value": {
               "value": 0
-            }
-          }
-        },
-        {
-          "name": "field/shadow",
-          "token": "--a63-field-shadow",
-          "type": "STRING",
-          "values": {
-            "Value": {
-              "value": "inset 0 1px 2px color-mix(in oklch, black 6%, transparent)"
-            }
-          }
-        },
-        {
-          "name": "marker/shadow",
-          "token": "--a63-marker-shadow",
-          "type": "STRING",
-          "values": {
-            "Value": {
-              "value": "0 0 #0000"
             }
           }
         },
@@ -426,52 +2124,12 @@
           }
         },
         {
-          "name": "overlay/border/width",
-          "token": "--a63-overlay-border-width",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 1
-            }
-          }
-        },
-        {
-          "name": "overlay/drag/shadow",
-          "token": "--a63-overlay-drag-shadow",
-          "type": "STRING",
-          "values": {
-            "Value": {
-              "alias": "--a63-overlay-shadow"
-            }
-          }
-        },
-        {
-          "name": "overlay/highlight/opacity",
-          "token": "--a63-overlay-highlight-opacity",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 1
-            }
-          }
-        },
-        {
           "name": "overlay/inner/shadow",
           "token": "--a63-overlay-inner-shadow",
           "type": "STRING",
           "values": {
             "Value": {
               "value": "0 0 #0000"
-            }
-          }
-        },
-        {
-          "name": "overlay/shadow",
-          "token": "--a63-overlay-shadow",
-          "type": "STRING",
-          "values": {
-            "Value": {
-              "value": "0 8px 24px -6px color-mix(in oklch, black 22%, transparent),\n    0 2px 6px -2px color-mix(in oklch, black 12%, transparent)"
             }
           }
         },
@@ -576,42 +2234,12 @@
           }
         },
         {
-          "name": "surface/border/width",
-          "token": "--a63-surface-border-width",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 1
-            }
-          }
-        },
-        {
-          "name": "surface/highlight/opacity",
-          "token": "--a63-surface-highlight-opacity",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 1
-            }
-          }
-        },
-        {
           "name": "surface/inner/shadow",
           "token": "--a63-surface-inner-shadow",
           "type": "STRING",
           "values": {
             "Value": {
               "value": "0 0 #0000"
-            }
-          }
-        },
-        {
-          "name": "surface/shadow",
-          "token": "--a63-surface-shadow",
-          "type": "STRING",
-          "values": {
-            "Value": {
-              "value": "0 1px 2px color-mix(in oklch, black 6%, transparent),\n    0 1px 1px color-mix(in oklch, black 4%, transparent)"
             }
           }
         },
@@ -692,16 +2320,6 @@
           "values": {
             "Value": {
               "value": "none"
-            }
-          }
-        },
-        {
-          "name": "track/shadow",
-          "token": "--a63-track-shadow",
-          "type": "STRING",
-          "values": {
-            "Value": {
-              "value": "inset 0 1px 1px color-mix(in oklch, black 6%, transparent)"
             }
           }
         },
@@ -806,106 +2424,6 @@
           }
         },
         {
-          "name": "weather/background/color",
-          "token": "--a63-weather-background-color",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "value": {
-                "r": 0,
-                "g": 0,
-                "b": 0,
-                "a": 0
-              }
-            }
-          }
-        },
-        {
-          "name": "weather/border/color",
-          "token": "--a63-weather-border-color",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "value": {
-                "r": 0,
-                "g": 0,
-                "b": 0,
-                "a": 0
-              }
-            }
-          }
-        },
-        {
-          "name": "weather/divider/color",
-          "token": "--a63-weather-divider-color",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "value": {
-                "r": 1,
-                "g": 1,
-                "b": 1,
-                "a": 0.2
-              }
-            }
-          }
-        },
-        {
-          "name": "weather/foreground",
-          "token": "--a63-weather-foreground",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "value": {
-                "r": 1,
-                "g": 1,
-                "b": 1,
-                "a": 1
-              }
-            }
-          }
-        },
-        {
-          "name": "weather/muted/foreground",
-          "token": "--a63-weather-muted-foreground",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "value": {
-                "r": 1,
-                "g": 1,
-                "b": 1,
-                "a": 0.701961
-              }
-            }
-          }
-        },
-        {
-          "name": "weather/text/shadow",
-          "token": "--a63-weather-text-shadow",
-          "type": "STRING",
-          "values": {
-            "Value": {
-              "value": "none"
-            }
-          }
-        },
-        {
-          "name": "widget/background/color",
-          "token": "--a63-widget-background-color",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "value": {
-                "r": 0.988225,
-                "g": 0.988231,
-                "b": 0.988291,
-                "a": 0.82
-              }
-            }
-          }
-        },
-        {
           "name": "widget/border/color",
           "token": "--a63-widget-border-color",
           "type": "COLOR",
@@ -967,26 +2485,6 @@
           "values": {
             "Value": {
               "alias": "--a63-border-subtle"
-            }
-          }
-        },
-        {
-          "name": "widget/rim/width",
-          "token": "--a63-widget-rim-width",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 4
-            }
-          }
-        },
-        {
-          "name": "widget/shadow",
-          "token": "--a63-widget-shadow",
-          "type": "STRING",
-          "values": {
-            "Value": {
-              "value": "none"
             }
           }
         }
@@ -10800,32 +12298,6 @@
           }
         },
         {
-          "name": "action/neutral",
-          "token": "--a63-action-neutral",
-          "type": "COLOR",
-          "values": {
-            "light": {
-              "alias": "--surface-light-12"
-            },
-            "dark": {
-              "alias": "--surface-dark-12"
-            }
-          }
-        },
-        {
-          "name": "action/neutral/foreground",
-          "token": "--a63-action-neutral-foreground",
-          "type": "COLOR",
-          "values": {
-            "light": {
-              "alias": "--surface-light-2"
-            },
-            "dark": {
-              "alias": "--surface-dark-1"
-            }
-          }
-        },
-        {
           "name": "badge/amber/accent",
           "token": "--a63-badge-amber-accent",
           "type": "COLOR",
@@ -11424,32 +12896,6 @@
           }
         },
         {
-          "name": "border/control",
-          "token": "--a63-border-control",
-          "type": "COLOR",
-          "values": {
-            "light": {
-              "alias": "--surface-light-5"
-            },
-            "dark": {
-              "alias": "--surface-dark-7"
-            }
-          }
-        },
-        {
-          "name": "border/subtle",
-          "token": "--a63-border-subtle",
-          "type": "COLOR",
-          "values": {
-            "light": {
-              "alias": "--surface-light-4"
-            },
-            "dark": {
-              "alias": "--surface-dark-6"
-            }
-          }
-        },
-        {
           "name": "effect/shadow/2xl",
           "token": "--effect-shadow-2xl",
           "type": "STRING",
@@ -11724,32 +13170,6 @@
           }
         },
         {
-          "name": "surface/page",
-          "token": "--a63-surface-page",
-          "type": "COLOR",
-          "values": {
-            "light": {
-              "alias": "--surface-light-2"
-            },
-            "dark": {
-              "alias": "--surface-dark-1"
-            }
-          }
-        },
-        {
-          "name": "surface/panel",
-          "token": "--a63-surface-panel",
-          "type": "COLOR",
-          "values": {
-            "light": {
-              "alias": "--surface-light-1"
-            },
-            "dark": {
-              "alias": "--surface-dark-2"
-            }
-          }
-        },
-        {
           "name": "text/accent",
           "token": "--a63-text-accent",
           "type": "COLOR",
@@ -11759,32 +13179,6 @@
             },
             "dark": {
               "alias": "--a63-brand-400"
-            }
-          }
-        },
-        {
-          "name": "text/primary",
-          "token": "--a63-text-primary",
-          "type": "COLOR",
-          "values": {
-            "light": {
-              "alias": "--surface-light-12"
-            },
-            "dark": {
-              "alias": "--surface-dark-12"
-            }
-          }
-        },
-        {
-          "name": "text/secondary",
-          "token": "--a63-text-secondary",
-          "type": "COLOR",
-          "values": {
-            "light": {
-              "alias": "--surface-light-11"
-            },
-            "dark": {
-              "alias": "--surface-dark-11"
             }
           }
         },
@@ -13968,7 +15362,35 @@
       "reason": "unsupported type: string"
     },
     {
+      "token": "--a63-choice-indicator-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-choice-indicator-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-choice-indicator-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
       "token": "--a63-control-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-control-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-control-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-control-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-control-highlight",
       "reason": "unsupported type: string"
     },
     {
@@ -14012,12 +15434,40 @@
       "reason": "conditional: @media (max-width: 40rem)"
     },
     {
+      "token": "--a63-field-background",
+      "reason": "theme value not representable, kept its default: retro-dark: (empty)"
+    },
+    {
+      "token": "--a63-field-background",
+      "reason": "unresolvable value: (empty)"
+    },
+    {
+      "token": "--a63-menu-highlight-background",
+      "reason": "theme value not representable, kept its default: terminal-dark: (empty)"
+    },
+    {
+      "token": "--a63-menu-highlight-background",
+      "reason": "unresolvable value: (empty)"
+    },
+    {
       "token": "--a63-menu-highlight-gloss",
       "reason": "unsupported type: string"
     },
     {
       "token": "--a63-menu-item-radius",
       "reason": "unresolvable value in round: (empty)"
+    },
+    {
+      "token": "--a63-menu-popup-background",
+      "reason": "theme value not representable, kept its default: terminal-dark: (empty)"
+    },
+    {
+      "token": "--a63-menu-popup-background",
+      "reason": "unresolvable value: (empty)"
+    },
+    {
+      "token": "--a63-menu-popup-gloss",
+      "reason": "unsupported type: string"
     },
     {
       "token": "--a63-motion-control-feedback-duration",
@@ -14040,7 +15490,19 @@
       "reason": "unsupported type: string"
     },
     {
+      "token": "--a63-overlay-backdrop",
+      "reason": "unsupported type: string"
+    },
+    {
       "token": "--a63-overlay-border-style",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-overlay-border-style",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-overlay-gloss",
       "reason": "unsupported type: string"
     },
     {
@@ -14052,7 +15514,31 @@
       "reason": "unsupported type: string"
     },
     {
+      "token": "--a63-overlay-highlight",
+      "reason": "theme value not representable, kept its default: terminal-dark: none"
+    },
+    {
+      "token": "--a63-overlay-highlight",
+      "reason": "unresolvable value: none"
+    },
+    {
       "token": "--a63-overlay-texture-blend",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-overlay-texture-blend",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-overlay-texture-blend",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-overlay-texture-image",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-overlay-texture-image",
       "reason": "unsupported type: string"
     },
     {
@@ -14064,8 +15550,88 @@
       "reason": "conditional: @media (pointer: coarse)"
     },
     {
+      "token": "--a63-segment-disabled-opacity",
+      "reason": "theme value not representable, kept its default: terminal-dark: (empty)"
+    },
+    {
+      "token": "--a63-segment-disabled-opacity",
+      "reason": "unresolvable value: (empty)"
+    },
+    {
+      "token": "--a63-segment-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-segment-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-segment-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-segment-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-segment-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-segment-hover-foreground",
+      "reason": "theme value not representable, kept its default: terminal-dark: (empty)"
+    },
+    {
+      "token": "--a63-segment-hover-foreground",
+      "reason": "unresolvable value: (empty)"
+    },
+    {
+      "token": "--a63-segment-selected-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-segment-selected-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-segment-selected-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-segment-selected-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-segment-selected-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-segment-track-background",
+      "reason": "alias target not synced: --a63-field-background"
+    },
+    {
+      "token": "--a63-segment-track-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-segment-track-shadow",
+      "reason": "theme value not representable, kept its default: terminal-dark: (empty)"
+    },
+    {
+      "token": "--a63-segment-track-shadow",
+      "reason": "unresolvable value: (empty)"
+    },
+    {
+      "token": "--a63-surface-backdrop",
+      "reason": "theme value not representable, kept its default: terminal-dark: none"
+    },
+    {
       "token": "--a63-surface-backdrop",
       "reason": "unresolvable value: none"
+    },
+    {
+      "token": "--a63-surface-border-style",
+      "reason": "theme value not representable, kept its default: terminal-dark: solid"
     },
     {
       "token": "--a63-surface-border-style",
@@ -14073,7 +15639,15 @@
     },
     {
       "token": "--a63-surface-gloss",
+      "reason": "theme value not representable, kept its default: terminal-dark: none"
+    },
+    {
+      "token": "--a63-surface-gloss",
       "reason": "unresolvable value: none"
+    },
+    {
+      "token": "--a63-surface-highlight",
+      "reason": "theme value not representable, kept its default: terminal-dark: none"
     },
     {
       "token": "--a63-surface-highlight",
@@ -14081,7 +15655,15 @@
     },
     {
       "token": "--a63-surface-texture-blend",
+      "reason": "theme value not representable, kept its default: terminal-dark: overlay"
+    },
+    {
+      "token": "--a63-surface-texture-blend",
       "reason": "unresolvable value: normal"
+    },
+    {
+      "token": "--a63-surface-texture-image",
+      "reason": "theme value not representable, kept its default: terminal-dark: repeating-linear-gradient(\n    to bottom,\n    color-mix(in oklch, rgba(5, 93, 210, 1) 6%, transparent) 0px,\n    color-mix(in oklch, rgba(5, 93, 210, 1) 6%, transparent) 1px,\n    transparent 1px,\n    transparent 3px\n  )"
     },
     {
       "token": "--a63-surface-texture-image",
@@ -14096,8 +15678,28 @@
       "reason": "unsupported type: string"
     },
     {
+      "token": "--a63-weather-backdrop",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-weather-backdrop",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-weather-backdrop",
+      "reason": "unsupported type: string"
+    },
+    {
       "token": "--a63-weather-background-blend",
       "reason": "unresolvable value: normal"
+    },
+    {
+      "token": "--a63-weather-background-image",
+      "reason": "theme value not representable, kept its default: terminal-dark: linear-gradient(color-mix(in oklch, rgba(5, 93, 210, 1) 12%, transparent), transparent),\n    linear-gradient(\n      135deg,\n      color-mix(in oklch, rgba(5, 93, 210, 1) 30%, black 70%),\n      color-mix(in oklch, rgba(5, 93, 210, 1) 16%, black 84%)\n    )"
+    },
+    {
+      "token": "--a63-weather-background-image",
+      "reason": "unresolvable value: (empty)"
     },
     {
       "token": "--a63-weather-condition-background-image",
@@ -14216,12 +15818,60 @@
       "reason": "unsupported type: string"
     },
     {
+      "token": "--a63-widget-rim-backdrop",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-widget-rim-backdrop",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-widget-rim-border-color",
+      "reason": "theme value not representable, kept its default: retro-dark: color-mix(in oklch, white 50%, transparent)\n    color-mix(in oklch, black 22%, transparent) color-mix(in oklch, black 22%, transparent)\n    color-mix(in oklch, white 50%, transparent)"
+    },
+    {
+      "token": "--a63-widget-rim-image",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-widget-rim-image",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-widget-rim-image",
+      "reason": "unsupported type: string"
+    },
+    {
       "token": "--a63-widget-rim-image",
       "reason": "unsupported type: string"
     },
     {
       "token": "--a63-widget-shadow",
       "reason": "context scope: [data-widget-kind='sticky-note'][data-focused]"
+    },
+    {
+      "token": "--aqua-overlay-drop",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--retro-bevel-drop",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--retro-bevel-drop-lg",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--retro-bevel-drop-md",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--retro-bevel-drop-soft",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--terminal-overlay-glow",
+      "reason": "unsupported type: string"
     },
     {
       "token": "--typography-2xl-font-size",

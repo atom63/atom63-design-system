@@ -14,6 +14,12 @@
  * synced variable. A color-mix() whose second weight resolves to 0% reduces to
  * its first operand, so tint-aware roles keep their alias at the default tint.
  * Everything else is resolved per mode to a literal.
+ *
+ * Themes are the exception to one-axis-per-collection: aqua and terminal vary a
+ * token by theme and mode together. Every token any theme overrides goes to one
+ * Theme collection whose modes are theme × mode (`aqua-dark`), each resolved in
+ * the browser with both attributes set. Such a token may otherwise vary only by
+ * mode; a theme token on any other axis fails the build.
  */
 /* global document, getComputedStyle -- resolveInPage runs inside the browser page */
 import { readFile, writeFile } from 'node:fs/promises'
@@ -25,7 +31,13 @@ import { chromium } from 'playwright'
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const manifestPath = path.join(packageRoot, 'generated/atom63.tokens.json')
 const outputPath = path.join(packageRoot, 'generated/atom63.figma-sync.json')
-const cssEntries = ['src/tokens/index.css', 'src/contracts/index.css']
+const cssEntries = ['src/tokens/index.css', 'src/contracts/index.css', 'src/themes/index.css']
+
+const themes = ['modern', 'aqua', 'retro', 'terminal']
+const themeCollection = {
+  name: 'Atom63 Theme',
+  modes: themes.flatMap(theme => ['light', 'dark'].map(mode => `${theme}-${mode}`)),
+}
 
 const layerCollections = {
   foundation: 'Atom63 Foundation',
@@ -136,6 +148,15 @@ function isRootScope(scope) {
 /** Which axis (if any) a manifest entry belongs to; null means a :root default. */
 function classify(entry) {
   if (entry.conditions?.length) return { skip: `conditional: ${entry.conditions.join(', ')}` }
+  const theme = /data-a63-theme=['"](\w+)['"]/.exec(entry.scope)?.[1]
+  if (theme) {
+    const mode = /a63-mode=['"]dark|\.dark\b/.test(entry.scope)
+      ? 'dark'
+      : /a63-mode=['"]light|\.light\b/.test(entry.scope)
+        ? 'light'
+        : 'base'
+    return { theme, mode }
+  }
   for (const axis of axes) {
     const match = axis.pattern.exec(entry.scope)
     if (match) return { axis, mode: match.slice(1).find(Boolean) }
@@ -287,7 +308,11 @@ async function main() {
       modes: new Set(),
       rawByMode: {},
     }
-    if (placement.axis) {
+    if (placement.theme) {
+      record.themes ??= {}
+      record.themes[placement.theme] ??= {}
+      record.themes[placement.theme][placement.mode] = entry.value
+    } else if (placement.axis) {
       if (record.axis && record.axis !== placement.axis) {
         throw new Error(
           `${entry.cssVar} varies on both ${record.axis.id} and ${placement.axis.id}; Figma cannot model that`
@@ -303,9 +328,17 @@ async function main() {
     byVar.set(entry.cssVar, record)
   }
 
+  for (const record of byVar.values()) {
+    if (record.themes && record.axis && record.axis.id !== 'mode') {
+      throw new Error(
+        `${record.entry.cssVar} varies by theme and ${record.axis.id}; the Theme collection only combines themes with mode`
+      )
+    }
+  }
+
   // A token that only appears inside skipped contexts is dropped entirely.
   const synced = new Set(byVar.keys())
-  const css = (await inlineCss(cssEntries[0])) + '\n' + (await inlineCss(cssEntries[1]))
+  const css = (await Promise.all(cssEntries.map(entry => inlineCss(entry)))).join('\n')
 
   const browser = await chromium.launch()
   try {
@@ -337,7 +370,58 @@ async function main() {
       return collections.get(name)
     }
 
-    const rootRecords = [...byVar.values()].filter(record => !record.axis)
+    const themeRecords = [...byVar.values()].filter(record => record.themes)
+    if (themeRecords.length) {
+      const collection = ensureCollection(themeCollection.name, themeCollection.modes)
+      // The raw value in effect for a theme and mode, for alias detection.
+      const rawFor = (record, theme, mode) =>
+        record.themes[theme]?.[mode] ??
+        record.themes[theme]?.base ??
+        record.rawByMode[mode] ??
+        record.rawByMode.default ??
+        ''
+      const valuesByMode = {}
+      for (const theme of themes) {
+        for (const mode of ['light', 'dark']) {
+          for (const record of themeRecords) record.currentRaw = rawFor(record, theme, mode)
+          valuesByMode[`${theme}-${mode}`] = await resolveContext(
+            { 'data-a63-theme': theme, 'data-a63-mode': mode },
+            themeRecords
+          )
+        }
+      }
+      for (const record of themeRecords) {
+        const values = {}
+        let failed = null
+        for (const theme of themes) {
+          for (const mode of ['light', 'dark']) {
+            const key = `${theme}-${mode}`
+            const value = toValue(
+              record,
+              rawFor(record, theme, mode),
+              valuesByMode[key][record.entry.cssVar],
+              synced
+            )
+            if (!value)
+              failed = `${key}: ${valuesByMode[key][record.entry.cssVar].value || '(empty)'}`
+            values[key] = value
+          }
+        }
+        if (failed) {
+          // A theme value Figma cannot hold (a four-sided border color) keeps the
+          // token in its own collection with the default value, instead of dropping it.
+          skipped.push({
+            token: record.entry.cssVar,
+            reason: `theme value not representable, kept its default: ${failed}`,
+          })
+          record.themes = null
+          continue
+        }
+        collection.variables.push(variable(record, values))
+      }
+    }
+
+    const rootRecords = [...byVar.values()].filter(record => !record.axis && !record.themes)
     for (const record of rootRecords) record.currentRaw = record.rawByMode.default ?? ''
     const rootValues = await resolveContext({}, rootRecords)
 
@@ -357,7 +441,7 @@ async function main() {
     }
 
     for (const axis of axes) {
-      const records = [...byVar.values()].filter(record => record.axis === axis)
+      const records = [...byVar.values()].filter(record => record.axis === axis && !record.themes)
       if (records.length === 0) continue
       const collection = ensureCollection(axis.collection, axis.modes)
       const valuesByMode = {}

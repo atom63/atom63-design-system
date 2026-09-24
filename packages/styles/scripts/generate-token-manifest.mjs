@@ -15,6 +15,7 @@ const generatorRelativePath = 'packages/styles/scripts/generate-token-manifest.m
 const sourceDirectories = [
   path.join(packageRoot, 'src/tokens'),
   path.join(packageRoot, 'src/contracts'),
+  path.join(packageRoot, 'src/themes'),
 ]
 
 // Public stability is intentionally opt-in. Milestone 2 establishes evidence; it
@@ -96,6 +97,7 @@ function declarationContexts(source, declarationIndexes) {
 
 function inferLayer(sourceFile) {
   if (sourceFile.includes('/contracts/')) return 'contract'
+  if (sourceFile.includes('/themes/')) return 'theme'
   if (sourceFile.includes('/tokens/foundation/')) return 'foundation'
   if (sourceFile.endsWith('/tokens/foundation.css')) return 'foundation'
   return 'semantic'
@@ -156,6 +158,7 @@ function inferFigmaMapping(cssVar, type, layer, scope, conditions) {
     foundation: 'Atom63 Foundation',
     semantic: 'Atom63 Semantic',
     contract: 'Atom63 Contract',
+    theme: 'Atom63 Theme',
   }[layer]
   if (!collection) return undefined
 

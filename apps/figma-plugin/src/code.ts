@@ -10,6 +10,7 @@ import figmaSyncModel from '@atom63/styles/figma-sync.json'
 
 import { applyPlan, readSnapshot, type VariablesApi } from './sync/apply'
 import { planExport, toTokenPatch } from './sync/export'
+import { rebindBindings } from './sync/rebind'
 import { planSync, type SyncModel, type SyncPlan } from './sync/plan'
 import type { PluginSettings, SyncPlanSummary, UIToMainMessage } from './types/messages'
 
@@ -61,7 +62,15 @@ async function saveSettings(partial: Partial<PluginSettings>): Promise<PluginSet
 const syncModel = figmaSyncModel as SyncModel
 // The plugin typings' VariableCollection and Variable satisfy the sync's
 // structural interfaces; the cast only narrows createVariable's overloads.
-const variablesApi: VariablesApi = figma.variables
+const variablesApi: VariablesApi = {
+  getLocalVariableCollectionsAsync: () => figma.variables.getLocalVariableCollectionsAsync(),
+  getVariableByIdAsync: id => figma.variables.getVariableByIdAsync(id),
+  createVariableCollection: name => figma.variables.createVariableCollection(name),
+  createVariable: (name, collection, type) =>
+    figma.variables.createVariable(name, collection as VariableCollection, type),
+  createVariableAlias: variable => figma.variables.createVariableAlias(variable as Variable),
+  rebindBindings: (from, to) => rebindBindings(from as Variable, to as Variable),
+}
 
 function summarizePlan(plan: SyncPlan): SyncPlanSummary {
   return { collections: plan.collections, totals: plan.totals }
