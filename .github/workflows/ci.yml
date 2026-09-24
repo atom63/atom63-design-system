@@ -1,7 +1,10 @@
 name: CI
 
 on:
+  # Pull requests run CI for their branch; a push to a branch that has a pull
+  # request would only run the same commit twice.
   push:
+    branches: [main]
   pull_request:
   # Lets the visual baseline job start CI for the commit it pushes: pushes made
   # with GITHUB_TOKEN do not trigger workflows, but workflow_dispatch does.
@@ -10,7 +13,41 @@ on:
 permissions:
   contents: read
 
+# A newer push to a pull request cancels the run it replaces; main keeps every run.
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 jobs:
+  # Decides which jobs a pull request needs. Every other event runs everything.
+  changes:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      ios: ${{ steps.diff.outputs.ios }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Find what the pull request changes
+        id: diff
+        run: |
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            echo "ios=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          changed=$(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}")
+          echo "$changed"
+          # iOS reads the contracts, the token sources and generated models, and
+          # its own package; anything else cannot change what the iOS job checks.
+          if echo "$changed" | grep -qE '^(packages/ui-ios/|examples/ios-demo/|packages/ui-foundation/|packages/styles/(src|generated|scripts)/|scripts/generate-cross-renderer-contracts\.mjs|Package\.swift|\.github/workflows/ci\.yml)'; then
+            echo "ios=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ios=false" >> "$GITHUB_OUTPUT"
+          fi
+
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -22,7 +59,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version-file: .nvmrc
 
       - name: Enable pnpm with Corepack
         run: corepack enable
@@ -119,27 +156,6 @@ jobs:
           pnpm --filter @atom63/ui-foundation lint
           pnpm --filter @atom63/ui-react lint
 
-      - name: Check docs site
-        run: |
-          pnpm --filter @atom63/docs typecheck
-          pnpm --filter @atom63/docs lint
-          pnpm --filter @atom63/docs test
-          pnpm --filter @atom63/docs build
-
-      - name: Check Storybook
-        run: |
-          pnpm --filter @atom63/storybook typecheck
-          pnpm --filter @atom63/storybook build
-          pnpm --filter @atom63/storybook test
-          pnpm --filter @atom63/storybook test:ssr
-
-      - name: Check Figma plugin
-        run: |
-          pnpm --filter @atom63/figma-plugin typecheck
-          pnpm --filter @atom63/figma-plugin lint
-          pnpm --filter @atom63/figma-plugin test
-          pnpm --filter @atom63/figma-plugin build
-
       - name: Check Changesets status
         run: |
           if [ -f .changeset/pre.json ]; then
@@ -149,9 +165,8 @@ jobs:
             pnpm changeset status --verbose
           fi
 
-  # Every story renders in Firefox and WebKit. Render only: axe and visual
-  # regression run in Chromium in the verify and visual jobs.
-  cross-browser:
+  # Docs site and Figma plugin, in parallel with verify.
+  docs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -162,7 +177,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version-file: .nvmrc
 
       - name: Enable pnpm with Corepack
         run: corepack enable
@@ -170,13 +185,82 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps firefox webkit
+      - name: Check docs site
+        run: |
+          pnpm --filter @atom63/docs typecheck
+          pnpm --filter @atom63/docs lint
+          pnpm --filter @atom63/docs test
+          pnpm --filter @atom63/docs build
+
+      - name: Check Figma plugin
+        run: |
+          pnpm --filter @atom63/figma-plugin typecheck
+          pnpm --filter @atom63/figma-plugin lint
+          pnpm --filter @atom63/figma-plugin test
+          pnpm --filter @atom63/figma-plugin build
+
+  # Storybook render, axe and SSR tests. The Playwright image ships the
+  # browsers, so nothing is downloaded. Keep it in step with the root
+  # `playwright` version, like visual.yml.
+  storybook:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container: mcr.microsoft.com/playwright:v1.61.1-noble
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Enable pnpm with Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check Storybook
+        run: |
+          pnpm --filter @atom63/storybook typecheck
+          pnpm --filter @atom63/storybook build
+          pnpm --filter @atom63/storybook test
+          pnpm --filter @atom63/storybook test:ssr
+
+  # Every story renders in Firefox and WebKit. Render only: axe and visual
+  # regression run in Chromium in the verify and visual jobs.
+  cross-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # Firefox and WebKit need their sandbox, which the image's default root user
+    # cannot create; Playwright's CI docs run the container as the runner user.
+    container:
+      image: mcr.microsoft.com/playwright:v1.61.1-noble
+      options: --user 1001
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Enable pnpm with Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Render stories in Firefox and WebKit
         run: pnpm --filter @atom63/storybook test:cross-browser
 
   ios:
+    needs: changes
+    if: needs.changes.outputs.ios == 'true'
     runs-on: macos-15
     timeout-minutes: 45
 
@@ -197,7 +281,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version-file: .nvmrc
 
       - name: Check generated iOS contracts and tokens
         run: |
@@ -222,3 +306,23 @@ jobs:
           name: ios-test-results
           path: ~/Library/Developer/Xcode/DerivedData/**/Logs/Test/*.xcresult
           if-no-files-found: ignore
+
+  # The one check branch protection requires. It passes when every job passed or
+  # was skipped on purpose (ios on a pull request that cannot affect iOS), so
+  # adding or splitting jobs never needs a settings change.
+  ci-status:
+    if: always()
+    needs: [changes, verify, docs, storybook, cross-browser, ios]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Require every job to pass or be skipped
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          node -e '
+            const needs = JSON.parse(process.env.NEEDS)
+            const bad = Object.entries(needs).filter(([, job]) => !["success", "skipped"].includes(job.result))
+            for (const [name, job] of Object.entries(needs)) console.log(`${name}: ${job.result}`)
+            if (bad.length) process.exit(1)
+          '
