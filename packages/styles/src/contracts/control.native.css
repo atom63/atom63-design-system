@@ -1,0 +1,13 @@
+/*
+ * CSS-native values of the control contract: values with no DTCG type. The rest of
+ * the contract is generated from control.tokens.json. Each declaration here is listed
+ * in native-values.json; see docs/design-system/token-single-source.md.
+ */
+
+:root {
+  --a63-control-gloss: none;
+  /* A gloss reflection panel painted in the top of the control (recipe ::after);
+        none = no reflection. Themes set a gradient (e.g. aqua's glass highlight). */
+  --a63-control-highlight: none;
+  --a63-control-press-transform: translateY(1px);
+}

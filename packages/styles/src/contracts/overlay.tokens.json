@@ -1,0 +1,103 @@
+{
+  "$description": "Overlay contract — the FLOATING elevated surface (menus, popovers, select\npopups, tooltips, dialogs, toasts, drawers).\n\nLean by design (see the taxonomy spec): semantics carry the default look — the\nrecipe reads --a63-surface-overlay (bg), --a63-border-subtle (border),\n--radius-lg (radius), --z-layer-popover (stacking), --a63-control-feedback-*\n(entrance) at the use-site. The ONE thing themes vary distinctly for a floating\nsurface is its ELEVATION, so that is the only contract token here.\n\n--a63-overlay-shadow is a drop/elevation (mode-independent), so it's safe to\ndefault at :root and let each theme override it on its shell (modern soft,\naqua glassy halo, retro hard Win98 offset, terminal phosphor glow).\n\nThe contract now carries the full treatment vocabulary plus a drag-shadow\n(elevation while a floating surface is dragged).\n\n--a63-overlay-radius intentionally unset at :root; recipes read\n   var(--a63-overlay-radius, <own default>) so themes can square all overlays.",
+  "a63": {
+    "overlay": {
+      "shadow": {
+        "$type": "shadow",
+        "$value": [
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [0, 0, 0],
+              "alpha": 0.22
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 8,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 24,
+              "unit": "px"
+            },
+            "spread": {
+              "value": -6,
+              "unit": "px"
+            }
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [0, 0, 0],
+              "alpha": 0.12
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 2,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 6,
+              "unit": "px"
+            },
+            "spread": {
+              "value": -2,
+              "unit": "px"
+            }
+          }
+        ],
+        "$extensions": {
+          "io.atom63.derive": "0 8px 24px -6px color-mix(in oklch, black 22%, transparent), 0 2px 6px -2px color-mix(in oklch, black 12%, transparent)"
+        },
+        "$description": "Outer elevation (existing lever, unchanged)."
+      },
+      "drag": {
+        "shadow": {
+          "$type": "shadow",
+          "$value": "{a63.overlay.shadow}",
+          "$description": "Elevation while a floating surface is dragged (widgets, window frames).\n   Defaults to the resting shadow; a theme/consumer lifts it during drag."
+        }
+      },
+      "inner": {
+        "shadow": {
+          "$type": "shadow",
+          "$value": [],
+          "$extensions": {
+            "io.atom63.derive": "0 0 #0000"
+          },
+          "$description": "`0 0 #0000` not `none`: composed into comma-separated box-shadow lists\n   (`var(--a63-overlay-inner-shadow), var(--a63-overlay-shadow)`). `none` is\n   only legal as the sole value, so it invalidates the whole declaration and\n   silently drops the overlay's elevation."
+        }
+      },
+      "highlight": {
+        "opacity": {
+          "$type": "number",
+          "$value": 1
+        }
+      },
+      "border": {
+        "style": {
+          "$type": "strokeStyle",
+          "$value": "solid"
+        },
+        "width": {
+          "$type": "dimension",
+          "$value": {
+            "value": 1,
+            "unit": "px"
+          }
+        }
+      }
+    }
+  },
+  "$extensions": {
+    "io.atom63.css": {
+      "imports": ["./overlay.native.css"]
+    }
+  }
+}

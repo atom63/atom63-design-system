@@ -1,0 +1,17 @@
+/*
+ * CSS-native values of the surface contract: values with no DTCG type. The rest of
+ * the contract is generated from surface.tokens.json. Each declaration here is listed
+ * in native-values.json; see docs/design-system/token-single-source.md.
+ */
+
+:root {
+  /* Top-half sheen gradient (background-image layer). none = no sheen. */
+  --a63-surface-gloss: none;
+  /* Rim/edge specular highlight (recipe ::after or an inset shadow layer). */
+  --a63-surface-highlight: none;
+  /* backdrop-filter (blur/saturate) for translucent glass. none = opaque. */
+  --a63-surface-backdrop: none;
+  /* Texture layer: an extra background-image (scanline/pinstripe) + its blend. */
+  --a63-surface-texture-image: none;
+  --a63-surface-texture-blend: normal;
+}

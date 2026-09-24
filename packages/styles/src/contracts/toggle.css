@@ -1,4 +1,7 @@
 /*
+ * Generated from src/contracts/toggle.tokens.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
  * Toggle contract — persistent on/off controls.
  *
  * Covers standalone Toggle. ToggleGroup is always a joined segmented bar and
@@ -13,7 +16,6 @@
  *   --a63-toggle-primary-background   -> var(--a63-action-primary)
  *   --a63-toggle-primary-foreground   -> var(--a63-action-primary-foreground)
  */
-
 :root {
   --a63-toggle-border-width: var(--a63-segment-border-width);
   --a63-toggle-gap: var(--a63-control-gap);

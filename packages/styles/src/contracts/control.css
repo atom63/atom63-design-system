@@ -1,4 +1,7 @@
 /*
+ * Generated from src/contracts/control.tokens.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
  * Shared control contracts.
  *
  * Component recipes consume these first and introduce component-specific
@@ -6,97 +9,85 @@
  * sizing/feedback tokens (see contracts/environment.css); recipes never hardcode
  * sizes. Radius comes from the semantic ramp (theme/personalization), not here.
  */
+@import './control.native.css';
 
 :root {
   /* Height ramp (xs..xl) — web defaults (desktop density: 24/28/32/36/40, to
-     match production @atom63/ui). iOS overrides in environment.css. */
+        match production @atom63/ui). iOS overrides in environment.css. */
   --a63-control-height-xs: calc(var(--a63-space-unit) * 6);
   --a63-control-height-sm: calc(var(--a63-space-unit) * 7);
   --a63-control-height-md: calc(var(--a63-space-unit) * 8);
   --a63-control-height-lg: calc(var(--a63-space-unit) * 9);
   --a63-control-height-xl: calc(var(--a63-space-unit) * 10);
-
-  /*
-   * Recipes resolve rendered size at their own use-site:
-   *   max(calc(height * density), size-appropriate min-SIZE)
-   * Do not cache that formula in a :root custom property. Input, density, and
-   * design-language axes can be scoped to nested providers; deriving at :root
-   * would freeze the root values and ignore those local overrides.
-   *
-   * Floor with --a63-control-min-size (rendered geometry), NOT
-   * --a63-control-min-target (interaction). The two are separate on purpose —
-   * see contracts/environment.css. Touch therefore keeps the xs/sm/md ramp
-   * intact and satisfies the 44px target by expanding the interaction area:
-   * compact markers (checkbox, radio, switch, slider, badge) via a positioned
-   * pseudo-element, button-class controls the same way. Square icon buttons are
-   * NOT an exception — they sit on the rendered ramp like everything else, so a
-   * 32px icon button and a 32px text button line up in the same toolbar row.
-   *
-   * The button recipe delivers that interaction floor on `::before`. Consumer
-   * CSS must not paint on, resize, or hide `.a63-Button::before`: it wins the
-   * cascade at higher specificity than a single consumer class, and silently
-   * breaks either the visual or the touch target.
-   */
-
-  /* Inline padding ramp */
+  /* Recipes resolve rendered size at their own use-site:
+       max(calc(height * density), size-appropriate min-SIZE)
+     Do not cache that formula in a :root custom property. Input, density, and
+     design-language axes can be scoped to nested providers; deriving at :root
+     would freeze the root values and ignore those local overrides.
+     
+     Floor with --a63-control-min-size (rendered geometry), NOT
+     --a63-control-min-target (interaction). The two are separate on purpose —
+     see contracts/environment.css. Touch therefore keeps the xs/sm/md ramp
+     intact and satisfies the 44px target by expanding the interaction area:
+     compact markers (checkbox, radio, switch, slider, badge) via a positioned
+     pseudo-element, button-class controls the same way. Square icon buttons are
+     NOT an exception — they sit on the rendered ramp like everything else, so a
+     32px icon button and a 32px text button line up in the same toolbar row.
+     
+     The button recipe delivers that interaction floor on `::before`. Consumer
+     CSS must not paint on, resize, or hide `.a63-Button::before`: it wins the
+     cascade at higher specificity than a single consumer class, and silently
+     breaks either the visual or the touch target.
+     Inline padding ramp */
   --a63-control-padding-inline-xs: var(--a63-space-2);
   --a63-control-padding-inline-sm: var(--a63-space-2_5);
   --a63-control-padding-inline-md: var(--a63-space-3);
   --a63-control-padding-inline-lg: var(--a63-space-3_5);
   --a63-control-padding-inline-xl: var(--a63-space-4);
-
   /* Text ramp */
   --a63-control-font-weight: var(--font-weight-medium, 500);
   --a63-control-font-family: var(--font-family-sans);
-  --a63-control-text-shadow: none;
   --a63-control-font-size-xs: var(--typography-xs-font-size);
   --a63-control-font-size-sm: var(--typography-xs-font-size);
   --a63-control-font-size-md: var(--typography-sm-font-size);
   --a63-control-font-size-lg: var(--typography-base-font-size);
   --a63-control-font-size-xl: var(--typography-lg-font-size);
-
+  --a63-control-text-shadow: none;
   /* Icon geometry follows control size, not the compressed text ramp. */
   --a63-control-icon-size-xs: 0.75rem;
   --a63-control-icon-size-sm: 0.875rem;
   --a63-control-icon-size-md: 1rem;
   --a63-control-icon-size-lg: 1.125rem;
   --a63-control-icon-size-xl: 1.25rem;
-
   --a63-control-gap: var(--a63-space-2);
   --a63-control-radius: var(--a63-radius-control);
-
-  /* Row block padding. Rows (Item today; Menu/Command rows are the intended
-     next tenants) take their height from content + this padding, floored by the
-     control ramp, so a single-line row lands on ~44pt and a two-line row on
-     ~59pt. Those targets come from our own measurement of shipping iOS apps
-     (docs/design-system/web-ios-token-parity.md) — Apple publishes no iOS row
-     height, so do not cite UIKit cell metrics for them. It lives here rather
-     than in the recipe
-     because the design-language axis has to retune it (contracts/environment.css)
-     and axes own tokens; recipes only read them. */
-  --a63-row-padding-block-xs: var(--a63-space-2);
-  --a63-row-padding-block-sm: var(--a63-space-3);
-  --a63-row-padding-block-md: var(--a63-space-4);
   --a63-control-border-width: 1px;
   /* `0 0 #0000` not `none` — composed into comma-separated box-shadow lists
-     alongside the focus ring, where `none` invalidates the declaration. */
+        alongside the focus ring, where `none` invalidates the declaration. */
   --a63-control-shadow: 0 0 #0000;
   --a63-control-shadow-active: var(--a63-control-shadow);
   /* Shadow for flat/bordered variants (outline, destructive-outline). Defaults to
-     the regular shadow; a theme can soften it — e.g. aqua drops the bright top rim
-     that's too strong on a light fill while keeping a gentle lift. */
+        the regular shadow; a theme can soften it — e.g. aqua drops the bright top rim
+        that's too strong on a light fill while keeping a gentle lift. */
   --a63-control-shadow-flat: var(--a63-control-shadow);
   /* How strongly a control's drop shadow is tinted by its own fill colour (0% =
-     neutral shadow). The recipe composes the tinted layer at the button so it
-     follows each button's colour; a theme just sets the strength. */
+        neutral shadow). The recipe composes the tinted layer at the button so it
+        follows each button's colour; a theme just sets the strength. */
   --a63-control-shadow-tint: 0%;
-  --a63-control-gloss: none;
-  /* A gloss reflection panel painted in the top of the control (recipe ::after);
-     none = no reflection. Themes set a gradient (e.g. aqua's glass highlight). */
-  --a63-control-highlight: none;
   --a63-control-focus-ring-width: 3px;
   --a63-control-focus-ring-color: var(--a63-focus-ring);
   --a63-control-feedback-duration: var(--a63-motion-control-feedback-duration);
   --a63-control-feedback-ease: var(--a63-motion-ease-standard);
-  --a63-control-press-transform: translateY(1px);
+  /* Row block padding. Rows (Item today; Menu/Command rows are the intended
+        next tenants) take their height from content + this padding, floored by the
+        control ramp, so a single-line row lands on ~44pt and a two-line row on
+        ~59pt. Those targets come from our own measurement of shipping iOS apps
+        (docs/design-system/web-ios-token-parity.md) — Apple publishes no iOS row
+        height, so do not cite UIKit cell metrics for them. It lives here rather
+        than in the recipe
+        because the design-language axis has to retune it (contracts/environment.css)
+        and axes own tokens; recipes only read them. */
+  --a63-row-padding-block-xs: var(--a63-space-2);
+  --a63-row-padding-block-sm: var(--a63-space-3);
+  --a63-row-padding-block-md: var(--a63-space-4);
 }

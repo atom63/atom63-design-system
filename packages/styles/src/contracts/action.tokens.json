@@ -1,0 +1,66 @@
+{
+  "$description": "Action contract — momentary controls that perform an action now.\n\nCovers Button, IconButton, SplitButton, and ButtonGroup. Action controls share\nthe physical CONTROL substrate (height, padding, focus ring, press feedback),\nbut get their own namespace so momentary \"pressed\" styling never has to stand\nin for persistent selected/on styling (Toggle/Segment).\n\nAxis-dependent colour hooks are intentionally not declared at :root. Recipes\nshould consume them at the use-site with live semantic fallbacks, e.g.\n  --a63-action-control-background -> var(--a63-action-neutral)\n  --a63-action-control-foreground -> var(--a63-action-neutral-foreground)\n  --a63-action-primary-background -> var(--a63-action-primary)\n  --a63-action-danger-background  -> var(--a63-action-danger)",
+  "a63": {
+    "action": {
+      "control": {
+        "border": {
+          "width": {
+            "$type": "dimension",
+            "$value": "{a63.control.border.width}"
+          }
+        },
+        "focus": {
+          "ring": {
+            "width": {
+              "$type": "dimension",
+              "$value": "{a63.control.focus.ring.width}"
+            }
+          }
+        },
+        "gap": {
+          "$type": "dimension",
+          "$value": "{a63.control.gap}"
+        },
+        "radius": {
+          "$type": "dimension",
+          "$value": "{a63.control.radius}"
+        },
+        "shadow": {
+          "$root": {
+            "$type": "shadow",
+            "$value": "{a63.control.shadow}"
+          },
+          "active": {
+            "$type": "shadow",
+            "$value": "{a63.control.shadow.active}"
+          },
+          "flat": {
+            "$type": "shadow",
+            "$value": "{a63.control.shadow.flat}"
+          },
+          "tint": {
+            "$type": "shadow",
+            "$value": "{a63.control.shadow.tint}"
+          }
+        },
+        "text": {
+          "shadow": {
+            "$type": "shadow",
+            "$value": "{a63.control.text.shadow}"
+          }
+        }
+      },
+      "disabled": {
+        "opacity": {
+          "$type": "number",
+          "$value": 0.56
+        }
+      }
+    }
+  },
+  "$extensions": {
+    "io.atom63.css": {
+      "imports": ["./action.native.css"]
+    }
+  }
+}

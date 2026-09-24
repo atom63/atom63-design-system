@@ -69,6 +69,27 @@ B1–B5 are step one of D1, and B6–B7 are step two. iOS follows automatically:
 from the Figma sync model (phase A), so once themes are in the model, `AtomTheme` can be generated per
 theme.
 
+## CSS-native values (decided 2026-09-24, during B6)
+
+About 60 contract values have no DTCG type:
+- `none` and transforms such as `scale(0.97)`
+- `env(safe-area-inset-bottom, 0px)` and `100dvh`
+- composite shadows with `color-mix()`
+- `solid`
+
+They are implementation details, not design decisions a designer would edit, and Figma skips them
+already. Forcing them into DTCG would mean writing a misleading stand-in `$value`. So they stay in
+hand-written CSS. The rule that keeps them from becoming black boxes:
+
+- A contract file is migrated whole when every value it declares has a DTCG type.
+- A file with CSS-native values is split. The DTCG-typed tokens move to `<name>.tokens.json`, and
+  generate `<name>.css`. The CSS-native ones move to `<name>.native.css`, which the generated
+  `<name>.css` imports (`$extensions["io.atom63.css"].imports`), so the contract keeps one entry
+  point.
+- Every declaration in a `*.native.css` file is listed in `native-values.json` with a one-line
+  reason. A check fails when a native file declares a value that is not listed, so a new
+  hand-written value needs a reviewed entry.
+
 ## Open questions, decided per slice
 
 - **How `io.atom63.derive` is shaped.** It could be one CSS expression string with `{token.path}`

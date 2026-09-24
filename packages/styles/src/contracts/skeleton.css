@@ -1,4 +1,7 @@
 /*
+ * Generated from src/contracts/skeleton.resolver.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
  * Skeleton appearance contract.
  *
  * Renderers may use different masking primitives, but the base surface and

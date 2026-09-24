@@ -1,0 +1,23 @@
+/*
+ * CSS-native values of the environment contract: values with no DTCG type. The rest of
+ * the contract is generated from environment.resolver.json. Each declaration here is listed
+ * in native-values.json; see docs/design-system/token-single-source.md.
+ */
+
+:root {
+  --a63-safe-area-top: env(safe-area-inset-top, 0px);
+  --a63-safe-area-right: env(safe-area-inset-right, 0px);
+  --a63-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --a63-safe-area-left: env(safe-area-inset-left, 0px);
+  --a63-viewport-height: 100vh;
+}
+
+@supports (height: 100dvh) {
+  :root {
+    --a63-viewport-height: 100dvh;
+  }
+}
+
+:is([data-a63-design-language='ios'], [data-design-language='ios']) {
+  --a63-control-press-transform: scale(0.97);
+}

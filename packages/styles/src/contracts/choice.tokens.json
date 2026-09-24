@@ -1,0 +1,66 @@
+{
+  "$description": "Choice contract — form controls that expose checked/selected value state.\n\nCovers Checkbox, Radio, and Switch. This is the visual home for indicators,\ndots, thumbs, and on/off tracks. It aliases the older `selection` namespace so\ncurrent recipes keep working while new recipes can use the clearer name.\n\nAxis-dependent colour hooks are resolved at the recipe use-site:\n  --a63-choice-accent       -> var(--a63-action-primary)\n  --a63-choice-border       -> var(--a63-border-control)\n  --a63-choice-track-off    -> var(--a63-surface-control)\n  --a63-choice-focus-ring   -> var(--a63-focus-ring)\n\nMaterial hooks are axis-independent defaults. Themes override them to express\nglass, bevel, or phosphor treatment without making choice controls inherit the\nfull Button chrome. Switch maps the box shadows to its track and the indicator\ngloss to its checked fill; Checkbox and Radio use the same hooks on their\nboxes and indicators.",
+  "a63": {
+    "choice": {
+      "thumb": {
+        "$root": {
+          "$type": "color",
+          "$value": "{a63.selection.thumb}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{a63.selection.thumb.fg}"
+        }
+      },
+      "switch": {
+        "thumb": {
+          "size": {
+            "$type": "dimension",
+            "$value": "{a63.switch.thumb.size}"
+          }
+        }
+      },
+      "border": {
+        "width": {
+          "$type": "dimension",
+          "$value": "{a63.control.border.width}"
+        }
+      },
+      "focus": {
+        "ring": {
+          "width": {
+            "$type": "dimension",
+            "$value": "{a63.control.focus.ring.width}"
+          }
+        }
+      },
+      "feedback": {
+        "duration": {
+          "$type": "duration",
+          "$value": "{a63.control.feedback.duration}"
+        },
+        "ease": {
+          "$type": "duration",
+          "$value": "{a63.control.feedback.ease}"
+        }
+      },
+      "box": {
+        "shadow": {
+          "$root": {
+            "$type": "shadow",
+            "$value": []
+          },
+          "checked": {
+            "$type": "shadow",
+            "$value": []
+          }
+        }
+      }
+    }
+  },
+  "$extensions": {
+    "io.atom63.css": {
+      "imports": ["./choice.native.css"]
+    }
+  }
+}

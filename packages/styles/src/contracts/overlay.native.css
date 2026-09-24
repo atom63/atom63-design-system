@@ -1,0 +1,13 @@
+/*
+ * CSS-native values of the overlay contract: values with no DTCG type. The rest of
+ * the contract is generated from overlay.tokens.json. Each declaration here is listed
+ * in native-values.json; see docs/design-system/token-single-source.md.
+ */
+
+:root {
+  --a63-overlay-gloss: none;
+  --a63-overlay-highlight: none;
+  --a63-overlay-backdrop: none;
+  --a63-overlay-texture-image: none;
+  --a63-overlay-texture-blend: normal;
+}

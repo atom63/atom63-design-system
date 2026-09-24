@@ -1,0 +1,9 @@
+/*
+ * CSS-native values of the trigger contract: values with no DTCG type. The rest of
+ * the contract is generated from trigger.tokens.json. Each declaration here is listed
+ * in native-values.json; see docs/design-system/token-single-source.md.
+ */
+
+:root {
+  --a63-trigger-indicator-size: 1em;
+}

@@ -1,7 +1,7 @@
 /**
  * Builds token CSS from DTCG source files (Design Tokens Format Module 2025.10).
  *
- * Each `src/tokens/**\/<name>.tokens.json` produces the sibling `<name>.css`: one
+ * Each `src/{tokens,contracts}/**\/<name>.tokens.json` produces the sibling `<name>.css`: one
  * `:root` custom property per token, named by joining the token's group path
  * with `-` (`spacing` > `1` becomes `--spacing-1`). The JSON is the source of
  * truth; the CSS is generated and must not be edited by hand.
@@ -18,7 +18,9 @@
  *
  * A resolver may also list `sets` in its `resolutionOrder`: token groups that
  * apply unconditionally, emitted before the modifier's contexts under the
- * selector in the set's `$extensions["io.atom63.css"].selector`. A context with
+ * selector in the set's `$extensions["io.atom63.css"].selector`, wrapped in its
+ * `atRule` (for example `@media (pointer: coarse)`) when it has one; a resolver
+ * may consist of sets only, one per CSS scope. A context with
  * no sources emits no rule, so a modifier can hold overrides for a few contexts
  * only. `$extensions["io.atom63.css"].selectors` on the resolver may name the
  * selector of any context, replacing the attribute selector (the mode axis
@@ -30,6 +32,12 @@
  * placeholders in the expression become `var(--token-path)`, and each must name
  * an existing token. Example: the auto brand ramp,
  * `"var(--color-auto-50, {color.b1.50})"` over `$value` `"{color.b1.50}"`.
+ *
+ * Values with no DTCG type (transforms, `env()`, composite shadows…) live in
+ * hand-written `*.native.css` files. Every declaration there must be listed with a
+ * reason in `src/tokens/native-values.json`, and every listed entry must still
+ * exist; `--check` enforces both, so a new hand-written value needs a reviewed
+ * entry. See docs/design-system/token-single-source.md.
  *
  * Usage: node scripts/build-css-from-dtcg.mjs [--check]
  */
@@ -114,10 +122,24 @@ function formatValue(type, value, name, knownNames) {
       return String(value)
     case 'fontFamily':
       return formatFontFamily(value)
-    case 'shadow':
-      // Only "no shadow" so far: an empty layer list is CSS `none`.
-      if (Array.isArray(value) && value.length === 0) return 'none'
-      throw new Error(`${name}: only an empty shadow list is supported`)
+    case 'shadow': {
+      // A DTCG shadow or list of shadows; an empty list is CSS `none`.
+      const layers = Array.isArray(value) ? value : [value]
+      if (layers.length === 0) return 'none'
+      return layers
+        .map(layer => {
+          const lengths = [layer.offsetX, layer.offsetY, layer.blur, layer.spread].map(length =>
+            formatValue('dimension', length, name, knownNames)
+          )
+          const color = formatValue('color', layer.color, name, knownNames)
+          return `${layer.inset ? 'inset ' : ''}${lengths.join(' ')} ${color}`
+        })
+        .join(', ')
+    }
+    case 'strokeStyle':
+      if (typeof value !== 'string')
+        throw new Error(`${name}: only keyword stroke styles are supported`)
+      return value
     default:
       throw new Error(`${name}: unsupported $type "${type}"`)
   }
@@ -179,15 +201,7 @@ function toRules(sourcePath, document) {
   if (document.version !== '2025.10')
     throw new Error(`${sourcePath}: resolver version must be 2025.10`)
   const modifiers = Object.entries(document.modifiers ?? {})
-  if (modifiers.length !== 1) throw new Error(`${sourcePath}: expected exactly one modifier`)
-  const [[modifierName, modifier]] = modifiers
-  const attribute = document.$extensions?.['io.atom63.css']?.attribute
-  if (!attribute) throw new Error(`${sourcePath}: missing $extensions["io.atom63.css"].attribute`)
-  if (!Object.hasOwn(modifier.contexts, modifier.default)) {
-    throw new Error(
-      `${sourcePath}: default context "${modifier.default}" of "${modifierName}" is missing`
-    )
-  }
+  if (modifiers.length > 1) throw new Error(`${sourcePath}: expected at most one modifier`)
   const inline = sources => {
     for (const source of sources) {
       if (Object.hasOwn(source, '$ref'))
@@ -195,26 +209,40 @@ function toRules(sourcePath, document) {
     }
     return sources
   }
-  const selectors = document.$extensions['io.atom63.css'].selectors ?? {}
-  const modifierRules = Object.entries(modifier.contexts)
-    .filter(([, sources]) => sources.length > 0)
-    .map(([context, sources]) => {
-      const scoped = `[${attribute}='${context}']`
-      const selector =
-        selectors[context] ?? (context === modifier.default ? `:root,\n${scoped}` : scoped)
-      return { selector, groups: inline(sources) }
-    })
-  const order = document.resolutionOrder ?? [{ $ref: `#/modifiers/${modifierName}` }]
+  let modifierName
+  let modifierRules = []
+  if (modifiers.length === 1) {
+    const [[name, modifier]] = modifiers
+    modifierName = name
+    const attribute = document.$extensions?.['io.atom63.css']?.attribute
+    if (!attribute) throw new Error(`${sourcePath}: missing $extensions["io.atom63.css"].attribute`)
+    if (!Object.hasOwn(modifier.contexts, modifier.default)) {
+      throw new Error(
+        `${sourcePath}: default context "${modifier.default}" of "${name}" is missing`
+      )
+    }
+    const selectors = document.$extensions['io.atom63.css'].selectors ?? {}
+    modifierRules = Object.entries(modifier.contexts)
+      .filter(([, sources]) => sources.length > 0)
+      .map(([context, sources]) => {
+        const scoped = `[${attribute}='${context}']`
+        const selector =
+          selectors[context] ?? (context === modifier.default ? `:root,\n${scoped}` : scoped)
+        return { selector, groups: inline(sources) }
+      })
+  }
+  const order =
+    document.resolutionOrder ?? (modifierName ? [{ $ref: `#/modifiers/${modifierName}` }] : [])
   return order.flatMap(({ $ref }) => {
-    if ($ref === `#/modifiers/${modifierName}`) return modifierRules
+    if (modifierName && $ref === `#/modifiers/${modifierName}`) return modifierRules
     const setName = /^#\/sets\/(.+)$/.exec($ref ?? '')?.[1]
     const set = setName && document.sets?.[setName]
     if (!set) throw new Error(`${sourcePath}: resolutionOrder entry ${$ref} does not resolve`)
-    const selector = set.$extensions?.['io.atom63.css']?.selector
+    const { selector, atRule } = set.$extensions?.['io.atom63.css'] ?? {}
     if (!selector) {
       throw new Error(`${sourcePath}: set "${setName}" needs $extensions["io.atom63.css"].selector`)
     }
-    return [{ selector, groups: inline(set.sources) }]
+    return [{ selector, atRule, groups: inline(set.sources) }]
   })
 }
 
@@ -241,23 +269,51 @@ function render(sourcePath, document, rules, knownNames) {
         : ''
       return `${comment}  --${name}: ${css};`
     })
-    return `${rule.selector} {\n${declarations.join('\n')}\n}\n`
+    const block = `${rule.selector} {\n${declarations.join('\n')}\n}\n`
+    // A set may sit inside a conditional group rule (`@media …`, `@supports …`).
+    return rule.atRule ? `${rule.atRule} {\n${block}}\n` : block
   })
+  // A split contract keeps one entry point: its generated CSS imports the
+  // hand-written native part (`$extensions["io.atom63.css"].imports`).
+  const imports = (document.$extensions?.['io.atom63.css']?.imports ?? [])
+    .map(file => `@import '${file}';\n`)
+    .join('')
   return (
     `/*\n * Generated from ${relativeSource} by scripts/build-css-from-dtcg.mjs. Do not edit;\n` +
     ` * change the DTCG source and run \`pnpm --filter @atom63/styles generate:tokens\`.${description}\n */\n` +
+    (imports ? `${imports}\n` : '') +
     blocks.join('\n')
   )
 }
 
 const check = process.argv.includes('--check')
 const sources = []
-for (const sourcePath of await findSources(tokensRoot)) {
+const sourceRoots = [tokensRoot, path.join(packageRoot, 'src/contracts')]
+for (const sourcePath of (await Promise.all(sourceRoots.map(findSources))).flat()) {
   const document = JSON.parse(await readFile(sourcePath, 'utf8'))
   sources.push([sourcePath, document, toRules(sourcePath, document)])
 }
-// Every token name across all sources, so aliases can point into any file.
+// Every token name across all sources, so aliases can point into any file, plus
+// every custom property the package's hand-written CSS declares: while a layer is
+// migrated, a DTCG token may alias one that is still written in CSS.
 const knownNames = new Set(sources.flatMap(([, , rules]) => tokensOf(rules).map(([name]) => name)))
+async function findCss(directory) {
+  const found = []
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const entryPath = path.join(directory, entry.name)
+    if (entry.isDirectory()) found.push(...(await findCss(entryPath)))
+    else if (entry.name.endsWith('.css')) found.push(entryPath)
+  }
+  return found
+}
+const generatedCss = new Set(
+  sources.map(([sourcePath]) => sourcePath.replace(/\.(tokens|resolver)\.json$/, '.css'))
+)
+for (const file of await findCss(path.join(packageRoot, 'src'))) {
+  if (generatedCss.has(file)) continue
+  const css = (await readFile(file, 'utf8')).replaceAll(/\/\*[\s\S]*?\*\//g, '')
+  for (const [, name] of css.matchAll(/--([\w-]+)\s*:/g)) knownNames.add(name)
+}
 
 const stale = []
 for (const [sourcePath, document, rules] of sources) {
@@ -275,6 +331,39 @@ for (const [sourcePath, document, rules] of sources) {
   } else {
     await writeFile(cssPath, css)
   }
+}
+
+// CSS-native values: every declaration in a *.native.css file is listed with a reason.
+const srcRoot = path.join(packageRoot, 'src')
+async function findNative(directory) {
+  const found = []
+  for (const entry of await readdir(directory, { withFileTypes: true })) {
+    const entryPath = path.join(directory, entry.name)
+    if (entry.isDirectory()) found.push(...(await findNative(entryPath)))
+    else if (entry.name.endsWith('.native.css')) found.push(entryPath)
+  }
+  return found.sort()
+}
+const nativeList = JSON.parse(await readFile(path.join(tokensRoot, 'native-values.json'), 'utf8'))
+const declaredNative = new Set()
+for (const file of await findNative(srcRoot)) {
+  const css = (await readFile(file, 'utf8')).replaceAll(/\/\*[\s\S]*?\*\//g, '')
+  for (const [, name] of css.matchAll(/(--[\w-]+)\s*:/g)) declaredNative.add(name)
+}
+const unlisted = [...declaredNative].filter(name => !nativeList.values[name])
+const unused = Object.keys(nativeList.values).filter(name => !declaredNative.has(name))
+if (unlisted.length || unused.length) {
+  process.stderr.write(
+    [
+      ...unlisted.map(
+        name => `${name}: declared in a *.native.css file but not listed in native-values.json`
+      ),
+      ...unused.map(
+        name => `${name}: listed in native-values.json but no *.native.css file declares it`
+      ),
+    ].join('\n') + '\n'
+  )
+  process.exit(1)
 }
 
 if (stale.length) {

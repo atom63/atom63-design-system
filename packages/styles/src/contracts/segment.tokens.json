@@ -1,0 +1,19 @@
+{
+  "$description": "Segment contract — the SELECTABLE / GROUPED action-control archetype.\n\nCovers the controls that present a SET of options where a resting cell flips to\na SELECTED cell: Toggle, ToggleGroup, SegmentedControl, Tabs, and other option\n/ group-action rows. These are NOT single call-to-action buttons (that is the\n`control` archetype) — so they get their OWN namespace and never borrow the\nButton's control chrome. This is the token home for \"secondary action controls.\"\n\n── TWO authored tonal styles for the SELECTED cell ────────────────────────\n  1. neutral (default) — a quiet neutral fill (the segmented-control default).\n  2. primary           — the brand-accent fill (radio-like emphasis / a\n                         highlighted current selection).\n  The recipe picks one via a tone flag, e.g. [data-tone='primary'].\n  The RESTING + HOVER treatment is shared by both tones — only the selected\n  cell differs between neutral and primary.\n\n── AXIS TRAP (learned on Input/Switch — see selection.css) ────────────────\n  Tokens whose value references mode/theme/brand semantics — every COLOUR here\n  (the fills + foregrounds, e.g. --a63-action-neutral is mode-split light/dark,\n  --a63-action-primary follows the brand axis) — must NOT be declared at :root.\n  A var(--a63-action-*) resolved at :root freezes to the root's mode/theme and\n  inherits that frozen value into .dark / [data-a63-theme] subtrees.\n  So: the COLOUR hooks are consumed at the recipe USE-SITE with the live-semantic\n  fallback shown in the API block below, and a THEME overrides them under its\n  own [data-a63-theme='…'] scope (never :root). Only axis-INDEPENDENT geometry\n  + treatment defaults are declared at :root here.\n\nRADIUS is read at the recipe USE-SITE, NOT declared here. It's multiplier-\ndependent (--radius-md/-sm), so a :root declaration would freeze to the root\nmultiplier and ignore the radius axis (the same trap fixed in menu.css):\n  bar / outer cell -> var(--a63-segment-radius, var(--radius-md))\n  inset selected   -> var(--a63-segment-selected-radius, var(--radius-sm))\nGrouped/segmented controls stay TIGHTER than a standalone control pill (they\ndo NOT read --a63-control-radius, which a theme can inflate to a pill).\n\nTREATMENT (track/selected gloss + shadow) is likewise read at the use-site,\nbridging to the control archetype until a theme/Figma sets a segment value:\n  track    -> var(--a63-segment-track-gloss,    var(--a63-control-gloss))\n              var(--a63-segment-track-shadow,   var(--a63-control-shadow))\n  selected -> var(--a63-segment-selected-gloss, var(--a63-control-gloss))\n              var(--a63-segment-selected-shadow,var(--a63-control-shadow))\nA theme/Figma overrides any of these under [data-a63-theme='…'] to give\nsegments their OWN character instead of borrowing the button's.",
+  "a63": {
+    "segment": {
+      "border": {
+        "width": {
+          "$type": "dimension",
+          "$value": "{a63.control.border.width}",
+          "$description": "── Geometry (axis-independent, safe at :root) ────────────────────────"
+        }
+      },
+      "gap": {
+        "$type": "number",
+        "$value": 0,
+        "$description": "welded by default; a gapped variant overrides"
+      }
+    }
+  }
+}

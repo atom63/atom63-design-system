@@ -1,4 +1,7 @@
 /*
+ * Generated from src/contracts/marker.tokens.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
  * Marker contract — the tiny NON-interactive labeled chip (keycap, badge, chip,
  * tag, inline code). Presentational; no state.
  *
@@ -13,11 +16,10 @@
  * to default at :root. Default is `none` — modern and terminal are flat pills
  * (spec: "terminal none"); aqua and retro give it keycap character.
  */
-
 :root {
   /* `0 0 #0000` rather than `none`: recipes compose this into comma-separated
-     box-shadow lists (e.g. `var(--a63-marker-shadow), <focus ring>`), and `none`
-     is only legal as the sole value — it would invalidate the whole declaration
-     and silently drop the focus ring. This paints nothing. */
+        box-shadow lists (e.g. `var(--a63-marker-shadow), <focus ring>`), and `none`
+        is only legal as the sole value — it would invalidate the whole declaration
+        and silently drop the focus ring. This paints nothing. */
   --a63-marker-shadow: 0 0 #0000;
 }

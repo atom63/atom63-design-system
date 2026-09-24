@@ -1,0 +1,40 @@
+{
+  "$description": "Field contract — the RECESSED control (text inputs), the inset counterpart to\nthe raised control (buttons) in control.css.\n\nA field is a control: it reuses the control SIZING ramp\n(--a63-control-height/padding-inline/font-size/radius), so it inherits\ndesign-language (iOS taller) sizing for free.\n\nTheme-overridable hooks: --a63-field-{background,border,radius,shadow,\nfocus-ring,focus-border}. Only --a63-field-shadow gets a default here — it is\nmode-independent (static inset), so it's safe to declare at :root and let\nthemes override it on their shell. The OTHER hooks resolve at the recipe\nuse-site against mode/theme/brand-dependent semantics (--a63-surface-control,\n--a63-border-control, --a63-control-radius, --a63-focus-ring,\n--a63-action-primary); declaring THOSE at :root would freeze their var()s to\nthe root's mode/theme and inherit the wrong value down — the\nresolve-at-declaration trap. So they stay UNSET here and the recipe reads\n`var(--a63-field-X, <semantic>)`: a theme override wins, else the live\nsemantic resolves per the field's own scope. A theme sets --a63-field-shadow\n(all four) and, where it re-skins the fill, --a63-field-background (terminal).",
+  "a63": {
+    "field": {
+      "shadow": {
+        "$type": "shadow",
+        "$value": [
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [0, 0, 0],
+              "alpha": 0.06
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 1,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 2,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            },
+            "inset": true
+          }
+        ],
+        "$extensions": {
+          "io.atom63.derive": "inset 0 1px 2px color-mix(in oklch, black 6%, transparent)"
+        },
+        "$description": "Recessed inset — mode-independent, so safe to default here."
+      }
+    }
+  }
+}

@@ -1,0 +1,1104 @@
+{
+  "version": "2025.10",
+  "description": "Widget contract — a persistent floating surface hosted on a desktop, card\nflow, or agent surface. Defaults compose the overlay archetype; widget kinds\ncan specialize the material without replacing surface anatomy.\n\nRaised media sitting ON a widget face — poster-fan prints, stacked cards.\n\nDeliberately heavier than --a63-widget-shadow: the tile floats above the\ndesktop, but this is print stock resting on the tile, so it needs a near\ncontact throw plus a far soft one to read as a physical object rather than a\nsecond pane. `-raised` is the focused/centered print; the base token is the\nresting one.\n\nEach stack carries its own hairline rim and specular inset, so the consumer\npaints ONE box-shadow. A separate `ring` utility is composed into box-shadow\nas well, so it would clobber the whole stack rather than sit beside it.\n\nMode-split like semantics.css: the throw is far stronger on a dark face, and\nthe hairline rim flips from a white specular edge to a dark hairline.\n\nWeather FACE material — shared by the weather tile and by Location when it\ncarries a condition tone. Outer chrome (rim + drop shadow) stays on the\nshared widget defaults so every tile reads as one system; only the face\nfill / foreground specialize.\n\nSticky note focus: lift the shared rim shadow while editing. The variable\n lives on the shell (where box-shadow is painted), so it must be set there —\n a face-only className cannot reach it.",
+  "sets": {
+    "01-root": {
+      "sources": [
+        {
+          "a63": {
+            "widget": {
+              "background": {
+                "color": {
+                  "$type": "color",
+                  "$value": "{a63.surface.overlay}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {a63.surface.overlay} 82%, transparent)"
+                  }
+                },
+                "image": {
+                  "$type": "color",
+                  "$value": "{a63.overlay.gloss}",
+                  "$extensions": {
+                    "io.atom63.derive": "{a63.overlay.gloss}, {a63.overlay.texture.image}"
+                  }
+                },
+                "blend": {
+                  "$type": "color",
+                  "$value": "{a63.overlay.texture.blend}",
+                  "$extensions": {
+                    "io.atom63.derive": "normal, {a63.overlay.texture.blend}"
+                  }
+                }
+              },
+              "foreground": {
+                "$type": "color",
+                "$value": "{a63.text.primary}"
+              },
+              "border": {
+                "color": {
+                  "$type": "color",
+                  "$value": "{a63.border.subtle}"
+                },
+                "style": {
+                  "$type": "strokeStyle",
+                  "$value": "{a63.overlay.border.style}"
+                },
+                "width": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 0,
+                    "unit": "px"
+                  },
+                  "$description": "No border by default: the rim IS the tile's edge. A hairline on the face\n   inside a 4px rim reads as a second concentric ring."
+                }
+              },
+              "radius": {
+                "$type": "dimension",
+                "$value": "{radius.xl}",
+                "$extensions": {
+                  "io.atom63.derive": "var(--a63-overlay-radius, {radius.xl})"
+                }
+              },
+              "shadow": {
+                "$type": "shadow",
+                "$value": [],
+                "$description": "Flat by default: the 4px rim already separates the tile from the page, so a\n   drop shadow on top of it reads as a second edge rather than as height. The\n   shadow stays available as a STATE — sticky-note focus and drag both raise\n   it — and each skin still opts into its own resting elevation (retro's hard\n   offset, terminal's phosphor glow, aqua's gel drop) on its theme scope.\n   `none` is safe as the sole value here; it would only be invalid if composed\n   into a comma-separated list."
+              },
+              "rim": {
+                "width": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 4,
+                    "unit": "px"
+                  },
+                  "$description": "Rim = the padded outer shell between the tile edge and the card face. A\n   padded rim can carry a gradient across the whole frame; a box-shadow inset\n   cannot. Themes fill it via --a63-widget-rim-image."
+                },
+                "color": {
+                  "$type": "color",
+                  "$value": "{a63.border.subtle}"
+                },
+                "border": {
+                  "color": {
+                    "$type": "color",
+                    "$value": {
+                      "colorSpace": "srgb",
+                      "components": [0, 0, 0],
+                      "alpha": 0
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "transparent"
+                    },
+                    "$description": "Per-side rim color. The rim is a border, so this mitres around the corner\n   arc at ANY radius — which is how a bevel theme lights top+left and darkens\n   bottom+right without breaking when the radius axis is turned up. Transparent\n   by default so gradient rims show through from --a63-widget-rim-image."
+                  }
+                }
+              }
+            },
+            "weather": {
+              "background": {
+                "color": {
+                  "$type": "color",
+                  "$value": {
+                    "colorSpace": "srgb",
+                    "components": [0, 0, 0],
+                    "alpha": 0
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "transparent"
+                  },
+                  "$description": "Weather defaults preserve live condition color in the neutral theme."
+                }
+              },
+              "foreground": {
+                "$type": "color",
+                "$value": "{color.white.100}",
+                "$extensions": {
+                  "io.atom63.derive": "white"
+                }
+              },
+              "muted": {
+                "foreground": {
+                  "$type": "color",
+                  "$value": {
+                    "colorSpace": "srgb",
+                    "components": [1.0, 1.0, 1.0],
+                    "alpha": 0.7
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "rgb(255 255 255 / 0.7)"
+                  }
+                }
+              },
+              "divider": {
+                "color": {
+                  "$type": "color",
+                  "$value": {
+                    "colorSpace": "srgb",
+                    "components": [1.0, 1.0, 1.0],
+                    "alpha": 0.2
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "rgb(255 255 255 / 0.2)"
+                  }
+                }
+              },
+              "text": {
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": []
+                }
+              },
+              "border": {
+                "color": {
+                  "$type": "color",
+                  "$value": {
+                    "colorSpace": "srgb",
+                    "components": [0, 0, 0],
+                    "alpha": 0
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "transparent"
+                  }
+                }
+              },
+              "condition": {
+                "mode": {
+                  "color": {
+                    "$type": "color",
+                    "$value": {
+                      "colorSpace": "srgb",
+                      "components": [0, 0, 0],
+                      "alpha": 0
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "transparent"
+                    }
+                  }
+                },
+                "color": {
+                  "strength": {
+                    "$type": "number",
+                    "$value": 100,
+                    "$extensions": {
+                      "io.atom63.derive": "100%"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":root"
+        }
+      }
+    },
+    "02-root-light-data-a63-mode-light": {
+      "sources": [
+        {
+          "a63": {
+            "widget": {
+              "media": {
+                "shadow": {
+                  "$root": {
+                    "$type": "shadow",
+                    "$value": [
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [0, 0, 0],
+                          "alpha": 0.08
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 1,
+                          "unit": "px"
+                        }
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [1, 1, 1],
+                          "alpha": 0.45
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 1,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "inset": true
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [0, 0, 0],
+                          "alpha": 0.22
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 10,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 16,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": -10,
+                          "unit": "px"
+                        }
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [0, 0, 0],
+                          "alpha": 0.26
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 22,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 34,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": -16,
+                          "unit": "px"
+                        }
+                      }
+                    ],
+                    "$extensions": {
+                      "io.atom63.derive": "0 0 0 1px color-mix(in oklch, black 8%, transparent), 0 1px 0 color-mix(in oklch, white 45%, transparent) inset, 0 10px 16px -10px color-mix(in oklch, black 22%, transparent), 0 22px 34px -16px color-mix(in oklch, black 26%, transparent)"
+                    }
+                  },
+                  "raised": {
+                    "$type": "shadow",
+                    "$value": [
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [0, 0, 0],
+                          "alpha": 0.12
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 1,
+                          "unit": "px"
+                        }
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [1, 1, 1],
+                          "alpha": 0.6
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 1,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "inset": true
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [0, 0, 0],
+                          "alpha": 0.12
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 1,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 1,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 0,
+                          "unit": "px"
+                        }
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [0, 0, 0],
+                          "alpha": 0.26
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 14,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 22,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": -10,
+                          "unit": "px"
+                        }
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [0, 0, 0],
+                          "alpha": 0.3
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 32,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 48,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": -18,
+                          "unit": "px"
+                        }
+                      }
+                    ],
+                    "$extensions": {
+                      "io.atom63.derive": "0 0 0 1px color-mix(in oklch, black 12%, transparent), 0 1px 0 color-mix(in oklch, white 60%, transparent) inset, 0 1px 1px color-mix(in oklch, black 12%, transparent), 0 14px 22px -10px color-mix(in oklch, black 26%, transparent), 0 32px 48px -18px color-mix(in oklch, black 30%, transparent)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":root,\n.light,\n[data-a63-mode='light']"
+        }
+      }
+    },
+    "03-is-dark-data-a63-mode-dark": {
+      "sources": [
+        {
+          "a63": {
+            "widget": {
+              "media": {
+                "shadow": {
+                  "$root": {
+                    "$type": "shadow",
+                    "$value": [
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [1, 1, 1],
+                          "alpha": 0.1
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 1,
+                          "unit": "px"
+                        }
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [1, 1, 1],
+                          "alpha": 0.08
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 1,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "inset": true
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [0, 0, 0],
+                          "alpha": 0.5
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 10,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 16,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": -10,
+                          "unit": "px"
+                        }
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [0, 0, 0],
+                          "alpha": 0.62
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 22,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 34,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": -16,
+                          "unit": "px"
+                        }
+                      }
+                    ],
+                    "$extensions": {
+                      "io.atom63.derive": "0 0 0 1px color-mix(in oklch, white 10%, transparent), 0 1px 0 color-mix(in oklch, white 8%, transparent) inset, 0 10px 16px -10px color-mix(in oklch, black 50%, transparent), 0 22px 34px -16px color-mix(in oklch, black 62%, transparent)"
+                    }
+                  },
+                  "raised": {
+                    "$type": "shadow",
+                    "$value": [
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [1, 1, 1],
+                          "alpha": 0.16
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 1,
+                          "unit": "px"
+                        }
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [1, 1, 1],
+                          "alpha": 0.12
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 1,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "inset": true
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [0, 0, 0],
+                          "alpha": 0.35
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 1,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 1,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 0,
+                          "unit": "px"
+                        }
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [0, 0, 0],
+                          "alpha": 0.58
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 14,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 22,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": -10,
+                          "unit": "px"
+                        }
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [0, 0, 0],
+                          "alpha": 0.72
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 32,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 48,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": -18,
+                          "unit": "px"
+                        }
+                      }
+                    ],
+                    "$extensions": {
+                      "io.atom63.derive": "0 0 0 1px color-mix(in oklch, white 16%, transparent), 0 1px 0 color-mix(in oklch, white 12%, transparent) inset, 0 1px 1px color-mix(in oklch, black 35%, transparent), 0 14px 22px -10px color-mix(in oklch, black 58%, transparent), 0 32px 48px -18px color-mix(in oklch, black 72%, transparent)"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":is(.dark, [data-a63-mode='dark'])"
+        }
+      }
+    },
+    "04-data-widget-kind-weather-data-widget-kind-locati": {
+      "sources": [
+        {
+          "a63": {
+            "widget": {
+              "background": {
+                "color": {
+                  "$type": "color",
+                  "$value": "{a63.weather.background.color}"
+                },
+                "image": {
+                  "$type": "color",
+                  "$value": "{a63.weather.condition.background.image}",
+                  "$extensions": {
+                    "io.atom63.derive": "var( --a63-weather-background-image, {a63.weather.condition.background.image} )"
+                  }
+                },
+                "blend": {
+                  "$type": "color",
+                  "$value": "{a63.weather.background.blend}"
+                }
+              },
+              "foreground": {
+                "$type": "color",
+                "$value": "{a63.weather.foreground}"
+              }
+            },
+            "weather": {
+              "condition": {
+                "background": {
+                  "image": {
+                    "$type": "color",
+                    "$value": "{a63.weather.condition.start}",
+                    "$extensions": {
+                      "io.atom63.derive": "linear-gradient( 135deg, color-mix( in oklch, {a63.weather.condition.start} {a63.weather.condition.color.strength}, {a63.weather.condition.mode.color} ), color-mix( in oklch, {a63.weather.condition.end} {a63.weather.condition.color.strength}, {a63.weather.condition.mode.color} ) )"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-widget-kind='weather'], [data-widget-kind='location'][data-weather-tone]"
+        }
+      }
+    },
+    "05-data-weather-tone-clear-day": {
+      "sources": [
+        {
+          "a63": {
+            "weather": {
+              "condition": {
+                "start": {
+                  "$type": "color",
+                  "$value": "{color.sky.400}"
+                },
+                "end": {
+                  "$type": "color",
+                  "$value": "{color.blue.500}"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-weather-tone='clear-day']"
+        }
+      }
+    },
+    "06-data-weather-tone-clear-night": {
+      "sources": [
+        {
+          "a63": {
+            "weather": {
+              "condition": {
+                "start": {
+                  "$type": "color",
+                  "$value": "{color.indigo.800}"
+                },
+                "end": {
+                  "$type": "color",
+                  "$value": "{color.slate.800}"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-weather-tone='clear-night']"
+        }
+      }
+    },
+    "07-data-weather-tone-partly-cloudy-day": {
+      "sources": [
+        {
+          "a63": {
+            "weather": {
+              "condition": {
+                "start": {
+                  "$type": "color",
+                  "$value": "{color.sky.300}"
+                },
+                "end": {
+                  "$type": "color",
+                  "$value": "{color.blue.400}"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-weather-tone='partly-cloudy-day']"
+        }
+      }
+    },
+    "08-data-weather-tone-partly-cloudy-night": {
+      "sources": [
+        {
+          "a63": {
+            "weather": {
+              "condition": {
+                "start": {
+                  "$type": "color",
+                  "$value": "{color.indigo.700}"
+                },
+                "end": {
+                  "$type": "color",
+                  "$value": "{color.slate.700}"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-weather-tone='partly-cloudy-night']"
+        }
+      }
+    },
+    "09-data-weather-tone-overcast": {
+      "sources": [
+        {
+          "a63": {
+            "weather": {
+              "condition": {
+                "start": {
+                  "$type": "color",
+                  "$value": "{color.slate.400}"
+                },
+                "end": {
+                  "$type": "color",
+                  "$value": "{color.slate.500}"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-weather-tone='overcast']"
+        }
+      }
+    },
+    "10-data-weather-tone-fog": {
+      "sources": [
+        {
+          "a63": {
+            "weather": {
+              "condition": {
+                "start": {
+                  "$type": "color",
+                  "$value": "{color.gray.400}"
+                },
+                "end": {
+                  "$type": "color",
+                  "$value": "{color.gray.500}"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-weather-tone='fog']"
+        }
+      }
+    },
+    "11-data-weather-tone-rain": {
+      "sources": [
+        {
+          "a63": {
+            "weather": {
+              "condition": {
+                "start": {
+                  "$type": "color",
+                  "$value": "{color.slate.500}"
+                },
+                "end": {
+                  "$type": "color",
+                  "$value": "{color.blue.600}"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-weather-tone='rain']"
+        }
+      }
+    },
+    "12-data-weather-tone-snow": {
+      "sources": [
+        {
+          "a63": {
+            "weather": {
+              "condition": {
+                "start": {
+                  "$type": "color",
+                  "$value": "{color.slate.300}"
+                },
+                "end": {
+                  "$type": "color",
+                  "$value": "{color.blue.300}"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-weather-tone='snow']"
+        }
+      }
+    },
+    "13-data-weather-tone-storm": {
+      "sources": [
+        {
+          "a63": {
+            "weather": {
+              "condition": {
+                "start": {
+                  "$type": "color",
+                  "$value": "{color.slate.600}"
+                },
+                "end": {
+                  "$type": "color",
+                  "$value": "{color.slate.800}"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-weather-tone='storm']"
+        }
+      }
+    },
+    "14-where-light-data-a63-mode-light-data-weather-ton": {
+      "sources": [
+        {
+          "a63": {
+            "weather": {
+              "condition": {
+                "mode": {
+                  "color": {
+                    "$type": "color",
+                    "$value": "{color.white.100}",
+                    "$extensions": {
+                      "io.atom63.derive": "white"
+                    }
+                  }
+                },
+                "color": {
+                  "strength": {
+                    "$type": "number",
+                    "$value": 82,
+                    "$extensions": {
+                      "io.atom63.derive": "82%"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":where(.light, [data-a63-mode='light']) [data-weather-tone]"
+        }
+      }
+    },
+    "15-where-dark-data-a63-mode-dark-data-weather-tone": {
+      "sources": [
+        {
+          "a63": {
+            "weather": {
+              "condition": {
+                "mode": {
+                  "color": {
+                    "$type": "color",
+                    "$value": "{color.black.100}",
+                    "$extensions": {
+                      "io.atom63.derive": "black"
+                    }
+                  }
+                },
+                "color": {
+                  "strength": {
+                    "$type": "number",
+                    "$value": 88,
+                    "$extensions": {
+                      "io.atom63.derive": "88%"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":where(.dark, [data-a63-mode='dark']) [data-weather-tone]"
+        }
+      }
+    },
+    "16-data-widget-kind-sticky-note-data-focused": {
+      "sources": [
+        {
+          "a63": {
+            "widget": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": "{a63.overlay.drag.shadow}"
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-widget-kind='sticky-note'][data-focused]"
+        }
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/01-root"
+    },
+    {
+      "$ref": "#/sets/02-root-light-data-a63-mode-light"
+    },
+    {
+      "$ref": "#/sets/03-is-dark-data-a63-mode-dark"
+    },
+    {
+      "$ref": "#/sets/04-data-widget-kind-weather-data-widget-kind-locati"
+    },
+    {
+      "$ref": "#/sets/05-data-weather-tone-clear-day"
+    },
+    {
+      "$ref": "#/sets/06-data-weather-tone-clear-night"
+    },
+    {
+      "$ref": "#/sets/07-data-weather-tone-partly-cloudy-day"
+    },
+    {
+      "$ref": "#/sets/08-data-weather-tone-partly-cloudy-night"
+    },
+    {
+      "$ref": "#/sets/09-data-weather-tone-overcast"
+    },
+    {
+      "$ref": "#/sets/10-data-weather-tone-fog"
+    },
+    {
+      "$ref": "#/sets/11-data-weather-tone-rain"
+    },
+    {
+      "$ref": "#/sets/12-data-weather-tone-snow"
+    },
+    {
+      "$ref": "#/sets/13-data-weather-tone-storm"
+    },
+    {
+      "$ref": "#/sets/14-where-light-data-a63-mode-light-data-weather-ton"
+    },
+    {
+      "$ref": "#/sets/15-where-dark-data-a63-mode-dark-data-weather-tone"
+    },
+    {
+      "$ref": "#/sets/16-data-widget-kind-sticky-note-data-focused"
+    }
+  ],
+  "$extensions": {
+    "io.atom63.css": {
+      "imports": ["./widget.native.css"]
+    }
+  }
+}

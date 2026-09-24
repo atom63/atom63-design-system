@@ -1,10 +1,12 @@
 /*
+ * Generated from src/contracts/badge.resolver.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
  * Badge palette contract — category/tag hues owned by @atom63/styles.
  *
  * Recipes read --a63-badge-*-accent / --a63-badge-*-foreground only. Accent
  * references foundation primitives; foreground flips for dark mode contrast.
  */
-
 :root,
 .light,
 [data-a63-mode='light'] {

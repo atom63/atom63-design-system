@@ -1,0 +1,569 @@
+{
+  "version": "2025.10",
+  "description": "Environment dimensions.\n\nEach dimension owns a distinct slice (see packages/styles/README.md — the\ndimension-ownership table):\n  - Design Language → component sizing/proportions + interaction feedback\n  - Input           → ergonomics (min touch target)\n  - Density         → proportional rhythm\n\nRadius, color, and shadow are NOT design-language concerns — they belong to\nthe semantic ramp + theme (personalization). Design language never sets radius.\n\nPrevent focus zoom in mobile Safari without inflating non-editable control\n labels. Editable recipes combine this floor with their normal type token.\n\nDensity — proportional rhythm\n\nAuto-detect coarse pointers. Without this, touch ergonomics only apply when an\n app explicitly passes `input` to UIProvider — an opt-in almost nothing does, so\n controls stay at their 24px floor on phones. Declared before the attribute\n rules below (equal specificity) so an explicit data-a63-input always wins.\n\nInput — ergonomics (touch target). Independent of design language.\n\nExplicit fine-pointer choices override coarse auto-detection (hybrid devices,\n or a user who picked \"pointer\" in the appearance panel on a touchscreen).\n\nDesign language — component sizing/proportions + interaction feedback only.\nThe base :root (control.css) is the web default; iOS overrides sizing + feel.\nNo radius, color, or touch-target here.",
+  "sets": {
+    "01-root": {
+      "sources": [
+        {
+          "a63": {
+            "density": {
+              "scale": {
+                "$type": "number",
+                "$value": 1
+              }
+            },
+            "editable": {
+              "font": {
+                "size": {
+                  "min": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 0,
+                      "unit": "px"
+                    }
+                  }
+                }
+              }
+            },
+            "control": {
+              "min": {
+                "size": {
+                  "$root": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 1.5,
+                      "unit": "rem"
+                    },
+                    "$description": "Two different numbers, deliberately separate:\n   - min-size   = RENDERED geometry floor. WCAG 2.5.8 pointer minimum (24px).\n                  Touch raises it only to 32px — the smallest rendered control\n                  observed in shipping iOS apps (measured 30.6–31.5pt across two\n                  apps). Apple's Accessibility page publishes an iOS\nminimum control size* of 28x28pt, so a 32pt rendered floor\n                  sits above the documented minimum and below the 44pt default.\n                  https://developer.apple.com/design/human-interface-guidelines/accessibility\n   - min-target = INTERACTION floor. Touch raises it to 44px per Apple HIG.\n   Recipes must floor their height ramp with min-size and expand the touch\n   region with min-target. Flooring rendered height with min-target is what\n   collapses the xs/sm/md ramp to a single 44px rung on every phone.\n   See docs/design-system/web-ios-token-parity.md."
+                  },
+                  "lg": {
+                    "$type": "dimension",
+                    "$value": "{a63.control.min.size}"
+                  },
+                  "xl": {
+                    "$type": "dimension",
+                    "$value": "{a63.control.min.size}"
+                  }
+                },
+                "target": {
+                  "$root": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 1.5,
+                      "unit": "rem"
+                    }
+                  },
+                  "lg": {
+                    "$type": "dimension",
+                    "$value": "{a63.control.min.target}"
+                  }
+                }
+              }
+            },
+            "row": {
+              "min": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": "{a63.control.min.size}",
+                  "$description": "Rendered floor for a full-width ROW (a list/panel row whose whole width is\n   the target), as opposed to a compact control sitting inside one. A row\n   cannot borrow the pseudo-element trick: rows live in clipping containers\n   (rounded panels, scroll areas) that cut an overhanging pseudo off, so the\n   row's own height has to BE the target. 44px on touch — Apple's HIG default,\n   and our own measurement of shipping iOS apps put primary rows and\n   full-width controls at 42.4-44.1pt (docs/design-system/web-ios-token-parity.md).\n   Equal to min-size on fine pointers, so desktop is unchanged."
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":root"
+        }
+      }
+    },
+    "03-media-max-width-40rem-root": {
+      "sources": [
+        {
+          "a63": {
+            "editable": {
+              "font": {
+                "size": {
+                  "min": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 1,
+                      "unit": "rem"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":root",
+          "atRule": "@media (max-width: 40rem)"
+        }
+      }
+    },
+    "04-is-data-a63-density-compact-data-density-compact": {
+      "sources": [
+        {
+          "a63": {
+            "density": {
+              "scale": {
+                "$type": "number",
+                "$value": 0.9
+              }
+            },
+            "space": {
+              "unit": {
+                "$type": "dimension",
+                "$value": "{spacing.1}",
+                "$extensions": {
+                  "io.atom63.derive": "calc({spacing.1} * 0.875)"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":is([data-a63-density='compact'], [data-density='compact'])"
+        }
+      }
+    },
+    "05-is-data-a63-density-comfortable-data-density-com": {
+      "sources": [
+        {
+          "a63": {
+            "density": {
+              "scale": {
+                "$type": "number",
+                "$value": 1
+              }
+            },
+            "space": {
+              "unit": {
+                "$type": "dimension",
+                "$value": "{spacing.1}"
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":is([data-a63-density='comfortable'], [data-density='comfortable'])"
+        }
+      }
+    },
+    "06-media-pointer-coarse-root": {
+      "sources": [
+        {
+          "a63": {
+            "control": {
+              "min": {
+                "size": {
+                  "$root": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 2,
+                      "unit": "rem"
+                    }
+                  },
+                  "lg": {
+                    "$type": "dimension",
+                    "$value": "{a63.control.min.size}"
+                  },
+                  "xl": {
+                    "$type": "dimension",
+                    "$value": "{a63.control.min.size}"
+                  }
+                },
+                "target": {
+                  "$root": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 2.75,
+                      "unit": "rem"
+                    }
+                  },
+                  "lg": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 3,
+                      "unit": "rem"
+                    }
+                  },
+                  "xl": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 3.25,
+                      "unit": "rem"
+                    }
+                  }
+                }
+              }
+            },
+            "row": {
+              "min": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 2.75,
+                    "unit": "rem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":root",
+          "atRule": "@media (pointer: coarse)"
+        }
+      }
+    },
+    "07-is-data-a63-input-touch-data-input-touch": {
+      "sources": [
+        {
+          "a63": {
+            "control": {
+              "min": {
+                "size": {
+                  "$root": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 2,
+                      "unit": "rem"
+                    }
+                  },
+                  "lg": {
+                    "$type": "dimension",
+                    "$value": "{a63.control.min.size}"
+                  },
+                  "xl": {
+                    "$type": "dimension",
+                    "$value": "{a63.control.min.size}"
+                  }
+                },
+                "target": {
+                  "$root": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 2.75,
+                      "unit": "rem"
+                    }
+                  },
+                  "lg": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 3,
+                      "unit": "rem"
+                    }
+                  },
+                  "xl": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 3.25,
+                      "unit": "rem"
+                    }
+                  }
+                }
+              }
+            },
+            "row": {
+              "min": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 2.75,
+                    "unit": "rem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":is([data-a63-input='touch'], [data-input='touch'])"
+        }
+      }
+    },
+    "08-is-data-a63-input-pointer-data-input-pointer-dat": {
+      "sources": [
+        {
+          "a63": {
+            "control": {
+              "min": {
+                "size": {
+                  "$root": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 1.5,
+                      "unit": "rem"
+                    }
+                  },
+                  "lg": {
+                    "$type": "dimension",
+                    "$value": "{a63.control.min.size}"
+                  },
+                  "xl": {
+                    "$type": "dimension",
+                    "$value": "{a63.control.min.size}"
+                  }
+                },
+                "target": {
+                  "$root": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 1.5,
+                      "unit": "rem"
+                    }
+                  },
+                  "lg": {
+                    "$type": "dimension",
+                    "$value": "{a63.control.min.target}"
+                  },
+                  "xl": {
+                    "$type": "dimension",
+                    "$value": "{a63.control.min.target}"
+                  }
+                }
+              }
+            },
+            "row": {
+              "min": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": "{a63.control.min.size}"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":is( [data-a63-input='pointer'], [data-input='pointer'], [data-a63-input='keyboard'], [data-input='keyboard'] )"
+        }
+      }
+    },
+    "09-is-data-a63-design-language-ios-data-design-lang": {
+      "sources": [
+        {
+          "a63": {
+            "control": {
+              "height": {
+                "xs": {
+                  "$type": "dimension",
+                  "$value": "{a63.space.unit}",
+                  "$extensions": {
+                    "io.atom63.derive": "calc({a63.space.unit} * 9)"
+                  }
+                },
+                "sm": {
+                  "$type": "dimension",
+                  "$value": "{a63.space.unit}",
+                  "$extensions": {
+                    "io.atom63.derive": "calc({a63.space.unit} * 10)"
+                  }
+                },
+                "md": {
+                  "$type": "dimension",
+                  "$value": "{a63.space.unit}",
+                  "$extensions": {
+                    "io.atom63.derive": "calc({a63.space.unit} * 11)"
+                  }
+                },
+                "lg": {
+                  "$type": "dimension",
+                  "$value": "{a63.space.unit}",
+                  "$extensions": {
+                    "io.atom63.derive": "calc({a63.space.unit} * 12)"
+                  }
+                },
+                "xl": {
+                  "$type": "dimension",
+                  "$value": "{a63.space.unit}",
+                  "$extensions": {
+                    "io.atom63.derive": "calc({a63.space.unit} * 13)"
+                  }
+                }
+              },
+              "padding": {
+                "inline": {
+                  "xs": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.3}"
+                  },
+                  "sm": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.3_5}"
+                  },
+                  "md": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.4}"
+                  },
+                  "lg": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.5}"
+                  },
+                  "xl": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.6}"
+                  }
+                }
+              },
+              "font": {
+                "weight": {
+                  "$type": "number",
+                  "$value": 600
+                },
+                "size": {
+                  "xs": {
+                    "$type": "dimension",
+                    "$value": "{typography.xs.font.size}"
+                  },
+                  "sm": {
+                    "$type": "dimension",
+                    "$value": "{typography.sm.font.size}"
+                  },
+                  "md": {
+                    "$type": "dimension",
+                    "$value": "{typography.base.font.size}"
+                  },
+                  "lg": {
+                    "$type": "dimension",
+                    "$value": "{typography.lg.font.size}"
+                  },
+                  "xl": {
+                    "$type": "dimension",
+                    "$value": "{typography.lg.font.size}"
+                  }
+                }
+              },
+              "icon": {
+                "size": {
+                  "xs": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 0.875,
+                      "unit": "rem"
+                    }
+                  },
+                  "sm": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 1,
+                      "unit": "rem"
+                    }
+                  },
+                  "md": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 1.125,
+                      "unit": "rem"
+                    }
+                  },
+                  "lg": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 1.25,
+                      "unit": "rem"
+                    }
+                  },
+                  "xl": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 1.375,
+                      "unit": "rem"
+                    }
+                  }
+                }
+              },
+              "feedback": {
+                "ease": {
+                  "$type": "duration",
+                  "$value": "{a63.motion.ease.emphasized}"
+                }
+              }
+            },
+            "row": {
+              "padding": {
+                "block": {
+                  "xs": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.1}",
+                    "$description": "Rows stop padding their way to height and let the control ramp floor them,\n   so a single-line row lands on 44pt and a two-line row on ~59pt, instead of\n   52pt and 75pt. Targets are from our measurement study, not a published\n   Apple row height — there isn't one."
+                  },
+                  "sm": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.1_5}"
+                  },
+                  "md": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.2}"
+                  }
+                }
+              }
+            },
+            "switch": {
+              "thumb": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 1.375,
+                    "unit": "rem"
+                  },
+                  "$description": "Larger, iconic iOS pill switch (web default is 1rem in selection.css)."
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+        }
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/01-root"
+    },
+    {
+      "$ref": "#/sets/03-media-max-width-40rem-root"
+    },
+    {
+      "$ref": "#/sets/04-is-data-a63-density-compact-data-density-compact"
+    },
+    {
+      "$ref": "#/sets/05-is-data-a63-density-comfortable-data-density-com"
+    },
+    {
+      "$ref": "#/sets/06-media-pointer-coarse-root"
+    },
+    {
+      "$ref": "#/sets/07-is-data-a63-input-touch-data-input-touch"
+    },
+    {
+      "$ref": "#/sets/08-is-data-a63-input-pointer-data-input-pointer-dat"
+    },
+    {
+      "$ref": "#/sets/09-is-data-a63-design-language-ios-data-design-lang"
+    }
+  ],
+  "$extensions": {
+    "io.atom63.css": {
+      "imports": ["./environment.native.css"]
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$description": "Selection contract — shared value tokens for bistate/selection controls\n(Switch now; Checkbox + Radio next). The \"on\" fill is the brand primary, so a\nchecked control follows the brand axis AND each theme's primary for free.\n\nThe axis-dependent hooks (--a63-selection-accent / -track-off / -border /\n-focus-ring, which reference mode/theme/brand semantics) are resolved at the\nrecipe USE-SITE via `var(--a63-selection-X, <live semantic>)` — declaring them\nat :root would freeze their var()s to the root's mode/theme (the\nresolve-at-declaration trap, learned on Input). So only the axis-independent\ndefaults live here: the knob colour and the switch geometry driver.",
+  "a63": {
+    "selection": {
+      "thumb": {
+        "$root": {
+          "$type": "color",
+          "$value": "{color.white.100}",
+          "$extensions": {
+            "io.atom63.derive": "white"
+          },
+          "$description": "The knob — always white (an iOS switch thumb is white in light AND dark)."
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.black.100}",
+          "$extensions": {
+            "io.atom63.derive": "color-mix(in oklch, black 78%, transparent)"
+          },
+          "$description": "Ink on the white knob — fixed dark, never mode text (which washes out in dark)."
+        }
+      }
+    },
+    "switch": {
+      "thumb": {
+        "size": {
+          "$type": "dimension",
+          "$value": {
+            "value": 1,
+            "unit": "rem"
+          },
+          "$description": "Drives the switch track geometry; iOS enlarges it in environment.css."
+        }
+      }
+    }
+  }
+}

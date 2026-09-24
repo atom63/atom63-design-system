@@ -1,4 +1,7 @@
 /*
+ * Generated from src/contracts/trigger.tokens.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
  * Trigger contract — controls whose main job is to open another surface.
  *
  * Covers DropdownMenuTrigger, PopoverTrigger, SelectTrigger, NavigationMenu
@@ -12,15 +15,15 @@
  *   --a63-trigger-hover-background -> var(--a63-surface-control-hover)
  *   --a63-trigger-open-background  -> var(--a63-surface-control-hover)
  */
+@import './trigger.native.css';
 
 :root {
   --a63-trigger-border-width: var(--a63-control-border-width);
   --a63-trigger-focus-ring-width: var(--a63-control-focus-ring-width);
   --a63-trigger-gap: var(--a63-control-gap);
-  --a63-trigger-indicator-size: 1em;
   --a63-trigger-radius: var(--a63-control-radius);
   /* `0 0 #0000` not `none` — composed into comma-separated box-shadow lists
-     alongside the focus ring, where `none` invalidates the declaration. */
+        alongside the focus ring, where `none` invalidates the declaration. */
   --a63-trigger-shadow: 0 0 #0000;
   --a63-trigger-open-shadow: var(--a63-trigger-shadow);
   --a63-trigger-feedback-duration: var(--a63-control-feedback-duration);

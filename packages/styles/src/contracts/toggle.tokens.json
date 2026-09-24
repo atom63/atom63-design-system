@@ -1,0 +1,49 @@
+{
+  "$description": "Toggle contract — persistent on/off controls.\n\nCovers standalone Toggle. ToggleGroup is always a joined segmented bar and\nreads the segment contract for cell chrome; it does not use a layout variant.\n\nColour hooks resolve at recipe use-sites:\n  --a63-toggle-background           -> transparent\n  --a63-toggle-foreground           -> var(--a63-text-primary)\n  --a63-toggle-hover-background     -> var(--a63-surface-control-hover)\n  --a63-toggle-on-background        -> var(--a63-surface-muted)\n  --a63-toggle-on-foreground        -> var(--a63-text-primary)\n  --a63-toggle-primary-background   -> var(--a63-action-primary)\n  --a63-toggle-primary-foreground   -> var(--a63-action-primary-foreground)",
+  "a63": {
+    "toggle": {
+      "border": {
+        "width": {
+          "$type": "dimension",
+          "$value": "{a63.segment.border.width}"
+        }
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{a63.control.gap}"
+      },
+      "group": {
+        "gap": {
+          "$type": "dimension",
+          "$value": "{a63.segment.gap}"
+        }
+      },
+      "radius": {
+        "$type": "dimension",
+        "$value": "{a63.control.radius}"
+      },
+      "shadow": {
+        "$root": {
+          "$type": "shadow",
+          "$value": []
+        },
+        "active": {
+          "$type": "shadow",
+          "$value": []
+        }
+      },
+      "text": {
+        "shadow": {
+          "$type": "shadow",
+          "$value": []
+        }
+      },
+      "disabled": {
+        "opacity": {
+          "$type": "number",
+          "$value": 0.56
+        }
+      }
+    }
+  }
+}

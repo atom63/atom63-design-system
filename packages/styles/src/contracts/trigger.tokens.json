@@ -1,0 +1,58 @@
+{
+  "$description": "Trigger contract — controls whose main job is to open another surface.\n\nCovers DropdownMenuTrigger, PopoverTrigger, SelectTrigger, NavigationMenu\ntrigger, Menubar trigger, and disclosure-style triggers. A trigger can render\nas button-like, field-like, or navigation-like, but it needs an explicit open\nstate so \"pressed\" is not confused with Button's momentary press.\n\nAxis-dependent hooks resolve at the recipe use-site:\n  --a63-trigger-background       -> transparent / field background / action fill\n  --a63-trigger-foreground       -> var(--a63-text-primary)\n  --a63-trigger-hover-background -> var(--a63-surface-control-hover)\n  --a63-trigger-open-background  -> var(--a63-surface-control-hover)",
+  "a63": {
+    "trigger": {
+      "border": {
+        "width": {
+          "$type": "dimension",
+          "$value": "{a63.control.border.width}"
+        }
+      },
+      "focus": {
+        "ring": {
+          "width": {
+            "$type": "dimension",
+            "$value": "{a63.control.focus.ring.width}"
+          }
+        }
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{a63.control.gap}"
+      },
+      "radius": {
+        "$type": "dimension",
+        "$value": "{a63.control.radius}"
+      },
+      "shadow": {
+        "$type": "shadow",
+        "$value": [],
+        "$extensions": {
+          "io.atom63.derive": "0 0 #0000"
+        },
+        "$description": "`0 0 #0000` not `none` — composed into comma-separated box-shadow lists\n   alongside the focus ring, where `none` invalidates the declaration."
+      },
+      "open": {
+        "shadow": {
+          "$type": "shadow",
+          "$value": "{a63.trigger.shadow}"
+        }
+      },
+      "feedback": {
+        "duration": {
+          "$type": "duration",
+          "$value": "{a63.control.feedback.duration}"
+        },
+        "ease": {
+          "$type": "duration",
+          "$value": "{a63.control.feedback.ease}"
+        }
+      }
+    }
+  },
+  "$extensions": {
+    "io.atom63.css": {
+      "imports": ["./trigger.native.css"]
+    }
+  }
+}
