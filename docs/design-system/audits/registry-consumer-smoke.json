@@ -7,7 +7,7 @@
     {
       "name": "@atom63/styles",
       "requested": "beta",
-      "resolved": "0.1.0-beta.4",
+      "resolved": "0.1.0-beta.5",
       "manifest": "node_modules/@atom63/styles/package.json"
     },
     {
@@ -19,7 +19,7 @@
     {
       "name": "@atom63/ui-react",
       "requested": "beta",
-      "resolved": "0.2.0-beta.8",
+      "resolved": "0.2.0-beta.9",
       "manifest": "node_modules/@atom63/ui-react/package.json"
     }
   ],
