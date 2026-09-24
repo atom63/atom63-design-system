@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://system.atom63.io
+    about: Guides, component docs, and token reference.
+  - name: Report a security vulnerability
+    url: https://github.com/atom63/atom63-design-system/security/advisories/new
+    about: Report vulnerabilities privately. Do not open a public issue.
