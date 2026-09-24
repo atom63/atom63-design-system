@@ -1,5 +1,25 @@
 # @atom63/styles
 
+## 0.1.0-beta.5
+
+### Patch Changes
+
+- [#8](https://github.com/atom63/atom63-design-system/pull/8) [`4713698`](https://github.com/atom63/atom63-design-system/commit/47136984d7c478d00f46a68b2292a71776315316) Thanks [@atom63](https://github.com/atom63)! - The foundation surface aliases, font families and motion tokens are now defined in DTCG files and
+  generated, and are exported as `@atom63/styles/tokens/foundation/{aliases,fonts,motion}.tokens.json`.
+  Values are unchanged, except that `--font-family-serif` and `--font-family-mono` now quote every
+  non-generic family name (for example `'Georgia'`, `'Menlo'`), which CSS treats the same.
+
+- [#5](https://github.com/atom63/atom63-design-system/pull/5) [`9a7dc5e`](https://github.com/atom63/atom63-design-system/commit/9a7dc5e6db27f5aec556808fbfb1e9b741f9b809) Thanks [@atom63](https://github.com/atom63)! - Foundation primitives and the color palette are now defined in DTCG 2025.10 files, and their CSS is
+  generated from them. Every CSS custom property keeps its name and value. The DTCG sources are
+  exported as `@atom63/styles/tokens/foundation/primitives.tokens.json` and
+  `@atom63/styles/tokens/foundation/palette.tokens.json` for tools such as Style Dictionary and
+  Terrazzo.
+
+- [#8](https://github.com/atom63/atom63-design-system/pull/8) [`4713698`](https://github.com/atom63/atom63-design-system/commit/47136984d7c478d00f46a68b2292a71776315316) Thanks [@atom63](https://github.com/atom63)! - The surface palette axis (`[data-a63-surface='n1'..'n6']`) is now defined as a DTCG Resolver file and
+  its CSS is generated; every value is unchanged. The resolver is exported as
+  `@atom63/styles/tokens/surface.resolver.json`. `--a63-surface-tint` is now declared in
+  `tokens/semantics.css`, next to the tokens it tints, with the same default of `0%`.
+
 ## 0.1.0-beta.4
 
 ### Patch Changes
