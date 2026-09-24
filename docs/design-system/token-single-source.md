@@ -90,6 +90,33 @@ hand-written CSS. The rule that keeps them from becoming black boxes:
   reason. A check fails when a native file declares a value that is not listed, so a new
   hand-written value needs a reviewed entry.
 
+## Themes in Figma and iOS (B7b, decided 2026-09-24)
+
+Themes are generated from DTCG since B7a, but they are not yet in the token manifest, so neither
+Figma nor iOS sees them. Measured on the current sources:
+- 85 tokens are overridden by at least one theme.
+- 32 of them sit in the Contract collection and 8 in the Mode collection.
+- 27 are theme-only hooks that are in no collection yet.
+- 18 are skipped types, such as image layers.
+- None of them varies on the brand, surface, density, radius, input or design-language axis, so
+  no token needs two axes.
+
+- **One Theme collection with eight modes**, one per theme × mode: `modern-light`, `modern-dark`, …,
+  `terminal-dark`. Every token that any theme overrides moves there, and each mode holds the value
+  Chromium resolves for that theme and mode. Aqua and terminal vary tokens by theme and mode
+  together, so a single mode dimension of theme × mode is the only 1:1 model. It fits Figma's
+  limits: variable modes need a Professional plan (up to 10 modes per collection) or
+  Organization (20).
+- **Moving variables keeps bindings.** The Figma API cannot move a variable to another collection.
+  When a token's collection changes, the plugin:
+  1. creates the variable in its new collection;
+  2. rebinds every node and style bound to the old variable;
+  3. then deletes the old one.
+
+  Without step 2, designs would stay bound to a stale orphan. The plugin tests cover the move.
+- **iOS** resolves Theme-collection tokens with the `modern-<mode>` mode by default. Per-theme
+  Swift values (decision D2) are generated from the same collection in a later slice.
+
 ## Open questions, decided per slice
 
 - **How `io.atom63.derive` is shaped.** It could be one CSS expression string with `{token.path}`

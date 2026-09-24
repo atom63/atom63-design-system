@@ -1,4 +1,7 @@
 /*
+ * Generated from src/themes/modern.resolver.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
  * Modern theme — the default.
  *
  * Otherwise the identity theme (base --a63-* values ship in tokens/semantics.css),
@@ -8,35 +11,28 @@
  *
  * Material stacks are theme-private under this selector (not foundation).
  */
+@import './modern.native.css';
 
 [data-a63-theme='modern'] {
   --a63-control-shadow: inset 0 1px 0 color-mix(in oklch, white 16%, transparent);
   --a63-control-shadow-active: inset 0 1px 0 color-mix(in oklch, black 8%, transparent);
   --a63-control-shadow-tint: 24%;
   /* Flat/bordered controls (outline, and field-like triggers built on it) drop the
-     bright top rim — it reads as a raised plate on something that should sit flush,
-     and outline already nulls the other two raised cues (gloss, highlight). The
-     recipe's tinted inset + drop still supply the gentle lift. */
+        bright top rim — it reads as a raised plate on something that should sit flush,
+        and outline already nulls the other two raised cues (gloss, highlight). The
+        recipe's tinted inset + drop still supply the gentle lift. */
   --a63-control-shadow-flat: 0 0 #0000;
   /* Recessed field — a restrained inset, the inverse of the raised highlight. */
   --a63-field-shadow: inset 0 1px 2px color-mix(in oklch, black 8%, transparent);
-  /* Rim: a soft directional frame, light top-left to firm bottom-right. */
-  --a63-widget-rim-image: linear-gradient(
-    135deg,
-    color-mix(in oklch, var(--a63-border-subtle) 50%, transparent),
-    color-mix(in oklch, var(--a63-border-subtle) 90%, transparent)
-  );
   /* SegmentedControl track + ToggleGroup outline cells. */
   --a63-segment-track-background: var(--a63-surface-muted);
   --a63-segment-track-border: var(--a63-border-subtle);
   --a63-segment-background: var(--a63-surface-muted);
   --a63-segment-foreground: var(--a63-text-secondary);
-  --a63-segment-gloss: none;
   --a63-segment-selected-background: var(--a63-surface-overlay);
   --a63-segment-selected-foreground: var(--a63-text-primary);
-  --a63-segment-selected-gloss: none;
   /* Quiet raised plate on the muted track — inset-only control shadow vanishes
-     on a light fill, so the selected cell needs a soft drop. */
+        on a light fill, so the selected cell needs a soft drop. */
   --a63-segment-selected-shadow:
     inset 0 1px 0 color-mix(in oklch, white 70%, transparent),
     0 1px 2px color-mix(in oklch, black 12%, transparent),
@@ -50,6 +46,6 @@
 
 [data-a63-theme='modern']:is(.dark, [data-a63-mode='dark']) {
   /* Keep the expressive directional rim, but seat the face on the darker panel
-     tier so modern widgets do not read as luminous slabs in dark mode. */
+        tier so modern widgets do not read as luminous slabs in dark mode. */
   --a63-widget-background-color: color-mix(in oklch, var(--a63-surface-panel) 90%, transparent);
 }

@@ -1,0 +1,22 @@
+/*
+ * CSS-native values of terminal.css: values with no DTCG type. The rest of
+ * the contract is generated from terminal.resolver.json. Each declaration here is listed
+ * in native-values.json; see docs/design-system/token-single-source.md.
+ */
+
+[data-a63-theme='terminal'] {
+  --a63-control-gloss: none;
+  /* Phosphor edge as a real rim; the outer neon glow stays a shadow. */
+  --a63-widget-rim-image: linear-gradient(
+    180deg,
+    color-mix(in oklch, var(--a63-action-primary) 30%, transparent),
+    color-mix(in oklch, var(--a63-action-primary) 10%, transparent)
+  );
+  --a63-overlay-texture-image: var(--a63-surface-texture-image);
+  --a63-surface-texture-blend: overlay;
+  --a63-overlay-texture-blend: overlay;
+  --a63-choice-indicator-gloss: none;
+  --a63-segment-gloss: none;
+  --a63-segment-selected-gloss: none;
+  --a63-weather-backdrop: none;
+}

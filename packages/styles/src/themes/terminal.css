@@ -1,4 +1,7 @@
 /*
+ * Generated from src/themes/terminal.resolver.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
  * Terminal theme — flat monochrome phosphor CRT.
  *
  * Value-overrides only. CRT glow recipes are theme-private under this selector
@@ -11,21 +14,27 @@
  * each mode is declared twice: on the theme element itself (theme + mode class/
  * attr co-located) AND as a descendant re-assertion so a nested [data-a63-mode]
  * can't clobber the phosphor palette.
+ *
+ * ── Light terminal — dark-green phosphor on a light paper surface ────────
+ *
+ * No --a63-weather-shadow: the phosphor ring is the rim's job now, and the
+ *    tile keeps the shared --terminal-overlay-glow like every other widget.
+ *
+ * ── Dark terminal — bright phosphor on near-black ───────────────────────
  */
+@import './terminal.native.css';
 
 [data-a63-theme='terminal'] {
   /* Theme-private helper reused by overlay + widget. */
   --terminal-overlay-glow: 0 0 20px -4px
     color-mix(in oklch, var(--a63-action-primary) 40%, transparent);
-
-  --a63-control-gloss: none;
   --a63-control-radius: var(--radius-sm);
   /* Monospace label + a soft phosphor text-glow — the CRT terminal signature. */
   --a63-control-font-family: var(--font-family-mono);
   --a63-control-text-shadow: 0 0 6px color-mix(in oklch, var(--a63-action-primary) 45%, transparent);
   /* Monochrome phosphor glow (accent) — terminal is intentionally single-colour.
-     Uses --a63-action-primary (resolvable on the theme scope), not the per-button
-     tint, which a theme-declared shadow can't see. */
+        Uses --a63-action-primary (resolvable on the theme scope), not the per-button
+        tint, which a theme-declared shadow can't see. */
   --a63-control-shadow:
     inset 0 0 0 1px color-mix(in oklch, var(--a63-action-primary) 32%, transparent),
     0 0 14px -2px color-mix(in oklch, var(--a63-action-primary) 45%, transparent);
@@ -39,18 +48,12 @@
   --a63-overlay-shadow:
     inset 0 0 0 1px color-mix(in oklch, var(--a63-action-primary) 30%, transparent),
     var(--terminal-overlay-glow);
-  /* Phosphor edge as a real rim; the outer neon glow stays a shadow. */
-  --a63-widget-rim-image: linear-gradient(
-    180deg,
-    color-mix(in oklch, var(--a63-action-primary) 30%, transparent),
-    color-mix(in oklch, var(--a63-action-primary) 10%, transparent)
-  );
   /* Phosphor edge moved to the rim; keep only the outer glow. */
   --a63-widget-shadow: var(--terminal-overlay-glow);
   --a63-surface-shadow: inset 0 0 0 1px
     color-mix(in oklch, var(--a63-action-primary) 22%, transparent);
   /* Terminal surfaces/overlays get a faint CRT scanline texture. Square look
-     comes from the radius personalization axis, not hardcoded radii here. */
+        comes from the radius personalization axis, not hardcoded radii here. */
   --a63-surface-texture-image: repeating-linear-gradient(
     to bottom,
     color-mix(in oklch, var(--a63-action-primary) 6%, transparent) 0px,
@@ -58,9 +61,6 @@
     transparent 1px,
     transparent 3px
   );
-  --a63-overlay-texture-image: var(--a63-surface-texture-image);
-  --a63-surface-texture-blend: overlay;
-  --a63-overlay-texture-blend: overlay;
   --a63-track-shadow: inset 0 0 4px -1px
     color-mix(in oklch, var(--a63-action-primary) 22%, transparent);
   --a63-choice-box-shadow: inset 0 0 5px -2px
@@ -68,16 +68,13 @@
   --a63-choice-box-shadow-checked:
     inset 0 0 0 1px color-mix(in oklch, var(--a63-action-primary) 44%, transparent),
     0 0 10px -4px color-mix(in oklch, var(--a63-action-primary) 55%, transparent);
-  --a63-choice-indicator-gloss: none;
   /* Segmented controls — flat phosphor cells; selected = edged glow, no gel. */
   --a63-segment-track-background: var(--a63-field-background);
   --a63-segment-track-border: var(--a63-border-subtle);
   --a63-segment-background: var(--a63-surface-panel);
   --a63-segment-foreground: var(--a63-text-secondary);
-  --a63-segment-gloss: none;
   --a63-segment-selected-background: var(--a63-surface-muted);
   --a63-segment-selected-foreground: var(--a63-text-primary);
-  --a63-segment-selected-gloss: none;
   --a63-segment-selected-shadow: inset 0 0 0 1px
     color-mix(in oklch, var(--a63-action-primary) 36%, transparent);
   --a63-segment-primary-background: var(--a63-action-primary);
@@ -90,10 +87,8 @@
     var(--a63-action-primary) 44%,
     var(--a63-border-subtle)
   );
-  --a63-weather-backdrop: none;
 }
 
-/* ── Light terminal — dark-green phosphor on a light paper surface ──────── */
 [data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']),
 [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light']) {
   /* Darker phosphor ink on paper — pure brand-500 fails AA on near-white page. */
@@ -143,11 +138,8 @@
   --a63-weather-divider-color: color-mix(in oklch, var(--a63-action-primary) 38%, transparent);
   --a63-weather-text-shadow: 0 0 10px
     color-mix(in oklch, var(--a63-action-primary) 22%, transparent);
-  /* No --a63-weather-shadow: the phosphor ring is the rim's job now, and the
-     tile keeps the shared --terminal-overlay-glow like every other widget. */
 }
 
-/* ── Dark terminal — bright phosphor on near-black ─────────────────────── */
 [data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']),
 [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark']) {
   /* Opaque phosphor text — translucent secondary failed AA against the page. */

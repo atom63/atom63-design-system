@@ -1,0 +1,16 @@
+/*
+ * CSS-native values of modern.css: values with no DTCG type. The rest of
+ * the contract is generated from modern.resolver.json. Each declaration here is listed
+ * in native-values.json; see docs/design-system/token-single-source.md.
+ */
+
+[data-a63-theme='modern'] {
+  /* Rim: a soft directional frame, light top-left to firm bottom-right. */
+  --a63-widget-rim-image: linear-gradient(
+    135deg,
+    color-mix(in oklch, var(--a63-border-subtle) 50%, transparent),
+    color-mix(in oklch, var(--a63-border-subtle) 90%, transparent)
+  );
+  --a63-segment-gloss: none;
+  --a63-segment-selected-gloss: none;
+}

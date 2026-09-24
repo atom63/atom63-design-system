@@ -1,0 +1,350 @@
+{
+  "version": "2025.10",
+  "description": "Modern theme — the default.\n\nOtherwise the identity theme (base --a63-* values ship in tokens/semantics.css),\nmodern adds one restrained tactile touch to filled controls: a hairline white\ntop highlight + a faint drop tinted by the button's own fill (via the recipe's\nshadow-tint); on press the highlight flips to a subtle dark inset.\n\nMaterial stacks are theme-private under this selector (not foundation).",
+  "sets": {
+    "01-data-a63-theme-modern": {
+      "sources": [
+        {
+          "a63": {
+            "control": {
+              "shadow": {
+                "$root": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [1, 1, 1],
+                        "alpha": 0.16
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "inset 0 1px 0 color-mix(in oklch, white 16%, transparent)"
+                  }
+                },
+                "active": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.08
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "inset 0 1px 0 color-mix(in oklch, black 8%, transparent)"
+                  }
+                },
+                "tint": {
+                  "$type": "number",
+                  "$value": 24,
+                  "$extensions": {
+                    "io.atom63.derive": "24%"
+                  }
+                },
+                "flat": {
+                  "$type": "shadow",
+                  "$value": [],
+                  "$extensions": {
+                    "io.atom63.derive": "0 0 #0000"
+                  },
+                  "$description": "Flat/bordered controls (outline, and field-like triggers built on it) drop the\n   bright top rim — it reads as a raised plate on something that should sit flush,\n   and outline already nulls the other two raised cues (gloss, highlight). The\n   recipe's tinted inset + drop still supply the gentle lift."
+                }
+              }
+            },
+            "field": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": [
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0, 0, 0],
+                      "alpha": 0.08
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 1,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 2,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "inset": true
+                  }
+                ],
+                "$extensions": {
+                  "io.atom63.derive": "inset 0 1px 2px color-mix(in oklch, black 8%, transparent)"
+                },
+                "$description": "Recessed field — a restrained inset, the inverse of the raised highlight."
+              }
+            },
+            "segment": {
+              "track": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.surface.muted}",
+                  "$description": "SegmentedControl track + ToggleGroup outline cells."
+                },
+                "border": {
+                  "$type": "dimension",
+                  "$value": "{a63.border.subtle}"
+                }
+              },
+              "background": {
+                "$type": "color",
+                "$value": "{a63.surface.muted}"
+              },
+              "foreground": {
+                "$type": "color",
+                "$value": "{a63.text.secondary}"
+              },
+              "selected": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.surface.overlay}"
+                },
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.text.primary}"
+                },
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [1, 1, 1],
+                        "alpha": 0.7
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    },
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.12
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 2,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      }
+                    },
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.06
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      }
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "inset 0 1px 0 color-mix(in oklch, white 70%, transparent), 0 1px 2px color-mix(in oklch, black 12%, transparent), 0 1px 1px color-mix(in oklch, black 6%, transparent)"
+                  },
+                  "$description": "Quiet raised plate on the muted track — inset-only control shadow vanishes\n   on a light fill, so the selected cell needs a soft drop."
+                }
+              },
+              "primary": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}"
+                },
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary.foreground}"
+                },
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [1, 1, 1],
+                        "alpha": 0.3
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    },
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.16
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 2,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      }
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "inset 0 1px 0 color-mix(in oklch, white 30%, transparent), 0 1px 2px color-mix(in oklch, black 16%, transparent)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-a63-theme='modern']"
+        }
+      }
+    },
+    "02-data-a63-theme-modern-is-dark-data-a63-mode-dark": {
+      "sources": [
+        {
+          "a63": {
+            "widget": {
+              "background": {
+                "color": {
+                  "$type": "color",
+                  "$value": "{a63.surface.panel}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {a63.surface.panel} 90%, transparent)"
+                  },
+                  "$description": "Keep the expressive directional rim, but seat the face on the darker panel\n   tier so modern widgets do not read as luminous slabs in dark mode."
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-a63-theme='modern']:is(.dark, [data-a63-mode='dark'])"
+        }
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/01-data-a63-theme-modern"
+    },
+    {
+      "$ref": "#/sets/02-data-a63-theme-modern-is-dark-data-a63-mode-dark"
+    }
+  ],
+  "$extensions": {
+    "io.atom63.css": {
+      "imports": ["./modern.native.css"]
+    }
+  }
+}

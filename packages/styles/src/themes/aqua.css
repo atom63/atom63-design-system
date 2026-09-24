@@ -1,4 +1,7 @@
 /*
+ * Generated from src/themes/aqua.resolver.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
  * Aqua theme — glossy translucent gel.
  *
  * Lean value-overrides — themes override VALUES, never anatomy. Captures the
@@ -9,32 +12,19 @@
  *
  * Gel material is theme-private under this selector. Shared blur ladder stops
  * (--blur-lg) come from foundation; the 20px gel blur is skin-only.
+ *
+ * Brand-tinted halo removed: weather keeps the shared aqua drop so the tile
+ *    sits on the same elevation as every other widget.
  */
+@import './aqua.native.css';
 
 [data-a63-theme='aqua'] {
   /* Theme-private helpers reused across contract knobs. */
   --aqua-overlay-drop:
     0 12px 32px -8px color-mix(in oklch, black 30%, transparent),
     0 2px 8px -3px color-mix(in oklch, black 16%, transparent);
-
   --a63-control-radius: var(--radius-md);
   --a63-control-focus-ring-width: 4px;
-  /* Two layers, matching production: (1) a DEFINED rounded reflection panel in the
-     top of the button (painted by the recipe ::after) — a bright white→transparent
-     glass highlight with a crisp shape and edges; (2) a subtle near-white bg dome
-     underneath for the overall convex sheen. */
-  --a63-control-highlight: linear-gradient(
-    to bottom,
-    color-mix(in oklch, white 82%, transparent) 0%,
-    color-mix(in oklch, white 30%, transparent) 55%,
-    transparent 100%
-  );
-  --a63-control-gloss: radial-gradient(
-    76% 58% at 50% -2%,
-    color-mix(in oklch, white 46%, transparent) 0%,
-    color-mix(in oklch, white 12%, transparent) 46%,
-    transparent 72%
-  );
   --a63-control-shadow-tint: 40%;
   --a63-control-shadow:
     inset 0 1px 0 color-mix(in oklch, white 85%, transparent),
@@ -54,54 +44,21 @@
     inset 0 -1px 0 color-mix(in oklch, white 60%, transparent);
   --a63-overlay-shadow:
     inset 0 1px 0 color-mix(in oklch, white 60%, transparent), var(--aqua-overlay-drop);
-  /* Gel rim: bright specular top fading to clear — the inset that used to live
-     in --a63-overlay-shadow, now able to gradate across the whole frame. */
-  --a63-widget-rim-image: linear-gradient(
-    to bottom,
-    color-mix(in oklch, white 60%, transparent),
-    color-mix(in oklch, white 12%, transparent)
-  );
-  --a63-widget-rim-backdrop: saturate(1.6) blur(20px);
+  --a63-overlay-highlight-opacity: 0.75;
   --a63-widget-shadow: var(--aqua-overlay-drop);
   --a63-surface-shadow:
     inset 0 1px 0 color-mix(in oklch, white 55%, transparent),
     0 6px 16px -6px color-mix(in oklch, black 22%, transparent),
     0 1px 3px -1px color-mix(in oklch, black 12%, transparent);
   /* Aqua surfaces/overlays are glassy: translucent backdrop blur + a top gel
-     sheen + a bright specular rim. Shared frost uses --blur-lg; gel blur is
-     skin-only (between lg and xl). */
+        sheen + a bright specular rim. Shared frost uses --blur-lg; gel blur is
+        skin-only (between lg and xl). */
   --a63-surface-backdrop: saturate(1.4) blur(var(--blur-lg));
-  --a63-overlay-backdrop: saturate(1.6) blur(20px);
-  --a63-surface-gloss: linear-gradient(
-    to bottom,
-    color-mix(in oklch, white 22%, transparent) 0%,
-    color-mix(in oklch, white 4%, transparent) 48%,
-    transparent 72%
-  );
-  --a63-overlay-gloss: var(--a63-surface-gloss);
-  /* Menus need a quieter, more even backplate than larger Aqua overlays so
-     dense rows remain legible from top to bottom. */
-  --a63-menu-popup-background: color-mix(in oklch, var(--a63-surface-overlay) 92%, white);
-  --a63-menu-popup-gloss: linear-gradient(
-    to bottom,
-    color-mix(in oklch, white 10%, transparent),
-    transparent 64%
-  );
   --a63-surface-highlight: color-mix(in oklch, white 55%, transparent);
-  --a63-overlay-highlight: color-mix(in oklch, white 60%, transparent);
   --a63-surface-highlight-opacity: 0.75;
-  --a63-overlay-highlight-opacity: 0.75;
-  /* Aqua pinstripe — faint horizontal hairlines, the Aqua signature. CHROME/
-     floating ONLY (overlay contract): window chrome, widgets, menus, popovers,
-     dialogs. Static CONTENT surfaces stay clean. */
-  --a63-overlay-texture-image: repeating-linear-gradient(
-    to bottom,
-    color-mix(in oklch, white 10%, transparent) 0px,
-    color-mix(in oklch, white 10%, transparent) 1px,
-    transparent 1px,
-    transparent 2px
-  );
-  --a63-overlay-texture-blend: soft-light;
+  /* Menus need a quieter, more even backplate than larger Aqua overlays so
+        dense rows remain legible from top to bottom. */
+  --a63-menu-popup-background: color-mix(in oklch, var(--a63-surface-overlay) 92%, white);
   --a63-track-shadow:
     inset 0 2px 3px color-mix(in oklch, black 14%, transparent),
     inset 0 -1px 0 color-mix(in oklch, white 45%, transparent);
@@ -114,16 +71,10 @@
   --a63-choice-box-shadow-checked:
     inset 0 1px 0 color-mix(in oklch, white 34%, transparent),
     inset 0 -1px 1px color-mix(in oklch, black 16%, transparent);
-  --a63-choice-indicator-gloss: linear-gradient(
-    to bottom,
-    color-mix(in oklch, white 34%, transparent),
-    transparent 58%
-  );
   /* ── Segment / ToggleGroup (Figma A63-System 432:1335) ─────────────────────
-     Welded gel CELLS own the chrome. Resting = soft card→muted wash + quiet
-     mid-line sheen. Selected = pressed-IN plate + restrained gel + inset. */
+        Welded gel CELLS own the chrome. Resting = soft card→muted wash + quiet
+        mid-line sheen. Selected = pressed-IN plate + restrained gel + inset. */
   --a63-segment-track-background: var(--a63-surface-muted);
-  --a63-segment-track-gloss: none;
   --a63-segment-track-shadow: var(--a63-track-shadow);
   --a63-segment-track-border: var(--a63-border-subtle);
   --a63-segment-foreground: var(--a63-text-secondary);
@@ -140,13 +91,6 @@
     linear-gradient(180deg, var(--a63-surface-panel) 0%, var(--a63-surface-muted) 100%);
   --a63-segment-selected-background: var(--a63-surface-panel);
   --a63-segment-selected-foreground: var(--a63-text-primary);
-  --a63-segment-selected-gloss: linear-gradient(
-    180deg,
-    color-mix(in oklch, white 28%, transparent) 0%,
-    color-mix(in oklch, white 10%, transparent) 42%,
-    color-mix(in oklch, black 10%, transparent) 58%,
-    color-mix(in oklch, white 4%, transparent) 100%
-  );
   --a63-segment-selected-shadow:
     inset 0 1px 0 color-mix(in oklch, white 35%, transparent),
     inset 0 2px 6px color-mix(in oklch, black 14%, transparent);
@@ -162,7 +106,6 @@
   --a63-weather-muted-foreground: color-mix(in oklch, white 76%, transparent);
   --a63-weather-divider-color: color-mix(in oklch, white 24%, transparent);
   --a63-weather-text-shadow: 0 1px 2px color-mix(in oklch, black 42%, transparent);
-  --a63-weather-backdrop: none;
 }
 
 [data-a63-theme='aqua']:is(:root, .light, [data-a63-mode='light']) {
@@ -185,15 +128,13 @@
       color-mix(in oklch, var(--a63-action-primary) 78%, white 10%),
       color-mix(in oklch, var(--a63-action-primary) 70%, var(--color-b1-900) 30%)
     );
-  /* Brand-tinted halo removed: weather keeps the shared aqua drop so the tile
-     sits on the same elevation as every other widget. */
 }
 
 [data-a63-theme='aqua']:is(.dark, [data-a63-mode='dark']) {
   --a63-surface-page: color-mix(in oklch, var(--surface-dark-1) 94%, var(--color-b1-500));
   --a63-surface-panel: color-mix(in oklch, var(--surface-dark-2) 94%, var(--color-b1-500));
   /* Lift neutral menu rows above the striped gray backplate without turning the
-     hover state into the stronger primary-selection treatment. */
+        hover state into the stronger primary-selection treatment. */
   --a63-menu-highlight-background: color-mix(in oklch, white 12%, transparent);
   --a63-weather-border-color: color-mix(in oklch, white 14%, transparent);
   --a63-weather-background-image:
@@ -225,12 +166,6 @@
       color-mix(in oklch, var(--a63-surface-panel) 88%, white) 0%,
       var(--a63-surface-muted) 100%
     );
-  --a63-segment-selected-gloss: linear-gradient(
-    180deg,
-    color-mix(in oklch, white 18%, transparent) 0%,
-    color-mix(in oklch, white 4%, transparent) 40%,
-    color-mix(in oklch, black 18%, transparent) 100%
-  );
   --a63-segment-selected-shadow:
     inset 0 1px 0 color-mix(in oklch, white 22%, transparent),
     inset 0 3px 8px color-mix(in oklch, black 28%, transparent);

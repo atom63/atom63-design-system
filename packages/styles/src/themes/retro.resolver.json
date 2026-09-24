@@ -1,0 +1,788 @@
+{
+  "version": "2025.10",
+  "description": "Retro theme — early-web / Windows-98 chrome: thick beveled edges and hard\noffset shadows.\n\nValue-overrides only. Bevel stacks are theme-private under this selector.\nBoxier radius and chunky borders complete the physical look.",
+  "sets": {
+    "01-data-a63-theme-retro": {
+      "sources": [
+        {
+          "retro": {
+            "bevel": {
+              "drop": {
+                "$root": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.3
+                      },
+                      "offsetX": {
+                        "value": 2,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 2,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      }
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "2px 2px 0 color-mix(in oklch, black 30%, transparent)"
+                  },
+                  "$description": "Theme-private helpers reused across contract knobs."
+                },
+                "md": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.3
+                      },
+                      "offsetX": {
+                        "value": 3,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 3,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      }
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "3px 3px 0 color-mix(in oklch, black 30%, transparent)"
+                  }
+                },
+                "lg": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.34
+                      },
+                      "offsetX": {
+                        "value": 4,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 4,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      }
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "4px 4px 0 color-mix(in oklch, black 34%, transparent)"
+                  }
+                },
+                "soft": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.16
+                      },
+                      "offsetX": {
+                        "value": 2,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 2,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      }
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "2px 2px 0 color-mix(in oklch, black 16%, transparent)"
+                  }
+                }
+              }
+            }
+          },
+          "a63": {
+            "control": {
+              "radius": {
+                "$type": "dimension",
+                "$value": "{radius.sm}"
+              },
+              "border": {
+                "width": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 2,
+                    "unit": "px"
+                  }
+                }
+              },
+              "focus": {
+                "ring": {
+                  "width": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 2,
+                      "unit": "px"
+                    }
+                  }
+                }
+              },
+              "shadow": {
+                "$root": {
+                  "$type": "shadow",
+                  "$value": "{retro.bevel.drop}",
+                  "$extensions": {
+                    "io.atom63.derive": "inset 2px 2px 0 color-mix(in oklch, white 55%, transparent), inset -2px -2px 0 color-mix(in oklch, black 28%, transparent), {retro.bevel.drop}"
+                  }
+                },
+                "active": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.3
+                      },
+                      "offsetX": {
+                        "value": 2,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 2,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    },
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [1, 1, 1],
+                        "alpha": 0.22
+                      },
+                      "offsetX": {
+                        "value": -1,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": -1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "inset 2px 2px 0 color-mix(in oklch, black 30%, transparent), inset -1px -1px 0 color-mix(in oklch, white 22%, transparent)"
+                  },
+                  "$description": "Pressed: the bevel inverts (recessed) and the hard drop collapses — the\n   button physically pushes in. Pairs with the default translateY(1px) press."
+                }
+              }
+            },
+            "field": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": [
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0, 0, 0],
+                      "alpha": 0.22
+                    },
+                    "offsetX": {
+                      "value": 2,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 2,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "inset": true
+                  },
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [1, 1, 1],
+                      "alpha": 0.4
+                    },
+                    "offsetX": {
+                      "value": -1,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": -1,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "inset": true
+                  }
+                ],
+                "$extensions": {
+                  "io.atom63.derive": "inset 2px 2px 0 color-mix(in oklch, black 22%, transparent), inset -1px -1px 0 color-mix(in oklch, white 40%, transparent)"
+                }
+              }
+            },
+            "overlay": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": "{retro.bevel.drop.md}",
+                "$extensions": {
+                  "io.atom63.derive": "inset 1px 1px 0 color-mix(in oklch, white 50%, transparent), inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), {retro.bevel.drop.md}"
+                }
+              },
+              "border": {
+                "style": {
+                  "$type": "strokeStyle",
+                  "$value": "outset"
+                },
+                "width": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 2,
+                    "unit": "px"
+                  }
+                }
+              },
+              "drag": {
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": "{retro.bevel.drop.lg}",
+                  "$extensions": {
+                    "io.atom63.derive": "inset 1px 1px 0 color-mix(in oklch, white 50%, transparent), inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), {retro.bevel.drop.lg}"
+                  }
+                }
+              }
+            },
+            "widget": {
+              "rim": {
+                "width": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 2,
+                    "unit": "px"
+                  },
+                  "$description": "Win98 bevel as real geometry: light on top + left, dark on bottom + right.\n   Per-side BORDER colors, so the bevel mitres around the corner arc and holds\n   at any radius — radius is a personalization axis, not a per-theme constant.\n   Order: top right bottom left."
+                },
+                "border": {
+                  "color": {
+                    "$type": "color",
+                    "$value": "{color.white.100}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklch, white 50%, transparent) color-mix(in oklch, black 22%, transparent) color-mix(in oklch, black 22%, transparent) color-mix(in oklch, white 50%, transparent)"
+                    }
+                  }
+                }
+              },
+              "shadow": {
+                "$type": "shadow",
+                "$value": "{retro.bevel.drop.md}",
+                "$description": "Bevel moved to the rim; keep only the hard drop."
+              },
+              "background": {
+                "color": {
+                  "$type": "color",
+                  "$value": "{a63.surface.overlay}",
+                  "$description": "Opaque face. The contract's 82% default lets the rim gradient bleed through,\n   which turns the bevel's hard diagonal stop into a seam across the whole card.\n   Win98 plastic is not glass — the face should be solid regardless."
+                }
+              }
+            },
+            "surface": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": "{retro.bevel.drop.soft}",
+                "$extensions": {
+                  "io.atom63.derive": "inset 1px 1px 0 color-mix(in oklch, white 55%, transparent), inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), {retro.bevel.drop.soft}"
+                }
+              },
+              "border": {
+                "style": {
+                  "$type": "strokeStyle",
+                  "$value": "outset",
+                  "$description": "Retro surfaces/overlays are chunky beveled frames: 2px outset border, hard\n   square corners via the radius personalization axis (not hardcoded here)."
+                },
+                "width": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 2,
+                    "unit": "px"
+                  }
+                }
+              }
+            },
+            "track": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": [
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0, 0, 0],
+                      "alpha": 0.22
+                    },
+                    "offsetX": {
+                      "value": 1,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 1,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "inset": true
+                  },
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [1, 1, 1],
+                      "alpha": 0.4
+                    },
+                    "offsetX": {
+                      "value": -1,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": -1,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "inset": true
+                  }
+                ],
+                "$extensions": {
+                  "io.atom63.derive": "inset 1px 1px 0 color-mix(in oklch, black 22%, transparent), inset -1px -1px 0 color-mix(in oklch, white 40%, transparent)"
+                }
+              }
+            },
+            "marker": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": [
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [1, 1, 1],
+                      "alpha": 0.5
+                    },
+                    "offsetX": {
+                      "value": 1,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 1,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "inset": true
+                  },
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0, 0, 0],
+                      "alpha": 0.2
+                    },
+                    "offsetX": {
+                      "value": -1,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": -1,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "inset": true
+                  },
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0, 0, 0],
+                      "alpha": 0.15
+                    },
+                    "offsetX": {
+                      "value": 1,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 1,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": 0,
+                      "unit": "px"
+                    }
+                  }
+                ],
+                "$extensions": {
+                  "io.atom63.derive": "inset 1px 1px 0 color-mix(in oklch, white 50%, transparent), inset -1px -1px 0 color-mix(in oklch, black 20%, transparent), 1px 1px 0 color-mix(in oklch, black 15%, transparent)"
+                }
+              }
+            },
+            "choice": {
+              "box": {
+                "shadow": {
+                  "$root": {
+                    "$type": "shadow",
+                    "$value": [
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [0, 0, 0],
+                          "alpha": 0.24
+                        },
+                        "offsetX": {
+                          "value": 1,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 1,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "inset": true
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [1, 1, 1],
+                          "alpha": 0.42
+                        },
+                        "offsetX": {
+                          "value": -1,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": -1,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "inset": true
+                      }
+                    ],
+                    "$extensions": {
+                      "io.atom63.derive": "inset 1px 1px 0 color-mix(in oklch, black 24%, transparent), inset -1px -1px 0 color-mix(in oklch, white 42%, transparent)"
+                    }
+                  },
+                  "checked": {
+                    "$type": "shadow",
+                    "$value": [
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [1, 1, 1],
+                          "alpha": 0.38
+                        },
+                        "offsetX": {
+                          "value": 1,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 1,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "inset": true
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [0, 0, 0],
+                          "alpha": 0.24
+                        },
+                        "offsetX": {
+                          "value": -1,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": -1,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "inset": true
+                      }
+                    ],
+                    "$extensions": {
+                      "io.atom63.derive": "inset 1px 1px 0 color-mix(in oklch, white 38%, transparent), inset -1px -1px 0 color-mix(in oklch, black 24%, transparent)"
+                    }
+                  }
+                }
+              }
+            },
+            "segment": {
+              "track": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.surface.panel}",
+                  "$description": "Segmented controls — welded Win98 cells; selected = pressed-in bevel."
+                },
+                "border": {
+                  "$type": "dimension",
+                  "$value": "{a63.border.control}"
+                }
+              },
+              "background": {
+                "$type": "color",
+                "$value": "{a63.surface.panel}"
+              },
+              "foreground": {
+                "$type": "color",
+                "$value": "{a63.text.secondary}"
+              },
+              "selected": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.surface.muted}"
+                },
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.text.primary}"
+                },
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": "{a63.control.shadow.active}"
+                }
+              },
+              "primary": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}"
+                },
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary.foreground}"
+                },
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": "{a63.control.shadow.active}"
+                }
+              }
+            },
+            "weather": {
+              "foreground": {
+                "$type": "color",
+                "$value": "{color.white.100}",
+                "$extensions": {
+                  "io.atom63.derive": "white"
+                }
+              },
+              "muted": {
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{color.white.100}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, white 76%, transparent)"
+                  }
+                }
+              },
+              "divider": {
+                "color": {
+                  "$type": "color",
+                  "$value": "{color.white.100}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, white 32%, transparent)"
+                  }
+                }
+              },
+              "text": {
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.34
+                      },
+                      "offsetX": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      }
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "1px 1px 0 color-mix(in oklch, black 34%, transparent)"
+                  }
+                }
+              },
+              "border": {
+                "color": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {a63.action.primary} 44%, {a63.border.subtle} )"
+                  }
+                }
+              },
+              "background": {
+                "color": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {a63.action.primary} 48%, {a63.surface.panel} )"
+                  }
+                },
+                "image": {
+                  "$type": "dimension",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "linear-gradient(135deg, color-mix(in oklch, white 22%, transparent), transparent 44%), linear-gradient( 135deg, color-mix(in oklch, {a63.action.primary} 58%, {a63.surface.panel}), color-mix(in oklch, {a63.action.primary} 68%, {a63.text.primary}) )"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-a63-theme='retro']"
+        }
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/01-data-a63-theme-retro"
+    }
+  ],
+  "$extensions": {
+    "io.atom63.css": {
+      "imports": ["./retro.native.css"]
+    }
+  }
+}

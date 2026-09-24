@@ -1,7 +1,7 @@
 /**
  * Builds token CSS from DTCG source files (Design Tokens Format Module 2025.10).
  *
- * Each `src/{tokens,contracts}/**\/<name>.tokens.json` produces the sibling `<name>.css`: one
+ * Each `src/{tokens,contracts,themes}/**\/<name>.tokens.json` produces the sibling `<name>.css`: one
  * `:root` custom property per token, named by joining the token's group path
  * with `-` (`spacing` > `1` becomes `--spacing-1`). The JSON is the source of
  * truth; the CSS is generated and must not be edited by hand.
@@ -288,7 +288,10 @@ function render(sourcePath, document, rules, knownNames) {
 
 const check = process.argv.includes('--check')
 const sources = []
-const sourceRoots = [tokensRoot, path.join(packageRoot, 'src/contracts')]
+const sourceRoots = [
+  tokensRoot,
+  ...['src/contracts', 'src/themes'].map(dir => path.join(packageRoot, dir)),
+]
 for (const sourcePath of (await Promise.all(sourceRoots.map(findSources))).flat()) {
   const document = JSON.parse(await readFile(sourcePath, 'utf8'))
   sources.push([sourcePath, document, toRules(sourcePath, document)])

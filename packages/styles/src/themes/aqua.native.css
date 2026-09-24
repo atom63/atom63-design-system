@@ -1,0 +1,80 @@
+/*
+ * CSS-native values of aqua.css: values with no DTCG type. The rest of
+ * the contract is generated from aqua.resolver.json. Each declaration here is listed
+ * in native-values.json; see docs/design-system/token-single-source.md.
+ */
+
+[data-a63-theme='aqua'] {
+  /* Two layers, matching production: (1) a DEFINED rounded reflection panel in the
+        top of the button (painted by the recipe ::after) — a bright white→transparent
+        glass highlight with a crisp shape and edges; (2) a subtle near-white bg dome
+        underneath for the overall convex sheen. */
+  --a63-control-highlight: linear-gradient(
+    to bottom,
+    color-mix(in oklch, white 82%, transparent) 0%,
+    color-mix(in oklch, white 30%, transparent) 55%,
+    transparent 100%
+  );
+  --a63-control-gloss: radial-gradient(
+    76% 58% at 50% -2%,
+    color-mix(in oklch, white 46%, transparent) 0%,
+    color-mix(in oklch, white 12%, transparent) 46%,
+    transparent 72%
+  );
+  /* Gel rim: bright specular top fading to clear — the inset that used to live
+        in --a63-overlay-shadow, now able to gradate across the whole frame. */
+  --a63-widget-rim-image: linear-gradient(
+    to bottom,
+    color-mix(in oklch, white 60%, transparent),
+    color-mix(in oklch, white 12%, transparent)
+  );
+  --a63-widget-rim-backdrop: saturate(1.6) blur(20px);
+  --a63-overlay-backdrop: saturate(1.6) blur(20px);
+  --a63-surface-gloss: linear-gradient(
+    to bottom,
+    color-mix(in oklch, white 22%, transparent) 0%,
+    color-mix(in oklch, white 4%, transparent) 48%,
+    transparent 72%
+  );
+  --a63-overlay-gloss: var(--a63-surface-gloss);
+  --a63-menu-popup-gloss: linear-gradient(
+    to bottom,
+    color-mix(in oklch, white 10%, transparent),
+    transparent 64%
+  );
+  --a63-overlay-highlight: color-mix(in oklch, white 60%, transparent);
+  /* Aqua pinstripe — faint horizontal hairlines, the Aqua signature. CHROME/
+        floating ONLY (overlay contract): window chrome, widgets, menus, popovers,
+        dialogs. Static CONTENT surfaces stay clean. */
+  --a63-overlay-texture-image: repeating-linear-gradient(
+    to bottom,
+    color-mix(in oklch, white 10%, transparent) 0px,
+    color-mix(in oklch, white 10%, transparent) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  --a63-overlay-texture-blend: soft-light;
+  --a63-choice-indicator-gloss: linear-gradient(
+    to bottom,
+    color-mix(in oklch, white 34%, transparent),
+    transparent 58%
+  );
+  --a63-segment-track-gloss: none;
+  --a63-segment-selected-gloss: linear-gradient(
+    180deg,
+    color-mix(in oklch, white 28%, transparent) 0%,
+    color-mix(in oklch, white 10%, transparent) 42%,
+    color-mix(in oklch, black 10%, transparent) 58%,
+    color-mix(in oklch, white 4%, transparent) 100%
+  );
+  --a63-weather-backdrop: none;
+}
+
+[data-a63-theme='aqua']:is(.dark, [data-a63-mode='dark']) {
+  --a63-segment-selected-gloss: linear-gradient(
+    180deg,
+    color-mix(in oklch, white 18%, transparent) 0%,
+    color-mix(in oklch, white 4%, transparent) 40%,
+    color-mix(in oklch, black 18%, transparent) 100%
+  );
+}
