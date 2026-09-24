@@ -101,16 +101,14 @@ export function FramePanel({
   )
 }
 
+// A div, not <header>: outside a sectioning element a header is a page
+// banner landmark, and a page with two frames would announce two banners.
 export function FrameHeader({
   className,
   ...props
-}: React.ComponentProps<'header'>): React.ReactElement {
+}: React.ComponentProps<'div'>): React.ReactElement {
   return (
-    <header
-      className={cn('a63-Frame-header', className)}
-      data-slot="frame-panel-header"
-      {...props}
-    />
+    <div className={cn('a63-Frame-header', className)} data-slot="frame-panel-header" {...props} />
   )
 }
 
@@ -136,15 +134,12 @@ export function FrameDescription({
   )
 }
 
+// A div, not <footer>, for the same reason as FrameHeader (contentinfo).
 export function FrameFooter({
   className,
   ...props
-}: React.ComponentProps<'footer'>): React.ReactElement {
+}: React.ComponentProps<'div'>): React.ReactElement {
   return (
-    <footer
-      className={cn('a63-Frame-footer', className)}
-      data-slot="frame-panel-footer"
-      {...props}
-    />
+    <div className={cn('a63-Frame-footer', className)} data-slot="frame-panel-footer" {...props} />
   )
 }

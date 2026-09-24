@@ -1,6 +1,7 @@
-/* PageMeta recipe — eyebrow chrome. */
+/* PageMeta recipe — eyebrow chrome. Secondary text at full strength: the
+   eyebrow is 12px, and dimming it further dropped it below 4.5:1. */
 @layer components {
   .mdx-page-meta-eyebrow {
-    color: color-mix(in oklab, var(--a63-text-secondary) 70%, transparent);
+    color: var(--a63-text-secondary);
   }
 }

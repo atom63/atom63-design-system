@@ -35,7 +35,8 @@ export default defineConfig({
           {
             defaultLang: 'tsx',
             keepBackground: false,
-            theme: { dark: 'github-dark-dimmed', light: 'github-light' },
+            // Same themes as @atom63/mdx code blocks; see use-shiki-highlight.ts.
+            theme: { dark: 'github-dark-dimmed', light: 'github-light-high-contrast' },
           },
         ],
       ],

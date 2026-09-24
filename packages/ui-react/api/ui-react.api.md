@@ -1368,10 +1368,10 @@ export function Frame(input: FrameProps): React$1.ReactElement;
 export function FrameDescription(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
-export function FrameFooter(input: React$1.ComponentProps<'footer'>): React$1.ReactElement;
+export function FrameFooter(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
-export function FrameHeader(input: React$1.ComponentProps<'header'>): React$1.ReactElement;
+export function FrameHeader(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
 export function FramePanel(input: FramePanelProps): React$1.ReactElement;

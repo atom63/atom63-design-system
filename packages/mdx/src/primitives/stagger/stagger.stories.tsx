@@ -2,6 +2,7 @@ import { Stagger } from '@atom63/mdx/primitives'
 import '@atom63/ui-react/styles.css'
 import '@atom63/mdx/styles/index.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect, waitFor } from 'storybook/test'
 
 function Item({ label }: { label: string }) {
   return (
@@ -28,6 +29,18 @@ const meta = {
         <Item label="Fourth item" />
       </>
     ),
+  },
+  // Axe checks contrast against the rendered frame, and mid-fade text fails it.
+  // Let the entrance settle first.
+  play: async ({ canvasElement }) => {
+    await waitFor(
+      () => {
+        for (const element of canvasElement.querySelectorAll<HTMLElement>('[style*="opacity"]')) {
+          expect(getComputedStyle(element).opacity).toBe('1')
+        }
+      },
+      { timeout: 3000 }
+    )
   },
   decorators: [
     Story => (

@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import { Frame, FrameDescription, FrameFooter, FrameHeader, FramePanel, FrameTitle } from './frame'
@@ -66,5 +66,20 @@ describe('Frame', () => {
     expect(container.querySelector('[data-slot="frame-panel-title"]')).not.toBeNull()
     expect(container.querySelector('[data-slot="frame-panel-description"]')).not.toBeNull()
     expect(container.querySelector('[data-slot="frame-panel-footer"]')).not.toBeNull()
+  })
+
+  it('adds no banner or contentinfo landmarks, so several frames fit on one page', () => {
+    render(
+      <>
+        {[1, 2].map(n => (
+          <Frame key={n}>
+            <FrameHeader>Header {n}</FrameHeader>
+            <FrameFooter>Footer {n}</FrameFooter>
+          </Frame>
+        ))}
+      </>
+    )
+    expect(screen.queryAllByRole('banner')).toHaveLength(0)
+    expect(screen.queryAllByRole('contentinfo')).toHaveLength(0)
   })
 })
