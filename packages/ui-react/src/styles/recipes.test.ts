@@ -19,11 +19,14 @@ const styleSystemDir = join(stylesDir, '..', '..', '..', 'styles', 'src')
 const repoDir = join(stylesDir, '..', '..', '..', '..')
 const recipesCss = readFileSync(join(stylesDir, 'recipes.css'), 'utf8')
 const resetCss = readFileSync(join(stylesDir, 'reset.css'), 'utf8')
-const controlContractCss = readFileSync(join(styleSystemDir, 'contracts', 'control.css'), 'utf8')
-const environmentContractCss = readFileSync(
-  join(styleSystemDir, 'contracts', 'environment.css'),
-  'utf8'
-)
+// A contract or theme is its generated CSS plus the hand-written `.native.css`
+// file that holds its values with no DTCG type (packages/styles).
+const readWithNative = (path: string): string => {
+  const native = path.replace(/\.css$/, '.native.css')
+  return readFileSync(path, 'utf8') + (existsSync(native) ? readFileSync(native, 'utf8') : '')
+}
+const controlContractCss = readWithNative(join(styleSystemDir, 'contracts', 'control.css'))
+const environmentContractCss = readWithNative(join(styleSystemDir, 'contracts', 'environment.css'))
 const reverseCompatCss = readFileSync(join(styleSystemDir, 'compat', 'a63-from-shadcn.css'), 'utf8')
 const readRecipe = (name: string): string =>
   readFileSync(join(componentsDir, name, `${name}.css`), 'utf8')
@@ -186,10 +189,10 @@ describe('recipes.css cascade layering', () => {
       // bleed past the button radius.
       const themeDir = join(styleSystemDir, 'themes')
       const glossThemes = readdirSync(themeDir)
-        .filter(file => file.endsWith('.css') && file !== 'index.css')
-        .filter(file =>
-          readFileSync(join(themeDir, file), 'utf8').includes('--a63-control-highlight:')
+        .filter(
+          file => file.endsWith('.css') && file !== 'index.css' && !file.endsWith('.native.css')
         )
+        .filter(file => readWithNative(join(themeDir, file)).includes('--a63-control-highlight:'))
         .map(file => file.replace('.css', ''))
 
       expect(glossThemes).toEqual(['aqua'])
