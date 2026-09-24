@@ -20,7 +20,9 @@
  * apply unconditionally, emitted before the modifier's contexts under the
  * selector in the set's `$extensions["io.atom63.css"].selector`. A context with
  * no sources emits no rule, so a modifier can hold overrides for a few contexts
- * only. A token's `$description` is kept as a comment above its declaration.
+ * only. `$extensions["io.atom63.css"].selectors` on the resolver may name the
+ * selector of any context, replacing the attribute selector (the mode axis
+ * also answers to `.light` / `.dark` classes). A token's `$description` is kept as a comment above its declaration.
  *
  * A token whose value is computed in CSS keeps a plain DTCG `$value` (its main
  * input, usually an alias, which is what Figma and other readers see) and puts
@@ -193,14 +195,14 @@ function toRules(sourcePath, document) {
     }
     return sources
   }
+  const selectors = document.$extensions['io.atom63.css'].selectors ?? {}
   const modifierRules = Object.entries(modifier.contexts)
     .filter(([, sources]) => sources.length > 0)
     .map(([context, sources]) => {
       const scoped = `[${attribute}='${context}']`
-      return {
-        selector: context === modifier.default ? `:root,\n${scoped}` : scoped,
-        groups: inline(sources),
-      }
+      const selector =
+        selectors[context] ?? (context === modifier.default ? `:root,\n${scoped}` : scoped)
+      return { selector, groups: inline(sources) }
     })
   const order = document.resolutionOrder ?? [{ $ref: `#/modifiers/${modifierName}` }]
   return order.flatMap(({ $ref }) => {

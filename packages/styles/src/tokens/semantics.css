@@ -1,4 +1,7 @@
 /*
+ * Generated from src/tokens/semantics.resolver.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
  * Canonical semantic layer.
  *
  * This is the single source of semantic truth for the new system. Values are
@@ -7,17 +10,10 @@
  * and Tailwind are opt-in adapters that re-reference THESE names — never the
  * reverse. See packages/styles/README.md (the mirror rule).
  */
-
-/*
- * Surface tint — --a63-surface-tint (0%..100%) bends the neutrals toward the brand
- * hue. Rather than mixing all 24 raw ramp stops, only the semantic surface and
- * border tokens below mix toward a lightness-matched --a63-brand-* step: about
- * 12 color-mixes instead of 144. Themes that fully re-skin surfaces (aqua and
- * terminal) define their own surface identity and do not receive the tint.
- * Tint 0 is neutral.
- */
 :root {
   --a63-surface-tint: 0%;
+  /* Scrim — the modal/drawer/sheet backdrop veil behind overlays. */
+  --a63-scrim: color-mix(in oklch, black 40%, transparent);
 }
 
 :root,
@@ -65,14 +61,12 @@
     ),
     transparent 20%
   );
-
   /* Text */
   --a63-text-primary: var(--surface-light-12);
   --a63-text-secondary: var(--surface-light-11);
   /* The brand as text (links, accents) on light surfaces; brand.css picks the
      ramp step per brand. Use --a63-action-primary for fills. */
   --a63-text-accent: var(--a63-brand-text);
-
   /* Border */
   --a63-border-subtle: color-mix(
     in oklch,
@@ -84,7 +78,6 @@
     var(--surface-light-5) calc(100% - var(--a63-surface-tint)),
     var(--a63-brand-400) var(--a63-surface-tint)
   );
-
   /* Action — primary + focus ring live in tokens/brand.css (brand-ramp scoped).
      Neutral = the default variant's fill; sourced from surfaces (NOT --a63-text-*)
      so a theme can recolor text without turning the default button into a fill. */
@@ -93,7 +86,6 @@
   --a63-action-danger: var(--color-danger-600);
   --a63-action-danger-hover: color-mix(in oklch, var(--a63-action-danger) 90%, transparent);
   --a63-action-danger-foreground: white;
-
   /* Status (danger's status role is served by --a63-action-danger). The base is
      the accent used for tinted callouts (bg = mix toward transparent, text/border
      = the accent); -foreground is the text/icon color ON a SOLID status fill.
@@ -105,13 +97,6 @@
   --a63-status-success-foreground: white;
   --a63-status-warning: var(--color-warning-600);
   --a63-status-warning-foreground: white;
-}
-
-/* Mode-agnostic semantics — same veil in light + dark, so declared once at :root
-   (the .dark block below never overrides them). */
-:root {
-  /* Scrim — the modal/drawer/sheet backdrop veil behind overlays. */
-  --a63-scrim: color-mix(in oklch, black 40%, transparent);
 }
 
 :is(.dark, [data-a63-mode='dark']) {
@@ -153,12 +138,10 @@
     ),
     transparent 20%
   );
-
   --a63-text-primary: var(--surface-dark-12);
   --a63-text-secondary: var(--surface-dark-11);
   /* The primary fill is too dark to read as text on dark surfaces. */
   --a63-text-accent: var(--a63-brand-400);
-
   --a63-border-subtle: color-mix(
     in oklch,
     var(--surface-dark-6) calc(100% - var(--a63-surface-tint)),
@@ -169,12 +152,10 @@
     var(--surface-dark-7) calc(100% - var(--a63-surface-tint)),
     var(--a63-brand-500) var(--a63-surface-tint)
   );
-
   --a63-action-neutral: var(--surface-dark-12);
   --a63-action-neutral-foreground: var(--surface-dark-1);
-
+  --a63-action-danger-hover: color-mix(in oklch, var(--a63-action-danger) 82%, white 8%);
   --a63-status-info: var(--color-info-500);
   --a63-status-success: var(--color-success-500);
   --a63-status-warning: var(--color-warning-500);
-  --a63-action-danger-hover: color-mix(in oklch, var(--a63-action-danger) 82%, white 8%);
 }
