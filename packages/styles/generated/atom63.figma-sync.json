@@ -6,7 +6,8 @@
     "collections": 14,
     "variables": 999,
     "aliasValues": 573,
-    "skipped": 183
+    "skipped": 183,
+    "computed": 59
   },
   "collections": [
     {
@@ -2454,16 +2455,6 @@
           }
         },
         {
-          "name": "widget/radius",
-          "token": "--a63-widget-radius",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 14
-            }
-          }
-        },
-        {
           "name": "widget/rim/border/color",
           "token": "--a63-widget-rim-border-color",
           "type": "COLOR",
@@ -2497,42 +2488,12 @@
       ],
       "variables": [
         {
-          "name": "action/primary/foreground",
-          "token": "--a63-action-primary-foreground",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "value": {
-                "r": 0.96246,
-                "g": 0.982337,
-                "b": 1,
-                "a": 1
-              }
-            }
-          }
-        },
-        {
           "name": "action/primary/text/shadow",
           "token": "--a63-action-primary-text-shadow",
           "type": "STRING",
           "values": {
             "Value": {
               "value": "none"
-            }
-          }
-        },
-        {
-          "name": "focus/ring",
-          "token": "--a63-focus-ring",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "value": {
-                "r": 0.17255,
-                "g": 0.498039,
-                "b": 1,
-                "a": 0.3
-              }
             }
           }
         },
@@ -2662,102 +2623,12 @@
           }
         },
         {
-          "name": "space/0_5",
-          "token": "--a63-space-0_5",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 2
-            }
-          }
-        },
-        {
           "name": "space/1",
           "token": "--a63-space-1",
           "type": "FLOAT",
           "values": {
             "Value": {
               "alias": "--a63-space-unit"
-            }
-          }
-        },
-        {
-          "name": "space/1_5",
-          "token": "--a63-space-1_5",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 6
-            }
-          }
-        },
-        {
-          "name": "space/2",
-          "token": "--a63-space-2",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 8
-            }
-          }
-        },
-        {
-          "name": "space/2_5",
-          "token": "--a63-space-2_5",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 10
-            }
-          }
-        },
-        {
-          "name": "space/3",
-          "token": "--a63-space-3",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 12
-            }
-          }
-        },
-        {
-          "name": "space/3_5",
-          "token": "--a63-space-3_5",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 14
-            }
-          }
-        },
-        {
-          "name": "space/4",
-          "token": "--a63-space-4",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 16
-            }
-          }
-        },
-        {
-          "name": "space/5",
-          "token": "--a63-space-5",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 20
-            }
-          }
-        },
-        {
-          "name": "space/6",
-          "token": "--a63-space-6",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 24
             }
           }
         },
@@ -11050,116 +10921,6 @@
           }
         },
         {
-          "name": "radius",
-          "token": "--radius",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 8
-            }
-          }
-        },
-        {
-          "name": "radius/2xl",
-          "token": "--radius-2xl",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 18
-            }
-          }
-        },
-        {
-          "name": "radius/2xs",
-          "token": "--radius-2xs",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 2
-            }
-          }
-        },
-        {
-          "name": "radius/3xl",
-          "token": "--radius-3xl",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 22
-            }
-          }
-        },
-        {
-          "name": "radius/4xl",
-          "token": "--radius-4xl",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 26
-            }
-          }
-        },
-        {
-          "name": "radius/full",
-          "token": "--radius-full",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 28
-            }
-          }
-        },
-        {
-          "name": "radius/lg",
-          "token": "--radius-lg",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 10
-            }
-          }
-        },
-        {
-          "name": "radius/md",
-          "token": "--radius-md",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 8
-            }
-          }
-        },
-        {
-          "name": "radius/sm",
-          "token": "--radius-sm",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 6
-            }
-          }
-        },
-        {
-          "name": "radius/xl",
-          "token": "--radius-xl",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 14
-            }
-          }
-        },
-        {
-          "name": "radius/xs",
-          "token": "--radius-xs",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 4
-            }
-          }
-        },
-        {
           "name": "rounded/2xl",
           "token": "--rounded-2xl",
           "type": "FLOAT",
@@ -13296,6 +13057,61 @@
           }
         },
         {
+          "name": "action/primary/foreground",
+          "token": "--a63-action-primary-foreground",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.96246,
+                "g": 0.982337,
+                "b": 1,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 1,
+                "g": 0.972021,
+                "b": 0.960043,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0.968281,
+                "g": 0.985877,
+                "b": 0.973315,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 1,
+                "g": 0.968582,
+                "b": 0.980814,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.979523,
+                "g": 0.974978,
+                "b": 1,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 1,
+                "g": 0.968243,
+                "b": 0.967913,
+                "a": 1
+              }
+            }
+          }
+        },
+        {
           "name": "action/primary/hover",
           "token": "--a63-action-primary-hover",
           "type": "COLOR",
@@ -13617,6 +13433,61 @@
             },
             "b6": {
               "alias": "--a63-brand-600"
+            }
+          }
+        },
+        {
+          "name": "focus/ring",
+          "token": "--a63-focus-ring",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.17255,
+                "g": 0.498039,
+                "b": 1,
+                "a": 0.3
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.968627,
+                "g": 0.403922,
+                "b": 0.050981,
+                "a": 0.3
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0.164705,
+                "g": 0.686275,
+                "b": 0.462745,
+                "a": 0.3
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.901961,
+                "g": 0.262745,
+                "b": 0.552941,
+                "a": 0.3
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.470588,
+                "g": 0.211765,
+                "b": 0.94902,
+                "a": 0.3
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.992157,
+                "g": 0.247058,
+                "b": 0.360784,
+                "a": 0.3
+              }
             }
           }
         }
@@ -14725,6 +14596,123 @@
           }
         },
         {
+          "name": "space/0_5",
+          "token": "--a63-space-0_5",
+          "type": "FLOAT",
+          "values": {
+            "comfortable": {
+              "value": 2
+            },
+            "compact": {
+              "value": 1.75
+            }
+          }
+        },
+        {
+          "name": "space/1_5",
+          "token": "--a63-space-1_5",
+          "type": "FLOAT",
+          "values": {
+            "comfortable": {
+              "value": 6
+            },
+            "compact": {
+              "value": 5.25
+            }
+          }
+        },
+        {
+          "name": "space/2",
+          "token": "--a63-space-2",
+          "type": "FLOAT",
+          "values": {
+            "comfortable": {
+              "value": 8
+            },
+            "compact": {
+              "value": 7
+            }
+          }
+        },
+        {
+          "name": "space/2_5",
+          "token": "--a63-space-2_5",
+          "type": "FLOAT",
+          "values": {
+            "comfortable": {
+              "value": 10
+            },
+            "compact": {
+              "value": 8.75
+            }
+          }
+        },
+        {
+          "name": "space/3",
+          "token": "--a63-space-3",
+          "type": "FLOAT",
+          "values": {
+            "comfortable": {
+              "value": 12
+            },
+            "compact": {
+              "value": 10.5
+            }
+          }
+        },
+        {
+          "name": "space/3_5",
+          "token": "--a63-space-3_5",
+          "type": "FLOAT",
+          "values": {
+            "comfortable": {
+              "value": 14
+            },
+            "compact": {
+              "value": 12.25
+            }
+          }
+        },
+        {
+          "name": "space/4",
+          "token": "--a63-space-4",
+          "type": "FLOAT",
+          "values": {
+            "comfortable": {
+              "value": 16
+            },
+            "compact": {
+              "value": 14
+            }
+          }
+        },
+        {
+          "name": "space/5",
+          "token": "--a63-space-5",
+          "type": "FLOAT",
+          "values": {
+            "comfortable": {
+              "value": 20
+            },
+            "compact": {
+              "value": 17.5
+            }
+          }
+        },
+        {
+          "name": "space/6",
+          "token": "--a63-space-6",
+          "type": "FLOAT",
+          "values": {
+            "comfortable": {
+              "value": 24
+            },
+            "compact": {
+              "value": 21
+            }
+          }
+        },
+        {
           "name": "space/unit",
           "token": "--a63-space-unit",
           "type": "FLOAT",
@@ -14806,6 +14794,158 @@
           }
         },
         {
+          "name": "radius",
+          "token": "--radius",
+          "type": "FLOAT",
+          "values": {
+            "default": {
+              "value": 8
+            },
+            "none": {
+              "value": 0
+            },
+            "subtle": {
+              "value": 4
+            },
+            "round": {
+              "value": 12
+            }
+          }
+        },
+        {
+          "name": "radius/2xl",
+          "token": "--radius-2xl",
+          "type": "FLOAT",
+          "values": {
+            "default": {
+              "value": 18
+            },
+            "none": {
+              "value": 0
+            },
+            "subtle": {
+              "value": 9
+            },
+            "round": {
+              "value": 27
+            }
+          }
+        },
+        {
+          "name": "radius/2xs",
+          "token": "--radius-2xs",
+          "type": "FLOAT",
+          "values": {
+            "default": {
+              "value": 2
+            },
+            "none": {
+              "value": 0
+            },
+            "subtle": {
+              "value": 1
+            },
+            "round": {
+              "value": 3
+            }
+          }
+        },
+        {
+          "name": "radius/3xl",
+          "token": "--radius-3xl",
+          "type": "FLOAT",
+          "values": {
+            "default": {
+              "value": 22
+            },
+            "none": {
+              "value": 0
+            },
+            "subtle": {
+              "value": 11
+            },
+            "round": {
+              "value": 33
+            }
+          }
+        },
+        {
+          "name": "radius/4xl",
+          "token": "--radius-4xl",
+          "type": "FLOAT",
+          "values": {
+            "default": {
+              "value": 26
+            },
+            "none": {
+              "value": 0
+            },
+            "subtle": {
+              "value": 13
+            },
+            "round": {
+              "value": 39
+            }
+          }
+        },
+        {
+          "name": "radius/full",
+          "token": "--radius-full",
+          "type": "FLOAT",
+          "values": {
+            "default": {
+              "value": 28
+            },
+            "none": {
+              "value": 0
+            },
+            "subtle": {
+              "value": 14
+            },
+            "round": {
+              "value": 42
+            }
+          }
+        },
+        {
+          "name": "radius/lg",
+          "token": "--radius-lg",
+          "type": "FLOAT",
+          "values": {
+            "default": {
+              "value": 10
+            },
+            "none": {
+              "value": 0
+            },
+            "subtle": {
+              "value": 5
+            },
+            "round": {
+              "value": 15
+            }
+          }
+        },
+        {
+          "name": "radius/md",
+          "token": "--radius-md",
+          "type": "FLOAT",
+          "values": {
+            "default": {
+              "value": 8
+            },
+            "none": {
+              "value": 0
+            },
+            "subtle": {
+              "value": 4
+            },
+            "round": {
+              "value": 12
+            }
+          }
+        },
+        {
           "name": "radius/multiplier",
           "token": "--radius-multiplier",
           "type": "FLOAT",
@@ -14823,6 +14963,82 @@
               "value": 1.5
             }
           }
+        },
+        {
+          "name": "radius/sm",
+          "token": "--radius-sm",
+          "type": "FLOAT",
+          "values": {
+            "default": {
+              "value": 6
+            },
+            "none": {
+              "value": 0
+            },
+            "subtle": {
+              "value": 3
+            },
+            "round": {
+              "value": 9
+            }
+          }
+        },
+        {
+          "name": "radius/xl",
+          "token": "--radius-xl",
+          "type": "FLOAT",
+          "values": {
+            "default": {
+              "value": 14
+            },
+            "none": {
+              "value": 0
+            },
+            "subtle": {
+              "value": 7
+            },
+            "round": {
+              "value": 21
+            }
+          }
+        },
+        {
+          "name": "radius/xs",
+          "token": "--radius-xs",
+          "type": "FLOAT",
+          "values": {
+            "default": {
+              "value": 4
+            },
+            "none": {
+              "value": 0
+            },
+            "subtle": {
+              "value": 2
+            },
+            "round": {
+              "value": 6
+            }
+          }
+        },
+        {
+          "name": "widget/radius",
+          "token": "--a63-widget-radius",
+          "type": "FLOAT",
+          "values": {
+            "default": {
+              "value": 14
+            },
+            "none": {
+              "value": 0
+            },
+            "subtle": {
+              "value": 7
+            },
+            "round": {
+              "value": 21
+            }
+          }
         }
       ]
     },
@@ -14835,6 +15051,44 @@
         "large"
       ],
       "variables": [
+        {
+          "name": "typography/base/font/size",
+          "token": "--typography-base-font-size",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 15
+            },
+            "compact": {
+              "value": 13.5
+            },
+            "comfortable": {
+              "value": 16.5
+            },
+            "large": {
+              "value": 18
+            }
+          }
+        },
+        {
+          "name": "typography/base/line/height",
+          "token": "--typography-base-line-height",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 23
+            },
+            "compact": {
+              "value": 20.6875
+            },
+            "comfortable": {
+              "value": 25.2969
+            },
+            "large": {
+              "value": 27.5938
+            }
+          }
+        },
         {
           "name": "typography/scale",
           "token": "--typography-scale",
@@ -14851,6 +15105,82 @@
             },
             "large": {
               "value": 1.2
+            }
+          }
+        },
+        {
+          "name": "typography/sm/font/size",
+          "token": "--typography-sm-font-size",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 13
+            },
+            "compact": {
+              "value": 11.6875
+            },
+            "comfortable": {
+              "value": 14.2969
+            },
+            "large": {
+              "value": 15.5938
+            }
+          }
+        },
+        {
+          "name": "typography/sm/line/height",
+          "token": "--typography-sm-line-height",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 20
+            },
+            "compact": {
+              "value": 18
+            },
+            "comfortable": {
+              "value": 22
+            },
+            "large": {
+              "value": 24
+            }
+          }
+        },
+        {
+          "name": "typography/xs/font/size",
+          "token": "--typography-xs-font-size",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 12
+            },
+            "compact": {
+              "value": 10.7969
+            },
+            "comfortable": {
+              "value": 13.1875
+            },
+            "large": {
+              "value": 14.3906
+            }
+          }
+        },
+        {
+          "name": "typography/xs/line/height",
+          "token": "--typography-xs-line-height",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 18
+            },
+            "compact": {
+              "value": 16.1875
+            },
+            "comfortable": {
+              "value": 19.7969
+            },
+            "large": {
+              "value": 21.5938
             }
           }
         }
@@ -15151,38 +15481,6 @@
           }
         },
         {
-          "name": "typography/base/font/size",
-          "token": "--typography-base-font-size",
-          "type": "FLOAT",
-          "values": {
-            "md": {
-              "value": 15
-            },
-            "sm": {
-              "value": 15
-            },
-            "xs": {
-              "value": 15
-            }
-          }
-        },
-        {
-          "name": "typography/base/line/height",
-          "token": "--typography-base-line-height",
-          "type": "FLOAT",
-          "values": {
-            "md": {
-              "value": 23
-            },
-            "sm": {
-              "value": 23
-            },
-            "xs": {
-              "value": 23
-            }
-          }
-        },
-        {
           "name": "typography/lg/font/size",
           "token": "--typography-lg-font-size",
           "type": "FLOAT",
@@ -15215,38 +15513,6 @@
           }
         },
         {
-          "name": "typography/sm/font/size",
-          "token": "--typography-sm-font-size",
-          "type": "FLOAT",
-          "values": {
-            "md": {
-              "value": 13
-            },
-            "sm": {
-              "value": 13
-            },
-            "xs": {
-              "value": 13
-            }
-          }
-        },
-        {
-          "name": "typography/sm/line/height",
-          "token": "--typography-sm-line-height",
-          "type": "FLOAT",
-          "values": {
-            "md": {
-              "value": 20
-            },
-            "sm": {
-              "value": 20
-            },
-            "xs": {
-              "value": 20
-            }
-          }
-        },
-        {
           "name": "typography/xl/font/size",
           "token": "--typography-xl-font-size",
           "type": "FLOAT",
@@ -15275,38 +15541,6 @@
             },
             "xs": {
               "value": 23
-            }
-          }
-        },
-        {
-          "name": "typography/xs/font/size",
-          "token": "--typography-xs-font-size",
-          "type": "FLOAT",
-          "values": {
-            "md": {
-              "value": 12
-            },
-            "sm": {
-              "value": 12
-            },
-            "xs": {
-              "value": 12
-            }
-          }
-        },
-        {
-          "name": "typography/xs/line/height",
-          "token": "--typography-xs-line-height",
-          "type": "FLOAT",
-          "values": {
-            "md": {
-              "value": 18
-            },
-            "sm": {
-              "value": 18
-            },
-            "xs": {
-              "value": 18
             }
           }
         }
@@ -16045,6 +16279,567 @@
     {
       "token": "--typography-xl-line-height",
       "reason": "conditional: @media (min-width: 48rem)"
+    }
+  ],
+  "computed": [
+    {
+      "token": "--a63-action-neutral",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "surface",
+        "theme"
+      ],
+      "expression": "var(--surface-dark-12)"
+    },
+    {
+      "token": "--a63-action-neutral-foreground",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "surface",
+        "theme"
+      ],
+      "expression": "var(--surface-dark-1)"
+    },
+    {
+      "token": "--a63-border-control",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "surface",
+        "theme"
+      ],
+      "expression": "color-mix( in oklab, var(--surface-dark-7) calc(100% - var(--a63-surface-tint)), var(--a63-brand-500) var(--a63-surface-tint) )"
+    },
+    {
+      "token": "--a63-border-subtle",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "surface",
+        "theme"
+      ],
+      "expression": "color-mix( in oklab, var(--surface-dark-6) calc(100% - var(--a63-surface-tint)), var(--a63-brand-600) var(--a63-surface-tint) )"
+    },
+    {
+      "token": "--a63-choice-box-shadow",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "theme"
+      ],
+      "expression": "none"
+    },
+    {
+      "token": "--a63-choice-box-shadow-checked",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "theme"
+      ],
+      "expression": "none"
+    },
+    {
+      "token": "--a63-control-focus-ring-color",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "theme"
+      ],
+      "expression": "var(--a63-focus-ring)"
+    },
+    {
+      "token": "--a63-control-height-lg",
+      "collection": "Atom63 Design Language",
+      "variesOn": [
+        "density",
+        "design-language"
+      ],
+      "expression": "calc(var(--a63-space-unit) * 9)"
+    },
+    {
+      "token": "--a63-control-height-md",
+      "collection": "Atom63 Design Language",
+      "variesOn": [
+        "density",
+        "design-language"
+      ],
+      "expression": "calc(var(--a63-space-unit) * 8)"
+    },
+    {
+      "token": "--a63-control-height-sm",
+      "collection": "Atom63 Design Language",
+      "variesOn": [
+        "density",
+        "design-language"
+      ],
+      "expression": "calc(var(--a63-space-unit) * 7)"
+    },
+    {
+      "token": "--a63-control-height-xl",
+      "collection": "Atom63 Design Language",
+      "variesOn": [
+        "density",
+        "design-language"
+      ],
+      "expression": "calc(var(--a63-space-unit) * 10)"
+    },
+    {
+      "token": "--a63-control-height-xs",
+      "collection": "Atom63 Design Language",
+      "variesOn": [
+        "density",
+        "design-language"
+      ],
+      "expression": "calc(var(--a63-space-unit) * 6)"
+    },
+    {
+      "token": "--a63-control-shadow",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "theme"
+      ],
+      "expression": "0 0 #0000"
+    },
+    {
+      "token": "--a63-control-shadow-active",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "theme"
+      ],
+      "expression": "var(--a63-control-shadow)"
+    },
+    {
+      "token": "--a63-control-shadow-flat",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "theme"
+      ],
+      "expression": "var(--a63-control-shadow)"
+    },
+    {
+      "token": "--a63-control-text-shadow",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "theme"
+      ],
+      "expression": "none"
+    },
+    {
+      "token": "--a63-field-shadow",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "theme"
+      ],
+      "expression": "inset 0 1px 2px color-mix(in oklch, black 6%, transparent)"
+    },
+    {
+      "token": "--a63-menu-gap",
+      "collection": "Atom63 Radius",
+      "variesOn": [
+        "density",
+        "radius"
+      ],
+      "expression": "var(--a63-space-0_5)"
+    },
+    {
+      "token": "--a63-menu-popup-padding",
+      "collection": "Atom63 Radius",
+      "variesOn": [
+        "density",
+        "radius"
+      ],
+      "expression": "var(--a63-space-1)"
+    },
+    {
+      "token": "--a63-overlay-drag-shadow",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "theme"
+      ],
+      "expression": "var(--a63-overlay-shadow)"
+    },
+    {
+      "token": "--a63-overlay-shadow",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "theme"
+      ],
+      "expression": "0 8px 24px -6px color-mix(in oklch, black 22%, transparent), 0 2px 6px -2px color-mix(in oklch, black 12%, transparent)"
+    },
+    {
+      "token": "--a63-segment-primary-shadow",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "theme"
+      ],
+      "expression": ""
+    },
+    {
+      "token": "--a63-segment-selected-shadow",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "theme"
+      ],
+      "expression": ""
+    },
+    {
+      "token": "--a63-surface-control-hover",
+      "collection": "Atom63 Mode",
+      "variesOn": [
+        "mode",
+        "surface"
+      ],
+      "expression": "color-mix( in srgb, color-mix( in oklab, var(--surface-dark-6) calc(100% - var(--a63-surface-tint)), var(--a63-brand-600) var(--a63-surface-tint) ), transparent 20% )"
+    },
+    {
+      "token": "--a63-surface-page",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "surface",
+        "theme"
+      ],
+      "expression": "color-mix( in oklab, var(--surface-dark-1) calc(100% - var(--a63-surface-tint)), var(--a63-brand-950) var(--a63-surface-tint) )"
+    },
+    {
+      "token": "--a63-surface-panel",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "surface",
+        "theme"
+      ],
+      "expression": "color-mix( in oklab, var(--surface-dark-2) calc(100% - var(--a63-surface-tint)), var(--a63-brand-900) var(--a63-surface-tint) )"
+    },
+    {
+      "token": "--a63-surface-shadow",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "theme"
+      ],
+      "expression": "0 1px 2px color-mix(in oklch, black 6%, transparent), 0 1px 1px color-mix(in oklch, black 4%, transparent)"
+    },
+    {
+      "token": "--a63-text-primary",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "surface",
+        "theme"
+      ],
+      "expression": "var(--surface-dark-12)"
+    },
+    {
+      "token": "--a63-text-secondary",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "surface",
+        "theme"
+      ],
+      "expression": "var(--surface-dark-11)"
+    },
+    {
+      "token": "--a63-track-shadow",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "theme"
+      ],
+      "expression": "inset 0 1px 1px color-mix(in oklch, black 6%, transparent)"
+    },
+    {
+      "token": "--a63-weather-background-color",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "surface",
+        "theme"
+      ],
+      "expression": "transparent"
+    },
+    {
+      "token": "--a63-weather-border-color",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "surface",
+        "theme"
+      ],
+      "expression": "transparent"
+    },
+    {
+      "token": "--a63-weather-divider-color",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "theme"
+      ],
+      "expression": "rgb(255 255 255 / 0.2)"
+    },
+    {
+      "token": "--a63-weather-foreground",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "surface",
+        "theme"
+      ],
+      "expression": "white"
+    },
+    {
+      "token": "--a63-weather-muted-foreground",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "surface",
+        "theme"
+      ],
+      "expression": "rgb(255 255 255 / 0.7)"
+    },
+    {
+      "token": "--a63-weather-text-shadow",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "theme"
+      ],
+      "expression": "none"
+    },
+    {
+      "token": "--a63-widget-background-color",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "mode",
+        "surface",
+        "theme"
+      ],
+      "expression": "color-mix(in oklab, var(--a63-surface-overlay) 82%, transparent)"
+    },
+    {
+      "token": "--a63-widget-rim-border-color",
+      "collection": "Atom63 Contract",
+      "variesOn": [
+        "theme"
+      ],
+      "expression": "transparent"
+    },
+    {
+      "token": "--a63-widget-shadow",
+      "collection": "Atom63 Theme",
+      "variesOn": [
+        "brand",
+        "theme"
+      ],
+      "expression": "none"
+    },
+    {
+      "token": "--typography-2xl-font-size",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(19px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-2xl-line-height",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(24px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-3xl-font-size",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(21px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-3xl-line-height",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(26px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-4xl-font-size",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(23px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-4xl-line-height",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(29px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-5xl-font-size",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(26px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-5xl-line-height",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(33px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-6xl-font-size",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(28px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-6xl-line-height",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(35px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-7xl-font-size",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(31px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-7xl-line-height",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(39px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-8xl-font-size",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(35px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-8xl-line-height",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(44px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-9xl-font-size",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(39px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-9xl-line-height",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(49px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-lg-font-size",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(16px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-lg-line-height",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(24px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-xl-font-size",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(18px * var(--typography-scale, 1))"
+    },
+    {
+      "token": "--typography-xl-line-height",
+      "collection": "Atom63 Window Size",
+      "variesOn": [
+        "type-scale",
+        "window-size"
+      ],
+      "expression": "calc(23px * var(--typography-scale, 1))"
     }
   ]
 }
