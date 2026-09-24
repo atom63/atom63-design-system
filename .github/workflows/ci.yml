@@ -234,7 +234,11 @@ jobs:
   cross-browser:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    container: mcr.microsoft.com/playwright:v1.61.1-noble
+    # Firefox and WebKit need their sandbox, which the image's default root user
+    # cannot create; Playwright's CI docs run the container as the runner user.
+    container:
+      image: mcr.microsoft.com/playwright:v1.61.1-noble
+      options: --user 1001
 
     steps:
       - name: Check out repository
