@@ -39,7 +39,14 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // `Atom63Theme` (3b61f6c) and the `./preview` entry (fb98662) landed after the
 // extraction, while the check still lived in atom63-vite, and shipped in
 // 0.2.0-beta.3 at that size. The budget re-baselines at 86 kB from here.
-const gzipBudgetBytes = 86 * 1024
+//
+// 86 kB held 85.8 kB. Generating custom brand ramps in OKLCH takes it to 86.6,
+// so it moves to 87. The +0.8 kB is OKLCH to sRGB conversion both ways and a
+// binary search that lowers chroma until each step fits the sRGB gamut. It buys
+// ramps where every hue has the same perceived lightness per step, so a custom
+// brand meets WCAG AA like the built-in ones; the HSL ramps it replaces fell to
+// 1.7:1 for yellow and green brands.
+const gzipBudgetBytes = 87 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()
