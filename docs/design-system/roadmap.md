@@ -214,7 +214,7 @@ Astryx 是 Meta 开源的 React 设计系统（MIT，2026-06 公开 beta，0.6.x
 **D 进度（2026-09-25）：** `@atom63/mdx` 已从 atom63-vite 迁入 `packages/mdx`（除 `craft-demos` 外全部迁入），docs 站改为依赖它，`apps/docs/src/mdx-kit` 副本已删除。
 包暂时标为 `private`：npm 要求包先存在才能配置 trusted publishing，所以首次发布需要你在本机用自己的账号手动发一次，之后再配置 trusted publisher、加入 `publish-beta.mjs` 的包列表和 API / 包正确性检查。
 atom63-vite 一侧（改用 npm 上的 `@atom63/mdx`，`craft-demos` 移到 atom63.io，删除自己的 `packages/mdx`）等首次发布后再做。
-两套 lightbox（mdx 的 photoswipe 版与 ui-react 的 `media-lightbox`）的合并单独做，不放在这次迁移里。
+两套 lightbox 已合并：`FigureLightboxHost` 保留原有的 trigger 与 API，内部改用 ui-react 的 `MediaLightbox`，mdx 不再依赖 photoswipe。
 
 A 可以马上开始。B 需要先定下 D1；D 和 C 可以部分并行。（2026-09-25 更新：token manifest 的 1669 条中，1603 条由 DTCG 生成；其余 66 条是 DTCG 无法表达类型的 CSS 原生值，放在 `*.native.css` 中，每条都在 `native-values.json` 里写明原因；没有其他手写 token。）
 

@@ -7,7 +7,7 @@ export { MDX_FIGURE_LIGHTBOX_GALLERY_ID } from './constants'
 export { getImageDimensions, getRealImageDimensions, loadImageDimensions } from './dimensions'
 export { FigureLightboxHost } from './figure-lightbox-host'
 export { FigureLightboxTrigger } from './figure-lightbox-trigger'
-export { collectFigureLightboxImages, openFigureLightbox } from './open-lightbox'
+export { collectFigureLightboxImages } from './open-lightbox'
 export type { PhotoSwipeImageData } from './types'
 
 /**
@@ -15,8 +15,8 @@ export type { PhotoSwipeImageData } from './types'
  *
  * Migration: (1) mount `FigureLightboxHost` once at the app root; (2) replace each
  * `PhotoSwipeImage` with a `FigureLightboxTrigger` (button semantics + connected gallery);
- * (3) use `collectFigureLightboxImages` + `openFigureLightbox` for dimension loading and
- * open handling (no per-component state). Preserve existing aspect-ratio logic when porting
+ * (3) let `FigureLightboxHost` collect the triggers and open the gallery
+ * (no per-component state). Preserve existing aspect-ratio logic when porting
  * image grids. Tracked in issue #236.
  */
 export type PhotoSwipeGalleryProps = {
@@ -89,7 +89,7 @@ export function PhotoSwipeImage({
   )
 }
 
-/** @deprecated Use openFigureLightbox via FigureLightboxHost. */
+/** @deprecated Mount FigureLightboxHost; it opens the gallery. */
 export function usePhotoSwipe(_images: PhotoSwipeImageData[]) {
   return {
     openPhotoSwipe: () => {},

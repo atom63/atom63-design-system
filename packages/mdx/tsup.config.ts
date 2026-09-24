@@ -22,7 +22,6 @@ export default defineConfig({
     '@atom63/ui-react',
     '@mdx-js/react',
     'beautiful-mermaid',
-    'photoswipe',
     'shiki',
     'shiki/core',
     'shiki/engine/oniguruma',

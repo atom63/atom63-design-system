@@ -89,6 +89,8 @@ Atom63 apps should import the Atom63 adapter after `@atom63/styles`, Tailwind, a
 
 Do **not** duplicate `@source` paths to `packages/mdx` in app CSS — the consumer owns that.
 
+The figure lightbox is `MediaLightbox` from `@atom63/ui-react`, so the app also needs its recipe: `@atom63/ui-react/recipes.css` (or `@atom63/ui-react/recipes/media-lightbox.css` on its own).
+
 The stylesheets ship from `src/` and scan both the TS/TSX source (workspace) and the emitted `dist/` JS (installed package).
 That keeps linked local apps and installed consumers on the same CSS entrypoint.
 
@@ -133,7 +135,7 @@ Registered on `mdxComponents` / `blockMdxComponents`:
 | `CreditsBlock` | Collapsible project credits |
 | `DemoStage` | Framed surface for live demos or centerpiece visuals |
 | `ExampleContainer` | Live demo frame with dot grid |
-| `FigureBlock` | Captioned image figure with connected PhotoSwipe lightbox (default on) |
+| `FigureBlock` | Captioned image figure with a connected `MediaLightbox` gallery (default on) |
 | `MediaCaption` | Centered figure caption |
 | `VideoBlock` | Captioned or explicitly decorative video figure |
 
@@ -166,7 +168,6 @@ heavier libraries behind narrower user actions:
 | `@mdx-js/mdx` | Runtime compilation in `@atom63/mdx/runtime` and live preview |
 | `react-simple-code-editor` | `@atom63/mdx/editor` source editing |
 | `shiki` | Code block/source highlighting, loaded on demand |
-| `photoswipe` | Figure lightbox, loaded when a gallery opens |
 | `react-compare-slider` | `ImageCompare` block |
 | `beautiful-mermaid` | Mermaid diagram block |
 

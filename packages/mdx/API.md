@@ -13,7 +13,7 @@ added, removed, or reclassified, update this file in the same change.
 | `@atom63/mdx/blocks/media-caption` | Lightweight media caption import |
 | `@atom63/mdx/article` | Article provider, component-map extension helper, article spacing helpers |
 | `@atom63/mdx/editor` | Source editor, source view, and live preview components |
-| `@atom63/mdx/lightbox` | Figure lightbox helpers and PhotoSwipe integration components |
+| `@atom63/mdx/lightbox` | Figure lightbox host, triggers and helpers, built on `MediaLightbox` from `@atom63/ui-react` |
 | `@atom63/mdx/runtime` | Runtime MDX compiler hook and Shiki highlight helpers |
 
 ## Experimental Runtime Imports
