@@ -55,6 +55,9 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          # The changeset check compares against the base branch.
+          fetch-depth: 0
 
       - name: Set up Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
@@ -66,6 +69,9 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      - name: Check dependency version policy
+        run: pnpm check:dependency-version-policy
 
       - name: Check React exports
         run: pnpm check:ui-react-exports
@@ -156,14 +162,12 @@ jobs:
           pnpm --filter @atom63/ui-foundation lint
           pnpm --filter @atom63/ui-react lint
 
-      - name: Check Changesets status
-        run: |
-          if [ -f .changeset/pre.json ]; then
-            echo "Prerelease version commit detected; pending changeset status is not expected."
-            cat .changeset/pre.json
-          else
-            pnpm changeset status --verbose
-          fi
+      # A pull request that changes a published package needs a changeset. One
+      # that ships nothing to npm (tests, tooling, dev dependencies) adds an
+      # empty one with `pnpm changeset --empty`. Private apps are not checked.
+      - name: Check for a changeset
+        if: github.event_name == 'pull_request'
+        run: pnpm changeset status --since="origin/${{ github.base_ref }}"
 
   # Docs site and Figma plugin, in parallel with verify.
   docs:

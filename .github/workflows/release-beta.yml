@@ -302,6 +302,23 @@ jobs:
           echo "The beta tag did not reach the published versions in time" >&2
           exit 1
 
+      # One `<package>@<version>` tag per published package, on the commit that
+      # was published (not the later main this job checked out). Existing tags
+      # are left alone, so a rerun is harmless.
+      - name: Tag the published versions
+        run: |
+          set -euo pipefail
+          git fetch --depth=1 origin "${GITHUB_SHA}"
+          for dir in packages/styles packages/ui-foundation packages/ui-react; do
+            tag=$(git show "${GITHUB_SHA}:${dir}/package.json" | node -p "const p = JSON.parse(require('fs').readFileSync(0)); p.name + '@' + p.version")
+            if git ls-remote --exit-code --tags origin "refs/tags/${tag}" > /dev/null; then
+              echo "${tag} already exists"
+            else
+              git tag "${tag}" "${GITHUB_SHA}"
+              git push origin "refs/tags/${tag}"
+            fi
+          done
+
       - name: Regenerate and commit the evidence
         run: |
           set -euo pipefail

@@ -148,6 +148,10 @@ changed and what they need to do. The repository is in beta prerelease mode, so 
 published to the npm `beta` tag. Releases are automated: merging to `main` opens a "Version
 Packages" pull request, and merging that pull request publishes. Contributors do not publish.
 
+CI fails a pull request that changes files in a published package without a changeset. If
+the change ships nothing to consumers (tests, stories, tooling, dev dependencies), add an
+empty one with `pnpm changeset --empty`.
+
 ## Pull requests
 
 - Keep each pull request focused on one change, and describe how you verified it.
