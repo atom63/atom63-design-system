@@ -46,13 +46,13 @@ Shared control
   → ui-react recipe reads --a63-* (+ family contracts)
 
 Shared color / scale dictionary
-  → tokens/foundation/*
+  → tokens/foundation/*.tokens.json (typography, radius, effects: still *.css)
 
 Role meaning (light/dark, brand primary)
-  → tokens/semantics.css + tokens/brand.css
+  → tokens/semantics.resolver.json + tokens/brand-action.resolver.json
 
 Skin character (including theme-private stacks)
-  → themes/*.css assigns contract knobs; promote to foundation only when shared
+  → themes/*.resolver.json assigns contract knobs; promote to foundation only when shared
 ```
 
 | Stage | Write with | Why |
@@ -123,11 +123,12 @@ Do not mint a contract because a token “might be reusable.” Prefer extending
 | Task | Open first |
 | --- | --- |
 | Style a page | shadcn/Tailwind semantics; this doc’s lane table |
-| Change blue-500 / spacing-4 / radius / blur scale | `tokens/foundation/*` |
-| Change what “primary” means | `tokens/brand.css` / `semantics.css` |
-| Make Aqua glossier / Retro chunkier / Terminal glow | `themes/<id>.css` (skin-private OK) |
+| Change blue-500 / spacing-4 | `tokens/foundation/*.tokens.json` |
+| Change the radius or blur scale | `tokens/foundation/{radius,effects}.css` (still CSS) |
+| Change what “primary” means | `tokens/brand-action.resolver.json` / `semantics.resolver.json` |
+| Make Aqua glossier / Retro chunkier / Terminal glow | `themes/<id>.resolver.json` (skin-private OK) |
 | Reuse the same stop across two themes | Promote into foundation, then remap |
-| Add a shared Button+Input size knob | Contract growth rule → maybe `control.css` |
+| Add a shared Button+Input size knob | Contract growth rule → maybe `contracts/control.tokens.json` |
 | Audit shared-scale drift in contracts | [`foundation-value-drift.md`](./foundation-value-drift.md) |
 
 ## Related

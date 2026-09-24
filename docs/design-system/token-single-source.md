@@ -1,7 +1,9 @@
 # Phase B: DTCG as the single token source
 
-Status: design, 2026-09-24. Implements decision D1 in [roadmap.md](./roadmap.md) (every layer moves
-to DTCG, in two steps: semantics and brand first, then contracts and themes).
+Status: B1–B7 shipped on 2026-09-24 (#25–#32); B8 is open. Implements decision D1 in
+[roadmap.md](./roadmap.md) (every layer moves to DTCG, in two steps: semantics and brand first, then
+contracts and themes). 1454 of the 1669 token manifest entries (87%) now come from DTCG sources. The
+other 215 are the hand-written CSS that B8 covers.
 
 ## Why
 
@@ -55,19 +57,20 @@ slice.
 
 ## Slices
 
-| # | Slice | Source → DTCG | Proof |
-|---|---|---|---|
-| B1 | Brand ramp | `brand.css` ramp blocks (b1–b6, auto) → `brand.resolver.json` | manifest + Figma model unchanged |
-| B2 | Brand action block | primary action, hover, `brand-text`, foreground formula, focus ring, per-brand overrides (b3, b2) → same resolver, base group + context overrides | same |
-| B3 | Mode semantics | `semantics.css` light/dark blocks → `mode.resolver.json`; tint `color-mix()` formulas as derive expressions | same, plus visual baselines |
-| B4 | Figma write-back | `token-patch.mjs` applies multi-mode collections by writing into resolver contexts; aliases and derived tokens are rejected with a reason that names the input to edit | round-trip test with the fake Figma API |
-| B5 | Remove duplicates | delete the 24 `--surface-*` entries that `aliases.css` repeats from the surface resolver | manifest loses exactly those 24 entries; the Figma model is unchanged (it already listed them once, in Surface) |
-| B6 | Contracts | `contracts/*.css` → `contracts/*.tokens.json` (mostly aliases plus derive expressions) | manifest unchanged |
-| B7 | Themes | `themes/*.css` → `theme.resolver.json` (modern, aqua, retro, terminal); the manifest and Figma gain a Theme collection | new Figma collection; iOS `AtomTheme` values per theme |
+| # | Slice | Source → DTCG | Proof | Status |
+|---|---|---|---|---|
+| B1 | Brand ramp | `brand.css` ramp blocks (b1–b6, auto) → `tokens/brand-ramp.resolver.json` | manifest + Figma model unchanged | shipped (#25) |
+| B2 | Brand action block | primary action, hover, `brand-text`, foreground formula, focus ring, per-brand overrides (b3, b2) → `tokens/brand-action.resolver.json`, base group + context overrides | same | shipped (#26) |
+| B3 | Mode semantics | `semantics.css` light/dark blocks → `tokens/semantics.resolver.json`; tint `color-mix()` formulas as derive expressions | same, plus visual baselines | shipped (#27) |
+| B4 | Figma write-back | `token-patch.mjs` applies multi-mode collections by writing into resolver contexts; aliases and derived tokens are rejected with a reason that names the input to edit | round-trip test with the fake Figma API | shipped (#28) |
+| B5 | Remove duplicates | delete the 24 `--surface-*` entries that `aliases.css` repeats from the surface resolver | manifest loses exactly those 24 entries; the Figma model is unchanged (it already listed them once, in Surface) | shipped (#29) |
+| B6 | Contracts | `contracts/*.css` → `contracts/*.tokens.json` or `*.resolver.json` (mostly aliases plus derive expressions) | manifest unchanged | shipped (#30) |
+| B7 | Themes | `themes/*.css` → `themes/<id>.resolver.json` (modern, aqua, retro, terminal); the manifest and Figma gain a Theme collection | new Figma collection | shipped (#31, #32) |
+| B8 | Remaining CSS | `foundation/{typography,radius,effects}.css` and the axis files `tokens/{space,radius,motion,font,type-scale}.css` (215 entries) | manifest unchanged | open |
 
-B1–B5 are step one of D1, and B6–B7 are step two. iOS follows automatically: Swift colors are resolved
-from the Figma sync model (phase A), so once themes are in the model, `AtomTheme` can be generated per
-theme.
+B1–B5 are step one of D1, and B6–B8 are step two. iOS follows automatically: Swift colors are resolved
+from the Figma sync model (phase A). Themes are in the model since B7, so `AtomTheme` values can now be
+generated per theme; that is a separate slice (decision D2).
 
 ## CSS-native values (decided 2026-09-24, during B6)
 
@@ -110,8 +113,9 @@ Figma nor iOS sees them. Measured on the current sources:
 - **Moving variables keeps bindings.** The Figma API cannot move a variable to another collection.
   When a token's collection changes, the plugin:
   1. creates the variable in its new collection;
-  2. rebinds every node and style bound to the old variable;
-  3. then deletes the old one.
+  2. rebinds every node and style bound to the old variable, and re-points aliases to it;
+  3. retires the old one: renames it under `(moved)/`, clears its token data and hides it from
+     publishing. It is never deleted, so a binding the plugin missed still resolves.
 
   Without step 2, designs would stay bound to a stale orphan. The plugin tests cover the move.
 - **iOS** resolves Theme-collection tokens with the `modern-<mode>` mode by default. Per-theme

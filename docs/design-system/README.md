@@ -61,9 +61,9 @@ Full policy: [authoring-surfaces.md](./authoring-surfaces.md) ← **canonical fo
 
 ### Agents / AI
 
-1. Repo root [`AGENTS.md`](../../AGENTS.md) (always-on) — styles authoring bullet  
-2. This page + [authoring-surfaces.md](./authoring-surfaces.md)  
-3. Skill: `design-tokens` (Claude) / Cursor rule `.cursor/rules/styles-authoring.mdc`  
+1. This page + [authoring-surfaces.md](./authoring-surfaces.md)  
+2. [CONTRIBUTING.md](../../CONTRIBUTING.md) — DTCG sources, generated files, and the checks CI runs  
+3. [token-single-source.md](./token-single-source.md) — how tokens, resolvers, and derived values are structured  
 4. Design-system page **Architecture → Agent instructions** for product boundaries  
 5. Verify `@atom63/ui-react` props via Storybook MCP when using components — never invent props  
 
@@ -71,10 +71,11 @@ Full policy: [authoring-surfaces.md](./authoring-surfaces.md) ← **canonical fo
 
 | You want to… | Open |
 | --- | --- |
-| Change blue-500 / spacing / radius / blur ladder | `packages/styles/src/tokens/foundation/*` |
-| Change what “primary” means | `tokens/brand.css` / `semantics.css` |
-| Make Aqua glossier / Retro chunkier / Terminal glow | `packages/styles/src/themes/<id>.css` |
-| Add a shared Button+Input size knob | Contract growth rule → maybe `contracts/control.css` |
+| Change blue-500 / spacing | `packages/styles/src/tokens/foundation/*.tokens.json` |
+| Change the radius or blur ladder, or the type scale | `packages/styles/src/tokens/foundation/{radius,effects,typography}.css` (still CSS) |
+| Change what “primary” means | `tokens/brand-action.resolver.json` / `tokens/semantics.resolver.json` |
+| Make Aqua glossier / Retro chunkier / Terminal glow | `packages/styles/src/themes/<id>.resolver.json` |
+| Add a shared Button+Input size knob | Contract growth rule → maybe `contracts/control.tokens.json` |
 | Style a page in an app | Tailwind / shadcn roles only |
 | Wire a shared component | Recipe in `@atom63/ui-react` reading `--a63-*` |
 

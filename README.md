@@ -4,14 +4,17 @@
 [![CI](https://github.com/atom63/atom63-design-system/actions/workflows/ci.yml/badge.svg)](https://github.com/atom63/atom63-design-system/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
-One token architecture for React, SwiftUI, and Figma. Atom63 defines its design tokens once, in
-CSS, and delivers them to every platform: React components on the web, SwiftUI components on iOS,
-and Figma variables for designers.
+One token architecture for React, SwiftUI, and Figma. Atom63 defines its design tokens once, as
+[DTCG](https://www.designtokens.org/tr/2025.10/format/) sources, and generates what every platform
+uses from them: CSS for React components on the web, Swift for SwiftUI components on iOS, and
+Figma variables for designers.
 
 **Documentation:** [system.atom63.io](https://system.atom63.io)
 
 > Atom63 is in public beta. APIs can change before the stable release; install from the `beta`
 > tag and read the [release notes](./docs/design-system/beta-release-notes.md) when upgrading.
+> Until the first stable release, npm's `latest` tag also points at the beta, so a plain
+> `npm install @atom63/ui-react` installs it too.
 
 ## Packages
 
