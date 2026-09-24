@@ -122,8 +122,9 @@ const preview: Preview = {
     layout: 'centered',
     controls: { expanded: true },
     backgrounds: { disable: true },
-    // Every story's render test also runs axe; a violation fails the test.
-    a11y: { test: 'error' },
+    // Every story's render test also runs axe; a violation fails the test. The
+    // cross-browser project renders only and turns it off (render-only.setup.ts).
+    a11y: { test: (globalThis as { __A63_A11Y_TEST__?: 'off' }).__A63_A11Y_TEST__ ?? 'error' },
     options: { storySort: { method: 'alphabetical' } },
   },
   decorators: [withPersonalization],

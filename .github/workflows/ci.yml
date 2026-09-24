@@ -149,6 +149,33 @@ jobs:
             pnpm changeset status --verbose
           fi
 
+  # Every story renders in Firefox and WebKit. Render only: axe and visual
+  # regression run in Chromium in the verify and visual jobs.
+  cross-browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable pnpm with Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps firefox webkit
+
+      - name: Render stories in Firefox and WebKit
+        run: pnpm --filter @atom63/storybook test:cross-browser
+
   ios:
     runs-on: macos-15
     timeout-minutes: 45
