@@ -54,17 +54,16 @@ jobs:
         if: ${{ !inputs.update }}
         run: pnpm --filter @atom63/storybook test:visual
 
-      # Diffs for failed comparisons, plus any baseline this run had to create
-      # because none was committed yet. Downloading the artifact is also how a
+      # Diffs for failed comparisons. On CI Vitest does not write a missing
+      # baseline into __screenshots__; it saves the capture here as
+      # `<story>-reference-chromium-linux.png`, so this artifact is also how a
       # new story's first baseline gets into a pull request.
       - name: Upload screenshot results
         if: ${{ failure() && !inputs.update }}
         uses: actions/upload-artifact@v4
         with:
           name: visual-results
-          path: |
-            apps/storybook/visual/__diff__
-            apps/storybook/visual/__screenshots__/*-linux.png
+          path: apps/storybook/visual/__diff__
           if-no-files-found: ignore
 
       - name: Regenerate baselines

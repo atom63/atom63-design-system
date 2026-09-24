@@ -62,7 +62,7 @@
 ## 决策结论（2026-09-23）
 
 1. 位置：`apps/storybook`。
-2. 托管：新建 Vercel 项目，域名 `storybook.atom63.io`；建项目和配 DNS 的每一步先确认。
+2. 托管：新建 Vercel 项目；域名改为 `storybook.system.atom63.io`，因为 `storybook.atom63.io` 已被 atom63-vite 的应用层 Storybook 使用；建项目和配域名的每一步先确认。
 3. 视觉回归：自建，Vitest 4 `toMatchScreenshot`，基线只在 CI 的固定 Linux 环境生成和比对。
 4. 覆盖范围：全部 story 的默认主题亮色，加约 10 个核心组件 × 4 个主题 × 2 种模式。
 

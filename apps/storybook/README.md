@@ -39,5 +39,9 @@ When a pull request changes how something looks on purpose, run the **Visual reg
 workflow manually on the branch with **update** checked. It regenerates the baselines in the same
 container and commits them to the branch; review the changed images in that commit. When the
 comparison fails, the workflow uploads the actual and diff images as the `visual-results`
-artifact, together with any baseline the run had to create; a new story's first baseline can be
-committed from there.
+artifact.
+
+A story without a baseline fails too. On CI, Vitest saves its capture in the same artifact as
+`<story>-reference-chromium-linux.png` instead of writing a baseline. To add it, drop the
+`-reference` part of the name and commit the file to `visual/__screenshots__/`, or run the workflow
+with **update** once the branch is ready.
