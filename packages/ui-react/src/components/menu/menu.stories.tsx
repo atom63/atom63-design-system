@@ -92,13 +92,25 @@ export const Tones: Story = {
     <EnvironmentShell>
       <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
         <div style={{ display: 'grid', gap: '0.5rem' }}>
-          <div style={{ fontSize: 12, opacity: 0.6, fontFamily: 'Geist Mono, monospace' }}>
+          <div
+            style={{
+              fontSize: 12,
+              color: 'var(--a63-text-secondary)',
+              fontFamily: 'Geist Mono, monospace',
+            }}
+          >
             neutral (default)
           </div>
           <MenuPreview />
         </div>
         <div style={{ display: 'grid', gap: '0.5rem' }}>
-          <div style={{ fontSize: 12, opacity: 0.6, fontFamily: 'Geist Mono, monospace' }}>
+          <div
+            style={{
+              fontSize: 12,
+              color: 'var(--a63-text-secondary)',
+              fontFamily: 'Geist Mono, monospace',
+            }}
+          >
             primary (data-tone)
           </div>
           <MenuPreview tone="primary" />
@@ -154,7 +166,9 @@ function EndpointMenu({ label }: { label: string }) {
         padding: 12,
       }}
     >
-      <span style={{ fontSize: 12, opacity: 0.7, paddingTop: 8, width: 112 }}>{label}</span>
+      <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', paddingTop: 8, width: 112 }}>
+        {label}
+      </span>
       <MenuPreview />
     </div>
   )

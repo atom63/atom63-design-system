@@ -3,6 +3,9 @@ name: CI
 on:
   push:
   pull_request:
+  # Lets the visual baseline job start CI for the commit it pushes: pushes made
+  # with GITHUB_TOKEN do not trigger workflows, but workflow_dispatch does.
+  workflow_dispatch:
 
 permissions:
   contents: read

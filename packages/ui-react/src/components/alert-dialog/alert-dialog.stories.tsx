@@ -16,6 +16,7 @@ import {
 import '@atom63/ui-react/styles.css'
 import { AlertTriangle, CheckCircle2, Info } from 'lucide-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { pendingContrastReview } from '../story-probes'
 
 const meta = {
   title: 'UI React/AlertDialog',
@@ -66,6 +67,7 @@ export const Playground: Story = {
 }
 
 export const Confirm: Story = {
+  parameters: pendingContrastReview,
   render: () => (
     <AlertDialog>
       <AlertDialogTrigger render={<Button variant="primary">Publish</Button>} />
@@ -133,7 +135,7 @@ export const Themes: Story = {
                 borderRadius: '0.75rem',
               }}
             >
-              <span style={{ fontSize: 12, opacity: 0.7, width: 96 }}>
+              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
                 {theme} / {mode}
               </span>
               <AlertDialog>
@@ -197,7 +199,9 @@ export const Endpoints: Story = {
               padding: '0.75rem',
             }}
           >
-            <span style={{ fontSize: 12, opacity: 0.7, width: 112 }}>{endpoint.label}</span>
+            <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>
+              {endpoint.label}
+            </span>
             <AlertDialog>
               <AlertDialogTrigger render={<Button variant="outline">Delete project</Button>} />
               <AlertDialogPopup variant="destructive">

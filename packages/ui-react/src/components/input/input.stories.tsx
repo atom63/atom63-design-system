@@ -117,7 +117,13 @@ export const Sizes: Story = {
     <EnvironmentShell>
       <div style={{ display: 'grid', gap: '0.75rem' }}>
         {inputSizes.map(size => (
-          <Input defaultValue={size} key={size} size={size} style={{ width: '100%' }} />
+          <Input
+            aria-label="Example text field"
+            defaultValue={size}
+            key={size}
+            size={size}
+            style={{ width: '100%' }}
+          />
         ))}
       </div>
     </EnvironmentShell>
@@ -128,10 +134,28 @@ export const States: Story = {
   render: () => (
     <EnvironmentShell>
       <div style={{ display: 'grid', gap: '0.75rem' }}>
-        <Input placeholder="Placeholder" style={{ width: '100%' }} />
-        <Input defaultValue="Filled value" style={{ width: '100%' }} />
-        <Input defaultValue="Invalid entry" invalid style={{ width: '100%' }} />
-        <Input defaultValue="Disabled" disabled style={{ width: '100%' }} />
+        <Input
+          aria-label="Example text field"
+          placeholder="Placeholder"
+          style={{ width: '100%' }}
+        />
+        <Input
+          aria-label="Example text field"
+          defaultValue="Filled value"
+          style={{ width: '100%' }}
+        />
+        <Input
+          aria-label="Example text field, invalid"
+          defaultValue="Invalid entry"
+          invalid
+          style={{ width: '100%' }}
+        />
+        <Input
+          aria-label="Example text field, disabled"
+          defaultValue="Disabled"
+          disabled
+          style={{ width: '100%' }}
+        />
       </div>
     </EnvironmentShell>
   ),
@@ -147,11 +171,11 @@ export const Group: Story = {
           <InputGroupAddon>
             <Search aria-hidden />
           </InputGroupAddon>
-          <InputGroupInput placeholder="Search…" />
+          <InputGroupInput aria-label="Example text field" placeholder="Search…" />
         </InputGroup>
 
         <InputGroup style={{ width: '100%' }}>
-          <InputGroupInput defaultValue="Draft note" />
+          <InputGroupInput aria-label="Example text field" defaultValue="Draft note" />
           <InputGroupAddon align="inline-end">
             <InputGroupButton aria-label="Clear" size="icon-xs" type="button">
               <X aria-hidden />
@@ -163,21 +187,21 @@ export const Group: Story = {
           <InputGroupAddon>
             <InputGroupText>https://</InputGroupText>
           </InputGroupAddon>
-          <InputGroupInput defaultValue="atom63.io" />
+          <InputGroupInput aria-label="Example text field" defaultValue="atom63.io" />
         </InputGroup>
 
         <InputGroup invalid style={{ width: '100%' }}>
           <InputGroupAddon>
             <Search aria-hidden />
           </InputGroupAddon>
-          <InputGroupInput defaultValue="bad query" />
+          <InputGroupInput aria-label="Example text field" defaultValue="bad query" />
         </InputGroup>
 
         <InputGroup disabled style={{ width: '100%' }}>
           <InputGroupAddon>
             <Search aria-hidden />
           </InputGroupAddon>
-          <InputGroupInput defaultValue="Disabled" />
+          <InputGroupInput aria-label="Example text field" defaultValue="Disabled" />
         </InputGroup>
       </div>
     </EnvironmentShell>
@@ -191,9 +215,9 @@ export const NumericSize: Story = {
   render: () => (
     <EnvironmentShell>
       <div style={{ display: 'grid', gap: '0.75rem', justifyItems: 'start' }}>
-        <Input defaultValue="4" size={4} />
-        <Input defaultValue="10 chars" size={10} />
-        <Input placeholder="20-char field" size={20} />
+        <Input aria-label="Example text field" defaultValue="4" size={4} />
+        <Input aria-label="Example text field" defaultValue="10 chars" size={10} />
+        <Input aria-label="Example text field" placeholder="20-char field" size={20} />
       </div>
     </EnvironmentShell>
   ),
@@ -209,9 +233,19 @@ export const FieldChrome: Story = {
   render: () => (
     <EnvironmentShell>
       <div style={{ display: 'grid', gap: '0.75rem' }}>
-        <Input defaultValue="With recessed shadow" style={{ width: '100%' }} />
-        <Input defaultValue="Flat (shadow={false})" shadow={false} style={{ width: '100%' }} />
         <Input
+          aria-label="Example text field"
+          defaultValue="With recessed shadow"
+          style={{ width: '100%' }}
+        />
+        <Input
+          aria-label="Example text field"
+          defaultValue="Flat (shadow={false})"
+          shadow={false}
+          style={{ width: '100%' }}
+        />
+        <Input
+          aria-label="Example text field"
           defaultValue="inputClassName: text-center"
           inputClassName="text-center"
           style={{ width: '100%' }}
@@ -221,7 +255,11 @@ export const FieldChrome: Story = {
           <InputGroupAddon>
             <Search aria-hidden />
           </InputGroupAddon>
-          <InputGroupInput defaultValue="Leading icon via InputGroup" placeholder="Search…" />
+          <InputGroupInput
+            aria-label="Example text field"
+            defaultValue="Leading icon via InputGroup"
+            placeholder="Search…"
+          />
         </InputGroup>
       </div>
     </EnvironmentShell>
@@ -246,8 +284,17 @@ export const Themes: Story = {
           <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>
             <PreviewCard label={`${theme} / ${mode}`}>
               <div style={{ display: 'grid', gap: '0.625rem' }}>
-                <Input placeholder="Search…" style={{ width: '100%' }} />
-                <Input defaultValue="focused-look" invalid style={{ width: '100%' }} />
+                <Input
+                  aria-label="Example text field"
+                  placeholder="Search…"
+                  style={{ width: '100%' }}
+                />
+                <Input
+                  aria-label="Example text field, invalid"
+                  defaultValue="focused-look"
+                  invalid
+                  style={{ width: '100%' }}
+                />
               </div>
             </PreviewCard>
           </UIProvider>

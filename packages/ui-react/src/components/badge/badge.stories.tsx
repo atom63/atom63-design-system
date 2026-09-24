@@ -8,6 +8,7 @@ import {
 import { Badge, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { pendingContrastReview } from '../story-probes'
 
 const meta = {
   title: 'UI React/Badge',
@@ -52,6 +53,7 @@ function Row({
 
 /* All 12 variants, grouped as the app's badges-section does (solid/surface + semantic). */
 export const Variants: Story = {
+  parameters: pendingContrastReview,
   render: () => (
     <div style={{ display: 'grid', gap: 16 }}>
       <Row items={SOLID} label="Solid & surface" />
@@ -64,6 +66,7 @@ export const Variants: Story = {
 /* The full Tailwind palette, backed by foundation --color-* tokens (works without
    Tailwind). These back category/tag colors (e.g. the card's resource tags). */
 export const Palette: Story = {
+  parameters: pendingContrastReview,
   render: () => (
     <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
       {badgePaletteVariants.map(variant => (
@@ -76,6 +79,7 @@ export const Palette: Story = {
 }
 
 export const Sizes: Story = {
+  parameters: pendingContrastReview,
   render: () => (
     <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
       {badgeSizes.map(size => (
@@ -88,6 +92,7 @@ export const Sizes: Story = {
 }
 
 export const Interactive: Story = {
+  parameters: pendingContrastReview,
   render: () => (
     <div style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: 8 }}>
       <Badge render={<button type="button" />} variant="primary">
@@ -126,7 +131,6 @@ export const Themes: Story = {
                 style={{
                   color: 'var(--a63-text-secondary)',
                   fontSize: 12,
-                  opacity: 0.7,
                   width: 96,
                 }}
               >

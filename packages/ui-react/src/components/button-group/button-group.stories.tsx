@@ -91,7 +91,7 @@ export const Themes: Story = {
                 padding: '0.75rem',
               }}
             >
-              <span style={{ fontSize: 12, opacity: 0.7, width: 96 }}>
+              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
                 {theme} / {mode}
               </span>
               <ButtonGroup>
@@ -131,8 +131,11 @@ export const WithInput: Story = {
     <div style={{ display: 'grid', gap: 16 }}>
       {(['default', 'sm', 'lg'] as const).map(size => (
         <div key={size} style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-          <span style={{ fontSize: 12, opacity: 0.6, width: 56 }}>{size}</span>
+          <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 56 }}>
+            {size}
+          </span>
           <Input
+            aria-label="Example text field"
             placeholder="Search…"
             size={size === 'default' ? 'md' : size}
             style={{ width: 180 }}
@@ -183,7 +186,9 @@ export const Endpoints: Story = {
               padding: '0.75rem',
             }}
           >
-            <span style={{ fontSize: 12, opacity: 0.7, width: 112 }}>{endpoint.label}</span>
+            <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>
+              {endpoint.label}
+            </span>
             <ButtonGroup size={endpoint.label === 'Compact extension' ? 'sm' : 'default'}>
               <Button variant="secondary">Cut</Button>
               <Button variant="secondary">Copy</Button>

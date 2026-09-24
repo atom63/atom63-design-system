@@ -274,7 +274,6 @@ export const Themes: Story = {
                 style={{
                   color: 'var(--a63-text-secondary)',
                   fontSize: 12,
-                  opacity: 0.7,
                   width: 96,
                 }}
               >

@@ -36,7 +36,7 @@ function Demo({
   return (
     <div style={{ width: 220 }}>
       <Select items={ITEMS} onValueChange={next => setValue(next ?? '')} value={value}>
-        <SelectTrigger disabled={disabled} size={size}>
+        <SelectTrigger aria-label="Example select, disabled" disabled={disabled} size={size}>
           <SelectValue />
         </SelectTrigger>
         <SelectPopup portalContainer={portalContainer}>
@@ -96,7 +96,7 @@ export const Grouped: Story = {
       return (
         <div style={{ width: 220 }}>
           <Select items={GROUPED} onValueChange={next => setValue(next ?? '')} value={value}>
-            <SelectTrigger>
+            <SelectTrigger aria-label="Example select">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -142,7 +142,7 @@ export const Scrollable: Story = {
       return (
         <div style={{ width: 220 }}>
           <Select items={LONG} onValueChange={next => setValue(next ?? '')} value={value}>
-            <SelectTrigger>
+            <SelectTrigger aria-label="Example select">
               <SelectValue />
             </SelectTrigger>
             <SelectPopup>

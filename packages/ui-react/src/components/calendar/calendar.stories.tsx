@@ -4,6 +4,7 @@ import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import type { DateRange } from 'react-day-picker'
+import { pendingContrastReview, repeatedLandmarks } from '../story-probes'
 
 const meta = {
   title: 'UI React/Calendar',
@@ -13,45 +14,69 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+/* A fixed date keeps screenshots and a11y results the same on every day. */
+const REFERENCE_DATE = new Date(2026, 0, 14)
+const fixedDate = { defaultMonth: REFERENCE_DATE, today: REFERENCE_DATE }
+
 /* Single-date selection — the default mode; the selected day fills with the
    brand primary and today shows a dot. */
 export const Playground: Story = {
+  parameters: pendingContrastReview,
   render: () => {
-    const [date, setDate] = useState<Date | undefined>(new Date())
-    return <Calendar mode="single" onSelect={setDate} selected={date} />
+    const [date, setDate] = useState<Date | undefined>(REFERENCE_DATE)
+    return <Calendar {...fixedDate} mode="single" onSelect={setDate} selected={date} />
   },
 }
 
 /* Range selection — connected ends with a tinted middle. */
 export const Range: Story = {
+  parameters: pendingContrastReview,
   render: () => {
-    const today = new Date()
     const [range, setRange] = useState<DateRange | undefined>({
-      from: today,
-      to: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 5),
+      from: REFERENCE_DATE,
+      to: new Date(2026, 0, 19),
     })
-    return <Calendar mode="range" onSelect={setRange} selected={range} />
+    return <Calendar {...fixedDate} mode="range" onSelect={setRange} selected={range} />
   },
 }
 
 /* Dropdown caption — month/year pickers instead of the label. */
 export const DropdownCaption: Story = {
+  parameters: pendingContrastReview,
   render: () => {
-    const [date, setDate] = useState<Date | undefined>(new Date())
-    return <Calendar captionLayout="dropdown" mode="single" onSelect={setDate} selected={date} />
+    const [date, setDate] = useState<Date | undefined>(REFERENCE_DATE)
+    return (
+      <Calendar
+        {...fixedDate}
+        captionLayout="dropdown"
+        mode="single"
+        onSelect={setDate}
+        selected={date}
+      />
+    )
   },
 }
 
 /* Two months side by side. */
 export const MultipleMonths: Story = {
+  parameters: pendingContrastReview,
   render: () => {
-    const [date, setDate] = useState<Date | undefined>(new Date())
-    return <Calendar mode="single" numberOfMonths={2} onSelect={setDate} selected={date} />
+    const [date, setDate] = useState<Date | undefined>(REFERENCE_DATE)
+    return (
+      <Calendar
+        {...fixedDate}
+        mode="single"
+        numberOfMonths={2}
+        onSelect={setDate}
+        selected={date}
+      />
+    )
   },
 }
 
 /* The selected fill + today dot follow each theme's brand primary and mode. */
 export const Themes: Story = {
+  parameters: repeatedLandmarks,
   render: () => (
     <div style={{ display: 'grid', gap: 16 }}>
       {themes.map(theme =>
@@ -67,10 +92,10 @@ export const Themes: Story = {
                 padding: '0.75rem',
               }}
             >
-              <span style={{ fontSize: 12, opacity: 0.7, width: 96 }}>
+              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
                 {theme} / {mode}
               </span>
-              <Calendar mode="single" selected={new Date()} />
+              <Calendar {...fixedDate} mode="single" selected={REFERENCE_DATE} />
             </div>
           </UIProvider>
         ))
@@ -81,6 +106,7 @@ export const Themes: Story = {
 
 /* The same calendar reviewed against target host contexts. */
 export const Endpoints: Story = {
+  parameters: repeatedLandmarks,
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>
       {[
@@ -114,8 +140,10 @@ export const Endpoints: Story = {
               padding: '0.75rem',
             }}
           >
-            <span style={{ fontSize: 12, opacity: 0.7, width: 112 }}>{endpoint.label}</span>
-            <Calendar mode="single" selected={new Date()} />
+            <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>
+              {endpoint.label}
+            </span>
+            <Calendar {...fixedDate} mode="single" selected={REFERENCE_DATE} />
           </div>
         </UIProvider>
       ))}

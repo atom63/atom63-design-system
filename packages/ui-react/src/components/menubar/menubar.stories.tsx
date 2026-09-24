@@ -143,7 +143,9 @@ function ReviewCell({ label, ...providerProps }: ReviewCellProps) {
           padding: 12,
         }}
       >
-        <span style={{ fontSize: 12, opacity: 0.7, width: 112 }}>{label}</span>
+        <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>
+          {label}
+        </span>
         <Demo portalContainer={portalContainerRef} />
       </div>
     </UIProvider>

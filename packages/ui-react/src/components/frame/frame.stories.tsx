@@ -10,6 +10,7 @@ import {
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { repeatedLandmarks } from '../story-probes'
 
 const meta = {
   title: 'UI React/Frame',
@@ -50,6 +51,7 @@ export const StackedPanels: Story = {
 
 /* Every named tray+panel preset. */
 export const Variants: Story = {
+  parameters: repeatedLandmarks,
   render: args => (
     <div style={{ display: 'grid', gap: 16 }}>
       {frameVariants.map(variant => (
@@ -66,6 +68,7 @@ export const Variants: Story = {
 
 /* Chrome follows each theme + mode via the surface tokens. */
 export const Themes: Story = {
+  parameters: repeatedLandmarks,
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>
       {themes.map(theme =>
@@ -87,6 +90,7 @@ export const Themes: Story = {
 }
 
 export const Endpoints: Story = {
+  parameters: repeatedLandmarks,
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>
       {[

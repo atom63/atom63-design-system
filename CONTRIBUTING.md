@@ -54,7 +54,7 @@ swift test                                     # SwiftUI package tests
 ## Stories and visual tests
 
 Write a story next to each component (`*.stories.tsx`) and add a `Themes` story that wraps it in
-the shared `ThemeMatrix` probe. Every story runs as a render test, and CI compares every story
+the shared `ThemeMatrix` probe. Every story runs as a render test that also checks accessibility with axe, and CI compares every story
 against a baseline screenshot. When a change alters how something looks on purpose, update the
 baselines as described in the [Storybook README](./apps/storybook/README.md).
 

@@ -1,5 +1,8 @@
 import { render } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+
+const reducedMotion = vi.hoisted(() => vi.fn(() => false))
+vi.mock('motion/react', () => ({ useReducedMotion: reducedMotion }))
 
 import { Marquee } from './marquee'
 
@@ -62,5 +65,35 @@ describe('Marquee', () => {
     const root = container.querySelector<HTMLElement>('.a63-Marquee')
     expect(root).toHaveStyle({ '--gap': '2rem' })
     expect(root?.style.color).toBe('red')
+  })
+})
+
+describe('Marquee under reduced motion', () => {
+  afterEach(() => {
+    reducedMotion.mockReturnValue(false)
+  })
+
+  it('becomes a focusable, named scroll region so keyboard users can scroll it', () => {
+    reducedMotion.mockReturnValue(true)
+    const { container } = render(
+      <Marquee>
+        <span>item</span>
+      </Marquee>
+    )
+    const root = container.querySelector('.a63-Marquee')
+    expect(root).toHaveAttribute('tabindex', '0')
+    expect(root).toHaveAttribute('role', 'group')
+    expect(root).toHaveAttribute('aria-label', 'Scrolling content')
+  })
+
+  it('adds no tab stop while the strip animates', () => {
+    const { container } = render(
+      <Marquee>
+        <span>item</span>
+      </Marquee>
+    )
+    const root = container.querySelector('.a63-Marquee')
+    expect(root).not.toHaveAttribute('tabindex')
+    expect(root).not.toHaveAttribute('role')
   })
 })

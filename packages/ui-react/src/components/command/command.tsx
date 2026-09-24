@@ -127,6 +127,9 @@ export function CommandInput({
         <SearchIcon />
       </span>
       <AutocompletePrimitive.Input
+        // The list is inline and always open (see Command), so the combobox is
+        // always expanded; ARIA requires the attribute on role="combobox".
+        aria-expanded
         autoFocus
         className={cn('a63-Command-input', className)}
         data-slot="command-input"
@@ -234,6 +237,10 @@ export function CommandSeparator({
     <AutocompletePrimitive.Separator
       className={cn('a63-Command-separator', className)}
       data-slot="command-separator"
+      // A listbox may only own options and groups; the rule is visual only, so it
+      // leaves the accessibility tree (and drops the separator's orientation).
+      aria-orientation={undefined}
+      role="presentation"
       {...props}
     />
   )

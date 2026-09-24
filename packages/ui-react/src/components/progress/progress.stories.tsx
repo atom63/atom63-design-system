@@ -22,7 +22,7 @@ type Story = StoryObj
 export const Playground: Story = {
   render: () => (
     <div style={{ width: 280 }}>
-      <Progress value={40} />
+      <Progress aria-label="Example progress" value={40} />
     </div>
   ),
 }
@@ -31,7 +31,7 @@ export const Playground: Story = {
 export const WithLabelAndValue: Story = {
   render: () => (
     <div style={{ width: 280 }}>
-      <Progress value={68}>
+      <Progress aria-label="Example progress" value={68}>
         <div style={{ alignItems: 'baseline', display: 'flex', justifyContent: 'space-between' }}>
           <ProgressLabel>Downloading</ProgressLabel>
           <ProgressValue />
@@ -48,7 +48,7 @@ export const Steps: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 16, width: 280 }}>
       {[0, 25, 50, 75, 100].map(v => (
-        <Progress key={v} value={v} />
+        <Progress aria-label="Example progress" key={v} value={v} />
       ))}
     </div>
   ),
@@ -58,7 +58,7 @@ export const Steps: Story = {
 export const Indeterminate: Story = {
   render: () => (
     <div style={{ width: 280 }}>
-      <Progress value={null} />
+      <Progress aria-label="Example progress" value={null} />
     </div>
   ),
 }
@@ -80,12 +80,12 @@ export const Themes: Story = {
                 padding: '0.75rem',
               }}
             >
-              <span style={{ fontSize: 12, opacity: 0.7, width: 96 }}>
+              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
                 {theme} / {mode}
               </span>
               <div style={{ display: 'grid', gap: 10, width: 200 }}>
-                <Progress value={68} />
-                <Progress value={null} />
+                <Progress aria-label="Example progress" value={68} />
+                <Progress aria-label="Example progress" value={null} />
               </div>
             </div>
           </UIProvider>
@@ -131,9 +131,9 @@ function EndpointProgress({ label }: { label: string }) {
         padding: 12,
       }}
     >
-      <span style={{ fontSize: 12, opacity: 0.7, width: 112 }}>{label}</span>
+      <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>{label}</span>
       <div style={{ width: 240 }}>
-        <Progress value={68} />
+        <Progress aria-label="Example progress" value={68} />
       </div>
     </div>
   )

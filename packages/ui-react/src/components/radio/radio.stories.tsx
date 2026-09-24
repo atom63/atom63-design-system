@@ -39,15 +39,15 @@ export const States: Story = {
   render: () => (
     <div style={{ alignItems: 'center', display: 'flex', gap: 16 }}>
       <RadioGroup defaultValue="on" style={{ flexDirection: 'row', gap: 16 }}>
-        <Radio value="off" />
-        <Radio value="on" />
+        <Radio aria-label="Example radio option" value="off" />
+        <Radio aria-label="Example radio option" value="on" />
       </RadioGroup>
       <RadioGroup defaultValue="disabled-on" style={{ flexDirection: 'row', gap: 16 }}>
-        <Radio disabled value="disabled-off" />
-        <Radio disabled value="disabled-on" />
+        <Radio aria-label="Example radio option, disabled" disabled value="disabled-off" />
+        <Radio aria-label="Example radio option, disabled" disabled value="disabled-on" />
       </RadioGroup>
       <RadioGroup>
-        <Radio aria-invalid="true" value="invalid" />
+        <Radio aria-label="Example radio option, invalid" aria-invalid="true" value="invalid" />
       </RadioGroup>
     </div>
   ),
@@ -57,7 +57,7 @@ export const Sizes: Story = {
   render: () => (
     <RadioGroup defaultValue="a" style={{ flexDirection: 'row', gap: 16 }}>
       {radioSizes.map(size => (
-        <Radio key={size} size={size} value={size} />
+        <Radio aria-label="Example radio option" key={size} size={size} value={size} />
       ))}
     </RadioGroup>
   ),
@@ -85,16 +85,15 @@ export const Themes: Story = {
                 style={{
                   color: 'var(--a63-text-secondary)',
                   fontSize: 12,
-                  opacity: 0.7,
                   width: 96,
                 }}
               >
                 {theme} / {mode}
               </span>
               <RadioGroup defaultValue="on" style={{ flexDirection: 'row', gap: 12 }}>
-                <Radio value="off" />
-                <Radio value="on" />
-                <Radio disabled value="dis" />
+                <Radio aria-label="Example radio option" value="off" />
+                <Radio aria-label="Example radio option" value="on" />
+                <Radio aria-label="Example radio option, disabled" disabled value="dis" />
               </RadioGroup>
             </div>
           </UIProvider>
@@ -142,9 +141,9 @@ function EndpointRadios({ label }: { label: string }) {
     >
       <span style={{ color: 'var(--a63-text-secondary)', fontSize: 12, width: 112 }}>{label}</span>
       <RadioGroup defaultValue="on" style={{ flexDirection: 'row', gap: 12 }}>
-        <Radio value="off" />
-        <Radio value="on" />
-        <Radio disabled value="disabled" />
+        <Radio aria-label="Example radio option" value="off" />
+        <Radio aria-label="Example radio option" value="on" />
+        <Radio aria-label="Example radio option, disabled" disabled value="disabled" />
       </RadioGroup>
     </div>
   )

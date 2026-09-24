@@ -93,7 +93,14 @@ export const Themes: Story = {
                 padding: '0.75rem',
               }}
             >
-              <span style={{ fontSize: 12, opacity: 0.7, paddingTop: 8, width: 96 }}>
+              <span
+                style={{
+                  fontSize: 12,
+                  color: 'var(--a63-text-secondary)',
+                  paddingTop: 8,
+                  width: 96,
+                }}
+              >
                 {theme} / {mode}
               </span>
               <div style={{ flex: 1, maxWidth: 320 }}>

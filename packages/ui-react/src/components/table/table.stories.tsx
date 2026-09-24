@@ -12,6 +12,7 @@ import {
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { pendingContrastReview } from '../story-probes'
 
 const meta = {
   title: 'UI React/Table',
@@ -28,6 +29,7 @@ const rows = [
 ]
 
 export const Playground: Story = {
+  parameters: pendingContrastReview,
   render: () => (
     <div style={{ width: 480 }}>
       <Table>
@@ -130,7 +132,14 @@ export const Themes: Story = {
                 padding: '0.75rem',
               }}
             >
-              <span style={{ flexShrink: 0, fontSize: 12, opacity: 0.7, width: 96 }}>
+              <span
+                style={{
+                  flexShrink: 0,
+                  fontSize: 12,
+                  color: 'var(--a63-text-secondary)',
+                  width: 96,
+                }}
+              >
                 {theme} / {mode}
               </span>
               <div data-slot="frame" style={{ width: 360 }}>
