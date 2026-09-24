@@ -123,7 +123,8 @@ Before promoting any package to stable/latest:
 - [x] Configure npm trusted publishers and GitHub `npm-publish` environment reviewers before running `publish=true`.
 - [x] Keep `@base-ui/react` and other type-visible dependencies under an explicit dependency policy; `pnpm check:dependency-version-policy` now audits React peers, runtime dependencies, type-visible dependency ranges, and stable semver categories.
 - [x] Run a clean external registry install, typecheck, and production-build smoke for the current first-wave beta packages; CI and beta release preflight now enforce the checked-in registry readback.
-- [ ] Keep the registry smoke green after every approved beta or stable publish and add a stable/latest readback when stable promotion is approved.
+- [x] Keep the registry smoke green after every approved beta publish; the release workflow's `record-evidence` job now regenerates and commits the evidence once npm resolves the published versions.
+- [ ] Add a stable/latest registry readback when stable promotion is approved.
 - [x] Keep `atom63-vite` adopter smoke green without root override workarounds; PR [#416](https://github.com/atom63/atom63-vite/pull/416) added fixture, resolver, and website temp-repo published DS checks.
 - [x] Audit `@atom63/ui-react` root exports and define beta support tiers in `docs/design-system/ui-react-support-policy.json`; CI now checks the generated export inventory for drift.
 - [x] Generate a stable/latest action matrix for `@atom63/ui-react` root exports and public subpaths in `docs/design-system/ui-react-stable-action-matrix.md`; CI now checks it for drift.
@@ -136,7 +137,8 @@ Before promoting any package to stable/latest:
 - [x] Record partial media-lane evidence for Carousel, useExtractColor, and extract-color; keep all three monitor-high-risk pending real-browser gesture, CORS/canvas, performance, and assistive-technology QA. See [ui-react-media-evidence.md](./ui-react-media-evidence.md).
 - [x] Record partial infrastructure-lane evidence for PortalContainer, completing partial evidence for all 7/7 high-risk families; keep it monitor-high-risk pending real-browser overlay, Shadow DOM, and SSR/hydration QA. See [ui-react-portal-evidence.md](./ui-react-portal-evidence.md).
 - [x] Audit published file lists for CSS, dist output, and accidental test/internal files; CI now regenerates `docs/design-system/audits/package-surface.json` and fails on drift.
-- [x] Run a versioned visual QA matrix definition and published/default product-adopter sanity pass; full stable component-state screenshot baselines remain pending.
+- [x] Run a versioned visual QA matrix definition and published/default product-adopter sanity pass.
+- [x] Keep component-state screenshot baselines: Storybook's visual regression compares all 446 stories, including the four-theme light/dark matrix of 62 components, on every pull request (`apps/storybook`, `.github/workflows/visual.yml`).
 - [ ] Complete Figma manual QA: variables sync, styleguide generation, idempotent rerun.
 - [x] Create a public adopter [quickstart](./quickstart.md) covering beta install, CSS, theme/mode, a first component, preview policy, and consumer verification.
 - [x] Publish the public [support and governance policy](./support-governance.md) covering beta scope, compatibility tiers, deprecation, reporting, lifecycle evidence, and human release gates.
