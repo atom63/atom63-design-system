@@ -1,0 +1,108 @@
+/*
+ * Generated from src/tokens/brand-ramp.resolver.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
+ * Brand personalization axis. [data-a63-brand="b1".."b6"] remaps the whole brand ramp
+ * (--a63-brand-50..950) to one of the six brand palettes; b1 is the default, so components work
+ * with no [data-a63-brand] set. `auto` maps the ramp onto --color-auto-50..950, which the
+ * personalization controller writes from the wallpaper at runtime, with a b1 fallback.
+ * The primary action derived from the ramp lives in brand.css.
+ */
+:root,
+[data-a63-brand='b1'] {
+  --a63-brand-50: var(--color-b1-50);
+  --a63-brand-100: var(--color-b1-100);
+  --a63-brand-200: var(--color-b1-200);
+  --a63-brand-300: var(--color-b1-300);
+  --a63-brand-400: var(--color-b1-400);
+  --a63-brand-500: var(--color-b1-500);
+  --a63-brand-600: var(--color-b1-600);
+  --a63-brand-700: var(--color-b1-700);
+  --a63-brand-800: var(--color-b1-800);
+  --a63-brand-900: var(--color-b1-900);
+  --a63-brand-950: var(--color-b1-950);
+}
+
+[data-a63-brand='b2'] {
+  --a63-brand-50: var(--color-b2-50);
+  --a63-brand-100: var(--color-b2-100);
+  --a63-brand-200: var(--color-b2-200);
+  --a63-brand-300: var(--color-b2-300);
+  --a63-brand-400: var(--color-b2-400);
+  --a63-brand-500: var(--color-b2-500);
+  --a63-brand-600: var(--color-b2-600);
+  --a63-brand-700: var(--color-b2-700);
+  --a63-brand-800: var(--color-b2-800);
+  --a63-brand-900: var(--color-b2-900);
+  --a63-brand-950: var(--color-b2-950);
+}
+
+[data-a63-brand='b3'] {
+  --a63-brand-50: var(--color-b3-50);
+  --a63-brand-100: var(--color-b3-100);
+  --a63-brand-200: var(--color-b3-200);
+  --a63-brand-300: var(--color-b3-300);
+  --a63-brand-400: var(--color-b3-400);
+  --a63-brand-500: var(--color-b3-500);
+  --a63-brand-600: var(--color-b3-600);
+  --a63-brand-700: var(--color-b3-700);
+  --a63-brand-800: var(--color-b3-800);
+  --a63-brand-900: var(--color-b3-900);
+  --a63-brand-950: var(--color-b3-950);
+}
+
+[data-a63-brand='b4'] {
+  --a63-brand-50: var(--color-b4-50);
+  --a63-brand-100: var(--color-b4-100);
+  --a63-brand-200: var(--color-b4-200);
+  --a63-brand-300: var(--color-b4-300);
+  --a63-brand-400: var(--color-b4-400);
+  --a63-brand-500: var(--color-b4-500);
+  --a63-brand-600: var(--color-b4-600);
+  --a63-brand-700: var(--color-b4-700);
+  --a63-brand-800: var(--color-b4-800);
+  --a63-brand-900: var(--color-b4-900);
+  --a63-brand-950: var(--color-b4-950);
+}
+
+[data-a63-brand='b5'] {
+  --a63-brand-50: var(--color-b5-50);
+  --a63-brand-100: var(--color-b5-100);
+  --a63-brand-200: var(--color-b5-200);
+  --a63-brand-300: var(--color-b5-300);
+  --a63-brand-400: var(--color-b5-400);
+  --a63-brand-500: var(--color-b5-500);
+  --a63-brand-600: var(--color-b5-600);
+  --a63-brand-700: var(--color-b5-700);
+  --a63-brand-800: var(--color-b5-800);
+  --a63-brand-900: var(--color-b5-900);
+  --a63-brand-950: var(--color-b5-950);
+}
+
+[data-a63-brand='b6'] {
+  --a63-brand-50: var(--color-b6-50);
+  --a63-brand-100: var(--color-b6-100);
+  --a63-brand-200: var(--color-b6-200);
+  --a63-brand-300: var(--color-b6-300);
+  --a63-brand-400: var(--color-b6-400);
+  --a63-brand-500: var(--color-b6-500);
+  --a63-brand-600: var(--color-b6-600);
+  --a63-brand-700: var(--color-b6-700);
+  --a63-brand-800: var(--color-b6-800);
+  --a63-brand-900: var(--color-b6-900);
+  --a63-brand-950: var(--color-b6-950);
+}
+
+[data-a63-brand='auto'] {
+  --a63-brand-50: var(--color-auto-50, var(--color-b1-50));
+  --a63-brand-100: var(--color-auto-100, var(--color-b1-100));
+  --a63-brand-200: var(--color-auto-200, var(--color-b1-200));
+  --a63-brand-300: var(--color-auto-300, var(--color-b1-300));
+  --a63-brand-400: var(--color-auto-400, var(--color-b1-400));
+  --a63-brand-500: var(--color-auto-500, var(--color-b1-500));
+  --a63-brand-600: var(--color-auto-600, var(--color-b1-600));
+  --a63-brand-700: var(--color-auto-700, var(--color-b1-700));
+  --a63-brand-800: var(--color-auto-800, var(--color-b1-800));
+  --a63-brand-900: var(--color-auto-900, var(--color-b1-900));
+  --a63-brand-950: var(--color-auto-950, var(--color-b1-950));
+}
