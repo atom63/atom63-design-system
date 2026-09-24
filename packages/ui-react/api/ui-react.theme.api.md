@@ -49,10 +49,22 @@ export interface AppearanceMenuProps {
     triggerLabel?: string;
 }
 
-// Warning: (ae-forgotten-export) The symbol "AppearanceMenuTriggerProps" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export function AppearanceMenuTrigger(input: AppearanceMenuTriggerProps): React_2.JSX.Element;
+
+// Warning: (ae-forgotten-export) The symbol "Button" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export interface AppearanceMenuTriggerProps extends Omit<ComponentProps<typeof Button>, 'aria-expanded' | 'aria-haspopup' | 'onClick'> {
+    // (undocumented)
+    label?: string;
+    // (undocumented)
+    onOpenChange: (open: boolean) => void;
+    // (undocumented)
+    open: boolean;
+    // (undocumented)
+    shortcutLabel?: string;
+}
 
 // @public (undocumented)
 export function AppearancePanel(input: AppearancePanelProps): React_2.ReactElement;
@@ -126,8 +138,6 @@ export function clearAutoColorRamp(root: HTMLElement): void;
 // @public
 export type ColorMode = 'light' | 'dark' | 'system';
 
-// Warning: (ae-forgotten-export) The symbol "CreatePersonalizationControllerOptions" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export function createPersonalizationController(input: CreatePersonalizationControllerOptions): {
     PersonalizationProvider: (input: {
@@ -135,6 +145,15 @@ export function createPersonalizationController(input: CreatePersonalizationCont
     }) => React_2.JSX.Element;
     usePersonalization: () => PersonalizationController;
 };
+
+// @public (undocumented)
+export interface CreatePersonalizationControllerOptions {
+    // (undocumented)
+    defaultState: PersonalizationState;
+    resolveWallpaperSrc?: (wallpaper: string | null, isDark: boolean) => string | null | undefined;
+    // (undocumented)
+    storageKey: string;
+}
 
 // @public (undocumented)
 export function createThemeProvider(options: CreateThemeProviderOptions): {

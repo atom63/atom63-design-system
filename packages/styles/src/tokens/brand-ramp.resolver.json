@@ -1,0 +1,418 @@
+{
+  "version": "2025.10",
+  "description": "Brand personalization axis. [data-a63-brand=\"b1\"..\"b6\"] remaps the whole brand ramp\n(--a63-brand-50..950) to one of the six brand palettes; b1 is the default, so components work\nwith no [data-a63-brand] set. `auto` maps the ramp onto --color-auto-50..950, which the\npersonalization controller writes from the wallpaper at runtime, with a b1 fallback.\nThe primary action derived from the ramp lives in brand.css.",
+  "resolutionOrder": [
+    {
+      "$ref": "#/modifiers/brand"
+    }
+  ],
+  "modifiers": {
+    "brand": {
+      "default": "b1",
+      "contexts": {
+        "b1": [
+          {
+            "a63": {
+              "brand": {
+                "50": {
+                  "$type": "color",
+                  "$value": "{color.b1.50}"
+                },
+                "100": {
+                  "$type": "color",
+                  "$value": "{color.b1.100}"
+                },
+                "200": {
+                  "$type": "color",
+                  "$value": "{color.b1.200}"
+                },
+                "300": {
+                  "$type": "color",
+                  "$value": "{color.b1.300}"
+                },
+                "400": {
+                  "$type": "color",
+                  "$value": "{color.b1.400}"
+                },
+                "500": {
+                  "$type": "color",
+                  "$value": "{color.b1.500}"
+                },
+                "600": {
+                  "$type": "color",
+                  "$value": "{color.b1.600}"
+                },
+                "700": {
+                  "$type": "color",
+                  "$value": "{color.b1.700}"
+                },
+                "800": {
+                  "$type": "color",
+                  "$value": "{color.b1.800}"
+                },
+                "900": {
+                  "$type": "color",
+                  "$value": "{color.b1.900}"
+                },
+                "950": {
+                  "$type": "color",
+                  "$value": "{color.b1.950}"
+                }
+              }
+            }
+          }
+        ],
+        "b2": [
+          {
+            "a63": {
+              "brand": {
+                "50": {
+                  "$type": "color",
+                  "$value": "{color.b2.50}"
+                },
+                "100": {
+                  "$type": "color",
+                  "$value": "{color.b2.100}"
+                },
+                "200": {
+                  "$type": "color",
+                  "$value": "{color.b2.200}"
+                },
+                "300": {
+                  "$type": "color",
+                  "$value": "{color.b2.300}"
+                },
+                "400": {
+                  "$type": "color",
+                  "$value": "{color.b2.400}"
+                },
+                "500": {
+                  "$type": "color",
+                  "$value": "{color.b2.500}"
+                },
+                "600": {
+                  "$type": "color",
+                  "$value": "{color.b2.600}"
+                },
+                "700": {
+                  "$type": "color",
+                  "$value": "{color.b2.700}"
+                },
+                "800": {
+                  "$type": "color",
+                  "$value": "{color.b2.800}"
+                },
+                "900": {
+                  "$type": "color",
+                  "$value": "{color.b2.900}"
+                },
+                "950": {
+                  "$type": "color",
+                  "$value": "{color.b2.950}"
+                }
+              }
+            }
+          }
+        ],
+        "b3": [
+          {
+            "a63": {
+              "brand": {
+                "50": {
+                  "$type": "color",
+                  "$value": "{color.b3.50}"
+                },
+                "100": {
+                  "$type": "color",
+                  "$value": "{color.b3.100}"
+                },
+                "200": {
+                  "$type": "color",
+                  "$value": "{color.b3.200}"
+                },
+                "300": {
+                  "$type": "color",
+                  "$value": "{color.b3.300}"
+                },
+                "400": {
+                  "$type": "color",
+                  "$value": "{color.b3.400}"
+                },
+                "500": {
+                  "$type": "color",
+                  "$value": "{color.b3.500}"
+                },
+                "600": {
+                  "$type": "color",
+                  "$value": "{color.b3.600}"
+                },
+                "700": {
+                  "$type": "color",
+                  "$value": "{color.b3.700}"
+                },
+                "800": {
+                  "$type": "color",
+                  "$value": "{color.b3.800}"
+                },
+                "900": {
+                  "$type": "color",
+                  "$value": "{color.b3.900}"
+                },
+                "950": {
+                  "$type": "color",
+                  "$value": "{color.b3.950}"
+                }
+              }
+            }
+          }
+        ],
+        "b4": [
+          {
+            "a63": {
+              "brand": {
+                "50": {
+                  "$type": "color",
+                  "$value": "{color.b4.50}"
+                },
+                "100": {
+                  "$type": "color",
+                  "$value": "{color.b4.100}"
+                },
+                "200": {
+                  "$type": "color",
+                  "$value": "{color.b4.200}"
+                },
+                "300": {
+                  "$type": "color",
+                  "$value": "{color.b4.300}"
+                },
+                "400": {
+                  "$type": "color",
+                  "$value": "{color.b4.400}"
+                },
+                "500": {
+                  "$type": "color",
+                  "$value": "{color.b4.500}"
+                },
+                "600": {
+                  "$type": "color",
+                  "$value": "{color.b4.600}"
+                },
+                "700": {
+                  "$type": "color",
+                  "$value": "{color.b4.700}"
+                },
+                "800": {
+                  "$type": "color",
+                  "$value": "{color.b4.800}"
+                },
+                "900": {
+                  "$type": "color",
+                  "$value": "{color.b4.900}"
+                },
+                "950": {
+                  "$type": "color",
+                  "$value": "{color.b4.950}"
+                }
+              }
+            }
+          }
+        ],
+        "b5": [
+          {
+            "a63": {
+              "brand": {
+                "50": {
+                  "$type": "color",
+                  "$value": "{color.b5.50}"
+                },
+                "100": {
+                  "$type": "color",
+                  "$value": "{color.b5.100}"
+                },
+                "200": {
+                  "$type": "color",
+                  "$value": "{color.b5.200}"
+                },
+                "300": {
+                  "$type": "color",
+                  "$value": "{color.b5.300}"
+                },
+                "400": {
+                  "$type": "color",
+                  "$value": "{color.b5.400}"
+                },
+                "500": {
+                  "$type": "color",
+                  "$value": "{color.b5.500}"
+                },
+                "600": {
+                  "$type": "color",
+                  "$value": "{color.b5.600}"
+                },
+                "700": {
+                  "$type": "color",
+                  "$value": "{color.b5.700}"
+                },
+                "800": {
+                  "$type": "color",
+                  "$value": "{color.b5.800}"
+                },
+                "900": {
+                  "$type": "color",
+                  "$value": "{color.b5.900}"
+                },
+                "950": {
+                  "$type": "color",
+                  "$value": "{color.b5.950}"
+                }
+              }
+            }
+          }
+        ],
+        "b6": [
+          {
+            "a63": {
+              "brand": {
+                "50": {
+                  "$type": "color",
+                  "$value": "{color.b6.50}"
+                },
+                "100": {
+                  "$type": "color",
+                  "$value": "{color.b6.100}"
+                },
+                "200": {
+                  "$type": "color",
+                  "$value": "{color.b6.200}"
+                },
+                "300": {
+                  "$type": "color",
+                  "$value": "{color.b6.300}"
+                },
+                "400": {
+                  "$type": "color",
+                  "$value": "{color.b6.400}"
+                },
+                "500": {
+                  "$type": "color",
+                  "$value": "{color.b6.500}"
+                },
+                "600": {
+                  "$type": "color",
+                  "$value": "{color.b6.600}"
+                },
+                "700": {
+                  "$type": "color",
+                  "$value": "{color.b6.700}"
+                },
+                "800": {
+                  "$type": "color",
+                  "$value": "{color.b6.800}"
+                },
+                "900": {
+                  "$type": "color",
+                  "$value": "{color.b6.900}"
+                },
+                "950": {
+                  "$type": "color",
+                  "$value": "{color.b6.950}"
+                }
+              }
+            }
+          }
+        ],
+        "auto": [
+          {
+            "a63": {
+              "brand": {
+                "50": {
+                  "$type": "color",
+                  "$value": "{color.b1.50}",
+                  "$extensions": {
+                    "io.atom63.derive": "var(--color-auto-50, {color.b1.50})"
+                  }
+                },
+                "100": {
+                  "$type": "color",
+                  "$value": "{color.b1.100}",
+                  "$extensions": {
+                    "io.atom63.derive": "var(--color-auto-100, {color.b1.100})"
+                  }
+                },
+                "200": {
+                  "$type": "color",
+                  "$value": "{color.b1.200}",
+                  "$extensions": {
+                    "io.atom63.derive": "var(--color-auto-200, {color.b1.200})"
+                  }
+                },
+                "300": {
+                  "$type": "color",
+                  "$value": "{color.b1.300}",
+                  "$extensions": {
+                    "io.atom63.derive": "var(--color-auto-300, {color.b1.300})"
+                  }
+                },
+                "400": {
+                  "$type": "color",
+                  "$value": "{color.b1.400}",
+                  "$extensions": {
+                    "io.atom63.derive": "var(--color-auto-400, {color.b1.400})"
+                  }
+                },
+                "500": {
+                  "$type": "color",
+                  "$value": "{color.b1.500}",
+                  "$extensions": {
+                    "io.atom63.derive": "var(--color-auto-500, {color.b1.500})"
+                  }
+                },
+                "600": {
+                  "$type": "color",
+                  "$value": "{color.b1.600}",
+                  "$extensions": {
+                    "io.atom63.derive": "var(--color-auto-600, {color.b1.600})"
+                  }
+                },
+                "700": {
+                  "$type": "color",
+                  "$value": "{color.b1.700}",
+                  "$extensions": {
+                    "io.atom63.derive": "var(--color-auto-700, {color.b1.700})"
+                  }
+                },
+                "800": {
+                  "$type": "color",
+                  "$value": "{color.b1.800}",
+                  "$extensions": {
+                    "io.atom63.derive": "var(--color-auto-800, {color.b1.800})"
+                  }
+                },
+                "900": {
+                  "$type": "color",
+                  "$value": "{color.b1.900}",
+                  "$extensions": {
+                    "io.atom63.derive": "var(--color-auto-900, {color.b1.900})"
+                  }
+                },
+                "950": {
+                  "$type": "color",
+                  "$value": "{color.b1.950}",
+                  "$extensions": {
+                    "io.atom63.derive": "var(--color-auto-950, {color.b1.950})"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "$extensions": {
+    "io.atom63.css": {
+      "attribute": "data-a63-brand"
+    }
+  }
+}

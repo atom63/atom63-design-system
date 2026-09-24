@@ -24,7 +24,7 @@ function detectVideoType(src: string): string {
   }
 }
 
-interface VideoSource {
+export interface VideoSource {
   src: string
   type?: string
 }

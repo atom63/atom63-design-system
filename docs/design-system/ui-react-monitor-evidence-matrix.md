@@ -7,7 +7,7 @@
 ## Summary
 
 - Monitor families: **16**.
-- Monitor symbols/types: **76**.
+- Monitor symbols/types: **79**.
 - High-risk families: **7** (`components/autocomplete`, `components/calendar`, `components/carousel`, `components/input-otp`, `components/portal-container`, `hooks/use-extract-color`, `lib/extract-color`).
 
 ## Evidence checklist by family
@@ -18,7 +18,7 @@
 | `components/autocomplete`         | high   | `design-system-forms`          |      18 | [`partial-evidence-recorded`](./ui-react-forms-evidence.md)  | `keyboard navigation`<br>`filter behavior`<br>`empty/loading states`<br>`Base UI type policy`<br>`mobile viewport QA`          | `mouse`<br>`keyboard`<br>`screen reader labels`<br>`mobile popover`<br>`no-results state`         | Promote only after focused interaction tests and browser evidence cover the combobox contract.                      |
 | `components/calendar`             | high   | `design-system-forms`          |       2 | [`partial-evidence-recorded`](./ui-react-forms-evidence.md)  | `date-fns/react-day-picker dependency policy`<br>`keyboard navigation`<br>`locale/date boundary tests`<br>`mobile viewport QA` | `single month`<br>`keyboard`<br>`disabled dates`<br>`mobile`<br>`light/dark`                      | Promote only with dependency pin policy and date interaction evidence.                                              |
 | `components/card`                 | medium | `design-system-surfaces`       |       4 | `blocked-until-evidence-recorded`                            | `pointer behavior`<br>`reduced-motion fallback`<br>`touch/no-pointer fallback`                                                 | `desktop pointer`<br>`touch viewport`<br>`reduced motion`                                         | Keep core Card stable; promote cursor helpers only if documented as an intentional card interaction API.            |
-| `components/carousel`             | high   | `design-system-media`          |       8 | [`partial-evidence-recorded`](./ui-react-media-evidence.md)  | `Embla dependency policy`<br>`keyboard controls`<br>`loop/disabled state tests`<br>`mobile swipe QA`                           | `previous/next`<br>`keyboard`<br>`mobile swipe`<br>`short item count`<br>`RTL/focus if supported` | Promote only after gesture, focus, and dependency behavior are locked.                                              |
+| `components/carousel`             | high   | `design-system-media`          |      11 | [`partial-evidence-recorded`](./ui-react-media-evidence.md)  | `Embla dependency policy`<br>`keyboard controls`<br>`loop/disabled state tests`<br>`mobile swipe QA`                           | `previous/next`<br>`keyboard`<br>`mobile swipe`<br>`short item count`<br>`RTL/focus if supported` | Promote only after gesture, focus, and dependency behavior are locked.                                              |
 | `components/copy-button`          | medium | `design-system-feedback`       |       4 | `blocked-until-evidence-recorded`                            | `clipboard success/failure tests`<br>`aria-live feedback`<br>`permission failure behavior`                                     | `success`<br>`failure`<br>`keyboard`<br>`screen reader label`                                     | Promote if clipboard failure and feedback semantics are documented.                                                 |
 | `components/destination-link`     | medium | `design-system-navigation`     |       4 | `blocked-until-evidence-recorded`                            | `routing/link semantics`<br>`icon override policy`<br>`accessible name behavior`                                               | `internal`<br>`external`<br>`new tab`<br>`custom icon`<br>`keyboard`                              | Promote if destination semantics and icon customization are documented.                                             |
 | `components/input-otp`            | high   | `design-system-forms`          |       4 | [`partial-evidence-recorded`](./ui-react-forms-evidence.md)  | `input-otp dependency policy`<br>`paste behavior`<br>`mobile numeric keyboard`<br>`error/disabled states`                      | `paste full code`<br>`backspace`<br>`mobile`<br>`disabled`<br>`invalid state`                     | Promote only with dependency policy and mobile/paste evidence.                                                      |
@@ -104,8 +104,11 @@
   - `Carousel`
   - `CarouselApi`
   - `CarouselContent`
+  - `CarouselContextProps`
   - `CarouselItem`
   - `CarouselNext`
+  - `CarouselOptions`
+  - `CarouselPlugin`
   - `CarouselPrevious`
   - `CarouselProps`
   - `useCarousel`

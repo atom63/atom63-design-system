@@ -20,7 +20,13 @@ export type {
   UseMediaLightboxResult,
 } from './media-lightbox'
 export { Video, type VideoProps } from './video'
-export { VideoDialog, type VideoDialogProps } from './video-dialog'
-export { VideoManagerContext, VideoManagerProvider, useVideoManager } from './video-manager-context'
-export { VideoModal } from './video-modal'
-export { VideoThumbnail, isVideoSrc } from './video-thumbnail'
+export { VideoDialog, type VideoDialogProps, type VideoSource } from './video-dialog'
+export {
+  VideoManagerContext,
+  VideoManagerProvider,
+  useVideoManager,
+  type VideoManagerContextType,
+  type VideoManagerProviderProps,
+} from './video-manager-context'
+export { VideoModal, type VideoModalInteractionMode, type VideoModalProps } from './video-modal'
+export { VideoThumbnail, isVideoSrc, type VideoThumbnailProps } from './video-thumbnail'

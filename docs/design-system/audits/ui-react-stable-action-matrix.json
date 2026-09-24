@@ -77,12 +77,12 @@
   },
   "summary": {
     "sourceFamilies": 75,
-    "sourceExports": 602,
+    "sourceExports": 612,
     "sourceTierCounts": {
-      "monitor-high-risk": 76,
+      "monitor-high-risk": 79,
       "preview-experimental-candidate": 31,
-      "beta-supported-core": 314,
-      "beta-supported-composition-conditional": 181
+      "beta-supported-core": 320,
+      "beta-supported-composition-conditional": 182
     },
     "sourceActionCounts": {
       "assign-owner-and-evidence": 16,
@@ -254,11 +254,11 @@
       "source": "./components/carousel",
       "family": "components/carousel",
       "kind": "component-family",
-      "totalExports": 8,
+      "totalExports": 11,
       "valueExports": 6,
-      "typeExports": 2,
+      "typeExports": 5,
       "tierCounts": {
-        "monitor-high-risk": 8
+        "monitor-high-risk": 11
       },
       "dominantTier": "monitor-high-risk",
       "blockingTier": "monitor-high-risk",
@@ -279,6 +279,9 @@
         "CarouselPrevious",
         "useCarousel",
         "CarouselApi",
+        "CarouselContextProps",
+        "CarouselOptions",
+        "CarouselPlugin",
         "CarouselProps"
       ],
       "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
@@ -1447,11 +1450,11 @@
       "source": "./components/sidebar",
       "family": "components/sidebar",
       "kind": "component-family",
-      "totalExports": 28,
+      "totalExports": 29,
       "valueExports": 24,
-      "typeExports": 4,
+      "typeExports": 5,
       "tierCounts": {
-        "beta-supported-composition-conditional": 28
+        "beta-supported-composition-conditional": 29
       },
       "dominantTier": "beta-supported-composition-conditional",
       "blockingTier": "beta-supported-composition-conditional",
@@ -1732,11 +1735,11 @@
       "source": "./components/drawer",
       "family": "components/drawer",
       "kind": "component-family",
-      "totalExports": 14,
+      "totalExports": 17,
       "valueExports": 12,
-      "typeExports": 2,
+      "typeExports": 5,
       "tierCounts": {
-        "beta-supported-core": 14
+        "beta-supported-core": 17
       },
       "dominantTier": "beta-supported-core",
       "blockingTier": "beta-supported-core",
@@ -1975,11 +1978,11 @@
       "source": "./components/resizable",
       "family": "components/resizable",
       "kind": "component-family",
-      "totalExports": 6,
+      "totalExports": 7,
       "valueExports": 3,
-      "typeExports": 3,
+      "typeExports": 4,
       "tierCounts": {
-        "beta-supported-core": 6
+        "beta-supported-core": 7
       },
       "dominantTier": "beta-supported-core",
       "blockingTier": "beta-supported-core",
@@ -1996,6 +1999,7 @@
         "ResizablePanel",
         "ResizablePanelGroup",
         "ResizableHandleProps",
+        "ResizableOrientation",
         "ResizablePanelGroupProps",
         "ResizablePanelProps"
       ],
@@ -2005,11 +2009,11 @@
       "source": "./components/scroll-area",
       "family": "components/scroll-area",
       "kind": "component-family",
-      "totalExports": 2,
+      "totalExports": 3,
       "valueExports": 2,
-      "typeExports": 0,
+      "typeExports": 1,
       "tierCounts": {
-        "beta-supported-core": 2
+        "beta-supported-core": 3
       },
       "dominantTier": "beta-supported-core",
       "blockingTier": "beta-supported-core",
@@ -2021,7 +2025,7 @@
         "external packed-consumer smoke",
         "dependency and public type compatibility review"
       ],
-      "notableSymbols": ["ScrollArea", "ScrollBar"],
+      "notableSymbols": ["ScrollArea", "ScrollBar", "ScrollAreaViewportProps"],
       "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
     },
     {
@@ -2097,11 +2101,11 @@
       "source": "./components/slider",
       "family": "components/slider",
       "kind": "component-family",
-      "totalExports": 3,
+      "totalExports": 4,
       "valueExports": 2,
-      "typeExports": 1,
+      "typeExports": 2,
       "tierCounts": {
-        "beta-supported-core": 3
+        "beta-supported-core": 4
       },
       "dominantTier": "beta-supported-core",
       "blockingTier": "beta-supported-core",
@@ -2113,7 +2117,7 @@
         "external packed-consumer smoke",
         "dependency and public type compatibility review"
       ],
-      "notableSymbols": ["Slider", "SliderValue", "SliderProps"],
+      "notableSymbols": ["Slider", "SliderValue", "SliderProps", "SliderRootProps"],
       "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
     },
     {

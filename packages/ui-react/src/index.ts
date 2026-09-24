@@ -125,7 +125,13 @@ export {
   CarouselPrevious,
   useCarousel,
 } from './components/carousel'
-export type { CarouselApi, CarouselProps } from './components/carousel'
+export type {
+  CarouselApi,
+  CarouselContextProps,
+  CarouselOptions,
+  CarouselPlugin,
+  CarouselProps,
+} from './components/carousel'
 export { Checkbox } from './components/checkbox'
 export type { CheckboxProps } from './components/checkbox'
 export {
@@ -237,7 +243,13 @@ export {
   DrawerTitle,
   DrawerTrigger,
 } from './components/drawer'
-export type { DrawerCloseProps, DrawerTriggerProps } from './components/drawer'
+export type {
+  DrawerAsChildProps,
+  DrawerCloseProps,
+  DrawerContentProps,
+  DrawerRootProps,
+  DrawerTriggerProps,
+} from './components/drawer'
 export {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -462,10 +474,12 @@ export type { RadioGroupProps, RadioProps } from './components/radio'
 export { ResizableHandle, ResizablePanel, ResizablePanelGroup } from './components/resizable'
 export type {
   ResizableHandleProps,
+  ResizableOrientation,
   ResizablePanelGroupProps,
   ResizablePanelProps,
 } from './components/resizable'
 export { ScrollArea, ScrollBar } from './components/scroll-area'
+export type { ScrollAreaViewportProps } from './components/scroll-area'
 export { ScrollableList, scrollableListControlClassNames } from './components/scrollable-list'
 export type { ScrollableListProps } from './components/scrollable-list'
 export { SearchField } from './components/search-field'
@@ -539,6 +553,7 @@ export {
   useSidebar,
 } from './components/sidebar'
 export type {
+  SidebarContextProps,
   SidebarMenuButtonProps,
   SidebarMenuSubButtonProps,
   SidebarProps,
@@ -559,7 +574,7 @@ export type {
   SidebarNavSubListProps,
 } from './components/sidebar-nav-tree'
 export { Skeleton } from './components/skeleton'
-export { Slider, SliderValue, type SliderProps } from './components/slider'
+export { Slider, SliderValue, type SliderProps, type SliderRootProps } from './components/slider'
 export { Spinner } from './components/spinner'
 export { Switch } from './components/switch'
 export type { SwitchProps } from './components/switch'

@@ -33,7 +33,7 @@ export function isVideoSrc(src?: string): boolean {
   return VIDEO_SRC_REGEX.test(src)
 }
 
-interface VideoThumbnailProps {
+export interface VideoThumbnailProps {
   className?: string
   src: string
 }

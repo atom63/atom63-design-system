@@ -5,9 +5,9 @@ import { Image } from './image'
 import { Video } from './video'
 import { VideoDialog } from './video-dialog'
 
-type InteractionMode = 'autoplay' | 'lightbox'
+export type VideoModalInteractionMode = 'autoplay' | 'lightbox'
 
-interface VideoModalProps {
+export interface VideoModalProps {
   /** Alt text for accessibility */
   alt?: string
   /** Aspect ratio for the video container */
@@ -17,7 +17,7 @@ interface VideoModalProps {
   /** Whether to use Vimeo instead of local video */
   isVimeo?: boolean
   /** Interaction mode - autoplay starts playing immediately */
-  mode?: InteractionMode
+  mode?: VideoModalInteractionMode
   /** Title for modal dialog */
   title: string
   /** Video sources for both preview and modal */

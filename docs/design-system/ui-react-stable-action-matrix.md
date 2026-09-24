@@ -8,7 +8,7 @@
 
 ## Summary
 
-- Root export symbols: **602** across **75** source families.
+- Root export symbols: **612** across **75** source families.
 - Package export-map subpaths: **71**.
 - P0 root/source families: **31**.
 - P1 root/source families: **12**.
@@ -27,9 +27,9 @@
 
 ### Root export tier counts
 
-- `beta-supported-composition-conditional`: 181
-- `beta-supported-core`: 314
-- `monitor-high-risk`: 76
+- `beta-supported-composition-conditional`: 182
+- `beta-supported-core`: 320
+- `monitor-high-risk`: 79
 - `preview-experimental-candidate`: 31
 
 ## P0: must resolve before stable/latest
@@ -40,7 +40,7 @@
 | `components/autocomplete`         | P0       | `assign-owner-and-evidence`  | `monitor-until-evidence`                          | `keep-beta-root-unchanged-and-monitor`  |      19 | `monitor-high-risk`: 18<br>`preview-experimental-candidate`: 1                             | Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded. |
 | `components/calendar`             | P0       | `assign-owner-and-evidence`  | `monitor-until-evidence`                          | `keep-beta-root-unchanged-and-monitor`  |       2 | `monitor-high-risk`: 2                                                                     | Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded. |
 | `components/card`                 | P0       | `assign-owner-and-evidence`  | `monitor-until-evidence`                          | `keep-beta-root-unchanged-and-monitor`  |      30 | `beta-supported-core`: 25<br>`monitor-high-risk`: 4<br>`preview-experimental-candidate`: 1 | Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded. |
-| `components/carousel`             | P0       | `assign-owner-and-evidence`  | `monitor-until-evidence`                          | `keep-beta-root-unchanged-and-monitor`  |       8 | `monitor-high-risk`: 8                                                                     | Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded. |
+| `components/carousel`             | P0       | `assign-owner-and-evidence`  | `monitor-until-evidence`                          | `keep-beta-root-unchanged-and-monitor`  |      11 | `monitor-high-risk`: 11                                                                    | Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded. |
 | `components/copy-button`          | P0       | `assign-owner-and-evidence`  | `monitor-until-evidence`                          | `keep-beta-root-unchanged-and-monitor`  |       4 | `monitor-high-risk`: 4                                                                     | Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded. |
 | `components/destination-link`     | P0       | `assign-owner-and-evidence`  | `monitor-until-evidence`                          | `keep-beta-root-unchanged-and-monitor`  |       4 | `monitor-high-risk`: 4                                                                     | Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded. |
 | `components/input-otp`            | P0       | `assign-owner-and-evidence`  | `monitor-until-evidence`                          | `keep-beta-root-unchanged-and-monitor`  |       4 | `monitor-high-risk`: 4                                                                     | Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded. |
@@ -90,7 +90,7 @@
 | `components/item`             | P1       | `document-before-stable` | `not-required`  | `matrix-action-only` |      13 | `beta-supported-composition-conditional`: 13 | Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable. |
 | `components/menubar`          | P1       | `document-before-stable` | `not-required`  | `matrix-action-only` |      18 | `beta-supported-composition-conditional`: 18 | Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable. |
 | `components/preview-card`     | P1       | `document-before-stable` | `not-required`  | `matrix-action-only` |       4 | `beta-supported-composition-conditional`: 4  | Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable. |
-| `components/sidebar`          | P1       | `document-before-stable` | `not-required`  | `matrix-action-only` |      28 | `beta-supported-composition-conditional`: 28 | Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable. |
+| `components/sidebar`          | P1       | `document-before-stable` | `not-required`  | `matrix-action-only` |      29 | `beta-supported-composition-conditional`: 29 | Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable. |
 | `components/sidebar-nav-tree` | P1       | `document-before-stable` | `not-required`  | `matrix-action-only` |      10 | `beta-supported-composition-conditional`: 10 | Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable. |
 
 ### P1 public subpaths

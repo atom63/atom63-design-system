@@ -20,6 +20,7 @@
     "packages/styles/src/contracts/track.css",
     "packages/styles/src/contracts/trigger.css",
     "packages/styles/src/contracts/widget.css",
+    "packages/styles/src/tokens/brand-ramp.css",
     "packages/styles/src/tokens/brand.css",
     "packages/styles/src/tokens/font.css",
     "packages/styles/src/tokens/foundation.css",
@@ -40,7 +41,7 @@
     "packages/styles/src/tokens/type-scale.css"
   ],
   "summary": {
-    "sourceFiles": 36,
+    "sourceFiles": 37,
     "declarations": 1494,
     "uniqueCssVariables": 1021,
     "figmaMappedDeclarations": 1473
@@ -1550,7 +1551,7 @@
       "cssVar": "--a63-brand-100",
       "type": "color",
       "value": "var(--color-b1-100)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1566,7 +1567,7 @@
       "cssVar": "--a63-brand-100",
       "type": "color",
       "value": "var(--color-auto-100, var(--color-b1-100))",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1582,7 +1583,7 @@
       "cssVar": "--a63-brand-100",
       "type": "color",
       "value": "var(--color-b2-100)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1598,7 +1599,7 @@
       "cssVar": "--a63-brand-100",
       "type": "color",
       "value": "var(--color-b3-100)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1614,7 +1615,7 @@
       "cssVar": "--a63-brand-100",
       "type": "color",
       "value": "var(--color-b4-100)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1630,7 +1631,7 @@
       "cssVar": "--a63-brand-100",
       "type": "color",
       "value": "var(--color-b5-100)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1646,7 +1647,7 @@
       "cssVar": "--a63-brand-100",
       "type": "color",
       "value": "var(--color-b6-100)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1662,7 +1663,7 @@
       "cssVar": "--a63-brand-200",
       "type": "color",
       "value": "var(--color-b1-200)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1678,7 +1679,7 @@
       "cssVar": "--a63-brand-200",
       "type": "color",
       "value": "var(--color-auto-200, var(--color-b1-200))",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1694,7 +1695,7 @@
       "cssVar": "--a63-brand-200",
       "type": "color",
       "value": "var(--color-b2-200)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1710,7 +1711,7 @@
       "cssVar": "--a63-brand-200",
       "type": "color",
       "value": "var(--color-b3-200)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1726,7 +1727,7 @@
       "cssVar": "--a63-brand-200",
       "type": "color",
       "value": "var(--color-b4-200)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1742,7 +1743,7 @@
       "cssVar": "--a63-brand-200",
       "type": "color",
       "value": "var(--color-b5-200)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1758,7 +1759,7 @@
       "cssVar": "--a63-brand-200",
       "type": "color",
       "value": "var(--color-b6-200)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1774,7 +1775,7 @@
       "cssVar": "--a63-brand-300",
       "type": "color",
       "value": "var(--color-b1-300)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1790,7 +1791,7 @@
       "cssVar": "--a63-brand-300",
       "type": "color",
       "value": "var(--color-auto-300, var(--color-b1-300))",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1806,7 +1807,7 @@
       "cssVar": "--a63-brand-300",
       "type": "color",
       "value": "var(--color-b2-300)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1822,7 +1823,7 @@
       "cssVar": "--a63-brand-300",
       "type": "color",
       "value": "var(--color-b3-300)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1838,7 +1839,7 @@
       "cssVar": "--a63-brand-300",
       "type": "color",
       "value": "var(--color-b4-300)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1854,7 +1855,7 @@
       "cssVar": "--a63-brand-300",
       "type": "color",
       "value": "var(--color-b5-300)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1870,7 +1871,7 @@
       "cssVar": "--a63-brand-300",
       "type": "color",
       "value": "var(--color-b6-300)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1886,7 +1887,7 @@
       "cssVar": "--a63-brand-400",
       "type": "color",
       "value": "var(--color-b1-400)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1902,7 +1903,7 @@
       "cssVar": "--a63-brand-400",
       "type": "color",
       "value": "var(--color-auto-400, var(--color-b1-400))",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1918,7 +1919,7 @@
       "cssVar": "--a63-brand-400",
       "type": "color",
       "value": "var(--color-b2-400)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1934,7 +1935,7 @@
       "cssVar": "--a63-brand-400",
       "type": "color",
       "value": "var(--color-b3-400)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1950,7 +1951,7 @@
       "cssVar": "--a63-brand-400",
       "type": "color",
       "value": "var(--color-b4-400)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1966,7 +1967,7 @@
       "cssVar": "--a63-brand-400",
       "type": "color",
       "value": "var(--color-b5-400)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1982,7 +1983,7 @@
       "cssVar": "--a63-brand-400",
       "type": "color",
       "value": "var(--color-b6-400)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -1998,7 +1999,7 @@
       "cssVar": "--a63-brand-50",
       "type": "color",
       "value": "var(--color-b1-50)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2014,7 +2015,7 @@
       "cssVar": "--a63-brand-50",
       "type": "color",
       "value": "var(--color-auto-50, var(--color-b1-50))",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2030,7 +2031,7 @@
       "cssVar": "--a63-brand-50",
       "type": "color",
       "value": "var(--color-b2-50)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2046,7 +2047,7 @@
       "cssVar": "--a63-brand-50",
       "type": "color",
       "value": "var(--color-b3-50)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2062,7 +2063,7 @@
       "cssVar": "--a63-brand-50",
       "type": "color",
       "value": "var(--color-b4-50)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2078,7 +2079,7 @@
       "cssVar": "--a63-brand-50",
       "type": "color",
       "value": "var(--color-b5-50)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2094,7 +2095,7 @@
       "cssVar": "--a63-brand-50",
       "type": "color",
       "value": "var(--color-b6-50)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2110,7 +2111,7 @@
       "cssVar": "--a63-brand-500",
       "type": "color",
       "value": "var(--color-b1-500)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2126,7 +2127,7 @@
       "cssVar": "--a63-brand-500",
       "type": "color",
       "value": "var(--color-auto-500, var(--color-b1-500))",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2142,7 +2143,7 @@
       "cssVar": "--a63-brand-500",
       "type": "color",
       "value": "var(--color-b2-500)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2158,7 +2159,7 @@
       "cssVar": "--a63-brand-500",
       "type": "color",
       "value": "var(--color-b3-500)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2174,7 +2175,7 @@
       "cssVar": "--a63-brand-500",
       "type": "color",
       "value": "var(--color-b4-500)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2190,7 +2191,7 @@
       "cssVar": "--a63-brand-500",
       "type": "color",
       "value": "var(--color-b5-500)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2206,7 +2207,7 @@
       "cssVar": "--a63-brand-500",
       "type": "color",
       "value": "var(--color-b6-500)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2222,7 +2223,7 @@
       "cssVar": "--a63-brand-600",
       "type": "color",
       "value": "var(--color-b1-600)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2238,7 +2239,7 @@
       "cssVar": "--a63-brand-600",
       "type": "color",
       "value": "var(--color-auto-600, var(--color-b1-600))",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2254,7 +2255,7 @@
       "cssVar": "--a63-brand-600",
       "type": "color",
       "value": "var(--color-b2-600)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2270,7 +2271,7 @@
       "cssVar": "--a63-brand-600",
       "type": "color",
       "value": "var(--color-b3-600)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2286,7 +2287,7 @@
       "cssVar": "--a63-brand-600",
       "type": "color",
       "value": "var(--color-b4-600)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2302,7 +2303,7 @@
       "cssVar": "--a63-brand-600",
       "type": "color",
       "value": "var(--color-b5-600)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2318,7 +2319,7 @@
       "cssVar": "--a63-brand-600",
       "type": "color",
       "value": "var(--color-b6-600)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2334,7 +2335,7 @@
       "cssVar": "--a63-brand-700",
       "type": "color",
       "value": "var(--color-b1-700)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2350,7 +2351,7 @@
       "cssVar": "--a63-brand-700",
       "type": "color",
       "value": "var(--color-auto-700, var(--color-b1-700))",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2366,7 +2367,7 @@
       "cssVar": "--a63-brand-700",
       "type": "color",
       "value": "var(--color-b2-700)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2382,7 +2383,7 @@
       "cssVar": "--a63-brand-700",
       "type": "color",
       "value": "var(--color-b3-700)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2398,7 +2399,7 @@
       "cssVar": "--a63-brand-700",
       "type": "color",
       "value": "var(--color-b4-700)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2414,7 +2415,7 @@
       "cssVar": "--a63-brand-700",
       "type": "color",
       "value": "var(--color-b5-700)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2430,7 +2431,7 @@
       "cssVar": "--a63-brand-700",
       "type": "color",
       "value": "var(--color-b6-700)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2446,7 +2447,7 @@
       "cssVar": "--a63-brand-800",
       "type": "color",
       "value": "var(--color-b1-800)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2462,7 +2463,7 @@
       "cssVar": "--a63-brand-800",
       "type": "color",
       "value": "var(--color-auto-800, var(--color-b1-800))",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2478,7 +2479,7 @@
       "cssVar": "--a63-brand-800",
       "type": "color",
       "value": "var(--color-b2-800)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2494,7 +2495,7 @@
       "cssVar": "--a63-brand-800",
       "type": "color",
       "value": "var(--color-b3-800)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2510,7 +2511,7 @@
       "cssVar": "--a63-brand-800",
       "type": "color",
       "value": "var(--color-b4-800)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2526,7 +2527,7 @@
       "cssVar": "--a63-brand-800",
       "type": "color",
       "value": "var(--color-b5-800)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2542,7 +2543,7 @@
       "cssVar": "--a63-brand-800",
       "type": "color",
       "value": "var(--color-b6-800)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2558,7 +2559,7 @@
       "cssVar": "--a63-brand-900",
       "type": "color",
       "value": "var(--color-b1-900)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2574,7 +2575,7 @@
       "cssVar": "--a63-brand-900",
       "type": "color",
       "value": "var(--color-auto-900, var(--color-b1-900))",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2590,7 +2591,7 @@
       "cssVar": "--a63-brand-900",
       "type": "color",
       "value": "var(--color-b2-900)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2606,7 +2607,7 @@
       "cssVar": "--a63-brand-900",
       "type": "color",
       "value": "var(--color-b3-900)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2622,7 +2623,7 @@
       "cssVar": "--a63-brand-900",
       "type": "color",
       "value": "var(--color-b4-900)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2638,7 +2639,7 @@
       "cssVar": "--a63-brand-900",
       "type": "color",
       "value": "var(--color-b5-900)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2654,7 +2655,7 @@
       "cssVar": "--a63-brand-900",
       "type": "color",
       "value": "var(--color-b6-900)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2670,7 +2671,7 @@
       "cssVar": "--a63-brand-950",
       "type": "color",
       "value": "var(--color-b1-950)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2686,7 +2687,7 @@
       "cssVar": "--a63-brand-950",
       "type": "color",
       "value": "var(--color-auto-950, var(--color-b1-950))",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2702,7 +2703,7 @@
       "cssVar": "--a63-brand-950",
       "type": "color",
       "value": "var(--color-b2-950)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2718,7 +2719,7 @@
       "cssVar": "--a63-brand-950",
       "type": "color",
       "value": "var(--color-b3-950)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2734,7 +2735,7 @@
       "cssVar": "--a63-brand-950",
       "type": "color",
       "value": "var(--color-b4-950)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2750,7 +2751,7 @@
       "cssVar": "--a63-brand-950",
       "type": "color",
       "value": "var(--color-b5-950)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2766,7 +2767,7 @@
       "cssVar": "--a63-brand-950",
       "type": "color",
       "value": "var(--color-b6-950)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-ramp.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",

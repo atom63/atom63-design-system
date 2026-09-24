@@ -5,7 +5,7 @@ import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
 
-type ScrollAreaViewportProps = Omit<
+export type ScrollAreaViewportProps = Omit<
   ScrollAreaPrimitive.Viewport.Props,
   'children' | 'className' | 'ref'
 > & {

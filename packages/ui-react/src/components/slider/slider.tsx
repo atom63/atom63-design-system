@@ -5,7 +5,7 @@ import * as React from 'react'
 
 import { cn } from '../../lib/cn'
 
-type SliderRootProps = SliderPrimitive.Root.Props
+export type SliderRootProps = SliderPrimitive.Root.Props
 
 function normalizeSliderValues(
   input: number | readonly number[] | undefined,

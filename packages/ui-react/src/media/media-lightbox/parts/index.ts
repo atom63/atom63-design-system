@@ -93,3 +93,16 @@ export const Lightbox = {
   ZoomIn: LightboxZoomIn,
   ZoomOut: LightboxZoomOut,
 } as const
+// Types that appear in the parts' public props. Only the types leave these
+// modules; the registries and option plumbing stay internal.
+export type { LightboxTiming } from '../timing'
+export type {
+  MediaLightboxAppearance,
+  MediaLightboxItem,
+  MediaLightboxItemKind,
+  MediaLightboxLabels,
+  MediaLightboxTransition,
+  MediaLightboxVideoSource,
+  MediaLightboxVideoTrack,
+} from '../types'
+export type { LightboxZoomOptions } from './zoom-options'
