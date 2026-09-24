@@ -120,10 +120,24 @@ function formatValue(type, value, name, knownNames) {
       return String(value)
     case 'fontFamily':
       return formatFontFamily(value)
-    case 'shadow':
-      // Only "no shadow" so far: an empty layer list is CSS `none`.
-      if (Array.isArray(value) && value.length === 0) return 'none'
-      throw new Error(`${name}: only an empty shadow list is supported`)
+    case 'shadow': {
+      // A DTCG shadow or list of shadows; an empty list is CSS `none`.
+      const layers = Array.isArray(value) ? value : [value]
+      if (layers.length === 0) return 'none'
+      return layers
+        .map(layer => {
+          const lengths = [layer.offsetX, layer.offsetY, layer.blur, layer.spread].map(length =>
+            formatValue('dimension', length, name, knownNames)
+          )
+          const color = formatValue('color', layer.color, name, knownNames)
+          return `${layer.inset ? 'inset ' : ''}${lengths.join(' ')} ${color}`
+        })
+        .join(', ')
+    }
+    case 'strokeStyle':
+      if (typeof value !== 'string')
+        throw new Error(`${name}: only keyword stroke styles are supported`)
+      return value
     default:
       throw new Error(`${name}: unsupported $type "${type}"`)
   }

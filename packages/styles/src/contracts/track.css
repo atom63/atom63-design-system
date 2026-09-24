@@ -1,4 +1,7 @@
 /*
+ * Generated from src/contracts/track.tokens.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
  * Track contract — the RECESSED rail that holds raised cells/thumbs
  * (segmented-control track, slider rail, tabs list). Distinct from FIELD (holds
  * text, not interactive cells) and from CONTROL (raised). The ACTIVE cell/thumb
@@ -20,7 +23,6 @@
  * valid archetype expressions: recessed-well (SegmentedControl) vs raised-bar
  * (joined ToggleGroup). Only the recessed one is `track`.
  */
-
 :root {
   --a63-track-shadow: inset 0 1px 1px color-mix(in oklch, black 6%, transparent);
 }

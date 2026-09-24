@@ -1,0 +1,97 @@
+{
+  "$description": "Surface contract — the STATIC, in-flow container/panel (cards, panels,\nframes, sections, accordion containers, windows). The counterpart to OVERLAY:\nsame \"grouped surface\" idea, but no z-stacking / elevation-above-page — it\nsits IN the flow.\n\nLean by design (see the taxonomy spec): semantics carry the default look — the\nrecipe reads --a63-surface-panel (bg), --a63-border-subtle (border),\n--radius-* (radius), --a63-text-* (text) at the use-site. The ONE thing themes\nvary distinctly for a static surface is its FLUSH-vs-LIFT-vs-BEVEL treatment,\nso that is the only contract token here.\n\n--a63-surface-shadow is a drop/bevel (mode-independent), so it's safe to\ndefault at :root and let each theme override it on its shell (modern soft-flush,\naqua subtle glassy lift, retro hard Win98 frame bevel, terminal phosphor edge).\n\nThe contract now carries the full treatment vocabulary\n(gloss/highlight/backdrop/border/texture/inner-shadow), not just the shadow.\n\nRadius is intentionally NOT defaulted here — recipes read\n   var(--a63-surface-radius, <own default>); a theme sets it to square all\n   surfaces (retro → 0). Declaring it here would flatten per-recipe radii, so\n   it stays unset at :root.",
+  "a63": {
+    "surface": {
+      "shadow": {
+        "$type": "shadow",
+        "$value": [
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [0, 0, 0],
+              "alpha": 0.06
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 1,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 2,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [0, 0, 0],
+              "alpha": 0.04
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 1,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 1,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          }
+        ],
+        "$extensions": {
+          "io.atom63.derive": "0 1px 2px color-mix(in oklch, black 6%, transparent), 0 1px 1px color-mix(in oklch, black 4%, transparent)"
+        },
+        "$description": "Outer elevation — flush · bevel · drop · glow (existing lever, unchanged)."
+      },
+      "inner": {
+        "shadow": {
+          "$type": "shadow",
+          "$value": [],
+          "$extensions": {
+            "io.atom63.derive": "0 0 #0000"
+          },
+          "$description": "Recessed/inset treatment (sunken well). `0 0 #0000` = flat.\n   NOT `none`: this token is composed into comma-separated box-shadow lists\n   (`var(--a63-surface-inner-shadow), var(--a63-surface-shadow)`), and `none`\n   is only legal as the sole value — it invalidates the whole declaration and\n   silently drops the surface's elevation."
+        }
+      },
+      "highlight": {
+        "opacity": {
+          "$type": "number",
+          "$value": 1
+        }
+      },
+      "border": {
+        "style": {
+          "$type": "strokeStyle",
+          "$value": "solid",
+          "$description": "Bevel controls."
+        },
+        "width": {
+          "$type": "dimension",
+          "$value": {
+            "value": 1,
+            "unit": "px"
+          }
+        }
+      }
+    }
+  },
+  "$extensions": {
+    "io.atom63.css": {
+      "imports": ["./surface.native.css"]
+    }
+  }
+}

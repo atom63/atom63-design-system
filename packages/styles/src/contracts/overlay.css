@@ -1,4 +1,7 @@
 /*
+ * Generated from src/contracts/overlay.tokens.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
  * Overlay contract — the FLOATING elevated surface (menus, popovers, select
  * popups, tooltips, dialogs, toasts, drawers).
  *
@@ -14,31 +17,26 @@
  *
  * The contract now carries the full treatment vocabulary plus a drag-shadow
  * (elevation while a floating surface is dragged).
+ *
+ * --a63-overlay-radius intentionally unset at :root; recipes read
+ *    var(--a63-overlay-radius, <own default>) so themes can square all overlays.
  */
+@import './overlay.native.css';
 
 :root {
   /* Outer elevation (existing lever, unchanged). */
   --a63-overlay-shadow:
     0 8px 24px -6px color-mix(in oklch, black 22%, transparent),
     0 2px 6px -2px color-mix(in oklch, black 12%, transparent);
-
   /* Elevation while a floating surface is dragged (widgets, window frames).
-     Defaults to the resting shadow; a theme/consumer lifts it during drag. */
+        Defaults to the resting shadow; a theme/consumer lifts it during drag. */
   --a63-overlay-drag-shadow: var(--a63-overlay-shadow);
-
   /* `0 0 #0000` not `none`: composed into comma-separated box-shadow lists
-     (`var(--a63-overlay-inner-shadow), var(--a63-overlay-shadow)`). `none` is
-     only legal as the sole value, so it invalidates the whole declaration and
-     silently drops the overlay's elevation. */
+        (`var(--a63-overlay-inner-shadow), var(--a63-overlay-shadow)`). `none` is
+        only legal as the sole value, so it invalidates the whole declaration and
+        silently drops the overlay's elevation. */
   --a63-overlay-inner-shadow: 0 0 #0000;
-  --a63-overlay-gloss: none;
-  --a63-overlay-highlight: none;
   --a63-overlay-highlight-opacity: 1;
-  --a63-overlay-backdrop: none;
   --a63-overlay-border-style: solid;
   --a63-overlay-border-width: 1px;
-  --a63-overlay-texture-image: none;
-  --a63-overlay-texture-blend: normal;
-  /* --a63-overlay-radius intentionally unset at :root; recipes read
-     var(--a63-overlay-radius, <own default>) so themes can square all overlays. */
 }

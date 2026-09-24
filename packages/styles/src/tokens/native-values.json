@@ -3,6 +3,21 @@
   "values": {
     "--a63-action-control-gloss": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
     "--a63-action-control-highlight": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
-    "--a63-action-control-press-transform": "A CSS transform (translateY / scale); DTCG has no transform type."
+    "--a63-action-control-press-transform": "A CSS transform (translateY / scale); DTCG has no transform type.",
+    "--a63-choice-indicator-gloss": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
+    "--a63-control-gloss": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
+    "--a63-control-highlight": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
+    "--a63-control-press-transform": "A CSS transform (translateY / scale); DTCG has no transform type.",
+    "--a63-overlay-backdrop": "A backdrop-filter value (default none, blur in translucent themes); DTCG has no filter type.",
+    "--a63-overlay-gloss": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
+    "--a63-overlay-highlight": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
+    "--a63-overlay-texture-blend": "A mix-blend-mode keyword; DTCG has no blend-mode type.",
+    "--a63-overlay-texture-image": "A background-image texture (default none); DTCG has no image type.",
+    "--a63-surface-backdrop": "A backdrop-filter value (default none, blur in translucent themes); DTCG has no filter type.",
+    "--a63-surface-gloss": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
+    "--a63-surface-highlight": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
+    "--a63-surface-texture-blend": "A mix-blend-mode keyword; DTCG has no blend-mode type.",
+    "--a63-surface-texture-image": "A background-image texture (default none); DTCG has no image type.",
+    "--a63-trigger-indicator-size": "Sized in em, relative to the trigger's font size; DTCG dimensions are px or rem only."
   }
 }

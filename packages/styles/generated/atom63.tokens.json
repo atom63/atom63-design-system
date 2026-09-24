@@ -6,20 +6,25 @@
     "packages/styles/src/contracts/action.native.css",
     "packages/styles/src/contracts/badge.css",
     "packages/styles/src/contracts/choice.css",
+    "packages/styles/src/contracts/choice.native.css",
     "packages/styles/src/contracts/control.css",
+    "packages/styles/src/contracts/control.native.css",
     "packages/styles/src/contracts/environment.css",
     "packages/styles/src/contracts/field.css",
     "packages/styles/src/contracts/index.css",
     "packages/styles/src/contracts/marker.css",
     "packages/styles/src/contracts/menu.css",
     "packages/styles/src/contracts/overlay.css",
+    "packages/styles/src/contracts/overlay.native.css",
     "packages/styles/src/contracts/segment.css",
     "packages/styles/src/contracts/selection.css",
     "packages/styles/src/contracts/skeleton.css",
     "packages/styles/src/contracts/surface.css",
+    "packages/styles/src/contracts/surface.native.css",
     "packages/styles/src/contracts/toggle.css",
     "packages/styles/src/contracts/track.css",
     "packages/styles/src/contracts/trigger.css",
+    "packages/styles/src/contracts/trigger.native.css",
     "packages/styles/src/contracts/widget.css",
     "packages/styles/src/tokens/brand-action.css",
     "packages/styles/src/tokens/brand-ramp.css",
@@ -42,7 +47,7 @@
     "packages/styles/src/tokens/type-scale.css"
   ],
   "summary": {
-    "sourceFiles": 38,
+    "sourceFiles": 43,
     "declarations": 1470,
     "uniqueCssVariables": 1021,
     "figmaMappedDeclarations": 1449
@@ -2919,7 +2924,7 @@
       "cssVar": "--a63-choice-indicator-gloss",
       "type": "string",
       "value": "none",
-      "sourceFile": "packages/styles/src/contracts/choice.css",
+      "sourceFile": "packages/styles/src/contracts/choice.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "scope": ":root"
@@ -3278,7 +3283,7 @@
       "cssVar": "--a63-control-gloss",
       "type": "string",
       "value": "none",
-      "sourceFile": "packages/styles/src/contracts/control.css",
+      "sourceFile": "packages/styles/src/contracts/control.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "scope": ":root"
@@ -3443,7 +3448,7 @@
       "cssVar": "--a63-control-highlight",
       "type": "string",
       "value": "none",
-      "sourceFile": "packages/styles/src/contracts/control.css",
+      "sourceFile": "packages/styles/src/contracts/control.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "scope": ":root"
@@ -4110,7 +4115,7 @@
       "cssVar": "--a63-control-press-transform",
       "type": "string",
       "value": "translateY(1px)",
-      "sourceFile": "packages/styles/src/contracts/control.css",
+      "sourceFile": "packages/styles/src/contracts/control.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "scope": ":root"
@@ -4799,7 +4804,7 @@
       "cssVar": "--a63-overlay-backdrop",
       "type": "string",
       "value": "none",
-      "sourceFile": "packages/styles/src/contracts/overlay.css",
+      "sourceFile": "packages/styles/src/contracts/overlay.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "scope": ":root"
@@ -4848,7 +4853,7 @@
       "cssVar": "--a63-overlay-gloss",
       "type": "string",
       "value": "none",
-      "sourceFile": "packages/styles/src/contracts/overlay.css",
+      "sourceFile": "packages/styles/src/contracts/overlay.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "scope": ":root"
@@ -4858,7 +4863,7 @@
       "cssVar": "--a63-overlay-highlight",
       "type": "string",
       "value": "none",
-      "sourceFile": "packages/styles/src/contracts/overlay.css",
+      "sourceFile": "packages/styles/src/contracts/overlay.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "scope": ":root"
@@ -4910,7 +4915,7 @@
       "cssVar": "--a63-overlay-texture-blend",
       "type": "string",
       "value": "normal",
-      "sourceFile": "packages/styles/src/contracts/overlay.css",
+      "sourceFile": "packages/styles/src/contracts/overlay.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "scope": ":root"
@@ -4920,7 +4925,7 @@
       "cssVar": "--a63-overlay-texture-image",
       "type": "string",
       "value": "none",
-      "sourceFile": "packages/styles/src/contracts/overlay.css",
+      "sourceFile": "packages/styles/src/contracts/overlay.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "scope": ":root"
@@ -5611,7 +5616,7 @@
       "cssVar": "--a63-surface-backdrop",
       "type": "color",
       "value": "none",
-      "sourceFile": "packages/styles/src/contracts/surface.css",
+      "sourceFile": "packages/styles/src/contracts/surface.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -5717,7 +5722,7 @@
       "cssVar": "--a63-surface-gloss",
       "type": "color",
       "value": "none",
-      "sourceFile": "packages/styles/src/contracts/surface.css",
+      "sourceFile": "packages/styles/src/contracts/surface.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -5731,7 +5736,7 @@
       "cssVar": "--a63-surface-highlight",
       "type": "color",
       "value": "none",
-      "sourceFile": "packages/styles/src/contracts/surface.css",
+      "sourceFile": "packages/styles/src/contracts/surface.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -5915,7 +5920,7 @@
       "cssVar": "--a63-surface-texture-blend",
       "type": "color",
       "value": "normal",
-      "sourceFile": "packages/styles/src/contracts/surface.css",
+      "sourceFile": "packages/styles/src/contracts/surface.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -5929,7 +5934,7 @@
       "cssVar": "--a63-surface-texture-image",
       "type": "color",
       "value": "none",
-      "sourceFile": "packages/styles/src/contracts/surface.css",
+      "sourceFile": "packages/styles/src/contracts/surface.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -6287,7 +6292,7 @@
       "cssVar": "--a63-trigger-indicator-size",
       "type": "dimension",
       "value": "1em",
-      "sourceFile": "packages/styles/src/contracts/trigger.css",
+      "sourceFile": "packages/styles/src/contracts/trigger.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",

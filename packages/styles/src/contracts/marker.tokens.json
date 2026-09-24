@@ -1,0 +1,15 @@
+{
+  "$description": "Marker contract — the tiny NON-interactive labeled chip (keycap, badge, chip,\ntag, inline code). Presentational; no state.\n\nLean by design (see the taxonomy spec): semantics carry the whole look — the\nrecipe reads --a63-surface-muted (bg), --a63-text-secondary (fg),\n--a63-border-subtle (border), --a63-control-radius (radius) and\n--a63-control-font-family (→ terminal-mono for free) at the use-site. The ONE\nthing themes vary distinctly for a keycap is its BEVEL, so that is the only\ncontract token here.\n\n--a63-marker-shadow is a static keycap shadow (mode-independent), so it's safe\nto default at :root. Default is `none` — modern and terminal are flat pills\n(spec: \"terminal none\"); aqua and retro give it keycap character.",
+  "a63": {
+    "marker": {
+      "shadow": {
+        "$type": "shadow",
+        "$value": [],
+        "$extensions": {
+          "io.atom63.derive": "0 0 #0000"
+        },
+        "$description": "`0 0 #0000` rather than `none`: recipes compose this into comma-separated\n   box-shadow lists (e.g. `var(--a63-marker-shadow), <focus ring>`), and `none`\n   is only legal as the sole value — it would invalidate the whole declaration\n   and silently drop the focus ring. This paints nothing."
+      }
+    }
+  }
+}

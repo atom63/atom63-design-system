@@ -1,0 +1,245 @@
+{
+  "$description": "Shared control contracts.\n\nComponent recipes consume these first and introduce component-specific\nvariables only for genuinely unique needs. Design language overrides the\nsizing/feedback tokens (see contracts/environment.css); recipes never hardcode\nsizes. Radius comes from the semantic ramp (theme/personalization), not here.",
+  "a63": {
+    "control": {
+      "height": {
+        "xs": {
+          "$type": "dimension",
+          "$value": "{a63.space.unit}",
+          "$extensions": {
+            "io.atom63.derive": "calc({a63.space.unit} * 6)"
+          },
+          "$description": "Height ramp (xs..xl) — web defaults (desktop density: 24/28/32/36/40, to\n   match production @atom63/ui). iOS overrides in environment.css."
+        },
+        "sm": {
+          "$type": "dimension",
+          "$value": "{a63.space.unit}",
+          "$extensions": {
+            "io.atom63.derive": "calc({a63.space.unit} * 7)"
+          }
+        },
+        "md": {
+          "$type": "dimension",
+          "$value": "{a63.space.unit}",
+          "$extensions": {
+            "io.atom63.derive": "calc({a63.space.unit} * 8)"
+          }
+        },
+        "lg": {
+          "$type": "dimension",
+          "$value": "{a63.space.unit}",
+          "$extensions": {
+            "io.atom63.derive": "calc({a63.space.unit} * 9)"
+          }
+        },
+        "xl": {
+          "$type": "dimension",
+          "$value": "{a63.space.unit}",
+          "$extensions": {
+            "io.atom63.derive": "calc({a63.space.unit} * 10)"
+          }
+        }
+      },
+      "padding": {
+        "inline": {
+          "xs": {
+            "$type": "dimension",
+            "$value": "{a63.space.2}",
+            "$description": "Recipes resolve rendered size at their own use-site:\n  max(calc(height * density), size-appropriate min-SIZE)\nDo not cache that formula in a :root custom property. Input, density, and\ndesign-language axes can be scoped to nested providers; deriving at :root\nwould freeze the root values and ignore those local overrides.\n\nFloor with --a63-control-min-size (rendered geometry), NOT\n--a63-control-min-target (interaction). The two are separate on purpose —\nsee contracts/environment.css. Touch therefore keeps the xs/sm/md ramp\nintact and satisfies the 44px target by expanding the interaction area:\ncompact markers (checkbox, radio, switch, slider, badge) via a positioned\npseudo-element, button-class controls the same way. Square icon buttons are\nNOT an exception — they sit on the rendered ramp like everything else, so a\n32px icon button and a 32px text button line up in the same toolbar row.\n\nThe button recipe delivers that interaction floor on `::before`. Consumer\nCSS must not paint on, resize, or hide `.a63-Button::before`: it wins the\ncascade at higher specificity than a single consumer class, and silently\nbreaks either the visual or the touch target.\nInline padding ramp"
+          },
+          "sm": {
+            "$type": "dimension",
+            "$value": "{a63.space.2_5}"
+          },
+          "md": {
+            "$type": "dimension",
+            "$value": "{a63.space.3}"
+          },
+          "lg": {
+            "$type": "dimension",
+            "$value": "{a63.space.3_5}"
+          },
+          "xl": {
+            "$type": "dimension",
+            "$value": "{a63.space.4}"
+          }
+        }
+      },
+      "font": {
+        "weight": {
+          "$type": "dimension",
+          "$value": "{font.weight.medium}",
+          "$extensions": {
+            "io.atom63.derive": "var(--font-weight-medium, 500)"
+          },
+          "$description": "Text ramp"
+        },
+        "family": {
+          "$type": "dimension",
+          "$value": "{font.family.sans}"
+        },
+        "size": {
+          "xs": {
+            "$type": "dimension",
+            "$value": "{typography.xs.font.size}"
+          },
+          "sm": {
+            "$type": "dimension",
+            "$value": "{typography.xs.font.size}"
+          },
+          "md": {
+            "$type": "dimension",
+            "$value": "{typography.sm.font.size}"
+          },
+          "lg": {
+            "$type": "dimension",
+            "$value": "{typography.base.font.size}"
+          },
+          "xl": {
+            "$type": "dimension",
+            "$value": "{typography.lg.font.size}"
+          }
+        }
+      },
+      "text": {
+        "shadow": {
+          "$type": "shadow",
+          "$value": []
+        }
+      },
+      "icon": {
+        "size": {
+          "xs": {
+            "$type": "dimension",
+            "$value": {
+              "value": 0.75,
+              "unit": "rem"
+            },
+            "$description": "Icon geometry follows control size, not the compressed text ramp."
+          },
+          "sm": {
+            "$type": "dimension",
+            "$value": {
+              "value": 0.875,
+              "unit": "rem"
+            }
+          },
+          "md": {
+            "$type": "dimension",
+            "$value": {
+              "value": 1,
+              "unit": "rem"
+            }
+          },
+          "lg": {
+            "$type": "dimension",
+            "$value": {
+              "value": 1.125,
+              "unit": "rem"
+            }
+          },
+          "xl": {
+            "$type": "dimension",
+            "$value": {
+              "value": 1.25,
+              "unit": "rem"
+            }
+          }
+        }
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{a63.space.2}"
+      },
+      "radius": {
+        "$type": "dimension",
+        "$value": "{a63.radius.control}"
+      },
+      "border": {
+        "width": {
+          "$type": "dimension",
+          "$value": {
+            "value": 1,
+            "unit": "px"
+          }
+        }
+      },
+      "shadow": {
+        "$root": {
+          "$type": "shadow",
+          "$value": [],
+          "$extensions": {
+            "io.atom63.derive": "0 0 #0000"
+          },
+          "$description": "`0 0 #0000` not `none` — composed into comma-separated box-shadow lists\n   alongside the focus ring, where `none` invalidates the declaration."
+        },
+        "active": {
+          "$type": "shadow",
+          "$value": "{a63.control.shadow}"
+        },
+        "flat": {
+          "$type": "shadow",
+          "$value": "{a63.control.shadow}",
+          "$description": "Shadow for flat/bordered variants (outline, destructive-outline). Defaults to\n   the regular shadow; a theme can soften it — e.g. aqua drops the bright top rim\n   that's too strong on a light fill while keeping a gentle lift."
+        },
+        "tint": {
+          "$type": "number",
+          "$value": 0,
+          "$extensions": {
+            "io.atom63.derive": "0%"
+          },
+          "$description": "How strongly a control's drop shadow is tinted by its own fill colour (0% =\n   neutral shadow). The recipe composes the tinted layer at the button so it\n   follows each button's colour; a theme just sets the strength."
+        }
+      },
+      "focus": {
+        "ring": {
+          "width": {
+            "$type": "dimension",
+            "$value": {
+              "value": 3,
+              "unit": "px"
+            }
+          },
+          "color": {
+            "$type": "color",
+            "$value": "{a63.focus.ring}"
+          }
+        }
+      },
+      "feedback": {
+        "duration": {
+          "$type": "duration",
+          "$value": "{a63.motion.control.feedback.duration}"
+        },
+        "ease": {
+          "$type": "duration",
+          "$value": "{a63.motion.ease.standard}"
+        }
+      }
+    },
+    "row": {
+      "padding": {
+        "block": {
+          "xs": {
+            "$type": "dimension",
+            "$value": "{a63.space.2}",
+            "$description": "Row block padding. Rows (Item today; Menu/Command rows are the intended\n   next tenants) take their height from content + this padding, floored by the\n   control ramp, so a single-line row lands on ~44pt and a two-line row on\n   ~59pt. Those targets come from our own measurement of shipping iOS apps\n   (docs/design-system/web-ios-token-parity.md) — Apple publishes no iOS row\n   height, so do not cite UIKit cell metrics for them. It lives here rather\n   than in the recipe\n   because the design-language axis has to retune it (contracts/environment.css)\n   and axes own tokens; recipes only read them."
+          },
+          "sm": {
+            "$type": "dimension",
+            "$value": "{a63.space.3}"
+          },
+          "md": {
+            "$type": "dimension",
+            "$value": "{a63.space.4}"
+          }
+        }
+      }
+    }
+  },
+  "$extensions": {
+    "io.atom63.css": {
+      "imports": ["./control.native.css"]
+    }
+  }
+}

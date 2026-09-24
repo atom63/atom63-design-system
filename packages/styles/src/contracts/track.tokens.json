@@ -1,0 +1,39 @@
+{
+  "$description": "Track contract — the RECESSED rail that holds raised cells/thumbs\n(segmented-control track, slider rail, tabs list). Distinct from FIELD (holds\ntext, not interactive cells) and from CONTROL (raised). The ACTIVE cell/thumb\nthat rides in the track reuses the CONTROL contract (e.g. the segmented\nindicator reads --a63-control-shadow); the track itself is the sunken well.\n\nLean by design (see the taxonomy spec): semantics carry the default look — the\nrecipe reads --a63-surface-control (bg), --a63-control-radius (radius) and its\ninset/gap constants at the use-site. The ONE thing themes vary distinctly for a\nrecessed rail is its INSET-WELL depth, so that is the only contract token here.\n\n--a63-track-shadow is a static inset (mode-independent, like --a63-field-shadow),\nso it's safe to default at :root and let each theme override it on its shell\n(modern faint inset, aqua deeper sunken gel, retro Win98 inset well, terminal\nfaint phosphor inset).\n\nNOTE: the joined-ToggleGroup bar is intentionally a RAISED control (it reads the\nCONTROL contract — aqua gel / retro bevel), NOT a track. \"Segmented set\" has two\nvalid archetype expressions: recessed-well (SegmentedControl) vs raised-bar\n(joined ToggleGroup). Only the recessed one is `track`.",
+  "a63": {
+    "track": {
+      "shadow": {
+        "$type": "shadow",
+        "$value": [
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [0, 0, 0],
+              "alpha": 0.06
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 1,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 1,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            },
+            "inset": true
+          }
+        ],
+        "$extensions": {
+          "io.atom63.derive": "inset 0 1px 1px color-mix(in oklch, black 6%, transparent)"
+        }
+      }
+    }
+  }
+}
