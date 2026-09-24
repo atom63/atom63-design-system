@@ -1,0 +1,343 @@
+{
+  "version": "2025.10",
+  "description": "Canonical semantic layer.\n\nThis is the single source of semantic truth for the new system. Values are\nsourced directly from the token foundation (surface aliases + primitives),\nwith .dark overrides where the mode differs. shadcn (--background/--primary…)\nand Tailwind are opt-in adapters that re-reference THESE names — never the\nreverse. See packages/styles/README.md (the mirror rule).",
+  "sets": {
+    "base": {
+      "sources": [
+        {
+          "a63": {
+            "surface": {
+              "tint": {
+                "$type": "number",
+                "$value": 0,
+                "$extensions": {
+                  "io.atom63.derive": "0%"
+                }
+              }
+            },
+            "scrim": {
+              "$type": "color",
+              "$value": "{color.black.100}",
+              "$extensions": {
+                "io.atom63.derive": "color-mix(in oklch, black 40%, transparent)"
+              },
+              "$description": "Scrim — the modal/drawer/sheet backdrop veil behind overlays."
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":root"
+        }
+      }
+    }
+  },
+  "modifiers": {
+    "mode": {
+      "default": "light",
+      "contexts": {
+        "light": [
+          {
+            "a63": {
+              "surface": {
+                "page": {
+                  "$type": "color",
+                  "$value": "{surface.light.2}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {surface.light.2} calc(100% - {a63.surface.tint}), {a63.brand.100} {a63.surface.tint} )"
+                  },
+                  "$description": "Surfaces — neutral, optionally bent toward the brand hue by --a63-surface-tint\n(0% = pure neutral). Each mixes with a lightness-matched --a63-brand-* step."
+                },
+                "panel": {
+                  "$type": "color",
+                  "$value": "{surface.light.1}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {surface.light.1} calc(100% - {a63.surface.tint}), {a63.brand.50} {a63.surface.tint} )"
+                  }
+                },
+                "overlay": {
+                  "$type": "color",
+                  "$value": "{surface.light.1}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {surface.light.1} calc(100% - {a63.surface.tint}), {a63.brand.50} {a63.surface.tint} )"
+                  }
+                },
+                "muted": {
+                  "$type": "color",
+                  "$value": "{surface.light.3}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {surface.light.3} calc(100% - {a63.surface.tint}), {a63.brand.200} {a63.surface.tint} )"
+                  }
+                },
+                "control": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{surface.light.1}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix( in oklch, {surface.light.1} calc(100% - {a63.surface.tint}), {a63.brand.50} {a63.surface.tint} )"
+                    },
+                    "$description": "Recessed input surface (the field fill). Brightest surface in light mode so a\nfield reads as a clean well recessed into its panel via --a63-field-shadow."
+                  },
+                  "hover": {
+                    "$type": "color",
+                    "$value": "{surface.light.4}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix( in srgb, color-mix( in oklch, {surface.light.4} calc(100% - {a63.surface.tint}), {a63.brand.300} {a63.surface.tint} ), transparent 20% )"
+                    },
+                    "$description": "Translucent hover plate. The BASE bends toward the brand hue by the surface\ntint (same surface-4 -> brand-300 step as --a63-border-subtle) so it stays in\nfamily on tinted themes instead of reading as a raw neutral grey; the outer\nmix keeps the 20% translucency (value-identical at tint 0)."
+                  }
+                }
+              },
+              "text": {
+                "primary": {
+                  "$type": "color",
+                  "$value": "{surface.light.12}",
+                  "$description": "Text"
+                },
+                "secondary": {
+                  "$type": "color",
+                  "$value": "{surface.light.11}"
+                },
+                "accent": {
+                  "$type": "color",
+                  "$value": "{a63.brand.text}",
+                  "$description": "The brand as text (links, accents) on light surfaces; brand.css picks the\nramp step per brand. Use --a63-action-primary for fills."
+                }
+              },
+              "border": {
+                "subtle": {
+                  "$type": "color",
+                  "$value": "{surface.light.4}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {surface.light.4} calc(100% - {a63.surface.tint}), {a63.brand.300} {a63.surface.tint} )"
+                  },
+                  "$description": "Border"
+                },
+                "control": {
+                  "$type": "color",
+                  "$value": "{surface.light.5}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {surface.light.5} calc(100% - {a63.surface.tint}), {a63.brand.400} {a63.surface.tint} )"
+                  }
+                }
+              },
+              "action": {
+                "neutral": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{surface.light.12}",
+                    "$description": "Action — primary + focus ring live in tokens/brand.css (brand-ramp scoped).\nNeutral = the default variant's fill; sourced from surfaces (NOT --a63-text-*)\nso a theme can recolor text without turning the default button into a fill."
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{surface.light.2}"
+                  }
+                },
+                "danger": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{color.danger.600}"
+                  },
+                  "hover": {
+                    "$type": "color",
+                    "$value": "{a63.action.danger}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklch, {a63.action.danger} 90%, transparent)"
+                    }
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.white.100}",
+                    "$extensions": {
+                      "io.atom63.derive": "white"
+                    }
+                  }
+                }
+              },
+              "status": {
+                "info": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{color.info.600}",
+                    "$description": "Status (danger's status role is served by --a63-action-danger). The base is\nthe accent used for tinted callouts (bg = mix toward transparent, text/border\n= the accent); -foreground is the text/icon color ON a SOLID status fill.\nStep 600 on light surfaces and 500 on dark ones (the .dark block), so icons\ndrawn in the accent reach WCAG's 3:1 for graphics in both modes."
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.white.100}",
+                    "$extensions": {
+                      "io.atom63.derive": "white"
+                    }
+                  }
+                },
+                "success": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{color.success.600}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.white.100}",
+                    "$extensions": {
+                      "io.atom63.derive": "white"
+                    }
+                  }
+                },
+                "warning": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{color.warning.600}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.white.100}",
+                    "$extensions": {
+                      "io.atom63.derive": "white"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "dark": [
+          {
+            "a63": {
+              "surface": {
+                "page": {
+                  "$type": "color",
+                  "$value": "{surface.dark.1}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {surface.dark.1} calc(100% - {a63.surface.tint}), {a63.brand.950} {a63.surface.tint} )"
+                  }
+                },
+                "panel": {
+                  "$type": "color",
+                  "$value": "{surface.dark.2}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {surface.dark.2} calc(100% - {a63.surface.tint}), {a63.brand.900} {a63.surface.tint} )"
+                  }
+                },
+                "overlay": {
+                  "$type": "color",
+                  "$value": "{surface.dark.4}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {surface.dark.4} calc(100% - {a63.surface.tint}), {a63.brand.800} {a63.surface.tint} )"
+                  }
+                },
+                "muted": {
+                  "$type": "color",
+                  "$value": "{surface.dark.3}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {surface.dark.3} calc(100% - {a63.surface.tint}), {a63.brand.800} {a63.surface.tint} )"
+                  }
+                },
+                "control": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{surface.dark.1}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix( in oklch, {surface.dark.1} calc(100% - {a63.surface.tint}), {a63.brand.950} {a63.surface.tint} )"
+                    },
+                    "$description": "Recessed input surface — darkest surface in dark mode, so a field reads as a\nsunken well relative to its panel."
+                  },
+                  "hover": {
+                    "$type": "color",
+                    "$value": "{surface.dark.6}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix( in srgb, color-mix( in oklch, {surface.dark.6} calc(100% - {a63.surface.tint}), {a63.brand.600} {a63.surface.tint} ), transparent 20% )"
+                    },
+                    "$description": "Tint-aware translucent hover plate (dark) — surface-6 -> brand-600, matching\n--a63-border-subtle; outer mix keeps the 20% translucency."
+                  }
+                }
+              },
+              "text": {
+                "primary": {
+                  "$type": "color",
+                  "$value": "{surface.dark.12}"
+                },
+                "secondary": {
+                  "$type": "color",
+                  "$value": "{surface.dark.11}"
+                },
+                "accent": {
+                  "$type": "color",
+                  "$value": "{a63.brand.400}",
+                  "$description": "The primary fill is too dark to read as text on dark surfaces."
+                }
+              },
+              "border": {
+                "subtle": {
+                  "$type": "color",
+                  "$value": "{surface.dark.6}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {surface.dark.6} calc(100% - {a63.surface.tint}), {a63.brand.600} {a63.surface.tint} )"
+                  }
+                },
+                "control": {
+                  "$type": "color",
+                  "$value": "{surface.dark.7}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {surface.dark.7} calc(100% - {a63.surface.tint}), {a63.brand.500} {a63.surface.tint} )"
+                  }
+                }
+              },
+              "action": {
+                "neutral": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{surface.dark.12}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{surface.dark.1}"
+                  }
+                },
+                "danger": {
+                  "hover": {
+                    "$type": "color",
+                    "$value": "{a63.action.danger}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklch, {a63.action.danger} 82%, white 8%)"
+                    }
+                  }
+                }
+              },
+              "status": {
+                "info": {
+                  "$type": "color",
+                  "$value": "{color.info.500}"
+                },
+                "success": {
+                  "$type": "color",
+                  "$value": "{color.success.500}"
+                },
+                "warning": {
+                  "$type": "color",
+                  "$value": "{color.warning.500}"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/base"
+    },
+    {
+      "$ref": "#/modifiers/mode"
+    }
+  ],
+  "$extensions": {
+    "io.atom63.css": {
+      "attribute": "data-a63-mode",
+      "selectors": {
+        "light": ":root,\n.light,\n[data-a63-mode='light']",
+        "dark": ":is(.dark, [data-a63-mode='dark'])"
+      }
+    }
+  }
+}
