@@ -96,12 +96,14 @@
 
   /* Status (danger's status role is served by --a63-action-danger). The base is
      the accent used for tinted callouts (bg = mix toward transparent, text/border
-     = the accent); -foreground is the text/icon color ON a SOLID status fill. */
-  --a63-status-info: var(--color-info-500);
+     = the accent); -foreground is the text/icon color ON a SOLID status fill.
+     Step 600 on light surfaces and 500 on dark ones (the .dark block), so icons
+     drawn in the accent reach WCAG's 3:1 for graphics in both modes. */
+  --a63-status-info: var(--color-info-600);
   --a63-status-info-foreground: white;
-  --a63-status-success: var(--color-success-500);
+  --a63-status-success: var(--color-success-600);
   --a63-status-success-foreground: white;
-  --a63-status-warning: var(--color-warning-500);
+  --a63-status-warning: var(--color-warning-600);
   --a63-status-warning-foreground: white;
 }
 
@@ -170,5 +172,9 @@
 
   --a63-action-neutral: var(--surface-dark-12);
   --a63-action-neutral-foreground: var(--surface-dark-1);
+
+  --a63-status-info: var(--color-info-500);
+  --a63-status-success: var(--color-success-500);
+  --a63-status-warning: var(--color-warning-500);
   --a63-action-danger-hover: color-mix(in oklch, var(--a63-action-danger) 82%, white 8%);
 }

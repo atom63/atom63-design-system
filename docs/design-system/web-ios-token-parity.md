@@ -12,6 +12,14 @@
 > (what parity currently *means*), [personalization-axes.md](./personalization-axes.md)
 > (what the axes own), [authoring-surfaces.md](./authoring-surfaces.md) (where values live).
 
+> **Update 2026-09-24:** the colour side is fixed. `generate-swift-tokens.mjs` now
+> resolves every Swift colour from its web semantic or contract token through the
+> Figma sync model, with the defaults an app starts with (theme modern, brand b1,
+> surface n1), and the hand-written map is gone. The Swift file names the token
+> above each colour, and `packages/styles/src/tokens/swift-parity.browser.test.ts`
+> compares each one with the value Chromium paints, in light and dark mode. Brand,
+> theme and surface are still not native axes on iOS; see section C.
+
 ## Summary
 
 The web side is sound. Contracts are layered, axes are orthogonal, and the
@@ -108,7 +116,7 @@ adaptation rather than an implicit one.
 | --- | --- | --- |
 | Mode | ✅ | ✅ |
 | Design language | ✅ | n/a (iOS *is* the design language) |
-| Brand (b1–b6) | ✅ | ❌ hardcoded `color-b1-500` |
+| Brand (b1–b6) | ✅ | ❌ default b1 only (resolved from the semantic tokens) |
 | Theme (modern/aqua/retro/terminal) | ✅ | ❌ |
 | Surface (n1–n6) | ✅ | ❌ |
 | Surface tint | ✅ | ❌ |
@@ -524,12 +532,13 @@ Item 1 is **partially done**: the generator now also reads `contracts/control.cs
 the control ramp, press scale, disabled opacity and easing. The hand-written
 `colors` map is still the semantic source of truth. Remaining:
 
-1. Point the colour side at `semantics.css` too, and delete the hand-written map.
+1. ~~Point the colour side at `semantics.css` too, and delete the hand-written map.~~
+   Done 2026-09-24 (colours resolve through the Figma sync model).
 2. Wire `tokens/*.json` in as the authoritative slot map, or delete them, and extend
    coverage past Button/Input/Switch.
-3. Add a `scripts/check-cross-renderer-tokens.mjs` that compares resolved web
-   contract values against the generated Swift values, and put it in
-   `check:harness-architecture`.
+3. ~~Add a check that compares resolved web values against the generated Swift
+   values.~~ Done 2026-09-24 for colours, as `swift-parity.browser.test.ts` in the
+   styles browser tests, which CI already runs.
 4. Give `packages/ui-ios` a `test` script so `precheck` reaches it.
 
 ### C — product decision (not a cleanup)

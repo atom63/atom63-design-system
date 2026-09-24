@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "module": "Atom63UI",
-  "symbolCount": 273,
+  "symbolCount": 277,
   "symbols": [
     {
       "id": "s:8Atom63UI10AtomAvatarV",
@@ -116,6 +116,13 @@
       "source": "Generated/Atom63Tokens.generated.swift"
     },
     {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO10textAccentAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.textAccent",
+      "declaration": "static let textAccent: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
       "id": "s:8Atom63UI10AtomTokensO5ColorO11surfacePageAA0c7DynamicE0VvpZ",
       "kind": "swift.type.property",
       "path": "AtomTokens.Color.surfacePage",
@@ -214,6 +221,13 @@
       "source": "Generated/Atom63Tokens.generated.swift"
     },
     {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO14surfaceOverlayAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.surfaceOverlay",
+      "declaration": "static let surfaceOverlay: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
       "id": "s:8Atom63UI10AtomTokensO5ColorO17selectionTrackOffAA0c7DynamicE0VvpZ",
       "kind": "swift.type.property",
       "path": "AtomTokens.Color.selectionTrackOff",
@@ -253,6 +267,20 @@
       "kind": "swift.type.property",
       "path": "AtomTokens.Color.actionPrimaryForeground",
       "declaration": "static let actionPrimaryForeground: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO5scrimAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.scrim",
+      "declaration": "static let scrim: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO9focusRingAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.focusRing",
+      "declaration": "static let focusRing: AtomDynamicColor",
       "source": "Generated/Atom63Tokens.generated.swift"
     },
     {
@@ -2012,6 +2040,11 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO10textAccentAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI10AtomTokensO5ColorO11surfacePageAA0c7DynamicE0VvpZ",
       "target": "s:8Atom63UI10AtomTokensO5ColorO",
       "kind": "memberOf"
@@ -2082,6 +2115,11 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO14surfaceOverlayAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI10AtomTokensO5ColorO17selectionTrackOffAA0c7DynamicE0VvpZ",
       "target": "s:8Atom63UI10AtomTokensO5ColorO",
       "kind": "memberOf"
@@ -2108,6 +2146,16 @@
     },
     {
       "source": "s:8Atom63UI10AtomTokensO5ColorO23actionPrimaryForegroundAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO5scrimAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO9focusRingAA0c7DynamicE0VvpZ",
       "target": "s:8Atom63UI10AtomTokensO5ColorO",
       "kind": "memberOf"
     },

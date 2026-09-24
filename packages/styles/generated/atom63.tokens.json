@@ -43,9 +43,9 @@
   ],
   "summary": {
     "sourceFiles": 38,
-    "declarations": 1491,
+    "declarations": 1494,
     "uniqueCssVariables": 1021,
-    "figmaMappedDeclarations": 1470
+    "figmaMappedDeclarations": 1473
   },
   "entries": [
     {
@@ -5475,10 +5475,26 @@
       "figma": {
         "collection": "Atom63 Semantic",
         "path": "status/info",
-        "mode": "Light"
+        "mode": "Dark"
       },
       "lifecycle": "preview",
       "aliases": ["--color-info-500"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-status-info",
+      "cssVar": "--a63-status-info",
+      "type": "color",
+      "value": "var(--color-info-600)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "status/info",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-info-600"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -5506,10 +5522,26 @@
       "figma": {
         "collection": "Atom63 Semantic",
         "path": "status/success",
-        "mode": "Light"
+        "mode": "Dark"
       },
       "lifecycle": "preview",
       "aliases": ["--color-success-500"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-status-success",
+      "cssVar": "--a63-status-success",
+      "type": "color",
+      "value": "var(--color-success-600)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "status/success",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-success-600"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -5537,10 +5569,26 @@
       "figma": {
         "collection": "Atom63 Semantic",
         "path": "status/warning",
-        "mode": "Light"
+        "mode": "Dark"
       },
       "lifecycle": "preview",
       "aliases": ["--color-warning-500"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-status-warning",
+      "cssVar": "--a63-status-warning",
+      "type": "color",
+      "value": "var(--color-warning-600)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "status/warning",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-warning-600"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {

@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url'
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const manifestPath = resolve(packageRoot, '../styles/generated/atom63.tokens.json')
+const figmaModelPath = resolve(packageRoot, '../styles/generated/atom63.figma-sync.json')
 const outputPath = resolve(packageRoot, 'Sources/Atom63UI/Generated/Atom63Tokens.generated.swift')
 
 /*
@@ -14,6 +15,23 @@ const outputPath = resolve(packageRoot, 'Sources/Atom63UI/Generated/Atom63Tokens
  * restated in Swift or re-parsed from CSS.
  */
 const manifest = JSON.parse(await readFile(manifestPath, 'utf8'))
+
+/*
+ * Colors come from the Figma sync model instead: @atom63/styles resolves every
+ * semantic token there per mode in Chromium, so iOS, Figma and the web read the
+ * same values. Axes other than light/dark use the defaults an app starts with.
+ */
+const figmaModel = JSON.parse(await readFile(figmaModelPath, 'utf8'))
+const variablesByToken = new Map(
+  figmaModel.collections.flatMap(collection =>
+    collection.variables.map(variable => [variable.token, { collection, variable }])
+  )
+)
+const defaultModes = {
+  'Atom63 Brand': 'b1',
+  'Atom63 Surface': 'n1',
+  'Atom63 Design Language': 'ios',
+}
 
 const rootBlock = {
   label: ':root',
@@ -103,15 +121,6 @@ function declaration(name) {
   return blockValue(rootBlock, name)
 }
 
-function rgba(name) {
-  const value = declaration(name)
-  const match = value.match(/^rgba\(\s*([\d.]+),\s*([\d.]+),\s*([\d.]+),\s*([\d.]+)\s*\)$/)
-  if (!match) {
-    throw new Error(`Expected --${name} to be rgba(), received ${value}`)
-  }
-  return match.slice(1).map(Number)
-}
-
 function pixels(name) {
   const value = declaration(name)
   const match = value.match(/^([\d.]+)px$/)
@@ -130,37 +139,60 @@ function milliseconds(name) {
   return Number(match[1])
 }
 
-function components(name) {
-  const [red, green, blue, opacity] = rgba(name)
-  return `AtomColorComponents(red: ${red / 255}, green: ${green / 255}, blue: ${blue / 255}, opacity: ${opacity})`
+/** The RGBA value of a token in light or dark mode, following aliases. */
+function resolveColor(token, mode, seen = []) {
+  const found = variablesByToken.get(token)
+  if (!found) throw new Error(`${token} is not in the Figma sync model`)
+  if (seen.includes(token)) throw new Error(`Alias cycle: ${[...seen, token].join(' -> ')}`)
+  const { collection, variable } = found
+  const modeName = collection.modes.includes(mode)
+    ? mode
+    : (defaultModes[collection.name] ?? collection.modes[0])
+  const entry = variable.values[modeName]
+  if (entry?.alias) return resolveColor(entry.alias, mode, [...seen, token])
+  const value = entry?.value
+  if (typeof value !== 'object' || value === null || !('r' in value)) {
+    throw new Error(`${token} does not resolve to a color in ${modeName} mode`)
+  }
+  return value
 }
 
-function dynamicColor(light, dark = light) {
-  return `AtomDynamicColor(light: ${components(light)}, dark: ${components(dark)})`
+function components({ r, g, b, a }) {
+  return `AtomColorComponents(red: ${r}, green: ${g}, blue: ${b}, opacity: ${a})`
 }
 
+function dynamicColor(token) {
+  return `AtomDynamicColor(light: ${components(resolveColor(token, 'light'))}, dark: ${components(resolveColor(token, 'dark'))})`
+}
+
+/* Each Swift color is one web semantic or contract token. */
 const colors = {
-  surfacePage: ['color-n1-light-2', 'color-n1-dark-1'],
-  surfacePanel: ['color-n1-light-1', 'color-n1-dark-2'],
-  surfaceMuted: ['color-n1-light-3', 'color-n1-dark-3'],
-  surfaceControl: ['color-n1-light-1', 'color-n1-dark-1'],
-  textPrimary: ['color-n1-light-12', 'color-n1-dark-12'],
-  textSecondary: ['color-n1-light-11', 'color-n1-dark-11'],
-  borderSubtle: ['color-n1-light-4', 'color-n1-dark-6'],
-  borderControl: ['color-n1-light-5', 'color-n1-dark-7'],
-  actionPrimary: ['color-b1-500'],
-  actionPrimaryPressed: ['color-b1-600'],
-  actionPrimaryForeground: ['color-b1-50'],
-  actionNeutral: ['color-n1-light-12', 'color-n1-dark-12'],
-  actionNeutralForeground: ['color-n1-light-2', 'color-n1-dark-1'],
-  actionDanger: ['color-danger-600'],
-  actionDangerForeground: ['color-white-100'],
-  statusInfo: ['color-info-500'],
-  statusSuccess: ['color-success-600'],
-  statusWarning: ['color-warning-600'],
-  selectionTrackOff: ['color-n1-light-7', 'color-n1-dark-7'],
-  selectionThumb: ['color-white-100'],
-  skeletonHighlight: ['color-white-60', 'color-white-10'],
+  surfacePage: '--a63-surface-page',
+  surfacePanel: '--a63-surface-panel',
+  surfaceMuted: '--a63-surface-muted',
+  surfaceControl: '--a63-surface-control',
+  surfaceOverlay: '--a63-surface-overlay',
+  textPrimary: '--a63-text-primary',
+  textSecondary: '--a63-text-secondary',
+  textAccent: '--a63-text-accent',
+  borderSubtle: '--a63-border-subtle',
+  borderControl: '--a63-border-control',
+  actionPrimary: '--a63-action-primary',
+  actionPrimaryPressed: '--a63-action-primary-hover',
+  actionPrimaryForeground: '--a63-action-primary-foreground',
+  actionNeutral: '--a63-action-neutral',
+  actionNeutralForeground: '--a63-action-neutral-foreground',
+  actionDanger: '--a63-action-danger',
+  actionDangerForeground: '--a63-action-danger-foreground',
+  statusInfo: '--a63-status-info',
+  statusSuccess: '--a63-status-success',
+  statusWarning: '--a63-status-warning',
+  focusRing: '--a63-focus-ring',
+  scrim: '--a63-scrim',
+  // The switch track when off: the web recipe falls back to surface-muted.
+  selectionTrackOff: '--a63-surface-muted',
+  selectionThumb: '--a63-selection-thumb',
+  skeletonHighlight: '--a63-skeleton-highlight',
 }
 
 const spaces = {
@@ -180,7 +212,7 @@ const radii = {
 }
 
 const generated = `// Generated by Scripts/generate-swift-tokens.mjs.
-// Source: @atom63/styles foundation primitives. Do not edit manually.
+// Source: the @atom63/styles token manifest and Figma sync model. Do not edit manually.
 
 import SwiftUI
 
@@ -220,7 +252,8 @@ public enum AtomTokens {
     public enum Color {
 ${Object.entries(colors)
   .map(
-    ([name, [light, dark]]) => `        public static let ${name} = ${dynamicColor(light, dark)}`
+    ([name, token]) =>
+      `        /// ${token}\n        public static let ${name} = ${dynamicColor(token)}`
   )
   .join('\n')}
     }
