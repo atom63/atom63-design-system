@@ -158,7 +158,7 @@
         {
           "name": "choice/feedback/ease",
           "token": "--a63-choice-feedback-ease",
-          "type": "FLOAT",
+          "type": "STRING",
           "values": {
             "Value": {
               "alias": "--a63-control-feedback-ease"
@@ -248,7 +248,7 @@
         {
           "name": "control/font/family",
           "token": "--a63-control-font-family",
-          "type": "FLOAT",
+          "type": "STRING",
           "values": {
             "Value": {
               "alias": "--font-family-sans"
@@ -728,7 +728,7 @@
         {
           "name": "trigger/feedback/ease",
           "token": "--a63-trigger-feedback-ease",
-          "type": "FLOAT",
+          "type": "STRING",
           "values": {
             "Value": {
               "alias": "--a63-control-feedback-ease"
@@ -1111,7 +1111,7 @@
         {
           "name": "motion/ease/emphasized",
           "token": "--a63-motion-ease-emphasized",
-          "type": "FLOAT",
+          "type": "STRING",
           "values": {
             "Value": {
               "alias": "--ease-emphasized"
@@ -1121,7 +1121,7 @@
         {
           "name": "motion/ease/overlay",
           "token": "--a63-motion-ease-overlay",
-          "type": "FLOAT",
+          "type": "STRING",
           "values": {
             "Value": {
               "alias": "--ease-overlay"
@@ -1131,7 +1131,7 @@
         {
           "name": "motion/ease/scrim",
           "token": "--a63-motion-ease-scrim",
-          "type": "FLOAT",
+          "type": "STRING",
           "values": {
             "Value": {
               "alias": "--ease-scrim"
@@ -1141,7 +1141,7 @@
         {
           "name": "motion/ease/standard",
           "token": "--a63-motion-ease-standard",
-          "type": "FLOAT",
+          "type": "STRING",
           "values": {
             "Value": {
               "alias": "--ease-standard"
@@ -12731,7 +12731,7 @@
         {
           "name": "control/feedback/ease",
           "token": "--a63-control-feedback-ease",
-          "type": "FLOAT",
+          "type": "STRING",
           "values": {
             "web": {
               "alias": "--a63-motion-ease-standard"
@@ -13354,7 +13354,7 @@
         {
           "name": "font/app",
           "token": "--a63-font-app",
-          "type": "FLOAT",
+          "type": "STRING",
           "values": {
             "sans": {
               "alias": "--font-family-sans"

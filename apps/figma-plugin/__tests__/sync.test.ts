@@ -59,6 +59,19 @@ function createFakeApi({ maxModes = 10 } = {}) {
         resolvedType: type,
         valuesByMode: {},
         setValueForMode(modeId: string, value: RawValue) {
+          // Like Figma: a value, or an alias's target, must match the variable's type.
+          const valueType =
+            typeof value === 'object' && 'type' in value
+              ? variables.get(value.id)?.resolvedType
+              : typeof value === 'number'
+                ? 'FLOAT'
+                : typeof value === 'string'
+                  ? 'STRING'
+                  : typeof value === 'boolean'
+                    ? 'BOOLEAN'
+                    : 'COLOR'
+          if (valueType !== this.resolvedType)
+            throw new Error(`in setValueForMode: Mismatched variable resolved type for ${modeId}`)
           this.valuesByMode[modeId] = value
         },
         getPluginData: key => pluginData.get(key) ?? '',

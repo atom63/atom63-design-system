@@ -427,6 +427,8 @@ async function main() {
     if (nameCollisions.length)
       throw new Error(`Duplicate Figma variable names: ${nameCollisions.join(', ')}`)
 
+    alignAliasTypes([...collections.values()])
+
     const ordered = [...collections.values()]
     const output = {
       schemaVersion: 1,
@@ -479,6 +481,38 @@ function toValue(record, raw, result, synced) {
   if (result.resolved === null || result.resolved === undefined || Number.isNaN(result.resolved))
     return null
   return { value: result.resolved }
+}
+
+/**
+ * Figma only accepts an alias to a variable of the same resolved type. A token's
+ * manifest type is a heuristic (a font stack is `typography`, so FLOAT), so a
+ * variable whose values are aliases takes its type from the variables it points
+ * at, following alias chains until nothing changes. A variable whose modes would
+ * need different types fails the build instead of failing in Figma.
+ */
+function alignAliasTypes(collections) {
+  const variables = collections.flatMap(collection => collection.variables)
+  const byToken = new Map(variables.map(item => [item.token, item]))
+  let changed = true
+  while (changed) {
+    changed = false
+    for (const item of variables) {
+      const values = Object.values(item.values)
+      if (values.some(value => !value.alias)) continue
+      const [type] = new Set(values.map(value => byToken.get(value.alias).type))
+      if (type && type !== item.type) {
+        item.type = type
+        changed = true
+      }
+    }
+  }
+  const mismatches = variables.flatMap(item =>
+    Object.entries(item.values)
+      .filter(([, value]) => value.alias && byToken.get(value.alias).type !== item.type)
+      .map(([mode, value]) => `${item.name} (${item.type}) ${mode} -> ${value.alias}`)
+  )
+  if (mismatches.length)
+    throw new Error(`Figma aliases must match their target's type: ${mismatches.join(', ')}`)
 }
 
 /**

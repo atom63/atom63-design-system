@@ -139,7 +139,7 @@ Before promoting any package to stable/latest:
 - [x] Audit published file lists for CSS, dist output, and accidental test/internal files; CI now regenerates `docs/design-system/audits/package-surface.json` and fails on drift.
 - [x] Run a versioned visual QA matrix definition and published/default product-adopter sanity pass.
 - [x] Keep component-state screenshot baselines: Storybook's visual regression compares all 446 stories, including the four-theme light/dark matrix of 62 components, on every pull request (`apps/storybook`, `.github/workflows/visual.yml`).
-- [ ] Complete Figma manual QA: variables sync, styleguide generation, idempotent rerun.
+- [x] Complete Figma manual QA in the Figma desktop app (2026-09-24): the sync created 13 collections, 26 modes and 984 variables in a new file, and a second preview found nothing to change; editing `spacing/4` and `color/b1/500` in Figma, exporting the patch and applying it with `tokens:apply` round-tripped exactly (the Foundation collection then previews as 685 unchanged). The run found and fixed alias variables whose Figma type did not match their target's.
 - [x] Create a public adopter [quickstart](./quickstart.md) covering beta install, CSS, theme/mode, a first component, preview policy, and consumer verification.
 - [x] Publish the public [support and governance policy](./support-governance.md) covering beta scope, compatibility tiers, deprecation, reporting, lifecycle evidence, and human release gates.
 - [ ] Enforce support-tier and human-approval boundaries in release and API-change checks, and adopt the final stable browser/runtime/assistive-technology support matrix.

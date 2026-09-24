@@ -74,8 +74,20 @@
 - **不在插件里放 GitHub token**：插件只产出文件，PR 在仓库这边开，凭据不进 Figma。
 - **验证**：插件端 3 个导出测试（同步后无改动、颜色和数值导出、不支持的情况带原因跳过）；
   仓库端 5 个测试（换算、各色彩空间和单位、全有或全无、格式校验）；端到端把一个补丁应用到真实源文件，
-  JSON 只改了对应的值，CSS、manifest、Figma 模型随之更新。本机没有 Figma 桌面版，
-  还没在真实 Figma 文件里走过一遍。
+  JSON 只改了对应的值，CSS、manifest、Figma 模型随之更新。
+
+### 真实 Figma 验证（2026-09-24）
+
+- **代码 → Figma**：在新文件里同步，创建 13 个集合、26 个模式、984 个变量；再次预览没有任何改动。
+- **发现并修复的问题**：第一次同步在 `setValueForMode` 报 "Mismatched variable resolved type"。
+  原因是同步模型里有 9 个引用变量（字体族 `font/app`、`control/font/family`，缓动曲线
+  `motion/ease/*` 及引用它们的 `*-feedback-ease`）按启发式被标成 FLOAT，而引用目标是 STRING；
+  Figma 要求引用和目标类型一致。生成器现在让引用变量继承目标类型（沿引用链迭代），仍不一致就构建失败；
+  测试里的 Figma 假 API 也加上了同样的类型校验，旧模型会让 9 个测试失败。
+- **Figma → 代码**：在 Figma 里把 `spacing/4` 改成 18、`color/b1/500` 改成 `#1A66E6`，插件找到正好这 2 个，
+  导出补丁；`tokens:apply` 把 Figma 的单精度浮点值精确还原成 `#1a66e6`（8 位通道）和 `18px`。
+  用改后的代码重新预览，Foundation 685 个全部不变；Semantic 里由 `brand-500` 计算出的
+  `--a63-action-primary-foreground` 和 `--a63-focus-ring` 随之需要更新，符合预期。测试改动随后还原，没有提交。
 
 ## 后续层
 
