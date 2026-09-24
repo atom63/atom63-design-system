@@ -80,19 +80,29 @@ jobs:
     if: ${{ github.event_name == 'push' && needs.detect.outputs.pending_changesets != '0' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    # The push and the pull request go through the Atom63 bot app: work done
+    # with GITHUB_TOKEN starts no workflows, so the pull request would get no CI.
+    # GITHUB_TOKEN only lets the changelog generator read pull request metadata.
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read
+      pull-requests: read
     env:
       BRANCH: changeset-release/main
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
+      - name: Create a bot token
+        id: bot
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ vars.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Check out repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
+          token: ${{ steps.bot.outputs.token }}
 
       - name: Set up Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
@@ -110,10 +120,12 @@ jobs:
         run: pnpm release:version
 
       - name: Push the release branch and open or update the pull request
+        env:
+          GH_TOKEN: ${{ steps.bot.outputs.token }}
         run: |
           set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "atom63-ds-bot[bot]"
+          git config user.email "333482271+atom63-ds-bot[bot]@users.noreply.github.com"
           git checkout -B "$BRANCH"
           git add -A
           versions=$(for dir in packages/styles packages/ui-foundation packages/ui-react; do node -p "const p=require('./${dir}/package.json'); '- ' + p.name + '@' + p.version"; done)
@@ -263,14 +275,24 @@ jobs:
     needs: publish
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    # Pushes to main and tags go through the Atom63 bot app, which the main
+    # ruleset lets through; GITHUB_TOKEN stays read-only.
     permissions:
-      contents: write
+      contents: read
 
     steps:
+      - name: Create a bot token
+        id: bot
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ vars.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Check out main
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           ref: main
+          token: ${{ steps.bot.outputs.token }}
 
       - name: Set up Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
@@ -323,8 +345,8 @@ jobs:
         run: |
           set -euo pipefail
           pnpm check:ds-registry-smoke -- --write
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "atom63-ds-bot[bot]"
+          git config user.email "333482271+atom63-ds-bot[bot]@users.noreply.github.com"
           git add docs/design-system/audits/registry-consumer-smoke.json
           if git diff --cached --quiet; then
             echo "Evidence already current."
