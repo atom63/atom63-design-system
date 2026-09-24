@@ -153,6 +153,20 @@ export function SyncPage() {
           </Alert>
         )}
 
+        {applied && applied.applied.moved > 0 && (
+          <Alert
+            title="Variables moved to another collection"
+            variant={applied.applied.bindingsRemaining > 0 ? 'warning' : 'success'}
+          >
+            {applied.applied.moved} variables moved to a new collection, and{' '}
+            {applied.applied.bindingsRebound} bindings in this file now use the new variables. The
+            old variables are kept, renamed with a “(moved)” prefix and hidden from publishing.{' '}
+            {applied.applied.bindingsRemaining > 0
+              ? `${applied.applied.bindingsRemaining} layers, styles or variables still use them (for example a binding inside a text range); rebind those by hand before deleting the (moved) group.`
+              : 'Nothing uses them any more, so you can delete the (moved) group.'}
+          </Alert>
+        )}
+
         {plan && plan.totals.typeConflicts > 0 && (
           <Alert title="Type conflicts" variant="warning">
             {plan.totals.typeConflicts} variables exist with a different type and are left

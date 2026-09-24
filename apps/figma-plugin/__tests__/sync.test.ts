@@ -4,6 +4,7 @@ import { resolve } from 'node:path'
 import {
   applyPlan,
   type CollectionLike,
+  MOVED_PREFIX,
   type ModeLike,
   type RawValue,
   readSnapshot,
@@ -87,9 +88,9 @@ function createFakeApi({ maxModes = 10 } = {}) {
   return { api, collections, variables }
 }
 
-async function sync(api: VariablesApi) {
-  const plan = planSync(model, await readSnapshot(api, model))
-  const result = await applyPlan(api, model, plan)
+async function sync(api: VariablesApi, syncModel: SyncModel = model) {
+  const plan = planSync(syncModel, await readSnapshot(api, syncModel))
+  const result = await applyPlan(api, syncModel, plan)
   return { plan, result }
 }
 
@@ -113,6 +114,7 @@ describe('Atom63 Figma sync', () => {
     const plan = planSync(model, await readSnapshot(api, model))
 
     expect(plan.totals).toEqual({
+      move: 0,
       create: 0,
       update: 0,
       unchanged: model.summary.variables,
@@ -195,6 +197,78 @@ describe('Atom63 Figma sync', () => {
     ).toBe(true)
     expect(valuesEqual({ value: 44 }, { value: 40 })).toBe(false)
     expect(valuesEqual({ alias: '--a' }, { value: 1 })).toBe(false)
+  })
+})
+
+describe('Atom63 Figma sync: a token moving to another collection', () => {
+  // Two small models: --x lives in Contract, then moves to a two-mode Theme
+  // collection; --y aliases --x throughout.
+  const color = (r: number) => ({ value: { r, g: 0, b: 0, a: 1 } })
+  const before: SyncModel = {
+    schemaVersion: 1,
+    summary: { collections: 2, variables: 2, aliasValues: 1, skipped: 0 },
+    collections: [
+      {
+        name: 'Atom63 Contract',
+        modes: ['Value'],
+        variables: [{ name: 'x', token: '--x', type: 'COLOR', values: { Value: color(0.2) } }],
+      },
+      {
+        name: 'Atom63 Semantic',
+        modes: ['Value'],
+        variables: [
+          { name: 'y', token: '--y', type: 'COLOR', values: { Value: { alias: '--x' } } },
+        ],
+      },
+    ],
+    skipped: [],
+  }
+  const after: SyncModel = {
+    ...before,
+    collections: [
+      { name: 'Atom63 Contract', modes: ['Value'], variables: [] },
+      before.collections[1],
+      {
+        name: 'Atom63 Theme',
+        modes: ['modern-light', 'aqua-light'],
+        variables: [
+          {
+            name: 'x',
+            token: '--x',
+            type: 'COLOR',
+            values: { 'modern-light': color(0.2), 'aqua-light': color(0.8) },
+          },
+        ],
+      },
+    ],
+  }
+
+  it('creates the variable in its new collection, re-points aliases and retires the old one', async () => {
+    const fake = createFakeApi()
+    await sync(fake.api, before)
+    const oldX = [...fake.variables.values()].find(item => item.getPluginData(TOKEN_KEY) === '--x')
+    const { plan, result } = await sync(fake.api, after)
+
+    expect(plan.totals.move).toBe(1)
+    expect(plan.collections.find(item => item.name === 'Atom63 Contract')?.orphaned).toEqual([])
+    expect(result.moved).toBe(1)
+
+    const newX = [...fake.variables.values()].find(item => item.getPluginData(TOKEN_KEY) === '--x')
+    expect(newX?.id).not.toBe(oldX?.id)
+    const theme = fake.collections.find(item => item.name === 'Atom63 Theme')
+    expect(theme?.variableIds).toContain(newX?.id)
+
+    // --y now aliases the new variable in every mode.
+    const y = [...fake.variables.values()].find(item => item.getPluginData(TOKEN_KEY) === '--y')
+    expect(Object.values(y?.valuesByMode ?? {})).toEqual([{ type: 'VARIABLE_ALIAS', id: newX?.id }])
+
+    // The old variable is kept, renamed and untagged, so no design loses a binding.
+    expect(oldX?.name).toBe(`${MOVED_PREFIX}/x`)
+    expect(oldX?.getPluginData(TOKEN_KEY)).toBe('')
+    expect(oldX?.hiddenFromPublishing).toBe(true)
+
+    const again = planSync(after, await readSnapshot(fake.api, after))
+    expect(again.totals).toMatchObject({ move: 0, create: 0, update: 0, orphaned: 0 })
   })
 })
 

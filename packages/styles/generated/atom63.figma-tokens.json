@@ -219,6 +219,38 @@
       "name": "a63-action-neutral",
       "cssVar": "--a63-action-neutral",
       "type": "color",
+      "value": "color-mix(in oklch, var(--surface-light-3) 60%, white)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "action/neutral",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--surface-light-3"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-action-neutral",
+      "cssVar": "--a63-action-neutral",
+      "type": "color",
+      "value": "color-mix( in oklch, var(--surface-dark-3) 86%, var(--a63-action-primary) 14% )",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "action/neutral",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--surface-dark-3"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-action-neutral",
+      "cssVar": "--a63-action-neutral",
+      "type": "color",
       "value": "var(--surface-dark-12)",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
@@ -246,6 +278,38 @@
       "lifecycle": "preview",
       "aliases": ["--surface-light-12"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-action-neutral-foreground",
+      "cssVar": "--a63-action-neutral-foreground",
+      "type": "color",
+      "value": "color-mix( in oklch, var(--a63-action-primary) 80%, var(--surface-light-12) )",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "action/neutral/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--surface-light-12"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-action-neutral-foreground",
+      "cssVar": "--a63-action-neutral-foreground",
+      "type": "color",
+      "value": "var(--a63-text-accent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "action/neutral/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-accent"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-action-neutral-foreground",
@@ -1409,6 +1473,38 @@
       "name": "a63-border-control",
       "cssVar": "--a63-border-control",
       "type": "color",
+      "value": "color-mix( in oklch, var(--a63-action-primary) 26%, color-mix(in oklch, var(--surface-light-5) 60%, white) )",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "border/control",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--surface-light-5"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-border-control",
+      "cssVar": "--a63-border-control",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 42%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "border/control",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-border-control",
+      "cssVar": "--a63-border-control",
+      "type": "color",
       "value": "color-mix( in oklch, var(--surface-dark-7) calc(100% - var(--a63-surface-tint)), var(--a63-brand-500) var(--a63-surface-tint) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
@@ -1436,6 +1532,38 @@
       "lifecycle": "preview",
       "aliases": ["--a63-brand-400", "--a63-surface-tint", "--surface-light-5"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-border-subtle",
+      "cssVar": "--a63-border-subtle",
+      "type": "color",
+      "value": "color-mix( in oklch, var(--a63-action-primary) 16%, color-mix(in oklch, var(--surface-light-6) 50%, white) )",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "border/subtle",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--surface-light-6"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-border-subtle",
+      "cssVar": "--a63-border-subtle",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 22%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "border/subtle",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-border-subtle",
@@ -2778,6 +2906,52 @@
       "scope": ":root"
     },
     {
+      "name": "a63-choice-box-shadow",
+      "cssVar": "--a63-choice-box-shadow",
+      "type": "shadow",
+      "value": "inset 0 1px 2px color-mix(in oklch, black 14%, transparent), inset 0 -1px 0 color-mix(in oklch, white 50%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "choice/box/shadow",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-choice-box-shadow",
+      "cssVar": "--a63-choice-box-shadow",
+      "type": "shadow",
+      "value": "inset 1px 1px 0 color-mix(in oklch, black 24%, transparent), inset -1px -1px 0 color-mix(in oklch, white 42%, transparent)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "choice/box/shadow",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-choice-box-shadow",
+      "cssVar": "--a63-choice-box-shadow",
+      "type": "shadow",
+      "value": "inset 0 0 5px -2px color-mix(in oklch, var(--a63-action-primary) 32%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "choice/box/shadow",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']"
+    },
+    {
       "name": "a63-choice-box-shadow-checked",
       "cssVar": "--a63-choice-box-shadow-checked",
       "type": "shadow",
@@ -2790,6 +2964,52 @@
       },
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-choice-box-shadow-checked",
+      "cssVar": "--a63-choice-box-shadow-checked",
+      "type": "shadow",
+      "value": "inset 0 1px 0 color-mix(in oklch, white 34%, transparent), inset 0 -1px 1px color-mix(in oklch, black 16%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "choice/box/shadow/checked",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-choice-box-shadow-checked",
+      "cssVar": "--a63-choice-box-shadow-checked",
+      "type": "shadow",
+      "value": "inset 1px 1px 0 color-mix(in oklch, white 38%, transparent), inset -1px -1px 0 color-mix(in oklch, black 24%, transparent)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "choice/box/shadow/checked",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-choice-box-shadow-checked",
+      "cssVar": "--a63-choice-box-shadow-checked",
+      "type": "shadow",
+      "value": "inset 0 0 0 1px color-mix(in oklch, var(--a63-action-primary) 44%, transparent), 0 0 10px -4px color-mix(in oklch, var(--a63-action-primary) 55%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "choice/box/shadow/checked",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']"
     },
     {
       "name": "a63-choice-feedback-duration",
@@ -2896,6 +3116,21 @@
       "scope": ":root"
     },
     {
+      "name": "a63-control-border-width",
+      "cssVar": "--a63-control-border-width",
+      "type": "dimension",
+      "value": "2px",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/border/width",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
       "name": "a63-control-feedback-duration",
       "cssVar": "--a63-control-feedback-duration",
       "type": "motion",
@@ -2957,6 +3192,22 @@
       "scope": ":root"
     },
     {
+      "name": "a63-control-focus-ring-color",
+      "cssVar": "--a63-control-focus-ring-color",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 55%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/focus/ring/color",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']"
+    },
+    {
       "name": "a63-control-focus-ring-width",
       "cssVar": "--a63-control-focus-ring-width",
       "type": "dimension",
@@ -2969,6 +3220,36 @@
       },
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-control-focus-ring-width",
+      "cssVar": "--a63-control-focus-ring-width",
+      "type": "dimension",
+      "value": "4px",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/focus/ring/width",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-control-focus-ring-width",
+      "cssVar": "--a63-control-focus-ring-width",
+      "type": "dimension",
+      "value": "2px",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/focus/ring/width",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='retro']"
     },
     {
       "name": "a63-control-font-family",
@@ -2984,6 +3265,22 @@
       "lifecycle": "preview",
       "aliases": ["--font-family-sans"],
       "scope": ":root"
+    },
+    {
+      "name": "a63-control-font-family",
+      "cssVar": "--a63-control-font-family",
+      "type": "typography",
+      "value": "var(--font-family-mono)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/font/family",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--font-family-mono"],
+      "scope": "[data-a63-theme='terminal']"
     },
     {
       "name": "a63-control-font-size-lg",
@@ -4013,6 +4310,54 @@
       "scope": ":root"
     },
     {
+      "name": "a63-control-radius",
+      "cssVar": "--a63-control-radius",
+      "type": "radius",
+      "value": "var(--radius-md)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/radius",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--radius-md"],
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-control-radius",
+      "cssVar": "--a63-control-radius",
+      "type": "radius",
+      "value": "var(--radius-sm)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/radius",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--radius-sm"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-control-radius",
+      "cssVar": "--a63-control-radius",
+      "type": "radius",
+      "value": "var(--radius-sm)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/radius",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--radius-sm"],
+      "scope": "[data-a63-theme='terminal']"
+    },
+    {
       "name": "a63-control-shadow",
       "cssVar": "--a63-control-shadow",
       "type": "shadow",
@@ -4025,6 +4370,68 @@
       },
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-control-shadow",
+      "cssVar": "--a63-control-shadow",
+      "type": "shadow",
+      "value": "inset 0 1px 0 color-mix(in oklch, white 85%, transparent), inset 0 -1px 1px color-mix(in oklch, black 10%, transparent), 0 1px 2px color-mix(in oklch, black 18%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/shadow",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-control-shadow",
+      "cssVar": "--a63-control-shadow",
+      "type": "shadow",
+      "value": "inset 0 1px 0 color-mix(in oklch, white 16%, transparent)",
+      "sourceFile": "packages/styles/src/themes/modern.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/shadow",
+        "mode": "theme: modern"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='modern']"
+    },
+    {
+      "name": "a63-control-shadow",
+      "cssVar": "--a63-control-shadow",
+      "type": "shadow",
+      "value": "inset 2px 2px 0 color-mix(in oklch, white 55%, transparent), inset -2px -2px 0 color-mix(in oklch, black 28%, transparent), var(--retro-bevel-drop)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/shadow",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--retro-bevel-drop"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-control-shadow",
+      "cssVar": "--a63-control-shadow",
+      "type": "shadow",
+      "value": "inset 0 0 0 1px color-mix(in oklch, var(--a63-action-primary) 32%, transparent), 0 0 14px -2px color-mix(in oklch, var(--a63-action-primary) 45%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/shadow",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']"
     },
     {
       "name": "a63-control-shadow-active",
@@ -4042,6 +4449,67 @@
       "scope": ":root"
     },
     {
+      "name": "a63-control-shadow-active",
+      "cssVar": "--a63-control-shadow-active",
+      "type": "shadow",
+      "value": "inset 0 1px 1px color-mix(in oklch, black 14%, transparent), inset 0 -1px 0 color-mix(in oklch, white 40%, transparent), 0 0 0 color-mix(in oklch, black 0%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/shadow/active",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-control-shadow-active",
+      "cssVar": "--a63-control-shadow-active",
+      "type": "shadow",
+      "value": "inset 0 1px 0 color-mix(in oklch, black 8%, transparent)",
+      "sourceFile": "packages/styles/src/themes/modern.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/shadow/active",
+        "mode": "theme: modern"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='modern']"
+    },
+    {
+      "name": "a63-control-shadow-active",
+      "cssVar": "--a63-control-shadow-active",
+      "type": "shadow",
+      "value": "inset 2px 2px 0 color-mix(in oklch, black 30%, transparent), inset -1px -1px 0 color-mix(in oklch, white 22%, transparent)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/shadow/active",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-control-shadow-active",
+      "cssVar": "--a63-control-shadow-active",
+      "type": "shadow",
+      "value": "inset 0 0 0 1px color-mix(in oklch, var(--a63-action-primary) 48%, transparent), 0 0 8px -2px color-mix(in oklch, var(--a63-action-primary) 55%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/shadow/active",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']"
+    },
+    {
       "name": "a63-control-shadow-flat",
       "cssVar": "--a63-control-shadow-flat",
       "type": "shadow",
@@ -4055,6 +4523,36 @@
       "lifecycle": "preview",
       "aliases": ["--a63-control-shadow"],
       "scope": ":root"
+    },
+    {
+      "name": "a63-control-shadow-flat",
+      "cssVar": "--a63-control-shadow-flat",
+      "type": "shadow",
+      "value": "inset 0 1px 0 color-mix(in oklch, white 52%, transparent), inset 0 -1px 1px color-mix(in oklch, black 7%, transparent), 0 1px 2px color-mix(in oklch, black 14%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/shadow/flat",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-control-shadow-flat",
+      "cssVar": "--a63-control-shadow-flat",
+      "type": "shadow",
+      "value": "0 0 #0000",
+      "sourceFile": "packages/styles/src/themes/modern.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/shadow/flat",
+        "mode": "theme: modern"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='modern']"
     },
     {
       "name": "a63-control-shadow-tint",
@@ -4071,6 +4569,36 @@
       "scope": ":root"
     },
     {
+      "name": "a63-control-shadow-tint",
+      "cssVar": "--a63-control-shadow-tint",
+      "type": "shadow",
+      "value": "40%",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/shadow/tint",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-control-shadow-tint",
+      "cssVar": "--a63-control-shadow-tint",
+      "type": "shadow",
+      "value": "24%",
+      "sourceFile": "packages/styles/src/themes/modern.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/shadow/tint",
+        "mode": "theme: modern"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='modern']"
+    },
+    {
       "name": "a63-control-text-shadow",
       "cssVar": "--a63-control-text-shadow",
       "type": "shadow",
@@ -4083,6 +4611,22 @@
       },
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-control-text-shadow",
+      "cssVar": "--a63-control-text-shadow",
+      "type": "shadow",
+      "value": "0 0 6px color-mix(in oklch, var(--a63-action-primary) 45%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "control/text/shadow",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']"
     },
     {
       "name": "a63-density-scale",
@@ -4159,6 +4703,38 @@
       "conditions": ["@media (max-width: 40rem)"]
     },
     {
+      "name": "a63-field-background",
+      "cssVar": "--a63-field-background",
+      "type": "color",
+      "value": "color-mix( in oklch, var(--surface-light-2) 86%, var(--a63-action-primary) )",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "field/background",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--surface-light-2"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-field-background",
+      "cssVar": "--a63-field-background",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--surface-dark-1) 90%, var(--a63-action-primary))",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "field/background",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--surface-dark-1"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
+    },
+    {
       "name": "a63-field-shadow",
       "cssVar": "--a63-field-shadow",
       "type": "shadow",
@@ -4171,6 +4747,67 @@
       },
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-field-shadow",
+      "cssVar": "--a63-field-shadow",
+      "type": "shadow",
+      "value": "inset 0 2px 3px color-mix(in oklch, black 16%, transparent), inset 0 1px 0 color-mix(in oklch, black 10%, transparent), inset 0 -1px 0 color-mix(in oklch, white 60%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "field/shadow",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-field-shadow",
+      "cssVar": "--a63-field-shadow",
+      "type": "shadow",
+      "value": "inset 0 1px 2px color-mix(in oklch, black 8%, transparent)",
+      "sourceFile": "packages/styles/src/themes/modern.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "field/shadow",
+        "mode": "theme: modern"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='modern']"
+    },
+    {
+      "name": "a63-field-shadow",
+      "cssVar": "--a63-field-shadow",
+      "type": "shadow",
+      "value": "inset 2px 2px 0 color-mix(in oklch, black 22%, transparent), inset -1px -1px 0 color-mix(in oklch, white 40%, transparent)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "field/shadow",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-field-shadow",
+      "cssVar": "--a63-field-shadow",
+      "type": "shadow",
+      "value": "inset 0 0 6px -2px color-mix(in oklch, var(--a63-action-primary) 30%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "field/shadow",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']"
     },
     {
       "name": "a63-focus-ring",
@@ -4281,6 +4918,36 @@
       "scope": ":root"
     },
     {
+      "name": "a63-marker-shadow",
+      "cssVar": "--a63-marker-shadow",
+      "type": "shadow",
+      "value": "inset 0 1px 0 color-mix(in oklch, white 50%, transparent), 0 1px 2px -1px color-mix(in oklch, black 15%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "marker/shadow",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-marker-shadow",
+      "cssVar": "--a63-marker-shadow",
+      "type": "shadow",
+      "value": "inset 1px 1px 0 color-mix(in oklch, white 50%, transparent), inset -1px -1px 0 color-mix(in oklch, black 20%, transparent), 1px 1px 0 color-mix(in oklch, black 15%, transparent)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "marker/shadow",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
       "name": "a63-menu-disabled-opacity",
       "cssVar": "--a63-menu-disabled-opacity",
       "type": "dimension",
@@ -4323,6 +4990,21 @@
       },
       "lifecycle": "preview",
       "scope": "[data-a63-radius='none']"
+    },
+    {
+      "name": "a63-menu-highlight-background",
+      "cssVar": "--a63-menu-highlight-background",
+      "type": "color",
+      "value": "color-mix(in oklch, white 12%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "menu/highlight/background",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']:is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-menu-highlight-shadow",
@@ -4426,6 +5108,22 @@
       },
       "lifecycle": "preview",
       "scope": "[data-a63-radius='none']"
+    },
+    {
+      "name": "a63-menu-popup-background",
+      "cssVar": "--a63-menu-popup-background",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-surface-overlay) 92%, white)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "menu/popup/background",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-overlay"],
+      "scope": "[data-a63-theme='aqua']"
     },
     {
       "name": "a63-menu-popup-padding",
@@ -4671,6 +5369,21 @@
       "scope": ":root"
     },
     {
+      "name": "a63-overlay-border-width",
+      "cssVar": "--a63-overlay-border-width",
+      "type": "dimension",
+      "value": "2px",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "overlay/border/width",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
       "name": "a63-overlay-drag-shadow",
       "cssVar": "--a63-overlay-drag-shadow",
       "type": "shadow",
@@ -4686,6 +5399,37 @@
       "scope": ":root"
     },
     {
+      "name": "a63-overlay-drag-shadow",
+      "cssVar": "--a63-overlay-drag-shadow",
+      "type": "shadow",
+      "value": "inset 1px 1px 0 color-mix(in oklch, white 50%, transparent), inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), var(--retro-bevel-drop-lg)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "overlay/drag/shadow",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--retro-bevel-drop-lg"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-overlay-highlight",
+      "cssVar": "--a63-overlay-highlight",
+      "type": "color",
+      "value": "color-mix(in oklch, white 60%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.native.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "overlay/highlight",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
       "name": "a63-overlay-highlight-opacity",
       "cssVar": "--a63-overlay-highlight-opacity",
       "type": "dimension",
@@ -4698,6 +5442,21 @@
       },
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-overlay-highlight-opacity",
+      "cssVar": "--a63-overlay-highlight-opacity",
+      "type": "dimension",
+      "value": "0.75",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "overlay/highlight/opacity",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
     },
     {
       "name": "a63-overlay-inner-shadow",
@@ -4726,6 +5485,54 @@
       },
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-overlay-shadow",
+      "cssVar": "--a63-overlay-shadow",
+      "type": "shadow",
+      "value": "inset 0 1px 0 color-mix(in oklch, white 60%, transparent), var(--aqua-overlay-drop)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "overlay/shadow",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--aqua-overlay-drop"],
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-overlay-shadow",
+      "cssVar": "--a63-overlay-shadow",
+      "type": "shadow",
+      "value": "inset 1px 1px 0 color-mix(in oklch, white 50%, transparent), inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), var(--retro-bevel-drop-md)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "overlay/shadow",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--retro-bevel-drop-md"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-overlay-shadow",
+      "cssVar": "--a63-overlay-shadow",
+      "type": "shadow",
+      "value": "inset 0 0 0 1px color-mix(in oklch, var(--a63-action-primary) 30%, transparent), var(--terminal-overlay-glow)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "overlay/shadow",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--terminal-overlay-glow"],
+      "scope": "[data-a63-theme='terminal']"
     },
     {
       "name": "a63-radius-control",
@@ -4968,6 +5775,70 @@
       "scope": ":root"
     },
     {
+      "name": "a63-segment-background",
+      "cssVar": "--a63-segment-background",
+      "type": "color",
+      "value": "var(--a63-surface-muted)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/background",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-muted"],
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-segment-background",
+      "cssVar": "--a63-segment-background",
+      "type": "color",
+      "value": "var(--a63-surface-muted)",
+      "sourceFile": "packages/styles/src/themes/modern.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/background",
+        "mode": "theme: modern"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-muted"],
+      "scope": "[data-a63-theme='modern']"
+    },
+    {
+      "name": "a63-segment-background",
+      "cssVar": "--a63-segment-background",
+      "type": "color",
+      "value": "var(--a63-surface-panel)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/background",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-panel"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-segment-background",
+      "cssVar": "--a63-segment-background",
+      "type": "color",
+      "value": "var(--a63-surface-panel)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/background",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-panel"],
+      "scope": "[data-a63-theme='terminal']"
+    },
+    {
       "name": "a63-segment-border-width",
       "cssVar": "--a63-segment-border-width",
       "type": "dimension",
@@ -4983,6 +5854,85 @@
       "scope": ":root"
     },
     {
+      "name": "a63-segment-disabled-opacity",
+      "cssVar": "--a63-segment-disabled-opacity",
+      "type": "dimension",
+      "value": "0.4",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/disabled/opacity",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-segment-foreground",
+      "cssVar": "--a63-segment-foreground",
+      "type": "color",
+      "value": "var(--a63-text-secondary)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/foreground",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-secondary"],
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-segment-foreground",
+      "cssVar": "--a63-segment-foreground",
+      "type": "color",
+      "value": "var(--a63-text-secondary)",
+      "sourceFile": "packages/styles/src/themes/modern.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/foreground",
+        "mode": "theme: modern"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-secondary"],
+      "scope": "[data-a63-theme='modern']"
+    },
+    {
+      "name": "a63-segment-foreground",
+      "cssVar": "--a63-segment-foreground",
+      "type": "color",
+      "value": "var(--a63-text-secondary)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/foreground",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-secondary"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-segment-foreground",
+      "cssVar": "--a63-segment-foreground",
+      "type": "color",
+      "value": "var(--a63-text-secondary)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/foreground",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-secondary"],
+      "scope": "[data-a63-theme='terminal']"
+    },
+    {
       "name": "a63-segment-gap",
       "cssVar": "--a63-segment-gap",
       "type": "dimension",
@@ -4995,6 +5945,576 @@
       },
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-segment-hover-foreground",
+      "cssVar": "--a63-segment-hover-foreground",
+      "type": "color",
+      "value": "var(--a63-text-primary)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/hover/foreground",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-primary"],
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-segment-primary-background",
+      "cssVar": "--a63-segment-primary-background",
+      "type": "color",
+      "value": "var(--a63-action-primary)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/primary/background",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-segment-primary-background",
+      "cssVar": "--a63-segment-primary-background",
+      "type": "color",
+      "value": "var(--a63-action-primary)",
+      "sourceFile": "packages/styles/src/themes/modern.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/primary/background",
+        "mode": "theme: modern"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='modern']"
+    },
+    {
+      "name": "a63-segment-primary-background",
+      "cssVar": "--a63-segment-primary-background",
+      "type": "color",
+      "value": "var(--a63-action-primary)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/primary/background",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-segment-primary-background",
+      "cssVar": "--a63-segment-primary-background",
+      "type": "color",
+      "value": "var(--a63-action-primary)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/primary/background",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']"
+    },
+    {
+      "name": "a63-segment-primary-foreground",
+      "cssVar": "--a63-segment-primary-foreground",
+      "type": "color",
+      "value": "var(--a63-action-primary-foreground)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/primary/foreground",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary-foreground"],
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-segment-primary-foreground",
+      "cssVar": "--a63-segment-primary-foreground",
+      "type": "color",
+      "value": "var(--a63-action-primary-foreground)",
+      "sourceFile": "packages/styles/src/themes/modern.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/primary/foreground",
+        "mode": "theme: modern"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary-foreground"],
+      "scope": "[data-a63-theme='modern']"
+    },
+    {
+      "name": "a63-segment-primary-foreground",
+      "cssVar": "--a63-segment-primary-foreground",
+      "type": "color",
+      "value": "var(--a63-action-primary-foreground)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/primary/foreground",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary-foreground"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-segment-primary-foreground",
+      "cssVar": "--a63-segment-primary-foreground",
+      "type": "color",
+      "value": "var(--a63-action-primary-foreground)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/primary/foreground",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary-foreground"],
+      "scope": "[data-a63-theme='terminal']"
+    },
+    {
+      "name": "a63-segment-primary-shadow",
+      "cssVar": "--a63-segment-primary-shadow",
+      "type": "shadow",
+      "value": "inset 0 1px 0 color-mix(in oklch, white 28%, transparent), inset 0 2px 8px color-mix(in oklch, black 36%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/primary/shadow",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-segment-primary-shadow",
+      "cssVar": "--a63-segment-primary-shadow",
+      "type": "shadow",
+      "value": "inset 0 1px 0 color-mix(in oklch, white 22%, transparent), inset 0 3px 10px color-mix(in oklch, black 42%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/primary/shadow",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']:is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-segment-primary-shadow",
+      "cssVar": "--a63-segment-primary-shadow",
+      "type": "shadow",
+      "value": "inset 0 1px 0 color-mix(in oklch, white 30%, transparent), 0 1px 2px color-mix(in oklch, black 16%, transparent)",
+      "sourceFile": "packages/styles/src/themes/modern.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/primary/shadow",
+        "mode": "theme: modern"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='modern']"
+    },
+    {
+      "name": "a63-segment-primary-shadow",
+      "cssVar": "--a63-segment-primary-shadow",
+      "type": "shadow",
+      "value": "var(--a63-control-shadow-active)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/primary/shadow",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-control-shadow-active"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-segment-primary-shadow",
+      "cssVar": "--a63-segment-primary-shadow",
+      "type": "shadow",
+      "value": "inset 0 0 0 1px color-mix(in oklch, var(--a63-action-primary) 50%, transparent), 0 0 10px -3px color-mix(in oklch, var(--a63-action-primary) 40%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/primary/shadow",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']"
+    },
+    {
+      "name": "a63-segment-selected-background",
+      "cssVar": "--a63-segment-selected-background",
+      "type": "color",
+      "value": "var(--a63-surface-panel)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/selected/background",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-panel"],
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-segment-selected-background",
+      "cssVar": "--a63-segment-selected-background",
+      "type": "color",
+      "value": "var(--a63-surface-overlay)",
+      "sourceFile": "packages/styles/src/themes/modern.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/selected/background",
+        "mode": "theme: modern"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-overlay"],
+      "scope": "[data-a63-theme='modern']"
+    },
+    {
+      "name": "a63-segment-selected-background",
+      "cssVar": "--a63-segment-selected-background",
+      "type": "color",
+      "value": "var(--a63-surface-muted)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/selected/background",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-muted"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-segment-selected-background",
+      "cssVar": "--a63-segment-selected-background",
+      "type": "color",
+      "value": "var(--a63-surface-muted)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/selected/background",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-muted"],
+      "scope": "[data-a63-theme='terminal']"
+    },
+    {
+      "name": "a63-segment-selected-foreground",
+      "cssVar": "--a63-segment-selected-foreground",
+      "type": "color",
+      "value": "var(--a63-text-primary)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/selected/foreground",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-primary"],
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-segment-selected-foreground",
+      "cssVar": "--a63-segment-selected-foreground",
+      "type": "color",
+      "value": "var(--a63-text-primary)",
+      "sourceFile": "packages/styles/src/themes/modern.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/selected/foreground",
+        "mode": "theme: modern"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-primary"],
+      "scope": "[data-a63-theme='modern']"
+    },
+    {
+      "name": "a63-segment-selected-foreground",
+      "cssVar": "--a63-segment-selected-foreground",
+      "type": "color",
+      "value": "var(--a63-text-primary)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/selected/foreground",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-primary"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-segment-selected-foreground",
+      "cssVar": "--a63-segment-selected-foreground",
+      "type": "color",
+      "value": "var(--a63-text-primary)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/selected/foreground",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-primary"],
+      "scope": "[data-a63-theme='terminal']"
+    },
+    {
+      "name": "a63-segment-selected-shadow",
+      "cssVar": "--a63-segment-selected-shadow",
+      "type": "shadow",
+      "value": "inset 0 1px 0 color-mix(in oklch, white 35%, transparent), inset 0 2px 6px color-mix(in oklch, black 14%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/selected/shadow",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-segment-selected-shadow",
+      "cssVar": "--a63-segment-selected-shadow",
+      "type": "shadow",
+      "value": "inset 0 1px 0 color-mix(in oklch, white 22%, transparent), inset 0 3px 8px color-mix(in oklch, black 28%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/selected/shadow",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']:is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-segment-selected-shadow",
+      "cssVar": "--a63-segment-selected-shadow",
+      "type": "shadow",
+      "value": "inset 0 1px 0 color-mix(in oklch, white 70%, transparent), 0 1px 2px color-mix(in oklch, black 12%, transparent), 0 1px 1px color-mix(in oklch, black 6%, transparent)",
+      "sourceFile": "packages/styles/src/themes/modern.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/selected/shadow",
+        "mode": "theme: modern"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='modern']"
+    },
+    {
+      "name": "a63-segment-selected-shadow",
+      "cssVar": "--a63-segment-selected-shadow",
+      "type": "shadow",
+      "value": "var(--a63-control-shadow-active)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/selected/shadow",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-control-shadow-active"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-segment-selected-shadow",
+      "cssVar": "--a63-segment-selected-shadow",
+      "type": "shadow",
+      "value": "inset 0 0 0 1px color-mix(in oklch, var(--a63-action-primary) 36%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/selected/shadow",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']"
+    },
+    {
+      "name": "a63-segment-track-background",
+      "cssVar": "--a63-segment-track-background",
+      "type": "color",
+      "value": "var(--a63-surface-muted)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/track/background",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-muted"],
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-segment-track-background",
+      "cssVar": "--a63-segment-track-background",
+      "type": "color",
+      "value": "var(--a63-surface-muted)",
+      "sourceFile": "packages/styles/src/themes/modern.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/track/background",
+        "mode": "theme: modern"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-muted"],
+      "scope": "[data-a63-theme='modern']"
+    },
+    {
+      "name": "a63-segment-track-background",
+      "cssVar": "--a63-segment-track-background",
+      "type": "color",
+      "value": "var(--a63-surface-panel)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/track/background",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-panel"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-segment-track-background",
+      "cssVar": "--a63-segment-track-background",
+      "type": "color",
+      "value": "var(--a63-field-background)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/track/background",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-field-background"],
+      "scope": "[data-a63-theme='terminal']"
+    },
+    {
+      "name": "a63-segment-track-border",
+      "cssVar": "--a63-segment-track-border",
+      "type": "color",
+      "value": "var(--a63-border-subtle)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/track/border",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-border-subtle"],
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-segment-track-border",
+      "cssVar": "--a63-segment-track-border",
+      "type": "color",
+      "value": "var(--a63-border-subtle)",
+      "sourceFile": "packages/styles/src/themes/modern.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/track/border",
+        "mode": "theme: modern"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-border-subtle"],
+      "scope": "[data-a63-theme='modern']"
+    },
+    {
+      "name": "a63-segment-track-border",
+      "cssVar": "--a63-segment-track-border",
+      "type": "color",
+      "value": "var(--a63-border-control)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/track/border",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-border-control"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-segment-track-border",
+      "cssVar": "--a63-segment-track-border",
+      "type": "color",
+      "value": "var(--a63-border-subtle)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/track/border",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-border-subtle"],
+      "scope": "[data-a63-theme='terminal']"
+    },
+    {
+      "name": "a63-segment-track-shadow",
+      "cssVar": "--a63-segment-track-shadow",
+      "type": "shadow",
+      "value": "var(--a63-track-shadow)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "segment/track/shadow",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-track-shadow"],
+      "scope": "[data-a63-theme='aqua']"
     },
     {
       "name": "a63-selection-thumb",
@@ -5423,6 +6943,22 @@
       "scope": ":root"
     },
     {
+      "name": "a63-surface-backdrop",
+      "cssVar": "--a63-surface-backdrop",
+      "type": "color",
+      "value": "saturate(1.4) blur(var(--blur-lg))",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/backdrop",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--blur-lg"],
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
       "name": "a63-surface-border-style",
       "cssVar": "--a63-surface-border-style",
       "type": "color",
@@ -5437,6 +6973,21 @@
       "scope": ":root"
     },
     {
+      "name": "a63-surface-border-style",
+      "cssVar": "--a63-surface-border-style",
+      "type": "color",
+      "value": "outset",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/border/style",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
       "name": "a63-surface-border-width",
       "cssVar": "--a63-surface-border-width",
       "type": "dimension",
@@ -5449,6 +7000,21 @@
       },
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-surface-border-width",
+      "cssVar": "--a63-surface-border-width",
+      "type": "dimension",
+      "value": "2px",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/border/width",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='retro']"
     },
     {
       "name": "a63-surface-control",
@@ -5529,6 +7095,21 @@
       "scope": ":root"
     },
     {
+      "name": "a63-surface-gloss",
+      "cssVar": "--a63-surface-gloss",
+      "type": "color",
+      "value": "linear-gradient( to bottom, color-mix(in oklch, white 22%, transparent) 0%, color-mix(in oklch, white 4%, transparent) 48%, transparent 72% )",
+      "sourceFile": "packages/styles/src/themes/aqua.native.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/gloss",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
       "name": "a63-surface-highlight",
       "cssVar": "--a63-surface-highlight",
       "type": "color",
@@ -5543,6 +7124,21 @@
       "scope": ":root"
     },
     {
+      "name": "a63-surface-highlight",
+      "cssVar": "--a63-surface-highlight",
+      "type": "color",
+      "value": "color-mix(in oklch, white 55%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/highlight",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
       "name": "a63-surface-highlight-opacity",
       "cssVar": "--a63-surface-highlight-opacity",
       "type": "dimension",
@@ -5555,6 +7151,21 @@
       },
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-surface-highlight-opacity",
+      "cssVar": "--a63-surface-highlight-opacity",
+      "type": "dimension",
+      "value": "0.75",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/highlight/opacity",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
     },
     {
       "name": "a63-surface-inner-shadow",
@@ -5638,6 +7249,70 @@
       "name": "a63-surface-page",
       "cssVar": "--a63-surface-page",
       "type": "color",
+      "value": "color-mix(in oklch, var(--surface-light-2) 95%, var(--color-b1-500))",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/page",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-b1-500", "--surface-light-2"],
+      "scope": "[data-a63-theme='aqua']:is(:root, .light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-surface-page",
+      "cssVar": "--a63-surface-page",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--surface-dark-1) 94%, var(--color-b1-500))",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/page",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-b1-500", "--surface-dark-1"],
+      "scope": "[data-a63-theme='aqua']:is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-surface-page",
+      "cssVar": "--a63-surface-page",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--surface-light-1) 60%, white)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/page",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--surface-light-1"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-surface-page",
+      "cssVar": "--a63-surface-page",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--surface-dark-1) 92%, var(--a63-action-primary))",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/page",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--surface-dark-1"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-surface-page",
+      "cssVar": "--a63-surface-page",
+      "type": "color",
       "value": "color-mix( in oklch, var(--surface-dark-1) calc(100% - var(--a63-surface-tint)), var(--a63-brand-950) var(--a63-surface-tint) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
@@ -5665,6 +7340,70 @@
       "lifecycle": "preview",
       "aliases": ["--a63-brand-100", "--a63-surface-tint", "--surface-light-2"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-surface-panel",
+      "cssVar": "--a63-surface-panel",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--surface-light-1) 96%, var(--color-b1-500))",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/panel",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-b1-500", "--surface-light-1"],
+      "scope": "[data-a63-theme='aqua']:is(:root, .light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-surface-panel",
+      "cssVar": "--a63-surface-panel",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--surface-dark-2) 94%, var(--color-b1-500))",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/panel",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-b1-500", "--surface-dark-2"],
+      "scope": "[data-a63-theme='aqua']:is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-surface-panel",
+      "cssVar": "--a63-surface-panel",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--surface-light-2) 60%, white)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/panel",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--surface-light-2"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-surface-panel",
+      "cssVar": "--a63-surface-panel",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--surface-dark-2) 92%, var(--a63-action-primary))",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/panel",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--surface-dark-2"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-surface-panel",
@@ -5713,6 +7452,53 @@
       "scope": ":root"
     },
     {
+      "name": "a63-surface-shadow",
+      "cssVar": "--a63-surface-shadow",
+      "type": "shadow",
+      "value": "inset 0 1px 0 color-mix(in oklch, white 55%, transparent), 0 6px 16px -6px color-mix(in oklch, black 22%, transparent), 0 1px 3px -1px color-mix(in oklch, black 12%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/shadow",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-surface-shadow",
+      "cssVar": "--a63-surface-shadow",
+      "type": "shadow",
+      "value": "inset 1px 1px 0 color-mix(in oklch, white 55%, transparent), inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), var(--retro-bevel-drop-soft)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/shadow",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--retro-bevel-drop-soft"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-surface-shadow",
+      "cssVar": "--a63-surface-shadow",
+      "type": "shadow",
+      "value": "inset 0 0 0 1px color-mix(in oklch, var(--a63-action-primary) 22%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/shadow",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']"
+    },
+    {
       "name": "a63-surface-texture-blend",
       "cssVar": "--a63-surface-texture-blend",
       "type": "color",
@@ -5727,6 +7513,21 @@
       "scope": ":root"
     },
     {
+      "name": "a63-surface-texture-blend",
+      "cssVar": "--a63-surface-texture-blend",
+      "type": "color",
+      "value": "overlay",
+      "sourceFile": "packages/styles/src/themes/terminal.native.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/texture/blend",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='terminal']"
+    },
+    {
       "name": "a63-surface-texture-image",
       "cssVar": "--a63-surface-texture-image",
       "type": "color",
@@ -5739,6 +7540,22 @@
       },
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-surface-texture-image",
+      "cssVar": "--a63-surface-texture-image",
+      "type": "color",
+      "value": "repeating-linear-gradient( to bottom, color-mix(in oklch, var(--a63-action-primary) 6%, transparent) 0px, color-mix(in oklch, var(--a63-action-primary) 6%, transparent) 1px, transparent 1px, transparent 3px )",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "surface/texture/image",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']"
     },
     {
       "name": "a63-surface-tint",
@@ -5819,6 +7636,38 @@
       "name": "a63-text-primary",
       "cssVar": "--a63-text-primary",
       "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 70%, black)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "text/primary",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-text-primary",
+      "cssVar": "--a63-text-primary",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 62%, white)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "text/primary",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-text-primary",
+      "cssVar": "--a63-text-primary",
+      "type": "color",
       "value": "var(--surface-dark-12)",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
@@ -5846,6 +7695,38 @@
       "lifecycle": "preview",
       "aliases": ["--surface-light-12"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-text-secondary",
+      "cssVar": "--a63-text-secondary",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 52%, black)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "text/secondary",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-text-secondary",
+      "cssVar": "--a63-text-secondary",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-text-accent) 48%, var(--surface-dark-11))",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "text/secondary",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-accent", "--surface-dark-11"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-text-secondary",
@@ -6008,6 +7889,52 @@
       },
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-track-shadow",
+      "cssVar": "--a63-track-shadow",
+      "type": "shadow",
+      "value": "inset 0 2px 3px color-mix(in oklch, black 14%, transparent), inset 0 -1px 0 color-mix(in oklch, white 45%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "track/shadow",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-track-shadow",
+      "cssVar": "--a63-track-shadow",
+      "type": "shadow",
+      "value": "inset 1px 1px 0 color-mix(in oklch, black 22%, transparent), inset -1px -1px 0 color-mix(in oklch, white 40%, transparent)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "track/shadow",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-track-shadow",
+      "cssVar": "--a63-track-shadow",
+      "type": "shadow",
+      "value": "inset 0 0 4px -1px color-mix(in oklch, var(--a63-action-primary) 22%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "track/shadow",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']"
     },
     {
       "name": "a63-trigger-border-width",
@@ -6201,6 +8128,149 @@
       "scope": ":root"
     },
     {
+      "name": "a63-weather-background-color",
+      "cssVar": "--a63-weather-background-color",
+      "type": "color",
+      "value": "transparent",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/background/color",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-weather-background-color",
+      "cssVar": "--a63-weather-background-color",
+      "type": "color",
+      "value": "color-mix( in oklch, var(--a63-action-primary) 48%, var(--a63-surface-panel) )",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/background/color",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--a63-surface-panel"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-weather-background-color",
+      "cssVar": "--a63-weather-background-color",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 34%, white 66%)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/background/color",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-weather-background-color",
+      "cssVar": "--a63-weather-background-color",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 22%, black 78%)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/background/color",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-weather-background-image",
+      "cssVar": "--a63-weather-background-image",
+      "type": "color",
+      "value": "radial-gradient( 120% 90% at 10% 0%, color-mix(in oklch, white 28%, transparent), transparent 48% ), radial-gradient( 78% 100% at 100% 0%, color-mix(in oklch, var(--a63-action-primary) 32%, transparent), transparent 58% ), linear-gradient( 135deg, color-mix(in oklch, var(--a63-action-primary) 78%, white 10%), color-mix(in oklch, var(--a63-action-primary) 70%, var(--color-b1-900) 30%) )",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/background/image",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--color-b1-900"],
+      "scope": "[data-a63-theme='aqua']:is(:root, .light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-weather-background-image",
+      "cssVar": "--a63-weather-background-image",
+      "type": "color",
+      "value": "radial-gradient( 120% 90% at 10% 0%, color-mix(in oklch, white 18%, transparent), transparent 48% ), radial-gradient( 88% 110% at 100% 0%, color-mix(in oklch, var(--a63-action-primary) 30%, transparent), transparent 58% ), linear-gradient( 135deg, color-mix(in oklch, var(--a63-action-primary) 58%, var(--surface-dark-6) 42%), color-mix(in oklch, var(--a63-action-primary) 36%, var(--surface-dark-3) 64%) )",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/background/image",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--surface-dark-3", "--surface-dark-6"],
+      "scope": "[data-a63-theme='aqua']:is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-weather-background-image",
+      "cssVar": "--a63-weather-background-image",
+      "type": "color",
+      "value": "linear-gradient(135deg, color-mix(in oklch, white 22%, transparent), transparent 44%), linear-gradient( 135deg, color-mix(in oklch, var(--a63-action-primary) 58%, var(--a63-surface-panel)), color-mix(in oklch, var(--a63-action-primary) 68%, var(--a63-text-primary)) )",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/background/image",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--a63-surface-panel", "--a63-text-primary"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-weather-background-image",
+      "cssVar": "--a63-weather-background-image",
+      "type": "color",
+      "value": "linear-gradient(color-mix(in oklch, var(--a63-action-primary) 18%, transparent), transparent), linear-gradient( 135deg, color-mix(in oklch, var(--a63-action-primary) 48%, white 52%), color-mix(in oklch, var(--a63-action-primary) 36%, white 64%) )",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/background/image",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-weather-background-image",
+      "cssVar": "--a63-weather-background-image",
+      "type": "color",
+      "value": "linear-gradient(color-mix(in oklch, var(--a63-action-primary) 12%, transparent), transparent), linear-gradient( 135deg, color-mix(in oklch, var(--a63-action-primary) 30%, black 70%), color-mix(in oklch, var(--a63-action-primary) 16%, black 84%) )",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/background/image",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
+    },
+    {
       "name": "a63-weather-border-color",
       "cssVar": "--a63-weather-border-color",
       "type": "color",
@@ -6213,6 +8283,69 @@
       },
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-weather-border-color",
+      "cssVar": "--a63-weather-border-color",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 32%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/border/color",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='aqua']:is(:root, .light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-weather-border-color",
+      "cssVar": "--a63-weather-border-color",
+      "type": "color",
+      "value": "color-mix(in oklch, white 14%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/border/color",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']:is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-weather-border-color",
+      "cssVar": "--a63-weather-border-color",
+      "type": "color",
+      "value": "color-mix( in oklch, var(--a63-action-primary) 44%, var(--a63-border-subtle) )",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/border/color",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--a63-border-subtle"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-weather-border-color",
+      "cssVar": "--a63-weather-border-color",
+      "type": "color",
+      "value": "color-mix( in oklch, var(--a63-action-primary) 44%, var(--a63-border-subtle) )",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/border/color",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--a63-border-subtle"],
+      "scope": "[data-a63-theme='terminal']"
     },
     {
       "name": "a63-weather-condition-background-image",
@@ -6626,6 +8759,68 @@
       "scope": ":root"
     },
     {
+      "name": "a63-weather-divider-color",
+      "cssVar": "--a63-weather-divider-color",
+      "type": "color",
+      "value": "color-mix(in oklch, white 24%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/divider/color",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-weather-divider-color",
+      "cssVar": "--a63-weather-divider-color",
+      "type": "color",
+      "value": "color-mix(in oklch, white 32%, transparent)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/divider/color",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-weather-divider-color",
+      "cssVar": "--a63-weather-divider-color",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 38%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/divider/color",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-weather-divider-color",
+      "cssVar": "--a63-weather-divider-color",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 36%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/divider/color",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
+    },
+    {
       "name": "a63-weather-foreground",
       "cssVar": "--a63-weather-foreground",
       "type": "color",
@@ -6638,6 +8833,68 @@
       },
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-weather-foreground",
+      "cssVar": "--a63-weather-foreground",
+      "type": "color",
+      "value": "white",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/foreground",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-weather-foreground",
+      "cssVar": "--a63-weather-foreground",
+      "type": "color",
+      "value": "white",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/foreground",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-weather-foreground",
+      "cssVar": "--a63-weather-foreground",
+      "type": "color",
+      "value": "color-mix( in oklch, var(--a63-action-primary) 82%, var(--surface-light-12) )",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--surface-light-12"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-weather-foreground",
+      "cssVar": "--a63-weather-foreground",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 26%, white 74%)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-weather-muted-foreground",
@@ -6654,6 +8911,68 @@
       "scope": ":root"
     },
     {
+      "name": "a63-weather-muted-foreground",
+      "cssVar": "--a63-weather-muted-foreground",
+      "type": "color",
+      "value": "color-mix(in oklch, white 76%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/muted/foreground",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-weather-muted-foreground",
+      "cssVar": "--a63-weather-muted-foreground",
+      "type": "color",
+      "value": "color-mix(in oklch, white 76%, transparent)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/muted/foreground",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-weather-muted-foreground",
+      "cssVar": "--a63-weather-muted-foreground",
+      "type": "color",
+      "value": "color-mix( in oklch, var(--a63-action-primary) 58%, var(--surface-light-10) )",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/muted/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--surface-light-10"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-weather-muted-foreground",
+      "cssVar": "--a63-weather-muted-foreground",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-text-accent) 54%, white 46%)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/muted/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-accent"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
+    },
+    {
       "name": "a63-weather-text-shadow",
       "cssVar": "--a63-weather-text-shadow",
       "type": "shadow",
@@ -6666,6 +8985,68 @@
       },
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-weather-text-shadow",
+      "cssVar": "--a63-weather-text-shadow",
+      "type": "shadow",
+      "value": "0 1px 2px color-mix(in oklch, black 42%, transparent)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/text/shadow",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-weather-text-shadow",
+      "cssVar": "--a63-weather-text-shadow",
+      "type": "shadow",
+      "value": "1px 1px 0 color-mix(in oklch, black 34%, transparent)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/text/shadow",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-weather-text-shadow",
+      "cssVar": "--a63-weather-text-shadow",
+      "type": "shadow",
+      "value": "0 0 10px color-mix(in oklch, var(--a63-action-primary) 22%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/text/shadow",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-weather-text-shadow",
+      "cssVar": "--a63-weather-text-shadow",
+      "type": "shadow",
+      "value": "0 0 8px color-mix(in oklch, var(--a63-action-primary) 38%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "weather/text/shadow",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-widget-background-blend",
@@ -6728,6 +9109,38 @@
       "lifecycle": "preview",
       "aliases": ["--a63-weather-background-color"],
       "scope": "[data-widget-kind='weather'], [data-widget-kind='location'][data-weather-tone]"
+    },
+    {
+      "name": "a63-widget-background-color",
+      "cssVar": "--a63-widget-background-color",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-surface-panel) 90%, transparent)",
+      "sourceFile": "packages/styles/src/themes/modern.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "widget/background/color",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-panel"],
+      "scope": "[data-a63-theme='modern']:is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-widget-background-color",
+      "cssVar": "--a63-widget-background-color",
+      "type": "color",
+      "value": "var(--a63-surface-overlay)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "widget/background/color",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-overlay"],
+      "scope": "[data-a63-theme='retro']"
     },
     {
       "name": "a63-widget-background-image",
@@ -6910,6 +9323,21 @@
       "scope": ":root"
     },
     {
+      "name": "a63-widget-rim-border-color",
+      "cssVar": "--a63-widget-rim-border-color",
+      "type": "color",
+      "value": "color-mix(in oklch, white 50%, transparent) color-mix(in oklch, black 22%, transparent) color-mix(in oklch, black 22%, transparent) color-mix(in oklch, white 50%, transparent)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "widget/rim/border/color",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
       "name": "a63-widget-rim-color",
       "cssVar": "--a63-widget-rim-color",
       "type": "color",
@@ -6937,6 +9365,21 @@
       },
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-widget-rim-width",
+      "cssVar": "--a63-widget-rim-width",
+      "type": "dimension",
+      "value": "2px",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "widget/rim/width",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-theme='retro']"
     },
     {
       "name": "a63-widget-shadow",
@@ -6967,6 +9410,54 @@
       "lifecycle": "preview",
       "aliases": ["--a63-overlay-drag-shadow"],
       "scope": "[data-widget-kind='sticky-note'][data-focused]"
+    },
+    {
+      "name": "a63-widget-shadow",
+      "cssVar": "--a63-widget-shadow",
+      "type": "shadow",
+      "value": "var(--aqua-overlay-drop)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "widget/shadow",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--aqua-overlay-drop"],
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-widget-shadow",
+      "cssVar": "--a63-widget-shadow",
+      "type": "shadow",
+      "value": "var(--retro-bevel-drop-md)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "widget/shadow",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--retro-bevel-drop-md"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-widget-shadow",
+      "cssVar": "--a63-widget-shadow",
+      "type": "shadow",
+      "value": "var(--terminal-overlay-glow)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Atom63 Theme",
+        "path": "widget/shadow",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--terminal-overlay-glow"],
+      "scope": "[data-a63-theme='terminal']"
     },
     {
       "name": "blur-2xl",

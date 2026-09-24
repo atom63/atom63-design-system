@@ -704,7 +704,15 @@ export interface SyncPreviewResultMessage {
 export interface SyncApplyResultMessage {
   type: 'sync-apply-result'
   data: {
-    applied: { createdCollections: number; addedModes: number; created: number; updated: number }
+    applied: {
+      createdCollections: number
+      addedModes: number
+      created: number
+      updated: number
+      moved: number
+      bindingsRebound: number
+      bindingsRemaining: number
+    }
     /** Plan computed after applying; a correct sync leaves nothing to create or update. */
     verification: SyncPlanSummary
   }
