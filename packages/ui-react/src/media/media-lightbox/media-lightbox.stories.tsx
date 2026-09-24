@@ -225,3 +225,7 @@ export const LightAndDarkVariants: Story = {
 export const Composition: Story = {
   render: () => <ComposedGallery items={GALLERY} />,
 }
+
+/* GalleryOfThree in dark mode, so visual regression covers dark for this component,
+   which has no Themes matrix. The global applies to <html>, so portals are dark too. */
+export const Dark: Story = { ...GalleryOfThree, globals: { mode: 'dark' } }

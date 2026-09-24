@@ -66,7 +66,12 @@ export default defineConfig({
           browser: {
             enabled: true,
             headless: true,
-            provider: playwright({ contextOptions: { reducedMotion: 'reduce' } }),
+            // The tester iframe is scaled down to fit this outer page, so make the
+            // page large enough that captures stay at 1:1, even for a story that
+            // visual.setup.ts grows to its full height.
+            provider: playwright({
+              contextOptions: { reducedMotion: 'reduce', viewport: { width: 1280, height: 10000 } },
+            }),
             instances: [{ browser: 'chromium', viewport: { width: 1280, height: 800 } }],
             expect: {
               toMatchScreenshot: {

@@ -55,6 +55,11 @@ async function settleImages() {
   await Promise.all([...document.images].map(image => image.decode().catch(() => {})))
 }
 
+/* Matches the `visual` project's instance viewport in vitest.config.ts. */
+const VIEWPORT = { width: 1280, height: 800 }
+/* The outer page height in vitest.config.ts; taller stories are cut here. */
+const MAX_HEIGHT = 10000
+
 afterEach(async ({ task }) => {
   const storyId = task.meta.storyId
   if (!storyId || task.result?.state === 'fail') return
@@ -66,6 +71,13 @@ afterEach(async ({ task }) => {
   ])
   await document.fonts.ready
   await settleImages()
+  // Only the viewport is painted in the capture, so a story taller than the
+  // viewport would come out blank below the fold. Grow the viewport to the page.
+  const height = Math.min(
+    MAX_HEIGHT,
+    Math.max(VIEWPORT.height, Math.ceil(document.documentElement.scrollHeight))
+  )
+  if (height > VIEWPORT.height) await page.viewport(VIEWPORT.width, height)
   // The body, not the story root, so portalled overlays (dialogs, menus,
   // tooltips) are part of the image.
   await expect.element(page.elementLocator(document.body)).toMatchScreenshot(storyId)
