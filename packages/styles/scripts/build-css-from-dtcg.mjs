@@ -119,6 +119,7 @@ function formatValue(type, value, name, knownNames) {
     case 'cubicBezier':
       return `cubic-bezier(${value.join(', ')})`
     case 'number':
+    case 'fontWeight':
       return String(value)
     case 'fontFamily':
       return formatFontFamily(value)

@@ -1,4 +1,7 @@
 /*
+ * Generated from src/tokens/font.resolver.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
  * Font personalization axis.
  *
  * --a63-font-app is the active application font stack; a consumer applies it on
@@ -14,12 +17,15 @@
 [data-a63-font='sans'] {
   --a63-font-app: var(--font-family-sans);
 }
+
 [data-a63-font='serif'] {
   --a63-font-app: var(--font-family-serif);
 }
+
 [data-a63-font='mono'] {
   --a63-font-app: var(--font-family-mono);
 }
+
 [data-a63-font='pixel'] {
   --a63-font-app: var(--font-family-pixel);
 }

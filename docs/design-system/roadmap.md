@@ -206,12 +206,12 @@ Astryx 是 Meta 开源的 React 设计系统（MIT，2026-06 公开 beta，0.6.x
 | 阶段 | 内容 | 目的 | 进度 |
 |---|---|---|---|
 | A. 正确性（近期、小） | Swift 颜色改从语义 token 生成；新增 Web / iOS 值级别一致性检查 | 修复已经存在的漂移 | 已完成（#24） |
-| B. 唯一源头（最大的一步） | 语义、品牌、contract、主题迁入 DTCG + resolver；公式写成派生规则；主题进入 Figma mode；打通 Figma 回写 | 消除黑盒，实现 Figma 1:1 | B1–B7 已完成（#25–#32）；B8（typography、radius、effects 和几个轴文件，共 215 条）未开始 |
+| B. 唯一源头（最大的一步） | 语义、品牌、contract、主题迁入 DTCG + resolver；公式写成派生规则；主题进入 Figma mode；打通 Figma 回写 | 消除黑盒，实现 Figma 1:1 | B1–B7 已完成（#25–#32）；B8a（radius、effects、space、motion 和三个轴文件，71 条）已完成；B8b（响应式字号，144 条）未开始 |
 | C. 流水线 | 脚手架、由 contract 生成文档、MCP / CLI、craft lint、模板库 | 流程化产出 | 未开始 |
 | D. pattern 迁入 | brand logo、icons 清理、mdx 通用部分、inform、agent runtime、widgets foundation | 完成分离 | 未开始 |
 | E. 质量标杆 | a11y 规格合约、vibe tests、iOS 截图测试 | 把控 craft 与 taste | 未开始 |
 
-A 可以马上开始。B 需要先定下 D1；D 和 C 可以部分并行。（2026-09-24 更新：token manifest 的 1669 条中有 1454 条，即 87%，已由 DTCG 生成。）
+A 可以马上开始。B 需要先定下 D1；D 和 C 可以部分并行。（2026-09-25 更新：token manifest 的 1669 条中有 1525 条，即 91%，已由 DTCG 生成。）
 
 ---
 

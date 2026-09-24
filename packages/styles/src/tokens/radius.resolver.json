@@ -1,0 +1,138 @@
+{
+  "version": "2025.10",
+  "description": "Radius contract.\n\nA stable intent name over the radius anchor/multiplier model for executable UI\nrecipes. Raw --radius-* primitives remain available for other needs.\n\nRadius personalization axis.\n\n[data-a63-radius] sets the multiplier the whole --radius-* scale (foundation/\nradius.css) already multiplies by, so one attribute rescales every corner.\n`default` = 1 restates the foundation default so a subtree can override back.",
+  "sets": {
+    "base": {
+      "sources": [
+        {
+          "a63": {
+            "avatar": {
+              "radius": {
+                "$type": "number",
+                "$value": 50,
+                "$extensions": {
+                  "io.atom63.derive": "50%"
+                }
+              }
+            },
+            "radius": {
+              "control": {
+                "$type": "dimension",
+                "$value": "{radius.lg}"
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":root"
+        }
+      }
+    }
+  },
+  "modifiers": {
+    "radius": {
+      "default": "default",
+      "contexts": {
+        "none": [
+          {
+            "a63": {
+              "avatar": {
+                "radius": {
+                  "$type": "number",
+                  "$value": 0
+                }
+              }
+            },
+            "radius": {
+              "multiplier": {
+                "$type": "number",
+                "$value": 0
+              }
+            }
+          }
+        ],
+        "subtle": [
+          {
+            "a63": {
+              "avatar": {
+                "radius": {
+                  "$type": "dimension",
+                  "$value": "{radius.full}"
+                }
+              }
+            },
+            "radius": {
+              "multiplier": {
+                "$type": "number",
+                "$value": 0.5
+              }
+            }
+          }
+        ],
+        "default": [
+          {
+            "a63": {
+              "avatar": {
+                "radius": {
+                  "$type": "number",
+                  "$value": 50,
+                  "$extensions": {
+                    "io.atom63.derive": "50%"
+                  }
+                }
+              }
+            },
+            "radius": {
+              "multiplier": {
+                "$type": "number",
+                "$value": 1
+              }
+            }
+          }
+        ],
+        "round": [
+          {
+            "a63": {
+              "avatar": {
+                "radius": {
+                  "$type": "number",
+                  "$value": 50,
+                  "$extensions": {
+                    "io.atom63.derive": "50%"
+                  }
+                }
+              }
+            },
+            "radius": {
+              "multiplier": {
+                "$type": "number",
+                "$value": 1.5
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/base"
+    },
+    {
+      "$ref": "#/modifiers/radius"
+    }
+  ],
+  "$extensions": {
+    "io.atom63.css": {
+      "attribute": "data-a63-radius",
+      "selectors": {
+        "none": "[data-a63-radius='none']",
+        "subtle": "[data-a63-radius='subtle']",
+        "default": "[data-a63-radius='default']",
+        "round": "[data-a63-radius='round']"
+      }
+    }
+  }
+}

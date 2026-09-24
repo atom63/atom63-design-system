@@ -1,0 +1,107 @@
+{
+  "version": "2025.10",
+  "description": "Font personalization axis.\n\n--a63-font-app is the active application font stack; a consumer applies it on\nthe app root (e.g. `font-family: var(--a63-font-app)` on body). [data-a63-font]\nremaps it to one of the four foundation family stacks (foundation/fonts.css).\nDefaults to the sans stack.",
+  "sets": {
+    "base": {
+      "sources": [
+        {
+          "a63": {
+            "font": {
+              "app": {
+                "$type": "fontFamily",
+                "$value": "{font.family.sans}"
+              }
+            }
+          },
+          "font": {
+            "weight": {
+              "medium": {
+                "$type": "fontWeight",
+                "$value": 500
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":root"
+        }
+      }
+    }
+  },
+  "modifiers": {
+    "font": {
+      "default": "sans",
+      "contexts": {
+        "sans": [
+          {
+            "a63": {
+              "font": {
+                "app": {
+                  "$type": "fontFamily",
+                  "$value": "{font.family.sans}"
+                }
+              }
+            }
+          }
+        ],
+        "serif": [
+          {
+            "a63": {
+              "font": {
+                "app": {
+                  "$type": "fontFamily",
+                  "$value": "{font.family.serif}"
+                }
+              }
+            }
+          }
+        ],
+        "mono": [
+          {
+            "a63": {
+              "font": {
+                "app": {
+                  "$type": "fontFamily",
+                  "$value": "{font.family.mono}"
+                }
+              }
+            }
+          }
+        ],
+        "pixel": [
+          {
+            "a63": {
+              "font": {
+                "app": {
+                  "$type": "fontFamily",
+                  "$value": "{font.family.pixel}"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/base"
+    },
+    {
+      "$ref": "#/modifiers/font"
+    }
+  ],
+  "$extensions": {
+    "io.atom63.css": {
+      "attribute": "data-a63-font",
+      "selectors": {
+        "sans": "[data-a63-font='sans']",
+        "serif": "[data-a63-font='serif']",
+        "mono": "[data-a63-font='mono']",
+        "pixel": "[data-a63-font='pixel']"
+      }
+    }
+  }
+}

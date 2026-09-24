@@ -1,0 +1,433 @@
+{
+  "version": "2025.10",
+  "description": "Effects — shared shadow + blur scales\n\nShadows override Tailwind's defaults so values match Figma tokens\n\nUsage: shadow-md → var(--shadow-md) → var(--effect-shadow-md)\n\nShadow utilities read effect aliases at runtime so generated themes can swap\n visual depth without rebuilding Tailwind classes.",
+  "sets": {
+    "01-root-light": {
+      "sources": [
+        {
+          "effect": {
+            "shadow": {
+              "2xs": {
+                "$type": "shadow",
+                "$value": [
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0.0, 0.0, 0.0],
+                      "alpha": 0.04
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 1,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 1,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": 0,
+                      "unit": "px"
+                    }
+                  }
+                ],
+                "$extensions": {
+                  "io.atom63.derive": "0px 1px 1px 0px rgb(0 0 0 / 0.04)"
+                }
+              },
+              "xs": {
+                "$type": "shadow",
+                "$value": [
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0.0, 0.0, 0.0],
+                      "alpha": 0.05
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 1,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 2,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": 0,
+                      "unit": "px"
+                    }
+                  },
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0.0, 0.0, 0.0],
+                      "alpha": 0.08
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 2,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 4,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": -2,
+                      "unit": "px"
+                    }
+                  }
+                ],
+                "$extensions": {
+                  "io.atom63.derive": "0px 1px 2px 0px rgb(0 0 0 / 0.05), 0px 2px 4px -2px rgb(0 0 0 / 0.08)"
+                }
+              },
+              "sm": {
+                "$type": "shadow",
+                "$value": [
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0.0, 0.0, 0.0],
+                      "alpha": 0.06
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 2,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 4,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": -1,
+                      "unit": "px"
+                    }
+                  },
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0.0, 0.0, 0.0],
+                      "alpha": 0.08
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 6,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 10,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": -4,
+                      "unit": "px"
+                    }
+                  }
+                ],
+                "$extensions": {
+                  "io.atom63.derive": "0px 2px 4px -1px rgb(0 0 0 / 0.06), 0px 6px 10px -4px rgb(0 0 0 / 0.08)"
+                }
+              },
+              "md": {
+                "$type": "shadow",
+                "$value": [
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0.0, 0.0, 0.0],
+                      "alpha": 0.06
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 4,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 8,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": -2,
+                      "unit": "px"
+                    }
+                  },
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0.0, 0.0, 0.0],
+                      "alpha": 0.09
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 12,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 18,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": -8,
+                      "unit": "px"
+                    }
+                  }
+                ],
+                "$extensions": {
+                  "io.atom63.derive": "0px 4px 8px -2px rgb(0 0 0 / 0.06), 0px 12px 18px -8px rgb(0 0 0 / 0.09)"
+                }
+              },
+              "lg": {
+                "$type": "shadow",
+                "$value": [
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0.0, 0.0, 0.0],
+                      "alpha": 0.07
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 8,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 14,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": -4,
+                      "unit": "px"
+                    }
+                  },
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0.0, 0.0, 0.0],
+                      "alpha": 0.1
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 18,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 32,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": -12,
+                      "unit": "px"
+                    }
+                  }
+                ],
+                "$extensions": {
+                  "io.atom63.derive": "0px 8px 14px -4px rgb(0 0 0 / 0.07), 0px 18px 32px -12px rgb(0 0 0 / 0.1)"
+                }
+              },
+              "xl": {
+                "$type": "shadow",
+                "$value": [
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0.0, 0.0, 0.0],
+                      "alpha": 0.08
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 14,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 22,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": -6,
+                      "unit": "px"
+                    }
+                  },
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0.0, 0.0, 0.0],
+                      "alpha": 0.13
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 34,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 64,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": -16,
+                      "unit": "px"
+                    }
+                  }
+                ],
+                "$extensions": {
+                  "io.atom63.derive": "0px 14px 22px -6px rgb(0 0 0 / 0.08), 0px 34px 64px -16px rgb(0 0 0 / 0.13)"
+                }
+              },
+              "2xl": {
+                "$type": "shadow",
+                "$value": [
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0.0, 0.0, 0.0],
+                      "alpha": 0.1
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 20,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 32,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": -8,
+                      "unit": "px"
+                    }
+                  },
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0.0, 0.0, 0.0],
+                      "alpha": 0.14
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 52,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 96,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": -18,
+                      "unit": "px"
+                    }
+                  }
+                ],
+                "$extensions": {
+                  "io.atom63.derive": "0px 20px 32px -8px rgb(0 0 0 / 0.1), 0px 52px 96px -18px rgb(0 0 0 / 0.14)"
+                }
+              }
+            }
+          },
+          "blur": {
+            "xs": {
+              "$type": "dimension",
+              "$value": {
+                "value": 4,
+                "unit": "px"
+              },
+              "$description": "Blur scale — canonical shared steps; Tailwind adapter re-references."
+            },
+            "sm": {
+              "$type": "dimension",
+              "$value": {
+                "value": 8,
+                "unit": "px"
+              }
+            },
+            "md": {
+              "$type": "dimension",
+              "$value": {
+                "value": 12,
+                "unit": "px"
+              }
+            },
+            "lg": {
+              "$type": "dimension",
+              "$value": {
+                "value": 16,
+                "unit": "px"
+              }
+            },
+            "xl": {
+              "$type": "dimension",
+              "$value": {
+                "value": 24,
+                "unit": "px"
+              }
+            },
+            "2xl": {
+              "$type": "dimension",
+              "$value": {
+                "value": 40,
+                "unit": "px"
+              }
+            },
+            "3xl": {
+              "$type": "dimension",
+              "$value": {
+                "value": 64,
+                "unit": "px"
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":root,\n.light"
+        }
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/01-root-light"
+    }
+  ]
+}

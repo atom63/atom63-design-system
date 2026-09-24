@@ -1,4 +1,7 @@
 /*
+ * Generated from src/tokens/type-scale.resolver.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
  * Typography personalization axis.
  *
  * [data-a63-type-scale] sets the multiplier the responsive type scale
@@ -9,12 +12,15 @@
 [data-a63-type-scale='compact'] {
   --typography-scale: 0.9;
 }
+
 [data-a63-type-scale='normal'] {
   --typography-scale: 1;
 }
+
 [data-a63-type-scale='comfortable'] {
   --typography-scale: 1.1;
 }
+
 [data-a63-type-scale='large'] {
   --typography-scale: 1.2;
 }

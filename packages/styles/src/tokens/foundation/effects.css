@@ -1,9 +1,16 @@
-/* Effects — shared shadow + blur scales */
-/* Shadows override Tailwind's defaults so values match Figma tokens */
-/* Usage: shadow-md → var(--shadow-md) → var(--effect-shadow-md) */
-
-/* Shadow utilities read effect aliases at runtime so generated themes can swap
-   visual depth without rebuilding Tailwind classes. */
+/*
+ * Generated from src/tokens/foundation/effects.resolver.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
+ * Effects — shared shadow + blur scales
+ *
+ * Shadows override Tailwind's defaults so values match Figma tokens
+ *
+ * Usage: shadow-md → var(--shadow-md) → var(--effect-shadow-md)
+ *
+ * Shadow utilities read effect aliases at runtime so generated themes can swap
+ *  visual depth without rebuilding Tailwind classes.
+ */
 :root,
 .light {
   --effect-shadow-2xs: 0px 1px 1px 0px rgb(0 0 0 / 0.04);
@@ -13,7 +20,6 @@
   --effect-shadow-lg: 0px 8px 14px -4px rgb(0 0 0 / 0.07), 0px 18px 32px -12px rgb(0 0 0 / 0.1);
   --effect-shadow-xl: 0px 14px 22px -6px rgb(0 0 0 / 0.08), 0px 34px 64px -16px rgb(0 0 0 / 0.13);
   --effect-shadow-2xl: 0px 20px 32px -8px rgb(0 0 0 / 0.1), 0px 52px 96px -18px rgb(0 0 0 / 0.14);
-
   /* Blur scale — canonical shared steps; Tailwind adapter re-references. */
   --blur-xs: 4px;
   --blur-sm: 8px;
@@ -23,9 +29,3 @@
   --blur-2xl: 40px;
   --blur-3xl: 64px;
 }
-
-/*
- * Theme-private material (gel stacks, bevels, CRT glows, skin-only blur stops)
- * lives under `[data-a63-theme]` in themes/*.css — not here. Promote into this
- * file only when a second theme or an adapter needs the same stop.
- */
