@@ -5,5 +5,10 @@
   },
   // The ui-react library typecheck excludes its stories because they depend on
   // Storybook tooling; this app owns and typechecks them.
-  "include": [".storybook", "vitest.config.ts", "../../packages/ui-react/src/**/*.stories.tsx"]
+  "include": [
+    ".storybook",
+    "ssr",
+    "vitest.config.ts",
+    "../../packages/ui-react/src/**/*.stories.tsx"
+  ]
 }

@@ -26,6 +26,14 @@ parameter in `packages/ui-react/src/components/story-probes.tsx` switches off th
 uniqueness rules for theme and environment matrices, which repeat a component's landmarks by design.
 Every other rule, including color contrast, applies to every story. Label every form control you add to a story.
 
+**Server rendering.** The `ssr` project renders every story with `renderToString` in Node, where
+`window` and `document` do not exist, and fails if a component touches browser globals during import
+or render. Browser access inside effects is fine, since effects do not run on the server.
+
+```bash
+pnpm --filter @atom63/storybook test:ssr
+```
+
 **Visual regression.** Every story is compared against a committed baseline screenshot in
 `visual/__screenshots__/`. Stories with a `Themes` story render all four themes in light and
 dark, so those components get a full theme matrix. To keep screenshots deterministic, the test

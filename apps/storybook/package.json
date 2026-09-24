@@ -8,6 +8,7 @@
     "build": "storybook build",
     "typecheck": "tsc --noEmit",
     "test": "vitest run --project=storybook",
+    "test:ssr": "vitest run --project=ssr",
     "test:visual": "vitest run --project=visual"
   },
   "dependencies": {

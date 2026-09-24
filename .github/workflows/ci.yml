@@ -131,6 +131,7 @@ jobs:
           pnpm --filter @atom63/storybook typecheck
           pnpm --filter @atom63/storybook build
           pnpm --filter @atom63/storybook test
+          pnpm --filter @atom63/storybook test:ssr
 
       - name: Check Figma plugin
         run: |
