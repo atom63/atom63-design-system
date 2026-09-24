@@ -61,7 +61,7 @@ slice.
 | B2 | Brand action block | primary action, hover, `brand-text`, foreground formula, focus ring, per-brand overrides (b3, b2) → same resolver, base group + context overrides | same |
 | B3 | Mode semantics | `semantics.css` light/dark blocks → `mode.resolver.json`; tint `color-mix()` formulas as derive expressions | same, plus visual baselines |
 | B4 | Figma write-back | `token-patch.mjs` applies multi-mode collections by writing into resolver contexts; aliases and derived tokens are rejected with a reason that names the input to edit | round-trip test with the fake Figma API |
-| B5 | Remove duplicates | delete the 24 `--surface-*` entries that `aliases.css` repeats from the surface resolver | manifest diff reviewed; Figma Foundation loses 24 variables |
+| B5 | Remove duplicates | delete the 24 `--surface-*` entries that `aliases.css` repeats from the surface resolver | manifest loses exactly those 24 entries; the Figma model is unchanged (it already listed them once, in Surface) |
 | B6 | Contracts | `contracts/*.css` → `contracts/*.tokens.json` (mostly aliases plus derive expressions) | manifest unchanged |
 | B7 | Themes | `themes/*.css` → `theme.resolver.json` (modern, aqua, retro, terminal); the manifest and Figma gain a Theme collection | new Figma collection; iOS `AtomTheme` values per theme |
 

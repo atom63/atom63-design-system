@@ -305,8 +305,6 @@
   --ease-spring: var(--ease-spring);
 }
 
-/* tokens/foundation/aliases.css */
-
 /* Tailwind CSS v4 @theme inline */
 @theme inline {
   --duration-fast: var(--duration-fast);

@@ -7,7 +7,6 @@
  */
 @import './foundation/primitives.css';
 @import './foundation/palette.css';
-@import './foundation/aliases.css';
 @import './foundation/effects.css';
 @import './foundation/radius.css';
 @import './foundation/fonts.css';

@@ -25,7 +25,6 @@
     "packages/styles/src/tokens/brand.css",
     "packages/styles/src/tokens/font.css",
     "packages/styles/src/tokens/foundation.css",
-    "packages/styles/src/tokens/foundation/aliases.css",
     "packages/styles/src/tokens/foundation/effects.css",
     "packages/styles/src/tokens/foundation/fonts.css",
     "packages/styles/src/tokens/foundation/motion.css",
@@ -42,10 +41,10 @@
     "packages/styles/src/tokens/type-scale.css"
   ],
   "summary": {
-    "sourceFiles": 38,
-    "declarations": 1494,
+    "sourceFiles": 37,
+    "declarations": 1470,
     "uniqueCssVariables": 1021,
-    "figmaMappedDeclarations": 1473
+    "figmaMappedDeclarations": 1449
   },
   "entries": [
     {
@@ -16762,21 +16761,6 @@
       "cssVar": "--surface-dark-1",
       "type": "color",
       "value": "var(--color-n1-dark-1)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/dark/1"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-dark-1"],
-      "scope": ":root"
-    },
-    {
-      "name": "surface-dark-1",
-      "cssVar": "--surface-dark-1",
-      "type": "color",
-      "value": "var(--color-n1-dark-1)",
       "sourceFile": "packages/styles/src/tokens/surface.css",
       "layer": "semantic",
       "figma": {
@@ -16867,21 +16851,6 @@
       "lifecycle": "preview",
       "aliases": ["--color-n6-dark-1"],
       "scope": "[data-a63-surface='n6']"
-    },
-    {
-      "name": "surface-dark-10",
-      "cssVar": "--surface-dark-10",
-      "type": "color",
-      "value": "var(--color-n1-dark-10)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/dark/10"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-dark-10"],
-      "scope": ":root"
     },
     {
       "name": "surface-dark-10",
@@ -16984,21 +16953,6 @@
       "cssVar": "--surface-dark-11",
       "type": "color",
       "value": "var(--color-n1-dark-11)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/dark/11"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-dark-11"],
-      "scope": ":root"
-    },
-    {
-      "name": "surface-dark-11",
-      "cssVar": "--surface-dark-11",
-      "type": "color",
-      "value": "var(--color-n1-dark-11)",
       "sourceFile": "packages/styles/src/tokens/surface.css",
       "layer": "semantic",
       "figma": {
@@ -17089,21 +17043,6 @@
       "lifecycle": "preview",
       "aliases": ["--color-n6-dark-11"],
       "scope": "[data-a63-surface='n6']"
-    },
-    {
-      "name": "surface-dark-12",
-      "cssVar": "--surface-dark-12",
-      "type": "color",
-      "value": "var(--color-n1-dark-12)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/dark/12"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-dark-12"],
-      "scope": ":root"
     },
     {
       "name": "surface-dark-12",
@@ -17206,21 +17145,6 @@
       "cssVar": "--surface-dark-2",
       "type": "color",
       "value": "var(--color-n1-dark-2)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/dark/2"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-dark-2"],
-      "scope": ":root"
-    },
-    {
-      "name": "surface-dark-2",
-      "cssVar": "--surface-dark-2",
-      "type": "color",
-      "value": "var(--color-n1-dark-2)",
       "sourceFile": "packages/styles/src/tokens/surface.css",
       "layer": "semantic",
       "figma": {
@@ -17311,21 +17235,6 @@
       "lifecycle": "preview",
       "aliases": ["--color-n6-dark-2"],
       "scope": "[data-a63-surface='n6']"
-    },
-    {
-      "name": "surface-dark-3",
-      "cssVar": "--surface-dark-3",
-      "type": "color",
-      "value": "var(--color-n1-dark-3)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/dark/3"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-dark-3"],
-      "scope": ":root"
     },
     {
       "name": "surface-dark-3",
@@ -17428,21 +17337,6 @@
       "cssVar": "--surface-dark-4",
       "type": "color",
       "value": "var(--color-n1-dark-4)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/dark/4"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-dark-4"],
-      "scope": ":root"
-    },
-    {
-      "name": "surface-dark-4",
-      "cssVar": "--surface-dark-4",
-      "type": "color",
-      "value": "var(--color-n1-dark-4)",
       "sourceFile": "packages/styles/src/tokens/surface.css",
       "layer": "semantic",
       "figma": {
@@ -17533,21 +17427,6 @@
       "lifecycle": "preview",
       "aliases": ["--color-n6-dark-4"],
       "scope": "[data-a63-surface='n6']"
-    },
-    {
-      "name": "surface-dark-5",
-      "cssVar": "--surface-dark-5",
-      "type": "color",
-      "value": "var(--color-n1-dark-5)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/dark/5"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-dark-5"],
-      "scope": ":root"
     },
     {
       "name": "surface-dark-5",
@@ -17650,21 +17529,6 @@
       "cssVar": "--surface-dark-6",
       "type": "color",
       "value": "var(--color-n1-dark-6)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/dark/6"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-dark-6"],
-      "scope": ":root"
-    },
-    {
-      "name": "surface-dark-6",
-      "cssVar": "--surface-dark-6",
-      "type": "color",
-      "value": "var(--color-n1-dark-6)",
       "sourceFile": "packages/styles/src/tokens/surface.css",
       "layer": "semantic",
       "figma": {
@@ -17755,21 +17619,6 @@
       "lifecycle": "preview",
       "aliases": ["--color-n6-dark-6"],
       "scope": "[data-a63-surface='n6']"
-    },
-    {
-      "name": "surface-dark-7",
-      "cssVar": "--surface-dark-7",
-      "type": "color",
-      "value": "var(--color-n1-dark-7)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/dark/7"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-dark-7"],
-      "scope": ":root"
     },
     {
       "name": "surface-dark-7",
@@ -17872,21 +17721,6 @@
       "cssVar": "--surface-dark-8",
       "type": "color",
       "value": "var(--color-n1-dark-8)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/dark/8"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-dark-8"],
-      "scope": ":root"
-    },
-    {
-      "name": "surface-dark-8",
-      "cssVar": "--surface-dark-8",
-      "type": "color",
-      "value": "var(--color-n1-dark-8)",
       "sourceFile": "packages/styles/src/tokens/surface.css",
       "layer": "semantic",
       "figma": {
@@ -17977,21 +17811,6 @@
       "lifecycle": "preview",
       "aliases": ["--color-n6-dark-8"],
       "scope": "[data-a63-surface='n6']"
-    },
-    {
-      "name": "surface-dark-9",
-      "cssVar": "--surface-dark-9",
-      "type": "color",
-      "value": "var(--color-n1-dark-9)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/dark/9"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-dark-9"],
-      "scope": ":root"
     },
     {
       "name": "surface-dark-9",
@@ -18094,21 +17913,6 @@
       "cssVar": "--surface-light-1",
       "type": "color",
       "value": "var(--color-n1-light-1)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/light/1"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-light-1"],
-      "scope": ":root"
-    },
-    {
-      "name": "surface-light-1",
-      "cssVar": "--surface-light-1",
-      "type": "color",
-      "value": "var(--color-n1-light-1)",
       "sourceFile": "packages/styles/src/tokens/surface.css",
       "layer": "semantic",
       "figma": {
@@ -18199,21 +18003,6 @@
       "lifecycle": "preview",
       "aliases": ["--color-n6-light-1"],
       "scope": "[data-a63-surface='n6']"
-    },
-    {
-      "name": "surface-light-10",
-      "cssVar": "--surface-light-10",
-      "type": "color",
-      "value": "var(--color-n1-light-10)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/light/10"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-light-10"],
-      "scope": ":root"
     },
     {
       "name": "surface-light-10",
@@ -18316,21 +18105,6 @@
       "cssVar": "--surface-light-11",
       "type": "color",
       "value": "var(--color-n1-light-11)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/light/11"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-light-11"],
-      "scope": ":root"
-    },
-    {
-      "name": "surface-light-11",
-      "cssVar": "--surface-light-11",
-      "type": "color",
-      "value": "var(--color-n1-light-11)",
       "sourceFile": "packages/styles/src/tokens/surface.css",
       "layer": "semantic",
       "figma": {
@@ -18421,21 +18195,6 @@
       "lifecycle": "preview",
       "aliases": ["--color-n6-light-11"],
       "scope": "[data-a63-surface='n6']"
-    },
-    {
-      "name": "surface-light-12",
-      "cssVar": "--surface-light-12",
-      "type": "color",
-      "value": "var(--color-n1-light-12)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/light/12"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-light-12"],
-      "scope": ":root"
     },
     {
       "name": "surface-light-12",
@@ -18538,21 +18297,6 @@
       "cssVar": "--surface-light-2",
       "type": "color",
       "value": "var(--color-n1-light-2)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/light/2"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-light-2"],
-      "scope": ":root"
-    },
-    {
-      "name": "surface-light-2",
-      "cssVar": "--surface-light-2",
-      "type": "color",
-      "value": "var(--color-n1-light-2)",
       "sourceFile": "packages/styles/src/tokens/surface.css",
       "layer": "semantic",
       "figma": {
@@ -18643,21 +18387,6 @@
       "lifecycle": "preview",
       "aliases": ["--color-n6-light-2"],
       "scope": "[data-a63-surface='n6']"
-    },
-    {
-      "name": "surface-light-3",
-      "cssVar": "--surface-light-3",
-      "type": "color",
-      "value": "var(--color-n1-light-3)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/light/3"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-light-3"],
-      "scope": ":root"
     },
     {
       "name": "surface-light-3",
@@ -18760,21 +18489,6 @@
       "cssVar": "--surface-light-4",
       "type": "color",
       "value": "var(--color-n1-light-4)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/light/4"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-light-4"],
-      "scope": ":root"
-    },
-    {
-      "name": "surface-light-4",
-      "cssVar": "--surface-light-4",
-      "type": "color",
-      "value": "var(--color-n1-light-4)",
       "sourceFile": "packages/styles/src/tokens/surface.css",
       "layer": "semantic",
       "figma": {
@@ -18865,21 +18579,6 @@
       "lifecycle": "preview",
       "aliases": ["--color-n6-light-4"],
       "scope": "[data-a63-surface='n6']"
-    },
-    {
-      "name": "surface-light-5",
-      "cssVar": "--surface-light-5",
-      "type": "color",
-      "value": "var(--color-n1-light-5)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/light/5"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-light-5"],
-      "scope": ":root"
     },
     {
       "name": "surface-light-5",
@@ -18982,21 +18681,6 @@
       "cssVar": "--surface-light-6",
       "type": "color",
       "value": "var(--color-n1-light-6)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/light/6"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-light-6"],
-      "scope": ":root"
-    },
-    {
-      "name": "surface-light-6",
-      "cssVar": "--surface-light-6",
-      "type": "color",
-      "value": "var(--color-n1-light-6)",
       "sourceFile": "packages/styles/src/tokens/surface.css",
       "layer": "semantic",
       "figma": {
@@ -19087,21 +18771,6 @@
       "lifecycle": "preview",
       "aliases": ["--color-n6-light-6"],
       "scope": "[data-a63-surface='n6']"
-    },
-    {
-      "name": "surface-light-7",
-      "cssVar": "--surface-light-7",
-      "type": "color",
-      "value": "var(--color-n1-light-7)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/light/7"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-light-7"],
-      "scope": ":root"
     },
     {
       "name": "surface-light-7",
@@ -19204,21 +18873,6 @@
       "cssVar": "--surface-light-8",
       "type": "color",
       "value": "var(--color-n1-light-8)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/light/8"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-light-8"],
-      "scope": ":root"
-    },
-    {
-      "name": "surface-light-8",
-      "cssVar": "--surface-light-8",
-      "type": "color",
-      "value": "var(--color-n1-light-8)",
       "sourceFile": "packages/styles/src/tokens/surface.css",
       "layer": "semantic",
       "figma": {
@@ -19309,21 +18963,6 @@
       "lifecycle": "preview",
       "aliases": ["--color-n6-light-8"],
       "scope": "[data-a63-surface='n6']"
-    },
-    {
-      "name": "surface-light-9",
-      "cssVar": "--surface-light-9",
-      "type": "color",
-      "value": "var(--color-n1-light-9)",
-      "sourceFile": "packages/styles/src/tokens/foundation/aliases.css",
-      "layer": "foundation",
-      "figma": {
-        "collection": "Atom63 Foundation",
-        "path": "surface/light/9"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-n1-light-9"],
-      "scope": ":root"
     },
     {
       "name": "surface-light-9",
