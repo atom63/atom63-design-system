@@ -7,8 +7,10 @@
  * Model: tokens defined only at :root become single-mode collections (one per
  * manifest layer). Every personalization axis that remaps tokens through a
  * data-a63-* attribute becomes its own collection whose modes are the axis
- * values, because a Figma collection has exactly one mode dimension. The CSS
- * never varies one token on two axes, and the generator fails if that changes.
+ * values, because a Figma collection has exactly one mode dimension. After that
+ * first placement by declaration scope, placeByMeasuredAxes() measures which
+ * axes each literal value really varies on and moves it to that axis, or lists
+ * it as `computed` when it varies on more axes than one collection can hold.
  *
  * A value that is exactly var(--other) becomes a Figma alias when --other is a
  * synced variable. A color-mix() whose second weight resolves to 0% reduces to
@@ -483,6 +485,13 @@ async function main() {
       }
     }
 
+    const computed = await placeByMeasuredAxes({
+      collections,
+      ensureCollection,
+      byVar,
+      resolveContext,
+    })
+
     // Drop aliases whose target was skipped, resolving them to literals is not
     // possible here, so report them instead of emitting a dangling reference.
     const emitted = new Set(
@@ -532,9 +541,11 @@ async function main() {
           0
         ),
         skipped: skipped.length,
+        computed: computed.length,
       },
       collections: ordered,
       skipped: skipped.sort((left, right) => left.token.localeCompare(right.token)),
+      computed,
     }
 
     const content = `${JSON.stringify(output, null, 2)}\n`
@@ -557,6 +568,122 @@ async function main() {
   } finally {
     await browser.close()
   }
+}
+
+/**
+ * A variable whose value is an alias follows its target across every axis, but a
+ * literal (a computed calc() or color-mix(), resolved at the defaults) only
+ * changes along its own collection's axis. Collections are chosen from where a
+ * token is declared, so a formula declared at :root whose inputs sit on an axis
+ * (a space step over the density unit, a radius over the radius multiplier, a
+ * focus ring over the brand ramp) would stay frozen at the default mode.
+ *
+ * This pass measures in the page which axes each literal variable actually
+ * varies on. A variable that varies on exactly one axis, other than the one its
+ * collection represents, moves to that axis's collection with one resolved value
+ * per mode, so Figma matches the browser in every mode. A variable that varies on more axes
+ * than one collection can hold (a theme mix over the brand, a type step over
+ * both window size and type scale) keeps its default value and is listed in
+ * `computed` with its CSS expression, for renderers that evaluate formulas
+ * natively and for the parity test.
+ */
+async function placeByMeasuredAxes({ collections, ensureCollection, byVar, resolveContext }) {
+  const variables = [...collections.values()].flatMap(collection =>
+    collection.variables.map(item => ({ collection, item }))
+  )
+  const measured = variables
+    .filter(({ item }) => Object.values(item.values).some(value => !value.alias))
+    .map(({ collection, item }) => ({ collection, item, record: byVar.get(item.token) }))
+  const records = measured.map(({ record }) => {
+    record.currentRaw = record.rawByMode.default ?? Object.values(record.rawByMode)[0] ?? ''
+    return record
+  })
+
+  const key = value => JSON.stringify(value?.resolved ?? null)
+  // Each axis alone, for the per-mode values of a moved variable.
+  const results = {}
+  for (const axis of axes) {
+    results[axis.id] = {}
+    for (const mode of axis.modes)
+      results[axis.id][mode] = await resolveContext({ [axis.attribute]: mode }, records)
+  }
+  // Each axis again under every theme and mode, because a theme can make a token
+  // depend on an axis it ignores under the default theme (retro's weather card
+  // follows the brand; modern's does not).
+  const variesByAxis = new Map(axes.map(axis => [axis.id, new Set()]))
+  for (const theme of themes)
+    for (const themeMode of ['light', 'dark'])
+      for (const axis of axes) {
+        const byMode = []
+        for (const mode of axis.modes)
+          byMode.push(
+            await resolveContext(
+              { 'data-a63-theme': theme, 'data-a63-mode': themeMode, [axis.attribute]: mode },
+              records
+            )
+          )
+        for (const record of records) {
+          const token = record.entry.cssVar
+          if (new Set(byMode.map(result => key(result[token]))).size > 1)
+            variesByAxis.get(axis.id).add(token)
+        }
+      }
+  const themeResults = {}
+  for (const theme of themes)
+    for (const mode of ['light', 'dark'])
+      themeResults[`${theme}-${mode}`] = await resolveContext(
+        { 'data-a63-theme': theme, 'data-a63-mode': mode },
+        records
+      )
+
+  const axisOf = collection =>
+    collection.name === themeCollection.name
+      ? ['theme', 'mode']
+      : [axes.find(axis => axis.collection === collection.name)?.id].filter(Boolean)
+
+  const computed = []
+  for (const { collection, item, record } of measured) {
+    const token = item.token
+    const variesOn = axes
+      .filter(
+        axis =>
+          variesByAxis.get(axis.id).has(token) ||
+          new Set(axis.modes.map(mode => key(results[axis.id][mode][token]))).size > 1
+      )
+      .map(axis => axis.id)
+    const themeVaries = ['light', 'dark'].some(
+      mode => new Set(themes.map(theme => key(themeResults[`${theme}-${mode}`][token]))).size > 1
+    )
+    if (themeVaries) variesOn.push('theme')
+    const extra = variesOn.filter(axis => !axisOf(collection).includes(axis))
+    if (extra.length === 0) continue
+
+    // A value that varies on one axis belongs to that axis's collection, even
+    // when its declaration scope placed it on another one it does not vary on.
+    const axis = variesOn.length === 1 && axes.find(candidate => candidate.id === variesOn[0])
+    const singleAxis = Boolean(axis)
+    const perMode = singleAxis
+      ? axis.modes.map(mode => [mode, results[axis.id][mode][token]?.resolved])
+      : []
+    if (
+      singleAxis &&
+      perMode.every(([, resolved]) => resolved !== null && resolved !== undefined)
+    ) {
+      const values = Object.fromEntries(
+        perMode.map(([mode, resolved]) => [mode, { value: resolved }])
+      )
+      collection.variables = collection.variables.filter(other => other !== item)
+      ensureCollection(axis.collection, axis.modes).variables.push(variable(record, values))
+      continue
+    }
+    computed.push({
+      token,
+      collection: collection.name,
+      variesOn: variesOn.sort(),
+      expression: record.rawByMode.default ?? Object.values(record.rawByMode)[0] ?? '',
+    })
+  }
+  return computed.sort((left, right) => left.token.localeCompare(right.token))
 }
 
 function toValue(record, raw, result, synced) {

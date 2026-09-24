@@ -151,6 +151,31 @@ same result, so the default appearance does not change; mixes of two chromatic c
 `color-mix-space.browser.test.ts` fails when an oklch mix takes an operand whose chroma is low but
 not zero in any theme, surface or mode.
 
+## Figma placement by measured axes (decided 2026-09-25)
+
+A formula token (a `calc()` or `color-mix()`) is a literal in Figma: Figma variables hold values
+and aliases, not expressions. The generator used to place each token in the collection of the
+scope that declares it, so a formula declared at `:root` over an axis input stayed at its default
+value in every mode. `space-2` did not follow density, `radius-md` did not follow the radius
+axis, the type scale did not follow type scale, and the focus ring did not follow the brand.
+
+`generate-figma-sync.mjs` now measures, in the browser, which axes each literal value varies on,
+under every theme and mode:
+
+- **One axis:** the variable moves to that axis's collection with one resolved value per mode.
+  This fixed 29 variables, including 9 space steps (Density), 12 radius steps (Radius), 6 type
+  steps (Type Scale) and the primary foreground and focus ring (Brand). The plugin moves them with
+  their bindings, as for themes (B7b).
+- **More axes than one collection holds:** the variable keeps its default value and is listed in
+  the model's `computed` array with the axes it varies on and its CSS expression. There are 59:
+  theme mixes over brand or surface, control heights over density and design language, and type
+  steps over both window size and type scale. Figma cannot show these exactly; a renderer that
+  evaluates the expression natively (iOS, next) gets them right.
+
+`figma-parity.browser.test.ts` checks the result: every variable, in every mode of every axis,
+and every color in every theme × brand × surface × mode, resolves in the model to what the
+browser computes, except variables in `computed` and aliases that reach one.
+
 ## Open questions, decided per slice
 
 - **How `io.atom63.derive` is shaped.** It could be one CSS expression string with `{token.path}`
