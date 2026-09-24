@@ -59,12 +59,16 @@
 - **验证**：给 `ContainerProps` 加一个可选 prop，`check:api-report` 失败并指出变化的报告；把一个入口的
   `types` 指向不存在的文件，publint 和 attw 都失败。
 
-### 3. SSR 冒烟
+### 3. SSR 冒烟（已完成）
 
-- **现状**：组件只在浏览器里测过。Next.js 等服务端渲染的使用方如果在导入或首次渲染时碰到 `window`
-  会直接报错，目前发现不了。PortalContainer 已被标为 SSR 待验证的高风险项。
-- **做法**：在 Node 中对每个 story 做一次 `renderToString`，要求不抛错。
-- **验证**：故意在一个组件的渲染里访问 `window`，测试必须失败。
+- **结果**：Storybook 新增 `ssr` 测试项目，运行在 Node 环境（没有 `window` / `document`），对 ui-react 的
+  全部 446 个 story 做 `renderToString`，要求不抛错；在导入阶段访问浏览器全局变量同样会失败。CI 在
+  Storybook 检查里运行 `pnpm --filter @atom63/storybook test:ssr`。首次运行全部通过，目前没有组件在
+  导入或渲染时访问浏览器全局变量。
+- **覆盖范围**：6 个 story 以打开状态渲染弹层（包括 PortalContainer），服务端渲染不报错。Base UI 的
+  portal 在服务端不输出内容、挂载后才在客户端渲染，所以弹层内部由浏览器端测试覆盖。
+- **验证**：在 `Kbd` 的渲染里访问 `window.innerWidth`，用到它的 14 个 story 都以
+  `ReferenceError: window is not defined` 失败。
 
 ### 4. 跨浏览器渲染测试
 

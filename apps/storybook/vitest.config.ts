@@ -2,6 +2,7 @@ import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
 import { playwright } from '@vitest/browser-playwright'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { defaultServerConditions } from 'vite'
 import { defineConfig } from 'vitest/config'
 
 import { sharedTestOptions } from '../../config/vite/vitest-defaults'
@@ -28,6 +29,17 @@ export default defineConfig({
             provider: playwright(),
             instances: [{ browser: 'chromium' }],
           },
+        },
+      },
+      {
+        extends: true,
+        // Workspace packages load from source, as they do in Storybook.
+        resolve: { conditions: ['@atom63/source', ...defaultServerConditions] },
+        ssr: { resolve: { conditions: ['@atom63/source', ...defaultServerConditions] } },
+        test: {
+          name: 'ssr',
+          environment: 'node',
+          include: ['ssr/**/*.test.tsx'],
         },
       },
       {
