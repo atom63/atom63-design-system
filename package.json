@@ -17,6 +17,7 @@
     "check:api-report": "node scripts/design-system/api-report.mjs --check",
     "check:benchmark-parity": "node scripts/design-system/audit-benchmark-parity.mjs",
     "check:control-alignment": "node scripts/design-system/check-control-alignment.mjs",
+    "check:craft": "node scripts/design-system/check-craft.mjs",
     "check:dependency-version-policy": "node scripts/design-system/audit-dependency-version-policy.mjs",
     "check:ds-pack-smoke": "node scripts/design-system/smoke-packed-ui-react.mjs",
     "check:ds-registry-smoke": "node scripts/design-system/smoke-registry-ui-react.mjs",

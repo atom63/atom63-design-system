@@ -207,9 +207,14 @@ Astryx 是 Meta 开源的 React 设计系统（MIT，2026-06 公开 beta，0.6.x
 |---|---|---|---|
 | A. 正确性（近期、小） | Swift 颜色改从语义 token 生成；新增 Web / iOS 值级别一致性检查 | 修复已经存在的漂移 | 已完成（#24） |
 | B. 唯一源头（最大的一步） | 语义、品牌、contract、主题迁入 DTCG + resolver；公式写成派生规则；主题进入 Figma mode；打通 Figma 回写 | 消除黑盒，实现 Figma 1:1 | 已完成：B1–B7（#25–#32）、B8a（#45）、B8b（响应式字号） |
-| C. 流水线 | 脚手架、由 contract 生成文档、MCP / CLI、craft lint、模板库 | 流程化产出 | 未开始 |
+| C. 流水线 | 脚手架、由 contract 生成文档、MCP / CLI、craft lint、模板库 | 流程化产出 | 进行中：craft lint 已上线（见下方 C 进度） |
 | D. pattern 迁入 | brand logo、icons 清理、mdx 通用部分、inform、agent runtime、widgets foundation | 完成分离 | 进行中：mdx 已迁入 `packages/mdx`，docs 站改用它（见下方 D 进度） |
 | E. 质量标杆 | a11y 规格合约、vibe tests、iOS 截图测试 | 把控 craft 与 taste | 未开始 |
+
+**C 进度（2026-09-25）：** craft lint 第一版（`pnpm check:craft`，已接入 CI）检查 ui-react 和 mdx 源码中的三条规则：原始颜色值（`raw-color`）、物理方向写法（`physical-properties`）、不经过 `:focus-visible` 的焦点样式（`focus-visible`）。
+现有 103 处违规记在 `docs/design-system/audits/craft-baseline.json`：新增违规会让 CI 失败；修复后基线必须同步缩小。
+主要存量集中在：mdx 的 callout 配色（直接用 Tailwind 调色板，需要改用 DS 的状态 token）、视频弹窗、侧边栏等组件的物理方向写法，以及 Calendar 下拉框的 `:has(:focus)`。
+"禁用态不响应 hover" 静态扫描判断不可靠，改为之后用 Storybook 运行时测试来做。
 
 **D 进度（2026-09-25）：** `@atom63/mdx` 已从 atom63-vite 迁入 `packages/mdx`（除 `craft-demos` 外全部迁入），docs 站改为依赖它，`apps/docs/src/mdx-kit` 副本已删除。
 包暂时标为 `private`：npm 要求包先存在才能配置 trusted publishing，所以首次发布需要你在本机用自己的账号手动发一次，之后再配置 trusted publisher、加入 `publish-beta.mjs` 的包列表和 API / 包正确性检查。

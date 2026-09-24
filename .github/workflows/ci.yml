@@ -93,11 +93,12 @@ jobs:
       - name: Check tokens
         run: pnpm --filter @atom63/styles check:tokens
 
-      - name: Check theme authoring and token economy
+      - name: Check theme authoring, token economy and craft
         run: |
           pnpm test:scripts
           pnpm check:theme-authoring
           pnpm check:token-economy
+          pnpm check:craft
 
       - name: Build UI foundation
         run: pnpm --filter @atom63/ui-foundation build
