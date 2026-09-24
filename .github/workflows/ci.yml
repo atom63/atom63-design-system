@@ -62,6 +62,12 @@ jobs:
       - name: Build React UI
         run: pnpm --filter @atom63/ui-react build
 
+      - name: Check API reports
+        run: pnpm check:api-report
+
+      - name: Check package correctness
+        run: pnpm check:package-correctness
+
       - name: Check React UI bundle size
         run: pnpm check:ui-react-size
 
