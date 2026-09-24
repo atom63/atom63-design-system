@@ -72,13 +72,23 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     container: mcr.microsoft.com/playwright:v1.61.1-noble
+    # The baseline commit is pushed by the Atom63 bot app, so CI and the visual
+    # comparison run on it like on any other push.
     permissions:
-      contents: write
-      actions: write
+      contents: read
 
     steps:
+      - name: Create a bot token
+        id: bot
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ vars.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Check out repository
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          token: ${{ steps.bot.outputs.token }}
 
       - name: Set up Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
@@ -95,44 +105,14 @@ jobs:
         run: pnpm --filter @atom63/storybook test:visual --update
 
       - name: Commit updated baselines
-        id: commit
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "atom63-ds-bot[bot]"
+          git config user.email "333482271+atom63-ds-bot[bot]@users.noreply.github.com"
           git add apps/storybook/visual/__screenshots__
           if git diff --cached --quiet; then
             echo "Baselines are already up to date."
           else
             git commit -m "test: update visual baselines"
             git push origin "HEAD:${GITHUB_REF_NAME}"
-            echo "pushed=true" >> "$GITHUB_OUTPUT"
           fi
-
-      # A push made with GITHUB_TOKEN starts no workflows, so the new commit would
-      # carry no checks. workflow_dispatch is the documented exception: start CI
-      # and a normal comparison run for the pushed commit.
-      - name: Start checks for the baseline commit
-        if: steps.commit.outputs.pushed == 'true'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          node --input-type=module -e '
-          const dispatch = async (workflow, inputs) => {
-            const response = await fetch(
-              `https://api.github.com/repos/${process.env.GITHUB_REPOSITORY}/actions/workflows/${workflow}/dispatches`,
-              {
-                method: "POST",
-                headers: {
-                  Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-                  Accept: "application/vnd.github+json",
-                },
-                body: JSON.stringify({ ref: process.env.GITHUB_REF_NAME, inputs }),
-              }
-            )
-            if (!response.ok) throw new Error(`${workflow}: ${response.status} ${await response.text()}`)
-            console.log(`Started ${workflow} on ${process.env.GITHUB_REF_NAME}`)
-          }
-          await dispatch("ci.yml")
-          await dispatch("visual.yml", { update: "false" })
-          '
