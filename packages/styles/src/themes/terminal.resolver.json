@@ -1,0 +1,517 @@
+{
+  "version": "2025.10",
+  "description": "Terminal theme — flat monochrome phosphor CRT.\n\nValue-overrides only. CRT glow recipes are theme-private under this selector\nso color-mix(... var(--a63-action-primary) ...) re-resolves when brand changes\n(prefer theme scope over foundation :root-only recipes).\n\nMODE-SPLIT (matches production): terminal supports BOTH modes — dark = bright\nphosphor on near-black, light = dark-green phosphor on a light \"paper\" surface.\nThe surfaces + monochrome text + neutral action are mode-split semantics, so\neach mode is declared twice: on the theme element itself (theme + mode class/\nattr co-located) AND as a descendant re-assertion so a nested [data-a63-mode]\ncan't clobber the phosphor palette.\n\n── Light terminal — dark-green phosphor on a light paper surface ────────\n\nNo --a63-weather-shadow: the phosphor ring is the rim's job now, and the\n   tile keeps the shared --terminal-overlay-glow like every other widget.\n\n── Dark terminal — bright phosphor on near-black ───────────────────────",
+  "sets": {
+    "01-data-a63-theme-terminal": {
+      "sources": [
+        {
+          "terminal": {
+            "overlay": {
+              "glow": {
+                "$type": "dimension",
+                "$value": "{a63.action.primary}",
+                "$extensions": {
+                  "io.atom63.derive": "0 0 20px -4px color-mix(in oklch, {a63.action.primary} 40%, transparent)"
+                },
+                "$description": "Theme-private helper reused by overlay + widget."
+              }
+            }
+          },
+          "a63": {
+            "control": {
+              "radius": {
+                "$type": "dimension",
+                "$value": "{radius.sm}"
+              },
+              "font": {
+                "family": {
+                  "$type": "dimension",
+                  "$value": "{font.family.mono}",
+                  "$description": "Monospace label + a soft phosphor text-glow — the CRT terminal signature."
+                }
+              },
+              "text": {
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "0 0 6px color-mix(in oklch, {a63.action.primary} 45%, transparent)"
+                  }
+                }
+              },
+              "shadow": {
+                "$root": {
+                  "$type": "shadow",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "inset 0 0 0 1px color-mix(in oklch, {a63.action.primary} 32%, transparent), 0 0 14px -2px color-mix(in oklch, {a63.action.primary} 45%, transparent)"
+                  },
+                  "$description": "Monochrome phosphor glow (accent) — terminal is intentionally single-colour.\n   Uses --a63-action-primary (resolvable on the theme scope), not the per-button\n   tint, which a theme-declared shadow can't see."
+                },
+                "active": {
+                  "$type": "shadow",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "inset 0 0 0 1px color-mix(in oklch, {a63.action.primary} 48%, transparent), 0 0 8px -2px color-mix(in oklch, {a63.action.primary} 55%, transparent)"
+                  },
+                  "$description": "Pressed: tighten the glow and deepen the phosphor edge (no bevel — terminal is flat)."
+                }
+              },
+              "focus": {
+                "ring": {
+                  "color": {
+                    "$type": "color",
+                    "$value": "{a63.action.primary}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 55%, transparent)"
+                    }
+                  }
+                }
+              }
+            },
+            "field": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": "{a63.action.primary}",
+                "$extensions": {
+                  "io.atom63.derive": "inset 0 0 6px -2px color-mix(in oklch, {a63.action.primary} 30%, transparent)"
+                }
+              }
+            },
+            "overlay": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": "{a63.action.primary}",
+                "$extensions": {
+                  "io.atom63.derive": "inset 0 0 0 1px color-mix(in oklch, {a63.action.primary} 30%, transparent), {terminal.overlay.glow}"
+                }
+              }
+            },
+            "widget": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": "{terminal.overlay.glow}",
+                "$description": "Phosphor edge moved to the rim; keep only the outer glow."
+              }
+            },
+            "surface": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": "{a63.action.primary}",
+                "$extensions": {
+                  "io.atom63.derive": "inset 0 0 0 1px color-mix(in oklch, {a63.action.primary} 22%, transparent)"
+                }
+              },
+              "texture": {
+                "image": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "repeating-linear-gradient( to bottom, color-mix(in oklch, {a63.action.primary} 6%, transparent) 0px, color-mix(in oklch, {a63.action.primary} 6%, transparent) 1px, transparent 1px, transparent 3px )"
+                  },
+                  "$description": "Terminal surfaces/overlays get a faint CRT scanline texture. Square look\n   comes from the radius personalization axis, not hardcoded radii here."
+                }
+              }
+            },
+            "track": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": "{a63.action.primary}",
+                "$extensions": {
+                  "io.atom63.derive": "inset 0 0 4px -1px color-mix(in oklch, {a63.action.primary} 22%, transparent)"
+                }
+              }
+            },
+            "choice": {
+              "box": {
+                "shadow": {
+                  "$root": {
+                    "$type": "shadow",
+                    "$value": "{a63.action.primary}",
+                    "$extensions": {
+                      "io.atom63.derive": "inset 0 0 5px -2px color-mix(in oklch, {a63.action.primary} 32%, transparent)"
+                    }
+                  },
+                  "checked": {
+                    "$type": "shadow",
+                    "$value": "{a63.action.primary}",
+                    "$extensions": {
+                      "io.atom63.derive": "inset 0 0 0 1px color-mix(in oklch, {a63.action.primary} 44%, transparent), 0 0 10px -4px color-mix(in oklch, {a63.action.primary} 55%, transparent)"
+                    }
+                  }
+                }
+              }
+            },
+            "segment": {
+              "track": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.field.background}",
+                  "$description": "Segmented controls — flat phosphor cells; selected = edged glow, no gel."
+                },
+                "border": {
+                  "$type": "dimension",
+                  "$value": "{a63.border.subtle}"
+                }
+              },
+              "background": {
+                "$type": "color",
+                "$value": "{a63.surface.panel}"
+              },
+              "foreground": {
+                "$type": "color",
+                "$value": "{a63.text.secondary}"
+              },
+              "selected": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.surface.muted}"
+                },
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.text.primary}"
+                },
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "inset 0 0 0 1px color-mix(in oklch, {a63.action.primary} 36%, transparent)"
+                  }
+                }
+              },
+              "primary": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}"
+                },
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary.foreground}"
+                },
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "inset 0 0 0 1px color-mix(in oklch, {a63.action.primary} 50%, transparent), 0 0 10px -3px color-mix(in oklch, {a63.action.primary} 40%, transparent)"
+                  }
+                }
+              }
+            },
+            "weather": {
+              "border": {
+                "color": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {a63.action.primary} 44%, {a63.border.subtle} )"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-a63-theme='terminal']"
+        }
+      }
+    },
+    "02-data-a63-theme-terminal-is-root-light-data-a63-m": {
+      "sources": [
+        {
+          "a63": {
+            "text": {
+              "primary": {
+                "$type": "color",
+                "$value": "{a63.action.primary}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 70%, black)"
+                },
+                "$description": "Darker phosphor ink on paper — pure brand-500 fails AA on near-white page."
+              },
+              "secondary": {
+                "$type": "color",
+                "$value": "{a63.action.primary}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 52%, black)"
+                }
+              }
+            },
+            "border": {
+              "control": {
+                "$type": "color",
+                "$value": "{a63.action.primary}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix( in oklch, {a63.action.primary} 26%, color-mix(in oklch, {surface.light.5} 60%, white) )"
+                }
+              },
+              "subtle": {
+                "$type": "color",
+                "$value": "{a63.action.primary}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix( in oklch, {a63.action.primary} 16%, color-mix(in oklch, {surface.light.6} 50%, white) )"
+                }
+              }
+            },
+            "surface": {
+              "page": {
+                "$type": "color",
+                "$value": "{surface.light.1}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {surface.light.1} 60%, white)"
+                }
+              },
+              "panel": {
+                "$type": "color",
+                "$value": "{surface.light.2}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {surface.light.2} 60%, white)"
+                }
+              }
+            },
+            "field": {
+              "background": {
+                "$type": "color",
+                "$value": "{surface.light.2}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix( in oklch, {surface.light.2} 86%, {a63.action.primary} )"
+                }
+              }
+            },
+            "action": {
+              "neutral": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{surface.light.3}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {surface.light.3} 60%, white)"
+                  }
+                },
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {a63.action.primary} 80%, {surface.light.12} )"
+                  }
+                }
+              }
+            },
+            "weather": {
+              "background": {
+                "color": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 34%, white 66%)"
+                  }
+                },
+                "image": {
+                  "$type": "dimension",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "linear-gradient(color-mix(in oklch, {a63.action.primary} 18%, transparent), transparent), linear-gradient( 135deg, color-mix(in oklch, {a63.action.primary} 48%, white 52%), color-mix(in oklch, {a63.action.primary} 36%, white 64%) )"
+                  }
+                }
+              },
+              "foreground": {
+                "$type": "color",
+                "$value": "{a63.action.primary}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix( in oklch, {a63.action.primary} 82%, {surface.light.12} )"
+                }
+              },
+              "muted": {
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {a63.action.primary} 58%, {surface.light.10} )"
+                  }
+                }
+              },
+              "divider": {
+                "color": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 38%, transparent)"
+                  }
+                }
+              },
+              "text": {
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "0 0 10px color-mix(in oklch, {a63.action.primary} 22%, transparent)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+        }
+      }
+    },
+    "03-data-a63-theme-terminal-is-dark-data-a63-mode-da": {
+      "sources": [
+        {
+          "a63": {
+            "text": {
+              "primary": {
+                "$type": "color",
+                "$value": "{a63.action.primary}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 62%, white)"
+                },
+                "$description": "Opaque phosphor text — translucent secondary failed AA against the page."
+              },
+              "secondary": {
+                "$type": "color",
+                "$value": "{a63.text.accent}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {a63.text.accent} 48%, {surface.dark.11})"
+                },
+                "$description": "Text mixes read the brand-as-text token; the primary fill is too dark here."
+              }
+            },
+            "border": {
+              "control": {
+                "$type": "color",
+                "$value": "{a63.action.primary}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 42%, transparent)"
+                }
+              },
+              "subtle": {
+                "$type": "color",
+                "$value": "{a63.action.primary}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 22%, transparent)"
+                }
+              }
+            },
+            "surface": {
+              "page": {
+                "$type": "color",
+                "$value": "{surface.dark.1}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {surface.dark.1} 92%, {a63.action.primary})"
+                }
+              },
+              "panel": {
+                "$type": "color",
+                "$value": "{surface.dark.2}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {surface.dark.2} 92%, {a63.action.primary})"
+                }
+              }
+            },
+            "field": {
+              "background": {
+                "$type": "color",
+                "$value": "{surface.dark.1}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {surface.dark.1} 90%, {a63.action.primary})"
+                }
+              }
+            },
+            "action": {
+              "neutral": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{surface.dark.3}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklch, {surface.dark.3} 86%, {a63.action.primary} 14% )"
+                  }
+                },
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.text.accent}"
+                }
+              }
+            },
+            "weather": {
+              "background": {
+                "color": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 22%, black 78%)"
+                  }
+                },
+                "image": {
+                  "$type": "dimension",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "linear-gradient(color-mix(in oklch, {a63.action.primary} 12%, transparent), transparent), linear-gradient( 135deg, color-mix(in oklch, {a63.action.primary} 30%, black 70%), color-mix(in oklch, {a63.action.primary} 16%, black 84%) )"
+                  }
+                }
+              },
+              "foreground": {
+                "$type": "color",
+                "$value": "{a63.action.primary}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 26%, white 74%)"
+                }
+              },
+              "muted": {
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.text.accent}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {a63.text.accent} 54%, white 46%)"
+                  }
+                }
+              },
+              "divider": {
+                "color": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 36%, transparent)"
+                  }
+                }
+              },
+              "text": {
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "0 0 8px color-mix(in oklch, {a63.action.primary} 38%, transparent)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
+        }
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/01-data-a63-theme-terminal"
+    },
+    {
+      "$ref": "#/sets/02-data-a63-theme-terminal-is-root-light-data-a63-m"
+    },
+    {
+      "$ref": "#/sets/03-data-a63-theme-terminal-is-dark-data-a63-mode-da"
+    }
+  ],
+  "$extensions": {
+    "io.atom63.css": {
+      "imports": ["./terminal.native.css"]
+    }
+  }
+}

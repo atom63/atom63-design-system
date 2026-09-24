@@ -1,0 +1,16 @@
+/*
+ * CSS-native values of retro.css: values with no DTCG type. The rest of
+ * the contract is generated from retro.resolver.json. Each declaration here is listed
+ * in native-values.json; see docs/design-system/token-single-source.md.
+ */
+
+[data-a63-theme='retro'] {
+  --a63-control-gloss: none;
+  --a63-widget-rim-backdrop: none;
+  --a63-choice-indicator-gloss: none;
+  --a63-segment-gloss: none;
+  --a63-segment-selected-gloss: none;
+  /* No --a63-weather-shadow: the retro weather tile throws the same hard drop
+        as every other retro widget, and the bevel edge lives on the rim. */
+  --a63-weather-backdrop: none;
+}

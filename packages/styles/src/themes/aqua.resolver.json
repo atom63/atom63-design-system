@@ -1,0 +1,1292 @@
+{
+  "version": "2025.10",
+  "description": "Aqua theme — glossy translucent gel.\n\nLean value-overrides — themes override VALUES, never anatomy. Captures the\naqua gel with a handful of levers: rounder controls, a glossy top-half sheen\n(--a63-control-gloss, the shared capability) + specular rim + soft colored drop\nshadow, a wide focus halo, and a faint blue surface tint. The blue tint is\ninherent to aqua (fixed b1), independent of the brand accent.\n\nGel material is theme-private under this selector. Shared blur ladder stops\n(--blur-lg) come from foundation; the 20px gel blur is skin-only.\n\nBrand-tinted halo removed: weather keeps the shared aqua drop so the tile\n   sits on the same elevation as every other widget.",
+  "sets": {
+    "01-data-a63-theme-aqua": {
+      "sources": [
+        {
+          "aqua": {
+            "overlay": {
+              "drop": {
+                "$type": "shadow",
+                "$value": [
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0, 0, 0],
+                      "alpha": 0.3
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 12,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 32,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": -8,
+                      "unit": "px"
+                    }
+                  },
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0, 0, 0],
+                      "alpha": 0.16
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 2,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 8,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": -3,
+                      "unit": "px"
+                    }
+                  }
+                ],
+                "$extensions": {
+                  "io.atom63.derive": "0 12px 32px -8px color-mix(in oklch, black 30%, transparent), 0 2px 8px -3px color-mix(in oklch, black 16%, transparent)"
+                },
+                "$description": "Theme-private helpers reused across contract knobs."
+              }
+            }
+          },
+          "a63": {
+            "control": {
+              "radius": {
+                "$type": "dimension",
+                "$value": "{radius.md}"
+              },
+              "focus": {
+                "ring": {
+                  "width": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 4,
+                      "unit": "px"
+                    }
+                  }
+                }
+              },
+              "shadow": {
+                "tint": {
+                  "$type": "number",
+                  "$value": 40,
+                  "$extensions": {
+                    "io.atom63.derive": "40%"
+                  }
+                },
+                "$root": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [1, 1, 1],
+                        "alpha": 0.85
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    },
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.1
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": -1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    },
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.18
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 2,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      }
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "inset 0 1px 0 color-mix(in oklch, white 85%, transparent), inset 0 -1px 1px color-mix(in oklch, black 10%, transparent), 0 1px 2px color-mix(in oklch, black 18%, transparent)"
+                  }
+                },
+                "flat": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [1, 1, 1],
+                        "alpha": 0.52
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    },
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.07
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": -1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    },
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.14
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 2,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      }
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "inset 0 1px 0 color-mix(in oklch, white 52%, transparent), inset 0 -1px 1px color-mix(in oklch, black 7%, transparent), 0 1px 2px color-mix(in oklch, black 14%, transparent)"
+                  }
+                },
+                "active": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.14
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    },
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [1, 1, 1],
+                        "alpha": 0.4
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": -1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    },
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.0
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      }
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "inset 0 1px 1px color-mix(in oklch, black 14%, transparent), inset 0 -1px 0 color-mix(in oklch, white 40%, transparent), 0 0 0 color-mix(in oklch, black 0%, transparent)"
+                  }
+                }
+              }
+            },
+            "field": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": [
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0, 0, 0],
+                      "alpha": 0.16
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 2,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 3,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "inset": true
+                  },
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0, 0, 0],
+                      "alpha": 0.1
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 1,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "inset": true
+                  },
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [1, 1, 1],
+                      "alpha": 0.6
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": -1,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "inset": true
+                  }
+                ],
+                "$extensions": {
+                  "io.atom63.derive": "inset 0 2px 3px color-mix(in oklch, black 16%, transparent), inset 0 1px 0 color-mix(in oklch, black 10%, transparent), inset 0 -1px 0 color-mix(in oklch, white 60%, transparent)"
+                }
+              }
+            },
+            "overlay": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": "{aqua.overlay.drop}",
+                "$extensions": {
+                  "io.atom63.derive": "inset 0 1px 0 color-mix(in oklch, white 60%, transparent), {aqua.overlay.drop}"
+                }
+              },
+              "highlight": {
+                "opacity": {
+                  "$type": "number",
+                  "$value": 0.75
+                }
+              }
+            },
+            "widget": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": "{aqua.overlay.drop}"
+              }
+            },
+            "surface": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": [
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [1, 1, 1],
+                      "alpha": 0.55
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 1,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "inset": true
+                  },
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0, 0, 0],
+                      "alpha": 0.22
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 6,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 16,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": -6,
+                      "unit": "px"
+                    }
+                  },
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0, 0, 0],
+                      "alpha": 0.12
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 1,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 3,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": -1,
+                      "unit": "px"
+                    }
+                  }
+                ],
+                "$extensions": {
+                  "io.atom63.derive": "inset 0 1px 0 color-mix(in oklch, white 55%, transparent), 0 6px 16px -6px color-mix(in oklch, black 22%, transparent), 0 1px 3px -1px color-mix(in oklch, black 12%, transparent)"
+                }
+              },
+              "backdrop": {
+                "$type": "color",
+                "$value": "{blur.lg}",
+                "$extensions": {
+                  "io.atom63.derive": "saturate(1.4) blur({blur.lg})"
+                },
+                "$description": "Aqua surfaces/overlays are glassy: translucent backdrop blur + a top gel\n   sheen + a bright specular rim. Shared frost uses --blur-lg; gel blur is\n   skin-only (between lg and xl)."
+              },
+              "highlight": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.white.100}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, white 55%, transparent)"
+                  }
+                },
+                "opacity": {
+                  "$type": "number",
+                  "$value": 0.75
+                }
+              }
+            },
+            "menu": {
+              "popup": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.surface.overlay}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {a63.surface.overlay} 92%, white)"
+                  },
+                  "$description": "Menus need a quieter, more even backplate than larger Aqua overlays so\n   dense rows remain legible from top to bottom."
+                }
+              }
+            },
+            "track": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": [
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0, 0, 0],
+                      "alpha": 0.14
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 2,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 3,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "inset": true
+                  },
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [1, 1, 1],
+                      "alpha": 0.45
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": -1,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "inset": true
+                  }
+                ],
+                "$extensions": {
+                  "io.atom63.derive": "inset 0 2px 3px color-mix(in oklch, black 14%, transparent), inset 0 -1px 0 color-mix(in oklch, white 45%, transparent)"
+                }
+              }
+            },
+            "marker": {
+              "shadow": {
+                "$type": "shadow",
+                "$value": [
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [1, 1, 1],
+                      "alpha": 0.5
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 1,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "inset": true
+                  },
+                  {
+                    "color": {
+                      "colorSpace": "srgb",
+                      "components": [0, 0, 0],
+                      "alpha": 0.15
+                    },
+                    "offsetX": {
+                      "value": 0,
+                      "unit": "px"
+                    },
+                    "offsetY": {
+                      "value": 1,
+                      "unit": "px"
+                    },
+                    "blur": {
+                      "value": 2,
+                      "unit": "px"
+                    },
+                    "spread": {
+                      "value": -1,
+                      "unit": "px"
+                    }
+                  }
+                ],
+                "$extensions": {
+                  "io.atom63.derive": "inset 0 1px 0 color-mix(in oklch, white 50%, transparent), 0 1px 2px -1px color-mix(in oklch, black 15%, transparent)"
+                }
+              }
+            },
+            "choice": {
+              "box": {
+                "shadow": {
+                  "$root": {
+                    "$type": "shadow",
+                    "$value": [
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [0, 0, 0],
+                          "alpha": 0.14
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 1,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 2,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "inset": true
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [1, 1, 1],
+                          "alpha": 0.5
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": -1,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "inset": true
+                      }
+                    ],
+                    "$extensions": {
+                      "io.atom63.derive": "inset 0 1px 2px color-mix(in oklch, black 14%, transparent), inset 0 -1px 0 color-mix(in oklch, white 50%, transparent)"
+                    }
+                  },
+                  "checked": {
+                    "$type": "shadow",
+                    "$value": [
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [1, 1, 1],
+                          "alpha": 0.34
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": 1,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "inset": true
+                      },
+                      {
+                        "color": {
+                          "colorSpace": "srgb",
+                          "components": [0, 0, 0],
+                          "alpha": 0.16
+                        },
+                        "offsetX": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "offsetY": {
+                          "value": -1,
+                          "unit": "px"
+                        },
+                        "blur": {
+                          "value": 1,
+                          "unit": "px"
+                        },
+                        "spread": {
+                          "value": 0,
+                          "unit": "px"
+                        },
+                        "inset": true
+                      }
+                    ],
+                    "$extensions": {
+                      "io.atom63.derive": "inset 0 1px 0 color-mix(in oklch, white 34%, transparent), inset 0 -1px 1px color-mix(in oklch, black 16%, transparent)"
+                    }
+                  }
+                }
+              }
+            },
+            "segment": {
+              "track": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.surface.muted}",
+                  "$description": "── Segment / ToggleGroup (Figma A63-System 432:1335) ─────────────────────\n   Welded gel CELLS own the chrome. Resting = soft card→muted wash + quiet\n   mid-line sheen. Selected = pressed-IN plate + restrained gel + inset."
+                },
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": "{a63.track.shadow}"
+                },
+                "border": {
+                  "$type": "dimension",
+                  "$value": "{a63.border.subtle}"
+                }
+              },
+              "foreground": {
+                "$type": "color",
+                "$value": "{a63.text.secondary}"
+              },
+              "hover": {
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.text.primary}"
+                }
+              },
+              "background": {
+                "$type": "color",
+                "$value": "{a63.surface.muted}"
+              },
+              "gloss": {
+                "$type": "dimension",
+                "$value": "{a63.surface.panel}",
+                "$extensions": {
+                  "io.atom63.derive": "linear-gradient( 180deg, color-mix(in oklch, white 10%, transparent) 0%, color-mix(in oklch, white 4%, transparent) 46%, color-mix(in oklch, black 6%, transparent) 54%, color-mix(in oklch, white 2%, transparent) 100% ), linear-gradient(180deg, {a63.surface.panel} 0%, {a63.surface.muted} 100%)"
+                }
+              },
+              "selected": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.surface.panel}"
+                },
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.text.primary}"
+                },
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [1, 1, 1],
+                        "alpha": 0.35
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    },
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.14
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 2,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 6,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "inset 0 1px 0 color-mix(in oklch, white 35%, transparent), inset 0 2px 6px color-mix(in oklch, black 14%, transparent)"
+                  }
+                }
+              },
+              "primary": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}"
+                },
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary.foreground}"
+                },
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [1, 1, 1],
+                        "alpha": 0.28
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    },
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.36
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 2,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 8,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "inset 0 1px 0 color-mix(in oklch, white 28%, transparent), inset 0 2px 8px color-mix(in oklch, black 36%, transparent)"
+                  }
+                }
+              },
+              "disabled": {
+                "opacity": {
+                  "$type": "number",
+                  "$value": 0.4
+                }
+              }
+            },
+            "weather": {
+              "background": {
+                "color": {
+                  "$type": "color",
+                  "$value": {
+                    "colorSpace": "srgb",
+                    "components": [0, 0, 0],
+                    "alpha": 0
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "transparent"
+                  },
+                  "$description": "Weather is an Aqua sky material rather than a live condition gradient."
+                }
+              },
+              "foreground": {
+                "$type": "color",
+                "$value": "{color.white.100}",
+                "$extensions": {
+                  "io.atom63.derive": "white"
+                }
+              },
+              "muted": {
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{color.white.100}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, white 76%, transparent)"
+                  }
+                }
+              },
+              "divider": {
+                "color": {
+                  "$type": "color",
+                  "$value": "{color.white.100}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, white 24%, transparent)"
+                  }
+                }
+              },
+              "text": {
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.42
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 2,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      }
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "0 1px 2px color-mix(in oklch, black 42%, transparent)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-a63-theme='aqua']"
+        }
+      }
+    },
+    "02-data-a63-theme-aqua-is-root-light-data-a63-mode-": {
+      "sources": [
+        {
+          "a63": {
+            "surface": {
+              "page": {
+                "$type": "color",
+                "$value": "{surface.light.2}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {surface.light.2} 95%, {color.b1.500})"
+                }
+              },
+              "panel": {
+                "$type": "color",
+                "$value": "{surface.light.1}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {surface.light.1} 96%, {color.b1.500})"
+                }
+              }
+            },
+            "weather": {
+              "border": {
+                "color": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 32%, transparent)"
+                  }
+                }
+              },
+              "background": {
+                "image": {
+                  "$type": "dimension",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "radial-gradient( 120% 90% at 10% 0%, color-mix(in oklch, white 28%, transparent), transparent 48% ), radial-gradient( 78% 100% at 100% 0%, color-mix(in oklch, {a63.action.primary} 32%, transparent), transparent 58% ), linear-gradient( 135deg, color-mix(in oklch, {a63.action.primary} 78%, white 10%), color-mix(in oklch, {a63.action.primary} 70%, {color.b1.900} 30%) )"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-a63-theme='aqua']:is(:root, .light, [data-a63-mode='light'])"
+        }
+      }
+    },
+    "03-data-a63-theme-aqua-is-dark-data-a63-mode-dark": {
+      "sources": [
+        {
+          "a63": {
+            "surface": {
+              "page": {
+                "$type": "color",
+                "$value": "{surface.dark.1}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {surface.dark.1} 94%, {color.b1.500})"
+                }
+              },
+              "panel": {
+                "$type": "color",
+                "$value": "{surface.dark.2}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {surface.dark.2} 94%, {color.b1.500})"
+                }
+              }
+            },
+            "menu": {
+              "highlight": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{color.white.100}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, white 12%, transparent)"
+                  },
+                  "$description": "Lift neutral menu rows above the striped gray backplate without turning the\n   hover state into the stronger primary-selection treatment."
+                }
+              }
+            },
+            "weather": {
+              "border": {
+                "color": {
+                  "$type": "color",
+                  "$value": "{color.white.100}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, white 14%, transparent)"
+                  }
+                }
+              },
+              "background": {
+                "image": {
+                  "$type": "dimension",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "radial-gradient( 120% 90% at 10% 0%, color-mix(in oklch, white 18%, transparent), transparent 48% ), radial-gradient( 88% 110% at 100% 0%, color-mix(in oklch, {a63.action.primary} 30%, transparent), transparent 58% ), linear-gradient( 135deg, color-mix(in oklch, {a63.action.primary} 58%, {surface.dark.6} 42%), color-mix(in oklch, {a63.action.primary} 36%, {surface.dark.3} 64%) )"
+                  }
+                }
+              }
+            },
+            "segment": {
+              "gloss": {
+                "$type": "dimension",
+                "$value": "{a63.surface.panel}",
+                "$extensions": {
+                  "io.atom63.derive": "linear-gradient( 180deg, color-mix(in oklch, white 8%, transparent) 0%, color-mix(in oklch, white 2%, transparent) 48%, color-mix(in oklch, black 14%, transparent) 100% ), linear-gradient( 180deg, color-mix(in oklch, {a63.surface.panel} 88%, white) 0%, {a63.surface.muted} 100% )"
+                },
+                "$description": "Dark gel: quieter sheen so the mid-line doesn't blow out to a white band."
+              },
+              "selected": {
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [1, 1, 1],
+                        "alpha": 0.22
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    },
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.28
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 3,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 8,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "inset 0 1px 0 color-mix(in oklch, white 22%, transparent), inset 0 3px 8px color-mix(in oklch, black 28%, transparent)"
+                  }
+                }
+              },
+              "primary": {
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": [
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [1, 1, 1],
+                        "alpha": 0.22
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 1,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    },
+                    {
+                      "color": {
+                        "colorSpace": "srgb",
+                        "components": [0, 0, 0],
+                        "alpha": 0.42
+                      },
+                      "offsetX": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "offsetY": {
+                        "value": 3,
+                        "unit": "px"
+                      },
+                      "blur": {
+                        "value": 10,
+                        "unit": "px"
+                      },
+                      "spread": {
+                        "value": 0,
+                        "unit": "px"
+                      },
+                      "inset": true
+                    }
+                  ],
+                  "$extensions": {
+                    "io.atom63.derive": "inset 0 1px 0 color-mix(in oklch, white 22%, transparent), inset 0 3px 10px color-mix(in oklch, black 42%, transparent)"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-a63-theme='aqua']:is(.dark, [data-a63-mode='dark'])"
+        }
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/01-data-a63-theme-aqua"
+    },
+    {
+      "$ref": "#/sets/02-data-a63-theme-aqua-is-root-light-data-a63-mode-"
+    },
+    {
+      "$ref": "#/sets/03-data-a63-theme-aqua-is-dark-data-a63-mode-dark"
+    }
+  ],
+  "$extensions": {
+    "io.atom63.css": {
+      "imports": ["./aqua.native.css"]
+    }
+  }
+}
