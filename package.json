@@ -5,7 +5,8 @@
   "type": "module",
   "packageManager": "pnpm@10.29.2",
   "engines": {
-    "pnpm": ">=10"
+    "pnpm": ">=10",
+    "node": ">=22"
   },
   "scripts": {
     "api:report": "node scripts/design-system/api-report.mjs",

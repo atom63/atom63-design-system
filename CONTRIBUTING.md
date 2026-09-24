@@ -29,7 +29,7 @@ support covers and who approves releases and support changes.
 
 ## Setup
 
-You need Node.js 22 and the pnpm version pinned in `package.json` (enable it with Corepack).
+You need Node.js 24 (see `.nvmrc`; 22 works too) and the pnpm version pinned in `package.json` (enable it with Corepack).
 Swift work also needs a current Xcode.
 
 ```bash
