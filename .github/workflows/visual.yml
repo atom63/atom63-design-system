@@ -27,21 +27,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Runs pull request code, so its token stays read-only.
   visual:
+    if: ${{ !inputs.update }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     # Keep in step with the root `playwright` version.
     container: mcr.microsoft.com/playwright:v1.61.1-noble
-    permissions:
-      contents: write
-      actions: write
 
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version-file: .nvmrc
 
@@ -52,7 +51,6 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Compare stories with baselines
-        if: ${{ !inputs.update }}
         run: pnpm --filter @atom63/storybook test:visual
 
       # Diffs for failed comparisons. On CI Vitest does not write a missing
@@ -60,20 +58,44 @@ jobs:
       # `<story>-reference-chromium-linux.png`, so this artifact is also how a
       # new story's first baseline gets into a pull request.
       - name: Upload screenshot results
-        if: ${{ failure() && !inputs.update }}
-        uses: actions/upload-artifact@v4
+        if: failure()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: visual-results
           path: apps/storybook/visual/__diff__
           if-no-files-found: ignore
 
+  # Only a manual run with `update` checked can push baselines, and only this
+  # job gets write access.
+  update-baselines:
+    if: ${{ inputs.update }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container: mcr.microsoft.com/playwright:v1.61.1-noble
+    permissions:
+      contents: write
+      actions: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Enable pnpm with Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
       - name: Regenerate baselines
-        if: ${{ inputs.update }}
         run: pnpm --filter @atom63/storybook test:visual --update
 
       - name: Commit updated baselines
         id: commit
-        if: ${{ inputs.update }}
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           git config user.name "github-actions[bot]"
@@ -91,7 +113,7 @@ jobs:
       # carry no checks. workflow_dispatch is the documented exception: start CI
       # and a normal comparison run for the pushed commit.
       - name: Start checks for the baseline commit
-        if: ${{ inputs.update && steps.commit.outputs.pushed == 'true' }}
+        if: steps.commit.outputs.pushed == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
