@@ -9,10 +9,9 @@
 
 Atom63 packages stay scalable by keeping package responsibilities explicit and checked.
 
-Public distribution is still pre-publish. The proposed public beta boundary,
-release-channel policy, readiness checks, and YZ approval gates are defined in
-[publish-boundary-rfc.md](./publish-boundary-rfc.md). This document describes
-package ownership; it does not authorize publishing.
+The published beta packages and how they are released are described in
+[release-automation.md](./release-automation.md). This document describes package
+ownership.
 
 ## Current package boundaries (prefer this)
 

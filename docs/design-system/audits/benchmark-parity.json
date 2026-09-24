@@ -82,12 +82,11 @@
       "atom63Status": "Package manifests, export maps, packed contents, and both packed and registry-only external consumer smokes are checked in CI and beta release preflight for the published first-wave beta packages.",
       "currentEvidence": {
         "docs": [
-          "docs/design-system/package-metadata-audit.md",
           "docs/design-system/audits/package-surface.json",
           "docs/design-system/audits/registry-consumer-smoke.json",
           "docs/design-system/README.md",
           "docs/design-system/quickstart.md",
-          "docs/design-system/extraction-rehearsal.md"
+          "docs/design-system/release-automation.md"
         ],
         "commands": [
           "pnpm check:package-surface",
@@ -169,8 +168,7 @@
           "docs/design-system/dependency-version-policy.json",
           "docs/design-system/audits/dependency-version-policy.json",
           "docs/design-system/beta-release-notes.md",
-          "docs/design-system/package-metadata-audit.md",
-          "docs/design-system/changesets-beta-plan.md"
+          "docs/design-system/release-automation.md"
         ],
         "commands": [
           "pnpm check:dependency-version-policy",
@@ -289,10 +287,10 @@
       "currentEvidence": {
         "docs": [
           "examples/vite-basic/README.md",
-          "docs/design-system/extraction-rehearsal.md",
           "docs/design-system/beta-release-notes.md",
           "docs/design-system/audits/registry-consumer-smoke.json",
-          "https://github.com/atom63/atom63-vite/pull/416"
+          "https://github.com/atom63/atom63-vite/pull/416",
+          "docs/design-system/release-automation.md"
         ],
         "commands": [
           "pnpm check:ds-pack-smoke",
@@ -418,7 +416,6 @@
           "docs/design-system/release-automation.md",
           "docs/design-system/stable-release-policy.json",
           "docs/design-system/audits/stable-release-preflight.json",
-          "docs/design-system/publish-approval-packet.md",
           ".github/workflows/release-beta.yml"
         ],
         "commands": ["pnpm changeset status --verbose", "pnpm check:stable-release-preflight"]
@@ -452,13 +449,13 @@
           "reference": "https://www.npmjs.com/package/frosted-ui"
         }
       ],
-      "atom63Status": "Figma token output and token-surface audit artifacts exist, but variables sync, styleguide generation, component parity, and idempotent reruns have not completed manual QA.",
+      "atom63Status": "A generated Figma sync model (collections, modes, aliases) and a sync plugin exist, but variables sync, styleguide generation, component parity, and idempotent reruns have not completed manual QA.",
       "currentEvidence": {
         "docs": [
-          "docs/design-system/audits/token-figma-surface.json",
+          "packages/styles/generated/atom63.figma-sync.json",
           "docs/design-system/beta-release-notes.md"
         ],
-        "commands": ["node scripts/design-system/audit-token-figma-surface.mjs"]
+        "commands": ["pnpm --filter @atom63/styles check:figma"]
       },
       "gaps": [
         "Run and record variables sync and styleguide generation.",

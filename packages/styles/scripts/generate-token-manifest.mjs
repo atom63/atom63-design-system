@@ -9,7 +9,6 @@ const workspaceRoot = path.resolve(packageRoot, '../..')
 const generatedDirectory = path.join(packageRoot, 'generated')
 
 const manifestRelativePath = 'packages/styles/generated/atom63.tokens.json'
-const figmaManifestRelativePath = 'packages/styles/generated/atom63.figma-tokens.json'
 const generatorRelativePath = 'packages/styles/scripts/generate-token-manifest.mjs'
 
 const sourceDirectories = [
@@ -251,12 +250,6 @@ export async function buildTokenManifestOutputs() {
     },
     entries,
   }
-  const figmaManifest = {
-    schemaVersion: 1,
-    generatedBy: generatorRelativePath,
-    derivedFrom: manifestRelativePath,
-    entries: figmaEntries,
-  }
 
   const prettier = await import('prettier')
   const formatJson = async (relativePath, value) => {
@@ -270,7 +263,6 @@ export async function buildTokenManifestOutputs() {
 
   return {
     [manifestRelativePath]: await formatJson(manifestRelativePath, manifest),
-    [figmaManifestRelativePath]: await formatJson(figmaManifestRelativePath, figmaManifest),
   }
 }
 

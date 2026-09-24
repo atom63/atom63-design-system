@@ -49,7 +49,6 @@
       "@atom63/ui-foundation": "workspace-beta-internal; exact-published-before-stable",
       "@base-ui/react": "pin-exact-through-beta",
       "clsx": "compatible-range-ok",
-      "date-fns": "compatible-range-ok",
       "embla-carousel-react": "monitor-minor-compatible-range",
       "input-otp": "pin-via-root-override-through-beta",
       "lucide-react": "compatible-range-ok-user-replaceable-icons",

@@ -8,8 +8,8 @@ agent about to change tokens, themes, contracts, or shared UI.
 
 Executable styles package: [`packages/styles/README.md`](../../packages/styles/README.md).
 Runnable adopter example: [`examples/vite-basic`](../../examples/vite-basic).
-For this extracted workspace's public repo scope and first-wave package boundary, see
-[extracted-repo-status.md](./extracted-repo-status.md).
+Current direction and progress: [roadmap.md](./roadmap.md) (phases A–E) and
+[token-single-source.md](./token-single-source.md) (DTCG as the only token source).
 
 ## What this system is
 
@@ -50,14 +50,14 @@ Full policy: [authoring-surfaces.md](./authoring-surfaces.md) ← **canonical fo
 ### Humans (new teammate)
 
 1. This page
-2. [extracted-repo-status.md](./extracted-repo-status.md) — current repository boundary
+2. [roadmap.md](./roadmap.md) — direction, phases and what is done
 3. [authoring-surfaces.md](./authoring-surfaces.md) — where to edit
 4. Design-system site: Architecture → Overview, then Foundation → Designing in code
 5. [cross-renderer-contracts.md](./cross-renderer-contracts.md) for React/SwiftUI parity
 6. [theme-authoring.md](./theme-authoring.md) if you touch skins
 7. [personalization-axes.md](./personalization-axes.md) if you touch `data-a63-*`
 8. [package-governance.md](./package-governance.md) + [ui-react-component-review.md](./ui-react-component-review.md) when shipping components
-9. [beta-release-notes.md](./beta-release-notes.md), [release-automation.md](./release-automation.md), [publish-boundary-rfc.md](./publish-boundary-rfc.md), [ui-react-root-api-audit.md](./ui-react-root-api-audit.md), [changesets-beta-plan.md](./changesets-beta-plan.md), [extraction-rehearsal.md](./extraction-rehearsal.md), [publish-approval-packet.md](./publish-approval-packet.md), then [changesets-backlog-isolation.md](./changesets-backlog-isolation.md), before executing any public package release
+9. [release-automation.md](./release-automation.md), [beta-release-notes.md](./beta-release-notes.md) and [ui-react-root-api-audit.md](./ui-react-root-api-audit.md) before a release
 
 ### Agents / AI
 
@@ -117,7 +117,6 @@ Web ↔ iOS component-token gap (including two commands above that are documente
 | --- | --- |
 | [quickstart.md](./quickstart.md) | Public beta install, CSS, theme/mode, first component, preview policy, and consumer verification |
 | [support-governance.md](./support-governance.md) | Public support tiers, compatibility scope, reporting routes, deprecation rules, lifecycle gates, and release authority |
-| [extracted-repo-status.md](./extracted-repo-status.md) | Local-only status, first-wave boundary, and `atom63-vite` follow-up |
 | [authoring-surfaces.md](./authoring-surfaces.md) | Where to edit / value ownership |
 | [theme-authoring.md](./theme-authoring.md) | Theme file guardrails |
 | [personalization-axes.md](./personalization-axes.md) | `data-a63-*` ownership |
@@ -130,7 +129,6 @@ Web ↔ iOS component-token gap (including two commands above that are documente
 | [package-governance.md](./package-governance.md) | Package boundaries |
 | [dependency-version-policy.json](./dependency-version-policy.json) | Machine-readable React peer, runtime dependency, type-visible dependency, and stable semver policy |
 | [beta-release-notes.md](./beta-release-notes.md) | Current public beta versions, npm dist-tags, adopter evidence, and stable-readiness checklist |
-| [next-beta-release-candidate.md](./next-beta-release-candidate.md) | Prepared next-beta scope, evidence checklist, and publish approval gate |
 | [benchmark-parity.md](./benchmark-parity.md) | Generated benchmark-parity board for stable-readiness gates, evidence, gaps, owners, and next actions |
 | [benchmark-parity-source.json](./benchmark-parity-source.json) | Human-authored machine-readable source for the benchmark-parity board |
 | [ui-react-support-policy.json](./ui-react-support-policy.json) | Machine-readable `@atom63/ui-react` beta support tiers, symbol overrides, public subpath policy, and stable blockers |
@@ -142,14 +140,10 @@ Web ↔ iOS component-token gap (including two commands above that are documente
 | [ui-react-portal-evidence.md](./ui-react-portal-evidence.md) | Partial stable-readiness evidence packet for PortalContainer |
 | [ui-react-preview-cleanup-plan.md](./ui-react-preview-cleanup-plan.md) | Preview-symbol cleanup plan for root exports that should move to preview/private before stable |
 | [ui-react-preview-migration.md](./ui-react-preview-migration.md) | Root-to-preview import guidance for beta adopters and stable/latest root narrowing |
+| [roadmap.md](./roadmap.md) | Direction for phases A–E, decisions D1–D5 and progress |
+| [token-single-source.md](./token-single-source.md) | Phase B design: DTCG as the only token source, CSS-native values, themes in Figma and iOS |
 | [release-automation.md](./release-automation.md) | GitHub Actions beta release workflow, stable/latest no-publish preflight, and npm trusted publishing setup notes |
 | [stable-release-policy.json](./stable-release-policy.json) | Machine-readable stable/latest dist-tag, registry readback, and rollback policy |
-| [publish-boundary-rfc.md](./publish-boundary-rfc.md) | Proposed public beta boundary and pre-publish approval gates |
 | [ui-react-root-api-audit.md](./ui-react-root-api-audit.md) | Proposed support tiers for the broad `@atom63/ui-react` root and public subpaths |
-| [package-metadata-audit.md](./package-metadata-audit.md) | First-wave package metadata and packed-content gaps |
-| [changesets-beta-plan.md](./changesets-beta-plan.md) | First-wave prerelease order, coordinated unexecuted Changeset, and approval gates |
-| [extraction-rehearsal.md](./extraction-rehearsal.md) | Local external-repo tarball rehearsal evidence before versioning or publish approval |
 | [../../examples/product-shell/README.md](../../examples/product-shell/README.md) | DS-owned application presentation layer; keeps `atom63-vite` as the real portfolio consumer |
-| [publish-approval-packet.md](./publish-approval-packet.md) | Approved first-wave beta decisions, evidence, risks, preflight, and exact no-publish boundary |
-| [changesets-backlog-isolation.md](./changesets-backlog-isolation.md) | Why the current Changesets backlog must be isolated before DS beta versioning |
 | [react-first-status.md](./react-first-status.md) | Historical checkpoint (not primary policy) |
