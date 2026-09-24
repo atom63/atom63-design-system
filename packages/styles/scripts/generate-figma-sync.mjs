@@ -558,17 +558,12 @@ async function main() {
         [outputPath, content],
         [computedOutputPath, computedContent],
       ]) {
-        const current = await readFile(file, 'utf8').catch(() => '')
-        if (current === expected) continue
         const name = path.relative(packageRoot, file)
+        const current = await readFile(file, 'utf8').catch(() => '')
+        const difference = firstDifference(safeParse(current), JSON.parse(expected))
+        if (!difference) continue
         stale.push(name)
-        // Name the first line that differs, so a stale file in CI says why.
-        const currentLines = current.split('\n')
-        const expectedLines = expected.split('\n')
-        const line = expectedLines.findIndex((text, index) => text !== currentLines[index])
-        process.stderr.write(
-          `${name}:${line + 1}\n  committed: ${currentLines[line] ?? '(end of file)'}\n  generated: ${expectedLines[line] ?? '(end of file)'}\n`
-        )
+        process.stderr.write(`${name} at ${difference}\n`)
       }
       if (stale.length) {
         process.stderr.write(
@@ -764,6 +759,49 @@ function formatComputed(values) {
     })
     .join(',\n')
   return `{\n  "schemaVersion": 1,\n  "generatedBy": "packages/styles/scripts/generate-figma-sync.mjs",\n  "tokens": {\n${body}\n  }\n}\n`
+}
+
+/**
+ * Browser-resolved numbers differ across platforms in the sixth decimal (Linux
+ * and macOS Chromium round oklab mixes differently), far below one 8-bit color
+ * step. The check therefore compares the committed output structurally, with
+ * numbers equal within 1e-5, instead of byte for byte. Returns the path and both
+ * values of the first real difference, or null.
+ */
+function firstDifference(current, expected, at = '$') {
+  if (typeof expected === 'number' && typeof current === 'number')
+    return Math.abs(current - expected) <= 1e-5
+      ? null
+      : `${at}: committed ${current}, generated ${expected}`
+  if (
+    typeof expected !== 'object' ||
+    expected === null ||
+    typeof current !== 'object' ||
+    current === null
+  )
+    return Object.is(current, expected)
+      ? null
+      : `${at}: committed ${JSON.stringify(current)}, generated ${JSON.stringify(expected)}`
+  if (Array.isArray(expected) !== Array.isArray(current)) return `${at}: array and object differ`
+  const keys = new Set([...Object.keys(current), ...Object.keys(expected)])
+  if (Array.isArray(expected) && current.length !== expected.length)
+    return `${at}: committed ${current.length} items, generated ${expected.length}`
+  for (const key of keys) {
+    if (!(key in current)) return `${at}.${key}: missing from the committed file`
+    if (!(key in expected)) return `${at}.${key}: no longer generated`
+    const difference = firstDifference(current[key], expected[key], `${at}.${key}`)
+    if (difference) return difference
+  }
+  const order = Object.keys(current).join() === Object.keys(expected).join()
+  return order ? null : `${at}: keys are in a different order`
+}
+
+function safeParse(text) {
+  try {
+    return JSON.parse(text)
+  } catch {
+    return null
+  }
 }
 
 function toValue(record, raw, result, synced) {
