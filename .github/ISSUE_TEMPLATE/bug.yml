@@ -1,0 +1,43 @@
+name: Bug report
+description: Something in an Atom63 package does not work as documented.
+labels: [bug]
+body:
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package
+      options:
+        - '@atom63/ui-react'
+        - '@atom63/styles'
+        - '@atom63/ui-foundation'
+        - Atom63UI (SwiftUI)
+        - Figma plugin
+        - Documentation site
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      placeholder: 0.2.0-beta.7
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: The smallest code or steps that show the problem. A link to a repository or sandbox is ideal.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Runtime, framework, and browser or OS versions.
+      placeholder: React 19.2, Vite 8, Chrome 141, macOS 26

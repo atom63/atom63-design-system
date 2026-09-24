@@ -1,6 +1,7 @@
 {
   "name": "@atom63/ui-ios",
   "version": "0.1.0",
+  "license": "MIT",
   "private": true,
   "repository": "https://github.com/atom63/atom63-design-system",
   "type": "module",

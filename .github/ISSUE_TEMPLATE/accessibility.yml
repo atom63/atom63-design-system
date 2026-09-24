@@ -1,0 +1,41 @@
+name: Accessibility problem
+description: A component is hard or impossible to use with a keyboard, screen reader, or other assistive technology.
+labels: [accessibility]
+body:
+  - type: input
+    id: component
+    attributes:
+      label: Component and package version
+      placeholder: Select in @atom63/ui-react 0.2.0-beta.7
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happens
+      description: Steps to reproduce, and what you expected instead.
+    validations:
+      required: true
+  - type: input
+    id: input-method
+    attributes:
+      label: Input method
+      placeholder: Keyboard only, touch, switch control, voice control
+    validations:
+      required: true
+  - type: input
+    id: assistive-tech
+    attributes:
+      label: Assistive technology and version
+      placeholder: VoiceOver on macOS 26, NVDA 2026.1 with Firefox 142
+  - type: input
+    id: environment
+    attributes:
+      label: Browser and operating system
+    validations:
+      required: true
+  - type: textarea
+    id: state
+    attributes:
+      label: Component state
+      description: Relevant props or state, for example open, disabled, or with a validation error.

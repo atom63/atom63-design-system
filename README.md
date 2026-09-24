@@ -1,78 +1,102 @@
 # Atom63 Design System
 
-Atom63's first-wave design-system packages, extracted into a focused workspace for
-release preparation and external-consumer verification.
+[![npm](https://img.shields.io/npm/v/@atom63/ui-react/beta?label=%40atom63%2Fui-react)](https://www.npmjs.com/package/@atom63/ui-react)
+[![CI](https://github.com/atom63/atom63-design-system/actions/workflows/ci.yml/badge.svg)](https://github.com/atom63/atom63-design-system/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
-Documentation: [system.atom63.io](https://system.atom63.io) (built from `apps/docs`).
+One token architecture for React, SwiftUI, and Figma. Atom63 defines its design tokens once, in
+CSS, and delivers them to every platform: React components on the web, SwiftUI components on iOS,
+and Figma variables for designers.
+
+**Documentation:** [system.atom63.io](https://system.atom63.io)
+
+> Atom63 is in public beta. APIs can change before the stable release; install from the `beta`
+> tag and read the [release notes](./docs/design-system/beta-release-notes.md) when upgrading.
 
 ## Packages
 
-| Package | Purpose |
-| --- | --- |
-| `@atom63/styles` | CSS tokens, themes, contracts, and utilities |
-| `@atom63/ui-foundation` | Platform-neutral TypeScript contracts and environment types |
-| `@atom63/ui-react` | React components, layout primitives, media, and theme controls |
-| `Atom63UI` (`packages/ui-ios`) | SwiftUI components generated from the same tokens, distributed with SwiftPM from the root `Package.swift` |
+| Package                                          | Platform | What it provides                                                    |
+| ------------------------------------------------ | -------- | ------------------------------------------------------------------- |
+| [`@atom63/ui-react`](./packages/ui-react)        | Web      | React components, layout primitives, media, and theme controls      |
+| [`@atom63/styles`](./packages/styles)            | Web      | CSS tokens, themes, contracts, and utilities                        |
+| [`@atom63/ui-foundation`](./packages/ui-foundation) | Any   | Platform-neutral TypeScript contracts and environment types         |
+| [`Atom63UI`](./packages/ui-ios)                  | iOS      | SwiftUI components generated from the same tokens, via SwiftPM      |
+| [Figma plugin](./apps/figma-plugin)              | Figma    | Syncs the tokens into Figma variables, one collection per theme axis |
 
-## Install
-
-The first-wave packages are available as a public npm beta. Install from the
-`beta` dist-tag:
-
-```bash
-pnpm add @atom63/styles@beta @atom63/ui-foundation@beta @atom63/ui-react@beta
-```
-
-Install only the packages a consumer needs, for example:
+## Quick start: React
 
 ```bash
 pnpm add @atom63/styles@beta @atom63/ui-react@beta
 ```
 
-Start with the [public beta quickstart](./docs/design-system/quickstart.md) for
-CSS imports, theme and mode attributes, a first component, preview policy, and
-consumer verification. See [beta release notes](./docs/design-system/beta-release-notes.md)
-for current versions, adopter evidence, and stable-readiness blockers. The
-[support and governance policy](./docs/design-system/support-governance.md)
-defines the beta support scope, compatibility tiers, reporting routes, and
-human approval gates.
+`@atom63/ui-react` needs React 19. Import the stylesheet once, wrap the app in `Atom63Theme`, and
+use components from the package root:
 
-## Local development
+```tsx
+import '@atom63/ui-react/styles.css'
+import { Atom63Theme, Button, Card, CardContent, CardHeader, CardTitle } from '@atom63/ui-react'
 
-Use Node.js 22 and the pnpm version pinned in `package.json`:
-
-```bash
-corepack enable
-pnpm install --frozen-lockfile
-pnpm --filter @atom63/ui-foundation dev
-pnpm --filter @atom63/ui-react dev
-pnpm --filter atom63-vite-basic-example dev
+export function App() {
+  return (
+    <Atom63Theme mode="light" theme="modern">
+      <Card>
+        <CardHeader>
+          <CardTitle>Hello, Atom63</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Button type="button">Get started</Button>
+        </CardContent>
+      </Card>
+    </Atom63Theme>
+  )
+}
 ```
 
-Run package watchers in separate terminals when developing against the example.
+Modes are `light` and `dark`; bundled themes are `modern`, `aqua`, `retro`, and `terminal`. The
+[quickstart](./docs/design-system/quickstart.md) covers forms, preview APIs, and verification.
 
-## Verification
+## Quick start: SwiftUI
 
-```bash
-pnpm check:ui-react-exports
-pnpm --filter @atom63/styles check:tokens
-pnpm --filter @atom63/ui-foundation build
-pnpm --filter @atom63/ui-react build
-pnpm check:ds-pack-smoke
-pnpm build:example:vite-basic
-pnpm --filter @atom63/styles test
-pnpm --filter @atom63/ui-foundation typecheck
-pnpm --filter @atom63/ui-react typecheck
-pnpm --filter @atom63/ui-react test
-pnpm changeset status --verbose
+Add the package in Xcode (**File → Add Package Dependencies**) or in `Package.swift`:
+
+```swift
+.package(url: "https://github.com/atom63/atom63-design-system", branch: "main")
 ```
 
-## Repository status
+Then depend on the `Atom63UI` product:
 
-This repository is the extracted Atom63 Design System workspace. It is prepared for
-public GitHub visibility, and the first-wave packages are published on npm under
-the `beta` tag. Further versioning and publishing require separate approval. See
-[the extracted-repository status](./docs/design-system/extracted-repo-status.md)
-for the current package boundary and intended follow-up.
+```swift
+import Atom63UI
 
-Built by You Zhang through Hermes Agent.
+AtomButton("Continue", variant: .primary) {
+    continueFlow()
+}
+```
+
+`Atom63UI` targets iOS 17+ and macOS 14+. See the [package guide](./packages/ui-ios/README.md).
+
+## Examples
+
+- [`examples/vite-basic`](./examples/vite-basic): the smallest React and Vite app.
+- [`examples/product-shell`](./examples/product-shell): a responsive app shell built from cards, tabs, inputs, and
+  empty states.
+- [`examples/ios-demo`](./examples/ios-demo): a SwiftUI demo app with UI tests.
+
+## Contributing
+
+Bug reports, accessibility reports, and proposals are welcome. Read
+[CONTRIBUTING.md](./CONTRIBUTING.md) to set up the repository, and report security issues as
+described in [SECURITY.md](./SECURITY.md). Everyone taking part follows the
+[Code of Conduct](./CODE_OF_CONDUCT.md). The
+[support and governance policy](./docs/design-system/support-governance.md) explains what the beta
+covers.
+
+## Acknowledgements
+
+Atom63 builds on [Base UI](https://base-ui.com) for accessible primitives and
+[Tailwind CSS](https://tailwindcss.com) for utilities, and its component APIs follow conventions
+popularized by [shadcn/ui](https://ui.shadcn.com).
+
+## License
+
+[MIT](./LICENSE). Created by You Zhang.
