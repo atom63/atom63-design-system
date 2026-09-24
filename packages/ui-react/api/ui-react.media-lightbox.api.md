@@ -62,16 +62,10 @@ export type LightboxCloseProps = useRender.ComponentProps<'button'>;
 
 // @public
 export interface LightboxConfig {
-    // Warning: (ae-forgotten-export) The symbol "MediaLightboxAppearance" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     appearance: Record<string, MediaLightboxAppearance> | undefined;
-    // Warning: (ae-forgotten-export) The symbol "MediaLightboxItem" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     items: readonly MediaLightboxItem[];
-    // Warning: (ae-forgotten-export) The symbol "MediaLightboxLabels" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     labels: MediaLightboxLabels;
     // (undocumented)
@@ -84,12 +78,8 @@ export interface LightboxConfig {
     preload: number;
     // (undocumented)
     reducedMotion: boolean;
-    // Warning: (ae-forgotten-export) The symbol "LightboxTiming" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     timing: LightboxTiming;
-    // Warning: (ae-forgotten-export) The symbol "MediaLightboxTransition" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     transition: MediaLightboxTransition;
 }
@@ -270,6 +260,9 @@ export type LightboxThumbnailsProps = Omit<useRender.ComponentProps<'div'>, 'chi
 };
 
 // @public
+export type LightboxTiming = 'default' | 'snappy' | 'relaxed' | 'spring';
+
+// @public
 export function LightboxViewport(input: LightboxViewportProps): React_2.ReactElement;
 
 // @public (undocumented)
@@ -285,15 +278,114 @@ export function LightboxZoomIn(input: LightboxZoomInProps): React_2.ReactElement
 export type LightboxZoomInProps = useRender.ComponentProps<'button'>;
 
 // @public
+export interface LightboxZoomOptions {
+    // (undocumented)
+    doubleTapScale?: number;
+    // (undocumented)
+    keyboardPanDistance?: number;
+    maxZoom?: number;
+    minZoom?: number;
+    // (undocumented)
+    onZoomChange?: (zoom: number) => void;
+    scrollToZoom?: boolean;
+    // (undocumented)
+    wheelSensitivity?: number;
+    zoomStep?: number;
+}
+
+// @public
 export function LightboxZoomOut(input: LightboxZoomOutProps): React_2.ReactElement;
 
 // @public (undocumented)
 export type LightboxZoomOutProps = useRender.ComponentProps<'button'>;
 
-// Warning: (ae-forgotten-export) The symbol "LightboxZoomOptions" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export type LightboxZoomProps = LightboxZoomOptions & useRender.ComponentProps<'div'>;
+
+// @public (undocumented)
+export type MediaLightboxAppearance = 'light' | 'dark';
+
+// @public (undocumented)
+export interface MediaLightboxItem {
+    // (undocumented)
+    alt: string;
+    caption?: string;
+    // (undocumented)
+    darkSrc?: string;
+    href?: string;
+    id: string;
+    // (undocumented)
+    kind?: MediaLightboxItemKind;
+    // (undocumented)
+    lightSrc?: string;
+    poster?: string;
+    render?: React_2.ReactNode;
+    renderHref?: React_2.ReactElement;
+    // (undocumented)
+    sizes?: string;
+    // (undocumented)
+    sources?: readonly MediaLightboxVideoSource[];
+    src?: string;
+    srcSet?: string;
+    // (undocumented)
+    thumbDarkSrc?: string;
+    // (undocumented)
+    thumbLightSrc?: string;
+    thumbSrc?: string;
+    // (undocumented)
+    title: string;
+    tracks?: readonly MediaLightboxVideoTrack[];
+}
+
+// @public
+export type MediaLightboxItemKind = 'image' | 'video';
+
+// @public
+export interface MediaLightboxLabels {
+    appearance: (title: string, target: MediaLightboxAppearance) => string;
+    carousel: string;
+    // (undocumented)
+    close: string;
+    gallery: string;
+    // (undocumented)
+    next: string;
+    // (undocumented)
+    openDestination: (title: string) => string;
+    position: (index: number, total: number) => string;
+    // (undocumented)
+    previous: string;
+    slide: string;
+    thumbnails: string;
+    view: (title: string) => string;
+    // (undocumented)
+    zoomIn: (title: string) => string;
+    // (undocumented)
+    zoomOut: (title: string) => string;
+}
+
+// @public
+export type MediaLightboxTransition = 'flip' | 'view-transition';
+
+// @public (undocumented)
+export interface MediaLightboxVideoSource {
+    // (undocumented)
+    src: string;
+    type?: string;
+}
+
+// @public
+export interface MediaLightboxVideoTrack {
+    // (undocumented)
+    default?: boolean;
+    // (undocumented)
+    kind?: 'captions' | 'subtitles' | 'descriptions' | 'chapters' | 'metadata';
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    src: string;
+    // (undocumented)
+    srcLang: string;
+}
 
 // @public (undocumented)
 export function useLightboxConfig(): LightboxConfig;

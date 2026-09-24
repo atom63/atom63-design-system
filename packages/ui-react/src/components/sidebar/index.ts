@@ -25,6 +25,7 @@ export {
   useSidebar,
 } from './sidebar'
 export type {
+  SidebarContextProps,
   SidebarMenuButtonProps,
   SidebarMenuSubButtonProps,
   SidebarProps,

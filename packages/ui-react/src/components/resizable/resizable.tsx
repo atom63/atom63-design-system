@@ -6,7 +6,7 @@ import * as ResizablePrimitive from 'react-resizable-panels'
 
 import { cn } from '../../lib/cn'
 
-type ResizableOrientation = 'horizontal' | 'vertical'
+export type ResizableOrientation = 'horizontal' | 'vertical'
 
 const ResizableOrientationContext = createContext<ResizableOrientation>('horizontal')
 

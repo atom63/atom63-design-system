@@ -76,7 +76,7 @@ function resolveRender(
   return undefined
 }
 
-type SidebarContextProps = {
+export type SidebarContextProps = {
   state: SidebarState
   open: boolean
   setOpen: (open: boolean) => void

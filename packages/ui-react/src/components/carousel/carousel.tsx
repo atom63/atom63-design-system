@@ -26,8 +26,8 @@ import { cn } from '../../lib/cn'
 
 export type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
-type CarouselOptions = UseCarouselParameters[0]
-type CarouselPlugin = UseCarouselParameters[1]
+export type CarouselOptions = UseCarouselParameters[0]
+export type CarouselPlugin = UseCarouselParameters[1]
 
 export type CarouselProps = {
   opts?: CarouselOptions
@@ -38,7 +38,7 @@ export type CarouselProps = {
   cursorIndicator?: boolean
 }
 
-type CarouselContextProps = {
+export type CarouselContextProps = {
   carouselRef: ReturnType<typeof useEmblaCarousel>[0]
   api: ReturnType<typeof useEmblaCarousel>[1]
   scrollPrev: () => void

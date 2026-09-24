@@ -12,4 +12,10 @@ export {
   DrawerTitle,
   DrawerTrigger,
 } from './drawer'
-export type { DrawerCloseProps, DrawerTriggerProps } from './drawer'
+export type {
+  DrawerAsChildProps,
+  DrawerCloseProps,
+  DrawerContentProps,
+  DrawerRootProps,
+  DrawerTriggerProps,
+} from './drawer'

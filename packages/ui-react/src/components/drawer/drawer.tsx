@@ -13,14 +13,14 @@ import { cn } from '../../lib/cn'
  * rooted in the same Base UI primitive family as Dialog/Popover/Sheet.
  */
 
-type AsChildProps = {
+export type DrawerAsChildProps = {
   /** Merges trigger props onto the single child element (Radix-compatible). */
   asChild?: boolean
   render?: ReactElement
   children?: ReactNode
 }
 
-type DrawerRootProps = Omit<DrawerPrimitive.Root.Props, 'swipeDirection'> & {
+export type DrawerRootProps = Omit<DrawerPrimitive.Root.Props, 'swipeDirection'> & {
   /** Visual edge the drawer is anchored to. */
   direction?: DrawerDirection
   /** Override the inferred dismiss direction when needed. */
@@ -31,7 +31,7 @@ type DrawerContextValue = {
   direction: DrawerDirection
 }
 
-type DrawerContentProps = Omit<DrawerPrimitive.Popup.Props, 'children'> & {
+export type DrawerContentProps = Omit<DrawerPrimitive.Popup.Props, 'children'> & {
   children?: React.ReactNode
   contentProps?: DrawerPrimitive.Content.Props
   portalProps?: DrawerPrimitive.Portal.Props
@@ -102,7 +102,7 @@ export function Drawer({
   )
 }
 
-export type DrawerTriggerProps = DrawerPrimitive.Trigger.Props & AsChildProps
+export type DrawerTriggerProps = DrawerPrimitive.Trigger.Props & DrawerAsChildProps
 
 export function DrawerTrigger({
   asChild,
@@ -122,7 +122,7 @@ export function DrawerPortal(props: DrawerPrimitive.Portal.Props): React.ReactEl
   return <DrawerPrimitive.Portal data-slot="drawer-portal" {...props} />
 }
 
-export type DrawerCloseProps = DrawerPrimitive.Close.Props & AsChildProps
+export type DrawerCloseProps = DrawerPrimitive.Close.Props & DrawerAsChildProps
 
 export function DrawerClose({
   asChild,

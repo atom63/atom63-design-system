@@ -6,4 +6,10 @@ export {
   CarouselPrevious,
   useCarousel,
 } from './carousel'
-export type { CarouselApi, CarouselProps } from './carousel'
+export type {
+  CarouselApi,
+  CarouselContextProps,
+  CarouselOptions,
+  CarouselPlugin,
+  CarouselProps,
+} from './carousel'

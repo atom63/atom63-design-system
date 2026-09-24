@@ -2,6 +2,7 @@ export {
   AppearanceMenu,
   AppearanceMenuTrigger,
   type AppearanceMenuProps,
+  type AppearanceMenuTriggerProps,
 } from './appearance/appearance-menu'
 export {
   AppearancePanel,
@@ -19,7 +20,10 @@ export {
   isAutoPrimary,
   type ExtractedColor,
 } from './core/auto-primary'
-export { createPersonalizationController } from './providers/create-personalization-controller'
+export {
+  createPersonalizationController,
+  type CreatePersonalizationControllerOptions,
+} from './providers/create-personalization-controller'
 export { createThemeProvider } from './providers/create-theme-provider'
 export {
   BRAND_OPTIONS,
