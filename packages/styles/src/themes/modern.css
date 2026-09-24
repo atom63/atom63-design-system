@@ -47,5 +47,5 @@
 [data-a63-theme='modern']:is(.dark, [data-a63-mode='dark']) {
   /* Keep the expressive directional rim, but seat the face on the darker panel
         tier so modern widgets do not read as luminous slabs in dark mode. */
-  --a63-widget-background-color: color-mix(in oklch, var(--a63-surface-panel) 90%, transparent);
+  --a63-widget-background-color: color-mix(in oklab, var(--a63-surface-panel) 90%, transparent);
 }

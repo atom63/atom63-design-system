@@ -134,6 +134,23 @@ Figma nor iOS sees them. Measured on the current sources:
 - **iOS** resolves Theme-collection tokens with the `modern-<mode>` mode by default. Per-theme
   Swift values (decision D2) are generated from the same collection in a later slice.
 
+## Mixing neutrals in oklab (decided 2026-09-25)
+
+A cross-axis check of the Figma model against the browser found that `color-mix(in oklch, …)`
+with a slightly tinted neutral renders differently per engine. The n2–n6 surface palettes have a
+chroma around 0.003. CSS Color 4 makes an oklch hue powerless only at C <= 0.000004, so the
+neutral keeps its hue: Firefox and WebKit interpolate from it, while Chromium treats the hue as
+powerless and takes the other operand's hue, which is a Chromium bug. A 0% tint therefore
+turned n2–n6 surfaces toward the brand hue in Chrome only, and the aqua, terminal and retro theme
+mixes rendered up to 170/255 apart between Chrome and Safari.
+
+oklab has no hue, so every engine agrees. Forty declarations that mix a tinted neutral now use
+oklab: the tint mixes in `semantics.resolver.json` and the neutral mixes in the aqua, terminal,
+retro and modern themes and the widget contract. On an exact gray (n1) oklch and oklab give the
+same result, so the default appearance does not change; mixes of two chromatic colors keep oklch.
+`color-mix-space.browser.test.ts` fails when an oklch mix takes an operand whose chroma is low but
+not zero in any theme, surface or mode.
+
 ## Open questions, decided per slice
 
 - **How `io.atom63.derive` is shaped.** It could be one CSS expression string with `{token.path}`

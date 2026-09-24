@@ -86,11 +86,12 @@ export const Preview: Story = {
   ),
 }
 
-/* The two authored highlight tones side by side: neutral (default) vs primary. */
+/* The two authored highlight tones side by side: neutral (default) vs primary.
+   The columns wrap on a narrow viewport instead of overlapping. */
 export const Tones: Story = {
   render: () => (
     <EnvironmentShell>
-      <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'flex-start' }}>
         <div style={{ display: 'grid', gap: '0.5rem' }}>
           <div
             style={{

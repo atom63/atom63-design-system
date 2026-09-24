@@ -73,7 +73,7 @@
   color: var(--a63-text-primary);
 }
 .a63-Field[data-invalid='true'] {
-  color: var(--a63-action-danger);
+  color: var(--a63-text-danger);
 }
 
 /* orientation: vertical (default) — stretch controls to the field width */
@@ -245,7 +245,7 @@
 
 /* ── FieldError ────────────────────────────────────────────────────────── */
 .a63-FieldError {
-  color: var(--a63-action-danger);
+  color: var(--a63-text-danger);
   font-family: var(--a63-control-font-family);
   font-size: var(--a63-control-font-size-sm);
   font-weight: 400;

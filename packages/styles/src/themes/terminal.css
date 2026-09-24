@@ -83,7 +83,7 @@
     inset 0 0 0 1px color-mix(in oklch, var(--a63-action-primary) 50%, transparent),
     0 0 10px -3px color-mix(in oklch, var(--a63-action-primary) 40%, transparent);
   --a63-weather-border-color: color-mix(
-    in oklch,
+    in oklab,
     var(--a63-action-primary) 44%,
     var(--a63-border-subtle)
   );
@@ -95,25 +95,25 @@
   --a63-text-primary: color-mix(in oklch, var(--a63-action-primary) 70%, black);
   --a63-text-secondary: color-mix(in oklch, var(--a63-action-primary) 52%, black);
   --a63-border-control: color-mix(
-    in oklch,
+    in oklab,
     var(--a63-action-primary) 26%,
-    color-mix(in oklch, var(--surface-light-5) 60%, white)
+    color-mix(in oklab, var(--surface-light-5) 60%, white)
   );
   --a63-border-subtle: color-mix(
-    in oklch,
+    in oklab,
     var(--a63-action-primary) 16%,
-    color-mix(in oklch, var(--surface-light-6) 50%, white)
+    color-mix(in oklab, var(--surface-light-6) 50%, white)
   );
-  --a63-surface-page: color-mix(in oklch, var(--surface-light-1) 60%, white);
-  --a63-surface-panel: color-mix(in oklch, var(--surface-light-2) 60%, white);
+  --a63-surface-page: color-mix(in oklab, var(--surface-light-1) 60%, white);
+  --a63-surface-panel: color-mix(in oklab, var(--surface-light-2) 60%, white);
   --a63-field-background: color-mix(
-    in oklch,
+    in oklab,
     var(--surface-light-2) 86%,
     var(--a63-action-primary)
   );
-  --a63-action-neutral: color-mix(in oklch, var(--surface-light-3) 60%, white);
+  --a63-action-neutral: color-mix(in oklab, var(--surface-light-3) 60%, white);
   --a63-action-neutral-foreground: color-mix(
-    in oklch,
+    in oklab,
     var(--a63-action-primary) 80%,
     var(--surface-light-12)
   );
@@ -126,12 +126,12 @@
       color-mix(in oklch, var(--a63-action-primary) 36%, white 64%)
     );
   --a63-weather-foreground: color-mix(
-    in oklch,
+    in oklab,
     var(--a63-action-primary) 82%,
     var(--surface-light-12)
   );
   --a63-weather-muted-foreground: color-mix(
-    in oklch,
+    in oklab,
     var(--a63-action-primary) 58%,
     var(--surface-light-10)
   );
@@ -145,14 +145,14 @@
   /* Opaque phosphor text — translucent secondary failed AA against the page. */
   --a63-text-primary: color-mix(in oklch, var(--a63-action-primary) 62%, white);
   /* Text mixes read the brand-as-text token; the primary fill is too dark here. */
-  --a63-text-secondary: color-mix(in oklch, var(--a63-text-accent) 48%, var(--surface-dark-11));
+  --a63-text-secondary: color-mix(in oklab, var(--a63-text-accent) 48%, var(--surface-dark-11));
   --a63-border-control: color-mix(in oklch, var(--a63-action-primary) 42%, transparent);
   --a63-border-subtle: color-mix(in oklch, var(--a63-action-primary) 22%, transparent);
-  --a63-surface-page: color-mix(in oklch, var(--surface-dark-1) 92%, var(--a63-action-primary));
-  --a63-surface-panel: color-mix(in oklch, var(--surface-dark-2) 92%, var(--a63-action-primary));
-  --a63-field-background: color-mix(in oklch, var(--surface-dark-1) 90%, var(--a63-action-primary));
+  --a63-surface-page: color-mix(in oklab, var(--surface-dark-1) 92%, var(--a63-action-primary));
+  --a63-surface-panel: color-mix(in oklab, var(--surface-dark-2) 92%, var(--a63-action-primary));
+  --a63-field-background: color-mix(in oklab, var(--surface-dark-1) 90%, var(--a63-action-primary));
   --a63-action-neutral: color-mix(
-    in oklch,
+    in oklab,
     var(--surface-dark-3) 86%,
     var(--a63-action-primary) 14%
   );

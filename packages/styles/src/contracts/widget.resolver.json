@@ -12,7 +12,7 @@
                   "$type": "color",
                   "$value": "{a63.surface.overlay}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix(in oklch, {a63.surface.overlay} 82%, transparent)"
+                    "io.atom63.derive": "color-mix(in oklab, {a63.surface.overlay} 82%, transparent)"
                   }
                 },
                 "image": {

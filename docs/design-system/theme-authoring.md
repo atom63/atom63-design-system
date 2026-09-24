@@ -57,6 +57,7 @@ Shared-scale / contract drift (deferred):
 - **slot-geometry-through-variables** — shared slot radii/geometry via contract vars, not hardcoded one-offs.
 - **no-new-shared-scales** — new palette/space/radius/type/blur **ladders** go in foundation; skin-private stacks in the theme are OK ([authoring-surfaces.md](./authoring-surfaces.md)).
 - **brand-tinted material** — prefer declaring `var(--a63-action-primary)` mixes on the theme scope so phosphor tracks brand.
+- **neutral mixes in oklab** — a `color-mix()` that takes a surface, text or border color (the n2–n6 neutrals are slightly tinted) mixes `in oklab`, not `in oklch`. Browsers disagree on the hue of a near-gray color, so an oklch mix renders differently in Chrome than in Safari and Firefox. `color-mix-space.browser.test.ts` fails on a tinted neutral in an oklch mix.
 - **Storybook coverage** — ThemeMatrix / contact sheets stamp `data-a63-theme` × mode for manual craft review (not a CI gate).
 
 Run `pnpm --filter @atom63/styles generate:tokens` and then `pnpm check:theme-authoring`

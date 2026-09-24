@@ -45,7 +45,7 @@
                   "$type": "color",
                   "$value": "{surface.light.2}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {surface.light.2} calc(100% - {a63.surface.tint}), {a63.brand.100} {a63.surface.tint} )"
+                    "io.atom63.derive": "color-mix( in oklab, {surface.light.2} calc(100% - {a63.surface.tint}), {a63.brand.100} {a63.surface.tint} )"
                   },
                   "$description": "Surfaces — neutral, optionally bent toward the brand hue by --a63-surface-tint\n(0% = pure neutral). Each mixes with a lightness-matched --a63-brand-* step."
                 },
@@ -53,21 +53,21 @@
                   "$type": "color",
                   "$value": "{surface.light.1}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {surface.light.1} calc(100% - {a63.surface.tint}), {a63.brand.50} {a63.surface.tint} )"
+                    "io.atom63.derive": "color-mix( in oklab, {surface.light.1} calc(100% - {a63.surface.tint}), {a63.brand.50} {a63.surface.tint} )"
                   }
                 },
                 "overlay": {
                   "$type": "color",
                   "$value": "{surface.light.1}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {surface.light.1} calc(100% - {a63.surface.tint}), {a63.brand.50} {a63.surface.tint} )"
+                    "io.atom63.derive": "color-mix( in oklab, {surface.light.1} calc(100% - {a63.surface.tint}), {a63.brand.50} {a63.surface.tint} )"
                   }
                 },
                 "muted": {
                   "$type": "color",
                   "$value": "{surface.light.3}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {surface.light.3} calc(100% - {a63.surface.tint}), {a63.brand.200} {a63.surface.tint} )"
+                    "io.atom63.derive": "color-mix( in oklab, {surface.light.3} calc(100% - {a63.surface.tint}), {a63.brand.200} {a63.surface.tint} )"
                   }
                 },
                 "control": {
@@ -75,7 +75,7 @@
                     "$type": "color",
                     "$value": "{surface.light.1}",
                     "$extensions": {
-                      "io.atom63.derive": "color-mix( in oklch, {surface.light.1} calc(100% - {a63.surface.tint}), {a63.brand.50} {a63.surface.tint} )"
+                      "io.atom63.derive": "color-mix( in oklab, {surface.light.1} calc(100% - {a63.surface.tint}), {a63.brand.50} {a63.surface.tint} )"
                     },
                     "$description": "Recessed input surface (the field fill). Brightest surface in light mode so a\nfield reads as a clean well recessed into its panel via --a63-field-shadow."
                   },
@@ -83,7 +83,7 @@
                     "$type": "color",
                     "$value": "{surface.light.4}",
                     "$extensions": {
-                      "io.atom63.derive": "color-mix( in srgb, color-mix( in oklch, {surface.light.4} calc(100% - {a63.surface.tint}), {a63.brand.300} {a63.surface.tint} ), transparent 20% )"
+                      "io.atom63.derive": "color-mix( in srgb, color-mix( in oklab, {surface.light.4} calc(100% - {a63.surface.tint}), {a63.brand.300} {a63.surface.tint} ), transparent 20% )"
                     },
                     "$description": "Translucent hover plate. The BASE bends toward the brand hue by the surface\ntint (same surface-4 -> brand-300 step as --a63-border-subtle) so it stays in\nfamily on tinted themes instead of reading as a raw neutral grey; the outer\nmix keeps the 20% translucency (value-identical at tint 0)."
                   }
@@ -103,6 +103,11 @@
                   "$type": "color",
                   "$value": "{a63.brand.text}",
                   "$description": "The brand as text (links, accents) on light surfaces; brand.css picks the\nramp step per brand. Use --a63-action-primary for fills."
+                },
+                "danger": {
+                  "$type": "color",
+                  "$value": "{color.danger.600}",
+                  "$description": "Danger text: error messages and destructive labels on surfaces. Step 600 on\nlight surfaces; --a63-action-danger stays the fill for danger buttons."
                 }
               },
               "border": {
@@ -110,7 +115,7 @@
                   "$type": "color",
                   "$value": "{surface.light.4}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {surface.light.4} calc(100% - {a63.surface.tint}), {a63.brand.300} {a63.surface.tint} )"
+                    "io.atom63.derive": "color-mix( in oklab, {surface.light.4} calc(100% - {a63.surface.tint}), {a63.brand.300} {a63.surface.tint} )"
                   },
                   "$description": "Border"
                 },
@@ -118,7 +123,7 @@
                   "$type": "color",
                   "$value": "{surface.light.5}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {surface.light.5} calc(100% - {a63.surface.tint}), {a63.brand.400} {a63.surface.tint} )"
+                    "io.atom63.derive": "color-mix( in oklab, {surface.light.5} calc(100% - {a63.surface.tint}), {a63.brand.400} {a63.surface.tint} )"
                   }
                 }
               },
@@ -208,28 +213,28 @@
                   "$type": "color",
                   "$value": "{surface.dark.1}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {surface.dark.1} calc(100% - {a63.surface.tint}), {a63.brand.950} {a63.surface.tint} )"
+                    "io.atom63.derive": "color-mix( in oklab, {surface.dark.1} calc(100% - {a63.surface.tint}), {a63.brand.950} {a63.surface.tint} )"
                   }
                 },
                 "panel": {
                   "$type": "color",
                   "$value": "{surface.dark.2}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {surface.dark.2} calc(100% - {a63.surface.tint}), {a63.brand.900} {a63.surface.tint} )"
+                    "io.atom63.derive": "color-mix( in oklab, {surface.dark.2} calc(100% - {a63.surface.tint}), {a63.brand.900} {a63.surface.tint} )"
                   }
                 },
                 "overlay": {
                   "$type": "color",
                   "$value": "{surface.dark.4}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {surface.dark.4} calc(100% - {a63.surface.tint}), {a63.brand.800} {a63.surface.tint} )"
+                    "io.atom63.derive": "color-mix( in oklab, {surface.dark.4} calc(100% - {a63.surface.tint}), {a63.brand.800} {a63.surface.tint} )"
                   }
                 },
                 "muted": {
                   "$type": "color",
                   "$value": "{surface.dark.3}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {surface.dark.3} calc(100% - {a63.surface.tint}), {a63.brand.800} {a63.surface.tint} )"
+                    "io.atom63.derive": "color-mix( in oklab, {surface.dark.3} calc(100% - {a63.surface.tint}), {a63.brand.800} {a63.surface.tint} )"
                   }
                 },
                 "control": {
@@ -237,7 +242,7 @@
                     "$type": "color",
                     "$value": "{surface.dark.1}",
                     "$extensions": {
-                      "io.atom63.derive": "color-mix( in oklch, {surface.dark.1} calc(100% - {a63.surface.tint}), {a63.brand.950} {a63.surface.tint} )"
+                      "io.atom63.derive": "color-mix( in oklab, {surface.dark.1} calc(100% - {a63.surface.tint}), {a63.brand.950} {a63.surface.tint} )"
                     },
                     "$description": "Recessed input surface — darkest surface in dark mode, so a field reads as a\nsunken well relative to its panel."
                   },
@@ -245,7 +250,7 @@
                     "$type": "color",
                     "$value": "{surface.dark.6}",
                     "$extensions": {
-                      "io.atom63.derive": "color-mix( in srgb, color-mix( in oklch, {surface.dark.6} calc(100% - {a63.surface.tint}), {a63.brand.600} {a63.surface.tint} ), transparent 20% )"
+                      "io.atom63.derive": "color-mix( in srgb, color-mix( in oklab, {surface.dark.6} calc(100% - {a63.surface.tint}), {a63.brand.600} {a63.surface.tint} ), transparent 20% )"
                     },
                     "$description": "Tint-aware translucent hover plate (dark) — surface-6 -> brand-600, matching\n--a63-border-subtle; outer mix keeps the 20% translucency."
                   }
@@ -264,6 +269,11 @@
                   "$type": "color",
                   "$value": "{a63.brand.400}",
                   "$description": "The primary fill is too dark to read as text on dark surfaces."
+                },
+                "danger": {
+                  "$type": "color",
+                  "$value": "{color.danger.400}",
+                  "$description": "Danger text on dark surfaces: step 400 reaches WCAG AA 4.5:1 on every theme's\ndark page and panel (step 600, the fill, is about 2.7:1 there)."
                 }
               },
               "border": {
@@ -271,14 +281,14 @@
                   "$type": "color",
                   "$value": "{surface.dark.6}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {surface.dark.6} calc(100% - {a63.surface.tint}), {a63.brand.600} {a63.surface.tint} )"
+                    "io.atom63.derive": "color-mix( in oklab, {surface.dark.6} calc(100% - {a63.surface.tint}), {a63.brand.600} {a63.surface.tint} )"
                   }
                 },
                 "control": {
                   "$type": "color",
                   "$value": "{surface.dark.7}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {surface.dark.7} calc(100% - {a63.surface.tint}), {a63.brand.500} {a63.surface.tint} )"
+                    "io.atom63.derive": "color-mix( in oklab, {surface.dark.7} calc(100% - {a63.surface.tint}), {a63.brand.500} {a63.surface.tint} )"
                   }
                 }
               },

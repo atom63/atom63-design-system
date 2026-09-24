@@ -354,7 +354,7 @@
   align-items: center;
   border-radius: var(--radius-md);
   padding-inline: var(--a63-space-2);
-  color: color-mix(in oklch, var(--sidebar-fg) 70%, transparent);
+  color: var(--a63-text-secondary);
   font-weight: 500;
   font-size: var(--a63-control-font-size-xs);
   outline: none;

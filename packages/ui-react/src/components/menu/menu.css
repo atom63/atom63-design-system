@@ -106,7 +106,8 @@
   background-color: var(--a63-menu-highlight-primary-background, var(--a63-action-primary));
   color: var(--a63-menu-highlight-primary-foreground, var(--a63-action-primary-foreground));
 }
-.a63-Menu-popup[data-tone='primary'] .a63-Menu-item[data-highlighted] svg {
+.a63-Menu-popup[data-tone='primary'] .a63-Menu-item[data-highlighted] svg,
+.a63-Menu-popup[data-tone='primary'] .a63-Menu-item[data-highlighted] .a63-Menu-shortcut {
   color: var(--a63-menu-highlight-primary-foreground, var(--a63-action-primary-foreground));
 }
 
@@ -116,10 +117,10 @@
 }
 
 .a63-Menu-item[data-variant='destructive'] {
-  color: var(--a63-menu-destructive-foreground, var(--a63-action-danger));
+  color: var(--a63-menu-destructive-foreground, var(--a63-text-danger));
 }
 .a63-Menu-item[data-variant='destructive'] svg {
-  color: var(--a63-menu-destructive-foreground, var(--a63-action-danger));
+  color: var(--a63-menu-destructive-foreground, var(--a63-text-danger));
 }
 .a63-Menu-item[data-variant='destructive'] .a63-Menu-shortcut {
   color: currentColor;
@@ -129,7 +130,7 @@
     --a63-menu-destructive-highlight-background,
     color-mix(in oklch, var(--a63-action-danger) 10%, transparent)
   );
-  color: var(--a63-menu-destructive-foreground, var(--a63-action-danger));
+  color: var(--a63-menu-destructive-foreground, var(--a63-text-danger));
 }
 
 /* ── Item indicator (checkbox / radio marker) ──────────────────────────── */

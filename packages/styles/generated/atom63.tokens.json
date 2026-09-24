@@ -61,9 +61,9 @@
   ],
   "summary": {
     "sourceFiles": 56,
-    "declarations": 1669,
-    "uniqueCssVariables": 1048,
-    "figmaMappedDeclarations": 1608
+    "declarations": 1671,
+    "uniqueCssVariables": 1049,
+    "figmaMappedDeclarations": 1610
   },
   "entries": [
     {
@@ -315,7 +315,7 @@
       "name": "a63-action-neutral",
       "cssVar": "--a63-action-neutral",
       "type": "color",
-      "value": "color-mix(in oklch, var(--surface-light-3) 60%, white)",
+      "value": "color-mix(in oklab, var(--surface-light-3) 60%, white)",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -331,7 +331,7 @@
       "name": "a63-action-neutral",
       "cssVar": "--a63-action-neutral",
       "type": "color",
-      "value": "color-mix( in oklch, var(--surface-dark-3) 86%, var(--a63-action-primary) 14% )",
+      "value": "color-mix( in oklab, var(--surface-dark-3) 86%, var(--a63-action-primary) 14% )",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -379,7 +379,7 @@
       "name": "a63-action-neutral-foreground",
       "cssVar": "--a63-action-neutral-foreground",
       "type": "color",
-      "value": "color-mix( in oklch, var(--a63-action-primary) 80%, var(--surface-light-12) )",
+      "value": "color-mix( in oklab, var(--a63-action-primary) 80%, var(--surface-light-12) )",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -1569,7 +1569,7 @@
       "name": "a63-border-control",
       "cssVar": "--a63-border-control",
       "type": "color",
-      "value": "color-mix( in oklch, var(--a63-action-primary) 26%, color-mix(in oklch, var(--surface-light-5) 60%, white) )",
+      "value": "color-mix( in oklab, var(--a63-action-primary) 26%, color-mix(in oklab, var(--surface-light-5) 60%, white) )",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -1601,7 +1601,7 @@
       "name": "a63-border-control",
       "cssVar": "--a63-border-control",
       "type": "color",
-      "value": "color-mix( in oklch, var(--surface-dark-7) calc(100% - var(--a63-surface-tint)), var(--a63-brand-500) var(--a63-surface-tint) )",
+      "value": "color-mix( in oklab, var(--surface-dark-7) calc(100% - var(--a63-surface-tint)), var(--a63-brand-500) var(--a63-surface-tint) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -1617,7 +1617,7 @@
       "name": "a63-border-control",
       "cssVar": "--a63-border-control",
       "type": "color",
-      "value": "color-mix( in oklch, var(--surface-light-5) calc(100% - var(--a63-surface-tint)), var(--a63-brand-400) var(--a63-surface-tint) )",
+      "value": "color-mix( in oklab, var(--surface-light-5) calc(100% - var(--a63-surface-tint)), var(--a63-brand-400) var(--a63-surface-tint) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -1633,7 +1633,7 @@
       "name": "a63-border-subtle",
       "cssVar": "--a63-border-subtle",
       "type": "color",
-      "value": "color-mix( in oklch, var(--a63-action-primary) 16%, color-mix(in oklch, var(--surface-light-6) 50%, white) )",
+      "value": "color-mix( in oklab, var(--a63-action-primary) 16%, color-mix(in oklab, var(--surface-light-6) 50%, white) )",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -1665,7 +1665,7 @@
       "name": "a63-border-subtle",
       "cssVar": "--a63-border-subtle",
       "type": "color",
-      "value": "color-mix( in oklch, var(--surface-dark-6) calc(100% - var(--a63-surface-tint)), var(--a63-brand-600) var(--a63-surface-tint) )",
+      "value": "color-mix( in oklab, var(--surface-dark-6) calc(100% - var(--a63-surface-tint)), var(--a63-brand-600) var(--a63-surface-tint) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -1681,7 +1681,7 @@
       "name": "a63-border-subtle",
       "cssVar": "--a63-border-subtle",
       "type": "color",
-      "value": "color-mix( in oklch, var(--surface-light-4) calc(100% - var(--a63-surface-tint)), var(--a63-brand-300) var(--a63-surface-tint) )",
+      "value": "color-mix( in oklab, var(--surface-light-4) calc(100% - var(--a63-surface-tint)), var(--a63-brand-300) var(--a63-surface-tint) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -4922,7 +4922,7 @@
       "name": "a63-field-background",
       "cssVar": "--a63-field-background",
       "type": "color",
-      "value": "color-mix( in oklch, var(--surface-light-2) 86%, var(--a63-action-primary) )",
+      "value": "color-mix( in oklab, var(--surface-light-2) 86%, var(--a63-action-primary) )",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -4938,7 +4938,7 @@
       "name": "a63-field-background",
       "cssVar": "--a63-field-background",
       "type": "color",
-      "value": "color-mix(in oklch, var(--surface-dark-1) 90%, var(--a63-action-primary))",
+      "value": "color-mix(in oklab, var(--surface-dark-1) 90%, var(--a63-action-primary))",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -5339,7 +5339,7 @@
       "name": "a63-menu-popup-background",
       "cssVar": "--a63-menu-popup-background",
       "type": "color",
-      "value": "color-mix(in oklch, var(--a63-surface-overlay) 92%, white)",
+      "value": "color-mix(in oklab, var(--a63-surface-overlay) 92%, white)",
       "sourceFile": "packages/styles/src/themes/aqua.css",
       "layer": "theme",
       "figma": {
@@ -7500,7 +7500,7 @@
       "name": "a63-surface-control",
       "cssVar": "--a63-surface-control",
       "type": "color",
-      "value": "color-mix( in oklch, var(--surface-dark-1) calc(100% - var(--a63-surface-tint)), var(--a63-brand-950) var(--a63-surface-tint) )",
+      "value": "color-mix( in oklab, var(--surface-dark-1) calc(100% - var(--a63-surface-tint)), var(--a63-brand-950) var(--a63-surface-tint) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -7516,7 +7516,7 @@
       "name": "a63-surface-control",
       "cssVar": "--a63-surface-control",
       "type": "color",
-      "value": "color-mix( in oklch, var(--surface-light-1) calc(100% - var(--a63-surface-tint)), var(--a63-brand-50) var(--a63-surface-tint) )",
+      "value": "color-mix( in oklab, var(--surface-light-1) calc(100% - var(--a63-surface-tint)), var(--a63-brand-50) var(--a63-surface-tint) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -7532,7 +7532,7 @@
       "name": "a63-surface-control-hover",
       "cssVar": "--a63-surface-control-hover",
       "type": "color",
-      "value": "color-mix( in srgb, color-mix( in oklch, var(--surface-dark-6) calc(100% - var(--a63-surface-tint)), var(--a63-brand-600) var(--a63-surface-tint) ), transparent 20% )",
+      "value": "color-mix( in srgb, color-mix( in oklab, var(--surface-dark-6) calc(100% - var(--a63-surface-tint)), var(--a63-brand-600) var(--a63-surface-tint) ), transparent 20% )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -7548,7 +7548,7 @@
       "name": "a63-surface-control-hover",
       "cssVar": "--a63-surface-control-hover",
       "type": "color",
-      "value": "color-mix( in srgb, color-mix( in oklch, var(--surface-light-4) calc(100% - var(--a63-surface-tint)), var(--a63-brand-300) var(--a63-surface-tint) ), transparent 20% )",
+      "value": "color-mix( in srgb, color-mix( in oklab, var(--surface-light-4) calc(100% - var(--a63-surface-tint)), var(--a63-brand-300) var(--a63-surface-tint) ), transparent 20% )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -7665,7 +7665,7 @@
       "name": "a63-surface-muted",
       "cssVar": "--a63-surface-muted",
       "type": "color",
-      "value": "color-mix( in oklch, var(--surface-dark-3) calc(100% - var(--a63-surface-tint)), var(--a63-brand-800) var(--a63-surface-tint) )",
+      "value": "color-mix( in oklab, var(--surface-dark-3) calc(100% - var(--a63-surface-tint)), var(--a63-brand-800) var(--a63-surface-tint) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -7681,7 +7681,7 @@
       "name": "a63-surface-muted",
       "cssVar": "--a63-surface-muted",
       "type": "color",
-      "value": "color-mix( in oklch, var(--surface-light-3) calc(100% - var(--a63-surface-tint)), var(--a63-brand-200) var(--a63-surface-tint) )",
+      "value": "color-mix( in oklab, var(--surface-light-3) calc(100% - var(--a63-surface-tint)), var(--a63-brand-200) var(--a63-surface-tint) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -7697,7 +7697,7 @@
       "name": "a63-surface-overlay",
       "cssVar": "--a63-surface-overlay",
       "type": "color",
-      "value": "color-mix( in oklch, var(--surface-dark-4) calc(100% - var(--a63-surface-tint)), var(--a63-brand-800) var(--a63-surface-tint) )",
+      "value": "color-mix( in oklab, var(--surface-dark-4) calc(100% - var(--a63-surface-tint)), var(--a63-brand-800) var(--a63-surface-tint) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -7713,7 +7713,7 @@
       "name": "a63-surface-overlay",
       "cssVar": "--a63-surface-overlay",
       "type": "color",
-      "value": "color-mix( in oklch, var(--surface-light-1) calc(100% - var(--a63-surface-tint)), var(--a63-brand-50) var(--a63-surface-tint) )",
+      "value": "color-mix( in oklab, var(--surface-light-1) calc(100% - var(--a63-surface-tint)), var(--a63-brand-50) var(--a63-surface-tint) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -7729,7 +7729,7 @@
       "name": "a63-surface-page",
       "cssVar": "--a63-surface-page",
       "type": "color",
-      "value": "color-mix(in oklch, var(--surface-light-2) 95%, var(--color-b1-500))",
+      "value": "color-mix(in oklab, var(--surface-light-2) 95%, var(--color-b1-500))",
       "sourceFile": "packages/styles/src/themes/aqua.css",
       "layer": "theme",
       "figma": {
@@ -7745,7 +7745,7 @@
       "name": "a63-surface-page",
       "cssVar": "--a63-surface-page",
       "type": "color",
-      "value": "color-mix(in oklch, var(--surface-dark-1) 94%, var(--color-b1-500))",
+      "value": "color-mix(in oklab, var(--surface-dark-1) 94%, var(--color-b1-500))",
       "sourceFile": "packages/styles/src/themes/aqua.css",
       "layer": "theme",
       "figma": {
@@ -7761,7 +7761,7 @@
       "name": "a63-surface-page",
       "cssVar": "--a63-surface-page",
       "type": "color",
-      "value": "color-mix(in oklch, var(--surface-light-1) 60%, white)",
+      "value": "color-mix(in oklab, var(--surface-light-1) 60%, white)",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -7777,7 +7777,7 @@
       "name": "a63-surface-page",
       "cssVar": "--a63-surface-page",
       "type": "color",
-      "value": "color-mix(in oklch, var(--surface-dark-1) 92%, var(--a63-action-primary))",
+      "value": "color-mix(in oklab, var(--surface-dark-1) 92%, var(--a63-action-primary))",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -7793,7 +7793,7 @@
       "name": "a63-surface-page",
       "cssVar": "--a63-surface-page",
       "type": "color",
-      "value": "color-mix( in oklch, var(--surface-dark-1) calc(100% - var(--a63-surface-tint)), var(--a63-brand-950) var(--a63-surface-tint) )",
+      "value": "color-mix( in oklab, var(--surface-dark-1) calc(100% - var(--a63-surface-tint)), var(--a63-brand-950) var(--a63-surface-tint) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -7809,7 +7809,7 @@
       "name": "a63-surface-page",
       "cssVar": "--a63-surface-page",
       "type": "color",
-      "value": "color-mix( in oklch, var(--surface-light-2) calc(100% - var(--a63-surface-tint)), var(--a63-brand-100) var(--a63-surface-tint) )",
+      "value": "color-mix( in oklab, var(--surface-light-2) calc(100% - var(--a63-surface-tint)), var(--a63-brand-100) var(--a63-surface-tint) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -7825,7 +7825,7 @@
       "name": "a63-surface-panel",
       "cssVar": "--a63-surface-panel",
       "type": "color",
-      "value": "color-mix(in oklch, var(--surface-light-1) 96%, var(--color-b1-500))",
+      "value": "color-mix(in oklab, var(--surface-light-1) 96%, var(--color-b1-500))",
       "sourceFile": "packages/styles/src/themes/aqua.css",
       "layer": "theme",
       "figma": {
@@ -7841,7 +7841,7 @@
       "name": "a63-surface-panel",
       "cssVar": "--a63-surface-panel",
       "type": "color",
-      "value": "color-mix(in oklch, var(--surface-dark-2) 94%, var(--color-b1-500))",
+      "value": "color-mix(in oklab, var(--surface-dark-2) 94%, var(--color-b1-500))",
       "sourceFile": "packages/styles/src/themes/aqua.css",
       "layer": "theme",
       "figma": {
@@ -7857,7 +7857,7 @@
       "name": "a63-surface-panel",
       "cssVar": "--a63-surface-panel",
       "type": "color",
-      "value": "color-mix(in oklch, var(--surface-light-2) 60%, white)",
+      "value": "color-mix(in oklab, var(--surface-light-2) 60%, white)",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -7873,7 +7873,7 @@
       "name": "a63-surface-panel",
       "cssVar": "--a63-surface-panel",
       "type": "color",
-      "value": "color-mix(in oklch, var(--surface-dark-2) 92%, var(--a63-action-primary))",
+      "value": "color-mix(in oklab, var(--surface-dark-2) 92%, var(--a63-action-primary))",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -7889,7 +7889,7 @@
       "name": "a63-surface-panel",
       "cssVar": "--a63-surface-panel",
       "type": "color",
-      "value": "color-mix( in oklch, var(--surface-dark-2) calc(100% - var(--a63-surface-tint)), var(--a63-brand-900) var(--a63-surface-tint) )",
+      "value": "color-mix( in oklab, var(--surface-dark-2) calc(100% - var(--a63-surface-tint)), var(--a63-brand-900) var(--a63-surface-tint) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -7905,7 +7905,7 @@
       "name": "a63-surface-panel",
       "cssVar": "--a63-surface-panel",
       "type": "color",
-      "value": "color-mix( in oklch, var(--surface-light-1) calc(100% - var(--a63-surface-tint)), var(--a63-brand-50) var(--a63-surface-tint) )",
+      "value": "color-mix( in oklab, var(--surface-light-1) calc(100% - var(--a63-surface-tint)), var(--a63-brand-50) var(--a63-surface-tint) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -8113,6 +8113,38 @@
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
+      "name": "a63-text-danger",
+      "cssVar": "--a63-text-danger",
+      "type": "color",
+      "value": "var(--color-danger-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "text/danger",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-danger-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-text-danger",
+      "cssVar": "--a63-text-danger",
+      "type": "color",
+      "value": "var(--color-danger-600)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "text/danger",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-danger-600"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
       "name": "a63-text-primary",
       "cssVar": "--a63-text-primary",
       "type": "color",
@@ -8196,7 +8228,7 @@
       "name": "a63-text-secondary",
       "cssVar": "--a63-text-secondary",
       "type": "color",
-      "value": "color-mix(in oklch, var(--a63-text-accent) 48%, var(--surface-dark-11))",
+      "value": "color-mix(in oklab, var(--a63-text-accent) 48%, var(--surface-dark-11))",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -8666,7 +8698,7 @@
       "name": "a63-weather-background-color",
       "cssVar": "--a63-weather-background-color",
       "type": "color",
-      "value": "color-mix( in oklch, var(--a63-action-primary) 48%, var(--a63-surface-panel) )",
+      "value": "color-mix( in oklab, var(--a63-action-primary) 48%, var(--a63-surface-panel) )",
       "sourceFile": "packages/styles/src/themes/retro.css",
       "layer": "theme",
       "figma": {
@@ -8730,7 +8762,7 @@
       "name": "a63-weather-background-image",
       "cssVar": "--a63-weather-background-image",
       "type": "color",
-      "value": "radial-gradient( 120% 90% at 10% 0%, color-mix(in oklch, white 18%, transparent), transparent 48% ), radial-gradient( 88% 110% at 100% 0%, color-mix(in oklch, var(--a63-action-primary) 30%, transparent), transparent 58% ), linear-gradient( 135deg, color-mix(in oklch, var(--a63-action-primary) 58%, var(--surface-dark-6) 42%), color-mix(in oklch, var(--a63-action-primary) 36%, var(--surface-dark-3) 64%) )",
+      "value": "radial-gradient( 120% 90% at 10% 0%, color-mix(in oklab, white 18%, transparent), transparent 48% ), radial-gradient( 88% 110% at 100% 0%, color-mix(in oklab, var(--a63-action-primary) 30%, transparent), transparent 58% ), linear-gradient( 135deg, color-mix(in oklab, var(--a63-action-primary) 58%, var(--surface-dark-6) 42%), color-mix(in oklab, var(--a63-action-primary) 36%, var(--surface-dark-3) 64%) )",
       "sourceFile": "packages/styles/src/themes/aqua.css",
       "layer": "theme",
       "figma": {
@@ -8746,7 +8778,7 @@
       "name": "a63-weather-background-image",
       "cssVar": "--a63-weather-background-image",
       "type": "color",
-      "value": "linear-gradient(135deg, color-mix(in oklch, white 22%, transparent), transparent 44%), linear-gradient( 135deg, color-mix(in oklch, var(--a63-action-primary) 58%, var(--a63-surface-panel)), color-mix(in oklch, var(--a63-action-primary) 68%, var(--a63-text-primary)) )",
+      "value": "linear-gradient(135deg, color-mix(in oklab, white 22%, transparent), transparent 44%), linear-gradient( 135deg, color-mix(in oklab, var(--a63-action-primary) 58%, var(--a63-surface-panel)), color-mix(in oklab, var(--a63-action-primary) 68%, var(--a63-text-primary)) )",
       "sourceFile": "packages/styles/src/themes/retro.css",
       "layer": "theme",
       "figma": {
@@ -8839,7 +8871,7 @@
       "name": "a63-weather-border-color",
       "cssVar": "--a63-weather-border-color",
       "type": "color",
-      "value": "color-mix( in oklch, var(--a63-action-primary) 44%, var(--a63-border-subtle) )",
+      "value": "color-mix( in oklab, var(--a63-action-primary) 44%, var(--a63-border-subtle) )",
       "sourceFile": "packages/styles/src/themes/retro.css",
       "layer": "theme",
       "figma": {
@@ -8855,7 +8887,7 @@
       "name": "a63-weather-border-color",
       "cssVar": "--a63-weather-border-color",
       "type": "color",
-      "value": "color-mix( in oklch, var(--a63-action-primary) 44%, var(--a63-border-subtle) )",
+      "value": "color-mix( in oklab, var(--a63-action-primary) 44%, var(--a63-border-subtle) )",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -9388,7 +9420,7 @@
       "name": "a63-weather-foreground",
       "cssVar": "--a63-weather-foreground",
       "type": "color",
-      "value": "color-mix( in oklch, var(--a63-action-primary) 82%, var(--surface-light-12) )",
+      "value": "color-mix( in oklab, var(--a63-action-primary) 82%, var(--surface-light-12) )",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -9464,7 +9496,7 @@
       "name": "a63-weather-muted-foreground",
       "cssVar": "--a63-weather-muted-foreground",
       "type": "color",
-      "value": "color-mix( in oklch, var(--a63-action-primary) 58%, var(--surface-light-10) )",
+      "value": "color-mix( in oklab, var(--a63-action-primary) 58%, var(--surface-light-10) )",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -9625,7 +9657,7 @@
       "name": "a63-widget-background-color",
       "cssVar": "--a63-widget-background-color",
       "type": "color",
-      "value": "color-mix(in oklch, var(--a63-surface-overlay) 82%, transparent)",
+      "value": "color-mix(in oklab, var(--a63-surface-overlay) 82%, transparent)",
       "sourceFile": "packages/styles/src/contracts/widget.css",
       "layer": "contract",
       "figma": {
@@ -9656,7 +9688,7 @@
       "name": "a63-widget-background-color",
       "cssVar": "--a63-widget-background-color",
       "type": "color",
-      "value": "color-mix(in oklch, var(--a63-surface-panel) 90%, transparent)",
+      "value": "color-mix(in oklab, var(--a63-surface-panel) 90%, transparent)",
       "sourceFile": "packages/styles/src/themes/modern.css",
       "layer": "theme",
       "figma": {

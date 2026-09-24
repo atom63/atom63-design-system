@@ -167,7 +167,7 @@ ramp). Together these are the single source of semantic truth.
 | Group | Tokens | Home |
 | --- | --- | --- |
 | Surface | `--a63-surface-page`, `--a63-surface-panel`, `--a63-surface-overlay`, `--a63-surface-muted`, `--a63-surface-control`, `--a63-surface-control-hover` | `semantics.css` |
-| Text | `--a63-text-primary`, `--a63-text-secondary` | `semantics.css` |
+| Text | `--a63-text-primary`, `--a63-text-secondary`, `--a63-text-danger` (error and destructive text; `--a63-action-danger` is the fill) | `semantics.css` |
 | Border | `--a63-border-subtle`, `--a63-border-control` | `semantics.css` |
 | Action | `--a63-action-primary` (+ `-hover`, `-foreground`), `--a63-action-danger` (+ `-hover`, `-foreground`), `--a63-action-neutral` (+ `-foreground`) | primary/focus in `brand.css`; danger/neutral in `semantics.css` |
 | Status | `--a63-status-info`, `--a63-status-success`, `--a63-status-warning` (+ `-foreground`) | `semantics.css` |
