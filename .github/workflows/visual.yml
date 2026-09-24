@@ -54,12 +54,17 @@ jobs:
         if: ${{ !inputs.update }}
         run: pnpm --filter @atom63/storybook test:visual
 
-      - name: Upload screenshot diffs
+      # Diffs for failed comparisons, plus any baseline this run had to create
+      # because none was committed yet. Downloading the artifact is also how a
+      # new story's first baseline gets into a pull request.
+      - name: Upload screenshot results
         if: ${{ failure() && !inputs.update }}
         uses: actions/upload-artifact@v4
         with:
-          name: visual-diff
-          path: apps/storybook/visual/__diff__
+          name: visual-results
+          path: |
+            apps/storybook/visual/__diff__
+            apps/storybook/visual/__screenshots__/*-linux.png
           if-no-files-found: ignore
 
       - name: Regenerate baselines
