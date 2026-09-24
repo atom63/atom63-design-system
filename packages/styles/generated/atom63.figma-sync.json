@@ -11559,7 +11559,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-info-500"
+              "alias": "--color-info-600"
             },
             "dark": {
               "alias": "--color-info-500"
@@ -11595,7 +11595,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-success-500"
+              "alias": "--color-success-600"
             },
             "dark": {
               "alias": "--color-success-500"
@@ -11631,7 +11631,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-warning-500"
+              "alias": "--color-warning-600"
             },
             "dark": {
               "alias": "--color-warning-500"
