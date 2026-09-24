@@ -24,7 +24,15 @@ const actionPairs = [
   { fg: '--a63-action-danger-foreground', bg: '--a63-action-danger', min: AA_UI },
 ] as const
 
-const pairs = [...textPairs, ...actionPairs] as const
+// Status accents paint icons and borders (alerts, copy check, load more), so
+// they meet WCAG's 3:1 for graphics against the page.
+const statusPairs = [
+  { fg: '--a63-status-info', bg: '--a63-surface-page', min: AA_UI },
+  { fg: '--a63-status-success', bg: '--a63-surface-page', min: AA_UI },
+  { fg: '--a63-status-warning', bg: '--a63-surface-page', min: AA_UI },
+] as const
+
+const pairs = [...textPairs, ...actionPairs, ...statusPairs] as const
 
 afterEach(() => {
   document.documentElement.removeAttribute('data-a63-theme')

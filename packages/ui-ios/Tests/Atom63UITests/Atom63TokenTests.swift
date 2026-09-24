@@ -12,10 +12,12 @@ struct Atom63TokenTests {
     #expect(AtomTokens.Motion.standard == 0.25)
     #expect(AtomTokens.Motion.controlFeedback == 0.15)
     #expect(AtomTokens.Motion.skeletonShimmer == 1.5)
-    #expect(AtomTokens.Color.statusInfo.light.blue > 0.8)
+    // Exact values are checked against the web by swift-parity.browser.test.ts.
+    #expect(AtomTokens.Color.statusInfo.light.blue > 0.7)
     #expect(AtomTokens.Color.statusSuccess.light.green > 0.5)
-    #expect(AtomTokens.Color.skeletonHighlight.light.opacity == 0.6)
-    #expect(AtomTokens.Color.skeletonHighlight.dark.opacity == 0.1)
+    // Colors are resolved as painted, so alpha has 8-bit precision (0.1 is 26/255).
+    #expect(abs(AtomTokens.Color.skeletonHighlight.light.opacity - 0.6) < 1 / 255)
+    #expect(abs(AtomTokens.Color.skeletonHighlight.dark.opacity - 0.1) < 1 / 255)
   }
 
   @Test
