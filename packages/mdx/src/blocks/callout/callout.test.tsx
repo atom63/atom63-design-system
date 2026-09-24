@@ -23,4 +23,15 @@ describe('Callout', () => {
     expect(screen.getByText('the details').closest('[data-slot="body"]')).not.toBeNull()
     expect(screen.getByRole('button', { name: 'Dismiss' })).toBeInTheDocument()
   })
+
+  it('marks its tone for the recipe, defaulting to info', () => {
+    render(
+      <>
+        <Callout>plain</Callout>
+        <Callout type="error">broken</Callout>
+      </>
+    )
+    expect(screen.getByText('plain')).toHaveAttribute('data-tone', 'info')
+    expect(screen.getByText('broken')).toHaveAttribute('data-tone', 'error')
+  })
 })

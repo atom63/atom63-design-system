@@ -93,7 +93,7 @@ export const mdxStyles = {
     strong: 'font-semibold',
     em: 'italic',
     del: 'line-through',
-    ins: 'underline decoration-green-500/70',
+    ins: 'mdx-ins underline',
 
     // inline code
     inlineCode: 'mdx-inline-code px-1 py-0.5 font-mono text-xs leading-snug font-medium',
@@ -151,7 +151,7 @@ export const mdxStyles = {
       'mdx-summary cursor-pointer select-none font-semibold [&::-webkit-details-marker]:hidden',
 
     // misc semantics
-    mark: 'mdx-mark rounded-sm bg-yellow-200 px-1 dark:bg-yellow-800/60',
+    mark: 'mdx-mark rounded-sm px-1',
     sub: 'text-xs align-sub',
     sup: 'text-xs align-super',
     abbr: 'mdx-abbr cursor-help',
@@ -169,13 +169,6 @@ export const mdxStyles = {
       // Tailwind's scanner is static, so a class assembled at runtime is never
       // seen and no rule is generated for it.
       base: `my-4 rounded-lg border p-4 ${mdxTypography.calloutBody} first:mt-0 last:mb-0 sm:my-5 [&_p]:mt-1.5 [&_p]:text-base [&_p]:leading-relaxed [&_p:first-child]:mt-0 [&_ul]:mt-1.5 [&_ul]:space-y-1 [&_ol]:mt-1.5 [&_ol]:space-y-1 [&_li]:text-base [&_li]:leading-relaxed [&_li]:text-inherit`,
-      info: 'border-blue-500/20 bg-blue-50/60 text-blue-950 dark:border-blue-500/20 dark:bg-blue-950/40 dark:text-blue-50',
-      warning:
-        'border-yellow-500/20 bg-yellow-50/60 text-yellow-950 dark:border-yellow-500/20 dark:bg-yellow-950/40 dark:text-yellow-50',
-      error:
-        'border-red-500/20 bg-red-50/60 text-red-950 dark:border-red-500/20 dark:bg-red-950/40 dark:text-red-50',
-      success:
-        'border-green-500/20 bg-green-50/60 text-green-950 dark:border-green-500/20 dark:bg-green-950/40 dark:text-green-50',
     },
   },
 } as const

@@ -1,13 +1,34 @@
 /*
- * Callout recipe — status-callout chrome. Foundation styling on --a63-* tokens
- * (in @layer components so consumer utilities override). The tinted status
- * variants (blue/yellow/red/green 50↔950) stay as Tailwind palettes on the
- * component — no --a63-* tinted-surface equivalent yet.
+ * Callout recipe — status-callout chrome on --a63-* tokens (in @layer
+ * components so consumer utilities override). Each tone tints the border,
+ * fill and icon with its status color, the same mix ui-react's Alert uses;
+ * the text stays on the primary text token so it keeps its contrast.
  */
 @layer components {
   .callout {
+    --callout-tone: var(--a63-status-info);
+
     border-radius: var(--radius-lg);
     border-width: 1px;
+    border-color: color-mix(in oklch, var(--callout-tone) 32%, transparent);
+    background-color: color-mix(in oklch, var(--callout-tone) 4%, transparent);
+    color: var(--a63-text-primary);
+  }
+
+  .callout[data-tone='warning'] {
+    --callout-tone: var(--a63-status-warning);
+  }
+
+  .callout[data-tone='error'] {
+    --callout-tone: var(--a63-action-danger);
+  }
+
+  .callout[data-tone='success'] {
+    --callout-tone: var(--a63-status-success);
+  }
+
+  .callout [data-slot='icon'] {
+    color: var(--callout-tone);
   }
 
   .mdx-callout-title {

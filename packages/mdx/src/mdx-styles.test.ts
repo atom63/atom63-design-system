@@ -34,12 +34,6 @@ describe('mdxStyles', () => {
     }
   })
 
-  it('layout.callout has all variants', () => {
-    for (const variant of ['info', 'warning', 'error', 'success'] as const) {
-      expect(mdxStyles.layout.callout[variant]).toBeTruthy()
-    }
-  })
-
   it('spacing has expected keys', () => {
     const expectedKeys = ['component', 'media', 'mediaLg', 'mediaSm']
     for (const key of expectedKeys) {
