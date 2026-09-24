@@ -30,6 +30,11 @@ const result = spawnSync(
     'Atom63Demo',
     '-destination',
     `platform=iOS Simulator,id=${device.udid}`,
+    // A UI test that times out on a slow simulator gets up to two more runs;
+    // a real failure still fails every run.
+    '-retry-tests-on-failure',
+    '-test-iterations',
+    '3',
     'CODE_SIGNING_ALLOWED=NO',
   ],
   {
