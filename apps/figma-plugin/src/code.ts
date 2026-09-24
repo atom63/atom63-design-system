@@ -9,6 +9,7 @@
 import figmaSyncModel from '@atom63/styles/figma-sync.json'
 
 import { applyPlan, readSnapshot, type VariablesApi } from './sync/apply'
+import { planExport, toTokenPatch } from './sync/export'
 import { planSync, type SyncModel, type SyncPlan } from './sync/plan'
 import type { PluginSettings, SyncPlanSummary, UIToMainMessage } from './types/messages'
 
@@ -1727,6 +1728,23 @@ async function handleUIMessage(msg: UIToMainMessage) {
           data: { applied, verification: summarizePlan(verification) },
         })
         figma.notify(`Atom63 sync: ${applied.created} created, ${applied.updated} updated`)
+      } catch (error) {
+        figma.ui.postMessage({ type: 'sync-error', data: { message: errorMessage(error) } })
+      }
+      break
+    }
+
+    case 'sync-export': {
+      try {
+        const plan = planExport(syncModel, await readSnapshot(variablesApi, syncModel))
+        figma.ui.postMessage({
+          type: 'sync-export-result',
+          data: {
+            changes: plan.changes.map(({ name, token }) => ({ name, token })),
+            skipped: plan.skipped,
+            patch: `${JSON.stringify(toTokenPatch(plan), null, 2)}\n`,
+          },
+        })
       } catch (error) {
         figma.ui.postMessage({ type: 'sync-error', data: { message: errorMessage(error) } })
       }
