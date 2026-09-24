@@ -14,6 +14,7 @@ const meta = {
     disabled: { control: 'boolean' },
   },
   args: {
+    'aria-label': 'Example switch',
     defaultChecked: true,
     disabled: false,
     size: 'md',
@@ -143,12 +144,12 @@ export const States: Story = {
     <EnvironmentShell>
       <div style={{ display: 'grid', gap: '0.75rem' }}>
         <Row>
-          <Switch />
-          <Switch defaultChecked />
+          <Switch aria-label="Example switch" />
+          <Switch aria-label="Example switch, checked" defaultChecked />
         </Row>
         <Row>
-          <Switch disabled />
-          <Switch defaultChecked disabled />
+          <Switch aria-label="Example switch, disabled" disabled />
+          <Switch aria-label="Example switch, checked, disabled" defaultChecked disabled />
         </Row>
       </div>
     </EnvironmentShell>
@@ -161,8 +162,8 @@ export const Sizes: Story = {
       <div style={{ display: 'grid', gap: '0.75rem' }}>
         {switchSizes.map(size => (
           <Row key={size}>
-            <Switch size={size} />
-            <Switch defaultChecked size={size} />
+            <Switch aria-label="Example switch" size={size} />
+            <Switch aria-label="Example switch, checked" defaultChecked size={size} />
             <span style={{ color: 'var(--a63-text-secondary)', fontSize: '0.75rem' }}>{size}</span>
           </Row>
         ))}
@@ -242,8 +243,8 @@ export const Themes: Story = {
           <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>
             <PreviewCard label={`${theme} / ${mode}`}>
               <Row>
-                <Switch />
-                <Switch defaultChecked />
+                <Switch aria-label="Example switch" />
+                <Switch aria-label="Example switch, checked" defaultChecked />
               </Row>
             </PreviewCard>
           </UIProvider>
@@ -266,7 +267,7 @@ export const BrandRamps: Story = {
       {brands.map(brand => (
         <UIProvider brand={brand} key={brand} mode="light">
           <PreviewCard label={`brand / ${brand}`}>
-            <Switch defaultChecked />
+            <Switch aria-label="Example switch, checked" defaultChecked />
           </PreviewCard>
         </UIProvider>
       ))}
@@ -280,24 +281,24 @@ export const Endpoints: Story = {
       <UIProvider designLanguage="web" input="pointer">
         <PreviewCard label="Web">
           <Row>
-            <Switch />
-            <Switch defaultChecked />
+            <Switch aria-label="Example switch" />
+            <Switch aria-label="Example switch, checked" defaultChecked />
           </Row>
         </PreviewCard>
       </UIProvider>
       <UIProvider designLanguage="ios" input="touch">
         <PreviewCard label="iOS touch">
           <Row>
-            <Switch />
-            <Switch defaultChecked />
+            <Switch aria-label="Example switch" />
+            <Switch aria-label="Example switch, checked" defaultChecked />
           </Row>
         </PreviewCard>
       </UIProvider>
       <UIProvider density="compact" designLanguage="web" input="pointer">
         <PreviewCard label="Compact extension">
           <Row>
-            <Switch />
-            <Switch defaultChecked />
+            <Switch aria-label="Example switch" />
+            <Switch aria-label="Example switch, checked" defaultChecked />
           </Row>
         </PreviewCard>
       </UIProvider>

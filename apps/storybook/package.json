@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@atom63/tsconfig": "workspace:*",
+    "@storybook/addon-a11y": "^10.6.0",
     "@storybook/addon-docs": "^10.6.0",
     "@storybook/addon-vitest": "^10.6.0",
     "@storybook/react-vite": "^10.6.0",

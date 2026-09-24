@@ -130,7 +130,7 @@ export const Aligns: Story = {
     <div style={{ display: 'grid', gap: 24 }}>
       {connectedPanelAligns.map(align => (
         <div key={align} style={{ display: 'grid', gap: 8 }}>
-          <span style={{ fontSize: 12, opacity: 0.7 }}>align={align}</span>
+          <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)' }}>align={align}</span>
           <Demo align={align} />
         </div>
       ))}
@@ -155,7 +155,7 @@ export const Themes: Story = {
                 padding: '0.75rem',
               }}
             >
-              <span style={{ fontSize: 12, opacity: 0.7, width: 96 }}>
+              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
                 {theme} / {mode}
               </span>
               <Demo defaultOpen />
@@ -201,7 +201,9 @@ export const Endpoints: Story = {
               padding: '0.75rem',
             }}
           >
-            <span style={{ fontSize: 12, opacity: 0.7, width: 112 }}>{endpoint.label}</span>
+            <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>
+              {endpoint.label}
+            </span>
             <Demo defaultOpen />
           </div>
         </UIProvider>

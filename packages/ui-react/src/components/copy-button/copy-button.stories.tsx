@@ -72,7 +72,7 @@ export const Sizes: Story = {
           key={pair.icon}
           style={{ alignItems: 'center', display: 'flex', gap: 12, minHeight: 48 }}
         >
-          <span style={{ fontSize: 12, opacity: 0.7, width: 88 }}>
+          <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 88 }}>
             {pair.icon} / {pair.label}
           </span>
           <CopyButton size={pair.icon} value={pair.icon} variant="outline" />
@@ -115,7 +115,7 @@ export const Themes: Story = {
                 padding: '0.75rem',
               }}
             >
-              <span style={{ fontSize: 12, opacity: 0.7, width: 96 }}>
+              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
                 {theme} / {mode}
               </span>
               <CopyButton value="ghost" variant="ghost" />
@@ -161,7 +161,9 @@ export const Endpoints: Story = {
               padding: '0.75rem',
             }}
           >
-            <span style={{ fontSize: 12, opacity: 0.7, width: 112 }}>{endpoint.label}</span>
+            <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>
+              {endpoint.label}
+            </span>
             <CopyButton value={`${endpoint.label}-icon`} variant="outline" />
             <CopyButton value={`${endpoint.label}-label`} variant="outline">
               Copy

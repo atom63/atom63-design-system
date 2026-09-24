@@ -122,6 +122,8 @@ const preview: Preview = {
     layout: 'centered',
     controls: { expanded: true },
     backgrounds: { disable: true },
+    // Every story's render test also runs axe; a violation fails the test.
+    a11y: { test: 'error' },
     options: { storySort: { method: 'alphabetical' } },
   },
   decorators: [withPersonalization],

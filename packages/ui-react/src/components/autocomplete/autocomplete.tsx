@@ -103,6 +103,8 @@ export function AutocompleteInput({
       />
       {showTrigger ? (
         <AutocompleteTrigger
+          // Icon-only buttons need a name; callers can override it via triggerProps.
+          aria-label="Show suggestions"
           className={cn('a63-Autocomplete-adornment', triggerProps?.className)}
           {...triggerProps}
         >
@@ -113,6 +115,7 @@ export function AutocompleteInput({
       ) : null}
       {showClear ? (
         <AutocompleteClear
+          aria-label="Clear"
           className={cn('a63-Autocomplete-adornment', clearProps?.className)}
           {...clearProps}
         >

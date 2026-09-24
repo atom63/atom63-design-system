@@ -87,7 +87,7 @@ export const Themes: Story = {
                 padding: '0.75rem',
               }}
             >
-              <span style={{ fontSize: 12, opacity: 0.7, width: 96 }}>
+              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
                 {theme} / {mode}
               </span>
               <div style={{ flex: 1, minWidth: 0 }}>
@@ -142,7 +142,9 @@ function EndpointMarquee({ label }: { label: string }) {
         padding: 12,
       }}
     >
-      <span style={{ flex: '0 0 112px', fontSize: 12, opacity: 0.7 }}>{label}</span>
+      <span style={{ flex: '0 0 112px', fontSize: 12, color: 'var(--a63-text-secondary)' }}>
+        {label}
+      </span>
       <div style={{ flex: 1, minWidth: 0 }}>
         <Marquee paused>
           {chips.map(chip => (

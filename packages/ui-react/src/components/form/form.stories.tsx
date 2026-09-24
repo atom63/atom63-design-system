@@ -48,7 +48,12 @@ function ProfileForm({ withError }: { withError?: boolean }) {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="you@atom63.io" type="email" {...field} />
+                <Input
+                  aria-label="Example text field"
+                  placeholder="you@atom63.io"
+                  type="email"
+                  {...field}
+                />
               </FormControl>
               <FormDescription>We use this to send release notes.</FormDescription>
               <FormMessage />
@@ -89,7 +94,7 @@ export const Themes: Story = {
                 borderRadius: '0.75rem',
               }}
             >
-              <span style={{ fontSize: 12, opacity: 0.7, width: 96 }}>
+              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
                 {theme} / {mode}
               </span>
               <ProfileForm withError />
@@ -129,7 +134,9 @@ export const Endpoints: Story = {
               padding: 12,
             }}
           >
-            <span style={{ fontSize: 12, opacity: 0.7, width: 112 }}>{endpoint.label}</span>
+            <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>
+              {endpoint.label}
+            </span>
             <ProfileForm withError />
           </div>
         </UIProvider>

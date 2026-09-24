@@ -20,6 +20,13 @@ surface, tint, radius, type scale, density, and OS.
 pnpm --filter @atom63/storybook test
 ```
 
+**Accessibility.** The same render tests run [axe](https://github.com/dequelabs/axe-core) on every
+story through `@storybook/addon-a11y`, and any violation fails the test. Two shared parameters in
+`packages/ui-react/src/components/story-probes.tsx` switch off specific rules, each for a stated
+reason: `repeatedLandmarks` for theme and environment matrices that repeat a component's landmarks
+by design, and `pendingContrastReview` for stories whose only failures are color contrast set by the
+design tokens, which waits on a design decision. Label every form control you add to a story.
+
 **Visual regression.** Every story is compared against a committed baseline screenshot in
 `visual/__screenshots__/`. Stories with a `Themes` story render all four themes in light and
 dark, so those components get a full theme matrix. To keep screenshots deterministic, the test

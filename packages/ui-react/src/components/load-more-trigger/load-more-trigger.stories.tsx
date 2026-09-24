@@ -82,7 +82,7 @@ export const Themes: Story = {
                 padding: '0.75rem',
               }}
             >
-              <span style={{ fontSize: 12, opacity: 0.7, width: 96 }}>
+              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
                 {theme} / {mode}
               </span>
               <LoadMoreTrigger hasMore isLoading />
@@ -130,7 +130,7 @@ function EndpointTrigger({ label }: { label: string }) {
         paddingInline: 12,
       }}
     >
-      <span style={{ fontSize: 12, opacity: 0.7, width: 112 }}>{label}</span>
+      <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>{label}</span>
       <LoadMoreTrigger hasMore isLoading variant="prominent" />
     </div>
   )

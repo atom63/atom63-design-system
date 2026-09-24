@@ -136,7 +136,7 @@ export const Themes: Story = {
                 borderRadius: 'var(--a63-surface-radius, var(--radius-lg))',
               }}
             >
-              <span style={{ fontSize: 12, opacity: 0.7, width: 96 }}>
+              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
                 {theme} / {mode}
               </span>
               <div style={{ width: 320 }}>
@@ -199,7 +199,7 @@ function EndpointItem({ label }: { label: string }) {
         padding: 12,
       }}
     >
-      <span style={{ fontSize: 12, opacity: 0.7, width: 112 }}>{label}</span>
+      <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>{label}</span>
       <div style={{ width: 320 }}>
         <Item variant="outline">
           <ItemMedia variant="icon">

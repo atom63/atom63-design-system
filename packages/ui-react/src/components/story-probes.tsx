@@ -231,3 +231,32 @@ export function ContractProbeGrid({
     </EnvironmentShell>
   )
 }
+
+/*
+ * a11y parameters for matrix stories. A matrix renders the same component once
+ * per theme / environment on one page, so its landmarks (navigation, region,
+ * header) repeat by design; axe's uniqueness rules would flag the matrix, not the
+ * component. Every other rule still runs.
+ */
+export const repeatedLandmarks = {
+  a11y: {
+    config: {
+      rules: [
+        { id: 'landmark-unique', enabled: false },
+        { id: 'landmark-no-duplicate-banner', enabled: false },
+      ],
+    },
+  },
+}
+
+/*
+ * Temporary: stories whose only a11y failures are color contrast that comes from
+ * design tokens, not from the component: white text on the default primary
+ * (about 3.6:1, below WCAG AA's 4.5:1 for normal text) and the tonal Badge
+ * palette. Fixing them changes the brand's primary or palette colors, which is a
+ * design decision recorded in docs/design-system/hardening-plan.md. Remove this
+ * marker from a story once its colors pass. Every other rule still runs.
+ */
+export const pendingContrastReview = {
+  a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } },
+}

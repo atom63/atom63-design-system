@@ -11,6 +11,7 @@ import {
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { repeatedLandmarks } from '../story-probes'
 
 const meta = {
   title: 'UI React/Breadcrumb',
@@ -80,6 +81,7 @@ export const CustomSeparator: Story = {
 
 /* The breadcrumb chrome across all 4 DS themes in light and dark. */
 export const Themes: Story = {
+  parameters: repeatedLandmarks,
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>
       {themes.map(theme =>
@@ -96,7 +98,7 @@ export const Themes: Story = {
                 borderRadius: 'var(--radius-lg)',
               }}
             >
-              <span style={{ fontSize: 12, opacity: 0.7, width: 96 }}>
+              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
                 {theme} / {mode}
               </span>
               <Breadcrumb>
@@ -127,6 +129,7 @@ export const Themes: Story = {
 }
 
 export const Endpoints: Story = {
+  parameters: repeatedLandmarks,
   render: () => (
     <div
       style={{

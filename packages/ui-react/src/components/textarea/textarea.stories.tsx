@@ -56,7 +56,11 @@ export const Playground: Story = {
 export const Disabled: Story = {
   render: () => (
     <div style={{ maxWidth: 320 }}>
-      <Textarea disabled defaultValue="Read only content" />
+      <Textarea
+        aria-label="Example text area, disabled"
+        disabled
+        defaultValue="Read only content"
+      />
     </div>
   ),
 }
@@ -65,7 +69,10 @@ export const Disabled: Story = {
 export const AutoSizing: Story = {
   render: () => (
     <div style={{ maxWidth: 320 }}>
-      <Textarea defaultValue={'Line one\nLine two\nLine three\nLine four'} />
+      <Textarea
+        aria-label="Example text area"
+        defaultValue={'Line one\nLine two\nLine three\nLine four'}
+      />
     </div>
   ),
 }
@@ -82,7 +89,11 @@ export const Unstyled: Story = {
         width: 320,
       }}
     >
-      <Textarea defaultValue="No chrome of my own — the parent frame owns it." unstyled />
+      <Textarea
+        aria-label="Example text area"
+        defaultValue="No chrome of my own — the parent frame owns it."
+        unstyled
+      />
     </div>
   ),
 }
@@ -91,11 +102,20 @@ export const SizesAndStates: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: '0.75rem', maxWidth: 360 }}>
       {textareaSizes.map(size => (
-        <Textarea defaultValue={`${size} textarea`} key={size} size={size} />
+        <Textarea
+          aria-label="Example text area"
+          defaultValue={`${size} textarea`}
+          key={size}
+          size={size}
+        />
       ))}
-      <Textarea invalid defaultValue="This content needs attention." />
-      <Textarea disabled defaultValue="Disabled content" />
-      <Textarea defaultValue="Flat field shadow" shadow={false} />
+      <Textarea
+        aria-label="Example text area, invalid"
+        invalid
+        defaultValue="This content needs attention."
+      />
+      <Textarea aria-label="Example text area, disabled" disabled defaultValue="Disabled content" />
+      <Textarea aria-label="Example text area" defaultValue="Flat field shadow" shadow={false} />
     </div>
   ),
 }
@@ -107,8 +127,12 @@ export const Themes: Story = {
         (['light', 'dark'] as const).map(mode => (
           <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>
             <PreviewCard label={`${theme} / ${mode}`}>
-              <Textarea defaultValue="The quick brown fox." />
-              <Textarea invalid defaultValue="Invalid notes" />
+              <Textarea aria-label="Example text area" defaultValue="The quick brown fox." />
+              <Textarea
+                aria-label="Example text area, invalid"
+                invalid
+                defaultValue="Invalid notes"
+              />
             </PreviewCard>
           </UIProvider>
         ))
@@ -128,17 +152,17 @@ export const Endpoints: Story = {
     >
       <UIProvider designLanguage="web" input="pointer">
         <PreviewCard label="web / pointer">
-          <Textarea defaultValue="Desktop notes" />
+          <Textarea aria-label="Example text area" defaultValue="Desktop notes" />
         </PreviewCard>
       </UIProvider>
       <UIProvider designLanguage="ios" input="touch">
         <PreviewCard label="ios / touch">
-          <Textarea defaultValue="Touch notes" />
+          <Textarea aria-label="Example text area" defaultValue="Touch notes" />
         </PreviewCard>
       </UIProvider>
       <UIProvider density="compact" designLanguage="web" input="pointer">
         <PreviewCard label="extension / compact">
-          <Textarea defaultValue="Compact notes" />
+          <Textarea aria-label="Example text area" defaultValue="Compact notes" />
         </PreviewCard>
       </UIProvider>
     </div>

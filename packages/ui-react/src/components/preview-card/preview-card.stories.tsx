@@ -3,6 +3,7 @@ import { PreviewCard, PreviewCardPopup, PreviewCardTrigger, UIProvider } from '@
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { type ComponentProps, useRef } from 'react'
+import { pendingContrastReview } from '../story-probes'
 
 const meta = {
   title: 'UI React/PreviewCard',
@@ -20,6 +21,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Playground: Story = {
+  parameters: pendingContrastReview,
   render: () => (
     <p style={{ color: 'var(--a63-text-primary)' }}>
       Follow{' '}
@@ -100,7 +102,9 @@ function ReviewCell({ label, ...providerProps }: ReviewCellProps) {
           padding: 12,
         }}
       >
-        <span style={{ fontSize: 12, opacity: 0.7, width: 112 }}>{label}</span>
+        <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>
+          {label}
+        </span>
         <PreviewCard defaultOpen>
           <PreviewCardTrigger
             render={

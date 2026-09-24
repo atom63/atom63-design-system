@@ -14,6 +14,7 @@ import {
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
+import { pendingContrastReview } from '../story-probes'
 
 const meta = {
   title: 'UI React/Popover',
@@ -97,6 +98,7 @@ function ThemeCell() {
 }
 
 export const Themes: Story = {
+  parameters: pendingContrastReview,
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>
       {themes.map(theme =>
@@ -113,7 +115,7 @@ export const Themes: Story = {
                 padding: '0.75rem',
               }}
             >
-              <span style={{ fontSize: 12, opacity: 0.7, width: 96 }}>
+              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
                 {theme} / {mode}
               </span>
               <ThemeCell />
@@ -161,7 +163,7 @@ function EndpointPopover({ label }: { label: string }) {
         padding: 12,
       }}
     >
-      <span style={{ fontSize: 12, opacity: 0.7, width: 112 }}>{label}</span>
+      <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>{label}</span>
       <ThemeCell />
     </div>
   )

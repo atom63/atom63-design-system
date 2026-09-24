@@ -14,7 +14,7 @@ const config: StorybookConfig = {
     '../../../packages/ui-react/src/**/*.mdx',
     '../../../packages/ui-react/src/**/*.stories.@(ts|tsx)',
   ],
-  addons: ['@storybook/addon-docs', '@storybook/addon-vitest'],
+  addons: ['@storybook/addon-docs', '@storybook/addon-a11y', '@storybook/addon-vitest'],
   framework: { name: '@storybook/react-vite', options: {} },
   core: { disableTelemetry: true },
   typescript: {

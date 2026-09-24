@@ -11,6 +11,7 @@ import {
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { type ComponentProps, useRef } from 'react'
+import { repeatedLandmarks } from '../story-probes'
 
 const meta = {
   title: 'UI React/NavigationMenu',
@@ -72,6 +73,7 @@ export const AlignEnd: Story = {
 // The trigger bar is the always-visible surface; the shared content panel is
 // portalled, so the matrix documents the trigger chrome across all 4 DS themes.
 export const Themes: Story = {
+  parameters: repeatedLandmarks,
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>
       {themes.map(theme =>
@@ -89,6 +91,7 @@ export const Themes: Story = {
 }
 
 export const Endpoints: Story = {
+  parameters: repeatedLandmarks,
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>
       <ReviewCell designLanguage="web" input="pointer" label="Web" />
@@ -128,7 +131,9 @@ function ReviewCell({ label, ...providerProps }: ReviewCellProps) {
           padding: 12,
         }}
       >
-        <span style={{ fontSize: 12, opacity: 0.7, width: 112 }}>{label}</span>
+        <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>
+          {label}
+        </span>
         <Demo portalContainer={portalContainerRef} width={200} />
       </div>
     </UIProvider>

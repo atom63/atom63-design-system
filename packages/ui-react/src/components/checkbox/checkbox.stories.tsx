@@ -9,7 +9,7 @@ const meta = {
   argTypes: {
     size: { control: 'inline-radio', options: checkboxSizes },
   },
-  args: { size: 'md' },
+  args: { size: 'md', 'aria-label': 'Example checkbox' },
 } satisfies Meta<typeof Checkbox>
 
 export default meta
@@ -20,11 +20,11 @@ export const Playground: Story = { args: { defaultChecked: true } }
 export const States: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-      <Checkbox />
-      <Checkbox defaultChecked />
-      <Checkbox indeterminate />
-      <Checkbox defaultChecked disabled />
-      <Checkbox disabled />
+      <Checkbox aria-label="Example checkbox" />
+      <Checkbox aria-label="Example checkbox, checked" defaultChecked />
+      <Checkbox aria-label="Example checkbox, indeterminate" indeterminate />
+      <Checkbox aria-label="Example checkbox, checked, disabled" defaultChecked disabled />
+      <Checkbox aria-label="Example checkbox, disabled" disabled />
     </div>
   ),
 }
@@ -33,7 +33,7 @@ export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
       {checkboxSizes.map(size => (
-        <Checkbox defaultChecked key={size} size={size} />
+        <Checkbox aria-label="Example checkbox, checked" defaultChecked key={size} size={size} />
       ))}
     </div>
   ),
@@ -76,16 +76,15 @@ export const Themes: Story = {
                 style={{
                   color: 'var(--a63-text-secondary)',
                   fontSize: 12,
-                  opacity: 0.7,
                   width: 96,
                 }}
               >
                 {theme} / {mode}
               </span>
-              <Checkbox />
-              <Checkbox defaultChecked />
-              <Checkbox indeterminate />
-              <Checkbox defaultChecked disabled />
+              <Checkbox aria-label="Example checkbox" />
+              <Checkbox aria-label="Example checkbox, checked" defaultChecked />
+              <Checkbox aria-label="Example checkbox, indeterminate" indeterminate />
+              <Checkbox aria-label="Example checkbox, checked, disabled" defaultChecked disabled />
             </div>
           </UIProvider>
         ))
@@ -132,10 +131,10 @@ export const Endpoints: Story = {
             <span style={{ color: 'var(--a63-text-secondary)', fontSize: 12, width: 112 }}>
               {endpoint.label}
             </span>
-            <Checkbox />
-            <Checkbox defaultChecked />
-            <Checkbox indeterminate />
-            <Checkbox defaultChecked disabled />
+            <Checkbox aria-label="Example checkbox" />
+            <Checkbox aria-label="Example checkbox, checked" defaultChecked />
+            <Checkbox aria-label="Example checkbox, indeterminate" indeterminate />
+            <Checkbox aria-label="Example checkbox, checked, disabled" defaultChecked disabled />
           </div>
         </UIProvider>
       ))}

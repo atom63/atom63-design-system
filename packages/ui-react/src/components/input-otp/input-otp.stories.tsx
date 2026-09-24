@@ -29,7 +29,7 @@ const endpointCases: readonly [string, ProviderProps][] = [
 /* A 6-digit code entered as one fused pill. Focus a slot to see the caret. */
 export const Playground: Story = {
   render: () => (
-    <InputOTP maxLength={6}>
+    <InputOTP aria-label="Example one-time code" maxLength={6}>
       <InputOTPGroup>
         {Array.from({ length: 6 }, (_, i) => (
           <InputOTPSlot index={i} key={i} />
@@ -42,7 +42,7 @@ export const Playground: Story = {
 /* Two grouped triplets split by a separator (e.g. 3-3 verification codes). */
 export const WithSeparator: Story = {
   render: () => (
-    <InputOTP maxLength={6}>
+    <InputOTP aria-label="Example one-time code" maxLength={6}>
       <InputOTPGroup>
         <InputOTPSlot index={0} />
         <InputOTPSlot index={1} />
@@ -61,7 +61,7 @@ export const WithSeparator: Story = {
 /* A pre-filled, disabled field. */
 export const Disabled: Story = {
   render: () => (
-    <InputOTP disabled maxLength={4} value="1234">
+    <InputOTP aria-label="Example one-time code, disabled" disabled maxLength={4} value="1234">
       <InputOTPGroup>
         <InputOTPSlot index={0} />
         <InputOTPSlot index={1} />
@@ -74,7 +74,7 @@ export const Disabled: Story = {
 
 export const Invalid: Story = {
   render: () => (
-    <InputOTP aria-invalid maxLength={6} value="1234">
+    <InputOTP aria-label="Example one-time code, invalid" aria-invalid maxLength={6} value="1234">
       <InputOTPGroup>
         {Array.from({ length: 6 }, (_, index) => (
           <InputOTPSlot index={index} key={index} />
@@ -102,10 +102,10 @@ export const Themes: Story = {
                 padding: '0.75rem',
               }}
             >
-              <span style={{ fontSize: 12, opacity: 0.7, width: 96 }}>
+              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
                 {theme} / {mode}
               </span>
-              <InputOTP maxLength={6} value="1234">
+              <InputOTP aria-label="Example one-time code" maxLength={6} value="1234">
                 <InputOTPGroup>
                   <InputOTPSlot index={0} />
                   <InputOTPSlot index={1} />
@@ -141,8 +141,10 @@ export const Endpoints: Story = {
               padding: 12,
             }}
           >
-            <span style={{ fontSize: 12, opacity: 0.7, width: 112 }}>{label}</span>
-            <InputOTP maxLength={4} value="1234">
+            <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>
+              {label}
+            </span>
+            <InputOTP aria-label="Example one-time code" maxLength={4} value="1234">
               <InputOTPGroup>
                 {Array.from({ length: 4 }, (_, index) => (
                   <InputOTPSlot index={index} key={index} />

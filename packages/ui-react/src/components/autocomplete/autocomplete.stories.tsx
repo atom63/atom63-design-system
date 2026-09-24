@@ -101,25 +101,27 @@ export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 16 }}>
       <div>
-        <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 6 }}>sm</div>
+        <div style={{ fontSize: 12, color: 'var(--a63-text-secondary)', marginBottom: 6 }}>sm</div>
         <Demo size="sm" />
       </div>
       <div>
-        <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 6 }}>default</div>
+        <div style={{ fontSize: 12, color: 'var(--a63-text-secondary)', marginBottom: 6 }}>
+          default
+        </div>
         <Demo size="default" />
       </div>
       <div>
-        <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 6 }}>lg</div>
+        <div style={{ fontSize: 12, color: 'var(--a63-text-secondary)', marginBottom: 6 }}>lg</div>
         <Demo size="lg" />
       </div>
       <div>
-        <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 6 }}>
+        <div style={{ fontSize: 12, color: 'var(--a63-text-secondary)', marginBottom: 6 }}>
           size={'{'}12{'}'} (native char-width)
         </div>
         <Demo size={12} />
       </div>
       <div>
-        <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 6 }}>
+        <div style={{ fontSize: 12, color: 'var(--a63-text-secondary)', marginBottom: 6 }}>
           size={'{'}30{'}'} (native char-width)
         </div>
         <Demo size={30} />
@@ -145,7 +147,7 @@ export const Themes: Story = {
                 padding: '0.75rem',
               }}
             >
-              <span style={{ fontSize: 12, opacity: 0.7, width: 96 }}>
+              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
                 {theme} / {mode}
               </span>
               <Demo />
@@ -177,7 +179,9 @@ export const RadiusSpacing: Story = {
             padding: '0.75rem',
           }}
         >
-          <span style={{ fontSize: 12, opacity: 0.7, width: 112 }}>{example.label}</span>
+          <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>
+            {example.label}
+          </span>
           <GroupedDemo />
         </div>
       ))}
@@ -220,7 +224,9 @@ export const Endpoints: Story = {
               padding: '0.75rem',
             }}
           >
-            <span style={{ fontSize: 12, opacity: 0.7, width: 112 }}>{endpoint.label}</span>
+            <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>
+              {endpoint.label}
+            </span>
             <GroupedDemo size={endpoint.label === 'Compact extension' ? 'sm' : 'default'} />
           </div>
         </UIProvider>

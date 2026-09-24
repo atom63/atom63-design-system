@@ -161,7 +161,7 @@ export const Variants: Story = {
     <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start', padding: 16 }}>
       {sidebarContract.variants.map(variant => (
         <div key={variant} style={{ display: 'grid', gap: 8 }}>
-          <span style={{ fontSize: 12, opacity: 0.7 }}>{variant}</span>
+          <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)' }}>{variant}</span>
           <StaticDemo variant={variant} />
         </div>
       ))}
@@ -186,7 +186,7 @@ export const Themes: Story = {
                 padding: '0.75rem',
               }}
             >
-              <span style={{ fontSize: 12, opacity: 0.7, width: 96 }}>
+              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
                 {theme} / {mode}
               </span>
               <StaticDemo />

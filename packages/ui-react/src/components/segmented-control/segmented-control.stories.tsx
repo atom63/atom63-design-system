@@ -10,6 +10,7 @@ import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { GitBranch, Grid, List } from 'lucide-react'
 import { type ReactNode, useState } from 'react'
+import { pendingContrastReview } from '../story-probes'
 
 const ITEMS = [
   { value: 'list', label: 'List' },
@@ -133,6 +134,7 @@ export const Variants: Story = {
 }
 
 export const Tones: Story = {
+  parameters: pendingContrastReview,
   render: () => (
     <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
       <Demo tone="neutral" />
@@ -158,7 +160,7 @@ export const Themes: Story = {
                 padding: '0.75rem',
               }}
             >
-              <span style={{ fontSize: 12, opacity: 0.7, width: 96 }}>
+              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
                 {theme} / {mode}
               </span>
               <Demo />

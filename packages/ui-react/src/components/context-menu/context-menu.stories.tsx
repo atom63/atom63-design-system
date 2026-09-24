@@ -89,7 +89,9 @@ function ReviewCell({ label, providerProps }: { label: string; providerProps: Pr
           padding: '0.75rem',
         }}
       >
-        <span style={{ fontSize: 12, opacity: 0.7, width: 112 }}>{label}</span>
+        <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>
+          {label}
+        </span>
         <ContextMenu>
           <ContextMenuTrigger>
             <div style={{ ...triggerStyle, height: 96, width: 200 }}>Right-click here</div>
