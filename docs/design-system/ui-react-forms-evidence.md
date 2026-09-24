@@ -11,7 +11,7 @@ manual QA below is completed and reviewed.
 
 ## Shared dependency policy
 
-- `@base-ui/react`, `react-day-picker`, `date-fns`, and `input-otp` remain declared runtime
+- `@base-ui/react`, `react-day-picker`, and `input-otp` remain declared runtime
   dependencies of `@atom63/ui-react`; consumers must not rely on transitive installation.
 - Autocomplete and Calendar expose dependency-owned prop types through their public component
   contracts. Dependency major upgrades therefore require focused typecheck, interaction tests,

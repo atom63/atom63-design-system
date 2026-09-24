@@ -12,15 +12,5 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": [
-    "@atom63/storybook",
-    "@atom63/website",
-    "@atom63/design-system",
-    "@os63/app",
-    "@atom63/os63",
-    "create-atom63",
-    "scaffold-preview",
-    "@atom63/fixture-vite",
-    "@atom63/vibe-tests"
-  ]
+  "ignore": ["@atom63/storybook"]
 }
