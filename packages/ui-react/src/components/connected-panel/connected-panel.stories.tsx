@@ -27,6 +27,8 @@ const meta = {
   argTypes: {
     align: { control: 'inline-radio', options: connectedPanelAligns },
   },
+  // Required prop; every story renders its own panel content.
+  args: { children: null },
   decorators: [
     Story => (
       <div style={{ minHeight: 320, padding: 48 }}>

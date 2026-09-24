@@ -169,15 +169,20 @@ export const Endpoints: Story = {
       {[
         {
           label: 'Web',
-          props: { density: 'comfortable', designLanguage: 'web', input: 'pointer' },
+          props: { density: 'comfortable', designLanguage: 'web', input: 'pointer' } as const,
         },
         {
           label: 'iOS touch',
-          props: { density: 'comfortable', designLanguage: 'ios', input: 'touch' },
+          props: { density: 'comfortable', designLanguage: 'ios', input: 'touch' } as const,
         },
         {
           label: 'Compact extension',
-          props: { density: 'compact', designLanguage: 'web', input: 'pointer', surface: 'n2' },
+          props: {
+            density: 'compact',
+            designLanguage: 'web',
+            input: 'pointer',
+            surface: 'n2',
+          } as const,
         },
       ].map(endpoint => (
         <UIProvider key={endpoint.label} {...endpoint.props}>

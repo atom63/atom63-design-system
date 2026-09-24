@@ -16,7 +16,8 @@ const meta = {
 } satisfies Meta<typeof InputOTP>
 
 export default meta
-type Story = StoryObj<typeof meta>
+// Render-only stories: they build their own props, so no required args apply.
+type Story = StoryObj
 type ProviderProps = Omit<ComponentProps<typeof UIProvider>, 'children'>
 
 const endpointCases: readonly [string, ProviderProps][] = [

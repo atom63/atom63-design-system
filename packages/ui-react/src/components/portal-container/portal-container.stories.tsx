@@ -19,7 +19,8 @@ const meta = {
 } satisfies Meta<typeof PortalContainerProvider>
 
 export default meta
-type Story = StoryObj<typeof meta>
+// Render-only stories: they build their own props, so no required args apply.
+type Story = StoryObj
 
 function Consumer() {
   const container = usePortalContainer()

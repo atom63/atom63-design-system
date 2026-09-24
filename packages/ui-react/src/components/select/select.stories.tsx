@@ -35,7 +35,7 @@ function Demo({
   const [value, setValue] = useState('all')
   return (
     <div style={{ width: 220 }}>
-      <Select items={ITEMS} onValueChange={setValue} value={value}>
+      <Select items={ITEMS} onValueChange={next => setValue(next ?? '')} value={value}>
         <SelectTrigger disabled={disabled} size={size}>
           <SelectValue />
         </SelectTrigger>
@@ -95,7 +95,7 @@ export const Grouped: Story = {
       const [value, setValue] = useState('article')
       return (
         <div style={{ width: 220 }}>
-          <Select items={GROUPED} onValueChange={setValue} value={value}>
+          <Select items={GROUPED} onValueChange={next => setValue(next ?? '')} value={value}>
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
@@ -141,7 +141,7 @@ export const Scrollable: Story = {
       const [value, setValue] = useState(LONG[0].value)
       return (
         <div style={{ width: 220 }}>
-          <Select items={LONG} onValueChange={setValue} value={value}>
+          <Select items={LONG} onValueChange={next => setValue(next ?? '')} value={value}>
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
