@@ -26,6 +26,16 @@ parameter in `packages/ui-react/src/components/story-probes.tsx` switches off th
 uniqueness rules for theme and environment matrices, which repeat a component's landmarks by design.
 Every other rule, including color contrast, applies to every story. Label every form control you add to a story.
 
+**Other browsers.** The `cross-browser` project renders every story in Firefox and WebKit. It
+checks rendering only: axe and visual regression run in Chromium. Axe is off there because reading
+the computed `mask` shorthand of an element with more than one mask layer crashes WebKit 26.5, and
+the ScrollArea scroll fade uses four layers.
+
+```bash
+pnpm exec playwright install firefox webkit   # once
+pnpm --filter @atom63/storybook test:cross-browser
+```
+
 **Server rendering.** The `ssr` project renders every story with `renderToString` in Node, where
 `window` and `document` do not exist, and fails if a component touches browser globals during import
 or render. Browser access inside effects is fine, since effects do not run on the server.
