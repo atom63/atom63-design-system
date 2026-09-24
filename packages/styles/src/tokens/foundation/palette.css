@@ -1,4 +1,7 @@
 /*
+ * Generated from src/tokens/foundation/palette.tokens.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
  * Tailwind v4 default color palette — the full 22-hue × 11-stop scale in oklch,
  * as foundation PRIMITIVES so the palette is available on platforms WITHOUT
  * Tailwind (the DS's non-TW path). Values are copied verbatim from Tailwind's

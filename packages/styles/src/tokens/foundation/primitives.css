@@ -1,5 +1,12 @@
-/* primitives — 402 variables */
-
+/*
+ * Generated from src/tokens/foundation/primitives.tokens.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
+ * Foundation primitives: the neutral (n1–n6), brand (b1–b6) and status color ramps, static black and
+ * white with alpha steps, spacing, size, radius, container and screen widths, motion durations and
+ * easings, and the z-index layer scale. Raw values, not themeable: components use the semantic
+ * --a63-* tokens that reference them.
+ */
 :root {
   --color-b1-50: rgba(239, 252, 255, 1);
   --color-b1-100: rgba(221, 247, 255, 1);
@@ -357,27 +364,23 @@
   --size-80: 320px;
   --size-96: 384px;
   --spacing-0: 0px;
-  --spacing-0_5: 2px;
   --spacing-1: 4px;
   --spacing-2: 8px;
-  --spacing-10: 40px;
-  --spacing-11: 44px;
-  --spacing-12: 48px;
-  --spacing-14: 56px;
-  --spacing-16: 64px;
-  --spacing-1_5: 6px;
-  --spacing-20: 80px;
-  --spacing-24: 96px;
-  --spacing-28: 112px;
-  --spacing-2_5: 10px;
   --spacing-3: 12px;
-  --spacing-3_5: 14px;
   --spacing-4: 16px;
   --spacing-5: 20px;
   --spacing-6: 24px;
   --spacing-7: 28px;
   --spacing-8: 32px;
   --spacing-9: 36px;
+  --spacing-10: 40px;
+  --spacing-11: 44px;
+  --spacing-12: 48px;
+  --spacing-14: 56px;
+  --spacing-16: 64px;
+  --spacing-20: 80px;
+  --spacing-24: 96px;
+  --spacing-28: 112px;
   --spacing-32: 128px;
   --spacing-36: 144px;
   --spacing-40: 160px;
@@ -390,6 +393,10 @@
   --spacing-72: 288px;
   --spacing-80: 320px;
   --spacing-96: 384px;
+  --spacing-0_5: 2px;
+  --spacing-1_5: 6px;
+  --spacing-2_5: 10px;
+  --spacing-3_5: 14px;
   --z-layer-base: 10;
   --z-layer-below: -1;
   --z-layer-boot: 1100;
