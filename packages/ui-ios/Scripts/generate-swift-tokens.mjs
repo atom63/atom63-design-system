@@ -1,11 +1,28 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import {
+  brands,
+  computedKey,
+  createResolver,
+  selectionKey,
+  skins,
+  surfaces,
+} from './lib/theme-graph.mjs'
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const manifestPath = resolve(packageRoot, '../styles/generated/atom63.tokens.json')
 const figmaModelPath = resolve(packageRoot, '../styles/generated/atom63.figma-sync.json')
 const outputPath = resolve(packageRoot, 'Sources/Atom63UI/Generated/Atom63Tokens.generated.swift')
+const graphOutputPath = resolve(
+  packageRoot,
+  'Sources/Atom63UI/Generated/AtomTokenGraph.generated.swift'
+)
+const fixtureOutputPath = resolve(
+  packageRoot,
+  'Tests/Atom63UITests/AtomThemeFixture.generated.swift'
+)
+const computedValuesPath = resolve(packageRoot, '../styles/generated/atom63.computed-values.json')
 
 /*
  * Every value comes from the @atom63/styles token manifest, the one interface
@@ -22,17 +39,10 @@ const manifest = JSON.parse(await readFile(manifestPath, 'utf8'))
  * same values. Axes other than light/dark use the defaults an app starts with.
  */
 const figmaModel = JSON.parse(await readFile(figmaModelPath, 'utf8'))
-const variablesByToken = new Map(
-  figmaModel.collections.flatMap(collection =>
-    collection.variables.map(variable => [variable.token, { collection, variable }])
-  )
-)
-const defaultTheme = 'modern'
-const defaultModes = {
-  'Atom63 Brand': 'b1',
-  'Atom63 Surface': 'n1',
-  'Atom63 Design Language': 'ios',
-}
+const computedValues = JSON.parse(await readFile(computedValuesPath, 'utf8'))
+const graph = createResolver(figmaModel, computedValues)
+/* The static colors are the selection an app starts with. */
+const defaultSelection = { skin: 'modern', brand: 'b1', surface: 'n1' }
 
 const rootBlock = {
   label: ':root',
@@ -140,35 +150,13 @@ function milliseconds(name) {
   return Number(match[1])
 }
 
-/** The RGBA value of a token in light or dark mode, following aliases. */
-function resolveColor(token, mode, seen = []) {
-  const found = variablesByToken.get(token)
-  if (!found) throw new Error(`${token} is not in the Figma sync model`)
-  if (seen.includes(token)) throw new Error(`Alias cycle: ${[...seen, token].join(' -> ')}`)
-  const { collection, variable } = found
-  // The Theme collection's modes are theme × mode (`modern-dark`); iOS ships the
-  // default theme until themes are native (roadmap decision D2).
-  const themed = `${defaultTheme}-${mode}`
-  const modeName = collection.modes.includes(mode)
-    ? mode
-    : collection.modes.includes(themed)
-      ? themed
-      : (defaultModes[collection.name] ?? collection.modes[0])
-  const entry = variable.values[modeName]
-  if (entry?.alias) return resolveColor(entry.alias, mode, [...seen, token])
-  const value = entry?.value
-  if (typeof value !== 'object' || value === null || !('r' in value)) {
-    throw new Error(`${token} does not resolve to a color in ${modeName} mode`)
-  }
-  return value
-}
-
 function components({ r, g, b, a }) {
   return `AtomColorComponents(red: ${r}, green: ${g}, blue: ${b}, opacity: ${a})`
 }
 
 function dynamicColor(token) {
-  return `AtomDynamicColor(light: ${components(resolveColor(token, 'light'))}, dark: ${components(resolveColor(token, 'dark'))})`
+  const color = mode => components(graph.resolve(token, { ...defaultSelection, mode }))
+  return `AtomDynamicColor(light: ${color('light')}, dark: ${color('dark')})`
 }
 
 /* Each Swift color is one web semantic or contract token. */
@@ -309,13 +297,152 @@ ${sizes.map(size => `            public static let ${size}: Double = ${controlPa
 }
 `
 
+/* The AtomThemeColors fields, each one of the colors above. */
+const themeColorFields = [
+  'surfacePage',
+  'surfacePanel',
+  'surfaceMuted',
+  'surfaceControl',
+  'textPrimary',
+  'textSecondary',
+  'borderSubtle',
+  'borderControl',
+  'actionPrimary',
+  'actionPrimaryPressed',
+  'actionPrimaryForeground',
+  'actionNeutral',
+  'actionNeutralForeground',
+  'actionDanger',
+  'actionDangerForeground',
+  'statusInfo',
+  'statusSuccess',
+  'statusWarning',
+  'selectionTrackOff',
+  'selectionThumb',
+  'skeletonHighlight',
+]
+
+const swiftString = text => JSON.stringify(text)
+const swiftComponents = ({ r, g, b, a }) =>
+  `AtomColorComponents(red: ${r}, green: ${g}, blue: ${b}, opacity: ${a})`
+const selectors = { 'skin-mode': '.skinMode', mode: '.mode', brand: '.brand', surface: '.surface' }
+
+const reachable = [...graph.reachable(themeColorFields.map(field => colors[field]))].sort()
+const variableLines = reachable
+  .filter(token => !computedValues.tokens[token])
+  .map(token => {
+    const { collection, variable } = graph.byToken.get(token)
+    const key = selectionKey(collection.name)
+    const modes = key ? collection.modes : [graph.modeFor(collection, {})]
+    const values = modes.map(mode => {
+      const entry = variable.values[mode]
+      const value = entry.alias
+        ? `.alias(${swiftString(entry.alias)})`
+        : `.color(${swiftComponents(entry.value)})`
+      return `${swiftString(key ? mode : '')}: ${value}`
+    })
+    return `        ${swiftString(token)}: Variable(selector: ${key ? selectors[key] : '.fixed'}, values: [${values.join(', ')}]),`
+  })
+const computedLines = reachable
+  .filter(token => computedValues.tokens[token])
+  .map(token => {
+    const { variesOn, values } = computedValues.tokens[token]
+    const rows = Object.entries(values)
+      .map(([combination, { r, g, b, a }]) => `${combination} ${r} ${g} ${b} ${a}`)
+      .join('\n')
+    return `        ${swiftString(token)}: Computed(\n            variesOn: ${JSON.stringify(variesOn)},\n            rows: """\n${rows}\n"""\n        ),`
+  })
+
+const graphFile = `// Generated by Scripts/generate-swift-tokens.mjs.
+// Source: the @atom63/styles Figma sync model and computed values. Do not edit manually.
+
+/// A web theme: the product skin that remaps contracts and semantic colors.
+public enum AtomSkin: String, CaseIterable, Sendable {
+${skins.map(skin => `    case ${skin}`).join('\n')}
+}
+
+/// A brand ramp, as \`data-a63-brand\` on the web.
+public enum AtomBrand: String, CaseIterable, Sendable {
+${brands.map(brand => `    case ${brand}`).join('\n')}
+}
+
+/// A neutral surface palette, as \`data-a63-surface\` on the web.
+public enum AtomSurface: String, CaseIterable, Sendable {
+${surfaces.map(surface => `    case ${surface}`).join('\n')}
+}
+
+extension AtomThemeColors {
+    /// The colors the web renders for a skin, brand and surface, in light and dark mode.
+    public init(skin: AtomSkin, brand: AtomBrand, surface: AtomSurface) {
+        func color(_ token: String) -> AtomDynamicColor {
+            AtomTokenGraph.dynamicColor(token, skin: skin, brand: brand, surface: surface)
+        }
+        self.init(
+${themeColorFields.map((field, index) => `            ${field}: color(${swiftString(colors[field])})${index < themeColorFields.length - 1 ? ',' : ''}`).join('\n')}
+        )
+    }
+}
+
+/// The Figma variable graph the iOS colors can reach, and the browser-resolved
+/// values of the computed variables in it (those that vary on more axes than one
+/// collection holds). Resolution follows Scripts/lib/theme-graph.mjs.
+enum AtomTokenGraph {
+    static let variables: [String: Variable] = [
+${variableLines.join('\n')}
+    ]
+
+    static let computed: [String: Computed] = [
+${computedLines.join('\n')}
+    ]
+}
+`
+
+/*
+ * Expected colors for a sample of selections, from the same resolver: every skin
+ * with every brand on n1, and every skin with every surface on b1. The Swift test
+ * checks its port against these; packages/styles checks the resolver against
+ * Chromium for every selection.
+ */
+const sampleSelections = [
+  ...skins.flatMap(skin => brands.map(brand => ({ skin, brand, surface: 'n1' }))),
+  ...skins.flatMap(skin =>
+    surfaces.filter(surface => surface !== 'n1').map(surface => ({ skin, brand: 'b1', surface }))
+  ),
+]
+const fixtureRows = sampleSelections.flatMap(selection =>
+  themeColorFields.flatMap(field =>
+    ['light', 'dark'].map(mode => {
+      const { r, g, b, a } = graph.resolve(colors[field], { ...selection, mode })
+      return `${selection.skin} ${selection.brand} ${selection.surface} ${mode} ${field} ${r} ${g} ${b} ${a}`
+    })
+  )
+)
+const fixtureFile = `// Generated by Scripts/generate-swift-tokens.mjs. Do not edit manually.
+
+/// Expected AtomThemeColors for sample selections, resolved by
+/// Scripts/lib/theme-graph.mjs: \`skin brand surface mode field r g b a\`.
+enum AtomThemeFixture {
+    static let rows = """
+${fixtureRows.join('\n')}
+"""
+}
+`
+
+const outputs = [
+  [outputPath, generated],
+  [graphOutputPath, graphFile],
+  [fixtureOutputPath, fixtureFile],
+]
 if (process.argv.includes('--check')) {
-  const current = await readFile(outputPath, 'utf8').catch(() => '')
-  if (current !== generated) {
-    console.error('Swift tokens are stale. Run: pnpm --filter @atom63/ui-ios generate:swift')
-    process.exitCode = 1
+  for (const [path, content] of outputs) {
+    const current = await readFile(path, 'utf8').catch(() => '')
+    if (current !== content) {
+      console.error('Swift tokens are stale. Run: pnpm --filter @atom63/ui-ios generate:swift')
+      process.exitCode = 1
+      break
+    }
   }
 } else {
   await mkdir(dirname(outputPath), { recursive: true })
-  await writeFile(outputPath, generated)
+  for (const [path, content] of outputs) await writeFile(path, content)
 }

@@ -1,5 +1,14 @@
 import { afterEach, describe, expect, it } from 'vitest'
 import swiftTokens from '../../../ui-ios/Sources/Atom63UI/Generated/Atom63Tokens.generated.swift?raw'
+// @ts-expect-error -- plain ESM module shared with the Swift generator, no types
+import {
+  brands,
+  createResolver,
+  skins,
+  surfaces,
+} from '../../../ui-ios/Scripts/lib/theme-graph.mjs'
+import computedValues from '../../generated/atom63.computed-values.json'
+import figmaModel from '../../generated/atom63.figma-sync.json'
 import { resetRoot, root } from '../test/apply-styles'
 
 /*
@@ -57,7 +66,8 @@ function setMode(mode: 'light' | 'dark') {
 
 afterEach(() => {
   resetRoot()
-  root().removeAttribute('data-a63-mode')
+  for (const attribute of ['data-a63-mode', 'data-a63-theme', 'data-a63-surface'])
+    root().removeAttribute(attribute)
   root().classList.remove('light', 'dark')
 })
 
@@ -89,5 +99,39 @@ describe('web/iOS color parity', () => {
       }
     }
     expect(failures, failures.join('\n')).toEqual([])
+  })
+
+  /*
+   * AtomTheme(skin:brand:surface:) resolves through the token graph the Swift
+   * generator emits, with the same algorithm as Scripts/lib/theme-graph.mjs (the
+   * Swift tests check the port against that module). Here the module's result is
+   * checked against the browser for every skin, brand, surface and mode.
+   */
+  it('matches every color the Swift theme resolves, for every skin × brand × surface × mode', () => {
+    const resolver = createResolver(figmaModel, computedValues)
+    const failures: string[] = []
+    for (const skin of skins as string[])
+      for (const brand of brands as string[])
+        for (const surface of surfaces as string[])
+          for (const mode of ['light', 'dark'] as const) {
+            setMode(mode)
+            root().setAttribute('data-a63-theme', skin)
+            root().setAttribute('data-a63-brand', brand)
+            root().setAttribute('data-a63-surface', surface)
+            for (const color of swiftColors) {
+              const web = paint(color.token)
+              const graph = resolver.resolve(color.token, { skin, brand, surface, mode })
+              // Compare premultiplied, as the canvas stores it: a translucent
+              // color's channels are only exact to 1/255 after multiplying by alpha.
+              const drift = Math.max(
+                Math.abs(web.r * web.a - graph.r * 255 * graph.a),
+                Math.abs(web.g * web.a - graph.g * 255 * graph.a),
+                Math.abs(web.b * web.a - graph.b * 255 * graph.a),
+                Math.abs(web.a - graph.a) * 255
+              )
+              if (drift > 1.5) failures.push(`${skin}/${brand}/${surface}/${mode} ${color.name}`)
+            }
+          }
+    expect(failures.slice(0, 20), `${failures.length} differences`).toEqual([])
   })
 })

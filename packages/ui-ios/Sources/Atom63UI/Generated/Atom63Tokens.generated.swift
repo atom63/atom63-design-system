@@ -38,7 +38,7 @@ public struct AtomDynamicColor: Equatable, Sendable {
 public enum AtomTokens {
     public enum Color {
         /// --a63-surface-page
-        public static let surfacePage = AtomDynamicColor(light: AtomColorComponents(red: 0.976471, green: 0.976471, blue: 0.976471, opacity: 1), dark: AtomColorComponents(red: 0.066667, green: 0.066667, blue: 0.066667, opacity: 1))
+        public static let surfacePage = AtomDynamicColor(light: AtomColorComponents(red: 0.97647, green: 0.976471, blue: 0.976471, opacity: 1), dark: AtomColorComponents(red: 0.066667, green: 0.066667, blue: 0.066667, opacity: 1))
         /// --a63-surface-panel
         public static let surfacePanel = AtomDynamicColor(light: AtomColorComponents(red: 0.988235, green: 0.988235, blue: 0.988235, opacity: 1), dark: AtomColorComponents(red: 0.098039, green: 0.098039, blue: 0.098039, opacity: 1))
         /// --a63-surface-muted
@@ -56,7 +56,7 @@ public enum AtomTokens {
         /// --a63-border-subtle
         public static let borderSubtle = AtomDynamicColor(light: AtomColorComponents(red: 0.909804, green: 0.909804, blue: 0.909804, opacity: 1), dark: AtomColorComponents(red: 0.227451, green: 0.227451, blue: 0.227451, opacity: 1))
         /// --a63-border-control
-        public static let borderControl = AtomDynamicColor(light: AtomColorComponents(red: 0.878431, green: 0.878431, blue: 0.878431, opacity: 1), dark: AtomColorComponents(red: 0.282353, green: 0.282353, blue: 0.282353, opacity: 1))
+        public static let borderControl = AtomDynamicColor(light: AtomColorComponents(red: 0.878432, green: 0.878431, blue: 0.878431, opacity: 1), dark: AtomColorComponents(red: 0.282353, green: 0.282353, blue: 0.282353, opacity: 1))
         /// --a63-action-primary
         public static let actionPrimary = AtomDynamicColor(light: AtomColorComponents(red: 0.019608, green: 0.364706, blue: 0.823529, opacity: 1), dark: AtomColorComponents(red: 0.019608, green: 0.364706, blue: 0.823529, opacity: 1))
         /// --a63-action-primary-hover

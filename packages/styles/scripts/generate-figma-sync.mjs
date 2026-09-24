@@ -33,6 +33,7 @@ import { chromium } from 'playwright'
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const manifestPath = path.join(packageRoot, 'generated/atom63.tokens.json')
 const outputPath = path.join(packageRoot, 'generated/atom63.figma-sync.json')
+const computedOutputPath = path.join(packageRoot, 'generated/atom63.computed-values.json')
 const cssEntries = ['src/tokens/index.css', 'src/contracts/index.css', 'src/themes/index.css']
 
 const themes = ['modern', 'aqua', 'retro', 'terminal']
@@ -491,6 +492,7 @@ async function main() {
       byVar,
       resolveContext,
     })
+    const computedValues = await resolveComputed(computed, byVar, resolveContext)
 
     // Drop aliases whose target was skipped, resolving them to literals is not
     // possible here, so report them instead of emitting a dangling reference.
@@ -549,11 +551,16 @@ async function main() {
     }
 
     const content = `${JSON.stringify(output, null, 2)}\n`
+    const computedContent = formatComputed(computedValues)
     if (process.argv.includes('--check')) {
-      const current = await readFile(outputPath, 'utf8').catch(() => '')
-      if (current !== content) {
+      const stale = []
+      if ((await readFile(outputPath, 'utf8').catch(() => '')) !== content)
+        stale.push('generated/atom63.figma-sync.json')
+      if ((await readFile(computedOutputPath, 'utf8').catch(() => '')) !== computedContent)
+        stale.push('generated/atom63.computed-values.json')
+      if (stale.length) {
         process.stderr.write(
-          'generated/atom63.figma-sync.json is stale. Run: pnpm --filter @atom63/styles generate:figma\n'
+          `${stale.join(', ')} ${stale.length === 1 ? 'is' : 'are'} stale. Run: pnpm --filter @atom63/styles generate:figma\n`
         )
         process.exitCode = 1
         return
@@ -562,6 +569,7 @@ async function main() {
       return
     }
     await writeFile(outputPath, content)
+    await writeFile(computedOutputPath, computedContent)
     process.stdout.write(
       `Generated ${output.summary.variables} Figma variables in ${output.summary.collections} collections (${output.summary.aliasValues} alias values, ${output.summary.skipped} skipped).\n`
     )
@@ -684,6 +692,66 @@ async function placeByMeasuredAxes({ collections, ensureCollection, byVar, resol
     })
   }
   return computed.sort((left, right) => left.token.localeCompare(right.token))
+}
+
+/**
+ * The browser-resolved value of every `computed` variable in every combination
+ * of the axes it varies on, for renderers that cannot evaluate CSS: iOS reads a
+ * variable's value here instead of the default Figma shows. A key names each
+ * axis and its mode, sorted by axis (`brand=b3,mode=dark,surface=n2,theme=aqua`).
+ * It is a separate file so the Figma plugin, which bundles the sync model, does
+ * not carry it.
+ */
+async function resolveComputed(computed, byVar, resolveContext) {
+  const dimension = id =>
+    id === 'theme'
+      ? { id, attribute: 'data-a63-theme', modes: themes }
+      : axes.find(axis => axis.id === id)
+  const groups = new Map()
+  for (const entry of computed) {
+    const group = entry.variesOn.join('+')
+    groups.set(group, [...(groups.get(group) ?? []), entry])
+  }
+  const values = {}
+  for (const entries of groups.values()) {
+    let combinations = [[]]
+    for (const axis of entries[0].variesOn.map(dimension))
+      combinations = combinations.flatMap(combination =>
+        axis.modes.map(mode => [...combination, [axis, mode]])
+      )
+    const records = entries.map(entry => {
+      const record = byVar.get(entry.token)
+      record.currentRaw = entry.expression
+      return record
+    })
+    for (const combination of combinations) {
+      const attributes = Object.fromEntries(
+        combination.map(([axis, mode]) => [axis.attribute, mode])
+      )
+      const key = combination.map(([axis, mode]) => `${axis.id}=${mode}`).join(',')
+      const result = await resolveContext(attributes, records)
+      for (const entry of entries) {
+        values[entry.token] ??= { variesOn: entry.variesOn, values: {} }
+        values[entry.token].values[key] = result[entry.token].resolved
+      }
+    }
+  }
+  return values
+}
+
+/** One line per combination, so a diff shows exactly which values moved. */
+function formatComputed(values) {
+  const tokens = Object.keys(values).sort()
+  const body = tokens
+    .map(token => {
+      const { variesOn, values: byKey } = values[token]
+      const lines = Object.entries(byKey).map(
+        ([key, value]) => `      ${JSON.stringify(key)}: ${JSON.stringify(value)}`
+      )
+      return `    ${JSON.stringify(token)}: {\n      "variesOn": ${JSON.stringify(variesOn)},\n      "values": {\n${lines.map(line => `  ${line}`).join(',\n')}\n      }\n    }`
+    })
+    .join(',\n')
+  return `{\n  "schemaVersion": 1,\n  "generatedBy": "packages/styles/scripts/generate-figma-sync.mjs",\n  "tokens": {\n${body}\n  }\n}\n`
 }
 
 function toValue(record, raw, result, synced) {
