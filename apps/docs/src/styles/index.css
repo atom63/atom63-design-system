@@ -12,15 +12,7 @@
 @plugin '@tailwindcss/typography';
 
 @source '../**/*.{ts,tsx,mdx}';
-@source '../../../../packages/agent/src/**/*.{ts,tsx}';
-/* Inform surfaces are rendered live in the pattern-inform-* pages, so their
-   Tailwind classes must be generated here. Without this the package's own
-   utilities only appear when this app happens to emit the same class from its
-   own source — which silently fails the moment a package uses one this app
-   does not, such as an arbitrary `gap-[var(--a63-space-2)]`. */
-@source '../../../../packages/inform/src/**/*.{ts,tsx}';
 @source '../../../../packages/ui-react/src/**/*.{ts,tsx}';
-@source '../../../../packages/widgets/src/**/*.{ts,tsx}';
 
 @font-face {
   font-family: 'Geist';
