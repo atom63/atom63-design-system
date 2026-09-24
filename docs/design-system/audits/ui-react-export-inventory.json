@@ -45,7 +45,7 @@
   },
   "counts": {
     "rootValueExports": 426,
-    "rootTypeExports": 176,
+    "rootTypeExports": 186,
     "packageExportKeys": 71,
     "cssExportKeys": 65
   },
@@ -1151,6 +1151,18 @@
           "proposedTier": "monitor-high-risk"
         },
         {
+          "name": "CarouselContextProps",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "CarouselOptions",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "CarouselPlugin",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
           "name": "CarouselProps",
           "proposedTier": "monitor-high-risk"
         }
@@ -1613,7 +1625,19 @@
       ],
       "types": [
         {
+          "name": "DrawerAsChildProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
           "name": "DrawerCloseProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DrawerContentProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "DrawerRootProps",
           "proposedTier": "beta-supported-core"
         },
         {
@@ -2605,6 +2629,10 @@
           "proposedTier": "beta-supported-core"
         },
         {
+          "name": "ResizableOrientation",
+          "proposedTier": "beta-supported-core"
+        },
+        {
           "name": "ResizablePanelGroupProps",
           "proposedTier": "beta-supported-core"
         },
@@ -2626,7 +2654,12 @@
           "proposedTier": "beta-supported-core"
         }
       ],
-      "types": []
+      "types": [
+        {
+          "name": "ScrollAreaViewportProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
     },
     {
       "source": "./components/scrollable-list",
@@ -2948,6 +2981,10 @@
       ],
       "types": [
         {
+          "name": "SidebarContextProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
           "name": "SidebarMenuButtonProps",
           "proposedTier": "beta-supported-composition-conditional"
         },
@@ -3037,6 +3074,10 @@
       "types": [
         {
           "name": "SliderProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "SliderRootProps",
           "proposedTier": "beta-supported-core"
         }
       ]

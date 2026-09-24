@@ -593,10 +593,28 @@ export type CarouselApi = UseEmblaCarouselType[1];
 export function CarouselContent(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
+export type CarouselContextProps = {
+    carouselRef: ReturnType<typeof useEmblaCarousel>[0];
+    api: ReturnType<typeof useEmblaCarousel>[1];
+    scrollPrev: () => void;
+    scrollNext: () => void;
+    canScrollPrev: boolean;
+    canScrollNext: boolean;
+} & CarouselProps;
+
+// @public (undocumented)
 export function CarouselItem(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
 export function CarouselNext(input: React$1.ComponentProps<'button'>): React$1.ReactElement;
+
+// Warning: (ae-forgotten-export) The symbol "UseCarouselParameters" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export type CarouselOptions = UseCarouselParameters[0];
+
+// @public (undocumented)
+export type CarouselPlugin = UseCarouselParameters[1];
 
 // @public (undocumented)
 export function CarouselPrevious(input: React$1.ComponentProps<'button'>): React$1.ReactElement;
@@ -984,10 +1002,15 @@ export function DialogTrigger(input: Dialog_2.Trigger.Props): React$1.ReactEleme
 // @public (undocumented)
 export function DialogViewport(input: Dialog_2.Viewport.Props): React$1.ReactElement;
 
-// Warning: (ae-forgotten-export) The symbol "DrawerRootProps" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export function Drawer(input: DrawerRootProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type DrawerAsChildProps = {
+    asChild?: boolean;
+    render?: ReactElement;
+    children?: ReactNode;
+};
 
 // @public (undocumented)
 export function DrawerBody(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
@@ -995,15 +1018,19 @@ export function DrawerBody(input: React$1.ComponentProps<'div'>): React$1.ReactE
 // @public (undocumented)
 export function DrawerClose(input: DrawerCloseProps): React$1.ReactElement;
 
-// Warning: (ae-forgotten-export) The symbol "AsChildProps" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
-export type DrawerCloseProps = Drawer_2.Close.Props & AsChildProps;
+export type DrawerCloseProps = Drawer_2.Close.Props & DrawerAsChildProps;
 
-// Warning: (ae-forgotten-export) The symbol "DrawerContentProps" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export function DrawerContent(input: DrawerContentProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type DrawerContentProps = Omit<Drawer_2.Popup.Props, 'children'> & {
+    children?: React$1.ReactNode;
+    contentProps?: Drawer_2.Content.Props;
+    portalProps?: Drawer_2.Portal.Props;
+    viewportProps?: Drawer_2.Viewport.Props;
+};
 
 // @public (undocumented)
 export function DrawerDescription(input: Drawer_2.Description.Props): React$1.ReactElement;
@@ -1026,13 +1053,19 @@ export function DrawerOverlay(input: Drawer_2.Backdrop.Props): React$1.ReactElem
 export function DrawerPortal(props: Drawer_2.Portal.Props): React$1.ReactElement | null;
 
 // @public (undocumented)
+export type DrawerRootProps = Omit<Drawer_2.Root.Props, 'swipeDirection'> & {
+    direction?: DrawerDirection;
+    swipeDirection?: Drawer_2.Root.Props['swipeDirection'];
+};
+
+// @public (undocumented)
 export function DrawerTitle(input: Drawer_2.Title.Props): React$1.ReactElement;
 
 // @public (undocumented)
 export function DrawerTrigger(input: DrawerTriggerProps): React$1.ReactElement;
 
 // @public (undocumented)
-export type DrawerTriggerProps = Drawer_2.Trigger.Props & AsChildProps;
+export type DrawerTriggerProps = Drawer_2.Trigger.Props & DrawerAsChildProps;
 
 // @public (undocumented)
 export function DropdownMenu(props: Menu.Root.Props): React$1.ReactElement;
@@ -2065,6 +2098,9 @@ export type ResizableHandleProps = React$1.ComponentProps<typeof ResizablePrimit
 };
 
 // @public (undocumented)
+export type ResizableOrientation = 'horizontal' | 'vertical';
+
+// @public (undocumented)
 export function ResizablePanel(input: ResizablePanelProps): React$1.ReactElement;
 
 // @public (undocumented)
@@ -2115,6 +2151,11 @@ export function ScrollArea(input: ScrollArea_2.Root.Props & {
     viewportProps?: ScrollAreaViewportProps;
     viewportRef?: React$1.Ref<HTMLDivElement>;
 }): React$1.JSX.Element;
+
+// @public (undocumented)
+export type ScrollAreaViewportProps = Omit<ScrollArea_2.Viewport.Props, 'children' | 'className' | 'ref'> & {
+    [key: `data-${string}`]: boolean | number | string | undefined;
+};
 
 // @public (undocumented)
 export function ScrollBar(input: ScrollArea_2.Scrollbar.Props): React$1.JSX.Element;
@@ -2312,6 +2353,17 @@ export function Sidebar(input: SidebarProps): React$1.ReactElement;
 export function SidebarContent(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
+export type SidebarContextProps = {
+    state: SidebarState;
+    open: boolean;
+    setOpen: (open: boolean) => void;
+    openMobile: boolean;
+    setOpenMobile: (open: boolean) => void;
+    isMobile: boolean;
+    toggleSidebar: () => void;
+};
+
+// @public (undocumented)
 export function SidebarFooter(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
@@ -2490,8 +2542,6 @@ export function Skeleton(input: React$1.ComponentProps<'div'>): React$1.ReactEle
 // @public (undocumented)
 export function Slider(input: SliderProps): React$1.ReactElement;
 
-// Warning: (ae-forgotten-export) The symbol "SliderRootProps" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export interface SliderProps extends Omit<SliderRootProps, 'value' | 'defaultValue' | 'onValueChange' | 'render'> {
     // (undocumented)
@@ -2504,6 +2554,9 @@ export interface SliderProps extends Omit<SliderRootProps, 'value' | 'defaultVal
     onValueChange?: (value: number) => void;
     value?: number | readonly number[];
 }
+
+// @public (undocumented)
+export type SliderRootProps = Slider_2.Root.Props;
 
 // @public (undocumented)
 export function SliderValue(input: Slider_2.Value.Props): React$1.ReactElement;
@@ -2749,8 +2802,6 @@ export interface UseCardCursorOptions {
     }) => void;
 }
 
-// Warning: (ae-forgotten-export) The symbol "CarouselContextProps" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export function useCarousel(): CarouselContextProps;
 
@@ -2796,20 +2847,11 @@ export const useFormField: () => {
 // @public (undocumented)
 export function usePortalContainer(): PortalContainer;
 
-// Warning: (ae-forgotten-export) The symbol "SidebarContextProps" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export function useSidebar(): SidebarContextProps;
 
 // @public (undocumented)
 export function useUIEnvironment(): UIEnvironment;
-
-// Warnings were encountered during analysis:
-//
-// dist/index.d.ts:214:5 - (ae-forgotten-export) The symbol "CarouselOptions" needs to be exported by the entry point index.d.ts
-// dist/index.d.ts:215:5 - (ae-forgotten-export) The symbol "CarouselPlugin" needs to be exported by the entry point index.d.ts
-// dist/index.d.ts:812:5 - (ae-forgotten-export) The symbol "ResizableOrientation" needs to be exported by the entry point index.d.ts
-// dist/index.d.ts:832:5 - (ae-forgotten-export) The symbol "ScrollAreaViewportProps" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

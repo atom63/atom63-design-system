@@ -29,7 +29,7 @@ import type {
   TypeScale,
 } from '../core/types'
 
-interface CreatePersonalizationControllerOptions {
+export interface CreatePersonalizationControllerOptions {
   storageKey: string
   defaultState: PersonalizationState
   /**

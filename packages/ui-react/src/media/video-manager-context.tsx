@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { createContext, useContext, useMemo, useRef } from 'react'
 
-interface VideoManagerContextType {
+export interface VideoManagerContextType {
   pauseAllVideos: () => void
   pauseVideo: (id: string) => void
   playVideo: (id: string) => void
@@ -14,7 +14,7 @@ interface VideoManagerContextType {
 
 export const VideoManagerContext = createContext<VideoManagerContextType | null>(null)
 
-interface VideoManagerProviderProps {
+export interface VideoManagerProviderProps {
   children: ReactNode
   maxConcurrentVideos?: number
 }

@@ -226,8 +226,6 @@ export function useMediaLightboxZoomCursor(input?: {
     };
 };
 
-// Warning: (ae-forgotten-export) The symbol "VideoManagerContextType" needs to be exported by the entry point index.d.ts
-//
 // @public (undocumented)
 export function useVideoManager(): VideoManagerContextType;
 
@@ -255,8 +253,6 @@ export interface VideoDialogProps {
     title?: string;
     // (undocumented)
     trigger: ReactElement;
-    // Warning: (ae-forgotten-export) The symbol "VideoSource" needs to be exported by the entry point index.d.ts
-    //
     // (undocumented)
     videoSources?: VideoSource[];
     // (undocumented)
@@ -268,15 +264,58 @@ export interface VideoDialogProps {
 // @public (undocumented)
 export const VideoManagerContext: React_2.Context<VideoManagerContextType | null>;
 
-// Warning: (ae-forgotten-export) The symbol "VideoManagerProviderProps" needs to be exported by the entry point index.d.ts
-//
+// @public (undocumented)
+export interface VideoManagerContextType {
+    // (undocumented)
+    pauseAllVideos: () => void;
+    // (undocumented)
+    pauseVideo: (id: string) => void;
+    // (undocumented)
+    playVideo: (id: string) => void;
+    // (undocumented)
+    registerIframe: (id: string, iframeElement: HTMLIFrameElement) => void;
+    // (undocumented)
+    registerVideo: (id: string, videoElement: HTMLVideoElement) => void;
+    // (undocumented)
+    resumeAllVideos: () => void;
+    // (undocumented)
+    unregisterIframe: (id: string) => void;
+    // (undocumented)
+    unregisterVideo: (id: string) => void;
+}
+
 // @public (undocumented)
 export function VideoManagerProvider(input: VideoManagerProviderProps): React_2.JSX.Element;
 
-// Warning: (ae-forgotten-export) The symbol "VideoModalProps" needs to be exported by the entry point index.d.ts
-//
+// @public (undocumented)
+export interface VideoManagerProviderProps {
+    // (undocumented)
+    children: ReactNode;
+    // (undocumented)
+    maxConcurrentVideos?: number;
+}
+
 // @public (undocumented)
 export const VideoModal: (input: VideoModalProps) => React_2.JSX.Element;
+
+// @public (undocumented)
+export type VideoModalInteractionMode = 'autoplay' | 'lightbox';
+
+// @public (undocumented)
+export interface VideoModalProps {
+    alt?: string;
+    aspectRatio?: string;
+    className?: string;
+    isVimeo?: boolean;
+    mode?: VideoModalInteractionMode;
+    title: string;
+    videoSources?: Array<{
+        src: string;
+        type?: string;
+    }>;
+    vimeoId?: string;
+    vimeoThumbnail?: string;
+}
 
 // @public (undocumented)
 export interface VideoProps extends VideoHTMLAttributes<HTMLVideoElement> {
@@ -292,10 +331,24 @@ export interface VideoProps extends VideoHTMLAttributes<HTMLVideoElement> {
     }>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "VideoThumbnailProps" needs to be exported by the entry point index.d.ts
-//
+// @public (undocumented)
+export interface VideoSource {
+    // (undocumented)
+    src: string;
+    // (undocumented)
+    type?: string;
+}
+
 // @public (undocumented)
 export function VideoThumbnail(input: VideoThumbnailProps): React_2.JSX.Element;
+
+// @public (undocumented)
+export interface VideoThumbnailProps {
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    src: string;
+}
 
 // Warnings were encountered during analysis:
 //
