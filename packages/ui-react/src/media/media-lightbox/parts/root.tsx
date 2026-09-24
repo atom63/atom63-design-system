@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { Children, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { AnimatePresence } from 'motion/react'
 import { usePortalContainer } from '../../../components/portal-container'
@@ -182,8 +182,10 @@ export function LightboxPortal({ children, onExitComplete }: LightboxPortalProps
   // update that closes the lightbox, so that unmount has to be synchronous —
   // `AnimatePresence` holding children back for an exit animation would leave
   // the lightbox in the new snapshot and make the browser skip the transition
-  // entirely.
-  const content = open ? children : null
+  // entirely. `toArray` keys the children by position: `AnimatePresence`
+  // tracks each direct child by key, and the backdrop and content arrive
+  // unkeyed as siblings.
+  const content = open ? Children.toArray(children) : null
 
   return createPortal(
     viewTransition ? (

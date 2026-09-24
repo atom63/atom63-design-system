@@ -6,11 +6,6 @@
  */
 @import './mdx-blocks.css';
 
-/* Ensure lightbox stacks above app chrome + nested media dialogs */
-.pswp {
-  z-index: 10000;
-}
-
 /* The stylesheets ship from src/, the components from dist/. Scan the TS
    source in the workspace and the emitted JS in the published tarball. */
 @source '../**/*.{ts,tsx}';

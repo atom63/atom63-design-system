@@ -32,6 +32,7 @@ export function FigureLightboxTrigger({
         className
       )}
       data-gallery-id={galleryId}
+      data-pswp-alt={alt}
       data-pswp-caption={caption}
       data-pswp-height={height}
       data-pswp-src={src}

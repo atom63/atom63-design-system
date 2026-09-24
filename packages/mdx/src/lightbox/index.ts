@@ -6,11 +6,7 @@ export {
   type FigureLightboxHostProps,
 } from './figure-lightbox-host'
 export { FigureLightboxTrigger, type FigureLightboxTriggerProps } from './figure-lightbox-trigger'
-export {
-  collectFigureLightboxImages,
-  isFigureLightboxOpen,
-  openFigureLightbox,
-} from './open-lightbox'
+export { collectFigureLightboxImages, isFigureLightboxOpen } from './open-lightbox'
 export {
   PhotoSwipeGallery,
   PhotoSwipeImage,

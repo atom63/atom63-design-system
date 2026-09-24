@@ -261,8 +261,10 @@ export function LightboxBackdrop({
 
   const defaultProps = {
     // Opaque, no backdrop-filter: the page behind can stop painting, which
-    // a translucent blur would forbid.
-    className: cn('absolute inset-0 bg-black', className),
+    // a translucent blur would forbid. It portals next to `Content`, so it
+    // needs `Content`'s fixed layer too: `absolute` left it under any
+    // positioned page chrome with a z-index, such as a sticky header.
+    className: cn('fixed inset-0 z-50 bg-black', className),
     'data-slot': 'media-lightbox-backdrop',
     onClick: close,
   }

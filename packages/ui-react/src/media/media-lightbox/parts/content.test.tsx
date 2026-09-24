@@ -46,6 +46,12 @@ describe('Lightbox.Content', () => {
     expect(status?.textContent).toBe('One, 1 of 2')
   })
 
+  it('puts the backdrop on the same fixed layer as the content', () => {
+    renderContent()
+    const backdrop = document.querySelector('[data-slot="media-lightbox-backdrop"]')
+    expect(backdrop).toHaveClass('fixed', 'inset-0', 'z-50')
+  })
+
   it('closes when the backdrop is pressed', async () => {
     const { onOpenChange } = renderContent()
     const backdrop = document.querySelector('[data-slot="media-lightbox-backdrop"]')

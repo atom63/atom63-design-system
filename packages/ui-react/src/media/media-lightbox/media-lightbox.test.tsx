@@ -827,3 +827,22 @@ describe('MediaLightbox', () => {
     }
   })
 })
+
+describe('MediaLightbox portal', () => {
+  it('opens without React key warnings', () => {
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
+    render(
+      <MediaLightbox
+        index={0}
+        items={items}
+        onIndexChange={() => {}}
+        onOpenChange={() => {}}
+        open
+      />
+    )
+    expect(consoleError.mock.calls.filter(([message]) => String(message).includes('key'))).toEqual(
+      []
+    )
+    consoleError.mockRestore()
+  })
+})
