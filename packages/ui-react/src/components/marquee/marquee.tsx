@@ -1,4 +1,7 @@
+'use client'
+
 import { marqueeContract } from '@atom63/ui-foundation'
+import { useReducedMotion } from 'motion/react'
 import type { ComponentPropsWithoutRef, CSSProperties, ReactElement, ReactNode } from 'react'
 
 import { cn } from '../../lib/cn'
@@ -30,11 +33,20 @@ export function Marquee({
   gap = marqueeContract.defaultGap,
   ...props
 }: MarqueeProps): ReactElement {
+  // Under reduced motion the strip stops and becomes a scrollable region
+  // (marquee.css), so keyboard users need to be able to focus it to scroll.
+  // A group, not a region landmark, so several marquees on one page do not
+  // add duplicate landmarks; pass aria-label to name each one.
+  const reducedMotion = Boolean(useReducedMotion())
+  const scrollRegion = reducedMotion
+    ? { 'aria-label': 'Scrolling content', role: 'group', tabIndex: 0 }
+    : undefined
   return (
     <div
       className={cn('a63-Marquee', className)}
       data-orientation={vertical ? 'vertical' : 'horizontal'}
       data-slot="marquee"
+      {...scrollRegion}
       {...props}
       style={{ '--gap': gap, ...style } as CSSProperties}
     >
