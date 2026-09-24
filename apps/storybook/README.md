@@ -46,9 +46,11 @@ pnpm --filter @atom63/storybook test:ssr
 
 **Visual regression.** Every story is compared against a committed baseline screenshot in
 `visual/__screenshots__/`. Stories with a `Themes` story render all four themes in light and
-dark, so those components get a full theme matrix. To keep screenshots deterministic, the test
-freezes CSS motion, loads the Geist fonts before capturing, and replaces remote images with one
-fixed placeholder.
+dark, so those components get a full theme matrix; the few components without one have a `Dark`
+story that sets the `mode` global. Each capture is taken at 1:1 and at the story's full height:
+the test grows the viewport to the page before capturing. To keep screenshots deterministic, the
+test freezes CSS motion, loads the Geist fonts before capturing, and replaces remote images with
+one fixed placeholder.
 
 Font rendering differs across operating systems, so only the Linux baselines produced by the
 [Visual regression workflow](../../.github/workflows/visual.yml) are committed. Local runs write
