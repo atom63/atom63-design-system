@@ -1,6 +1,6 @@
 {
   "name": "@atom63/styles",
-  "version": "0.1.0-beta.3",
+  "version": "0.1.0-beta.4",
   "description": "CSS tokens, themes, contracts, and utilities for the Atom63 design system",
   "license": "MIT",
   "repository": {

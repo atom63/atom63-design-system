@@ -1,5 +1,12 @@
 # @atom63/styles
 
+## 0.1.0-beta.4
+
+### Patch Changes
+
+- [#2](https://github.com/atom63/atom63-design-system/pull/2) [`12509a2`](https://github.com/atom63/atom63-design-system/commit/12509a2ee3946a15b466d1c84180bd5c92189092) Thanks [@atom63](https://github.com/atom63)! - Include the MIT `LICENSE` file in the published package. The packages were already MIT-licensed
+  through `package.json`; the tarball now carries the license text as well.
+
 ## 0.1.0-beta.3
 
 ### Patch Changes
