@@ -88,20 +88,20 @@
   --a63-weather-divider-color: color-mix(in oklch, white 32%, transparent);
   --a63-weather-text-shadow: 1px 1px 0 color-mix(in oklch, black 34%, transparent);
   --a63-weather-border-color: color-mix(
-    in oklch,
+    in oklab,
     var(--a63-action-primary) 44%,
     var(--a63-border-subtle)
   );
   --a63-weather-background-color: color-mix(
-    in oklch,
+    in oklab,
     var(--a63-action-primary) 48%,
     var(--a63-surface-panel)
   );
   --a63-weather-background-image:
-    linear-gradient(135deg, color-mix(in oklch, white 22%, transparent), transparent 44%),
+    linear-gradient(135deg, color-mix(in oklab, white 22%, transparent), transparent 44%),
     linear-gradient(
       135deg,
-      color-mix(in oklch, var(--a63-action-primary) 58%, var(--a63-surface-panel)),
-      color-mix(in oklch, var(--a63-action-primary) 68%, var(--a63-text-primary))
+      color-mix(in oklab, var(--a63-action-primary) 58%, var(--a63-surface-panel)),
+      color-mix(in oklab, var(--a63-action-primary) 68%, var(--a63-text-primary))
     );
 }

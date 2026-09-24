@@ -12,7 +12,7 @@
 
 /* FormLabel wraps Label (.a63-Label); flip to danger when the field errors. */
 .a63-FormLabel[data-error='true'] {
-  color: var(--a63-action-danger);
+  color: var(--a63-text-danger);
 }
 
 .a63-FormDescription {
@@ -25,7 +25,7 @@
 
 .a63-FormMessage {
   margin: 0;
-  color: var(--a63-action-danger);
+  color: var(--a63-text-danger);
   font-family: var(--a63-control-font-family);
   font-size: var(--a63-control-font-size-sm);
   line-height: var(--typography-sm-line-height);

@@ -137,6 +137,12 @@
 [data-slot='frame'] .a63-Table-body .a63-Table-row[data-state='selected'] {
   background: transparent;
 }
+/* Cells paint the frame's page surface, so a selected row fills its cells with
+   the selection color that its foreground (--a63-action-primary-foreground) is
+   meant for. */
+[data-slot='frame'] .a63-Table-body .a63-Table-row[data-state='selected'] .a63-Table-cell {
+  background: var(--a63-action-primary);
+}
 [data-slot='frame'] .a63-Table-body .a63-Table-cell {
   border-bottom: 1px solid var(--a63-border-subtle);
   background: var(--a63-surface-page);

@@ -33,7 +33,7 @@
 @import './widget.native.css';
 
 :root {
-  --a63-widget-background-color: color-mix(in oklch, var(--a63-surface-overlay) 82%, transparent);
+  --a63-widget-background-color: color-mix(in oklab, var(--a63-surface-overlay) 82%, transparent);
   --a63-widget-background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
   --a63-widget-background-blend: normal, var(--a63-overlay-texture-blend);
   --a63-widget-foreground: var(--a63-text-primary);

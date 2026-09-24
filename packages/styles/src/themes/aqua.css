@@ -58,7 +58,7 @@
   --a63-surface-highlight-opacity: 0.75;
   /* Menus need a quieter, more even backplate than larger Aqua overlays so
         dense rows remain legible from top to bottom. */
-  --a63-menu-popup-background: color-mix(in oklch, var(--a63-surface-overlay) 92%, white);
+  --a63-menu-popup-background: color-mix(in oklab, var(--a63-surface-overlay) 92%, white);
   --a63-track-shadow:
     inset 0 2px 3px color-mix(in oklch, black 14%, transparent),
     inset 0 -1px 0 color-mix(in oklch, white 45%, transparent);
@@ -109,8 +109,8 @@
 }
 
 [data-a63-theme='aqua']:is(:root, .light, [data-a63-mode='light']) {
-  --a63-surface-page: color-mix(in oklch, var(--surface-light-2) 95%, var(--color-b1-500));
-  --a63-surface-panel: color-mix(in oklch, var(--surface-light-1) 96%, var(--color-b1-500));
+  --a63-surface-page: color-mix(in oklab, var(--surface-light-2) 95%, var(--color-b1-500));
+  --a63-surface-panel: color-mix(in oklab, var(--surface-light-1) 96%, var(--color-b1-500));
   --a63-weather-border-color: color-mix(in oklch, var(--a63-action-primary) 32%, transparent);
   --a63-weather-background-image:
     radial-gradient(
@@ -131,8 +131,8 @@
 }
 
 [data-a63-theme='aqua']:is(.dark, [data-a63-mode='dark']) {
-  --a63-surface-page: color-mix(in oklch, var(--surface-dark-1) 94%, var(--color-b1-500));
-  --a63-surface-panel: color-mix(in oklch, var(--surface-dark-2) 94%, var(--color-b1-500));
+  --a63-surface-page: color-mix(in oklab, var(--surface-dark-1) 94%, var(--color-b1-500));
+  --a63-surface-panel: color-mix(in oklab, var(--surface-dark-2) 94%, var(--color-b1-500));
   /* Lift neutral menu rows above the striped gray backplate without turning the
         hover state into the stronger primary-selection treatment. */
   --a63-menu-highlight-background: color-mix(in oklch, white 12%, transparent);
@@ -140,18 +140,18 @@
   --a63-weather-background-image:
     radial-gradient(
       120% 90% at 10% 0%,
-      color-mix(in oklch, white 18%, transparent),
+      color-mix(in oklab, white 18%, transparent),
       transparent 48%
     ),
     radial-gradient(
       88% 110% at 100% 0%,
-      color-mix(in oklch, var(--a63-action-primary) 30%, transparent),
+      color-mix(in oklab, var(--a63-action-primary) 30%, transparent),
       transparent 58%
     ),
     linear-gradient(
       135deg,
-      color-mix(in oklch, var(--a63-action-primary) 58%, var(--surface-dark-6) 42%),
-      color-mix(in oklch, var(--a63-action-primary) 36%, var(--surface-dark-3) 64%)
+      color-mix(in oklab, var(--a63-action-primary) 58%, var(--surface-dark-6) 42%),
+      color-mix(in oklab, var(--a63-action-primary) 36%, var(--surface-dark-3) 64%)
     );
   /* Dark gel: quieter sheen so the mid-line doesn't blow out to a white band. */
   --a63-segment-gloss:

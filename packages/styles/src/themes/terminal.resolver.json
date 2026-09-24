@@ -203,7 +203,7 @@
                   "$type": "color",
                   "$value": "{a63.action.primary}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {a63.action.primary} 44%, {a63.border.subtle} )"
+                    "io.atom63.derive": "color-mix( in oklab, {a63.action.primary} 44%, {a63.border.subtle} )"
                   }
                 }
               }
@@ -243,14 +243,14 @@
                 "$type": "color",
                 "$value": "{a63.action.primary}",
                 "$extensions": {
-                  "io.atom63.derive": "color-mix( in oklch, {a63.action.primary} 26%, color-mix(in oklch, {surface.light.5} 60%, white) )"
+                  "io.atom63.derive": "color-mix( in oklab, {a63.action.primary} 26%, color-mix(in oklab, {surface.light.5} 60%, white) )"
                 }
               },
               "subtle": {
                 "$type": "color",
                 "$value": "{a63.action.primary}",
                 "$extensions": {
-                  "io.atom63.derive": "color-mix( in oklch, {a63.action.primary} 16%, color-mix(in oklch, {surface.light.6} 50%, white) )"
+                  "io.atom63.derive": "color-mix( in oklab, {a63.action.primary} 16%, color-mix(in oklab, {surface.light.6} 50%, white) )"
                 }
               }
             },
@@ -259,14 +259,14 @@
                 "$type": "color",
                 "$value": "{surface.light.1}",
                 "$extensions": {
-                  "io.atom63.derive": "color-mix(in oklch, {surface.light.1} 60%, white)"
+                  "io.atom63.derive": "color-mix(in oklab, {surface.light.1} 60%, white)"
                 }
               },
               "panel": {
                 "$type": "color",
                 "$value": "{surface.light.2}",
                 "$extensions": {
-                  "io.atom63.derive": "color-mix(in oklch, {surface.light.2} 60%, white)"
+                  "io.atom63.derive": "color-mix(in oklab, {surface.light.2} 60%, white)"
                 }
               }
             },
@@ -275,7 +275,7 @@
                 "$type": "color",
                 "$value": "{surface.light.2}",
                 "$extensions": {
-                  "io.atom63.derive": "color-mix( in oklch, {surface.light.2} 86%, {a63.action.primary} )"
+                  "io.atom63.derive": "color-mix( in oklab, {surface.light.2} 86%, {a63.action.primary} )"
                 }
               }
             },
@@ -285,14 +285,14 @@
                   "$type": "color",
                   "$value": "{surface.light.3}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix(in oklch, {surface.light.3} 60%, white)"
+                    "io.atom63.derive": "color-mix(in oklab, {surface.light.3} 60%, white)"
                   }
                 },
                 "foreground": {
                   "$type": "color",
                   "$value": "{a63.action.primary}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {a63.action.primary} 80%, {surface.light.12} )"
+                    "io.atom63.derive": "color-mix( in oklab, {a63.action.primary} 80%, {surface.light.12} )"
                   }
                 }
               }
@@ -318,7 +318,7 @@
                 "$type": "color",
                 "$value": "{a63.action.primary}",
                 "$extensions": {
-                  "io.atom63.derive": "color-mix( in oklch, {a63.action.primary} 82%, {surface.light.12} )"
+                  "io.atom63.derive": "color-mix( in oklab, {a63.action.primary} 82%, {surface.light.12} )"
                 }
               },
               "muted": {
@@ -326,7 +326,7 @@
                   "$type": "color",
                   "$value": "{a63.action.primary}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {a63.action.primary} 58%, {surface.light.10} )"
+                    "io.atom63.derive": "color-mix( in oklab, {a63.action.primary} 58%, {surface.light.10} )"
                   }
                 }
               },
@@ -375,7 +375,7 @@
                 "$type": "color",
                 "$value": "{a63.text.accent}",
                 "$extensions": {
-                  "io.atom63.derive": "color-mix(in oklch, {a63.text.accent} 48%, {surface.dark.11})"
+                  "io.atom63.derive": "color-mix(in oklab, {a63.text.accent} 48%, {surface.dark.11})"
                 },
                 "$description": "Text mixes read the brand-as-text token; the primary fill is too dark here."
               }
@@ -401,14 +401,14 @@
                 "$type": "color",
                 "$value": "{surface.dark.1}",
                 "$extensions": {
-                  "io.atom63.derive": "color-mix(in oklch, {surface.dark.1} 92%, {a63.action.primary})"
+                  "io.atom63.derive": "color-mix(in oklab, {surface.dark.1} 92%, {a63.action.primary})"
                 }
               },
               "panel": {
                 "$type": "color",
                 "$value": "{surface.dark.2}",
                 "$extensions": {
-                  "io.atom63.derive": "color-mix(in oklch, {surface.dark.2} 92%, {a63.action.primary})"
+                  "io.atom63.derive": "color-mix(in oklab, {surface.dark.2} 92%, {a63.action.primary})"
                 }
               }
             },
@@ -417,7 +417,7 @@
                 "$type": "color",
                 "$value": "{surface.dark.1}",
                 "$extensions": {
-                  "io.atom63.derive": "color-mix(in oklch, {surface.dark.1} 90%, {a63.action.primary})"
+                  "io.atom63.derive": "color-mix(in oklab, {surface.dark.1} 90%, {a63.action.primary})"
                 }
               }
             },
@@ -427,7 +427,7 @@
                   "$type": "color",
                   "$value": "{surface.dark.3}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {surface.dark.3} 86%, {a63.action.primary} 14% )"
+                    "io.atom63.derive": "color-mix( in oklab, {surface.dark.3} 86%, {a63.action.primary} 14% )"
                   }
                 },
                 "foreground": {

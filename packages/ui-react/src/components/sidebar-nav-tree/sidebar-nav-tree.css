@@ -18,7 +18,7 @@
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: color-mix(in oklch, var(--sidebar-fg) 40%, transparent);
+  color: var(--a63-text-secondary);
 }
 
 .a63-SidebarNavTree-group-content {

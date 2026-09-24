@@ -744,7 +744,7 @@
                   "$type": "color",
                   "$value": "{a63.action.primary}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {a63.action.primary} 44%, {a63.border.subtle} )"
+                    "io.atom63.derive": "color-mix( in oklab, {a63.action.primary} 44%, {a63.border.subtle} )"
                   }
                 }
               },
@@ -753,14 +753,14 @@
                   "$type": "color",
                   "$value": "{a63.action.primary}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix( in oklch, {a63.action.primary} 48%, {a63.surface.panel} )"
+                    "io.atom63.derive": "color-mix( in oklab, {a63.action.primary} 48%, {a63.surface.panel} )"
                   }
                 },
                 "image": {
                   "$type": "dimension",
                   "$value": "{a63.action.primary}",
                   "$extensions": {
-                    "io.atom63.derive": "linear-gradient(135deg, color-mix(in oklch, white 22%, transparent), transparent 44%), linear-gradient( 135deg, color-mix(in oklch, {a63.action.primary} 58%, {a63.surface.panel}), color-mix(in oklch, {a63.action.primary} 68%, {a63.text.primary}) )"
+                    "io.atom63.derive": "linear-gradient(135deg, color-mix(in oklab, white 22%, transparent), transparent 44%), linear-gradient( 135deg, color-mix(in oklab, {a63.action.primary} 58%, {a63.surface.panel}), color-mix(in oklab, {a63.action.primary} 68%, {a63.text.primary}) )"
                   }
                 }
               }
