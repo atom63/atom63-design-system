@@ -7,15 +7,15 @@
  * Keep both aligned when tuning (mustard golds must get dark text).
  */
 
-/** Large-text white 3:1 boundary — light fg only when Y is below this. */
-export const AUTO_CONTRAST_WCAG_Y_THRESHOLD = 0.3
+/** Where near-white and near-black fg give equal contrast — light fg only when Y is below this. */
+export const AUTO_CONTRAST_WCAG_Y_THRESHOLD = 0.18
 
 /**
  * Documentation mirror of the CSS clamp step
- * `oklch(from … clamp(0.15, (0.665 - l) * 1000, 0.985) …)`.
+ * `oklch(from … clamp(0.15, (0.57 - l) * 1000, 0.985) …)`.
  * Not evaluated in JS — components use the CSS token.
  */
-export const AUTO_CONTRAST_CSS_OKLCH_L_STEP = 0.665
+export const AUTO_CONTRAST_CSS_OKLCH_L_STEP = 0.57
 
 export function relativeLuminance(r: number, g: number, b: number): number {
   const toLinear = (c: number) => {

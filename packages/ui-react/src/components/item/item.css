@@ -197,7 +197,7 @@
   text-underline-offset: 4px;
 }
 .a63-ItemDescription a:hover {
-  color: var(--a63-action-primary);
+  color: var(--a63-text-accent);
 }
 
 /* ── Actions / Header / Footer ──────────────────────────────────────────── */

@@ -4,8 +4,8 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 13,
-    "variables": 984,
-    "aliasValues": 430,
+    "variables": 989,
+    "aliasValues": 454,
     "skipped": 119
   },
   "collections": [
@@ -999,37 +999,17 @@
       ],
       "variables": [
         {
-          "name": "action/primary",
-          "token": "--a63-action-primary",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "alias": "--a63-brand-500"
-            }
-          }
-        },
-        {
           "name": "action/primary/foreground",
           "token": "--a63-action-primary-foreground",
           "type": "COLOR",
           "values": {
             "Value": {
               "value": {
-                "r": 0.96151,
-                "g": 0.982412,
+                "r": 0.96246,
+                "g": 0.982337,
                 "b": 1,
                 "a": 1
               }
-            }
-          }
-        },
-        {
-          "name": "action/primary/hover",
-          "token": "--a63-action-primary-hover",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "alias": "--a63-brand-600"
             }
           }
         },
@@ -10864,7 +10844,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-amber-600"
+              "alias": "--color-amber-800"
             },
             "dark": {
               "alias": "--color-amber-400"
@@ -10890,7 +10870,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-blue-600"
+              "alias": "--color-blue-700"
             },
             "dark": {
               "alias": "--color-blue-400"
@@ -10916,7 +10896,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-cyan-600"
+              "alias": "--color-cyan-800"
             },
             "dark": {
               "alias": "--color-cyan-400"
@@ -10942,7 +10922,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-emerald-600"
+              "alias": "--color-emerald-800"
             },
             "dark": {
               "alias": "--color-emerald-400"
@@ -10968,7 +10948,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-fuchsia-600"
+              "alias": "--color-fuchsia-700"
             },
             "dark": {
               "alias": "--color-fuchsia-400"
@@ -10994,7 +10974,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-green-600"
+              "alias": "--color-green-800"
             },
             "dark": {
               "alias": "--color-green-400"
@@ -11020,10 +11000,23 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-indigo-600"
+              "alias": "--color-indigo-700"
             },
             "dark": {
               "alias": "--color-indigo-400"
+            }
+          }
+        },
+        {
+          "name": "badge/info/foreground",
+          "token": "--a63-badge-info-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-info-700"
+            },
+            "dark": {
+              "alias": "--color-info-400"
             }
           }
         },
@@ -11046,7 +11039,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-lime-600"
+              "alias": "--color-lime-800"
             },
             "dark": {
               "alias": "--color-lime-400"
@@ -11072,7 +11065,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-neutral-600"
+              "alias": "--color-neutral-700"
             },
             "dark": {
               "alias": "--color-neutral-400"
@@ -11098,7 +11091,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-orange-600"
+              "alias": "--color-orange-800"
             },
             "dark": {
               "alias": "--color-orange-400"
@@ -11124,7 +11117,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-pink-600"
+              "alias": "--color-pink-700"
             },
             "dark": {
               "alias": "--color-pink-400"
@@ -11150,7 +11143,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-purple-600"
+              "alias": "--color-purple-700"
             },
             "dark": {
               "alias": "--color-purple-400"
@@ -11176,7 +11169,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-red-600"
+              "alias": "--color-red-700"
             },
             "dark": {
               "alias": "--color-red-400"
@@ -11202,7 +11195,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-rose-600"
+              "alias": "--color-rose-700"
             },
             "dark": {
               "alias": "--color-rose-400"
@@ -11228,10 +11221,23 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-sky-600"
+              "alias": "--color-sky-700"
             },
             "dark": {
               "alias": "--color-sky-400"
+            }
+          }
+        },
+        {
+          "name": "badge/success/foreground",
+          "token": "--a63-badge-success-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-success-700"
+            },
+            "dark": {
+              "alias": "--color-success-400"
             }
           }
         },
@@ -11254,7 +11260,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-teal-600"
+              "alias": "--color-teal-800"
             },
             "dark": {
               "alias": "--color-teal-400"
@@ -11280,10 +11286,23 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-violet-600"
+              "alias": "--color-violet-700"
             },
             "dark": {
               "alias": "--color-violet-400"
+            }
+          }
+        },
+        {
+          "name": "badge/warning/foreground",
+          "token": "--a63-badge-warning-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-warning-800"
+            },
+            "dark": {
+              "alias": "--color-warning-400"
             }
           }
         },
@@ -11306,7 +11325,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-yellow-600"
+              "alias": "--color-yellow-800"
             },
             "dark": {
               "alias": "--color-yellow-400"
@@ -11731,6 +11750,19 @@
           }
         },
         {
+          "name": "text/accent",
+          "token": "--a63-text-accent",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-brand-text"
+            },
+            "dark": {
+              "alias": "--a63-brand-400"
+            }
+          }
+        },
+        {
           "name": "text/primary",
           "token": "--a63-text-primary",
           "type": "COLOR",
@@ -11831,6 +11863,56 @@
         "b6"
       ],
       "variables": [
+        {
+          "name": "action/primary",
+          "token": "--a63-action-primary",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "alias": "--a63-brand-600"
+            },
+            "b2": {
+              "alias": "--a63-brand-600"
+            },
+            "b3": {
+              "alias": "--a63-brand-700"
+            },
+            "b4": {
+              "alias": "--a63-brand-600"
+            },
+            "b5": {
+              "alias": "--a63-brand-600"
+            },
+            "b6": {
+              "alias": "--a63-brand-600"
+            }
+          }
+        },
+        {
+          "name": "action/primary/hover",
+          "token": "--a63-action-primary-hover",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "alias": "--a63-brand-700"
+            },
+            "b2": {
+              "alias": "--a63-brand-700"
+            },
+            "b3": {
+              "alias": "--a63-brand-800"
+            },
+            "b4": {
+              "alias": "--a63-brand-700"
+            },
+            "b5": {
+              "alias": "--a63-brand-700"
+            },
+            "b6": {
+              "alias": "--a63-brand-700"
+            }
+          }
+        },
         {
           "name": "brand/100",
           "token": "--a63-brand-100",
@@ -12103,6 +12185,31 @@
             },
             "b6": {
               "alias": "--color-b6-950"
+            }
+          }
+        },
+        {
+          "name": "brand/text",
+          "token": "--a63-brand-text",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "alias": "--a63-brand-600"
+            },
+            "b2": {
+              "alias": "--a63-brand-700"
+            },
+            "b3": {
+              "alias": "--a63-brand-700"
+            },
+            "b4": {
+              "alias": "--a63-brand-600"
+            },
+            "b5": {
+              "alias": "--a63-brand-600"
+            },
+            "b6": {
+              "alias": "--a63-brand-600"
             }
           }
         }

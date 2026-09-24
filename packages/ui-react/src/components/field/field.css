@@ -218,7 +218,7 @@
   text-underline-offset: 4px;
 }
 .a63-FieldDescription a:hover {
-  color: var(--a63-action-primary);
+  color: var(--a63-text-accent);
 }
 
 /* ── FieldSeparator ────────────────────────────────────────────────────── */

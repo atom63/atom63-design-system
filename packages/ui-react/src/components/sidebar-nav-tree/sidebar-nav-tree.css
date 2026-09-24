@@ -54,11 +54,11 @@
 .a63-SidebarNavTree-item[data-active='true'] {
   background-color: transparent;
   font-weight: 500;
-  color: var(--a63-action-primary);
+  color: var(--a63-text-accent);
 }
 .a63-SidebarNavTree-item[data-active='true']:hover {
   background-color: color-mix(in oklch, var(--sidebar-accent) 50%, transparent);
-  color: var(--a63-action-primary);
+  color: var(--a63-text-accent);
 }
 .a63-SidebarNavTree-item > span {
   min-width: 0;
@@ -110,7 +110,7 @@
   background-color: transparent;
 }
 .a63-SidebarNavTree-row:hover .a63-SidebarNavTree-row-item[data-active='true'] {
-  color: var(--a63-action-primary);
+  color: var(--a63-text-accent);
 }
 
 /* Trigger-only row: the section has no page, so the whole row is one control. */

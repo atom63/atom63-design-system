@@ -3,7 +3,6 @@ import { HoverCard, HoverCardContent, HoverCardTrigger, UIProvider } from '@atom
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { type ComponentProps, useRef } from 'react'
-import { pendingContrastReview } from '../story-probes'
 
 /* Shared preview body — the popup surface that reskins per theme. */
 function CardBody() {
@@ -49,7 +48,7 @@ function ReviewCell({ label, providerProps }: { label: string; providerProps: Pr
         <HoverCard>
           <HoverCardTrigger
             render={
-              <a href="#a" style={{ color: 'var(--a63-action-primary)' }}>
+              <a href="#a" style={{ color: 'var(--a63-text-accent)' }}>
                 @atom63
               </a>
             }
@@ -66,13 +65,12 @@ function ReviewCell({ label, providerProps }: { label: string; providerProps: Pr
 /* Hover the trigger to reveal the overlay-archetype popover (elevation from the
    --a63-overlay-shadow lever — themes reskin it, like the Select popup). */
 export const Playground: Story = {
-  parameters: pendingContrastReview,
   render: () => (
     <div style={{ padding: 80 }}>
       <HoverCard>
         <HoverCardTrigger
           render={
-            <a href="#a" style={{ color: 'var(--a63-action-primary)' }}>
+            <a href="#a" style={{ color: 'var(--a63-text-accent)' }}>
               @atom63
             </a>
           }
@@ -88,7 +86,6 @@ export const Playground: Story = {
 /* Each popup stays inside its theme cell's portal container so the overlay
    inherits the same theme and endpoint context as its trigger. */
 export const Themes: Story = {
-  parameters: pendingContrastReview,
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>
       {themes.map(theme =>

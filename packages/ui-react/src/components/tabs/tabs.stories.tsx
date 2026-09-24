@@ -2,7 +2,6 @@ import { tabsContract, tabsSizes, tabsVariants, themes } from '@atom63/ui-founda
 import { Tabs, TabsList, TabsPanel, TabsTab, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { pendingContrastReview } from '../story-probes'
 
 const meta = {
   title: 'UI React/Tabs',
@@ -36,7 +35,6 @@ export const Playground: Story = {
 }
 
 export const Variants: Story = {
-  parameters: pendingContrastReview,
   render: () => (
     <div style={{ display: 'grid', gap: 24 }}>
       {tabsVariants.map(variant => (
@@ -61,7 +59,6 @@ export const Variants: Story = {
    body, and the active tab merges into it (no bottom border, shares the panel
    surface). Only reads with a panel present, which Variants omits. */
 export const Attached: Story = {
-  parameters: pendingContrastReview,
   render: () => (
     <Tabs defaultValue="overview" style={{ maxWidth: 460 }}>
       <TabsList variant="attached">
