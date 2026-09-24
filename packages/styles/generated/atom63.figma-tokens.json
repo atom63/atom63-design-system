@@ -5522,7 +5522,7 @@
       "cssVar": "--a63-surface-tint",
       "type": "dimension",
       "value": "0%",
-      "sourceFile": "packages/styles/src/tokens/surface.css",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -14816,7 +14816,7 @@
       "name": "font-family-mono",
       "cssVar": "--font-family-mono",
       "type": "typography",
-      "value": "'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
+      "value": "'Geist Mono', ui-monospace, 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace",
       "sourceFile": "packages/styles/src/tokens/foundation/fonts.css",
       "layer": "foundation",
       "figma": {
@@ -14858,7 +14858,7 @@
       "name": "font-family-serif",
       "cssVar": "--font-family-serif",
       "type": "typography",
-      "value": "'Brawler', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif",
+      "value": "'Brawler', ui-serif, 'Georgia', 'Cambria', 'Times New Roman', 'Times', serif",
       "sourceFile": "packages/styles/src/tokens/foundation/fonts.css",
       "layer": "foundation",
       "figma": {

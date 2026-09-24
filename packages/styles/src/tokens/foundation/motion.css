@@ -1,4 +1,7 @@
 /*
+ * Generated from src/tokens/foundation/motion.tokens.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
  * Motion foundation.
  *
  * Raw duration primitives live in primitives.css. This layer chooses the lean
