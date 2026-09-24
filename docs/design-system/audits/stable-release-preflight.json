@@ -9,19 +9,19 @@
   "packages": [
     {
       "name": "@atom63/styles",
-      "version": "0.1.0-beta.3",
+      "version": "0.1.0-beta.4",
       "prerelease": true,
       "private": false
     },
     {
       "name": "@atom63/ui-foundation",
-      "version": "0.1.1-beta.1",
+      "version": "0.1.1-beta.2",
       "prerelease": true,
       "private": false
     },
     {
       "name": "@atom63/ui-react",
-      "version": "0.2.0-beta.7",
+      "version": "0.2.0-beta.8",
       "prerelease": true,
       "private": false
     }
