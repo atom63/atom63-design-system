@@ -45,14 +45,9 @@ function ComparisonSlot({
             'flex items-center gap-1.5 px-4 pt-3',
             side === 'after' && 'md:justify-end'
           )}
+          data-side={side}
         >
-          <span
-            aria-hidden
-            className={clsx(
-              'size-1.5 rounded-full',
-              side === 'before' ? 'bg-red-400/60' : 'bg-emerald-400/60'
-            )}
-          />
+          <span aria-hidden className="mdx-comparison-dot size-1.5 rounded-full" />
           <span className={clsx('text-xs font-medium', BADGE_STYLES[side])}>{label}</span>
         </div>
       ) : null}

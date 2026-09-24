@@ -60,12 +60,8 @@ export function NoticeBlock(props: NoticeBlockProps) {
 
   return (
     <div
-      className={clsx(
-        'callout not-mdx',
-        mdxStyles.layout.callout.base,
-        mdxStyles.layout.callout[tone],
-        className
-      )}
+      className={clsx('callout not-mdx', mdxStyles.layout.callout.base, className)}
+      data-tone={tone}
     >
       {hasStructure ? (
         <div className="flex gap-2.5">

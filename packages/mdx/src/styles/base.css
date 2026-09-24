@@ -333,7 +333,11 @@
   /* --- misc semantics ----------------------------------------------------- */
   .mdx-mark {
     color: var(--a63-text-primary);
-    /* yellow highlight tint has no --a63-* surface equivalent (design gap) */
+    background-color: color-mix(in oklch, var(--a63-status-warning) 24%, transparent);
+  }
+
+  .mdx-ins {
+    text-decoration-color: color-mix(in oklch, var(--a63-status-success) 70%, transparent);
   }
 
   .mdx-abbr {

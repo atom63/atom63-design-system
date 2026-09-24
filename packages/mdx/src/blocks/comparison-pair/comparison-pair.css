@@ -16,6 +16,12 @@
     color: color-mix(in oklab, var(--a63-text-secondary) 60%, transparent);
   }
 
-  /* before/after status dots keep their red/emerald palette (no --a63-* status
-     dot color pairing intended here — decorative before/after affordance). */
+  /* Before/after dots: danger for the before state, success for the after. */
+  .mdx-comparison-dot {
+    background-color: color-mix(in oklch, var(--a63-status-success) 60%, transparent);
+  }
+
+  [data-side='before'] > .mdx-comparison-dot {
+    background-color: color-mix(in oklch, var(--a63-action-danger) 60%, transparent);
+  }
 }
