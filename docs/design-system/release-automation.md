@@ -21,6 +21,7 @@ It runs on every push to `main` and on `workflow_dispatch`:
 2. `version-pr` runs on a push with pending changesets. It runs `pnpm release:version` (`changeset version` plus the audit regenerations the version bump requires), force-pushes the result to `changeset-release/main`, and opens or updates the **chore: version packages** pull request.
 3. `preflight` runs when there are unpublished versions (or on `workflow_dispatch`): the full DS verification gates, pack and registry smoke, and the prerelease-mode check.
 4. `publish` runs after a green preflight when there are unpublished versions on a push, or when `workflow_dispatch` sets `publish=true`. It uses `permissions.id-token: write`, runs in the `npm-publish` environment, and publishes with `NPM_CONFIG_PROVENANCE=true`.
+5. `record-evidence` runs after a publish. It waits until the npm `beta` tag resolves to the published versions, regenerates `docs/design-system/audits/registry-consumer-smoke.json`, and commits it to `main`, so CI does not fail on evidence that still names the previous versions. Moving `latest` and updating `beta-release-notes.md` stay manual.
 
 `workflow_dispatch` with `publish=false` remains a dry run of the preflight.
 

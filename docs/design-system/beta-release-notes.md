@@ -14,11 +14,11 @@ Current published beta versions:
 
 | Package | Beta version | Notes |
 | --- | --- | --- |
-| `@atom63/styles` | `0.1.0-beta.3` | CSS tokens, themes, contracts, utilities, the token manifest (`./tokens.json`), and the Figma variable model (`./figma-sync.json`) |
-| `@atom63/ui-foundation` | `0.1.1-beta.1` | Platform-neutral TypeScript contracts |
-| `@atom63/ui-react` | `0.2.0-beta.7` | React components, layout/media/theme subpaths |
+| `@atom63/styles` | `0.1.0-beta.4` | CSS tokens, themes, contracts, utilities, the token manifest (`./tokens.json`), and the Figma variable model (`./figma-sync.json`) |
+| `@atom63/ui-foundation` | `0.1.1-beta.2` | Platform-neutral TypeScript contracts |
+| `@atom63/ui-react` | `0.2.0-beta.8` | React components, layout/media/theme subpaths |
 
-These versions are published from GitHub Actions through npm trusted publishing, with provenance. `@atom63/styles@0.1.0-beta.3` ships `@atom63/styles/z-layers` as JavaScript with a type declaration, so plain JavaScript and Node consumers can import it. `@atom63/ui-react@0.2.0-beta.7` makes `react-hook-form` a peer dependency, so `Form` and the consumer's `useForm` share one copy; package managers that add peers automatically need no change. It still pins `@base-ui/react` to `1.6.0`.
+These versions are published from GitHub Actions through npm trusted publishing, with provenance. All three packages now include the MIT `LICENSE` file. `@atom63/styles` ships `@atom63/styles/z-layers` as JavaScript with a type declaration, so plain JavaScript and Node consumers can import it. `@atom63/ui-react` makes `react-hook-form` a peer dependency, so `Form` and the consumer's `useForm` share one copy; package managers that add peers automatically need no change. It still pins `@base-ui/react` to `1.6.0`.
 
 ## Dist-tag state
 
@@ -28,9 +28,9 @@ Current npm state:
 
 | Package | `beta` | `latest` |
 | --- | --- | --- |
-| `@atom63/styles` | `0.1.0-beta.3` | `0.1.0-beta.3` |
-| `@atom63/ui-foundation` | `0.1.1-beta.1` | `0.1.1-beta.1` |
-| `@atom63/ui-react` | `0.2.0-beta.7` | `0.2.0-beta.7` |
+| `@atom63/styles` | `0.1.0-beta.4` | `0.1.0-beta.4` |
+| `@atom63/ui-foundation` | `0.1.1-beta.2` | `0.1.1-beta.2` |
+| `@atom63/ui-react` | `0.2.0-beta.8` | `0.2.0-beta.8` |
 
 The initial npm publishes created `latest` automatically. npm currently returns `403` for deleting `latest` with the available token/session, so the mitigation is to keep `latest` synchronized with the current safe beta. Production/stable docs should still instruct consumers to install with `@beta` until a real stable release exists.
 
