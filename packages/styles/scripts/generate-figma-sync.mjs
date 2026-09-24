@@ -554,10 +554,22 @@ async function main() {
     const computedContent = formatComputed(computedValues)
     if (process.argv.includes('--check')) {
       const stale = []
-      if ((await readFile(outputPath, 'utf8').catch(() => '')) !== content)
-        stale.push('generated/atom63.figma-sync.json')
-      if ((await readFile(computedOutputPath, 'utf8').catch(() => '')) !== computedContent)
-        stale.push('generated/atom63.computed-values.json')
+      for (const [file, expected] of [
+        [outputPath, content],
+        [computedOutputPath, computedContent],
+      ]) {
+        const current = await readFile(file, 'utf8').catch(() => '')
+        if (current === expected) continue
+        const name = path.relative(packageRoot, file)
+        stale.push(name)
+        // Name the first line that differs, so a stale file in CI says why.
+        const currentLines = current.split('\n')
+        const expectedLines = expected.split('\n')
+        const line = expectedLines.findIndex((text, index) => text !== currentLines[index])
+        process.stderr.write(
+          `${name}:${line + 1}\n  committed: ${currentLines[line] ?? '(end of file)'}\n  generated: ${expectedLines[line] ?? '(end of file)'}\n`
+        )
+      }
       if (stale.length) {
         process.stderr.write(
           `${stale.join(', ')} ${stale.length === 1 ? 'is' : 'are'} stale. Run: pnpm --filter @atom63/styles generate:figma\n`
