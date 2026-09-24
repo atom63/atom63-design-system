@@ -1,0 +1,53 @@
+{
+  "$description": "Motion foundation.\n\nRaw duration primitives live in primitives.css. This layer chooses the lean\ntiming ramp and easing vocabulary shared by semantic motion contracts.",
+  "duration": {
+    "instant": {
+      "$type": "duration",
+      "$value": "{duration.none}"
+    },
+    "fast": {
+      "$type": "duration",
+      "$value": "{duration.150}"
+    },
+    "normal": {
+      "$type": "duration",
+      "$value": "{duration.250}"
+    },
+    "overlay": {
+      "$type": "duration",
+      "$value": "{duration.450}"
+    },
+    "swipe": {
+      "dismiss": {
+        "$type": "duration",
+        "$value": "{duration.400}"
+      }
+    },
+    "slow": {
+      "$type": "duration",
+      "$value": "{duration.500}"
+    },
+    "slower": {
+      "$type": "duration",
+      "$value": "{duration.1000}"
+    }
+  },
+  "ease": {
+    "overlay": {
+      "$type": "cubicBezier",
+      "$value": [0.22, 1, 0.36, 1]
+    },
+    "scrim": {
+      "$type": "cubicBezier",
+      "$value": [0.32, 0.72, 0, 1]
+    },
+    "standard": {
+      "$type": "cubicBezier",
+      "$value": [0.2, 0, 0, 1]
+    },
+    "emphasized": {
+      "$type": "cubicBezier",
+      "$value": [0.3, 0, 0, 1]
+    }
+  }
+}

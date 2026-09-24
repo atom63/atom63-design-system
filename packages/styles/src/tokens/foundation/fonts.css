@@ -1,11 +1,15 @@
-/* Fonts — family choices and font-family aliases */
-
+/*
+ * Generated from src/tokens/foundation/fonts.tokens.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
+ * Font families: the family stacks the typography and font axis choose from.
+ */
 :root {
   --font-family-sans:
     'Geist', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
-  --font-family-serif: 'Brawler', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-family-serif: 'Brawler', ui-serif, 'Georgia', 'Cambria', 'Times New Roman', 'Times', serif;
   --font-family-mono:
-    'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Geist Mono', ui-monospace, 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono',
     'Courier New', monospace;
   --font-family-pixel: 'Doto', 'Geist Mono', ui-monospace, monospace;
 }

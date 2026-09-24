@@ -25,9 +25,27 @@
 - 重新生成后 manifest、Figma 同步模型、Figma tokens、z-layers 零改动；Swift token 检查通过。
 - styles 的浏览器测试通过；Storybook 视觉回归 446/446 一致。
 
+## 第 2 层：基础引用（已完成）
+
+- **范围**：`foundation/aliases.css`（24 个）、`fonts.css`（4 个）和 `motion.css`（11 个），共 39 个。
+- **引用**：`var(--duration-150)` 写成 DTCG 引用 `{duration.150}`；生成器把引用转回
+  `var(--…)`，引用目标不存在时构建失败。引用可以跨文件。
+- **字体**：`fontFamily` 类型，字体名数组。DTCG 不记录引号，所以统一规则：CSS 通用族名和系统关键字
+  （`serif`、`ui-monospace` 等）不加引号，其余字体名都加引号。结果 `font-family-serif` 和
+  `font-family-mono` 里的 `Georgia`、`Menlo` 等多了引号，含义不变；这是 manifest 和 Figma 同步模型里
+  唯一的变化。
+- **格式**：生成的 CSS 按仓库的 Prettier 配置格式化。
+- **发现**：`aliases.css` 和 `surface.css` 里 `n1` 的默认值在 `:root` 上重复声明了同样的 24 个
+  `--surface-*` 变量，值也相同。迁移没有改变它，之后单独清理。
+
+### 验证
+
+- 39 个 token 逐个比对：除上述 2 个字体列表的引号外，生成的值与原值完全一致。
+- Swift token 检查、styles 浏览器测试、Figma 插件测试通过；Storybook 视觉回归 446/446 一致。
+
 ## 后续层
 
-1. **语义角色**（`semantics.css`、`surface.css`、`brand.css` 等）：大量使用 `var()` 引用和
+1. **语义角色**（`semantics.css`、`brand.css` 等）：大量使用 `var()` 引用和
    `color-mix()`，需要用 DTCG 引用语法 `{color.n1.1}` 表示，`color-mix()` 要么保留为 CSS，
    要么扩展生成器支持。
 2. **主题和个性化维度**：按 `[data-a63-*]` 选择器重映射，需要设计多套 token 文件（每个维度值一套），

@@ -1,28 +1,32 @@
-/* aliases — surface variables */
-
+/*
+ * Generated from src/tokens/foundation/aliases.tokens.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
+ * Default surface ramp: --surface-light-* and --surface-dark-* point at the n1 neutral palette.
+ */
 :root {
   --surface-light-1: var(--color-n1-light-1);
-  --surface-dark-1: var(--color-n1-dark-1);
   --surface-light-2: var(--color-n1-light-2);
-  --surface-dark-2: var(--color-n1-dark-2);
   --surface-light-3: var(--color-n1-light-3);
-  --surface-dark-3: var(--color-n1-dark-3);
   --surface-light-4: var(--color-n1-light-4);
-  --surface-dark-4: var(--color-n1-dark-4);
   --surface-light-5: var(--color-n1-light-5);
-  --surface-dark-5: var(--color-n1-dark-5);
   --surface-light-6: var(--color-n1-light-6);
-  --surface-dark-6: var(--color-n1-dark-6);
   --surface-light-7: var(--color-n1-light-7);
-  --surface-dark-7: var(--color-n1-dark-7);
   --surface-light-8: var(--color-n1-light-8);
-  --surface-dark-8: var(--color-n1-dark-8);
   --surface-light-9: var(--color-n1-light-9);
-  --surface-dark-9: var(--color-n1-dark-9);
   --surface-light-10: var(--color-n1-light-10);
-  --surface-dark-10: var(--color-n1-dark-10);
   --surface-light-11: var(--color-n1-light-11);
-  --surface-dark-11: var(--color-n1-dark-11);
   --surface-light-12: var(--color-n1-light-12);
+  --surface-dark-1: var(--color-n1-dark-1);
+  --surface-dark-2: var(--color-n1-dark-2);
+  --surface-dark-3: var(--color-n1-dark-3);
+  --surface-dark-4: var(--color-n1-dark-4);
+  --surface-dark-5: var(--color-n1-dark-5);
+  --surface-dark-6: var(--color-n1-dark-6);
+  --surface-dark-7: var(--color-n1-dark-7);
+  --surface-dark-8: var(--color-n1-dark-8);
+  --surface-dark-9: var(--color-n1-dark-9);
+  --surface-dark-10: var(--color-n1-dark-10);
+  --surface-dark-11: var(--color-n1-dark-11);
   --surface-dark-12: var(--color-n1-dark-12);
 }

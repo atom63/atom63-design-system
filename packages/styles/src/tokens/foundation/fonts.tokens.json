@@ -1,0 +1,40 @@
+{
+  "$description": "Font families: the family stacks the typography and font axis choose from.",
+  "font": {
+    "family": {
+      "sans": {
+        "$type": "fontFamily",
+        "$value": [
+          "Geist",
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
+          "Apple Color Emoji",
+          "Segoe UI Emoji"
+        ]
+      },
+      "serif": {
+        "$type": "fontFamily",
+        "$value": ["Brawler", "ui-serif", "Georgia", "Cambria", "Times New Roman", "Times", "serif"]
+      },
+      "mono": {
+        "$type": "fontFamily",
+        "$value": [
+          "Geist Mono",
+          "ui-monospace",
+          "SFMono-Regular",
+          "Menlo",
+          "Monaco",
+          "Consolas",
+          "Liberation Mono",
+          "Courier New",
+          "monospace"
+        ]
+      },
+      "pixel": {
+        "$type": "fontFamily",
+        "$value": ["Doto", "Geist Mono", "ui-monospace", "monospace"]
+      }
+    }
+  }
+}
