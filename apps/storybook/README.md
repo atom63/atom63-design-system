@@ -44,7 +44,8 @@ pnpm --filter @atom63/storybook test:visual
 
 When a pull request changes how something looks on purpose, run the **Visual regression**
 workflow manually on the branch with **update** checked. It regenerates the baselines in the same
-container and commits them to the branch; review the changed images in that commit. When the
+container, commits them to the branch, and starts CI and a comparison run for that commit; review
+the changed images in the commit. When the
 comparison fails, the workflow uploads the actual and diff images as the `visual-results`
 artifact.
 
