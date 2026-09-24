@@ -16,6 +16,13 @@
  * context, `[data-a63-<axis>='<context>']`. The default context also applies at
  * `:root`. The attribute comes from `$extensions["io.atom63.css"].attribute`.
  *
+ * A token whose value is computed in CSS keeps a plain DTCG `$value` (its main
+ * input, usually an alias, which is what Figma and other readers see) and puts
+ * the CSS expression in `$extensions["io.atom63.derive"]`. `{token.path}`
+ * placeholders in the expression become `var(--token-path)`, and each must name
+ * an existing token. Example: the auto brand ramp,
+ * `"var(--color-auto-50, {color.b1.50})"` over `$value` `"{color.b1.50}"`.
+ *
  * Usage: node scripts/build-css-from-dtcg.mjs [--check]
  */
 import { readdir, readFile, writeFile } from 'node:fs/promises'
@@ -104,7 +111,20 @@ function formatValue(type, value, name, knownNames) {
   }
 }
 
-/** Walks a DTCG group, inheriting `$type`, and yields [cssName, $type, $value]. */
+/** Expands an `io.atom63.derive` expression: `{a.b}` → `var(--a-b)`. */
+function formatDerive(expression, name, knownNames) {
+  if (typeof expression !== 'string') {
+    throw new Error(`${name}: $extensions["io.atom63.derive"] must be a CSS expression string`)
+  }
+  return expression.replaceAll(/\{([^{}]+)\}/g, (_, reference) => {
+    const target = aliasTarget(reference)
+    if (!knownNames.has(target))
+      throw new Error(`${name}: derive {${reference}} has no target token`)
+    return `var(--${target})`
+  })
+}
+
+/** Walks a DTCG group, inheriting `$type`, and yields [cssName, $type, $value, derive]. */
 function* walk(group, trail, inheritedType) {
   const type = group.$type ?? inheritedType
   for (const [key, node] of Object.entries(group)) {
@@ -115,7 +135,7 @@ function* walk(group, trail, inheritedType) {
     if (Object.hasOwn(node, '$value')) {
       const tokenType = node.$type ?? type
       if (!tokenType) throw new Error(`${name}: no $type on the token or its groups`)
-      yield [name, tokenType, node.$value]
+      yield [name, tokenType, node.$value, node.$extensions?.['io.atom63.derive']]
     } else {
       yield* walk(node, [...trail, key], type)
     }
@@ -174,9 +194,11 @@ function render(sourcePath, document, rules, knownNames) {
         .join('\n')}`
     : ''
   const blocks = rules.map(rule => {
-    const declarations = tokensOf([rule]).map(
-      ([name, type, value]) => `  --${name}: ${formatValue(type, value, name, knownNames)};`
-    )
+    const declarations = tokensOf([rule]).map(([name, type, value, derive]) => {
+      // The plain value is validated even when a derive expression replaces it.
+      const plain = formatValue(type, value, name, knownNames)
+      return `  --${name}: ${derive === undefined ? plain : formatDerive(derive, name, knownNames)};`
+    })
     return `${rule.selector} {\n${declarations.join('\n')}\n}\n`
   })
   return (
