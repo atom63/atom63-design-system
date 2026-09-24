@@ -70,18 +70,27 @@ moving to DTCG one layer at a time.
 
 ### From Figma to code
 
-Designers can change foundation colors and numbers in Figma and bring them back to code. In the
-Atom63 Figma plugin, open **Sync** and use **Export to code**: it finds the Atom63 variables whose
-value differs from the code and downloads `atom63-token-patch.json`. Then, in the repository:
+Designers can change tokens in Figma and bring them back to code. That covers foundation colors
+and numbers, and semantic tokens in the Mode, Brand and Surface collections, per mode. For example,
+a designer can point `text/accent` in dark mode at `brand/300`. In the Atom63 Figma plugin, open
+**Sync** and use **Export to code**. It finds the Atom63 variables whose value differs from the code,
+mode by mode, and downloads `atom63-token-patch.json`. Then, in the repository:
 
 ```bash
 pnpm --filter @atom63/styles tokens:apply path/to/atom63-token-patch.json
 ```
 
-This writes the new values into the DTCG sources, keeping each token's color space and units, and
-regenerates the CSS and models. If any token in the patch cannot be applied (for example, a token
-that is not in a DTCG source yet, or one that is an alias in the source), nothing is written and
-the command lists the reasons. Review the diff, add a changeset, and open a pull request; CI runs
+This writes each change into the DTCG sources and regenerates the CSS and models:
+- A change in a multi-mode collection goes into the resolver context of that mode.
+- A literal keeps the token's color space and units.
+- A re-pointed variable becomes a DTCG alias.
+
+If any change cannot be applied, nothing is written and the command lists the reasons. These cases
+cannot be applied:
+- a token that is not in a DTCG source yet
+- an alias in code set to a raw value in Figma
+- a value computed in CSS; change its inputs instead
+- a token shared by every brand, changed for one brand only; that exception is added in code Review the diff, add a changeset, and open a pull request; CI runs
 the visual regression on the result.
 
 Several files are generated from the tokens and checked byte for byte in CI; regenerate them

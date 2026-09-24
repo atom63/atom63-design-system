@@ -231,40 +231,90 @@ describe('Atom63 Figma export', () => {
     ])
     expect(toTokenPatch(plan)).toEqual({
       format: 'atom63-token-patch',
-      version: 1,
-      tokens: {
-        '--color-b1-500': { type: 'COLOR', value: { r: 0.1, g: 0.4, b: 0.9, a: 1 } },
-        '--spacing-4': { type: 'FLOAT', value: 18 },
-      },
+      version: 2,
+      changes: [
+        {
+          token: '--color-b1-500',
+          collection: 'Atom63 Foundation',
+          mode: 'Value',
+          type: 'COLOR',
+          value: { r: 0.1, g: 0.4, b: 0.9, a: 1 },
+        },
+        {
+          token: '--spacing-4',
+          collection: 'Atom63 Foundation',
+          mode: 'Value',
+          type: 'FLOAT',
+          value: 18,
+        },
+      ],
     })
+  })
+
+  it('exports a re-pointed alias in one mode of a multi-mode collection', async () => {
+    const { byToken, modeId, exportPlan } = await syncedFile()
+    const brand300 = byToken('--a63-brand-300')
+    expect(brand300).toBeDefined()
+    byToken('--a63-text-accent')?.setValueForMode(modeId('Atom63 Mode', 'dark'), {
+      type: 'VARIABLE_ALIAS',
+      id: brand300?.id ?? '',
+    })
+
+    const plan = await exportPlan()
+    expect(plan.skipped).toEqual([])
+    expect(toTokenPatch(plan).changes).toEqual([
+      {
+        token: '--a63-text-accent',
+        collection: 'Atom63 Mode',
+        mode: 'dark',
+        type: 'COLOR',
+        alias: '--a63-brand-300',
+      },
+    ])
   })
 
   it('skips what the patch cannot express, with a reason', async () => {
     const { byToken, modeId, exportPlan } = await syncedFile()
-    // Multi-mode collection: the value belongs to one [data-a63-surface] scope.
+    // An alias in code (surface n2 points at the n2 palette), set to a raw color.
     byToken('--surface-light-2')?.setValueForMode(modeId('Atom63 Surface', 'n2'), {
       r: 1,
       g: 0,
       b: 0,
       a: 1,
     })
-    // Re-pointed at another variable in Figma.
-    const blue = byToken('--color-b1-400')
-    if (blue) {
-      byToken('--color-b1-500')?.setValueForMode(modeId('Atom63 Foundation', 'Value'), {
-        type: 'VARIABLE_ALIAS',
-        id: blue.id,
-      })
-    }
     // A string token.
     byToken('--font-family-sans')?.setValueForMode(modeId('Atom63 Foundation', 'Value'), 'Inter')
 
     const plan = await exportPlan()
     expect(plan.changes).toEqual([])
-    expect(plan.skipped.map(item => item.reason).sort()).toEqual([
-      'Atom63 Surface has several modes',
-      'an alias or unset value in Figma',
-      'string tokens are not exported yet',
+    expect(plan.skipped).toEqual([
+      {
+        name: 'font/family/sans',
+        reason: 'string tokens are not exported yet',
+      },
+      {
+        name: 'surface/light/2 (n2)',
+        reason: 'an alias in code; point it at another variable instead of a raw value',
+      },
+    ])
+  })
+
+  it('exports a literal re-pointed at another variable as an alias', async () => {
+    const { byToken, modeId, exportPlan } = await syncedFile()
+    const blue = byToken('--color-b1-400')
+    byToken('--color-b1-500')?.setValueForMode(modeId('Atom63 Foundation', 'Value'), {
+      type: 'VARIABLE_ALIAS',
+      id: blue?.id ?? '',
+    })
+    const plan = await exportPlan()
+    expect(toTokenPatch(plan).changes).toEqual([
+      {
+        token: '--color-b1-500',
+        collection: 'Atom63 Foundation',
+        mode: 'Value',
+        type: 'COLOR',
+        alias: '--color-b1-400',
+      },
     ])
   })
 })
