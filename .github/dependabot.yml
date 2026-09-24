@@ -18,5 +18,7 @@ updates:
     schedule:
       interval: weekly
     groups:
+      # Majors stay separate here too: a major can change the runtime or how
+      # credentials are stored, which needs a release-notes read.
       actions:
-        patterns: ['*']
+        update-types: [minor, patch]
