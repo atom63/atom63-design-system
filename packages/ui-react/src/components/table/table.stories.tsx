@@ -12,7 +12,6 @@ import {
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { pendingContrastReview } from '../story-probes'
 
 const meta = {
   title: 'UI React/Table',
@@ -29,7 +28,6 @@ const rows = [
 ]
 
 export const Playground: Story = {
-  parameters: pendingContrastReview,
   render: () => (
     <div style={{ width: 480 }}>
       <Table>

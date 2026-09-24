@@ -9,41 +9,45 @@
 .light,
 [data-a63-mode='light'] {
   --a63-badge-red-accent: var(--color-red-500);
-  --a63-badge-red-foreground: var(--color-red-600);
+  --a63-badge-red-foreground: var(--color-red-700);
   --a63-badge-orange-accent: var(--color-orange-500);
-  --a63-badge-orange-foreground: var(--color-orange-600);
+  --a63-badge-orange-foreground: var(--color-orange-800);
   --a63-badge-amber-accent: var(--color-amber-500);
-  --a63-badge-amber-foreground: var(--color-amber-600);
+  --a63-badge-amber-foreground: var(--color-amber-800);
   --a63-badge-yellow-accent: var(--color-yellow-500);
-  --a63-badge-yellow-foreground: var(--color-yellow-600);
+  --a63-badge-yellow-foreground: var(--color-yellow-800);
   --a63-badge-lime-accent: var(--color-lime-500);
-  --a63-badge-lime-foreground: var(--color-lime-600);
+  --a63-badge-lime-foreground: var(--color-lime-800);
   --a63-badge-green-accent: var(--color-green-500);
-  --a63-badge-green-foreground: var(--color-green-600);
+  --a63-badge-green-foreground: var(--color-green-800);
   --a63-badge-emerald-accent: var(--color-emerald-500);
-  --a63-badge-emerald-foreground: var(--color-emerald-600);
+  --a63-badge-emerald-foreground: var(--color-emerald-800);
   --a63-badge-teal-accent: var(--color-teal-500);
-  --a63-badge-teal-foreground: var(--color-teal-600);
+  --a63-badge-teal-foreground: var(--color-teal-800);
   --a63-badge-cyan-accent: var(--color-cyan-500);
-  --a63-badge-cyan-foreground: var(--color-cyan-600);
+  --a63-badge-cyan-foreground: var(--color-cyan-800);
   --a63-badge-sky-accent: var(--color-sky-500);
-  --a63-badge-sky-foreground: var(--color-sky-600);
+  --a63-badge-sky-foreground: var(--color-sky-700);
   --a63-badge-blue-accent: var(--color-blue-500);
-  --a63-badge-blue-foreground: var(--color-blue-600);
+  --a63-badge-blue-foreground: var(--color-blue-700);
   --a63-badge-indigo-accent: var(--color-indigo-500);
-  --a63-badge-indigo-foreground: var(--color-indigo-600);
+  --a63-badge-indigo-foreground: var(--color-indigo-700);
   --a63-badge-violet-accent: var(--color-violet-500);
-  --a63-badge-violet-foreground: var(--color-violet-600);
+  --a63-badge-violet-foreground: var(--color-violet-700);
   --a63-badge-purple-accent: var(--color-purple-500);
-  --a63-badge-purple-foreground: var(--color-purple-600);
+  --a63-badge-purple-foreground: var(--color-purple-700);
   --a63-badge-fuchsia-accent: var(--color-fuchsia-500);
-  --a63-badge-fuchsia-foreground: var(--color-fuchsia-600);
+  --a63-badge-fuchsia-foreground: var(--color-fuchsia-700);
   --a63-badge-pink-accent: var(--color-pink-500);
-  --a63-badge-pink-foreground: var(--color-pink-600);
+  --a63-badge-pink-foreground: var(--color-pink-700);
   --a63-badge-rose-accent: var(--color-rose-500);
-  --a63-badge-rose-foreground: var(--color-rose-600);
+  --a63-badge-rose-foreground: var(--color-rose-700);
   --a63-badge-neutral-accent: var(--color-neutral-500);
-  --a63-badge-neutral-foreground: var(--color-neutral-600);
+  --a63-badge-neutral-foreground: var(--color-neutral-700);
+  /* Status chips: the status color itself is too light for text on its tint. */
+  --a63-badge-info-foreground: var(--color-info-700);
+  --a63-badge-success-foreground: var(--color-success-700);
+  --a63-badge-warning-foreground: var(--color-warning-800);
 }
 
 :is(.dark, [data-a63-mode='dark']) {
@@ -65,4 +69,7 @@
   --a63-badge-pink-foreground: var(--color-pink-400);
   --a63-badge-rose-foreground: var(--color-rose-400);
   --a63-badge-neutral-foreground: var(--color-neutral-400);
+  --a63-badge-info-foreground: var(--color-info-400);
+  --a63-badge-success-foreground: var(--color-success-400);
+  --a63-badge-warning-foreground: var(--color-warning-400);
 }

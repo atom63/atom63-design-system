@@ -4,7 +4,6 @@ import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { CircleDot } from 'lucide-react'
 import { type ReactNode, useState } from 'react'
-import { pendingContrastReview } from '../story-probes'
 
 function Demo({
   multiple = false,
@@ -140,7 +139,6 @@ export const Sizes: Story = {
 }
 
 export const Tones: Story = {
-  parameters: pendingContrastReview,
   render: () => (
     <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
       <Demo tone="neutral" />

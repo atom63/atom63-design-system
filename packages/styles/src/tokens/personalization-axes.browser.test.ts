@@ -155,12 +155,14 @@ describe('os axis', () => {
 })
 
 describe('auto brand ramp', () => {
+  // The primary action uses step 600 of the ramp, which keeps white text at
+  // WCAG AA contrast (see tokens/brand.css).
   it('falls back to the b1 ramp when no --color-auto-* is set', () => {
     const el = root()
     el.setAttribute('data-a63-brand', 'auto')
-    // --a63-action-primary = --a63-brand-500 = var(--color-auto-500, var(--color-b1-500))
+    // --a63-action-primary = --a63-brand-600 = var(--color-auto-600, var(--color-b1-600))
     const primary = cssVar('--a63-action-primary')
-    const b1 = getComputedStyle(el).getPropertyValue('--color-b1-500').trim()
+    const b1 = getComputedStyle(el).getPropertyValue('--color-b1-600').trim()
     expect(primary).toBe(b1)
     expect(primary).not.toBe('')
   })
@@ -168,7 +170,7 @@ describe('auto brand ramp', () => {
   it('uses the extracted --color-auto ramp when present', () => {
     const el = root()
     el.setAttribute('data-a63-brand', 'auto')
-    el.style.setProperty('--color-auto-500', 'rgb(10, 20, 30)')
+    el.style.setProperty('--color-auto-600', 'rgb(10, 20, 30)')
     expect(cssVar('--a63-action-primary')).toBe('rgb(10, 20, 30)')
   })
 })

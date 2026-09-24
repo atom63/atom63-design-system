@@ -1336,11 +1336,11 @@
   .text-\[color\:var\(--a63-grid-crosshair-color\,var\(--input\,var\(--a63-border-subtle\)\)\)\] {
     color: var(--a63-grid-crosshair-color,var(--input,var(--a63-border-subtle)));
   }
-  .text-\[var\(--a63-action-primary\)\] {
-    color: var(--a63-action-primary);
-  }
   .text-\[var\(--a63-lightbox-on-media-fg\)\] {
     color: var(--a63-lightbox-on-media-fg);
+  }
+  .text-\[var\(--a63-text-accent\)\] {
+    color: var(--a63-text-accent);
   }
   .text-\[var\(--a63-text-primary\)\] {
     color: var(--a63-text-primary);

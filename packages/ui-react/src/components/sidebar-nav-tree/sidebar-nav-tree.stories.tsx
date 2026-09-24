@@ -13,7 +13,6 @@ import {
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import { pendingContrastReview } from '../story-probes'
 
 const meta = {
   title: 'UI React/SidebarNavTree',
@@ -61,7 +60,6 @@ function Tree() {
 }
 
 export const Playground: Story = {
-  parameters: pendingContrastReview,
   render: () => <Tree />,
 }
 
@@ -91,7 +89,6 @@ function SectionOnlyTree() {
 
 /** Sections without a page of their own: the whole row is the toggle. */
 export const SectionWithoutLink: Story = {
-  parameters: pendingContrastReview,
   render: () => <SectionOnlyTree />,
 }
 

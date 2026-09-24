@@ -14,7 +14,6 @@ import {
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
-import { pendingContrastReview } from '../story-probes'
 
 const meta = {
   title: 'UI React/Popover',
@@ -98,7 +97,6 @@ function ThemeCell() {
 }
 
 export const Themes: Story = {
-  parameters: pendingContrastReview,
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>
       {themes.map(theme =>

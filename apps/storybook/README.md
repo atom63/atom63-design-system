@@ -21,11 +21,10 @@ pnpm --filter @atom63/storybook test
 ```
 
 **Accessibility.** The same render tests run [axe](https://github.com/dequelabs/axe-core) on every
-story through `@storybook/addon-a11y`, and any violation fails the test. Two shared parameters in
-`packages/ui-react/src/components/story-probes.tsx` switch off specific rules, each for a stated
-reason: `repeatedLandmarks` for theme and environment matrices that repeat a component's landmarks
-by design, and `pendingContrastReview` for stories whose only failures are color contrast set by the
-design tokens, which waits on a design decision. Label every form control you add to a story.
+story through `@storybook/addon-a11y`, and any violation fails the test. The shared `repeatedLandmarks`
+parameter in `packages/ui-react/src/components/story-probes.tsx` switches off the two landmark
+uniqueness rules for theme and environment matrices, which repeat a component's landmarks by design.
+Every other rule, including color contrast, applies to every story. Label every form control you add to a story.
 
 **Server rendering.** The `ssr` project renders every story with `renderToString` in Node, where
 `window` and `document` do not exist, and fails if a component touches browser globals during import

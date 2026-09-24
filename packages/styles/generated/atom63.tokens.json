@@ -41,9 +41,9 @@
   ],
   "summary": {
     "sourceFiles": 36,
-    "declarations": 1478,
-    "uniqueCssVariables": 1016,
-    "figmaMappedDeclarations": 1457
+    "declarations": 1491,
+    "uniqueCssVariables": 1021,
+    "figmaMappedDeclarations": 1470
   },
   "entries": [
     {
@@ -359,7 +359,7 @@
       "name": "a63-action-primary",
       "cssVar": "--a63-action-primary",
       "type": "color",
-      "value": "var(--a63-brand-500)",
+      "value": "var(--a63-brand-600)",
       "sourceFile": "packages/styles/src/tokens/brand.css",
       "layer": "semantic",
       "figma": {
@@ -367,14 +367,30 @@
         "path": "action/primary"
       },
       "lifecycle": "preview",
-      "aliases": ["--a63-brand-500"],
+      "aliases": ["--a63-brand-600"],
       "scope": ":root, [data-a63-brand]"
+    },
+    {
+      "name": "a63-action-primary",
+      "cssVar": "--a63-action-primary",
+      "type": "color",
+      "value": "var(--a63-brand-700)",
+      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "action/primary",
+        "mode": "brand: b3"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-brand-700"],
+      "scope": "[data-a63-brand='b3']"
     },
     {
       "name": "a63-action-primary-foreground",
       "cssVar": "--a63-action-primary-foreground",
       "type": "color",
-      "value": "oklch( from var(--a63-action-primary) clamp(0.15, (0.665 - l) * 1000, 0.985) calc(c * 0.06) h )",
+      "value": "oklch( from var(--a63-action-primary) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h )",
       "sourceFile": "packages/styles/src/tokens/brand.css",
       "layer": "semantic",
       "figma": {
@@ -389,7 +405,7 @@
       "name": "a63-action-primary-hover",
       "cssVar": "--a63-action-primary-hover",
       "type": "color",
-      "value": "var(--a63-brand-600)",
+      "value": "var(--a63-brand-700)",
       "sourceFile": "packages/styles/src/tokens/brand.css",
       "layer": "semantic",
       "figma": {
@@ -397,8 +413,24 @@
         "path": "action/primary/hover"
       },
       "lifecycle": "preview",
-      "aliases": ["--a63-brand-600"],
+      "aliases": ["--a63-brand-700"],
       "scope": ":root, [data-a63-brand]"
+    },
+    {
+      "name": "a63-action-primary-hover",
+      "cssVar": "--a63-action-primary-hover",
+      "type": "color",
+      "value": "var(--a63-brand-800)",
+      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "action/primary/hover",
+        "mode": "brand: b3"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-brand-800"],
+      "scope": "[data-a63-brand='b3']"
     },
     {
       "name": "a63-action-primary-text-shadow",
@@ -525,7 +557,7 @@
       "name": "a63-badge-amber-foreground",
       "cssVar": "--a63-badge-amber-foreground",
       "type": "color",
-      "value": "var(--color-amber-600)",
+      "value": "var(--color-amber-800)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -534,7 +566,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-amber-600"],
+      "aliases": ["--color-amber-800"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -573,7 +605,7 @@
       "name": "a63-badge-blue-foreground",
       "cssVar": "--a63-badge-blue-foreground",
       "type": "color",
-      "value": "var(--color-blue-600)",
+      "value": "var(--color-blue-700)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -582,7 +614,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-blue-600"],
+      "aliases": ["--color-blue-700"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -621,7 +653,7 @@
       "name": "a63-badge-cyan-foreground",
       "cssVar": "--a63-badge-cyan-foreground",
       "type": "color",
-      "value": "var(--color-cyan-600)",
+      "value": "var(--color-cyan-800)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -630,7 +662,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-cyan-600"],
+      "aliases": ["--color-cyan-800"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -669,7 +701,7 @@
       "name": "a63-badge-emerald-foreground",
       "cssVar": "--a63-badge-emerald-foreground",
       "type": "color",
-      "value": "var(--color-emerald-600)",
+      "value": "var(--color-emerald-800)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -678,7 +710,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-emerald-600"],
+      "aliases": ["--color-emerald-800"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -717,7 +749,7 @@
       "name": "a63-badge-fuchsia-foreground",
       "cssVar": "--a63-badge-fuchsia-foreground",
       "type": "color",
-      "value": "var(--color-fuchsia-600)",
+      "value": "var(--color-fuchsia-700)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -726,7 +758,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-fuchsia-600"],
+      "aliases": ["--color-fuchsia-700"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -765,7 +797,7 @@
       "name": "a63-badge-green-foreground",
       "cssVar": "--a63-badge-green-foreground",
       "type": "color",
-      "value": "var(--color-green-600)",
+      "value": "var(--color-green-800)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -774,7 +806,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-green-600"],
+      "aliases": ["--color-green-800"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -813,7 +845,7 @@
       "name": "a63-badge-indigo-foreground",
       "cssVar": "--a63-badge-indigo-foreground",
       "type": "color",
-      "value": "var(--color-indigo-600)",
+      "value": "var(--color-indigo-700)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -822,7 +854,39 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-indigo-600"],
+      "aliases": ["--color-indigo-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-info-foreground",
+      "cssVar": "--a63-badge-info-foreground",
+      "type": "color",
+      "value": "var(--color-info-400)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Atom63 Contract",
+        "path": "badge/info/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-info-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-info-foreground",
+      "cssVar": "--a63-badge-info-foreground",
+      "type": "color",
+      "value": "var(--color-info-700)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Atom63 Contract",
+        "path": "badge/info/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-info-700"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -861,7 +925,7 @@
       "name": "a63-badge-lime-foreground",
       "cssVar": "--a63-badge-lime-foreground",
       "type": "color",
-      "value": "var(--color-lime-600)",
+      "value": "var(--color-lime-800)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -870,7 +934,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-lime-600"],
+      "aliases": ["--color-lime-800"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -909,7 +973,7 @@
       "name": "a63-badge-neutral-foreground",
       "cssVar": "--a63-badge-neutral-foreground",
       "type": "color",
-      "value": "var(--color-neutral-600)",
+      "value": "var(--color-neutral-700)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -918,7 +982,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-neutral-600"],
+      "aliases": ["--color-neutral-700"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -957,7 +1021,7 @@
       "name": "a63-badge-orange-foreground",
       "cssVar": "--a63-badge-orange-foreground",
       "type": "color",
-      "value": "var(--color-orange-600)",
+      "value": "var(--color-orange-800)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -966,7 +1030,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-orange-600"],
+      "aliases": ["--color-orange-800"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -1005,7 +1069,7 @@
       "name": "a63-badge-pink-foreground",
       "cssVar": "--a63-badge-pink-foreground",
       "type": "color",
-      "value": "var(--color-pink-600)",
+      "value": "var(--color-pink-700)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1014,7 +1078,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-pink-600"],
+      "aliases": ["--color-pink-700"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -1053,7 +1117,7 @@
       "name": "a63-badge-purple-foreground",
       "cssVar": "--a63-badge-purple-foreground",
       "type": "color",
-      "value": "var(--color-purple-600)",
+      "value": "var(--color-purple-700)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1062,7 +1126,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-purple-600"],
+      "aliases": ["--color-purple-700"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -1101,7 +1165,7 @@
       "name": "a63-badge-red-foreground",
       "cssVar": "--a63-badge-red-foreground",
       "type": "color",
-      "value": "var(--color-red-600)",
+      "value": "var(--color-red-700)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1110,7 +1174,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-red-600"],
+      "aliases": ["--color-red-700"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -1149,7 +1213,7 @@
       "name": "a63-badge-rose-foreground",
       "cssVar": "--a63-badge-rose-foreground",
       "type": "color",
-      "value": "var(--color-rose-600)",
+      "value": "var(--color-rose-700)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1158,7 +1222,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-rose-600"],
+      "aliases": ["--color-rose-700"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -1197,7 +1261,7 @@
       "name": "a63-badge-sky-foreground",
       "cssVar": "--a63-badge-sky-foreground",
       "type": "color",
-      "value": "var(--color-sky-600)",
+      "value": "var(--color-sky-700)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1206,7 +1270,39 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-sky-600"],
+      "aliases": ["--color-sky-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-success-foreground",
+      "cssVar": "--a63-badge-success-foreground",
+      "type": "color",
+      "value": "var(--color-success-400)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Atom63 Contract",
+        "path": "badge/success/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-success-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-success-foreground",
+      "cssVar": "--a63-badge-success-foreground",
+      "type": "color",
+      "value": "var(--color-success-700)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Atom63 Contract",
+        "path": "badge/success/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-success-700"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -1245,7 +1341,7 @@
       "name": "a63-badge-teal-foreground",
       "cssVar": "--a63-badge-teal-foreground",
       "type": "color",
-      "value": "var(--color-teal-600)",
+      "value": "var(--color-teal-800)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1254,7 +1350,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-teal-600"],
+      "aliases": ["--color-teal-800"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -1293,7 +1389,7 @@
       "name": "a63-badge-violet-foreground",
       "cssVar": "--a63-badge-violet-foreground",
       "type": "color",
-      "value": "var(--color-violet-600)",
+      "value": "var(--color-violet-700)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1302,7 +1398,39 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-violet-600"],
+      "aliases": ["--color-violet-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-warning-foreground",
+      "cssVar": "--a63-badge-warning-foreground",
+      "type": "color",
+      "value": "var(--color-warning-400)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Atom63 Contract",
+        "path": "badge/warning/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-warning-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-warning-foreground",
+      "cssVar": "--a63-badge-warning-foreground",
+      "type": "color",
+      "value": "var(--color-warning-800)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Atom63 Contract",
+        "path": "badge/warning/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-warning-800"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -1341,7 +1469,7 @@
       "name": "a63-badge-yellow-foreground",
       "cssVar": "--a63-badge-yellow-foreground",
       "type": "color",
-      "value": "var(--color-yellow-600)",
+      "value": "var(--color-yellow-800)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1350,7 +1478,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-yellow-600"],
+      "aliases": ["--color-yellow-800"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -2648,6 +2776,53 @@
       "lifecycle": "preview",
       "aliases": ["--color-b6-950"],
       "scope": "[data-a63-brand='b6']"
+    },
+    {
+      "name": "a63-brand-text",
+      "cssVar": "--a63-brand-text",
+      "type": "color",
+      "value": "var(--a63-brand-600)",
+      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "brand/text"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-brand-600"],
+      "scope": ":root, [data-a63-brand]"
+    },
+    {
+      "name": "a63-brand-text",
+      "cssVar": "--a63-brand-text",
+      "type": "color",
+      "value": "var(--a63-brand-700)",
+      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "brand/text",
+        "mode": "brand: b2"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-brand-700"],
+      "scope": "[data-a63-brand='b2']"
+    },
+    {
+      "name": "a63-brand-text",
+      "cssVar": "--a63-brand-text",
+      "type": "color",
+      "value": "var(--a63-brand-700)",
+      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "brand/text",
+        "mode": "brand: b3"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-brand-700"],
+      "scope": "[data-a63-brand='b3']"
     },
     {
       "name": "a63-choice-border-width",
@@ -5755,6 +5930,38 @@
       },
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-text-accent",
+      "cssVar": "--a63-text-accent",
+      "type": "color",
+      "value": "var(--a63-brand-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "text/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-brand-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-text-accent",
+      "cssVar": "--a63-text-accent",
+      "type": "color",
+      "value": "var(--a63-brand-text)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "text/accent",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-brand-text"],
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-text-primary",
