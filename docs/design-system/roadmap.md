@@ -33,7 +33,8 @@
 | `widgets` | **拆分** | `src/foundation/`（约 4k 行：布局单位、网格缩放、WidgetCard/Surface、加载 / 错误状态）是 DS 已有 `contracts/widget.css` 在 React 侧的实现，应该进 DS；各个小组件（天气固定在洛杉矶、GitHub 统计、Behance 等）是作品集产品，留下。README 里的"headless"指的是"不自己取数据"，组件本身带大量 Tailwind 样式（约 600 处 `className=`） |
 | `brand` | **拆分** | Logo 基础组件迁入 DS，替换掉 DS docs 里现有的逐字节副本；SEO 数据是你的个人信息，留下 |
 | `icons` | **清理 + 拆分** | `AnimatedCheck`、`Spinner` 与 DS 重复，删除；系统图标映射迁入；公司 logo、Behance、艺术素材留下 |
-| `os63`、`timeline`、`mdx`、`portfolio-content`、`app-services`、`dev`、`create-atom63` | **留在 atom63-vite** | 产品或内容 |
+| `mdx` | **拆分**（2026-09-25 修正，原判断为"留下"） | DS 文档站的 `apps/docs/src/mdx-kit` 是从 `@atom63/mdx` 复制的一部分：68 个文件相同来源，其中 4 个已经不一致，属于正在发生的漂移。排版 primitives（aside、bleed、grid、stack、reveal、stagger、motion token）、通用 block（callout、code-block、tabs、steps、accordion、figure、compare、mermaid、目录等）、MDX provider 和样式迁入 DS，文档站和 atom63-vite 都从同一个包使用，删除 `mdx-kit`。`credits-block`、`craft-demos`、`page-meta` 这类和作品集内容绑定的部分留下。另外 mdx 自带一套基于 photoswipe 的 lightbox，与 ui-react 的 `media-lightbox` 重复，迁入时合并为一套 |
+| `os63`、`timeline`、`portfolio-content`、`app-services`、`dev`、`create-atom63` | **留在 atom63-vite** | 产品或内容。`dev` 只有两个开发用 hook（快捷键、调试 class），没有 token 或组件 |
 | `dialkit` | **留下或单独成仓** | 是 vendored 的上游项目，自带主题，不用 `--a63` token；是开发工具，不是 DS 组件 |
 | `slides`、`resume`、`create-deck`、`create-resume` | **可单独成仓**（"文档引擎"） | 已发布，与 DS、作品集都无关；`resume` 有自己的纸张 token 体系 |
 | `ascii-loader` | **保持独立包** | 已经是独立发布的包 |
@@ -45,9 +46,10 @@
 
 1. brand 的 logo 组件（约 150 行，顺带消除 DS docs 里的副本）
 2. icons 清理（删除重复组件，迁入系统图标映射；6 个使用方要改导入）
-3. `inform`（发布 + 写 DS 文档页；iOS 版本后补）
-4. `agent` 的 runtime 和 controller hook（先移除用不到的 `portfolio-content` 依赖）
-5. `widgets/foundation`（价值最高、工作量最大：把 Tailwind class 改成 DS 的 CSS / token，还要写 Swift 版本）
+3. `mdx` 的通用部分（消除 DS docs 里的 `mdx-kit` 副本，它已经在漂移；同时合并两套 lightbox）
+4. `inform`（发布 + 写 DS 文档页；iOS 版本后补）
+5. `agent` 的 runtime 和 controller hook（先移除用不到的 `portfolio-content` 依赖）
+6. `widgets/foundation`（价值最高、工作量最大：把 Tailwind class 改成 DS 的 CSS / token，还要写 Swift 版本）
 
 ---
 
@@ -206,7 +208,7 @@ Astryx 是 Meta 开源的 React 设计系统（MIT，2026-06 公开 beta，0.6.x
 | A. 正确性（近期、小） | Swift 颜色改从语义 token 生成；新增 Web / iOS 值级别一致性检查 | 修复已经存在的漂移 | 已完成（#24） |
 | B. 唯一源头（最大的一步） | 语义、品牌、contract、主题迁入 DTCG + resolver；公式写成派生规则；主题进入 Figma mode；打通 Figma 回写 | 消除黑盒，实现 Figma 1:1 | B1–B7 已完成（#25–#32）；B8（typography、radius、effects 和几个轴文件，共 215 条）未开始 |
 | C. 流水线 | 脚手架、由 contract 生成文档、MCP / CLI、craft lint、模板库 | 流程化产出 | 未开始 |
-| D. pattern 迁入 | brand logo、icons 清理、inform、agent runtime、widgets foundation | 完成分离 | 未开始 |
+| D. pattern 迁入 | brand logo、icons 清理、mdx 通用部分、inform、agent runtime、widgets foundation | 完成分离 | 未开始 |
 | E. 质量标杆 | a11y 规格合约、vibe tests、iOS 截图测试 | 把控 craft 与 taste | 未开始 |
 
 A 可以马上开始。B 需要先定下 D1；D 和 C 可以部分并行。（2026-09-24 更新：token manifest 的 1669 条中有 1454 条，即 87%，已由 DTCG 生成。）
