@@ -8,6 +8,7 @@
   "include": [
     ".storybook",
     "ssr",
+    "stories",
     "vitest.config.ts",
     "../../packages/ui-react/src/**/*.stories.tsx"
   ]
