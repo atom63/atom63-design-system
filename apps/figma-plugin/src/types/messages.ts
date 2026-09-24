@@ -509,6 +509,11 @@ export interface SyncApplyMessage {
   type: 'sync-apply'
 }
 
+/** Collect variables edited in Figma into a token patch for the repository. */
+export interface SyncExportMessage {
+  type: 'sync-export'
+}
+
 /** Plugin settings stored via clientStorage */
 export interface PluginSettings {
   colorFormat: 'oklch' | 'hex' | 'rgba' | 'hsl'
@@ -629,6 +634,7 @@ export type UIToMainMessage =
   | CloseMessage
   | SyncPreviewMessage
   | SyncApplyMessage
+  | SyncExportMessage
 
 // ============================================================================
 // MAIN THREAD → UI MESSAGES
@@ -704,6 +710,16 @@ export interface SyncApplyResultMessage {
   }
 }
 
+export interface SyncExportResultMessage {
+  type: 'sync-export-result'
+  data: {
+    changes: { name: string; token: string }[]
+    skipped: { name: string; reason: string }[]
+    /** JSON for `pnpm --filter @atom63/styles tokens:apply`. */
+    patch: string
+  }
+}
+
 export interface SyncErrorMessage {
   type: 'sync-error'
   data: { message: string }
@@ -762,6 +778,7 @@ export type MainToUIMessage =
   | SettingsLoadedMessage
   | SyncPreviewResultMessage
   | SyncApplyResultMessage
+  | SyncExportResultMessage
   | SyncErrorMessage
 
 // ============================================================================

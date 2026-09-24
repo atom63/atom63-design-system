@@ -68,6 +68,22 @@ The foundation token layer is defined in
 (semantic roles, themes, and the remaining personalization axes) are still authored in CSS and are
 moving to DTCG one layer at a time.
 
+### From Figma to code
+
+Designers can change foundation colors and numbers in Figma and bring them back to code. In the
+Atom63 Figma plugin, open **Sync** and use **Export to code**: it finds the Atom63 variables whose
+value differs from the code and downloads `atom63-token-patch.json`. Then, in the repository:
+
+```bash
+pnpm --filter @atom63/styles tokens:apply path/to/atom63-token-patch.json
+```
+
+This writes the new values into the DTCG sources, keeping each token's color space and units, and
+regenerates the CSS and models. If any token in the patch cannot be applied (for example, a token
+that is not in a DTCG source yet, or one that is an alias in the source), nothing is written and
+the command lists the reasons. Review the diff, add a changeset, and open a pull request; CI runs
+the visual regression on the result.
+
 Several files are generated from the tokens and checked byte for byte in CI; regenerate them
 instead of editing them by hand:
 

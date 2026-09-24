@@ -38,3 +38,10 @@
 .new {
   color: var(--primary);
 }
+
+.patch {
+  width: 100%;
+  font-family: var(--font-family-mono, monospace);
+  font-size: 11px;
+  resize: vertical;
+}

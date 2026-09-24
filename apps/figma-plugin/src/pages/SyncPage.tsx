@@ -2,10 +2,15 @@ import { useState } from 'react'
 
 import { Alert, Button, ScrollArea, SectionHeader } from '../components/ui'
 import { useFigmaMessage, usePostMessage } from '../hooks/useFigmaMessage'
-import type { SyncModelSummary, SyncPlanSummary, SyncApplyResultMessage } from '../types/messages'
+import type {
+  SyncApplyResultMessage,
+  SyncExportResultMessage,
+  SyncModelSummary,
+  SyncPlanSummary,
+} from '../types/messages'
 import styles from './SyncPage.module.css'
 
-type Status = 'idle' | 'previewing' | 'applying'
+type Status = 'idle' | 'previewing' | 'applying' | 'exporting'
 
 function PlanTable({ plan }: { plan: SyncPlanSummary }) {
   return (
@@ -46,6 +51,7 @@ export function SyncPage() {
   const [plan, setPlan] = useState<SyncPlanSummary | null>(null)
   const [applied, setApplied] = useState<SyncApplyResultMessage['data'] | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [exported, setExported] = useState<SyncExportResultMessage['data'] | null>(null)
 
   useFigmaMessage(message => {
     if (message.type === 'sync-preview-result') {
@@ -56,6 +62,9 @@ export function SyncPage() {
     } else if (message.type === 'sync-apply-result') {
       setApplied(message.data)
       setPlan(message.data.verification)
+      setStatus('idle')
+    } else if (message.type === 'sync-export-result') {
+      setExported(message.data)
       setStatus('idle')
     } else if (message.type === 'sync-error') {
       setError(message.data.message)
@@ -73,6 +82,22 @@ export function SyncPage() {
     setError(null)
     setStatus('applying')
     postMessage({ type: 'sync-apply' })
+  }
+
+  const exportChanges = () => {
+    setError(null)
+    setStatus('exporting')
+    postMessage({ type: 'sync-export' })
+  }
+
+  const downloadPatch = () => {
+    if (!exported) return
+    const url = URL.createObjectURL(new Blob([exported.patch], { type: 'application/json' }))
+    const link = document.createElement('a')
+    link.href = url
+    link.download = 'atom63-token-patch.json'
+    link.click()
+    URL.revokeObjectURL(url)
   }
 
   const pending = plan ? plan.totals.create + plan.totals.update : 0
@@ -143,6 +168,49 @@ export function SyncPage() {
         )}
 
         {plan && <PlanTable plan={plan} />}
+
+        <SectionHeader
+          description="Collect the Atom63 variables you edited in this file into a token patch. Apply it in the repository with `pnpm --filter @atom63/styles tokens:apply <patch>`, which updates the DTCG sources and regenerates the CSS. Colors and numbers in the Foundation collection are exported; anything else is listed as skipped."
+          title="Export to code"
+        />
+
+        <div className={styles.actions}>
+          <Button loading={status === 'exporting'} onClick={exportChanges} variant="secondary">
+            Find edited variables
+          </Button>
+          <Button
+            disabled={!exported || exported.changes.length === 0}
+            onClick={downloadPatch}
+            variant="primary"
+          >
+            {exported ? `Download patch (${exported.changes.length})` : 'Download patch'}
+          </Button>
+        </div>
+
+        {exported && exported.changes.length === 0 && exported.skipped.length === 0 && (
+          <Alert title="Nothing to export" variant="info">
+            Every Atom63 variable in this file matches the code.
+          </Alert>
+        )}
+
+        {exported && exported.skipped.length > 0 && (
+          <Alert title="Not exported" variant="warning">
+            {exported.skipped.map(item => `${item.name}: ${item.reason}`).join('; ')}
+          </Alert>
+        )}
+
+        {exported && exported.changes.length > 0 && (
+          <>
+            <p className={styles.meta}>{exported.changes.map(change => change.name).join(', ')}</p>
+            <textarea
+              aria-label="Token patch"
+              className={styles.patch}
+              readOnly
+              rows={8}
+              value={exported.patch}
+            />
+          </>
+        )}
       </div>
     </ScrollArea>
   )

@@ -62,6 +62,21 @@
 - styles 浏览器测试（包括所有个性化维度）、Swift token 检查、Figma 插件测试通过；
   Storybook 视觉回归 446/446 一致。
 
+## Figma → 代码同步（第一版，已完成）
+
+- **插件**：Sync 页面新增 "Export to code"。`planExport` 对比 Figma 变量和同步模型，
+  只导出单模式集合里的字面量颜色和数值，输出 `atom63-token-patch.json`（按 CSS 变量名索引，
+  值保持 Figma 的格式）。多模式集合、Figma 里改成引用的变量和字符串 token 会列为 "Not exported"
+  并给出原因，不会静默丢弃。
+- **仓库**：`pnpm --filter @atom63/styles tokens:apply <patch>` 把值写回 DTCG 源文件并重新生成。
+  sRGB token 取最接近的 8 位整数并更新 `hex`；oklch token 用 Björn Ottosson 的公式从 sRGB 换算，
+  保留 3 位小数；dimension、duration 按源文件原来的单位写回。任何一个 token 写不进去就全部不写。
+- **不在插件里放 GitHub token**：插件只产出文件，PR 在仓库这边开，凭据不进 Figma。
+- **验证**：插件端 3 个导出测试（同步后无改动、颜色和数值导出、不支持的情况带原因跳过）；
+  仓库端 5 个测试（换算、各色彩空间和单位、全有或全无、格式校验）；端到端把一个补丁应用到真实源文件，
+  JSON 只改了对应的值，CSS、manifest、Figma 模型随之更新。本机没有 Figma 桌面版，
+  还没在真实 Figma 文件里走过一遍。
+
 ## 后续层
 
 1. **语义角色**（`semantics.css`、`brand.css` 等）：大量使用 `var()` 引用和
