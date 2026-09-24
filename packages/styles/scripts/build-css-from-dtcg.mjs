@@ -16,6 +16,12 @@
  * context, `[data-a63-<axis>='<context>']`. The default context also applies at
  * `:root`. The attribute comes from `$extensions["io.atom63.css"].attribute`.
  *
+ * A resolver may also list `sets` in its `resolutionOrder`: token groups that
+ * apply unconditionally, emitted before the modifier's contexts under the
+ * selector in the set's `$extensions["io.atom63.css"].selector`. A context with
+ * no sources emits no rule, so a modifier can hold overrides for a few contexts
+ * only. A token's `$description` is kept as a comment above its declaration.
+ *
  * A token whose value is computed in CSS keeps a plain DTCG `$value` (its main
  * input, usually an alias, which is what Figma and other readers see) and puts
  * the CSS expression in `$extensions["io.atom63.derive"]`. `{token.path}`
@@ -106,6 +112,10 @@ function formatValue(type, value, name, knownNames) {
       return String(value)
     case 'fontFamily':
       return formatFontFamily(value)
+    case 'shadow':
+      // Only "no shadow" so far: an empty layer list is CSS `none`.
+      if (Array.isArray(value) && value.length === 0) return 'none'
+      throw new Error(`${name}: only an empty shadow list is supported`)
     default:
       throw new Error(`${name}: unsupported $type "${type}"`)
   }
@@ -124,7 +134,10 @@ function formatDerive(expression, name, knownNames) {
   })
 }
 
-/** Walks a DTCG group, inheriting `$type`, and yields [cssName, $type, $value, derive]. */
+/**
+ * Walks a DTCG group, inheriting `$type`, and yields
+ * [cssName, $type, $value, derive, $description].
+ */
 function* walk(group, trail, inheritedType) {
   const type = group.$type ?? inheritedType
   for (const [key, node] of Object.entries(group)) {
@@ -135,7 +148,13 @@ function* walk(group, trail, inheritedType) {
     if (Object.hasOwn(node, '$value')) {
       const tokenType = node.$type ?? type
       if (!tokenType) throw new Error(`${name}: no $type on the token or its groups`)
-      yield [name, tokenType, node.$value, node.$extensions?.['io.atom63.derive']]
+      yield [
+        name,
+        tokenType,
+        node.$value,
+        node.$extensions?.['io.atom63.derive'],
+        node.$description,
+      ]
     } else {
       yield* walk(node, [...trail, key], type)
     }
@@ -167,16 +186,33 @@ function toRules(sourcePath, document) {
       `${sourcePath}: default context "${modifier.default}" of "${modifierName}" is missing`
     )
   }
-  return Object.entries(modifier.contexts).map(([context, sources]) => {
-    const scoped = `[${attribute}='${context}']`
+  const inline = sources => {
     for (const source of sources) {
       if (Object.hasOwn(source, '$ref'))
-        throw new Error(`${sourcePath}: only inline contexts are supported`)
+        throw new Error(`${sourcePath}: only inline sources are supported`)
     }
-    return {
-      selector: context === modifier.default ? `:root,\n${scoped}` : scoped,
-      groups: sources,
+    return sources
+  }
+  const modifierRules = Object.entries(modifier.contexts)
+    .filter(([, sources]) => sources.length > 0)
+    .map(([context, sources]) => {
+      const scoped = `[${attribute}='${context}']`
+      return {
+        selector: context === modifier.default ? `:root,\n${scoped}` : scoped,
+        groups: inline(sources),
+      }
+    })
+  const order = document.resolutionOrder ?? [{ $ref: `#/modifiers/${modifierName}` }]
+  return order.flatMap(({ $ref }) => {
+    if ($ref === `#/modifiers/${modifierName}`) return modifierRules
+    const setName = /^#\/sets\/(.+)$/.exec($ref ?? '')?.[1]
+    const set = setName && document.sets?.[setName]
+    if (!set) throw new Error(`${sourcePath}: resolutionOrder entry ${$ref} does not resolve`)
+    const selector = set.$extensions?.['io.atom63.css']?.selector
+    if (!selector) {
+      throw new Error(`${sourcePath}: set "${setName}" needs $extensions["io.atom63.css"].selector`)
     }
+    return [{ selector, groups: inline(set.sources) }]
   })
 }
 
@@ -194,10 +230,14 @@ function render(sourcePath, document, rules, knownNames) {
         .join('\n')}`
     : ''
   const blocks = rules.map(rule => {
-    const declarations = tokensOf([rule]).map(([name, type, value, derive]) => {
+    const declarations = tokensOf([rule]).map(([name, type, value, derive, description]) => {
       // The plain value is validated even when a derive expression replaces it.
       const plain = formatValue(type, value, name, knownNames)
-      return `  --${name}: ${derive === undefined ? plain : formatDerive(derive, name, knownNames)};`
+      const css = derive === undefined ? plain : formatDerive(derive, name, knownNames)
+      const comment = description
+        ? `  /* ${description.replaceAll('*/', '* /').split('\n').join('\n     ')} */\n`
+        : ''
+      return `${comment}  --${name}: ${css};`
     })
     return `${rule.selector} {\n${declarations.join('\n')}\n}\n`
   })
