@@ -13,6 +13,8 @@ const config: StorybookConfig = {
   stories: [
     '../../../packages/ui-react/src/**/*.mdx',
     '../../../packages/ui-react/src/**/*.stories.@(ts|tsx)',
+    // Token reference stories for @atom63/styles, which has no stories of its own.
+    '../stories/**/*.stories.@(ts|tsx)',
   ],
   addons: ['@storybook/addon-docs', '@storybook/addon-a11y', '@storybook/addon-vitest'],
   framework: { name: '@storybook/react-vite', options: {} },
