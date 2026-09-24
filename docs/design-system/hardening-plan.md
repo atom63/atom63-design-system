@@ -49,15 +49,20 @@
   先用"报告"模式统计现有违规，逐类修复后改为"违规即失败"，个别确有理由的 story 单独豁免并写明原因。
 - **验证**：故意去掉一个按钮的无障碍名称，测试必须失败。
 
-### 2. 类型层面的 API 报告和包正确性
+### 2. 类型层面的 API 报告和包正确性（已完成）
 
-- **现状**：现有检查只看导出名称，不看类型签名；改一个 prop 的类型不会被发现。也没有检查发布出去的包
-  在不同模块解析方式下类型能否正确解析。
-- **做法**：
-  - ui-react 和 ui-foundation 生成 API 报告（公开类型签名的快照），提交到仓库，CI 比对差异；
-    有意的 API 改动需要同时更新报告，评审时一眼可见。
-  - 对打包结果跑 `publint` 和 `@arethetypeswrong/cli`，检查 `exports`、类型入口和 ESM/CJS 解析。
-- **验证**：故意改一个 prop 类型，CI 必须失败。
+- **结果**：
+  - `pnpm api:report` 用 API Extractor 为 ui-foundation 和 ui-react 的 6 个入口生成 API 报告，提交在
+    `packages/*/api/*.api.md`。CI 的 `pnpm check:api-report` 比对构建出的类型和报告，不一致即失败。
+    报告按使用方的方式解析 workspace 依赖（发布的 `.d.ts`，不走 `@atom63/source` 条件）。
+  - `pnpm check:package-correctness` 对 styles、ui-foundation、ui-react 的打包结果跑
+    `publint --strict`，并对声明了类型的入口跑 `@arethetypeswrong/cli`（`esm-only`：Node16 ESM
+    和 bundler 解析必须通过；包本身只发布 ESM，CJS 和 node10 不检查）。当前全部通过。
+  - **顺带发现**：报告里记录了 26 处 `ae-forgotten-export`，即公开签名用到、但入口没有导出的类型
+    （如 `CarouselOptions`、`DrawerRootProps`、`AsChildProps`），使用方无法直接引用这些类型。
+    是否补导出留到后续决定。
+- **验证**：给 `ContainerProps` 加一个可选 prop，`check:api-report` 失败并指出变化的报告；把一个入口的
+  `types` 指向不存在的文件，publint 和 attw 都失败。
 
 ### 3. SSR 冒烟
 

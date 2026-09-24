@@ -27,5 +27,8 @@
   },
   "peerDependencies": {
     "eslint": ">=10"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
   }
 }
