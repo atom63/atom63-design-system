@@ -20,6 +20,7 @@
     "packages/styles/src/contracts/track.css",
     "packages/styles/src/contracts/trigger.css",
     "packages/styles/src/contracts/widget.css",
+    "packages/styles/src/tokens/brand-action.css",
     "packages/styles/src/tokens/brand-ramp.css",
     "packages/styles/src/tokens/brand.css",
     "packages/styles/src/tokens/font.css",
@@ -41,7 +42,7 @@
     "packages/styles/src/tokens/type-scale.css"
   ],
   "summary": {
-    "sourceFiles": 37,
+    "sourceFiles": 38,
     "declarations": 1494,
     "uniqueCssVariables": 1021,
     "figmaMappedDeclarations": 1473
@@ -361,7 +362,7 @@
       "cssVar": "--a63-action-primary",
       "type": "color",
       "value": "var(--a63-brand-600)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-action.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -376,7 +377,7 @@
       "cssVar": "--a63-action-primary",
       "type": "color",
       "value": "var(--a63-brand-700)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-action.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -392,7 +393,7 @@
       "cssVar": "--a63-action-primary-foreground",
       "type": "color",
       "value": "oklch( from var(--a63-action-primary) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h )",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-action.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -407,7 +408,7 @@
       "cssVar": "--a63-action-primary-hover",
       "type": "color",
       "value": "var(--a63-brand-700)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-action.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -422,7 +423,7 @@
       "cssVar": "--a63-action-primary-hover",
       "type": "color",
       "value": "var(--a63-brand-800)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-action.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -438,7 +439,7 @@
       "cssVar": "--a63-action-primary-text-shadow",
       "type": "shadow",
       "value": "none",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-action.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2783,7 +2784,7 @@
       "cssVar": "--a63-brand-text",
       "type": "color",
       "value": "var(--a63-brand-600)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-action.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2798,7 +2799,7 @@
       "cssVar": "--a63-brand-text",
       "type": "color",
       "value": "var(--a63-brand-700)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-action.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -2814,7 +2815,7 @@
       "cssVar": "--a63-brand-text",
       "type": "color",
       "value": "var(--a63-brand-700)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-action.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",
@@ -4304,7 +4305,7 @@
       "cssVar": "--a63-focus-ring",
       "type": "color",
       "value": "color-mix(in oklch, var(--a63-brand-500) 30%, transparent)",
-      "sourceFile": "packages/styles/src/tokens/brand.css",
+      "sourceFile": "packages/styles/src/tokens/brand-action.css",
       "layer": "semantic",
       "figma": {
         "collection": "Atom63 Semantic",

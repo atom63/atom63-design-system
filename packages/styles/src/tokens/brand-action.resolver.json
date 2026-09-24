@@ -1,0 +1,118 @@
+{
+  "version": "2025.10",
+  "description": "Primary action derived from the brand ramp (brand-ramp.resolver.json).\n\nThe base set MUST be declared on the same scope that remaps the ramp (:root and every\n[data-a63-brand]): a var() inside a custom property resolves on the element where the\nproperty is DECLARED, then inherits as a resolved value. Declaring only on :root would\nfreeze primary to the base ramp regardless of a downstream [data-a63-brand] override.\nThe brand contexts hold the few per-brand exceptions and follow the base set, so they\nwin at equal specificity.",
+  "sets": {
+    "base": {
+      "sources": [
+        {
+          "a63": {
+            "action": {
+              "primary": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{a63.brand.600}",
+                  "$description": "Step 600, not 500: white text on every brand's 500 falls below WCAG AA's\n4.5:1 for normal text (the default blue is about 3.5:1); 600 reaches it."
+                },
+                "hover": {
+                  "$type": "color",
+                  "$value": "{a63.brand.700}"
+                },
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$description": "Auto-contrast foreground: near-white on dark primaries, near-black on bright\nones (light brand picks / wallpaper golds). oklch `l` is the proxy; the steep\nclamp is a light/dark STEP at l≈0.57, about where near-white and near-black\ngive the same contrast (WCAG Y≈0.18), so each fill gets whichever reads\nbetter. The old step at 0.665 matched large-text 3:1 and left mid-lightness\ncustom brands on white text at 2.8–4:1. Chroma ×0.06 keeps a faint brand\ntint. Supersedes JS --color-auto-foreground for components.",
+                  "$extensions": {
+                    "io.atom63.derive": "oklch(from {a63.action.primary} clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h)"
+                  }
+                },
+                "text-shadow": {
+                  "$type": "shadow",
+                  "$value": [],
+                  "$description": "Subtle depth shadow under text on the primary (theme lever; Aqua sets a gel\ntint). Default none so flat themes stay crisp."
+                }
+              }
+            },
+            "brand": {
+              "text": {
+                "$type": "color",
+                "$value": "{a63.brand.600}",
+                "$description": "The brand as text on light surfaces (semantics.css --a63-text-accent)."
+              }
+            },
+            "focus-ring": {
+              "$type": "color",
+              "$value": "{a63.brand.500}",
+              "$extensions": {
+                "io.atom63.derive": "color-mix(in oklch, {a63.brand.500} 30%, transparent)"
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":root,\n[data-a63-brand]"
+        }
+      }
+    }
+  },
+  "modifiers": {
+    "brand": {
+      "default": "b1",
+      "contexts": {
+        "b1": [],
+        "b3": [
+          {
+            "a63": {
+              "action": {
+                "primary": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.brand.700}",
+                    "$description": "Green (b3) is lighter than the other ramps: white on its 600 is about 4.2:1,\nso its primary action steps one shade further to reach AA."
+                  },
+                  "hover": {
+                    "$type": "color",
+                    "$value": "{a63.brand.800}"
+                  }
+                }
+              },
+              "brand": {
+                "text": {
+                  "$type": "color",
+                  "$value": "{a63.brand.700}"
+                }
+              }
+            }
+          }
+        ],
+        "b2": [
+          {
+            "a63": {
+              "brand": {
+                "text": {
+                  "$type": "color",
+                  "$value": "{a63.brand.700}",
+                  "$description": "Orange (b2) keeps 600 for fills (white text is about 4.7:1), but its 600 as\ntext on the lightly tinted Aqua page is just under 4.5:1."
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/base"
+    },
+    {
+      "$ref": "#/modifiers/brand"
+    }
+  ],
+  "$extensions": {
+    "io.atom63.css": {
+      "attribute": "data-a63-brand"
+    }
+  }
+}
