@@ -8,6 +8,7 @@ coverage/
 output/
 storybook-static/
 .turbo/
+**/.build/
 .vite/
 .next/
 .claude/

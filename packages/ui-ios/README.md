@@ -72,9 +72,19 @@ contract and contribution requirements.
 The DTCG token sources in `@atom63/styles` and the cross-renderer component
 registry are the source of truth. Swift colours are resolved from the web
 semantic and contract tokens through the Figma sync model
-(`@atom63/styles/figma-sync.json`), with the defaults an app starts with (theme
-modern, brand b1, surface n1). Regenerate the checked-in Swift tokens and
-contract metadata after changing either source:
+(`@atom63/styles/figma-sync.json`). `AtomTokens.Color` holds the defaults an app
+starts with (skin modern, brand b1, surface n1); `AtomTheme(skin:brand:surface:)`
+resolves any other selection at runtime from the generated variable graph
+(`AtomTokenGraph.generated.swift`), reading variables that vary on several axes
+from `@atom63/styles`'s `atom63.computed-values.json`:
+
+```swift
+ContentView()
+  .atomTheme(AtomTheme(skin: .aqua, brand: .b3, surface: .n2))
+```
+
+Regenerate the checked-in Swift tokens and contract metadata after changing
+either source:
 
 ```bash
 pnpm --filter @atom63/ui-ios generate:swift

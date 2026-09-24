@@ -33,6 +33,7 @@ import { chromium } from 'playwright'
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const manifestPath = path.join(packageRoot, 'generated/atom63.tokens.json')
 const outputPath = path.join(packageRoot, 'generated/atom63.figma-sync.json')
+const computedOutputPath = path.join(packageRoot, 'generated/atom63.computed-values.json')
 const cssEntries = ['src/tokens/index.css', 'src/contracts/index.css', 'src/themes/index.css']
 
 const themes = ['modern', 'aqua', 'retro', 'terminal']
@@ -491,6 +492,7 @@ async function main() {
       byVar,
       resolveContext,
     })
+    const computedValues = await resolveComputed(computed, byVar, resolveContext)
 
     // Drop aliases whose target was skipped, resolving them to literals is not
     // possible here, so report them instead of emitting a dangling reference.
@@ -549,11 +551,23 @@ async function main() {
     }
 
     const content = `${JSON.stringify(output, null, 2)}\n`
+    const computedContent = formatComputed(computedValues)
     if (process.argv.includes('--check')) {
-      const current = await readFile(outputPath, 'utf8').catch(() => '')
-      if (current !== content) {
+      const stale = []
+      for (const [file, expected] of [
+        [outputPath, content],
+        [computedOutputPath, computedContent],
+      ]) {
+        const name = path.relative(packageRoot, file)
+        const current = await readFile(file, 'utf8').catch(() => '')
+        const difference = firstDifference(safeParse(current), JSON.parse(expected))
+        if (!difference) continue
+        stale.push(name)
+        process.stderr.write(`${name} at ${difference}\n`)
+      }
+      if (stale.length) {
         process.stderr.write(
-          'generated/atom63.figma-sync.json is stale. Run: pnpm --filter @atom63/styles generate:figma\n'
+          `${stale.join(', ')} ${stale.length === 1 ? 'is' : 'are'} stale. Run: pnpm --filter @atom63/styles generate:figma\n`
         )
         process.exitCode = 1
         return
@@ -562,6 +576,7 @@ async function main() {
       return
     }
     await writeFile(outputPath, content)
+    await writeFile(computedOutputPath, computedContent)
     process.stdout.write(
       `Generated ${output.summary.variables} Figma variables in ${output.summary.collections} collections (${output.summary.aliasValues} alias values, ${output.summary.skipped} skipped).\n`
     )
@@ -684,6 +699,109 @@ async function placeByMeasuredAxes({ collections, ensureCollection, byVar, resol
     })
   }
   return computed.sort((left, right) => left.token.localeCompare(right.token))
+}
+
+/**
+ * The browser-resolved value of every `computed` variable in every combination
+ * of the axes it varies on, for renderers that cannot evaluate CSS: iOS reads a
+ * variable's value here instead of the default Figma shows. A key names each
+ * axis and its mode, sorted by axis (`brand=b3,mode=dark,surface=n2,theme=aqua`).
+ * It is a separate file so the Figma plugin, which bundles the sync model, does
+ * not carry it.
+ */
+async function resolveComputed(computed, byVar, resolveContext) {
+  const dimension = id =>
+    id === 'theme'
+      ? { id, attribute: 'data-a63-theme', modes: themes }
+      : axes.find(axis => axis.id === id)
+  const groups = new Map()
+  for (const entry of computed) {
+    const group = entry.variesOn.join('+')
+    groups.set(group, [...(groups.get(group) ?? []), entry])
+  }
+  const values = {}
+  for (const entries of groups.values()) {
+    let combinations = [[]]
+    for (const axis of entries[0].variesOn.map(dimension))
+      combinations = combinations.flatMap(combination =>
+        axis.modes.map(mode => [...combination, [axis, mode]])
+      )
+    const records = entries.map(entry => {
+      const record = byVar.get(entry.token)
+      record.currentRaw = entry.expression
+      return record
+    })
+    for (const combination of combinations) {
+      const attributes = Object.fromEntries(
+        combination.map(([axis, mode]) => [axis.attribute, mode])
+      )
+      const key = combination.map(([axis, mode]) => `${axis.id}=${mode}`).join(',')
+      const result = await resolveContext(attributes, records)
+      for (const entry of entries) {
+        values[entry.token] ??= { variesOn: entry.variesOn, values: {} }
+        values[entry.token].values[key] = result[entry.token].resolved
+      }
+    }
+  }
+  return values
+}
+
+/** One line per combination, so a diff shows exactly which values moved. */
+function formatComputed(values) {
+  const tokens = Object.keys(values).sort()
+  const body = tokens
+    .map(token => {
+      const { variesOn, values: byKey } = values[token]
+      const lines = Object.entries(byKey).map(
+        ([key, value]) => `      ${JSON.stringify(key)}: ${JSON.stringify(value)}`
+      )
+      return `    ${JSON.stringify(token)}: {\n      "variesOn": ${JSON.stringify(variesOn)},\n      "values": {\n${lines.map(line => `  ${line}`).join(',\n')}\n      }\n    }`
+    })
+    .join(',\n')
+  return `{\n  "schemaVersion": 1,\n  "generatedBy": "packages/styles/scripts/generate-figma-sync.mjs",\n  "tokens": {\n${body}\n  }\n}\n`
+}
+
+/**
+ * Browser-resolved numbers differ across platforms in the sixth decimal (Linux
+ * and macOS Chromium round oklab mixes differently), far below one 8-bit color
+ * step. The check therefore compares the committed output structurally, with
+ * numbers equal within 1e-5, instead of byte for byte. Returns the path and both
+ * values of the first real difference, or null.
+ */
+function firstDifference(current, expected, at = '$') {
+  if (typeof expected === 'number' && typeof current === 'number')
+    return Math.abs(current - expected) <= 1e-5
+      ? null
+      : `${at}: committed ${current}, generated ${expected}`
+  if (
+    typeof expected !== 'object' ||
+    expected === null ||
+    typeof current !== 'object' ||
+    current === null
+  )
+    return Object.is(current, expected)
+      ? null
+      : `${at}: committed ${JSON.stringify(current)}, generated ${JSON.stringify(expected)}`
+  if (Array.isArray(expected) !== Array.isArray(current)) return `${at}: array and object differ`
+  const keys = new Set([...Object.keys(current), ...Object.keys(expected)])
+  if (Array.isArray(expected) && current.length !== expected.length)
+    return `${at}: committed ${current.length} items, generated ${expected.length}`
+  for (const key of keys) {
+    if (!(key in current)) return `${at}.${key}: missing from the committed file`
+    if (!(key in expected)) return `${at}.${key}: no longer generated`
+    const difference = firstDifference(current[key], expected[key], `${at}.${key}`)
+    if (difference) return difference
+  }
+  const order = Object.keys(current).join() === Object.keys(expected).join()
+  return order ? null : `${at}: keys are in a different order`
+}
+
+function safeParse(text) {
+  try {
+    return JSON.parse(text)
+  } catch {
+    return null
+  }
 }
 
 function toValue(record, raw, result, synced) {

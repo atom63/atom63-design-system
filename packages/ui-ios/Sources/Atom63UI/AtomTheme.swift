@@ -31,6 +31,12 @@ public struct AtomTheme: Equatable, Sendable {
     self.colors = colors
   }
 
+  /// The colors the web renders for a skin, brand and surface. The defaults
+  /// equal `.standard`.
+  public init(skin: AtomSkin = .modern, brand: AtomBrand = .b1, surface: AtomSurface = .n1) {
+    self.init(colors: AtomThemeColors(skin: skin, brand: brand, surface: surface))
+  }
+
   public static let standard = AtomTheme(
     colors: AtomThemeColors(
       surfacePage: AtomTokens.Color.surfacePage,

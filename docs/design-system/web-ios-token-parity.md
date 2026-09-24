@@ -17,8 +17,16 @@
 > Figma sync model, with the defaults an app starts with (theme modern, brand b1,
 > surface n1), and the hand-written map is gone. The Swift file names the token
 > above each colour, and `packages/styles/src/tokens/swift-parity.browser.test.ts`
-> compares each one with the value Chromium paints, in light and dark mode. Brand,
-> theme and surface are still not native axes on iOS; see section C.
+> compares each one with the value Chromium paints, in light and dark mode.
+>
+> **Update 2026-09-25:** skin (theme), brand and surface are native on iOS, as
+> decided in D2. `AtomTheme(skin:brand:surface:)` resolves every `AtomThemeColors`
+> field through the same variable graph Figma uses, generated into
+> `AtomTokenGraph.generated.swift`; a variable that varies on more axes than one
+> Figma collection holds is read from `atom63.computed-values.json`, resolved in
+> Chromium for every combination. `swift-parity.browser.test.ts` checks all 144
+> selections × light/dark against the browser. Density, radius and type scale
+> stay with iOS's own mechanisms (Dynamic Type), per D2.
 
 ## Summary
 
@@ -557,6 +565,10 @@ the control ramp, press scale, disabled opacity and easing. The hand-written
 Do `brand`, `theme`, `surface`, and `density` ship natively? That determines
 whether `AtomTheme` stays a static value or becomes a runtime axis resolver, and it
 sets the ceiling on how much of B is worth building.
+
+Decided (D2, option B): brand, theme and surface ship natively through
+`AtomTheme(skin:brand:surface:)`; density and type scale follow iOS's own
+mechanisms. Shipped 2026-09-25.
 
 ---
 

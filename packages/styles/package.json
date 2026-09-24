@@ -96,6 +96,7 @@
   },
   "files": [
     "generated",
+    "!generated/atom63.computed-values.json",
     "src"
   ],
   "sideEffects": [
