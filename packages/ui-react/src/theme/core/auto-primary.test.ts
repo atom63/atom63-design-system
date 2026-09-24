@@ -6,6 +6,7 @@ import {
   clearAutoColorRamp,
   isAutoPrimary,
 } from './auto-primary'
+import { relativeLuminance } from './auto-contrast'
 
 describe('auto-primary', () => {
   beforeEach(() => {
@@ -37,17 +38,39 @@ describe('auto-primary', () => {
     expect(root.style.getPropertyValue('--color-auto-foreground')).toBe('')
   })
 
-  it('picks a dark auto-foreground for saturated gold / mustard hues', () => {
+  it('meets WCAG AA for every hue and saturation', () => {
     const root = document.documentElement
-    // Wallpaper-extracted golds land near hue 45–55; ramp 500 is bright enough
-    // that light-on-primary fails large-text 3:1 and must use near-black fg.
-    applyAutoColorRamp(root, { hue: 48, saturation: 0.92 })
-    const fg = root.style.getPropertyValue('--color-auto-foreground')
-    const match = fg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i)
-    expect(match).not.toBeNull()
-    const [, r, g, b] = match!
-    const avg = (Number(r) + Number(g) + Number(b)) / 3
-    expect(avg).toBeLessThan(80)
+    const rgb = (step: number) => {
+      const match = root.style
+        .getPropertyValue(`--color-auto-${step}`)
+        .match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/i)
+      return match!.slice(1).map(Number) as [number, number, number]
+    }
+    const luminance = (c: [number, number, number]) => relativeLuminance(...c)
+    const contrast = (a: number, b: number) => (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05)
+    // The light and dark page surfaces (--color-n1-light-2, --color-n1-dark-1).
+    const lightPage = luminance([249, 249, 249])
+    const darkPage = luminance([17, 17, 17])
+    const failures: string[] = []
+    for (const saturation of [0.3, 0.6, 0.9, 1]) {
+      for (let hue = 0; hue < 360; hue += 10) {
+        applyAutoColorRamp(root, { hue, saturation })
+        const fill = luminance(rgb(600))
+        const checks = {
+          // White label on the primary action (brand-600).
+          'white on 600': contrast(1, fill),
+          // Brand as text on the light page (brand-text = 600).
+          '600 on light page': contrast(fill, lightPage),
+          // Brand as text on the dark page (text-accent = 400).
+          '400 on dark page': contrast(luminance(rgb(400)), darkPage),
+        }
+        for (const [name, ratio] of Object.entries(checks)) {
+          if (ratio < 4.5)
+            failures.push(`hue ${hue} sat ${saturation}: ${name} ${ratio.toFixed(2)}`)
+        }
+      }
+    }
+    expect(failures).toEqual([])
   })
 
   it('keeps a light auto-foreground for default blue', () => {
