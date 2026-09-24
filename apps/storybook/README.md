@@ -1,7 +1,8 @@
 # Atom63 Storybook
 
-The component workbench for `@atom63/ui-react`. Stories live next to their components in
-`packages/ui-react/src` and load the workspace packages from source, so edits hot-reload.
+The component workbench for `@atom63/ui-react` and `@atom63/mdx`. Stories live next to their
+components in `packages/ui-react/src` and `packages/mdx/src` and load the workspace packages from
+source, so edits hot-reload.
 
 ```bash
 pnpm --filter @atom63/storybook dev     # http://localhost:6006

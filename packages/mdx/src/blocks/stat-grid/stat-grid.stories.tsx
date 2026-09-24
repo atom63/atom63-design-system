@@ -19,7 +19,8 @@ const meta = {
 
 export default meta
 
-type Story = StoryObj<typeof meta>
+// Every story renders its own grid, so `children` is not an arg.
+type Story = StoryObj<typeof StatGrid>
 
 export const Default: Story = {
   render: () => (
