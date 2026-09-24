@@ -80,6 +80,9 @@ jobs:
       - name: Check Figma sync model
         run: pnpm --filter @atom63/styles check:figma
 
+      - name: Check DTCG token output
+        run: pnpm --filter @atom63/styles check:dtcg
+
       - name: Check z-layer output
         run: pnpm --filter @atom63/styles check:z-layers
 

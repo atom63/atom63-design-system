@@ -60,11 +60,17 @@ baselines as described in the [Storybook README](./apps/storybook/README.md).
 
 ## Tokens and generated files
 
-CSS in `packages/styles/src` is the source of truth for tokens. Several files are generated from
-it and checked byte for byte in CI; regenerate them instead of editing them by hand:
+Foundation primitives and the color palette are defined in
+[DTCG](https://www.designtokens.org/tr/2025.10/format/) files:
+`packages/styles/src/tokens/foundation/primitives.tokens.json` and `palette.tokens.json`. Edit
+those; their sibling `.css` files are generated. The other token layers (semantic roles, themes,
+and personalization axes) are still authored in CSS and are moving to DTCG one layer at a time.
+
+Several files are generated from the tokens and checked byte for byte in CI; regenerate them
+instead of editing them by hand:
 
 ```bash
-pnpm --filter @atom63/styles generate:tokens      # token manifest, Figma sync model, z-layers
+pnpm --filter @atom63/styles generate:tokens      # CSS from DTCG, token manifest, Figma sync model, z-layers
 pnpm --filter @atom63/ui-react generate:utilities # precompiled utilities.css
 ```
 
