@@ -34,3 +34,7 @@ export const External: Story = {
     kind: 'external',
   },
 }
+
+/* Internal in dark mode, so visual regression covers dark for this component,
+   which has no Themes matrix. The global applies to <html>, so portals are dark too. */
+export const Dark: Story = { ...Internal, globals: { mode: 'dark' } }

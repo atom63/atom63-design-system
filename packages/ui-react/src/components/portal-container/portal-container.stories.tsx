@@ -88,3 +88,7 @@ export const ContractMetadata: Story = {
     </pre>
   ),
 }
+
+/* Playground in dark mode, so visual regression covers dark for this component,
+   which has no Themes matrix. The global applies to <html>, so portals are dark too. */
+export const Dark: Story = { ...Playground, globals: { mode: 'dark' } }
