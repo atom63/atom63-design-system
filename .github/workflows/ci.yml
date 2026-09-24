@@ -283,12 +283,6 @@ jobs:
         with:
           node-version-file: .nvmrc
 
-      # A cold simulator boot takes about a minute. Start it now so it overlaps
-      # the checks below; the demo test step waits for it.
-      - name: Boot the test simulator in the background
-        working-directory: packages/ui-ios
-        run: nohup node Scripts/run-ios-tests.mjs --boot > "$RUNNER_TEMP/simulator-boot.log" 2>&1 &
-
       - name: Check generated iOS contracts and tokens
         run: |
           node scripts/generate-cross-renderer-contracts.mjs --check
@@ -303,9 +297,7 @@ jobs:
 
       - name: Test iOS demo app
         working-directory: packages/ui-ios
-        run: |
-          cat "$RUNNER_TEMP/simulator-boot.log" || true
-          node Scripts/run-ios-tests.mjs
+        run: node Scripts/run-ios-tests.mjs
 
       - name: Upload iOS test results
         if: failure()

@@ -19,15 +19,6 @@ if (!device) {
   throw new Error('No available iPhone Simulator was found')
 }
 
-// CI calls this with --boot at the start of the job so the cold boot overlaps
-// the other steps; the later test run picks the same device and xcodebuild
-// waits for the boot to finish.
-if (process.argv.includes('--boot')) {
-  console.log(`Booting ${device.name} (${device.udid})`)
-  const boot = spawnSync('xcrun', ['simctl', 'boot', device.udid], { stdio: 'inherit' })
-  process.exit(boot.status ?? 1)
-}
-
 console.log(`Running Atom63Demo tests on ${device.name} (${device.udid})`)
 const result = spawnSync(
   'xcodebuild',
