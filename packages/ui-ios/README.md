@@ -69,9 +69,12 @@ contract and contribution requirements.
 
 ## Token generation
 
-The CSS foundation and cross-renderer component registry remain the source of
-truth. Regenerate the checked-in Swift tokens and contract metadata after
-changing either source:
+The DTCG token sources in `@atom63/styles` and the cross-renderer component
+registry are the source of truth. Swift colours are resolved from the web
+semantic and contract tokens through the Figma sync model
+(`@atom63/styles/figma-sync.json`), with the defaults an app starts with (theme
+modern, brand b1, surface n1). Regenerate the checked-in Swift tokens and
+contract metadata after changing either source:
 
 ```bash
 pnpm --filter @atom63/ui-ios generate:swift

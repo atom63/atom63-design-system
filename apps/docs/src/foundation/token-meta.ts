@@ -10,8 +10,8 @@ export const TOKEN_LAYERS = [
     role: 'Named brand, neutral, and status ramps.',
   },
   {
-    file: 'foundation/aliases.css',
-    role: 'Light and dark surface steps.',
+    file: 'surface.css',
+    role: 'Light and dark surface steps for each surface palette.',
   },
   {
     file: 'foundation/effects.css',

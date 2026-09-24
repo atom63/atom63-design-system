@@ -38,7 +38,18 @@ reading, and surfaces a **second, separate problem that is not about iOS at all*
 the control height ramp collapses to the touch target on every phone, in the web
 renderer as well as the native one.
 
-## The two pipelines
+## The two pipelines (as assessed, before A0)
+
+Since A0 and phase B, colours take one path to both renderers:
+
+```txt
+DTCG sources (tokens · contracts · themes)
+  → generated CSS                         → recipes in @atom63/ui-react
+  → Figma sync model, resolved in Chromium
+    → Scripts/generate-swift-tokens.mjs   → Generated/Atom63Tokens.generated.swift
+```
+
+Space, radius and motion on iOS still follow the old path below.
 
 ```txt
 Web:

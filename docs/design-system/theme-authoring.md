@@ -1,7 +1,9 @@
 # Theme Authoring
 
 > **Current.** Themes are value overrides under `[data-a63-theme]` in
-> `@atom63/styles` (`packages/styles/src/themes/`). Components consume
+> `@atom63/styles` (`packages/styles/src/themes/`). Each theme is a DTCG resolver
+> (`<id>.resolver.json`, one context per mode); `<id>.css` is generated from it, and
+> values DTCG cannot type sit in `<id>.native.css`. Components consume
 > `--a63-*` contracts from `packages/styles/src/contracts/` via recipes in
 > `@atom63/ui-react`. Older `--theme-*` / `[data-ui-theme]` docs and skins are
 > archived — see `archive/styles-skins/` and the migration banner on
@@ -11,10 +13,10 @@
 
 | Id | File | Character |
 | --- | --- | --- |
-| `modern` | `themes/modern.css` | Default / identity — light tactile highlight on filled controls |
-| `aqua` | `themes/aqua.css` | Glossy gel, tint, overlay texture (pinstripe) |
-| `retro` | `themes/retro.css` | Win98 / early-web bevel, hard offset shadows |
-| `terminal` | `themes/terminal.css` | CRT phosphor glow + scanline texture; mode-split palette |
+| `modern` | `themes/modern.resolver.json` | Default / identity — light tactile highlight on filled controls |
+| `aqua` | `themes/aqua.resolver.json` | Glossy gel, tint, overlay texture (pinstripe) |
+| `retro` | `themes/retro.resolver.json` | Win98 / early-web bevel, hard offset shadows |
+| `terminal` | `themes/terminal.resolver.json` | CRT phosphor glow + scanline texture; mode-split palette |
 
 **Not a product theme:** Windows 11 acrylic/taskbar chrome is an **OS** concern (`data-a63-os` / `data-os63-system`), not `[data-a63-theme="windows11"]`.
 
@@ -57,8 +59,9 @@ Shared-scale / contract drift (deferred):
 - **brand-tinted material** — prefer declaring `var(--a63-action-primary)` mixes on the theme scope so phosphor tracks brand.
 - **Storybook coverage** — ThemeMatrix / contact sheets stamp `data-a63-theme` × mode for manual craft review (not a CI gate).
 
-Run `pnpm check:theme-authoring` after changing a theme or adding its file path to
-`internal/harness` `harnessThemeCssFiles`.
+Run `pnpm --filter @atom63/styles generate:tokens` and then `pnpm check:theme-authoring`
+after changing a theme. A new theme also needs its generated CSS path added to
+`scripts/design-system/check-theme-authoring.mjs`.
 
 ## Checklist for a new theme or contract hook
 
@@ -66,7 +69,7 @@ Run `pnpm check:theme-authoring` after changing a theme or adding its file path 
    [growth rule](./authoring-surfaces.md#css-contract-growth-rule) passes
    (second component + theme/axis need). Skin-private material stays in the theme;
    shared stops go to foundation.
-2. Override values in `packages/styles/src/themes/<id>.css`.
+2. Override values in `packages/styles/src/themes/<id>.resolver.json` and regenerate.
 3. Ensure recipes already read the contract (or update the recipe).
 4. Cover Storybook Themes matrix + harness scenario if app chrome is involved.
 5. Update [personalization-axes.md](./personalization-axes.md) ownership notes if the axis checklist changes.

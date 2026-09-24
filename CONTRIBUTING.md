@@ -60,13 +60,19 @@ baselines as described in the [Storybook README](./apps/storybook/README.md).
 
 ## Tokens and generated files
 
-The foundation token layer is defined in
-[DTCG](https://www.designtokens.org/tr/2025.10/format/) files in
-`packages/styles/src/tokens/foundation/`: `primitives`, `palette`, `aliases`, `fonts` and `motion`
-(`*.tokens.json`), plus the surface palette axis in `packages/styles/src/tokens/surface.resolver.json`
-(DTCG Resolver). Edit those; their sibling `.css` files are generated. The other token layers
-(semantic roles, themes, and the remaining personalization axes) are still authored in CSS and are
-moving to DTCG one layer at a time.
+Tokens are defined in [DTCG](https://www.designtokens.org/tr/2025.10/format/) files in
+`packages/styles/src/`. Edit those; the `.css` file next to each one is generated.
+
+- `tokens/foundation/*.tokens.json`: primitives, palette, fonts and motion
+- `tokens/*.resolver.json`: semantic roles per mode, the brand ramp and brand actions, and the
+  surface palette (DTCG resolvers, one context per mode, brand or surface)
+- `contracts/*.tokens.json` and `*.resolver.json`: component contracts
+- `themes/*.resolver.json`: the four themes, light and dark
+
+A value that DTCG cannot type (a CSS keyword, a gradient, a `calc()`) lives in a `*.native.css`
+file next to its source and is listed with a reason in `tokens/native-values.json`.
+Typography, radius, effects, space, motion and the font and type-scale axes are still written in
+CSS; they move to DTCG next.
 
 ### From Figma to code
 
@@ -90,8 +96,10 @@ cannot be applied:
 - a token that is not in a DTCG source yet
 - an alias in code set to a raw value in Figma
 - a value computed in CSS; change its inputs instead
-- a token shared by every brand, changed for one brand only; that exception is added in code Review the diff, add a changeset, and open a pull request; CI runs
-the visual regression on the result.
+- a token shared by every brand, changed for one brand only; that exception is added in code
+
+Review the diff, add a changeset, and open a pull request; CI runs the visual regression on the
+result.
 
 Several files are generated from the tokens and checked byte for byte in CI; regenerate them
 instead of editing them by hand:

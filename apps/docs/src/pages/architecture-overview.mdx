@@ -15,6 +15,7 @@ Atom63 keeps one token architecture and renders it on every platform it supports
 
 ```mermaid
 flowchart TD
+  dtcg["DTCG sources<br/>*.tokens.json · *.resolver.json"]
   css["@atom63/styles CSS<br/>tokens · contracts · themes"]
   manifest["@atom63/styles/tokens.json<br/>token manifest"]
   figmaModel["@atom63/styles/figma-sync.json<br/>Figma variable model"]
@@ -23,12 +24,13 @@ flowchart TD
   ios["Atom63UI<br/>SwiftUI renderer"]
   figma["Figma plugin<br/>variables and modes"]
 
+  dtcg --> css
   css --> manifest
   manifest --> figmaModel
   css --> react
   foundation --> react
   foundation --> ios
-  manifest --> ios
+  figmaModel --> ios
   figmaModel --> figma
 ```
 
@@ -37,7 +39,7 @@ flowchart TD
 | `@atom63/styles` | CSS variables, semantic tokens, theme value overrides, the Tailwind bridge, the token manifest, and the Figma variable model. | React behavior or product state. |
 | `@atom63/ui-foundation` | TypeScript contracts, component vocabularies, and personalization axis metadata shared by every renderer. | DOM or SwiftUI rendering. |
 | `@atom63/ui-react` | React components, Base UI composition, recipe CSS, and appearance UI. | App routing, fetching, or product content. |
-| `Atom63UI` | SwiftUI components whose tokens are generated from the manifest. | Web behavior. |
+| `Atom63UI` | SwiftUI components whose colors are generated from the resolved Figma variable model. | Web behavior. |
 | Figma plugin | Writing the Figma variable model into a file: one collection per personalization axis, aliases where tokens reference each other. | Deciding token values; code is the source. |
 | Consumer apps | Routes, storage choices, app chrome, data adapters, and content. | Reusable component contracts. |
 
