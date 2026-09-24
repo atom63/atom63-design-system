@@ -281,7 +281,7 @@
 @media (min-width: 768px) {
   .a63-Sidebar-wrapper:has([data-variant='inset']) .a63-Sidebar-inset {
     margin: var(--a63-space-2);
-    margin-left: 0;
+    margin-inline-start: 0;
     border-radius: var(--a63-surface-radius, var(--radius-xl));
     background-image: var(--a63-surface-gloss), var(--a63-surface-texture-image);
     background-blend-mode: normal, var(--a63-surface-texture-blend);
@@ -289,7 +289,7 @@
     box-shadow: var(--a63-surface-inner-shadow, none), var(--a63-surface-shadow);
   }
   .a63-Sidebar-wrapper:has([data-variant='inset'][data-state='collapsed']) .a63-Sidebar-inset {
-    margin-left: var(--a63-space-2);
+    margin-inline-start: var(--a63-space-2);
   }
 }
 
@@ -378,7 +378,7 @@
 .a63-Sidebar-group-action {
   position: absolute;
   top: 50%;
-  right: 0;
+  inset-inline-end: 0;
   display: flex;
   aspect-ratio: 1 / 1;
   width: var(--a63-control-min-target);
@@ -436,7 +436,7 @@
   overflow: hidden;
   border-radius: var(--radius-md);
   padding: var(--a63-space-2);
-  text-align: left;
+  text-align: start;
   font-size: var(--a63-control-font-size-sm);
   outline: none;
   transition:
@@ -478,7 +478,7 @@
 }
 /* reserve room for a menu-action */
 .a63-Sidebar-menu-item:has([data-sidebar='menu-action']) .a63-Sidebar-menu-button {
-  padding-right: calc(var(--a63-control-min-target) + var(--a63-space-1));
+  padding-inline-end: calc(var(--a63-control-min-target) + var(--a63-space-1));
 }
 /* size ramp */
 .a63-Sidebar-menu-button[data-size='default'] {
@@ -649,7 +649,7 @@
   gap: var(--a63-space-1);
   margin-inline: 0.875rem;
   translate: 1px;
-  border-left: 1px solid var(--sidebar-border);
+  border-inline-start: 1px solid var(--sidebar-border);
   padding-inline: 0.625rem;
   padding-block: 0.125rem;
 }

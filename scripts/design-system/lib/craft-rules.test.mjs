@@ -51,6 +51,25 @@ describe('scanCss', () => {
     assert.deepEqual(rules(scanCss(css)), ['2 focus-visible .a:focus'])
   })
 
+  it('passes physical properties in rules scoped to a physical side', () => {
+    const css = `
+      .sheet[data-side='left'] { padding-left: 1px; }
+      .sheet[data-side="right"] .inner { border-left: 1px solid; }
+      .other { padding-left: 1px }
+    `
+    assert.deepEqual(rules(scanCss(css)), ['4 physical-properties padding-left'])
+  })
+
+  it('honours craft-allow comments on the same line or the line above', () => {
+    const css = `.a {
+  /* craft-allow: physical-properties — rotated arrow, not a direction */
+  border-top-left-radius: 2px;
+  margin-left: 1px; /* craft-allow: physical-properties */
+  margin-right: 1px;
+}`
+    assert.deepEqual(rules(scanCss(css)), ['5 physical-properties margin-right'])
+  })
+
   it('passes colors in masks, which only carry alpha', () => {
     const css = `.a { mask-image: linear-gradient(#000, #0000); -webkit-mask: linear-gradient(#000, transparent); }`
     assert.deepEqual(scanCss(css), [])
@@ -67,6 +86,13 @@ const b = 'bg-[var(--a63-surface-page)] text-[color-mix(in_oklab,var(--x),transp
       '1 raw-color hover:text-red-500',
       '1 raw-color border-[#ccc]',
     ])
+  })
+
+  it('honours craft-allow comments in source', () => {
+    const source = `{/* craft-allow: physical-properties — optical nudge on a glyph that never mirrors */}
+<Play className="ml-1" />
+<Pause className="mr-1" />`
+    assert.deepEqual(rules(scanSource(source)), ['3 physical-properties mr-1'])
   })
 
   it('flags physical utilities and focus variants', () => {

@@ -104,11 +104,11 @@ export const mdxStyles = {
 
     // blockquote
     blockquote:
-      'mdx-blockquote mt-6 px-4 py-3 text-base italic rounded-r [&_p]:mt-2 [&_p:first-child]:mt-0',
+      'mdx-blockquote mt-6 px-4 py-3 text-base italic rounded-e [&_p]:mt-2 [&_p:first-child]:mt-0',
 
     // lists
-    ul: `mt-4 list-disc space-y-2 pl-4 [&_ul]:mt-2 [&_ul]:space-y-2 [&_ul]:pl-4 ${inlineLinkTreatment}`,
-    ol: `mt-4 list-decimal space-y-2 pl-4 [&_ol]:mt-2 [&_ol]:space-y-2 [&_ol]:pl-4 ${inlineLinkTreatment}`,
+    ul: `mt-4 list-disc space-y-2 ps-4 [&_ul]:mt-2 [&_ul]:space-y-2 [&_ul]:ps-4 ${inlineLinkTreatment}`,
+    ol: `mt-4 list-decimal space-y-2 ps-4 [&_ol]:mt-2 [&_ol]:space-y-2 [&_ol]:ps-4 ${inlineLinkTreatment}`,
     li: mdxTypography.articleBody,
 
     // hr
@@ -126,7 +126,7 @@ export const mdxStyles = {
     thead: 'mdx-thead',
     tbody: '[&_tr:last-child]:border-0',
     tr: 'mdx-tr transition-colors',
-    th: 'mdx-th h-9 px-3 text-left align-middle font-semibold',
+    th: 'mdx-th h-9 px-3 text-start align-middle font-semibold',
     td: 'mdx-td px-3 py-2 align-middle',
     caption: 'mdx-caption mt-3 text-balance text-xs',
 

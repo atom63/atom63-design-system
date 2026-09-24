@@ -24,7 +24,7 @@ export function PageMeta({
   return (
     <header
       className={clsx(
-        'not-mdx mdx-page-meta mx-auto mb-8 flex w-full max-w-xl flex-col items-start gap-4 text-left first:mt-0',
+        'not-mdx mdx-page-meta mx-auto mb-8 flex w-full max-w-xl flex-col items-start gap-4 text-start first:mt-0',
         className
       )}
     >

@@ -97,8 +97,8 @@
 .a63-SidebarNavTree-row-item {
   min-width: 0;
   flex: 1;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
 }
 .a63-SidebarNavTree-row-item:hover {
   background-color: transparent;
@@ -165,7 +165,7 @@
 .a63-SidebarNavTree-sub-list {
   gap: var(--a63-space-0_5);
   margin-inline: var(--a63-space-2) 0;
-  border-left-color: color-mix(in oklch, var(--sidebar-border) 70%, transparent);
+  border-inline-start-color: color-mix(in oklch, var(--sidebar-border) 70%, transparent);
   padding-inline: var(--a63-space-2) 0;
   padding-block: var(--a63-space-0_5);
 }

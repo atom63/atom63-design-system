@@ -206,7 +206,7 @@
 
 @media (min-width: 768px) {
   .a63-Drawer-header {
-    text-align: left;
+    text-align: start;
   }
 }
 

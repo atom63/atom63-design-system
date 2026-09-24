@@ -15,6 +15,12 @@
  * - `focus-visible`: focus styles follow `:focus-visible`, so a pointer press
  *   does not draw a keyboard focus ring. `:focus-within` passes, and so does a
  *   `:focus` rule or `focus:` utility that only removes the outline.
+ *
+ * Some physical directions are the point: a sheet docked to the left edge, or
+ * an optical nudge on a glyph that never mirrors. CSS rules scoped to
+ * `[data-side='left'|'right']` pass on their own. Anything else is exempted by
+ * a `craft-allow: <rule>` comment, with a reason, on the same line or the line
+ * above.
  */
 
 const CSS_COMMENT = /\/\*[\s\S]*?\*\//g
@@ -40,6 +46,27 @@ const CSS_PHYSICAL_PROPERTY =
 const CSS_FOCUS = /:focus(?![-\w])/
 const CSS_FOCUS_RESET = /^(?:outline(?:-style)?\s*:\s*(?:none|0)|box-shadow\s*:\s*none)$/
 const CSS_MASK_PROPERTY = /^(?:-webkit-)?mask(?:-image)?$/
+
+const DATA_SIDE = /\[data-side=['"]?(?:left|right)\b/
+const ALLOW = /craft-allow:\s*([a-z-]+)/g
+
+/**
+ * Drop violations a `craft-allow` comment exempts. A comment that shares its
+ * line with code covers that line; a comment on a line of its own covers the
+ * line below.
+ */
+function allowances(text) {
+  const allowed = new Map()
+  text.split('\n').forEach((line, index) => {
+    const code = line.replace(/\/\*[\s\S]*?\*\/|\/\/.*$/g, '').replace(/[{}\s]/g, '')
+    const at = code ? index + 1 : index + 2
+    for (const [, rule] of line.matchAll(ALLOW)) {
+      if (!allowed.has(at)) allowed.set(at, new Set())
+      allowed.get(at).add(rule)
+    }
+  })
+  return found => found.filter(({ rule, line }) => !allowed.get(line)?.has(rule))
+}
 
 function lineAt(text, index) {
   let line = 1
@@ -70,14 +97,19 @@ function onlyResetsFocus(src, start) {
 export function scanCss(css) {
   const src = blank(css, CSS_COMMENT)
   const found = []
+  const selectors = []
   // A declaration is `name: value` ending at `;` or `}`; a selector ends at `{`.
-  const statement = /([^{};]+)([{};])/g
+  const statement = /([^{};]*)([{};])/g
   let m
   while ((m = statement.exec(src))) {
     const body = m[1]
     const offset = m.index + body.length - body.trimStart().length
     const text = body.trim()
-    if (!text) continue
+    if (m[2] === '{') selectors.push(text)
+    if (!text) {
+      if (m[2] === '}') selectors.pop()
+      continue
+    }
     const line = lineAt(src, offset)
     if (m[2] === '{') {
       if (CSS_FOCUS.test(text) && !onlyResetsFocus(src, statement.lastIndex)) {
@@ -85,15 +117,17 @@ export function scanCss(css) {
       }
       continue
     }
+    // A declaration that ends its block (no trailing `;`) closes the block too.
+    if (m[2] === '}') statement.lastIndex = m.index + body.length
     const colon = text.indexOf(':')
-    if (colon === -1) continue
+    if (colon === -1 || text.startsWith('@')) continue
     const property = text.slice(0, colon).trim()
     const value = text.slice(colon + 1).trim()
-    if (property.startsWith('@')) continue
-    if (CSS_PHYSICAL_PROPERTY.test(property)) {
+    const sided = selectors.some(selector => DATA_SIDE.test(selector))
+    if (CSS_PHYSICAL_PROPERTY.test(property) && !sided) {
       found.push({ rule: 'physical-properties', match: property, line })
     }
-    if (property === 'text-align' && /^(?:left|right)\b/.test(value)) {
+    if (property === 'text-align' && /^(?:left|right)\b/.test(value) && !sided) {
       found.push({ rule: 'physical-properties', match: `text-align: ${value}`, line })
     }
     if (CSS_MASK_PROPERTY.test(property)) continue
@@ -102,7 +136,7 @@ export function scanCss(css) {
       found.push({ rule: 'raw-color', match: `${property}: ${color}`, line })
     }
   }
-  return found
+  return allowances(css)(found)
 }
 
 /**
@@ -133,7 +167,7 @@ export function scanSource(source) {
       found.push({ rule: 'focus-visible', match: raw, line: line() })
     }
   }
-  return found
+  return allowances(source)(found)
 }
 
 /**

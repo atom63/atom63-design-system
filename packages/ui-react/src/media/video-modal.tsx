@@ -54,6 +54,7 @@ const IconButton = ({
     >
       <div className="rounded-full bg-gradient-to-b from-white/10 to-white/5 p-3 transition-transform duration-300 group-hover:scale-110">
         <div className="flex h-8 w-8 items-center justify-center text-white">
+          {/* craft-allow: physical-properties — optical centering for a play glyph that never mirrors */}
           {icon === 'play' && <Play className="ml-1 h-8 w-8" />}
           {icon === 'maximize' && <Maximize className="h-8 w-8" />}
         </div>

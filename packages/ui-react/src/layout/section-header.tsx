@@ -99,7 +99,7 @@ export function SectionHeader({
 
   const alignClasses = {
     center: 'mx-auto text-center',
-    right: 'ml-auto text-right',
+    right: 'ms-auto text-end',
     left: '',
   }
 
@@ -107,7 +107,7 @@ export function SectionHeader({
     <div
       className={cn(
         align === 'center' && 'text-center',
-        align === 'right' && 'text-right',
+        align === 'right' && 'text-end',
         className
       )}
     >

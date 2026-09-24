@@ -23,7 +23,7 @@
   display: flex;
 }
 .a63-Carousel-track[data-orientation='horizontal'] {
-  margin-left: calc(var(--carousel-gutter) * -1);
+  margin-inline-start: calc(var(--carousel-gutter) * -1);
 }
 .a63-Carousel-track[data-orientation='vertical'] {
   flex-direction: column;
@@ -35,7 +35,7 @@
   flex: 0 0 100%;
 }
 .a63-Carousel-item[data-orientation='horizontal'] {
-  padding-left: var(--carousel-gutter);
+  padding-inline-start: var(--carousel-gutter);
 }
 .a63-Carousel-item[data-orientation='vertical'] {
   padding-top: var(--carousel-gutter);

@@ -131,6 +131,15 @@ Existing violations are listed in `docs/design-system/audits/craft-baseline.json
 fails the check. So does a fix that leaves its entry in the baseline: run
 `pnpm check:craft --write` so the baseline shrinks with the fix.
 
+Some physical directions are intended. CSS rules scoped to `[data-side='left']` or
+`[data-side='right']` pass on their own. For anything else, add a `craft-allow: <rule>` comment
+that gives the reason, either on the same line or on its own line directly above:
+
+```css
+/* craft-allow: physical-properties — the corner that becomes the arrow tip after the rotation */
+border-top-left-radius: var(--radius-xs);
+```
+
 ## Before opening a pull request
 
 Run the checks that cover your change. CI runs all of them:

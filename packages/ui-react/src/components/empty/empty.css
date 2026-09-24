@@ -127,7 +127,7 @@
     var(--a63-space-3) var(--a63-space-3);
   border-radius: var(--radius-md);
   background-color: color-mix(in oklch, var(--a63-surface-muted) 50%, transparent);
-  text-align: left;
+  text-align: start;
 }
 
 .a63-Empty-errorText {

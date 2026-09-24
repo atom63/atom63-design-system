@@ -190,7 +190,7 @@
 /* ── FieldDescription ──────────────────────────────────────────────────── */
 .a63-FieldDescription {
   margin: 0;
-  text-align: left;
+  text-align: start;
   color: var(--a63-text-secondary);
   font-family: var(--a63-control-font-family);
   font-size: var(--a63-control-font-size-sm);

@@ -312,7 +312,7 @@
   display: flex;
   align-items: center;
   gap: var(--a63-space-2);
-  margin-left: auto;
+  margin-inline-start: auto;
 }
 
 /* ── Link wrapper (unclipped so interactive lift isn't cut off) ────────── */

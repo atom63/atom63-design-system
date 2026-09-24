@@ -51,7 +51,7 @@
 .a63-Table-head {
   height: 2.5rem;
   padding-inline: 0.625rem;
-  text-align: left;
+  text-align: start;
   vertical-align: middle;
   font-weight: 500;
   line-height: 1;
