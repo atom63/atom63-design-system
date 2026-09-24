@@ -1,4 +1,4 @@
-import { Callout } from '../mdx-kit/blocks'
+import { Callout } from '@atom63/mdx/blocks'
 import { DraftingCompass } from 'lucide-react'
 
 type SiteAnnouncementProps = {

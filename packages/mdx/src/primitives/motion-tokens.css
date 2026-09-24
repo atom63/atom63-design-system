@@ -1,0 +1,16 @@
+/**
+ * Motion tokens — durations + easings for CSS-driven motion in @atom63/mdx.
+ * Canonical literal source, kept in sync with ./motion-tokens.ts by
+ * motion-tokens-sync.test.ts. (Apps on @atom63/styles also receive these via
+ * styles/compat/mdx.css, which maps them onto the shared --duration-* ramp.)
+ *
+ * Owned by @atom63/mdx — these are --mdx-* namespaced; they moved here when the
+ * legacy @atom63/tokens package was archived.
+ */
+:root {
+  --mdx-motion-fast: 150ms;
+  --mdx-motion-base: 300ms;
+  --mdx-motion-slow: 600ms;
+  --mdx-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --mdx-ease-emphasized: cubic-bezier(0.3, 0, 0, 1);
+}

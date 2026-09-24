@@ -1,0 +1,12 @@
+/**
+ * shadcn-token MDX adapter entry.
+ *
+ * Use in external shadcn apps that do not load @atom63/styles, but already
+ * define shadcn variables such as --background, --foreground, --card, --border,
+ * --primary, and --ring.
+ *
+ * This derives canonical --a63-* variables from shadcn tokens, then loads the
+ * full MDX stylesheet.
+ */
+@import '@atom63/styles/compat/a63-from-shadcn';
+@import './index.css';

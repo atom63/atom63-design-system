@@ -1,5 +1,5 @@
-import { mdxComponents } from '../mdx-kit'
-import { DocExample } from '../mdx-kit/blocks'
+import { mdxComponents } from '@atom63/mdx'
+import { DocExample } from '@atom63/mdx/blocks'
 import {
   Component,
   createElement,

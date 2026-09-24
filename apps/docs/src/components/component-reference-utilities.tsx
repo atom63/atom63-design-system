@@ -1,4 +1,4 @@
-import { mdxComponents } from '../mdx-kit'
+import { mdxComponents } from '@atom63/mdx'
 import { Link } from '@tanstack/react-router'
 import { ChevronDown } from 'lucide-react'
 import uiReactIndexSource from '../../../../packages/ui-react/src/index.ts?raw'

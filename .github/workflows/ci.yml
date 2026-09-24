@@ -105,6 +105,9 @@ jobs:
       - name: Build React UI
         run: pnpm --filter @atom63/ui-react build
 
+      - name: Build MDX
+        run: pnpm --filter @atom63/mdx build
+
       - name: Check API reports
         run: pnpm check:api-report
 
@@ -153,6 +156,12 @@ jobs:
       - name: Check React UI utilities CSS
         run: pnpm --filter @atom63/ui-react check:utilities
 
+      - name: Typecheck MDX
+        run: pnpm --filter @atom63/mdx typecheck
+
+      - name: Test MDX
+        run: pnpm --filter @atom63/mdx test
+
       - name: Check formatting
         run: pnpm format:check
 
@@ -161,6 +170,7 @@ jobs:
           pnpm --filter @atom63/styles lint
           pnpm --filter @atom63/ui-foundation lint
           pnpm --filter @atom63/ui-react lint
+          pnpm --filter @atom63/mdx lint
 
       # A pull request that changes a published package needs a changeset. One
       # that ships nothing to npm (tests, tooling, dev dependencies) adds an

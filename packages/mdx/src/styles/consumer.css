@@ -1,0 +1,7 @@
+/**
+ * Compatibility alias for the full MDX stylesheet entry.
+ *
+ * Prefer @atom63/mdx/styles/index.css for new raw-style consumers, or use
+ * a63.css / shadcn.css when the host needs a token adapter.
+ */
+@import './index.css';

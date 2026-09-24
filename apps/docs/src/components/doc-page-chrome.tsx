@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
   toast,
 } from '@atom63/ui-react'
-import { PageTableOfContents } from '../mdx-kit/blocks'
+import { PageTableOfContents } from '@atom63/mdx/blocks'
 import { Link } from '@tanstack/react-router'
 import { ArrowLeft, ArrowRight, Check, ChevronDown, Copy, FileText, ListTree } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'

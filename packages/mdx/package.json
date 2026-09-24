@@ -1,0 +1,140 @@
+{
+  "name": "@atom63/mdx",
+  "version": "0.4.0-beta.0",
+  "private": true,
+  "description": "MDX prose components, blocks, layout primitives and article styles for the Atom63 design system",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atom63/atom63-design-system.git",
+    "directory": "packages/mdx"
+  },
+  "homepage": "https://github.com/atom63/atom63-design-system/tree/main/packages/mdx#readme",
+  "bugs": {
+    "url": "https://github.com/atom63/atom63-design-system/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "atom63",
+    "design-system",
+    "mdx",
+    "react",
+    "prose"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "@atom63/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./blocks": {
+      "@atom63/source": "./src/blocks/index.ts",
+      "types": "./dist/blocks/index.d.ts",
+      "import": "./dist/blocks/index.js"
+    },
+    "./blocks/credits-block": {
+      "@atom63/source": "./src/blocks/credits-block-entry.ts",
+      "types": "./dist/blocks/credits-block-entry.d.ts",
+      "import": "./dist/blocks/credits-block-entry.js"
+    },
+    "./blocks/media-caption": {
+      "@atom63/source": "./src/blocks/media-caption-entry.ts",
+      "types": "./dist/blocks/media-caption-entry.d.ts",
+      "import": "./dist/blocks/media-caption-entry.js"
+    },
+    "./article": {
+      "@atom63/source": "./src/article/index.ts",
+      "types": "./dist/article/index.d.ts",
+      "import": "./dist/article/index.js"
+    },
+    "./editor": {
+      "@atom63/source": "./src/editor/index.ts",
+      "types": "./dist/editor/index.d.ts",
+      "import": "./dist/editor/index.js"
+    },
+    "./lightbox": {
+      "@atom63/source": "./src/lightbox/index.ts",
+      "types": "./dist/lightbox/index.d.ts",
+      "import": "./dist/lightbox/index.js"
+    },
+    "./runtime": {
+      "@atom63/source": "./src/runtime/index.ts",
+      "types": "./dist/runtime/index.d.ts",
+      "import": "./dist/runtime/index.js"
+    },
+    "./primitives": {
+      "@atom63/source": "./src/primitives/index.ts",
+      "types": "./dist/primitives/index.d.ts",
+      "import": "./dist/primitives/index.js"
+    },
+    "./styles/index.css": "./src/styles/index.css",
+    "./styles/a63.css": "./src/styles/a63.css",
+    "./styles/shadcn.css": "./src/styles/shadcn.css",
+    "./styles/mdx-blocks.css": "./src/styles/mdx-blocks.css",
+    "./styles/consumer.css": "./src/styles/consumer.css"
+  },
+  "sideEffects": [
+    "*.css",
+    "**/*.css"
+  ],
+  "files": [
+    "API.md",
+    "CONTRIBUTING.md",
+    "dist",
+    "src/**/*.css"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --cache --max-warnings 0",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@atom63/styles": "workspace:*",
+    "@atom63/ui-react": "workspace:*",
+    "@base-ui/react": "1.6.0",
+    "@mdx-js/mdx": "^3.1.0",
+    "@mdx-js/react": "^3.1.1",
+    "beautiful-mermaid": "^1.1.3",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.34.0",
+    "motion": "^13.1.1",
+    "photoswipe": "^5.4.4",
+    "react-compare-slider": "^4.0.0",
+    "react-simple-code-editor": "^0.14.1",
+    "shiki": "^4.3.1"
+  },
+  "peerDependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@atom63/eslint-config": "workspace:*",
+    "@atom63/tsconfig": "workspace:*",
+    "@storybook/addon-docs": "^10.6.0",
+    "@storybook/react-vite": "^10.6.0",
+    "@testing-library/jest-dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@types/node": "^26.3.0",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "axe-core": "^4.12.1",
+    "eslint": "10.7.0",
+    "jsdom": "catalog:",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "tsup": "^8.3.5",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "vitest-axe": "^0.1.0"
+  }
+}
