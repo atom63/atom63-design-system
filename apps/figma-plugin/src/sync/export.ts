@@ -3,21 +3,28 @@
  * Atom63 sync model and turns them into a token patch. Pure, like `plan.ts`; the
  * repository applies the patch with `pnpm --filter @atom63/styles tokens:apply`.
  *
- * Only literal values in single-mode collections are exported: those map one to
- * one onto a `:root` custom property. Everything else is reported as skipped with
- * a reason instead of being dropped silently.
+ * Each changed mode of each variable becomes one change: a literal value, or an
+ * alias to another Atom63 token variable. The repository writes a change in a
+ * multi-mode collection (Mode, Brand, Surface…) into the DTCG resolver context
+ * of that mode. What a patch cannot express is reported as skipped with a
+ * reason instead of being dropped silently.
  */
 import type { SnapshotCollection, SyncColor, SyncModel, SyncValue, SyncVariableType } from './plan'
 import { valuesEqual } from './plan'
+
+type Literal = SyncColor | number | string
 
 export interface ExportChange {
   /** CSS custom property, e.g. `--color-b1-500`. */
   token: string
   /** Figma variable name, e.g. `color/b1/500`. */
   name: string
+  collection: string
+  /** The Figma mode that changed, e.g. `dark`, or `Value` in a single-mode collection. */
+  mode: string
   type: SyncVariableType
-  from: SyncColor | number | string
-  to: SyncColor | number | string
+  from: SyncValue | undefined
+  to: { value: Literal } | { alias: string }
 }
 
 export interface ExportSkip {
@@ -30,15 +37,18 @@ export interface ExportPlan {
   skipped: ExportSkip[]
 }
 
+export type TokenPatchChange = {
+  token: string
+  collection: string
+  mode: string
+  type: SyncVariableType
+} & ({ value: Literal } | { alias: string })
+
 export interface TokenPatch {
   format: 'atom63-token-patch'
-  version: 1
-  /** Keyed by CSS custom property. Colors are sRGB channels in 0..1. */
-  tokens: Record<string, { type: SyncVariableType; value: SyncColor | number | string }>
-}
-
-function literal(value: SyncValue | undefined) {
-  return value && 'value' in value ? value.value : undefined
+  version: 2
+  /** Colors are sRGB channels in 0..1; an alias names another token's CSS custom property. */
+  changes: TokenPatchChange[]
 }
 
 export function planExport(model: SyncModel, snapshot: SnapshotCollection[]): ExportPlan {
@@ -55,31 +65,36 @@ export function planExport(model: SyncModel, snapshot: SnapshotCollection[]): Ex
     for (const variable of collection.variables) {
       const actual = byToken.get(variable.token)
       if (!actual) continue
-      const changedModes = collection.modes.filter(
-        mode => !valuesEqual(variable.values[mode], actual.values[mode])
-      )
-      if (changedModes.length === 0) continue
-
-      if (collection.modes.length !== 1) {
-        skipped.push({ name: variable.name, reason: `${collection.name} has several modes` })
-        continue
+      for (const mode of collection.modes) {
+        const from = variable.values[mode]
+        const to = actual.values[mode]
+        if (valuesEqual(from, to)) continue
+        const label = collection.modes.length === 1 ? variable.name : `${variable.name} (${mode})`
+        if (!to) {
+          skipped.push({ name: label, reason: 'an unset value in Figma' })
+          continue
+        }
+        if (variable.type === 'STRING') {
+          skipped.push({ name: label, reason: 'string tokens are not exported yet' })
+          continue
+        }
+        if (from && 'alias' in from && 'value' in to) {
+          skipped.push({
+            name: label,
+            reason: 'an alias in code; point it at another variable instead of a raw value',
+          })
+          continue
+        }
+        changes.push({
+          token: variable.token,
+          name: variable.name,
+          collection: collection.name,
+          mode,
+          type: variable.type,
+          from,
+          to,
+        })
       }
-      const [mode] = collection.modes
-      const from = literal(variable.values[mode])
-      const to = literal(actual.values[mode])
-      if (from === undefined) {
-        skipped.push({ name: variable.name, reason: 'an alias in code' })
-        continue
-      }
-      if (to === undefined) {
-        skipped.push({ name: variable.name, reason: 'an alias or unset value in Figma' })
-        continue
-      }
-      if (variable.type === 'STRING') {
-        skipped.push({ name: variable.name, reason: 'string tokens are not exported yet' })
-        continue
-      }
-      changes.push({ token: variable.token, name: variable.name, type: variable.type, from, to })
     }
   }
 
@@ -89,9 +104,13 @@ export function planExport(model: SyncModel, snapshot: SnapshotCollection[]): Ex
 export function toTokenPatch(plan: ExportPlan): TokenPatch {
   return {
     format: 'atom63-token-patch',
-    version: 1,
-    tokens: Object.fromEntries(
-      plan.changes.map(change => [change.token, { type: change.type, value: change.to }])
-    ),
+    version: 2,
+    changes: plan.changes.map(({ token, collection, mode, type, to }) => ({
+      token,
+      collection,
+      mode,
+      type,
+      ...to,
+    })),
   }
 }

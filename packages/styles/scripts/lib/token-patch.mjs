@@ -1,11 +1,18 @@
+import path from 'node:path'
+
 /**
  * Applies a token patch exported by the Atom63 Figma plugin to DTCG sources.
  * Pure: takes parsed documents, returns edited copies or the reasons it cannot.
  *
- * A patch maps CSS custom properties to Figma values:
+ * Version 1 maps CSS custom properties to Figma values in single-mode collections:
  *   { "format": "atom63-token-patch", "version": 1,
  *     "tokens": { "--color-b1-500": { "type": "COLOR", "value": { r, g, b, a } } } }
- * Each value is converted back into the token's existing DTCG $type and units.
+ * Version 2 lists changes per collection mode, each a literal or an alias:
+ *   { "format": "atom63-token-patch", "version": 2, "changes": [
+ *     { "token": "--a63-text-accent", "collection": "Atom63 Mode", "mode": "dark",
+ *       "type": "COLOR", "alias": "--a63-brand-300" } ] }
+ * A literal is converted back into the token's existing DTCG $type and units. A
+ * multi-mode collection's change is written into the resolver context of its mode.
  */
 
 /** sRGB channel (0..1) to linear light. */
@@ -77,63 +84,171 @@ export function convertValue(token, patchEntry) {
   }
 }
 
-/** Indexes every token by CSS custom property: `--a-b-c` → { file, node, $type }. */
+/** Walks a DTCG group and calls `visit(cssName, node, $type, path)` for each token. */
+function walkTokens(group, trail, inheritedType, visit) {
+  const type = group.$type ?? inheritedType
+  for (const [key, node] of Object.entries(group)) {
+    if (key.startsWith('$') && key !== '$root') continue
+    if (Object.hasOwn(node, '$value')) {
+      const path = key === '$root' ? trail : [...trail, key]
+      visit(`--${path.join('-')}`, node, node.$type ?? type, path)
+    } else {
+      walkTokens(node, [...trail, key], type, visit)
+    }
+  }
+}
+
+/** Indexes every token in `*.tokens.json` documents: `--a-b-c` → { file, node, type, path }. */
 export function indexTokens(documents) {
   const index = new Map()
   for (const [file, document] of documents) {
-    const visit = (group, trail, inheritedType) => {
-      const type = group.$type ?? inheritedType
-      for (const [key, node] of Object.entries(group)) {
-        if (key.startsWith('$') && key !== '$root') continue
-        if (Object.hasOwn(node, '$value')) {
-          const name = `--${(key === '$root' ? trail : [...trail, key]).join('-')}`
-          index.set(name, { file, node, type: node.$type ?? type })
-        } else {
-          visit(node, [...trail, key], type)
-        }
-      }
-    }
-    visit(document, [], undefined)
+    if (file.endsWith('.resolver.json')) continue
+    walkTokens(document, [], undefined, (name, node, type, path) =>
+      index.set(name, { file, node, type, path })
+    )
   }
   return index
+}
+
+/**
+ * Indexes the tokens of DTCG resolvers, one entry per place a token is declared:
+ * a set (applies in every context) or one context of the resolver's modifier.
+ */
+function indexResolvers(documents) {
+  const entries = []
+  for (const [file, document] of documents) {
+    if (!file.endsWith('.resolver.json')) continue
+    const [[axis, modifier]] = Object.entries(document.modifiers ?? {})
+    const contexts = Object.keys(modifier.contexts)
+    for (const set of Object.values(document.sets ?? {})) {
+      for (const source of set.sources) {
+        walkTokens(source, [], undefined, (name, node, type, path) =>
+          entries.push({ file, node, type, path, name, axis, contexts, context: null })
+        )
+      }
+    }
+    for (const [context, sources] of Object.entries(modifier.contexts)) {
+      for (const source of sources) {
+        walkTokens(source, [], undefined, (name, node, type, path) =>
+          entries.push({ file, node, type, path, name, axis, contexts, context })
+        )
+      }
+    }
+  }
+  return entries
+}
+
+const isAlias = value => typeof value === 'string' && value.startsWith('{')
+
+/** Where a v2 change is written, or why it cannot be: { target } | { error }. */
+function locate(change, tokens, resolvers) {
+  const { token, mode } = change
+  const declared = resolvers.filter(entry => entry.name === token)
+  if (mode === 'Value') {
+    const target = tokens.get(token) ?? declared.find(entry => entry.context === null)
+    if (target) return { target }
+    if (declared.length) {
+      const { axis, file } = declared[0]
+      return { error: `varies by ${axis} in ${path.basename(file)}; edit it in its ${axis} modes` }
+    }
+    return { error: 'not defined in a DTCG source yet' }
+  }
+  const inContext = declared.find(entry => entry.context === mode)
+  if (inContext) return { target: inContext }
+  // A mode belongs to an axis if any resolver of that axis declares it as a context.
+  const axisHasMode = axis =>
+    resolvers.some(entry => entry.axis === axis && entry.contexts.includes(mode))
+  const shared = declared.find(entry => entry.context === null && axisHasMode(entry.axis))
+  if (shared) {
+    return {
+      error: `shared by every ${shared.axis} in ${path.basename(shared.file)}; a ${mode}-only exception is added in code`,
+    }
+  }
+  return { error: `not defined for ${mode} in a DTCG source yet` }
+}
+
+function applyV2(copies, patch) {
+  const tokens = indexTokens(copies)
+  const resolvers = indexResolvers(copies)
+  const known = new Map([
+    ...[...tokens].map(([name, entry]) => [name, entry.path]),
+    ...resolvers.map(entry => [entry.name, entry.path]),
+  ])
+  const errors = []
+  const changed = []
+  const touched = new Set()
+
+  for (const change of patch.changes) {
+    const label = change.mode === 'Value' ? change.token : `${change.token} (${change.mode})`
+    const { target, error } = locate(change, tokens, resolvers)
+    if (error) {
+      errors.push(`${label}: ${error}`)
+      continue
+    }
+    const { node, type, file } = target
+    if (node.$extensions?.['io.atom63.derive'] !== undefined) {
+      errors.push(`${label}: computed in CSS (io.atom63.derive); change its inputs instead`)
+      continue
+    }
+    if (change.alias !== undefined) {
+      const aliasPath = known.get(change.alias)
+      if (!aliasPath) {
+        errors.push(`${label}: alias target ${change.alias} is not a DTCG token`)
+        continue
+      }
+      node.$value = `{${aliasPath.join('.')}}`
+    } else {
+      if (isAlias(node.$value)) {
+        errors.push(
+          `${label}: an alias in the DTCG source (${node.$value}); point it at another variable instead`
+        )
+        continue
+      }
+      try {
+        node.$value = convertValue({ ...node, $type: type }, change)
+      } catch (conversionError) {
+        errors.push(`${label}: ${conversionError.message}`)
+        continue
+      }
+    }
+    changed.push(label)
+    touched.add(file)
+  }
+  return { changed, errors, touched }
 }
 
 /**
  * Applies `patch` to `documents` (Map of file → parsed DTCG document), all or
  * nothing. Returns { documents, changed, errors }: `documents` holds edited
  * copies of the files that changed, and is empty when there are errors.
+ *
+ * Version 1 carries one literal per token for single-mode collections. Version 2
+ * carries changes per collection mode, each a literal `value` or an `alias` (the
+ * CSS custom property of another token); a change in a multi-mode collection is
+ * written into the resolver context of that mode.
  */
 export function applyPatch(documents, patch) {
-  if (patch?.format !== 'atom63-token-patch' || patch.version !== 1) {
-    return { documents: new Map(), changed: [], errors: ['not an atom63-token-patch v1 file'] }
+  if (patch?.format !== 'atom63-token-patch' || ![1, 2].includes(patch.version)) {
+    return {
+      documents: new Map(),
+      changed: [],
+      errors: ['not an atom63-token-patch v1 or v2 file'],
+    }
   }
   const copies = new Map(
     [...documents].map(([file, document]) => [file, JSON.parse(JSON.stringify(document))])
   )
-  const index = indexTokens(copies)
-  const errors = []
-  const changed = []
-  const touched = new Set()
-
-  for (const [name, entry] of Object.entries(patch.tokens)) {
-    const token = index.get(name)
-    if (!token) {
-      errors.push(`${name}: not defined in a DTCG source yet`)
-      continue
-    }
-    if (typeof token.node.$value === 'string' && token.node.$value.startsWith('{')) {
-      errors.push(`${name}: an alias in the DTCG source (${token.node.$value})`)
-      continue
-    }
-    try {
-      token.node.$value = convertValue({ ...token.node, $type: token.type }, entry)
-      changed.push(name)
-      touched.add(token.file)
-    } catch (error) {
-      errors.push(`${name}: ${error.message}`)
-    }
-  }
-
+  const v2 =
+    patch.version === 2
+      ? patch
+      : {
+          changes: Object.entries(patch.tokens).map(([token, entry]) => ({
+            token,
+            mode: 'Value',
+            ...entry,
+          })),
+        }
+  const { changed, errors, touched } = applyV2(copies, v2)
   if (errors.length) return { documents: new Map(), changed: [], errors }
   return {
     documents: new Map([...copies].filter(([file]) => touched.has(file))),

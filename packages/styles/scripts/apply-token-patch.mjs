@@ -32,7 +32,7 @@ async function findSources(directory) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const entryPath = path.join(directory, entry.name)
     if (entry.isDirectory()) found.push(...(await findSources(entryPath)))
-    else if (entry.name.endsWith('.tokens.json')) found.push(entryPath)
+    else if (/\.(tokens|resolver)\.json$/.test(entry.name)) found.push(entryPath)
   }
   return found.sort()
 }

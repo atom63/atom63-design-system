@@ -1740,7 +1740,11 @@ async function handleUIMessage(msg: UIToMainMessage) {
         figma.ui.postMessage({
           type: 'sync-export-result',
           data: {
-            changes: plan.changes.map(({ name, token }) => ({ name, token })),
+            // Multi-mode changes name their mode: `text/accent (dark)`.
+            changes: plan.changes.map(({ name, token, mode }) => ({
+              name: mode === 'Value' ? name : `${name} (${mode})`,
+              token,
+            })),
             skipped: plan.skipped,
             patch: `${JSON.stringify(toTokenPatch(plan), null, 2)}\n`,
           },
