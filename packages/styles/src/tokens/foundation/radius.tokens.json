@@ -1,0 +1,100 @@
+{
+  "$description": "Radius foundation.\n\nThe anchor (--corner-radius) and --radius-multiplier drive a derived scale.\nThese are plain custom properties so the default, Tailwind-free build owns a\ncomplete radius scale; the Tailwind adapter (tailwind/theme.css) only\nre-exposes them as theme values, matching every other token category.",
+  "corner": {
+    "radius": {
+      "$type": "dimension",
+      "$value": {
+        "value": 10,
+        "unit": "px"
+      }
+    }
+  },
+  "radius": {
+    "multiplier": {
+      "$type": "number",
+      "$value": 1
+    },
+    "$root": {
+      "$type": "dimension",
+      "$value": "{corner.radius}",
+      "$extensions": {
+        "io.atom63.derive": "calc({corner.radius} * 0.8 * {radius.multiplier})"
+      },
+      "$description": "Tailwind default: `rounded` class (matches md)"
+    },
+    "2xs": {
+      "$type": "dimension",
+      "$value": "{corner.radius}",
+      "$extensions": {
+        "io.atom63.derive": "calc({corner.radius} * 0.2 * {radius.multiplier})"
+      },
+      "$description": "Lower scale"
+    },
+    "xs": {
+      "$type": "dimension",
+      "$value": "{corner.radius}",
+      "$extensions": {
+        "io.atom63.derive": "calc({corner.radius} * 0.4 * {radius.multiplier})"
+      }
+    },
+    "sm": {
+      "$type": "dimension",
+      "$value": "{corner.radius}",
+      "$extensions": {
+        "io.atom63.derive": "calc({corner.radius} * 0.6 * {radius.multiplier})"
+      }
+    },
+    "md": {
+      "$type": "dimension",
+      "$value": "{corner.radius}",
+      "$extensions": {
+        "io.atom63.derive": "calc({corner.radius} * 0.8 * {radius.multiplier})"
+      }
+    },
+    "lg": {
+      "$type": "dimension",
+      "$value": "{corner.radius}",
+      "$extensions": {
+        "io.atom63.derive": "calc({corner.radius} * {radius.multiplier})"
+      },
+      "$description": "The anchor"
+    },
+    "xl": {
+      "$type": "dimension",
+      "$value": "{corner.radius}",
+      "$extensions": {
+        "io.atom63.derive": "calc({corner.radius} * 1.4 * {radius.multiplier})"
+      },
+      "$description": "Upper scale"
+    },
+    "2xl": {
+      "$type": "dimension",
+      "$value": "{corner.radius}",
+      "$extensions": {
+        "io.atom63.derive": "calc({corner.radius} * 1.8 * {radius.multiplier})"
+      }
+    },
+    "3xl": {
+      "$type": "dimension",
+      "$value": "{corner.radius}",
+      "$extensions": {
+        "io.atom63.derive": "calc({corner.radius} * 2.2 * {radius.multiplier})"
+      }
+    },
+    "4xl": {
+      "$type": "dimension",
+      "$value": "{corner.radius}",
+      "$extensions": {
+        "io.atom63.derive": "calc({corner.radius} * 2.6 * {radius.multiplier})"
+      }
+    },
+    "full": {
+      "$type": "dimension",
+      "$value": "{radius.xl}",
+      "$extensions": {
+        "io.atom63.derive": "calc({radius.xl} * 2)"
+      },
+      "$description": "Soft “full” = 2× md (already includes the multiplier). Stays on the same\npersonalization curve as the rest of the scale instead of a fixed 9999px\npill that ignores subtle/none/round wrap."
+    }
+  }
+}

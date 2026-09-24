@@ -1,0 +1,135 @@
+{
+  "version": "2025.10",
+  "description": "Motion contract.\n\nThe interaction-timing intents the system uses. Raw --duration-* / --ease-*\nprimitives remain available for anything else.",
+  "sets": {
+    "01-root": {
+      "sources": [
+        {
+          "a63": {
+            "motion": {
+              "duration": {
+                "fast": {
+                  "$type": "duration",
+                  "$value": "{duration.fast}"
+                },
+                "overlay": {
+                  "$type": "duration",
+                  "$value": "{duration.overlay}"
+                },
+                "swipe": {
+                  "dismiss": {
+                    "$type": "duration",
+                    "$value": "{duration.swipe.dismiss}"
+                  }
+                }
+              },
+              "ease": {
+                "overlay": {
+                  "$type": "cubicBezier",
+                  "$value": "{ease.overlay}"
+                },
+                "scrim": {
+                  "$type": "cubicBezier",
+                  "$value": "{ease.scrim}"
+                },
+                "standard": {
+                  "$type": "cubicBezier",
+                  "$value": "{ease.standard}"
+                },
+                "emphasized": {
+                  "$type": "cubicBezier",
+                  "$value": "{ease.emphasized}"
+                }
+              },
+              "control": {
+                "feedback": {
+                  "duration": {
+                    "$type": "duration",
+                    "$value": "{a63.motion.duration.fast}"
+                  }
+                }
+              },
+              "skeleton": {
+                "shimmer": {
+                  "duration": {
+                    "$type": "duration",
+                    "$value": "{duration.1500}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":root"
+        }
+      }
+    },
+    "02-media-prefers-reduced-motion-reduce-root": {
+      "sources": [
+        {
+          "a63": {
+            "motion": {
+              "control": {
+                "feedback": {
+                  "duration": {
+                    "$type": "duration",
+                    "$value": {
+                      "value": 0,
+                      "unit": "ms"
+                    }
+                  }
+                }
+              },
+              "duration": {
+                "overlay": {
+                  "$type": "duration",
+                  "$value": {
+                    "value": 0,
+                    "unit": "ms"
+                  }
+                },
+                "swipe": {
+                  "dismiss": {
+                    "$type": "duration",
+                    "$value": {
+                      "value": 0,
+                      "unit": "ms"
+                    }
+                  }
+                }
+              },
+              "skeleton": {
+                "shimmer": {
+                  "duration": {
+                    "$type": "duration",
+                    "$value": {
+                      "value": 0,
+                      "unit": "ms"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":root",
+          "atRule": "@media (prefers-reduced-motion: reduce)"
+        }
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/01-root"
+    },
+    {
+      "$ref": "#/sets/02-media-prefers-reduced-motion-reduce-root"
+    }
+  ]
+}

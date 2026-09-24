@@ -1,10 +1,12 @@
 /*
+ * Generated from src/tokens/motion.resolver.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
  * Motion contract.
  *
  * The interaction-timing intents the system uses. Raw --duration-* / --ease-*
  * primitives remain available for anything else.
  */
-
 :root {
   --a63-motion-duration-fast: var(--duration-fast);
   --a63-motion-duration-overlay: var(--duration-overlay);

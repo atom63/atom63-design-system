@@ -1,0 +1,67 @@
+{
+  "version": "2025.10",
+  "description": "Typography personalization axis.\n\n[data-a63-type-scale] sets the multiplier the responsive type scale\n(foundation/typography.css) already multiplies every size + line-height by.\n`normal` = 1 restates the foundation default (--typography-scale defaults to 1\nvia its calc fallback) so a subtree can reset it.",
+  "modifiers": {
+    "type-scale": {
+      "default": "normal",
+      "contexts": {
+        "compact": [
+          {
+            "typography": {
+              "scale": {
+                "$type": "number",
+                "$value": 0.9
+              }
+            }
+          }
+        ],
+        "normal": [
+          {
+            "typography": {
+              "scale": {
+                "$type": "number",
+                "$value": 1
+              }
+            }
+          }
+        ],
+        "comfortable": [
+          {
+            "typography": {
+              "scale": {
+                "$type": "number",
+                "$value": 1.1
+              }
+            }
+          }
+        ],
+        "large": [
+          {
+            "typography": {
+              "scale": {
+                "$type": "number",
+                "$value": 1.2
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/modifiers/type-scale"
+    }
+  ],
+  "$extensions": {
+    "io.atom63.css": {
+      "attribute": "data-a63-type-scale",
+      "selectors": {
+        "compact": "[data-a63-type-scale='compact']",
+        "normal": "[data-a63-type-scale='normal']",
+        "comfortable": "[data-a63-type-scale='comfortable']",
+        "large": "[data-a63-type-scale='large']"
+      }
+    }
+  }
+}

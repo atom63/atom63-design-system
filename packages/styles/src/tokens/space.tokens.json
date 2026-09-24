@@ -1,0 +1,78 @@
+{
+  "$description": "Space contract.\n\nA proportional unit + the compact set of aliases the system actually uses, so\ndensity can tune rhythm without component-local spacing scales. Raw --spacing-*\nprimitives remain available for anything outside this set.",
+  "a63": {
+    "space": {
+      "unit": {
+        "$type": "dimension",
+        "$value": "{spacing.1}"
+      },
+      "0_5": {
+        "$type": "dimension",
+        "$value": "{a63.space.unit}",
+        "$extensions": {
+          "io.atom63.derive": "calc({a63.space.unit} * 0.5)"
+        }
+      },
+      "1": {
+        "$type": "dimension",
+        "$value": "{a63.space.unit}"
+      },
+      "1_5": {
+        "$type": "dimension",
+        "$value": "{a63.space.unit}",
+        "$extensions": {
+          "io.atom63.derive": "calc({a63.space.unit} * 1.5)"
+        }
+      },
+      "2": {
+        "$type": "dimension",
+        "$value": "{a63.space.unit}",
+        "$extensions": {
+          "io.atom63.derive": "calc({a63.space.unit} * 2)"
+        }
+      },
+      "2_5": {
+        "$type": "dimension",
+        "$value": "{a63.space.unit}",
+        "$extensions": {
+          "io.atom63.derive": "calc({a63.space.unit} * 2.5)"
+        }
+      },
+      "3": {
+        "$type": "dimension",
+        "$value": "{a63.space.unit}",
+        "$extensions": {
+          "io.atom63.derive": "calc({a63.space.unit} * 3)"
+        }
+      },
+      "3_5": {
+        "$type": "dimension",
+        "$value": "{a63.space.unit}",
+        "$extensions": {
+          "io.atom63.derive": "calc({a63.space.unit} * 3.5)"
+        }
+      },
+      "4": {
+        "$type": "dimension",
+        "$value": "{a63.space.unit}",
+        "$extensions": {
+          "io.atom63.derive": "calc({a63.space.unit} * 4)"
+        }
+      },
+      "5": {
+        "$type": "dimension",
+        "$value": "{a63.space.unit}",
+        "$extensions": {
+          "io.atom63.derive": "calc({a63.space.unit} * 5)"
+        }
+      },
+      "6": {
+        "$type": "dimension",
+        "$value": "{a63.space.unit}",
+        "$extensions": {
+          "io.atom63.derive": "calc({a63.space.unit} * 6)"
+        }
+      }
+    }
+  }
+}

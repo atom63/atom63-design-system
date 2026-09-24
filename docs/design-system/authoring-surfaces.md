@@ -124,7 +124,7 @@ Do not mint a contract because a token “might be reusable.” Prefer extending
 | --- | --- |
 | Style a page | shadcn/Tailwind semantics; this doc’s lane table |
 | Change blue-500 / spacing-4 | `tokens/foundation/*.tokens.json` |
-| Change the radius or blur scale | `tokens/foundation/{radius,effects}.css` (still CSS) |
+| Change the radius or blur scale | `tokens/foundation/radius.tokens.json`, `effects.resolver.json` |
 | Change what “primary” means | `tokens/brand-action.resolver.json` / `semantics.resolver.json` |
 | Make Aqua glossier / Retro chunkier / Terminal glow | `themes/<id>.resolver.json` (skin-private OK) |
 | Reuse the same stop across two themes | Promote into foundation, then remap |
