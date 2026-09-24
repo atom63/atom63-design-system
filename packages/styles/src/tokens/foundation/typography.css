@@ -1,4 +1,19 @@
-/* Typography — responsive type scale */
+/*
+ * Generated from src/tokens/foundation/typography.resolver.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
+ * Typography — responsive type scale.
+ *
+ * Every size and line height is multiplied by --typography-scale (1 when unset;
+ * set by [data-a63-type-scale] and the .text-scale-* classes). The Viewport
+ * modifier holds the three steps: xs (the base values), sm (640px+ / tablet
+ * portrait) and md (768px+ / tablet landscape and up). Each step is written twice,
+ * from the same values: as a min-width @media breakpoint on :root that declares
+ * only what changes from the step before, and as a complete [data-window-size]
+ * rule (md also covers lg and xl) for windowed layouts. The window rules come
+ * last, so on an element that matches both, the window size wins.
+ */
+@import './typography.native.css';
 
 :root {
   --typography-xs-font-size: calc(12px * var(--typography-scale, 1));
@@ -29,7 +44,6 @@
   --typography-9xl-line-height: calc(49px * var(--typography-scale, 1));
 }
 
-/* Small (640px+ / tablet portrait) */
 @media (min-width: 40rem) {
   :root {
     --typography-lg-font-size: calc(17px * var(--typography-scale, 1));
@@ -53,7 +67,6 @@
   }
 }
 
-/* Medium (768px+ / tablet landscape) */
 @media (min-width: 48rem) {
   :root {
     --typography-xl-font-size: calc(19px * var(--typography-scale, 1));
@@ -77,7 +90,6 @@
   }
 }
 
-/* Window-responsive: Extra small (< 640px / mobile) */
 [data-window-size='xs'] {
   --typography-xs-font-size: calc(12px * var(--typography-scale, 1));
   --typography-xs-line-height: calc(18px * var(--typography-scale, 1));
@@ -107,7 +119,6 @@
   --typography-9xl-line-height: calc(49px * var(--typography-scale, 1));
 }
 
-/* Window-responsive: Small (640px+ / tablet portrait) */
 [data-window-size='sm'] {
   --typography-xs-font-size: calc(12px * var(--typography-scale, 1));
   --typography-xs-line-height: calc(18px * var(--typography-scale, 1));
@@ -137,7 +148,6 @@
   --typography-9xl-line-height: calc(55px * var(--typography-scale, 1));
 }
 
-/* Window-responsive: Medium (768px+ / tablet landscape) / Large (1024px+ / desktop) / Extra large (1280px+ / large desktop) */
 [data-window-size='md'],
 [data-window-size='lg'],
 [data-window-size='xl'] {
@@ -170,21 +180,24 @@
 }
 
 @layer base {
-  small {
-    font-size: var(--typography-xs-font-size);
-    line-height: var(--typography-xs-line-height);
-  }
-
-  /* Typography Scale Classes — set --typography-scale per subtree */
   .text-scale-sm {
     --typography-scale: 0.8;
   }
+}
+
+@layer base {
   .text-scale-normal {
     --typography-scale: 1;
   }
+}
+
+@layer base {
   .text-scale-lg {
     --typography-scale: 1.2;
   }
+}
+
+@layer base {
   .text-scale-xl {
     --typography-scale: 1.4;
   }

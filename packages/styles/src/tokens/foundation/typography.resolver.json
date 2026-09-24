@@ -1,0 +1,936 @@
+{
+  "version": "2025.10",
+  "description": "Typography — responsive type scale.\n\nEvery size and line height is multiplied by --typography-scale (1 when unset;\nset by [data-a63-type-scale] and the .text-scale-* classes). The Viewport\nmodifier holds the three steps: xs (the base values), sm (640px+ / tablet\nportrait) and md (768px+ / tablet landscape and up). Each step is written twice,\nfrom the same values: as a min-width @media breakpoint on :root that declares\nonly what changes from the step before, and as a complete [data-window-size]\nrule (md also covers lg and xl) for windowed layouts. The window rules come\nlast, so on an element that matches both, the window size wins.",
+  "sets": {
+    "base": {
+      "sources": [
+        {
+          "typography": {
+            "xs": {
+              "font": {
+                "size": {
+                  "$value": {
+                    "value": 12,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$value": {
+                    "value": 18,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "sm": {
+              "font": {
+                "size": {
+                  "$value": {
+                    "value": 13,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$value": {
+                    "value": 20,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "base": {
+              "font": {
+                "size": {
+                  "$value": {
+                    "value": 15,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$value": {
+                    "value": 23,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "lg": {
+              "font": {
+                "size": {
+                  "$value": {
+                    "value": 16,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$value": {
+                    "value": 24,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "xl": {
+              "font": {
+                "size": {
+                  "$value": {
+                    "value": 18,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$value": {
+                    "value": 23,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "2xl": {
+              "font": {
+                "size": {
+                  "$value": {
+                    "value": 19,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$value": {
+                    "value": 24,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "3xl": {
+              "font": {
+                "size": {
+                  "$value": {
+                    "value": 21,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$value": {
+                    "value": 26,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "4xl": {
+              "font": {
+                "size": {
+                  "$value": {
+                    "value": 23,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$value": {
+                    "value": 29,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "5xl": {
+              "font": {
+                "size": {
+                  "$value": {
+                    "value": 26,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$value": {
+                    "value": 33,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "6xl": {
+              "font": {
+                "size": {
+                  "$value": {
+                    "value": 28,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$value": {
+                    "value": 35,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "7xl": {
+              "font": {
+                "size": {
+                  "$value": {
+                    "value": 31,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$value": {
+                    "value": 39,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "8xl": {
+              "font": {
+                "size": {
+                  "$value": {
+                    "value": 35,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$value": {
+                    "value": 44,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "9xl": {
+              "font": {
+                "size": {
+                  "$value": {
+                    "value": 39,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$value": {
+                    "value": 49,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            }
+          },
+          "$type": "dimension"
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":root"
+        }
+      }
+    },
+    "text-scale-sm": {
+      "sources": [
+        {
+          "typography": {
+            "scale": {
+              "$type": "number",
+              "$value": 0.8
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "atRule": "@layer base",
+          "selector": ".text-scale-sm"
+        }
+      }
+    },
+    "text-scale-normal": {
+      "sources": [
+        {
+          "typography": {
+            "scale": {
+              "$type": "number",
+              "$value": 1
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "atRule": "@layer base",
+          "selector": ".text-scale-normal"
+        }
+      }
+    },
+    "text-scale-lg": {
+      "sources": [
+        {
+          "typography": {
+            "scale": {
+              "$type": "number",
+              "$value": 1.2
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "atRule": "@layer base",
+          "selector": ".text-scale-lg"
+        }
+      }
+    },
+    "text-scale-xl": {
+      "sources": [
+        {
+          "typography": {
+            "scale": {
+              "$type": "number",
+              "$value": 1.4
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "atRule": "@layer base",
+          "selector": ".text-scale-xl"
+        }
+      }
+    }
+  },
+  "modifiers": {
+    "viewport": {
+      "default": "xs",
+      "contexts": {
+        "xs": [],
+        "sm": [
+          {
+            "typography": {
+              "lg": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 17,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 26,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              },
+              "2xl": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 20,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 25,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              },
+              "3xl": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 23,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 29,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              },
+              "4xl": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 25,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 31,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              },
+              "5xl": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 28,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 35,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              },
+              "6xl": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 31,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 39,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              },
+              "7xl": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 35,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 44,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              },
+              "8xl": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 39,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 49,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              },
+              "9xl": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 44,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 55,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              }
+            },
+            "$type": "dimension"
+          }
+        ],
+        "md": [
+          {
+            "typography": {
+              "lg": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 17,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 26,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              },
+              "2xl": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 21,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 26,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              },
+              "3xl": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 24,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 30,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              },
+              "4xl": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 27,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 34,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              },
+              "5xl": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 30,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 38,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              },
+              "6xl": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 34,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 43,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              },
+              "7xl": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 38,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 48,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              },
+              "8xl": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 43,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 54,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              },
+              "9xl": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 49,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 61,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              },
+              "xl": {
+                "font": {
+                  "size": {
+                    "$value": {
+                      "value": 19,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                },
+                "line": {
+                  "height": {
+                    "$value": {
+                      "value": 24,
+                      "unit": "px"
+                    },
+                    "$extensions": {
+                      "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                    }
+                  }
+                }
+              }
+            },
+            "$type": "dimension"
+          }
+        ]
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/base"
+    },
+    {
+      "$ref": "#/modifiers/viewport"
+    },
+    {
+      "$ref": "#/sets/text-scale-sm"
+    },
+    {
+      "$ref": "#/sets/text-scale-normal"
+    },
+    {
+      "$ref": "#/sets/text-scale-lg"
+    },
+    {
+      "$ref": "#/sets/text-scale-xl"
+    }
+  ],
+  "$extensions": {
+    "io.atom63.css": {
+      "imports": ["./typography.native.css"],
+      "emit": [
+        {
+          "context": "sm",
+          "atRule": "@media (min-width: 40rem)",
+          "selector": ":root",
+          "values": "changes"
+        },
+        {
+          "context": "md",
+          "atRule": "@media (min-width: 48rem)",
+          "selector": ":root",
+          "values": "changes"
+        },
+        {
+          "context": "xs",
+          "selector": "[data-window-size='xs']",
+          "values": "resolved"
+        },
+        {
+          "context": "sm",
+          "selector": "[data-window-size='sm']",
+          "values": "resolved"
+        },
+        {
+          "context": "md",
+          "selector": "[data-window-size='md'],\n[data-window-size='lg'],\n[data-window-size='xl']",
+          "values": "resolved"
+        }
+      ]
+    }
+  }
+}

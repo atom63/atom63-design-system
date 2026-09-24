@@ -67,6 +67,7 @@ Tokens are defined in [DTCG](https://www.designtokens.org/tr/2025.10/format/) fi
   radius and effects
 - `tokens/space.tokens.json`, `tokens/motion.resolver.json`: the space and motion intents
 - `tokens/{radius,font,type-scale}.resolver.json`: personalization axes (one modifier each)
+- `tokens/foundation/typography.resolver.json`: the responsive type scale (a Viewport modifier)
 - `tokens/*.resolver.json`: semantic roles per mode, the brand ramp and brand actions, and the
   surface palette (DTCG resolvers, one context per mode, brand or surface)
 - `contracts/*.tokens.json` and `*.resolver.json`: component contracts
@@ -74,8 +75,6 @@ Tokens are defined in [DTCG](https://www.designtokens.org/tr/2025.10/format/) fi
 
 A value that DTCG cannot type (a CSS keyword, a gradient, a `calc()`) lives in a `*.native.css`
 file next to its source and is listed with a reason in `tokens/native-values.json`.
-The responsive type scale (`tokens/foundation/typography.css`) is still written in CSS; it moves
-to DTCG next.
 
 ### From Figma to code
 
