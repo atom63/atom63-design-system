@@ -1,0 +1,11 @@
+/*
+ * Element styles that belong with the type scale but are not tokens: <small>
+ * uses the xs step. Kept next to typography.resolver.json, which generates the
+ * scale itself; see docs/design-system/token-single-source.md.
+ */
+@layer base {
+  small {
+    font-size: var(--typography-xs-font-size);
+    line-height: var(--typography-xs-line-height);
+  }
+}

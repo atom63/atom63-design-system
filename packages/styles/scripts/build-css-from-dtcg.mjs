@@ -146,12 +146,17 @@ function formatValue(type, value, name, knownNames) {
   }
 }
 
-/** Expands an `io.atom63.derive` expression: `{a.b}` → `var(--a-b)`. */
-function formatDerive(expression, name, knownNames) {
+/**
+ * Expands an `io.atom63.derive` expression: `{a.b}` → `var(--a-b)`, and
+ * `{$value}` → the token's own `$value`, so a formula over a literal does not
+ * repeat it (`calc({$value} * var(--typography-scale, 1))`).
+ */
+function formatDerive(expression, name, knownNames, plain) {
   if (typeof expression !== 'string') {
     throw new Error(`${name}: $extensions["io.atom63.derive"] must be a CSS expression string`)
   }
   return expression.replaceAll(/\{([^{}]+)\}/g, (_, reference) => {
+    if (reference === '$value') return plain
     const target = aliasTarget(reference)
     if (!knownNames.has(target))
       throw new Error(`${name}: derive {${reference}} has no target token`)
@@ -215,22 +220,29 @@ function toRules(sourcePath, document) {
   if (modifiers.length === 1) {
     const [[name, modifier]] = modifiers
     modifierName = name
-    const attribute = document.$extensions?.['io.atom63.css']?.attribute
-    if (!attribute) throw new Error(`${sourcePath}: missing $extensions["io.atom63.css"].attribute`)
     if (!Object.hasOwn(modifier.contexts, modifier.default)) {
       throw new Error(
         `${sourcePath}: default context "${modifier.default}" of "${name}" is missing`
       )
     }
-    const selectors = document.$extensions['io.atom63.css'].selectors ?? {}
-    modifierRules = Object.entries(modifier.contexts)
-      .filter(([, sources]) => sources.length > 0)
-      .map(([context, sources]) => {
-        const scoped = `[${attribute}='${context}']`
-        const selector =
-          selectors[context] ?? (context === modifier.default ? `:root,\n${scoped}` : scoped)
-        return { selector, groups: inline(sources) }
-      })
+    const emit = document.$extensions?.['io.atom63.css']?.emit
+    if (emit) {
+      modifierRules = emitRules(sourcePath, document, name, modifier, emit, inline)
+    } else {
+      const attribute = document.$extensions?.['io.atom63.css']?.attribute
+      if (!attribute) {
+        throw new Error(`${sourcePath}: missing $extensions["io.atom63.css"].attribute`)
+      }
+      const selectors = document.$extensions['io.atom63.css'].selectors ?? {}
+      modifierRules = Object.entries(modifier.contexts)
+        .filter(([, sources]) => sources.length > 0)
+        .map(([context, sources]) => {
+          const scoped = `[${attribute}='${context}']`
+          const selector =
+            selectors[context] ?? (context === modifier.default ? `:root,\n${scoped}` : scoped)
+          return { selector, groups: inline(sources) }
+        })
+    }
   }
   const order =
     document.resolutionOrder ?? (modifierName ? [{ $ref: `#/modifiers/${modifierName}` }] : [])
@@ -244,6 +256,59 @@ function toRules(sourcePath, document) {
       throw new Error(`${sourcePath}: set "${setName}" needs $extensions["io.atom63.css"].selector`)
     }
     return [{ selector, atRule, groups: inline(set.sources) }]
+  })
+}
+
+/**
+ * A modifier with `$extensions["io.atom63.css"].emit` writes its contexts to an
+ * ordered list of targets instead of attribute selectors. Each target names a
+ * context, a selector, an optional at-rule and which values to declare:
+ * - `resolved`: every token as the context resolves it, that is the sets before
+ *   the modifier in `resolutionOrder` overridden by the context;
+ * - `changes`: only the tokens whose resolved value differs from the context
+ *   listed before it (the first context compares with the sets alone).
+ * The type scale uses both: cumulative `@media` breakpoints on `:root` and a
+ * complete `[data-window-size]` rule per context, from one set of values.
+ */
+function emitRules(sourcePath, document, modifierName, modifier, emit, inline) {
+  const order = document.resolutionOrder ?? []
+  const modifierIndex = order.findIndex(({ $ref }) => $ref === `#/modifiers/${modifierName}`)
+  const baseSources = order.slice(0, Math.max(modifierIndex, 0)).flatMap(({ $ref }) => {
+    const set = document.sets?.[/^#\/sets\/(.+)$/.exec($ref ?? '')?.[1]]
+    if (!set) throw new Error(`${sourcePath}: resolutionOrder entry ${$ref} does not resolve`)
+    return inline(set.sources)
+  })
+  // name → a flat token node; later sources override earlier ones in place.
+  const flatten = (sources, into = new Map()) => {
+    for (const [name, $type, $value, derive] of tokensOf([{ groups: sources }])) {
+      const node = { $type, $value }
+      if (derive !== undefined) node.$extensions = { 'io.atom63.derive': derive }
+      into.set(name, node)
+    }
+    return into
+  }
+  const base = flatten(baseSources)
+  const contexts = Object.keys(modifier.contexts)
+  const resolved = new Map(
+    contexts.map(context => [context, flatten(inline(modifier.contexts[context]), new Map(base))])
+  )
+  return emit.map(({ context, selector, atRule, values }) => {
+    const tokens = resolved.get(context)
+    if (!tokens) throw new Error(`${sourcePath}: emit names unknown context "${context}"`)
+    if (!selector) throw new Error(`${sourcePath}: emit target for "${context}" needs a selector`)
+    let declared = tokens
+    if (values === 'changes') {
+      const index = contexts.indexOf(context)
+      const previous = index === 0 ? base : resolved.get(contexts[index - 1])
+      declared = new Map(
+        [...tokens].filter(
+          ([name, node]) => JSON.stringify(node) !== JSON.stringify(previous.get(name))
+        )
+      )
+    } else if (values !== 'resolved') {
+      throw new Error(`${sourcePath}: emit values must be "resolved" or "changes"`)
+    }
+    return { selector, atRule, groups: [Object.fromEntries(declared)] }
   })
 }
 
@@ -264,7 +329,7 @@ function render(sourcePath, document, rules, knownNames) {
     const declarations = tokensOf([rule]).map(([name, type, value, derive, description]) => {
       // The plain value is validated even when a derive expression replaces it.
       const plain = formatValue(type, value, name, knownNames)
-      const css = derive === undefined ? plain : formatDerive(derive, name, knownNames)
+      const css = derive === undefined ? plain : formatDerive(derive, name, knownNames, plain)
       const comment = description
         ? `  /* ${description.replaceAll('*/', '* /').split('\n').join('\n     ')} */\n`
         : ''

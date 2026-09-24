@@ -73,7 +73,7 @@ Full policy: [authoring-surfaces.md](./authoring-surfaces.md) ← **canonical fo
 | --- | --- |
 | Change blue-500 / spacing | `packages/styles/src/tokens/foundation/*.tokens.json` |
 | Change the radius or blur ladder | `packages/styles/src/tokens/foundation/radius.tokens.json`, `effects.resolver.json` |
-| Change the type scale | `packages/styles/src/tokens/foundation/typography.css` (still CSS) |
+| Change the type scale | `packages/styles/src/tokens/foundation/typography.resolver.json` |
 | Change what “primary” means | `tokens/brand-action.resolver.json` / `tokens/semantics.resolver.json` |
 | Make Aqua glossier / Retro chunkier / Terminal glow | `packages/styles/src/themes/<id>.resolver.json` |
 | Add a shared Button+Input size knob | Contract growth rule → maybe `contracts/control.tokens.json` |

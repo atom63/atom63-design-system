@@ -1,9 +1,11 @@
 # Phase B: DTCG as the single token source
 
-Status: B1–B7 shipped on 2026-09-24 (#25–#32); B8a shipped; B8b is open. Implements decision D1 in
+Status: shipped. B1–B7 on 2026-09-24 (#25–#32), B8a (#45) and B8b on 2026-09-25. Implements decision D1 in
 [roadmap.md](./roadmap.md) (every layer moves to DTCG, in two steps: semantics and brand first, then
-contracts and themes). 1525 of the 1669 token manifest entries (91%) now come from DTCG sources. The
-other 144 are the responsive type scale that B8b covers.
+contracts and themes). Of the 1669 token manifest entries, 1603 are generated from DTCG sources. The other 66 are values
+with no DTCG type in `*.native.css` files, each listed with a reason in `native-values.json`. No
+other token is written by hand. (Earlier progress figures of 87% and 91% counted the native values
+as DTCG.)
 
 ## Why
 
@@ -50,7 +52,15 @@ designers.
   The default is `[data-a63-<axis>='<context>']`, plus `:root` for the default context.
 - **A base group outside any context.** These are tokens declared on the axis scope for every context,
   such as the action block on `:root, [data-a63-brand]` that must re-resolve where the ramp is remapped.
-- **Emitting `io.atom63.derive` expressions.**
+- **Emitting `io.atom63.derive` expressions.** `{$value}` in an expression is the token's own
+  `$value`, so a formula over a literal does not repeat it: every type-scale step is
+  `calc({$value} * var(--typography-scale, 1))`.
+- **Explicit emit targets (B8b).** A modifier with `$extensions["io.atom63.css"].emit` writes its
+  contexts to an ordered list of targets instead of attribute selectors. Each target names a
+  context, a selector and an optional at-rule, and declares either the context's `resolved` values
+  (the sets before the modifier, overridden by the context) or only the `changes` from the context
+  listed before it. The type scale writes each Viewport step twice from one set of values: as a
+  cumulative `@media (min-width: …)` block on `:root` and as a complete `[data-window-size]` rule.
 
 The manifest generator keeps reading CSS, so the manifest check is the equivalence proof for each
 slice.
@@ -67,7 +77,7 @@ slice.
 | B6 | Contracts | `contracts/*.css` → `contracts/*.tokens.json` or `*.resolver.json` (mostly aliases plus derive expressions) | manifest unchanged | shipped (#30) |
 | B7 | Themes | `themes/*.css` → `themes/<id>.resolver.json` (modern, aqua, retro, terminal); the manifest and Figma gain a Theme collection | new Figma collection | shipped (#31, #32) |
 | B8a | Scales and axes | `foundation/{radius,effects}.css` and the axis files `tokens/{space,radius,motion,font,type-scale}.css` (71 entries); radius, font and type-scale become one modifier each | manifest and Figma model byte-identical | shipped |
-| B8b | Type scale | `foundation/typography.css` (144 entries): one Viewport modifier (xs, sm, md) emitted both as `@media` breakpoints and as `[data-window-size]` rules; the two already agree at every breakpoint | manifest unchanged | open |
+| B8b | Type scale | `foundation/typography.css` (144 entries) → `foundation/typography.resolver.json`: one Viewport modifier (xs, sm, md) emitted both as `@media` breakpoints and as `[data-window-size]` rules; the two already agreed at every breakpoint | declarations identical in order; manifest gains only the native file in `generatedFrom`; Figma model byte-identical | shipped |
 
 B1–B5 are step one of D1, and B6–B8 are step two. iOS follows automatically: Swift colors are resolved
 from the Figma sync model (phase A). Themes are in the model since B7, so `AtomTheme` values can now be
@@ -90,7 +100,9 @@ hand-written CSS. The rule that keeps them from becoming black boxes:
   generate `<name>.css`. The CSS-native ones move to `<name>.native.css`, which the generated
   `<name>.css` imports (`$extensions["io.atom63.css"].imports`), so the contract keeps one entry
   point.
-- Every declaration in a `*.native.css` file is listed in `native-values.json` with a one-line
+- A native file may also hold element styles that belong with its token file but are not tokens,
+  such as `small` in `typography.native.css`.
+- Every custom property in a `*.native.css` file is listed in `native-values.json` with a one-line
   reason. A check fails when a native file declares a value that is not listed, so a new
   hand-written value needs a reviewed entry.
 

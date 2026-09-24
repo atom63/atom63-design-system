@@ -50,6 +50,7 @@
     "packages/styles/src/tokens/foundation/primitives.css",
     "packages/styles/src/tokens/foundation/radius.css",
     "packages/styles/src/tokens/foundation/typography.css",
+    "packages/styles/src/tokens/foundation/typography.native.css",
     "packages/styles/src/tokens/index.css",
     "packages/styles/src/tokens/motion.css",
     "packages/styles/src/tokens/radius.css",
@@ -59,7 +60,7 @@
     "packages/styles/src/tokens/type-scale.css"
   ],
   "summary": {
-    "sourceFiles": 55,
+    "sourceFiles": 56,
     "declarations": 1669,
     "uniqueCssVariables": 1048,
     "figmaMappedDeclarations": 1608
