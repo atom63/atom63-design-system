@@ -44,7 +44,7 @@ function AnimatedCheckDemo({ animate }: { animate: boolean }) {
 }
 
 export const Playground: Story = {
-  render: args => <AnimatedCheckDemo animate={args.animate} />,
+  render: args => <AnimatedCheckDemo animate={args.animate ?? true} />,
 }
 
 export const StaticSizes: Story = {

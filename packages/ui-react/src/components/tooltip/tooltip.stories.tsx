@@ -121,7 +121,7 @@ export const AnchorAndPortal: Story = {
   render: () => <AnchorAndPortalExample />,
 }
 
-function ThemeCell({ theme, mode }: { theme: string; mode: 'light' | 'dark' }) {
+function ThemeCell({ theme, mode }: { theme: (typeof themes)[number]; mode: 'light' | 'dark' }) {
   const [node, setNode] = useState<HTMLElement | null>(null)
   return (
     <UIProvider mode={mode} theme={theme}>

@@ -39,6 +39,8 @@ const meta = {
     crosshairs: true,
     lineStyle: 'dashed',
     tone: 'default',
+    // Required prop; every story renders its own content.
+    children: null,
   },
 } satisfies Meta<typeof GridChrome>
 

@@ -207,7 +207,8 @@ const meta = {
 
 export default meta
 
-type Story = StoryObj<typeof meta>
+// Render-only stories: they build their own props, so no required args apply.
+type Story = StoryObj
 
 export const GalleryOfThree: Story = {
   render: () => <Gallery items={GALLERY} />,

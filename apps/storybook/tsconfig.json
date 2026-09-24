@@ -3,8 +3,7 @@
   "compilerOptions": {
     "types": ["vite/client", "node"]
   },
-  // Stories are not typechecked yet: the ui-react library excludes them, and
-  // they carry pre-existing type errors (mostly render-only stories that omit
-  // required args). They still build and run as render tests.
-  "include": [".storybook", "vitest.config.ts"]
+  // The ui-react library typecheck excludes its stories because they depend on
+  // Storybook tooling; this app owns and typechecks them.
+  "include": [".storybook", "vitest.config.ts", "../../packages/ui-react/src/**/*.stories.tsx"]
 }

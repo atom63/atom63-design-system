@@ -69,7 +69,16 @@ const meta = {
     tone: { control: 'inline-radio', options: segmentedControlTones },
     animateBackplate: { control: 'boolean' },
   },
-  args: { size: 'md', tone: 'neutral', variant: 'label', animateBackplate: true },
+  args: {
+    size: 'md',
+    tone: 'neutral',
+    variant: 'label',
+    animateBackplate: true,
+    // Required props; every story renders its own items and state.
+    items: [],
+    value: '',
+    onValueChange: () => {},
+  },
 } satisfies Meta<typeof SegmentedControl>
 
 export default meta

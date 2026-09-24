@@ -72,4 +72,5 @@
 - 渲染测试：`@storybook/addon-vitest`，446 个全部通过；故意让 Button 抛错时，21 个相关测试失败。
 - 视觉回归：Vitest `toMatchScreenshot`，每个 story 一张截图，共 446 张。有 62 个组件自带 `Themes` story（4 主题 × 亮暗），所以主题矩阵覆盖了 62 个组件，比计划的约 10 个多，截图总数不变。为了截图稳定：冻结 CSS 动画、截图前加载 Geist 字体、把远程图片（picsum、pravatar）在请求前替换成固定占位图；两个 story 的标签从系统 `monospace` 改为 `Geist Mono`。本地连续 4 轮 446 张全部一致；故意改 Button 样式时 21 张截图失败。
 - 基线只在 CI 的 `mcr.microsoft.com/playwright:v1.61.1-noble` 容器里生成：本地没有 Docker，而且 macOS 和 Linux 的字体渲染不同。首次基线通过手动运行 Visual regression workflow（勾选 update）生成并提交。
-- 与计划的差异：Storybook 的类型检查暂时只覆盖它自己的配置文件。story 文件存在 74 个历史类型错误（它们从来没有被类型检查过），另开任务修复。
+- 与计划的差异：Storybook 的类型检查起初只覆盖它自己的配置文件，因为 story 文件有 74 个历史类型错误（它们从来没有被类型检查过）。
+- 后续修复（2026-09-24）：74 个错误全部修好，story 文件纳入 Storybook 的类型检查。其中 66 个是只写了 `render` 的 story 没有提供组件的必填 props：不用 `args` 的 10 个文件改用不带泛型的 `StoryObj`，用 `args` 的 3 个文件在 `meta.args` 里补上必填 props 的占位值。另外 8 个是真实类型问题：两处 `UIProvider` props 被放宽成 `string`（加 `as const`）、`animate` 可能为 `undefined`（默认 `true`）、`Select` 的 `onValueChange` 会收到 `null`（清空时回退为空字符串）、`ThemeCell` 的 `theme` 改为主题 id 联合类型。渲染测试和视觉回归都是 446/446。

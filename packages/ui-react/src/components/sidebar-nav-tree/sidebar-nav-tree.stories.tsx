@@ -21,7 +21,8 @@ const meta = {
 } satisfies Meta<typeof SidebarNavGroup>
 
 export default meta
-type Story = StoryObj<typeof meta>
+// Render-only stories: they build their own props, so no required args apply.
+type Story = StoryObj
 
 function Tree() {
   const [open, setOpen] = useState(true)
