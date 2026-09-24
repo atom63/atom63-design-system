@@ -1,5 +1,12 @@
 # @atom63/ui-react
 
+## 0.2.0-beta.9
+
+### Patch Changes
+
+- Updated dependencies [[`4713698`](https://github.com/atom63/atom63-design-system/commit/47136984d7c478d00f46a68b2292a71776315316), [`9a7dc5e`](https://github.com/atom63/atom63-design-system/commit/9a7dc5e6db27f5aec556808fbfb1e9b741f9b809), [`4713698`](https://github.com/atom63/atom63-design-system/commit/47136984d7c478d00f46a68b2292a71776315316)]:
+  - @atom63/styles@0.1.0-beta.5
+
 ## 0.2.0-beta.8
 
 ### Patch Changes
