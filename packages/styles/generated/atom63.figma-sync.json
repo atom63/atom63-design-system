@@ -10886,7 +10886,7 @@
           "type": "STRING",
           "values": {
             "Value": {
-              "value": "'Geist Mono', ui-monospace, 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono',\n    'Courier New', monospace"
+              "value": "'Geist Mono', ui-monospace, 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono',\n    'Courier New', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans Mono CJK SC',\n    'WenQuanYi Zen Hei Mono', monospace"
             }
           }
         },

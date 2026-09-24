@@ -8,8 +8,10 @@
   --font-family-sans:
     'Geist', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
   --font-family-serif: 'Brawler', ui-serif, 'Georgia', 'Cambria', 'Times New Roman', 'Times', serif;
+  /* Latin monospace faces first, then one Simplified Chinese face per platform before the generic family. Without them, CJK text in monospace falls back to whichever CJK font the system picks, which differs between runs on Linux. */
   --font-family-mono:
     'Geist Mono', ui-monospace, 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono',
-    'Courier New', monospace;
+    'Courier New', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans Mono CJK SC',
+    'WenQuanYi Zen Hei Mono', monospace;
   --font-family-pixel: 'Doto', 'Geist Mono', ui-monospace, monospace;
 }

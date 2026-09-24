@@ -28,8 +28,13 @@
           "Consolas",
           "Liberation Mono",
           "Courier New",
+          "PingFang SC",
+          "Microsoft YaHei",
+          "Noto Sans Mono CJK SC",
+          "WenQuanYi Zen Hei Mono",
           "monospace"
-        ]
+        ],
+        "$description": "Latin monospace faces first, then one Simplified Chinese face per platform before the generic family. Without them, CJK text in monospace falls back to whichever CJK font the system picks, which differs between runs on Linux."
       },
       "pixel": {
         "$type": "fontFamily",

@@ -18229,7 +18229,7 @@
       "name": "font-family-mono",
       "cssVar": "--font-family-mono",
       "type": "typography",
-      "value": "'Geist Mono', ui-monospace, 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', monospace",
+      "value": "'Geist Mono', ui-monospace, 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans Mono CJK SC', 'WenQuanYi Zen Hei Mono', monospace",
       "sourceFile": "packages/styles/src/tokens/foundation/fonts.css",
       "layer": "foundation",
       "figma": {
