@@ -5,8 +5,6 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 
 const SAMPLE_SRC =
   'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'
-const _SAMPLE_POSTER =
-  'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg'
 
 const meta = {
   title: 'MDX/Blocks/Video Block',
@@ -29,7 +27,8 @@ const meta = {
 
 export default meta
 
-type Story = StoryObj<typeof meta>
+// VideoBlock's props are a union, which `typeof meta` narrows to `never`.
+type Story = StoryObj<typeof VideoBlock>
 
 export const Default: Story = {}
 

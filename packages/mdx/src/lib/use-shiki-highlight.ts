@@ -51,7 +51,9 @@ async function getHighlighter() {
       const h = await createHighlighterCore({
         themes: [
           import('shiki/themes/github-dark-dimmed.mjs'),
-          import('shiki/themes/github-light.mjs'),
+          // The high-contrast light theme is the only GitHub light theme whose
+          // token colors all reach 4.5:1 on every light page surface.
+          import('shiki/themes/github-light-high-contrast.mjs'),
         ],
         langs: [
           import('shiki/langs/tsx.mjs'),
@@ -138,7 +140,7 @@ export function useShikiHighlightResult(code: string, lang = 'tsx'): ShikiHighli
         }
         const result = h.codeToHtml(trimmed, {
           lang: language,
-          themes: { dark: 'github-dark-dimmed', light: 'github-light' },
+          themes: { dark: 'github-dark-dimmed', light: 'github-light-high-contrast' },
           defaultColor: false,
           transformers: [
             {

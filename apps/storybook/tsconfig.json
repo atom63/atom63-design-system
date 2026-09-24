@@ -3,13 +3,14 @@
   "compilerOptions": {
     "types": ["vite/client", "node"]
   },
-  // The ui-react library typecheck excludes its stories because they depend on
+  // The ui-react and mdx library typechecks exclude their stories because they depend on
   // Storybook tooling; this app owns and typechecks them.
   "include": [
     ".storybook",
     "ssr",
     "stories",
     "vitest.config.ts",
-    "../../packages/ui-react/src/**/*.stories.tsx"
+    "../../packages/ui-react/src/**/*.stories.tsx",
+    "../../packages/mdx/src/**/*.stories.tsx"
   ]
 }

@@ -293,6 +293,9 @@ importers:
 
   apps/storybook:
     dependencies:
+      '@atom63/mdx':
+        specifier: workspace:*
+        version: link:../../packages/mdx
       '@atom63/styles':
         specifier: workspace:*
         version: link:../../packages/styles
@@ -571,6 +574,9 @@ importers:
       react-dom:
         specifier: 19.2.7
         version: 19.2.7(react@19.2.7)
+      storybook:
+        specifier: ^10.6.0
+        version: 10.6.0(@types/react@19.2.17)(prettier@3.9.8)(react@19.2.7)
       tsup:
         specifier: ^8.3.5
         version: 8.5.1(@microsoft/api-extractor@7.59.2(@types/node@26.6.2))(jiti@2.7.0)(postcss@8.5.28)(tsx@4.23.15)(typescript@5.8.3)(yaml@2.9.1)
