@@ -111,3 +111,10 @@ storybook-static/
 # so the packed CLI carries a template. Tracking the copy let it drift from its
 # source — a full build would silently dirty the tree with the diff.
 packages/create-atom63/templates/
+
+# Storybook visual regression: only CI's Linux baselines are committed.
+apps/storybook/visual/__diff__/
+apps/storybook/.vitest-attachments/
+apps/storybook/visual/__screenshots__/*-darwin.png
+apps/storybook/visual/__screenshots__/*-win32.png
+apps/storybook/storybook-static/

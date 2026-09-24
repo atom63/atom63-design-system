@@ -114,6 +114,12 @@ jobs:
           pnpm --filter @atom63/docs test
           pnpm --filter @atom63/docs build
 
+      - name: Check Storybook
+        run: |
+          pnpm --filter @atom63/storybook typecheck
+          pnpm --filter @atom63/storybook build
+          pnpm --filter @atom63/storybook test
+
       - name: Check Figma plugin
         run: |
           pnpm --filter @atom63/figma-plugin typecheck

@@ -1,0 +1,10 @@
+{
+  "extends": "@atom63/tsconfig/react-app.json",
+  "compilerOptions": {
+    "types": ["vite/client", "node"]
+  },
+  // Stories are not typechecked yet: the ui-react library excludes them, and
+  // they carry pre-existing type errors (mostly render-only stories that omit
+  // required args). They still build and run as render tests.
+  "include": [".storybook", "vitest.config.ts"]
+}

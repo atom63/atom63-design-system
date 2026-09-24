@@ -176,7 +176,11 @@ function PreviewCard({ children, label }: { children: ReactNode; label: string }
       }}
     >
       <div
-        style={{ color: 'var(--a63-text-secondary)', fontFamily: 'monospace', fontSize: '0.75rem' }}
+        style={{
+          color: 'var(--a63-text-secondary)',
+          fontFamily: 'Geist Mono, monospace',
+          fontSize: '0.75rem',
+        }}
       >
         {label}
       </div>

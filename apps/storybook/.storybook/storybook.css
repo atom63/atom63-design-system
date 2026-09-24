@@ -1,0 +1,48 @@
+@import 'tailwindcss';
+/* The same token stack the docs site uses: --a63-* tokens are the source of
+   truth, and compat/shadcn derives the bg-background / text-foreground aliases
+   some stories still use. */
+@import '@atom63/styles';
+@import '@atom63/styles/tailwind';
+@import '@atom63/styles/compat/shadcn';
+@import '@atom63/ui-react/recipes.css';
+
+/* Generate the Tailwind classes that components and stories use. */
+@source '../../../packages/ui-react/src/**/*.{ts,tsx}';
+
+@font-face {
+  font-family: 'Geist';
+  src: url('../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2')
+    format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('../node_modules/geist/dist/fonts/geist-mono/GeistMono-Variable.woff2')
+    format('woff2-variations');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@custom-variant light (&:not(.dark *));
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  /* Paint the whole canvas with the active mode's surface, so every story is
+     viewed on the background it ships with. */
+  html,
+  body,
+  #storybook-root,
+  .sb-show-main,
+  .docs-story {
+    @apply bg-background text-foreground font-sans;
+  }
+}
