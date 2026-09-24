@@ -69,6 +69,9 @@
   /* Text */
   --a63-text-primary: var(--surface-light-12);
   --a63-text-secondary: var(--surface-light-11);
+  /* The brand as text (links, accents) on light surfaces; brand.css picks the
+     ramp step per brand. Use --a63-action-primary for fills. */
+  --a63-text-accent: var(--a63-brand-text);
 
   /* Border */
   --a63-border-subtle: color-mix(
@@ -151,6 +154,8 @@
 
   --a63-text-primary: var(--surface-dark-12);
   --a63-text-secondary: var(--surface-dark-11);
+  /* The primary fill is too dark to read as text on dark surfaces. */
+  --a63-text-accent: var(--a63-brand-400);
 
   --a63-border-subtle: color-mix(
     in oklch,

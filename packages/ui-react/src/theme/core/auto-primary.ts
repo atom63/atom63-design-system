@@ -74,7 +74,7 @@ export function applyAutoColorRamp(root: HTMLElement, color: ExtractedColor) {
     const s = Math.min(1, color.saturation * sFactor)
     const rgb = hslToRgb(color.hue, s, l)
     root.style.setProperty(`--color-auto-${step}`, `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 1)`)
-    if (step === 500) primaryRgb = rgb
+    if (step === 600) primaryRgb = rgb
   }
   const useLight = shouldUseLightForeground(...primaryRgb)
   const fgStep = useLight ? RAMP_STEPS[0] : RAMP_STEPS[RAMP_STEPS.length - 1]

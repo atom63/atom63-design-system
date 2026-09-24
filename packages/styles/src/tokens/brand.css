@@ -129,20 +129,39 @@
  */
 :root,
 [data-a63-brand] {
-  --a63-action-primary: var(--a63-brand-500);
-  --a63-action-primary-hover: var(--a63-brand-600);
+  /* Step 600, not 500: white text on every brand's 500 falls below WCAG AA's
+     4.5:1 for normal text (the default blue is about 3.5:1); 600 reaches it. */
+  --a63-action-primary: var(--a63-brand-600);
+  --a63-action-primary-hover: var(--a63-brand-700);
+  /* The brand as text on light surfaces (semantics.css --a63-text-accent). */
+  --a63-brand-text: var(--a63-brand-600);
   /* Auto-contrast foreground: near-white on dark primaries, near-black on bright
      ones (light brand picks / wallpaper golds). oklch `l` is the proxy; the steep
-     clamp is a light/dark STEP at l≈0.665 — aligned to WCAG *large-text* white
-     3:1 (Y≈0.30), not the old 0.70 / JS 0.36 pair which left mid-golds (mustard
-     ~L 0.69, Y≈0.33) on light text at ~2.8:1. Default blue (~L 0.62) stays light;
-     green/orange brand 500s that fail white 3:1 flip to dark. Chroma ×0.06 keeps
-     a faint brand tint. Supersedes JS --color-auto-foreground for components. */
+     clamp is a light/dark STEP at l≈0.57, about where near-white and near-black
+     give the same contrast (WCAG Y≈0.18), so each fill gets whichever reads
+     better. The old step at 0.665 matched large-text 3:1 and left mid-lightness
+     custom brands on white text at 2.8–4:1. Chroma ×0.06 keeps a faint brand
+     tint. Supersedes JS --color-auto-foreground for components. */
   --a63-action-primary-foreground: oklch(
-    from var(--a63-action-primary) clamp(0.15, (0.665 - l) * 1000, 0.985) calc(c * 0.06) h
+    from var(--a63-action-primary) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h
   );
   /* Subtle depth shadow under text on the primary (theme lever; Aqua sets a gel
      tint). Default none so flat themes stay crisp. */
   --a63-action-primary-text-shadow: none;
   --a63-focus-ring: color-mix(in oklch, var(--a63-brand-500) 30%, transparent);
+}
+
+/* Green (b3) is lighter than the other ramps: white on its 600 is about 4.2:1,
+   so its primary action steps one shade further to reach AA. Declared after the
+   block above so it wins at equal specificity. */
+[data-a63-brand='b3'] {
+  --a63-action-primary: var(--a63-brand-700);
+  --a63-action-primary-hover: var(--a63-brand-800);
+  --a63-brand-text: var(--a63-brand-700);
+}
+
+/* Orange (b2) keeps 600 for fills (white text is about 4.7:1), but its 600 as
+   text on the lightly tinted Aqua page is just under 4.5:1. */
+[data-a63-brand='b2'] {
+  --a63-brand-text: var(--a63-brand-700);
 }

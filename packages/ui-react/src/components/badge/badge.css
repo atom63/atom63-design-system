@@ -101,15 +101,15 @@
 }
 .a63-Badge[data-variant='info'] {
   --badge-bg: color-mix(in oklch, var(--a63-status-info) 14%, transparent);
-  --badge-fg: var(--a63-status-info);
+  --badge-fg: var(--a63-badge-info-foreground);
 }
 .a63-Badge[data-variant='success'] {
   --badge-bg: color-mix(in oklch, var(--a63-status-success) 14%, transparent);
-  --badge-fg: var(--a63-status-success);
+  --badge-fg: var(--a63-badge-success-foreground);
 }
 .a63-Badge[data-variant='warning'] {
   --badge-bg: color-mix(in oklch, var(--a63-status-warning) 14%, transparent);
-  --badge-fg: var(--a63-status-warning);
+  --badge-fg: var(--a63-badge-warning-foreground);
 }
 
 /* ── Palette variants (category hues via --a63-badge-* contract) ───────── */

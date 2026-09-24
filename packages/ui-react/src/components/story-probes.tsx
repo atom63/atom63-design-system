@@ -248,15 +248,3 @@ export const repeatedLandmarks = {
     },
   },
 }
-
-/*
- * Temporary: stories whose only a11y failures are color contrast that comes from
- * design tokens, not from the component: white text on the default primary
- * (about 3.6:1, below WCAG AA's 4.5:1 for normal text) and the tonal Badge
- * palette. Fixing them changes the brand's primary or palette colors, which is a
- * design decision recorded in docs/design-system/hardening-plan.md. Remove this
- * marker from a story once its colors pass. Every other rule still runs.
- */
-export const pendingContrastReview = {
-  a11y: { config: { rules: [{ id: 'color-contrast', enabled: false }] } },
-}

@@ -3,7 +3,6 @@ import { PreviewCard, PreviewCardPopup, PreviewCardTrigger, UIProvider } from '@
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { type ComponentProps, useRef } from 'react'
-import { pendingContrastReview } from '../story-probes'
 
 const meta = {
   title: 'UI React/PreviewCard',
@@ -21,14 +20,16 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Playground: Story = {
-  parameters: pendingContrastReview,
   render: () => (
     <p style={{ color: 'var(--a63-text-primary)' }}>
       Follow{' '}
       <PreviewCard>
         <PreviewCardTrigger
           render={
-            <a href="https://atom63.io" style={{ color: 'var(--a63-action-primary)' }}>
+            <a
+              href="https://atom63.io"
+              style={{ color: 'var(--a63-text-accent)', textDecoration: 'underline' }}
+            >
               @atom63
             </a>
           }
@@ -108,7 +109,10 @@ function ReviewCell({ label, ...providerProps }: ReviewCellProps) {
         <PreviewCard defaultOpen>
           <PreviewCardTrigger
             render={
-              <a href="https://atom63.io" style={{ color: 'var(--a63-action-primary)' }}>
+              <a
+                href="https://atom63.io"
+                style={{ color: 'var(--a63-text-accent)', textDecoration: 'underline' }}
+              >
                 @atom63
               </a>
             }

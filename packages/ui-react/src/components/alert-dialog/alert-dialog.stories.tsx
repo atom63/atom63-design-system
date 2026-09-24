@@ -16,7 +16,6 @@ import {
 import '@atom63/ui-react/styles.css'
 import { AlertTriangle, CheckCircle2, Info } from 'lucide-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { pendingContrastReview } from '../story-probes'
 
 const meta = {
   title: 'UI React/AlertDialog',
@@ -67,7 +66,6 @@ export const Playground: Story = {
 }
 
 export const Confirm: Story = {
-  parameters: pendingContrastReview,
   render: () => (
     <AlertDialog>
       <AlertDialogTrigger render={<Button variant="primary">Publish</Button>} />

@@ -178,7 +178,7 @@ export function FontPreview({ font, selected }: { font: FontFamily; selected: bo
       aria-hidden="true"
       className={cn(
         'flex h-12 w-full items-center justify-center text-2xl leading-none transition-colors',
-        selected ? 'text-[var(--a63-action-primary)]' : 'text-[var(--a63-text-primary)]'
+        selected ? 'text-[var(--a63-text-accent)]' : 'text-[var(--a63-text-primary)]'
       )}
       data-slot="appearance-font-preview"
       style={style}
@@ -201,7 +201,7 @@ export function TypeScalePreview({ scale, selected }: { scale: TypeScale; select
       aria-hidden="true"
       className={cn(
         'flex h-12 w-full items-center justify-center gap-1',
-        selected ? 'text-[var(--a63-action-primary)]' : 'text-[var(--a63-text-primary)]'
+        selected ? 'text-[var(--a63-text-accent)]' : 'text-[var(--a63-text-primary)]'
       )}
       data-slot="appearance-type-scale-preview"
     >
@@ -232,7 +232,7 @@ export function RadiusPreview({ radius, selected }: { radius: RadiusScale; selec
     <span
       className={cn(
         'flex h-12 w-full items-center justify-center',
-        selected ? 'text-[var(--a63-action-primary)]' : 'text-[var(--a63-text-primary)]'
+        selected ? 'text-[var(--a63-text-accent)]' : 'text-[var(--a63-text-primary)]'
       )}
       data-slot="appearance-radius-preview"
     >

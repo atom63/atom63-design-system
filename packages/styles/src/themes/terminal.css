@@ -152,7 +152,8 @@
 [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark']) {
   /* Opaque phosphor text — translucent secondary failed AA against the page. */
   --a63-text-primary: color-mix(in oklch, var(--a63-action-primary) 62%, white);
-  --a63-text-secondary: color-mix(in oklch, var(--a63-action-primary) 48%, var(--surface-dark-11));
+  /* Text mixes read the brand-as-text token; the primary fill is too dark here. */
+  --a63-text-secondary: color-mix(in oklch, var(--a63-text-accent) 48%, var(--surface-dark-11));
   --a63-border-control: color-mix(in oklch, var(--a63-action-primary) 42%, transparent);
   --a63-border-subtle: color-mix(in oklch, var(--a63-action-primary) 22%, transparent);
   --a63-surface-page: color-mix(in oklch, var(--surface-dark-1) 92%, var(--a63-action-primary));
@@ -163,7 +164,7 @@
     var(--surface-dark-3) 86%,
     var(--a63-action-primary) 14%
   );
-  --a63-action-neutral-foreground: var(--a63-action-primary);
+  --a63-action-neutral-foreground: var(--a63-text-accent);
   --a63-weather-background-color: color-mix(in oklch, var(--a63-action-primary) 22%, black 78%);
   --a63-weather-background-image:
     linear-gradient(color-mix(in oklch, var(--a63-action-primary) 12%, transparent), transparent),
@@ -173,7 +174,7 @@
       color-mix(in oklch, var(--a63-action-primary) 16%, black 84%)
     );
   --a63-weather-foreground: color-mix(in oklch, var(--a63-action-primary) 26%, white 74%);
-  --a63-weather-muted-foreground: color-mix(in oklch, var(--a63-action-primary) 54%, white 46%);
+  --a63-weather-muted-foreground: color-mix(in oklch, var(--a63-text-accent) 54%, white 46%);
   --a63-weather-divider-color: color-mix(in oklch, var(--a63-action-primary) 36%, transparent);
   --a63-weather-text-shadow: 0 0 8px color-mix(in oklch, var(--a63-action-primary) 38%, transparent);
 }

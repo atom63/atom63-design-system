@@ -4,7 +4,7 @@ import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import type { DateRange } from 'react-day-picker'
-import { pendingContrastReview, repeatedLandmarks } from '../story-probes'
+import { repeatedLandmarks } from '../story-probes'
 
 const meta = {
   title: 'UI React/Calendar',
@@ -21,7 +21,6 @@ const fixedDate = { defaultMonth: REFERENCE_DATE, today: REFERENCE_DATE }
 /* Single-date selection — the default mode; the selected day fills with the
    brand primary and today shows a dot. */
 export const Playground: Story = {
-  parameters: pendingContrastReview,
   render: () => {
     const [date, setDate] = useState<Date | undefined>(REFERENCE_DATE)
     return <Calendar {...fixedDate} mode="single" onSelect={setDate} selected={date} />
@@ -30,7 +29,6 @@ export const Playground: Story = {
 
 /* Range selection — connected ends with a tinted middle. */
 export const Range: Story = {
-  parameters: pendingContrastReview,
   render: () => {
     const [range, setRange] = useState<DateRange | undefined>({
       from: REFERENCE_DATE,
@@ -42,7 +40,6 @@ export const Range: Story = {
 
 /* Dropdown caption — month/year pickers instead of the label. */
 export const DropdownCaption: Story = {
-  parameters: pendingContrastReview,
   render: () => {
     const [date, setDate] = useState<Date | undefined>(REFERENCE_DATE)
     return (
@@ -59,7 +56,6 @@ export const DropdownCaption: Story = {
 
 /* Two months side by side. */
 export const MultipleMonths: Story = {
-  parameters: pendingContrastReview,
   render: () => {
     const [date, setDate] = useState<Date | undefined>(REFERENCE_DATE)
     return (

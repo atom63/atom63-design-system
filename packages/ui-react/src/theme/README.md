@@ -49,10 +49,10 @@ Keep JS and CSS thresholds aligned when tuning:
 
 | Layer | Location | Threshold |
 |-------|----------|-----------|
-| JS (WCAG relative luminance **Y**) | `core/auto-contrast.ts` → `AUTO_CONTRAST_WCAG_Y_THRESHOLD` | **0.30** — light foreground only when Y is below this |
-| CSS (oklch **l** step) | `packages/styles/src/tokens/brand.css` → `--a63-action-primary-foreground` clamp | **0.665** — `(0.665 - l) * 1000` step between near-black and near-white |
+| JS (WCAG relative luminance **Y**) | `core/auto-contrast.ts` → `AUTO_CONTRAST_WCAG_Y_THRESHOLD` | **0.18** — light foreground only when Y is below this (evaluated on the 600 step, the primary fill) |
+| CSS (oklch **l** step) | `packages/styles/src/tokens/brand.css` → `--a63-action-primary-foreground` clamp | **0.57** — `(0.57 - l) * 1000` step between near-black and near-white |
 
-Mustard/gold brand picks (~L 0.69, Y ≈ 0.33) must render **dark text** on the primary fill. If mid-golds look washed out, check both values before changing either alone. Regression cases live in [`core/auto-contrast.test.ts`](./core/auto-contrast.test.ts) (mustard/gold + b1 blue).
+Both values sit where near-white and near-black give about the same contrast, so each fill gets the more readable one. Mustard/gold brand picks (~L 0.69, Y ≈ 0.33) must render **dark text** on the primary fill. If mid-golds look washed out, check both values before changing either alone. Regression cases live in [`core/auto-contrast.test.ts`](./core/auto-contrast.test.ts) (mustard/gold + b1 blue).
 
 ## Related
 

@@ -13,10 +13,13 @@ const textPairs = [
   { fg: '--a63-text-primary', bg: '--a63-surface-page', min: AA_TEXT },
   { fg: '--a63-text-secondary', bg: '--a63-surface-page', min: AA_TEXT },
   { fg: '--a63-text-primary', bg: '--a63-surface-panel', min: AA_TEXT },
+  { fg: '--a63-text-accent', bg: '--a63-surface-page', min: AA_TEXT },
+  { fg: '--a63-text-accent', bg: '--a63-surface-panel', min: AA_TEXT },
 ] as const
 
 const actionPairs = [
-  { fg: '--a63-action-primary-foreground', bg: '--a63-action-primary', min: AA_UI },
+  // Button labels are normal-size text, so the primary pair meets AA text, not 3:1.
+  { fg: '--a63-action-primary-foreground', bg: '--a63-action-primary', min: AA_TEXT },
   { fg: '--a63-action-neutral-foreground', bg: '--a63-action-neutral', min: AA_UI },
   { fg: '--a63-action-danger-foreground', bg: '--a63-action-danger', min: AA_UI },
 ] as const
@@ -105,7 +108,7 @@ function applyThemeMode(theme: (typeof themes)[number], mode: (typeof modes)[num
 }
 
 describe('core semantic contrast (WCAG AA)', () => {
-  it('meets AA text 4.5:1 on surfaces and UI 3:1 on action fills', () => {
+  it('meets AA text 4.5:1 on surfaces and the primary fill, and 3:1 on other action fills', () => {
     const failures: string[] = []
 
     for (const theme of themes) {
@@ -135,6 +138,39 @@ describe('core semantic contrast (WCAG AA)', () => {
       }
     }
 
+    expect(failures, failures.join('\n')).toEqual([])
+  })
+})
+
+const brands = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6'] as const
+const brandPairs = [
+  { fg: '--a63-action-primary-foreground', bg: '--a63-action-primary', min: AA_TEXT },
+  { fg: '--a63-text-accent', bg: '--a63-surface-page', min: AA_TEXT },
+] as const
+
+describe('brand contrast (WCAG AA)', () => {
+  afterEach(() => root().removeAttribute('data-a63-brand'))
+
+  it('keeps the primary action and brand text readable on every brand ramp', () => {
+    const failures: string[] = []
+    for (const brand of brands) {
+      root().setAttribute('data-a63-brand', brand)
+      for (const theme of themes) {
+        for (const mode of modes) {
+          applyThemeMode(theme, mode)
+          for (const { fg, bg, min } of brandPairs) {
+            const fgCss = resolvePaintedColor(fg, 'color')
+            const bgCss = resolvePaintedColor(bg, 'background')
+            const ratio = contrastRatio(parseCssColor(fgCss), parseCssColor(bgCss))
+            if (ratio < min) {
+              failures.push(
+                `${brand} ${theme}/${mode} ${fg} on ${bg}: ${ratio.toFixed(2)}:1 < ${min}:1 (fg=${fgCss}, bg=${bgCss})`
+              )
+            }
+          }
+        }
+      }
+    }
     expect(failures, failures.join('\n')).toEqual([])
   })
 })
