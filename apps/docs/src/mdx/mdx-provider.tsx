@@ -5,7 +5,7 @@ import {
   type MdxProviderVariant,
   mdxStyles,
   useMdxStyle,
-} from '../mdx-kit'
+} from '@atom63/mdx'
 import { Link } from '@tanstack/react-router'
 import { clsx } from 'clsx'
 import type React from 'react'

@@ -9,7 +9,7 @@ pnpm build:docs   # build (also the fastest way to verify a page compiles)
 
 ## Authoring doc pages
 
-Pages are **auto-discovered** — there is no central page registry to edit. The nav builds itself from the files. Mechanics live in [`src/lib/doc-pages.ts`](src/lib/doc-pages.ts). MDX rendering components live in `src/mdx-kit`, a copy of the parts of `@atom63/mdx` the site uses, so the site depends only on the design system.
+Pages are **auto-discovered** — there is no central page registry to edit. The nav builds itself from the files. Mechanics live in [`src/lib/doc-pages.ts`](src/lib/doc-pages.ts). MDX rendering components come from the workspace package `@atom63/mdx` (`packages/mdx`).
 
 - **A prose page is** `src/pages/<slug>.mdx` — plain MDX: `# Title`, prose, `##` sections, tables, and any imported DS components. **No frontmatter.**
 - **Its nav group comes from the filename PREFIX:** `architecture-*` → Architecture; `foundation-*` → Foundations; `theme-*` → Themes; `component-*` → Components; `pattern-*` → Patterns. Legacy slugs from before the move redirect through `LEGACY_DOC_SLUG_ALIASES`.

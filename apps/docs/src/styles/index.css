@@ -6,7 +6,7 @@
 @import '@atom63/styles/tailwind';
 @import '@atom63/styles/compat/shadcn';
 @import '@atom63/styles/utils/debug';
-@import '../mdx-kit/styles/a63.css';
+@import '@atom63/mdx/styles/a63.css';
 @import '@atom63/ui-react/recipes.css';
 @import './os-theme-preview.css';
 @plugin '@tailwindcss/typography';

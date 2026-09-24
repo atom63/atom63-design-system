@@ -1,4 +1,4 @@
-import { MdxPageSkeleton, PageTableOfContents } from '../mdx-kit/blocks'
+import { MdxPageSkeleton, PageTableOfContents } from '@atom63/mdx/blocks'
 import { Container, Page, ReaderLayout, Section } from '@atom63/ui-react/layout'
 import { Suspense } from 'react'
 import { componentSlugFromDocSlug } from '../lib/component-catalog'

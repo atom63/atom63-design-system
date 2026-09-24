@@ -1,0 +1,17 @@
+/**
+ * Full MDX stylesheet entry.
+ *
+ * Use when the host already provides canonical --a63-* variables and wants the
+ * shared MDX recipes plus the package Tailwind v4 source scan.
+ */
+@import './mdx-blocks.css';
+
+/* Ensure lightbox stacks above app chrome + nested media dialogs */
+.pswp {
+  z-index: 10000;
+}
+
+/* The stylesheets ship from src/, the components from dist/. Scan the TS
+   source in the workspace and the emitted JS in the published tarball. */
+@source '../**/*.{ts,tsx}';
+@source '../../dist/**/*.js';
