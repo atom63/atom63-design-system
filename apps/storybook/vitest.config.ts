@@ -46,6 +46,21 @@ export default defineConfig({
         extends: true,
         plugins: [storybookTest({ configDir: path.join(dirname, '.storybook') })],
         test: {
+          name: 'cross-browser',
+          // Render-only in Firefox and WebKit; axe runs in the Chromium project.
+          setupFiles: ['./.storybook/render-only.setup.ts'],
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright(),
+            instances: [{ browser: 'firefox' }, { browser: 'webkit' }],
+          },
+        },
+      },
+      {
+        extends: true,
+        plugins: [storybookTest({ configDir: path.join(dirname, '.storybook') })],
+        test: {
           name: 'visual',
           setupFiles: ['./.storybook/visual.setup.ts'],
           browser: {

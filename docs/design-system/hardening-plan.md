@@ -75,10 +75,21 @@
 - **验证**：在 `Kbd` 的渲染里访问 `window.innerWidth`，用到它的 14 个 story 都以
   `ReferenceError: window is not defined` 失败。
 
-### 4. 跨浏览器渲染测试
+### 4. 跨浏览器渲染测试（已完成）
 
-- **现状**：渲染测试只跑 Chromium。
-- **做法**：渲染测试（不含截图）增加 Firefox 和 WebKit；视觉回归仍只用 Chromium，避免基线翻倍。
+- **结果**：Storybook 新增 `cross-browser` 项目，在 Firefox 和 WebKit 中渲染全部 446 个 story（共 892 个
+  测试，本地约 72 秒）。CI 新增与 `verify` 并行的 `cross-browser` job。只做渲染：axe 和视觉回归仍在
+  Chromium 中运行，基线不翻倍。当前全部通过。
+- **发现：WebKit 回归 bug**：WebKit 26.5（Playwright 自带版本）中，元素有 2 层以上 `mask-image` 时，
+  读取计算后的 `mask` 简写属性（`getComputedStyle(el).getPropertyValue('mask')`）会让页面进程崩溃
+  （`SIGSEGV`，位于 `extractFillLayerPropertyShorthand`）。ScrollArea 的 `scrollFade` 遮罩有 4 层，
+  axe 检查元素可见性时会读取 `mask`，所以 Command 等使用带淡出效果的 ScrollArea 的 story 会崩溃。
+  最小复现只需 3 行 HTML。用真实的 Safari 26.3.1 打开同样的页面不会崩溃，说明这是较新版 WebKit
+  的回归，组件代码没有问题。`cross-browser` 项目因此通过自己的 setup 文件关闭 axe。
+- **踩坑**：最初用 Vite 的 `define` 关闭 axe，但几个浏览器项目共用同一个 Vite 服务器，替换泄漏到
+  Chromium 项目，把 a11y 检查整个关掉了。改为只属于该项目的 setup 文件后，用一个没有标签的输入框
+  验证：Chromium 项目失败，`cross-browser` 项目通过。
+- **后续**：可以向 bugs.webkit.org 报告这个回归（需要用你的账号提交）。
 
 ### 5. 暗色模式视觉覆盖
 
