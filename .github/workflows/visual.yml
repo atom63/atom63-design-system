@@ -1,0 +1,85 @@
+name: Visual regression
+
+# Compares every Storybook story against its committed baseline screenshot.
+# Baselines are generated and compared only here, inside the pinned Playwright
+# container, because font rendering differs across operating systems.
+#
+# To create or update baselines after an intentional visual change, run this
+# workflow manually on your branch with `update` checked. It regenerates the
+# screenshots in the same container and commits them to that branch.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      update:
+        description: Regenerate the baseline screenshots and commit them to this branch
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: visual-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  visual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # Keep in step with the root `playwright` version.
+    container: mcr.microsoft.com/playwright:v1.61.1-noble
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Enable pnpm with Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Compare stories with baselines
+        if: ${{ !inputs.update }}
+        run: pnpm --filter @atom63/storybook test:visual
+
+      # Diffs for failed comparisons. On CI Vitest does not write a missing
+      # baseline into __screenshots__; it saves the capture here as
+      # `<story>-reference-chromium-linux.png`, so this artifact is also how a
+      # new story's first baseline gets into a pull request.
+      - name: Upload screenshot results
+        if: ${{ failure() && !inputs.update }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-results
+          path: apps/storybook/visual/__diff__
+          if-no-files-found: ignore
+
+      - name: Regenerate baselines
+        if: ${{ inputs.update }}
+        run: pnpm --filter @atom63/storybook test:visual --update
+
+      - name: Commit updated baselines
+        if: ${{ inputs.update }}
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/storybook/visual/__screenshots__
+          if git diff --cached --quiet; then
+            echo "Baselines are already up to date."
+          else
+            git commit -m "test: update visual baselines"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi

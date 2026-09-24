@@ -92,13 +92,13 @@ export const Tones: Story = {
     <EnvironmentShell>
       <div style={{ display: 'flex', gap: '1rem', alignItems: 'flex-start' }}>
         <div style={{ display: 'grid', gap: '0.5rem' }}>
-          <div style={{ fontSize: 12, opacity: 0.6, fontFamily: 'monospace' }}>
+          <div style={{ fontSize: 12, opacity: 0.6, fontFamily: 'Geist Mono, monospace' }}>
             neutral (default)
           </div>
           <MenuPreview />
         </div>
         <div style={{ display: 'grid', gap: '0.5rem' }}>
-          <div style={{ fontSize: 12, opacity: 0.6, fontFamily: 'monospace' }}>
+          <div style={{ fontSize: 12, opacity: 0.6, fontFamily: 'Geist Mono, monospace' }}>
             primary (data-tone)
           </div>
           <MenuPreview tone="primary" />

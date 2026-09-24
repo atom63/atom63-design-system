@@ -22,6 +22,7 @@ support covers and who approves releases and support changes.
 | `packages/ui-react`      | `@atom63/ui-react`: React components                                  |
 | `packages/ui-ios`        | `Atom63UI`: SwiftUI components, shipped through the root `Package.swift` |
 | `apps/docs`              | The documentation site at [system.atom63.io](https://system.atom63.io) |
+| `apps/storybook`         | Storybook for `@atom63/ui-react`, with render and visual regression tests |
 | `apps/figma-plugin`      | The Figma plugin that syncs tokens into Figma variables               |
 | `examples/`              | Consumer examples for Vite, a product shell, and iOS                  |
 | `scripts/design-system`  | Audits and guardrails run in CI                                       |
@@ -42,11 +43,20 @@ Common development commands:
 
 ```bash
 pnpm dev:docs                                  # documentation site
+pnpm --filter @atom63/storybook dev            # Storybook at http://localhost:6006
 pnpm --filter @atom63/ui-react dev             # rebuild ui-react on change
 pnpm --filter atom63-vite-basic-example dev    # run the Vite example against local packages
 pnpm --filter @atom63/ui-react test            # component tests
+pnpm --filter @atom63/storybook test           # render every story in Chromium
 swift test                                     # SwiftUI package tests
 ```
+
+## Stories and visual tests
+
+Write a story next to each component (`*.stories.tsx`) and add a `Themes` story that wraps it in
+the shared `ThemeMatrix` probe. Every story runs as a render test, and CI compares every story
+against a baseline screenshot. When a change alters how something looks on purpose, update the
+baselines as described in the [Storybook README](./apps/storybook/README.md).
 
 ## Tokens and generated files
 
