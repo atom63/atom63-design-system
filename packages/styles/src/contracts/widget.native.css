@@ -1,0 +1,23 @@
+/*
+ * CSS-native values of the widget contract: values with no DTCG type. The rest of
+ * the contract is generated from widget.resolver.json. Each declaration here is listed
+ * in native-values.json; see docs/design-system/token-single-source.md.
+ */
+
+:root {
+  --a63-widget-backdrop: var(--a63-overlay-backdrop);
+  --a63-widget-rim-image: none;
+  --a63-widget-rim-backdrop: none;
+  /* --a63-weather-background-image is intentionally optional. When a theme
+        leaves it unset, the weather element resolves its local condition image. */
+  --a63-weather-background-blend: normal;
+  /* No --a63-weather-shadow knob: weather specializes the FACE only. Outer
+        chrome (rim + drop) stays on the shared widget system so every tile reads as
+        one desktop — see the weather case in widget-chrome-signature.browser.test. */
+  --a63-weather-backdrop: none;
+}
+
+[data-widget-kind='weather'],
+[data-widget-kind='location'][data-weather-tone] {
+  --a63-widget-backdrop: var(--a63-weather-backdrop);
+}

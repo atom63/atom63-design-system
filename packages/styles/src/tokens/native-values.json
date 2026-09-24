@@ -8,16 +8,27 @@
     "--a63-control-gloss": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
     "--a63-control-highlight": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
     "--a63-control-press-transform": "A CSS transform (translateY / scale); DTCG has no transform type.",
+    "--a63-menu-highlight-gloss": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
     "--a63-overlay-backdrop": "A backdrop-filter value (default none, blur in translucent themes); DTCG has no filter type.",
     "--a63-overlay-gloss": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
     "--a63-overlay-highlight": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
     "--a63-overlay-texture-blend": "A mix-blend-mode keyword; DTCG has no blend-mode type.",
     "--a63-overlay-texture-image": "A background-image texture (default none); DTCG has no image type.",
+    "--a63-safe-area-bottom": "env(safe-area-inset-*, 0px): a device value only the browser knows; DTCG has no environment-variable value.",
+    "--a63-safe-area-left": "env(safe-area-inset-*, 0px): a device value only the browser knows; DTCG has no environment-variable value.",
+    "--a63-safe-area-right": "env(safe-area-inset-*, 0px): a device value only the browser knows; DTCG has no environment-variable value.",
+    "--a63-safe-area-top": "env(safe-area-inset-*, 0px): a device value only the browser knows; DTCG has no environment-variable value.",
     "--a63-surface-backdrop": "A backdrop-filter value (default none, blur in translucent themes); DTCG has no filter type.",
     "--a63-surface-gloss": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
     "--a63-surface-highlight": "A background-image layer (default none, a gradient in glossy themes); DTCG has no image or gradient type.",
     "--a63-surface-texture-blend": "A mix-blend-mode keyword; DTCG has no blend-mode type.",
     "--a63-surface-texture-image": "A background-image texture (default none); DTCG has no image type.",
-    "--a63-trigger-indicator-size": "Sized in em, relative to the trigger's font size; DTCG dimensions are px or rem only."
+    "--a63-trigger-indicator-size": "Sized in em, relative to the trigger's font size; DTCG dimensions are px or rem only.",
+    "--a63-viewport-height": "100vh / 100dvh: viewport units, with dvh behind @supports; DTCG dimensions are px or rem only.",
+    "--a63-weather-backdrop": "A backdrop-filter value; DTCG has no filter type.",
+    "--a63-weather-background-blend": "A blend-mode keyword; DTCG has no blend-mode type.",
+    "--a63-widget-backdrop": "A backdrop-filter value; DTCG has no filter type.",
+    "--a63-widget-rim-backdrop": "A backdrop-filter value; DTCG has no filter type.",
+    "--a63-widget-rim-image": "A background-image layer; DTCG has no image or gradient type."
   }
 }

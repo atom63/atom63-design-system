@@ -1,0 +1,10 @@
+/*
+ * CSS-native values of the menu contract: values with no DTCG type. The rest of
+ * the contract is generated from menu.resolver.json. Each declaration here is listed
+ * in native-values.json; see docs/design-system/token-single-source.md.
+ */
+
+:root {
+  /* ── Highlight treatment (theme-varying gel / glow; none at :root = flat) ── */
+  --a63-menu-highlight-gloss: none;
+}

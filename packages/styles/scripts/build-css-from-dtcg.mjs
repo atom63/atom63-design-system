@@ -18,7 +18,9 @@
  *
  * A resolver may also list `sets` in its `resolutionOrder`: token groups that
  * apply unconditionally, emitted before the modifier's contexts under the
- * selector in the set's `$extensions["io.atom63.css"].selector`. A context with
+ * selector in the set's `$extensions["io.atom63.css"].selector`, wrapped in its
+ * `atRule` (for example `@media (pointer: coarse)`) when it has one; a resolver
+ * may consist of sets only, one per CSS scope. A context with
  * no sources emits no rule, so a modifier can hold overrides for a few contexts
  * only. `$extensions["io.atom63.css"].selectors` on the resolver may name the
  * selector of any context, replacing the attribute selector (the mode axis
@@ -199,15 +201,7 @@ function toRules(sourcePath, document) {
   if (document.version !== '2025.10')
     throw new Error(`${sourcePath}: resolver version must be 2025.10`)
   const modifiers = Object.entries(document.modifiers ?? {})
-  if (modifiers.length !== 1) throw new Error(`${sourcePath}: expected exactly one modifier`)
-  const [[modifierName, modifier]] = modifiers
-  const attribute = document.$extensions?.['io.atom63.css']?.attribute
-  if (!attribute) throw new Error(`${sourcePath}: missing $extensions["io.atom63.css"].attribute`)
-  if (!Object.hasOwn(modifier.contexts, modifier.default)) {
-    throw new Error(
-      `${sourcePath}: default context "${modifier.default}" of "${modifierName}" is missing`
-    )
-  }
+  if (modifiers.length > 1) throw new Error(`${sourcePath}: expected at most one modifier`)
   const inline = sources => {
     for (const source of sources) {
       if (Object.hasOwn(source, '$ref'))
@@ -215,26 +209,40 @@ function toRules(sourcePath, document) {
     }
     return sources
   }
-  const selectors = document.$extensions['io.atom63.css'].selectors ?? {}
-  const modifierRules = Object.entries(modifier.contexts)
-    .filter(([, sources]) => sources.length > 0)
-    .map(([context, sources]) => {
-      const scoped = `[${attribute}='${context}']`
-      const selector =
-        selectors[context] ?? (context === modifier.default ? `:root,\n${scoped}` : scoped)
-      return { selector, groups: inline(sources) }
-    })
-  const order = document.resolutionOrder ?? [{ $ref: `#/modifiers/${modifierName}` }]
+  let modifierName
+  let modifierRules = []
+  if (modifiers.length === 1) {
+    const [[name, modifier]] = modifiers
+    modifierName = name
+    const attribute = document.$extensions?.['io.atom63.css']?.attribute
+    if (!attribute) throw new Error(`${sourcePath}: missing $extensions["io.atom63.css"].attribute`)
+    if (!Object.hasOwn(modifier.contexts, modifier.default)) {
+      throw new Error(
+        `${sourcePath}: default context "${modifier.default}" of "${name}" is missing`
+      )
+    }
+    const selectors = document.$extensions['io.atom63.css'].selectors ?? {}
+    modifierRules = Object.entries(modifier.contexts)
+      .filter(([, sources]) => sources.length > 0)
+      .map(([context, sources]) => {
+        const scoped = `[${attribute}='${context}']`
+        const selector =
+          selectors[context] ?? (context === modifier.default ? `:root,\n${scoped}` : scoped)
+        return { selector, groups: inline(sources) }
+      })
+  }
+  const order =
+    document.resolutionOrder ?? (modifierName ? [{ $ref: `#/modifiers/${modifierName}` }] : [])
   return order.flatMap(({ $ref }) => {
-    if ($ref === `#/modifiers/${modifierName}`) return modifierRules
+    if (modifierName && $ref === `#/modifiers/${modifierName}`) return modifierRules
     const setName = /^#\/sets\/(.+)$/.exec($ref ?? '')?.[1]
     const set = setName && document.sets?.[setName]
     if (!set) throw new Error(`${sourcePath}: resolutionOrder entry ${$ref} does not resolve`)
-    const selector = set.$extensions?.['io.atom63.css']?.selector
+    const { selector, atRule } = set.$extensions?.['io.atom63.css'] ?? {}
     if (!selector) {
       throw new Error(`${sourcePath}: set "${setName}" needs $extensions["io.atom63.css"].selector`)
     }
-    return [{ selector, groups: inline(set.sources) }]
+    return [{ selector, atRule, groups: inline(set.sources) }]
   })
 }
 
@@ -261,7 +269,9 @@ function render(sourcePath, document, rules, knownNames) {
         : ''
       return `${comment}  --${name}: ${css};`
     })
-    return `${rule.selector} {\n${declarations.join('\n')}\n}\n`
+    const block = `${rule.selector} {\n${declarations.join('\n')}\n}\n`
+    // A set may sit inside a conditional group rule (`@media …`, `@supports …`).
+    return rule.atRule ? `${rule.atRule} {\n${block}}\n` : block
   })
   // A split contract keeps one entry point: its generated CSS imports the
   // hand-written native part (`$extensions["io.atom63.css"].imports`).

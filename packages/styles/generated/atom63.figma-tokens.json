@@ -4902,7 +4902,7 @@
       "cssVar": "--a63-safe-area-bottom",
       "type": "dimension",
       "value": "env(safe-area-inset-bottom, 0px)",
-      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "sourceFile": "packages/styles/src/contracts/environment.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -4916,7 +4916,7 @@
       "cssVar": "--a63-safe-area-left",
       "type": "dimension",
       "value": "env(safe-area-inset-left, 0px)",
-      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "sourceFile": "packages/styles/src/contracts/environment.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -4930,7 +4930,7 @@
       "cssVar": "--a63-safe-area-right",
       "type": "dimension",
       "value": "env(safe-area-inset-right, 0px)",
-      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "sourceFile": "packages/styles/src/contracts/environment.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -4944,7 +4944,7 @@
       "cssVar": "--a63-safe-area-top",
       "type": "dimension",
       "value": "env(safe-area-inset-top, 0px)",
-      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "sourceFile": "packages/styles/src/contracts/environment.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -6147,7 +6147,7 @@
       "cssVar": "--a63-viewport-height",
       "type": "dimension",
       "value": "100vh",
-      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "sourceFile": "packages/styles/src/contracts/environment.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -6161,7 +6161,7 @@
       "cssVar": "--a63-viewport-height",
       "type": "dimension",
       "value": "100dvh",
-      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "sourceFile": "packages/styles/src/contracts/environment.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -6177,7 +6177,7 @@
       "cssVar": "--a63-weather-background-blend",
       "type": "color",
       "value": "normal",
-      "sourceFile": "packages/styles/src/contracts/widget.css",
+      "sourceFile": "packages/styles/src/contracts/widget.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",

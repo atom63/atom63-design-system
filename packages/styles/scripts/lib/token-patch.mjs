@@ -118,12 +118,25 @@ function indexResolvers(documents) {
   const entries = []
   for (const [file, document] of documents) {
     if (!file.endsWith('.resolver.json')) continue
-    const [[axis, modifier]] = Object.entries(document.modifiers ?? {})
+    const [[axis, modifier] = [null, { contexts: {} }]] = Object.entries(document.modifiers ?? {})
     const contexts = Object.keys(modifier.contexts)
     for (const set of Object.values(document.sets ?? {})) {
+      const { selector, atRule } = set.$extensions?.['io.atom63.css'] ?? {}
+      // Only a set declared at :root with no condition applies everywhere.
+      const unconditional = selector === ':root' && !atRule
       for (const source of set.sources) {
         walkTokens(source, [], undefined, (name, node, type, path) =>
-          entries.push({ file, node, type, path, name, axis, contexts, context: null })
+          entries.push({
+            file,
+            node,
+            type,
+            path,
+            name,
+            axis,
+            contexts,
+            context: null,
+            unconditional,
+          })
         )
       }
     }
@@ -145,8 +158,15 @@ function locate(change, tokens, resolvers) {
   const { token, mode } = change
   const declared = resolvers.filter(entry => entry.name === token)
   if (mode === 'Value') {
-    const target = tokens.get(token) ?? declared.find(entry => entry.context === null)
+    const target =
+      tokens.get(token) ??
+      declared.find(entry => entry.context === null && entry.unconditional !== false)
     if (target) return { target }
+    if (declared.some(entry => entry.context === null)) {
+      return {
+        error: 'declared only in conditional scopes (media query or selector); edit it in code',
+      }
+    }
     if (declared.length) {
       const { axis, file } = declared[0]
       return { error: `varies by ${axis} in ${path.basename(file)}; edit it in its ${axis} modes` }

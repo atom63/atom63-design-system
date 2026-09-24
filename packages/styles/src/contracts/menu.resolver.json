@@ -1,0 +1,122 @@
+{
+  "version": "2025.10",
+  "description": "Menu contract — the actionable MENU archetype: DropdownMenu, ContextMenu,\nSelect, Autocomplete, and Menubar menus. One token set so every menu surface\nreads the SAME item / popup treatment (spacing, radius, highlight,\ndestructive), consumed by the shared `.a63-Menu-*` recipe (including Select /\nAutocomplete surfaces + items). The popup *surface* treatment (gel / bevel /\nbackdrop / elevation) comes from the OVERLAY contract — this contract only\nadds the menu-specific item + chrome vocabulary.\n\n── TWO tonal styles for the HIGHLIGHTED item (mirrors `segment`) ───────────\n  1. neutral (default) — a quiet hover fill (--a63-surface-control-hover).\n  2. primary           — the accent fill (the classic macOS menu highlight).\n  Selected by a tone flag / theme default; the RESTING + destructive treatment\n  is shared by both tones.\n\n── AXIS TRAP (see selection.css) ──────────────────────────────────────────\n  Colour hooks reference mode/theme/brand semantics, so they are NOT declared\n  at :root (a var(--a63-action-*) resolved at :root freezes to the root mode).\n  They are consumed at the recipe USE-SITE with the live-semantic fallback in\n  the API block below, and a theme overrides them under [data-a63-theme].\n  Only axis-independent geometry + treatment defaults live at :root here.\n\nMenu spacing follows item shape. At the 'none' radius scale, rows become square\nand the menu collapses to a flat, flush list: no inter-item gap and no popup\ninset, so highlighted rows span edge-to-edge — the dense CRT / Win98 menu.\nAt every other radius scale (subtle/default/round), the inset/gapped rhythm is\nrestored for rounded highlights.",
+  "sets": {
+    "01-root": {
+      "sources": [
+        {
+          "a63": {
+            "menu": {
+              "popup": {
+                "padding": {
+                  "$type": "dimension",
+                  "$value": "{a63.space.1}",
+                  "$description": "── Popup box metrics (surface treatment = OVERLAY contract) ────────────"
+                }
+              },
+              "item": {
+                "padding": {
+                  "block": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.1_5}",
+                    "$description": "NOTE: --a63-menu-popup-radius and --a63-menu-item-radius are NOT declared\nhere. Radius is a THEME-VARYING axis (themes set --a63-overlay-radius /\n--a63-control-radius), so declaring them at :root would freeze them to the\nroot (modern) value and inherit it into every theme — the same resolve-at-\ndeclaration trap as the colour hooks. They are read at the recipe use-site:\n  popup  -> var(--a63-menu-popup-radius, var(--a63-overlay-radius, --radius-lg))\n  item   -> popup radius - popup border - popup padding (concentric inset)\nA theme MAY set --a63-menu-*-radius under [data-a63-theme] to override.\n── Item geometry ───────────────────────────────────────────────────────"
+                  },
+                  "inline": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.2}"
+                  }
+                },
+                "gap": {
+                  "$type": "dimension",
+                  "$value": "{a63.space.2}",
+                  "$description": "icon <-> label gap WITHIN an item"
+                },
+                "font": {
+                  "size": {
+                    "$type": "dimension",
+                    "$value": "{a63.control.font.size.sm}"
+                  }
+                },
+                "inset": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 2,
+                    "unit": "rem"
+                  },
+                  "$description": "checkbox / radio / inset indent"
+                }
+              },
+              "gap": {
+                "$type": "dimension",
+                "$value": "{a63.space.0_5}",
+                "$description": "vertical gap BETWEEN items/rows"
+              },
+              "highlight": {
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": []
+                }
+              },
+              "disabled": {
+                "opacity": {
+                  "$type": "number",
+                  "$value": 0.56,
+                  "$description": "── Disabled fade (foreground-only intent, like Button) ─────────────────"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":root"
+        }
+      }
+    },
+    "02-data-a63-radius-none": {
+      "sources": [
+        {
+          "a63": {
+            "menu": {
+              "gap": {
+                "$type": "number",
+                "$value": 0
+              },
+              "item": {
+                "radius": {
+                  "$type": "number",
+                  "$value": 0
+                }
+              },
+              "popup": {
+                "padding": {
+                  "$type": "number",
+                  "$value": 0
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-a63-radius='none']"
+        }
+      }
+    }
+  },
+  "resolutionOrder": [
+    {
+      "$ref": "#/sets/01-root"
+    },
+    {
+      "$ref": "#/sets/02-data-a63-radius-none"
+    }
+  ],
+  "$extensions": {
+    "io.atom63.css": {
+      "imports": ["./menu.native.css"]
+    }
+  }
+}

@@ -10,10 +10,12 @@
     "packages/styles/src/contracts/control.css",
     "packages/styles/src/contracts/control.native.css",
     "packages/styles/src/contracts/environment.css",
+    "packages/styles/src/contracts/environment.native.css",
     "packages/styles/src/contracts/field.css",
     "packages/styles/src/contracts/index.css",
     "packages/styles/src/contracts/marker.css",
     "packages/styles/src/contracts/menu.css",
+    "packages/styles/src/contracts/menu.native.css",
     "packages/styles/src/contracts/overlay.css",
     "packages/styles/src/contracts/overlay.native.css",
     "packages/styles/src/contracts/segment.css",
@@ -26,6 +28,7 @@
     "packages/styles/src/contracts/trigger.css",
     "packages/styles/src/contracts/trigger.native.css",
     "packages/styles/src/contracts/widget.css",
+    "packages/styles/src/contracts/widget.native.css",
     "packages/styles/src/tokens/brand-action.css",
     "packages/styles/src/tokens/brand-ramp.css",
     "packages/styles/src/tokens/brand.css",
@@ -47,7 +50,7 @@
     "packages/styles/src/tokens/type-scale.css"
   ],
   "summary": {
-    "sourceFiles": 43,
+    "sourceFiles": 46,
     "declarations": 1470,
     "uniqueCssVariables": 1021,
     "figmaMappedDeclarations": 1449
@@ -4125,7 +4128,7 @@
       "cssVar": "--a63-control-press-transform",
       "type": "string",
       "value": "scale(0.97)",
-      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "sourceFile": "packages/styles/src/contracts/environment.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
@@ -4462,7 +4465,7 @@
       "cssVar": "--a63-menu-highlight-gloss",
       "type": "string",
       "value": "none",
-      "sourceFile": "packages/styles/src/contracts/menu.css",
+      "sourceFile": "packages/styles/src/contracts/menu.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "scope": ":root"
@@ -5105,7 +5108,7 @@
       "cssVar": "--a63-safe-area-bottom",
       "type": "dimension",
       "value": "env(safe-area-inset-bottom, 0px)",
-      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "sourceFile": "packages/styles/src/contracts/environment.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -5119,7 +5122,7 @@
       "cssVar": "--a63-safe-area-left",
       "type": "dimension",
       "value": "env(safe-area-inset-left, 0px)",
-      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "sourceFile": "packages/styles/src/contracts/environment.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -5133,7 +5136,7 @@
       "cssVar": "--a63-safe-area-right",
       "type": "dimension",
       "value": "env(safe-area-inset-right, 0px)",
-      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "sourceFile": "packages/styles/src/contracts/environment.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -5147,7 +5150,7 @@
       "cssVar": "--a63-safe-area-top",
       "type": "dimension",
       "value": "env(safe-area-inset-top, 0px)",
-      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "sourceFile": "packages/styles/src/contracts/environment.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -6350,7 +6353,7 @@
       "cssVar": "--a63-viewport-height",
       "type": "dimension",
       "value": "100vh",
-      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "sourceFile": "packages/styles/src/contracts/environment.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -6364,7 +6367,7 @@
       "cssVar": "--a63-viewport-height",
       "type": "dimension",
       "value": "100dvh",
-      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "sourceFile": "packages/styles/src/contracts/environment.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -6380,7 +6383,7 @@
       "cssVar": "--a63-weather-backdrop",
       "type": "string",
       "value": "none",
-      "sourceFile": "packages/styles/src/contracts/widget.css",
+      "sourceFile": "packages/styles/src/contracts/widget.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "scope": ":root"
@@ -6390,7 +6393,7 @@
       "cssVar": "--a63-weather-background-blend",
       "type": "color",
       "value": "normal",
-      "sourceFile": "packages/styles/src/contracts/widget.css",
+      "sourceFile": "packages/styles/src/contracts/widget.native.css",
       "layer": "contract",
       "figma": {
         "collection": "Atom63 Contract",
@@ -6885,7 +6888,7 @@
       "cssVar": "--a63-widget-backdrop",
       "type": "string",
       "value": "var(--a63-overlay-backdrop)",
-      "sourceFile": "packages/styles/src/contracts/widget.css",
+      "sourceFile": "packages/styles/src/contracts/widget.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "aliases": ["--a63-overlay-backdrop"],
@@ -6896,7 +6899,7 @@
       "cssVar": "--a63-widget-backdrop",
       "type": "string",
       "value": "var(--a63-weather-backdrop)",
-      "sourceFile": "packages/styles/src/contracts/widget.css",
+      "sourceFile": "packages/styles/src/contracts/widget.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "aliases": ["--a63-weather-backdrop"],
@@ -7146,7 +7149,7 @@
       "cssVar": "--a63-widget-rim-backdrop",
       "type": "string",
       "value": "none",
-      "sourceFile": "packages/styles/src/contracts/widget.css",
+      "sourceFile": "packages/styles/src/contracts/widget.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "scope": ":root"
@@ -7185,7 +7188,7 @@
       "cssVar": "--a63-widget-rim-image",
       "type": "string",
       "value": "none",
-      "sourceFile": "packages/styles/src/contracts/widget.css",
+      "sourceFile": "packages/styles/src/contracts/widget.native.css",
       "layer": "contract",
       "lifecycle": "preview",
       "scope": ":root"
