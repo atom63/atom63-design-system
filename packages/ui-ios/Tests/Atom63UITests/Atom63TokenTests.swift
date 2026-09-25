@@ -56,7 +56,8 @@ struct Atom63TokenTests {
 
   @Test
   func generatedComponentContractsCoverCrossRendererRecipes() {
-    #expect(AtomComponentContracts.all.count == 27)
+    #expect(!AtomComponentContracts.all.isEmpty)
+    #expect(AtomComponentContracts.all.count == AtomRendererConformance.verified.count)
 
     let skeleton = AtomComponentContracts.contract(catalogItem: "skeleton")
     #expect(skeleton?.parity == .recipe)

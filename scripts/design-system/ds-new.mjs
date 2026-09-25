@@ -5,15 +5,18 @@
  *
  * Usage:
  *   pnpm ds:new <slug> --archetype <id> --category <id> --summary <text>
- *     --usage <text> --related <slug,slug> [--dry-run] [--no-generate]
+ *     --usage <text> --related <slug,slug> [--ios [--ios-section <id>]
+ *     [--ios-symbol <sf symbol>]] [--dry-run] [--no-generate]
  *
+ * --ios  also scaffolds the SwiftUI counterpart: a cross-renderer contract,
+ *        conformance evidence on both sides, Atom<Name>.swift, and an iOS
+ *        demo catalog entry with a showcase. The section defaults from
+ *        --category; the symbol defaults to square.dashed.
  * --dry-run  checks the name, the options and every registry anchor, and
  *            lists what would change, without writing. CI runs it so a
  *            registry that changes shape breaks the scaffold at once.
  * --no-generate  writes the files but skips the builds and audit rewrites.
- *
- * Web only for now: a component with an iOS counterpart still needs the
- * cross-renderer steps the script prints at the end.
+
  */
 import { execFileSync } from 'node:child_process'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
@@ -23,6 +26,11 @@ import { parseArgs } from 'node:util'
 import { fileURLToPath } from 'node:url'
 
 import {
+  addCrossRendererContract,
+  addDemoCatalogItem,
+  addDemoShowcase,
+  addReactConformance,
+  addSwiftConformance,
   addToArchetype,
   appendRecipeImport,
   archetypeIds,
@@ -33,16 +41,19 @@ import {
   componentIndexFile,
   componentNames,
   contractFile,
+  demoSections,
   foundationExportBlock,
   foundationFamily,
   insertCatalogDefinition,
   insertCatalogGroupSlug,
   insertExportBlock,
   insertRecipeExport,
+  iosSectionForCategory,
   reactExportBlock,
   reactFamily,
   recipeFile,
   storyFile,
+  swiftViewFile,
   testFile,
 } from './lib/ds-new.mjs'
 
@@ -57,6 +68,9 @@ const { values, positionals } = parseArgs({
     summary: { type: 'string' },
     usage: { type: 'string' },
     related: { type: 'string' },
+    ios: { type: 'boolean', default: false },
+    'ios-section': { type: 'string' },
+    'ios-symbol': { type: 'string', default: 'square.dashed' },
     'dry-run': { type: 'boolean', default: false },
     'no-generate': { type: 'boolean', default: false },
   },
@@ -86,6 +100,12 @@ const paths = {
   contract: `packages/ui-foundation/src/components/${slug}/${slug}-contract.ts`,
   component: `packages/ui-react/src/components/${slug}`,
   changeset: `.changeset/add-${slug}.md`,
+  crossRenderer: 'packages/ui-foundation/contracts/cross-renderer-contracts.json',
+  reactConformance: 'packages/ui-react/src/conformance/renderer-conformance.ts',
+  swiftConformance: 'packages/ui-ios/Sources/Atom63UI/AtomRendererConformance.swift',
+  swiftView: `packages/ui-ios/Sources/Atom63UI/Atom${pascal}.swift`,
+  demoCatalog: 'examples/ios-demo/Atom63Demo/CatalogRegistry.swift',
+  demoShowcases: 'examples/ios-demo/Atom63Demo/CatalogShowcases.swift',
 }
 
 const archetypes = archetypeIds(read(paths.archetypes))
@@ -115,6 +135,11 @@ for (const [option, text] of [
 if (related.length < 2) problems.push('--related needs at least two existing component slugs')
 const unknown = related.filter(item => !knownSlugs.includes(item))
 if (unknown.length > 0) problems.push(`--related names unknown slugs: ${unknown.join(', ')}`)
+const iosSections = demoSections(read(paths.demoCatalog))
+const iosSection = values['ios-section'] ?? iosSectionForCategory[values.category]
+if (values.ios && !iosSections.includes(iosSection)) {
+  problems.push(`--ios-section must be one of: ${iosSections.join(', ')}`)
+}
 if (problems.length > 0) fail(`\n  ${problems.join('\n  ')}`)
 
 /* Every edit is computed before anything is written, so a missing anchor
@@ -150,6 +175,23 @@ try {
       slug
     )
   )
+  if (values.ios) {
+    edits.set(
+      paths.crossRenderer,
+      addCrossRendererContract(read(paths.crossRenderer), names, values.summary)
+    )
+    edits.set(paths.reactConformance, addReactConformance(read(paths.reactConformance), names))
+    edits.set(paths.swiftConformance, addSwiftConformance(read(paths.swiftConformance), names))
+    edits.set(
+      paths.demoCatalog,
+      addDemoCatalogItem(read(paths.demoCatalog), names, {
+        section: iosSection,
+        symbol: values['ios-symbol'],
+        summary: values.summary,
+      })
+    )
+    edits.set(paths.demoShowcases, addDemoShowcase(read(paths.demoShowcases), names))
+  }
 } catch (error) {
   fail(`a registry no longer has the shape the scaffold expects: ${error.message}`)
 }
@@ -163,6 +205,7 @@ const created = new Map([
   [`${paths.component}/${slug}.test.tsx`, testFile(names)],
   [paths.changeset, changesetFile(names, values.summary)],
 ])
+if (values.ios) created.set(paths.swiftView, swiftViewFile(names))
 
 if (values['dry-run']) {
   process.stdout.write(`ds:new ${slug} (dry run): every registry anchor resolved.\n`)
@@ -182,7 +225,10 @@ const run = (command, args) => {
   execFileSync(command, args, { cwd: root, stdio: 'inherit' })
 }
 
-run('pnpm', ['exec', 'prettier', '--write', ...edits.keys(), ...created.keys()])
+const formatted = [...edits.keys(), ...created.keys()].filter(file => !file.endsWith('.swift'))
+run('pnpm', ['exec', 'prettier', '--write', ...formatted])
+// The generated TypeScript and Swift contracts follow the JSON source.
+if (values.ios) run('node', ['scripts/generate-cross-renderer-contracts.mjs'])
 
 if (!values['no-generate']) {
   run('pnpm', ['--filter', '@atom63/ui-foundation', 'build'])
@@ -192,7 +238,19 @@ if (!values['no-generate']) {
   run('pnpm', ['check:package-surface'])
   run('pnpm', ['api:report'])
   run('pnpm', ['--filter', '@atom63/ui-react', 'generate:utilities'])
+  // The Swift public API report needs a Swift toolchain, so only macOS writes it.
+  if (values.ios && process.platform === 'darwin') {
+    run('node', ['packages/ui-ios/Scripts/check-public-api.mjs', '--write'])
+  }
 }
+
+const iosNext = values.ios
+  ? `  5. Fill in the TODO(ds:new) intent, outcomes and adaptations in cross-renderer-contracts.json,
+     keep both conformance entries in step, and shape Atom${pascal}.swift and its showcase.
+     Run \`pnpm --filter @atom63/ui-ios test:swift\` and \`test:app\` on a Mac.
+`
+  : `With an iOS counterpart, rerun with --ios instead of adding the Swift side by hand.
+`
 
 process.stdout.write(`
 Scaffolded ${pascal}. Next:
@@ -200,8 +258,4 @@ Scaffolded ${pascal}. Next:
   2. Rerun \`pnpm api:report\` and \`pnpm check:ui-react-exports --write\` after the API settles.
   3. Push, then run the visual workflow with "update" on the branch to record baselines.
   4. Optional: a hand-written page at apps/docs/src/pages/component-${slug}.mdx.
-With an iOS counterpart, also: add it to packages/ui-foundation/contracts/cross-renderer-contracts.json
-and scripts/generate-cross-renderer-contracts.mjs, run \`pnpm --filter @atom63/ui-ios generate:swift\`,
-add renderer-conformance evidence on both sides, write Atom${pascal}.swift, and add it to the iOS
-demo catalog (see docs/design-system/cross-renderer-contracts.md).
-`)
+${iosNext}`)

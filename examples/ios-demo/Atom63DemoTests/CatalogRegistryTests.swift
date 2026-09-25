@@ -5,7 +5,7 @@ import XCTest
 
 final class CatalogRegistryTests: XCTestCase {
   func testCatalogCoversEveryRegisteredEntryWithUniqueMetadata() {
-    XCTAssertEqual(CatalogRegistry.items.count, 38)
+    XCTAssertGreaterThanOrEqual(CatalogRegistry.items.count, AtomComponentContracts.all.count)
     XCTAssertEqual(Set(CatalogRegistry.items.map(\.title)).count, CatalogRegistry.items.count)
     XCTAssertEqual(Set(CatalogRegistry.items.map(\.typeName)).count, CatalogRegistry.items.count)
     XCTAssertTrue(CatalogRegistry.items.allSatisfy { !$0.summary.isEmpty && !$0.usage.isEmpty })
