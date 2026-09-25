@@ -275,7 +275,64 @@ export function component(index, slug) {
   }
 }
 
-/** A story's code as a known-good usage sample, with the file's imports. */
+const DECLARATION =
+  /^(?:export\s+)?(?:const|let|function|type|interface|class)\s+([A-Za-z_$][\w$]*)/
+
+/**
+ * Split a module into its top-level declarations, keyed by name, in source
+ * order. A comment directly above a declaration belongs to it. Imports and the
+ * default export are left out.
+ */
+function topLevelBlocks(source) {
+  const blocks = new Map()
+  let current = null
+  let pendingComment = []
+  let inComment = false
+  for (const line of source.split('\n')) {
+    const declaration = DECLARATION.exec(line)
+    const startsComment = /^\/\*|^\/\//.test(line)
+    if (declaration) {
+      current = { name: declaration[1], lines: [...pendingComment, line] }
+      blocks.set(current.name, current)
+      pendingComment = []
+    } else if (inComment || (startsComment && !line.startsWith(' '))) {
+      pendingComment.push(line)
+      inComment = inComment ? !line.includes('*/') : line.startsWith('/*') && !line.includes('*/')
+      current = null
+    } else if (/^(?:import\b|export default\b)/.test(line)) {
+      current = null
+      pendingComment = []
+    } else if (current) {
+      current.lines.push(line)
+    }
+  }
+  return new Map(
+    [...blocks].map(([blockName, block]) => [blockName, block.lines.join('\n').trimEnd()])
+  )
+}
+
+/** The local declarations `name` uses, transitively, in source order. */
+function localDependencies(blocks, name) {
+  const needed = new Set()
+  const visit = blockName => {
+    for (const [candidate] of blocks) {
+      if (candidate === name || needed.has(candidate)) continue
+      if (new RegExp(`\\b${candidate.replace(/\$/g, '\\$')}\\b`).test(blocks.get(blockName))) {
+        needed.add(candidate)
+        visit(candidate)
+      }
+    }
+  }
+  visit(name)
+  return [...blocks.keys()]
+    .filter(blockName => needed.has(blockName))
+    .map(blockName => blocks.get(blockName))
+}
+
+/**
+ * A story's code as a known-good usage sample, with the file's imports and the
+ * local helpers (components, data, types) the story uses.
+ */
 export function example(index, slug, story) {
   const found = findComponent(index, slug)
   if (!found.stories) {
@@ -290,10 +347,8 @@ export function example(index, slug, story) {
     )
   }
   const source = found.stories.source
-  const start = source.search(new RegExp(`^export const ${name}\\s*:\\s*Story\\b`, 'm'))
-  const rest = source.slice(start + 1)
-  const next = rest.search(/^(?:\/\*|\/\/|export )/m)
-  const code = source.slice(start, next === -1 ? undefined : start + 1 + next).trimEnd()
+  const blocks = topLevelBlocks(source)
+  const code = [...localDependencies(blocks, name), blocks.get(name)].join('\n\n')
   // Whole statements, including ones that span lines (`import {\n  a,\n} from 'x'`).
   const imports = [...source.matchAll(/^import\b[^;'"]*?(?:from\s*)?['"][^'"]+['"];?$/gms)]
     .map(match => match[0])
