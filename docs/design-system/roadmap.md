@@ -217,6 +217,7 @@ Astryx 是 Meta 开源的 React 设计系统（MIT，2026-06 公开 beta，0.6.x
 剩余 6 处：ScrollableList 的玻璃阴影、色板控件的描边，以及 Calendar 下拉框的 `:has(:focus)`。
 "禁用态不响应 hover" 静态扫描判断不可靠，改为之后用 Storybook 运行时测试来做。
 组件脚手架 `pnpm ds:new <name>` 已完成（Web 部分）：生成 contract、组件、recipe、story、测试和 changeset，插入所有登记表（导出、`recipes.css`、visual archetype、docs catalog），并重新生成 API 报告和审计文件。生成出来的组件直接能过 CI，只差 visual 基线。CI 里用 `--dry-run` 守住登记表的格式。加 `--ios` 时还会生成 iOS 部分：跨平台 contract、React 和 Swift 两端的 conformance 证据、`Atom<Name>.swift`，以及 iOS 演示目录的条目和 showcase。生成的组件在两个平台上都能直接过 CI，包括模拟器里的演示 app 测试。
+由 contract 生成文档已完成：每个组件文档页（以及给 agent 用的 markdown / llms 输出）新增 Contract 一节，直接从 `@atom63/ui-foundation` 读取轴与默认值、slot、状态、token slot、visual archetype；跨平台组件还会列出共同意图、parity、SwiftUI 渲染器、必需状态、共同结果、无障碍要求和两端的适配。
 
 **D 进度（2026-09-25）：** `@atom63/mdx` 已从 atom63-vite 迁入 `packages/mdx`（除 `craft-demos` 外全部迁入），docs 站改为依赖它，`apps/docs/src/mdx-kit` 副本已删除。
 包暂时标为 `private`：npm 要求包先存在才能配置 trusted publishing，所以首次发布需要你在本机用自己的账号手动发一次，之后再配置 trusted publisher、加入 `publish-beta.mjs` 的包列表和 API / 包正确性检查。

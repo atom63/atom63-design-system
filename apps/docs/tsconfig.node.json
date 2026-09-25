@@ -1,7 +1,10 @@
 {
   "extends": "@atom63/tsconfig/node.json",
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo"
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    // The llms.txt plugin imports the docs contract helpers, which read
+    // @atom63/ui-foundation; type-check that against source, like the app.
+    "customConditions": ["@atom63/source"]
   },
   "include": ["vite.config.ts"]
 }
