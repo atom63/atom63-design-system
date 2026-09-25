@@ -1,0 +1,26 @@
+{
+  "name": "@atom63/cli",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Query the Atom63 design system from the command line or an MCP host: components, contracts, tokens, examples and docs",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "atom63": "./src/bin.mjs"
+  },
+  "exports": {
+    ".": "./src/core.mjs"
+  },
+  "files": [
+    "generated",
+    "src"
+  ],
+  "scripts": {
+    "generate:index": "node scripts/build-index.mjs",
+    "check:index": "node scripts/build-index.mjs --check",
+    "test": "node --test \"src/**/*.test.mjs\""
+  },
+  "devDependencies": {
+    "vite": "catalog:"
+  }
+}

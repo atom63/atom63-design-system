@@ -99,6 +99,8 @@ jobs:
           pnpm check:theme-authoring
           pnpm check:token-economy
           pnpm check:craft
+          pnpm check:agent-index
+          pnpm --filter @atom63/cli test
           pnpm ds:new scaffold-probe --dry-run --ios --archetype marker --category feedback-and-utilities \
             --summary "Probe that the scaffold still finds every registry anchor." \
             --usage "Never written: the dry run only resolves the registry edits." \

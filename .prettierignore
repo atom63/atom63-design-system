@@ -52,6 +52,7 @@ archive/
 apps/windows-shell/
 
 # Generator output checked byte-for-byte by the check:* scripts.
+packages/cli/generated/
 packages/styles/generated/
 packages/ui-react/src/styles/utilities.css
 docs/design-system/audits/
