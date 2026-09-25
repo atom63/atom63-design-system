@@ -1,3 +1,4 @@
+import { componentContractMarkdown } from './component-contract'
 import {
   componentCatalogGroupForSlug,
   componentCatalogItems,
@@ -164,6 +165,7 @@ export function componentReferenceMarkdown(slug: string, uiReactIndexSource: str
     .map(item => `- [${componentLabel(item.slug)}](${componentDocPath(item.slug)})`)
     .join('\n')
   const exports = componentExportSurface(slug, uiReactIndexSource)
+  const contract = componentContractMarkdown(slug)
 
   return `## Usage
 
@@ -178,7 +180,7 @@ import { ${doc.usageExports.join(', ')} } from '${doc.item.importPath}'
 **Types:** ${markdownExportList(exports.types)}
 
 TypeScript remains the source of truth for complete prop contracts.
-
+${contract ? `\n${contract}\n` : ''}
 ## Related components
 
 ${related}`
