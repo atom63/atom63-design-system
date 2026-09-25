@@ -1,6 +1,7 @@
 import { readJson, relativeToRoot, fromRoot, writeAuditJson } from './audit-utils.mjs'
+import { publishedPackageDirs } from './published-packages.mjs'
 
-const packageDirectories = ['packages/styles', 'packages/ui-foundation', 'packages/ui-react']
+const packageDirectories = publishedPackageDirs
 
 function selectQualityScripts(scripts = {}) {
   return Object.fromEntries(

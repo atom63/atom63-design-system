@@ -3,11 +3,13 @@ import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import prettier from 'prettier'
 
+import { publishedPackageDirs } from './published-packages.mjs'
+
 const scriptDirectory = dirname(fileURLToPath(import.meta.url))
 const repositoryRoot = resolve(scriptDirectory, '../..')
 const policyPath = 'docs/design-system/dependency-version-policy.json'
 const auditPath = 'docs/design-system/audits/dependency-version-policy.json'
-const packageDirs = ['packages/styles', 'packages/ui-foundation', 'packages/ui-react']
+const packageDirs = publishedPackageDirs
 
 function assert(condition, message) {
   if (!condition) throw new Error(message)

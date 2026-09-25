@@ -6,10 +6,19 @@
     "testedVersion": "19.2.7",
     "packages": ["@atom63/ui-react"]
   },
-  "coordinatedPackages": ["@atom63/styles", "@atom63/ui-foundation", "@atom63/ui-react"],
+  "coordinatedPackages": [
+    "@atom63/styles",
+    "@atom63/ui-foundation",
+    "@atom63/ui-react",
+    "@atom63/mdx"
+  ],
   "workspaceDependencyPolicy": {
     "publishedPackagesMustUseExactPublishedVersionsBeforeStable": true,
-    "allowedWorkspaceDependenciesDuringBeta": ["@atom63/styles", "@atom63/ui-foundation"]
+    "allowedWorkspaceDependenciesDuringBeta": [
+      "@atom63/styles",
+      "@atom63/ui-foundation",
+      "@atom63/ui-react"
+    ]
   },
   "typeVisibleDependencies": {
     "@atom63/ui-react": [
@@ -57,6 +66,20 @@
       "react-resizable-panels": "monitor-minor-compatible-range",
       "sonner": "monitor-minor-compatible-range",
       "tailwind-merge": "compatible-range-ok"
+    },
+    "@atom63/mdx": {
+      "@atom63/styles": "workspace-beta-internal; exact-published-before-stable",
+      "@atom63/ui-react": "workspace-beta-internal; exact-published-before-stable",
+      "@base-ui/react": "pin-exact-through-beta",
+      "@mdx-js/mdx": "compatible-range-ok",
+      "@mdx-js/react": "compatible-range-ok",
+      "beautiful-mermaid": "monitor-minor-compatible-range",
+      "clsx": "compatible-range-ok",
+      "lucide-react": "compatible-range-ok-user-replaceable-icons",
+      "motion": "monitor-minor-compatible-range",
+      "react-compare-slider": "monitor-minor-compatible-range",
+      "react-simple-code-editor": "monitor-minor-compatible-range",
+      "shiki": "monitor-minor-compatible-range"
     }
   },
   "stableSemverPolicy": {
