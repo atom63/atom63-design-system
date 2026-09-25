@@ -7,13 +7,34 @@ are in [`docs/design-system/agent-interface-plan.md`](../../docs/design-system/a
 
 Private while the interface settles. Status by step:
 
-1. **Agent index and query core** (this package today). `generated/agent-index.json` holds every
-   answer, so queries need no repo, network or build. `src/core.mjs` exposes `search`,
-   `component`, `example`, `token`, `docsPage` and `rules`. Each returns `{ type, data }` or
-   throws an `AtomError` with a stable `code`.
-2. The `atom63` command with `--json` output and `manifest`.
+1. **Agent index and query core.** `generated/agent-index.json` holds every answer, so queries
+   need no repo, network or build. `src/core.mjs` exposes `search`, `component`, `example`,
+   `token`, `docsPage` and `rules`. Each returns `{ type, data }` or throws an `AtomError` with a
+   stable `code`.
+2. **The `atom63` command.** See below.
 3. `atom63 mcp`, an MCP server over stdio.
 4. The AGENTS.md snippet, generated from `src/rules.mjs`.
+
+## Usage
+
+In this repo, run it through the root script:
+
+```bash
+pnpm atom63 search date picker
+pnpm atom63 component dialog
+pnpm atom63 example badge Sizes
+pnpm atom63 token --a63-surface-page
+pnpm atom63 docs theme-system
+pnpm atom63 rules
+pnpm atom63 manifest --json
+```
+
+Every command takes `--json` and prints one typed envelope on stdout, `{ "type": …, "data": … }`.
+Failures print `{ "type": "error", "data": { "code", "message", "suggestions" } }`. The exit code
+is 0 for an answer, 1 for a failed query (for example an unknown component) and 2 for a wrong
+command line. `manifest` lists every command, argument, flag, response type and error code.
+Error codes are append-only: once shipped, a code keeps its meaning. The command table in
+`src/commands.mjs` defines the CLI and the manifest, and it will define the MCP tools too.
 
 ## Keeping the index current
 

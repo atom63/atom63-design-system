@@ -115,6 +115,9 @@ describe('example', () => {
     assert.match(data.code, /^export const Sizes: Story = \{/)
     assert.doesNotMatch(data.code, /export const (?!Sizes)/)
     assert.match(data.imports, /from '@atom63\/ui-react'/)
+    // Multi-line imports come back whole, not cut after `import {`.
+    assert.match(data.imports, /^import \{\n[\s\S]*?^\} from '@atom63\/ui-foundation'$/m)
+    assert.match(data.imports, /^import '@atom63\/ui-react\/styles.css'$/m)
   })
 
   it('defaults to the first story and suggests close names', () => {
