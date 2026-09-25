@@ -490,6 +490,12 @@ importers:
         specifier: 'catalog:'
         version: 8.1.4(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.0)(tsx@4.23.15)(yaml@2.9.1)
 
+  packages/cli:
+    devDependencies:
+      vite:
+        specifier: 'catalog:'
+        version: 8.1.4(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.0)(tsx@4.23.15)(yaml@2.9.1)
+
   packages/mdx:
     dependencies:
       '@atom63/styles':
