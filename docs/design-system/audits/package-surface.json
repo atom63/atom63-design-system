@@ -3,16 +3,17 @@
   "inputs": [
     "packages/styles/package.json",
     "packages/ui-foundation/package.json",
-    "packages/ui-react/package.json"
+    "packages/ui-react/package.json",
+    "packages/mdx/package.json"
   ],
   "summary": {
-    "packageCount": 3,
-    "publishableCount": 3,
+    "packageCount": 4,
+    "publishableCount": 4,
     "privateCount": 0,
-    "packagesWithExports": 3,
-    "packagesWithFilesWhitelist": 3,
-    "packagesWithPeerDependencies": 1,
-    "packagesWithPublishAccess": 3
+    "packagesWithExports": 4,
+    "packagesWithFilesWhitelist": 4,
+    "packagesWithPeerDependencies": 2,
+    "packagesWithPublishAccess": 4
   },
   "packages": [
     {
@@ -381,6 +382,98 @@
       "qualityScripts": {
         "build": "tsup",
         "lint": "eslint . --cache --max-warnings 11",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "typecheck": "tsc --noEmit"
+      },
+      "publishConfig": {
+        "access": "public"
+      },
+      "publishAccess": "public"
+    },
+    {
+      "directory": "packages/mdx",
+      "manifestPath": "packages/mdx/package.json",
+      "name": "@atom63/mdx",
+      "version": "0.4.0-beta.0",
+      "private": false,
+      "exports": {
+        ".": {
+          "@atom63/source": "./src/index.ts",
+          "types": "./dist/index.d.ts",
+          "import": "./dist/index.js"
+        },
+        "./blocks": {
+          "@atom63/source": "./src/blocks/index.ts",
+          "types": "./dist/blocks/index.d.ts",
+          "import": "./dist/blocks/index.js"
+        },
+        "./blocks/credits-block": {
+          "@atom63/source": "./src/blocks/credits-block-entry.ts",
+          "types": "./dist/blocks/credits-block-entry.d.ts",
+          "import": "./dist/blocks/credits-block-entry.js"
+        },
+        "./blocks/media-caption": {
+          "@atom63/source": "./src/blocks/media-caption-entry.ts",
+          "types": "./dist/blocks/media-caption-entry.d.ts",
+          "import": "./dist/blocks/media-caption-entry.js"
+        },
+        "./article": {
+          "@atom63/source": "./src/article/index.ts",
+          "types": "./dist/article/index.d.ts",
+          "import": "./dist/article/index.js"
+        },
+        "./editor": {
+          "@atom63/source": "./src/editor/index.ts",
+          "types": "./dist/editor/index.d.ts",
+          "import": "./dist/editor/index.js"
+        },
+        "./lightbox": {
+          "@atom63/source": "./src/lightbox/index.ts",
+          "types": "./dist/lightbox/index.d.ts",
+          "import": "./dist/lightbox/index.js"
+        },
+        "./runtime": {
+          "@atom63/source": "./src/runtime/index.ts",
+          "types": "./dist/runtime/index.d.ts",
+          "import": "./dist/runtime/index.js"
+        },
+        "./primitives": {
+          "@atom63/source": "./src/primitives/index.ts",
+          "types": "./dist/primitives/index.d.ts",
+          "import": "./dist/primitives/index.js"
+        },
+        "./styles/index.css": "./src/styles/index.css",
+        "./styles/a63.css": "./src/styles/a63.css",
+        "./styles/shadcn.css": "./src/styles/shadcn.css",
+        "./styles/mdx-blocks.css": "./src/styles/mdx-blocks.css",
+        "./styles/consumer.css": "./src/styles/consumer.css"
+      },
+      "exportKeys": [
+        ".",
+        "./article",
+        "./blocks",
+        "./blocks/credits-block",
+        "./blocks/media-caption",
+        "./editor",
+        "./lightbox",
+        "./primitives",
+        "./runtime",
+        "./styles/a63.css",
+        "./styles/consumer.css",
+        "./styles/index.css",
+        "./styles/mdx-blocks.css",
+        "./styles/shadcn.css"
+      ],
+      "files": ["API.md", "CONTRIBUTING.md", "dist", "src/**/*.css"],
+      "sideEffects": ["*.css", "**/*.css"],
+      "peerDependencies": {
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0"
+      },
+      "qualityScripts": {
+        "build": "tsup",
+        "lint": "eslint . --cache --max-warnings 0",
         "test": "vitest run",
         "test:watch": "vitest",
         "typecheck": "tsc --noEmit"

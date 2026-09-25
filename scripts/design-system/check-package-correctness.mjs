@@ -12,8 +12,10 @@ import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import { publishedPackageDirs } from './published-packages.mjs'
+
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
-const packageDirs = ['packages/styles', 'packages/ui-foundation', 'packages/ui-react']
+const packageDirs = publishedPackageDirs
 
 function run(args) {
   execFileSync('pnpm', ['exec', ...args], { cwd: repoRoot, stdio: 'inherit' })

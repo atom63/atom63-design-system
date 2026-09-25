@@ -17,8 +17,10 @@ import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
+import { publishedPackageDirs } from './published-packages.mjs'
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
-const packageDirectories = ['packages/styles', 'packages/ui-foundation', 'packages/ui-react']
+const packageDirectories = publishedPackageDirs
 const dryRun = process.argv.includes('--dry-run')
 const tag = 'beta'
 

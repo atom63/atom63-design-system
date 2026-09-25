@@ -19,6 +19,11 @@ on:
         default: false
         type: boolean
 
+# The published packages, in dependency order. Must equal
+# scripts/design-system/published-packages.mjs (a script test checks it).
+env:
+  PUBLISHED_PACKAGES: packages/styles packages/ui-foundation packages/ui-react packages/mdx
+
 permissions:
   contents: read
 
@@ -58,7 +63,7 @@ jobs:
         run: |
           set -euo pipefail
           count=0
-          for dir in packages/styles packages/ui-foundation packages/ui-react; do
+          for dir in ${PUBLISHED_PACKAGES}; do
             name=$(node -p "require('./${dir}/package.json').name")
             version=$(node -p "require('./${dir}/package.json').version")
             if npm view "${name}@${version}" version >/dev/null 2>&1; then
@@ -128,7 +133,7 @@ jobs:
           git config user.email "333482271+atom63-ds-bot[bot]@users.noreply.github.com"
           git checkout -B "$BRANCH"
           git add -A
-          versions=$(for dir in packages/styles packages/ui-foundation packages/ui-react; do node -p "const p=require('./${dir}/package.json'); '- ' + p.name + '@' + p.version"; done)
+          versions=$(for dir in ${PUBLISHED_PACKAGES}; do node -p "const p=require('./${dir}/package.json'); '- ' + p.name + '@' + p.version"; done)
           git commit -m "chore: version packages" -m "${versions}"
           git push --force origin "$BRANCH"
           body=$(printf '%s\n\n%s\n\n%s\n' \
@@ -191,6 +196,9 @@ jobs:
       - name: Build React UI
         run: pnpm --filter @atom63/ui-react build
 
+      - name: Build MDX
+        run: pnpm --filter @atom63/mdx build
+
       - name: Smoke-test packed packages
         run: pnpm check:ds-pack-smoke
 
@@ -214,6 +222,11 @@ jobs:
 
       - name: Test React UI
         run: pnpm --filter @atom63/ui-react test
+
+      - name: Typecheck and test MDX
+        run: |
+          pnpm --filter @atom63/mdx typecheck
+          pnpm --filter @atom63/mdx test
 
       - name: Check Changesets prerelease mode
         run: |
@@ -253,6 +266,7 @@ jobs:
         run: |
           pnpm --filter @atom63/ui-foundation build
           pnpm --filter @atom63/ui-react build
+          pnpm --filter @atom63/mdx build
 
       # Trusted publishing needs npm 11.5.1 or later. Pinned so a new npm major
       # cannot change the publish step unreviewed; Dependabot does not track it.
@@ -311,7 +325,7 @@ jobs:
           set -euo pipefail
           for attempt in $(seq 1 30); do
             pending=0
-            for dir in packages/styles packages/ui-foundation packages/ui-react; do
+            for dir in ${PUBLISHED_PACKAGES}; do
               name=$(node -p "require('./${dir}/package.json').name")
               version=$(node -p "require('./${dir}/package.json').version")
               beta=$(npm view "${name}" dist-tags.beta --prefer-online 2>/dev/null || true)
@@ -331,7 +345,7 @@ jobs:
         run: |
           set -euo pipefail
           git fetch --depth=1 origin "${GITHUB_SHA}"
-          for dir in packages/styles packages/ui-foundation packages/ui-react; do
+          for dir in ${PUBLISHED_PACKAGES}; do
             tag=$(git show "${GITHUB_SHA}:${dir}/package.json" | node -p "const p = JSON.parse(require('fs').readFileSync(0)); p.name + '@' + p.version")
             if git ls-remote --exit-code --tags origin "refs/tags/${tag}" > /dev/null; then
               echo "${tag} already exists"

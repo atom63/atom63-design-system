@@ -27,13 +27,16 @@ It runs on every push to `main` and on `workflow_dispatch`:
 
 ## Required npm trusted-publisher setup
 
-Before `publish=true` can work without an npm token, configure npm trusted publishing for each first-wave package:
+Before `publish=true` can work without an npm token, configure npm trusted publishing for each published package (the list lives in `scripts/design-system/published-packages.mjs`). The owner and repository fields are case-sensitive: use lowercase `atom63`.
 
 | npm package | GitHub repository | Workflow file |
 | --- | --- | --- |
-| `@atom63/styles` | `ATOM63/atom63-design-system` | `.github/workflows/release-beta.yml` |
-| `@atom63/ui-foundation` | `ATOM63/atom63-design-system` | `.github/workflows/release-beta.yml` |
-| `@atom63/ui-react` | `ATOM63/atom63-design-system` | `.github/workflows/release-beta.yml` |
+| `@atom63/styles` | `atom63/atom63-design-system` | `.github/workflows/release-beta.yml` |
+| `@atom63/ui-foundation` | `atom63/atom63-design-system` | `.github/workflows/release-beta.yml` |
+| `@atom63/ui-react` | `atom63/atom63-design-system` | `.github/workflows/release-beta.yml` |
+| `@atom63/mdx` | `atom63/atom63-design-system` | `.github/workflows/release-beta.yml` |
+
+A trusted publisher can only be added to a package that exists, so a new package needs one manual first publish. Then add it to the published-packages list and to `PUBLISHED_PACKAGES` in the workflow.
 
 Recommended npm setting:
 
@@ -54,6 +57,7 @@ The workflow also references a GitHub environment named `npm-publish`. Create it
    npm view @atom63/styles@beta name version dist-tags --json
    npm view @atom63/ui-foundation@beta name version dist-tags --json
    npm view @atom63/ui-react@beta name version dist-tags dependencies --json
+   npm view @atom63/mdx@beta name version dist-tags dependencies --json
    ```
 
 5. Keep `latest` synchronized with `beta` (see caveats) and run external/adopter smoke.
