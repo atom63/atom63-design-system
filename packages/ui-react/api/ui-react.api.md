@@ -475,7 +475,7 @@ export function Card(input: CardProps): React$1.ReactElement;
 // @public (undocumented)
 export function CardAction(input: useRender.ComponentProps<'div'>): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
 export function CardContent(input: CardContentProps): React$1.ReactElement;
 
 // @public (undocumented)
@@ -514,7 +514,7 @@ export type CardFooterProps = useRender.ComponentProps<'div'> & {
     padding?: CardResponsivePadding;
 };
 
-// @public (undocumented)
+// @public
 export function CardHeader(input: CardHeaderProps): React$1.ReactElement;
 
 // @public (undocumented)

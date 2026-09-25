@@ -54,6 +54,11 @@ export function Card({
 
 export type CardHeaderProps = useRender.ComponentProps<'div'> & { padding?: CardPadding }
 
+/**
+ * A single row above the content for a `CardLabel` and a `CardAction`, spread
+ * to either end. Unlike shadcn's CardHeader it is not where the title goes:
+ * put `CardTitle` and `CardDescription` in `CardContent`.
+ */
 export function CardHeader({
   className,
   render,
@@ -188,6 +193,7 @@ export function CardMediaOverlayIconButton({
 
 export type CardContentProps = useRender.ComponentProps<'div'> & { padding?: CardResponsivePadding }
 
+/** The card's body: `CardTitle`, `CardDescription` and any other content. */
 export function CardContent({
   className,
   render,
