@@ -10,6 +10,7 @@
   },
   "scripts": {
     "api:report": "node scripts/design-system/api-report.mjs",
+    "atom63": "node packages/cli/src/bin.mjs",
     "build:docs": "pnpm --filter @atom63/docs build",
     "build:example:product-shell": "pnpm --filter atom63-product-shell-example build",
     "build:example:vite-basic": "pnpm --filter atom63-vite-basic-example build",

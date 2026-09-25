@@ -294,9 +294,9 @@ export function example(index, slug, story) {
   const rest = source.slice(start + 1)
   const next = rest.search(/^(?:\/\*|\/\/|export )/m)
   const code = source.slice(start, next === -1 ? undefined : start + 1 + next).trimEnd()
-  const imports = source
-    .split('\n')
-    .filter(line => line.startsWith('import '))
+  // Whole statements, including ones that span lines (`import {\n  a,\n} from 'x'`).
+  const imports = [...source.matchAll(/^import\b[^;'"]*?(?:from\s*)?['"][^'"]+['"];?$/gms)]
+    .map(match => match[0])
     .join('\n')
   return {
     type: 'example.source',
