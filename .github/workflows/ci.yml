@@ -93,12 +93,16 @@ jobs:
       - name: Check tokens
         run: pnpm --filter @atom63/styles check:tokens
 
-      - name: Check theme authoring, token economy and craft
+      - name: Check theme authoring, token economy, craft and the scaffold
         run: |
           pnpm test:scripts
           pnpm check:theme-authoring
           pnpm check:token-economy
           pnpm check:craft
+          pnpm ds:new scaffold-probe --dry-run --archetype marker --category feedback-and-utilities \
+            --summary "Probe that the scaffold still finds every registry anchor." \
+            --usage "Never written: the dry run only resolves the registry edits." \
+            --related badge,kbd
 
       - name: Build UI foundation
         run: pnpm --filter @atom63/ui-foundation build

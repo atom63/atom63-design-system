@@ -140,6 +140,25 @@ that gives the reason, either on the same line or on its own line directly above
 border-top-left-radius: var(--radius-xs);
 ```
 
+## Adding a component
+
+Start a new component with the scaffold instead of copying an existing one:
+
+```bash
+pnpm ds:new stat-meter --archetype marker --category feedback-and-utilities \
+  --summary "StatMeter shows one measured value against its range." \
+  --usage "Pair it with a visible label and keep the range meaningful." \
+  --related progress,badge
+```
+
+It creates the contract in `@atom63/ui-foundation`, then the component, recipe, stories, test and a
+changeset in `@atom63/ui-react`. It adds the component to every registry the checks read: the
+package exports, `recipes.css`, the visual archetype and the docs catalog. It then rebuilds the
+packages and rewrites the API reports and audit files. The result passes CI as it stands, apart
+from the visual baselines: run the visual workflow with **update** on the branch to record them.
+Run with `--dry-run` to see what would change. A component with an iOS counterpart needs the
+cross-renderer steps the scaffold prints at the end.
+
 ## Before opening a pull request
 
 Run the checks that cover your change. CI runs all of them:
