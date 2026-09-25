@@ -112,12 +112,30 @@ describe('component', () => {
 describe('example', () => {
   it("returns one story's code with the file's imports", () => {
     const { data } = example(index, 'badge', 'Sizes')
-    assert.match(data.code, /^export const Sizes: Story = \{/)
+    // Helpers come first; the story itself ends the sample.
+    assert.match(data.code, /^export const Sizes: Story = \{[\s\S]*\}$/m)
+    assert.ok(data.code.trimEnd().endsWith('}'))
     assert.doesNotMatch(data.code, /export const (?!Sizes)/)
     assert.match(data.imports, /from '@atom63\/ui-react'/)
     // Multi-line imports come back whole, not cut after `import {`.
     assert.match(data.imports, /^import \{\n[\s\S]*?^\} from '@atom63\/ui-foundation'$/m)
     assert.match(data.imports, /^import '@atom63\/ui-react\/styles.css'$/m)
+  })
+
+  it('includes the local helpers a story uses, and nothing else', () => {
+    const { code } = example(index, 'segmented-control', 'Playground').data
+    assert.match(code, /function Demo\(/)
+    assert.equal(code.match(/^export const /gm).length, 1)
+
+    const tree = example(index, 'sidebar-nav-tree', 'Playground').data.code
+    assert.match(tree, /function Tree\(/)
+    assert.doesNotMatch(tree, /SectionOnlyTree/)
+  })
+
+  it('includes meta when the story type refers to it', () => {
+    const { code } = example(index, 'badge', 'Sizes').data
+    assert.match(code, /type Story = StoryObj<typeof meta>/)
+    assert.match(code, /^const meta = \{/m)
   })
 
   it('defaults to the first story and suggests close names', () => {
