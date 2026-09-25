@@ -1,10 +1,17 @@
 import { execFileSync } from 'node:child_process'
-import { cpSync, mkdtempSync, mkdirSync, rmSync, writeFileSync } from 'node:fs'
+import { cpSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const repositoryRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..', '..')
+// The consumer must see every contract in the source, however many there are.
+const contractCount = JSON.parse(
+  readFileSync(
+    join(repositoryRoot, 'packages', 'ui-foundation', 'contracts', 'cross-renderer-contracts.json'),
+    'utf8'
+  )
+).contracts.length
 const temporaryRoot = mkdtempSync(join(tmpdir(), 'atom63-ui-consumer-'))
 const packageCopy = join(temporaryRoot, 'Atom63UI')
 const consumerRoot = join(temporaryRoot, 'Consumer')
@@ -42,8 +49,8 @@ let package = Package(
     join(consumerRoot, 'Sources', 'Consumer', 'main.swift'),
     `import Atom63UI
 
-precondition(AtomComponentContracts.all.count == 27)
-precondition(AtomRendererConformance.verified.count == 27)
+precondition(AtomComponentContracts.all.count == ${contractCount})
+precondition(AtomRendererConformance.verified.count == ${contractCount})
 print("Atom63UI consumer compiled with \\(AtomComponentContracts.all.count) contracts")
 `
   )

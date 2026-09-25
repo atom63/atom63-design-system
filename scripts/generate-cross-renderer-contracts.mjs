@@ -20,33 +20,8 @@ const atomSkeletonPath = resolve(root, 'packages/ui-ios/Sources/Atom63UI/AtomSke
 const source = JSON.parse(await readFile(sourcePath, 'utf8'))
 
 const foundationExports = {
-  accordion: ['accordionStates'],
   alert: ['alertVariants'],
-  'alert-dialog': ['alertDialogStates'],
-  avatar: ['avatarStates'],
   badge: ['badgeSolidVariants', 'badgeSemanticVariants', 'badgePaletteVariants'],
-  button: ['buttonStates'],
-  calendar: ['calendarStates'],
-  card: ['cardStates'],
-  dialog: ['dialogStates'],
-  'dropdown-menu': ['dropdownMenuStates'],
-  'destination-link': ['destinationLinkStates'],
-  empty: ['emptyStates'],
-  field: ['fieldStates'],
-  input: ['inputStates'],
-  'load-more-trigger': ['loadMoreTriggerStates'],
-  progress: ['progressStates'],
-  radio: ['radioStates'],
-  'search-field': ['searchFieldStates'],
-  'segmented-control': ['segmentedControlStates'],
-  select: ['selectStates'],
-  slider: ['sliderStates'],
-  skeleton: ['skeletonStates'],
-  switch: ['switchStates'],
-  tabs: ['tabsStates'],
-  textarea: ['textareaStates'],
-  toaster: ['toasterStates'],
-  toggle: ['toggleStates'],
 }
 const semanticTones = new Set(['neutral', 'info', 'success', 'warning', 'error'])
 
@@ -93,10 +68,12 @@ for (const contract of source.contracts) {
     throw new Error(`${contract.id} recipe parity requires a motion contract`)
   }
 
-  const exportNames = foundationExports[contract.foundationContract]
-  if (!exportNames) {
-    throw new Error(`Missing foundation source mapping: ${contract.foundationContract}`)
-  }
+  // Contracts whose required states come from anything but `<camel>States`
+  // are listed in foundationExports; the rest follow the convention.
+  const camel = contract.foundationContract.replace(/-([a-z])/g, (_, letter) =>
+    letter.toUpperCase()
+  )
+  const exportNames = foundationExports[contract.foundationContract] ?? [`${camel}States`]
   const contractPath = resolve(
     root,
     `packages/ui-foundation/src/components/${contract.foundationContract}/${contract.foundationContract}-contract.ts`

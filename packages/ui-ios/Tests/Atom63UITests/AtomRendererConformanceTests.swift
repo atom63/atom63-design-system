@@ -5,38 +5,9 @@ import Testing
 struct AtomRendererConformanceTests {
   @Test
   func verifiedEvidenceMatchesGeneratedContracts() {
-    #expect(
-      AtomRendererConformance.verified.map(\.contractId)
-        == [
-          "button",
-          "alert",
-          "dialog",
-          "alert-dialog",
-          "field",
-          "destination-link",
-          "input",
-          "textarea",
-          "switch",
-          "select",
-          "segmented-control",
-          "radio",
-          "slider",
-          "dropdown-menu",
-          "accordion",
-          "calendar",
-          "search-field",
-          "tabs",
-          "load-more-trigger",
-          "skeleton",
-          "toggle",
-          "card",
-          "badge",
-          "avatar",
-          "empty",
-          "progress",
-          "toaster",
-        ]
-    )
+    let verifiedIds = AtomRendererConformance.verified.map(\.contractId)
+    #expect(Set(verifiedIds).count == verifiedIds.count)
+    #expect(Set(verifiedIds) == Set(AtomComponentContracts.all.map(\.id)))
 
     for evidence in AtomRendererConformance.verified {
       let contract = AtomComponentContracts.all.first { $0.id == evidence.contractId }

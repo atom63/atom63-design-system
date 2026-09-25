@@ -156,8 +156,15 @@ changeset in `@atom63/ui-react`. It adds the component to every registry the che
 package exports, `recipes.css`, the visual archetype and the docs catalog. It then rebuilds the
 packages and rewrites the API reports and audit files. The result passes CI as it stands, apart
 from the visual baselines: run the visual workflow with **update** on the branch to record them.
-Run with `--dry-run` to see what would change. A component with an iOS counterpart needs the
-cross-renderer steps the scaffold prints at the end.
+Run with `--dry-run` to see what would change.
+
+Add `--ios` for a component with a SwiftUI counterpart. The scaffold then also adds the
+cross-renderer contract and conformance evidence on both sides, then regenerates the TypeScript
+and Swift contracts. It writes `Atom<Name>.swift` and adds an iOS demo catalog entry with a
+showcase. The demo section defaults from `--category`; `--ios-section` and `--ios-symbol` override
+the section and the SF Symbol. The scaffolded contract carries placeholder outcomes marked
+`TODO(ds:new)`: replace them with the real shared intent, and keep both conformance entries in
+step.
 
 ## Before opening a pull request
 

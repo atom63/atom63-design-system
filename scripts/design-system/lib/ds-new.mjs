@@ -349,3 +349,175 @@ export function changesetFile({ pascal }, summary) {
 Add ${pascal}. ${summary}
 `
 }
+
+/* ── iOS (cross-renderer) tier ───────────────────────────────────────────── */
+
+/** The iOS demo catalog section for each docs catalog category. */
+export const iosSectionForCategory = {
+  actions: 'actions',
+  'forms-and-selection': 'forms',
+  navigation: 'navigation',
+  overlays: 'actions',
+  'content-and-surfaces': 'content',
+  'feedback-and-utilities': 'feedback',
+}
+
+/** The iOS demo catalog sections, from `enum CatalogSection`. */
+export function demoSections(source) {
+  const start = source.indexOf('enum CatalogSection')
+  if (start === -1) throw new Error('CatalogRegistry.swift has no CatalogSection enum')
+  const end = source.indexOf('\n}', start)
+  return [...source.slice(start, end).matchAll(/^ {2}case ([a-zA-Z]+)(?: = |$)/gm)].map(
+    match => match[1]
+  )
+}
+
+/** The shared outcomes a scaffolded contract starts with. */
+export const scaffoldOutcomes = {
+  shared: ['content-remains-readable'],
+  accessibility: ['exposes-content-as-text'],
+}
+
+/** Append a cross-renderer contract to the JSON source. */
+export function addCrossRendererContract(jsonText, { camel, pascal, slug }, intent) {
+  const source = JSON.parse(jsonText)
+  if (source.contracts.some(contract => contract.id === slug)) {
+    throw new Error(`cross-renderer contract "${slug}" already exists`)
+  }
+  source.contracts.push({
+    id: slug,
+    foundationContract: slug,
+    foundationAxis: 'states',
+    catalogItem: camel,
+    reactRenderer: pascal,
+    swiftUIRenderer: `Atom${pascal}`,
+    intent,
+    parity: 'strict',
+    requiredStates: ['rest'],
+    sharedOutcomes: scaffoldOutcomes.shared,
+    accessibilityOutcomes: scaffoldOutcomes.accessibility,
+    platformAdaptations: {
+      react: ['TODO(ds:new): how the web renderer adapts the shared intent.'],
+      swiftUI: ['TODO(ds:new): how the SwiftUI renderer adapts the shared intent.'],
+    },
+  })
+  return `${JSON.stringify(source, null, 2)}\n`
+}
+
+/** Add React conformance evidence before the end of `reactRendererConformance`. */
+export function addReactConformance(source, { slug }) {
+  const end = source.indexOf('] as const satisfies readonly ReactRendererConformanceEvidence[]')
+  if (end === -1) throw new Error('renderer-conformance.ts has no reactRendererConformance list')
+  const entry = `  {
+    contractId: '${slug}',
+    implementedStates: ['rest'],
+    verifiedSharedOutcomes: [${scaffoldOutcomes.shared.map(item => `'${item}'`).join(', ')}],
+    verifiedAccessibilityOutcomes: [${scaffoldOutcomes.accessibility.map(item => `'${item}'`).join(', ')}],
+    verifiesMotionRecipe: false,
+  },
+`
+  return source.slice(0, end) + entry + source.slice(end)
+}
+
+/** Add SwiftUI conformance evidence before the end of `AtomRendererConformance.verified`. */
+export function addSwiftConformance(source, { slug }) {
+  const start = source.indexOf('public static let verified: [AtomRendererConformanceEvidence] = [')
+  if (start === -1) throw new Error('AtomRendererConformance.swift has no verified list')
+  const end = source.indexOf('\n  ]\n', start)
+  if (end === -1) throw new Error('cannot find the end of AtomRendererConformance.verified')
+  const list = values => `[${values.map(value => `"${value}"`).join(', ')}]`
+  const entry = `
+    AtomRendererConformanceEvidence(
+      contractId: "${slug}",
+      implementedStates: ["rest"],
+      verifiedSharedOutcomes: ${list(scaffoldOutcomes.shared)},
+      verifiedAccessibilityOutcomes: ${list(scaffoldOutcomes.accessibility)},
+      verifiesMotionRecipe: false
+    ),`
+  return source.slice(0, end) + entry + source.slice(end)
+}
+
+const swiftString = value => JSON.stringify(value)
+
+/**
+ * Add a catalog item to the iOS demo: an enum case plus a case in each of the
+ * `switch self` properties, placed before each switch's closing brace.
+ */
+export function addDemoCatalogItem(source, { camel, pascal }, { section, symbol, summary }) {
+  const enumStart = source.indexOf('enum CatalogItem:')
+  if (enumStart === -1) throw new Error('CatalogRegistry.swift has no CatalogItem enum')
+  const cases = [...source.slice(enumStart).matchAll(/^ {2}case ([a-zA-Z]+)$/gm)]
+  if (cases.some(match => match[1] === camel))
+    throw new Error(`catalog item "${camel}" already exists`)
+  const lastCase = cases.at(-1)
+  const caseAt = enumStart + lastCase.index + lastCase[0].length
+  let next = `${source.slice(0, caseAt)}\n  case ${camel}${source.slice(caseAt)}`
+
+  const values = {
+    section: `.${section}`,
+    title: swiftString(pascal.replace(/([a-z])([A-Z])/g, '$1 $2')),
+    symbol: swiftString(symbol),
+    summary: swiftString(summary),
+    typeName: swiftString(`Atom${pascal}`),
+    usage: swiftString(`Atom${pascal} { Text("Content") }`),
+  }
+  for (const [property, value] of Object.entries(values)) {
+    const header = new RegExp(
+      `^ {2}var ${property}: [A-Za-z]+ \\{\\n {4}switch self \\{\\n`,
+      'm'
+    ).exec(next)
+    if (!header) throw new Error(`CatalogItem has no switch for "${property}"`)
+    const close = next.indexOf('\n    }\n', header.index)
+    next = `${next.slice(0, close)}\n    case .${camel}:\n      ${value}${next.slice(close)}`
+  }
+  return next
+}
+
+/** Route the new catalog item to its showcase and append a starter showcase view. */
+export function addDemoShowcase(source, { camel, pascal }) {
+  const header = source.indexOf('  var body: some View {\n    switch item {\n')
+  if (header === -1) throw new Error('CatalogShowcases.swift has no `switch item` body')
+  const close = source.indexOf('\n    }\n', header)
+  const routed = `${source.slice(0, close)}\n    case .${camel}:\n      ${pascal}Showcase()${source.slice(close)}`
+  return `${routed.trimEnd()}
+
+private struct ${pascal}Showcase: View {
+  var body: some View {
+    Atom${pascal} {
+      Text("${pascal.replace(/([a-z])([A-Z])/g, '$1 $2')}")
+    }
+  }
+}
+`
+}
+
+export function swiftViewFile({ pascal }) {
+  return `import SwiftUI
+
+/// TODO(ds:new): describe what Atom${pascal} is for. Mirrors \`${pascal}\` in
+/// \`@atom63/ui-react\`; the shared intent lives in the cross-renderer contract.
+public struct Atom${pascal}<Content: View>: View {
+  @Environment(\\.atomTheme) private var theme
+  @Environment(\\.colorScheme) private var colorScheme
+
+  private let content: Content
+
+  public init(@ViewBuilder content: () -> Content) {
+    self.content = content()
+  }
+
+  public var body: some View {
+    content
+      .foregroundStyle(theme.colors.textPrimary.resolve(for: colorScheme))
+      .padding(.horizontal, AtomTokens.Space.x3)
+      .padding(.vertical, AtomTokens.Space.x2)
+      .background(theme.colors.surfacePanel.resolve(for: colorScheme))
+      .overlay {
+        RoundedRectangle(cornerRadius: AtomTokens.Radius.medium)
+          .strokeBorder(theme.colors.borderSubtle.resolve(for: colorScheme), lineWidth: 1)
+      }
+      .clipShape(.rect(cornerRadius: AtomTokens.Radius.medium))
+  }
+}
+`
+}

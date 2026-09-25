@@ -99,7 +99,7 @@ jobs:
           pnpm check:theme-authoring
           pnpm check:token-economy
           pnpm check:craft
-          pnpm ds:new scaffold-probe --dry-run --archetype marker --category feedback-and-utilities \
+          pnpm ds:new scaffold-probe --dry-run --ios --archetype marker --category feedback-and-utilities \
             --summary "Probe that the scaffold still finds every registry anchor." \
             --usage "Never written: the dry run only resolves the registry edits." \
             --related badge,kbd
