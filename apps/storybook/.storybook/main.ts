@@ -6,8 +6,8 @@ import { defaultClientConditions, mergeConfig } from 'vite'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
-// Stories live next to their components in packages/ui-react, packages/mdx and
-// packages/brand.
+// Stories live next to their components in packages/ui-react, packages/mdx,
+// packages/brand and packages/inform.
 // They load the workspace packages through the repo-private `@atom63/source`
 // export condition, so edits to a component or token hot-reload without
 // rebuilding dist.
@@ -17,6 +17,7 @@ const config: StorybookConfig = {
     '../../../packages/ui-react/src/**/*.stories.@(ts|tsx)',
     '../../../packages/mdx/src/**/*.stories.@(ts|tsx)',
     '../../../packages/brand/src/**/*.stories.@(ts|tsx)',
+    '../../../packages/inform/src/**/*.stories.@(ts|tsx)',
     // Token reference stories for @atom63/styles, which has no stories of its own.
     '../stories/**/*.stories.@(ts|tsx)',
   ],

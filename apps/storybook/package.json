@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@atom63/brand": "workspace:*",
+    "@atom63/inform": "workspace:*",
     "@atom63/mdx": "workspace:*",
     "@atom63/styles": "workspace:*",
     "@atom63/ui-foundation": "workspace:*",

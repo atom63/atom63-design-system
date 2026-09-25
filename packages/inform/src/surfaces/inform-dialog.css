@@ -1,0 +1,24 @@
+/*
+ * Inform dialog — the blocking notice, composed from the ui-react Dialog. Only
+ * the width and the icon row are its own; padding, title and description keep
+ * the Dialog recipe so an inform dialog sits like every other dialog.
+ */
+
+.a63-Dialog-popup.a63-InformDialog {
+  max-width: 28rem;
+}
+
+/* The icon is a sibling of the text block, so the body aligns with the title. */
+.a63-InformDialog-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--a63-space-3);
+}
+
+.a63-InformDialog-text {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  gap: var(--a63-space-2);
+  min-inline-size: 0;
+}

@@ -1,0 +1,55 @@
+/*
+ * Inform spotlight — a blocking guide step: a scrim with a cutout over the
+ * anchor, and a bubble placed beside it. The bubble is the same raised overlay
+ * surface as the corner flyout. Positions come from script (the anchor's
+ * viewport rect), so they are physical `top` / `left` values.
+ */
+
+.a63-InformSpotlight {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-layer-scrim);
+}
+
+/*
+ * The cutout is an empty box over the anchor carrying a huge shadow spread:
+ * visually a hole in the scrim, without clip-path math, and it keeps a
+ * token-driven radius.
+ */
+.a63-InformSpotlight-cutout {
+  position: absolute;
+  border-radius: var(--a63-surface-radius, var(--radius-lg));
+  box-shadow: 0 0 0 9999px var(--a63-scrim);
+  transition: opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+.a63-InformSpotlight-bubble {
+  position: absolute;
+  box-sizing: border-box;
+  inline-size: min(20rem, calc(100vw - 2rem));
+  padding: var(--a63-space-4);
+  border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
+  border-radius: var(--a63-overlay-radius, var(--radius-2xl));
+  background-color: var(--a63-surface-overlay);
+  background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
+  background-blend-mode: normal, var(--a63-overlay-texture-blend);
+  backdrop-filter: var(--a63-overlay-backdrop);
+  box-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow);
+  color: var(--a63-text-primary);
+  outline: none;
+}
+
+.a63-InformSpotlight-bubble:focus-visible {
+  outline: 2px solid var(--a63-focus-ring);
+  outline-offset: 2px;
+}
+
+.a63-InformSpotlight-bubble .a63-InformActions {
+  margin-block-start: var(--a63-space-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-InformSpotlight-cutout {
+    transition: none;
+  }
+}

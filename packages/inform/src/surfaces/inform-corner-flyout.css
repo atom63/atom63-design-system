@@ -1,0 +1,73 @@
+/*
+ * Inform corner flyout — a persistent, non-blocking card, and the stack that
+ * places several of them in one corner. The card is a raised overlay surface
+ * (the same overlay contract as Popover and Dialog), so it follows themes.
+ */
+
+.a63-InformCornerFlyout {
+  box-sizing: border-box;
+  padding: var(--a63-space-4);
+  border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
+  border-radius: var(--a63-overlay-radius, var(--radius-2xl));
+  background-color: var(--a63-surface-overlay);
+  background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
+  background-blend-mode: normal, var(--a63-overlay-texture-blend);
+  backdrop-filter: var(--a63-overlay-backdrop);
+  box-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow);
+  color: var(--a63-text-primary);
+  opacity: 0;
+  transform: translateY(var(--a63-space-2));
+  transition:
+    opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+/* One frame after mounting, so the entrance has a start state to animate from. */
+.a63-InformCornerFlyout[data-state='entered'] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* The exit slides toward the edge; the card reports its dismissal once it lands. */
+.a63-InformCornerFlyout[data-leaving] {
+  opacity: 0;
+  transform: translateX(var(--a63-space-4));
+}
+
+.a63-InformCornerFlyout .a63-InformActions {
+  margin-block-start: var(--a63-space-2);
+}
+
+/* ── Stack ─────────────────────────────────────────────────────────────── */
+
+/*
+ * The container ignores the pointer so the page stays clickable through its
+ * gaps; the cards take pointer events back. Offsets along the anchored edge are
+ * measured in script, because each card sits relative to the ones in front.
+ */
+.a63-InformFlyoutStack {
+  position: fixed;
+  z-index: var(--z-layer-flyout);
+  inline-size: min(22rem, calc(100vw - 2rem));
+  pointer-events: none;
+}
+
+/* The placement names a physical corner, so it does not mirror. */
+.a63-InformFlyoutStack[data-placement$='right'] {
+  right: var(--a63-space-4);
+}
+.a63-InformFlyoutStack[data-placement$='left'] {
+  left: var(--a63-space-4);
+}
+
+.a63-InformFlyoutStack-item {
+  pointer-events: auto;
+  transition: transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-InformCornerFlyout,
+  .a63-InformFlyoutStack-item {
+    transition: none;
+  }
+}

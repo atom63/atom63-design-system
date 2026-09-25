@@ -1,0 +1,28 @@
+/*
+ * Inform banner — an in-flow, non-interrupting notice. A bordered transparent
+ * row: the severity picks the border color (see inform-parts.css), text is
+ * start-aligned, and the padding is equal on both axes because the row's
+ * height follows the text rather than a touch target.
+ */
+
+.a63-InformBanner {
+  display: flex;
+  box-sizing: border-box;
+  inline-size: 100%;
+  align-items: flex-start;
+  gap: var(--a63-space-3);
+  padding: var(--a63-space-3);
+  border-width: var(--a63-surface-border-width);
+  border-style: var(--a63-surface-border-style);
+  border-radius: var(--a63-surface-radius, var(--radius-lg));
+  background-color: transparent;
+  color: var(--a63-text-secondary);
+  font-size: var(--typography-sm-font-size);
+  line-height: 1.375;
+  text-align: start;
+  text-wrap: pretty;
+}
+
+.a63-InformBanner .a63-InformActions {
+  margin-block-start: var(--a63-space-1);
+}
