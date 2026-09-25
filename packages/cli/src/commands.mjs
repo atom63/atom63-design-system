@@ -6,6 +6,7 @@
  * envelope `type`s it can return. `run` receives the index and the parsed
  * input and returns an envelope, or throws an AtomError.
  */
+import { agentsBlock } from './agents-md.mjs'
 import { component, docsPage, example, rules, search, searchKinds, token } from './core.mjs'
 
 export const commands = [
@@ -64,6 +65,15 @@ export const commands = [
     flags: [],
     returns: ['rules'],
     run: () => rules(),
+  },
+  {
+    name: 'agents',
+    summary:
+      'The AGENTS.md section for a project that builds UI with Atom63: how to query the system and the rules, wrapped in markers so it can be kept in sync.',
+    args: [],
+    flags: [],
+    returns: ['agents.md'],
+    run: () => ({ type: 'agents.md', data: { markdown: agentsBlock() } }),
   },
   {
     name: 'manifest',

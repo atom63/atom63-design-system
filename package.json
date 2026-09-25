@@ -16,6 +16,7 @@
     "build:example:vite-basic": "pnpm --filter atom63-vite-basic-example build",
     "changeset": "changeset",
     "check:agent-index": "pnpm --filter @atom63/cli check:index",
+    "check:agents-md": "pnpm --filter @atom63/cli check:agents-md",
     "check:api-report": "node scripts/design-system/api-report.mjs --check",
     "check:benchmark-parity": "node scripts/design-system/audit-benchmark-parity.mjs",
     "check:control-alignment": "node scripts/design-system/check-control-alignment.mjs",

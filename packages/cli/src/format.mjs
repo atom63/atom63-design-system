@@ -79,6 +79,7 @@ const renderers = {
   'example.source': exampleSource,
   'token.detail': tokenDetail,
   'docs.page': data => data.markdown.trim(),
+  'agents.md': data => data.markdown,
   rules: rulesText,
   manifest: manifestText,
   error: ({ code, message, suggestions }) =>

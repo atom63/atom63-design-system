@@ -22,30 +22,30 @@ export const rules = [
   },
   {
     id: 'tokens-only',
-    rule: 'Take every color, space, radius, shadow and duration from --a63-* tokens. No literal colors and no Tailwind palette utilities.',
+    rule: 'Take every color, space, radius, shadow and duration from `--a63-*` tokens. No literal colors and no Tailwind palette utilities.',
     why: 'Tokens follow the theme, brand, mode and density; literals break all four.',
     check: 'raw-color',
   },
   {
     id: 'on-media-colors',
-    rule: 'Controls drawn over photos or video use --a63-on-media-* and --a63-media-* tokens.',
+    rule: 'Controls drawn over photos or video use the `--a63-on-media-*` and `--a63-media-*` tokens.',
     why: 'Theme colors are meaningless on an unknown picture; these hold contrast on any image.',
   },
   {
     id: 'logical-directions',
-    rule: 'Use logical properties and utilities (margin-inline-start, ps-4, text-start, border-s), not left and right.',
+    rule: 'Use logical properties and utilities (`margin-inline-start`, `ps-4`, `text-start`, `border-s`), not left and right.',
     why: 'Layouts must mirror in right-to-left languages.',
     check: 'physical-properties',
   },
   {
     id: 'focus-visible',
-    rule: 'Draw focus rings on :focus-visible (focus-visible: in Tailwind), never on :focus.',
+    rule: 'Draw focus rings on `:focus-visible` (`focus-visible:` in Tailwind), never on `:focus`.',
     why: 'A pointer press should not leave a keyboard focus ring behind.',
     check: 'focus-visible',
   },
   {
     id: 'theme-agnostic',
-    rule: 'Never branch on light or dark mode in component code; let tokens and UIProvider resolve the mode.',
+    rule: 'Never branch on light or dark mode in component code; let tokens and `UIProvider` resolve the mode.',
     why: 'Themes and brands change the palette too; a mode check covers one axis of four.',
   },
   {

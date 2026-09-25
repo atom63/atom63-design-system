@@ -16,6 +16,7 @@ const samples = {
   token: { query: '--a63-surface-page' },
   docs: { slug: 'theme-system' },
   rules: {},
+  agents: {},
   manifest: {},
 }
 
