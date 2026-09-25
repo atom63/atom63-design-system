@@ -19,6 +19,7 @@ const samples = {
   token: ['token', '--a63-surface-page'],
   docs: ['docs', 'theme-system'],
   rules: ['rules'],
+  agents: ['agents'],
   manifest: ['manifest'],
 }
 

@@ -18,7 +18,9 @@
   "scripts": {
     "generate:index": "node scripts/build-index.mjs",
     "check:index": "node scripts/build-index.mjs --check",
-    "test": "node --test \"src/**/*.test.mjs\""
+    "test": "node --test \"src/**/*.test.mjs\"",
+    "sync:agents-md": "node scripts/sync-agents-md.mjs",
+    "check:agents-md": "node scripts/sync-agents-md.mjs --check"
   },
   "devDependencies": {
     "@modelcontextprotocol/client": "2.1.0",

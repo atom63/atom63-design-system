@@ -13,7 +13,10 @@ Private while the interface settles. Status by step:
    stable `code`.
 2. **The `atom63` command.** See below.
 3. **`atom63 mcp`**, an MCP server over stdio. See below.
-4. The AGENTS.md snippet, generated from `src/rules.mjs`.
+4. **`atom63 agents`**, the AGENTS.md section generated from `src/rules.mjs`. It covers how to
+   query the system and the rules with their reasons, and sits between `atom63:agents` markers so
+   it can be kept in sync. Paste it into a consuming project's AGENTS.md. This repo's own
+   `AGENTS.md` embeds it, and `pnpm check:agents-md` fails when it is stale.
 
 ## Usage
 
