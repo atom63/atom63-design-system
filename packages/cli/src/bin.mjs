@@ -4,6 +4,7 @@
  *
  *   atom63 <command> [args] [--json]
  *   atom63 manifest        every command, argument, flag and response type
+ *   atom63 mcp             serve the same commands as MCP tools over stdio
  *
  * Exit codes: 0 answered, 1 the query failed (unknown component, no match),
  * 2 the command line was wrong. With --json every result, failures included,
@@ -134,7 +135,11 @@ export function runCli(argv) {
 
 // Run when executed directly, including through the node_modules/.bin symlink.
 const invoked = process.argv[1] ? realpathSync(process.argv[1]) : ''
-if (invoked === fileURLToPath(import.meta.url)) {
+if (invoked === fileURLToPath(import.meta.url) && process.argv[2] === 'mcp') {
+  // Loaded only here, so plain queries never pay for the MCP SDK.
+  const { serve } = await import('./mcp.mjs')
+  serve()
+} else if (invoked === fileURLToPath(import.meta.url)) {
   const { exitCode, json, output } = runCli(process.argv.slice(2))
   ;(exitCode === 0 || json ? process.stdout : process.stderr).write(`${output}\n`)
   process.exitCode = exitCode
