@@ -212,8 +212,9 @@ Astryx 是 Meta 开源的 React 设计系统（MIT，2026-06 公开 beta，0.6.x
 | E. 质量标杆 | a11y 规格合约、vibe tests、iOS 截图测试 | 把控 craft 与 taste | 未开始 |
 
 **C 进度（2026-09-25）：** craft lint 第一版（`pnpm check:craft`，已接入 CI）检查 ui-react 和 mdx 源码中的三条规则：原始颜色值（`raw-color`）、物理方向写法（`physical-properties`）、不经过 `:focus-visible` 的焦点样式（`focus-visible`）。
-现有 103 处违规记在 `docs/design-system/audits/craft-baseline.json`：新增违规会让 CI 失败；修复后基线必须同步缩小。
-主要存量集中在：mdx 的 callout 配色（直接用 Tailwind 调色板，需要改用 DS 的状态 token）、视频弹窗、侧边栏等组件的物理方向写法，以及 Calendar 下拉框的 `:has(:focus)`。
+存量违规记在 `docs/design-system/audits/craft-baseline.json`：新增违规会让 CI 失败；修复后基线必须同步缩小。基线最初有 103 处。
+之后几次修复：mdx 状态配色改用状态 token（#54）；全部改为逻辑方向（#56），有意保留的物理方向用 `craft-allow:` 注释说明；新增 `--a63-media-*` / `--a63-on-media-*` token，替换媒体控件里的字面颜色。
+剩余 6 处：ScrollableList 的玻璃阴影、色板控件的描边，以及 Calendar 下拉框的 `:has(:focus)`。
 "禁用态不响应 hover" 静态扫描判断不可靠，改为之后用 Storybook 运行时测试来做。
 
 **D 进度（2026-09-25）：** `@atom63/mdx` 已从 atom63-vite 迁入 `packages/mdx`（除 `craft-demos` 外全部迁入），docs 站改为依赖它，`apps/docs/src/mdx-kit` 副本已删除。

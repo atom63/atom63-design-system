@@ -4,8 +4,8 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 999,
-    "aliasValues": 573,
+    "variables": 1008,
+    "aliasValues": 582,
     "skipped": 183,
     "computed": 59
   },
@@ -2508,6 +2508,26 @@
           }
         },
         {
+          "name": "media/scrim",
+          "token": "--a63-media-scrim",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-black-70"
+            }
+          }
+        },
+        {
+          "name": "media/stage",
+          "token": "--a63-media-stage",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-black-100"
+            }
+          }
+        },
+        {
           "name": "motion/control/feedback/duration",
           "token": "--a63-motion-control-feedback-duration",
           "type": "FLOAT",
@@ -2594,6 +2614,76 @@
           "values": {
             "Value": {
               "alias": "--duration-1500"
+            }
+          }
+        },
+        {
+          "name": "on/media/border",
+          "token": "--a63-on-media-border",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-white-20"
+            }
+          }
+        },
+        {
+          "name": "on/media/foreground",
+          "token": "--a63-on-media-foreground",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-white-100"
+            }
+          }
+        },
+        {
+          "name": "on/media/ring",
+          "token": "--a63-on-media-ring",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-white-90"
+            }
+          }
+        },
+        {
+          "name": "on/media/surface",
+          "token": "--a63-on-media-surface",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-black-60"
+            }
+          }
+        },
+        {
+          "name": "on/media/surface/strong",
+          "token": "--a63-on-media-surface-strong",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-black-70"
+            }
+          }
+        },
+        {
+          "name": "on/media/veil",
+          "token": "--a63-on-media-veil",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-black-10"
+            }
+          }
+        },
+        {
+          "name": "on/media/veil/strong",
+          "token": "--a63-on-media-veil-strong",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-black-20"
             }
           }
         },

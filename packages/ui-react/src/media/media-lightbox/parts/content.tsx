@@ -264,7 +264,7 @@ export function LightboxBackdrop({
     // a translucent blur would forbid. It portals next to `Content`, so it
     // needs `Content`'s fixed layer too: `absolute` left it under any
     // positioned page chrome with a z-index, such as a sticky header.
-    className: cn('fixed inset-0 z-50 bg-black', className),
+    className: cn('fixed inset-0 z-50 bg-[var(--a63-media-stage)]', className),
     'data-slot': 'media-lightbox-backdrop',
     onClick: close,
   }

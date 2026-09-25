@@ -61,9 +61,9 @@
   ],
   "summary": {
     "sourceFiles": 56,
-    "declarations": 1671,
-    "uniqueCssVariables": 1049,
-    "figmaMappedDeclarations": 1610
+    "declarations": 1680,
+    "uniqueCssVariables": 1058,
+    "figmaMappedDeclarations": 1619
   },
   "entries": [
     {
@@ -5164,6 +5164,36 @@
       "scope": "[data-a63-theme='retro']"
     },
     {
+      "name": "a63-media-scrim",
+      "cssVar": "--a63-media-scrim",
+      "type": "color",
+      "value": "var(--color-black-70)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "media/scrim"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-black-70"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-media-stage",
+      "cssVar": "--a63-media-stage",
+      "type": "color",
+      "value": "var(--color-black-100)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "media/stage"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-black-100"],
+      "scope": ":root"
+    },
+    {
       "name": "a63-menu-disabled-opacity",
       "cssVar": "--a63-menu-disabled-opacity",
       "type": "dimension",
@@ -5589,6 +5619,111 @@
       "lifecycle": "preview",
       "scope": ":root",
       "conditions": ["@media (prefers-reduced-motion: reduce)"]
+    },
+    {
+      "name": "a63-on-media-border",
+      "cssVar": "--a63-on-media-border",
+      "type": "color",
+      "value": "var(--color-white-20)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "on/media/border"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-white-20"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-on-media-foreground",
+      "cssVar": "--a63-on-media-foreground",
+      "type": "color",
+      "value": "var(--color-white-100)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "on/media/foreground"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-white-100"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-on-media-ring",
+      "cssVar": "--a63-on-media-ring",
+      "type": "color",
+      "value": "var(--color-white-90)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "on/media/ring"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-white-90"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-on-media-surface",
+      "cssVar": "--a63-on-media-surface",
+      "type": "color",
+      "value": "var(--color-black-60)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "on/media/surface"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-black-60"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-on-media-surface-strong",
+      "cssVar": "--a63-on-media-surface-strong",
+      "type": "color",
+      "value": "var(--color-black-70)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "on/media/surface/strong"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-black-70"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-on-media-veil",
+      "cssVar": "--a63-on-media-veil",
+      "type": "color",
+      "value": "var(--color-black-10)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "on/media/veil"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-black-10"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-on-media-veil-strong",
+      "cssVar": "--a63-on-media-veil-strong",
+      "type": "color",
+      "value": "var(--color-black-20)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Atom63 Semantic",
+        "path": "on/media/veil/strong"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-black-20"],
+      "scope": ":root"
     },
     {
       "name": "a63-overlay-backdrop",

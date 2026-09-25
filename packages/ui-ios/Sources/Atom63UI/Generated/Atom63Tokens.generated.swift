@@ -81,6 +81,24 @@ public enum AtomTokens {
         public static let focusRing = AtomDynamicColor(light: AtomColorComponents(red: 0.17255, green: 0.498039, blue: 1, opacity: 0.3), dark: AtomColorComponents(red: 0.17255, green: 0.498039, blue: 1, opacity: 0.3))
         /// --a63-scrim
         public static let scrim = AtomDynamicColor(light: AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 0.4), dark: AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 0.4))
+        /// --a63-media-stage
+        public static let mediaStage = AtomDynamicColor(light: AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 1), dark: AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 1))
+        /// --a63-media-scrim
+        public static let mediaScrim = AtomDynamicColor(light: AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 0.701961), dark: AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 0.701961))
+        /// --a63-on-media-foreground
+        public static let onMediaForeground = AtomDynamicColor(light: AtomColorComponents(red: 1, green: 1, blue: 1, opacity: 1), dark: AtomColorComponents(red: 1, green: 1, blue: 1, opacity: 1))
+        /// --a63-on-media-surface
+        public static let onMediaSurface = AtomDynamicColor(light: AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 0.6), dark: AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 0.6))
+        /// --a63-on-media-surface-strong
+        public static let onMediaSurfaceStrong = AtomDynamicColor(light: AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 0.701961), dark: AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 0.701961))
+        /// --a63-on-media-border
+        public static let onMediaBorder = AtomDynamicColor(light: AtomColorComponents(red: 1, green: 1, blue: 1, opacity: 0.2), dark: AtomColorComponents(red: 1, green: 1, blue: 1, opacity: 0.2))
+        /// --a63-on-media-ring
+        public static let onMediaRing = AtomDynamicColor(light: AtomColorComponents(red: 1, green: 1, blue: 1, opacity: 0.901961), dark: AtomColorComponents(red: 1, green: 1, blue: 1, opacity: 0.901961))
+        /// --a63-on-media-veil
+        public static let onMediaVeil = AtomDynamicColor(light: AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 0.101961), dark: AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 0.101961))
+        /// --a63-on-media-veil-strong
+        public static let onMediaVeilStrong = AtomDynamicColor(light: AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 0.2), dark: AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 0.2))
         /// --a63-surface-muted
         public static let selectionTrackOff = AtomDynamicColor(light: AtomColorComponents(red: 0.941176, green: 0.941176, blue: 0.941176, opacity: 1), dark: AtomColorComponents(red: 0.133333, green: 0.133333, blue: 0.133333, opacity: 1))
         /// --a63-selection-thumb

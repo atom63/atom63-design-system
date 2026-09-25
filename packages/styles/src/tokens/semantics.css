@@ -14,6 +14,24 @@
   --a63-surface-tint: 0%;
   /* Scrim — the modal/drawer/sheet backdrop veil behind overlays. */
   --a63-scrim: color-mix(in oklch, black 40%, transparent);
+  /* Media stage — behind full-screen photos and video: black in every theme, so letterboxing matches the picture. */
+  --a63-media-stage: var(--color-black-100);
+  /* Media scrim — the dim behind a video dialog; heavier than --a63-scrim because the video is the only thing on screen. */
+  --a63-media-scrim: var(--color-black-70);
+  /* On media — icons and text on controls that float over photos and video, whose colors are unknowable. */
+  --a63-on-media-foreground: var(--color-white-100);
+  /* On media — the backplate of a floating control, dark enough that its foreground reads over any picture. */
+  --a63-on-media-surface: var(--color-black-60);
+  /* On media — the backplate at rest for a primary control (play) and on hover for the others. */
+  --a63-on-media-surface-strong: var(--color-black-70);
+  /* On media — the hairline that separates a floating control from a dark picture. */
+  --a63-on-media-border: var(--color-white-20);
+  /* On media — the focus ring for controls over media. */
+  --a63-on-media-ring: var(--color-white-90);
+  /* On media — a light veil over a poster while it waits. */
+  --a63-on-media-veil: var(--color-black-10);
+  /* On media — the veil over a poster while a control on it is shown. */
+  --a63-on-media-veil-strong: var(--color-black-20);
 }
 
 :root,

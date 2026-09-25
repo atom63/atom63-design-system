@@ -10,11 +10,11 @@
  * or photo, so contrast never depends on what they're floating over.
  */
 [data-slot='media-lightbox'] {
-  --a63-lightbox-on-media-fg: #fff;
-  --a63-lightbox-on-media-surface: rgb(0 0 0 / 0.55);
-  --a63-lightbox-on-media-surface-hover: rgb(0 0 0 / 0.7);
-  --a63-lightbox-on-media-border: rgb(255 255 255 / 0.16);
-  --a63-lightbox-on-media-ring: rgb(255 255 255 / 0.85);
+  --a63-lightbox-on-media-fg: var(--a63-on-media-foreground);
+  --a63-lightbox-on-media-surface: var(--a63-on-media-surface);
+  --a63-lightbox-on-media-surface-hover: var(--a63-on-media-surface-strong);
+  --a63-lightbox-on-media-border: var(--a63-on-media-border);
+  --a63-lightbox-on-media-ring: var(--a63-on-media-ring);
 }
 
 /*

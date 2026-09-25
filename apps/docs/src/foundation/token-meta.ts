@@ -86,6 +86,15 @@ export const SEMANTIC_COLORS = [
   { name: 'status-info', variable: '--a63-status-info' },
   { name: 'focus-ring', variable: '--a63-focus-ring' },
   { name: 'scrim', variable: '--a63-scrim' },
+  { name: 'media-stage', variable: '--a63-media-stage' },
+  { name: 'media-scrim', variable: '--a63-media-scrim' },
+  { name: 'on-media-fg', variable: '--a63-on-media-foreground' },
+  { name: 'on-media-surface', variable: '--a63-on-media-surface' },
+  { name: 'on-media-strong', variable: '--a63-on-media-surface-strong' },
+  { name: 'on-media-border', variable: '--a63-on-media-border' },
+  { name: 'on-media-ring', variable: '--a63-on-media-ring' },
+  { name: 'on-media-veil', variable: '--a63-on-media-veil' },
+  { name: 'on-media-veil-strong', variable: '--a63-on-media-veil-strong' },
 ] as const
 
 export const SURFACE_STEPS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] as const
