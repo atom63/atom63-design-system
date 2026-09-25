@@ -19,7 +19,7 @@ pnpm dev
 
 - `src/site.ts`: the site title and tagline.
 - `src/pages`: the pages. `src/router.tsx` maps them to routes.
-- `src/content/blog`: posts in MDX. Add a file to publish a post.
+- `src/content`: the MDX content. Add a file to publish a post or page.
 - `src/theme.tsx`: mode and theme, applied through `Atom63Theme` and remembered per browser.
 - `src/styles.css`: Tailwind, the token stack and the component styles.
 

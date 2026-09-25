@@ -1,13 +1,14 @@
 /**
- * Proves the project starter works: generate an app, install it against
- * freshly packed design system tarballs, typecheck and build it, and hold its
- * source to the craft rules. With --shadcn it also adds a shadcn component
- * (the Tailwind + shadcn path the starter promises) and builds again.
+ * Proves the project starter works: for every kind, generate an app, install
+ * it against freshly packed design system tarballs, typecheck and build it,
+ * and hold its source to the craft rules. With --shadcn it also adds a shadcn
+ * component to the first kind's app (the Tailwind + shadcn path the starter
+ * promises) and builds again.
  *
  * Needs the packages built first (dist is packed). Needs the network for the
  * third-party dependencies.
  *
- * Usage: node scripts/design-system/check-starter.mjs [--shadcn] [--keep]
+ * Usage: node scripts/design-system/check-starter.mjs [--kind <kind>] [--shadcn] [--keep]
  */
 import { execFileSync } from 'node:child_process'
 import { mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
@@ -16,7 +17,7 @@ import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
-import { planProject, writeProject } from '../../packages/create/src/generate.mjs'
+import { kinds, planProject, writeProject } from '../../packages/create/src/generate.mjs'
 import { scanCss, scanSource } from './lib/craft-rules.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
@@ -28,10 +29,11 @@ const packages = {
 }
 const withShadcn = process.argv.includes('--shadcn')
 const keep = process.argv.includes('--keep')
+const kindFlag = process.argv.indexOf('--kind')
+const checkedKinds = kindFlag === -1 ? kinds : [process.argv[kindFlag + 1]]
 
 const work = mkdtempSync(path.join(tmpdir(), 'atom63-starter-'))
 const tarballs = path.join(work, 'tarballs')
-const app = path.join(work, 'app')
 
 const run = (command, args, cwd) => {
   process.stdout.write(`\n$ ${command} ${args.join(' ')}\n`)
@@ -59,57 +61,62 @@ try {
     return `file:${path.join(tarballs, file)}`
   }
 
-  const files = planProject({ name: 'starter-check', title: 'Starter check' })
-  writeProject(app, files)
+  for (const kind of checkedKinds) {
+    const app = path.join(work, `app-${kind}`)
+    const files = planProject({ name: `starter-check-${kind}`, kind, title: 'Starter check' })
+    writeProject(app, files)
 
-  // Point the app, and every package that depends on another, at the tarballs.
-  const manifestPath = path.join(app, 'package.json')
-  const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'))
-  const overrides = Object.fromEntries(Object.keys(packages).map(name => [name, tarballFor(name)]))
-  for (const name of Object.keys(packages)) manifest.dependencies[name] = overrides[name]
-  manifest.pnpm = { overrides }
-  writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`)
-
-  run('pnpm', ['install', '--ignore-workspace', '--no-frozen-lockfile'], app)
-  run('pnpm', ['typecheck'], app)
-  run('pnpm', ['build'], app)
-
-  const violations = []
-  for (const [relative, text] of files) {
-    if (!relative.startsWith('src/')) continue
-    const found = relative.endsWith('.css')
-      ? scanCss(text)
-      : /\.(tsx?|mdx)$/.test(relative)
-        ? scanSource(text)
-        : []
-    for (const violation of found)
-      violations.push(`${relative}:${violation.line} ${violation.rule} ${violation.match}`)
-  }
-  if (violations.length > 0) {
-    throw new Error(`The starter breaks the craft rules:\n  ${violations.join('\n  ')}`)
-  }
-  process.stdout.write('\nThe generated source passes the craft rules.\n')
-
-  if (withShadcn) {
-    run(
-      'pnpm',
-      [
-        'dlx',
-        'shadcn@latest',
-        'add',
-        'button',
-        '--yes',
-        '--overwrite',
-        '--path',
-        'src/components/ui',
-      ],
-      app
+    // Point the app, and every package that depends on another, at the tarballs.
+    const manifestPath = path.join(app, 'package.json')
+    const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'))
+    const overrides = Object.fromEntries(
+      Object.keys(packages).map(name => [name, tarballFor(name)])
     )
-    writeFileSync(
-      path.join(app, 'src/shadcn-check.tsx'),
-      "import { Button } from '@/components/ui/button'\n\nexport const ShadcnCheck = () => <Button>shadcn</Button>\n"
-    )
+    for (const name of Object.keys(packages)) manifest.dependencies[name] = overrides[name]
+    manifest.pnpm = { overrides }
+    writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`)
+
+    run('pnpm', ['install', '--ignore-workspace', '--no-frozen-lockfile'], app)
+    run('pnpm', ['typecheck'], app)
     run('pnpm', ['build'], app)
+
+    const violations = []
+    for (const [relative, text] of files) {
+      if (!relative.startsWith('src/')) continue
+      const found = relative.endsWith('.css')
+        ? scanCss(text)
+        : /\.(tsx?|mdx)$/.test(relative)
+          ? scanSource(text)
+          : []
+      for (const violation of found)
+        violations.push(`${relative}:${violation.line} ${violation.rule} ${violation.match}`)
+    }
+    if (violations.length > 0) {
+      throw new Error(`The ${kind} starter breaks the craft rules:\n  ${violations.join('\n  ')}`)
+    }
+    process.stdout.write(`\nThe ${kind} starter passes the craft rules.\n`)
+
+    if (withShadcn && kind === checkedKinds[0]) {
+      run(
+        'pnpm',
+        [
+          'dlx',
+          'shadcn@latest',
+          'add',
+          'button',
+          '--yes',
+          '--overwrite',
+          '--path',
+          'src/components/ui',
+        ],
+        app
+      )
+      writeFileSync(
+        path.join(app, 'src/shadcn-check.tsx'),
+        "import { Button } from '@/components/ui/button'\n\nexport const ShadcnCheck = () => <Button>shadcn</Button>\n"
+      )
+      run('pnpm', ['build'], app)
+    }
   }
 
   process.stdout.write('\nStarter check passed.\n')

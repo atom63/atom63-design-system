@@ -1,0 +1,36 @@
+---
+title: Writing pages
+description: Markdown, code, tables and design system blocks in a page.
+group: Guides
+order: 1
+---
+
+## Markdown
+
+Headings, lists, links and **emphasis** work as usual. Level two and three headings appear in the
+table of contents.
+
+## Code
+
+```tsx
+import { Button } from '@atom63/ui-react'
+
+export function SaveButton() {
+  return <Button>Save</Button>
+}
+```
+
+## Tables
+
+| Frontmatter   | Purpose                    |
+| ------------- | -------------------------- |
+| `title`       | The page heading           |
+| `description` | The line under the heading |
+| `group`       | The sidebar group          |
+| `order`       | The position in the group  |
+
+## Blocks
+
+<Callout type="success">
+  Blocks from `@atom63/mdx/blocks`, such as this callout, work in every page.
+</Callout>

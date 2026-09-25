@@ -70,6 +70,23 @@ describe('planProject', () => {
     assert.match(agents, /<!-- atom63:agents:start/)
   })
 
+  it('writes the docs kind over the same base', () => {
+    const docs = planProject({ name: 'my-docs', kind: 'docs', date: '2026-09-25' })
+    for (const file of [
+      'src/router.tsx',
+      'src/content/docs.ts',
+      'src/content/docs/introduction.mdx',
+      'src/components/docs-sidebar.tsx',
+      'src/pages/doc-page.tsx',
+      'src/theme.tsx',
+      'src/styles.css',
+    ]) {
+      assert.ok(docs.has(file), file)
+    }
+    assert.ok(!docs.has('src/content/posts.ts'))
+    assert.match(docs.get('src/pages/doc-page.tsx'), /DocsMDXContentProvider/)
+  })
+
   it('refuses an unknown kind', () => {
     assert.throws(() => planProject({ name: 'x', kind: 'shop' }), /Unknown kind "shop"/)
   })
