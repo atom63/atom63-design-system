@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "atom63": {
+      "command": "node",
+      "args": ["packages/cli/src/bin.mjs", "mcp"]
+    }
+  }
+}

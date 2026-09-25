@@ -12,7 +12,7 @@ Private while the interface settles. Status by step:
    `token`, `docsPage` and `rules`. Each returns `{ type, data }` or throws an `AtomError` with a
    stable `code`.
 2. **The `atom63` command.** See below.
-3. `atom63 mcp`, an MCP server over stdio.
+3. **`atom63 mcp`**, an MCP server over stdio. See below.
 4. The AGENTS.md snippet, generated from `src/rules.mjs`.
 
 ## Usage
@@ -35,6 +35,21 @@ is 0 for an answer, 1 for a failed query (for example an unknown component) and 
 command line. `manifest` lists every command, argument, flag, response type and error code.
 Error codes are append-only: once shipped, a code keeps its meaning. The command table in
 `src/commands.mjs` defines the CLI and the manifest, and it will define the MCP tools too.
+
+## MCP
+
+`atom63 mcp` serves the same commands as MCP tools over stdio, built with
+`@modelcontextprotocol/server` v2. Each tool has the command's name and a typed input schema, and
+it is marked read-only. The result carries the CLI's text as `content` and the `{ type, data }`
+envelope as `structuredContent`. A failed query is an `isError` result that holds the error
+`code`.
+
+This repo's `.mcp.json` registers the server for Claude Code; approve it once when Claude Code
+asks. In another project, add it by hand, for example:
+
+```bash
+claude mcp add atom63 -- node /path/to/atom63-design-system/packages/cli/src/bin.mjs mcp
+```
 
 ## Keeping the index current
 
