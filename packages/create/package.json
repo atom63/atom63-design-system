@@ -1,0 +1,21 @@
+{
+  "name": "@atom63/create",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Create a new project on the Atom63 design system: React, Tailwind CSS and MDX, wired to the tokens",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "create-atom63": "./src/index.mjs"
+  },
+  "files": [
+    "src",
+    "starter"
+  ],
+  "scripts": {
+    "test": "node --test \"src/**/*.test.mjs\""
+  },
+  "dependencies": {
+    "@atom63/cli": "workspace:*"
+  }
+}

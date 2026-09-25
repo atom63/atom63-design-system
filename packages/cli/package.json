@@ -9,7 +9,8 @@
     "atom63": "./src/bin.mjs"
   },
   "exports": {
-    ".": "./src/core.mjs"
+    ".": "./src/core.mjs",
+    "./agents-md": "./src/agents-md.mjs"
   },
   "files": [
     "generated",
