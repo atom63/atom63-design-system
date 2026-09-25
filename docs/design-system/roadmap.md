@@ -215,6 +215,7 @@ Astryx 是 Meta 开源的 React 设计系统（MIT，2026-06 公开 beta，0.6.x
 现有 103 处违规记在 `docs/design-system/audits/craft-baseline.json`：新增违规会让 CI 失败；修复后基线必须同步缩小。
 主要存量集中在：mdx 的 callout 配色（直接用 Tailwind 调色板，需要改用 DS 的状态 token）、视频弹窗、侧边栏等组件的物理方向写法，以及 Calendar 下拉框的 `:has(:focus)`。
 "禁用态不响应 hover" 静态扫描判断不可靠，改为之后用 Storybook 运行时测试来做。
+组件脚手架 `pnpm ds:new <name>` 已完成（Web 部分）：生成 contract、组件、recipe、story、测试和 changeset，插入所有登记表（导出、`recipes.css`、visual archetype、docs catalog），并重新生成 API 报告和审计文件。生成出来的组件直接能过 CI，只差 visual 基线。CI 里用 `--dry-run` 守住登记表的格式。iOS 部分（跨平台 contract、Swift 视图、演示目录）暂时只打印待办清单。
 
 **D 进度（2026-09-25）：** `@atom63/mdx` 已从 atom63-vite 迁入 `packages/mdx`（除 `craft-demos` 外全部迁入），docs 站改为依赖它，`apps/docs/src/mdx-kit` 副本已删除。
 包暂时标为 `private`：npm 要求包先存在才能配置 trusted publishing，所以首次发布需要你在本机用自己的账号手动发一次，之后再配置 trusted publisher、加入 `publish-beta.mjs` 的包列表和 API / 包正确性检查。

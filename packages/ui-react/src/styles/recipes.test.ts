@@ -319,6 +319,22 @@ describe('recipes.css cascade layering', () => {
     )
   })
 
+  it('publishes every component recipe as a ./recipes/<name>.css subpath', () => {
+    const { exports } = JSON.parse(
+      readFileSync(join(stylesDir, '..', '..', 'package.json'), 'utf8')
+    ) as {
+      exports: Record<string, unknown>
+    }
+    const targets = new Set(Object.values(exports).filter(target => typeof target === 'string'))
+    const recipeDirs = readdirSync(componentsDir, { withFileTypes: true })
+      .filter(entry => entry.isDirectory())
+      .map(entry => entry.name)
+      .filter(name => existsSync(join(componentsDir, name, `${name}.css`)))
+
+    const missing = recipeDirs.filter(name => !targets.has(`./src/components/${name}/${name}.css`))
+    expect(missing, `component recipes without a package export: ${missing.join(', ')}`).toEqual([])
+  })
+
   it('keeps the scoped reset in @layer base (so recipes still override it)', () => {
     expect(resetCss).toMatch(/@layer\s+base\b/)
   })
