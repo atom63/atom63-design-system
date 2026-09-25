@@ -1,5 +1,4 @@
-// SVG data constants for Flux Lab logo
-// TODO: Replace with actual SVG paths and viewBoxes
+// Path data for the ATOM63 symbol and wordmark, drawn in currentColor.
 
 export interface SvgData {
   path: string

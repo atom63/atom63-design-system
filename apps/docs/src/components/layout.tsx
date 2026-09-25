@@ -1,4 +1,4 @@
-import { AppLogo } from '../brand'
+import { AppLogo } from '@atom63/brand'
 import { Button, ScrollArea, SidebarInset, SidebarProvider, useSidebar } from '@atom63/ui-react'
 import { Container } from '@atom63/ui-react/layout'
 import { Link } from '@tanstack/react-router'

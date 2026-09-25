@@ -18,7 +18,7 @@ import { compareToBaseline, countViolations, scanCss, scanSource } from './lib/c
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const baselinePath = path.join(root, 'docs/design-system/audits/craft-baseline.json')
-const sourceRoots = ['packages/ui-react/src', 'packages/mdx/src']
+const sourceRoots = ['packages/ui-react/src', 'packages/mdx/src', 'packages/brand/src']
 // Generated from the recipes, so its literals are the recipes' literals.
 const generated = new Set(['packages/ui-react/src/styles/utilities.css'])
 

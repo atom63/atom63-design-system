@@ -1,0 +1,73 @@
+{
+  "name": "@atom63/brand",
+  "version": "0.3.0-beta.0",
+  "description": "The ATOM63 logo components: symbol, wordmark and lockups drawn in currentColor",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atom63/atom63-design-system.git",
+    "directory": "packages/brand"
+  },
+  "homepage": "https://github.com/atom63/atom63-design-system/tree/main/packages/brand#readme",
+  "bugs": {
+    "url": "https://github.com/atom63/atom63-design-system/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "atom63",
+    "design-system",
+    "logo",
+    "brand",
+    "react"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "@atom63/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --cache --max-warnings 0",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "peerDependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@atom63/eslint-config": "workspace:*",
+    "@atom63/tsconfig": "workspace:*",
+    "@storybook/react-vite": "^10.6.0",
+    "@testing-library/jest-dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@types/node": "^26.3.0",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "axe-core": "^4.12.1",
+    "eslint": "10.7.0",
+    "jsdom": "catalog:",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "storybook": "^10.6.0",
+    "tsup": "^8.3.5",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "vitest-axe": "^0.1.0"
+  }
+}
