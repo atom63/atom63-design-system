@@ -71,9 +71,18 @@ export const commands = [
     summary:
       'The AGENTS.md section for a project that builds UI with Atom63: how to query the system and the rules, wrapped in markers so it can be kept in sync.',
     args: [],
-    flags: [],
+    flags: [
+      {
+        name: 'variant',
+        type: 'string',
+        choices: ['cli', 'docs'],
+        default: 'cli',
+        description:
+          'cli: point agents at atom63 and its MCP server; docs: at the published docs, for projects without the CLI.',
+      },
+    ],
     returns: ['agents.md'],
-    run: () => ({ type: 'agents.md', data: { markdown: agentsBlock() } }),
+    run: (_, { variant }) => ({ type: 'agents.md', data: { markdown: agentsBlock({ variant }) } }),
   },
   {
     name: 'manifest',

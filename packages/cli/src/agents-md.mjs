@@ -11,7 +11,31 @@ export const markers = {
   end: '<!-- atom63:agents:end -->',
 }
 
-export function agentsSection() {
+const cliQueries = [
+  'Ask the design system before writing UI. The `atom63` CLI and its MCP server (`atom63 mcp`) answer from the same generated index as the packages:',
+  '',
+  '- `atom63 search <words>`: find a component, docs page, story example or token.',
+  '- `atom63 component <slug>`: the import line, contract (axes, defaults, slots, states, web and iOS), related components and examples.',
+  '- `atom63 example <slug> [story]`: a known-good usage sample to start from.',
+  '- `atom63 token <name or words>`: a token with its values per theme and mode, Figma path and Swift name.',
+  '- `atom63 rules`: the rules below, with their reasons.',
+  '',
+  'Add `--json` for a typed `{ type, data }` envelope. `atom63 manifest` lists every command and error code.',
+]
+
+const docsQueries = [
+  'Ask the design system before writing UI. Its documentation is published for agents:',
+  '',
+  '- `https://system.atom63.io/llms.txt` lists every page with a one-line summary.',
+  '- Every page has a Markdown twin at its path plus `.md`, for example `https://system.atom63.io/components/component-dialog.md`. A component page gives the import line, the contract (axes, defaults, slots, states, web and iOS) and related components.',
+  '- Start from a component that exists before writing markup of your own.',
+]
+
+/**
+ * `variant: 'cli'` points agents at the `atom63` CLI and MCP server; `'docs'`
+ * points them at the published docs, for projects that cannot run the CLI yet.
+ */
+export function agentsSection({ variant = 'cli' } = {}) {
   const ruleLines = rules.map(
     (rule, position) =>
       `${position + 1}. ${rule.rule} ${rule.why}${rule.check ? ` In the design system repo, \`check:craft\` enforces it as \`${rule.check}\`.` : ''}`
@@ -19,15 +43,7 @@ export function agentsSection() {
   return [
     '## Building UI with Atom63',
     '',
-    'Ask the design system before writing UI. The `atom63` CLI and its MCP server (`atom63 mcp`) answer from the same generated index as the packages:',
-    '',
-    '- `atom63 search <words>`: find a component, docs page, story example or token.',
-    '- `atom63 component <slug>`: the import line, contract (axes, defaults, slots, states, web and iOS), related components and examples.',
-    '- `atom63 example <slug> [story]`: a known-good usage sample to start from.',
-    '- `atom63 token <name or words>`: a token with its values per theme and mode, Figma path and Swift name.',
-    '- `atom63 rules`: the rules below, with their reasons.',
-    '',
-    'Add `--json` for a typed `{ type, data }` envelope. `atom63 manifest` lists every command and error code.',
+    ...(variant === 'docs' ? docsQueries : cliQueries),
     '',
     '### Rules',
     '',
@@ -36,8 +52,8 @@ export function agentsSection() {
 }
 
 /** The section wrapped in markers, ready to paste into or sync with an AGENTS.md. */
-export function agentsBlock() {
-  return `${markers.start}\n\n${agentsSection()}\n\n${markers.end}`
+export function agentsBlock(options) {
+  return `${markers.start}\n\n${agentsSection(options)}\n\n${markers.end}`
 }
 
 /** Replace the marked block in an AGENTS.md; throws when the markers are missing. */

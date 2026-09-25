@@ -15,6 +15,13 @@ describe('AGENTS.md section', () => {
     assert.ok(block.startsWith(markers.start) && block.endsWith(markers.end))
   })
 
+  it('points projects without the CLI at the published docs', () => {
+    const block = agentsBlock({ variant: 'docs' })
+    assert.match(block, /https:\/\/system\.atom63\.io\/llms\.txt/)
+    assert.doesNotMatch(block, /atom63 search/)
+    for (const rule of rules) assert.ok(block.includes(rule.rule), rule.id)
+  })
+
   it('replaces only the marked block', () => {
     const before = `# Guide\n\nKeep me.\n\n${markers.start}\nold\n${markers.end}\n\nAnd me.\n`
     const after = syncAgentsBlock(before)

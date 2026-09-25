@@ -1,0 +1,29 @@
+---
+title: Writing with MDX
+description: Markdown, code blocks and design system components in one file.
+date: '{{date}}'
+---
+
+MDX is Markdown that can hold components. Headings, lists, links and **emphasis** work as usual:
+
+> A quote picks up the blockquote style from `@atom63/mdx`.
+
+Code blocks are highlighted:
+
+```tsx
+import { Button } from '@atom63/ui-react'
+
+export function SaveButton() {
+  return <Button>Save</Button>
+}
+```
+
+<Callout type="success">
+  Tables, task lists and footnotes work too, through `remark-gfm`.
+</Callout>
+
+| Layer     | Where it lives          |
+| --------- | ----------------------- |
+| Tokens    | `@atom63/styles`        |
+| Contracts | `@atom63/ui-foundation` |
+| React     | `@atom63/ui-react`      |

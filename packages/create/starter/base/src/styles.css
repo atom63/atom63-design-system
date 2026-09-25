@@ -1,0 +1,32 @@
+@import 'tailwindcss';
+
+/* The Atom63 token stack. --a63-* tokens are the source of truth; the Tailwind
+   theme maps utilities onto them (bg-background, text-muted-foreground, …), and
+   the shadcn bridge gives components added with `npx shadcn add` the same
+   colors, radius and modes. */
+@import '@atom63/styles';
+@import '@atom63/styles/tailwind';
+@import '@atom63/styles/compat/shadcn';
+
+/* Component recipes and the MDX prose styles. */
+@import '@atom63/ui-react/reset.css';
+@import '@atom63/ui-react/recipes.css';
+@import '@atom63/mdx/styles/a63.css';
+
+/* Generate the utilities the Atom63 components use. */
+@source '../node_modules/@atom63/ui-react/dist';
+
+/* Atom63Theme puts the mode on a class, so `dark:` and `light:` utilities
+   (including those in shadcn components) follow it, not the OS setting. */
+@custom-variant light (&:not(.dark *));
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+    background-color: var(--a63-surface-page);
+    color: var(--a63-text-primary);
+  }
+}

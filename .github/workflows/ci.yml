@@ -170,6 +170,13 @@ jobs:
       - name: Test MDX
         run: pnpm --filter @atom63/mdx test
 
+      # Generates an app with @atom63/create, installs it against the packed
+      # packages, builds it, then adds a shadcn component and builds again.
+      - name: Check the project starter
+        run: |
+          pnpm --filter @atom63/create test
+          pnpm check:starter --shadcn
+
       - name: Check formatting
         run: pnpm format:check
 
