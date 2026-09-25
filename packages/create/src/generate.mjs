@@ -14,7 +14,7 @@ const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 const repoRoot = path.resolve(packageRoot, '../..')
 const starterRoot = path.join(packageRoot, 'starter')
 
-export const kinds = ['site']
+export const kinds = ['site', 'docs']
 
 const atom63Packages = {
   '@atom63/mdx': 'packages/mdx',

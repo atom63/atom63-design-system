@@ -160,7 +160,8 @@ coding agents.
    `build`. Check it in the browser in both modes and all four themes.
 2. **`check:starter` in CI** (S5, S8). Landed with step 1, because it is how step 1 was verified.
    *Verify:* the check fails when the starter imports something the packages do not export.
-3. **The `docs` kind.**
+3. **The `docs` kind.** Done: a grouped sidebar from frontmatter, the docs typography, a table of
+   contents, and previous and next links. A collapsible navigation for phones is a later refinement.
 
 ## Out of scope
 

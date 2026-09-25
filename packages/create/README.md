@@ -27,8 +27,10 @@ The generated app follows the [quickstart](../../docs/design-system/quickstart.m
 | Kind | Pages |
 | --- | --- |
 | `site` (default) | A landing page (hero, features, latest posts, sign-up) and an MDX blog |
+| `docs` | MDX documentation: a sidebar grouped from the pages' frontmatter, the docs typography, an "On this page" table of contents, and previous and next links |
 
-`docs` comes next. Each kind is a folder in `starter/` layered over `starter/base`.
+Each kind is a folder in `starter/`, layered over `starter/base`. Choose one with `--kind`, for
+example `pnpm create:app my-docs --kind docs`.
 
 ## How it works
 
@@ -41,9 +43,9 @@ takes the range the repo already uses. Packages no workspace package uses are li
 `pnpm check:starter` proves the starter works, and CI runs it:
 
 1. pack the design system packages;
-2. generate an app and install it against the tarballs;
+2. generate an app of every kind and install each against the tarballs;
 3. run `typecheck` and `build`;
 4. hold the generated source to the craft rules;
-5. with `--shadcn`, add a shadcn button and build again.
+5. with `--shadcn`, add a shadcn button to the first kind's app and build again.
 
 The generated app installs from npm only after `@atom63/mdx` has been published.
