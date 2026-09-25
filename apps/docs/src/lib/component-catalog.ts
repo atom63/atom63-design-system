@@ -115,7 +115,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['item', 'frame', 'preview-card'],
     summary: 'Card composes media, metadata, actions, and content into a reusable surface.',
     usage:
-      'Do not make the whole card clickable when it also contains independent interactive controls.',
+      'Put CardTitle and CardDescription inside CardContent. Unlike shadcn, CardHeader is a single row for a CardLabel and a CardAction, so a title placed there is squeezed and truncated. Do not make the whole card clickable when it also contains independent interactive controls.',
     usageExports: ['Card', 'CardHeader', 'CardTitle', 'CardContent'],
   },
   carousel: {
