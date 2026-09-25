@@ -1,22 +1,6 @@
 {
   "focus-visible | packages/ui-react/src/components/calendar/calendar.css | .a63-Calendar-dropdown-root:has(:focus)": 1,
   "raw-color | packages/ui-react/src/components/scrollable-list/scrollable-list.css | box-shadow: rgb(": 3,
-  "raw-color | packages/ui-react/src/media/media-lightbox/media-lightbox.css | --a63-lightbox-on-media-border: rgb(": 1,
-  "raw-color | packages/ui-react/src/media/media-lightbox/media-lightbox.css | --a63-lightbox-on-media-fg: #fff": 1,
-  "raw-color | packages/ui-react/src/media/media-lightbox/media-lightbox.css | --a63-lightbox-on-media-ring: rgb(": 1,
-  "raw-color | packages/ui-react/src/media/media-lightbox/media-lightbox.css | --a63-lightbox-on-media-surface-hover: rgb(": 1,
-  "raw-color | packages/ui-react/src/media/media-lightbox/media-lightbox.css | --a63-lightbox-on-media-surface: rgb(": 1,
-  "raw-color | packages/ui-react/src/media/media-lightbox/parts/content.tsx | bg-black": 1,
-  "raw-color | packages/ui-react/src/media/video-dialog.tsx | bg-black": 1,
-  "raw-color | packages/ui-react/src/media/video-dialog.tsx | bg-black/70": 1,
-  "raw-color | packages/ui-react/src/media/video-modal.tsx | bg-black/10": 1,
-  "raw-color | packages/ui-react/src/media/video-modal.tsx | bg-black/20": 1,
-  "raw-color | packages/ui-react/src/media/video-modal.tsx | bg-black/70": 1,
-  "raw-color | packages/ui-react/src/media/video-modal.tsx | bg-gray-200": 1,
-  "raw-color | packages/ui-react/src/media/video-modal.tsx | from-white/10": 1,
-  "raw-color | packages/ui-react/src/media/video-modal.tsx | text-gray-500": 1,
-  "raw-color | packages/ui-react/src/media/video-modal.tsx | text-white": 1,
-  "raw-color | packages/ui-react/src/media/video-modal.tsx | to-white/5": 1,
   "raw-color | packages/ui-react/src/theme/controls/swatch-token-control.tsx | dark:ring-white/15": 1,
   "raw-color | packages/ui-react/src/theme/controls/swatch-token-control.tsx | ring-black/10": 1
 }

@@ -157,7 +157,7 @@ of bug; run it after touching the token layers.
 
 ## Canonical `--a63-*` semantic tokens
 
-Surfaces, text, borders, danger/status, and scrim are defined in
+Surfaces, text, borders, danger/status, scrim and media colors are defined in
 `tokens/semantics.resolver.json`, one resolver context per mode, generated into
 `tokens/semantics.css` (`:root, .light` + `.dark` overrides). Primary action and
 focus ring are brand-derived in `tokens/brand-action.resolver.json`, generated into
@@ -173,6 +173,8 @@ ramp). Together these are the single source of semantic truth.
 | Status | `--a63-status-info`, `--a63-status-success`, `--a63-status-warning` (+ `-foreground`) | `semantics.css` |
 | Focus | `--a63-focus-ring` | `brand.css` |
 | Scrim | `--a63-scrim` | `semantics.css` |
+| Media | `--a63-media-stage`, `--a63-media-scrim` (behind full-screen photos and video, black in every theme) | `semantics.css` |
+| On media | `--a63-on-media-foreground`, `--a63-on-media-surface` (+ `-strong`), `--a63-on-media-border`, `--a63-on-media-ring`, `--a63-on-media-veil` (+ `-strong`) — controls over photos and video, whose colors are unknowable, so these hold in every theme | `semantics.css` |
 
 Contract tokens (`--a63-control-*`, `--a63-field-*`, `--a63-overlay-*`,
 `--a63-badge-*`, `--a63-space-*`, `--a63-radius-*`, `--a63-motion-*`,

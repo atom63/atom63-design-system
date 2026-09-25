@@ -42,6 +42,16 @@
   --a63-status-warning-foreground: white;
 
   --a63-scrim: color-mix(in oklch, black 40%, transparent);
+  /* Media and on-media colors hold in every theme; same values as semantics.css. */
+  --a63-media-stage: rgb(0 0 0);
+  --a63-media-scrim: rgb(0 0 0 / 0.7);
+  --a63-on-media-foreground: rgb(255 255 255);
+  --a63-on-media-surface: rgb(0 0 0 / 0.6);
+  --a63-on-media-surface-strong: rgb(0 0 0 / 0.7);
+  --a63-on-media-border: rgb(255 255 255 / 0.2);
+  --a63-on-media-ring: rgb(255 255 255 / 0.9);
+  --a63-on-media-veil: rgb(0 0 0 / 0.1);
+  --a63-on-media-veil-strong: rgb(0 0 0 / 0.2);
   --a63-focus-ring: var(--ring);
 
   /* ── Tactile archetype tokens → FLAT (shadcn has no bevel/gloss system) ── */

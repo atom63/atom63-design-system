@@ -22,6 +22,55 @@
                 "io.atom63.derive": "color-mix(in oklch, black 40%, transparent)"
               },
               "$description": "Scrim — the modal/drawer/sheet backdrop veil behind overlays."
+            },
+            "media": {
+              "stage": {
+                "$type": "color",
+                "$value": "{color.black.100}",
+                "$description": "Media stage — behind full-screen photos and video: black in every theme, so letterboxing matches the picture."
+              },
+              "scrim": {
+                "$type": "color",
+                "$value": "{color.black.70}",
+                "$description": "Media scrim — the dim behind a video dialog; heavier than --a63-scrim because the video is the only thing on screen."
+              }
+            },
+            "on-media": {
+              "foreground": {
+                "$type": "color",
+                "$value": "{color.white.100}",
+                "$description": "On media — icons and text on controls that float over photos and video, whose colors are unknowable."
+              },
+              "surface": {
+                "$type": "color",
+                "$value": "{color.black.60}",
+                "$description": "On media — the backplate of a floating control, dark enough that its foreground reads over any picture."
+              },
+              "surface-strong": {
+                "$type": "color",
+                "$value": "{color.black.70}",
+                "$description": "On media — the backplate at rest for a primary control (play) and on hover for the others."
+              },
+              "border": {
+                "$type": "color",
+                "$value": "{color.white.20}",
+                "$description": "On media — the hairline that separates a floating control from a dark picture."
+              },
+              "ring": {
+                "$type": "color",
+                "$value": "{color.white.90}",
+                "$description": "On media — the focus ring for controls over media."
+              },
+              "veil": {
+                "$type": "color",
+                "$value": "{color.black.10}",
+                "$description": "On media — a light veil over a poster while it waits."
+              },
+              "veil-strong": {
+                "$type": "color",
+                "$value": "{color.black.20}",
+                "$description": "On media — the veil over a poster while a control on it is shown."
+              }
             }
           }
         }

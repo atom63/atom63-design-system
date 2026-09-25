@@ -46,14 +46,14 @@ const IconButton = ({
     <button
       aria-label={ariaLabel}
       className={cn(
-        'rounded-full bg-black/70 p-2 transition-transform duration-300 group-hover:scale-110',
+        'rounded-full bg-[var(--a63-on-media-surface-strong)] p-2 transition-transform duration-300 group-hover:scale-110',
         className
       )}
       type="button"
       {...props}
     >
-      <div className="rounded-full bg-gradient-to-b from-white/10 to-white/5 p-3 transition-transform duration-300 group-hover:scale-110">
-        <div className="flex h-8 w-8 items-center justify-center text-white">
+      <div className="rounded-full bg-gradient-to-b from-[color-mix(in_oklch,var(--a63-on-media-foreground)_10%,transparent)] to-[color-mix(in_oklch,var(--a63-on-media-foreground)_5%,transparent)] p-3 transition-transform duration-300 group-hover:scale-110">
+        <div className="flex h-8 w-8 items-center justify-center text-[var(--a63-on-media-foreground)]">
           {/* craft-allow: physical-properties — optical centering for a play glyph that never mirrors */}
           {icon === 'play' && <Play className="ml-1 h-8 w-8" />}
           {icon === 'maximize' && <Maximize className="h-8 w-8" />}
@@ -243,7 +243,7 @@ export const VideoModal = ({
     }
 
     return (
-      <div className="flex h-full w-full items-center justify-center bg-gray-200 text-gray-500">
+      <div className="flex h-full w-full items-center justify-center bg-[var(--a63-surface-muted)] text-[var(--a63-text-secondary)]">
         No video available
       </div>
     )
@@ -265,7 +265,7 @@ export const VideoModal = ({
             aria-label={`Watch full ${title.toLowerCase()}`}
             className={cn(
               'absolute inset-0 z-10 flex items-center justify-center',
-              'bg-black/20 transition-opacity duration-300',
+              'bg-[var(--a63-on-media-veil-strong)] transition-opacity duration-300',
               getButtonOpacity()
             )}
             onKeyDown={handleKeyDown}
@@ -282,7 +282,7 @@ export const VideoModal = ({
 
       {/* Loading indicator */}
       {isPlaying && videoRef.current?.readyState === 0 && (
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/10">
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-[var(--a63-on-media-veil)]">
           <LoaderCircle className="size-6 animate-spin" />
         </div>
       )}

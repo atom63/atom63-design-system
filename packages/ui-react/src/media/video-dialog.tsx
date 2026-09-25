@@ -157,7 +157,7 @@ export const VideoDialog = ({
           sat under the case-study detail chrome and made the player unreachable.
         */}
         <Dialog.Backdrop
-          className="fixed inset-0 z-(--z-layer-overlay) bg-black/70 backdrop-blur-sm transition-opacity duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0"
+          className="fixed inset-0 z-(--z-layer-overlay) bg-[var(--a63-media-scrim)] backdrop-blur-sm transition-opacity duration-200 data-ending-style:opacity-0 data-starting-style:opacity-0"
           data-media-overlay="video"
         />
         <Dialog.Viewport
@@ -166,7 +166,7 @@ export const VideoDialog = ({
         >
           <Dialog.Popup
             className={cn(
-              'relative w-full max-w-7xl origin-center overflow-hidden rounded-2xl bg-black transition-[opacity,scale] duration-200 outline-none data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0',
+              'relative w-full max-w-7xl origin-center overflow-hidden rounded-2xl bg-[var(--a63-media-stage)] transition-[opacity,scale] duration-200 outline-none data-ending-style:scale-95 data-ending-style:opacity-0 data-starting-style:scale-95 data-starting-style:opacity-0',
               className
             )}
             data-media-overlay="video"
