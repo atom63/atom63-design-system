@@ -15,13 +15,13 @@ export function Atom63Logo({
   ...props
 }: Atom63LogoProps) {
   const width = Math.round((height * 40) / 48)
-  const svgClassName = className ? `inline-block ${className}` : 'inline-block'
 
   return (
     <svg
-      className={svgClassName}
+      className={className}
       fill="none"
       height={height}
+      role="img"
       viewBox="0 0 40 48"
       width={width}
       xmlns="http://www.w3.org/2000/svg"

@@ -170,6 +170,11 @@ jobs:
       - name: Test MDX
         run: pnpm --filter @atom63/mdx test
 
+      - name: Typecheck and test brand
+        run: |
+          pnpm --filter @atom63/brand typecheck
+          pnpm --filter @atom63/brand test
+
       # Generates an app with @atom63/create, installs it against the packed
       # packages, builds it, then adds a shadcn component and builds again.
       - name: Check the project starter
@@ -186,6 +191,7 @@ jobs:
           pnpm --filter @atom63/ui-foundation lint
           pnpm --filter @atom63/ui-react lint
           pnpm --filter @atom63/mdx lint
+          pnpm --filter @atom63/brand lint
 
       # A pull request that changes a published package needs a changeset. One
       # that ships nothing to npm (tests, tooling, dev dependencies) adds an

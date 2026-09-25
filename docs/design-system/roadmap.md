@@ -208,7 +208,7 @@ Astryx 是 Meta 开源的 React 设计系统（MIT，2026-06 公开 beta，0.6.x
 | A. 正确性（近期、小） | Swift 颜色改从语义 token 生成；新增 Web / iOS 值级别一致性检查 | 修复已经存在的漂移 | 已完成（#24） |
 | B. 唯一源头（最大的一步） | 语义、品牌、contract、主题迁入 DTCG + resolver；公式写成派生规则；主题进入 Figma mode；打通 Figma 回写 | 消除黑盒，实现 Figma 1:1 | 已完成：B1–B7（#25–#32）、B8a（#45）、B8b（响应式字号） |
 | C. 流水线 | 脚手架、由 contract 生成文档、MCP / CLI、craft lint、模板库 | 流程化产出 | 进行中：craft lint 已上线（见下方 C 进度） |
-| D. pattern 迁入 | brand logo、icons 清理、mdx 通用部分、inform、agent runtime、widgets foundation | 完成分离 | 进行中：mdx 已迁入 `packages/mdx`，docs 站改用它（见下方 D 进度） |
+| D. pattern 迁入 | brand logo、icons 清理、mdx 通用部分、inform、agent runtime、widgets foundation | 完成分离 | 进行中：mdx、brand logo 已迁入（见下方 D 进度） |
 | E. 质量标杆 | a11y 规格合约、vibe tests、iOS 截图测试 | 把控 craft 与 taste | 未开始 |
 
 **C 进度（2026-09-25）：** craft lint 第一版（`pnpm check:craft`，已接入 CI）检查 ui-react 和 mdx 源码中的三条规则：原始颜色值（`raw-color`）、物理方向写法（`physical-properties`）、不经过 `:focus-visible` 的焦点样式（`focus-visible`）。
@@ -225,6 +225,8 @@ agent 接口已完成（见 `docs/design-system/agent-interface-plan.md`）：`@
 包暂时标为 `private`：npm 要求包先存在才能配置 trusted publishing，所以首次发布需要你在本机用自己的账号手动发一次，之后再配置 trusted publisher、加入 `publish-beta.mjs` 的包列表和 API / 包正确性检查。
 atom63-vite 一侧（改用 npm 上的 `@atom63/mdx`，`craft-demos` 移到 atom63.io，删除自己的 `packages/mdx`）等首次发布后再做。
 两套 lightbox 已合并：`FigureLightboxHost` 保留原有的 trigger 与 API，内部改用 ui-react 的 `MediaLightbox`，mdx 不再依赖 photoswipe。
+mdx 已完成首次发布并加入自动发布（#69），atom63-vite 改用 npm 上的 `@atom63/mdx`（atom63-vite #427）。
+brand 的 logo 组件已迁入 `packages/brand`（`@atom63/brand`：`AppLogo`、`Atom63Logo` 和路径数据），去掉了对使用方 Tailwind 的依赖，着色改用 `--a63-action-primary`；docs 站删除了自己的副本。SEO 数据仍留在 atom63-vite。首次发布需要你手动发一次，之后再加入自动发布列表，atom63-vite 随后切换。
 
 A 可以马上开始。B 需要先定下 D1；D 和 C 可以部分并行。（2026-09-25 更新：token manifest 的 1669 条中，1603 条由 DTCG 生成；其余 66 条是 DTCG 无法表达类型的 CSS 原生值，放在 `*.native.css` 中，每条都在 `native-values.json` 里写明原因；没有其他手写 token。）
 
