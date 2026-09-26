@@ -1,7 +1,7 @@
 {
-  "name": "ATOM63 (You Zhang)",
+  "name": "ATOM63 Design System",
   "short_name": "ATOM63",
-  "description": "Hi, I'm You Zhang — a Motion Designer and Design Engineer blending storytelling with systems thinking.",
+  "description": "Tokens, components, and patterns for building expressive digital interfaces.",
   "id": "/",
   "start_url": "/",
   "scope": "/",

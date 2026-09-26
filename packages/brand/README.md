@@ -1,6 +1,11 @@
 # @atom63/brand
 
-The ATOM63 logo as React components. Every mark is an inline SVG drawn in `currentColor`, so it
+The ATOM63 logo as React components, for this repository's docs site and Storybook. The package
+is private and is not published to npm: the logo is not part of the design system's public
+surface. The ATOM63 name and logo are not covered by the repository's MIT license (see
+[LICENSE](../../LICENSE)).
+
+Every mark is an inline SVG drawn in `currentColor`, so it
 takes the color of the text around it; `colored` paints the symbol with `--a63-action-primary`,
 which follows the active brand and mode.
 

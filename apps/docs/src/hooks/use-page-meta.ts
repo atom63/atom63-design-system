@@ -1,8 +1,7 @@
-import { createMeta, type PageMetaOverrides } from '../brand/seo'
+import { createMeta, type PageMetaOverrides } from '../lib/site-meta'
 import { useEffect } from 'react'
 
-const ENDPOINT_ID = 'design-system' as const
-const baseMeta = createMeta(ENDPOINT_ID)
+const baseMeta = createMeta()
 
 function updateMetaTag(selector: string, content: string) {
   let el = document.querySelector(selector) as HTMLMetaElement
@@ -31,8 +30,6 @@ function applyMeta(meta: ReturnType<typeof createMeta>) {
   updateMetaTag('meta[property="og:image"]', meta.openGraph.image)
   updateMetaTag('meta[property="og:url"]', meta.openGraph.url)
   updateMetaTag('meta[name="twitter:card"]', meta.twitter.card)
-  updateMetaTag('meta[name="twitter:site"]', meta.twitter.site)
-  updateMetaTag('meta[name="twitter:creator"]', meta.twitter.creator)
   updateMetaTag('meta[name="twitter:title"]', meta.twitter.title)
   updateMetaTag('meta[name="twitter:description"]', meta.twitter.description)
   updateMetaTag('meta[name="twitter:image"]', meta.twitter.image)
@@ -48,7 +45,7 @@ function applyMeta(meta: ReturnType<typeof createMeta>) {
 
 export function usePageMeta(overrides?: PageMetaOverrides) {
   useEffect(() => {
-    const meta = overrides ? createMeta(ENDPOINT_ID, overrides) : baseMeta
+    const meta = overrides ? createMeta(overrides) : baseMeta
     applyMeta(meta)
     return () => {
       document.title = baseMeta.title
