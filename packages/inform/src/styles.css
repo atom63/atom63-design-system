@@ -1,0 +1,17 @@
+/*
+ * @atom63/inform styles: the `.a63-Inform*` classes the surfaces render.
+ *
+ * Load it after @atom63/styles and the @atom63/ui-react recipes (the dialog and
+ * the action buttons are ui-react components):
+ *
+ *   @import '@atom63/styles';
+ *   @import '@atom63/ui-react/recipes.css';
+ *   @import '@atom63/inform/styles.css';
+ *
+ * It needs no Tailwind: every value reads an --a63-* token.
+ */
+@import './surfaces/inform-parts.css' layer(components);
+@import './surfaces/inform-banner.css' layer(components);
+@import './surfaces/inform-corner-flyout.css' layer(components);
+@import './surfaces/inform-dialog.css' layer(components);
+@import './surfaces/inform-spotlight.css' layer(components);

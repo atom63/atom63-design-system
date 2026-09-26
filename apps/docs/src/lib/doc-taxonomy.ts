@@ -34,7 +34,7 @@ export const SECTION_ORDER: Partial<Record<PageSection, string[]>> = {
     'foundation-motion',
     'foundation-interaction-states',
   ],
-  pattern: ['pattern-layout', 'pattern-section-header', 'pattern-local-layout'],
+  pattern: ['pattern-layout', 'pattern-section-header', 'pattern-local-layout', 'pattern-inform'],
   theme: ['theme-overview', 'theme-system'],
 }
 

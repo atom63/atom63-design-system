@@ -1,0 +1,176 @@
+/*
+ * Inform parts — the pieces every surface shares: the line-sized gutter slots,
+ * the dismiss control, the text block, the action strip, media and severity.
+ *
+ * Every value reads an --a63-* token, so the surfaces follow theme, brand,
+ * mode and density like the rest of the system. No consumer Tailwind needed.
+ */
+
+/*
+ * Gutter slot: exactly one line box tall. Laid out from the top of the row, its
+ * optical centre coincides with the first line of text beside it, with no
+ * per-surface offset. `1lh` resolves against the slot's own line-height, so
+ * the slot carries the text's typography instead of inheriting it.
+ */
+.a63-Inform-slot {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  inline-size: 1lh;
+  block-size: 1lh;
+  font-size: var(--typography-sm-font-size);
+  line-height: 1.375;
+}
+
+.a63-InformIconSlot svg {
+  inline-size: var(--a63-space-4);
+  block-size: var(--a63-space-4);
+}
+
+/* ── Dismiss control ───────────────────────────────────────────────────── */
+.a63-InformDismissButton {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--a63-control-radius, var(--radius-md));
+  background: transparent;
+  color: var(--a63-text-secondary);
+  cursor: pointer;
+  transition: color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+/*
+ * The box stays one line tall for alignment, but an interactive slot still owes
+ * WCAG 2.2 (2.5.8) a 24px target: an invisible expansion of exactly
+ * (24px - 1lh) / 2 beyond every edge, which costs no layout.
+ */
+.a63-InformDismissButton::after {
+  position: absolute;
+  inset: calc((1lh - 1.5rem) / 2);
+  content: '';
+}
+
+@media (hover: hover) {
+  .a63-InformDismissButton:hover {
+    color: var(--a63-text-primary);
+  }
+}
+
+.a63-InformDismissButton:focus-visible {
+  outline: 2px solid var(--a63-focus-ring);
+  outline-offset: 2px;
+}
+
+/* ── Row and text block ────────────────────────────────────────────────── */
+.a63-Inform-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--a63-space-3);
+}
+
+/*
+ * Title and body carry no margins of their own, so without the gap their line
+ * boxes touch and only the leading separates them.
+ */
+.a63-Inform-content {
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  gap: var(--a63-space-1);
+  min-inline-size: 0;
+  font-size: var(--typography-sm-font-size);
+  line-height: 1.375;
+}
+
+.a63-Inform-title {
+  margin: 0;
+  font-weight: var(--font-weight-medium);
+}
+
+.a63-Inform-body {
+  margin: 0;
+  color: var(--a63-text-secondary);
+  text-wrap: pretty;
+}
+
+/* ── Actions ───────────────────────────────────────────────────────────── */
+.a63-InformActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--a63-space-2);
+}
+
+/* ── Media ─────────────────────────────────────────────────────────────── */
+
+/* A fixed square: a flyout's height feeds the stack's offsets. */
+.a63-InformThumbnail {
+  display: block;
+  flex-shrink: 0;
+  inline-size: calc(var(--a63-space-6) * 2);
+  block-size: calc(var(--a63-space-6) * 2);
+  overflow: hidden;
+  border-radius: var(--a63-surface-radius, var(--radius-lg));
+  background-color: var(--a63-surface-muted);
+}
+
+/* A fixed aspect ratio, so a late decode does not shift the text. */
+.a63-InformMedia {
+  inline-size: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--a63-surface-radius, var(--radius-lg));
+  background-color: var(--a63-surface-muted);
+}
+
+.a63-InformThumbnail :is(img, video),
+.a63-InformMedia :is(img, video) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+/* ── Severity ──────────────────────────────────────────────────────────── */
+
+/*
+ * `info` is deliberately neutral: it is the default editorial voice. Only the
+ * louder severities spend color.
+ *
+ * A title in a raw status color fails WCAG AA contrast at this size (warning
+ * measured 3.4:1 on the light page, danger 3.0:1 on the dark one), so the
+ * text mixes the status color toward the primary text color. That darkens it
+ * in light mode and lightens it in dark mode, keeping the hue while clearing
+ * 4.5:1. The dialog variants out-rank the dialog title's own color.
+ */
+.a63-Inform-border-info {
+  border-color: var(--a63-border-subtle);
+}
+.a63-Inform-border-success {
+  border-color: color-mix(in oklab, var(--a63-status-success) 40%, transparent);
+}
+.a63-Inform-border-warning {
+  border-color: color-mix(in oklab, var(--a63-status-warning) 40%, transparent);
+}
+.a63-Inform-border-danger {
+  border-color: color-mix(in oklab, var(--a63-action-danger) 40%, transparent);
+}
+
+.a63-Inform-text-info,
+.a63-InformDialog .a63-Inform-text-info {
+  color: var(--a63-text-primary);
+}
+.a63-Inform-text-success,
+.a63-InformDialog .a63-Inform-text-success {
+  color: color-mix(in oklab, var(--a63-status-success) 70%, var(--a63-text-primary));
+}
+.a63-Inform-text-warning,
+.a63-InformDialog .a63-Inform-text-warning {
+  color: color-mix(in oklab, var(--a63-status-warning) 70%, var(--a63-text-primary));
+}
+.a63-Inform-text-danger,
+.a63-InformDialog .a63-Inform-text-danger {
+  color: color-mix(in oklab, var(--a63-action-danger) 70%, var(--a63-text-primary));
+}

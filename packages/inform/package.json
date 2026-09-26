@@ -1,0 +1,92 @@
+{
+  "name": "@atom63/inform",
+  "version": "0.2.0-beta.0",
+  "description": "The Atom63 inform pattern: one message model, one arbiter, and the banner, dialog, corner flyout and spotlight surfaces",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atom63/atom63-design-system.git",
+    "directory": "packages/inform"
+  },
+  "homepage": "https://github.com/atom63/atom63-design-system/tree/main/packages/inform#readme",
+  "bugs": {
+    "url": "https://github.com/atom63/atom63-design-system/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "atom63",
+    "design-system",
+    "inform",
+    "onboarding",
+    "react"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "*.css",
+    "**/*.css"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "@atom63/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./react": {
+      "@atom63/source": "./src/react/index.ts",
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js"
+    },
+    "./surfaces": {
+      "@atom63/source": "./src/surfaces/index.ts",
+      "types": "./dist/surfaces/index.d.ts",
+      "import": "./dist/surfaces/index.js"
+    },
+    "./styles.css": "./src/styles.css"
+  },
+  "files": [
+    "dist",
+    "src/**/*.css"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --cache --max-warnings 0",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@atom63/ui-react": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@atom63/eslint-config": "workspace:*",
+    "@atom63/tsconfig": "workspace:*",
+    "@storybook/react-vite": "^10.6.0",
+    "@testing-library/jest-dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@testing-library/user-event": "catalog:",
+    "@types/node": "^26.3.0",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "axe-core": "^4.12.1",
+    "eslint": "10.7.0",
+    "jsdom": "catalog:",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "storybook": "^10.6.0",
+    "tsup": "^8.3.5",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "vitest-axe": "^0.1.0"
+  }
+}

@@ -8,6 +8,7 @@
 @import '@atom63/styles/utils/debug';
 @import '@atom63/mdx/styles/a63.css';
 @import '@atom63/ui-react/recipes.css';
+@import '@atom63/inform/styles.css';
 @import './os-theme-preview.css';
 @plugin '@tailwindcss/typography';
 

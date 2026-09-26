@@ -12,6 +12,7 @@
     "vitest.config.ts",
     "../../packages/ui-react/src/**/*.stories.tsx",
     "../../packages/mdx/src/**/*.stories.tsx",
-    "../../packages/brand/src/**/*.stories.tsx"
+    "../../packages/brand/src/**/*.stories.tsx",
+    "../../packages/inform/src/**/*.stories.tsx"
   ]
 }

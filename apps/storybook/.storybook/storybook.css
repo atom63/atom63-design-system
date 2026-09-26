@@ -7,6 +7,7 @@
 @import '@atom63/styles/compat/shadcn';
 @import '@atom63/ui-react/recipes.css';
 @import '@atom63/mdx/styles/a63.css';
+@import '@atom63/inform/styles.css';
 
 /* Generate the Tailwind classes that components and stories use. */
 @source '../../../packages/ui-react/src/**/*.{ts,tsx}';

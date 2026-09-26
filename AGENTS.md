@@ -14,6 +14,7 @@ version for coding agents.
 | `packages/ui-ios` | `Atom63UI`: SwiftUI components, shipped through the root `Package.swift` |
 | `packages/mdx` | `@atom63/mdx`: MDX prose components and blocks |
 | `packages/brand` | `@atom63/brand`: the ATOM63 logo components |
+| `packages/inform` | `@atom63/inform`: the inform pattern (message registry, arbiter, and the banner, dialog, corner flyout and spotlight surfaces) |
 | `packages/cli` | `@atom63/cli`: the `atom63` CLI and MCP server that answer questions about the system |
 | `apps/docs`, `apps/storybook`, `apps/figma-plugin` | Docs site, Storybook with render/axe/visual tests, Figma token sync |
 | `scripts/design-system` | Audits, guardrails and the `ds:new` scaffold |
