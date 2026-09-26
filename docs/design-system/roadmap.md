@@ -233,6 +233,7 @@ agent runtime 及其 controller hooks 已迁入 `packages/agent`（`@atom63/agen
 widgets foundation 已迁入 `packages/widgets`（`@atom63/widgets`：layout、primitives、states、hosted shell，计划见 `widgets-foundation-plan.md`），host 和 collection 留在 atom63-vite，图标改为 lucide；首次发布需要你手动发一次，atom63-vite 切换前要先把自己的包改名。
 
 **E 进度（2026-09-26）：** Web 端的 a11y 规格合约已上线（计划见 `quality-plan.md` 的 E2）：dialog、alert dialog、menu button、tabs 四个 APG pattern 写成 `@atom63/ui-foundation` 里的数据，Dialog、AlertDialog、DropdownMenu、Tabs 在 contract 里声明所实现的 pattern，Storybook 的 `a11y` Vitest 项目据此生成测试，逐条检查结构和键盘交互（已接入 CI），Dialog 缺少 `aria-modal` 记为已知缺口。
+craft rubric 已上线（E5）：docs 站的 Foundations 下新增 "Craft rubric" 页，间距节奏、层级、对齐、状态完整、动效克制、无障碍、token 使用七条标准各有 1–3 分描述、自动检查覆盖范围和现场好坏示例，标准数据放在 `scripts/design-system/lib/craft-rubric.mjs`，供设计评审和 E4 的模型评分共用。
 
 A 可以马上开始。B 需要先定下 D1；D 和 C 可以部分并行。（2026-09-25 更新：token manifest 的 1669 条中，1603 条由 DTCG 生成；其余 66 条是 DTCG 无法表达类型的 CSS 原生值，放在 `*.native.css` 中，每条都在 `native-values.json` 里写明原因；没有其他手写 token。）
 

@@ -36,6 +36,7 @@ version for coding agents.
   (`pnpm --filter @atom63/cli sync:agents-md`).
 - **Verify the way CI does.** CI builds only some packages per job, so delete a workspace
   package's `dist` before checking code that newly imports it.
+- **Score UI with the craft rubric** (`scripts/design-system/lib/craft-rubric.mjs`, docs page "Craft rubric").
 - **Changesets:** a change to a published package (`@atom63/styles`, `@atom63/ui-foundation`,
   `@atom63/ui-react`) needs `pnpm changeset`; tooling-only changes need `pnpm changeset --empty`.
 - **Commits and pull requests:** Conventional Commit titles (`feat(scope): …`, `fix: …`), with

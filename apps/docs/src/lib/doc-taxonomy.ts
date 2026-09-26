@@ -26,6 +26,7 @@ export const SECTION_ORDER: Partial<Record<PageSection, string[]>> = {
   foundation: [
     'foundation-personalization',
     'foundation-designing-in-code',
+    'foundation-craft-rubric',
     'foundation-colors',
     'foundation-surface-model',
     'foundation-typography',
