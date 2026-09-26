@@ -1,0 +1,297 @@
+import { useState } from 'react'
+import { Activity, Music } from 'lucide-react'
+import { Button } from '@atom63/ui-react'
+import {
+  WidgetGrid,
+  WidgetViewport,
+  widgetInsetStyle,
+  widgetTypeStyle,
+} from '@atom63/widgets'
+import {
+  WidgetCard,
+  WidgetCardContent,
+  WidgetCardHeader,
+  WidgetCardTitle,
+  WidgetSurface,
+} from '@atom63/widgets/primitives'
+import { WidgetStateFeedback, widgetStateCopy } from '@atom63/widgets/state'
+import {
+  WidgetHostedShell,
+  WidgetHostErrorFallback,
+  WidgetHostLoadingShell,
+  WidgetHostTitleTransition,
+} from '@atom63/widgets/runtime'
+import { ExampleContainer } from '@atom63/mdx/blocks'
+
+export const FILL = { blockSize: '100%', inlineSize: '100%' }
+export const MUTED = { color: 'var(--a63-text-secondary)' }
+
+export function Board({ children, columns = 2 }) {
+  return (
+    <div style={{ inlineSize: columns * 188 + (columns - 1) * 8, maxInlineSize: '100%' }}>
+      <WidgetGrid columns={columns} gap={8}>
+        {children}
+      </WidgetGrid>
+    </div>
+  )
+}
+
+export function ActivityCard({ size }) {
+  return (
+    <WidgetCard size={size} style={FILL}>
+      <WidgetCardHeader>
+        <WidgetCardTitle icon={<Activity aria-hidden />}>Activity</WidgetCardTitle>
+      </WidgetCardHeader>
+      <WidgetCardContent style={{ flex: 1, justifyContent: 'flex-end' }}>
+        <span style={widgetTypeStyle('display', size)}>42</span>
+        <span style={{ ...MUTED, ...widgetTypeStyle('label', size) }}>commits this week</span>
+      </WidgetCardContent>
+    </WidgetCard>
+  )
+}
+
+export const COPY = widgetStateCopy({
+  empty: 'No weather data yet',
+  error: 'Unable to load weather',
+  loading: 'Loading weather',
+})
+
+export const LAYOUT = {
+  small: { key: 'compact', title: 'Listening', body: 'One track' },
+  medium: { key: 'grid', title: 'Recent listening', body: 'Three recent tracks, side by side' },
+  large: { key: 'featured', title: 'Recent listening', body: 'The featured track, with the recent ones below it' },
+}
+
+export function HostedDemo() {
+  const [size, setSize] = useState('medium')
+  const layout = LAYOUT[size]
+  return (
+    <div style={{ display: 'grid', gap: 'var(--a63-space-4)', justifyItems: 'center', inlineSize: '100%' }}>
+      <div style={{ display: 'flex', gap: 'var(--a63-space-2)' }}>
+        {['small', 'medium', 'large'].map(value => (
+          <Button
+            aria-pressed={value === size}
+            key={value}
+            onClick={() => setSize(value)}
+            size="sm"
+            variant={value === size ? 'primary' : 'outline'}
+          >
+            {value}
+          </Button>
+        ))}
+      </div>
+      <div style={{ blockSize: 384 }}>
+        <Board>
+          <WidgetViewport size={size}>
+            <WidgetHostedShell
+              contentKey={layout.key}
+              header={
+                <WidgetCardHeader>
+                  <WidgetHostTitleTransition contentKey={layout.key}>
+                    <WidgetCardTitle icon={<Music aria-hidden />}>{layout.title}</WidgetCardTitle>
+                  </WidgetHostTitleTransition>
+                </WidgetCardHeader>
+              }
+              size={size}
+            >
+              <div style={{ ...widgetInsetStyle(size, 'body'), display: 'flex', flex: 1 }}>
+                <span style={{ ...MUTED, ...widgetTypeStyle('body', size), alignSelf: 'flex-end' }}>
+                  {layout.body}
+                </span>
+              </div>
+            </WidgetHostedShell>
+          </WidgetViewport>
+        </Board>
+      </div>
+    </div>
+  )
+}
+
+# Widgets
+
+`@atom63/widgets` is the foundation for widgets: small, persistent cards that live on a desktop, a board of tiles or an agent's reply. It has the unit model that sizes and scales them, the card and surface they are drawn on, the loading, empty and error states, and the hosted shell that keeps a widget's chrome still while its content changes size. The widgets themselves (weather, listening, a clock) are built by each app on top of it.
+
+```bash
+pnpm add @atom63/widgets
+```
+
+```css
+@import '@atom63/styles';
+@import '@atom63/ui-react/recipes.css';
+@import '@atom63/widgets/styles.css';
+```
+
+The package ships its own stylesheet and needs no Tailwind. The classes sit in the `components` layer, so a consumer's utility classes still override them.
+
+| Entry point | Contents |
+|-------------|----------|
+| `@atom63/widgets` | Units, scale, type ramp and insets; `WidgetGrid`, `WidgetViewport`; `WidgetImage`; the link and destination helpers; `WidgetSize`. |
+| `@atom63/widgets/primitives` | `WidgetSurface`, `WidgetCard` and its parts, `WidgetShell`, `WidgetBlock`, `WidgetAvatar`, and the surface class constants. |
+| `@atom63/widgets/state` | `WidgetStateFeedback`, `widgetStateCopy`, `resolveWidgetFeedbackState` and the shared state props. |
+| `@atom63/widgets/runtime` | `WidgetHostedShell`, the title and content transitions, the loading shell, the error fallback and the transition settings. |
+
+## Units and sizes
+
+A widget comes in three footprints, measured in widget units. One unit is one cell of the host's grid.
+
+| Size | Span | Use |
+|------|------|-----|
+| `small` | 1×1 | One figure or one item. |
+| `medium` | 2×1 | The same content with room for a second column. |
+| `large` | 2×2 | The full composition. |
+
+Every widget is authored on a 256 design-px canvas per unit and presented at a canonical 188px cell. `WidgetViewport` publishes `--widget-u`, the length of one design px in the host, and scales the whole canvas to the host's cell: down for narrow cells, and up to 137.5% (`WIDGET_MAX_PRESENTATION_SCALE`). Author lengths in design px with `wu()`, type with `widgetTypeStyle(role, size)` and padding with `widgetInsetStyle(size)`, so one dial moves the whole composition. Type roles have CSS-px floors, so labels stay legible when the canvas scales down.
+
+<ExampleContainer align="left">
+  <Board>
+    <WidgetViewport size="small"><ActivityCard size="small" /></WidgetViewport>
+    <WidgetViewport size="small"><ActivityCard size="small" /></WidgetViewport>
+    <WidgetViewport size="medium"><ActivityCard size="medium" /></WidgetViewport>
+  </Board>
+</ExampleContainer>
+
+`WidgetGrid` owns the tracks and the gap, and publishes both, so each tile can divide them out of its cell. Tracks are fixed, not responsive: every size keeps its shape at every width. A host that places tiles on its own grid wraps each one in a `WidgetViewport` and passes `cellPx` when it knows the cell, which keeps the scale still while it animates a tile between sizes.
+
+```tsx
+import { WidgetGrid, WidgetViewport } from '@atom63/widgets'
+
+<WidgetGrid columns={2} gap={8}>
+  <WidgetViewport size="small"><Clock size="small" /></WidgetViewport>
+  <WidgetViewport size="medium"><Weather size="medium" /></WidgetViewport>
+</WidgetGrid>
+```
+
+A host that renders one widget on its own, such as a chat reply, wraps the component with `withWidgetViewport` at its registry boundary.
+
+## Contract tokens
+
+The surface reads the widget contract from `@atom63/styles`. A theme or a widget kind restyles every widget by setting these tokens, never by overriding the classes.
+
+| Tokens | Role |
+|--------|------|
+| `--a63-widget-rim-*` | The rim between the tile edge and the face: `width`, `color`, `image` and `border-color`. It is a border, so a per-side color mitres around the corner at any radius. |
+| `--a63-widget-radius` | The outer radius. The face uses it less the rim width, so the curves stay concentric. |
+| `--a63-widget-background-*`, `--a63-widget-backdrop` | The face material (`color`, `image`, `blend` and the backdrop filter), drawn on a layer behind the content. Defaults compose the overlay surface. |
+| `--a63-widget-foreground` | Text color on the face. |
+| `--a63-widget-border-*` | An optional hairline on the face (`width`, `style`, `color`). None by default: the rim is the edge. |
+| `--a63-widget-shadow` | The drop shadow, cast from the rim. None at rest; themes and states (drag, focus) raise it. |
+| `--a63-widget-media-shadow` | Prints and stacked cards resting on a face, with a `-raised` step. |
+
+## Card and surface
+
+`WidgetSurface` is the sized surface: an outer shell that carries the rim and the shadow, and an inner face that carries the material. `size` is a signal (a `data-widget-surface-size` attribute and a context), not dimensions; the box comes from the tile. A `className` is split between the two boxes: sizing classes (`w-80`, `size-full`) go to the shell, flex-item and overflow classes go to both, and everything else stays on the face.
+
+`WidgetCard` is the surface with the card rhythm, and composes a header, a title and content. The header and content take their inline padding from the footprint's inset.
+
+<ExampleContainer align="left">
+  <Board>
+    <WidgetViewport size="small">
+      <WidgetSurface size="small" style={FILL}>
+        <div style={{ ...widgetInsetStyle('small', 'face'), ...widgetTypeStyle('display', 'small') }}>2:26</div>
+      </WidgetSurface>
+    </WidgetViewport>
+    <WidgetViewport size="small"><ActivityCard size="small" /></WidgetViewport>
+  </Board>
+</ExampleContainer>
+
+```tsx
+import {
+  WidgetCard,
+  WidgetCardContent,
+  WidgetCardHeader,
+  WidgetCardTitle,
+} from '@atom63/widgets/primitives'
+
+<WidgetCard size={size}>
+  <WidgetCardHeader>
+    <WidgetCardTitle icon={<Activity aria-hidden />}>Activity</WidgetCardTitle>
+  </WidgetCardHeader>
+  <WidgetCardContent>…</WidgetCardContent>
+</WidgetCard>
+```
+
+`WidgetShell` writes the same card in one call. `WidgetBlock` stacks an optional header, a growing body and a pinned footer inside it. `WIDGET_RIM_SHELL_CLASS` and `WIDGET_CARD_SURFACE_CLASS` name the two stylesheet classes, for a host that draws its own surface, such as a drag placeholder.
+
+## States
+
+`WidgetStateFeedback` is the one way a widget reports that it is loading, empty or failed. It pads itself and draws no border, so it looks the same wherever it is mounted. The 1×1 and 2×1 footprints share one compact density, because they differ in width, not height. On the error state, the retry button and a details disclosure replace the description, so technical detail never crowds the tile. Loading and empty announce themselves as a `status`, errors as an `alert`.
+
+<ExampleContainer align="left">
+  <Board columns={3}>
+    {['loading', 'empty', 'error'].map(state => (
+      <WidgetViewport key={state} size="small">
+        <WidgetCard size="small" style={FILL}>
+          <WidgetStateFeedback
+            copy={COPY(state, new Error('Request failed with status 503.'))}
+            onRetry={() => undefined}
+            state={state}
+          />
+        </WidgetCard>
+      </WidgetViewport>
+    ))}
+  </Board>
+</ExampleContainer>
+
+```tsx
+import {
+  resolveWidgetFeedbackState,
+  WidgetStateFeedback,
+  widgetStateCopy,
+} from '@atom63/widgets/state'
+
+const COPY = widgetStateCopy({
+  empty: 'No weather data yet',
+  error: 'Unable to load weather',
+  loading: 'Loading weather',
+})
+
+const state = resolveWidgetFeedbackState({ error, isLoading, isEmpty: !data })
+if (state) {
+  return <WidgetStateFeedback copy={COPY(state, error)} onRetry={refetch} state={state} />
+}
+```
+
+`resolveWidgetFeedbackState` puts an error before loading, so a failed refresh never sits behind a spinner, and only reports empty once the data has settled.
+
+## The hosted shell
+
+When a host resizes a widget, the chrome should stay put and only the content should change. `WidgetHostedShell` keeps one `WidgetCard` mounted and crossfades the body between the layouts of each footprint, keyed by `contentKey`. `WidgetHostTitleTransition` does the same for the header title, and `WidgetHostOptionalHeader` collapses a header row that only some sizes have. The outgoing layer keeps its width and blurs out, so copy does not visibly rewrap while the tile grows. Everything uses `widgetHostSizeMotionTransition`, which a host also uses for the tile's own bounds; reduced motion swaps without animating.
+
+Two shells cover the time before a widget renders: `WidgetHostLoadingShell` while its module loads, and `WidgetHostErrorFallback` when it fails to load or crashes. Both take the footprint they stand in for, so the chrome matches the widget that replaces them.
+
+<ExampleContainer align="left">
+  <Board>
+    <WidgetViewport size="small"><WidgetHostLoadingShell size="small" /></WidgetViewport>
+    <WidgetViewport size="small">
+      <WidgetHostErrorFallback message="Chunk failed to load." onRetry={() => undefined} size="small" />
+    </WidgetViewport>
+  </Board>
+</ExampleContainer>
+
+## Live example
+
+Pick a size. The tile changes footprint, the card stays mounted, and the title and body crossfade to the layout for that size.
+
+<ExampleContainer align="left">
+  <HostedDemo />
+</ExampleContainer>
+
+```tsx
+import { WidgetHostedShell, WidgetHostTitleTransition } from '@atom63/widgets/runtime'
+
+<WidgetHostedShell
+  contentKey={layout.key}
+  header={
+    <WidgetCardHeader>
+      <WidgetHostTitleTransition contentKey={layout.key}>
+        <WidgetCardTitle icon={<Music aria-hidden />}>{layout.title}</WidgetCardTitle>
+      </WidgetHostTitleTransition>
+    </WidgetCardHeader>
+  }
+  size={size}
+>
+  <Body layout={layout} />
+</WidgetHostedShell>
+```
+
+The body must supply its own inset (`WidgetCardContent`, or `widgetInsetStyle(size, 'body')`), unless the shell has a `footer`, in which case it pads the body and pins the footer below it.

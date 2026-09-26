@@ -1,0 +1,76 @@
+/*
+ * Widget layout: the viewport that publishes the design unit, and WidgetImage.
+ * The grid and the presentation canvas are inline styles, because their values
+ * are computed per footprint and per host cell.
+ */
+
+/* The viewport is a size container: tile content resolves `cqi` against it. */
+.a63-WidgetViewport {
+  position: relative;
+  min-inline-size: 0;
+  container-type: inline-size;
+}
+
+.a63-WidgetViewport-fill {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+/* ── WidgetImage ───────────────────────────────────────────────────────── */
+.a63-WidgetImage {
+  position: relative;
+  overflow: hidden;
+}
+
+:is(.a63-WidgetImage, .a63-WidgetImage-empty)[data-aspect='1/1'] {
+  aspect-ratio: 1 / 1;
+}
+
+:is(.a63-WidgetImage, .a63-WidgetImage-empty)[data-aspect='16/9'] {
+  aspect-ratio: 16 / 9;
+}
+
+:is(.a63-WidgetImage, .a63-WidgetImage-empty)[data-aspect='2/3'] {
+  aspect-ratio: 2 / 3;
+}
+
+.a63-WidgetImage-empty {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  padding: var(--a63-space-4);
+  background-color: var(--a63-surface-muted);
+  color: var(--a63-text-secondary);
+  font-size: var(--typography-sm-font-size);
+  line-height: var(--typography-sm-line-height);
+  text-align: center;
+}
+
+.a63-WidgetImage-skeleton,
+.a63-WidgetImage-img {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.a63-WidgetImage-img {
+  object-fit: cover;
+}
+
+/* The incoming frame fades in over the held one, then replaces it. */
+.a63-WidgetImage-incoming {
+  opacity: 0;
+  transition: opacity var(--duration-333) var(--ease-standard);
+}
+
+.a63-WidgetImage-incoming[data-shown] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-WidgetImage-incoming {
+    transition: none;
+  }
+}

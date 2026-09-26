@@ -1,0 +1,136 @@
+/*
+ * Widget runtime: the loading and error shells a host shows while a widget
+ * module loads or after it fails, and the layers the hosted shell crossfades
+ * when a widget changes size.
+ */
+
+/* Shared centered spinner inside an existing shell. */
+.a63-WidgetContentFallback {
+  display: flex;
+  flex: 1 1 0%;
+  align-items: center;
+  justify-content: center;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 0;
+}
+
+.a63-WidgetContentFallback-icon {
+  inline-size: var(--a63-space-5);
+  block-size: var(--a63-space-5);
+  color: var(--a63-text-secondary);
+}
+
+.a63-WidgetHostFallback {
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 0;
+}
+
+.a63-WidgetHostLoadingShell-content {
+  flex: 1 1 0%;
+  min-block-size: 0;
+}
+
+.a63-WidgetHostErrorFallback-content {
+  flex: 1 1 0%;
+  align-items: center;
+  justify-content: center;
+  gap: var(--a63-space-3);
+  min-block-size: 0;
+  text-align: center;
+}
+
+.a63-WidgetHostErrorFallback-icon {
+  color: var(--a63-text-danger);
+}
+
+.a63-WidgetHostErrorFallback-message {
+  max-inline-size: 100%;
+  margin: 0;
+  color: var(--a63-text-secondary);
+}
+
+/*
+ * The crossfade slot clips its layers; each layer is pinned to the slot so
+ * the outgoing and incoming content overlap instead of stacking.
+ */
+.a63-WidgetHostContentTransition {
+  position: relative;
+  flex: 1 1 0%;
+  isolation: isolate;
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: 0;
+  overflow: hidden;
+}
+
+.a63-WidgetHostContentTransition-layer {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  display: flex;
+  flex-direction: column;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  min-block-size: 0;
+  overflow: hidden;
+  transform-origin: top left;
+}
+
+.a63-WidgetHostTitleTransition {
+  position: relative;
+  isolation: isolate;
+  min-inline-size: 0;
+  overflow: hidden;
+}
+
+/* Crossfade keeps both layers in flow on one grid cell, at the taller height. */
+.a63-WidgetHostTitleTransition[data-variant='crossfade'] {
+  display: grid;
+}
+
+.a63-WidgetHostTitleTransition[data-variant='crossfade'] > * {
+  grid-row-start: 1;
+  grid-column-start: 1;
+}
+
+/* Slide never lets its layers size the box: they pin to the reserved box. */
+.a63-WidgetHostTitleTransition[data-variant='slide'] {
+  contain: layout size;
+}
+
+.a63-WidgetHostTitleTransition-layer {
+  display: flex;
+  align-items: flex-start;
+  inline-size: 100%;
+  min-inline-size: 0;
+  overflow: hidden;
+}
+
+.a63-WidgetHostTitleTransition[data-variant='slide'] > .a63-WidgetHostTitleTransition-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.a63-WidgetHostOptionalHeader {
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* ── Shared spin ───────────────────────────────────────────────────────── */
+@keyframes a63-widget-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.a63-Widget-spin {
+  animation: a63-widget-spin var(--duration-slower) linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Widget-spin {
+    animation: none;
+  }
+}

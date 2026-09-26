@@ -1,0 +1,20 @@
+/*
+ * @atom63/widgets styles: the `.a63-Widget*` classes the foundation renders.
+ *
+ * Load it after @atom63/styles and the @atom63/ui-react recipes (the states and
+ * fallbacks use ui-react buttons, the popover and the avatar):
+ *
+ *   @import '@atom63/styles';
+ *   @import '@atom63/ui-react/recipes.css';
+ *   @import '@atom63/widgets/styles.css';
+ *
+ * It needs no Tailwind: every value reads an --a63-* token, and the surface
+ * reads the widget contract (--a63-widget-*). The classes sit in the
+ * `components` layer, so a consumer's utility classes override them.
+ */
+@import './layout/widget-layout.css' layer(components);
+@import './primitives/widget-surface.css' layer(components);
+@import './primitives/widget-card.css' layer(components);
+@import './primitives/widget-avatar.css' layer(components);
+@import './state/widget-state-feedback.css' layer(components);
+@import './runtime/widget-runtime.css' layer(components);

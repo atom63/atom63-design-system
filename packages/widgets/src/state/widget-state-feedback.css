@@ -1,0 +1,149 @@
+/*
+ * Widget state feedback: loading, empty and error. It pads itself and draws no
+ * border or fill, so it renders the same wherever it is mounted. The one-row
+ * footprints share the compact density; the 2x2 footprint gets the large one.
+ */
+.a63-WidgetStateFeedback {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--a63-space-2);
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 0;
+  padding-block: var(--a63-space-2);
+  padding-inline: var(--a63-space-3);
+  text-align: center;
+}
+
+.a63-WidgetStateFeedback[data-density='large'] {
+  gap: var(--a63-space-3);
+  min-block-size: calc(var(--a63-space-1) * 32);
+  padding-block: var(--a63-space-6);
+  padding-inline: var(--a63-space-5);
+}
+
+.a63-WidgetStateFeedback-badge {
+  display: flex;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  inline-size: calc(var(--a63-space-1) * 8);
+  block-size: calc(var(--a63-space-1) * 8);
+  border: var(--a63-control-border-width) solid var(--a63-border-subtle);
+  border-radius: var(--radius-full);
+  background-color: color-mix(in oklab, var(--a63-surface-page) 70%, transparent);
+  box-shadow: var(--shadow-sm);
+  color: var(--a63-text-secondary);
+}
+
+.a63-WidgetStateFeedback[data-density='large'] .a63-WidgetStateFeedback-badge {
+  inline-size: calc(var(--a63-space-1) * 10);
+  block-size: calc(var(--a63-space-1) * 10);
+}
+
+.a63-WidgetStateFeedback[data-state='error'] .a63-WidgetStateFeedback-badge {
+  border-color: color-mix(in oklab, var(--a63-action-danger) 35%, transparent);
+  background-color: color-mix(in oklab, var(--a63-action-danger) 10%, transparent);
+  color: var(--a63-text-danger);
+}
+
+.a63-WidgetStateFeedback-icon {
+  inline-size: var(--a63-space-4);
+  block-size: var(--a63-space-4);
+}
+
+.a63-WidgetStateFeedback[data-density='large'] .a63-WidgetStateFeedback-icon {
+  inline-size: var(--a63-space-5);
+  block-size: var(--a63-space-5);
+}
+
+.a63-WidgetStateFeedback-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-1);
+  max-inline-size: calc(var(--a63-space-1) * 64);
+}
+
+.a63-WidgetStateFeedback[data-density='large'] .a63-WidgetStateFeedback-text {
+  gap: var(--a63-space-1_5);
+}
+
+.a63-WidgetStateFeedback-title,
+.a63-WidgetStateFeedback-description {
+  margin: 0;
+}
+
+.a63-WidgetStateFeedback[data-density='compact'] .a63-WidgetStateFeedback-title {
+  line-height: 1.25;
+}
+
+.a63-WidgetStateFeedback-description {
+  color: var(--a63-text-secondary);
+}
+
+.a63-WidgetStateFeedback[data-density='compact'] .a63-WidgetStateFeedback-description {
+  display: -webkit-box;
+  overflow: hidden;
+  line-height: 1.375;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+/* ── Error actions ─────────────────────────────────────────────────────── */
+.a63-WidgetStateFeedback-actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--a63-space-2);
+  min-block-size: calc(var(--a63-space-1) * 8);
+}
+
+.a63-WidgetStateFeedback-action {
+  flex-shrink: 0;
+}
+
+.a63-WidgetStateFeedback-retryIcon {
+  inline-size: var(--a63-space-3);
+  block-size: var(--a63-space-3);
+}
+
+.a63-WidgetStateFeedback-detailsIcon {
+  inline-size: var(--a63-space-3_5);
+  block-size: var(--a63-space-3_5);
+}
+
+/* The error details popover renders in a portal, outside the widget. */
+.a63-WidgetErrorDetails {
+  gap: var(--a63-space-3);
+  inline-size: calc(var(--a63-space-1) * 72);
+  max-inline-size: calc(100vw - var(--a63-space-4) * 2);
+  padding: var(--a63-space-3);
+}
+
+.a63-WidgetErrorDetails-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-1);
+  text-align: start;
+}
+
+.a63-WidgetErrorDetails-message {
+  max-block-size: calc(var(--a63-space-1) * 32);
+  margin: 0;
+  padding: var(--a63-space-2);
+  overflow: auto;
+  border-radius: var(--radius-md);
+  background-color: var(--a63-surface-muted);
+  color: var(--a63-text-secondary);
+  font-family: var(--font-mono);
+  font-size: var(--typography-xs-font-size);
+  line-height: 1.625;
+  text-align: start;
+  overflow-wrap: break-word;
+  user-select: text;
+}
