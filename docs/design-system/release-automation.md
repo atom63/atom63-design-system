@@ -36,7 +36,26 @@ Before `publish=true` can work without an npm token, configure npm trusted publi
 | `@atom63/ui-react` | `atom63/atom63-design-system` | `.github/workflows/release-beta.yml` |
 | `@atom63/mdx` | `atom63/atom63-design-system` | `.github/workflows/release-beta.yml` |
 
-A trusted publisher can only be added to a package that exists, so a new package needs one manual first publish. Then add it to the published-packages list and to `PUBLISHED_PACKAGES` in the workflow.
+A trusted publisher can only be added to a package that exists, so a new package needs one first publish with a maintainer's own npm login. Everything after that is automatic.
+
+## Adding a new package
+
+A maintainer with publish rights on the `@atom63` scope runs one command. It needs `npm login` and account-level two-factor authentication:
+
+```bash
+pnpm release:bootstrap packages/<name> [packages/<other> …]
+```
+
+For each package, `scripts/design-system/bootstrap-npm-package.mjs`:
+
+1. builds it;
+2. publishes it to the `beta` tag, if npm does not have that version yet;
+3. waits until npm serves it;
+4. adds this repository's GitHub Actions trusted publisher with `npm trust github` (npm 11.15 or later; the script runs the latest npm for this step).
+
+npm asks for two-factor confirmation at each publish and each trust step. `--dry-run` prints the steps without running them.
+
+Then add the directories to `scripts/design-system/published-packages.mjs` and to `PUBLISHED_PACKAGES` in the workflow; `lib/published-packages.test.mjs` checks that the two lists agree. From then on, the package releases with the others.
 
 Recommended npm setting:
 
