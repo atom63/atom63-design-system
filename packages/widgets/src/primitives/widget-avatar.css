@@ -1,0 +1,153 @@
+/*
+ * Widget avatar: a ui-react Avatar with a presence dot and an optional shuffle
+ * overlay. Geometry is per size; the dot sits on the circle's lower-end arc
+ * (a percentage inset), not in the bounding-box corner.
+ */
+.a63-WidgetAvatar {
+  --widget-avatar-size: calc(var(--a63-space-1) * 16);
+  --widget-avatar-dot: var(--a63-space-3_5);
+  --widget-avatar-dot-inset: 6%;
+  --widget-avatar-icon: calc(var(--a63-space-1) * 4.5);
+
+  position: relative;
+  flex-shrink: 0;
+  inline-size: var(--widget-avatar-size);
+  block-size: var(--widget-avatar-size);
+}
+
+.a63-WidgetAvatar[data-widget-avatar-size='sm'] {
+  --widget-avatar-size: calc(var(--a63-space-1) * 12);
+  --widget-avatar-dot: var(--a63-space-3);
+  --widget-avatar-dot-inset: 5%;
+  --widget-avatar-icon: var(--a63-space-4);
+}
+
+.a63-WidgetAvatar[data-widget-avatar-size='lg'] {
+  --widget-avatar-size: calc(var(--a63-space-1) * 20);
+  --widget-avatar-dot: var(--a63-space-4);
+  --widget-avatar-dot-inset: 7%;
+  --widget-avatar-icon: var(--a63-space-5);
+}
+
+.a63-WidgetAvatar[data-widget-avatar-size='xl'] {
+  --widget-avatar-size: calc(var(--a63-space-1) * 24);
+  --widget-avatar-dot: calc(var(--a63-space-1) * 4.5);
+  --widget-avatar-dot-inset: 7%;
+  --widget-avatar-icon: var(--a63-space-6);
+}
+
+/* The avatar fills the root and rings itself against the page. */
+.a63-WidgetAvatar-avatar {
+  --avatar-size: 100%;
+
+  background-color: var(--a63-surface-muted);
+  box-shadow:
+    0 0 0 2px var(--a63-surface-page),
+    var(--shadow-sm);
+  transition: outline-color var(--duration-normal) var(--ease-standard);
+}
+
+.a63-WidgetAvatar-avatar[data-outline] {
+  outline: 2px solid color-mix(in oklab, var(--a63-action-primary) 70%, transparent);
+  outline-offset: 2px;
+}
+
+.a63-WidgetAvatar-busyRing {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--a63-avatar-radius, var(--radius-full));
+  box-shadow:
+    0 0 0 2px var(--a63-surface-page),
+    0 0 0 4px color-mix(in oklab, var(--a63-action-primary) 60%, transparent);
+  animation: a63-widget-pulse calc(var(--duration-slower) * 2) var(--ease-inout) infinite;
+  pointer-events: none;
+}
+
+/*
+ * The shuffle affordance is drawn over a photo, so it uses the on-media
+ * tokens, which hold contrast on any image. It shows on hover, on keyboard
+ * focus and while busy.
+ */
+.a63-WidgetAvatar-shuffle {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--a63-avatar-radius, var(--radius-full));
+  background-color: transparent;
+  background-image: linear-gradient(
+    to top,
+    var(--a63-on-media-surface),
+    color-mix(in oklab, var(--a63-on-media-surface-strong) 50%, transparent)
+  );
+  color: var(--a63-on-media-foreground);
+  opacity: 0;
+  cursor: pointer;
+  backdrop-filter: blur(1px);
+  transition: opacity var(--duration-normal) var(--ease-standard);
+}
+
+.a63-WidgetAvatar-shuffle:disabled {
+  cursor: default;
+}
+
+.a63-WidgetAvatar[data-busy] .a63-WidgetAvatar-shuffle,
+.a63-WidgetAvatar-shuffle:focus-visible {
+  opacity: 1;
+}
+
+.a63-WidgetAvatar-shuffle:focus-visible {
+  outline: 2px solid var(--a63-on-media-ring);
+  outline-offset: 1px;
+}
+
+.a63-WidgetAvatar-shuffleIcon {
+  inline-size: var(--widget-avatar-icon);
+  block-size: var(--widget-avatar-icon);
+  filter: drop-shadow(0 1px 1px var(--a63-on-media-veil-strong));
+  transition: transform var(--duration-333) var(--ease-standard);
+}
+
+@media (hover: hover) {
+  .a63-WidgetAvatar:hover .a63-WidgetAvatar-shuffle {
+    opacity: 1;
+  }
+
+  .a63-WidgetAvatar:hover .a63-WidgetAvatar-shuffleIcon:not(.a63-Widget-spin) {
+    transform: rotate(180deg);
+  }
+}
+
+.a63-WidgetAvatar-status {
+  position: absolute;
+  inset-block-end: var(--widget-avatar-dot-inset);
+  inset-inline-end: var(--widget-avatar-dot-inset);
+  box-sizing: border-box;
+  inline-size: var(--widget-avatar-dot);
+  block-size: var(--widget-avatar-dot);
+  border: 2px solid var(--a63-surface-panel);
+  border-radius: var(--a63-avatar-radius, var(--radius-full));
+  background-color: var(--a63-status-success);
+  box-shadow: var(--shadow-sm);
+}
+
+@keyframes a63-widget-pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-WidgetAvatar-busyRing {
+    animation: none;
+  }
+
+  .a63-WidgetAvatar-shuffle,
+  .a63-WidgetAvatar-shuffleIcon {
+    transition: none;
+  }
+}

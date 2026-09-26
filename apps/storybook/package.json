@@ -19,6 +19,7 @@
     "@atom63/styles": "workspace:*",
     "@atom63/ui-foundation": "workspace:*",
     "@atom63/ui-react": "workspace:*",
+    "@atom63/widgets": "workspace:*",
     "geist": "1.7.2",
     "react": "19.2.7",
     "react-dom": "19.2.7"

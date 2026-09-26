@@ -16,6 +16,7 @@ version for coding agents.
 | `packages/brand` | `@atom63/brand`: the ATOM63 logo components |
 | `packages/inform` | `@atom63/inform`: the inform pattern (message registry, arbiter, and the banner, dialog, corner flyout and spotlight surfaces) |
 | `packages/agent` | `@atom63/agent`: the headless agent (chat) runtime and its React hooks, with no UI |
+| `packages/widgets` | `@atom63/widgets`: the widget foundation (units and scale, the widget card and surface, the loading, empty and error states, and the hosted shell) |
 | `packages/cli` | `@atom63/cli`: the `atom63` CLI and MCP server that answer questions about the system |
 | `apps/docs`, `apps/storybook`, `apps/figma-plugin` | Docs site, Storybook with render/axe/visual tests, Figma token sync |
 | `scripts/design-system` | Audits, guardrails and the `ds:new` scaffold |

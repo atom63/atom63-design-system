@@ -41,6 +41,7 @@ export const SECTION_ORDER: Partial<Record<PageSection, string[]>> = {
     'pattern-local-layout',
     'pattern-inform',
     'pattern-agent',
+    'pattern-widgets',
   ],
   theme: ['theme-overview', 'theme-system'],
 }
