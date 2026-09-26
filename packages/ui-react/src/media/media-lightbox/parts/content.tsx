@@ -11,7 +11,6 @@ import { BACKDROP_IN, BACKDROP_OUT } from '../motion'
 import { lockBodyScroll } from '../scroll-lock'
 import { useMediaZoom } from '../use-media-zoom'
 import { usePullToDismiss } from '../use-pull-to-dismiss'
-import { useSwipeIntent } from '../use-swipe-intent'
 import { whenMediaViewTransitionSettles } from '../view-transition'
 import { useLightboxConfig, useLightboxState } from './context'
 import { useLightboxRefs } from './refs'
@@ -78,18 +77,6 @@ export function LightboxContent({
     rootRef,
     stageRef,
     trackRef,
-  })
-
-  // A drag on zoomed media is a pan, not a page turn. The stack itself never
-  // moves during the drag (spec §2.4) — this only decides the direction and
-  // hands it to the same `goTo` an arrow key or a thumbnail click would use.
-  useSwipeIntent({
-    enabled: !isZoomed,
-    onIntent: delta => {
-      goTo(index + delta)
-    },
-    rootRef,
-    stageRef,
   })
 
   // Focus moves into the lightbox on open and returns to the trigger on close.

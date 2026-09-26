@@ -178,18 +178,18 @@ export function LightboxFrame({
   const { mediaRef } = useLightboxRefs()
   const viewTransition = transition === 'view-transition'
 
-  // The morph measures the media in viewport coordinates. Every slide's
-  // frame occupies the same box in the stack regardless of which index is
-  // active, so — unlike the scrolling track this replaced — that box is
-  // already right by the time this measures it; there is no jump to park
-  // first and no ordering to race.
+  // The morph measures the media in viewport coordinates. The track's resting
+  // transform is part of the same render that mounts this frame, so the
+  // active frame already sits on screen when this measures it; unlike the
+  // scroll-snap track before it, there is no scroll position to park first
+  // and no ordering to race.
 
   // Every slide the preload neighbourhood mounts, not only the active one.
   // Gated on `isActive` instead, a slide had no shape until it became the
   // active one and then gained one — two different sizing paths for the same
-  // element, so it visibly resized mid-crossfade while both slides were on
-  // screen at full opacity. `isNear` is already the set whose media is
-  // mounted, so this starts no fetch that was not happening anyway.
+  // element, so it visibly resized mid-turn while both slides were on
+  // screen. `isNear` is already the set whose media is mounted, so this
+  // starts no fetch that was not happening anyway.
   const itemThumb = isNear ? resolveThumbSrc(item, appearance?.[item.id]) : undefined
   const itemSrc = isNear ? resolveMediaSrc(item, appearance?.[item.id]) : undefined
   // The shape of this slide's photo, known before it arrives.
@@ -381,8 +381,8 @@ export function LightboxMedia(): React.ReactElement | null {
   // Every mounted slide, not only the active one. `filled` switches the
   // media between filling its frame and sizing itself, and a slide that
   // flipped between the two at the moment it became active resized on
-  // screen mid-crossfade, while both it and the slide it replaced were at
-  // full opacity. Slides outside the preload neighbourhood still probe
+  // screen mid-turn, while both it and the slide it replaced were in view.
+  // Slides outside the preload neighbourhood still probe
   // nothing — they render no media at all.
   const aspect = useMediaAspect(isNear ? thumbSrc : undefined, isNear ? src : undefined)
   const filled = aspect !== undefined

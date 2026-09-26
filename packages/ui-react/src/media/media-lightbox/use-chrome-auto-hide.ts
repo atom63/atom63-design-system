@@ -33,6 +33,24 @@ export interface ChromeAutoHide {
    */
   holdFocus: () => void
   releaseFocus: () => void
+  /**
+   * A touch tap on the photo or around it: hide the chrome if it is up, show
+   * it if it is not. Either way it stays put until the next tap. The idle
+   * clock does not run behind it, so chrome hidden by a tap does not come back
+   * on its own, and chrome shown by one does not vanish while the thumb
+   * travels to it. A mouse move, a key press, or focus entering the chrome
+   * still reveals it as usual.
+   */
+  toggle: () => void
+}
+
+/**
+ * Pointer activity that should reveal the chrome: a mouse moving or pressing,
+ * never a finger or a pen. On touch the chrome answers to taps alone (see
+ * `toggle`), and a finger dragging the photo about leaves it as it is.
+ */
+export function isRevealingPointer(event: { pointerType?: string }): boolean {
+  return event.pointerType !== 'touch' && event.pointerType !== 'pen'
 }
 
 /**
@@ -84,7 +102,13 @@ export interface ChromeAutoHide {
  * there either way, and the hover hold would otherwise cover it anyway.
  */
 export function useChromeAutoHide(open: boolean): ChromeAutoHide {
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisibleState] = useState(true)
+  // `toggle` needs the current value synchronously; the state is what renders.
+  const visibleRef = useRef(true)
+  const setVisible = useCallback((next: boolean) => {
+    visibleRef.current = next
+    setVisibleState(next)
+  }, [])
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const holdsRef = useRef<Set<ChromeHoldReason>>(new Set())
 
@@ -103,12 +127,17 @@ export function useChromeAutoHide(open: boolean): ChromeAutoHide {
         setVisible(false)
       }
     }, CHROME_IDLE_MS)
-  }, [clearIdleTimer])
+  }, [clearIdleTimer, setVisible])
 
   const reveal = useCallback(() => {
     setVisible(true)
     scheduleHide()
-  }, [scheduleHide])
+  }, [scheduleHide, setVisible])
+
+  const toggle = useCallback(() => {
+    clearIdleTimer()
+    setVisible(!visibleRef.current)
+  }, [clearIdleTimer, setVisible])
 
   const hold = useCallback(
     (reason: ChromeHoldReason) => {
@@ -116,12 +145,17 @@ export function useChromeAutoHide(open: boolean): ChromeAutoHide {
       clearIdleTimer()
       setVisible(true)
     },
-    [clearIdleTimer]
+    [clearIdleTimer, setVisible]
   )
 
   const release = useCallback(
     (reason: ChromeHoldReason) => {
-      holdsRef.current.delete(reason)
+      // Releasing a hold nobody took is not activity. Every `pointerup` in the
+      // document releases `drag`, and restarting the idle clock on each one
+      // would let a swipe hide chrome that a tap had just shown.
+      if (!holdsRef.current.delete(reason)) {
+        return
+      }
       if (holdsRef.current.size === 0) {
         scheduleHide()
       }
@@ -138,7 +172,7 @@ export function useChromeAutoHide(open: boolean): ChromeAutoHide {
     setVisible(true)
     scheduleHide()
     return clearIdleTimer
-  }, [open, clearIdleTimer, scheduleHide])
+  }, [open, clearIdleTimer, scheduleHide, setVisible])
 
   // A drag that started inside the dock can carry the pointer past its
   // bounds before it lets go, so the release has to be caught globally
@@ -178,6 +212,7 @@ export function useChromeAutoHide(open: boolean): ChromeAutoHide {
       release('hover')
     }, [release]),
     reveal,
+    toggle,
     visible,
   }
 }

@@ -2,12 +2,14 @@
 
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from 'lucide-react'
 import { motion } from 'motion/react'
-import type { CSSProperties, FocusEvent, ReactElement, RefObject } from 'react'
+import { useRef } from 'react'
+import type { CSSProperties, FocusEvent, PointerEvent, ReactElement, RefObject } from 'react'
 import { cn } from '../../lib/cn'
 import { CHROME_EXIT_OFFSET, CHROME_IN, CHROME_OUT } from './motion'
 import { Lightbox, useLightboxConfig, useLightboxRefs, useLightboxState } from './parts'
-import { useChromeAutoHide, type ChromeAutoHide } from './use-chrome-auto-hide'
+import { isRevealingPointer, useChromeAutoHide, type ChromeAutoHide } from './use-chrome-auto-hide'
 import { SM_BREAKPOINT_PX, useMinWidth } from './use-min-width'
+import { useTouchTap } from './use-touch-tap'
 import type { MediaLightboxProps } from './types'
 
 /**
@@ -263,13 +265,15 @@ function Dock({
           No surface of its own. A framed photo and a bar underneath read as
           two containers competing for the eye; the photo is the subject, so
           it is the only thing with an edge. Caption and strip sit directly
-          on the backdrop, centred under the picture.
+          on the backdrop, centred under the picture. Below `sm` that backdrop
+          is the black media stage whatever the theme, so the text takes the
+          on-media foreground there.
         */}
         <div
           className={cn(
             'flex w-full flex-col items-center gap-2.5',
             'px-3 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))]',
-            'text-[var(--a63-text-primary)]'
+            'text-[var(--a63-on-media-foreground)] sm:text-[var(--a63-text-primary)]'
           )}
           data-slot="media-lightbox-dock"
         >
@@ -285,7 +289,12 @@ function Dock({
           */}
             <div className="flex max-w-full items-baseline justify-center gap-3">
               {item?.caption ? (
-                <Lightbox.Caption className="min-w-0 truncate text-center text-sm text-[var(--a63-text-secondary)]" />
+                <Lightbox.Caption
+                  className={cn(
+                    'min-w-0 truncate text-center text-sm',
+                    'text-[var(--a63-on-media-foreground)] sm:text-[var(--a63-text-secondary)]'
+                  )}
+                />
               ) : null}
               {/*
                 The strip already shows position, and `Lightbox.Status`
@@ -299,8 +308,8 @@ function Dock({
                 <Lightbox.Counter
                   aria-hidden
                   className={cn(
-                    'shrink-0 font-mono text-xs text-[var(--a63-text-secondary)]',
-                    'tabular-nums opacity-70'
+                    'shrink-0 font-mono text-xs tabular-nums opacity-70',
+                    'text-[var(--a63-on-media-foreground)] sm:text-[var(--a63-text-secondary)]'
                   )}
                 />
               ) : null}
@@ -341,8 +350,14 @@ function Dock({
  * space around the photo — not just the backdrop's own margins — dismisses
  * the lightbox too. `aria-hidden` and untabbable: it duplicates `Close`'s
  * action rather than adding a second stop to the accessibility tree.
+ *
+ * Mouse only. On a phone a wide photo leaves most of the screen empty above
+ * and below it, and a tap there meant to hide the controls, or one that just
+ * missed the photo, closed the viewer. A tap from a finger or a pen toggles
+ * the chrome instead (`ChromeTapToggle`); dismissal on touch is the pull or
+ * the Close button.
  */
-function SlideCloseArea(): ReactElement {
+function SlideCloseArea({ touchRef }: { touchRef: RefObject<boolean> }): ReactElement {
   const { labels } = useLightboxConfig()
   const { close } = useLightboxState()
 
@@ -351,11 +366,41 @@ function SlideCloseArea(): ReactElement {
       aria-hidden
       aria-label={labels.close}
       className="absolute inset-0 cursor-default outline-none"
-      onClick={close}
+      onClick={() => {
+        if (!touchRef.current) {
+          close()
+        }
+      }}
       tabIndex={-1}
       type="button"
     />
   )
+}
+
+/**
+ * On touch, a single tap anywhere on the photo or around it shows or hides the
+ * chrome, the way a native photo viewer does. A double-tap still zooms and
+ * does not also toggle: each tap waits out the double-tap window first.
+ */
+function ChromeTapToggle({
+  chrome,
+  onPress,
+}: {
+  chrome: ChromeAutoHide
+  onPress: (touch: boolean) => void
+}): null {
+  const { rootRef } = useLightboxRefs()
+  useTouchTap({ onPress, onTap: chrome.toggle, rootRef })
+  return null
+}
+
+/** Reveals the chrome for a mouse; on touch it answers to taps alone. */
+function revealFor(chrome: ChromeAutoHide) {
+  return (event: PointerEvent<HTMLElement>) => {
+    if (isRevealingPointer(event)) {
+      chrome.reveal()
+    }
+  }
 }
 
 /**
@@ -390,6 +435,7 @@ export function MediaLightbox({
   // together, so one hook drives both from here rather than each managing
   // its own idle clock and drifting out of sync.
   const chrome = useChromeAutoHide(open)
+  const touchRef = useRef(false)
 
   return (
     <Lightbox.Root
@@ -406,28 +452,44 @@ export function MediaLightbox({
       transition={transition}
     >
       <Lightbox.Portal onExitComplete={onExitComplete}>
-        <Lightbox.Backdrop className="bg-[var(--a63-surface-page)]" />
+        {/*
+          Below the thumbnail-strip breakpoint the photo sits on the media
+          stage, black in every theme, the way a phone's own photo viewer
+          shows it. From `sm` up the backdrop follows the theme.
+        */}
+        <Lightbox.Backdrop className="bg-[var(--a63-media-stage)] sm:bg-[var(--a63-surface-page)]" />
         <Lightbox.Content
           className={className}
           onKeyDownCapture={chrome.reveal}
-          onPointerMove={chrome.reveal}
+          onPointerMove={revealFor(chrome)}
         >
           <Lightbox.Status />
-          <Lightbox.Viewport className="relative z-10 min-h-0 flex-1" onPointerDown={chrome.reveal}>
+          <ChromeTapToggle
+            chrome={chrome}
+            onPress={touch => {
+              touchRef.current = touch
+            }}
+          />
+          <Lightbox.Viewport
+            className="relative z-10 min-h-0 flex-1"
+            onPointerDown={revealFor(chrome)}
+          >
             <Lightbox.Slides>
               {slide => (
                 <Lightbox.Slide key={slide.item.id}>
-                  <SlideCloseArea />
+                  <SlideCloseArea touchRef={touchRef} />
                   {/*
                     No gutter and no width ceiling: the screen is the frame.
                     A cap at the photo's own resolution reads as principled —
                     upscaling past it only magnifies compression — but it also
                     left a 900px photo floating in the middle of a 1920px
                     display, which is a worse answer to "show me this picture"
-                    than a few soft pixels. The corner radius stays for the
-                    morph to land on, and lifts with the clip under zoom.
+                    than a few soft pixels. From `sm` up the corner radius
+                    stays for the morph to land on, and lifts with the clip
+                    under zoom; below it the photo runs edge to edge on the
+                    black stage with square corners.
                   */}
-                  <Lightbox.Frame className="rounded-2xl">
+                  <Lightbox.Frame className="sm:rounded-2xl">
                     <Lightbox.Zoom>
                       <Lightbox.Media />
                     </Lightbox.Zoom>

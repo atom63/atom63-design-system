@@ -34,6 +34,22 @@ export const PULL_SETTLE_SPRING = {
   restDelta: 0.01,
 } as const satisfies Transition
 
+/**
+ * The paging track settling onto a slide, in slide units (1 = one slide plus
+ * the gap). Just under critical damping: a released flick hands the spring its
+ * speed and glides in without bouncing off the neighbour's edge. `restSpeed`
+ * is explicit because the default is tuned for pixels, and a slide unit is a
+ * whole screen.
+ */
+export const PAGE_SPRING = {
+  type: 'spring',
+  stiffness: 420,
+  damping: 40,
+  mass: 1,
+  restDelta: 0.0005,
+  restSpeed: 0.01,
+} as const satisfies Transition
+
 /** Discrete zoom steps: buttons, `+`/`-`, double-tap. Critically damped — a photo that bounces at the end of a zoom looks broken. */
 export const ZOOM_STEP_SPRING = {
   type: 'spring',

@@ -1,6 +1,6 @@
 import { act, renderHook } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { useChromeAutoHide } from './use-chrome-auto-hide'
+import { isRevealingPointer, useChromeAutoHide } from './use-chrome-auto-hide'
 
 afterEach(() => {
   vi.useRealTimers()
@@ -113,6 +113,47 @@ describe('useChromeAutoHide', () => {
       vi.advanceTimersByTime(2500)
     })
     expect(result.current.visible).toBe(false)
+  })
+
+  it('toggles on a tap and stays where the tap left it', () => {
+    vi.useFakeTimers()
+    const { result } = renderHook(() => useChromeAutoHide(true))
+
+    act(() => {
+      result.current.toggle()
+    })
+    expect(result.current.visible).toBe(false)
+
+    act(() => {
+      result.current.toggle()
+      vi.advanceTimersByTime(10_000)
+    })
+    // Shown by a tap: no idle clock behind it.
+    expect(result.current.visible).toBe(true)
+  })
+
+  it('does not restart the idle clock for a release nobody held', () => {
+    vi.useFakeTimers()
+    const { result } = renderHook(() => useChromeAutoHide(true))
+
+    act(() => {
+      result.current.toggle()
+      result.current.toggle()
+    })
+    // Every pointerup in the document releases `drag`; a swipe's must not
+    // start a countdown on chrome a tap put up.
+    act(() => {
+      document.dispatchEvent(new Event('pointerup'))
+      vi.advanceTimersByTime(5000)
+    })
+    expect(result.current.visible).toBe(true)
+  })
+
+  it('reveals chrome for a mouse, never for a finger or a pen', () => {
+    expect(isRevealingPointer({ pointerType: 'mouse' })).toBe(true)
+    expect(isRevealingPointer({ pointerType: '' })).toBe(true)
+    expect(isRevealingPointer({ pointerType: 'touch' })).toBe(false)
+    expect(isRevealingPointer({ pointerType: 'pen' })).toBe(false)
   })
 
   it('resets to visible and re-arms the idle clock each time it opens again', () => {

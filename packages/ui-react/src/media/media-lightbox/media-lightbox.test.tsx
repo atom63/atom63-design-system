@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { useState } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 import { MediaLightbox } from './media-lightbox'
+import { trackTransform } from './track-physics'
 import type { MediaLightboxItem } from './types'
 
 const items: MediaLightboxItem[] = [
@@ -82,13 +83,27 @@ describe('MediaLightbox', () => {
     renderLightbox({ index: 0 })
 
     const backdrop = document.querySelector('[data-slot="media-lightbox-backdrop"]')
-    // The backdrop follows the theme surface token instead of a hardcoded
-    // black — the lightbox can now go light or dark with the rest of the app.
-    expect(backdrop?.className ?? '').toMatch(/a63-surface-page/)
-    expect(backdrop?.className ?? '').not.toMatch(/backdrop-blur/)
+    const className = backdrop?.className ?? ''
+    // From the thumbnail-strip breakpoint up the backdrop follows the theme
+    // surface; below it the photo sits on the media stage, black in every
+    // theme, as a phone's own photo viewer shows it.
+    expect(className).toContain('bg-[var(--a63-media-stage)]')
+    expect(className).toContain('sm:bg-[var(--a63-surface-page)]')
+    expect(className).not.toMatch(/backdrop-blur/)
   })
 
-  it('lays every item out as its own stacked slide, reachable only when active', () => {
+  it('squares the photo off below the thumbnail-strip breakpoint', () => {
+    renderLightbox({ index: 0 })
+
+    const frame = document.querySelector(
+      '[data-slot="media-lightbox-slide"][data-active] [data-slot="media-lightbox-frame"]'
+    )
+    const radii = (frame?.className ?? '').split(/\s+/).filter(name => name.includes('rounded'))
+    // Rounded only from `sm` up; edge to edge on a phone.
+    expect(radii).toEqual(['sm:rounded-2xl'])
+  })
+
+  it('lays every item out as its own slide on the track, reachable only when active', () => {
     renderLightbox({ index: 1 })
 
     // The lightbox is portalled, so it is never inside the render container.
@@ -96,7 +111,7 @@ describe('MediaLightbox', () => {
     expect(slides).toHaveLength(items.length)
     expect(document.querySelector('[data-slot="media-lightbox-track"]')).not.toBeNull()
 
-    // Only the item on screen is reachable; the rest sit `inert` in the stack.
+    // Only the item on screen is reachable; the rest sit `inert` on the track.
     expect(slides[1]).not.toHaveAttribute('inert')
     expect(slides[0]).toHaveAttribute('inert')
   })
@@ -502,7 +517,7 @@ describe('MediaLightbox', () => {
   it('mounts media only around the active slide', () => {
     renderLightbox({ index: 0, preload: 0 })
 
-    // Every slide keeps its box in the stack; only the bitmaps are gated.
+    // Every slide keeps its place on the track; only the bitmaps are gated.
     expect(document.querySelectorAll('[data-slot="media-lightbox-slide"]')).toHaveLength(
       items.length
     )
@@ -773,10 +788,9 @@ describe('MediaLightbox', () => {
   /**
    * The morph measures the media in viewport coordinates. A scrolling track
    * used to have to be parked on the opening slide first, or the measurement
-   * landed wherever an interrupted scroll happened to be — every slide in the
-   * stack now occupies the same box regardless of which index is active, so
-   * that race cannot recur: opening on a slide other than the first measures
-   * correctly with no parking step at all.
+   * landed wherever an interrupted scroll happened to be. The transform track
+   * commits its resting position in the same render that mounts the frame, so
+   * the strip is already on the opening slide when the morph measures it.
    */
   it('measures the morph correctly no matter which slide the lightbox opens on', async () => {
     const MEDIA_WIDTH = 800
@@ -801,12 +815,15 @@ describe('MediaLightbox', () => {
     document.body.append(origin)
 
     const originalRect = Element.prototype.getBoundingClientRect
+    let stripAtMeasure: string | null = null
     Element.prototype.getBoundingClientRect = function (this: HTMLElement) {
       if (this.dataset?.slot !== 'media-lightbox-frame') {
         return originalRect.call(this)
       }
-      // Every slide's frame sits in the same box in the stack; there is no
-      // per-index offset to account for.
+      // What the strip is drawn at in the very commit the morph measures in.
+      stripAtMeasure ??=
+        document.querySelector<HTMLElement>('[data-slot="media-lightbox-strip"]')?.style
+          .transform ?? null
       return makeRect(0, 0, MEDIA_WIDTH, MEDIA_HEIGHT)
     }
 
@@ -821,6 +838,7 @@ describe('MediaLightbox', () => {
       // Media centre (400, 300) onto thumbnail centre (200, 175).
       const x = /translate3d\((-?[\d.]+)px/.exec(frame?.style.transform ?? '')?.[1]
       expect(Number(x)).toBeCloseTo(-200, 1)
+      expect(stripAtMeasure).toBe(trackTransform(OPEN_INDEX))
     } finally {
       Element.prototype.getBoundingClientRect = originalRect
       origin.remove()

@@ -51,7 +51,18 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // +0.2 kB is two React contexts: Dialog passes `modal` to its popup so it can
 // set `aria-modal`, and Accordion items pass their panel id to the trigger so
 // a collapsed header keeps `aria-controls` (APG). The budget moves to 88.
-const gzipBudgetBytes = 88 * 1024
+//
+// 88 kB held 87.2 kB. Paging the media lightbox with a sliding track instead of
+// a crossfade takes it to 90.1, so it moves to 91. The +1.9 kB in the shared
+// lightbox chunk is the track itself: a spring-settled position that a press
+// can catch and a key press can retarget, rubber-band edges, a release rule
+// that pages by distance or velocity and catches a flick that reversed, and
+// trackpad swipes that follow the fingers 1:1 while still turning one page per
+// gesture. It replaces the crossfade stack and a swipe hook that only decided a
+// direction. The +1.1 kB in `./media` is the preset's touch tap: a single tap,
+// held back for the double-tap window, shows or hides the controls instead of
+// closing the viewer, and the chrome hook gained the toggle that tap drives.
+const gzipBudgetBytes = 91 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()
