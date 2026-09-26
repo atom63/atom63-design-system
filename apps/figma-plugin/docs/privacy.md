@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Last updated:** March 11, 2026
+**Last updated:** September 25, 2026
 
 ## Privacy Policy for Cipher
 
@@ -63,5 +63,5 @@ If the plugin later adds features such as accounts, cloud sync, analytics, or th
 If you have questions about this Privacy Policy, you can contact:
 
 **Cipher**
-**Email:** [yz.atom63@gmail.com](mailto:yz.atom63@gmail.com)
+**Email:** [hello.youzhang@gmail.com](mailto:hello.youzhang@gmail.com)
 **Website:** [https://usecipher.dev](https://usecipher.dev)

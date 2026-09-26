@@ -9,7 +9,7 @@ No analytics, tracking, or telemetry is used.
 
 Cipher does not sell personal data. This policy will be updated if features such as accounts, cloud sync, or analytics are introduced.
 
-For questions, contact yz.atom63@gmail.com`
+For questions, contact hello.youzhang@gmail.com`
 
 const TERMS_OF_USE = `By using Cipher, you agree to these terms. Cipher is a Figma plugin for importing, exporting, and synchronizing design tokens, provided as a beta product.
 
@@ -17,7 +17,7 @@ Cipher is provided as-is. Features may change or be removed at any time. You are
 
 Cipher is not affiliated with or endorsed by Figma. To the maximum extent permitted by law, Cipher and its creator are not liable for indirect, incidental, or consequential damages.
 
-For questions, contact yz.atom63@gmail.com`
+For questions, contact hello.youzhang@gmail.com`
 
 type LegalView = null | 'privacy' | 'terms'
 
@@ -50,8 +50,8 @@ export function AboutPage() {
           </div>
           <div className={styles.infoRow}>
             <span className={styles.infoLabel}>Contact</span>
-            <a className={styles.infoLink} href="mailto:yz.atom63@gmail.com">
-              yz.atom63@gmail.com
+            <a className={styles.infoLink} href="mailto:hello.youzhang@gmail.com">
+              hello.youzhang@gmail.com
             </a>
           </div>
           <div className={styles.infoRow}>
