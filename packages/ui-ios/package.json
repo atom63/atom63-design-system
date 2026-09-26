@@ -18,8 +18,10 @@
     "check:api:write": "node Scripts/check-public-api.mjs --write",
     "check:consumer": "node Scripts/check-consumer-smoke.mjs",
     "test:swift": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer swift test",
-    "test:app": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild test -project ../../examples/ios-demo/Atom63Demo.xcodeproj -scheme Atom63Demo -destination 'platform=iOS Simulator,name=iPhone 17 Pro' CODE_SIGNING_ALLOWED=NO -only-testing:Atom63DemoTests",
-    "test:ui": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild test -project ../../examples/ios-demo/Atom63Demo.xcodeproj -scheme Atom63Demo -destination 'platform=iOS Simulator,name=iPhone 17 Pro' CODE_SIGNING_ALLOWED=NO",
+    "test:app": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild test -project ../../examples/ios-demo/Atom63Demo.xcodeproj -scheme Atom63Demo -destination 'platform=iOS Simulator,name=iPhone 17 Pro' CODE_SIGNING_ALLOWED=NO -only-testing:Atom63DemoTests -skip-testing:Atom63DemoTests/CatalogSnapshotTests",
+    "test:snapshots": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer node Scripts/run-ios-snapshots.mjs",
+    "test:snapshots:record": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer node Scripts/run-ios-snapshots.mjs --record",
+    "test:ui": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild test -project ../../examples/ios-demo/Atom63Demo.xcodeproj -scheme Atom63Demo -destination 'platform=iOS Simulator,name=iPhone 17 Pro' CODE_SIGNING_ALLOWED=NO -skip-testing:Atom63DemoTests/CatalogSnapshotTests",
     "test:ci": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer node Scripts/run-ios-tests.mjs",
     "build:app": "DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project ../../examples/ios-demo/Atom63Demo.xcodeproj -scheme Atom63Demo -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build"
   },

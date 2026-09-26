@@ -19,6 +19,8 @@
 		B10000000000000000000001 /* Atom63DemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000001 /* Atom63DemoUITests.swift */; };
 		C10000000000000000000001 /* ProjectRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20000000000000000000001 /* ProjectRepositoryTests.swift */; };
 		C10000000000000000000002 /* CatalogRegistryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20000000000000000000003 /* CatalogRegistryTests.swift */; };
+		C10000000000000000000003 /* CatalogSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20000000000000000000004 /* CatalogSnapshotTests.swift */; };
+		C10000000000000000000004 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C80000000000000000000001 /* SnapshotTesting */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,7 @@
 		C20000000000000000000001 /* ProjectRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectRepositoryTests.swift; sourceTree = "<group>"; };
 		C20000000000000000000002 /* Atom63DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Atom63DemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C20000000000000000000003 /* CatalogRegistryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogRegistryTests.swift; sourceTree = "<group>"; };
+		C20000000000000000000004 /* CatalogSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogSnapshotTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C10000000000000000000004 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +133,7 @@
 			children = (
 				C20000000000000000000001 /* ProjectRepositoryTests.swift */,
 				C20000000000000000000003 /* CatalogRegistryTests.swift */,
+				C20000000000000000000004 /* CatalogSnapshotTests.swift */,
 			);
 			path = Atom63DemoTests;
 			sourceTree = "<group>";
@@ -191,6 +196,7 @@
 			);
 			name = Atom63DemoTests;
 			packageProductDependencies = (
+				C80000000000000000000001 /* SnapshotTesting */,
 			);
 			productName = Atom63DemoTests;
 			productReference = C20000000000000000000002 /* Atom63DemoTests.xctest */;
@@ -230,6 +236,7 @@
 			mainGroup = A40000000000000000000001;
 			packageReferences = (
 				A80000000000000000000002 /* XCLocalSwiftPackageReference "../../packages/ui-ios" */,
+				C80000000000000000000002 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			productRefGroup = A40000000000000000000003 /* Products */;
 			projectDirPath = "";
@@ -296,6 +303,7 @@
 			files = (
 				C10000000000000000000001 /* ProjectRepositoryTests.swift in Sources */,
 				C10000000000000000000002 /* CatalogRegistryTests.swift in Sources */,
+				C10000000000000000000003 /* CatalogSnapshotTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -540,11 +548,27 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		C80000000000000000000002 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = exactVersion;
+				version = 1.19.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		A80000000000000000000001 /* Atom63UI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A80000000000000000000002 /* XCLocalSwiftPackageReference "../../packages/ui-ios" */;
 			productName = Atom63UI;
+		};
+		C80000000000000000000001 /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C80000000000000000000002 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
