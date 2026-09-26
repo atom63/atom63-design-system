@@ -17,11 +17,10 @@
     color: var(--a63-text-secondary);
   }
 
+  /* An outline, so the active tab's shadow below cannot replace the ring. */
   .mdx-doc-example-tab:focus-visible {
-    outline: none;
-    box-shadow:
-      0 0 0 1px var(--a63-surface-page),
-      0 0 0 3px var(--a63-focus-ring);
+    outline: var(--a63-control-focus-ring-width) solid
+      var(--a63-control-focus-ring-color, var(--a63-focus-ring));
   }
 
   .mdx-doc-example-tab[data-active='true'] {

@@ -44,10 +44,26 @@
   flex-direction: column;
 }
 
-/* Focused member floats above its neighbours so the ring isn't clipped. */
+/* Focused member floats above its neighbours, and its ring sits inside its own
+   edge: the horizontal group scrolls (overflow-x), which would clip an outer
+   ring at the group's edges. */
 .a63-ButtonGroup > *:focus-visible {
   position: relative;
   z-index: 1;
+  outline-offset: calc(-1 * var(--a63-control-focus-ring-width));
+}
+
+/* On a loud fill (primary, destructive, …) a brand ring drawn inside the cell
+   disappears into the fill, so it takes the label colour, which contrasts with
+   the fill by design. Quiet cells (listed below) keep the brand ring. */
+.a63-ButtonGroup
+  > [data-button]:not(
+    [data-variant='ghost'],
+    [data-variant='link'],
+    [data-variant='secondary'],
+    [data-variant='outline']
+  ):focus-visible {
+  outline-color: var(--button-foreground);
 }
 
 .a63-ButtonGroup > [data-slot] {

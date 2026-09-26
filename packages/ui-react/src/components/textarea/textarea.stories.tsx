@@ -79,6 +79,9 @@ export const AutoSizing: Story = {
 
 /* Drops the field chrome so it can nest inside a parent that provides it. */
 export const Unstyled: Story = {
+  // `unstyled` hands all field chrome, the focus ring included, to the parent
+  // (InputGroup rings on `:focus-within`); this story's plain frame draws none.
+  parameters: { craft: { disable: ['focus-visible'] } },
   render: () => (
     <div
       style={{

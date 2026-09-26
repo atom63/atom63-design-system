@@ -45,9 +45,10 @@ const meta = {
     ),
   ],
   // The slider is code-split and replaces a skeleton once it loads; wait for
-  // it so tests see the finished block.
+  // it so tests see the finished block. The chunk can take well over the
+  // default 1 s to load on a busy CI browser.
   play: async ({ canvasElement }) => {
-    await within(canvasElement).findByRole('slider')
+    await within(canvasElement).findByRole('slider', undefined, { timeout: 10_000 })
   },
 } satisfies Meta<typeof ImageCompare>
 

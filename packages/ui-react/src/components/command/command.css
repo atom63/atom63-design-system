@@ -78,6 +78,14 @@
   align-items: center;
   gap: var(--a63-space-2);
   padding: 0.625rem 0.875rem;
+  border-radius: var(--a63-control-radius);
+}
+/* The search field has no chrome of its own, so the row rings as a field when
+   it holds keyboard focus; inset so the popup's rounded corners do not clip it. */
+.a63-Command-input-wrapper:has(> .a63-Command-input:focus-visible) {
+  outline: var(--a63-control-focus-ring-width) solid
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline-offset: calc(-1 * var(--a63-space-1_5));
 }
 .a63-Command-input-icon {
   display: inline-flex;

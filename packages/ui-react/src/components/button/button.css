@@ -184,11 +184,11 @@
   transform: var(--button-motion-press);
 }
 
+/* The ring is an outline, not a box-shadow layer: recipes that set a Button's
+   box-shadow (ButtonGroup cells, ScrollableList chevrons, ConnectedPanel
+   triggers) would otherwise replace it, and forced-colors mode drops shadows. */
 .a63-Button:focus-visible {
-  box-shadow:
-    var(--button-shadow),
-    var(--button-tint-drop),
-    0 0 0 var(--a63-control-focus-ring-width) var(--button-focus-ring);
+  outline: var(--a63-control-focus-ring-width) solid var(--button-focus-ring);
 }
 
 .a63-Button:disabled,

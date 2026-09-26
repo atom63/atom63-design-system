@@ -12,6 +12,18 @@
     background-color: var(--a63-surface-muted);
   }
 
+  /* The focusable slider spans the whole stage, so the stage rings while it has
+     keyboard focus (inset, because the framed panel clips its children), and so
+     does the knob the arrow keys move. */
+  .mdx-image-compare-stage:has([role='slider']:focus-visible),
+  .mdx-image-compare-stage:has([role='slider']:focus-visible) .mdx-image-compare-handle-knob {
+    outline: var(--a63-control-focus-ring-width) solid
+      var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  }
+  .mdx-image-compare-stage:has([role='slider']:focus-visible) {
+    outline-offset: calc(-1 * var(--a63-control-focus-ring-width));
+  }
+
   .mdx-image-compare-skeleton {
     background-color: var(--a63-surface-muted);
   }

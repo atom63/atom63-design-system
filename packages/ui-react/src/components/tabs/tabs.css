@@ -191,9 +191,13 @@
   color: var(--a63-text-primary);
 }
 
+/* An outline drawn inside the tab: the active tab's own shadow (attached) would
+   replace a box-shadow ring, and the list scrolls (overflow-x), which would
+   clip an outer ring. */
 .a63-Tabs-tab:focus-visible {
-  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+  outline: var(--a63-control-focus-ring-width) solid
     var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline-offset: calc(-1 * var(--a63-control-focus-ring-width));
 }
 
 .a63-Tabs-tab[data-disabled] {
@@ -241,6 +245,10 @@
   box-shadow: var(--a63-control-shadow);
   color: var(--a63-action-primary-foreground);
   font-weight: 600;
+}
+/* The inset ring would vanish into the primary fill; it takes the label colour. */
+.a63-Tabs-list[data-variant='attached'] .a63-Tabs-tab[data-active]:focus-visible {
+  outline-color: var(--a63-action-primary-foreground);
 }
 
 /* ── Sliding indicator ─────────────────────────────────────────────────── */
@@ -292,6 +300,12 @@
 .a63-Tabs-panel {
   flex: 1;
   outline: none;
+}
+
+/* The panel is a tab stop, so it needs a ring too. */
+.a63-Tabs-panel:focus-visible {
+  outline: var(--a63-control-focus-ring-width) solid
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
 }
 
 /* attached: the panel is the folder BODY — a card surface bordered on all sides
