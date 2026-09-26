@@ -43,7 +43,8 @@
     "release:bootstrap": "node scripts/design-system/bootstrap-npm-package.mjs",
     "release:version": "changeset version && node scripts/design-system/audit-dependency-version-policy.mjs --write && node scripts/design-system/audit-stable-release-preflight.mjs --write && pnpm check:package-surface && node scripts/design-system/audit-ui-react-exports.mjs --write && node scripts/design-system/audit-ui-react-stable-actions.mjs --write",
     "test:scripts": "node --test \"scripts/design-system/lib/*.test.mjs\" \"packages/styles/scripts/lib/*.test.mjs\"",
-    "version-packages": "changeset version"
+    "version-packages": "changeset version",
+    "vibe": "node scripts/design-system/vibe.mjs"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",
@@ -54,6 +55,7 @@
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "catalog:",
+    "axe-core": "^4.12.1",
     "clsx": "^2.1.1",
     "eslint": "10.7.0",
     "eslint-plugin-jsx-a11y": "6.10.2",

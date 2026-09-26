@@ -1,0 +1,586 @@
+{
+  "date": "2026-09-26",
+  "commit": "b19811c8946b25a4ccc101b848a970edc7b781d1",
+  "dirty": true,
+  "claudeVersion": "2.1.280 (Claude Code)",
+  "modelFlag": null,
+  "models": [
+    "claude-opus-5-5[1m]"
+  ],
+  "arms": [
+    "ds",
+    "plain"
+  ],
+  "limits": {
+    "builderTurns": 80,
+    "builderBudgetUsd": 5,
+    "judgeTurns": 30,
+    "judgeBudgetUsd": 2
+  },
+  "promptTemplate": "Build the following as a new page of this app, reachable at the URL path `/<brief id>`. Keep the pages that already exist working.\n\n## <brief title>\n\n<brief body>\n\n## Constraints\n\n- Work only inside this project directory.\n- Use only the dependencies that are already installed; do not add packages.\n- Use realistic mock data where the page needs data; there is no backend.\n- When you are done, `pnpm typecheck` and `pnpm build` must both pass.",
+  "briefs": [
+    {
+      "brief": {
+        "id": "sign-in",
+        "title": "Sign in",
+        "body": "A sign-in page for a project management tool called Tally.\n\n- A centered card with the product name, a short welcome line, an email field, a password field\n  and a \"Sign in\" button.\n- A \"Forgot password?\" link next to the password field and a \"Create an account\" link below the\n  card.\n- A \"Keep me signed in\" checkbox.\n- Submitting with an empty or malformed email shows an error on that field. Any password other\n  than `correct-horse` shows \"Email or password is incorrect\" above the button.\n- While the request is in flight (fake it with a one-second delay), the button shows that it is\n  working and cannot be pressed twice.",
+        "markdown": "# Sign in\n\nA sign-in page for a project management tool called Tally.\n\n- A centered card with the product name, a short welcome line, an email field, a password field\n  and a \"Sign in\" button.\n- A \"Forgot password?\" link next to the password field and a \"Create an account\" link below the\n  card.\n- A \"Keep me signed in\" checkbox.\n- Submitting with an empty or malformed email shows an error on that field. Any password other\n  than `correct-horse` shows \"Email or password is incorrect\" above the button.\n- While the request is in flight (fake it with a one-second delay), the button shows that it is\n  working and cannot be pressed twice."
+      },
+      "arms": {
+        "ds": {
+          "status": "ok",
+          "agent": {
+            "costUsd": 0.5990977999999999,
+            "durationMs": 76091,
+            "isError": false,
+            "models": [
+              "claude-opus-5-5[1m]"
+            ],
+            "permissionDenials": [
+              {
+                "tool": "Bash",
+                "input": "d=node_modules/@atom63/ui-react/dist; ls $d | head; grep -rhoE \"alertVariants[^;]*;\" node_modules/@atom63/ui-foundation/dist/*.d.ts 2>/dev/null | head -3; grep -rn \"variant\" $(grep -rl \"AlertProps\" $d --include=*.d.ts | head -2) | head; grep -rn \"onCheckedChange\\|CheckboxProps =\" $d --include=*.d.ts | head -3; grep -rn \"type ButtonProps\\|loading\" $d --include=button*.d.ts | head; grep -rn \"\\-\\-color-primary\\|--color-destructive\\|--color-muted-foreground\" node_modules/@atom63/styles -r --include=*.css | head -5"
+              }
+            ],
+            "stopReason": "success",
+            "turns": 28
+          },
+          "agentResult": "I've added the sign-in page at `/sign-in`, and `pnpm typecheck` and `pnpm build` both pass. The build shows the usual Vite warning about large chunks, but nothing fails. I haven't opened the page in a browser or clicked through it, so the checks below were built as specified but not tested by hand.\n\n**What's there** (`src/pages/sign-in.tsx`, plus a new route in `src/router.tsx`):\n- **The card:** a centered card with \"Tally\", a short welcome line, email and password fields, a \"Keep me signed in\" checkbox (ticked by default) and a \"Sign in\" button. It uses the design system's own components and colors.\n- **Links:** \"Forgot password?\" sits on the same line as the Password label, and \"New to Tally? Create an account\" sits below the card.\n- **Email check:** submitting with an empty or malformed email shows a message under the email field, marks the field as invalid and moves focus back to it. The message clears as soon as you start typing again.\n- **Wrong password:** after the one-second fake request, any password other than `correct-horse` shows \"Email or password is incorrect\" above the button, and screen readers announce it.\n- **While waiting:** the button shows a spinner and can't be pressed again. Its width stays the same, so nothing jumps.\n- **Success:** the right password replaces the form with a \"You're signed in\" message. It says \"for 30 days\" or \"for this session\" depending on the checkbox. I added this so success has a visible result; it wasn't in the spec.\n\n**Decision for you:** \"Forgot password?\" and \"Create an account\" point to `/forgot-password` and `/sign-up`. Those pages don't exist, so both links currently show the app's \"Page not found\" page. Tell me if you want placeholder pages for them or different targets.\n\nThe existing Home, Blog and post pages are unchanged. I didn't add Sign in to the header menu; that's a quick change if you want it.",
+          "files": {
+            "added": [
+              "src/pages/sign-in.tsx"
+            ],
+            "changed": [
+              "src/router.tsx"
+            ],
+            "removed": []
+          },
+          "measures": {
+            "craft": [],
+            "jsx": {
+              "system": 23,
+              "thirdParty": 2,
+              "icons": 1,
+              "local": 2,
+              "interactiveHtml": 3,
+              "otherHtml": 8,
+              "systemNames": {
+                "Page": 1,
+                "Container": 1,
+                "Card": 1,
+                "CardContent": 1,
+                "CardTitle": 1,
+                "CardDescription": 1,
+                "Alert": 2,
+                "AlertTitle": 2,
+                "AlertDescription": 1,
+                "FieldGroup": 1,
+                "Field": 2,
+                "FieldLabel": 2,
+                "Input": 2,
+                "FieldError": 1,
+                "Checkbox": 1,
+                "Label": 1,
+                "AlertIcon": 1,
+                "Button": 1
+              }
+            },
+            "lines": 240,
+            "literals": {
+              "paletteUtilities": [],
+              "literalColors": []
+            },
+            "share": 0.8214285714285714
+          },
+          "typecheck": {
+            "ok": true,
+            "errors": 0
+          },
+          "build": {
+            "ok": true,
+            "output": ""
+          },
+          "axe": {
+            "violations": [],
+            "nodes": 0
+          },
+          "page": {
+            "textLength": 252,
+            "consoleErrors": []
+          }
+        },
+        "plain": {
+          "status": "ok",
+          "agent": {
+            "costUsd": 0.1686938,
+            "durationMs": 41582,
+            "isError": false,
+            "models": [
+              "claude-opus-5-5[1m]"
+            ],
+            "permissionDenials": [],
+            "stopReason": "success",
+            "turns": 7
+          },
+          "agentResult": "The sign-in page is built and reachable at `/sign-in`. `pnpm typecheck` and `pnpm build` both pass. I didn't open it in a browser, so the page's behaviour hasn't been clicked through.\n\n**What changed**\n- **`src/SignIn.tsx`** (new): the Tally sign-in page. It has a centered card with the product name, a welcome line, email and password fields, a \"Forgot password?\" link next to the password label, a \"Keep me signed in\" checkbox, the \"Sign in\" button, and a \"Create an account\" link below the card.\n- **`src/App.tsx`**: the app had no router, so I added a simple check on the URL path. `/sign-in` (with or without a trailing slash) shows the new page. Every other path still shows the existing page, unchanged. No packages were added.\n\n**How it behaves**\n- **Email check:** an empty email shows \"Enter your email address\" under the field. A malformed one shows \"Enter a valid email address, like name@company.com\". The field turns red, gets focus, and the error clears as soon as you start typing.\n- **Wrong password:** after the fake one-second request, any password other than `correct-horse` shows \"Email or password is incorrect\" above the button.\n- **While waiting:** the button is disabled, shows a spinner and reads \"Signing in…\". Pressing it again or hitting Enter does nothing.\n- **Correct password:** the form is replaced by a \"Signed in as …\" confirmation. There's no dashboard to send you to.\n\n**Worth knowing**\n- **Dead links:** \"Forgot password?\" goes to `/forgot-password` and \"Create an account\" goes to `/sign-up`. Neither page exists, so both currently show the default page.\n- **Checkbox has no effect:** \"Keep me signed in\" is ticked by default, but nothing reads its value since there's no real session.\n- **Hosting:** `pnpm dev` and `pnpm preview` serve `/sign-in` directly. A static host will need to be set up to send unknown paths to `index.html`.",
+          "files": {
+            "added": [
+              "src/SignIn.tsx"
+            ],
+            "changed": [
+              "src/App.tsx"
+            ],
+            "removed": []
+          },
+          "measures": {
+            "craft": [
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "bg-slate-50",
+                "line": 55
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-200",
+                "line": 57
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 57
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "bg-indigo-600",
+                "line": 59
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-white",
+                "line": 59
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-900",
+                "line": 62
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-600",
+                "line": 63
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "bg-emerald-50",
+                "line": 67
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-emerald-800",
+                "line": 67
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-700",
+                "line": 73
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-900",
+                "line": 90
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "placeholder:text-slate-400",
+                "line": 90
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-2",
+                "line": 90
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "border-red-500",
+                "line": 92
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "focus:ring-red-500/40",
+                "line": 92
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-red-500/40",
+                "line": 92
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-300",
+                "line": 93
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "focus:border-indigo-500",
+                "line": 93
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-visible",
+                "match": "focus:border-indigo-500",
+                "line": 93
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "focus:ring-indigo-500/40",
+                "line": 93
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-indigo-500/40",
+                "line": 93
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-red-600",
+                "line": 97
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-700",
+                "line": 105
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-indigo-600",
+                "line": 108
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "hover:text-indigo-500",
+                "line": 108
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-300",
+                "line": 119
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-900",
+                "line": 119
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "focus:border-indigo-500",
+                "line": 119
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-visible",
+                "match": "focus:border-indigo-500",
+                "line": 119
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-2",
+                "line": 119
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "focus:ring-indigo-500/40",
+                "line": 119
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-indigo-500/40",
+                "line": 119
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-700",
+                "line": 123
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-300",
+                "line": 129
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "accent-indigo-600",
+                "line": 129
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "bg-red-50",
+                "line": 135
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-red-700",
+                "line": 135
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "bg-indigo-600",
+                "line": 145
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-white",
+                "line": 145
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-indigo-500",
+                "line": 145
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:ring-indigo-500",
+                "line": 145
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-600",
+                "line": 154
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-indigo-600",
+                "line": 156
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "hover:text-indigo-500",
+                "line": 156
+              }
+            ],
+            "jsx": {
+              "system": 0,
+              "thirdParty": 0,
+              "icons": 2,
+              "local": 1,
+              "interactiveHtml": 10,
+              "otherHtml": 17,
+              "systemNames": {}
+            },
+            "lines": 181,
+            "literals": {
+              "paletteUtilities": [
+                "bg-slate-50",
+                "border-slate-200",
+                "bg-white",
+                "bg-indigo-600",
+                "text-white",
+                "text-slate-900",
+                "text-slate-600",
+                "bg-emerald-50",
+                "text-emerald-800",
+                "text-slate-700",
+                "text-slate-900",
+                "placeholder:text-slate-400",
+                "border-red-500",
+                "focus:ring-red-500/40",
+                "border-slate-300",
+                "focus:border-indigo-500",
+                "focus:ring-indigo-500/40",
+                "text-red-600",
+                "text-slate-700",
+                "text-indigo-600",
+                "hover:text-indigo-500",
+                "border-slate-300",
+                "text-slate-900",
+                "focus:border-indigo-500",
+                "focus:ring-indigo-500/40",
+                "text-slate-700",
+                "border-slate-300",
+                "accent-indigo-600",
+                "bg-red-50",
+                "text-red-700",
+                "bg-indigo-600",
+                "text-white",
+                "hover:bg-indigo-500",
+                "focus-visible:ring-indigo-500",
+                "text-slate-600",
+                "text-indigo-600",
+                "hover:text-indigo-500"
+              ],
+              "literalColors": []
+            },
+            "share": 0
+          },
+          "typecheck": {
+            "ok": true,
+            "errors": 0
+          },
+          "build": {
+            "ok": true,
+            "output": ""
+          },
+          "axe": {
+            "violations": [],
+            "nodes": 0
+          },
+          "page": {
+            "textLength": 159,
+            "consoleErrors": []
+          }
+        }
+      },
+      "judge": {
+        "mapping": {
+          "A": "ds",
+          "B": "plain"
+        },
+        "agent": {
+          "costUsd": 0.2046336,
+          "durationMs": 28848,
+          "isError": false,
+          "models": [
+            "claude-opus-5-5[1m]"
+          ],
+          "permissionDenials": [],
+          "stopReason": "success",
+          "turns": 9
+        },
+        "raw": "{\"A\":[{\"criterion\":\"spacing-rhythm\",\"score\":3,\"evidence\":\"The page uses a small set of gaps: gap-1 inside the title block, FieldGroup's default gaps between fields, mb-6 between the header and the form, and gap-6 between the card and the 'Create an account' line. Each field's label and input sit closer together than the fields sit to each other.\"},{\"criterion\":\"hierarchy\",\"score\":3,\"evidence\":\"There is one variant=\\\"primary\\\" full-width Sign in button. The CardTitle h1 'Tally' is larger and heavier than the CardDescription welcome line, and the footer prompt uses text-muted-foreground with a text-primary link.\"},{\"criterion\":\"alignment\",\"score\":3,\"evidence\":\"Labels, inputs, the checkbox row and the button share the CardContent left edge. The Password label and the 'Forgot password?' link share a baseline through items-baseline justify-between, and the inputs are the same height.\"},{\"criterion\":\"state-completeness\",\"score\":3,\"evidence\":\"The button uses loading={pending}, and a pending guard stops a second submit. The email field shows specific FieldError copy with data-invalid. A wrong password shows an error Alert with an icon above the button, and success replaces the form with a success Alert that reflects the 'Keep me signed in' choice.\"},{\"criterion\":\"motion-restraint\",\"score\":3,\"evidence\":\"The page adds no custom animation. The only motion is the Button's built-in loading state, which comes from the component defaults.\"},{\"criterion\":\"accessibility\",\"score\":3,\"evidence\":\"Each input has a FieldLabel with htmlFor, and the email error is linked through aria-describedby with focus moved to the invalid field. The form error Alert has role=\\\"alert\\\" and an icon as well as color, and the links are native <a> elements with focus-visible underlines. The h1 comes through CardTitle render={<h1 />}.\"},{\"criterion\":\"token-use\",\"score\":3,\"evidence\":\"Styling comes only from components and role classes (text-primary, text-muted-foreground, text-sm, gap-6, max-w-sm). There are no literal colors, arbitrary lengths or className overrides that restyle a component.\"}],\"B\":[{\"criterion\":\"spacing-rhythm\",\"score\":2,\"evidence\":\"Gaps come from the scale (space-y-4 between fields, mt-1 between a label and its input, mb-6 under the header, mt-6 before the footer prompt) and grouping is correct. However, spacing is set as margins on individual children (mt-1, mb-3, mt-1 on the error) rather than as gaps on the parent.\"},{\"criterion\":\"hierarchy\",\"score\":3,\"evidence\":\"The single filled indigo Sign in button is the only primary action. The h1 at text-2xl font-semibold stands above the text-sm slate-600 welcome line, and the links step down to plain text links, although the 'T' logo tile adds a second accent block above the title.\"},{\"criterion\":\"alignment\",\"score\":3,\"evidence\":\"Labels, inputs, the checkbox and the button all start on the card's p-8 edge. The Password label and the 'Forgot password?' link share a baseline through items-baseline, and both inputs use the same px-3 py-2 height.\"},{\"criterion\":\"state-completeness\",\"score\":3,\"evidence\":\"While submitting, the button is disabled with aria-busy, shows a LoaderCircle spinner and changes its label to 'Signing in…'. The email field shows specific inline copy, the wrong-password error appears in an icon-and-text alert above the button, and a role=\\\"status\\\" success message replaces the form.\"},{\"criterion\":\"motion-restraint\",\"score\":2,\"evidence\":\"The only motion is the loading spinner, which has a purpose. It uses Tailwind's animate-spin at the default duration instead of the --a63-motion tokens, and it has no motion-reduce handling.\"},{\"criterion\":\"accessibility\",\"score\":3,\"evidence\":\"The page uses native label/input pairs with htmlFor and a label that wraps the checkbox. It sets aria-invalid and aria-describedby on the email field, gives the form error role=\\\"alert\\\" with an icon, and shows focus-visible rings on the controls and button.\"},{\"criterion\":\"token-use\",\"score\":1,\"evidence\":\"Colors are Tailwind palette literals throughout (bg-slate-50, bg-white, border-slate-300, bg-indigo-600, text-red-600, bg-emerald-50). The inputs, button and card are hand-rolled instead of design-system components, so the page ignores the theme, as the screenshots show with no header, footer or theme styling.\"}]}",
+        "scores": {
+          "ds": {
+            "max": 21,
+            "passed": true,
+            "scores": [
+              {
+                "criterion": "spacing-rhythm",
+                "score": 3,
+                "evidence": "The page uses a small set of gaps: gap-1 inside the title block, FieldGroup's default gaps between fields, mb-6 between the header and the form, and gap-6 between the card and the 'Create an account' line. Each field's label and input sit closer together than the fields sit to each other."
+              },
+              {
+                "criterion": "hierarchy",
+                "score": 3,
+                "evidence": "There is one variant=\"primary\" full-width Sign in button. The CardTitle h1 'Tally' is larger and heavier than the CardDescription welcome line, and the footer prompt uses text-muted-foreground with a text-primary link."
+              },
+              {
+                "criterion": "alignment",
+                "score": 3,
+                "evidence": "Labels, inputs, the checkbox row and the button share the CardContent left edge. The Password label and the 'Forgot password?' link share a baseline through items-baseline justify-between, and the inputs are the same height."
+              },
+              {
+                "criterion": "state-completeness",
+                "score": 3,
+                "evidence": "The button uses loading={pending}, and a pending guard stops a second submit. The email field shows specific FieldError copy with data-invalid. A wrong password shows an error Alert with an icon above the button, and success replaces the form with a success Alert that reflects the 'Keep me signed in' choice."
+              },
+              {
+                "criterion": "motion-restraint",
+                "score": 3,
+                "evidence": "The page adds no custom animation. The only motion is the Button's built-in loading state, which comes from the component defaults."
+              },
+              {
+                "criterion": "accessibility",
+                "score": 3,
+                "evidence": "Each input has a FieldLabel with htmlFor, and the email error is linked through aria-describedby with focus moved to the invalid field. The form error Alert has role=\"alert\" and an icon as well as color, and the links are native <a> elements with focus-visible underlines. The h1 comes through CardTitle render={<h1 />}."
+              },
+              {
+                "criterion": "token-use",
+                "score": 3,
+                "evidence": "Styling comes only from components and role classes (text-primary, text-muted-foreground, text-sm, gap-6, max-w-sm). There are no literal colors, arbitrary lengths or className overrides that restyle a component."
+              }
+            ],
+            "total": 21
+          },
+          "plain": {
+            "max": 21,
+            "passed": false,
+            "scores": [
+              {
+                "criterion": "spacing-rhythm",
+                "score": 2,
+                "evidence": "Gaps come from the scale (space-y-4 between fields, mt-1 between a label and its input, mb-6 under the header, mt-6 before the footer prompt) and grouping is correct. However, spacing is set as margins on individual children (mt-1, mb-3, mt-1 on the error) rather than as gaps on the parent."
+              },
+              {
+                "criterion": "hierarchy",
+                "score": 3,
+                "evidence": "The single filled indigo Sign in button is the only primary action. The h1 at text-2xl font-semibold stands above the text-sm slate-600 welcome line, and the links step down to plain text links, although the 'T' logo tile adds a second accent block above the title."
+              },
+              {
+                "criterion": "alignment",
+                "score": 3,
+                "evidence": "Labels, inputs, the checkbox and the button all start on the card's p-8 edge. The Password label and the 'Forgot password?' link share a baseline through items-baseline, and both inputs use the same px-3 py-2 height."
+              },
+              {
+                "criterion": "state-completeness",
+                "score": 3,
+                "evidence": "While submitting, the button is disabled with aria-busy, shows a LoaderCircle spinner and changes its label to 'Signing in…'. The email field shows specific inline copy, the wrong-password error appears in an icon-and-text alert above the button, and a role=\"status\" success message replaces the form."
+              },
+              {
+                "criterion": "motion-restraint",
+                "score": 2,
+                "evidence": "The only motion is the loading spinner, which has a purpose. It uses Tailwind's animate-spin at the default duration instead of the --a63-motion tokens, and it has no motion-reduce handling."
+              },
+              {
+                "criterion": "accessibility",
+                "score": 3,
+                "evidence": "The page uses native label/input pairs with htmlFor and a label that wraps the checkbox. It sets aria-invalid and aria-describedby on the email field, gives the form error role=\"alert\" with an icon, and shows focus-visible rings on the controls and button."
+              },
+              {
+                "criterion": "token-use",
+                "score": 1,
+                "evidence": "Colors are Tailwind palette literals throughout (bg-slate-50, bg-white, border-slate-300, bg-indigo-600, text-red-600, bg-emerald-50). The inputs, button and card are hand-rolled instead of design-system components, so the page ignores the theme, as the screenshots show with no header, footer or theme styling."
+              }
+            ],
+            "total": 17
+          }
+        }
+      },
+      "thumbnails": [
+        "vibe/2026-09-26/sign-in-ds-desktop.jpg",
+        "vibe/2026-09-26/sign-in-ds-mobile.jpg",
+        "vibe/2026-09-26/sign-in-plain-desktop.jpg",
+        "vibe/2026-09-26/sign-in-plain-mobile.jpg"
+      ]
+    }
+  ]
+}
