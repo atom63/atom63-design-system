@@ -234,6 +234,7 @@ widgets foundation 已迁入 `packages/widgets`（`@atom63/widgets`：layout、p
 
 **E 进度（2026-09-26）：** Web 端的 a11y 规格合约已上线（计划见 `quality-plan.md` 的 E2）：dialog、alert dialog、menu button、tabs 四个 APG pattern 写成 `@atom63/ui-foundation` 里的数据，Dialog、AlertDialog、DropdownMenu、Tabs 在 contract 里声明所实现的 pattern，Storybook 的 `a11y` Vitest 项目据此生成测试，逐条检查结构和键盘交互（已接入 CI），Dialog 缺少 `aria-modal` 记为已知缺口。
 craft rubric 已上线（E5）：docs 站的 Foundations 下新增 "Craft rubric" 页，间距节奏、层级、对齐、状态完整、动效克制、无障碍、token 使用七条标准各有 1–3 分描述、自动检查覆盖范围和现场好坏示例，标准数据放在 `scripts/design-system/lib/craft-rubric.mjs`，供设计评审和 E4 的模型评分共用。
+vibe tests 已上线（E4）：`pnpm vibe` 让无头 `claude -p` 按固定 brief 分别用 Atom63（starter + AGENTS.md + `atom63` MCP）和纯 React + Tailwind 各做一遍页面，测 craft 违规、类型错误、构建、axe、系统组件占比和字面颜色，再由盲评模型按 craft rubric 打分，报告提交在 `docs/design-system/audits/vibe-<日期>.md`。
 
 A 可以马上开始。B 需要先定下 D1；D 和 C 可以部分并行。（2026-09-25 更新：token manifest 的 1669 条中，1603 条由 DTCG 生成；其余 66 条是 DTCG 无法表达类型的 CSS 原生值，放在 `*.native.css` 中，每条都在 `native-values.json` 里写明原因；没有其他手写 token。）
 
