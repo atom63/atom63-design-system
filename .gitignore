@@ -79,3 +79,7 @@ apps/storybook/visual/__screenshots__/*-win32.png
 apps/storybook/storybook-static/
 # Failure screenshots of the a11y contract tests.
 apps/storybook/a11y/__screenshots__/
+
+# iOS screenshot tests: only the pinned simulator's baselines are committed.
+examples/ios-demo/Atom63DemoTests/__Snapshots__/local/
+examples/ios-demo/snapshot-failures/
