@@ -2,6 +2,9 @@
   "extends": "@atom63/tsconfig/react-app.json",
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    // The craft rubric page renders from scripts/design-system/lib/craft-rubric.mjs,
+    // which carries its types as JSDoc.
+    "allowJs": true,
     "typeRoots": ["./node_modules/@types"]
   },
   "include": ["src"]

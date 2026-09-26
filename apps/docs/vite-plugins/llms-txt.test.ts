@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 import { describe, expect, it } from 'vitest'
+import { craftCriteria } from '../../../scripts/design-system/lib/craft-rubric.mjs'
 import { componentCatalogItems, componentDocSlug } from '../src/lib/component-catalog'
 import { buildLlmsTxt, markdownRoute, readEntries, readEntryMarkdown } from './llms-txt'
 
@@ -80,5 +81,23 @@ describe('LLM documentation inventory', () => {
     expect(markdown).toContain('## Unreleased')
     expect(markdown).toContain('## Released')
     expect(markdown).toContain('@atom63/ui-react')
+  })
+
+  it('spells out every craft rubric criterion in the page twin', async () => {
+    const entries = await readEntries(pagesDir)
+    const rubric = entries.find(entry => entry.slug === 'foundation-craft-rubric')
+    const uiReactIndexSource = await fs.readFile(uiReactIndexPath, 'utf8')
+
+    expect(rubric).toBeDefined()
+    if (!rubric) {
+      return
+    }
+
+    const markdown = await readEntryMarkdown(pagesDir, rubric, uiReactIndexSource)
+    expect(markdown).not.toContain('<CraftCriterion')
+    for (const criterion of craftCriteria) {
+      expect(markdown).toContain(`## ${criterion.name}\n\n${criterion.definition}`)
+      expect(markdown).toContain(`| 1 | ${criterion.levels[1]} |`)
+    }
   })
 })

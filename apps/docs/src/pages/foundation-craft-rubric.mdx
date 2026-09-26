@@ -1,0 +1,73 @@
+import { Callout } from '@atom63/mdx/blocks'
+import { CraftCriterion } from '../components/craft-rubric/craft-criterion'
+
+# Craft rubric
+
+Checks catch a literal color or a missing name. They do not catch a screen whose gaps are all legal tokens but have no rhythm, or a dialog with three primary buttons. This rubric writes that part of taste down as seven criteria, so a person in design review and a model judging agent output score a result the same way.
+
+Each criterion has a definition, a 1–3 scale described by what you can see in the result, the checks that already cover part of it, and a live example that scores 3 next to one that scores 1. Every example that scores 1 passes the repo's checks: it is built from tokens, contract values and components, used poorly.
+
+## How to score
+
+Score each criterion on its own, from 1 to 3, against the level descriptions. When a result sits between two levels, give the lower score. Score what the result shows, not what it could do with small changes.
+
+- **Passing:** no criterion scores 1. A result with a 1 fails, whatever its total, because one broken criterion, such as a keyboard path that does not work, is not offset by good spacing.
+- **Total:** the sum of the seven scores, from 7 to 21. Use it to compare results, such as the same brief built with and without the design system. It is not a pass mark.
+- **Evidence:** for each criterion, write one or two sentences that name what in the result earned the score: an element, a class, a prop or a state. "Rows use `py-3` and groups `gap-6`" is evidence; "feels balanced" is not.
+
+A model judge outputs the scores as a JSON array with one entry per criterion:
+
+```ts
+type CraftScore = {
+  criterion: string // a criterion id, such as 'spacing-rhythm'
+  score: 1 | 2 | 3
+  evidence: string
+}
+type CraftScores = CraftScore[]
+```
+
+<Callout type="info">
+  The criteria, their level descriptions and the score type live in `scripts/design-system/lib/craft-rubric.mjs`. This page renders from that module, and so will the E4 vibe runner's judge prompt; `summarizeCraftScores()` there validates a judge's output and applies the passing rule. Change the rubric there, not on this page.
+</Callout>
+
+## Spacing rhythm
+
+<CraftCriterion id="spacing-rhythm" />
+
+## Hierarchy
+
+<CraftCriterion id="hierarchy" />
+
+## Alignment
+
+<CraftCriterion id="alignment" />
+
+## State completeness
+
+<CraftCriterion id="state-completeness" />
+
+## Motion restraint
+
+<CraftCriterion id="motion-restraint" />
+
+## Accessibility
+
+<CraftCriterion id="accessibility" />
+
+## Token use
+
+<CraftCriterion id="token-use" />
+
+## Reference gallery
+
+These Storybook stories show each criterion done well. Start from them when you build, and compare against them when you score.
+
+- **Spacing rhythm:** [Field: fieldset with separator](https://storybook.atom63.io/?path=/story/ui-react-field--fieldset-with-separator), [Item: group](https://storybook.atom63.io/?path=/story/ui-react-item--group).
+- **Hierarchy:** [Button: variants](https://storybook.atom63.io/?path=/story/ui-react-button--variants), [Card: compositions](https://storybook.atom63.io/?path=/story/ui-react-card--compositions).
+- **Alignment:** [Control axis audit](https://storybook.atom63.io/?path=/story/tokens-control-axis-audit--control-rows), [ButtonGroup: with input](https://storybook.atom63.io/?path=/story/ui-react-buttongroup--with-input).
+- **State completeness:** [FeedbackState: states](https://storybook.atom63.io/?path=/story/ui-react-feedbackstate--states), [Empty: error state](https://storybook.atom63.io/?path=/story/ui-react-empty--error-state), [Skeleton: card placeholder](https://storybook.atom63.io/?path=/story/ui-react-skeleton--card-placeholder), [Button: loading](https://storybook.atom63.io/?path=/story/ui-react-button--loading), [Field: invalid](https://storybook.atom63.io/?path=/story/ui-react-field--invalid).
+- **Motion restraint:** [Collapsible](https://storybook.atom63.io/?path=/story/ui-react-collapsible--playground), [Accordion](https://storybook.atom63.io/?path=/story/ui-react-accordion--playground), [Motion durations](https://storybook.atom63.io/?path=/story/tokens-aliases--durations).
+- **Accessibility:** [Tabs](https://storybook.atom63.io/?path=/story/ui-react-tabs--playground), [DropdownMenu](https://storybook.atom63.io/?path=/story/ui-react-dropdownmenu--playground), [Dialog](https://storybook.atom63.io/?path=/story/ui-react-dialog--playground); each runs axe, the runtime craft checks and, for tabs, menus and dialogs, the APG pattern contract.
+- **Token use:** [Semantic colors](https://storybook.atom63.io/?path=/story/tokens-semantics--colors), [Surfaces](https://storybook.atom63.io/?path=/story/tokens-aliases--surfaces), [Button: themes](https://storybook.atom63.io/?path=/story/ui-react-button--themes).
+
+Related: [Designing in code](/foundations) for which token names to write, [Interaction states](/foundations/foundation-interaction-states) for the state model, and [Motion](/foundations/foundation-motion) for the motion tokens.

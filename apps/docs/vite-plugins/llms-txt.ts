@@ -2,6 +2,10 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import type { Plugin } from 'vite'
 import {
+  craftCriteria,
+  craftCriterionMarkdown,
+} from '../../../scripts/design-system/lib/craft-rubric.mjs'
+import {
   componentCatalogGroups,
   componentCatalogItems,
   componentDocSlug,
@@ -134,6 +138,14 @@ function firstParagraph(source: string): string {
   return paragraph.replace(/\s+/g, ' ').slice(0, 200)
 }
 
+/** The craft rubric page renders each criterion from data; spell it out for the Markdown twin. */
+function expandCraftCriteria(source: string): string {
+  return source.replace(/^<CraftCriterion id="([^"]+)" \/>$/gm, (tag, id: string) => {
+    const criterion = craftCriteria.find(entry => entry.id === id)
+    return criterion ? craftCriterionMarkdown(criterion) : tag
+  })
+}
+
 async function readUiReactIndexSource(pagesDir: string): Promise<string> {
   return fs.readFile(path.resolve(pagesDir, '../../../../packages/ui-react/src/index.ts'), 'utf8')
 }
@@ -152,7 +164,7 @@ export async function readEntryMarkdown(
   }
 
   const source = await fs.readFile(path.join(pagesDir, `${entry.slug}.mdx`), 'utf8')
-  const markdown = mdxToMarkdown(source)
+  const markdown = mdxToMarkdown(expandCraftCriteria(source))
   if (!isComponentDocSlug(entry.slug)) {
     return markdown
   }
