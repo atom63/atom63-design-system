@@ -1,8 +1,13 @@
 import { mdxComponents } from '@atom63/mdx'
 import type { ReactNode } from 'react'
 
-import { getComponentContractDoc, outcomeLabel } from '../lib/component-contract'
+import {
+  getComponentContractDoc,
+  outcomeLabel,
+  patternOptionsLabel,
+} from '../lib/component-contract'
 
+const A = mdxComponents.a
 const H2 = mdxComponents.h2
 const H3 = mdxComponents.h3
 const P = mdxComponents.p
@@ -44,6 +49,7 @@ export function ComponentContractSection({ componentSlug }: { componentSlug: str
     return null
   }
   const shared = doc.crossRenderer
+  const pattern = doc.accessibility
 
   return (
     <>
@@ -98,6 +104,24 @@ export function ComponentContractSection({ componentSlug }: { componentSlug: str
           {archetype.label} — {archetype.description}
         </Row>
       ))}
+      {pattern ? (
+        <>
+          <Row label="Accessibility pattern">
+            <A href={pattern.source}>{pattern.name}</A>
+            {patternOptionsLabel(pattern)}, checked against the component&apos;s stories in
+            Storybook&apos;s <Code>a11y</Code> tests.
+          </Row>
+          {pattern.knownGaps.length > 0 ? (
+            <Ul>
+              {pattern.knownGaps.map(gap => (
+                <Li key={gap.check}>
+                  Known gap (<Code>{gap.check}</Code>): {gap.reason}
+                </Li>
+              ))}
+            </Ul>
+          ) : null}
+        </>
+      ) : null}
 
       {shared ? (
         <>

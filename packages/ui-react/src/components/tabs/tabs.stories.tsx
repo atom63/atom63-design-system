@@ -16,7 +16,7 @@ const PANEL_STYLE = { color: 'var(--a63-text-secondary)', fontSize: 14, paddingT
 export const Playground: Story = {
   render: () => (
     <Tabs defaultValue="overview">
-      <TabsList>
+      <TabsList aria-label="Product details">
         <TabsTab value="overview">Overview</TabsTab>
         <TabsTab value="specs">Specs</TabsTab>
         <TabsTab value="reviews">Reviews</TabsTab>

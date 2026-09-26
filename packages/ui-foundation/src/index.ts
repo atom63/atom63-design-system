@@ -19,6 +19,31 @@ export type {
   CrossRendererSemanticTone,
 } from './conformance'
 export {
+  a11yPatterns,
+  alertDialogPattern,
+  dialogModalPattern,
+  getA11yPattern,
+  menuButtonPattern,
+  tabsPattern,
+} from './a11y'
+export type {
+  A11yAttributeCheck,
+  A11yFocus,
+  A11yKeyboardInteraction,
+  A11yKeyboardState,
+  A11yKnownGap,
+  A11yPart,
+  A11yPatternBinding,
+  A11yPatternContract,
+  A11yPatternId,
+  A11yPosition,
+  A11yRole,
+  A11yStructureCheck,
+  A11yTarget,
+  A11yTreeNode,
+  A11yTreeState,
+} from './a11y'
+export {
   animatedCheckContract,
   animatedCheckSlots,
   animatedCheckStates,

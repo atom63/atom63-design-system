@@ -10,6 +10,7 @@
     "craft",
     "ssr",
     "stories",
+    "a11y",
     "vitest.config.ts",
     "../../packages/ui-react/src/**/*.stories.tsx",
     "../../packages/mdx/src/**/*.stories.tsx",

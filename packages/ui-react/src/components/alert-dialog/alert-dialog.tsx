@@ -88,7 +88,10 @@ export function AlertDialogPopup({
     <AlertDialogPortal {...portalProps}>
       <AlertDialogBackdrop />
       <AlertDialogViewport data-stick-bottom={bottomStickOnMobile ? '' : undefined}>
+        {/* An alert dialog is always modal; Base UI hides the page with
+            aria-hidden but does not set aria-modal, which the APG requires. */}
         <AlertDialogPrimitive.Popup
+          aria-modal
           className={cn('a63-AlertDialog-popup', className)}
           data-size={size}
           data-slot="alert-dialog-popup"

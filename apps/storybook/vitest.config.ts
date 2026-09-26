@@ -1,8 +1,10 @@
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin'
+import tailwindcss from '@tailwindcss/vite'
 import { playwright } from '@vitest/browser-playwright'
+import react from '@vitejs/plugin-react'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { defaultServerConditions } from 'vite'
+import { defaultClientConditions, defaultServerConditions } from 'vite'
 import { defineConfig } from 'vitest/config'
 
 import { sharedTestOptions } from '../../config/vite/vitest-defaults'
@@ -117,6 +119,29 @@ export default defineConfig({
                   `${root}/visual/__diff__/${arg}-${browserName}-${platform}${ext}`,
               },
             },
+          },
+        },
+      },
+      {
+        extends: true,
+        // `a11y`: the APG pattern contracts in @atom63/ui-foundation, played
+        // against the stories bound to them (a11y/patterns.test.ts). Stories
+        // load as portable stories with the Storybook preview applied, so this
+        // project builds them the way main.ts does.
+        plugins: [react(), tailwindcss()],
+        resolve: {
+          conditions: ['@atom63/source', ...defaultClientConditions],
+          dedupe: ['react', 'react-dom'],
+        },
+        test: {
+          name: 'a11y',
+          include: ['a11y/**/*.test.ts'],
+          setupFiles: ['./.storybook/a11y.setup.ts'],
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright(),
+            instances: [{ browser: 'chromium' }],
           },
         },
       },

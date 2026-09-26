@@ -1,3 +1,4 @@
+import type { A11yPatternBinding } from '../../a11y/types'
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 export const alertDialogVariants = ['default', 'destructive', 'info', 'success', 'warning'] as const
@@ -34,6 +35,8 @@ export type AlertDialogSlot = (typeof alertDialogSlots)[number]
 export type AlertDialogVisualArchetype = (typeof alertDialogVisualArchetypes)[number]
 
 export interface AlertDialogContract {
+  /** The WAI-ARIA APG pattern the component implements. */
+  accessibility: A11yPatternBinding
   defaultFooterVariant: AlertDialogFooterVariant
   defaultSize: AlertDialogSize
   defaultVariant: AlertDialogVariant
@@ -46,6 +49,7 @@ export interface AlertDialogContract {
 }
 
 export const alertDialogContract = {
+  accessibility: { pattern: 'alertdialog' },
   defaultFooterVariant: 'default',
   defaultSize: 'default',
   defaultVariant: 'default',

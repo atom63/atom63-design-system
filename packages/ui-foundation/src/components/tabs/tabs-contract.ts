@@ -1,3 +1,4 @@
+import type { A11yPatternBinding } from '../../a11y/types'
 // Faithful to prod @atom63/ui tabs.tsx: the TabsList carries a `variant`
 // (default = a filled pill track, underline = an underline indicator,
 // attached = borderless folder tabs) and a `size` ramp. TabsTab also takes the
@@ -20,6 +21,8 @@ export type TabsState = (typeof tabsStates)[number]
 export type TabsVisualArchetype = (typeof tabsVisualArchetypes)[number]
 
 export interface TabsContract {
+  /** The WAI-ARIA APG pattern the component implements. */
+  accessibility: A11yPatternBinding
   defaultVariant: TabsVariant
   defaultSize: TabsSize
   variants: readonly TabsVariant[]
@@ -31,6 +34,7 @@ export interface TabsContract {
 }
 
 export const tabsContract = {
+  accessibility: { pattern: 'tabs', options: { activation: 'manual' } },
   defaultVariant: 'default',
   defaultSize: 'default',
   variants: tabsVariants,

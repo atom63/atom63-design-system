@@ -11,7 +11,8 @@
     "test:craft": "vitest run --project=craft --project=craft-rules",
     "test:cross-browser": "vitest run --project='cross-browser*'",
     "test:ssr": "vitest run --project=ssr",
-    "test:visual": "vitest run --project=visual"
+    "test:visual": "vitest run --project=visual",
+    "test:a11y": "vitest run --project=a11y"
   },
   "dependencies": {
     "@atom63/brand": "workspace:*",

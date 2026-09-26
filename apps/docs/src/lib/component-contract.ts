@@ -1,5 +1,7 @@
 import * as foundation from '@atom63/ui-foundation'
 import {
+  type A11yPatternBinding,
+  getA11yPattern,
   getCrossRendererContract,
   crossRendererContracts,
   visualArchetypes,
@@ -22,7 +24,15 @@ export type ContractAxis = {
   values: string[]
 }
 
+export type AccessibilityPatternDoc = {
+  knownGaps: readonly { check: string; reason: string }[]
+  name: string
+  options: [option: string, value: string][]
+  source: string
+}
+
 export type ComponentContractDoc = {
+  accessibility?: AccessibilityPatternDoc
   archetypes: { description: string; id: string; label: string }[]
   axes: ContractAxis[]
   crossRenderer?: CrossRendererDoc
@@ -44,6 +54,21 @@ export type CrossRendererDoc = {
 }
 
 const NON_AXIS_KEYS = new Set(['slots', 'states', 'tokenSlots', 'visualArchetypes'])
+
+/** The APG pattern a contract binds to in its `accessibility` field, if any. */
+function accessibilityDoc(value: unknown): AccessibilityPatternDoc | undefined {
+  if (!value || typeof value !== 'object' || !('pattern' in value)) {
+    return undefined
+  }
+  const binding = value as A11yPatternBinding
+  const pattern = getA11yPattern(binding.pattern)
+  return {
+    knownGaps: binding.knownGaps ?? [],
+    name: pattern.name,
+    options: Object.entries(binding.options ?? {}),
+    source: pattern.source,
+  }
+}
 
 function camelCase(slug: string): string {
   return slug.replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase())
@@ -130,7 +155,10 @@ export function getComponentContractDoc(slug: string): ComponentContractDoc | nu
     }
   }
 
+  const accessibility = accessibilityDoc(fields.accessibility)
+
   return {
+    ...(accessibility ? { accessibility } : {}),
     archetypes,
     axes,
     ...(crossRenderer ? { crossRenderer } : {}),
@@ -146,6 +174,12 @@ export function getComponentContractDoc(slug: string): ComponentContractDoc | nu
 export function outcomeLabel(outcome: string): string {
   const words = outcome.replaceAll('-', ' ')
   return words[0]?.toUpperCase() + words.slice(1)
+}
+
+/** The option values a component picks: ` (activation: manual)`, or empty. */
+export function patternOptionsLabel(pattern: AccessibilityPatternDoc): string {
+  const options = pattern.options.map(([option, value]) => `${option}: ${value}`).join(', ')
+  return options ? ` (${options})` : ''
 }
 
 function codeList(values: readonly string[]): string {
@@ -179,6 +213,18 @@ export function componentContractMarkdown(slug: string): string {
       `**Visual archetype:** ${doc.archetypes.map(item => `${item.label} — ${item.description}`).join('; ')}`,
       ''
     )
+  }
+
+  const pattern = doc.accessibility
+  if (pattern) {
+    lines.push(
+      `**Accessibility pattern:** [${pattern.name}](${pattern.source})${patternOptionsLabel(pattern)}`,
+      ''
+    )
+    for (const gap of pattern.knownGaps) {
+      lines.push(`- Known gap (\`${gap.check}\`): ${gap.reason}`)
+    }
+    if (pattern.knownGaps.length > 0) lines.push('')
   }
 
   const shared = doc.crossRenderer
