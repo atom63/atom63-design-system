@@ -50,13 +50,11 @@
   color: var(--a63-segment-primary-foreground, var(--a63-action-primary-foreground));
 }
 
+/* The standalone Toggle's outline ring stays: the cell keeps its own (pressed)
+   shadow, and the focused cell sits above its welded neighbours so they do not
+   cover the ring. */
 .a63-ToggleGroup .a63-Toggle:focus-visible {
-  /* The group draws its own ring below, not the standalone outline. */
-  outline: none;
-  box-shadow:
-    var(--a63-segment-selected-shadow, none),
-    0 0 0 var(--a63-control-focus-ring-width)
-      var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  z-index: 1;
 }
 
 .a63-ToggleGroup[data-orientation='horizontal'] .a63-Toggle:first-child {

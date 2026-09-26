@@ -257,9 +257,10 @@
   color: var(--a63-text-primary);
 }
 
+/* The Button's outline ring, drawn inside the row: the panel clips its
+   children (`overflow: hidden`) to its rounded corners. */
 .a63-ConnectedPanel-trigger:focus-visible {
-  box-shadow: inset 0 0 0 var(--a63-control-focus-ring-width)
-    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline-offset: calc(-1 * var(--a63-control-focus-ring-width));
 }
 
 /* Icon / text / chevron row lives inside the Button's label wrapper. */
