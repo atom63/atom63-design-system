@@ -2218,7 +2218,7 @@ export interface SegmentedControlProps {
 }
 
 // @public (undocumented)
-export function Select<Value, Multiple extends boolean | undefined = false>(props: Select_2.Root.Props<Value, Multiple>): React$1.ReactElement;
+export const Select: typeof Select_2.Root;
 
 // @public
 export const SelectContent: typeof SelectPopup;
