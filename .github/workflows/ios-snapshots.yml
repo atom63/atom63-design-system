@@ -1,0 +1,130 @@
+name: iOS snapshots
+
+# Compares every iOS demo catalog showcase with its committed baseline screenshot, on the simulator
+# pinned in examples/ios-demo/snapshot-simulator.json. CI's `ios` job runs the same comparison on
+# every pull request that can affect iOS; this workflow exists to record baselines.
+#
+# To create or update baselines after an intentional visual change, run this workflow manually on
+# your branch with `update` checked. It records the screenshots on the macOS runner, compares them
+# once more to prove they are stable, and commits them to that branch.
+
+on:
+  workflow_dispatch:
+    inputs:
+      update:
+        description: Record the baseline screenshots and commit them to this branch
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-snapshots-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compare:
+    if: ${{ !inputs.update }}
+    runs-on: macos-15
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # Keep in step with the `ios` job in ci.yml, which compares against these baselines.
+      - name: Select the latest stable Xcode
+        uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1.7.0
+        with:
+          xcode-version: latest-stable
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Compare iOS catalog snapshots
+        working-directory: packages/ui-ios
+        run: node Scripts/run-ios-snapshots.mjs
+
+      - name: Upload iOS snapshot failures
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ios-snapshot-failures
+          path: |
+            examples/ios-demo/snapshot-failures
+            ~/Library/Developer/Xcode/DerivedData/**/Logs/Test/*.xcresult
+          if-no-files-found: ignore
+
+  # Only a manual run with `update` checked can push baselines, and only this
+  # job gets write access.
+  update-baselines:
+    if: ${{ inputs.update }}
+    runs-on: macos-15
+    timeout-minutes: 45
+    # The baseline commit is pushed by the Atom63 bot app, so CI and its snapshot
+    # comparison run on it like on any other push.
+    permissions:
+      contents: read
+
+    steps:
+      - name: Create a bot token
+        id: bot
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ vars.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          token: ${{ steps.bot.outputs.token }}
+
+      - name: Select the latest stable Xcode
+        uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1.7.0
+        with:
+          xcode-version: latest-stable
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Record baselines
+        working-directory: packages/ui-ios
+        run: node Scripts/run-ios-snapshots.mjs --record
+
+      # A baseline that does not match a second capture would fail every later run.
+      - name: Compare with the new baselines
+        working-directory: packages/ui-ios
+        run: node Scripts/run-ios-snapshots.mjs
+
+      - name: Upload iOS snapshot failures
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ios-snapshot-failures
+          path: |
+            examples/ios-demo/snapshot-failures
+            ~/Library/Developer/Xcode/DerivedData/**/Logs/Test/*.xcresult
+          if-no-files-found: ignore
+
+      - name: Commit updated baselines
+        run: |
+          git config user.name "atom63-ds-bot[bot]"
+          git config user.email "333482271+atom63-ds-bot[bot]@users.noreply.github.com"
+          git add examples/ios-demo/Atom63DemoTests/__Snapshots__
+          if git diff --cached --quiet; then
+            echo "Baselines are already up to date."
+          else
+            git commit -m "test(ios): update catalog snapshot baselines"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
