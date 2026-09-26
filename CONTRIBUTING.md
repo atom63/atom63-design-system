@@ -56,7 +56,9 @@ swift test                                     # SwiftUI package tests
 Write a story next to each component (`*.stories.tsx`) and add a `Themes` story that wraps it in
 the shared `ThemeMatrix` probe. Every story runs as a render test that also checks accessibility with axe, and CI compares every story
 against a baseline screenshot. When a change alters how something looks on purpose, update the
-baselines as described in the [Storybook README](./apps/storybook/README.md).
+baselines as described in the [Storybook README](./apps/storybook/README.md). On iOS, CI compares
+every demo catalog showcase with a baseline screenshot on a pinned simulator; record baselines
+with the **iOS snapshots** workflow, as described in the [iOS demo README](./examples/ios-demo/README.md#ios-screenshot-tests).
 
 ## Tokens and generated files
 
@@ -171,7 +173,8 @@ Run with `--dry-run` to see what would change.
 Add `--ios` for a component with a SwiftUI counterpart. The scaffold then also adds the
 cross-renderer contract and conformance evidence on both sides, then regenerates the TypeScript
 and Swift contracts. It writes `Atom<Name>.swift` and adds an iOS demo catalog entry with a
-showcase. The demo section defaults from `--category`; `--ios-section` and `--ios-symbol` override
+showcase; record its screenshot baselines with the **iOS snapshots** workflow. The demo section
+defaults from `--category`; `--ios-section` and `--ios-symbol` override
 the section and the SF Symbol. The scaffolded contract carries placeholder outcomes marked
 `TODO(ds:new)`: replace them with the real shared intent, and keep both conformance entries in
 step.

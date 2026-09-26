@@ -32,6 +32,8 @@ const result = spawnSync(
     `platform=iOS Simulator,id=${device.udid}`,
     // A UI test that times out on a slow simulator gets up to two more runs;
     // a real failure still fails every run.
+    // The screenshot tests run on their own, without retries: run-ios-snapshots.mjs.
+    '-skip-testing:Atom63DemoTests/CatalogSnapshotTests',
     '-retry-tests-on-failure',
     '-test-iterations',
     '3',
