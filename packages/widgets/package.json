@@ -1,6 +1,6 @@
 {
   "name": "@atom63/widgets",
-  "version": "0.1.0-beta.0",
+  "version": "0.1.0-beta.1",
   "description": "The Atom63 widget foundation: widget units and scale, the widget card and surface, loading, empty and error states, and the hosted shell",
   "license": "MIT",
   "repository": {

@@ -1,5 +1,25 @@
 # @atom63/ui-foundation
 
+## 0.1.1-beta.3
+
+### Patch Changes
+
+- [#81](https://github.com/atom63/atom63-design-system/pull/81) [`657033f`](https://github.com/atom63/atom63-design-system/commit/657033fbb6460378e319e860a4391cf1053aca04) Thanks [@atom63](https://github.com/atom63)! - `@atom63/ui-foundation` adds the WAI-ARIA APG select-only combobox, switch, checkbox, accordion
+  and radio group patterns as accessibility pattern contracts (`comboboxSelectOnlyPattern`,
+  `switchPattern`, `checkboxPattern`, `accordionPattern`, `radioPattern`). The Select, Switch,
+  Checkbox, Accordion and Radio contracts gain an `accessibility` field that names the pattern, its
+  option values and known gaps. `A11yPosition` accepts `checked`, and `A11yRole` and
+  `A11yPatternId` list the new roles and patterns.
+
+- [#76](https://github.com/atom63/atom63-design-system/pull/76) [`bbd4c87`](https://github.com/atom63/atom63-design-system/commit/bbd4c877ff39d9a58746997cc4b5b2b3a9c928ba) Thanks [@atom63](https://github.com/atom63)! - `@atom63/ui-foundation` exports accessibility pattern contracts: the WAI-ARIA APG dialog (modal),
+  alert dialog, menu button and tabs patterns as data (`dialogModalPattern`, `alertDialogPattern`,
+  `menuButtonPattern`, `tabsPattern`, `a11yPatterns`, `getA11yPattern`) with their types. The Dialog,
+  AlertDialog, DropdownMenu and Tabs contracts gain an `accessibility` field that names the pattern
+  the component implements, its option values and any known gaps.
+  
+  `AlertDialogPopup` in `@atom63/ui-react` sets `aria-modal="true"`, as the APG alert dialog pattern
+  requires.
+
 ## 0.1.1-beta.2
 
 ### Patch Changes
