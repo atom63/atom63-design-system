@@ -1,7 +1,7 @@
 'use client'
 
 import { Accordion as AccordionPrimitive } from '@base-ui/react/accordion'
-import type * as React from 'react'
+import * as React from 'react'
 
 import { cn } from '../../lib/cn'
 
@@ -25,6 +25,28 @@ type AccordionProps = Omit<
   type?: 'multiple' | 'single'
   value?: string | string[]
 }
+
+/*
+ * The APG gives every header button aria-controls referring to its panel.
+ * Base UI sets it only while the panel is open, and unmounts a closed panel,
+ * so a collapsed header has none. The accordion keeps closed panels mounted
+ * (hidden) by default, and each header points at its panel whenever the panel
+ * stays in the DOM. With `keepMounted={false}` (on the root or a panel) the
+ * header falls back to Base UI's behavior, so it never refers to a missing
+ * element.
+ */
+interface AccordionPanelRef {
+  id: string
+  persistent: boolean
+}
+
+// Outside `Accordion` (a Base UI root), Base UI's defaults apply.
+const AccordionRootContext = React.createContext({ hiddenUntilFound: false, keepMounted: false })
+const AccordionItemContext = React.createContext<{
+  panel: AccordionPanelRef | null
+  panelId: string
+  setPanel: (panel: AccordionPanelRef | null) => void
+} | null>(null)
 
 const toValueArray = (value: string | string[] | undefined) => {
   if (!value) {
@@ -79,26 +101,36 @@ export function Accordion({
   collapsible: _collapsible,
   defaultValue,
   onValueChange,
+  hiddenUntilFound = false,
+  keepMounted = true,
   type = 'single',
   value,
   ...props
 }: AccordionProps): React.ReactElement {
   const multiple = type === 'multiple'
+  const rootContext = React.useMemo(
+    () => ({ hiddenUntilFound, keepMounted }),
+    [hiddenUntilFound, keepMounted]
+  )
 
   return (
-    <AccordionPrimitive.Root
-      className={cn('a63-Accordion')}
-      data-slot="accordion"
-      defaultValue={toValueArray(defaultValue)}
-      multiple={multiple}
-      onValueChange={
-        onValueChange
-          ? nextValue => onValueChange(multiple ? nextValue : (nextValue.at(0) ?? ''))
-          : undefined
-      }
-      value={toValueArray(value)}
-      {...props}
-    />
+    <AccordionRootContext.Provider value={rootContext}>
+      <AccordionPrimitive.Root
+        className={cn('a63-Accordion')}
+        data-slot="accordion"
+        defaultValue={toValueArray(defaultValue)}
+        hiddenUntilFound={hiddenUntilFound}
+        keepMounted={keepMounted}
+        multiple={multiple}
+        onValueChange={
+          onValueChange
+            ? nextValue => onValueChange(multiple ? nextValue : (nextValue.at(0) ?? ''))
+            : undefined
+        }
+        value={toValueArray(value)}
+        {...props}
+      />
+    </AccordionRootContext.Provider>
   )
 }
 
@@ -106,12 +138,17 @@ export function AccordionItem({
   className,
   ...props
 }: AccordionPrimitive.Item.Props): React.ReactElement {
+  const panelId = `${React.useId()}-panel`
+  const [panel, setPanel] = React.useState<AccordionPanelRef | null>(null)
+  const itemContext = React.useMemo(() => ({ panel, panelId, setPanel }), [panel, panelId])
   return (
-    <AccordionPrimitive.Item
-      className={cn('a63-Accordion-item', className)}
-      data-slot="accordion-item"
-      {...props}
-    />
+    <AccordionItemContext.Provider value={itemContext}>
+      <AccordionPrimitive.Item
+        className={cn('a63-Accordion-item', className)}
+        data-slot="accordion-item"
+        {...props}
+      />
+    </AccordionItemContext.Provider>
   )
 }
 
@@ -125,9 +162,17 @@ export function AccordionTrigger({
   icon = 'chevron',
   ...props
 }: AccordionTriggerProps): React.ReactElement {
+  const root = React.useContext(AccordionRootContext)
+  const item = React.useContext(AccordionItemContext)
+  // Before the panel registers (the first render, and server rendering),
+  // assume it follows the root's settings.
+  const panel =
+    item &&
+    (item.panel ?? { id: item.panelId, persistent: root.hiddenUntilFound || root.keepMounted })
   return (
     <AccordionPrimitive.Header className="a63-Accordion-header">
       <AccordionPrimitive.Trigger
+        {...(panel?.persistent ? { 'aria-controls': panel.id } : {})}
         className={cn('a63-Accordion-trigger', className)}
         data-icon={icon}
         data-slot="accordion-trigger"
@@ -158,12 +203,30 @@ export function AccordionTrigger({
 export function AccordionContent({
   children,
   className,
+  hiddenUntilFound: hiddenUntilFoundProp,
+  id: idProp,
+  keepMounted: keepMountedProp,
   ...props
 }: AccordionPrimitive.Panel.Props): React.ReactElement {
+  const root = React.useContext(AccordionRootContext)
+  const item = React.useContext(AccordionItemContext)
+  const setPanel = item?.setPanel
+  const id = idProp ?? item?.panelId
+  const hiddenUntilFound = hiddenUntilFoundProp ?? root.hiddenUntilFound
+  const persistent = hiddenUntilFound || (keepMountedProp ?? root.keepMounted)
+  React.useLayoutEffect(() => {
+    if (!setPanel || !id) return undefined
+    setPanel({ id, persistent })
+    return () => setPanel(null)
+  }, [id, persistent, setPanel])
+
   return (
     <AccordionPrimitive.Panel
       className="a63-Accordion-panel"
       data-slot="accordion-content"
+      hiddenUntilFound={hiddenUntilFoundProp}
+      id={id}
+      keepMounted={keepMountedProp}
       {...props}
     >
       <div
