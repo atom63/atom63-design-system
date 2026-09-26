@@ -1,0 +1,81 @@
+{
+  "name": "@atom63/agent",
+  "version": "0.3.0-beta.0",
+  "description": "The Atom63 headless agent runtime: a chat state machine over a pluggable streaming transport, with React hooks to own it and drive chat chrome",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atom63/atom63-design-system.git",
+    "directory": "packages/agent"
+  },
+  "homepage": "https://github.com/atom63/atom63-design-system/tree/main/packages/agent#readme",
+  "bugs": {
+    "url": "https://github.com/atom63/atom63-design-system/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "atom63",
+    "design-system",
+    "agent",
+    "chat",
+    "headless",
+    "react"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "@atom63/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./react": {
+      "@atom63/source": "./src/react/index.ts",
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --cache --max-warnings 0",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "zustand": "^5.0.14"
+  },
+  "peerDependencies": {
+    "react": "^19.1.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@atom63/eslint-config": "workspace:*",
+    "@atom63/tsconfig": "workspace:*",
+    "@testing-library/react": "catalog:",
+    "@types/node": "^26.3.0",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "eslint": "10.7.0",
+    "jsdom": "catalog:",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "tsup": "^8.3.5",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

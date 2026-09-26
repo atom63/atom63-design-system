@@ -147,6 +147,9 @@ importers:
 
   apps/docs:
     dependencies:
+      '@atom63/agent':
+        specifier: workspace:*
+        version: link:../../packages/agent
       '@atom63/brand':
         specifier: workspace:*
         version: link:../../packages/brand
@@ -501,6 +504,55 @@ importers:
       vite:
         specifier: 'catalog:'
         version: 8.1.4(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.0)(tsx@4.23.15)(yaml@2.9.1)
+
+  packages/agent:
+    dependencies:
+      zustand:
+        specifier: ^5.0.14
+        version: 5.0.15(@types/react@19.2.17)(react@19.2.7)(use-sync-external-store@1.7.0(react@19.2.7))
+    devDependencies:
+      '@atom63/eslint-config':
+        specifier: workspace:*
+        version: link:../../config/eslint-config
+      '@atom63/tsconfig':
+        specifier: workspace:*
+        version: link:../../config/tsconfig
+      '@testing-library/react':
+        specifier: 'catalog:'
+        version: 16.3.2(@testing-library/dom@10.4.2)(@types/react-dom@19.2.3(@types/react@19.2.17))(@types/react@19.2.17)(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      '@types/node':
+        specifier: ^26.3.0
+        version: 26.6.2
+      '@types/react':
+        specifier: 19.2.17
+        version: 19.2.17
+      '@types/react-dom':
+        specifier: 19.2.3
+        version: 19.2.3(@types/react@19.2.17)
+      '@vitejs/plugin-react':
+        specifier: 'catalog:'
+        version: 6.1.1(vite@8.1.4(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.0)(tsx@4.23.15)(yaml@2.9.1))
+      eslint:
+        specifier: 10.7.0
+        version: 10.7.0(jiti@2.7.0)
+      jsdom:
+        specifier: 'catalog:'
+        version: 29.1.1
+      react:
+        specifier: 19.2.7
+        version: 19.2.7
+      react-dom:
+        specifier: 19.2.7
+        version: 19.2.7(react@19.2.7)
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(@microsoft/api-extractor@7.59.2(@types/node@26.6.2))(jiti@2.7.0)(postcss@8.5.28)(tsx@4.23.15)(typescript@5.8.3)(yaml@2.9.1)
+      typescript:
+        specifier: 'catalog:'
+        version: 5.8.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.11(@types/node@26.6.2)(@vitest/browser-playwright@4.1.11)(jsdom@29.1.1)(vite@8.1.4(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.0)(tsx@4.23.15)(yaml@2.9.1))
 
   packages/brand:
     devDependencies:
@@ -5993,6 +6045,24 @@ packages:
   zod@4.6.5:
     resolution: {integrity: sha512-v5l/aFXZQeai4awLbOpSoHecE9UiMrnfx75tEXLjNonXVARxQ5mOeipTjROUchszUNCqnE+hqAMujRsRHsut2Q==}
 
+  zustand@5.0.15:
+    resolution: {integrity: sha512-MpSEjRiBkA9crSYeOUH32rJC7SVqAbm0Fqcqge/bUi2PPoLcBWKOsG+C8mevmpr8TwXHBVkChbbJiyvkE+i/3A==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': 19.2.17
+      immer: '>=9.0.6'
+      react: 19.2.7
+      use-sync-external-store: '>=1.2.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      immer:
+        optional: true
+      react:
+        optional: true
+      use-sync-external-store:
+        optional: true
+
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
@@ -11438,5 +11508,11 @@ snapshots:
   zod@3.25.76: {}
 
   zod@4.6.5: {}
+
+  zustand@5.0.15(@types/react@19.2.17)(react@19.2.7)(use-sync-external-store@1.7.0(react@19.2.7)):
+    optionalDependencies:
+      '@types/react': 19.2.17
+      react: 19.2.7
+      use-sync-external-store: 1.7.0(react@19.2.7)
 
   zwitch@2.0.4: {}

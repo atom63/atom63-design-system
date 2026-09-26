@@ -12,6 +12,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@atom63/agent": "workspace:*",
     "@atom63/brand": "workspace:*",
     "@atom63/inform": "workspace:*",
     "@atom63/mdx": "workspace:*",

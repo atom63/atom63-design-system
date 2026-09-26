@@ -178,6 +178,10 @@ jobs:
         run: |
           pnpm --filter @atom63/inform typecheck
           pnpm --filter @atom63/inform test
+      - name: Typecheck and test agent
+        run: |
+          pnpm --filter @atom63/agent typecheck
+          pnpm --filter @atom63/agent test
 
       # Generates an app with @atom63/create, installs it against the packed
       # packages, builds it, then adds a shadcn component and builds again.
@@ -197,6 +201,7 @@ jobs:
           pnpm --filter @atom63/mdx lint
           pnpm --filter @atom63/brand lint
           pnpm --filter @atom63/inform lint
+          pnpm --filter @atom63/agent lint
 
       # A pull request that changes a published package needs a changeset. One
       # that ships nothing to npm (tests, tooling, dev dependencies) adds an
