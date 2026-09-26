@@ -36,7 +36,11 @@ function Demo({
   return (
     <div style={{ width: 220 }}>
       <Select items={ITEMS} onValueChange={next => setValue(next ?? '')} value={value}>
-        <SelectTrigger aria-label="Example select, disabled" disabled={disabled} size={size}>
+        <SelectTrigger
+          aria-label={disabled ? 'Example select, disabled' : 'Example select'}
+          disabled={disabled}
+          size={size}
+        >
           <SelectValue />
         </SelectTrigger>
         <SelectPopup portalContainer={portalContainer}>

@@ -1,3 +1,4 @@
+import type { A11yPatternBinding } from '../../a11y/types'
 import { type SelectionTokenSlot, selectionTokenSlots } from '../selection/selection-contract'
 
 export const switchSizes = ['sm', 'md'] as const
@@ -16,6 +17,8 @@ export type SwitchSlot = (typeof switchSlots)[number]
 export type SwitchVisualArchetype = (typeof switchVisualArchetypes)[number]
 
 export interface SwitchContract {
+  /** The WAI-ARIA APG pattern the component implements. */
+  accessibility: A11yPatternBinding
   defaultSize: SwitchSize
   sizes: readonly SwitchSize[]
   slots: readonly SwitchSlot[]
@@ -25,6 +28,7 @@ export interface SwitchContract {
 }
 
 export const switchContract = {
+  accessibility: { pattern: 'switch' },
   defaultSize: 'md',
   sizes: switchSizes,
   slots: switchSlots,

@@ -14,10 +14,35 @@
 
 /** The ARIA roles the pattern contracts use. */
 export type A11yRole =
-  'alertdialog' | 'button' | 'dialog' | 'menu' | 'menuitem' | 'tab' | 'tablist' | 'tabpanel'
+  | 'alertdialog'
+  | 'button'
+  | 'checkbox'
+  | 'combobox'
+  | 'dialog'
+  | 'heading'
+  | 'listbox'
+  | 'menu'
+  | 'menuitem'
+  | 'option'
+  | 'radio'
+  | 'radiogroup'
+  | 'region'
+  | 'switch'
+  | 'tab'
+  | 'tablist'
+  | 'tabpanel'
 
 /** The APG patterns with a contract. The id is the APG page slug. */
-export type A11yPatternId = 'alertdialog' | 'dialog-modal' | 'menu-button' | 'tabs'
+export type A11yPatternId =
+  | 'accordion'
+  | 'alertdialog'
+  | 'checkbox'
+  | 'combobox-select-only'
+  | 'dialog-modal'
+  | 'menu-button'
+  | 'radio'
+  | 'switch'
+  | 'tabs'
 
 /** ARIA states an accessibility tree node can require, as the tree prints them. */
 export type A11yTreeState = 'checked' | 'disabled' | 'expanded' | 'pressed' | 'selected'
@@ -38,8 +63,11 @@ export interface A11yPart {
   within?: string
 }
 
-/** Which instance of a part: by position among its siblings, or the selected one. */
-export type A11yPosition = 'first' | 'last' | 'selected' | number
+/**
+ * Which instance of a part: by position among its siblings, the selected one
+ * (`aria-selected="true"`) or the checked one (`aria-checked="true"`).
+ */
+export type A11yPosition = 'checked' | 'first' | 'last' | 'selected' | number
 
 /** An instance of a part, or the first or last tabbable element inside it. */
 export type A11yTarget =

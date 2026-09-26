@@ -11,19 +11,29 @@
 import * as foundation from '@atom63/ui-foundation'
 import {
   type A11yPatternBinding,
+  accordionContract,
   alertDialogContract,
+  checkboxContract,
   dialogContract,
   dropdownMenuContract,
   getA11yPattern,
+  radioContract,
+  selectContract,
+  switchContract,
   tabsContract,
 } from '@atom63/ui-foundation'
 import { composeStories } from '@storybook/react-vite'
 import type { ComponentType } from 'react'
 import { describe, expect, it } from 'vitest'
 
+import * as accordionStories from '../../../packages/ui-react/src/components/accordion/accordion.stories'
 import * as alertDialogStories from '../../../packages/ui-react/src/components/alert-dialog/alert-dialog.stories'
+import * as checkboxStories from '../../../packages/ui-react/src/components/checkbox/checkbox.stories'
 import * as dialogStories from '../../../packages/ui-react/src/components/dialog/dialog.stories'
 import * as dropdownMenuStories from '../../../packages/ui-react/src/components/dropdown-menu/dropdown-menu.stories'
+import * as radioStories from '../../../packages/ui-react/src/components/radio/radio.stories'
+import * as selectStories from '../../../packages/ui-react/src/components/select/select.stories'
+import * as switchStories from '../../../packages/ui-react/src/components/switch/switch.stories'
 import * as tabsStories from '../../../packages/ui-react/src/components/tabs/tabs.stories'
 import {
   type ContractCase,
@@ -65,6 +75,31 @@ const bindings: Binding[] = [
     exportName: 'tabsContract',
     contract: tabsContract,
     stories: [{ module: tabsStories, name: 'Playground' }],
+  },
+  {
+    exportName: 'selectContract',
+    contract: selectContract,
+    stories: [{ module: selectStories, name: 'Playground' }],
+  },
+  {
+    exportName: 'switchContract',
+    contract: switchContract,
+    stories: [{ module: switchStories, name: 'Playground' }],
+  },
+  {
+    exportName: 'checkboxContract',
+    contract: checkboxContract,
+    stories: [{ module: checkboxStories, name: 'Playground' }],
+  },
+  {
+    exportName: 'accordionContract',
+    contract: accordionContract,
+    stories: [{ module: accordionStories, name: 'Playground' }],
+  },
+  {
+    exportName: 'radioContract',
+    contract: radioContract,
+    stories: [{ module: radioStories, name: 'Playground' }],
   },
 ]
 

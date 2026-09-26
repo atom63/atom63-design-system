@@ -89,16 +89,20 @@ function instances(harness: Harness, part: string): Element[] {
     scope = page.elementLocator(container)
   }
   // Include hidden elements: a modal marks the rest of the page aria-hidden,
-  // and the trigger behind it is still the element focus must return to.
+  // and the trigger behind it is still the element focus must return to. An
+  // element hidden by its own aria-hidden is not part of the pattern, such as
+  // the native input a custom checkbox or radio keeps for forms.
   return scope
     .getByRole(spec.role, { exact: true, includeHidden: true, ...(name ? { name } : {}) })
     .elements()
+    .filter(element => element.getAttribute('aria-hidden') !== 'true')
 }
 
 function pick(list: Element[], at: A11yPosition | undefined): Element | string {
-  if (at === 'selected') {
-    const selected = list.filter(element => element.getAttribute('aria-selected') === 'true')
-    return selected.length === 1 ? selected[0]! : `${selected.length} selected instances`
+  if (at === 'selected' || at === 'checked') {
+    const attribute = at === 'selected' ? 'aria-selected' : 'aria-checked'
+    const found = list.filter(element => element.getAttribute(attribute) === 'true')
+    return found.length === 1 ? found[0]! : `${found.length} ${at} instances`
   }
   const index = at === 'last' ? list.length - 1 : at === 'first' || at === undefined ? 0 : at
   return list[index] ?? `no instance at ${String(at ?? 'first')} (found ${list.length})`
@@ -142,7 +146,7 @@ function targetLabel(target: A11yFocus): string {
   return target.at === undefined ? target.part : `${target.part} (${String(target.at)})`
 }
 
-const NAMED_BY_CONTENT = new Set(['a', 'button', 'link', 'menuitem', 'tab'])
+const NAMED_BY_CONTENT = new Set(['a', 'button', 'link', 'menuitem', 'option', 'tab'])
 
 /** `button "Open menu"`: the role (or tag) and a rough label, for messages. */
 export function describeElement(element: Element | null): string {
@@ -199,7 +203,10 @@ function checkFocus(harness: Harness, focus: A11yFocus): string | null {
   if (typeof expected === 'string') {
     return `focus should be on ${targetLabel(focus)}, but there is ${expected}; focus is on ${actual}`
   }
-  return expected === active
+  // Visual focus counts: DOM focus on the element, or on an element whose
+  // aria-activedescendant refers to it (a combobox and its options).
+  const activeDescendant = active?.getAttribute('aria-activedescendant')
+  return expected === active || (activeDescendant && activeDescendant === expected.id)
     ? null
     : `focus should be on ${targetLabel(focus)} (${describeElement(expected)}), but it is on ${actual}`
 }

@@ -83,16 +83,16 @@ export interface A11yPatternContract {
 }
 
 // @public
-export type A11yPatternId = 'alertdialog' | 'dialog-modal' | 'menu-button' | 'tabs';
+export type A11yPatternId = 'accordion' | 'alertdialog' | 'checkbox' | 'combobox-select-only' | 'dialog-modal' | 'menu-button' | 'radio' | 'switch' | 'tabs';
 
 // @public
 export const a11yPatterns: Readonly<Record<A11yPatternId, A11yPatternContract>>;
 
 // @public
-export type A11yPosition = 'first' | 'last' | 'selected' | number;
+export type A11yPosition = 'checked' | 'first' | 'last' | 'selected' | number;
 
 // @public
-export type A11yRole = 'alertdialog' | 'button' | 'dialog' | 'menu' | 'menuitem' | 'tab' | 'tablist' | 'tabpanel';
+export type A11yRole = 'alertdialog' | 'button' | 'checkbox' | 'combobox' | 'dialog' | 'heading' | 'listbox' | 'menu' | 'menuitem' | 'option' | 'radio' | 'radiogroup' | 'region' | 'switch' | 'tab' | 'tablist' | 'tabpanel';
 
 // @public
 export interface A11yStructureCheck extends A11yAttributeCheck {
@@ -122,6 +122,7 @@ export type A11yTreeState = 'checked' | 'disabled' | 'expanded' | 'pressed' | 's
 
 // @public (undocumented)
 export interface AccordionContract {
+    accessibility: A11yPatternBinding;
     // (undocumented)
     defaultIconVariant: AccordionIconVariant;
     // (undocumented)
@@ -136,6 +137,17 @@ export interface AccordionContract {
 
 // @public (undocumented)
 export const accordionContract: {
+    accessibility: {
+        pattern: "accordion";
+        options: {
+            collapse: string;
+            expand: string;
+        };
+        knownGaps: {
+            check: string;
+            reason: string;
+        }[];
+    };
     defaultIconVariant: "chevron";
     iconVariants: readonly ["chevron", "plus-minus"];
     slots: readonly ["accordion", "accordion-item", "accordion-trigger", "accordion-indicator", "accordion-content", "accordion-content-inner"];
@@ -148,6 +160,9 @@ export type AccordionIconVariant = (typeof accordionIconVariants)[number];
 
 // @public (undocumented)
 export const accordionIconVariants: readonly ["chevron", "plus-minus"];
+
+// @public
+export const accordionPattern: A11yPatternContract;
 
 // @public (undocumented)
 export type AccordionSlot = (typeof accordionSlots)[number];
@@ -861,6 +876,7 @@ export const carouselVisualArchetypes: readonly ["surface", "overlay", "action"]
 
 // @public (undocumented)
 export interface CheckboxContract {
+    accessibility: A11yPatternBinding;
     // (undocumented)
     defaultSize: CheckboxSize;
     // (undocumented)
@@ -875,12 +891,18 @@ export interface CheckboxContract {
 
 // @public (undocumented)
 export const checkboxContract: {
+    accessibility: {
+        pattern: "checkbox";
+    };
     defaultSize: "md";
     sizes: readonly ["sm", "md"];
     states: readonly ["unchecked", "checked", "indeterminate", "disabled", "invalid"];
     slots: readonly ["checkbox", "checkbox-indicator"];
     visualArchetypes: readonly ["choice"];
 };
+
+// @public
+export const checkboxPattern: A11yPatternContract;
 
 // @public (undocumented)
 export type CheckboxSize = (typeof checkboxSizes)[number];
@@ -940,6 +962,9 @@ export type CollapsibleVisualArchetype = (typeof collapsibleVisualArchetypes)[nu
 
 // @public (undocumented)
 export const collapsibleVisualArchetypes: readonly ["trigger"];
+
+// @public
+export const comboboxSelectOnlyPattern: A11yPatternContract;
 
 // @public (undocumented)
 export interface CommandContract {
@@ -3319,6 +3344,7 @@ export const radii: readonly ["none", "subtle", "default", "round"];
 
 // @public (undocumented)
 export interface RadioContract {
+    accessibility: A11yPatternBinding;
     // (undocumented)
     defaultSize: RadioSize;
     // (undocumented)
@@ -3333,12 +3359,18 @@ export interface RadioContract {
 
 // @public (undocumented)
 export const radioContract: {
+    accessibility: {
+        pattern: "radio";
+    };
     defaultSize: "md";
     sizes: readonly ["sm", "md"];
     states: readonly ["unchecked", "checked", "focus-visible", "disabled", "invalid"];
     slots: readonly ["radio-group", "radio", "radio-indicator"];
     visualArchetypes: readonly ["choice"];
 };
+
+// @public
+export const radioPattern: A11yPatternContract;
 
 // @public (undocumented)
 export type RadioSize = (typeof radioSizes)[number];
@@ -3655,6 +3687,7 @@ export const segmentedControlVisualArchetypes: readonly ["segment"];
 
 // @public (undocumented)
 export interface SelectContract {
+    accessibility: A11yPatternBinding;
     // (undocumented)
     defaultSize: SelectSize;
     // (undocumented)
@@ -3671,6 +3704,13 @@ export interface SelectContract {
 
 // @public (undocumented)
 export const selectContract: {
+    accessibility: {
+        pattern: "combobox-select-only";
+        knownGaps: {
+            check: string;
+            reason: string;
+        }[];
+    };
     defaultSize: "md";
     sizes: readonly ["sm", "md", "lg"];
     slots: readonly ["select-trigger", "select-value", "select-icon", "select-positioner", "select-popup", "select-surface", "select-list", "select-scroll-up-arrow", "select-scroll-down-arrow", "select-item", "select-item-indicator", "select-item-text", "select-group", "select-group-label", "select-separator"];
@@ -4124,6 +4164,7 @@ export const surfaces: readonly ["n1", "n2", "n3", "n4", "n5", "n6"];
 
 // @public (undocumented)
 export interface SwitchContract {
+    accessibility: A11yPatternBinding;
     // (undocumented)
     defaultSize: SwitchSize;
     // (undocumented)
@@ -4140,6 +4181,9 @@ export interface SwitchContract {
 
 // @public (undocumented)
 export const switchContract: {
+    accessibility: {
+        pattern: "switch";
+    };
     defaultSize: "md";
     sizes: readonly ["sm", "md"];
     slots: readonly ["switch", "switch-thumb"];
@@ -4147,6 +4191,9 @@ export const switchContract: {
     tokenSlots: readonly ["selection.accent", "selection.accentForeground", "selection.trackOff", "selection.border", "selection.thumb", "selection.focusRing"];
     visualArchetypes: readonly ["choice"];
 };
+
+// @public
+export const switchPattern: A11yPatternContract;
 
 // @public (undocumented)
 export type SwitchSize = (typeof switchSizes)[number];
