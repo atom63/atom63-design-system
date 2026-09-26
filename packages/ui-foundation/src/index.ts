@@ -20,10 +20,15 @@ export type {
 } from './conformance'
 export {
   a11yPatterns,
+  accordionPattern,
   alertDialogPattern,
+  checkboxPattern,
+  comboboxSelectOnlyPattern,
   dialogModalPattern,
   getA11yPattern,
   menuButtonPattern,
+  radioPattern,
+  switchPattern,
   tabsPattern,
 } from './a11y'
 export type {

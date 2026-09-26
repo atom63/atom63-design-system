@@ -1,3 +1,4 @@
+import type { A11yPatternBinding } from '../../a11y/types'
 export const radioSizes = ['sm', 'md'] as const
 export const radioStates = ['unchecked', 'checked', 'focus-visible', 'disabled', 'invalid'] as const
 export const radioSlots = ['radio-group', 'radio', 'radio-indicator'] as const
@@ -9,6 +10,8 @@ export type RadioSlot = (typeof radioSlots)[number]
 export type RadioVisualArchetype = (typeof radioVisualArchetypes)[number]
 
 export interface RadioContract {
+  /** The WAI-ARIA APG pattern the component implements. */
+  accessibility: A11yPatternBinding
   defaultSize: RadioSize
   sizes: readonly RadioSize[]
   states: readonly RadioState[]
@@ -17,6 +20,7 @@ export interface RadioContract {
 }
 
 export const radioContract = {
+  accessibility: { pattern: 'radio' },
   defaultSize: 'md',
   sizes: radioSizes,
   states: radioStates,

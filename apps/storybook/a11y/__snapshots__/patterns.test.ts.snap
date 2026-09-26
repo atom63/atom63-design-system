@@ -1,11 +1,24 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`accordionContract implements Accordion > Playground > accessibility tree under heading 1`] = `
+- heading "Is it accessible?" [level=3]:
+  - button "Is it accessible?" [expanded]
+`;
+
+exports[`accordionContract implements Accordion > Playground > accessibility tree under panel 1`] = `
+- region "Is it accessible?": Yes. It follows the WAI-ARIA accordion pattern out of the box.
+`;
+
 exports[`alertDialogContract implements Alert and Message Dialogs > Playground > accessibility tree under dialog 1`] = `
 - alertdialog "Delete this project?":
   - heading "Delete this project?" [level=2]
   - paragraph: This permanently removes the project and all of its files. This action cannot be undone.
   - button "Cancel"
   - button "Delete"
+`;
+
+exports[`checkboxContract implements Checkbox > Playground > accessibility tree under checkbox 1`] = `
+- checkbox "Example checkbox" [checked]
 `;
 
 exports[`dialogContract implements Dialog (Modal) > Playground > accessibility tree under dialog 1`] = `
@@ -25,6 +38,32 @@ exports[`dropdownMenuContract implements Menu Button > Playground > accessibilit
   - menuitem "Paste ⌘V"
   - separator
   - menuitem "Delete"
+`;
+
+exports[`radioContract implements Radio Group > Playground > accessibility tree under radiogroup 1`] = `
+- radiogroup "View":
+  - radio "List"
+  - text: List
+  - radio "Grid" [checked]
+  - text: Grid
+  - radio "Tree"
+  - text: Tree
+`;
+
+exports[`selectContract implements Select-Only Combobox > Playground > accessibility tree under combobox 1`] = `
+- combobox "Example select" [expanded]: All types
+`;
+
+exports[`selectContract implements Select-Only Combobox > Playground > accessibility tree under listbox 1`] = `
+- listbox:
+  - option "All types" [selected]
+  - option "Article"
+  - option "Video"
+  - option "Talk"
+`;
+
+exports[`switchContract implements Switch > Playground > accessibility tree under switch 1`] = `
+- switch "Example switch" [checked]
 `;
 
 exports[`tabsContract implements Tabs > Playground > accessibility tree under panel 1`] = `

@@ -19,7 +19,7 @@ const OPTIONS = [
 
 export const Playground: Story = {
   render: () => (
-    <RadioGroup defaultValue="grid">
+    <RadioGroup aria-label="View" defaultValue="grid">
       {OPTIONS.map(o => (
         <div key={o.value} style={{ alignItems: 'center', display: 'flex', gap: 8 }}>
           <Radio id={`radio-${o.value}`} value={o.value} />

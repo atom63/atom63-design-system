@@ -1,3 +1,4 @@
+import type { A11yPatternBinding } from '../../a11y/types'
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 export const accordionIconVariants = ['chevron', 'plus-minus'] as const
@@ -21,6 +22,8 @@ export type AccordionSlot = (typeof accordionSlots)[number]
 export type AccordionVisualArchetype = (typeof accordionVisualArchetypes)[number]
 
 export interface AccordionContract {
+  /** The WAI-ARIA APG pattern the component implements. */
+  accessibility: A11yPatternBinding
   defaultIconVariant: AccordionIconVariant
   iconVariants: readonly AccordionIconVariant[]
   slots: readonly AccordionSlot[]
@@ -29,6 +32,17 @@ export interface AccordionContract {
 }
 
 export const accordionContract = {
+  accessibility: {
+    pattern: 'accordion',
+    options: { collapse: 'collapsible', expand: 'single' },
+    knownGaps: [
+      {
+        check: 'header-controls-panel',
+        reason:
+          'Base UI sets aria-controls only on the header of an expanded panel, because a collapsed panel is not mounted. A fix needs the panels kept mounted and Base UI to set aria-controls while closed.',
+      },
+    ],
+  },
   defaultIconVariant: 'chevron',
   iconVariants: accordionIconVariants,
   slots: accordionSlots,

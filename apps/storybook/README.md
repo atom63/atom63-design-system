@@ -95,7 +95,8 @@ pnpm --filter @atom63/storybook test:ssr
 ```
 
 **Accessibility pattern contracts.** The `a11y` project checks the components that declare a
-WAI-ARIA APG pattern (dialog, alert dialog, menu button, tabs) against that pattern's contract in
+WAI-ARIA APG pattern (dialog, alert dialog, menu button, tabs, select-only combobox, switch,
+checkbox, accordion, radio group) against that pattern's contract in
 `@atom63/ui-foundation`. `a11y/patterns.test.ts` names the stories for each component and
 generates the tests; `a11y/contract.ts` renders each story as a portable story, with the preview
 applied, and then:
