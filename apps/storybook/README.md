@@ -27,6 +27,55 @@ parameter in `packages/ui-react/src/components/story-probes.tsx` switches off th
 uniqueness rules for theme and environment matrices, which repeat a component's landmarks by design.
 Every other rule, including color contrast, applies to every story. Label every form control you add to a story.
 
+**Runtime craft checks.** The `craft` project renders every story in Chromium again and, after it
+renders, checks three craft rules that only a rendered component shows. The rules live in
+`craft/rules.ts`; the `craft-rules` project tests them on hand-written fixtures, including a
+disabled button with a hover style and a 16 px icon button that must fail.
+
+- `disabled-hover`: hovers each disabled button, link, input, option, menu item and tab (`:disabled`,
+  `aria-disabled="true"` or `data-disabled`) with the real pointer. Its background, color, border,
+  box-shadow, opacity and text decoration must not change.
+- `target-size`: every visible, enabled pointer target (native controls, interactive roles and
+  anything tabbable) is at least 24 × 24 CSS px, as WCAG 2.5.8 asks. A control wrapped in its label
+  is measured by the label. The inline exception (a link in running text) and the spacing
+  exception (a 24 px circle on the target's center touches no other target) apply. Targets covered
+  by another element at their center, such as cards behind the front card of a stack, are skipped.
+  Not checked: the essential and user-agent-control exceptions, and click handlers on elements with
+  no role and no `tabindex`, which React attaches at the root where they cannot be seen.
+- `focus-visible`: tabs through the story, up to 16 stops. Each element that takes keyboard focus
+  must change its outline or box-shadow, the outline or box-shadow of one of its three nearest
+  ancestors (a field or group ringed on `:focus-within`), or a `::before` or `::after`
+  pseudo-element. Then it clicks the first plain button it tabbed to (one that does not toggle,
+  open a popup or submit) and checks that the click draws no ring on the button itself.
+
+The project runs apart from `storybook` so the render and axe tests keep their own timing: the
+check freezes CSS motion and pins remote images as the visual project does, waits for fonts,
+images and the DOM to settle, and moves the pointer onto a 2 px spot in the corner of the viewport
+between steps. Axe is off here, since it already runs in `storybook`.
+
+Existing violations are listed in `docs/design-system/audits/runtime-craft-baseline.json`, by
+story id, rule and element. A violation the baseline does not list fails the story, and so does a
+baseline entry that no longer occurs; after a full run, so does an entry for a story that no longer
+exists. Rewrite the baseline after fixing or accepting violations:
+
+```bash
+pnpm --filter @atom63/storybook test:craft                               # check
+CRAFT_WRITE_BASELINE=1 pnpm --filter @atom63/storybook test:craft        # rewrite the baseline
+```
+
+A run of some story files merges their results into the baseline and leaves the other stories'
+entries alone.
+
+A story whose rule result is wrong for a reason the check cannot see can opt out of that rule, with
+the reason in a comment:
+
+```ts
+// The ring is drawn on the active slot, a sibling of the focused input.
+parameters: { craft: { disable: ['focus-visible'] } },
+```
+
+Use this sparingly: a real violation belongs in the baseline, where it stays visible until fixed.
+
 **Other browsers.** The `cross-browser` project renders every story in Firefox and WebKit. It
 checks rendering only: axe and visual regression run in Chromium. Axe is off there because reading
 the computed `mask` shorthand of an element with more than one mask layer crashes WebKit 26.5, and

@@ -2,6 +2,7 @@ import { ImageCompare } from '@atom63/mdx/blocks'
 import '@atom63/ui-react/styles.css'
 import '@atom63/mdx/styles/index.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { within } from 'storybook/test'
 
 function svgDataUri(svg: string) {
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
@@ -43,6 +44,11 @@ const meta = {
       </div>
     ),
   ],
+  // The slider is code-split and replaces a skeleton once it loads; wait for
+  // it so tests see the finished block.
+  play: async ({ canvasElement }) => {
+    await within(canvasElement).findByRole('slider')
+  },
 } satisfies Meta<typeof ImageCompare>
 
 export default meta

@@ -6,23 +6,56 @@ import { defaultServerConditions } from 'vite'
 import { defineConfig } from 'vitest/config'
 
 import { sharedTestOptions } from '../../config/vite/vitest-defaults'
+import { CRAFT_PROJECT, CraftBaselineReporter, craftCommands } from './craft/node'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // `storybook`: every story becomes a browser test that renders it (and runs
 // its play function, if any) in Chromium.
 // `visual`: the same stories, each compared against a committed screenshot.
+// `craft`: the same stories, each checked for the runtime craft rules
+// (craft/rules.ts); `craft-rules` tests those rules on fixtures.
 // See
 // https://storybook.js.org/docs/writing-tests/integrations/vitest-addon
 export default defineConfig({
   test: {
     ...sharedTestOptions,
+    // The craft reporter checks and rewrites the runtime craft baseline.
+    reporters: ['default', new CraftBaselineReporter()],
     projects: [
       {
         extends: true,
         plugins: [storybookTest({ configDir: path.join(dirname, '.storybook') })],
         test: {
           name: 'storybook',
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright(),
+            instances: [{ browser: 'chromium' }],
+          },
+        },
+      },
+      {
+        extends: true,
+        plugins: [storybookTest({ configDir: path.join(dirname, '.storybook') })],
+        test: {
+          name: CRAFT_PROJECT,
+          setupFiles: ['./.storybook/craft.setup.ts'],
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright(),
+            instances: [{ browser: 'chromium' }],
+            commands: craftCommands,
+          },
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: 'craft-rules',
+          include: ['craft/**/*.test.ts'],
           browser: {
             enabled: true,
             headless: true,

@@ -251,7 +251,7 @@ jobs:
           pnpm --filter @atom63/figma-plugin test
           pnpm --filter @atom63/figma-plugin build
 
-  # Storybook render, axe and SSR tests. The Playwright image ships the
+  # Storybook render, axe, runtime craft and SSR tests. The Playwright image ships the
   # browsers, so nothing is downloaded. Keep it in step with the root
   # `playwright` version, like visual.yml.
   storybook:
@@ -279,6 +279,7 @@ jobs:
           pnpm --filter @atom63/storybook typecheck
           pnpm --filter @atom63/storybook build
           pnpm --filter @atom63/storybook test
+          pnpm --filter @atom63/storybook test:craft
           pnpm --filter @atom63/storybook test:ssr
 
   # Every story renders in Firefox and WebKit. Render only: axe and visual
