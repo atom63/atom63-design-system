@@ -35,13 +35,6 @@ export const accordionContract = {
   accessibility: {
     pattern: 'accordion',
     options: { collapse: 'collapsible', expand: 'single' },
-    knownGaps: [
-      {
-        check: 'header-controls-panel',
-        reason:
-          'Base UI sets aria-controls only on the header of an expanded panel, because a collapsed panel is not mounted. A fix needs the panels kept mounted and Base UI to set aria-controls while closed.',
-      },
-    ],
   },
   defaultIconVariant: 'chevron',
   iconVariants: accordionIconVariants,

@@ -4,7 +4,7 @@ import { Dialog as DialogPrimitive } from '@base-ui/react/dialog'
 import { mergeProps } from '@base-ui/react/merge-props'
 import { useRender } from '@base-ui/react/use-render'
 import type { DialogFooterVariant, DialogMobilePlacement, DialogSize } from '@atom63/ui-foundation'
-import type * as React from 'react'
+import * as React from 'react'
 
 import { cn } from '../../lib/cn'
 
@@ -28,7 +28,22 @@ import { cn } from '../../lib/cn'
 
 export const DialogCreateHandle: typeof DialogPrimitive.createHandle = DialogPrimitive.createHandle
 
-export const Dialog: typeof DialogPrimitive.Root = DialogPrimitive.Root
+/*
+ * Base UI hides the rest of the page with aria-hidden while a modal dialog is
+ * open, but does not set aria-modal, which the APG requires; and its Popup
+ * does not expose the root's `modal` prop. The root passes it down here.
+ * Base UI treats `true` and 'trap-focus' as modal (both hide the page), and
+ * defaults to `true`, so a popup outside our root counts as modal too.
+ */
+const DialogModalContext = React.createContext<DialogPrimitive.Root.Props['modal']>(true)
+
+export function Dialog<Payload>(props: DialogPrimitive.Root.Props<Payload>): React.ReactElement {
+  return (
+    <DialogModalContext.Provider value={props.modal ?? true}>
+      <DialogPrimitive.Root {...props} />
+    </DialogModalContext.Provider>
+  )
+}
 
 export function DialogPortal(props: DialogPrimitive.Portal.Props): React.ReactElement {
   return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />
@@ -110,6 +125,7 @@ export function DialogPopup({
   closeProps?: DialogPrimitive.Close.Props
   portalProps?: DialogPrimitive.Portal.Props
 }): React.ReactElement {
+  const modal = React.useContext(DialogModalContext)
   const resolvedMobilePlacement = mobilePlacement ?? (bottomStickOnMobile ? 'bottom' : 'center')
   const stickToBottomOnMobile = resolvedMobilePlacement === 'bottom'
 
@@ -118,6 +134,7 @@ export function DialogPopup({
       <DialogBackdrop />
       <DialogViewport data-mobile-placement={resolvedMobilePlacement}>
         <DialogPrimitive.Popup
+          aria-modal={modal === false ? undefined : true}
           className={cn('a63-Dialog-popup', className)}
           data-mobile-placement={resolvedMobilePlacement}
           data-size={size}

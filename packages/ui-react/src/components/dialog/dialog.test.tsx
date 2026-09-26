@@ -64,4 +64,31 @@ describe('Dialog', () => {
     const footer = document.querySelector('[data-slot="dialog-footer"]')
     expect(footer).toHaveAttribute('data-variant', 'default')
   })
+
+  it('marks a modal dialog with aria-modal', async () => {
+    render(<Example />)
+    expect(await screen.findByRole('dialog')).toHaveAttribute('aria-modal', 'true')
+  })
+
+  it('marks a focus-trapping dialog with aria-modal', async () => {
+    render(
+      <Dialog defaultOpen modal="trap-focus">
+        <DialogPopup>
+          <DialogTitle>Title</DialogTitle>
+        </DialogPopup>
+      </Dialog>
+    )
+    expect(await screen.findByRole('dialog')).toHaveAttribute('aria-modal', 'true')
+  })
+
+  it('leaves aria-modal off a non-modal dialog', async () => {
+    render(
+      <Dialog defaultOpen modal={false}>
+        <DialogPopup>
+          <DialogTitle>Title</DialogTitle>
+        </DialogPopup>
+      </Dialog>
+    )
+    expect(await screen.findByRole('dialog')).not.toHaveAttribute('aria-modal')
+  })
 })
