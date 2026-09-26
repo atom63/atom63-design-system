@@ -46,7 +46,12 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // ramps where every hue has the same perceived lightness per step, so a custom
 // brand meets WCAG AA like the built-in ones; the HSL ramps it replaces fell to
 // 1.7:1 for yellow and green brands.
-const gzipBudgetBytes = 87 * 1024
+//
+// 87 kB held 87.2 kB once Dialog and Accordion gained small wrapper roots. The
+// +0.2 kB is two React contexts: Dialog passes `modal` to its popup so it can
+// set `aria-modal`, and Accordion items pass their panel id to the trigger so
+// a collapsed header keeps `aria-controls` (APG). The budget moves to 88.
+const gzipBudgetBytes = 88 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()
