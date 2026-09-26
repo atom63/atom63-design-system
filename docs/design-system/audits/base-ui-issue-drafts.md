@@ -10,9 +10,9 @@ browser mode).
 | Draft | Check id | Atom63 status |
 | --- | --- | --- |
 | 1. Select keeps DOM focus on options | `combobox-active-descendant` | Known gap: not fixable in a wrapper |
-| 2. Select ignores Home and End while closed | `home-opens-at-first`, `end-opens-at-last` | Worked around in `SelectTrigger` |
-| 3. Select treats Alt + Up Arrow as Up Arrow | `alt-up-arrow-selects` | Worked around in `SelectPopup` |
-| 4. Select closes on Tab without selecting | `tab-selects` | Worked around in `Select` and `SelectPopup` |
+| 2. Select ignores Home and End while closed | `home-opens-at-first`, `end-opens-at-last` | Known gap (not worked around) |
+| 3. Select treats Alt + Up Arrow as Up Arrow | `alt-up-arrow-selects` | Known gap (not worked around) |
+| 4. Select closes on Tab without selecting | `tab-selects` | Known gap (not worked around) |
 | 5. Dialog.Popup has no aria-modal | `dialog-is-modal` | Worked around in `Dialog` and `DialogPopup` |
 | 6. Accordion.Trigger drops aria-controls while closed | `header-controls-panel` | Worked around in the Accordion parts |
 
