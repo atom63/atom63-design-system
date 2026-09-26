@@ -1,0 +1,308 @@
+import { useSyncExternalStore } from 'react'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogPopup,
+  AlertDialogTitle,
+  Button,
+  Input,
+} from '@atom63/ui-react'
+import { AgentTransportError, createAgentRuntime, getMessageText } from '@atom63/agent'
+import { useAgentChromeController, useOwnedAgentRuntime } from '@atom63/agent/react'
+import { ExampleContainer } from '@atom63/mdx/blocks'
+
+export const CANNED_REPLY =
+  'This reply comes from a fake transport. It streams one word at a time as text-delta events, and the runtime appends each one to the assistant message.'
+
+export const cannedTransport = {
+  async *stream(request) {
+    const last = request.messages[request.messages.length - 1]
+    yield { runId: request.runId, type: 'response-start' }
+    if (last.content.toLowerCase().includes('fail')) {
+      throw new AgentTransportError({
+        code: 'network',
+        message: 'The demo transport failed on purpose.',
+        retryable: true,
+      })
+    }
+    for (const word of CANNED_REPLY.split(/(?<= )/)) {
+      await new Promise(resolve => setTimeout(resolve, 60))
+      yield { delta: word, runId: request.runId, type: 'text-delta' }
+    }
+    yield { runId: request.runId, type: 'finish' }
+  },
+}
+
+export function AgentDemo() {
+  const runtime = useOwnedAgentRuntime(() =>
+    createAgentRuntime({ getSystemPrompt: () => 'You are a demo.', transport: cannedTransport })
+  )
+  const state = useSyncExternalStore(runtime.subscribe, runtime.getState)
+  const chrome = useAgentChromeController({ runtime })
+  const busy = state.status === 'submitted' || state.status === 'streaming'
+  const canSend = !busy && state.draft.trim() !== ''
+
+  return (
+    <div className="grid w-full gap-3">
+      <div className="flex items-center justify-between gap-2">
+        <span aria-live="polite" className="text-muted-foreground text-xs">
+          {chrome.statusLabel ?? `${chrome.userMessageCount} sent`}
+        </span>
+        {chrome.showClear && (
+          <Button disabled={!chrome.canClear} onClick={chrome.requestClear} size="sm" variant="ghost">
+            {chrome.labels.clear}
+          </Button>
+        )}
+      </div>
+      <ol aria-label="Transcript" className="grid gap-2" role="log">
+        {state.messages.map(message => (
+          <li
+            className={
+              message.role === 'user'
+                ? 'bg-muted ms-auto max-w-[80%] rounded-lg px-3 py-2 text-sm'
+                : 'max-w-[80%] text-sm'
+            }
+            key={message.id}
+          >
+            {message.status === 'error' ? (
+              <span className="flex flex-wrap items-center gap-2">
+                <span className="text-destructive">{message.error?.message}</span>
+                {message.error?.retryable && (
+                  <Button onClick={() => void runtime.retry(message.id)} size="xs" variant="outline">
+                    Retry
+                  </Button>
+                )}
+              </span>
+            ) : (
+              getMessageText(message) || '…'
+            )}
+          </li>
+        ))}
+      </ol>
+      <form
+        className="flex gap-2"
+        onSubmit={event => {
+          event.preventDefault()
+          if (canSend) void runtime.send({ text: state.draft })
+        }}
+      >
+        <Input
+          aria-label="Message"
+          onChange={event => runtime.setDraft(event.target.value)}
+          placeholder="Ask anything, or type “fail”"
+          value={state.draft}
+        />
+        {busy ? (
+          <Button onClick={() => runtime.stop()} type="button" variant="outline">
+            Stop
+          </Button>
+        ) : (
+          <Button disabled={!canSend} type="submit" variant="primary">
+            Send
+          </Button>
+        )}
+      </form>
+      <AlertDialog
+        onOpenChange={open => {
+          if (!open) chrome.cancelClear()
+        }}
+        open={chrome.clearConfirmationOpen}
+      >
+        <AlertDialogPopup size="sm">
+          <AlertDialogHeader>
+            <AlertDialogTitle>{chrome.labels.clearTitle}</AlertDialogTitle>
+            <AlertDialogDescription>{chrome.labels.clearDescription}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{chrome.labels.cancel}</AlertDialogCancel>
+            <AlertDialogAction onClick={chrome.confirmClear} variant="destructive">
+              {chrome.labels.clearConfirm}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogPopup>
+      </AlertDialog>
+    </div>
+  )
+}
+
+# Agent runtime
+
+`@atom63/agent` is the headless runtime behind a chat with an agent. It owns the conversation: the transcript, the draft, which run is in flight, and what went wrong. It talks to a model through a transport you provide, and it renders nothing.
+
+```bash
+pnpm add @atom63/agent
+```
+
+| Entry point | Contents |
+|-------------|----------|
+| `@atom63/agent` | `createAgentRuntime`, `createAgentStore`, `getMessageText`, `AgentTransportError`, and the message, transport and state types. No React. |
+| `@atom63/agent/react` | `useOwnedAgentRuntime`, `useAgentChromeController` and `DEFAULT_AGENT_CHROME_LABELS`. React is an optional peer, needed only here. |
+
+<ExampleContainer align="left">
+  <div style={{ width: 'min(28rem, 100%)' }}>
+    <AgentDemo />
+  </div>
+</ExampleContainer>
+
+The demo runs on a fake transport that streams a canned reply. Type a message containing "fail" to see a failed run and its retry.
+
+## The runtime
+
+`createAgentRuntime` takes a transport and a `getSystemPrompt(userQuery)` function, and returns a runtime backed by a vanilla zustand store:
+
+```ts
+import { createAgentRuntime } from '@atom63/agent'
+
+const runtime = createAgentRuntime({
+  transport,
+  getSystemPrompt: query => `You answer questions about Atom63. The visitor asked: ${query}`,
+  historyLimit: 20,
+})
+
+runtime.setDraft('What is a surface token?')
+const result = await runtime.send({ text: runtime.getState().draft })
+```
+
+| Option | Meaning |
+|--------|---------|
+| `transport` | Streams the model's reply. See [the transport contract](#the-transport-contract). |
+| `getSystemPrompt` | Builds the system message from the newest user message, once per run. |
+| `historyLimit` | How many earlier messages the transport receives. Unset sends the whole transcript; `0` sends none. |
+| `startDelayMs` | Waits this long before calling the transport, so a run stopped straight away never reaches the network. |
+| `store`, `threadId` | Resume an existing store or thread. `createAgentStore({ threadId, initialMessages })` builds one. |
+| `idGenerator`, `now` | Deterministic ids and timestamps for tests. |
+
+The runtime has `send`, `retry`, `stop`, `clear`, `setDraft` and `dispose`, plus `getState`, `subscribe` and the `store` itself. `send`, `retry`, `stop`, `clear` and `setDraft` fail with an `AgentTransportError` whose code is `invalid-state` when the runtime is disposed, and `send` and `retry` also fail with it while another run is in flight or when the message is empty. `dispose` is safe to call twice.
+
+### Statuses
+
+`state.status` moves through five values:
+
+| Status | Meaning |
+|--------|---------|
+| `idle` | No run in flight. The start state, and where a completed or stopped run returns. |
+| `submitted` | `send` or `retry` appended the user message and started a run; no text has arrived. |
+| `streaming` | The transport sent `response-start` or its first `text-delta`. |
+| `error` | The last run failed. `state.error` holds the public error; the next `send` or `retry` clears it. |
+| `disposed` | `dispose` was called. Terminal: the runtime accepts no more calls. |
+
+`state.activeRunId` is set exactly while a run is in `submitted` or `streaming`. Events from any other run are dropped, so a stopped run can never write into the transcript after the fact.
+
+### Messages and parts
+
+`state.messages` is the transcript. Each `AgentMessage` has an `id`, a `role` (`user`, `assistant` or `system`), a `createdAt` ISO timestamp, a `status` (`complete`, `streaming` or `error`), an optional `error`, and `parts`. Today the only part is `{ type: 'text', text }`; read the text with `getMessageText(message)`, which joins the text parts.
+
+A run appends the user message, then an empty assistant message with the `streaming` status that each `text-delta` grows. On `finish` the assistant message becomes `complete`. A failed run marks it `error` and attaches the error. Failed messages are never sent back to the transport as history.
+
+### Errors
+
+Errors reach the host as an `AgentPublicError`: a `code`, a `message` safe to show, and whether a retry can help (`retryable`). A transport throws `AgentTransportError` to choose them; anything else it throws becomes `unknown`.
+
+| Code | Use it for |
+|------|------------|
+| `network` | The request never reached the model or the connection dropped. |
+| `timeout` | The model did not answer in time. |
+| `rate-limited` | Too many requests; try again shortly. |
+| `quota-exceeded` | The account or visitor is out of budget. |
+| `unauthorized` | Missing or rejected credentials. |
+| `invalid-request` | The server rejected the request as malformed. |
+| `invalid-response` | The stream ended without `finish`, or finished with no text. The runtime raises this one itself. |
+| `invalid-state` | A runtime method was called when it cannot run. Thrown, never stored. |
+| `unknown` | Anything else. |
+
+### Run outcomes
+
+`send` and `retry` resolve with an `AgentRunResult` instead of throwing when the run itself fails:
+
+| Outcome | When | `messageId` |
+|---------|------|-------------|
+| `completed` | The transport sent `finish` after some text. | The assistant message. |
+| `aborted` | `stop`, `clear` or `dispose` ended the run. | The assistant message if it had text, which is kept as `complete`; otherwise it is removed and there is none. |
+| `failed` | The transport threw or the stream was invalid. `error` holds the public error. | The failed assistant message. |
+
+`retry(messageId)` re-runs the newest message when it is a failed assistant answer: it removes that message and runs the user message before it again. Retrying an older failure throws `invalid-state`.
+
+## The transport contract
+
+A transport is one method, `stream(request, { signal })`, that returns an async iterable of events:
+
+```ts
+interface AgentTransport {
+  stream(request: AgentRunRequest, context: { signal: AbortSignal }): AsyncIterable<AgentTransportEvent>
+}
+
+type AgentTransportEvent =
+  | { runId: string; type: 'response-start' }
+  | { delta: string; runId: string; type: 'text-delta' }
+  | { runId: string; type: 'finish' }
+```
+
+The request holds the `runId`, the `threadId`, and `messages` as plain `{ role, content }` pairs: the system prompt first, then the history. Every event carries the request's `runId`. Send `response-start` when the model starts answering, a `text-delta` per chunk, and `finish` at the end. Throw an `AgentTransportError` to fail the run with a code of your choosing.
+
+Pass `signal` to `fetch` so a stopped run cancels its request. The runtime does not depend on it, though: it stops reading the stream the moment the run is aborted, even if the transport never notices.
+
+A transport that streams a canned reply, like the demo above:
+
+```ts
+import { AgentTransportError, type AgentTransport } from '@atom63/agent'
+
+const reply = 'Tokens resolve per theme, brand, mode and density.'
+
+export const cannedTransport: AgentTransport = {
+  async *stream(request, { signal }) {
+    yield { runId: request.runId, type: 'response-start' }
+    for (const word of reply.split(/(?<= )/)) {
+      await new Promise(resolve => setTimeout(resolve, 60))
+      if (signal.aborted) return
+      yield { delta: word, runId: request.runId, type: 'text-delta' }
+    }
+    yield { runId: request.runId, type: 'finish' }
+  },
+}
+```
+
+A real transport reads a server-sent event stream from your model proxy the same way, and maps HTTP failures to codes: 401 to `unauthorized`, 429 to `rate-limited`, a dropped connection to `network`.
+
+## In React
+
+### Owning a runtime
+
+`useOwnedAgentRuntime(factory)` builds a runtime on mount and disposes it on unmount, so an in-flight run cannot outlive the component that shows it. It survives Strict Mode: when the development remount finds the runtime disposed, it builds a fresh one.
+
+```tsx
+import { createAgentRuntime } from '@atom63/agent'
+import { useOwnedAgentRuntime } from '@atom63/agent/react'
+import { useSyncExternalStore } from 'react'
+
+function Chat() {
+  const runtime = useOwnedAgentRuntime(() => createAgentRuntime({ getSystemPrompt, transport }))
+  const state = useSyncExternalStore(runtime.subscribe, runtime.getState)
+  // Render state.messages, bind state.draft to the input, call runtime.send on submit.
+}
+```
+
+The state is a plain external store: read it with `useSyncExternalStore`, or with zustand's `useStore(runtime.store, selector)` to re-render on one field only. Keep the runtime in a ref or context if several components share it; create it outside React if it must outlive them.
+
+### Driving chat chrome
+
+`useAgentChromeController({ runtime, labels })` holds what the frame around a chat needs, so every chat surface behaves the same:
+
+| Field | Meaning |
+|-------|---------|
+| `runtimeStatus`, `statusLabel` | The status, and a label for it: `Thinking`, `Responding`, `Unavailable`, or `null` when idle. |
+| `messageCount`, `userMessageCount` | Transcript sizes, for empty states and counters. |
+| `showClear`, `canClear` | Show the clear control once there are messages; enable it only when no run is in flight. |
+| `clearConfirmationOpen`, `requestClear`, `confirmClear`, `cancelClear` | A clear-history confirmation. It closes itself when a run starts, the runtime is disposed, or the runtime changes. |
+| `labels` | The resolved labels. |
+
+`labels` overrides any of the `DEFAULT_AGENT_CHROME_LABELS` (`clear`, `clearTitle`, `clearDescription`, `clearConfirm`, `cancel`, `close`, `submittedStatus`, `streamingStatus`, `errorStatus`). Pass copy that is already localized. The returned object keeps its identity until something it exposes changes, even when `labels` is written inline, so it can go straight into a context without re-rendering every consumer on each streamed token.
+
+## What the host owns
+
+The package draws nothing and ships no stylesheet. The host renders the transcript, the input and the chrome, from ui-react components and `--a63-*` tokens like the demo above. Assistant text arrives as plain strings: rendering it as markdown, with whatever sanitizing and components the host trusts, is also the host's job, and so are the model proxy, the system prompt and any persistence of the transcript.
+
+Announce new text politely: give the transcript `role="log"` or put the status label in an `aria-live="polite"` region, and never move focus while a reply streams.

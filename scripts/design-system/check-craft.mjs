@@ -23,6 +23,7 @@ const sourceRoots = [
   'packages/mdx/src',
   'packages/brand/src',
   'packages/inform/src',
+  'packages/agent/src',
 ]
 // Generated from the recipes, so its literals are the recipes' literals.
 const generated = new Set(['packages/ui-react/src/styles/utilities.css'])

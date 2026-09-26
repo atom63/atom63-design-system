@@ -17,6 +17,7 @@ export const NAV_LABEL_OVERRIDES: Record<string, string> = {
   'foundation-z-index': 'Z-index',
   icon: 'Icons',
   'pattern-layout': 'Page layout',
+  'pattern-agent': 'Agent runtime',
 }
 
 export const SECTION_ORDER: Partial<Record<PageSection, string[]>> = {
@@ -34,7 +35,13 @@ export const SECTION_ORDER: Partial<Record<PageSection, string[]>> = {
     'foundation-motion',
     'foundation-interaction-states',
   ],
-  pattern: ['pattern-layout', 'pattern-section-header', 'pattern-local-layout', 'pattern-inform'],
+  pattern: [
+    'pattern-layout',
+    'pattern-section-header',
+    'pattern-local-layout',
+    'pattern-inform',
+    'pattern-agent',
+  ],
   theme: ['theme-overview', 'theme-system'],
 }
 
