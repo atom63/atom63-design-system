@@ -1,6 +1,6 @@
 # Terms of Use
 
-**Last updated:** March 11, 2026
+**Last updated:** September 25, 2026
 
 ## Terms of Use for Cipher
 
@@ -75,5 +75,5 @@ These Terms are governed by the laws of the State of California, without regard 
 If you have questions about these Terms, you can contact:
 
 **Cipher**
-**Email:** [yz.atom63@gmail.com](mailto:yz.atom63@gmail.com)
+**Email:** [hello.youzhang@gmail.com](mailto:hello.youzhang@gmail.com)
 **Website:** [https://usecipher.dev](https://usecipher.dev)

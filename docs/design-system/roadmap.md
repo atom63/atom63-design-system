@@ -31,7 +31,7 @@
 | `inform`（消息、引导） | **整包迁入 DS** | `src/core/` 没有 React 依赖，真正 headless；和作品集没有耦合；README 已经指向 DS 里并不存在的文档页 |
 | `agent` | **拆分** | `src/runtime/`（约 750 行：zustand store、可替换的 transport、消息类型）是 headless 的聊天引擎，可以迁入；`src/react/` 是带样式的聊天 UI，还依赖 `@atom63/mdx`，先留下 |
 | `widgets` | **拆分** | `src/foundation/`（约 4k 行：布局单位、网格缩放、WidgetCard/Surface、加载 / 错误状态）是 DS 已有 `contracts/widget.css` 在 React 侧的实现，应该进 DS；各个小组件（天气固定在洛杉矶、GitHub 统计、Behance 等）是作品集产品，留下。README 里的"headless"指的是"不自己取数据"，组件本身带大量 Tailwind 样式（约 600 处 `className=`） |
-| `brand` | **拆分** | Logo 基础组件迁入 DS，替换掉 DS docs 里现有的逐字节副本；SEO 数据是你的个人信息，留下 |
+| `brand` | **拆分，DS 内部使用**（2026-09-25 修正） | Logo 组件迁入 DS 仓库，替换掉 DS docs 里现有的逐字节副本，但包是 private、不发布：它只属于 ATOM63，不是公开 DS 的一部分，名称和 logo 也不在 MIT 授权内（见 LICENSE）。atom63-vite 保留自己的 `packages/brand`（logo 和 SEO 数据） |
 | `icons` | **清理，留在 atom63-vite**（2026-09-25 修正，原判断为"清理 + 拆分"） | `AnimatedCheck`、`Spinner` 与 DS 重复，删除。系统图标映射不迁入：它约 370 个语义名，混用 Material Symbols、Phosphor 等，运行时从 Iconify API 取图，是作品集的图标风格；DS 继续默认 lucide。"图标可替换"如果要做，是 DS 自己的图标层（语义名 + provider），另行规划。公司 logo、Behance、艺术素材留下 |
 | `mdx` | **拆分**（2026-09-25 修正，原判断为"留下"） | DS 文档站的 `apps/docs/src/mdx-kit` 是从 `@atom63/mdx` 复制的一部分：68 个文件相同来源，其中 4 个已经不一致，属于正在发生的漂移。排版 primitives（aside、bleed、grid、stack、reveal、stagger、motion token）、通用 block（callout、code-block、tabs、steps、accordion、figure、compare、mermaid、目录等）、MDX provider 和样式迁入 DS，文档站和 atom63-vite 都从同一个包使用，删除 `mdx-kit`。只有 `craft-demos`（博客文章里的演示）和作品集内容绑定，留下；`CreditsBlock`、`PageMeta` 是由 props 驱动的通用组件，一并迁入（2026-09-25 迁移时修正）。另外 mdx 自带一套基于 photoswipe 的 lightbox，与 ui-react 的 `media-lightbox` 重复，迁入时合并为一套 |
 | `os63`、`timeline`、`portfolio-content`、`app-services`、`dev`、`create-atom63` | **留在 atom63-vite** | 产品或内容。`dev` 只有两个开发用 hook（快捷键、调试 class），没有 token 或组件 |
@@ -226,7 +226,7 @@ agent 接口已完成（见 `docs/design-system/agent-interface-plan.md`）：`@
 atom63-vite 一侧（改用 npm 上的 `@atom63/mdx`，`craft-demos` 移到 atom63.io，删除自己的 `packages/mdx`）等首次发布后再做。
 两套 lightbox 已合并：`FigureLightboxHost` 保留原有的 trigger 与 API，内部改用 ui-react 的 `MediaLightbox`，mdx 不再依赖 photoswipe。
 mdx 已完成首次发布并加入自动发布（#69），atom63-vite 改用 npm 上的 `@atom63/mdx`（atom63-vite #427）。
-brand 的 logo 组件已迁入 `packages/brand`（`@atom63/brand`：`AppLogo`、`Atom63Logo` 和路径数据），去掉了对使用方 Tailwind 的依赖，着色改用 `--a63-action-primary`；docs 站删除了自己的副本。SEO 数据仍留在 atom63-vite。首次发布需要你手动发一次，之后再加入自动发布列表，atom63-vite 随后切换。
+brand 的 logo 组件已迁入 `packages/brand`（`@atom63/brand`：`AppLogo`、`Atom63Logo` 和路径数据），去掉了对使用方 Tailwind 的依赖，着色改用 `--a63-action-primary`；docs 站删除了自己的副本。这个包是 private，只给 docs 站和 Storybook 用，不发布；atom63-vite 保留自己的一份。docs 站的 SEO 元数据改为只描述 DS 本身，删除了个人邮箱、社交账号和个人简介。
 icons：atom63-vite 删除了重复的 `AnimatedCheck`、`Spinner`（atom63-vite #428）；系统图标映射按上表的修正留在 atom63-vite。
 inform 已迁入 `packages/inform`（`@atom63/inform`：消息模型、仲裁器，以及 banner、dialog、corner flyout、spotlight 四个 surface），样式改为包内自带的样式表，不再依赖使用方的 Tailwind；首次发布需要你手动发一次，之后 atom63-vite 再切换。
 
