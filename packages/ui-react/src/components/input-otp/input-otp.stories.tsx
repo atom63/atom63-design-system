@@ -13,6 +13,10 @@ import type { ComponentProps } from 'react'
 const meta = {
   title: 'UI React/InputOTP',
   component: InputOTP,
+  // The focused element is a transparent input laid over the slots; the ring
+  // is drawn on the active slot (`[data-active]`), a sibling the runtime craft
+  // check does not follow.
+  parameters: { craft: { disable: ['focus-visible'] } },
 } satisfies Meta<typeof InputOTP>
 
 export default meta

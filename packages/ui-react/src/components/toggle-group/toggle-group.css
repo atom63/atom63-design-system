@@ -51,6 +51,8 @@
 }
 
 .a63-ToggleGroup .a63-Toggle:focus-visible {
+  /* The group draws its own ring below, not the standalone outline. */
+  outline: none;
   box-shadow:
     var(--a63-segment-selected-shadow, none),
     0 0 0 var(--a63-control-focus-ring-width)

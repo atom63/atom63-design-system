@@ -169,7 +169,9 @@
   border-radius: 0 0 50% 50% / 0 0 100% 100%;
 }
 
-.a63-Button:hover {
+/* Disabled buttons keep their resting look under the pointer. `:where()` keeps
+   the specificity of a plain `:hover`, so the rules that override it still do. */
+.a63-Button:where(:not(:disabled, [data-disabled])):hover {
   background-color: var(--button-state-hover-background);
   border-color: var(--button-state-hover-border-color);
 }
@@ -358,7 +360,7 @@
   text-underline-offset: 4px;
 }
 
-.a63-Button[data-variant='link']:hover,
+.a63-Button[data-variant='link']:where(:not(:disabled, [data-disabled])):hover,
 .a63-Button[data-variant='link']:active,
 .a63-Button[data-variant='link'][data-pressed] {
   text-decoration: underline;

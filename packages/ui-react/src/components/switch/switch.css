@@ -123,10 +123,10 @@
   --thumb-sx: 1.12;
 }
 
+/* An outline, not an extra shadow layer: the theme shadow is `none` where a
+   theme has none, and `none` cannot join a shadow list, which dropped the ring. */
 .a63-Switch:focus-visible {
-  box-shadow:
-    var(--switch-current-shadow),
-    0 0 0 var(--a63-control-focus-ring-width) var(--switch-focus-ring);
+  outline: var(--a63-control-focus-ring-width) solid var(--switch-focus-ring);
 }
 
 .a63-Switch[data-disabled] {

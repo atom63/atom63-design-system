@@ -126,11 +126,12 @@
   color: var(--a63-segment-hover-foreground, var(--a63-text-primary));
 }
 
+/* An outline, not an extra shadow layer: a pressed toggle's theme shadow is
+   `none` where a theme has none, and `none` cannot join a shadow list, which
+   dropped the ring. */
 .a63-Toggle:focus-visible {
-  box-shadow:
-    var(--toggle-shadow),
-    0 0 0 var(--a63-control-focus-ring-width)
-      var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline: var(--a63-control-focus-ring-width) solid
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
 }
 
 .a63-Toggle[data-pressed][data-tone='neutral'] {

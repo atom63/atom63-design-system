@@ -1,0 +1,233 @@
+{
+  "mdx-blocks-compare--before-after": {
+    "focus-visible": {
+      "button \"Copy code\"": 2
+    }
+  },
+  "mdx-blocks-docexample--default": {
+    "focus-visible": {
+      "button[role=tab] \"Preview\"": 1
+    }
+  },
+  "mdx-blocks-docexample--left-aligned": {
+    "focus-visible": {
+      "button[role=tab] \"Preview\"": 1
+    }
+  },
+  "mdx-blocks-docexample--no-title": {
+    "focus-visible": {
+      "button[role=tab] \"Preview\"": 1
+    }
+  },
+  "mdx-blocks-docexample--wide": {
+    "focus-visible": {
+      "button[role=tab] \"Preview\"": 1
+    }
+  },
+  "mdx-blocks-imagecompare--long-labels": {
+    "focus-visible": {
+      "div[role=slider] \"Click and drag or focus and use arrow k…\"": 1
+    }
+  },
+  "mdx-blocks-imagecompare--plain": {
+    "focus-visible": {
+      "div[role=slider] \"Click and drag or focus and use arrow k…\"": 1
+    }
+  },
+  "mdx-blocks-imagecompare--side-by-side": {
+    "focus-visible": {
+      "div[role=slider] \"Click and drag or focus and use arrow k…\"": 1
+    }
+  },
+  "mdx-blocks-tabs--three-panels": {
+    "focus-visible": {
+      "div[role=tabpanel] \"Tokens\"": 1
+    }
+  },
+  "mdx-blocks-tabs--two-panels": {
+    "focus-visible": {
+      "div[role=tabpanel] \"Preview\"": 1
+    }
+  },
+  "mdx-blocks-tabs--underline-variant": {
+    "focus-visible": {
+      "div[role=tabpanel] \"First\"": 1
+    }
+  },
+  "ui-react-buttongroup--endpoints": {
+    "focus-visible": {
+      "button \"Bold\"": 3,
+      "button \"Copy\"": 3,
+      "button \"Cut\"": 3,
+      "button \"Italic\"": 2,
+      "button \"Paste\"": 3,
+      "button \"Under\"": 2
+    }
+  },
+  "ui-react-buttongroup--playground": {
+    "focus-visible": {
+      "button \"Left\"": 1,
+      "button \"Middle\"": 1,
+      "button \"Right\"": 1
+    }
+  },
+  "ui-react-buttongroup--sizes": {
+    "focus-visible": {
+      "button \"One\"": 5,
+      "button \"Three\"": 5,
+      "button \"Two\"": 5
+    }
+  },
+  "ui-react-buttongroup--themes": {
+    "focus-visible": {
+      "button \"Copy\"": 3,
+      "button \"Cut\"": 3,
+      "button \"Off\"": 4,
+      "button \"On\"": 3,
+      "button \"Paste\"": 3
+    }
+  },
+  "ui-react-buttongroup--vertical": {
+    "focus-visible": {
+      "button \"Bottom\"": 1,
+      "button \"Middle\"": 1,
+      "button \"Top\"": 1
+    }
+  },
+  "ui-react-buttongroup--with-input": {
+    "focus-visible": {
+      "button \"Copy\"": 3,
+      "button \"Cut\"": 3,
+      "button \"Paste\"": 3
+    }
+  },
+  "ui-react-buttongroup--with-separator": {
+    "focus-visible": {
+      "button \"Copy\"": 1,
+      "button \"Cut\"": 1,
+      "button \"Paste\"": 1
+    }
+  },
+  "ui-react-buttongroup--with-text": {
+    "focus-visible": {
+      "button \"Copy\"": 1
+    }
+  },
+  "ui-react-command--endpoints": {
+    "focus-visible": {
+      "input[role=combobox] \"Search pages and actions…\"": 3
+    }
+  },
+  "ui-react-command--inline": {
+    "focus-visible": {
+      "input[role=combobox] \"Search pages and actions…\"": 1
+    }
+  },
+  "ui-react-command--themes": {
+    "focus-visible": {
+      "input[role=combobox] \"Search pages and actions…\"": 8
+    }
+  },
+  "ui-react-connectedpanel--button-group-trigger": {
+    "focus-visible": {
+      "button \"Contents\"": 1,
+      "button \"More actions\"": 1
+    }
+  },
+  "ui-react-scrollablelist--column-aligned-bleed": {
+    "focus-visible": {
+      "button \"Scroll right\"": 1
+    }
+  },
+  "ui-react-scrollablelist--draggable": {
+    "focus-visible": {
+      "button \"Scroll right\"": 1
+    }
+  },
+  "ui-react-scrollablelist--endpoints": {
+    "focus-visible": {
+      "button \"Scroll right\"": 3
+    }
+  },
+  "ui-react-scrollablelist--no-mask": {
+    "focus-visible": {
+      "button \"Scroll right\"": 1
+    }
+  },
+  "ui-react-scrollablelist--playground": {
+    "focus-visible": {
+      "button \"Scroll right\"": 1
+    }
+  },
+  "ui-react-scrollablelist--themes": {
+    "focus-visible": {
+      "button \"Scroll right\"": 8
+    }
+  },
+  "ui-react-tabs--attached": {
+    "focus-visible": {
+      "button[role=tab] \"Overview\"": 1,
+      "div[role=tabpanel] \"Overview\"": 1
+    }
+  },
+  "ui-react-tabs--playground": {
+    "focus-visible": {
+      "div[role=tabpanel] \"Overview\"": 1
+    }
+  },
+  "ui-react-tabs--variants": {
+    "focus-visible": {
+      "button[role=tab] \"First\"": 1
+    }
+  },
+  "ui-react-textarea--unstyled": {
+    "focus-visible": {
+      "textarea \"Example text area\"": 1
+    }
+  },
+  "ui-react-togglegroup--endpoints": {
+    "focus-visible": {
+      "button \"Left\"": 3
+    }
+  },
+  "ui-react-togglegroup--icon-bar": {
+    "focus-visible": {
+      "button \"One\"": 2
+    }
+  },
+  "ui-react-togglegroup--multiple": {
+    "focus-visible": {
+      "button \"Left\"": 1
+    }
+  },
+  "ui-react-togglegroup--playground": {
+    "focus-visible": {
+      "button \"Left\"": 1
+    }
+  },
+  "ui-react-togglegroup--sizes": {
+    "focus-visible": {
+      "button \"Left\"": 3
+    }
+  },
+  "ui-react-togglegroup--themes": {
+    "focus-visible": {
+      "button \"Left\"": 16
+    }
+  },
+  "ui-react-togglegroup--tones": {
+    "focus-visible": {
+      "button \"Left\"": 2
+    }
+  },
+  "ui-react-togglegroup--vertical": {
+    "focus-visible": {
+      "button \"Left\"": 1
+    }
+  },
+  "ui-react-togglegroup--with-separator": {
+    "focus-visible": {
+      "button \"B\"": 1
+    }
+  }
+}

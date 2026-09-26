@@ -140,6 +140,16 @@ that gives the reason, either on the same line or on its own line directly above
 border-top-left-radius: var(--radius-xs);
 ```
 
+`pnpm --filter @atom63/storybook test:craft` checks three more craft rules on every rendered
+story in Chromium: disabled controls do not react to hover (`disabled-hover`), pointer targets are
+at least 24 × 24 px (`target-size`), and keyboard focus is visible while a pointer press draws no
+ring (`focus-visible`). Its baseline is `docs/design-system/audits/runtime-craft-baseline.json`,
+and it works like the one above: new violations and stale entries both fail. Rewrite it with
+`CRAFT_WRITE_BASELINE=1 pnpm --filter @atom63/storybook test:craft`. A story can opt out of one
+rule with `parameters: { craft: { disable: ['<rule>'] } }` and a comment that gives the reason.
+[`apps/storybook/README.md`](./apps/storybook/README.md#tests) describes each rule and its
+exceptions.
+
 ## Adding a component
 
 Start a new component with the scaffold instead of copying an existing one:
@@ -178,6 +188,7 @@ pnpm --filter @atom63/ui-react test
 pnpm --filter @atom63/styles check:tokens
 pnpm check:ui-react-exports
 pnpm check:craft
+pnpm --filter @atom63/storybook test:craft   # after changing a recipe or a story
 pnpm check:package-surface
 pnpm check:ds-pack-smoke
 pnpm check:api-report            # after building the packages
