@@ -43,7 +43,7 @@
 }
 .a63-Item:focus-visible {
   border-color: var(--a63-focus-ring);
-  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+  outline: var(--a63-control-focus-ring-width) solid
     color-mix(in oklch, var(--a63-focus-ring) 50%, transparent);
 }
 /* Interaction belongs to the rendered semantic element, never to a static row. */

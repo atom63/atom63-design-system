@@ -64,7 +64,6 @@
   transition:
     background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
     border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
-    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
     opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
 }
 
@@ -73,11 +72,8 @@
 }
 
 .a63-Carousel-nav:focus-visible {
-  box-shadow:
-    var(--a63-overlay-inner-shadow, none),
-    var(--a63-overlay-shadow),
-    0 0 0 var(--a63-control-focus-ring-width)
-      var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline: var(--a63-control-focus-ring-width) solid
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
 }
 
 .a63-Carousel-nav:disabled {

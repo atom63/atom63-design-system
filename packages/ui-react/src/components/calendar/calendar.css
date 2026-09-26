@@ -83,9 +83,7 @@
   color: var(--a63-text-primary);
   cursor: pointer;
   outline: none;
-  transition:
-    background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
-    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+  transition: background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
 }
 .a63-Calendar-nav-button:not(:disabled):hover {
   background-color: var(--a63-surface-control-hover);
@@ -95,7 +93,7 @@
   opacity: 0.64;
 }
 .a63-Calendar-nav-button:focus-visible {
-  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+  outline: var(--a63-control-focus-ring-width) solid
     var(--a63-control-focus-ring-color, var(--a63-focus-ring));
 }
 
@@ -141,7 +139,7 @@
 }
 .a63-Calendar-dropdown-root:has(:focus) {
   border-color: var(--a63-focus-ring);
-  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+  outline: var(--a63-control-focus-ring-width) solid
     var(--a63-control-focus-ring-color, var(--a63-focus-ring));
 }
 .a63-Calendar-dropdown-root .a63-Calendar-chevron {
@@ -194,8 +192,7 @@
   transition:
     color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
     background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
-    border-radius var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
-    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+    border-radius var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
 }
 
 /* Hover on any non-selected day. */
@@ -239,7 +236,7 @@
 
 .a63-Calendar-day-button:focus-visible {
   z-index: 1;
-  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+  outline: var(--a63-control-focus-ring-width) solid
     color-mix(in oklch, var(--a63-focus-ring) 50%, transparent);
 }
 

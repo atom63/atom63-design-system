@@ -56,7 +56,7 @@
 
 .a63-Resizable-handle:focus-visible {
   background-color: var(--a63-action-primary);
-  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+  outline: var(--a63-control-focus-ring-width) solid
     var(--a63-control-focus-ring-color, var(--a63-focus-ring));
 }
 

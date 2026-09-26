@@ -54,9 +54,7 @@
   touch-action: manipulation;
   user-select: none;
   outline: none;
-  transition:
-    border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
-    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+  transition: border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -67,9 +65,7 @@
 
 .a63-Select-trigger:focus-visible {
   border-color: var(--select-focus-border);
-  box-shadow:
-    var(--select-shadow),
-    0 0 0 var(--a63-control-focus-ring-width) var(--select-focus-ring);
+  outline: var(--a63-control-focus-ring-width) solid var(--select-focus-ring);
 }
 
 .a63-Select-trigger[data-disabled] {

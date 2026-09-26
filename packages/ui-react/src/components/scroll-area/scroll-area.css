@@ -25,7 +25,6 @@
   height: 100%;
   border-radius: inherit;
   outline: none;
-  transition: box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
 }
 
 .a63-ScrollArea-viewport[data-has-overflow-x] {
@@ -33,7 +32,7 @@
 }
 
 .a63-ScrollArea-viewport:focus-visible {
-  box-shadow: 0 0 0 var(--a63-control-focus-ring-width, 2px) var(--a63-focus-ring);
+  outline: var(--a63-control-focus-ring-width, 2px) solid var(--a63-focus-ring);
 }
 
 /* ── Scroll fade mask ──────────────────────────────────────────────────── */

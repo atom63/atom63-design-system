@@ -1,6 +1,7 @@
 /**
- * Craft lint for the design-system packages: raw colors, physical directions
- * and focus styles outside `:focus-visible` (see lib/craft-rules.mjs).
+ * Craft lint for the design-system packages: raw colors, physical directions,
+ * focus styles outside `:focus-visible` and focus rings drawn as box-shadows
+ * (see lib/craft-rules.mjs).
  *
  * Existing violations live in docs/design-system/audits/craft-baseline.json.
  * The check fails on any violation the baseline does not cover, and on

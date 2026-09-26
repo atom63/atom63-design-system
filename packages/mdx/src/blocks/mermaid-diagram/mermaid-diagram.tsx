@@ -382,7 +382,7 @@ export function MermaidDiagram({ animated = false, chart, labels, title }: Merma
       <MdxFramePanel className="mdx-mermaid-panel overflow-hidden p-0">
         <div className="mdx-mermaid-scroll scrollbar-reveal overflow-x-auto">
           <div
-            className={`mdx-mermaid-stage relative min-h-80 overflow-hidden outline-none select-none ${
+            className={`mdx-mermaid-stage relative min-h-80 overflow-hidden select-none ${
               canPan ? (isDragging ? 'cursor-grabbing' : 'cursor-grab') : ''
             }`}
             onPointerCancel={stopDragging}

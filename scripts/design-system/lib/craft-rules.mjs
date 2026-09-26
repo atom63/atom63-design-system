@@ -15,6 +15,13 @@
  * - `focus-visible`: focus styles follow `:focus-visible`, so a pointer press
  *   does not draw a keyboard focus ring. `:focus-within` passes, and so does a
  *   `:focus` rule or `focus:` utility that only removes the outline.
+ * - `focus-ring-outline`: focus rings are outlines. Flags a `box-shadow` that
+ *   reads a focus-ring token (a custom property whose name contains
+ *   `focus-ring`, or the shadcn `--ring` and `--sidebar-ring`) in any rule,
+ *   and Tailwind `ring-*` utilities under a focus variant. Any later
+ *   box-shadow on the element would replace a ring drawn that way, and
+ *   forced-colors mode drops shadows. Elevation, border and separator shadows
+ *   (such as the Avatar group ring) read no focus-ring token, so they pass.
  *
  * Some physical directions are the point: a sheet docked to the left edge, or
  * an optical nudge on a glyph that never mirrors. CSS rules scoped to
@@ -38,6 +45,8 @@ const PHYSICAL_UTILITY =
 const FOCUS_VARIANT = /(?:^|:)(?:group-|peer-)?focus:/
 const FOCUS_RESET_UTILITY = /^(?:outline-none|outline-hidden|outline-0|ring-0|shadow-none)$/
 const SAFE_AREA = /env\(safe-area-inset-(?:left|right)\)/
+const FOCUS_RING_VARIANT = /focus/
+const RING_UTILITY = /^ring(?:-|$)/
 
 const CSS_LITERAL_COLOR =
   /#[0-9a-fA-F]{3,8}\b|\brgba?\(|\bhsla?\(|\boklch\((?=\s*[\d.])|\boklab\((?=\s*[\d.])/g
@@ -46,6 +55,9 @@ const CSS_PHYSICAL_PROPERTY =
 const CSS_FOCUS = /:focus(?![-\w])/
 const CSS_FOCUS_RESET = /^(?:outline(?:-style)?\s*:\s*(?:none|0)|box-shadow\s*:\s*none)$/
 const CSS_MASK_PROPERTY = /^(?:-webkit-)?mask(?:-image)?$/
+const CSS_VAR_NAME = /var\(\s*(--[\w-]+)/g
+const RING_TOKEN = /focus-ring|^--(?:sidebar-)?ring$/
+const isRingToken = name => RING_TOKEN.test(name)
 
 const DATA_SIDE = /\[data-side=['"]?(?:left|right)\b/
 const ALLOW = /craft-allow:\s*([a-z-]+)/g
@@ -130,6 +142,12 @@ export function scanCss(css) {
     if (property === 'text-align' && /^(?:left|right)\b/.test(value) && !sided) {
       found.push({ rule: 'physical-properties', match: `text-align: ${value}`, line })
     }
+    if (property === 'box-shadow') {
+      const ring = [...value.matchAll(CSS_VAR_NAME)].find(([, name]) => isRingToken(name))
+      if (ring) {
+        found.push({ rule: 'focus-ring-outline', match: `box-shadow: var(${ring[1]})`, line })
+      }
+    }
     if (CSS_MASK_PROPERTY.test(property)) continue
     for (const color of value.match(CSS_LITERAL_COLOR) ?? []) {
       if (color === '#0000') continue
@@ -165,6 +183,14 @@ export function scanSource(source) {
     }
     if (FOCUS_VARIANT.test(raw) && !FOCUS_RESET_UTILITY.test(utility)) {
       found.push({ rule: 'focus-visible', match: raw, line: line() })
+    }
+    const variants = raw.slice(0, raw.lastIndexOf(':') + 1)
+    if (
+      FOCUS_RING_VARIANT.test(variants) &&
+      RING_UTILITY.test(utility) &&
+      !FOCUS_RESET_UTILITY.test(utility)
+    ) {
+      found.push({ rule: 'focus-ring-outline', match: raw, line: line() })
     }
   }
   return allowances(source)(found)

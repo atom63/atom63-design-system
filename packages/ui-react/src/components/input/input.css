@@ -57,9 +57,7 @@
   font-family: var(--a63-control-font-family);
   font-size: max(var(--field-font-size), var(--a63-editable-font-size-min, 0px));
   cursor: text;
-  transition:
-    border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
-    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+  transition: border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
 }
 
 /* Drop the recessed field shadow (shadow={false}) — for inputs on translucent
@@ -134,9 +132,7 @@
 .a63-Input:not([data-unstyled]):focus-within,
 .a63-InputGroup:focus-within {
   border-color: var(--field-focus-border);
-  box-shadow:
-    var(--field-shadow),
-    0 0 0 var(--a63-control-focus-ring-width) var(--field-focus-ring);
+  outline: var(--a63-control-focus-ring-width) solid var(--field-focus-ring);
 }
 
 .a63-Input[data-invalid],

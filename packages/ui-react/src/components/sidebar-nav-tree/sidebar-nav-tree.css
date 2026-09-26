@@ -143,7 +143,7 @@
   }
 }
 .a63-SidebarNavTree-toggle:focus-visible {
-  box-shadow: 0 0 0 2px var(--sidebar-ring);
+  outline: 2px solid var(--sidebar-ring);
 }
 /* Hide the expand toggle when the sidebar is collapsed to the icon rail. */
 .a63-Sidebar-root[data-collapsible='icon'] .a63-SidebarNavTree-toggle,

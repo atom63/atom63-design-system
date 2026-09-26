@@ -43,12 +43,30 @@ describe('scanCss', () => {
 
   it('flags :focus rules that draw a ring, but not resets, :focus-visible or :focus-within', () => {
     const css = `
-      .a:focus { box-shadow: 0 0 0 2px var(--a63-focus-ring); }
+      .a:focus { outline: 2px solid var(--a63-focus-ring); }
       .b:focus, .b:focus-visible { outline: none; }
       .c:focus-visible, .d:focus-within { outline: 2px solid var(--a63-focus-ring); }
       /* .e:focus in a comment */
     `
     assert.deepEqual(rules(scanCss(css)), ['2 focus-visible .a:focus'])
+  })
+
+  it('flags a box-shadow that draws a focus ring, but not elevation shadows', () => {
+    const css = `
+      .a:focus-visible { box-shadow: var(--a-shadow), 0 0 0 2px var(--a63-focus-ring); }
+      .b[data-active] { box-shadow: 0 0 0 var(--a63-control-focus-ring-width) var(--a63-action-primary); }
+      .c:focus-within { box-shadow: 0 0 0 2px var(--sidebar-ring); }
+      .d { box-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow); }
+      .e:focus-visible { outline: 2px solid var(--a63-focus-ring); box-shadow: var(--a63-control-shadow); }
+      .f { box-shadow: 0 0 0 1px var(--a63-border-ring-subtle); --button-focus-ring: var(--a63-focus-ring); }
+      .g { box-shadow: var(--tw-ring-shadow), var(--tw-shadow); }
+      .h { box-shadow: 0 0 0 2px var(--a63-avatar-group-ring, var(--a63-surface-page)); }
+    `
+    assert.deepEqual(rules(scanCss(css)), [
+      '2 focus-ring-outline box-shadow: var(--a63-focus-ring)',
+      '3 focus-ring-outline box-shadow: var(--a63-control-focus-ring-width)',
+      '4 focus-ring-outline box-shadow: var(--sidebar-ring)',
+    ])
   })
 
   it('passes physical properties in rules scoped to a physical side', () => {
@@ -96,7 +114,7 @@ const b = 'bg-[var(--a63-surface-page)] text-[color-mix(in_oklab,var(--x),transp
   })
 
   it('flags physical utilities and focus variants', () => {
-    const source = `<div className="ms-2 ml-2 -mr-1 md:pl-4 text-left text-start border-l rounded-tr-md left-0 focus-visible:ring focus:ring group-focus:opacity-100 focus:outline-none pl-[env(safe-area-inset-left)]" />
+    const source = `<div className="ms-2 ml-2 -mr-1 md:pl-4 text-left text-start border-l rounded-tr-md left-0 focus-visible:outline-2 focus:outline-2 group-focus:opacity-100 focus:outline-none pl-[env(safe-area-inset-left)]" />
 <p>right-to-left text</p>`
     assert.deepEqual(rules(scanSource(source)), [
       '1 physical-properties ml-2',
@@ -105,8 +123,20 @@ const b = 'bg-[var(--a63-surface-page)] text-[color-mix(in_oklab,var(--x),transp
       '1 physical-properties text-left',
       '1 physical-properties border-l',
       '1 physical-properties rounded-tr-md',
-      '1 focus-visible focus:ring',
+      '1 focus-visible focus:outline-2',
       '1 focus-visible group-focus:opacity-100',
+    ])
+  })
+})
+
+describe('scanSource focus rings', () => {
+  it('flags ring utilities under a focus variant, but not plain rings or outlines', () => {
+    const source = `const a = 'focus-visible:ring-2 focus-visible:ring-[var(--a63-focus-ring)] group-focus-within:ring-inset'
+const b = 'ring-1 ring-[var(--a63-border-subtle)] focus-visible:ring-0 focus-visible:outline-2 focus-visible:outline-(--a63-focus-ring)'`
+    assert.deepEqual(rules(scanSource(source)), [
+      '1 focus-ring-outline focus-visible:ring-2',
+      '1 focus-ring-outline focus-visible:ring-[var(--a63-focus-ring)]',
+      '1 focus-ring-outline group-focus-within:ring-inset',
     ])
   })
 })
