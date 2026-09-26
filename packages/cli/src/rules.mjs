@@ -44,6 +44,12 @@ export const rules = [
     check: 'focus-visible',
   },
   {
+    id: 'focus-ring-outline',
+    rule: 'Draw focus rings as an `outline` (`focus-visible:outline-*` in Tailwind), not a `box-shadow` or `ring-*`. Inset it with a negative `outline-offset` where a parent clips it.',
+    why: "A component's own box-shadow replaces a shadow ring, and forced-colors mode drops shadows.",
+    check: 'focus-ring-outline',
+  },
+  {
     id: 'theme-agnostic',
     rule: 'Never branch on light or dark mode in component code; let tokens and `UIProvider` resolve the mode.',
     why: 'Themes and brands change the palette too; a mode check covers one axis of four.',

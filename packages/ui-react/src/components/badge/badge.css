@@ -215,9 +215,6 @@
 }
 
 .a63-Badge:focus-visible {
-  outline: none;
-  box-shadow:
-    var(--a63-marker-shadow),
-    0 0 0 var(--a63-control-focus-ring-width)
-      var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline: var(--a63-control-focus-ring-width) solid
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
 }

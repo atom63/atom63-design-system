@@ -85,7 +85,7 @@
 }
 
 .a63-Checkbox:focus-visible {
-  box-shadow: 0 0 0 var(--a63-control-focus-ring-width) var(--checkbox-focus-ring);
+  outline: var(--a63-control-focus-ring-width) solid var(--checkbox-focus-ring);
 }
 
 .a63-Checkbox[data-disabled] {

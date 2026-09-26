@@ -85,9 +85,12 @@
   }
 }
 
+/* Drawn inside the trigger: the list scrolls (overflow-x), which would clip an
+   outer ring at its edges. */
 .a63-NavigationMenu-trigger:focus-visible {
-  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+  outline: var(--a63-control-focus-ring-width) solid
     var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline-offset: calc(-1 * var(--a63-control-focus-ring-width));
 }
 
 .a63-NavigationMenu-trigger[data-disabled] {

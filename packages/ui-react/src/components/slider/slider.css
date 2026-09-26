@@ -57,9 +57,7 @@
     var(--a63-control-shadow),
     0 1px 2px color-mix(in oklch, black 20%, transparent);
   outline: none;
-  transition:
-    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
-    scale var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+  transition: scale var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
 }
 
 /* Interaction floor, using the same pattern as Checkbox/Radio/Switch/Button.
@@ -76,13 +74,15 @@
   translate: -50% -50%;
 }
 
-.a63-Slider-thumb:focus-visible {
-  box-shadow: 0 0 0 var(--a63-control-focus-ring-width) var(--a63-focus-ring);
+/* Keyboard focus lands on the thumb's visually hidden range input, so the thumb
+   rings while that input has it. */
+.a63-Slider-thumb:has(:focus-visible),
+.a63-Slider-thumb[data-dragging] {
+  outline: var(--a63-control-focus-ring-width) solid var(--a63-focus-ring);
 }
 
 .a63-Slider-thumb[data-dragging] {
   scale: 1.2;
-  box-shadow: 0 0 0 var(--a63-control-focus-ring-width) var(--a63-focus-ring);
 }
 
 .a63-Slider-value {

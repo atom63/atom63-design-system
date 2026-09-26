@@ -102,7 +102,7 @@ function getLinkClass(item: TocItem, variant: TableOfContentsVariant) {
   // (mdx-blocks.css), keyed on data-active / data-depth. Only layout geometry
   // stays as inline utilities here.
   return clsx(
-    'mdx-toc-link relative outline-none transition-colors duration-150',
+    'mdx-toc-link relative transition-colors duration-150',
     compactList && 'mdx-toc-link-inline flex min-h-8 items-center px-2 py-1.5 text-sm',
     variant === 'rail' && 'mdx-toc-link-rail block py-px pe-2 text-[0.8125rem] leading-[1.0625rem]',
     compactList && item.depth === 3 && 'ps-5',

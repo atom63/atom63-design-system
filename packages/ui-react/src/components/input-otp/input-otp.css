@@ -56,9 +56,7 @@
   font-family: var(--a63-control-font-family);
   font-size: max(var(--a63-control-font-size-md), var(--a63-editable-font-size-min, 0px));
   outline: none;
-  transition:
-    border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
-    box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+  transition: border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
 }
 
 /* Rounded outer corners + the missing leading border on the first slot. */
@@ -76,10 +74,8 @@
 .a63-InputOTP-slot[data-active='true'] {
   z-index: 1;
   border-color: var(--otp-accent);
-  box-shadow:
-    var(--a63-field-shadow),
-    0 0 0 var(--a63-control-focus-ring-width)
-      var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline: var(--a63-control-focus-ring-width) solid
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
 }
 
 /* Invalid state — recolor the border + active ring to danger. */
@@ -90,10 +86,7 @@
 .a63-InputOTP-slot[aria-invalid='true'][data-active='true'],
 .a63-InputOTP:has(.a63-InputOTP-input[aria-invalid='true']) .a63-InputOTP-slot[data-active='true'] {
   border-color: var(--a63-action-danger);
-  box-shadow:
-    var(--a63-field-shadow),
-    0 0 0 var(--a63-control-focus-ring-width)
-      color-mix(in oklch, var(--a63-action-danger) 35%, transparent);
+  outline-color: color-mix(in oklch, var(--a63-action-danger) 35%, transparent);
 }
 
 /* Fake caret — a blinking hairline centered in the active empty slot. */

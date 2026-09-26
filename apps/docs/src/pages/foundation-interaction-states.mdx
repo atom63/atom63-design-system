@@ -26,6 +26,7 @@ Best practice:
 
 - use `focus-visible`, not plain `focus`, for keyboard rings;
 - keep focus rings outside the component's normal border contract;
+- draw focus rings as an `outline`, not a `box-shadow`, so the component's own shadow cannot replace them;
 - do not replace focus with color alone;
 - ensure the ring still works on dark and tinted surfaces.
 

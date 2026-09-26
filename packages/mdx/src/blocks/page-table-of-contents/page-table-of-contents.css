@@ -2,10 +2,11 @@
 @layer components {
   .mdx-toc-link {
     color: var(--a63-text-secondary);
+    outline: none;
   }
 
   .mdx-toc-link:focus-visible {
-    box-shadow: 0 0 0 2px var(--a63-focus-ring);
+    outline: 2px solid var(--a63-focus-ring);
   }
 
   /* inline variant */
@@ -20,7 +21,9 @@
     }
   }
 
+  /* Inset: the compact list scrolls (overflow-y), which clips an outer ring. */
   .mdx-toc-link-inline:focus-visible {
+    outline-offset: -2px;
     background-color: color-mix(in oklab, var(--a63-surface-control-hover) 60%, transparent);
   }
 
@@ -42,9 +45,7 @@
 
   .mdx-toc-link-rail:focus-visible {
     border-radius: var(--radius-sm);
-    box-shadow:
-      0 0 0 2px var(--a63-surface-page),
-      0 0 0 4px var(--a63-focus-ring);
+    outline-offset: 2px;
   }
 
   .mdx-toc-link-rail[data-active='true'] {

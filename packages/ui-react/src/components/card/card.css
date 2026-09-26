@@ -325,7 +325,7 @@
   outline: none;
 }
 .a63-CardLink:focus-visible {
-  box-shadow: 0 0 0 2px var(--a63-focus-ring);
+  outline: 2px solid var(--a63-focus-ring);
 }
 
 /* Responsive padding: once the CARD is wide enough, the `sm` step wins

@@ -101,9 +101,12 @@
   color: var(--a63-segment-selected-foreground, var(--a63-text-primary));
 }
 
+/* Drawn inside the segment: the track scrolls (overflow-x), or clips when
+   full-width, which would cut an outer ring at its edges. */
 .a63-SegmentedControl-item:focus-visible {
-  box-shadow: 0 0 0 var(--a63-control-focus-ring-width)
+  outline: var(--a63-control-focus-ring-width) solid
     var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline-offset: calc(-1 * var(--a63-control-focus-ring-width));
 }
 
 .a63-SegmentedControl-item[data-disabled] {
@@ -194,6 +197,10 @@
 
 .a63-SegmentedControl[data-tone='accent'] .a63-SegmentedControl-item[data-active] {
   color: var(--a63-segment-primary-foreground, var(--a63-action-primary-foreground));
+}
+/* The inset ring would vanish into the accent pill; it takes the label colour. */
+.a63-SegmentedControl[data-tone='accent'] .a63-SegmentedControl-item[data-active]:focus-visible {
+  outline-color: var(--a63-segment-primary-foreground, var(--a63-action-primary-foreground));
 }
 
 /* ── Sizes (reuse the control ramp) ────────────────────────────────────── */

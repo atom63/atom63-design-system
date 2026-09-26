@@ -69,19 +69,19 @@ function lightboxIconButtonClassName(tone: 'glass' | 'ghost' | 'capsule' = 'glas
     tone === 'glass' &&
       cn(
         'a63-media-lightbox-on-media',
-        'focus-visible:ring-2 focus-visible:ring-[var(--a63-lightbox-on-media-ring)]'
+        'focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-(--a63-lightbox-on-media-ring)'
       ),
     tone === 'capsule' &&
       cn(
         'text-[var(--a63-lightbox-on-media-fg)]',
         'hover:bg-[var(--a63-lightbox-on-media-surface-hover)]',
-        'focus-visible:ring-2 focus-visible:ring-inset',
-        'focus-visible:ring-[var(--a63-lightbox-on-media-ring)]'
+        'focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-solid',
+        'focus-visible:outline-(--a63-lightbox-on-media-ring)'
       ),
     tone === 'ghost' &&
       cn(
         'rounded-full text-[var(--a63-text-primary)] hover:bg-[var(--a63-surface-control-hover)]',
-        'focus-visible:ring-2 focus-visible:ring-[var(--a63-focus-ring)]'
+        'focus-visible:outline-2 focus-visible:outline-solid focus-visible:outline-(--a63-focus-ring)'
       )
   )
 }
@@ -313,7 +313,7 @@ function Dock({
                     className={cn(
                       'relative h-11 w-14 shrink-0 snap-center overflow-hidden rounded-md outline-none',
                       'bg-[var(--a63-lightbox-on-media-surface)]',
-                      'focus-visible:ring-2 focus-visible:ring-[var(--a63-lightbox-on-media-ring)]',
+                      'focus-visible:outline-2 focus-visible:outline-(--a63-lightbox-on-media-ring) focus-visible:outline-solid',
                       // Opacity alone. The thumbs used to scale between
                       // states as well, which put a size change next to the
                       // photo's own dissolve and read as the picture being
