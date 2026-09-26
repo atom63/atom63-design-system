@@ -68,7 +68,9 @@ describe('component contract docs', () => {
     expect(componentContractMarkdown('tabs')).toContain(
       '**Accessibility pattern:** [Tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) (activation: manual)'
     )
-    expect(componentContractMarkdown('dialog')).toContain('Known gap (`dialog-is-modal`)')
+    expect(componentContractMarkdown('select')).toContain(
+      'Known gap (`combobox-active-descendant`)'
+    )
     expect(getComponentContractDoc('button')?.accessibility).toBeUndefined()
   })
 

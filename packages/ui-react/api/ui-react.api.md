@@ -940,7 +940,7 @@ export type DestinationLinkProps = Omit<useRender.ComponentProps<'a'>, 'rel' | '
 };
 
 // @public (undocumented)
-export const Dialog: typeof Dialog_2.Root;
+export function Dialog<Payload>(props: Dialog_2.Root.Props<Payload>): React$1.ReactElement;
 
 export { Dialog_2 as DialogPrimitive }
 export { Dialog_2 as SheetPrimitive }

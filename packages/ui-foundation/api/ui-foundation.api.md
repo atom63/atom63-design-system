@@ -143,10 +143,6 @@ export const accordionContract: {
             collapse: string;
             expand: string;
         };
-        knownGaps: {
-            check: string;
-            reason: string;
-        }[];
     };
     defaultIconVariant: "chevron";
     iconVariants: readonly ["chevron", "plus-minus"];
@@ -1802,10 +1798,6 @@ export interface DialogContract {
 export const dialogContract: {
     accessibility: {
         pattern: "dialog-modal";
-        knownGaps: {
-            check: string;
-            reason: string;
-        }[];
     };
     defaultFooterVariant: "default";
     defaultMobilePlacement: "bottom";
