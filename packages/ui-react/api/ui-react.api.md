@@ -940,7 +940,7 @@ export type DestinationLinkProps = Omit<useRender.ComponentProps<'a'>, 'rel' | '
 };
 
 // @public (undocumented)
-export const Dialog: typeof Dialog_2.Root;
+export function Dialog<Payload>(props: Dialog_2.Root.Props<Payload>): React$1.ReactElement;
 
 export { Dialog_2 as DialogPrimitive }
 export { Dialog_2 as SheetPrimitive }
@@ -2218,7 +2218,7 @@ export interface SegmentedControlProps {
 }
 
 // @public (undocumented)
-export const Select: typeof Select_2.Root;
+export function Select<Value, Multiple extends boolean | undefined = false>(props: Select_2.Root.Props<Value, Multiple>): React$1.ReactElement;
 
 // @public
 export const SelectContent: typeof SelectPopup;

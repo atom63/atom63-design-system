@@ -44,4 +44,47 @@ describe('Accordion', () => {
     await user.click(second)
     expect(second).toHaveAttribute('aria-expanded', 'true')
   })
+
+  it('points every header at its panel, keeping collapsed panels mounted and hidden', () => {
+    const { container } = render(<Example />)
+    const second = screen.getByText('Second').closest('button')!
+    expect(second).toHaveAttribute('aria-expanded', 'false')
+    const panel = container.querySelector(`#${CSS.escape(second.getAttribute('aria-controls')!)}`)
+    expect(panel).toHaveAttribute('data-slot', 'accordion-content')
+    expect(panel).toHaveAttribute('hidden')
+    expect(panel).toHaveTextContent('Second content')
+  })
+
+  it('keeps a custom panel id in aria-controls', () => {
+    render(
+      <Accordion>
+        <AccordionItem value="a">
+          <AccordionTrigger>First</AccordionTrigger>
+          <AccordionContent id="custom-panel">First content</AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    )
+    expect(screen.getByText('First').closest('button')).toHaveAttribute(
+      'aria-controls',
+      'custom-panel'
+    )
+  })
+
+  it('drops aria-controls from a collapsed header whose panel unmounts', () => {
+    render(
+      <Accordion defaultValue="a">
+        <AccordionItem value="a">
+          <AccordionTrigger>First</AccordionTrigger>
+          <AccordionContent>First content</AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="b">
+          <AccordionTrigger>Second</AccordionTrigger>
+          <AccordionContent keepMounted={false}>Second content</AccordionContent>
+        </AccordionItem>
+      </Accordion>
+    )
+    expect(screen.getByText('First').closest('button')).toHaveAttribute('aria-controls')
+    expect(screen.getByText('Second').closest('button')).not.toHaveAttribute('aria-controls')
+    expect(screen.queryByText('Second content')).not.toBeInTheDocument()
+  })
 })

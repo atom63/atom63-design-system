@@ -73,27 +73,7 @@ export const selectContract = {
       {
         check: 'combobox-active-descendant',
         reason:
-          'Base UI Select moves DOM focus onto the options instead of keeping it on the combobox with aria-activedescendant. Screen readers still announce the focused option.',
-      },
-      {
-        check: 'home-opens-at-first',
-        reason:
-          'Base UI Select does not open the listbox on Home; only Enter, Space and the arrow keys open it.',
-      },
-      {
-        check: 'end-opens-at-last',
-        reason:
-          'Base UI Select does not open the listbox on End; only Enter, Space and the arrow keys open it.',
-      },
-      {
-        check: 'alt-up-arrow-selects',
-        reason:
-          'Base UI Select treats Alt + Up Arrow as Up Arrow: it moves the highlight and keeps the listbox open.',
-      },
-      {
-        check: 'tab-selects',
-        reason:
-          'Base UI Select closes the listbox on Tab without selecting the highlighted option. A fix needs Base UI to commit the highlighted value on focus out.',
+          'Base UI Select moves DOM focus onto the options instead of keeping it on the combobox with aria-activedescendant, and has no option to change it. The APG Combobox pattern requires DOM focus to stay on the combobox (https://www.w3.org/WAI/ARIA/apg/patterns/combobox/), so this is a gap, not a variant. Screen readers still announce the focused option.',
       },
     ],
   },
