@@ -133,7 +133,7 @@ export const craftCriteria = [
     automated: [
       'axe runs on every story in Storybook and fails on violations: names, roles, contrast.',
       'The runtime craft checks `target-size` (24 × 24 px) and `focus-visible` (a ring on Tab, none on a pointer press) run on every story; `check:craft` `focus-visible` checks the same rule in source.',
-      'The APG pattern contracts check the accessibility tree and keyboard map of Dialog, AlertDialog, DropdownMenu and Tabs.',
+      'The APG pattern contracts check the accessibility tree and keyboard map of every component that declares a pattern (dialogs, menus, tabs, select, switch, checkbox, radio group and accordion).',
     ],
     judged:
       'Name quality, reading and focus order in a composed view, heading structure, and whether color alone carries a meaning.',
