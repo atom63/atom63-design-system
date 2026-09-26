@@ -1,3 +1,4 @@
+import type { A11yPatternBinding } from '../../a11y/types'
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 export const dialogSizes = ['sm', 'default', 'lg'] as const
@@ -33,6 +34,8 @@ export type DialogSlot = (typeof dialogSlots)[number]
 export type DialogVisualArchetype = (typeof dialogVisualArchetypes)[number]
 
 export interface DialogContract {
+  /** The WAI-ARIA APG pattern the component implements. */
+  accessibility: A11yPatternBinding
   defaultFooterVariant: DialogFooterVariant
   defaultMobilePlacement: DialogMobilePlacement
   defaultSize: DialogSize
@@ -45,6 +48,16 @@ export interface DialogContract {
 }
 
 export const dialogContract = {
+  accessibility: {
+    pattern: 'dialog-modal',
+    knownGaps: [
+      {
+        check: 'dialog-is-modal',
+        reason:
+          'Base UI hides the rest of the page with aria-hidden instead of setting aria-modal, and DialogPopup cannot read whether the root is modal.',
+      },
+    ],
+  },
   defaultFooterVariant: 'default',
   defaultMobilePlacement: 'bottom',
   defaultSize: 'default',

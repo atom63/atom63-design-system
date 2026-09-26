@@ -4,6 +4,122 @@
 
 ```ts
 
+// @public
+export interface A11yAttributeCheck {
+    attribute: string;
+    equals?: string | readonly string[];
+    references?: string;
+    resolves?: boolean;
+    target: {
+        at?: A11yPosition;
+        part: string;
+    };
+}
+
+// @public
+export type A11yFocus = A11yTarget | {
+    inside: string;
+} | 'page-start';
+
+// @public
+export interface A11yKeyboardInteraction {
+    given: A11yKeyboardState & {
+        focus: A11yFocus;
+    };
+    id: string;
+    key: string;
+    keys: string;
+    requirement: 'optional' | 'required';
+    result: string;
+    then: A11yKeyboardState;
+    when?: Readonly<Record<string, string>>;
+}
+
+// @public
+export interface A11yKeyboardState {
+    attributes?: readonly A11yAttributeCheck[];
+    focus?: A11yFocus;
+    open?: boolean;
+}
+
+// @public
+export interface A11yKnownGap {
+    check: string;
+    reason: string;
+}
+
+// @public
+export interface A11yPart {
+    description: string;
+    multiple?: boolean;
+    name: 'required' | 'none';
+    role: A11yRole;
+    whileOpen?: boolean;
+    within?: string;
+}
+
+// @public
+export interface A11yPatternBinding {
+    knownGaps?: readonly A11yKnownGap[];
+    options?: Readonly<Record<string, string>>;
+    pattern: A11yPatternId;
+}
+
+// @public
+export interface A11yPatternContract {
+    id: A11yPatternId;
+    keyboard: readonly A11yKeyboardInteraction[];
+    name: string;
+    opener?: {
+        keys: string;
+        part: string;
+    };
+    options?: Readonly<Record<string, readonly string[]>>;
+    parts: Readonly<Record<string, A11yPart>>;
+    popup?: string;
+    source: string;
+    structure: readonly A11yStructureCheck[];
+    tree: readonly A11yTreeNode[];
+}
+
+// @public
+export type A11yPatternId = 'alertdialog' | 'dialog-modal' | 'menu-button' | 'tabs';
+
+// @public
+export const a11yPatterns: Readonly<Record<A11yPatternId, A11yPatternContract>>;
+
+// @public
+export type A11yPosition = 'first' | 'last' | 'selected' | number;
+
+// @public
+export type A11yRole = 'alertdialog' | 'button' | 'dialog' | 'menu' | 'menuitem' | 'tab' | 'tablist' | 'tabpanel';
+
+// @public
+export interface A11yStructureCheck extends A11yAttributeCheck {
+    id: string;
+    requirement: 'optional' | 'required';
+    rule: string;
+}
+
+// @public
+export type A11yTarget = {
+    at?: A11yPosition;
+    part: string;
+} | {
+    part: string;
+    tabbable: 'first' | 'last';
+};
+
+// @public
+export interface A11yTreeNode {
+    children?: readonly A11yTreeNode[];
+    part: string;
+    states?: readonly A11yTreeState[];
+}
+
+// @public
+export type A11yTreeState = 'checked' | 'disabled' | 'expanded' | 'pressed' | 'selected';
+
 // @public (undocumented)
 export interface AccordionContract {
     // (undocumented)
@@ -73,6 +189,7 @@ export const alertContract: {
 
 // @public (undocumented)
 export interface AlertDialogContract {
+    accessibility: A11yPatternBinding;
     // (undocumented)
     defaultFooterVariant: AlertDialogFooterVariant;
     // (undocumented)
@@ -95,6 +212,9 @@ export interface AlertDialogContract {
 
 // @public (undocumented)
 export const alertDialogContract: {
+    accessibility: {
+        pattern: "alertdialog";
+    };
     defaultFooterVariant: "default";
     defaultSize: "default";
     defaultVariant: "default";
@@ -111,6 +231,9 @@ export type AlertDialogFooterVariant = (typeof alertDialogFooterVariants)[number
 
 // @public (undocumented)
 export const alertDialogFooterVariants: readonly ["default", "bare"];
+
+// @public
+export const alertDialogPattern: A11yPatternContract;
 
 // @public (undocumented)
 export type AlertDialogSize = (typeof alertDialogSizes)[number];
@@ -1629,6 +1752,7 @@ export const destinationLinkVisualArchetypes: readonly ["action"];
 
 // @public (undocumented)
 export interface DialogContract {
+    accessibility: A11yPatternBinding;
     // (undocumented)
     defaultFooterVariant: DialogFooterVariant;
     // (undocumented)
@@ -1651,6 +1775,13 @@ export interface DialogContract {
 
 // @public (undocumented)
 export const dialogContract: {
+    accessibility: {
+        pattern: "dialog-modal";
+        knownGaps: {
+            check: string;
+            reason: string;
+        }[];
+    };
     defaultFooterVariant: "default";
     defaultMobilePlacement: "bottom";
     defaultSize: "default";
@@ -1673,6 +1804,9 @@ export type DialogMobilePlacement = (typeof dialogMobilePlacements)[number];
 
 // @public (undocumented)
 export const dialogMobilePlacements: readonly ["bottom", "center"];
+
+// @public
+export const dialogModalPattern: A11yPatternContract;
 
 // @public (undocumented)
 export type DialogSize = (typeof dialogSizes)[number];
@@ -1759,6 +1893,7 @@ export const drawerVisualArchetypes: readonly ["overlay", "surface", "trigger", 
 
 // @public (undocumented)
 export interface DropdownMenuContract {
+    accessibility: A11yPatternBinding;
     // (undocumented)
     defaultItemVariant: DropdownMenuItemVariant;
     // (undocumented)
@@ -1773,6 +1908,12 @@ export interface DropdownMenuContract {
 
 // @public (undocumented)
 export const dropdownMenuContract: {
+    accessibility: {
+        pattern: "menu-button";
+        options: {
+            wrap: string;
+        };
+    };
     defaultItemVariant: "default";
     itemVariants: readonly ["default", "destructive"];
     slots: readonly ["dropdown-menu", "dropdown-menu-trigger", "dropdown-menu-group", "dropdown-menu-portal", "dropdown-menu-positioner", "dropdown-menu-content", "dropdown-menu-item", "dropdown-menu-checkbox-item", "dropdown-menu-radio-group", "dropdown-menu-radio-item", "dropdown-menu-item-indicator", "dropdown-menu-label", "dropdown-menu-separator", "dropdown-menu-shortcut", "dropdown-menu-sub", "dropdown-menu-sub-trigger", "dropdown-menu-sub-positioner", "dropdown-menu-sub-content"];
@@ -2110,6 +2251,9 @@ export type FrameVisualArchetype = (typeof frameVisualArchetypes)[number];
 
 // @public (undocumented)
 export const frameVisualArchetypes: readonly ["surface"];
+
+// @public
+export function getA11yPattern(id: A11yPatternId): A11yPatternContract;
 
 // @public (undocumented)
 export function getCrossRendererContract<Id extends CrossRendererContractId>(id: Id): CrossRendererContractById<Id>;
@@ -2565,6 +2709,9 @@ export type MenubarVisualArchetype = (typeof menubarVisualArchetypes)[number];
 
 // @public (undocumented)
 export const menubarVisualArchetypes: readonly ["surface", "trigger", "menu", "overlay"];
+
+// @public
+export const menuButtonPattern: A11yPatternContract;
 
 // @public (undocumented)
 export interface MenuContract {
@@ -4074,6 +4221,7 @@ export const tableVisualArchetypes: readonly ["surface"];
 
 // @public (undocumented)
 export interface TabsContract {
+    accessibility: A11yPatternBinding;
     // (undocumented)
     defaultSize: TabsSize;
     // (undocumented)
@@ -4094,6 +4242,12 @@ export interface TabsContract {
 
 // @public (undocumented)
 export const tabsContract: {
+    accessibility: {
+        pattern: "tabs";
+        options: {
+            activation: string;
+        };
+    };
     defaultVariant: "default";
     defaultSize: "default";
     variants: readonly ["default", "underline", "attached"];
@@ -4109,6 +4263,9 @@ export type TabsOrientation = (typeof tabsOrientations)[number];
 
 // @public (undocumented)
 export const tabsOrientations: readonly ["horizontal", "vertical"];
+
+// @public
+export const tabsPattern: A11yPatternContract;
 
 // @public (undocumented)
 export type TabsSize = (typeof tabsSizes)[number];

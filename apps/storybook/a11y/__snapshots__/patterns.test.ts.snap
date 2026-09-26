@@ -1,0 +1,39 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`alertDialogContract implements Alert and Message Dialogs > Playground > accessibility tree under dialog 1`] = `
+- alertdialog "Delete this project?":
+  - heading "Delete this project?" [level=2]
+  - paragraph: This permanently removes the project and all of its files. This action cannot be undone.
+  - button "Cancel"
+  - button "Delete"
+`;
+
+exports[`dialogContract implements Dialog (Modal) > Playground > accessibility tree under dialog 1`] = `
+- dialog "Rename project":
+  - heading "Rename project" [level=2]
+  - paragraph: Give this project a new, memorable name.
+  - paragraph: Any content can live in the scrollable panel.
+  - button "Cancel"
+  - button "Save"
+  - button "Close"
+`;
+
+exports[`dropdownMenuContract implements Menu Button > Playground > accessibility tree under menu 1`] = `
+- menu "Open menu":
+  - text: Actions
+  - menuitem "Copy ⌘C"
+  - menuitem "Paste ⌘V"
+  - separator
+  - menuitem "Delete"
+`;
+
+exports[`tabsContract implements Tabs > Playground > accessibility tree under panel 1`] = `
+- tabpanel "Overview": Overview content
+`;
+
+exports[`tabsContract implements Tabs > Playground > accessibility tree under tablist 1`] = `
+- tablist "Product details":
+  - tab "Overview" [selected]
+  - tab "Specs"
+  - tab "Reviews"
+`;

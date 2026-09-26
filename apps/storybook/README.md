@@ -94,6 +94,33 @@ or render. Browser access inside effects is fine, since effects do not run on th
 pnpm --filter @atom63/storybook test:ssr
 ```
 
+**Accessibility pattern contracts.** The `a11y` project checks the components that declare a
+WAI-ARIA APG pattern (dialog, alert dialog, menu button, tabs) against that pattern's contract in
+`@atom63/ui-foundation`. `a11y/patterns.test.ts` names the stories for each component and
+generates the tests; `a11y/contract.ts` renders each story as a portable story, with the preview
+applied, and then:
+
+- checks the contract's accessibility tree (roles, required names, states) with ARIA role
+  queries, and compares the whole tree with the reviewed ARIA snapshot in `a11y/__snapshots__/`
+  (Vitest's experimental `toMatchAriaSnapshot`);
+- checks each required attribute and ID reference (`aria-modal`, `aria-controls`,
+  `aria-labelledby`, and so on);
+- for each row of the keyboard map, sets up the state and focus it starts from, presses the key
+  with `userEvent.keyboard`, and waits for the expected state and focus.
+
+A failure names the pattern, the check and the story, and says what the APG expects and what
+happened. Checks listed in a contract's `knownGaps` run as expected failures. When a story's text
+changes on purpose, update its snapshot with `-u` and review the diff:
+
+```bash
+pnpm --filter @atom63/storybook test:a11y
+pnpm --filter @atom63/storybook test:a11y -u   # rewrite the ARIA snapshots
+```
+
+The contract tree is checked with role queries rather than `toMatchAriaInlineSnapshot`, because
+Vitest keys inline snapshots by call site and rejects one call site that sees different trees. See
+[Adding an accessibility pattern contract](../../CONTRIBUTING.md#adding-an-accessibility-pattern-contract).
+
 **Visual regression.** Every story is compared against a committed baseline screenshot in
 `visual/__screenshots__/`. Stories with a `Themes` story render all four themes in light and
 dark, so those components get a full theme matrix; the few components without one have a `Dark`

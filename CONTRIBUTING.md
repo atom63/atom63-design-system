@@ -176,6 +176,32 @@ the section and the SF Symbol. The scaffolded contract carries placeholder outco
 `TODO(ds:new)`: replace them with the real shared intent, and keep both conformance entries in
 step.
 
+## Adding an accessibility pattern contract
+
+Components that implement a [WAI-ARIA APG](https://www.w3.org/WAI/ARIA/apg/patterns/) pattern
+declare it in their contract, and Storybook checks the claim with real keyboard input. Each
+pattern is plain data in `packages/ui-foundation/src/a11y/<pattern>.ts` (types in `types.ts`):
+its parts and their roles, the accessibility tree, the required states and ID references, and the
+keyboard map (each key, the state and focus before it, and the state and focus after it).
+
+1. **Write the pattern** from its APG page: read the "Keyboard Interaction" and "WAI-ARIA Roles,
+   States, and Properties" sections in full, and set `source` to the page. Mark rows the APG calls
+   optional with `requirement: 'optional'`. Where the APG leaves a choice to the implementation
+   (tab activation, menu wrapping), add it to `options` and tag the rows that depend on it with
+   `when`. Register the pattern in `src/a11y/index.ts`.
+2. **Bind the component** with `accessibility: { pattern, options }` in its
+   `<name>-contract.ts`. The docs Contract section shows the binding.
+3. **Name the stories** that exercise it in `bindings` in `apps/storybook/a11y/patterns.test.ts`,
+   with the accessible names that pick a part when a story has several candidates (the trigger).
+4. **Run** `pnpm --filter @atom63/storybook test:a11y`. It generates one test per tree root,
+   structure check and keyboard row. The first run writes the story's ARIA snapshot to
+   `apps/storybook/a11y/__snapshots__/`; review and commit it.
+
+When a component fails a check, first make sure the pattern reads the APG correctly. A real bug
+is fixed in the component, or, when the fix is not small, listed in the binding's `knownGaps` with
+the check id and a reason. A known gap runs as an expected failure, so the test fails once the
+component is fixed and the gap must be removed.
+
 ## Before opening a pull request
 
 Run the checks that cover your change. CI runs all of them:

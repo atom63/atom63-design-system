@@ -281,6 +281,7 @@ jobs:
           pnpm --filter @atom63/storybook test
           pnpm --filter @atom63/storybook test:craft
           pnpm --filter @atom63/storybook test:ssr
+          pnpm --filter @atom63/storybook test:a11y
 
   # Every story renders in Firefox and WebKit. Render only: axe and visual
   # regression run in Chromium in the verify and visual jobs.

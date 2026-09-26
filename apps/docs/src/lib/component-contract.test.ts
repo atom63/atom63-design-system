@@ -55,6 +55,23 @@ describe('component contract docs', () => {
     expect(markdown).toContain('Rendered by `AtomButton` in SwiftUI')
   })
 
+  it('shows the APG pattern a contract binds to, with its options and known gaps', () => {
+    const tabs = getComponentContractDoc('tabs')
+
+    expect(tabs?.accessibility).toEqual({
+      knownGaps: [],
+      name: 'Tabs',
+      options: [['activation', 'manual']],
+      source: 'https://www.w3.org/WAI/ARIA/apg/patterns/tabs/',
+    })
+    expect(tabs?.axes.map(axis => axis.name)).not.toContain('accessibility')
+    expect(componentContractMarkdown('tabs')).toContain(
+      '**Accessibility pattern:** [Tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) (activation: manual)'
+    )
+    expect(componentContractMarkdown('dialog')).toContain('Known gap (`dialog-is-modal`)')
+    expect(getComponentContractDoc('button')?.accessibility).toBeUndefined()
+  })
+
   it('finds contracts whose export keeps an acronym (inputOTPContract)', () => {
     expect(getComponentContractDoc('input-otp')?.exportName).toBe('inputOTPContract')
   })

@@ -1,3 +1,4 @@
+import type { A11yPatternBinding } from '../../a11y/types'
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 export const dropdownMenuItemVariants = ['default', 'destructive'] as const
@@ -45,6 +46,8 @@ export type DropdownMenuSlot = (typeof dropdownMenuSlots)[number]
 export type DropdownMenuVisualArchetype = (typeof dropdownMenuVisualArchetypes)[number]
 
 export interface DropdownMenuContract {
+  /** The WAI-ARIA APG pattern the component implements. */
+  accessibility: A11yPatternBinding
   defaultItemVariant: DropdownMenuItemVariant
   itemVariants: readonly DropdownMenuItemVariant[]
   slots: readonly DropdownMenuSlot[]
@@ -53,6 +56,7 @@ export interface DropdownMenuContract {
 }
 
 export const dropdownMenuContract = {
+  accessibility: { pattern: 'menu-button', options: { wrap: 'wrap' } },
   defaultItemVariant: 'default',
   itemVariants: dropdownMenuItemVariants,
   slots: dropdownMenuSlots,
