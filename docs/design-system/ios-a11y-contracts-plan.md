@@ -101,7 +101,7 @@ has no modifier for it and XCUITest does not read it.
 
 Each step is its own pull request and ends green in CI.
 
-1. **Contract and harness** (done in this pull request). Add the `ios` section to the pattern contract types and to the
+1. **Contract and harness** (done, #101). Add the `ios` section to the pattern contract types and to the
    switch, select-only combobox, menu button and alert dialog contracts; generate the Swift
    expectations; add a launch environment value that opens one catalog showcase directly; add an
    `A11yContractUITests` class that plays every contract with an `ios` section. *Verify:* removing
