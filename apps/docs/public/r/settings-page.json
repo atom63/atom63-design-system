@@ -1,0 +1,40 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "settings-page",
+  "type": "registry:page",
+  "title": "Settings page",
+  "description": "Preferences inside the app shell, grouped into titled sections of labelled switches that apply at once, including a locked setting that explains why.",
+  "dependencies": [
+    "@atom63/ui-react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://system.atom63.io/r/app-shell.json",
+    "https://system.atom63.io/r/page-header.json",
+    "https://system.atom63.io/r/settings-section.json"
+  ],
+  "files": [
+    {
+      "path": "templates/pages/settings-page/settings-page.tsx",
+      "type": "registry:page",
+      "target": "@components/atom63/pages/settings-page/settings-page.tsx",
+      "content": "import { Container } from '@atom63/ui-react/layout'\nimport { FileText, LayoutDashboard, Settings } from 'lucide-react'\nimport { useState } from 'react'\n\nimport { AppShell } from '../../blocks/app-shell/app-shell'\nimport { PageHeader } from '../../blocks/page-header/page-header'\nimport { SettingsSection, SettingsSwitchRow } from '../../blocks/settings-section/settings-section'\n\nexport const template = {\n  id: 'settings-page',\n  kind: 'page',\n  title: 'Settings page',\n  description:\n    'Preferences inside the app shell, grouped into titled sections of labelled switches that apply at once, including a locked setting that explains why.',\n  category: 'forms',\n  tags: [\n    'settings',\n    'preferences',\n    'notifications',\n    'security',\n    'account',\n    'switches',\n    'app shell',\n  ],\n  readiness: 'draft',\n} as const\n\nconst nav = [\n  { href: '#overview', icon: <LayoutDashboard aria-hidden />, label: 'Overview' },\n  { href: '#invoices', icon: <FileText aria-hidden />, label: 'Invoices' },\n  { current: true, href: '#settings', icon: <Settings aria-hidden />, label: 'Settings' },\n]\n\nexport function SettingsPage() {\n  const [settings, setSettings] = useState({\n    digest: true,\n    overdue: true,\n    paid: false,\n    twoFactor: true,\n  })\n  const toggle = (key: keyof typeof settings) => (checked: boolean) =>\n    setSettings(current => ({ ...current, [key]: checked }))\n\n  return (\n    <AppShell navItems={nav} productName=\"Tally\">\n      <Container maxWidth=\"wide\" padding=\"none\">\n        <PageHeader description=\"Changes apply as soon as you make them.\" title=\"Settings\" />\n        <SettingsSection\n          description=\"Choose which invoice events send you an email.\"\n          title=\"Notifications\"\n        >\n          <SettingsSwitchRow\n            checked={settings.paid}\n            description=\"When a customer pays an invoice in full.\"\n            label=\"Invoice paid\"\n            onCheckedChange={toggle('paid')}\n          />\n          <SettingsSwitchRow\n            checked={settings.overdue}\n            description=\"The morning after an invoice passes its due date.\"\n            label=\"Invoice overdue\"\n            onCheckedChange={toggle('overdue')}\n          />\n          <SettingsSwitchRow\n            checked={settings.digest}\n            description=\"A summary of the week's invoices every Monday.\"\n            label=\"Weekly digest\"\n            onCheckedChange={toggle('digest')}\n          />\n        </SettingsSection>\n        <SettingsSection description=\"Protect access to your workspace.\" title=\"Security\">\n          <SettingsSwitchRow\n            checked={settings.twoFactor}\n            disabledReason=\"Required by your workspace owner.\"\n            label=\"Two-step verification\"\n            onCheckedChange={toggle('twoFactor')}\n          />\n        </SettingsSection>\n      </Container>\n    </AppShell>\n  )\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "readiness": "draft",
+    "tags": [
+      "settings",
+      "preferences",
+      "notifications",
+      "security",
+      "account",
+      "switches",
+      "app shell"
+    ]
+  },
+  "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates"
+}

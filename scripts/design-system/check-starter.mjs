@@ -3,14 +3,17 @@
  * it against freshly packed design system tarballs, typecheck and build it,
  * and hold its source to the craft rules. With --shadcn it also adds a shadcn
  * component to the first kind's app (the Tailwind + shadcn path the starter
- * promises) and builds again.
+ * promises), then installs the list page template from the Atom63 shadcn
+ * registry, served locally, and typechecks and builds again.
  *
  * Needs the packages built first (dist is packed). Needs the network for the
  * third-party dependencies.
  *
  * Usage: node scripts/design-system/check-starter.mjs [--kind <kind>] [--shadcn] [--keep]
  */
-import { execFileSync } from 'node:child_process'
+import { execFileSync, spawn } from 'node:child_process'
+import { createReadStream, existsSync } from 'node:fs'
+import { createServer } from 'node:http'
 import { mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
@@ -40,6 +43,41 @@ const run = (command, args, cwd) => {
   process.stdout.write(`\n$ ${command} ${args.join(' ')}\n`)
   execFileSync(command, args, { cwd, stdio: 'inherit', env: { ...process.env, CI: 'true' } })
 }
+
+/** Serve a directory over HTTP on a free local port. */
+function serveRegistry(directory) {
+  const server = createServer((request, response) => {
+    const file = path.join(directory, decodeURIComponent(new URL(request.url, 'http://x').pathname))
+    if (!file.startsWith(directory) || !existsSync(file)) {
+      response.writeHead(404).end()
+      return
+    }
+    response.writeHead(200, { 'content-type': 'application/json' })
+    createReadStream(file).pipe(response)
+  })
+  return new Promise(resolve => {
+    server.listen(0, '127.0.0.1', () => {
+      const { port } = server.address()
+      resolve({ url: `http://127.0.0.1:${port}`, close: () => server.close() })
+    })
+  })
+}
+
+/* Like run(), but without blocking the event loop, so the registry server in
+   this process can answer while the child runs. */
+const runAsync = (command, args, cwd) =>
+  new Promise((resolve, reject) => {
+    process.stdout.write(`\n$ ${command} ${args.join(' ')}\n`)
+    const child = spawn(command, args, {
+      cwd,
+      stdio: 'inherit',
+      env: { ...process.env, CI: 'true' },
+    })
+    child.on('error', reject)
+    child.on('exit', code =>
+      code === 0 ? resolve() : reject(new Error(`${command} ${args[0]} exited with ${code}`))
+    )
+  })
 
 let failed = false
 try {
@@ -116,6 +154,39 @@ try {
         path.join(app, 'src/shadcn-check.tsx'),
         "import { Button } from '@/components/ui/button'\n\nexport const ShadcnCheck = () => <Button>shadcn</Button>\n"
       )
+      run('pnpm', ['build'], app)
+
+      // The template registry: a page item pulls its blocks in by URL.
+      const { url, close } = await serveRegistry(path.join(work, 'registry'))
+      try {
+        run(
+          'node',
+          [
+            path.join(root, 'scripts/design-system/build-registry.mjs'),
+            '--base',
+            url,
+            '--out',
+            path.join(work, 'registry/r'),
+          ],
+          root
+        )
+        await runAsync(
+          'pnpm',
+          ['dlx', 'shadcn@latest', 'add', `${url}/r/list-page.json`, '--yes', '--overwrite'],
+          app
+        )
+      } finally {
+        close()
+      }
+      for (const block of ['data-table-section', 'empty-state', 'app-shell']) {
+        const file = path.join(app, `src/components/atom63/blocks/${block}/${block}.tsx`)
+        if (!existsSync(file)) throw new Error(`shadcn add list-page did not install ${block}`)
+      }
+      writeFileSync(
+        path.join(app, 'src/template-check.tsx'),
+        "import { ListPage } from '@/components/atom63/pages/list-page/list-page'\n\nexport const TemplateCheck = () => <ListPage />\n"
+      )
+      run('pnpm', ['typecheck'], app)
       run('pnpm', ['build'], app)
     }
   }

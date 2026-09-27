@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "data-table-section",
+  "type": "registry:block",
+  "title": "Data table section",
+  "description": "A collection shown as a table on wide screens and as stacked rows on phones, with a live result count, per-row actions and an empty state that offers a way out.",
+  "dependencies": [
+    "@atom63/ui-react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://system.atom63.io/r/empty-state.json"
+  ],
+  "files": [
+    {
+      "path": "templates/blocks/data-table-section/data-table-section.tsx",
+      "type": "registry:component",
+      "target": "@components/atom63/blocks/data-table-section/data-table-section.tsx",
+      "content": "import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@atom63/ui-react'\nimport { SearchX } from 'lucide-react'\nimport type { ReactNode } from 'react'\n\nimport { EmptyState } from '../empty-state/empty-state'\n\nexport const template = {\n  id: 'data-table-section',\n  kind: 'block',\n  title: 'Data table section',\n  description:\n    'A collection shown as a table on wide screens and as stacked rows on phones, with a live result count, per-row actions and an empty state that offers a way out.',\n  category: 'collections',\n  tags: ['table', 'list', 'rows', 'responsive', 'empty state', 'results'],\n  readiness: 'draft',\n} as const\n\nexport interface DataTableColumn<Row> {\n  /** `end` for numbers and amounts, so digits line up. */\n  align?: 'start' | 'end'\n  cell: (row: Row) => ReactNode\n  header: string\n  key: string\n}\n\nexport interface DataTableEmpty {\n  /** The next step, usually a button that clears the filters. */\n  action?: ReactNode\n  description: string\n  title: string\n}\n\nexport interface DataTableSectionProps<Row> {\n  /** Names the table and the phone list for assistive technology. */\n  label: string\n  /** The first column is the row's title in the phone layout. */\n  columns: readonly DataTableColumn<Row>[]\n  empty: DataTableEmpty\n  getRowKey: (row: Row) => string\n  /** Heading level of the empty state's title: one below the heading above the section. */\n  headingLevel?: 2 | 3 | 4\n  rowActions?: (row: Row) => ReactNode\n  rows: readonly Row[]\n  /** A short count such as \"12 of 25 invoices\", announced when it changes. */\n  summary: string\n}\n\nconst alignClass = (align: DataTableColumn<unknown>['align']) =>\n  align === 'end' ? 'text-end tabular-nums' : 'text-start'\n\n/*\n * A wide table does not fit a phone, so below `sm` each row becomes a stacked\n * item: the first column is its title and the rest are label and value pairs.\n * Only one layout is displayed at a time; the hidden one is out of the\n * accessibility tree.\n */\nexport function DataTableSection<Row>({\n  columns,\n  empty,\n  getRowKey,\n  headingLevel = 2,\n  label,\n  rowActions,\n  rows,\n  summary,\n}: DataTableSectionProps<Row>) {\n  const [titleColumn, ...detailColumns] = columns\n  return (\n    <div className=\"flex flex-col gap-3\">\n      <p aria-live=\"polite\" className=\"text-muted-foreground text-sm\">\n        {summary}\n      </p>\n      {rows.length === 0 ? (\n        <EmptyState\n          action={empty.action}\n          description={empty.description}\n          headingLevel={headingLevel}\n          icon={<SearchX aria-hidden />}\n          title={empty.title}\n        />\n      ) : (\n        <>\n          {/* A `frame` ancestor draws the table as a bordered card, like the phone list. */}\n          <div className=\"hidden sm:block\" data-slot=\"frame\">\n            <Table aria-label={label}>\n              <TableHeader>\n                <TableRow>\n                  {columns.map(column => (\n                    <TableHead className={alignClass(column.align)} key={column.key}>\n                      {column.header}\n                    </TableHead>\n                  ))}\n                  {rowActions ? (\n                    <TableHead className=\"w-0\">\n                      <span className=\"sr-only\">Actions</span>\n                    </TableHead>\n                  ) : null}\n                </TableRow>\n              </TableHeader>\n              <TableBody>\n                {rows.map(row => (\n                  <TableRow key={getRowKey(row)}>\n                    {columns.map(column => (\n                      <TableCell className={alignClass(column.align)} key={column.key}>\n                        {column.cell(row)}\n                      </TableCell>\n                    ))}\n                    {rowActions ? (\n                      <TableCell className=\"text-end\">{rowActions(row)}</TableCell>\n                    ) : null}\n                  </TableRow>\n                ))}\n              </TableBody>\n            </Table>\n          </div>\n          <ul\n            aria-label={label}\n            className=\"divide-border border-border flex flex-col divide-y rounded-lg border sm:hidden\"\n          >\n            {rows.map(row => (\n              <li className=\"flex items-start gap-3 p-4\" key={getRowKey(row)}>\n                <div className=\"flex min-w-0 flex-1 flex-col gap-2\">\n                  {titleColumn ? (\n                    <div className=\"text-foreground font-medium\">{titleColumn.cell(row)}</div>\n                  ) : null}\n                  <dl className=\"grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1 text-sm\">\n                    {detailColumns.map(column => (\n                      <div className=\"contents\" key={column.key}>\n                        <dt className=\"text-muted-foreground\">{column.header}</dt>\n                        <dd className={column.align === 'end' ? 'tabular-nums' : undefined}>\n                          {column.cell(row)}\n                        </dd>\n                      </div>\n                    ))}\n                  </dl>\n                </div>\n                {rowActions ? rowActions(row) : null}\n              </li>\n            ))}\n          </ul>\n        </>\n      )}\n    </div>\n  )\n}\n"
+    }
+  ],
+  "categories": [
+    "collections"
+  ],
+  "meta": {
+    "readiness": "draft",
+    "tags": [
+      "table",
+      "list",
+      "rows",
+      "responsive",
+      "empty state",
+      "results"
+    ]
+  },
+  "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates"
+}

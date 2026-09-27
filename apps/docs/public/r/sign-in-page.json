@@ -1,0 +1,37 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "sign-in-page",
+  "type": "registry:page",
+  "title": "Sign-in page",
+  "description": "Email and password sign-in with inline field errors, a form-level error for wrong credentials, a loading submit, and links to reset the password or create an account.",
+  "dependencies": [
+    "@atom63/ui-react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://system.atom63.io/r/auth-card.json"
+  ],
+  "files": [
+    {
+      "path": "templates/pages/sign-in-page/sign-in-page.tsx",
+      "type": "registry:page",
+      "target": "@components/atom63/pages/sign-in-page/sign-in-page.tsx",
+      "content": "import {\n  Alert,\n  AlertDescription,\n  AlertIcon,\n  AlertTitle,\n  Button,\n  Checkbox,\n  Field,\n  FieldError,\n  FieldGroup,\n  FieldLabel,\n  Input,\n} from '@atom63/ui-react'\nimport { Page } from '@atom63/ui-react/layout'\nimport { AlertCircle } from 'lucide-react'\nimport { type FormEvent, useId, useRef, useState } from 'react'\n\nimport { AuthCard } from '../../blocks/auth-card/auth-card'\n\nexport const template = {\n  id: 'sign-in-page',\n  kind: 'page',\n  title: 'Sign-in page',\n  description:\n    'Email and password sign-in with inline field errors, a form-level error for wrong credentials, a loading submit, and links to reset the password or create an account.',\n  category: 'forms',\n  tags: ['sign in', 'login', 'auth', 'password', 'form', 'validation'],\n  readiness: 'draft',\n} as const\n\nexport interface SignInPageProps {\n  /**\n   * Checks the credentials; resolve `false` for a wrong password. The template\n   * accepts any password except \"wrong\" so every state can be tried.\n   */\n  onSignIn?: (email: string, password: string) => Promise<boolean>\n}\n\nconst demoSignIn = (_email: string, password: string) =>\n  new Promise<boolean>(resolve => setTimeout(() => resolve(password !== 'wrong'), 600))\n\nconst linkClass =\n  'font-medium text-foreground underline underline-offset-4 hover:text-muted-foreground'\n\nexport function SignInPage({ onSignIn = demoSignIn }: SignInPageProps) {\n  const emailId = useId()\n  const emailErrorId = useId()\n  const passwordId = useId()\n  const rememberId = useId()\n  const emailRef = useRef<HTMLInputElement>(null)\n  const [emailError, setEmailError] = useState<string | null>(null)\n  const [formError, setFormError] = useState(false)\n  const [pending, setPending] = useState(false)\n\n  const submit = async (event: FormEvent<HTMLFormElement>) => {\n    event.preventDefault()\n    const data = new FormData(event.currentTarget)\n    const email = (data.get('email') as string | null)?.trim() ?? ''\n    const password = (data.get('password') as string | null) ?? ''\n    setFormError(false)\n    if (!/^\\S+@\\S+\\.\\S+$/.test(email)) {\n      setEmailError(\n        email === '' ? 'Enter your email address.' : 'Enter an email address like name@example.com.'\n      )\n      emailRef.current?.focus()\n      return\n    }\n    setEmailError(null)\n    setPending(true)\n    const ok = await onSignIn(email, password)\n    setPending(false)\n    if (!ok) setFormError(true)\n  }\n\n  return (\n    <Page className=\"flex items-center px-4\">\n      <AuthCard\n        description=\"Sign in to manage your invoices.\"\n        footer={\n          <p>\n            No account yet?{' '}\n            <a className={linkClass} href=\"#sign-up\">\n              Create one\n            </a>\n          </p>\n        }\n        title=\"Tally\"\n      >\n        <form noValidate onSubmit={event => void submit(event)}>\n          <FieldGroup>\n            {formError ? (\n              <Alert variant=\"error\">\n                <AlertIcon>\n                  <AlertCircle aria-hidden />\n                </AlertIcon>\n                <AlertTitle>That email and password do not match</AlertTitle>\n                <AlertDescription>\n                  Check them and try again, or reset your password.\n                </AlertDescription>\n              </Alert>\n            ) : null}\n            <Field data-invalid={emailError ? true : undefined}>\n              <FieldLabel htmlFor={emailId}>Email</FieldLabel>\n              <Input\n                aria-describedby={emailError ? emailErrorId : undefined}\n                aria-invalid={emailError ? true : undefined}\n                autoComplete=\"email\"\n                id={emailId}\n                name=\"email\"\n                ref={emailRef}\n                type=\"email\"\n              />\n              {emailError ? <FieldError id={emailErrorId}>{emailError}</FieldError> : null}\n            </Field>\n            <Field>\n              <div className=\"flex items-baseline justify-between gap-4\">\n                <FieldLabel htmlFor={passwordId}>Password</FieldLabel>\n                <a className={`${linkClass} text-sm`} href=\"#reset-password\">\n                  Forgot password?\n                </a>\n              </div>\n              <Input\n                autoComplete=\"current-password\"\n                id={passwordId}\n                name=\"password\"\n                type=\"password\"\n              />\n            </Field>\n            <Field orientation=\"horizontal\">\n              <Checkbox id={rememberId} name=\"remember\" />\n              <FieldLabel htmlFor={rememberId}>Keep me signed in</FieldLabel>\n            </Field>\n            <Button className=\"w-full\" loading={pending} type=\"submit\" variant=\"primary\">\n              Sign in\n            </Button>\n          </FieldGroup>\n        </form>\n      </AuthCard>\n    </Page>\n  )\n}\n"
+    }
+  ],
+  "categories": [
+    "forms"
+  ],
+  "meta": {
+    "readiness": "draft",
+    "tags": [
+      "sign in",
+      "login",
+      "auth",
+      "password",
+      "form",
+      "validation"
+    ]
+  },
+  "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates"
+}

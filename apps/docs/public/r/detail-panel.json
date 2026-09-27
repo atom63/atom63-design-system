@@ -1,0 +1,34 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "detail-panel",
+  "type": "registry:block",
+  "title": "Detail panel",
+  "description": "One record's fields in a side sheet over its list, with the record's actions in the footer, so people inspect a row without losing their place.",
+  "dependencies": [
+    "@atom63/ui-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "templates/blocks/detail-panel/detail-panel.tsx",
+      "type": "registry:component",
+      "target": "@components/atom63/blocks/detail-panel/detail-panel.tsx",
+      "content": "import {\n  Sheet,\n  SheetContent,\n  SheetDescription,\n  SheetFooter,\n  SheetHeader,\n  SheetPanel,\n  SheetTitle,\n} from '@atom63/ui-react'\nimport type { ReactNode } from 'react'\n\nexport const template = {\n  id: 'detail-panel',\n  kind: 'block',\n  title: 'Detail panel',\n  description:\n    \"One record's fields in a side sheet over its list, with the record's actions in the footer, so people inspect a row without losing their place.\",\n  category: 'collections',\n  tags: ['detail', 'inspector', 'side panel', 'sheet', 'record', 'view'],\n  readiness: 'draft',\n} as const\n\nexport interface DetailField {\n  label: string\n  value: ReactNode\n}\n\nexport interface DetailPanelProps {\n  /** The record's actions; one `primary`, the rest `outline`. */\n  actions?: ReactNode\n  description?: string\n  fields: readonly DetailField[]\n  onOpenChange: (open: boolean) => void\n  open: boolean\n  title: string\n}\n\n/* Controlled by the list: the page owns which row is open. */\nexport function DetailPanel({\n  actions,\n  description,\n  fields,\n  onOpenChange,\n  open,\n  title,\n}: DetailPanelProps) {\n  return (\n    <Sheet onOpenChange={onOpenChange} open={open}>\n      <SheetContent side=\"right\">\n        <SheetHeader>\n          <SheetTitle>{title}</SheetTitle>\n          {description ? <SheetDescription>{description}</SheetDescription> : null}\n        </SheetHeader>\n        <SheetPanel>\n          <dl className=\"grid grid-cols-[auto_minmax(0,1fr)] gap-x-6 gap-y-3 text-sm\">\n            {fields.map(field => (\n              <div className=\"contents\" key={field.label}>\n                <dt className=\"text-muted-foreground\">{field.label}</dt>\n                <dd className=\"text-foreground\">{field.value}</dd>\n              </div>\n            ))}\n          </dl>\n        </SheetPanel>\n        {actions ? <SheetFooter>{actions}</SheetFooter> : null}\n      </SheetContent>\n    </Sheet>\n  )\n}\n"
+    }
+  ],
+  "categories": [
+    "collections"
+  ],
+  "meta": {
+    "readiness": "draft",
+    "tags": [
+      "detail",
+      "inspector",
+      "side panel",
+      "sheet",
+      "record",
+      "view"
+    ]
+  },
+  "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates"
+}

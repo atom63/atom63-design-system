@@ -6,6 +6,18 @@ Templates are known-good starting points above the component level: whole pages 
 
 A template is a starting point, not a dependency. Copy its source into your product and change it freely; the product owns what it becomes. The templates live in `packages/templates` in this repository.
 
+## Getting a template
+
+With the `atom63` CLI, `atom63 build <idea>` suggests the closest templates and `atom63 copy <id> <dir>` writes one, with the blocks it uses, into your project.
+
+In a project set up for shadcn, install a template from the Atom63 registry instead. A page brings the blocks it uses with it:
+
+```bash
+npx shadcn@latest add https://system.atom63.io/r/list-page.json
+```
+
+The files land in `components/atom63/`, keeping their `pages/` and `blocks/` folders so their imports resolve. The templates use Atom63 components and Tailwind utilities, so the project needs `@atom63/ui-react` and the Atom63 token stack in its CSS, as an `@atom63/create` app sets up.
+
 ## Pages
 
 <TemplateGallery kind="page" />

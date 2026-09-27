@@ -227,7 +227,12 @@ Each step is its own pull request and ends green in CI.
    Next: a getting-started checklist block (the onboarding brief needs one and no template has
    it), and making agents reach for `atom63 build` before writing, since the brief's own words
    already rank onboarding-page first.
-6. **shadcn registry** (T8).
+6. **shadcn registry** (T8). `pnpm build:registry` generates `apps/docs/public/r/` from the
+   agent index: `registry.json` and one built item per template, served at
+   `https://system.atom63.io/r/<id>.json`. Files install under `@components/atom63/` with their
+   folder layout, and a page lists its blocks as registry dependencies by URL.
+   `check:registry` fails when it drifts, and `check:starter --shadcn` installs `list-page`
+   from a local copy of the registry into a starter app, then typechecks and builds it.
 
 ## Out of scope for now
 

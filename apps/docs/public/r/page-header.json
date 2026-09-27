@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "page-header",
+  "type": "registry:block",
+  "title": "Page header",
+  "description": "The page title and a one-line description, with the page-level actions beside them on wide screens and below them on phones.",
+  "dependencies": [
+    "@atom63/ui-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "templates/blocks/page-header/page-header.tsx",
+      "type": "registry:component",
+      "target": "@components/atom63/blocks/page-header/page-header.tsx",
+      "content": "import { SectionHeader } from '@atom63/ui-react/layout'\nimport type { ReactNode } from 'react'\n\nexport const template = {\n  id: 'page-header',\n  kind: 'block',\n  title: 'Page header',\n  description:\n    'The page title and a one-line description, with the page-level actions beside them on wide screens and below them on phones.',\n  category: 'layout',\n  tags: ['title', 'heading', 'actions', 'toolbar'],\n  readiness: 'draft',\n} as const\n\nexport interface PageHeaderProps {\n  /** Page-level actions. Keep one `primary` button; the rest are `outline` or `ghost`. */\n  actions?: ReactNode\n  description?: string\n  title: string\n}\n\n/*\n * The one h1 of a page. Actions wrap under the title on a phone rather than\n * squeezing it, and stay on the title's start edge so nothing floats.\n */\nexport function PageHeader({ actions, description, title }: PageHeaderProps) {\n  return (\n    <header className=\"flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between\">\n      <SectionHeader description={description} level={1} title={title} variant=\"secondary\" />\n      {actions ? <div className=\"flex flex-wrap items-center gap-2\">{actions}</div> : null}\n    </header>\n  )\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "readiness": "draft",
+    "tags": [
+      "title",
+      "heading",
+      "actions",
+      "toolbar"
+    ]
+  },
+  "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates"
+}
