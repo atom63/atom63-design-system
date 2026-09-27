@@ -4,6 +4,10 @@ import { MediaLightbox } from './media-lightbox'
 import * as originMorph from './origin-morph'
 import type { MediaLightboxItem } from './types'
 
+/** The aspect every slide reports; `undefined` until its thumbnail "loads". */
+let aspect: number | undefined = 16 / 9
+vi.mock('./use-media-aspect', () => ({ useMediaAspect: () => aspect }))
+
 vi.mock('./origin-morph', async importOriginal => {
   const actual = await importOriginal<typeof import('./origin-morph')>()
   return { ...actual, measureOriginMorph: vi.fn(actual.measureOriginMorph) }
@@ -72,5 +76,24 @@ describe('the closing morph', () => {
     // re-running against the new origin, whose last frame drew the photo full
     // size just before the overlay left.
     expect(originMorph.measureOriginMorph).toHaveBeenCalledTimes(1)
+  })
+
+  it('does not replay the opening zoom on a slide paged to before its shape was known', () => {
+    const first = tile()
+    const withThumbs = items.map(item => ({ ...item, thumbSrc: `/thumb-${item.id}.webp` }))
+    const props = { items: withThumbs, onIndexChange: vi.fn(), onOpenChange: vi.fn() }
+    aspect = 16 / 9
+    const { rerender } = render(<MediaLightbox {...props} index={0} open origin={first} />)
+    expect(originMorph.measureOriginMorph).toHaveBeenCalledTimes(1)
+    vi.mocked(originMorph.measureOriginMorph).mockClear()
+
+    // A thumbnail jump to a slide the preload never reached: its shape is
+    // still unknown when it becomes the one on screen, and arrives after.
+    aspect = undefined
+    rerender(<MediaLightbox {...props} index={3} open origin={first} />)
+    aspect = 16 / 9
+    rerender(<MediaLightbox {...props} index={3} open origin={first} />)
+
+    expect(originMorph.measureOriginMorph).not.toHaveBeenCalled()
   })
 })

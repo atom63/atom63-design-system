@@ -48,13 +48,18 @@ function useOriginZoom(
   // opening effect on the slide that just became active.
   const isActiveRef = useRef(isActive)
   isActiveRef.current = isActive
+  // The opening zoom plays once, on the slide that was on screen when the
+  // lightbox opened. `enabled` can turn true later (a slide paged to before its
+  // shape was known, or a light/dark switch), and replaying the zoom then would
+  // fly the photo out of the tile the gallery opened from mid-browse.
+  const openingZoomRef = useRef(isActive)
 
   useLayoutEffect(() => {
     const media = mediaRef.current
     // Closing sets a new origin (the tile for the photo on screen), which
     // would otherwise re-run this opening zoom on top of the closing one; its
     // last frame drew the photo full size just before the overlay left.
-    if (!media || !enabled || !isPresent || !isActiveRef.current) {
+    if (!media || !enabled || !isPresent || !isActiveRef.current || !openingZoomRef.current) {
       return
     }
 
@@ -81,6 +86,9 @@ function useOriginZoom(
 
       const morph = measureOriginMorph(media, box, origin ?? null)
       media.style.opacity = '1'
+      // Spent only once it has really started: a StrictMode re-run, or a
+      // cleanup while waiting for a box, must still be able to start it.
+      openingZoomRef.current = false
 
       if (morph) {
         media.style.transformOrigin = 'center'
