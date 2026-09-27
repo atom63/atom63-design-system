@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "module": "Atom63UI",
-  "symbolCount": 307,
+  "symbolCount": 318,
   "symbols": [
     {
       "id": "s:8Atom63UI10AtomAvatarV",
@@ -193,6 +193,13 @@
       "source": "Generated/Atom63Tokens.generated.swift"
     },
     {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO12widgetBorderAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.widgetBorder",
+      "declaration": "static let widgetBorder: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
       "id": "s:8Atom63UI10AtomTokensO5ColorO13actionNeutralAA0c7DynamicE0VvpZ",
       "kind": "swift.type.property",
       "path": "AtomTokens.Color.actionNeutral",
@@ -270,6 +277,20 @@
       "source": "Generated/Atom63Tokens.generated.swift"
     },
     {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO16widgetBackgroundAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.widgetBackground",
+      "declaration": "static let widgetBackground: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO16widgetForegroundAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.widgetForeground",
+      "declaration": "static let widgetForeground: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
       "id": "s:8Atom63UI10AtomTokensO5ColorO17onMediaForegroundAA0c7DynamicE0VvpZ",
       "kind": "swift.type.property",
       "path": "AtomTokens.Color.onMediaForeground",
@@ -344,6 +365,13 @@
       "kind": "swift.type.property",
       "path": "AtomTokens.Color.focusRing",
       "declaration": "static let focusRing: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO9widgetRimAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.widgetRim",
+      "declaration": "static let widgetRim: AtomDynamicColor",
       "source": "Generated/Atom63Tokens.generated.swift"
     },
     {
@@ -470,6 +498,27 @@
       "kind": "swift.type.property",
       "path": "AtomTokens.Radius.medium",
       "declaration": "static let medium: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO6WidgetO",
+      "kind": "swift.enum",
+      "path": "AtomTokens.Widget",
+      "declaration": "enum Widget",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO6WidgetO6radiusSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Widget.radius",
+      "declaration": "static let radius: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO6WidgetO8rimWidth3forSdAA0C4SkinO_tFZ",
+      "kind": "swift.type.method",
+      "path": "AtomTokens.Widget.rimWidth(for:)",
+      "declaration": "static func rimWidth(for skin: AtomSkin) -> Double",
       "source": "Generated/Atom63Tokens.generated.swift"
     },
     {
@@ -1068,6 +1117,13 @@
       "source": "AtomTheme.swift"
     },
     {
+      "id": "s:8Atom63UI15AtomThemeColorsV12widgetBorderAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.widgetBorder",
+      "declaration": "var widgetBorder: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
       "id": "s:8Atom63UI15AtomThemeColorsV13actionNeutralAA0C12DynamicColorVvp",
       "kind": "swift.property",
       "path": "AtomThemeColors.actionNeutral",
@@ -1124,6 +1180,20 @@
       "source": "AtomTheme.swift"
     },
     {
+      "id": "s:8Atom63UI15AtomThemeColorsV16widgetBackgroundAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.widgetBackground",
+      "declaration": "var widgetBackground: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV16widgetForegroundAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.widgetForeground",
+      "declaration": "var widgetForeground: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
       "id": "s:8Atom63UI15AtomThemeColorsV17selectionTrackOffAA0C12DynamicColorVvp",
       "kind": "swift.property",
       "path": "AtomThemeColors.selectionTrackOff",
@@ -1171,6 +1241,13 @@
       "path": "AtomThemeColors.init(skin:brand:surface:)",
       "declaration": "init(skin: AtomSkin, brand: AtomBrand, surface: AtomSurface)",
       "source": "Generated/AtomTokenGraph.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV9widgetRimAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.widgetRim",
+      "declaration": "var widgetRim: AtomDynamicColor",
+      "source": "AtomTheme.swift"
     },
     {
       "id": "s:8Atom63UI16AtomDynamicColorV",
@@ -2305,6 +2382,11 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO12widgetBorderAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI10AtomTokensO5ColorO13actionNeutralAA0c7DynamicE0VvpZ",
       "target": "s:8Atom63UI10AtomTokensO5ColorO",
       "kind": "memberOf"
@@ -2360,6 +2442,16 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO16widgetBackgroundAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO16widgetForegroundAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI10AtomTokensO5ColorO17onMediaForegroundAA0c7DynamicE0VvpZ",
       "target": "s:8Atom63UI10AtomTokensO5ColorO",
       "kind": "memberOf"
@@ -2411,6 +2503,11 @@
     },
     {
       "source": "s:8Atom63UI10AtomTokensO5ColorO9focusRingAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO9widgetRimAA0c7DynamicE0VvpZ",
       "target": "s:8Atom63UI10AtomTokensO5ColorO",
       "kind": "memberOf"
     },
@@ -2502,6 +2599,21 @@
     {
       "source": "s:8Atom63UI10AtomTokensO6RadiusO6mediumSdvpZ",
       "target": "s:8Atom63UI10AtomTokensO6RadiusO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO6WidgetO",
+      "target": "s:8Atom63UI10AtomTokensO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO6WidgetO6radiusSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO6WidgetO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO6WidgetO8rimWidth3forSdAA0C4SkinO_tFZ",
+      "target": "s:8Atom63UI10AtomTokensO6WidgetO",
       "kind": "memberOf"
     },
     {
@@ -3065,6 +3177,11 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI15AtomThemeColorsV12widgetBorderAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI15AtomThemeColorsV13actionNeutralAA0C12DynamicColorVvp",
       "target": "s:8Atom63UI15AtomThemeColorsV",
       "kind": "memberOf"
@@ -3105,6 +3222,16 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI15AtomThemeColorsV16widgetBackgroundAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV16widgetForegroundAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI15AtomThemeColorsV17selectionTrackOffAA0C12DynamicColorVvp",
       "target": "s:8Atom63UI15AtomThemeColorsV",
       "kind": "memberOf"
@@ -3136,6 +3263,11 @@
     },
     {
       "source": "s:8Atom63UI15AtomThemeColorsV4skin5brand7surfaceAcA0C4SkinO_AA0C5BrandOAA0C7SurfaceOtcfc",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV9widgetRimAA0C12DynamicColorVvp",
       "target": "s:8Atom63UI15AtomThemeColorsV",
       "kind": "memberOf"
     },

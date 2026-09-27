@@ -56,7 +56,11 @@ extension AtomThemeColors {
             statusWarning: color("--a63-status-warning"),
             selectionTrackOff: color("--a63-surface-muted"),
             selectionThumb: color("--a63-selection-thumb"),
-            skeletonHighlight: color("--a63-skeleton-highlight")
+            skeletonHighlight: color("--a63-skeleton-highlight"),
+            widgetBackground: color("--a63-widget-background-color"),
+            widgetForeground: color("--a63-widget-foreground"),
+            widgetBorder: color("--a63-widget-border-color"),
+            widgetRim: color("--a63-widget-rim-color")
         )
     }
 }
@@ -81,6 +85,9 @@ enum AtomTokenGraph {
         "--a63-status-warning": Variable(selector: .mode, values: ["light": .alias("--color-warning-600"), "dark": .alias("--color-warning-500")]),
         "--a63-surface-control": Variable(selector: .mode, values: ["light": .alias("--surface-light-1"), "dark": .alias("--surface-dark-1")]),
         "--a63-surface-muted": Variable(selector: .mode, values: ["light": .alias("--surface-light-3"), "dark": .alias("--surface-dark-3")]),
+        "--a63-widget-border-color": Variable(selector: .fixed, values: ["": .alias("--a63-border-subtle")]),
+        "--a63-widget-foreground": Variable(selector: .fixed, values: ["": .alias("--a63-text-primary")]),
+        "--a63-widget-rim-color": Variable(selector: .fixed, values: ["": .alias("--a63-border-subtle")]),
         "--color-b1-600": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.019608, green: 0.364706, blue: 0.823529, opacity: 1))]),
         "--color-b1-700": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0, green: 0.223529, blue: 0.619608, opacity: 1))]),
         "--color-b1-800": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0, green: 0.113725, blue: 0.435294, opacity: 1))]),
@@ -2481,6 +2488,59 @@ brand=b6,mode=dark,surface=n6,theme=modern 0.709804 0.701961 0.678431 1
 brand=b6,mode=dark,surface=n6,theme=aqua 0.709804 0.701961 0.678431 1
 brand=b6,mode=dark,surface=n6,theme=retro 0.709804 0.701961 0.678431 1
 brand=b6,mode=dark,surface=n6,theme=terminal 0.861018 0.63336 0.635502 1
+"""
+        ),
+        "--a63-widget-background-color": Computed(
+            variesOn: ["mode","surface","theme"],
+            rows: """
+mode=light,surface=n1,theme=modern 0.988235 0.988235 0.988235 0.82
+mode=light,surface=n1,theme=aqua 0.988235 0.988235 0.988235 0.82
+mode=light,surface=n1,theme=retro 0.988235 0.988235 0.988235 1
+mode=light,surface=n1,theme=terminal 0.988235 0.988235 0.988235 0.82
+mode=light,surface=n2,theme=modern 0.992157 0.988235 0.992157 0.82
+mode=light,surface=n2,theme=aqua 0.992157 0.988235 0.992157 0.82
+mode=light,surface=n2,theme=retro 0.992157 0.988235 0.992157 1
+mode=light,surface=n2,theme=terminal 0.992157 0.988235 0.992157 0.82
+mode=light,surface=n3,theme=modern 0.988235 0.988235 0.992157 0.82
+mode=light,surface=n3,theme=aqua 0.988235 0.988235 0.992157 0.82
+mode=light,surface=n3,theme=retro 0.988235 0.988235 0.992157 1
+mode=light,surface=n3,theme=terminal 0.988235 0.988235 0.992157 0.82
+mode=light,surface=n4,theme=modern 0.984314 0.992157 0.988235 0.82
+mode=light,surface=n4,theme=aqua 0.984314 0.992157 0.988235 0.82
+mode=light,surface=n4,theme=retro 0.984314 0.992157 0.988235 1
+mode=light,surface=n4,theme=terminal 0.984314 0.992157 0.988235 0.82
+mode=light,surface=n5,theme=modern 0.988235 0.992157 0.988235 0.82
+mode=light,surface=n5,theme=aqua 0.988235 0.992157 0.988235 0.82
+mode=light,surface=n5,theme=retro 0.988235 0.992157 0.988235 1
+mode=light,surface=n5,theme=terminal 0.988235 0.992157 0.988235 0.82
+mode=light,surface=n6,theme=modern 0.992157 0.992157 0.988235 0.82
+mode=light,surface=n6,theme=aqua 0.992157 0.992157 0.988235 0.82
+mode=light,surface=n6,theme=retro 0.992157 0.992157 0.988235 1
+mode=light,surface=n6,theme=terminal 0.992157 0.992157 0.988235 0.82
+mode=dark,surface=n1,theme=modern 0.098039 0.098039 0.098039 0.9
+mode=dark,surface=n1,theme=aqua 0.164706 0.164706 0.164706 0.82
+mode=dark,surface=n1,theme=retro 0.164706 0.164706 0.164706 1
+mode=dark,surface=n1,theme=terminal 0.164706 0.164706 0.164706 0.82
+mode=dark,surface=n2,theme=modern 0.101961 0.098039 0.105882 0.9
+mode=dark,surface=n2,theme=aqua 0.168627 0.160784 0.17647 0.82
+mode=dark,surface=n2,theme=retro 0.168627 0.160784 0.17647 1
+mode=dark,surface=n2,theme=terminal 0.168627 0.160784 0.17647 0.82
+mode=dark,surface=n3,theme=modern 0.094118 0.098039 0.105882 0.9
+mode=dark,surface=n3,theme=aqua 0.152941 0.164706 0.176471 0.82
+mode=dark,surface=n3,theme=retro 0.152941 0.164706 0.176471 1
+mode=dark,surface=n3,theme=terminal 0.152941 0.164706 0.176471 0.82
+mode=dark,surface=n4,theme=modern 0.090196 0.098039 0.094118 0.9
+mode=dark,surface=n4,theme=aqua 0.152941 0.164706 0.160784 0.82
+mode=dark,surface=n4,theme=retro 0.152941 0.164706 0.160784 1
+mode=dark,surface=n4,theme=terminal 0.152941 0.164706 0.160784 0.82
+mode=dark,surface=n5,theme=modern 0.094118 0.098039 0.090196 0.9
+mode=dark,surface=n5,theme=aqua 0.156863 0.164706 0.152941 0.82
+mode=dark,surface=n5,theme=retro 0.156863 0.164706 0.152941 1
+mode=dark,surface=n5,theme=terminal 0.156863 0.164706 0.152941 0.82
+mode=dark,surface=n6,theme=modern 0.098039 0.098039 0.094118 0.9
+mode=dark,surface=n6,theme=aqua 0.164706 0.164706 0.156863 0.82
+mode=dark,surface=n6,theme=retro 0.164706 0.164706 0.156863 1
+mode=dark,surface=n6,theme=terminal 0.164706 0.164706 0.156863 0.82
 """
         ),
     ]

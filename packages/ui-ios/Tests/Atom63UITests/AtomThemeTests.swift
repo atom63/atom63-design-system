@@ -75,6 +75,10 @@ struct AtomThemeTests {
       "selectionTrackOff": colors.selectionTrackOff,
       "selectionThumb": colors.selectionThumb,
       "skeletonHighlight": colors.skeletonHighlight,
+      "widgetBackground": colors.widgetBackground,
+      "widgetForeground": colors.widgetForeground,
+      "widgetBorder": colors.widgetBorder,
+      "widgetRim": colors.widgetRim,
     ]
     return fields[name]
   }
