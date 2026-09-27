@@ -136,4 +136,37 @@ export const radioPattern: A11yPatternContract = {
       'On the first radio, moves focus to the last radio and checks it.'
     ),
   ],
+  ios: {
+    parts: {
+      group: {
+        description: "The group's label, shown as the heading of its options.",
+        name: 'required',
+        type: 'staticText',
+      },
+      option: {
+        description:
+          'An option: a button named by its label; the chosen one is selected and an unavailable one disabled.',
+        name: 'required',
+        type: 'button',
+      },
+    },
+    structure: [
+      { target: { part: 'group', label: 'Default project view' }, exists: true },
+      { target: { part: 'option', label: 'Grid' }, selected: true },
+      { target: { part: 'option', label: 'List' }, selected: false },
+      { target: { part: 'option', label: 'Timeline' }, enabled: false },
+    ],
+    interactions: [
+      {
+        id: 'activation-selects-option',
+        action: 'tap',
+        on: { part: 'option', label: 'List' },
+        result: 'Selects the option and clears the previous selection.',
+        then: [
+          { target: { part: 'option', label: 'List' }, selected: true },
+          { target: { part: 'option', label: 'Grid' }, selected: false },
+        ],
+      },
+    ],
+  },
 }

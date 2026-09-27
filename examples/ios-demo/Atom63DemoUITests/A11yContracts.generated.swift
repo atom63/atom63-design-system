@@ -107,6 +107,32 @@ extension A11yIOSContract {
     ]
   ),
   .init(
+    pattern: "radio",
+    catalogItem: "radioGroup",
+    parts: [
+      "group": .init(type: .staticText, nameRequired: true, scope: .preview),
+      "option": .init(type: .button, nameRequired: true, scope: .preview),
+    ],
+    structure: [
+      .init(target: .init(part: "group", at: nil, label: "Default project view"), exists: true, enabled: nil, selected: nil, value: nil, labelIncludes: nil),
+      .init(target: .init(part: "option", at: nil, label: "Grid"), exists: nil, enabled: nil, selected: true, value: nil, labelIncludes: nil),
+      .init(target: .init(part: "option", at: nil, label: "List"), exists: nil, enabled: nil, selected: false, value: nil, labelIncludes: nil),
+      .init(target: .init(part: "option", at: nil, label: "Timeline"), exists: nil, enabled: false, selected: nil, value: nil, labelIncludes: nil),
+    ],
+    interactions: [
+      .init(
+        id: "activation-selects-option",
+        on: .init(part: "option", at: nil, label: "List"),
+        given: [],
+        then: [
+          .init(target: .init(part: "option", at: nil, label: "List"), exists: nil, enabled: nil, selected: true, value: nil, labelIncludes: nil),
+          .init(target: .init(part: "option", at: nil, label: "Grid"), exists: nil, enabled: nil, selected: false, value: nil, labelIncludes: nil),
+        ],
+        result: "Selects the option and clears the previous selection."
+      ),
+    ]
+  ),
+  .init(
     pattern: "switch",
     catalogItem: "toggle",
     parts: [
@@ -134,6 +160,33 @@ extension A11yIOSContract {
           .init(target: .init(part: "switch", at: .first, label: nil), exists: nil, enabled: nil, selected: nil, value: "1", labelIncludes: nil),
         ],
         result: "Changes the state of the switch back."
+      ),
+    ]
+  ),
+  .init(
+    pattern: "tabs",
+    catalogItem: "tabs",
+    parts: [
+      "panel": .init(type: .staticText, nameRequired: true, scope: .preview),
+      "tab": .init(type: .button, nameRequired: true, scope: .preview),
+    ],
+    structure: [
+      .init(target: .init(part: "tab", at: nil, label: "Overview"), exists: nil, enabled: nil, selected: true, value: nil, labelIncludes: nil),
+      .init(target: .init(part: "tab", at: nil, label: "Activity"), exists: nil, enabled: nil, selected: false, value: nil, labelIncludes: nil),
+      .init(target: .init(part: "panel", at: nil, label: "Project summary and current status."), exists: true, enabled: nil, selected: nil, value: nil, labelIncludes: nil),
+    ],
+    interactions: [
+      .init(
+        id: "activation-selects-tab",
+        on: .init(part: "tab", at: nil, label: "Activity"),
+        given: [],
+        then: [
+          .init(target: .init(part: "tab", at: nil, label: "Activity"), exists: nil, enabled: nil, selected: true, value: nil, labelIncludes: nil),
+          .init(target: .init(part: "tab", at: nil, label: "Overview"), exists: nil, enabled: nil, selected: false, value: nil, labelIncludes: nil),
+          .init(target: .init(part: "panel", at: nil, label: "Recent project changes."), exists: true, enabled: nil, selected: nil, value: nil, labelIncludes: nil),
+          .init(target: .init(part: "panel", at: nil, label: "Project summary and current status."), exists: false, enabled: nil, selected: nil, value: nil, labelIncludes: nil),
+        ],
+        result: "Selects the tab and shows its content in place of the previous one."
       ),
     ]
   ),

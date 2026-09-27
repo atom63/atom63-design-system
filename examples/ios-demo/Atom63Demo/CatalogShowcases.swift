@@ -552,25 +552,34 @@ private enum TabsShowcaseSelection: String {
 private struct TabsShowcase: View {
   @State private var selection: TabsShowcaseSelection = .overview
 
+  // In-page tabs on iOS: a segmented picker names each section and marks the
+  // selected one, and the content below follows it. TabView is for app-level
+  // sections, like the demo's own tab bar.
   var body: some View {
-    TabView(selection: $selection) {
-      ContentUnavailableView(
-        "Overview",
-        systemImage: "rectangle.grid.1x2",
-        description: Text("Project summary and current status.")
-      )
-      .tag(TabsShowcaseSelection.overview)
+    VStack(spacing: AtomTokens.Space.x4) {
+      Picker("Project sections", selection: $selection) {
+        Text("Overview").tag(TabsShowcaseSelection.overview)
+        Text("Activity").tag(TabsShowcaseSelection.activity)
+      }
+      .pickerStyle(.segmented)
+      .accessibilityIdentifier("catalog-tabs")
 
-      ContentUnavailableView(
-        "Activity",
-        systemImage: "clock.arrow.circlepath",
-        description: Text("Recent project changes.")
-      )
-      .tag(TabsShowcaseSelection.activity)
+      switch selection {
+      case .overview:
+        ContentUnavailableView(
+          "Overview",
+          systemImage: "rectangle.grid.1x2",
+          description: Text("Project summary and current status.")
+        )
+      case .activity:
+        ContentUnavailableView(
+          "Activity",
+          systemImage: "clock.arrow.circlepath",
+          description: Text("Recent project changes.")
+        )
+      }
     }
-    .tabViewStyle(.page(indexDisplayMode: .always))
-    .frame(minHeight: 220)
-    .accessibilityIdentifier("catalog-tabs")
+    .frame(minHeight: 220, alignment: .top)
   }
 }
 
@@ -738,14 +747,20 @@ private struct SegmentedControlShowcase: View {
 private struct RadioGroupShowcase: View {
   @State private var selection: CompactSelection = .grid
 
+  // An inline Picker shows every option as a row with the selected trait only
+  // inside a Form or List; outside one, iOS draws a wheel.
   var body: some View {
-    Picker("Default project view", selection: $selection) {
-      ForEach(CompactSelection.allCases) { value in
-        Text(value.rawValue).tag(value)
-          .disabled(value == .timeline)
+    Form {
+      Picker("Default project view", selection: $selection) {
+        ForEach(CompactSelection.allCases) { value in
+          Text(value.rawValue).tag(value)
+            .disabled(value == .timeline)
+        }
       }
+      .pickerStyle(.inline)
     }
-    .pickerStyle(.inline)
+    .scrollDisabled(true)
+    .frame(height: 240)
   }
 }
 

@@ -255,7 +255,7 @@ public enum AtomComponentContracts {
       foundationAxis: "states",
       catalogItem: "radioGroup",
       reactRenderer: "RadioGroup / Radio",
-      swiftUIRenderer: "Picker(.inline) / AtomSelectionRow group",
+      swiftUIRenderer: "Picker(.inline) in a Form / AtomSelectionRow group",
       intent: "Choose exactly one value from a visible set of mutually exclusive options.",
       parity: .platformAdaptive,
       requiredStates: ["unchecked", "checked", "disabled"],
@@ -263,7 +263,7 @@ public enum AtomComponentContracts {
       sharedOutcomes: ["exactly-one-option-may-be-selected", "activation-moves-selection-to-the-chosen-option", "disabled-option-prevents-selection"],
       accessibilityOutcomes: ["exposes-group-label", "exposes-option-labels-and-selected-state", "preserves-single-selection-semantics"],
       motion: nil,
-      platformAdaptations: AtomPlatformAdaptations(react: ["Uses radiogroup and radio semantics with circular indicators and keyboard movement."], swiftUI: ["Uses an inline Picker or grouped AtomSelectionRow controls with native selected traits and touch targets."])
+      platformAdaptations: AtomPlatformAdaptations(react: ["Uses radiogroup and radio semantics with circular indicators and keyboard movement."], swiftUI: ["Uses an inline Picker inside a Form or List, where each option is a row with the native selected trait (outside one, iOS draws a wheel), or grouped AtomSelectionRow controls."])
     ),
     AtomComponentContract(
       id: "slider",
@@ -351,7 +351,7 @@ public enum AtomComponentContracts {
       foundationAxis: "states",
       catalogItem: "tabs",
       reactRenderer: "Tabs",
-      swiftUIRenderer: "TabView",
+      swiftUIRenderer: "Picker(.segmented) with the selected content",
       intent: "Switch between peer destinations or content views while keeping one selection active.",
       parity: .platformAdaptive,
       requiredStates: ["rest", "selected"],
@@ -359,7 +359,7 @@ public enum AtomComponentContracts {
       sharedOutcomes: ["one-tab-is-selected-at-a-time", "selection-reveals-the-associated-content", "selected-tab-remains-visually-distinguishable"],
       accessibilityOutcomes: ["exposes-tab-labels", "exposes-selected-state", "associates-selection-with-visible-content"],
       motion: nil,
-      platformAdaptations: AtomPlatformAdaptations(react: ["Uses tablist, tab, and tabpanel semantics with keyboard navigation and a visual indicator."], swiftUI: ["Uses native TabView presentation, which may render as a tab bar, sidebar, or page control by platform and context."])
+      platformAdaptations: AtomPlatformAdaptations(react: ["Uses tablist, tab, and tabpanel semantics with keyboard navigation and a visual indicator."], swiftUI: ["In-page sections use a segmented Picker above the content it selects, so each tab is a named, selectable button. TabView stays the renderer for app-level sections such as a tab bar or sidebar."])
     ),
     AtomComponentContract(
       id: "avatar",
