@@ -224,7 +224,9 @@ const radii = {
  * --a63-overlay-radius; the rim width is set per theme.
  */
 if (declaration('a63-widget-radius') !== 'var(--a63-overlay-radius, var(--radius-xl))') {
-  throw new Error('--a63-widget-radius changed; update the widget radius in generate-swift-tokens.mjs')
+  throw new Error(
+    '--a63-widget-radius changed; update the widget radius in generate-swift-tokens.mjs'
+  )
 }
 if (manifest.entries.some(entry => entry.name === 'a63-overlay-radius')) {
   throw new Error('A theme now sets --a63-overlay-radius; generate the widget radius per skin')
