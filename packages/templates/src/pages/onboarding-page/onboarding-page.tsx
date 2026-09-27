@@ -1,6 +1,6 @@
 import { Button } from '@atom63/ui-react'
 import { Container } from '@atom63/ui-react/layout'
-import { FileText, LayoutDashboard, Plus, Settings, Upload, Users } from 'lucide-react'
+import { FileText, LayoutDashboard, Plus, Settings, Upload } from 'lucide-react'
 
 import { AppShell } from '../../blocks/app-shell/app-shell'
 import { EmptyState } from '../../blocks/empty-state/empty-state'
@@ -20,7 +20,6 @@ export const template = {
 const nav = [
   { href: '#overview', icon: <LayoutDashboard aria-hidden />, label: 'Overview' },
   { current: true, href: '#invoices', icon: <FileText aria-hidden />, label: 'Invoices' },
-  { href: '#customers', icon: <Users aria-hidden />, label: 'Customers' },
   { href: '#settings', icon: <Settings aria-hidden />, label: 'Settings' },
 ]
 

@@ -7,10 +7,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@atom63/ui-react'
-import { Container, Page } from '@atom63/ui-react/layout'
-import { Ellipsis, Plus } from 'lucide-react'
+import { Container } from '@atom63/ui-react/layout'
+import { Ellipsis, FileText, LayoutDashboard, Plus, Settings } from 'lucide-react'
 import { useState } from 'react'
 
+import { AppShell } from '../../blocks/app-shell/app-shell'
 import {
   type DataTableColumn,
   DataTableSection,
@@ -25,11 +26,17 @@ export const template = {
   kind: 'page',
   title: 'List page',
   description:
-    'A filterable collection page: a header with one primary action, a search and status filter, a table that becomes stacked rows on phones, and a detail sheet for one row.',
+    'A filterable collection page inside the app shell: a header with one primary action, a search and status filter, a table that becomes stacked rows on phones, and a detail sheet for one row.',
   category: 'collections',
   tags: ['list', 'detail', 'table', 'index', 'invoices', 'orders', 'filter', 'search'],
   readiness: 'draft',
 } as const
+
+const nav = [
+  { href: '#overview', icon: <LayoutDashboard aria-hidden />, label: 'Overview' },
+  { current: true, href: '#invoices', icon: <FileText aria-hidden />, label: 'Invoices' },
+  { href: '#settings', icon: <Settings aria-hidden />, label: 'Settings' },
+]
 
 const statusOptions = [
   { label: 'All statuses', value: 'all' },
@@ -91,8 +98,8 @@ export function ListPage({ invoices = sampleInvoices }: ListPageProps) {
   }
 
   return (
-    <Page>
-      <Container maxWidth="wide">
+    <AppShell navItems={nav} productName="Tally">
+      <Container maxWidth="wide" padding="none">
         <PageHeader
           actions={
             <Button variant="primary">
@@ -190,6 +197,6 @@ export function ListPage({ invoices = sampleInvoices }: ListPageProps) {
         open={open !== undefined}
         title={open?.id ?? ''}
       />
-    </Page>
+    </AppShell>
   )
 }

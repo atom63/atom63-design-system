@@ -1,6 +1,6 @@
 import { Button } from '@atom63/ui-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { FileText, LayoutDashboard, Settings, Users } from 'lucide-react'
+import { FileText, LayoutDashboard, Settings } from 'lucide-react'
 
 import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
 import { AppShell } from './app-shell'
@@ -10,7 +10,6 @@ const args = {
   navItems: [
     { current: true, href: '#overview', icon: <LayoutDashboard aria-hidden />, label: 'Overview' },
     { href: '#invoices', icon: <FileText aria-hidden />, label: 'Invoices' },
-    { href: '#customers', icon: <Users aria-hidden />, label: 'Customers' },
     { href: '#settings', icon: <Settings aria-hidden />, label: 'Settings' },
   ],
   productName: 'Tally',

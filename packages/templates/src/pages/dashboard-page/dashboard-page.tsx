@@ -1,6 +1,6 @@
 import { Badge, Button } from '@atom63/ui-react'
 import { Container, SectionHeader } from '@atom63/ui-react/layout'
-import { FileText, LayoutDashboard, Plus, Settings, Users } from 'lucide-react'
+import { FileText, LayoutDashboard, Plus, Settings } from 'lucide-react'
 
 import { type ActivityItem, ActivityList } from '../../blocks/activity-list/activity-list'
 import { AppShell } from '../../blocks/app-shell/app-shell'
@@ -26,7 +26,6 @@ export const template = {
 const nav = [
   { current: true, href: '#overview', icon: <LayoutDashboard aria-hidden />, label: 'Overview' },
   { href: '#invoices', icon: <FileText aria-hidden />, label: 'Invoices' },
-  { href: '#customers', icon: <Users aria-hidden />, label: 'Customers' },
   { href: '#settings', icon: <Settings aria-hidden />, label: 'Settings' },
 ]
 
