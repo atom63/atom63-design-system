@@ -191,6 +191,7 @@ export function useMediaLightbox(itemCount: number, options?: UseMediaLightboxOp
 
 // @public (undocumented)
 export interface UseMediaLightboxOptions {
+    getOrigin?: (index: number) => HTMLElement | null;
     morph?: MediaLightboxTransition;
 }
 

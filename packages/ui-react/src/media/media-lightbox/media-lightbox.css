@@ -42,6 +42,16 @@
 }
 
 /*
+ * Nothing blurred sits over the track while it moves. A `backdrop-filter`
+ * has to re-sample the photo moving beneath it on every frame, and a blur over
+ * the moving photo is what made paging judder before. The controls keep their
+ * opaque-enough backplate, so they stay legible for the moment the blur is off.
+ */
+[data-slot='media-lightbox'][data-paging] .a63-media-lightbox-on-media {
+  backdrop-filter: none;
+}
+
+/*
  * MediaLightbox — view-transition morph.
  *
  * Scoped to `.a63-media-lightbox-vt`, which the lightbox puts on <html> only for

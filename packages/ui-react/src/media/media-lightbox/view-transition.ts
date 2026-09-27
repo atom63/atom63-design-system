@@ -1,4 +1,5 @@
 import { flushSync } from 'react-dom'
+import { revealReturnTarget } from './reveal-origin'
 import type { LightboxTiming } from './timing'
 import { applyTimingVars, clearTimingVars } from './timing'
 
@@ -133,11 +134,16 @@ export function runMediaViewTransition({
   }
 
   const root = document.documentElement
+  // Closing, the tile comes back into its row before the old snapshot is
+  // taken; the lightbox covers the page, so the scroll is never seen. A tile
+  // still cut off by its row gets no name, and the photo fades out instead of
+  // morphing into a box nobody can see.
+  const target = direction === 'out' ? revealReturnTarget(origin) : origin
   const claim = () => {
-    if (origin) {
-      origin.style.viewTransitionName = MEDIA_VIEW_TRANSITION_NAME
-      origin.setAttribute(MORPH_TARGET_ATTRIBUTE, '')
-      claimedOrigins.add(origin)
+    if (target) {
+      target.style.viewTransitionName = MEDIA_VIEW_TRANSITION_NAME
+      target.setAttribute(MORPH_TARGET_ATTRIBUTE, '')
+      claimedOrigins.add(target)
     }
   }
 

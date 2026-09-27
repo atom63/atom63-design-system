@@ -14,6 +14,7 @@ import {
   measureOriginMorph,
   paintOriginMorph,
 } from '../origin-morph'
+import { revealReturnTarget } from '../reveal-origin'
 import { hasMedia, resolveMediaSrc, resolveThumbSrc, SlideMedia } from '../slide-media'
 import { useMediaAspect } from '../use-media-aspect'
 import { MEDIA_VIEW_TRANSITION_NAME, MORPH_TARGET_ATTRIBUTE } from '../view-transition'
@@ -37,14 +38,28 @@ import { useLightboxZoomOptionsRegistry, type LightboxZoomOptions } from './zoom
  */
 function useOriginZoom(
   origin: HTMLElement | null | undefined,
-  enabled: boolean
+  enabled: boolean,
+  isActive: boolean
 ): React.RefObject<HTMLDivElement | null> {
   const mediaRef = useRef<HTMLDivElement>(null)
   const [isPresent, safeToRemove] = usePresence()
+  // Every mounted slide owns a frame and calls this hook; only the slide on
+  // screen may morph. Read through a ref so a page turn does not re-run the
+  // opening effect on the slide that just became active.
+  const isActiveRef = useRef(isActive)
+  isActiveRef.current = isActive
+  // The opening zoom plays once, on the slide that was on screen when the
+  // lightbox opened. `enabled` can turn true later (a slide paged to before its
+  // shape was known, or a light/dark switch), and replaying the zoom then would
+  // fly the photo out of the tile the gallery opened from mid-browse.
+  const openingZoomRef = useRef(isActive)
 
   useLayoutEffect(() => {
     const media = mediaRef.current
-    if (!media || !enabled) {
+    // Closing sets a new origin (the tile for the photo on screen), which
+    // would otherwise re-run this opening zoom on top of the closing one; its
+    // last frame drew the photo full size just before the overlay left.
+    if (!media || !enabled || !isPresent || !isActiveRef.current || !openingZoomRef.current) {
       return
     }
 
@@ -71,6 +86,9 @@ function useOriginZoom(
 
       const morph = measureOriginMorph(media, box, origin ?? null)
       media.style.opacity = '1'
+      // Spent only once it has really started: a StrictMode re-run, or a
+      // cleanup while waiting for a box, must still be able to start it.
+      openingZoomRef.current = false
 
       if (morph) {
         media.style.transformOrigin = 'center'
@@ -114,14 +132,14 @@ function useOriginZoom(
       cancelled = true
       observer.disconnect()
     }
-  }, [enabled, origin])
+  }, [enabled, isPresent, origin])
 
   useEffect(() => {
     const media = mediaRef.current
     if (isPresent) {
       return
     }
-    if (!media || !enabled) {
+    if (!media || !enabled || !isActiveRef.current) {
       safeToRemove?.()
       return
     }
@@ -129,8 +147,11 @@ function useOriginZoom(
     // Re-measure rather than reuse the opening geometry: the gallery may have
     // been swiped, the viewport resized, or the image finally decoded since.
     clearOriginMorph(media)
+    // Bring the tile back into its row before measuring it: the gallery may
+    // have been paged far past the one on screen when it opened.
+    const target = revealReturnTarget(origin)
     const box = media.getBoundingClientRect()
-    const morph = box.width > 0 ? measureOriginMorph(media, box, origin ?? null) : null
+    const morph = box.width > 0 ? measureOriginMorph(media, box, target) : null
 
     const animation = morph
       ? (() => {
@@ -178,18 +199,18 @@ export function LightboxFrame({
   const { mediaRef } = useLightboxRefs()
   const viewTransition = transition === 'view-transition'
 
-  // The morph measures the media in viewport coordinates. Every slide's
-  // frame occupies the same box in the stack regardless of which index is
-  // active, so — unlike the scrolling track this replaced — that box is
-  // already right by the time this measures it; there is no jump to park
-  // first and no ordering to race.
+  // The morph measures the media in viewport coordinates. The track's resting
+  // transform is part of the same render that mounts this frame, so the
+  // active frame already sits on screen when this measures it; unlike the
+  // scroll-snap track before it, there is no scroll position to park first
+  // and no ordering to race.
 
   // Every slide the preload neighbourhood mounts, not only the active one.
   // Gated on `isActive` instead, a slide had no shape until it became the
   // active one and then gained one — two different sizing paths for the same
-  // element, so it visibly resized mid-crossfade while both slides were on
-  // screen at full opacity. `isNear` is already the set whose media is
-  // mounted, so this starts no fetch that was not happening anyway.
+  // element, so it visibly resized mid-turn while both slides were on
+  // screen. `isNear` is already the set whose media is mounted, so this
+  // starts no fetch that was not happening anyway.
   const itemThumb = isNear ? resolveThumbSrc(item, appearance?.[item.id]) : undefined
   const itemSrc = isNear ? resolveMediaSrc(item, appearance?.[item.id]) : undefined
   // The shape of this slide's photo, known before it arrives.
@@ -200,7 +221,8 @@ export function LightboxFrame({
   // a running morph drags the photo away from where the morph is aiming it.
   const frameRef = useOriginZoom(
     origin,
-    !reducedMotion && !viewTransition && (!itemThumb || activeAspect !== undefined)
+    !reducedMotion && !viewTransition && (!itemThumb || activeAspect !== undefined),
+    isActive
   )
   const slideAspect = activeAspect
 
@@ -259,7 +281,7 @@ export function LightboxFrame({
   return useRender({
     defaultTagName: 'div',
     props: mergeProps<'div'>(defaultProps, props),
-    ref: [isActive ? mediaRef : null, isActive ? frameRef : null, ref ?? null],
+    ref: [isActive ? mediaRef : null, frameRef, ref ?? null],
     render: render ?? (
       <motion.div
         animate={reducedMotion && isActive ? { opacity: 1 } : undefined}
@@ -381,8 +403,8 @@ export function LightboxMedia(): React.ReactElement | null {
   // Every mounted slide, not only the active one. `filled` switches the
   // media between filling its frame and sizing itself, and a slide that
   // flipped between the two at the moment it became active resized on
-  // screen mid-crossfade, while both it and the slide it replaced were at
-  // full opacity. Slides outside the preload neighbourhood still probe
+  // screen mid-turn, while both it and the slide it replaced were in view.
+  // Slides outside the preload neighbourhood still probe
   // nothing — they render no media at all.
   const aspect = useMediaAspect(isNear ? thumbSrc : undefined, isNear ? src : undefined)
   const filled = aspect !== undefined

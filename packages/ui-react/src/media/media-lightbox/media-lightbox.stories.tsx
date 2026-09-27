@@ -1,9 +1,10 @@
+import { ScrollableList } from '@atom63/ui-react'
 import { MediaLightbox, useMediaLightbox } from '@atom63/ui-react/media'
 import { Lightbox } from '@atom63/ui-react/media/lightbox'
 import type { MediaLightboxAppearance, MediaLightboxItem } from '@atom63/ui-react/media'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 const GALLERY: MediaLightboxItem[] = [
   {
@@ -36,6 +37,96 @@ const VARIANT_GALLERY: MediaLightboxItem[] = [
     title: 'Ribbon',
   },
 ]
+
+/** Seven wide wallpapers with a light and a dark source each, like the atom63.io home page. */
+const WALLPAPERS: MediaLightboxItem[] = [
+  ['ribbon', 'Ribbon', 1015],
+  ['harbour', 'Harbour', 1016],
+  ['canopy', 'Canopy', 1018],
+  ['dunes', 'Dunes', 1036],
+  ['summit', 'Summit', 1043],
+  ['coast', 'Coast', 1044],
+  ['meadow', 'Meadow', 1050],
+].map(([id, title, photo]) => ({
+  alt: `${String(title)} wallpaper`,
+  caption: `${String(title)} — 2400 × 1350`,
+  darkSrc: `https://picsum.photos/id/${String(photo)}/2400/1350?grayscale`,
+  id: String(id),
+  lightSrc: `https://picsum.photos/id/${String(photo)}/2400/1350`,
+  thumbDarkSrc: `https://picsum.photos/id/${String(photo)}/240/135?grayscale`,
+  thumbLightSrc: `https://picsum.photos/id/${String(photo)}/240/135`,
+  title: String(title),
+}))
+
+/**
+ * The atom63.io home page: a horizontal row of tiles that opens into the
+ * lightbox with its thumbnail strip, each wallpaper switchable between light
+ * and dark. This is the story to try the paging track on a phone.
+ */
+function WallpaperRow({ items }: { items: MediaLightboxItem[] }) {
+  const tiles = useRef(new Map<string, HTMLElement>())
+  // The row follows the gallery: each page turn scrolls the matching tile into
+  // view behind the lightbox, and closing morphs back into it.
+  const lightbox = useMediaLightbox(items.length, {
+    getOrigin: index => tiles.current.get(items[index]?.id ?? '') ?? null,
+  })
+  const [appearance, setAppearance] = useState<Record<string, MediaLightboxAppearance>>({})
+
+  return (
+    <div className="p-6">
+      <ScrollableList>
+        <div className="flex gap-3 p-1">
+          {items.map((item, itemIndex) => (
+            <button
+              aria-label={`View ${item.title}`}
+              className="relative aspect-3/2 w-64 shrink-0 overflow-hidden rounded-lg bg-muted outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              key={item.id}
+              onClick={event => {
+                lightbox.openAt(itemIndex, event.currentTarget)
+              }}
+              ref={element => {
+                if (element) {
+                  tiles.current.set(item.id, element)
+                } else {
+                  tiles.current.delete(item.id)
+                }
+              }}
+              type="button"
+            >
+              <div
+                className="absolute inset-0 bg-cover bg-center"
+                style={{
+                  backgroundImage: `url("${
+                    appearance[item.id] === 'light' ? item.thumbLightSrc : item.thumbDarkSrc
+                  }")`,
+                }}
+              />
+            </button>
+          ))}
+        </div>
+      </ScrollableList>
+
+      <MediaLightbox
+        appearance={appearance}
+        index={lightbox.index}
+        items={items}
+        onAppearanceChange={(id, next) => {
+          setAppearance(current => ({ ...current, [id]: next }))
+        }}
+        onIndexChange={lightbox.setIndex}
+        onOpenChange={open => {
+          if (!open) {
+            lightbox.close()
+          }
+        }}
+        open={lightbox.isOpen}
+        origin={lightbox.origin}
+        thumbnails
+        transition={lightbox.transition}
+      />
+    </div>
+  )
+}
 
 /**
  * Passing the clicked element as the zoom origin is what makes the enlarged
@@ -220,6 +311,18 @@ export const SingleItem: Story = {
 
 export const LightAndDarkVariants: Story = {
   render: () => <Gallery items={VARIANT_GALLERY} />,
+}
+
+/**
+ * Mirrors the atom63.io home page: seven wide light/dark wallpapers opened from
+ * a horizontal row, with the thumbnail strip. Drag, flick, or use the arrow
+ * keys to page; on a phone, tap to show or hide the controls.
+ */
+export const HomePageRow: Story = {
+  // Full width, so the row scrolls inside the page as it does on the site
+  // instead of widening a centred story past a phone's viewport.
+  parameters: { layout: 'fullscreen' },
+  render: () => <WallpaperRow items={WALLPAPERS} />,
 }
 
 export const Composition: Story = {

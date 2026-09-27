@@ -32,7 +32,7 @@ function renderSlides(index: number) {
 }
 
 describe('Lightbox.Slides', () => {
-  it('lays one snapping slide out per item', () => {
+  it('lays one slide per item out on the track', () => {
     renderSlides(0)
     expect(document.querySelectorAll('[data-slot="media-lightbox-slide"]')).toHaveLength(3)
     expect(document.querySelector('[data-slot="media-lightbox-track"]')).not.toBeNull()

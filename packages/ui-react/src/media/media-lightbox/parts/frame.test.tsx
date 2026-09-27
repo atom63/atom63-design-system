@@ -89,8 +89,8 @@ describe('Lightbox.Frame', () => {
   it('probes only the slides it has mounted, never the whole gallery', async () => {
     // Each mounted slide resolves its own shape: gated on `isActive` instead,
     // a slide had no aspect until it became active and then gained one, which
-    // resized it on screen mid-crossfade while both it and the slide it
-    // replaced were at full opacity. The probe hits a URL the neighbourhood
+    // resized it on screen mid-turn while both it and the slide it replaced
+    // were in view. The probe hits a URL the neighbourhood
     // is already fetching for its own `<img>`, so it costs a cache read
     // rather than a download — but a slide it has *not* mounted must still
     // not reach for one.

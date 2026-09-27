@@ -1,4 +1,5 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
+import { revealOrigin } from './reveal-origin'
 import type { MediaLightboxTransition } from './types'
 import {
   preferCheapMediaTransition,
@@ -13,6 +14,16 @@ export interface UseMediaLightboxOptions {
    * dense page such as the homepage.
    */
   morph?: MediaLightboxTransition
+  /**
+   * The thumbnail for an item, or `null` if it has none on the page.
+   *
+   * With it, the page behind the lightbox follows the gallery: each page turn
+   * scrolls that item's thumbnail into view (instantly; the lightbox covers
+   * the page), and `close()` without an argument morphs back into it. A row of
+   * tiles opened at the first and paged to the fourth then closes into the
+   * fourth, already in view, instead of a tile scrolled out of its row.
+   */
+  getOrigin?: (index: number) => HTMLElement | null
 }
 
 export interface UseMediaLightboxResult {
@@ -26,7 +37,8 @@ export interface UseMediaLightboxResult {
   /**
    * Pass the thumbnail for the item currently on screen. After a swipe that is
    * no longer the one the lightbox opened from, and morphing back to the wrong
-   * tile is worse than not morphing at all.
+   * tile is worse than not morphing at all. With `getOrigin`, calling it with
+   * no argument does that for you.
    */
   close: (origin?: HTMLElement | null) => void
   setIndex: (index: number) => void
@@ -60,11 +72,22 @@ export function useMediaLightbox(
   const [origin, setOrigin] = useState<HTMLElement | null>(null)
   const [transition, setTransition] = useState<MediaLightboxTransition>('flip')
 
+  // A ref, so an inline `getOrigin` does not give `setIndex` and `close` a new
+  // identity on every render.
+  const getOriginRef = useRef(options?.getOrigin)
+  getOriginRef.current = options?.getOrigin
+
   const setIndex = useCallback(
     (next: number) => {
-      setIndexState(clamp(next, itemCount))
+      const clamped = clamp(next, itemCount)
+      setIndexState(clamped)
+      // Page turns only, not the open: the tile the gallery opened from is
+      // already on screen, and scrolling its row mid-morph would move it.
+      if (isOpen) {
+        revealOrigin(getOriginRef.current?.(clamped))
+      }
     },
-    [itemCount]
+    [isOpen, itemCount]
   )
 
   const openAt = useCallback(
@@ -97,7 +120,8 @@ export function useMediaLightbox(
 
   const close = useCallback(
     (nextOrigin?: HTMLElement | null) => {
-      const target = nextOrigin === undefined ? origin : nextOrigin
+      const getOrigin = getOriginRef.current
+      const target = nextOrigin === undefined ? (getOrigin ? getOrigin(index) : origin) : nextOrigin
       const shut = () => {
         setOrigin(target)
         setIsOpen(false)
@@ -113,7 +137,7 @@ export function useMediaLightbox(
         shut()
       }
     },
-    [origin, transition]
+    [index, origin, transition]
   )
 
   return useMemo(
