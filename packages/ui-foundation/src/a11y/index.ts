@@ -21,6 +21,12 @@ export { tabsPattern } from './tabs'
 export type {
   A11yAttributeCheck,
   A11yFocus,
+  A11yIosCheck,
+  A11yIosContract,
+  A11yIosElementType,
+  A11yIosInteraction,
+  A11yIosPart,
+  A11yIosTarget,
   A11yKeyboardInteraction,
   A11yKeyboardState,
   A11yKnownGap,

@@ -285,4 +285,47 @@ export const comboboxSelectOnlyPattern: A11yPatternContract = {
       },
     },
   ],
+  ios: {
+    parts: {
+      trigger: {
+        description:
+          'A menu-style picker: a button named by its label, with the current value in the label.',
+        name: 'required',
+        type: 'button',
+      },
+      option: {
+        description: 'An option in the list the picker opens; the current one is selected.',
+        name: 'required',
+        scope: 'popup',
+        type: 'button',
+      },
+    },
+    structure: [
+      { target: { part: 'trigger', at: 'first' }, labelIncludes: 'Draft' },
+      { target: { part: 'trigger', at: 'last' }, enabled: false },
+    ],
+    interactions: [
+      {
+        id: 'activation-opens-options',
+        action: 'tap',
+        on: { part: 'trigger', at: 'first' },
+        result: 'Opens the list of options with the current one selected.',
+        then: [
+          { target: { part: 'option' }, exists: true },
+          { target: { part: 'option', label: 'Draft' }, selected: true },
+          { target: { part: 'option', label: 'Active' }, selected: false },
+        ],
+      },
+      {
+        id: 'choosing-an-option-closes-and-updates',
+        action: 'tap',
+        on: { part: 'option', label: 'Active' },
+        result: 'Selects the option, closes the list and shows the new value.',
+        then: [
+          { target: { part: 'option' }, exists: false },
+          { target: { part: 'trigger', at: 'first' }, labelIncludes: 'Active' },
+        ],
+      },
+    ],
+  },
 }

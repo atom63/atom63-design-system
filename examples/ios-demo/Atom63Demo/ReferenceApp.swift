@@ -223,7 +223,7 @@ private enum DemoTab: Hashable {
 private struct MainTabView: View {
   @Environment(\.horizontalSizeClass) private var horizontalSizeClass
   let model: DemoAppModel
-  @State private var selectedTab: DemoTab = .home
+  @State private var selectedTab: DemoTab = CatalogItem.launchItem == nil ? .home : .catalog
 
   var body: some View {
     if horizontalSizeClass == .regular {

@@ -208,4 +208,41 @@ export const menuButtonPattern: A11yPatternContract = {
       then: { open: false },
     },
   ],
+  ios: {
+    parts: {
+      trigger: {
+        description: 'The menu button, named by its label.',
+        name: 'required',
+        type: 'button',
+      },
+      item: {
+        description:
+          'A menu item: a button named by its label; a checked choice is selected and an unavailable one disabled.',
+        name: 'required',
+        scope: 'popup',
+        type: 'button',
+      },
+    },
+    structure: [{ target: { part: 'trigger', at: 'first' }, exists: true }],
+    interactions: [
+      {
+        id: 'activation-opens-menu',
+        action: 'tap',
+        on: { part: 'trigger', at: 'first' },
+        result: 'Opens the menu.',
+        then: [
+          { target: { part: 'item' }, exists: true },
+          { target: { part: 'item', label: 'Show details' }, selected: true },
+          { target: { part: 'item', label: 'Unavailable action' }, enabled: false },
+        ],
+      },
+      {
+        id: 'activating-an-item-closes-menu',
+        action: 'tap',
+        on: { part: 'item', label: 'Duplicate' },
+        result: 'Performs the action and closes the menu.',
+        then: [{ target: { part: 'item' }, exists: false }],
+      },
+    ],
+  },
 }
