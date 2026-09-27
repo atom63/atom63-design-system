@@ -116,6 +116,12 @@ jobs:
       - name: Build MDX
         run: pnpm --filter @atom63/mdx build
 
+      - name: Build inform, agent and widgets
+        run: |
+          pnpm --filter @atom63/inform build
+          pnpm --filter @atom63/agent build
+          pnpm --filter @atom63/widgets build
+
       - name: Check API reports
         run: pnpm check:api-report
 
