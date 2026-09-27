@@ -177,4 +177,53 @@ export const accordionPattern: A11yPatternContract = {
       then: { focus: { part: 'header', at: 1 } },
     },
   ],
+  ios: {
+    parts: {
+      header: {
+        description:
+          'A disclosure group header: a button named by its label. iOS does not report expanded state to XCUITest, so the checks follow the content it reveals.',
+        name: 'required',
+        type: 'button',
+      },
+      panel: {
+        description: "Text of a disclosure group's content.",
+        name: 'required',
+        type: 'staticText',
+      },
+    },
+    structure: [
+      { target: { part: 'header', label: 'Implementation details' }, enabled: true },
+      { target: { part: 'header', label: 'Unavailable details' }, enabled: false },
+      {
+        target: { part: 'panel', label: 'Native SwiftUI renderer with shared product intent.' },
+        exists: false,
+      },
+    ],
+    interactions: [
+      {
+        id: 'activation-expands',
+        action: 'tap',
+        on: { part: 'header', label: 'Implementation details' },
+        result: 'Expands the section and shows its content.',
+        then: [
+          {
+            target: { part: 'panel', label: 'Native SwiftUI renderer with shared product intent.' },
+            exists: true,
+          },
+        ],
+      },
+      {
+        id: 'activation-collapses',
+        action: 'tap',
+        on: { part: 'header', label: 'Implementation details' },
+        result: 'Collapses the section and hides its content.',
+        then: [
+          {
+            target: { part: 'panel', label: 'Native SwiftUI renderer with shared product intent.' },
+            exists: false,
+          },
+        ],
+      },
+    ],
+  },
 }
