@@ -19,6 +19,7 @@ import { fileURLToPath } from 'node:url'
 
 import { kinds, planProject, writeProject } from '../../packages/create/src/generate.mjs'
 import { scanCss, scanSource } from './lib/craft-rules.mjs'
+import { pnpmOverridesYaml } from './lib/pnpm-overrides.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const packages = {
@@ -73,10 +74,10 @@ try {
       Object.keys(packages).map(name => [name, tarballFor(name)])
     )
     for (const name of Object.keys(packages)) manifest.dependencies[name] = overrides[name]
-    manifest.pnpm = { overrides }
     writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`)
+    writeFileSync(path.join(app, 'pnpm-workspace.yaml'), pnpmOverridesYaml(overrides))
 
-    run('pnpm', ['install', '--ignore-workspace', '--no-frozen-lockfile'], app)
+    run('pnpm', ['install', '--no-frozen-lockfile'], app)
     run('pnpm', ['typecheck'], app)
     run('pnpm', ['build'], app)
 

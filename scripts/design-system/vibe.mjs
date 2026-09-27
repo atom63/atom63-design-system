@@ -59,6 +59,7 @@ import {
   summarizeClaudeResult,
 } from './lib/vibe-projects.mjs'
 import { blindArms, judgePrompt, parseJudgeOutput, renderReport } from './lib/vibe-report.mjs'
+import { pnpmOverridesYaml } from './lib/pnpm-overrides.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const briefsDir = path.join(root, 'scripts/design-system/vibe/briefs')
@@ -290,13 +291,13 @@ function setupProject(arm, brief, directory) {
     const manifest = JSON.parse(files.get('package.json'))
     const overrides = Object.fromEntries(Object.keys(packages).map(pkg => [pkg, tarballFor(pkg)]))
     for (const pkg of Object.keys(packages)) manifest.dependencies[pkg] = overrides[pkg]
-    manifest.pnpm = { overrides }
     files.set('package.json', `${JSON.stringify(manifest, null, 2)}\n`)
+    files.set('pnpm-workspace.yaml', pnpmOverridesYaml(overrides))
   } else {
     files = planPlainProject({ name, versions })
   }
   writeProject(directory, files)
-  run('pnpm', ['install', '--ignore-workspace', '--no-frozen-lockfile', '--silent'], directory)
+  run('pnpm', ['install', '--no-frozen-lockfile', '--silent'], directory)
   return snapshot(directory)
 }
 
