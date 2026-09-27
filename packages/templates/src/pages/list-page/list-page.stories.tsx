@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { within } from 'storybook/test'
 
 import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
 import { ListPage } from './list-page'
@@ -27,4 +28,15 @@ export const Themes: Story = {
       <ListPage />
     </ThemeMatrix>
   ),
+}
+
+/* A row's "View invoice" opens the detail sheet. */
+export const Detail: Story = {
+  play: async ({ canvas, canvasElement, userEvent }) => {
+    // The menu and the sheet render in a portal outside the story root.
+    const body = within(canvasElement.ownerDocument.body)
+    await userEvent.click(canvas.getByRole('button', { name: 'Actions for INV-1044' }))
+    await userEvent.click(await body.findByRole('menuitem', { name: 'View invoice' }))
+    await body.findByRole('dialog', { name: 'INV-1044' })
+  },
 }

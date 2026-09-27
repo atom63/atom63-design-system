@@ -107,3 +107,10 @@ test('fails missing stories', () => {
     /no stories file/
   )
 })
+
+test('fails a template missing from the catalog', () => {
+  const catalog = "import { template as listPage } from './pages/list-page/list-page'\n"
+  const problems = checkTemplates([block(metadata()), page()], catalog).join('\n')
+  assert.match(problems, /blocks\/page-header: is missing from src\/catalog\.ts/)
+  assert.doesNotMatch(problems, /list-page: is missing/)
+})
