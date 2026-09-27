@@ -1,6 +1,6 @@
 {
   "name": "@atom63/ui-foundation",
-  "version": "0.1.1-beta.2",
+  "version": "0.1.1-beta.3",
   "description": "Platform-neutral TypeScript contracts and environment types for Atom63 UI renderers",
   "license": "MIT",
   "repository": {

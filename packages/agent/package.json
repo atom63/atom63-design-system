@@ -1,6 +1,6 @@
 {
   "name": "@atom63/agent",
-  "version": "0.3.0-beta.0",
+  "version": "0.3.0-beta.1",
   "description": "The Atom63 headless agent runtime: a chat state machine over a pluggable streaming transport, with React hooks to own it and drive chat chrome",
   "license": "MIT",
   "repository": {
