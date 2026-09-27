@@ -1,0 +1,3340 @@
+{
+  "date": "2026-09-27",
+  "commit": "6b8b9ae6c87a28ce194837389355047ac02e8f2e",
+  "dirty": false,
+  "claudeVersion": "2.1.280 (Claude Code)",
+  "modelFlag": null,
+  "models": [
+    "claude-opus-5-5",
+    "claude-opus-5-5[1m]"
+  ],
+  "arms": [
+    "ds",
+    "plain"
+  ],
+  "limits": {
+    "builderTurns": 80,
+    "builderBudgetUsd": 5,
+    "judgeTurns": 30,
+    "judgeBudgetUsd": 2
+  },
+  "promptTemplate": "Build the following as a new page of this app, reachable at the URL path `/<brief id>`. Keep the pages that already exist working.\n\n## <brief title>\n\n<brief body>\n\n## Constraints\n\n- Work only inside this project directory.\n- Use only the dependencies that are already installed; do not add packages.\n- Use realistic mock data where the page needs data; there is no backend.\n- When you are done, `pnpm typecheck` and `pnpm build` must both pass.",
+  "briefs": [
+    {
+      "brief": {
+        "id": "invoice-list",
+        "title": "Invoices",
+        "body": "The invoices page of a small-business billing app.\n\n- A table of about 25 invoices: number, customer, issue date, due date, amount and status (draft,\n  sent, paid, overdue).\n- Filters above the table: a search box that matches invoice number or customer, a status filter\n  and a date range for the issue date. Show how many invoices match.\n- Amounts are in US dollars and line up so they are easy to compare.\n- Each row has a menu with \"View\", \"Download PDF\" and \"Mark as paid\" (only for unpaid invoices).\n- When no invoice matches the filters, say so and offer to clear the filters.\n- The page must also work on a phone.",
+        "markdown": "# Invoices\n\nThe invoices page of a small-business billing app.\n\n- A table of about 25 invoices: number, customer, issue date, due date, amount and status (draft,\n  sent, paid, overdue).\n- Filters above the table: a search box that matches invoice number or customer, a status filter\n  and a date range for the issue date. Show how many invoices match.\n- Amounts are in US dollars and line up so they are easy to compare.\n- Each row has a menu with \"View\", \"Download PDF\" and \"Mark as paid\" (only for unpaid invoices).\n- When no invoice matches the filters, say so and offer to clear the filters.\n- The page must also work on a phone."
+      },
+      "arms": {
+        "ds": {
+          "status": "ok",
+          "agent": {
+            "costUsd": 0.9536468000000001,
+            "durationMs": 140543,
+            "isError": false,
+            "models": [
+              "claude-opus-5-5[1m]"
+            ],
+            "permissionDenials": [
+              {
+                "tool": "Bash",
+                "input": "npx atom63 component button --json 2>/dev/null | head -c 1500; echo; npx atom63 example empty 2>/dev/null | head -80; npx atom63 component field 2>/dev/null | head -20; npx atom63 search toast 2>/dev/null | head"
+              },
+              {
+                "tool": "Bash",
+                "input": "python3 - <<'EOF'\np='src/router.tsx'\ns=open(p).read()\ns=s.replace(\"import { HomePage } from './pages/home'\\n\",\"import { HomePage } from './pages/home'\\nimport { InvoicesPage } from './pages/invoices'\\n\")\ns=s.replace(\"  { label: 'Blog', to: '/blog' },\\n\",\"  { label: 'Blog', to: '/blog' },\\n  { label: 'Invoices', to: '/invoice-list' },\\n\")\ns=s.replace(\"\"\"export const router\"\"\",\"\"\"const invoicesRoute = createRoute({\n  getParentRoute: () => rootRoute,\n  path: '/invoice-list',\n  component: InvoicesPage,\n})\n\nexport const router\"\"\")\ns=s.replace(\"postRoute])\",\"postRoute, invoicesRoute])\")\nopen(p,'w').write(s)\nEOF\ngrep -n \"nvoice\" src/router.tsx; grep -n \"to:\" src/components/site-header.tsx | head"
+              }
+            ],
+            "stopReason": "success",
+            "turns": 40
+          },
+          "agentResult": "The Invoices page is now at `/invoice-list`, and \"Invoices\" is added to the header nav. `pnpm typecheck` and `pnpm build` both pass. The build shows a warning about large chunks, which comes from code that was already there, not this page. The other pages are unchanged. I haven't opened the page in a browser, so the layout and menus are untested by eye.\n\n**What's on the page**\n- **Data:** 25 made-up invoices from two small-business customer lists, issued between May and September 2026, in all four statuses. Invoices past their due date are marked overdue.\n- **Filters:** a search box that matches invoice number or customer, a status dropdown, and \"Issued from\" / \"Issued to\" dates. Each date box stops you picking a range that ends before it starts. A line under the filters shows the match count (\"7 of 25 invoices match\") and is read out by screen readers. A \"Clear filters\" button appears once any filter is set.\n- **Amounts:** shown in US dollars, right-aligned, with digits of equal width so the columns line up.\n- **Row menu:** each row has a menu with View, Download PDF, and Mark as paid, which only appears on unpaid invoices. Each menu button is labelled for screen readers (\"Actions for INV-1044\").\n  - **View** opens a popup with the invoice details and the same actions.\n  - **Download PDF** only shows a message saying the download started; no file is made, since there's no backend.\n  - **Mark as paid** changes the status right away and shows a confirmation. The change is lost when the page reloads.\n- **No matches:** when nothing matches, the page says so and offers a \"Clear filters\" button.\n- **Phone:** the table only shows on wider screens. On a phone each invoice becomes a card with customer, number, status, amount, dates and the same menu, and the filters stack in one column. The date filters use the phone's own date picker.\n\nEverything is built from the design system's own components and colors. The files are:\n- `src/lib/invoices.ts`: the mock data and the dolla",
+          "files": {
+            "added": [
+              "src/lib/invoices.ts",
+              "src/pages/invoices.tsx"
+            ],
+            "changed": [
+              "src/router.tsx"
+            ],
+            "removed": []
+          },
+          "measures": {
+            "craft": [],
+            "jsx": {
+              "system": 69,
+              "thirdParty": 2,
+              "icons": 2,
+              "local": 7,
+              "interactiveHtml": 1,
+              "otherHtml": 34,
+              "systemNames": {
+                "Badge": 1,
+                "DropdownMenu": 1,
+                "DropdownMenuTrigger": 1,
+                "Button": 6,
+                "DropdownMenuContent": 1,
+                "DropdownMenuItem": 3,
+                "Page": 1,
+                "Container": 1,
+                "Section": 1,
+                "SectionHeader": 1,
+                "Field": 4,
+                "FieldLabel": 4,
+                "SearchField": 1,
+                "Select": 1,
+                "SelectTrigger": 1,
+                "SelectValue": 1,
+                "SelectPopup": 1,
+                "SelectItem": 1,
+                "Input": 2,
+                "Empty": 1,
+                "EmptyHeader": 1,
+                "EmptyMedia": 1,
+                "EmptyTitle": 1,
+                "EmptyDescription": 1,
+                "EmptyContent": 1,
+                "Table": 1,
+                "TableHeader": 1,
+                "TableRow": 2,
+                "TableHead": 7,
+                "TableBody": 1,
+                "TableCell": 7,
+                "Card": 1,
+                "CardContent": 1,
+                "Dialog": 1,
+                "DialogPopup": 1,
+                "DialogHeader": 1,
+                "DialogTitle": 1,
+                "DialogDescription": 1,
+                "DialogPanel": 1,
+                "DialogFooter": 1,
+                "DialogClose": 1,
+                "Toaster": 1
+              }
+            },
+            "lines": 520,
+            "literals": {
+              "paletteUtilities": [],
+              "literalColors": []
+            },
+            "share": 0.9583333333333334
+          },
+          "typecheck": {
+            "ok": true,
+            "errors": 0
+          },
+          "build": {
+            "ok": true,
+            "output": ""
+          },
+          "axe": {
+            "violations": [],
+            "nodes": 0
+          },
+          "page": {
+            "textLength": 2139,
+            "consoleErrors": []
+          }
+        },
+        "plain": {
+          "status": "ok",
+          "agent": {
+            "costUsd": 0.5757202000000001,
+            "durationMs": 147698,
+            "isError": false,
+            "models": [
+              "claude-opus-5-5[1m]"
+            ],
+            "permissionDenials": [
+              {
+                "tool": "Bash",
+                "input": "for i in Ellipsis Search X Eye Download CircleCheck FileSearch; do grep -c \"declare const $i:\" node_modules/lucide-react/dist/lucide-react.d.ts; done"
+              }
+            ],
+            "stopReason": "success",
+            "turns": 11
+          },
+          "agentResult": "The invoices page is now at `/invoice-list`, and the existing home page at `/` works as before. `pnpm typecheck` and `pnpm build` both pass. I haven't opened the page in a browser, so the layout and interactions have not been checked by eye, including on a phone-sized screen.\n\n**What's on the page**\n- **Invoices:** 25 made-up invoices for realistic small-business customers. Each one's status fits today's date: overdue invoices are unpaid and past their due date, sent invoices aren't due yet, and drafts are the most recent.\n- **Filters:** a search box (matches invoice number or customer, ignoring case), a status dropdown, and \"Issued from\" / \"Issued to\" dates. The page shows \"N of 25 invoices match\" plus the dollar total of the matches. A \"Clear filters\" button appears once any filter is set, and a warning shows if the start date is after the end date.\n- **Amounts:** shown as US dollars, right-aligned and with equal-width digits so they line up in a column.\n- **Row menu (⋯):**\n  - **View** opens a details window.\n  - **Download PDF** downloads a simple one-page PDF of the invoice, built in the browser.\n  - **Mark as paid** only appears on unpaid invoices. It changes the row to Paid and shows a short confirmation. This change isn't saved, so a page reload brings back the original data.\n  - The menu can be used with the keyboard: arrow keys to move, Escape to close.\n- **No matches:** a \"No invoices match your filters\" message with a \"Clear filters\" button.\n- **Phones:** below tablet width, the table turns into a list of cards (number, customer, status, dates, amount, menu). Buttons are large enough to tap, and the filters stack in one column.\n\n**Files**\n- `src/invoice-list/data.ts`: the mock invoices and the dollar/date formatting.\n- `src/invoice-list/pdf.ts`: builds and downloads the PDF.\n- `src/invoice-list/InvoiceListPage.tsx`: the page itself.\n- `src/App.tsx`: now picks the page from the URL path, since the project has no router package installed. The dev server an",
+          "files": {
+            "added": [
+              "src/invoice-list/InvoiceListPage.tsx",
+              "src/invoice-list/data.ts",
+              "src/invoice-list/pdf.ts"
+            ],
+            "changed": [
+              "src/App.tsx"
+            ],
+            "removed": []
+          },
+          "measures": {
+            "craft": [
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-slate-100",
+                "line": 25
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-700",
+                "line": 25
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "ring-slate-300",
+                "line": 25
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-blue-50",
+                "line": 26
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-blue-700",
+                "line": 26
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "ring-blue-200",
+                "line": 26
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-emerald-50",
+                "line": 27
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-emerald-700",
+                "line": 27
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "ring-emerald-200",
+                "line": 27
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-red-50",
+                "line": 28
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-red-700",
+                "line": 28
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "ring-red-200",
+                "line": 28
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-slate-50",
+                "line": 97
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-900",
+                "line": 97
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-600",
+                "line": 101
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-200",
+                "line": 104
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 104
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-700",
+                "line": 107
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-400",
+                "line": 113
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-300",
+                "line": 121
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 121
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "physical-properties",
+                "match": "pr-3",
+                "line": 121
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "physical-properties",
+                "match": "pl-9",
+                "line": 121
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "focus:border-blue-500",
+                "line": 121
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-visible",
+                "match": "focus:border-blue-500",
+                "line": 121
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-2",
+                "line": 121
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus:ring-2",
+                "line": 121
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "focus:ring-blue-500/30",
+                "line": 121
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-blue-500/30",
+                "line": 121
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus:ring-blue-500/30",
+                "line": 121
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-700",
+                "line": 126
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-300",
+                "line": 133
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 133
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "focus:border-blue-500",
+                "line": 133
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-visible",
+                "match": "focus:border-blue-500",
+                "line": 133
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-2",
+                "line": 133
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus:ring-2",
+                "line": 133
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "focus:ring-blue-500/30",
+                "line": 133
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-blue-500/30",
+                "line": 133
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus:ring-blue-500/30",
+                "line": 133
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-700",
+                "line": 144
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-300",
+                "line": 155
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 155
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "focus:border-blue-500",
+                "line": 155
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-visible",
+                "match": "focus:border-blue-500",
+                "line": 155
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-2",
+                "line": 155
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus:ring-2",
+                "line": 155
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "focus:ring-blue-500/30",
+                "line": 155
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-blue-500/30",
+                "line": 155
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus:ring-blue-500/30",
+                "line": 155
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-700",
+                "line": 159
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-300",
+                "line": 170
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 170
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "focus:border-blue-500",
+                "line": 170
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-visible",
+                "match": "focus:border-blue-500",
+                "line": 170
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-2",
+                "line": 170
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus:ring-2",
+                "line": 170
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "focus:ring-blue-500/30",
+                "line": 170
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-blue-500/30",
+                "line": 170
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus:ring-blue-500/30",
+                "line": 170
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-red-700",
+                "line": 175
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-100",
+                "line": 179
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-600",
+                "line": 180
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-900",
+                "line": 181
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-900",
+                "line": 186
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-blue-700",
+                "line": 194
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-blue-50",
+                "line": 194
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-2",
+                "line": 194
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:ring-blue-500",
+                "line": 194
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-blue-500",
+                "line": 194
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-slate-900",
+                "line": 225
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-white",
+                "line": 225
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-200",
+                "line": 253
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 253
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "physical-properties",
+                "match": "text-left",
+                "line": 255
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 255
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-200",
+                "line": 256
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "physical-properties",
+                "match": "rounded-tl-lg",
+                "line": 257
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-slate-50",
+                "line": 257
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-slate-50",
+                "line": 258
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-slate-50",
+                "line": 259
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-slate-50",
+                "line": 260
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-slate-50",
+                "line": 261
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "physical-properties",
+                "match": "text-right",
+                "line": 261
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-slate-50",
+                "line": 262
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "physical-properties",
+                "match": "rounded-tr-lg",
+                "line": 263
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-slate-50",
+                "line": 263
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "divide-slate-100",
+                "line": 268
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-slate-50",
+                "line": 270
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-blue-700",
+                "line": 275
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-2",
+                "line": 275
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:ring-blue-500",
+                "line": 275
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-blue-500",
+                "line": 275
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-600",
+                "line": 281
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-600",
+                "line": 282
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "physical-properties",
+                "match": "text-right",
+                "line": 283
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "physical-properties",
+                "match": "text-right",
+                "line": 289
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-200",
+                "line": 304
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 304
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-blue-700",
+                "line": 310
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-2",
+                "line": 310
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:ring-blue-500",
+                "line": 310
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-blue-500",
+                "line": 310
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-900",
+                "line": 314
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "physical-properties",
+                "match": "-mr-2",
+                "line": 316
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-600",
+                "line": 322
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "physical-properties",
+                "match": "text-right",
+                "line": 328
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "physical-properties",
+                "match": "text-left",
+                "line": 390
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 405
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-slate-100",
+                "line": 405
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "hover:text-slate-900",
+                "line": 405
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-2",
+                "line": 405
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:ring-blue-500",
+                "line": 405
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-blue-500",
+                "line": 405
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-200",
+                "line": 415
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 415
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "physical-properties",
+                "match": "text-left",
+                "line": 430
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-700",
+                "line": 430
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-slate-100",
+                "line": 430
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "focus:bg-slate-100",
+                "line": 430
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-visible",
+                "match": "focus:bg-slate-100",
+                "line": 430
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 432
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-300",
+                "line": 444
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 444
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-400",
+                "line": 445
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-600",
+                "line": 447
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-blue-600",
+                "line": 453
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-white",
+                "line": 453
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-blue-700",
+                "line": 453
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-2",
+                "line": 453
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:ring-blue-500",
+                "line": 453
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-blue-500",
+                "line": 453
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-offset-2",
+                "line": 453
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "backdrop:bg-slate-900/40",
+                "line": 489
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-600",
+                "line": 498
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "physical-properties",
+                "match": "-mr-2",
+                "line": 504
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 504
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-slate-100",
+                "line": 504
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-2",
+                "line": 504
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:ring-blue-500",
+                "line": 504
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-blue-500",
+                "line": 504
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 511
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 515
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 519
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 523
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-300",
+                "line": 533
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-slate-50",
+                "line": 533
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-2",
+                "line": 533
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:ring-blue-500",
+                "line": 533
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-blue-500",
+                "line": 533
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "bg-blue-600",
+                "line": 542
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "text-white",
+                "line": 542
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-blue-700",
+                "line": 542
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-2",
+                "line": 542
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:ring-blue-500",
+                "line": 542
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-blue-500",
+                "line": 542
+              },
+              {
+                "file": "src/invoice-list/InvoiceListPage.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus-visible:ring-offset-2",
+                "line": 542
+              }
+            ],
+            "jsx": {
+              "system": 0,
+              "thirdParty": 0,
+              "icons": 7,
+              "local": 12,
+              "interactiveHtml": 20,
+              "otherHtml": 82,
+              "systemNames": {}
+            },
+            "lines": 700,
+            "literals": {
+              "paletteUtilities": [
+                "bg-slate-100",
+                "text-slate-700",
+                "ring-slate-300",
+                "bg-blue-50",
+                "text-blue-700",
+                "ring-blue-200",
+                "bg-emerald-50",
+                "text-emerald-700",
+                "ring-emerald-200",
+                "bg-red-50",
+                "text-red-700",
+                "ring-red-200",
+                "bg-slate-50",
+                "text-slate-900",
+                "text-slate-600",
+                "border-slate-200",
+                "bg-white",
+                "text-slate-700",
+                "text-slate-400",
+                "border-slate-300",
+                "bg-white",
+                "focus:border-blue-500",
+                "focus:ring-blue-500/30",
+                "text-slate-700",
+                "border-slate-300",
+                "bg-white",
+                "focus:border-blue-500",
+                "focus:ring-blue-500/30",
+                "text-slate-700",
+                "border-slate-300",
+                "bg-white",
+                "focus:border-blue-500",
+                "focus:ring-blue-500/30",
+                "text-slate-700",
+                "border-slate-300",
+                "bg-white",
+                "focus:border-blue-500",
+                "focus:ring-blue-500/30",
+                "text-red-700",
+                "border-slate-100",
+                "text-slate-600",
+                "text-slate-900",
+                "text-slate-900",
+                "text-blue-700",
+                "hover:bg-blue-50",
+                "focus-visible:ring-blue-500",
+                "bg-slate-900",
+                "text-white",
+                "border-slate-200",
+                "bg-white",
+                "text-slate-500",
+                "border-slate-200",
+                "bg-slate-50",
+                "bg-slate-50",
+                "bg-slate-50",
+                "bg-slate-50",
+                "bg-slate-50",
+                "bg-slate-50",
+                "bg-slate-50",
+                "divide-slate-100",
+                "hover:bg-slate-50",
+                "text-blue-700",
+                "focus-visible:ring-blue-500",
+                "text-slate-600",
+                "text-slate-600",
+                "border-slate-200",
+                "bg-white",
+                "text-blue-700",
+                "focus-visible:ring-blue-500",
+                "text-slate-900",
+                "text-slate-600",
+                "text-slate-500",
+                "hover:bg-slate-100",
+                "hover:text-slate-900",
+                "focus-visible:ring-blue-500",
+                "border-slate-200",
+                "bg-white",
+                "text-slate-700",
+                "hover:bg-slate-100",
+                "focus:bg-slate-100",
+                "text-slate-500",
+                "border-slate-300",
+                "bg-white",
+                "text-slate-400",
+                "text-slate-600",
+                "bg-blue-600",
+                "text-white",
+                "hover:bg-blue-700",
+                "focus-visible:ring-blue-500",
+                "backdrop:bg-slate-900/40",
+                "text-slate-600",
+                "text-slate-500",
+                "hover:bg-slate-100",
+                "focus-visible:ring-blue-500",
+                "text-slate-500",
+                "text-slate-500",
+                "text-slate-500",
+                "text-slate-500",
+                "border-slate-300",
+                "hover:bg-slate-50",
+                "focus-visible:ring-blue-500",
+                "bg-blue-600",
+                "text-white",
+                "hover:bg-blue-700",
+                "focus-visible:ring-blue-500"
+              ],
+              "literalColors": []
+            },
+            "share": 0
+          },
+          "typecheck": {
+            "ok": true,
+            "errors": 0
+          },
+          "build": {
+            "ok": true,
+            "output": ""
+          },
+          "axe": {
+            "violations": [],
+            "nodes": 0
+          },
+          "page": {
+            "textLength": 2075,
+            "consoleErrors": []
+          }
+        }
+      },
+      "judge": {
+        "mapping": {
+          "A": "ds",
+          "B": "plain"
+        },
+        "agent": {
+          "costUsd": 0.36144,
+          "durationMs": 27557,
+          "isError": false,
+          "models": [
+            "claude-opus-5-5[1m]"
+          ],
+          "permissionDenials": [],
+          "stopReason": "success",
+          "turns": 14
+        },
+        "raw": "{\"A\":[{\"criterion\":\"spacing-rhythm\",\"score\":3,\"evidence\":\"Spacing is handled by Section, SectionHeader and the design system's components. The page itself adds only a few scale steps: gap-4 in the filter grid, gap-3 between mobile cards and gap-2 inside cards. The filter, count and table groups are separated more widely than the rows within them.\"},{\"criterion\":\"hierarchy\",\"score\":3,\"evidence\":\"The level-1 SectionHeader title is the focal point, and the description sits in muted text. Row menus use ghost icon-sm buttons, and Clear filters is ghost. The only primary actions are Clear filters in the Empty state and Close in the dialog, with Download PDF and Mark as paid stepped down to outline.\"},{\"criterion\":\"alignment\",\"score\":3,\"evidence\":\"The Amount header and cells use text-end with tabular-nums, and the filter controls share one height on a shared baseline. Table columns and mobile cards start on one edge, and the amount lines up with the status badge row.\"},{\"criterion\":\"state-completeness\",\"score\":3,\"evidence\":\"The no-match view is an Empty with an icon, an explanation and a Clear filters button. An aria-live count reads '25 invoices' or 'N of 25 invoices match'. Mark as paid gives a toast and updates the badge. The date inputs use min/max to stop a reversed range, but Download PDF only shows a toast and downloads nothing.\"},{\"criterion\":\"motion-restraint\",\"score\":3,\"evidence\":\"There are no custom animations. The only motion comes from the library's Dialog, DropdownMenu, Select and Toaster components, which use the motion tokens.\"},{\"criterion\":\"accessibility\",\"score\":3,\"evidence\":\"Every filter has a FieldLabel, and the Select trigger uses aria-labelledby. The form has role=search. Each row trigger is named aria-label='Actions for INV-xxxx', and the Actions column has an sr-only header. Status is shown as a text Badge, and the mobile list has an aria-label.\"},{\"criterion\":\"token-use\",\"score\":3,\"evidence\":\"There are no literal colors or lengths. Styling comes from component variants (Badge muted, info, success and error) and role classes such as text-muted-foreground and text-foreground. The only className additions are layout utilities.\"}],\"B\":[{\"criterion\":\"spacing-rhythm\",\"score\":2,\"evidence\":\"The steps mostly come from the scale (mb-1, mt-1, mt-3, mt-4, mb-6, mt-6), but they are set as margins on individual children. The rhythm also varies: the filter footer mixes mt-4 and pt-3, the menu cell uses px-2 py-2 while other cells use px-4 py-3, and mobile cards pull the menu in with -mt-1 -mr-2.\"},{\"criterion\":\"hierarchy\",\"score\":3,\"evidence\":\"The text-2xl/3xl semibold h1 leads the page, and the uppercase xs headers in slate-500 step down. Clear filters in the filter footer is a text-style link, so the solid blue button appears only in the empty state and as Mark as paid in the dialog. On mobile, the amount is set in text-lg semibold as each card's focal point.\"},{\"criterion\":\"alignment\",\"score\":3,\"evidence\":\"The Amount header and cells use text-right with tabular-nums, dates are tabular as well, and the filter controls share py-2 heights. On mobile, a dt/dd grid aligns the Issued and Due values, and the amount sits at the end of each card.\"},{\"criterion\":\"state-completeness\",\"score\":3,\"evidence\":\"The dashed EmptyState explains why no invoices match and offers Clear filters. An invalid date range shows an inline error, linked through aria-invalid and aria-describedby, and the aria-live count shows 'N of 25 invoices match' with a total. Download PDF really builds and downloads a PDF, and each action shows a toast.\"},{\"criterion\":\"motion-restraint\",\"score\":3,\"evidence\":\"There are no animations or transitions, only hover background changes. The menu, dialog and toast appear without motion, so nothing is decorative or loops.\"},{\"criterion\":\"accessibility\",\"score\":3,\"evidence\":\"The page uses native label/htmlFor, a select and a dialog with aria-labelledby. The custom menu has role=menu, arrow, Home, End and Escape keys, and returns focus to its trigger. Menu buttons are size-10 with aria-label names, statuses are text badges, and focus-visible rings are present.\"},{\"criterion\":\"token-use\",\"score\":1,\"evidence\":\"Colors are Tailwind palette literals throughout: bg-slate-50, text-slate-900, bg-blue-600, text-blue-700, and a STATUS_STYLES map of emerald, red and blue classes. The design-system components are not used, and the dialog has a one-off w-[calc(100%-2rem)].\"}]}",
+        "scores": {
+          "ds": {
+            "max": 21,
+            "passed": true,
+            "scores": [
+              {
+                "criterion": "spacing-rhythm",
+                "score": 3,
+                "evidence": "Spacing is handled by Section, SectionHeader and the design system's components. The page itself adds only a few scale steps: gap-4 in the filter grid, gap-3 between mobile cards and gap-2 inside cards. The filter, count and table groups are separated more widely than the rows within them."
+              },
+              {
+                "criterion": "hierarchy",
+                "score": 3,
+                "evidence": "The level-1 SectionHeader title is the focal point, and the description sits in muted text. Row menus use ghost icon-sm buttons, and Clear filters is ghost. The only primary actions are Clear filters in the Empty state and Close in the dialog, with Download PDF and Mark as paid stepped down to outline."
+              },
+              {
+                "criterion": "alignment",
+                "score": 3,
+                "evidence": "The Amount header and cells use text-end with tabular-nums, and the filter controls share one height on a shared baseline. Table columns and mobile cards start on one edge, and the amount lines up with the status badge row."
+              },
+              {
+                "criterion": "state-completeness",
+                "score": 3,
+                "evidence": "The no-match view is an Empty with an icon, an explanation and a Clear filters button. An aria-live count reads '25 invoices' or 'N of 25 invoices match'. Mark as paid gives a toast and updates the badge. The date inputs use min/max to stop a reversed range, but Download PDF only shows a toast and downloads nothing."
+              },
+              {
+                "criterion": "motion-restraint",
+                "score": 3,
+                "evidence": "There are no custom animations. The only motion comes from the library's Dialog, DropdownMenu, Select and Toaster components, which use the motion tokens."
+              },
+              {
+                "criterion": "accessibility",
+                "score": 3,
+                "evidence": "Every filter has a FieldLabel, and the Select trigger uses aria-labelledby. The form has role=search. Each row trigger is named aria-label='Actions for INV-xxxx', and the Actions column has an sr-only header. Status is shown as a text Badge, and the mobile list has an aria-label."
+              },
+              {
+                "criterion": "token-use",
+                "score": 3,
+                "evidence": "There are no literal colors or lengths. Styling comes from component variants (Badge muted, info, success and error) and role classes such as text-muted-foreground and text-foreground. The only className additions are layout utilities."
+              }
+            ],
+            "total": 21
+          },
+          "plain": {
+            "max": 21,
+            "passed": false,
+            "scores": [
+              {
+                "criterion": "spacing-rhythm",
+                "score": 2,
+                "evidence": "The steps mostly come from the scale (mb-1, mt-1, mt-3, mt-4, mb-6, mt-6), but they are set as margins on individual children. The rhythm also varies: the filter footer mixes mt-4 and pt-3, the menu cell uses px-2 py-2 while other cells use px-4 py-3, and mobile cards pull the menu in with -mt-1 -mr-2."
+              },
+              {
+                "criterion": "hierarchy",
+                "score": 3,
+                "evidence": "The text-2xl/3xl semibold h1 leads the page, and the uppercase xs headers in slate-500 step down. Clear filters in the filter footer is a text-style link, so the solid blue button appears only in the empty state and as Mark as paid in the dialog. On mobile, the amount is set in text-lg semibold as each card's focal point."
+              },
+              {
+                "criterion": "alignment",
+                "score": 3,
+                "evidence": "The Amount header and cells use text-right with tabular-nums, dates are tabular as well, and the filter controls share py-2 heights. On mobile, a dt/dd grid aligns the Issued and Due values, and the amount sits at the end of each card."
+              },
+              {
+                "criterion": "state-completeness",
+                "score": 3,
+                "evidence": "The dashed EmptyState explains why no invoices match and offers Clear filters. An invalid date range shows an inline error, linked through aria-invalid and aria-describedby, and the aria-live count shows 'N of 25 invoices match' with a total. Download PDF really builds and downloads a PDF, and each action shows a toast."
+              },
+              {
+                "criterion": "motion-restraint",
+                "score": 3,
+                "evidence": "There are no animations or transitions, only hover background changes. The menu, dialog and toast appear without motion, so nothing is decorative or loops."
+              },
+              {
+                "criterion": "accessibility",
+                "score": 3,
+                "evidence": "The page uses native label/htmlFor, a select and a dialog with aria-labelledby. The custom menu has role=menu, arrow, Home, End and Escape keys, and returns focus to its trigger. Menu buttons are size-10 with aria-label names, statuses are text badges, and focus-visible rings are present."
+              },
+              {
+                "criterion": "token-use",
+                "score": 1,
+                "evidence": "Colors are Tailwind palette literals throughout: bg-slate-50, text-slate-900, bg-blue-600, text-blue-700, and a STATUS_STYLES map of emerald, red and blue classes. The design-system components are not used, and the dialog has a one-off w-[calc(100%-2rem)]."
+              }
+            ],
+            "total": 18
+          }
+        }
+      },
+      "thumbnails": [
+        "vibe/2026-09-27/invoice-list-ds-desktop.jpg",
+        "vibe/2026-09-27/invoice-list-ds-mobile.jpg",
+        "vibe/2026-09-27/invoice-list-plain-desktop.jpg",
+        "vibe/2026-09-27/invoice-list-plain-mobile.jpg"
+      ]
+    },
+    {
+      "brief": {
+        "id": "notification-settings",
+        "title": "Notification settings",
+        "body": "A settings page where a signed-in user of a team chat app decides which notifications they get.\n\n- Three groups: \"Messages\" (direct messages, mentions, replies in threads you follow), \"Channels\"\n  (new channels, channel invites) and \"Account\" (security alerts, product news).\n- Each notification has a short description and a switch per delivery channel: email, push and\n  in-app.\n- Security alerts by email cannot be turned off; say why.\n- A \"Quiet hours\" section with a switch and a start and end time.\n- Changes are not saved until the user presses \"Save changes\". The button is disabled until\n  something changes and shows progress while saving (fake it with a one-second delay), and a short\n  confirmation appears when the save succeeds. A \"Discard\" action resets the form.",
+        "markdown": "# Notification settings\n\nA settings page where a signed-in user of a team chat app decides which notifications they get.\n\n- Three groups: \"Messages\" (direct messages, mentions, replies in threads you follow), \"Channels\"\n  (new channels, channel invites) and \"Account\" (security alerts, product news).\n- Each notification has a short description and a switch per delivery channel: email, push and\n  in-app.\n- Security alerts by email cannot be turned off; say why.\n- A \"Quiet hours\" section with a switch and a start and end time.\n- Changes are not saved until the user presses \"Save changes\". The button is disabled until\n  something changes and shows progress while saving (fake it with a one-second delay), and a short\n  confirmation appears when the save succeeds. A \"Discard\" action resets the form."
+      },
+      "arms": {
+        "ds": {
+          "status": "ok",
+          "agent": {
+            "costUsd": 0.6768414,
+            "durationMs": 109267,
+            "isError": false,
+            "models": [
+              "claude-opus-5-5[1m]"
+            ],
+            "permissionDenials": [
+              {
+                "tool": "Bash",
+                "input": "d=node_modules/@atom63/ui-react/dist; ls $d | head -30; grep -rl \"SwitchProps\" $d --include=*.d.ts | head; grep -rn \"Toaster\" src | head"
+              }
+            ],
+            "stopReason": "success",
+            "turns": 33
+          },
+          "agentResult": "The notification settings page is live at `/notification-settings`, and `pnpm typecheck` and `pnpm build` both pass. I haven't opened it in a browser, so the layout and the save flow have only been type-checked and built, not clicked through. The build prints a warning that some bundles are larger than 500 kB; it's only a warning and nothing fails.\n\n**What's on the page** (`src/pages/notification-settings.tsx`):\n- **The three groups:** Messages, Channels and Account are each a table with one row per notification and its short description. There's a switch per delivery channel (Email, Push, In-app), and each switch has its own screen-reader name, such as \"Mentions by email\".\n- **Security alerts by email** is always on and can't be switched off. A lock note under the row explains why: so you still hear about a sign-in or password change if someone else gets into your account.\n- **Quiet hours** has a switch and start and end time fields. The time fields are greyed out while quiet hours are off. If start and end are the same time, it shows an error and blocks saving.\n- **Saving:**\n  - A bar stays at the bottom of the screen with \"Save changes\" and \"Discard\".\n  - Both buttons stay disabled until something differs from the last saved settings.\n  - Saving waits one second, shows a spinner on the button and locks the form. It then shows a \"Notification settings saved\" pop-up confirmation and makes the new values the saved ones.\n  - \"Discard\" puts the form back to the last saved settings.\n  - A short status line (\"You have unsaved changes.\" / \"Saving…\" / \"All changes saved.\") is read out to screen readers.\n- **Mock data:** a made-up signed-in user in a \"Northwind Chat\" workspace, with realistic starting values.\n\n**Changes to `src/router.tsx`:** I added the route and a \"Notifications\" link in the header. I also added the pop-up confirmation host to the root layout so any page can use it. The Home and Blog pages are unchanged.\n\n**One design-system conflict:** the design system",
+          "files": {
+            "added": [
+              "src/pages/notification-settings.tsx"
+            ],
+            "changed": [
+              "src/router.tsx"
+            ],
+            "removed": []
+          },
+          "measures": {
+            "craft": [],
+            "jsx": {
+              "system": 37,
+              "thirdParty": 2,
+              "icons": 1,
+              "local": 2,
+              "interactiveHtml": 1,
+              "otherHtml": 8,
+              "systemNames": {
+                "Page": 1,
+                "Container": 1,
+                "Section": 3,
+                "SectionHeader": 3,
+                "Card": 2,
+                "CardContent": 2,
+                "Table": 1,
+                "TableHeader": 1,
+                "TableRow": 2,
+                "TableHead": 3,
+                "TableBody": 1,
+                "TableCell": 1,
+                "Switch": 2,
+                "Field": 3,
+                "FieldContent": 1,
+                "FieldLabel": 3,
+                "FieldDescription": 1,
+                "Input": 2,
+                "FieldError": 1,
+                "Button": 2,
+                "Toaster": 1
+              }
+            },
+            "lines": 401,
+            "literals": {
+              "paletteUtilities": [],
+              "literalColors": []
+            },
+            "share": 0.925
+          },
+          "typecheck": {
+            "ok": true,
+            "errors": 0
+          },
+          "build": {
+            "ok": true,
+            "output": ""
+          },
+          "axe": {
+            "violations": [],
+            "nodes": 0
+          },
+          "page": {
+            "textLength": 1411,
+            "consoleErrors": []
+          }
+        },
+        "plain": {
+          "status": "ok",
+          "agent": {
+            "costUsd": 0.4013566,
+            "durationMs": 101637,
+            "isError": false,
+            "models": [
+              "claude-opus-5-5[1m]"
+            ],
+            "permissionDenials": [
+              {
+                "tool": "Bash",
+                "input": "python3 - <<'EOF'\np='src/pages/NotificationSettings.tsx'\ns=open(p).read()\ns=s.replace('<li className=\"grid gap-x-2 gap-y-3 px-4 py-4 sm:grid-cols-[1fr_repeat(3,4.5rem)] sm:items-center sm:px-6\">','<li className=\"grid gap-x-2 gap-y-3 px-4 py-4 sm:grid-cols-[1fr_auto] sm:items-center sm:px-6\">')\ns=s.replace('''      <div\n        role=\"group\"\n        aria-labelledby={titleId}\n        className=\"flex gap-6 sm:contents\"\n      >''','''      <div\n        role=\"group\"\n        aria-labelledby={titleId}\n        className=\"flex gap-6 sm:grid sm:grid-cols-[repeat(3,4.5rem)] sm:gap-x-2\"\n      >''')\ns=s.replace('className=\"flex flex-col items-center gap-1.5 sm:justify-self-center\"','className=\"flex flex-col items-center gap-1.5\"')\nopen(p,'w').write(s)\nEOF\npnpm typecheck && pnpm build 2>&1 | tail -8"
+              }
+            ],
+            "stopReason": "success",
+            "turns": 12
+          },
+          "agentResult": "The new page is at `/notification-settings`. `pnpm typecheck` and `pnpm build` both pass. I haven't opened it in a browser, so I haven't clicked through the switches, the save flow or the phone layout.\n\n**What changed**\n- `src/App.tsx`: the app had no router, so I added a small check on the URL path. `/notification-settings` shows the new page and every other path shows the existing home page as before. I didn't add a routing package. The Vite dev and preview servers send unknown paths to the app, so the URL works there. A static host in production would need the same setting.\n- `src/pages/NotificationSettings.tsx`: the page itself.\n\n**The page**\n- **Groups:** Messages, Channels and Account, with the notifications you listed. Each has a description and a switch for email, push and in-app. On wider screens the switches line up under column headings; on phones each switch has its own label.\n- **Security alerts by email:** the switch is locked on and shows a lock icon. A note underneath explains that email is how the user is reached if someone else signs in or they lose access to their devices.\n- **Quiet hours:** a switch plus start and end times. The times are greyed out while quiet hours are off. A line below explains the window, including when it runs past midnight.\n- **Saving:**\n  - \"Save changes\" and \"Discard\" stay disabled until something differs from the last saved settings.\n  - While saving, the button shows a spinner and \"Saving…\" for one second, and the form is locked.\n  - Afterwards a \"Your notification settings were saved.\" message appears for about three seconds.\n  - Discard puts everything back to the last saved state.\n- **Mock data:** a signed-in user, Priya Raman in the \"Northwind\" workspace, with realistic starting settings.\n\n**Additions you didn't ask for**\n- Saving is blocked, with an error message, if quiet hours start and end at the same time.\n- The browser asks for confirmation before you leave the page with unsaved changes.\n- The switches and sta",
+          "files": {
+            "added": [
+              "src/pages/NotificationSettings.tsx"
+            ],
+            "changed": [
+              "src/App.tsx"
+            ],
+            "removed": []
+          },
+          "measures": {
+            "craft": [
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "bg-slate-50",
+                "line": 229
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-900",
+                "line": 229
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-indigo-600",
+                "line": 233
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-600",
+                "line": 237
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-900",
+                "line": 239
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-200",
+                "line": 264
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "bg-white/95",
+                "line": 264
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-600",
+                "line": 266
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-emerald-700",
+                "line": 268
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-700",
+                "line": 285
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-slate-100",
+                "line": 285
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:outline-indigo-600",
+                "line": 285
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "disabled:text-slate-400",
+                "line": 285
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "bg-indigo-600",
+                "line": 293
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-white",
+                "line": 293
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-indigo-500",
+                "line": 293
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:outline-indigo-600",
+                "line": 293
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "disabled:bg-slate-300",
+                "line": 293
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "disabled:text-slate-500",
+                "line": 293
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-200",
+                "line": 330
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 330
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-100",
+                "line": 332
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "bg-indigo-50",
+                "line": 333
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-indigo-600",
+                "line": 333
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-600",
+                "line": 338
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "bg-slate-50",
+                "line": 361
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 361
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "divide-slate-100",
+                "line": 372
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-900",
+                "line": 403
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-600",
+                "line": 406
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "bg-amber-50",
+                "line": 412
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-amber-900",
+                "line": 412
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 432
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:outline-indigo-600",
+                "line": 481
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "bg-indigo-600",
+                "line": 483
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "bg-slate-300",
+                "line": 483
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 489
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-indigo-600",
+                "line": 493
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-300",
+                "line": 515
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 515
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "focus:border-indigo-500",
+                "line": 515
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "focus-visible",
+                "match": "focus:border-indigo-500",
+                "line": 515
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "focus-visible",
+                "match": "focus:outline-2",
+                "line": 515
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "focus:outline-indigo-500/30",
+                "line": 515
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "focus-visible",
+                "match": "focus:outline-indigo-500/30",
+                "line": 515
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "disabled:bg-slate-50",
+                "line": 515
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "disabled:text-slate-400",
+                "line": 515
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "aria-invalid:border-red-500",
+                "line": 515
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-900",
+                "line": 536
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-400",
+                "line": 536
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-900",
+                "line": 555
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-400",
+                "line": 555
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-red-600",
+                "line": 574
+              },
+              {
+                "file": "src/pages/NotificationSettings.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 574
+              }
+            ],
+            "jsx": {
+              "system": 0,
+              "thirdParty": 0,
+              "icons": 11,
+              "local": 9,
+              "interactiveHtml": 8,
+              "otherHtml": 42,
+              "systemNames": {}
+            },
+            "lines": 610,
+            "literals": {
+              "paletteUtilities": [
+                "bg-slate-50",
+                "text-slate-900",
+                "text-indigo-600",
+                "text-slate-600",
+                "text-slate-900",
+                "border-slate-200",
+                "bg-white/95",
+                "text-slate-600",
+                "text-emerald-700",
+                "text-slate-700",
+                "hover:bg-slate-100",
+                "focus-visible:outline-indigo-600",
+                "disabled:text-slate-400",
+                "bg-indigo-600",
+                "text-white",
+                "hover:bg-indigo-500",
+                "focus-visible:outline-indigo-600",
+                "disabled:bg-slate-300",
+                "disabled:text-slate-500",
+                "border-slate-200",
+                "bg-white",
+                "border-slate-100",
+                "bg-indigo-50",
+                "text-indigo-600",
+                "text-slate-600",
+                "bg-slate-50",
+                "text-slate-500",
+                "divide-slate-100",
+                "text-slate-900",
+                "text-slate-600",
+                "bg-amber-50",
+                "text-amber-900",
+                "text-slate-500",
+                "focus-visible:outline-indigo-600",
+                "bg-indigo-600",
+                "bg-slate-300",
+                "bg-white",
+                "text-indigo-600",
+                "border-slate-300",
+                "bg-white",
+                "focus:border-indigo-500",
+                "focus:outline-indigo-500/30",
+                "disabled:bg-slate-50",
+                "disabled:text-slate-400",
+                "aria-invalid:border-red-500",
+                "text-slate-900",
+                "text-slate-400",
+                "text-slate-900",
+                "text-slate-400",
+                "text-red-600",
+                "text-slate-500"
+              ],
+              "literalColors": []
+            },
+            "share": 0
+          },
+          "typecheck": {
+            "ok": true,
+            "errors": 0
+          },
+          "build": {
+            "ok": true,
+            "output": ""
+          },
+          "axe": {
+            "violations": [],
+            "nodes": 0
+          },
+          "page": {
+            "textLength": 1392,
+            "consoleErrors": []
+          }
+        }
+      },
+      "judge": {
+        "mapping": {
+          "A": "ds",
+          "B": "plain"
+        },
+        "agent": {
+          "costUsd": 0.295949,
+          "durationMs": 34717,
+          "isError": false,
+          "models": [
+            "claude-opus-5-5[1m]"
+          ],
+          "permissionDenials": [],
+          "stopReason": "success",
+          "turns": 11
+        },
+        "raw": "{\"A\":[{\"criterion\":\"spacing-rhythm\",\"score\":3,\"evidence\":\"Spacing comes from the layout primitives: Section/SectionHeader set the gaps between groups, and the Quiet hours card uses CardContent `gap-6` outside and `gap-4` for the time fields. Every notification row gets the same `py-3`, so rows sit tighter than sections.\"},{\"criterion\":\"hierarchy\",\"score\":3,\"evidence\":\"The page title is an h1 and each group title an h2 from SectionHeader, with muted descriptions below. The sticky footer has one `variant=\\\"primary\\\"` Save changes, a ghost Discard and a muted status line.\"},{\"criterion\":\"alignment\",\"score\":2,\"evidence\":\"On desktop the channel columns (`w-20 text-center`) line up across all group tables. On mobile the Messages table overflows and the Push column is cut off, and the narrow first column wraps descriptions to two or three words per line.\"},{\"criterion\":\"state-completeness\",\"score\":3,\"evidence\":\"Save changes is disabled until something changes and uses `loading={saving}`, and the switches are disabled while saving. The locked email switch shows its reason with a Lock icon and `aria-describedby`, equal quiet-hours times show a FieldError beside the inputs, and success appears as a toast plus the text \\\"All changes saved.\\\"\"},{\"criterion\":\"motion-restraint\",\"score\":3,\"evidence\":\"The page adds no custom animation. Motion comes only from the Switch, Button loading and toast defaults of the design system.\"},{\"criterion\":\"accessibility\",\"score\":3,\"evidence\":\"Each notification label is a row header (`scope=\\\"row\\\"`), and each Switch has a full `aria-label` such as \\\"Mentions by email\\\". FieldLabel is tied to the time inputs, headings run in order (h1 then h2), and save status is announced through an `aria-live` paragraph.\"},{\"criterion\":\"token-use\",\"score\":3,\"evidence\":\"All colors are role tokens (`text-muted-foreground`, `border-border`, `bg-background`) and all components are atom63 components used with default props. The only lengths are scale utilities such as `w-20` and `size-3.5`.\"}],\"B\":[{\"criterion\":\"spacing-rhythm\",\"score\":2,\"evidence\":\"Cards are separated by `space-y-6` and every row uses `px-4 py-4 sm:px-6`, so the ratio mostly holds. Many gaps are margins set on individual children (`mt-0.5`, `mt-1`, `mt-2`, `mt-8`, `mt-px`), which mixes several steps at the text level.\"},{\"criterion\":\"hierarchy\",\"score\":3,\"evidence\":\"The h1 is `text-2xl sm:text-3xl font-semibold`, card h2s are `text-base font-semibold`, and descriptions are lighter secondary text. The footer has one filled indigo Save changes next to a text-only Discard.\"},{\"criterion\":\"alignment\",\"score\":3,\"evidence\":\"Column headers and switches share a grid (`grid-cols-[1fr_repeat(3,4.5rem)]`), so switches line up across all cards. On mobile each switch sits under its own icon label, and group icons, titles and rows share one start edge.\"},{\"criterion\":\"state-completeness\",\"score\":3,\"evidence\":\"While saving, the submit button shows a spinner with \\\"Saving…\\\" and `aria-busy`, and the fieldset is disabled. Success shows an inline \\\"Your notification settings were saved.\\\" with a CircleCheck icon, the quiet-hours hint turns into an error or an \\\"off\\\" explanation, and the locked switch has an amber reason panel beside it.\"},{\"criterion\":\"motion-restraint\",\"score\":2,\"evidence\":\"Only the switch moves (`transition-colors` and `transition-transform`), and only the loader spins, to show progress. Durations and easings are Tailwind defaults rather than `--a63-motion-*` tokens, and nothing handles reduced motion.\"},{\"criterion\":\"accessibility\",\"score\":3,\"evidence\":\"The custom switch is a `<button role=\\\"switch\\\">` with `aria-checked`, a full aria-label and `aria-describedby` pointing to the lock reason, and it has a visible focus outline. Cards are sections named by `aria-labelledby` their h2, and the save status is carried by text and an icon, not color alone.\"},{\"criterion\":\"token-use\",\"score\":1,\"evidence\":\"The page uses Tailwind palette classes throughout (`bg-slate-50`, `text-indigo-600`, `bg-amber-50`, `text-emerald-700`, `bg-white/95`) and builds its own buttons, switches and inputs instead of using atom63 components. As a result it ignores the theme, which is visible in its missing site header.\"}]}",
+        "scores": {
+          "ds": {
+            "max": 21,
+            "passed": true,
+            "scores": [
+              {
+                "criterion": "spacing-rhythm",
+                "score": 3,
+                "evidence": "Spacing comes from the layout primitives: Section/SectionHeader set the gaps between groups, and the Quiet hours card uses CardContent `gap-6` outside and `gap-4` for the time fields. Every notification row gets the same `py-3`, so rows sit tighter than sections."
+              },
+              {
+                "criterion": "hierarchy",
+                "score": 3,
+                "evidence": "The page title is an h1 and each group title an h2 from SectionHeader, with muted descriptions below. The sticky footer has one `variant=\"primary\"` Save changes, a ghost Discard and a muted status line."
+              },
+              {
+                "criterion": "alignment",
+                "score": 2,
+                "evidence": "On desktop the channel columns (`w-20 text-center`) line up across all group tables. On mobile the Messages table overflows and the Push column is cut off, and the narrow first column wraps descriptions to two or three words per line."
+              },
+              {
+                "criterion": "state-completeness",
+                "score": 3,
+                "evidence": "Save changes is disabled until something changes and uses `loading={saving}`, and the switches are disabled while saving. The locked email switch shows its reason with a Lock icon and `aria-describedby`, equal quiet-hours times show a FieldError beside the inputs, and success appears as a toast plus the text \"All changes saved.\""
+              },
+              {
+                "criterion": "motion-restraint",
+                "score": 3,
+                "evidence": "The page adds no custom animation. Motion comes only from the Switch, Button loading and toast defaults of the design system."
+              },
+              {
+                "criterion": "accessibility",
+                "score": 3,
+                "evidence": "Each notification label is a row header (`scope=\"row\"`), and each Switch has a full `aria-label` such as \"Mentions by email\". FieldLabel is tied to the time inputs, headings run in order (h1 then h2), and save status is announced through an `aria-live` paragraph."
+              },
+              {
+                "criterion": "token-use",
+                "score": 3,
+                "evidence": "All colors are role tokens (`text-muted-foreground`, `border-border`, `bg-background`) and all components are atom63 components used with default props. The only lengths are scale utilities such as `w-20` and `size-3.5`."
+              }
+            ],
+            "total": 20
+          },
+          "plain": {
+            "max": 21,
+            "passed": false,
+            "scores": [
+              {
+                "criterion": "spacing-rhythm",
+                "score": 2,
+                "evidence": "Cards are separated by `space-y-6` and every row uses `px-4 py-4 sm:px-6`, so the ratio mostly holds. Many gaps are margins set on individual children (`mt-0.5`, `mt-1`, `mt-2`, `mt-8`, `mt-px`), which mixes several steps at the text level."
+              },
+              {
+                "criterion": "hierarchy",
+                "score": 3,
+                "evidence": "The h1 is `text-2xl sm:text-3xl font-semibold`, card h2s are `text-base font-semibold`, and descriptions are lighter secondary text. The footer has one filled indigo Save changes next to a text-only Discard."
+              },
+              {
+                "criterion": "alignment",
+                "score": 3,
+                "evidence": "Column headers and switches share a grid (`grid-cols-[1fr_repeat(3,4.5rem)]`), so switches line up across all cards. On mobile each switch sits under its own icon label, and group icons, titles and rows share one start edge."
+              },
+              {
+                "criterion": "state-completeness",
+                "score": 3,
+                "evidence": "While saving, the submit button shows a spinner with \"Saving…\" and `aria-busy`, and the fieldset is disabled. Success shows an inline \"Your notification settings were saved.\" with a CircleCheck icon, the quiet-hours hint turns into an error or an \"off\" explanation, and the locked switch has an amber reason panel beside it."
+              },
+              {
+                "criterion": "motion-restraint",
+                "score": 2,
+                "evidence": "Only the switch moves (`transition-colors` and `transition-transform`), and only the loader spins, to show progress. Durations and easings are Tailwind defaults rather than `--a63-motion-*` tokens, and nothing handles reduced motion."
+              },
+              {
+                "criterion": "accessibility",
+                "score": 3,
+                "evidence": "The custom switch is a `<button role=\"switch\">` with `aria-checked`, a full aria-label and `aria-describedby` pointing to the lock reason, and it has a visible focus outline. Cards are sections named by `aria-labelledby` their h2, and the save status is carried by text and an icon, not color alone."
+              },
+              {
+                "criterion": "token-use",
+                "score": 1,
+                "evidence": "The page uses Tailwind palette classes throughout (`bg-slate-50`, `text-indigo-600`, `bg-amber-50`, `text-emerald-700`, `bg-white/95`) and builds its own buttons, switches and inputs instead of using atom63 components. As a result it ignores the theme, which is visible in its missing site header."
+              }
+            ],
+            "total": 17
+          }
+        }
+      },
+      "thumbnails": [
+        "vibe/2026-09-27/notification-settings-ds-desktop.jpg",
+        "vibe/2026-09-27/notification-settings-ds-mobile.jpg",
+        "vibe/2026-09-27/notification-settings-plain-desktop.jpg",
+        "vibe/2026-09-27/notification-settings-plain-mobile.jpg"
+      ]
+    },
+    {
+      "brief": {
+        "id": "onboarding-empty-state",
+        "title": "First project",
+        "body": "What a new user of a design feedback tool sees right after signing up, before they have any\nprojects.\n\n- The page explains in one or two sentences what a project is and why they would create one.\n- One primary action, \"Create your first project\", and a secondary way to \"Import from Figma\".\n- Below it, a short checklist of three getting-started steps (create a project, invite a teammate,\n  share a link for feedback), each with a one-line explanation. The first step is the current one;\n  the others are not done yet.\n- A link to a two-minute video tour.\n- Pressing \"Create your first project\" opens a small dialog that asks for a project name and\n  creates it. After that, the page shows the new project in a list and the checklist marks the\n  first step done.",
+        "markdown": "# First project\n\nWhat a new user of a design feedback tool sees right after signing up, before they have any\nprojects.\n\n- The page explains in one or two sentences what a project is and why they would create one.\n- One primary action, \"Create your first project\", and a secondary way to \"Import from Figma\".\n- Below it, a short checklist of three getting-started steps (create a project, invite a teammate,\n  share a link for feedback), each with a one-line explanation. The first step is the current one;\n  the others are not done yet.\n- A link to a two-minute video tour.\n- Pressing \"Create your first project\" opens a small dialog that asks for a project name and\n  creates it. After that, the page shows the new project in a list and the checklist marks the\n  first step done."
+      },
+      "arms": {
+        "ds": {
+          "status": "ok",
+          "agent": {
+            "costUsd": 0.8027228,
+            "durationMs": 134490,
+            "isError": false,
+            "models": [
+              "claude-opus-5-5[1m]"
+            ],
+            "permissionDenials": [
+              {
+                "tool": "Bash",
+                "input": "f=$(node -e \"console.log(require.resolve('@atom63/styles/tailwind'))\" 2>/dev/null); echo $f; ls node_modules/@atom63/styles; grep -rhoE \"\\-\\-color-(primary|success|muted-foreground)[a-z-]*:[^;]*\" node_modules/@atom63/styles | sort -u | head"
+              },
+              {
+                "tool": "Bash",
+                "input": "python3 - <<'EOF'\np='src/pages/onboarding-empty-state.tsx'\ns=open(p).read()\ns=s.replace(\"<ItemGroup render={<ol />}>\",\"<ol className=\\\"grid gap-2\\\">\",1)\ns=s.replace(\"\"\"            })}\n          </ItemGroup>\"\"\",\"\"\"            })}\n          </ol>\"\"\",1)\ns=s.replace('<ItemGroup aria-live=\"polite\" render={<ul />}>','<ul className=\"grid gap-2\">',1)\ns=s.replace(\"\"\"            </ItemGroup>\n          )}\"\"\",\"\"\"            </ul>\n          )}\"\"\",1)\ns=s.replace(\"'text-primary'\",\"'text-(--a63-status-success)'\")\ns=s.replace(\"  ItemGroup,\\n\",\"\")\ns=s.replace(\"import { CircleCheck, CirclePlay, Circle,\",\"import { Circle, CircleCheck, CirclePlay,\")\nopen(p,'w').write(s)\nEOF\ngrep -n \"ItemGroup\\|<ol\\|<ul\\|</ol\\|</ul\" src/pages/onboarding-empty-state.tsx"
+              }
+            ],
+            "stopReason": "success",
+            "turns": 34
+          },
+          "agentResult": "The new page is at `/onboarding-empty-state`, and `pnpm typecheck` and `pnpm build` both pass. I haven't opened it in a browser, so the dialogs and layout are only checked by the compiler so far. Vite printed a warning that some chunks are over 500 kB. It doesn't stop the build, and I didn't change anything about code-splitting.\n\n**Files**\n- `src/pages/onboarding-empty-state.tsx`: the new page.\n- `src/router.tsx`: adds the route and a \"Get started\" link in the header nav. Home, Blog and the post pages are unchanged.\n\n**What the page shows**\n- **Intro:** the heading \"Start your first project\", two sentences on what a project is and why to create one, and a \"Welcome aboard\" label.\n- **Buttons:** \"Create your first project\" is the primary action and \"Import from Figma\" is the secondary one.\n- **Video tour:** a \"Watch the 2-minute video tour\" link, which opens in a new tab.\n- **Getting started checklist:** the three steps, each with a one-line explanation and a progress bar (\"0 of 3 steps done\"). The first step is marked as the current one (\"Up next\"); the other two are \"Not started\".\n- **Your projects:** an empty state until a project exists, then a list of projects, newest first.\n\n**Creating a project**\n- \"Create your first project\" opens a small dialog asking for a project name. The Create button stays disabled until the name has some text.\n- After you submit, the project appears in the list, step 1 is marked \"Done\" and \"Invite a teammate\" becomes the current step.\n- The main button then reads \"New project\", so the page also works once the first project exists.\n\n**Things to know**\n- **Figma import is something I added.** The brief only asked for a secondary way to import, so I made it a small dialog: you paste a Figma file link and it creates a project named after the file. A link that isn't a Figma file shows an error message.\n- **The video tour link is a made-up YouTube URL**, since there's no real video. Replace `tourUrl` in the page file with the real one.\n- **Pr",
+          "files": {
+            "added": [
+              "src/pages/onboarding-empty-state.tsx"
+            ],
+            "changed": [
+              "src/router.tsx"
+            ],
+            "removed": []
+          },
+          "measures": {
+            "craft": [],
+            "jsx": {
+              "system": 66,
+              "thirdParty": 2,
+              "icons": 7,
+              "local": 4,
+              "interactiveHtml": 3,
+              "otherHtml": 9,
+              "systemNames": {
+                "Dialog": 2,
+                "DialogTrigger": 2,
+                "Button": 7,
+                "DialogPopup": 2,
+                "DialogHeader": 2,
+                "DialogTitle": 2,
+                "DialogDescription": 2,
+                "DialogPanel": 2,
+                "Field": 2,
+                "FieldLabel": 2,
+                "Input": 2,
+                "FieldDescription": 2,
+                "DialogFooter": 2,
+                "DialogClose": 2,
+                "Page": 1,
+                "Container": 1,
+                "Section": 3,
+                "Badge": 4,
+                "SectionHeader": 3,
+                "Progress": 1,
+                "ProgressLabel": 1,
+                "ProgressValue": 1,
+                "ProgressTrack": 1,
+                "ProgressIndicator": 1,
+                "Item": 2,
+                "ItemMedia": 2,
+                "ItemContent": 2,
+                "ItemTitle": 2,
+                "ItemDescription": 2,
+                "ItemActions": 1,
+                "Empty": 1,
+                "EmptyHeader": 1,
+                "EmptyMedia": 1,
+                "EmptyTitle": 1,
+                "EmptyDescription": 1
+              }
+            },
+            "lines": 439,
+            "literals": {
+              "paletteUtilities": [],
+              "literalColors": []
+            },
+            "share": 0.9295774647887324
+          },
+          "typecheck": {
+            "ok": true,
+            "errors": 0
+          },
+          "build": {
+            "ok": true,
+            "output": ""
+          },
+          "axe": {
+            "violations": [],
+            "nodes": 0
+          },
+          "page": {
+            "textLength": 879,
+            "consoleErrors": []
+          }
+        },
+        "plain": {
+          "status": "ok",
+          "agent": {
+            "costUsd": 0.2666606,
+            "durationMs": 68834,
+            "isError": false,
+            "models": [
+              "claude-opus-5-5[1m]"
+            ],
+            "permissionDenials": [
+              {
+                "tool": "Bash",
+                "input": "for i in Figma Plus Check Circle CirclePlay PlayCircle X FolderOpen Users Link2 Share2 Loader2 LoaderCircle ArrowRight CircleCheck Folder Upload; do grep -q \"export { default as $i }\" node_modules/lucide-react/dist/lucide-react.d.ts 2>/dev/null || grep -qE \"declare const $i\\b\" node_modules/lucide-react/dist/lucide-react.d.ts && echo \"ok $i\" || echo \"MISSING $i\"; done"
+              }
+            ],
+            "stopReason": "success",
+            "turns": 8
+          },
+          "agentResult": "The new page is live at `/onboarding-empty-state`, and `pnpm typecheck` and `pnpm build` both pass. I didn't open it in a browser, so I haven't clicked through the dialog or checked how it looks.\n\n**What's on the page**\n- **Intro:** a heading and two sentences saying what a project is and why to create one.\n- **Buttons:** \"Create your first project\" as the main button, with \"Import from Figma\" as a secondary button beside it.\n- **Checklist:** the three steps, each with a one-line explanation and a \"0 of 3 done\" count. Step 1 is highlighted as the current step and the other two show as not done.\n- **Video link:** \"Watch the 2-minute video tour\" opens in a new tab.\n- **Creating a project:** the button opens a small dialog asking for a name. An empty name or one you've already used shows an error. After a short fake delay the project is added. The intro box is then replaced by a \"Your projects\" list with a \"New project\" button, and the checklist shows step 1 done and step 2 as current.\n\n**Things that are placeholders**\n- **Figma import:** there's no backend, so the button only shows a message saying import isn't available in this preview.\n- **Video URL:** the link points to a made-up address (`help.pinpoint.design/...`) and needs a real one.\n- **Names and icon:** the product name \"Pinpoint\" and the signed-in user \"Maya Chen\" are mock data. The installed icon library has no Figma logo, so that button uses a generic upload icon.\n- **No saving:** projects exist only while the page is open and disappear on reload.\n\nThe app had no URL routing, so `src/main.tsx` now shows the new page when the path is `/onboarding-empty-state` and the existing `App` for every other path. The page is in `src/pages/OnboardingEmptyState.tsx`.",
+          "files": {
+            "added": [
+              "src/pages/OnboardingEmptyState.tsx"
+            ],
+            "changed": [
+              "src/main.tsx"
+            ],
+            "removed": []
+          },
+          "measures": {
+            "craft": [
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "bg-slate-50",
+                "line": 58
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-900",
+                "line": 58
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-200",
+                "line": 59
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 59
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 62
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-300",
+                "line": 76
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 76
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-slate-50",
+                "line": 76
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:outline-indigo-600",
+                "line": 76
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "divide-slate-200",
+                "line": 82
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-200",
+                "line": 82
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 82
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "bg-indigo-50",
+                "line": 85
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-indigo-600",
+                "line": 85
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 90
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-200",
+                "line": 99
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 99
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-600",
+                "line": 103
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "bg-indigo-600",
+                "line": 111
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-white",
+                "line": 111
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-indigo-700",
+                "line": 111
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:outline-indigo-600",
+                "line": 111
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-300",
+                "line": 121
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 121
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-700",
+                "line": 121
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-slate-50",
+                "line": 121
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:outline-indigo-600",
+                "line": 121
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-600",
+                "line": 130
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-900",
+                "line": 135
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "physical-properties",
+                "match": "ml-2",
+                "line": 137
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 137
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "border-indigo-300",
+                "line": 150
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 150
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-200",
+                "line": 150
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "bg-white/60",
+                "line": 150
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "bg-emerald-600",
+                "line": 157
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-white",
+                "line": 157
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "border-indigo-600",
+                "line": 159
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-indigo-700",
+                "line": 159
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-300",
+                "line": 160
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 160
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 166
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-600",
+                "line": 172
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-indigo-700",
+                "line": 184
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:outline-indigo-600",
+                "line": 184
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 254
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-900",
+                "line": 254
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "backdrop:bg-slate-900/40",
+                "line": 254
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 266
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-slate-100",
+                "line": 266
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-300",
+                "line": 288
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "placeholder:text-slate-400",
+                "line": 288
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "focus:border-indigo-600",
+                "line": 288
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "focus-visible",
+                "match": "focus:border-indigo-600",
+                "line": 288
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "focus-visible",
+                "match": "focus:outline-2",
+                "line": 288
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "focus:outline-indigo-600/30",
+                "line": 288
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "focus-visible",
+                "match": "focus:outline-indigo-600/30",
+                "line": 288
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "aria-invalid:border-red-600",
+                "line": 288
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-red-700",
+                "line": 291
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-700",
+                "line": 301
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-slate-100",
+                "line": 301
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "bg-indigo-600",
+                "line": 308
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "text-white",
+                "line": 308
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-indigo-700",
+                "line": 308
+              },
+              {
+                "file": "src/pages/OnboardingEmptyState.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:outline-indigo-600",
+                "line": 308
+              }
+            ],
+            "jsx": {
+              "system": 0,
+              "thirdParty": 1,
+              "icons": 8,
+              "local": 2,
+              "interactiveHtml": 11,
+              "otherHtml": 35,
+              "systemNames": {}
+            },
+            "lines": 346,
+            "literals": {
+              "paletteUtilities": [
+                "bg-slate-50",
+                "text-slate-900",
+                "border-slate-200",
+                "bg-white",
+                "text-slate-500",
+                "border-slate-300",
+                "bg-white",
+                "hover:bg-slate-50",
+                "focus-visible:outline-indigo-600",
+                "divide-slate-200",
+                "border-slate-200",
+                "bg-white",
+                "bg-indigo-50",
+                "text-indigo-600",
+                "text-slate-500",
+                "border-slate-200",
+                "bg-white",
+                "text-slate-600",
+                "bg-indigo-600",
+                "text-white",
+                "hover:bg-indigo-700",
+                "focus-visible:outline-indigo-600",
+                "border-slate-300",
+                "bg-white",
+                "text-slate-700",
+                "hover:bg-slate-50",
+                "focus-visible:outline-indigo-600",
+                "text-slate-600",
+                "text-slate-900",
+                "text-slate-500",
+                "border-indigo-300",
+                "bg-white",
+                "border-slate-200",
+                "bg-white/60",
+                "bg-emerald-600",
+                "text-white",
+                "border-indigo-600",
+                "text-indigo-700",
+                "border-slate-300",
+                "text-slate-500",
+                "text-slate-500",
+                "text-slate-600",
+                "text-indigo-700",
+                "focus-visible:outline-indigo-600",
+                "bg-white",
+                "text-slate-900",
+                "backdrop:bg-slate-900/40",
+                "text-slate-500",
+                "hover:bg-slate-100",
+                "border-slate-300",
+                "placeholder:text-slate-400",
+                "focus:border-indigo-600",
+                "focus:outline-indigo-600/30",
+                "aria-invalid:border-red-600",
+                "text-red-700",
+                "text-slate-700",
+                "hover:bg-slate-100",
+                "bg-indigo-600",
+                "text-white",
+                "hover:bg-indigo-700",
+                "focus-visible:outline-indigo-600"
+              ],
+              "literalColors": []
+            },
+            "share": 0
+          },
+          "typecheck": {
+            "ok": true,
+            "errors": 0
+          },
+          "build": {
+            "ok": true,
+            "output": ""
+          },
+          "axe": {
+            "violations": [],
+            "nodes": 0
+          },
+          "page": {
+            "textLength": 663,
+            "consoleErrors": []
+          }
+        }
+      },
+      "judge": {
+        "mapping": {
+          "A": "plain",
+          "B": "ds"
+        },
+        "agent": {
+          "costUsd": 0.26409720000000003,
+          "durationMs": 38844,
+          "isError": false,
+          "models": [
+            "claude-opus-5-5[1m]"
+          ],
+          "permissionDenials": [],
+          "stopReason": "success",
+          "turns": 9
+        },
+        "raw": "{\"A\":[{\"criterion\":\"spacing-rhythm\",\"score\":2,\"evidence\":\"Gaps are Tailwind scale steps, but they are margins on individual children (`mt-3`, `mt-6`, `mt-4`, `mt-1.5`) rather than stack gaps. The checklist section's `mt-6` equals the gap between the paragraph and buttons inside the welcome card, so the section gap is no larger than a row gap. The status line's `min-h-5` only partly makes up for this.\"},{\"criterion\":\"hierarchy\",\"score\":2,\"evidence\":\"The welcome card has one clear focal point: an indigo primary button for 'Create your first project' beside an outlined 'Import from Figma'. However, the 'Getting started' h2 is `text-sm font-semibold`, no larger than the step titles and body text below it. Secondary text uses `text-slate-500/600` instead of `text-muted-foreground`.\"},{\"criterion\":\"alignment\",\"score\":3,\"evidence\":\"The card, checklist rows and video link share the `max-w-3xl` container edge. The two action buttons share `px-4 py-2.5` and match in height. Step number badges sit on the same inset in every row, and the title and description text start on one edge.\"},{\"criterion\":\"state-completeness\",\"score\":3,\"evidence\":\"The dialog validates beside the field: 'Enter a project name.' and a duplicate-name error, linked with `aria-invalid`/`aria-describedby`. It shows a 'Creating…' button with a spinner and disables its controls while submitting. After creation the page swaps to a 'Your projects' list, and the checklist shows the first step done with a check and strikethrough. 'Import from Figma' explains in a status line that it isn't available in this preview.\"},{\"criterion\":\"motion-restraint\",\"score\":3,\"evidence\":\"The only animation is `animate-spin` on the LoaderCircle icon while a project is being created, which shows progress. Nothing else animates.\"},{\"criterion\":\"accessibility\",\"score\":3,\"evidence\":\"Uses a native `<dialog>` with `showModal`, `aria-labelledby` and a labelled input, an `aria-label='Close'` icon button, and `aria-current='step'`. The step status is also given as sr-only text ('(done)', '(current step)'). Notices use a `role='status'` live region, the external link says it opens in a new tab, and buttons have focus-visible outlines.\"},{\"criterion\":\"token-use\",\"score\":1,\"evidence\":\"All styling uses literal Tailwind palette classes: `bg-slate-50`, `bg-indigo-600`, `text-slate-500`, `bg-emerald-600`, `text-red-700` and `backdrop:bg-slate-900/40`. No `--a63-*` tokens or design-system components are used; buttons, dialog and input are hand-built.\"}],\"B\":[{\"criterion\":\"spacing-rhythm\",\"score\":3,\"evidence\":\"Spacing comes from the layout `Section`/`SectionHeader` defaults, with large gaps between the hero, 'Getting started' and 'Your projects' sections. Inside a section, `gap-3` separates the actions and `grid gap-2` separates the checklist and project items. Items of the same kind use the same `Item` padding.\"},{\"criterion\":\"hierarchy\",\"score\":2,\"evidence\":\"There is a single `variant=\\\"primary\\\"` 'Create your first project' button, with 'Import from Figma' as `outline` and the tour as `link`. Secondary text uses the description slots. However, the h2 headings 'Getting started' and 'Your projects' render at almost the same size as the h1, so the three sections read as flat.\"},{\"criterion\":\"alignment\",\"score\":2,\"evidence\":\"Most content shares the narrow container's left edge. The 'Watch the 2-minute video tour' link button is inset by its button padding, so it sits off the edge used by the heading and action buttons. The checklist icons and status badges line up consistently across rows.\"},{\"criterion\":\"state-completeness\",\"score\":2,\"evidence\":\"The empty projects list uses `Empty` with 'No projects yet', and the checklist moves the step from 'Up next' to a 'Done' badge. However, the empty state offers no next-step action inside it. The create dialog's submit button is simply `disabled` until a name is entered, with no reason given. The Figma URL error replaces the `FieldDescription` text rather than using a Field error.\"},{\"criterion\":\"motion-restraint\",\"score\":3,\"evidence\":\"The only motion is whatever the Dialog, Progress and Button components provide by default. The page adds no custom animation, durations or looping effects.\"},{\"criterion\":\"accessibility\",\"score\":3,\"evidence\":\"Dialogs use `DialogTitle`/`DialogDescription`, and every input has a `FieldLabel` plus a hint linked with `aria-describedby`. Headings run in order: `level={1}`, then `level={2}`. Step status is carried by text badges ('Done', 'Up next', 'Not started'), sr-only 'Step n:' prefixes and `aria-current='step'`, not by icon colour alone.\"},{\"criterion\":\"token-use\",\"score\":3,\"evidence\":\"Everything is built from @atom63/ui-react components using variants the contract lists (`primary`, `outline`, `ghost`, `link`, and Badge `success`/`info`/`muted`). The only color overrides are `text-muted-foreground` and `text-(--a63-status-success)` on the done-step icon, each used for its intended role. No literal colors or lengths appear.\"}]}",
+        "scores": {
+          "plain": {
+            "max": 21,
+            "passed": false,
+            "scores": [
+              {
+                "criterion": "spacing-rhythm",
+                "score": 2,
+                "evidence": "Gaps are Tailwind scale steps, but they are margins on individual children (`mt-3`, `mt-6`, `mt-4`, `mt-1.5`) rather than stack gaps. The checklist section's `mt-6` equals the gap between the paragraph and buttons inside the welcome card, so the section gap is no larger than a row gap. The status line's `min-h-5` only partly makes up for this."
+              },
+              {
+                "criterion": "hierarchy",
+                "score": 2,
+                "evidence": "The welcome card has one clear focal point: an indigo primary button for 'Create your first project' beside an outlined 'Import from Figma'. However, the 'Getting started' h2 is `text-sm font-semibold`, no larger than the step titles and body text below it. Secondary text uses `text-slate-500/600` instead of `text-muted-foreground`."
+              },
+              {
+                "criterion": "alignment",
+                "score": 3,
+                "evidence": "The card, checklist rows and video link share the `max-w-3xl` container edge. The two action buttons share `px-4 py-2.5` and match in height. Step number badges sit on the same inset in every row, and the title and description text start on one edge."
+              },
+              {
+                "criterion": "state-completeness",
+                "score": 3,
+                "evidence": "The dialog validates beside the field: 'Enter a project name.' and a duplicate-name error, linked with `aria-invalid`/`aria-describedby`. It shows a 'Creating…' button with a spinner and disables its controls while submitting. After creation the page swaps to a 'Your projects' list, and the checklist shows the first step done with a check and strikethrough. 'Import from Figma' explains in a status line that it isn't available in this preview."
+              },
+              {
+                "criterion": "motion-restraint",
+                "score": 3,
+                "evidence": "The only animation is `animate-spin` on the LoaderCircle icon while a project is being created, which shows progress. Nothing else animates."
+              },
+              {
+                "criterion": "accessibility",
+                "score": 3,
+                "evidence": "Uses a native `<dialog>` with `showModal`, `aria-labelledby` and a labelled input, an `aria-label='Close'` icon button, and `aria-current='step'`. The step status is also given as sr-only text ('(done)', '(current step)'). Notices use a `role='status'` live region, the external link says it opens in a new tab, and buttons have focus-visible outlines."
+              },
+              {
+                "criterion": "token-use",
+                "score": 1,
+                "evidence": "All styling uses literal Tailwind palette classes: `bg-slate-50`, `bg-indigo-600`, `text-slate-500`, `bg-emerald-600`, `text-red-700` and `backdrop:bg-slate-900/40`. No `--a63-*` tokens or design-system components are used; buttons, dialog and input are hand-built."
+              }
+            ],
+            "total": 17
+          },
+          "ds": {
+            "max": 21,
+            "passed": true,
+            "scores": [
+              {
+                "criterion": "spacing-rhythm",
+                "score": 3,
+                "evidence": "Spacing comes from the layout `Section`/`SectionHeader` defaults, with large gaps between the hero, 'Getting started' and 'Your projects' sections. Inside a section, `gap-3` separates the actions and `grid gap-2` separates the checklist and project items. Items of the same kind use the same `Item` padding."
+              },
+              {
+                "criterion": "hierarchy",
+                "score": 2,
+                "evidence": "There is a single `variant=\"primary\"` 'Create your first project' button, with 'Import from Figma' as `outline` and the tour as `link`. Secondary text uses the description slots. However, the h2 headings 'Getting started' and 'Your projects' render at almost the same size as the h1, so the three sections read as flat."
+              },
+              {
+                "criterion": "alignment",
+                "score": 2,
+                "evidence": "Most content shares the narrow container's left edge. The 'Watch the 2-minute video tour' link button is inset by its button padding, so it sits off the edge used by the heading and action buttons. The checklist icons and status badges line up consistently across rows."
+              },
+              {
+                "criterion": "state-completeness",
+                "score": 2,
+                "evidence": "The empty projects list uses `Empty` with 'No projects yet', and the checklist moves the step from 'Up next' to a 'Done' badge. However, the empty state offers no next-step action inside it. The create dialog's submit button is simply `disabled` until a name is entered, with no reason given. The Figma URL error replaces the `FieldDescription` text rather than using a Field error."
+              },
+              {
+                "criterion": "motion-restraint",
+                "score": 3,
+                "evidence": "The only motion is whatever the Dialog, Progress and Button components provide by default. The page adds no custom animation, durations or looping effects."
+              },
+              {
+                "criterion": "accessibility",
+                "score": 3,
+                "evidence": "Dialogs use `DialogTitle`/`DialogDescription`, and every input has a `FieldLabel` plus a hint linked with `aria-describedby`. Headings run in order: `level={1}`, then `level={2}`. Step status is carried by text badges ('Done', 'Up next', 'Not started'), sr-only 'Step n:' prefixes and `aria-current='step'`, not by icon colour alone."
+              },
+              {
+                "criterion": "token-use",
+                "score": 3,
+                "evidence": "Everything is built from @atom63/ui-react components using variants the contract lists (`primary`, `outline`, `ghost`, `link`, and Badge `success`/`info`/`muted`). The only color overrides are `text-muted-foreground` and `text-(--a63-status-success)` on the done-step icon, each used for its intended role. No literal colors or lengths appear."
+              }
+            ],
+            "total": 18
+          }
+        }
+      },
+      "thumbnails": [
+        "vibe/2026-09-27/onboarding-empty-state-ds-desktop.jpg",
+        "vibe/2026-09-27/onboarding-empty-state-ds-mobile.jpg",
+        "vibe/2026-09-27/onboarding-empty-state-plain-desktop.jpg",
+        "vibe/2026-09-27/onboarding-empty-state-plain-mobile.jpg"
+      ]
+    },
+    {
+      "brief": {
+        "id": "sign-in",
+        "title": "Sign in",
+        "body": "A sign-in page for a project management tool called Tally.\n\n- A centered card with the product name, a short welcome line, an email field, a password field\n  and a \"Sign in\" button.\n- A \"Forgot password?\" link next to the password field and a \"Create an account\" link below the\n  card.\n- A \"Keep me signed in\" checkbox.\n- Submitting with an empty or malformed email shows an error on that field. Any password other\n  than `correct-horse` shows \"Email or password is incorrect\" above the button.\n- While the request is in flight (fake it with a one-second delay), the button shows that it is\n  working and cannot be pressed twice.",
+        "markdown": "# Sign in\n\nA sign-in page for a project management tool called Tally.\n\n- A centered card with the product name, a short welcome line, an email field, a password field\n  and a \"Sign in\" button.\n- A \"Forgot password?\" link next to the password field and a \"Create an account\" link below the\n  card.\n- A \"Keep me signed in\" checkbox.\n- Submitting with an empty or malformed email shows an error on that field. Any password other\n  than `correct-horse` shows \"Email or password is incorrect\" above the button.\n- While the request is in flight (fake it with a one-second delay), the button shows that it is\n  working and cannot be pressed twice."
+      },
+      "arms": {
+        "ds": {
+          "status": "ok",
+          "agent": {
+            "costUsd": 0.5143504,
+            "durationMs": 67594,
+            "isError": false,
+            "models": [
+              "claude-opus-5-5[1m]"
+            ],
+            "permissionDenials": [
+              {
+                "tool": "Bash",
+                "input": "cat src/pages/not-found.tsx src/components/site-header.tsx && ls src && cat src/site.ts* 2>/dev/null | head -30; D=node_modules/@atom63/ui-react/dist; ls $D | head; grep -rl \"AlertProps\\b\" $D --include=*.d.ts | head -3"
+              }
+            ],
+            "stopReason": "success",
+            "turns": 26
+          },
+          "agentResult": "The sign-in page is now at `/sign-in`, and `pnpm typecheck` and `pnpm build` both pass. I haven't opened it in a browser, so the layout and interactions haven't been checked visually.\n\n**What's on the page** (`src/pages/sign-in.tsx`, built from Atom63 components):\n- **Card:** a card centred on the page with \"Tally\" as the heading and a short welcome line.\n- **Fields:** an email field and a password field, with \"Forgot password?\" next to the password label.\n- **Checkbox:** \"Keep me signed in\", on by default.\n- **Button:** \"Sign in\", using the design system's loading state.\n- **Link below the card:** \"New to Tally? Create an account\".\n\n**How it behaves:**\n- **Email check:** an empty email shows \"Enter your email address.\" and a malformed one shows \"Enter an email address like name@company.com.\" The error sits under the field, and focus moves back to it.\n- **Password check:** the fake request waits one second. Any password other than `correct-horse` shows \"Email or password is incorrect\" in an error alert above the button.\n- **While waiting:** the button shows a spinner, keeps its width and can't be pressed again. The submit handler also ignores repeat submits.\n- **On success:** the form is replaced by \"Welcome back. You are signed in as …\". There's no page to send the user to afterwards.\n\nI added the route in `src/router.tsx` alongside the existing ones and left the other pages unchanged. The build prints a \"chunks larger than 500 kB\" warning, which comes from the existing bundle, not this page.\n\n**Decision for you:** \"Forgot password?\" goes to `/forgot-password` and \"Create an account\" goes to `/sign-up`. Neither page exists yet, so both links currently show the app's \"Page not found\" page. You can have me build those pages, or point the links somewhere else.",
+          "files": {
+            "added": [
+              "src/pages/sign-in.tsx"
+            ],
+            "changed": [
+              "src/router.tsx"
+            ],
+            "removed": []
+          },
+          "measures": {
+            "craft": [],
+            "jsx": {
+              "system": 18,
+              "thirdParty": 2,
+              "icons": 0,
+              "local": 2,
+              "interactiveHtml": 3,
+              "otherHtml": 7,
+              "systemNames": {
+                "Card": 1,
+                "CardContent": 1,
+                "CardTitle": 1,
+                "CardDescription": 1,
+                "FieldGroup": 1,
+                "Field": 3,
+                "FieldLabel": 3,
+                "Input": 2,
+                "FieldError": 1,
+                "Checkbox": 1,
+                "Alert": 1,
+                "AlertDescription": 1,
+                "Button": 1
+              }
+            },
+            "lines": 226,
+            "literals": {
+              "paletteUtilities": [],
+              "literalColors": []
+            },
+            "share": 0.782608695652174
+          },
+          "typecheck": {
+            "ok": true,
+            "errors": 0
+          },
+          "build": {
+            "ok": true,
+            "output": ""
+          },
+          "axe": {
+            "violations": [],
+            "nodes": 0
+          },
+          "page": {
+            "textLength": 252,
+            "consoleErrors": []
+          }
+        },
+        "plain": {
+          "status": "ok",
+          "agent": {
+            "costUsd": 0.1931392,
+            "durationMs": 48387,
+            "isError": false,
+            "models": [
+              "claude-opus-5-5[1m]"
+            ],
+            "permissionDenials": [],
+            "stopReason": "success",
+            "turns": 8
+          },
+          "agentResult": "The Tally sign-in page is now at `/sign-in`, and `pnpm typecheck` and `pnpm build` both pass. I haven't opened it in a browser, so the layout and interactions haven't been checked by hand.\n\n**What's there** (`src/SignIn.tsx`):\n- A centered card with the \"Tally\" name, a \"Welcome back\" heading and a short welcome line.\n- Email and password fields, with the \"Forgot password?\" link next to the password label.\n- A \"Keep me signed in\" checkbox, which starts ticked.\n- A \"Sign in\" button, with a \"New to Tally? Create an account\" link below the card.\n\n**How it behaves:**\n- An empty email or one that isn't a valid address shows an error under the email field and puts the cursor back there. The error clears once you start typing.\n- Any password other than `correct-horse` shows \"Email or password is incorrect\" above the button after the one-second fake delay.\n- While the request is running, the button shows a spinner and \"Signing in…\" and is disabled, so a second click does nothing.\n- A successful sign-in shows \"Signed in as …\" with a link back to the home page.\n\n**Routing:** there's no router installed, so `src/main.tsx` now checks the address. `/sign-in` shows the new page and every other path shows the existing `App` as before.\n\nThe \"Forgot password?\" and \"Create an account\" links go to `/forgot-password` and `/sign-up`. Those pages don't exist, so for now both just show the existing home page.",
+          "files": {
+            "added": [
+              "src/SignIn.tsx"
+            ],
+            "changed": [
+              "src/main.tsx"
+            ],
+            "removed": []
+          },
+          "measures": {
+            "craft": [
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "bg-slate-50",
+                "line": 57
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-900",
+                "line": 57
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-200",
+                "line": 59
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "bg-white",
+                "line": 59
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-indigo-600",
+                "line": 61
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-500",
+                "line": 63
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "bg-emerald-50",
+                "line": 67
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-emerald-800",
+                "line": 67
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-emerald-700",
+                "line": 69
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "hover:text-emerald-900",
+                "line": 69
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "placeholder:text-slate-400",
+                "line": 94
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-2",
+                "line": 94
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus:ring-2",
+                "line": 94
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "border-red-500",
+                "line": 96
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "focus:border-red-500",
+                "line": 96
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-visible",
+                "match": "focus:border-red-500",
+                "line": 96
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "focus:ring-red-200",
+                "line": 96
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-red-200",
+                "line": 96
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus:ring-red-200",
+                "line": 96
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-300",
+                "line": 97
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "focus:border-indigo-500",
+                "line": 97
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-visible",
+                "match": "focus:border-indigo-500",
+                "line": 97
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "focus:ring-indigo-200",
+                "line": 97
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-indigo-200",
+                "line": 97
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus:ring-indigo-200",
+                "line": 97
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-red-600",
+                "line": 101
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-indigo-600",
+                "line": 114
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "hover:text-indigo-500",
+                "line": 114
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-300",
+                "line": 129
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "focus:border-indigo-500",
+                "line": 129
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-visible",
+                "match": "focus:border-indigo-500",
+                "line": 129
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-2",
+                "line": 129
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus:ring-2",
+                "line": 129
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "focus:ring-indigo-200",
+                "line": 129
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-visible",
+                "match": "focus:ring-indigo-200",
+                "line": 129
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "focus-ring-outline",
+                "match": "focus:ring-indigo-200",
+                "line": 129
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-700",
+                "line": 133
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "border-slate-300",
+                "line": 139
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "accent-indigo-600",
+                "line": 139
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "border-red-200",
+                "line": 147
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "bg-red-50",
+                "line": 147
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-red-700",
+                "line": 147
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "bg-indigo-600",
+                "line": 158
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-white",
+                "line": 158
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "hover:bg-indigo-500",
+                "line": 158
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "focus-visible:outline-indigo-600",
+                "line": 158
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-slate-600",
+                "line": 167
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "text-indigo-600",
+                "line": 169
+              },
+              {
+                "file": "src/SignIn.tsx",
+                "rule": "raw-color",
+                "match": "hover:text-indigo-500",
+                "line": 169
+              }
+            ],
+            "jsx": {
+              "system": 0,
+              "thirdParty": 1,
+              "icons": 2,
+              "local": 1,
+              "interactiveHtml": 11,
+              "otherHtml": 15,
+              "systemNames": {}
+            },
+            "lines": 199,
+            "literals": {
+              "paletteUtilities": [
+                "bg-slate-50",
+                "text-slate-900",
+                "border-slate-200",
+                "bg-white",
+                "text-indigo-600",
+                "text-slate-500",
+                "bg-emerald-50",
+                "text-emerald-800",
+                "text-emerald-700",
+                "hover:text-emerald-900",
+                "placeholder:text-slate-400",
+                "border-red-500",
+                "focus:border-red-500",
+                "focus:ring-red-200",
+                "border-slate-300",
+                "focus:border-indigo-500",
+                "focus:ring-indigo-200",
+                "text-red-600",
+                "text-indigo-600",
+                "hover:text-indigo-500",
+                "border-slate-300",
+                "focus:border-indigo-500",
+                "focus:ring-indigo-200",
+                "text-slate-700",
+                "border-slate-300",
+                "accent-indigo-600",
+                "border-red-200",
+                "bg-red-50",
+                "text-red-700",
+                "bg-indigo-600",
+                "text-white",
+                "hover:bg-indigo-500",
+                "focus-visible:outline-indigo-600",
+                "text-slate-600",
+                "text-indigo-600",
+                "hover:text-indigo-500"
+              ],
+              "literalColors": []
+            },
+            "share": 0
+          },
+          "typecheck": {
+            "ok": true,
+            "errors": 0
+          },
+          "build": {
+            "ok": true,
+            "output": ""
+          },
+          "axe": {
+            "violations": [],
+            "nodes": 0
+          },
+          "page": {
+            "textLength": 157,
+            "consoleErrors": []
+          }
+        }
+      },
+      "judge": {
+        "mapping": {
+          "A": "plain",
+          "B": "ds"
+        },
+        "agent": {
+          "costUsd": 0.20371820000000002,
+          "durationMs": 35482,
+          "isError": false,
+          "models": [
+            "claude-opus-5-5"
+          ],
+          "permissionDenials": [],
+          "stopReason": "success",
+          "turns": 9
+        },
+        "raw": "{\"A\":[{\"criterion\":\"spacing-rhythm\",\"score\":2,\"evidence\":\"The gaps all come from the scale, but they mix many steps: mb-6 below the header, mt-2 and mt-1 inside it, space-y-5 between fields, mt-1.5 from label to input and mt-6 before the footer link. The field gap (20px) is almost the same as the header-to-form gap (24px), so the ratio between grouping levels is weak.\"},{\"criterion\":\"hierarchy\",\"score\":3,\"evidence\":\"There is one solid indigo 'Sign in' button. The 'Tally' wordmark (text-2xl font-bold) and the h1 'Welcome back' (text-lg font-semibold) sit clearly above the text-sm body. The subtitle and footer copy are dimmed with text-slate-500 and text-slate-600.\"},{\"criterion\":\"alignment\",\"score\":2,\"evidence\":\"Inside one card, the header block is centred (text-center) while the labels, inputs, checkbox and button are start-aligned, so the card mixes two alignment systems. The email error and the form-error box are added conditionally, which pushes the content below them down.\"},{\"criterion\":\"state-completeness\",\"score\":3,\"evidence\":\"A malformed email gets a specific error under the field, linked with aria-invalid and aria-describedby, and focus returns to the field. A wrong password shows an alert box with an icon above the button. While the request runs, the button is disabled and shows a spinner with 'Signing in…', and an inFlight ref blocks a second press. Success shows a role=status confirmation.\"},{\"criterion\":\"motion-restraint\",\"score\":2,\"evidence\":\"The only motion is the LoaderCircle animate-spin during submit, which shows progress. It uses Tailwind's built-in animation instead of the --a63-motion tokens, and there is no motion-reduce handling.\"},{\"criterion\":\"accessibility\",\"score\":3,\"evidence\":\"The controls are a native form, inputs, links and button, each with a visible label linked by htmlFor. The error uses role=alert with text plus an icon, and the button sets aria-busy. Focus rings are visible (focus:ring-2, focus-visible:outline). The checkbox label wraps the input, which enlarges its target.\"},{\"criterion\":\"token-use\",\"score\":1,\"evidence\":\"Every colour is a literal Tailwind palette class, such as bg-slate-50, bg-white, text-indigo-600, bg-indigo-600, border-red-500, bg-red-50 and bg-emerald-50. It uses raw HTML controls instead of the system components, so the page ignores the theme.\"}],\"B\":[{\"criterion\":\"spacing-rhythm\",\"score\":3,\"evidence\":\"FieldGroup provides one consistent gap between fields, and CardContent padding=\\\"lg\\\" pads the card. The header-to-form gap (mt-6) and the card-to-footer gap (gap-6) are wider section gaps, so proximity matches grouping.\"},{\"criterion\":\"hierarchy\",\"score\":3,\"evidence\":\"CardTitle 'Tally', rendered as the h1, leads above the muted CardDescription. The only variant=\\\"primary\\\" action is 'Sign in'. 'Forgot password?' and 'Create an account' step down as underlined text links.\"},{\"criterion\":\"alignment\",\"score\":3,\"evidence\":\"The title, description, labels, inputs, checkbox row and button all share one start edge inside the card. The Password label and 'Forgot password?' share a baseline (items-baseline justify-between), and the inputs have matching heights.\"},{\"criterion\":\"state-completeness\",\"score\":3,\"evidence\":\"Email errors go through FieldError inside a data-invalid Field, and focus returns to the field. A wrong password shows an Alert variant=\\\"error\\\" above the button. The button uses the loading prop while pending, and the handler returns early if a request is already in flight. Success replaces the form with a signed-in description.\"},{\"criterion\":\"motion-restraint\",\"score\":2,\"evidence\":\"Loading motion comes from Button's loading state, which uses the system's motion tokens. The shared link class adds transition-colors with Tailwind's default duration instead of an --a63-motion token, and it animates colour rather than only transform or opacity.\"},{\"criterion\":\"accessibility\",\"score\":3,\"evidence\":\"Each control has a visible label linked by FieldLabel htmlFor, the email error is linked with aria-describedby, the Alert has role=alert, and the single h1 is the card title. Links are underlined, so they don't rely on colour alone.\"},{\"criterion\":\"token-use\",\"score\":3,\"evidence\":\"There are no literal colours or lengths. Links use text-foreground and hover:text-muted-foreground, the footer copy uses text-muted-foreground, and Card, Button, Input, Checkbox and Alert keep their defaults. The only className on a component is w-full on Button, for layout.\"}]}",
+        "scores": {
+          "plain": {
+            "max": 21,
+            "passed": false,
+            "scores": [
+              {
+                "criterion": "spacing-rhythm",
+                "score": 2,
+                "evidence": "The gaps all come from the scale, but they mix many steps: mb-6 below the header, mt-2 and mt-1 inside it, space-y-5 between fields, mt-1.5 from label to input and mt-6 before the footer link. The field gap (20px) is almost the same as the header-to-form gap (24px), so the ratio between grouping levels is weak."
+              },
+              {
+                "criterion": "hierarchy",
+                "score": 3,
+                "evidence": "There is one solid indigo 'Sign in' button. The 'Tally' wordmark (text-2xl font-bold) and the h1 'Welcome back' (text-lg font-semibold) sit clearly above the text-sm body. The subtitle and footer copy are dimmed with text-slate-500 and text-slate-600."
+              },
+              {
+                "criterion": "alignment",
+                "score": 2,
+                "evidence": "Inside one card, the header block is centred (text-center) while the labels, inputs, checkbox and button are start-aligned, so the card mixes two alignment systems. The email error and the form-error box are added conditionally, which pushes the content below them down."
+              },
+              {
+                "criterion": "state-completeness",
+                "score": 3,
+                "evidence": "A malformed email gets a specific error under the field, linked with aria-invalid and aria-describedby, and focus returns to the field. A wrong password shows an alert box with an icon above the button. While the request runs, the button is disabled and shows a spinner with 'Signing in…', and an inFlight ref blocks a second press. Success shows a role=status confirmation."
+              },
+              {
+                "criterion": "motion-restraint",
+                "score": 2,
+                "evidence": "The only motion is the LoaderCircle animate-spin during submit, which shows progress. It uses Tailwind's built-in animation instead of the --a63-motion tokens, and there is no motion-reduce handling."
+              },
+              {
+                "criterion": "accessibility",
+                "score": 3,
+                "evidence": "The controls are a native form, inputs, links and button, each with a visible label linked by htmlFor. The error uses role=alert with text plus an icon, and the button sets aria-busy. Focus rings are visible (focus:ring-2, focus-visible:outline). The checkbox label wraps the input, which enlarges its target."
+              },
+              {
+                "criterion": "token-use",
+                "score": 1,
+                "evidence": "Every colour is a literal Tailwind palette class, such as bg-slate-50, bg-white, text-indigo-600, bg-indigo-600, border-red-500, bg-red-50 and bg-emerald-50. It uses raw HTML controls instead of the system components, so the page ignores the theme."
+              }
+            ],
+            "total": 16
+          },
+          "ds": {
+            "max": 21,
+            "passed": true,
+            "scores": [
+              {
+                "criterion": "spacing-rhythm",
+                "score": 3,
+                "evidence": "FieldGroup provides one consistent gap between fields, and CardContent padding=\"lg\" pads the card. The header-to-form gap (mt-6) and the card-to-footer gap (gap-6) are wider section gaps, so proximity matches grouping."
+              },
+              {
+                "criterion": "hierarchy",
+                "score": 3,
+                "evidence": "CardTitle 'Tally', rendered as the h1, leads above the muted CardDescription. The only variant=\"primary\" action is 'Sign in'. 'Forgot password?' and 'Create an account' step down as underlined text links."
+              },
+              {
+                "criterion": "alignment",
+                "score": 3,
+                "evidence": "The title, description, labels, inputs, checkbox row and button all share one start edge inside the card. The Password label and 'Forgot password?' share a baseline (items-baseline justify-between), and the inputs have matching heights."
+              },
+              {
+                "criterion": "state-completeness",
+                "score": 3,
+                "evidence": "Email errors go through FieldError inside a data-invalid Field, and focus returns to the field. A wrong password shows an Alert variant=\"error\" above the button. The button uses the loading prop while pending, and the handler returns early if a request is already in flight. Success replaces the form with a signed-in description."
+              },
+              {
+                "criterion": "motion-restraint",
+                "score": 2,
+                "evidence": "Loading motion comes from Button's loading state, which uses the system's motion tokens. The shared link class adds transition-colors with Tailwind's default duration instead of an --a63-motion token, and it animates colour rather than only transform or opacity."
+              },
+              {
+                "criterion": "accessibility",
+                "score": 3,
+                "evidence": "Each control has a visible label linked by FieldLabel htmlFor, the email error is linked with aria-describedby, the Alert has role=alert, and the single h1 is the card title. Links are underlined, so they don't rely on colour alone."
+              },
+              {
+                "criterion": "token-use",
+                "score": 3,
+                "evidence": "There are no literal colours or lengths. Links use text-foreground and hover:text-muted-foreground, the footer copy uses text-muted-foreground, and Card, Button, Input, Checkbox and Alert keep their defaults. The only className on a component is w-full on Button, for layout."
+              }
+            ],
+            "total": 20
+          }
+        }
+      },
+      "thumbnails": [
+        "vibe/2026-09-27/sign-in-ds-desktop.jpg",
+        "vibe/2026-09-27/sign-in-ds-mobile.jpg",
+        "vibe/2026-09-27/sign-in-plain-desktop.jpg",
+        "vibe/2026-09-27/sign-in-plain-mobile.jpg"
+      ]
+    }
+  ]
+}
