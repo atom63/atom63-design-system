@@ -35,6 +35,8 @@ export interface AppShellNavItem {
 export interface AppShellProps {
   /** The page. The shell renders the `main` landmark, so pages inside it do not add `Page`. */
   children: ReactNode
+  /** Where the product name links; the first navigation item by default. */
+  homeHref?: string
   navItems: readonly AppShellNavItem[]
   productName: string
   /** Actions at the end of the top bar, such as an account menu. */
@@ -46,19 +48,31 @@ export interface AppShellProps {
  * screens it collapses to icons. The current page is marked with
  * `aria-current`, not only the active style.
  */
-export function AppShell({ children, navItems, productName, topBarActions }: AppShellProps) {
+export function AppShell({
+  children,
+  homeHref,
+  navItems,
+  productName,
+  topBarActions,
+}: AppShellProps) {
   return (
     <SidebarProvider>
       <Sidebar collapsible="icon">
-        <SidebarHeader>
-          <span className="font-heading text-foreground truncate px-2 font-semibold">
-            {productName}
-          </span>
-        </SidebarHeader>
-        <SidebarContent>
-          <SidebarGroup>
-            <SidebarGroupContent>
-              <nav aria-label="Main">
+        {/* One navigation landmark holds the product name and the menu, so all
+            sidebar content sits in a landmark; `contents` keeps the sidebar's
+            own layout. */}
+        <nav aria-label="Main" className="contents">
+          <SidebarHeader>
+            <a
+              className="font-heading text-foreground truncate px-2 font-semibold"
+              href={homeHref ?? navItems[0]?.href ?? '#'}
+            >
+              {productName}
+            </a>
+          </SidebarHeader>
+          <SidebarContent>
+            <SidebarGroup>
+              <SidebarGroupContent>
                 <SidebarMenu>
                   {navItems.map(item => (
                     <SidebarMenuItem key={item.href}>
@@ -76,10 +90,10 @@ export function AppShell({ children, navItems, productName, topBarActions }: App
                     </SidebarMenuItem>
                   ))}
                 </SidebarMenu>
-              </nav>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </SidebarContent>
+        </nav>
       </Sidebar>
       <SidebarInset>
         <header className="border-border flex h-14 items-center gap-2 border-b px-4">
