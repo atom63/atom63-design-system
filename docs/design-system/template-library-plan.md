@@ -217,7 +217,16 @@ Each step is its own pull request and ends green in CI.
    `atom63 copy <id> <dir>`, search kind `template` and `atom63 build [idea]`, with golden
    queries. MCP gets them from the command table, except `copy`: MCP tools are read-only.
    Until a template is `ready`, `template` and `build` list drafts too, marked as such.
-5. **The agent trial** (T7), with the report committed.
+5. **The agent trial** (T7), with the report committed. Done as a vibe rerun
+   (`audits/vibe-2026-09-27-templates.md`, same briefs and model as the baseline). The ds arm
+   scored 78 of 84 against 79 in the baseline, within run-to-run noise, and passed all four
+   briefs again. Two builders adopted templates: invoice-list copied the page header, data table
+   section and empty state, and notification-settings copied the page header and settings
+   section, which removed the baseline's phone overflow. The other two wrote from scratch, and
+   onboarding repeated the baseline's inset link button and added a heading-order axe violation.
+   Next: a getting-started checklist block (the onboarding brief needs one and no template has
+   it), and making agents reach for `atom63 build` before writing, since the brief's own words
+   already rank onboarding-page first.
 6. **shadcn registry** (T8).
 
 ## Out of scope for now
