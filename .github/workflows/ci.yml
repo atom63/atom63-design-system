@@ -100,6 +100,7 @@ jobs:
           pnpm check:token-economy
           pnpm check:craft
           pnpm check:templates
+          pnpm check:registry
           pnpm check:agent-index
           pnpm check:agents-md
           pnpm --filter @atom63/cli test

@@ -218,7 +218,12 @@ Each step is its own pull request and ends green in CI.
    queries. MCP gets them from the command table, except `copy`: MCP tools are read-only.
    Until a template is `ready`, `template` and `build` list drafts too, marked as such.
 5. **The agent trial** (T7), with the report committed.
-6. **shadcn registry** (T8).
+6. **shadcn registry** (T8). `pnpm build:registry` generates `apps/docs/public/r/` from the
+   agent index: `registry.json` and one built item per template, served at
+   `https://system.atom63.io/r/<id>.json`. Files install under `@components/atom63/` with their
+   folder layout, and a page lists its blocks as registry dependencies by URL.
+   `check:registry` fails when it drifts, and `check:starter --shadcn` installs `list-page`
+   from a local copy of the registry into a starter app, then typechecks and builds it.
 
 ## Out of scope for now
 

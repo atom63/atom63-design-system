@@ -1,0 +1,39 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "onboarding-page",
+  "type": "registry:page",
+  "title": "Onboarding page",
+  "description": "A first-run page inside the app shell: a welcome header and an empty state whose primary action creates the first record, with importing as the quieter alternative.",
+  "dependencies": [
+    "@atom63/ui-react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://system.atom63.io/r/app-shell.json",
+    "https://system.atom63.io/r/empty-state.json",
+    "https://system.atom63.io/r/page-header.json"
+  ],
+  "files": [
+    {
+      "path": "templates/pages/onboarding-page/onboarding-page.tsx",
+      "type": "registry:page",
+      "target": "@components/atom63/pages/onboarding-page/onboarding-page.tsx",
+      "content": "import { Button } from '@atom63/ui-react'\nimport { Container } from '@atom63/ui-react/layout'\nimport { FileText, LayoutDashboard, Plus, Settings, Upload } from 'lucide-react'\n\nimport { AppShell } from '../../blocks/app-shell/app-shell'\nimport { EmptyState } from '../../blocks/empty-state/empty-state'\nimport { PageHeader } from '../../blocks/page-header/page-header'\n\nexport const template = {\n  id: 'onboarding-page',\n  kind: 'page',\n  title: 'Onboarding page',\n  description:\n    'A first-run page inside the app shell: a welcome header and an empty state whose primary action creates the first record, with importing as the quieter alternative.',\n  category: 'feedback',\n  tags: ['onboarding', 'first run', 'empty', 'welcome', 'getting started', 'app shell'],\n  readiness: 'draft',\n} as const\n\nconst nav = [\n  { href: '#overview', icon: <LayoutDashboard aria-hidden />, label: 'Overview' },\n  { current: true, href: '#invoices', icon: <FileText aria-hidden />, label: 'Invoices' },\n  { href: '#settings', icon: <Settings aria-hidden />, label: 'Settings' },\n]\n\nexport function OnboardingPage() {\n  return (\n    <AppShell navItems={nav} productName=\"Tally\">\n      <Container maxWidth=\"default\" padding=\"none\">\n        <PageHeader\n          description=\"Send your first invoice and Tally tracks it until it is paid.\"\n          title=\"Welcome to Tally\"\n        />\n        <EmptyState\n          action={\n            <Button variant=\"primary\">\n              <Plus aria-hidden />\n              Create your first invoice\n            </Button>\n          }\n          description=\"Invoices you create or import appear here, with their status and amount.\"\n          icon={<FileText aria-hidden />}\n          secondaryAction={\n            <Button variant=\"outline\">\n              <Upload aria-hidden />\n              Import from CSV\n            </Button>\n          }\n          title=\"No invoices yet\"\n        />\n      </Container>\n    </AppShell>\n  )\n}\n"
+    }
+  ],
+  "categories": [
+    "feedback"
+  ],
+  "meta": {
+    "readiness": "draft",
+    "tags": [
+      "onboarding",
+      "first run",
+      "empty",
+      "welcome",
+      "getting started",
+      "app shell"
+    ]
+  },
+  "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates"
+}

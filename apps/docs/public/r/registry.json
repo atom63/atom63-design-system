@@ -1,0 +1,540 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "atom63",
+  "homepage": "https://system.atom63.io/patterns/pattern-templates",
+  "items": [
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "dashboard-page",
+      "type": "registry:page",
+      "title": "Dashboard page",
+      "description": "An overview inside the app shell: headline numbers, the most recent records and an activity feed, with one primary action.",
+      "dependencies": [
+        "@atom63/ui-react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://system.atom63.io/r/activity-list.json",
+        "https://system.atom63.io/r/app-shell.json",
+        "https://system.atom63.io/r/data-table-section.json",
+        "https://system.atom63.io/r/page-header.json",
+        "https://system.atom63.io/r/stat-row.json"
+      ],
+      "categories": [
+        "data"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "dashboard",
+          "overview",
+          "home",
+          "stats",
+          "metrics",
+          "activity",
+          "app shell"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/pages/dashboard-page/dashboard-page.tsx",
+          "type": "registry:page",
+          "target": "@components/atom63/pages/dashboard-page/dashboard-page.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "list-page",
+      "type": "registry:page",
+      "title": "List page",
+      "description": "A filterable collection page inside the app shell: a header with one primary action, a search and status filter, a table that becomes stacked rows on phones, and a detail sheet for one row.",
+      "dependencies": [
+        "@atom63/ui-react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://system.atom63.io/r/app-shell.json",
+        "https://system.atom63.io/r/data-table-section.json",
+        "https://system.atom63.io/r/detail-panel.json",
+        "https://system.atom63.io/r/filter-bar.json",
+        "https://system.atom63.io/r/page-header.json"
+      ],
+      "categories": [
+        "collections"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "list",
+          "detail",
+          "table",
+          "index",
+          "invoice",
+          "invoices",
+          "orders",
+          "filter",
+          "search"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/pages/list-page/list-page-data.ts",
+          "type": "registry:page",
+          "target": "@components/atom63/pages/list-page/list-page-data.ts"
+        },
+        {
+          "path": "templates/pages/list-page/list-page.tsx",
+          "type": "registry:page",
+          "target": "@components/atom63/pages/list-page/list-page.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "onboarding-page",
+      "type": "registry:page",
+      "title": "Onboarding page",
+      "description": "A first-run page inside the app shell: a welcome header and an empty state whose primary action creates the first record, with importing as the quieter alternative.",
+      "dependencies": [
+        "@atom63/ui-react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://system.atom63.io/r/app-shell.json",
+        "https://system.atom63.io/r/empty-state.json",
+        "https://system.atom63.io/r/page-header.json"
+      ],
+      "categories": [
+        "feedback"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "onboarding",
+          "first run",
+          "empty",
+          "welcome",
+          "getting started",
+          "app shell"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/pages/onboarding-page/onboarding-page.tsx",
+          "type": "registry:page",
+          "target": "@components/atom63/pages/onboarding-page/onboarding-page.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "settings-page",
+      "type": "registry:page",
+      "title": "Settings page",
+      "description": "Preferences inside the app shell, grouped into titled sections of labelled switches that apply at once, including a locked setting that explains why.",
+      "dependencies": [
+        "@atom63/ui-react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://system.atom63.io/r/app-shell.json",
+        "https://system.atom63.io/r/page-header.json",
+        "https://system.atom63.io/r/settings-section.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "settings",
+          "preferences",
+          "notifications",
+          "security",
+          "account",
+          "switches",
+          "app shell"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/pages/settings-page/settings-page.tsx",
+          "type": "registry:page",
+          "target": "@components/atom63/pages/settings-page/settings-page.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "sign-in-page",
+      "type": "registry:page",
+      "title": "Sign-in page",
+      "description": "Email and password sign-in with inline field errors, a form-level error for wrong credentials, a loading submit, and links to reset the password or create an account.",
+      "dependencies": [
+        "@atom63/ui-react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://system.atom63.io/r/auth-card.json"
+      ],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "sign in",
+          "login",
+          "auth",
+          "password",
+          "form",
+          "validation"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/pages/sign-in-page/sign-in-page.tsx",
+          "type": "registry:page",
+          "target": "@components/atom63/pages/sign-in-page/sign-in-page.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "activity-list",
+      "type": "registry:block",
+      "title": "Activity list",
+      "description": "Recent events in time order: who did what to which item, and when, with a machine-readable time for each entry.",
+      "dependencies": [
+        "@atom63/ui-react"
+      ],
+      "registryDependencies": [],
+      "categories": [
+        "data"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "activity",
+          "feed",
+          "timeline",
+          "history",
+          "audit log",
+          "recent"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/blocks/activity-list/activity-list.tsx",
+          "type": "registry:component",
+          "target": "@components/atom63/blocks/activity-list/activity-list.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "app-shell",
+      "type": "registry:block",
+      "title": "App shell",
+      "description": "The frame of a product: a sidebar with the product name and main navigation, a top bar with the menu toggle, and the page as the main landmark.",
+      "dependencies": [
+        "@atom63/ui-react"
+      ],
+      "registryDependencies": [],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "shell",
+          "sidebar",
+          "navigation",
+          "layout",
+          "frame",
+          "top bar",
+          "dashboard"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/blocks/app-shell/app-shell.tsx",
+          "type": "registry:component",
+          "target": "@components/atom63/blocks/app-shell/app-shell.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "auth-card",
+      "type": "registry:block",
+      "title": "Auth card",
+      "description": "A centered card for signing in or up: the product name as the page heading, one short line of context, the form, and the way to the other flow.",
+      "dependencies": [
+        "@atom63/ui-react"
+      ],
+      "registryDependencies": [],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "sign in",
+          "login",
+          "sign up",
+          "register",
+          "auth",
+          "password",
+          "form"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/blocks/auth-card/auth-card.tsx",
+          "type": "registry:component",
+          "target": "@components/atom63/blocks/auth-card/auth-card.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "data-table-section",
+      "type": "registry:block",
+      "title": "Data table section",
+      "description": "A collection shown as a table on wide screens and as stacked rows on phones, with a live result count, per-row actions and an empty state that offers a way out.",
+      "dependencies": [
+        "@atom63/ui-react",
+        "lucide-react"
+      ],
+      "registryDependencies": [
+        "https://system.atom63.io/r/empty-state.json"
+      ],
+      "categories": [
+        "collections"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "table",
+          "list",
+          "rows",
+          "responsive",
+          "empty state",
+          "results"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/blocks/data-table-section/data-table-section.tsx",
+          "type": "registry:component",
+          "target": "@components/atom63/blocks/data-table-section/data-table-section.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "detail-panel",
+      "type": "registry:block",
+      "title": "Detail panel",
+      "description": "One record's fields in a side sheet over its list, with the record's actions in the footer, so people inspect a row without losing their place.",
+      "dependencies": [
+        "@atom63/ui-react"
+      ],
+      "registryDependencies": [],
+      "categories": [
+        "collections"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "detail",
+          "inspector",
+          "side panel",
+          "sheet",
+          "record",
+          "view"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/blocks/detail-panel/detail-panel.tsx",
+          "type": "registry:component",
+          "target": "@components/atom63/blocks/detail-panel/detail-panel.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "empty-state",
+      "type": "registry:block",
+      "title": "Empty state",
+      "description": "Explains why there is nothing here and offers the next step: one primary action, with an optional quieter second one.",
+      "dependencies": [
+        "@atom63/ui-react"
+      ],
+      "registryDependencies": [],
+      "categories": [
+        "feedback"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "empty",
+          "zero state",
+          "no results",
+          "onboarding",
+          "first run"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/blocks/empty-state/empty-state.tsx",
+          "type": "registry:component",
+          "target": "@components/atom63/blocks/empty-state/empty-state.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "filter-bar",
+      "type": "registry:block",
+      "title": "Filter bar",
+      "description": "A labelled search field and one select filter above a collection, with a clear action that appears once a filter is set.",
+      "dependencies": [
+        "@atom63/ui-react"
+      ],
+      "registryDependencies": [],
+      "categories": [
+        "collections"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "search",
+          "filter",
+          "toolbar",
+          "list",
+          "table"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/blocks/filter-bar/filter-bar.tsx",
+          "type": "registry:component",
+          "target": "@components/atom63/blocks/filter-bar/filter-bar.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "page-header",
+      "type": "registry:block",
+      "title": "Page header",
+      "description": "The page title and a one-line description, with the page-level actions beside them on wide screens and below them on phones.",
+      "dependencies": [
+        "@atom63/ui-react"
+      ],
+      "registryDependencies": [],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "title",
+          "heading",
+          "actions",
+          "toolbar"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/blocks/page-header/page-header.tsx",
+          "type": "registry:component",
+          "target": "@components/atom63/blocks/page-header/page-header.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "settings-section",
+      "type": "registry:block",
+      "title": "Settings section",
+      "description": "A titled group of settings: the heading and why the group matters on the start side, and labelled rows with their controls in a card beside it.",
+      "dependencies": [
+        "@atom63/ui-react"
+      ],
+      "registryDependencies": [],
+      "categories": [
+        "forms"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "settings",
+          "preferences",
+          "account",
+          "notifications",
+          "toggles",
+          "form"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/blocks/settings-section/settings-section.tsx",
+          "type": "registry:component",
+          "target": "@components/atom63/blocks/settings-section/settings-section.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "stat-row",
+      "type": "registry:block",
+      "title": "Stat row",
+      "description": "A row of headline numbers, each with its label and an optional change against the previous period that does not rely on color alone.",
+      "dependencies": [
+        "@atom63/ui-react"
+      ],
+      "registryDependencies": [],
+      "categories": [
+        "data"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "stats",
+          "metrics",
+          "kpi",
+          "dashboard",
+          "numbers",
+          "summary"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/blocks/stat-row/stat-row.tsx",
+          "type": "registry:component",
+          "target": "@components/atom63/blocks/stat-row/stat-row.tsx"
+        }
+      ]
+    }
+  ]
+}
