@@ -7,6 +7,39 @@ import XCTest
 extension A11yIOSContract {
   static let all: [A11yIOSContract] = [
   .init(
+    pattern: "accordion",
+    catalogItem: "disclosureGroup",
+    parts: [
+      "header": .init(type: .button, nameRequired: true, scope: .preview),
+      "panel": .init(type: .staticText, nameRequired: true, scope: .preview),
+    ],
+    structure: [
+      .init(target: .init(part: "header", at: nil, label: "Implementation details"), exists: nil, enabled: true, selected: nil, value: nil, labelIncludes: nil),
+      .init(target: .init(part: "header", at: nil, label: "Unavailable details"), exists: nil, enabled: false, selected: nil, value: nil, labelIncludes: nil),
+      .init(target: .init(part: "panel", at: nil, label: "Native SwiftUI renderer with shared product intent."), exists: false, enabled: nil, selected: nil, value: nil, labelIncludes: nil),
+    ],
+    interactions: [
+      .init(
+        id: "activation-expands",
+        on: .init(part: "header", at: nil, label: "Implementation details"),
+        given: [],
+        then: [
+          .init(target: .init(part: "panel", at: nil, label: "Native SwiftUI renderer with shared product intent."), exists: true, enabled: nil, selected: nil, value: nil, labelIncludes: nil),
+        ],
+        result: "Expands the section and shows its content."
+      ),
+      .init(
+        id: "activation-collapses",
+        on: .init(part: "header", at: nil, label: "Implementation details"),
+        given: [],
+        then: [
+          .init(target: .init(part: "panel", at: nil, label: "Native SwiftUI renderer with shared product intent."), exists: false, enabled: nil, selected: nil, value: nil, labelIncludes: nil),
+        ],
+        result: "Collapses the section and hides its content."
+      ),
+    ]
+  ),
+  .init(
     pattern: "alertdialog",
     catalogItem: "confirmationDialog",
     parts: [
@@ -70,6 +103,40 @@ extension A11yIOSContract {
           .init(target: .init(part: "trigger", at: .first, label: nil), exists: nil, enabled: nil, selected: nil, value: nil, labelIncludes: "Active"),
         ],
         result: "Selects the option, closes the list and shows the new value."
+      ),
+    ]
+  ),
+  .init(
+    pattern: "dialog-modal",
+    catalogItem: "sheet",
+    parts: [
+      "close": .init(type: .button, nameRequired: true, scope: .app),
+      "title": .init(type: .staticText, nameRequired: true, scope: .app),
+      "trigger": .init(type: .button, nameRequired: true, scope: .preview),
+    ],
+    structure: [
+      .init(target: .init(part: "trigger", at: nil, label: "Open project sheet"), exists: true, enabled: nil, selected: nil, value: nil, labelIncludes: nil),
+    ],
+    interactions: [
+      .init(
+        id: "activation-opens-sheet",
+        on: .init(part: "trigger", at: nil, label: "Open project sheet"),
+        given: [],
+        then: [
+          .init(target: .init(part: "title", at: nil, label: "Project details"), exists: true, enabled: nil, selected: nil, value: nil, labelIncludes: nil),
+          .init(target: .init(part: "close", at: nil, label: "Done"), exists: true, enabled: nil, selected: nil, value: nil, labelIncludes: nil),
+        ],
+        result: "Opens the sheet, named by its title, with a way to close it."
+      ),
+      .init(
+        id: "close-dismisses-sheet",
+        on: .init(part: "close", at: nil, label: "Done"),
+        given: [],
+        then: [
+          .init(target: .init(part: "title", at: nil, label: "Project details"), exists: false, enabled: nil, selected: nil, value: nil, labelIncludes: nil),
+          .init(target: .init(part: "trigger", at: nil, label: "Open project sheet"), exists: true, enabled: nil, selected: nil, value: nil, labelIncludes: nil),
+        ],
+        result: "Closes the sheet and returns to the view that opened it."
       ),
     ]
   ),

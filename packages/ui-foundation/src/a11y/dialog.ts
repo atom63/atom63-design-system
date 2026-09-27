@@ -77,4 +77,48 @@ export const dialogModalPattern: A11yPatternContract = {
     },
   ],
   keyboard: modalDialogKeyboard('dialog'),
+  ios: {
+    parts: {
+      trigger: {
+        description: 'The button that opens the sheet.',
+        name: 'required',
+        type: 'button',
+      },
+      title: {
+        description: "The sheet's title, which names it.",
+        name: 'required',
+        scope: 'app',
+        type: 'staticText',
+      },
+      close: {
+        description: "The sheet's close action.",
+        name: 'required',
+        scope: 'app',
+        type: 'button',
+      },
+    },
+    structure: [{ target: { part: 'trigger', label: 'Open project sheet' }, exists: true }],
+    interactions: [
+      {
+        id: 'activation-opens-sheet',
+        action: 'tap',
+        on: { part: 'trigger', label: 'Open project sheet' },
+        result: 'Opens the sheet, named by its title, with a way to close it.',
+        then: [
+          { target: { part: 'title', label: 'Project details' }, exists: true },
+          { target: { part: 'close', label: 'Done' }, exists: true },
+        ],
+      },
+      {
+        id: 'close-dismisses-sheet',
+        action: 'tap',
+        on: { part: 'close', label: 'Done' },
+        result: 'Closes the sheet and returns to the view that opened it.',
+        then: [
+          { target: { part: 'title', label: 'Project details' }, exists: false },
+          { target: { part: 'trigger', label: 'Open project sheet' }, exists: true },
+        ],
+      },
+    ],
+  },
 }
