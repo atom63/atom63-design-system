@@ -10,7 +10,10 @@
     "@atom63/styles",
     "@atom63/ui-foundation",
     "@atom63/ui-react",
-    "@atom63/mdx"
+    "@atom63/mdx",
+    "@atom63/inform",
+    "@atom63/agent",
+    "@atom63/widgets"
   ],
   "workspaceDependencyPolicy": {
     "publishedPackagesMustUseExactPublishedVersionsBeforeStable": true,
@@ -80,6 +83,17 @@
       "react-compare-slider": "monitor-minor-compatible-range",
       "react-simple-code-editor": "monitor-minor-compatible-range",
       "shiki": "monitor-minor-compatible-range"
+    },
+    "@atom63/inform": {
+      "@atom63/ui-react": "workspace-beta-internal; exact-published-before-stable"
+    },
+    "@atom63/agent": {
+      "zustand": "compatible-range-ok"
+    },
+    "@atom63/widgets": {
+      "@atom63/ui-react": "workspace-beta-internal; exact-published-before-stable",
+      "lucide-react": "compatible-range-ok-user-replaceable-icons",
+      "motion": "monitor-minor-compatible-range"
     }
   },
   "stableSemverPolicy": {
