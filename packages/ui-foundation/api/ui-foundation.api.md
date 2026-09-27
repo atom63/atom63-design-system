@@ -22,6 +22,60 @@ export type A11yFocus = A11yTarget | {
 } | 'page-start';
 
 // @public
+export interface A11yIosCheck {
+    // (undocumented)
+    enabled?: boolean;
+    // (undocumented)
+    exists?: boolean;
+    // (undocumented)
+    labelIncludes?: string;
+    // (undocumented)
+    selected?: boolean;
+    // (undocumented)
+    target: A11yIosTarget;
+    // (undocumented)
+    value?: string;
+}
+
+// @public
+export interface A11yIosContract {
+    interactions: readonly A11yIosInteraction[];
+    parts: Readonly<Record<string, A11yIosPart>>;
+    structure: readonly A11yIosCheck[];
+}
+
+// @public
+export type A11yIosElementType = 'alert' | 'button' | 'staticText' | 'switch';
+
+// @public
+export interface A11yIosInteraction {
+    action: 'tap';
+    given?: readonly A11yIosCheck[];
+    id: string;
+    on: A11yIosTarget;
+    result: string;
+    then: readonly A11yIosCheck[];
+}
+
+// @public
+export interface A11yIosPart {
+    description: string;
+    name: 'required' | 'none';
+    scope?: 'app' | 'popup' | 'preview';
+    type: A11yIosElementType;
+}
+
+// @public
+export interface A11yIosTarget {
+    // (undocumented)
+    at?: 'first' | 'last' | number;
+    // (undocumented)
+    label?: string;
+    // (undocumented)
+    part: string;
+}
+
+// @public
 export interface A11yKeyboardInteraction {
     given: A11yKeyboardState & {
         focus: A11yFocus;
@@ -68,6 +122,7 @@ export interface A11yPatternBinding {
 // @public
 export interface A11yPatternContract {
     id: A11yPatternId;
+    ios?: A11yIosContract;
     keyboard: readonly A11yKeyboardInteraction[];
     name: string;
     opener?: {

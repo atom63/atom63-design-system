@@ -3,6 +3,7 @@ import SwiftUI
 
 struct CatalogView: View {
   @State private var query = ""
+  @State private var path: [CatalogItem] = CatalogItem.launchItem.map { [$0] } ?? []
 
   private var visibleSections: [CatalogSection] {
     CatalogRegistry.sections.filter {
@@ -11,7 +12,7 @@ struct CatalogView: View {
   }
 
   var body: some View {
-    NavigationStack {
+    NavigationStack(path: $path) {
       List {
         CatalogIntroduction()
 

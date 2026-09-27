@@ -17,6 +17,8 @@
 		A10000000000000000000008 /* CatalogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000008 /* CatalogView.swift */; };
 		A10000000000000000000009 /* CatalogShowcases.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000009 /* CatalogShowcases.swift */; };
 		B10000000000000000000001 /* Atom63DemoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20000000000000000000001 /* Atom63DemoUITests.swift */; };
+		BA1100000000000000000001 /* A11yContractUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1200000000000000000001 /* A11yContractUITests.swift */; };
+		BA1100000000000000000002 /* A11yContracts.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1200000000000000000002 /* A11yContracts.generated.swift */; };
 		C10000000000000000000001 /* ProjectRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20000000000000000000001 /* ProjectRepositoryTests.swift */; };
 		C10000000000000000000002 /* CatalogRegistryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20000000000000000000003 /* CatalogRegistryTests.swift */; };
 		C10000000000000000000003 /* CatalogSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20000000000000000000004 /* CatalogSnapshotTests.swift */; };
@@ -51,6 +53,8 @@
 		A20000000000000000000008 /* CatalogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogView.swift; sourceTree = "<group>"; };
 		A20000000000000000000009 /* CatalogShowcases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogShowcases.swift; sourceTree = "<group>"; };
 		B20000000000000000000001 /* Atom63DemoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atom63DemoUITests.swift; sourceTree = "<group>"; };
+		BA1200000000000000000001 /* A11yContractUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = A11yContractUITests.swift; sourceTree = "<group>"; };
+		BA1200000000000000000002 /* A11yContracts.generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = A11yContracts.generated.swift; sourceTree = "<group>"; };
 		B20000000000000000000002 /* Atom63DemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Atom63DemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C20000000000000000000001 /* ProjectRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectRepositoryTests.swift; sourceTree = "<group>"; };
 		C20000000000000000000002 /* Atom63DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Atom63DemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -124,6 +128,8 @@
 			isa = PBXGroup;
 			children = (
 				B20000000000000000000001 /* Atom63DemoUITests.swift */,
+				BA1200000000000000000001 /* A11yContractUITests.swift */,
+				BA1200000000000000000002 /* A11yContracts.generated.swift */,
 			);
 			path = Atom63DemoUITests;
 			sourceTree = "<group>";
@@ -294,6 +300,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B10000000000000000000001 /* Atom63DemoUITests.swift in Sources */,
+				BA1100000000000000000001 /* A11yContractUITests.swift in Sources */,
+				BA1100000000000000000002 /* A11yContracts.generated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

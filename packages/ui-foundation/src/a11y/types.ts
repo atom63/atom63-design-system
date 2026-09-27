@@ -6,7 +6,8 @@
  * the states and relationships between them, and the keyboard map. Component
  * contracts bind to a pattern (`accessibility` in `<name>-contract.ts`), and
  * the renderers verify the binding: the web in Storybook's `a11y` Vitest
- * project, iOS later.
+ * project, iOS in the demo app's XCUITest target from the pattern's `ios`
+ * section.
  *
  * The data is renderer-neutral. It names parts (`trigger`, `menu`, `item`),
  * never DOM selectors; a renderer's harness finds each part by its role.
@@ -140,6 +141,79 @@ export interface A11yKeyboardInteraction {
   when?: Readonly<Record<string, string>>
 }
 
+/**
+ * iOS: the element types XCUITest reports for the parts of a pattern. These
+ * are `XCUIElement.ElementType` cases.
+ */
+export type A11yIosElementType = 'alert' | 'button' | 'staticText' | 'switch'
+
+/** A pattern part as iOS exposes it to VoiceOver, Switch Control and XCUITest. */
+export interface A11yIosPart {
+  /** What the part is on iOS. */
+  description: string
+  /** `required`: the element has a non-empty label. */
+  name: 'required' | 'none'
+  /** The element type it is found by. */
+  type: A11yIosElementType
+  /**
+   * Where the part is looked up: `preview`, the showcase's component preview
+   * (the default); `popup`, the list the system draws for an open menu or
+   * menu-style picker; or `app`, the whole app, for alerts and sheets. A part
+   * with a required name is found only among elements that have a label, so
+   * an unlabelled control fails as missing.
+   */
+  scope?: 'app' | 'popup' | 'preview'
+}
+
+/** An instance of an iOS part: by position among the matches, or by its exact label. */
+export interface A11yIosTarget {
+  at?: 'first' | 'last' | number
+  label?: string
+  part: string
+}
+
+/**
+ * A fact about an iOS part that XCUITest can read. `value` is the element's
+ * accessibility value, `labelIncludes` a substring of its label (a menu-style
+ * picker reports its choice there), and `exists` whether any instance is on
+ * screen. XCUITest has no expanded state, so a disclosure is checked through
+ * the content it reveals.
+ */
+export interface A11yIosCheck {
+  enabled?: boolean
+  exists?: boolean
+  labelIncludes?: string
+  selected?: boolean
+  target: A11yIosTarget
+  value?: string
+}
+
+/** One activation on iOS and its result: the touch, VoiceOver and Switch Control counterpart of a key. */
+export interface A11yIosInteraction {
+  /** What is done: a tap (a VoiceOver double-tap, a Switch Control select). */
+  action: 'tap'
+  /** Facts that hold before the action. */
+  given?: readonly A11yIosCheck[]
+  /** Stable id. */
+  id: string
+  /** The element acted on. */
+  on: A11yIosTarget
+  /** The expected result, in the APG's words where they apply. */
+  result: string
+  /** Facts that hold after the action. */
+  then: readonly A11yIosCheck[]
+}
+
+/** How the pattern is checked on iOS, in the demo app's catalog showcase. */
+export interface A11yIosContract {
+  /** Interactions played in order, each from the state the previous one left. */
+  interactions: readonly A11yIosInteraction[]
+  /** The iOS parts, by the id the checks use. */
+  parts: Readonly<Record<string, A11yIosPart>>
+  /** Facts that hold when the showcase opens. */
+  structure: readonly A11yIosCheck[]
+}
+
 /** A WAI-ARIA APG pattern, as data. */
 export interface A11yPatternContract {
   /** The APG page slug. */
@@ -162,6 +236,8 @@ export interface A11yPatternContract {
   structure: readonly A11yStructureCheck[]
   /** The expected accessibility tree, one entry per root that a harness snapshots. */
   tree: readonly A11yTreeNode[]
+  /** The iOS checks. Omitted for patterns iOS does not render. */
+  ios?: A11yIosContract
 }
 
 /** A check the component fails today, kept visible instead of silently skipped. */

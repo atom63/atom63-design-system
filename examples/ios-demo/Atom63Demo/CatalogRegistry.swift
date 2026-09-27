@@ -30,6 +30,12 @@ enum CatalogSection: String, CaseIterable, Identifiable {
 }
 
 enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
+  /// The showcase to open at launch, from `ATOM63_CATALOG_ITEM` (a raw value).
+  /// UI tests use it to reach one showcase without scrolling the catalog.
+  static let launchItem: CatalogItem? = ProcessInfo.processInfo
+    .environment["ATOM63_CATALOG_ITEM"]
+    .flatMap(CatalogItem.init(rawValue:))
+
   case tokens
   case theme
   case button

@@ -45,4 +45,42 @@ export const alertDialogPattern: A11yPatternContract = {
     },
   ],
   keyboard: modalDialogKeyboard('dialog'),
+  ios: {
+    parts: {
+      trigger: {
+        description: 'The button that asks for confirmation.',
+        name: 'required',
+        type: 'button',
+      },
+      alert: {
+        description: 'The system alert, named by its title.',
+        name: 'required',
+        scope: 'app',
+        type: 'alert',
+      },
+      cancel: {
+        description: "The alert's cancel action.",
+        name: 'required',
+        scope: 'app',
+        type: 'button',
+      },
+    },
+    structure: [{ target: { part: 'trigger', at: 'first' }, exists: true }],
+    interactions: [
+      {
+        id: 'activation-opens-alert',
+        action: 'tap',
+        on: { part: 'trigger', at: 'first' },
+        result: 'Opens the alert dialog, named by its title.',
+        then: [{ target: { part: 'alert', at: 'first' }, exists: true }],
+      },
+      {
+        id: 'cancel-closes-alert',
+        action: 'tap',
+        on: { part: 'cancel', label: 'Cancel' },
+        result: 'Closes the alert without performing the action.',
+        then: [{ target: { part: 'alert' }, exists: false }],
+      },
+    ],
+  },
 }

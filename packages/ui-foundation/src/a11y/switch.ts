@@ -53,4 +53,33 @@ export const switchPattern: A11yPatternContract = {
       then: { focus: { part: 'switch', at: 'first' }, attributes: [checked('false')] },
     },
   ],
+  ios: {
+    parts: {
+      switch: {
+        description: 'A switch, named by its title (and description), with a value of 1 or 0.',
+        name: 'required',
+        type: 'switch',
+      },
+    },
+    structure: [
+      { target: { part: 'switch', at: 'first' }, value: '1' },
+      { target: { part: 'switch', at: 'last' }, value: '0' },
+    ],
+    interactions: [
+      {
+        id: 'activation-turns-off',
+        action: 'tap',
+        on: { part: 'switch', at: 'first' },
+        result: 'Changes the state of the switch.',
+        then: [{ target: { part: 'switch', at: 'first' }, value: '0' }],
+      },
+      {
+        id: 'activation-turns-on',
+        action: 'tap',
+        on: { part: 'switch', at: 'first' },
+        result: 'Changes the state of the switch back.',
+        then: [{ target: { part: 'switch', at: 'first' }, value: '1' }],
+      },
+    ],
+  },
 }
