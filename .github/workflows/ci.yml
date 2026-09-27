@@ -93,12 +93,13 @@ jobs:
       - name: Check tokens
         run: pnpm --filter @atom63/styles check:tokens
 
-      - name: Check theme authoring, token economy, craft and the scaffold
+      - name: Check theme authoring, token economy, craft, templates and the scaffold
         run: |
           pnpm test:scripts
           pnpm check:theme-authoring
           pnpm check:token-economy
           pnpm check:craft
+          pnpm check:templates
           pnpm check:agent-index
           pnpm check:agents-md
           pnpm --filter @atom63/cli test
@@ -192,6 +193,8 @@ jobs:
         run: |
           pnpm --filter @atom63/widgets typecheck
           pnpm --filter @atom63/widgets test
+      - name: Typecheck templates
+        run: pnpm --filter @atom63/templates typecheck
 
       # Generates an app with @atom63/create, installs it against the packed
       # packages, builds it, then adds a shadcn component and builds again.
@@ -213,6 +216,7 @@ jobs:
           pnpm --filter @atom63/inform lint
           pnpm --filter @atom63/agent lint
           pnpm --filter @atom63/widgets lint
+          pnpm --filter @atom63/templates lint
 
       # A pull request that changes a published package needs a changeset. One
       # that ships nothing to npm (tests, tooling, dev dependencies) adds an
