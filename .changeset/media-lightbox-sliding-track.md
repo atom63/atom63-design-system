@@ -28,3 +28,7 @@
 - `useMediaLightbox(count, { getOrigin })` takes the thumbnail for an item. With it, each page turn
   scrolls that thumbnail into view behind the lightbox, so a row of tiles follows the gallery, and
   `close()` without an argument morphs back into the thumbnail of the item on screen.
+- Closing after a page turn morphs the photo on screen. The morph used to run on the slide the
+  gallery opened on, so the visible photo stayed full size and vanished with the overlay. Closing
+  also no longer restarts the opening zoom when it is handed a new origin, which drew the photo
+  full size for a frame just before the overlay left.

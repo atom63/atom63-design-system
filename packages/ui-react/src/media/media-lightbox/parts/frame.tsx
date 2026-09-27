@@ -38,14 +38,23 @@ import { useLightboxZoomOptionsRegistry, type LightboxZoomOptions } from './zoom
  */
 function useOriginZoom(
   origin: HTMLElement | null | undefined,
-  enabled: boolean
+  enabled: boolean,
+  isActive: boolean
 ): React.RefObject<HTMLDivElement | null> {
   const mediaRef = useRef<HTMLDivElement>(null)
   const [isPresent, safeToRemove] = usePresence()
+  // Every mounted slide owns a frame and calls this hook; only the slide on
+  // screen may morph. Read through a ref so a page turn does not re-run the
+  // opening effect on the slide that just became active.
+  const isActiveRef = useRef(isActive)
+  isActiveRef.current = isActive
 
   useLayoutEffect(() => {
     const media = mediaRef.current
-    if (!media || !enabled) {
+    // Closing sets a new origin (the tile for the photo on screen), which
+    // would otherwise re-run this opening zoom on top of the closing one; its
+    // last frame drew the photo full size just before the overlay left.
+    if (!media || !enabled || !isPresent || !isActiveRef.current) {
       return
     }
 
@@ -115,14 +124,14 @@ function useOriginZoom(
       cancelled = true
       observer.disconnect()
     }
-  }, [enabled, origin])
+  }, [enabled, isPresent, origin])
 
   useEffect(() => {
     const media = mediaRef.current
     if (isPresent) {
       return
     }
-    if (!media || !enabled) {
+    if (!media || !enabled || !isActiveRef.current) {
       safeToRemove?.()
       return
     }
@@ -204,7 +213,8 @@ export function LightboxFrame({
   // a running morph drags the photo away from where the morph is aiming it.
   const frameRef = useOriginZoom(
     origin,
-    !reducedMotion && !viewTransition && (!itemThumb || activeAspect !== undefined)
+    !reducedMotion && !viewTransition && (!itemThumb || activeAspect !== undefined),
+    isActive
   )
   const slideAspect = activeAspect
 
@@ -263,7 +273,7 @@ export function LightboxFrame({
   return useRender({
     defaultTagName: 'div',
     props: mergeProps<'div'>(defaultProps, props),
-    ref: [isActive ? mediaRef : null, isActive ? frameRef : null, ref ?? null],
+    ref: [isActive ? mediaRef : null, frameRef, ref ?? null],
     render: render ?? (
       <motion.div
         animate={reducedMotion && isActive ? { opacity: 1 } : undefined}
