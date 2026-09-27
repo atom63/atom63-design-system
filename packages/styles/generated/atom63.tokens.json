@@ -61,9 +61,9 @@
   ],
   "summary": {
     "sourceFiles": 56,
-    "declarations": 1680,
-    "uniqueCssVariables": 1058,
-    "figmaMappedDeclarations": 1619
+    "declarations": 1682,
+    "uniqueCssVariables": 1059,
+    "figmaMappedDeclarations": 1621
   },
   "entries": [
     {
@@ -795,6 +795,38 @@
       },
       "lifecycle": "preview",
       "aliases": ["--color-emerald-800"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-error-foreground",
+      "cssVar": "--a63-badge-error-foreground",
+      "type": "color",
+      "value": "var(--color-danger-400)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Atom63 Contract",
+        "path": "badge/error/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-danger-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-error-foreground",
+      "cssVar": "--a63-badge-error-foreground",
+      "type": "color",
+      "value": "var(--color-danger-700)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Atom63 Contract",
+        "path": "badge/error/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-danger-700"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {

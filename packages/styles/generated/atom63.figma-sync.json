@@ -4,8 +4,8 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1008,
-    "aliasValues": 582,
+    "variables": 1009,
+    "aliasValues": 584,
     "skipped": 183,
     "computed": 59
   },
@@ -12249,6 +12249,19 @@
             },
             "dark": {
               "alias": "--color-emerald-400"
+            }
+          }
+        },
+        {
+          "name": "badge/error/foreground",
+          "token": "--a63-badge-error-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-danger-700"
+            },
+            "dark": {
+              "alias": "--color-danger-400"
             }
           }
         },
