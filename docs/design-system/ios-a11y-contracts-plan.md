@@ -1,6 +1,6 @@
 # iOS accessibility contracts plan
 
-Status: step 1 done, 2026-09-27; I1–I5 take their recommendations. Item 3 of the handoff menu ("iOS parity"), first part: the E2
+Status: steps 1 and 2 done, 2026-09-27; I1–I5 take their recommendations. Item 3 of the handoff menu ("iOS parity"), first part: the E2
 accessibility contracts on iOS. `quality-plan.md` E2 asked for this once the web contracts
 settled: "check the accessibility traits and values of the SwiftUI view in the same contract. This
 replaces the free-text `accessibilityOutcomes` step by step."
@@ -101,12 +101,12 @@ has no modifier for it and XCUITest does not read it.
 
 Each step is its own pull request and ends green in CI.
 
-1. **Contract and harness** (done in this pull request). Add the `ios` section to the pattern contract types and to the
+1. **Contract and harness** (done, #101). Add the `ios` section to the pattern contract types and to the
    switch, select-only combobox, menu button and alert dialog contracts; generate the Swift
    expectations; add a launch environment value that opens one catalog showcase directly; add an
    `A11yContractUITests` class that plays every contract with an `ios` section. *Verify:* removing
    the switch's label, or its value, fails the test.
-2. **Radio and tabs.** Fix the two showcases (I3, I4), update the tabs renderer in the
+2. **Radio and tabs** (done). Fix the two showcases (I3, I4), update the tabs renderer in the
    cross-renderer contract, and add their `ios` sections.
 3. **Accordion and dialog.** Add their `ios` sections (I5 for the accordion; the sheet's title and
    its Done button for the dialog).

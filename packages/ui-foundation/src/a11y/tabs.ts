@@ -178,4 +178,41 @@ export const tabsPattern: A11yPatternContract = {
       then: { focus: { part: 'tab', at: 1 }, attributes: [selected(1)] },
     },
   ],
+  ios: {
+    parts: {
+      tab: {
+        description:
+          'A segment of the segmented picker above the content: a button named by its label; the shown section is selected.',
+        name: 'required',
+        type: 'button',
+      },
+      panel: {
+        description: "Text of the selected section's content.",
+        name: 'required',
+        type: 'staticText',
+      },
+    },
+    structure: [
+      { target: { part: 'tab', label: 'Overview' }, selected: true },
+      { target: { part: 'tab', label: 'Activity' }, selected: false },
+      { target: { part: 'panel', label: 'Project summary and current status.' }, exists: true },
+    ],
+    interactions: [
+      {
+        id: 'activation-selects-tab',
+        action: 'tap',
+        on: { part: 'tab', label: 'Activity' },
+        result: 'Selects the tab and shows its content in place of the previous one.',
+        then: [
+          { target: { part: 'tab', label: 'Activity' }, selected: true },
+          { target: { part: 'tab', label: 'Overview' }, selected: false },
+          { target: { part: 'panel', label: 'Recent project changes.' }, exists: true },
+          {
+            target: { part: 'panel', label: 'Project summary and current status.' },
+            exists: false,
+          },
+        ],
+      },
+    ],
+  },
 }

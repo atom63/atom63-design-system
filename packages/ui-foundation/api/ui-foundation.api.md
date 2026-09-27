@@ -1494,7 +1494,7 @@ export const crossRendererContracts: readonly [{
     readonly foundationAxis: "states";
     readonly catalogItem: "radioGroup";
     readonly reactRenderer: "RadioGroup / Radio";
-    readonly swiftUIRenderer: "Picker(.inline) / AtomSelectionRow group";
+    readonly swiftUIRenderer: "Picker(.inline) in a Form / AtomSelectionRow group";
     readonly intent: "Choose exactly one value from a visible set of mutually exclusive options.";
     readonly parity: "platform-adaptive";
     readonly requiredStates: readonly ["unchecked", "checked", "disabled"];
@@ -1502,7 +1502,7 @@ export const crossRendererContracts: readonly [{
     readonly accessibilityOutcomes: readonly ["exposes-group-label", "exposes-option-labels-and-selected-state", "preserves-single-selection-semantics"];
     readonly platformAdaptations: {
         readonly react: readonly ["Uses radiogroup and radio semantics with circular indicators and keyboard movement."];
-        readonly swiftUI: readonly ["Uses an inline Picker or grouped AtomSelectionRow controls with native selected traits and touch targets."];
+        readonly swiftUI: readonly ["Uses an inline Picker inside a Form or List, where each option is a row with the native selected trait (outside one, iOS draws a wheel), or grouped AtomSelectionRow controls."];
     };
 }, {
     readonly id: "slider";
@@ -1590,7 +1590,7 @@ export const crossRendererContracts: readonly [{
     readonly foundationAxis: "states";
     readonly catalogItem: "tabs";
     readonly reactRenderer: "Tabs";
-    readonly swiftUIRenderer: "TabView";
+    readonly swiftUIRenderer: "Picker(.segmented) with the selected content";
     readonly intent: "Switch between peer destinations or content views while keeping one selection active.";
     readonly parity: "platform-adaptive";
     readonly requiredStates: readonly ["rest", "selected"];
@@ -1598,7 +1598,7 @@ export const crossRendererContracts: readonly [{
     readonly accessibilityOutcomes: readonly ["exposes-tab-labels", "exposes-selected-state", "associates-selection-with-visible-content"];
     readonly platformAdaptations: {
         readonly react: readonly ["Uses tablist, tab, and tabpanel semantics with keyboard navigation and a visual indicator."];
-        readonly swiftUI: readonly ["Uses native TabView presentation, which may render as a tab bar, sidebar, or page control by platform and context."];
+        readonly swiftUI: readonly ["In-page sections use a segmented Picker above the content it selects, so each tab is a named, selectable button. TabView stays the renderer for app-level sections such as a tab bar or sidebar."];
     };
 }, {
     readonly id: "avatar";
