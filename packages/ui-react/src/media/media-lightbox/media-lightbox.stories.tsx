@@ -4,7 +4,7 @@ import { Lightbox } from '@atom63/ui-react/media/lightbox'
 import type { MediaLightboxAppearance, MediaLightboxItem } from '@atom63/ui-react/media'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 const GALLERY: MediaLightboxItem[] = [
   {
@@ -64,7 +64,12 @@ const WALLPAPERS: MediaLightboxItem[] = [
  * and dark. This is the story to try the paging track on a phone.
  */
 function WallpaperRow({ items }: { items: MediaLightboxItem[] }) {
-  const lightbox = useMediaLightbox(items.length)
+  const tiles = useRef(new Map<string, HTMLElement>())
+  // The row follows the gallery: each page turn scrolls the matching tile into
+  // view behind the lightbox, and closing morphs back into it.
+  const lightbox = useMediaLightbox(items.length, {
+    getOrigin: index => tiles.current.get(items[index]?.id ?? '') ?? null,
+  })
   const [appearance, setAppearance] = useState<Record<string, MediaLightboxAppearance>>({})
 
   return (
@@ -78,6 +83,13 @@ function WallpaperRow({ items }: { items: MediaLightboxItem[] }) {
               key={item.id}
               onClick={event => {
                 lightbox.openAt(itemIndex, event.currentTarget)
+              }}
+              ref={element => {
+                if (element) {
+                  tiles.current.set(item.id, element)
+                } else {
+                  tiles.current.delete(item.id)
+                }
               }}
               type="button"
             >

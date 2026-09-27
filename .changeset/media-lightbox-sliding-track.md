@@ -2,7 +2,8 @@
 '@atom63/ui-react': patch
 ---
 
-`MediaLightbox` pages like a native photo viewer. The props API is unchanged.
+`MediaLightbox` pages like a native photo viewer. The `MediaLightbox` props API is unchanged;
+`useMediaLightbox` gains an optional `getOrigin`.
 
 - Page turns slide instead of crossfading. Once a drag locks horizontal, the photo follows the
   pointer 1:1, and its neighbours sit beside it with a gap (`--a63-media-lightbox-gap`, default
@@ -20,3 +21,10 @@
   backdrop, and the caption and counter use the on-media foreground.
 - `Lightbox.Slides` now renders a `data-slot="media-lightbox-strip"` element inside the track,
   and the track sets `touch-action: none`. Slides no longer carry an inline `opacity`.
+- Closing into a thumbnail no longer flickers when the gallery was paged past it. Right before the
+  closing morph measures, the lightbox scrolls the return thumbnail into view instantly (the
+  overlay still covers the page), and it counts a thumbnail cut off by a scrolling ancestor as not
+  visible, so a still-clipped one cross-fades instead of morphing into a hidden box.
+- `useMediaLightbox(count, { getOrigin })` takes the thumbnail for an item. With it, each page turn
+  scrolls that thumbnail into view behind the lightbox, so a row of tiles follows the gallery, and
+  `close()` without an argument morphs back into the thumbnail of the item on screen.

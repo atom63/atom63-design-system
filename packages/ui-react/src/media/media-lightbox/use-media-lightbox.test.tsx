@@ -178,3 +178,85 @@ describe('useMediaLightbox', () => {
     expect(result.current.origin).toBe(trigger)
   })
 })
+
+describe('useMediaLightbox with getOrigin', () => {
+  function tiles(count: number) {
+    return Array.from({ length: count }, () => {
+      const tile = document.createElement('button')
+      tile.scrollIntoView = vi.fn()
+      return tile
+    })
+  }
+
+  it('scrolls the thumbnail of each page turn into view, instantly', () => {
+    const row = tiles(5)
+    const { result } = renderHook(() =>
+      useMediaLightbox(5, { getOrigin: index => row[index] ?? null })
+    )
+
+    act(() => {
+      result.current.openAt(0, row[0])
+    })
+    // Opening does not scroll the row under the opening morph.
+    expect(row[0]?.scrollIntoView).not.toHaveBeenCalled()
+
+    act(() => {
+      result.current.setIndex(3)
+    })
+
+    expect(row[3]?.scrollIntoView).toHaveBeenCalledWith({
+      behavior: 'instant',
+      block: 'nearest',
+      inline: 'nearest',
+    })
+  })
+
+  it('leaves the page alone while closed', () => {
+    const row = tiles(3)
+    const { result } = renderHook(() =>
+      useMediaLightbox(3, { getOrigin: index => row[index] ?? null })
+    )
+
+    act(() => {
+      result.current.setIndex(2)
+    })
+
+    expect(row[2]?.scrollIntoView).not.toHaveBeenCalled()
+  })
+
+  it('closes into the thumbnail of the item on screen', () => {
+    const row = tiles(5)
+    const { result } = renderHook(() =>
+      useMediaLightbox(5, { getOrigin: index => row[index] ?? null })
+    )
+
+    act(() => {
+      result.current.openAt(0, row[0])
+    })
+    act(() => {
+      result.current.setIndex(3)
+    })
+    act(() => {
+      result.current.close()
+    })
+
+    expect(result.current.origin).toBe(row[3])
+  })
+
+  it('still lets an explicit close target win', () => {
+    const row = tiles(3)
+    const elsewhere = document.createElement('div')
+    const { result } = renderHook(() =>
+      useMediaLightbox(3, { getOrigin: index => row[index] ?? null })
+    )
+
+    act(() => {
+      result.current.openAt(1, row[1])
+    })
+    act(() => {
+      result.current.close(elsewhere)
+    })
+
+    expect(result.current.origin).toBe(elsewhere)
+  })
+})

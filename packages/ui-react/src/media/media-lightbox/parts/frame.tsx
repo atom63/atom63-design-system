@@ -14,6 +14,7 @@ import {
   measureOriginMorph,
   paintOriginMorph,
 } from '../origin-morph'
+import { revealReturnTarget } from '../reveal-origin'
 import { hasMedia, resolveMediaSrc, resolveThumbSrc, SlideMedia } from '../slide-media'
 import { useMediaAspect } from '../use-media-aspect'
 import { MEDIA_VIEW_TRANSITION_NAME, MORPH_TARGET_ATTRIBUTE } from '../view-transition'
@@ -129,8 +130,11 @@ function useOriginZoom(
     // Re-measure rather than reuse the opening geometry: the gallery may have
     // been swiped, the viewport resized, or the image finally decoded since.
     clearOriginMorph(media)
+    // Bring the tile back into its row before measuring it: the gallery may
+    // have been paged far past the one on screen when it opened.
+    const target = revealReturnTarget(origin)
     const box = media.getBoundingClientRect()
-    const morph = box.width > 0 ? measureOriginMorph(media, box, origin ?? null) : null
+    const morph = box.width > 0 ? measureOriginMorph(media, box, target) : null
 
     const animation = morph
       ? (() => {
