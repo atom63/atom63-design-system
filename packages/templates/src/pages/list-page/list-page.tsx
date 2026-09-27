@@ -28,7 +28,7 @@ export const template = {
   description:
     'A filterable collection page inside the app shell: a header with one primary action, a search and status filter, a table that becomes stacked rows on phones, and a detail sheet for one row.',
   category: 'collections',
-  tags: ['list', 'detail', 'table', 'index', 'invoices', 'orders', 'filter', 'search'],
+  tags: ['list', 'detail', 'table', 'index', 'invoice', 'invoices', 'orders', 'filter', 'search'],
   readiness: 'draft',
 } as const
 

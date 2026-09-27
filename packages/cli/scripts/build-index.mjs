@@ -10,12 +10,17 @@
  *
  * Usage: node packages/cli/scripts/build-index.mjs [--check]
  */
-import { existsSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
 import { createServer, defaultServerConditions } from 'vite'
+
+import {
+  importSpecifiers,
+  parseTemplateMetadata,
+} from '../../../scripts/design-system/lib/templates-check.mjs'
 
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const root = path.resolve(packageRoot, '../..')
@@ -88,6 +93,7 @@ try {
     generatedBy: 'packages/cli/scripts/build-index.mjs',
     components,
     docs: docs.sort((left, right) => left.slug.localeCompare(right.slug)),
+    templates: templates(components),
     tokens: tokens(),
   }
 } finally {
@@ -97,6 +103,85 @@ try {
 /** Story export names in declaration order: `export const Sizes: Story = …`. */
 function storyNames(source) {
   return [...source.matchAll(/^export const ([A-Z]\w*)\s*:\s*Story\b/gm)].map(match => match[1])
+}
+
+/** Names imported from a module: `import { A, type B, C as D } from 'x'` → A, C. */
+function namedImports(source, specifier) {
+  const names = []
+  const pattern = new RegExp(`import\\s*\\{([^}]*)\\}\\s*from\\s*'${specifier}'`, 'g')
+  for (const match of source.matchAll(pattern)) {
+    for (const part of match[1].split(',')) {
+      const name = part.trim()
+      if (name && !name.startsWith('type ')) names.push(name.split(/\s+as\s+/)[0])
+    }
+  }
+  return names
+}
+
+/** The package a specifier names: `@atom63/ui-react/layout` → `@atom63/ui-react`. */
+function packageName(specifier) {
+  const parts = specifier.split('/')
+  return specifier.startsWith('@') ? parts.slice(0, 2).join('/') : parts[0]
+}
+
+/**
+ * Page and block templates from packages/templates, pages first. The files
+ * are the template's folder without its stories; `componentsUsed` is derived
+ * from the design system imports, so it cannot drift from the source.
+ */
+function templates(components) {
+  const srcDir = path.join(root, 'packages/templates/src')
+  const slugByExport = new Map(
+    components.flatMap(component => component.exports.values.map(name => [name, component.slug]))
+  )
+  const entries = []
+  for (const [dir, kind] of [
+    ['pages', 'page'],
+    ['blocks', 'block'],
+  ]) {
+    for (const id of readdirSync(path.join(srcDir, dir)).sort()) {
+      const folder = path.join(srcDir, dir, id)
+      const files = readdirSync(folder)
+        .filter(name => /\.(ts|tsx)$/.test(name) && !/\.(stories|test)\.tsx?$/.test(name))
+        .sort()
+        .map(name => ({
+          path: `${dir}/${id}/${name}`,
+          source: readFileSync(path.join(folder, name), 'utf8'),
+        }))
+      const main = files.find(file => file.path.endsWith(`/${id}.tsx`))
+      const metadata = parseTemplateMetadata(main.source)
+      const sources = files.map(file => file.source)
+      const imported = sources.flatMap(source => [
+        ...namedImports(source, '@atom63/ui-react'),
+        ...namedImports(source, '@atom63/ui-react/layout'),
+      ])
+      const specifiers = sources.flatMap(importSpecifiers)
+      entries.push({
+        id,
+        kind,
+        title: metadata.title,
+        description: metadata.description,
+        category: metadata.category,
+        tags: [...metadata.tags],
+        readiness: metadata.readiness,
+        componentsUsed: [...new Set(imported.map(name => slugByExport.get(name) ?? name))].sort(),
+        blocksUsed: [
+          ...new Set(
+            specifiers
+              .filter(specifier => specifier.startsWith('.'))
+              .map(specifier => path.posix.join(dir, id, specifier))
+              .flatMap(target => target.match(/^blocks\/([^/]+)\//)?.[1] ?? [])
+              .filter(block => block !== id)
+          ),
+        ].sort(),
+        packages: [
+          ...new Set(specifiers.filter(specifier => !specifier.startsWith('.')).map(packageName)),
+        ].sort(),
+        files,
+      })
+    }
+  }
+  return entries
 }
 
 /** Swift color names keyed by the CSS variable they are generated from. */
@@ -152,6 +237,6 @@ if (process.argv.includes('--check')) {
 } else {
   writeFileSync(indexPath, output)
   process.stdout.write(
-    `Wrote ${path.relative(root, indexPath)}: ${index.components.length} components, ${index.docs.length} docs pages, ${index.tokens.length} tokens.\n`
+    `Wrote ${path.relative(root, indexPath)}: ${index.components.length} components, ${index.docs.length} docs pages, ${index.templates.length} templates, ${index.tokens.length} tokens.\n`
   )
 }

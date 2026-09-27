@@ -9,12 +9,17 @@ import { runCli } from './bin.mjs'
 import { commands } from './commands.mjs'
 import { createAtomServer } from './mcp.mjs'
 
+/* The MCP tools are read-only, so commands that write files are not served. */
+const readCommands = commands.filter(command => !command.writes)
+
 const samples = {
   search: { query: 'date picker', limit: 3 },
   component: { slug: 'dialog' },
   example: { slug: 'badge', story: 'Sizes' },
   token: { query: '--a63-surface-page' },
   docs: { slug: 'theme-system' },
+  build: { idea: 'billing settings page' },
+  template: { id: 'settings-page' },
   rules: {},
   agents: {},
   manifest: {},
@@ -34,12 +39,13 @@ describe('atom63 MCP server', () => {
     const { tools } = await client.listTools()
     assert.deepEqual(
       tools.map(tool => tool.name),
-      commands.map(command => command.name)
+      readCommands.map(command => command.name)
     )
     const search = tools.find(tool => tool.name === 'search')
     assert.deepEqual(search.inputSchema.required, ['query'])
     assert.deepEqual(search.inputSchema.properties.kind.enum, [
       'component',
+      'template',
       'token',
       'doc',
       'example',
@@ -48,7 +54,7 @@ describe('atom63 MCP server', () => {
     for (const tool of tools) assert.equal(tool.annotations.readOnlyHint, true, tool.name)
   })
 
-  for (const command of commands) {
+  for (const command of readCommands) {
     it(`answers ${command.name} with the same envelope as the CLI`, async () => {
       const input = samples[command.name]
       assert.ok(input, `add a sample input for ${command.name}`)
@@ -91,7 +97,7 @@ describe('atom63 mcp over stdio', () => {
     )
     try {
       const { tools } = await stdioClient.listTools()
-      assert.equal(tools.length, commands.length)
+      assert.equal(tools.length, readCommands.length)
       const result = await stdioClient.callTool({ name: 'component', arguments: { slug: 'kbd' } })
       assert.equal(result.structuredContent.type, 'component.detail')
     } finally {

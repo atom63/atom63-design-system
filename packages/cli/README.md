@@ -17,12 +17,20 @@ Private while the interface settles. Status by step:
    query the system and the rules with their reasons, and sits between `atom63:agents` markers so
    it can be kept in sync. Paste it into a consuming project's AGENTS.md. This repo's own
    `AGENTS.md` embeds it, and `pnpm check:agents-md` fails when it is stale.
+5. **Templates.** The index holds every page and block in `@atom63/templates`, with its source
+   files and the components and blocks it uses (derived from its imports). `atom63 template`
+   lists or shows them, `atom63 copy` writes one and the blocks it uses into a project, and
+   `atom63 build <idea>` returns a kit: the closest pages and blocks, the components they use,
+   the foundation and the rules. `search` finds templates too.
 
 ## Usage
 
 In this repo, run it through the root script:
 
 ```bash
+pnpm atom63 build billing settings page
+pnpm atom63 template settings-page
+pnpm atom63 copy settings-page src/templates
 pnpm atom63 search date picker
 pnpm atom63 component dialog
 pnpm atom63 example badge Sizes
@@ -43,7 +51,7 @@ Error codes are append-only: once shipped, a code keeps its meaning. The command
 
 `atom63 mcp` serves the same commands as MCP tools over stdio, built with
 `@modelcontextprotocol/server` v2. Each tool has the command's name and a typed input schema, and
-it is marked read-only. The result carries the CLI's text as `content` and the `{ type, data }`
+it is marked read-only; `copy`, which writes files, is left out. The result carries the CLI's text as `content` and the `{ type, data }`
 envelope as `structuredContent`. A failed query is an `isError` result that holds the error
 `code`.
 

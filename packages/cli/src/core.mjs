@@ -64,7 +64,7 @@ export function editDistance(left, right, max = 3) {
 }
 
 /** Closest names to `wanted`, for "did you mean" suggestions. */
-function closest(wanted, names, limit = 3) {
+export function closest(wanted, names, limit = 3) {
   const target = normalize(wanted)
   return names
     .map(name => ({ name, distance: editDistance(target, normalize(name), 4) }))
@@ -82,7 +82,7 @@ function closest(wanted, names, limit = 3) {
  * count as an exact match: most components export a `…Popup` or `…Trigger`,
  * so partial matches on them are noise.
  */
-function score(query, terms, { names, aliases = [], keywords = [], prose = '' }) {
+export function score(query, terms, { names, aliases = [], keywords = [], prose = '' }) {
   const q = normalize(query)
   const nameTexts = names.map(normalize)
   let total = 0
@@ -107,7 +107,7 @@ function score(query, terms, { names, aliases = [], keywords = [], prose = '' })
   return total
 }
 
-function queryTerms(query) {
+export function queryTerms(query) {
   const terms = new Map(words(query).map(term => [term, 1]))
   for (const term of [...terms.keys()]) {
     for (const slug of synonyms[term] ?? []) {
@@ -129,10 +129,11 @@ function synonymBoost(query, slug) {
 
 /* ── Commands ────────────────────────────────────────────────────────────── */
 
-export const searchKinds = ['component', 'token', 'doc', 'example']
+export const searchKinds = ['component', 'template', 'token', 'doc', 'example']
 
 /**
- * One ranked list across components, tokens, docs pages and story examples.
+ * One ranked list across components, templates, tokens, docs pages and story
+ * examples.
  * Tokens only join when the query looks like one (`--…`) or kind is `token`,
  * so a thousand variables cannot bury the components.
  */
@@ -167,6 +168,26 @@ export function search(index, query, { kind, limit = 10 } = {}) {
           summary: component.summary,
           score: total,
           next: `atom63 component ${component.slug}`,
+        })
+      }
+    }
+  }
+
+  if (wants('template')) {
+    for (const template of index.templates) {
+      const total = score(query, terms, {
+        names: [template.id, template.title],
+        keywords: [...template.tags, template.category, ...template.componentsUsed],
+        prose: template.description,
+      })
+      if (total > 0) {
+        results.push({
+          kind: 'template',
+          id: template.id,
+          label: template.title,
+          summary: template.description,
+          score: total,
+          next: `atom63 template ${template.id}`,
         })
       }
     }

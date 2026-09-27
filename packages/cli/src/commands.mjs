@@ -3,11 +3,13 @@
  * from it, so the three can never describe different commands.
  *
  * Each command names its positional arguments and flags with types, and the
- * envelope `type`s it can return. `run` receives the index and the parsed
+ * envelope `type`s it can return. A command with `writes: true` changes files,
+ * so the MCP server, whose tools are read-only, leaves it out. `run` receives the index and the parsed
  * input and returns an envelope, or throws an AtomError.
  */
 import { agentsBlock } from './agents-md.mjs'
 import { component, docsPage, example, rules, search, searchKinds, token } from './core.mjs'
+import { build, copy, template, templateKinds } from './templates.mjs'
 
 export const commands = [
   {
@@ -40,6 +42,45 @@ export const commands = [
     flags: [],
     returns: ['example.source'],
     run: (index, { slug, story }) => example(index, slug, story),
+  },
+  {
+    name: 'build',
+    summary:
+      'A composition kit for an idea: the closest page templates and blocks, the components it needs, the foundation and the rules. With no idea, the build playbook.',
+    args: [
+      {
+        name: 'idea',
+        optional: true,
+        description: 'What you are building, e.g. "billing settings page".',
+      },
+    ],
+    flags: [],
+    returns: ['build.kit', 'build.playbook'],
+    run: (index, { idea }) => build(index, idea),
+  },
+  {
+    name: 'template',
+    summary:
+      'Page and block templates: with no id, the list; with an id, its source files, the components and blocks it uses, and how to copy it.',
+    args: [{ name: 'id', optional: true, description: 'Template id, e.g. settings-page.' }],
+    flags: [
+      { name: 'kind', type: 'string', choices: templateKinds, description: 'Only this kind.' },
+    ],
+    returns: ['template.list', 'template.detail'],
+    run: (index, { id, kind }) => template(index, id, { kind }),
+  },
+  {
+    name: 'copy',
+    summary:
+      'Copy a template and the blocks it uses into a directory of your project, keeping their layout so the imports resolve. Existing files are left alone.',
+    args: [
+      { name: 'id', description: 'Template id, e.g. settings-page.' },
+      { name: 'dir', description: 'Directory to copy into, e.g. src/templates.' },
+    ],
+    flags: [{ name: 'force', type: 'boolean', description: 'Overwrite files that already exist.' }],
+    returns: ['template.copied'],
+    writes: true,
+    run: (index, { id, dir, force }) => copy(index, id, dir, { force }),
   },
   {
     name: 'token',
@@ -107,6 +148,7 @@ export const errorCodes = [
   'token.empty_query',
   'token.not_found',
   'docs.not_found',
+  'template.not_found',
 ]
 
 /** The self-describing manifest an agent reads once to learn the interface. */
