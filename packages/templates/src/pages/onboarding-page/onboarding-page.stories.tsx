@@ -20,7 +20,7 @@ export const Phone: Story = { globals: phoneGlobals }
 export const Themes: Story = {
   parameters: themeMatrixParameters,
   render: () => (
-    <ThemeMatrix>
+    <ThemeMatrix frame>
       <OnboardingPage />
     </ThemeMatrix>
   ),

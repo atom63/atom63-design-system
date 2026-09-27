@@ -38,7 +38,7 @@ export const Themes: Story = {
   args,
   parameters: themeMatrixParameters,
   render: props => (
-    <ThemeMatrix>
+    <ThemeMatrix frame>
       <AppShell {...props} />
     </ThemeMatrix>
   ),

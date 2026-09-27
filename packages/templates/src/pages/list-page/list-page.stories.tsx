@@ -24,7 +24,7 @@ export const NoInvoices: Story = { args: { invoices: [] } }
 export const Themes: Story = {
   parameters: themeMatrixParameters,
   render: () => (
-    <ThemeMatrix>
+    <ThemeMatrix frame>
       <ListPage />
     </ThemeMatrix>
   ),
