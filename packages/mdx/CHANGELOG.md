@@ -1,5 +1,51 @@
 # @atom63/mdx
 
+## 0.4.0-beta.1
+
+### Patch Changes
+
+- [#85](https://github.com/atom63/atom63-design-system/pull/85) [`cc43c53`](https://github.com/atom63/atom63-design-system/commit/cc43c539453f0d8d60209d0e99c5bcc3b1edcf1a) Thanks [@atom63](https://github.com/atom63)! - Every keyboard focus ring is now an `outline`, so a component's own box-shadow can no longer hide
+  it and forced-colors mode shows it.
+  
+  - Checkbox, Radio, Select, Input, InputGroup, Textarea, InputOTP, Autocomplete, Accordion, Slider,
+    Badge, Breadcrumb, Calendar, CardLink, Carousel, Dialog close button, Item, Menubar,
+    NavigationMenu, Resizable, ScrollArea, SegmentedControl, Sidebar and SidebarNavTree draw their
+    ring as an outline. Elevation and inset-border shadows stay on while the element has focus, so a
+    checked Checkbox, an open Accordion trigger or a Slider thumb keep their shadow.
+  - Menubar, NavigationMenu and SegmentedControl draw the ring inside the item, because their lists
+    scroll and clipped an outer ring. On the accent SegmentedControl the active item's ring takes the
+    label colour.
+  - Invalid Input, Textarea and InputOTP fields keep their danger-tinted ring.
+  - The Slider thumb keeps its ring while dragged, now as an outline.
+  - MediaLightbox buttons and thumbnails and the appearance VisualChoiceControl use Tailwind outline
+    utilities instead of `ring-*`.
+  - Rings appear at once. Recipes whose only animated shadow was the ring no longer transition
+    `box-shadow`.
+  - `@atom63/mdx`: MermaidDiagram draws its ring inside the stage, which its scroll container used to
+    clip, and PageTableOfContents links use an outline ring, inset in the compact list.
+
+- [#84](https://github.com/atom63/atom63-design-system/pull/84) [`8f58388`](https://github.com/atom63/atom63-design-system/commit/8f583887296639967fe0f7c183d96e496f4e6ac0) Thanks [@atom63](https://github.com/atom63)! - Keyboard focus rings are visible again where a component's own box-shadow used to replace them.
+  
+  - `Button` draws its focus ring as an `outline` instead of an extra box-shadow layer, so recipes
+    that set a Button's shadow no longer drop the ring. This fixes `ButtonGroup` members,
+    `ScrollableList` scroll buttons, `ConnectedPanel` triggers and `CopyButton`. Forced-colors mode
+    now shows the ring too.
+  - `ButtonGroup` members draw the ring inside their own edge, since a horizontal group scrolls and
+    would clip an outer ring; on filled variants (primary, destructive, …) the ring takes the label
+    colour. `ConnectedPanel` triggers also draw it inside.
+  - `ToggleGroup` items, pressed ones included, keep the standalone `Toggle` outline, and the focused
+    item sits above its neighbours.
+  - `Tabs`: tabs draw the ring as an inset outline, so the active `attached` tab keeps it; on that
+    tab it takes the label colour. Tab panels, which are tab stops, now show a ring.
+  - `CommandInput`: the search row rings while the input has keyboard focus.
+  - `@atom63/mdx`: `DocExample` tabs keep their ring when active, and `ImageCompare` rings the stage
+    and the handle while the slider has keyboard focus.
+
+- [#69](https://github.com/atom63/atom63-design-system/pull/69) [`ff25f46`](https://github.com/atom63/atom63-design-system/commit/ff25f46fb317c1224fa170856d852f7ef859bf33) Thanks [@atom63](https://github.com/atom63)! - Publish `@atom63/mdx` from the release workflow, alongside the other design system packages.
+- Updated dependencies [[`dfe96a4`](https://github.com/atom63/atom63-design-system/commit/dfe96a4d508abb209bc4a11782252d867fac6ad7), [`bbd4c87`](https://github.com/atom63/atom63-design-system/commit/bbd4c877ff39d9a58746997cc4b5b2b3a9c928ba), [`ad62b14`](https://github.com/atom63/atom63-design-system/commit/ad62b1480089c5b92f984313c1045586e2dba7e3), [`be6077c`](https://github.com/atom63/atom63-design-system/commit/be6077c79fc1d3126427f9e44dc8f9446a06bbcd), [`0a538ef`](https://github.com/atom63/atom63-design-system/commit/0a538ef579c3841dcfae600403ce98f47053bd52), [`db5fadc`](https://github.com/atom63/atom63-design-system/commit/db5fadc3d5326f22a063fb2ea2dbaf78acc9e25c), [`a76b878`](https://github.com/atom63/atom63-design-system/commit/a76b878ea50c2ebbe75f4e4261cab42a89e22077), [`a76b878`](https://github.com/atom63/atom63-design-system/commit/a76b878ea50c2ebbe75f4e4261cab42a89e22077), [`a76b878`](https://github.com/atom63/atom63-design-system/commit/a76b878ea50c2ebbe75f4e4261cab42a89e22077), [`11555a8`](https://github.com/atom63/atom63-design-system/commit/11555a8d79f53ed5bcdbf4dc6476eecdc85dddac), [`457b90e`](https://github.com/atom63/atom63-design-system/commit/457b90e066b29fac5181cb709fc349f324e9262d), [`948aa37`](https://github.com/atom63/atom63-design-system/commit/948aa3772be67e1a27c8e007c7e014d32a17d0ca), [`78af86a`](https://github.com/atom63/atom63-design-system/commit/78af86a8af0f89a11b536109f4a0ef6e319478db), [`0b83864`](https://github.com/atom63/atom63-design-system/commit/0b8386419fb36738ea80a142b38ba523fb281983), [`cc43c53`](https://github.com/atom63/atom63-design-system/commit/cc43c539453f0d8d60209d0e99c5bcc3b1edcf1a), [`8f58388`](https://github.com/atom63/atom63-design-system/commit/8f583887296639967fe0f7c183d96e496f4e6ac0), [`7fc3f86`](https://github.com/atom63/atom63-design-system/commit/7fc3f86e4e4fe820972b417fe23f14e51f5be9c9), [`ffc8394`](https://github.com/atom63/atom63-design-system/commit/ffc8394d5f1e4cb9f5eb7ab922c3c7b5b125f9c3), [`85c29a5`](https://github.com/atom63/atom63-design-system/commit/85c29a53491c3c96ca3076e0964d138d5ec9ff75), [`f321b96`](https://github.com/atom63/atom63-design-system/commit/f321b961a259bcbfe422f07387ca72856f6f912d), [`aa077f9`](https://github.com/atom63/atom63-design-system/commit/aa077f9b547d15ca61f21c65367b49f03ab414d1), [`f297a4f`](https://github.com/atom63/atom63-design-system/commit/f297a4ff8f933b52c5dac74f86f17950486fe563), [`2cd2cb1`](https://github.com/atom63/atom63-design-system/commit/2cd2cb17474284abf5b58c47e864f4127190677d), [`3de1dce`](https://github.com/atom63/atom63-design-system/commit/3de1dcee52dc86436a0530d6849727705bc48945), [`11555a8`](https://github.com/atom63/atom63-design-system/commit/11555a8d79f53ed5bcdbf4dc6476eecdc85dddac), [`541e675`](https://github.com/atom63/atom63-design-system/commit/541e67582f86b9d9987b2ac41923dc9e5706ec95), [`614e4a5`](https://github.com/atom63/atom63-design-system/commit/614e4a5a1b02d0422aaf53920d6a6f840042b217), [`9109b20`](https://github.com/atom63/atom63-design-system/commit/9109b2076a71764d3869c3932ad9fdc0d676dd5b), [`f89eda9`](https://github.com/atom63/atom63-design-system/commit/f89eda9abc960caf880b57b1e41f73a7b4e8dd68), [`c3bdaf8`](https://github.com/atom63/atom63-design-system/commit/c3bdaf8648b67d7ce63bac343a5b9e42fafb5bae), [`b8a42d8`](https://github.com/atom63/atom63-design-system/commit/b8a42d86c445889f24ca80ca63e2c8433b9ae778), [`2f46468`](https://github.com/atom63/atom63-design-system/commit/2f46468f5a4b1b223f6a4235f15a47e2a0f393f4), [`38430d0`](https://github.com/atom63/atom63-design-system/commit/38430d06d2a691a43beb177906d2c8270e14b84c), [`b784cf5`](https://github.com/atom63/atom63-design-system/commit/b784cf5413e82a0343162ef1824ed73e9c19850d)]:
+  - @atom63/ui-react@0.2.0-beta.10
+  - @atom63/styles@0.1.0-beta.6
+
 ## 0.3.2
 
 ### Patch Changes

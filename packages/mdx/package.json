@@ -1,6 +1,6 @@
 {
   "name": "@atom63/mdx",
-  "version": "0.4.0-beta.0",
+  "version": "0.4.0-beta.1",
   "description": "MDX prose components, blocks, layout primitives and article styles for the Atom63 design system",
   "license": "MIT",
   "repository": {

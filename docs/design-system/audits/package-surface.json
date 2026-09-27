@@ -23,7 +23,7 @@
       "directory": "packages/styles",
       "manifestPath": "packages/styles/package.json",
       "name": "@atom63/styles",
-      "version": "0.1.0-beta.5",
+      "version": "0.1.0-beta.6",
       "private": false,
       "exports": {
         ".": "./src/index.css",
@@ -176,7 +176,7 @@
       "directory": "packages/ui-foundation",
       "manifestPath": "packages/ui-foundation/package.json",
       "name": "@atom63/ui-foundation",
-      "version": "0.1.1-beta.2",
+      "version": "0.1.1-beta.3",
       "private": false,
       "exports": {
         ".": {
@@ -203,7 +203,7 @@
       "directory": "packages/ui-react",
       "manifestPath": "packages/ui-react/package.json",
       "name": "@atom63/ui-react",
-      "version": "0.2.0-beta.9",
+      "version": "0.2.0-beta.10",
       "private": false,
       "exports": {
         ".": {
@@ -398,7 +398,7 @@
       "directory": "packages/mdx",
       "manifestPath": "packages/mdx/package.json",
       "name": "@atom63/mdx",
-      "version": "0.4.0-beta.0",
+      "version": "0.4.0-beta.1",
       "private": false,
       "exports": {
         ".": {
@@ -490,7 +490,7 @@
       "directory": "packages/inform",
       "manifestPath": "packages/inform/package.json",
       "name": "@atom63/inform",
-      "version": "0.2.0-beta.0",
+      "version": "0.2.0-beta.1",
       "private": false,
       "exports": {
         ".": {
@@ -533,7 +533,7 @@
       "directory": "packages/agent",
       "manifestPath": "packages/agent/package.json",
       "name": "@atom63/agent",
-      "version": "0.3.0-beta.0",
+      "version": "0.3.0-beta.1",
       "private": false,
       "exports": {
         ".": {
@@ -569,7 +569,7 @@
       "directory": "packages/widgets",
       "manifestPath": "packages/widgets/package.json",
       "name": "@atom63/widgets",
-      "version": "0.1.0-beta.0",
+      "version": "0.1.0-beta.1",
       "private": false,
       "exports": {
         ".": {
