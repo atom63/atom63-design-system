@@ -4,16 +4,19 @@
     "packages/styles/package.json",
     "packages/ui-foundation/package.json",
     "packages/ui-react/package.json",
-    "packages/mdx/package.json"
+    "packages/mdx/package.json",
+    "packages/inform/package.json",
+    "packages/agent/package.json",
+    "packages/widgets/package.json"
   ],
   "summary": {
-    "packageCount": 4,
-    "publishableCount": 4,
+    "packageCount": 7,
+    "publishableCount": 7,
     "privateCount": 0,
-    "packagesWithExports": 4,
-    "packagesWithFilesWhitelist": 4,
-    "packagesWithPeerDependencies": 2,
-    "packagesWithPublishAccess": 4
+    "packagesWithExports": 7,
+    "packagesWithFilesWhitelist": 7,
+    "packagesWithPeerDependencies": 5,
+    "packagesWithPublishAccess": 7
   },
   "packages": [
     {
@@ -466,6 +469,133 @@
         "./styles/shadcn.css"
       ],
       "files": ["API.md", "CONTRIBUTING.md", "dist", "src/**/*.css"],
+      "sideEffects": ["*.css", "**/*.css"],
+      "peerDependencies": {
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0"
+      },
+      "qualityScripts": {
+        "build": "tsup",
+        "lint": "eslint . --cache --max-warnings 0",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "typecheck": "tsc --noEmit"
+      },
+      "publishConfig": {
+        "access": "public"
+      },
+      "publishAccess": "public"
+    },
+    {
+      "directory": "packages/inform",
+      "manifestPath": "packages/inform/package.json",
+      "name": "@atom63/inform",
+      "version": "0.2.0-beta.0",
+      "private": false,
+      "exports": {
+        ".": {
+          "@atom63/source": "./src/index.ts",
+          "types": "./dist/index.d.ts",
+          "import": "./dist/index.js"
+        },
+        "./react": {
+          "@atom63/source": "./src/react/index.ts",
+          "types": "./dist/react/index.d.ts",
+          "import": "./dist/react/index.js"
+        },
+        "./surfaces": {
+          "@atom63/source": "./src/surfaces/index.ts",
+          "types": "./dist/surfaces/index.d.ts",
+          "import": "./dist/surfaces/index.js"
+        },
+        "./styles.css": "./src/styles.css"
+      },
+      "exportKeys": [".", "./react", "./styles.css", "./surfaces"],
+      "files": ["dist", "src/**/*.css"],
+      "sideEffects": ["*.css", "**/*.css"],
+      "peerDependencies": {
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0"
+      },
+      "qualityScripts": {
+        "build": "tsup",
+        "lint": "eslint . --cache --max-warnings 0",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "typecheck": "tsc --noEmit"
+      },
+      "publishConfig": {
+        "access": "public"
+      },
+      "publishAccess": "public"
+    },
+    {
+      "directory": "packages/agent",
+      "manifestPath": "packages/agent/package.json",
+      "name": "@atom63/agent",
+      "version": "0.3.0-beta.0",
+      "private": false,
+      "exports": {
+        ".": {
+          "@atom63/source": "./src/index.ts",
+          "types": "./dist/index.d.ts",
+          "import": "./dist/index.js"
+        },
+        "./react": {
+          "@atom63/source": "./src/react/index.ts",
+          "types": "./dist/react/index.d.ts",
+          "import": "./dist/react/index.js"
+        }
+      },
+      "exportKeys": [".", "./react"],
+      "files": ["dist"],
+      "sideEffects": false,
+      "peerDependencies": {
+        "react": "^19.1.0"
+      },
+      "qualityScripts": {
+        "build": "tsup",
+        "lint": "eslint . --cache --max-warnings 0",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "typecheck": "tsc --noEmit"
+      },
+      "publishConfig": {
+        "access": "public"
+      },
+      "publishAccess": "public"
+    },
+    {
+      "directory": "packages/widgets",
+      "manifestPath": "packages/widgets/package.json",
+      "name": "@atom63/widgets",
+      "version": "0.1.0-beta.0",
+      "private": false,
+      "exports": {
+        ".": {
+          "@atom63/source": "./src/index.ts",
+          "types": "./dist/index.d.ts",
+          "import": "./dist/index.js"
+        },
+        "./primitives": {
+          "@atom63/source": "./src/primitives/index.ts",
+          "types": "./dist/primitives/index.d.ts",
+          "import": "./dist/primitives/index.js"
+        },
+        "./state": {
+          "@atom63/source": "./src/state/index.ts",
+          "types": "./dist/state/index.d.ts",
+          "import": "./dist/state/index.js"
+        },
+        "./runtime": {
+          "@atom63/source": "./src/runtime/index.ts",
+          "types": "./dist/runtime/index.d.ts",
+          "import": "./dist/runtime/index.js"
+        },
+        "./styles.css": "./src/styles.css"
+      },
+      "exportKeys": [".", "./primitives", "./runtime", "./state", "./styles.css"],
+      "files": ["dist", "src/**/*.css"],
       "sideEffects": ["*.css", "**/*.css"],
       "peerDependencies": {
         "react": "^19.1.0",

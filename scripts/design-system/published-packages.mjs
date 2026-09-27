@@ -10,4 +10,7 @@ export const publishedPackageDirs = [
   'packages/ui-foundation',
   'packages/ui-react',
   'packages/mdx',
+  'packages/inform',
+  'packages/agent',
+  'packages/widgets',
 ]

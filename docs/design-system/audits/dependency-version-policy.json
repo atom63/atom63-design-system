@@ -12,7 +12,10 @@
     "@atom63/styles",
     "@atom63/ui-foundation",
     "@atom63/ui-react",
-    "@atom63/mdx"
+    "@atom63/mdx",
+    "@atom63/inform",
+    "@atom63/agent",
+    "@atom63/widgets"
   ],
   "packages": [
     {
@@ -71,6 +74,31 @@
         "react-compare-slider": "^4.0.0",
         "react-simple-code-editor": "^0.14.1",
         "shiki": "^4.3.1"
+      }
+    },
+    {
+      "name": "@atom63/inform",
+      "version": "0.2.0-beta.0",
+      "dir": "packages/inform",
+      "peerDependencies": { "react": "^19.1.0", "react-dom": "^19.1.0" },
+      "dependencies": { "@atom63/ui-react": "workspace:*" }
+    },
+    {
+      "name": "@atom63/agent",
+      "version": "0.3.0-beta.0",
+      "dir": "packages/agent",
+      "peerDependencies": { "react": "^19.1.0" },
+      "dependencies": { "zustand": "^5.0.14" }
+    },
+    {
+      "name": "@atom63/widgets",
+      "version": "0.1.0-beta.0",
+      "dir": "packages/widgets",
+      "peerDependencies": { "react": "^19.1.0", "react-dom": "^19.1.0" },
+      "dependencies": {
+        "@atom63/ui-react": "workspace:*",
+        "lucide-react": "^1.34.0",
+        "motion": "^13.1.1"
       }
     }
   ],

@@ -35,6 +35,9 @@ Before `publish=true` can work without an npm token, configure npm trusted publi
 | `@atom63/ui-foundation` | `atom63/atom63-design-system` | `.github/workflows/release-beta.yml` |
 | `@atom63/ui-react` | `atom63/atom63-design-system` | `.github/workflows/release-beta.yml` |
 | `@atom63/mdx` | `atom63/atom63-design-system` | `.github/workflows/release-beta.yml` |
+| `@atom63/inform` | `atom63/atom63-design-system` | `.github/workflows/release-beta.yml` |
+| `@atom63/agent` | `atom63/atom63-design-system` | `.github/workflows/release-beta.yml` |
+| `@atom63/widgets` | `atom63/atom63-design-system` | `.github/workflows/release-beta.yml` |
 
 A trusted publisher can only be added to a package that exists, so a new package needs one first publish with a maintainer's own npm login. Everything after that is automatic.
 
@@ -77,6 +80,9 @@ The workflow also references a GitHub environment named `npm-publish`. Create it
    npm view @atom63/ui-foundation@beta name version dist-tags --json
    npm view @atom63/ui-react@beta name version dist-tags dependencies --json
    npm view @atom63/mdx@beta name version dist-tags dependencies --json
+   npm view @atom63/inform@beta name version dist-tags dependencies --json
+   npm view @atom63/agent@beta name version dist-tags dependencies --json
+   npm view @atom63/widgets@beta name version dist-tags dependencies --json
    ```
 
 5. Keep `latest` synchronized with `beta` (see caveats) and run external/adopter smoke.

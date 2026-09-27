@@ -22,7 +22,7 @@ on:
 # The published packages, in dependency order. Must equal
 # scripts/design-system/published-packages.mjs (a script test checks it).
 env:
-  PUBLISHED_PACKAGES: packages/styles packages/ui-foundation packages/ui-react packages/mdx
+  PUBLISHED_PACKAGES: packages/styles packages/ui-foundation packages/ui-react packages/mdx packages/inform packages/agent packages/widgets
 
 permissions:
   contents: read
@@ -199,6 +199,12 @@ jobs:
       - name: Build MDX
         run: pnpm --filter @atom63/mdx build
 
+      - name: Build inform, agent and widgets
+        run: |
+          pnpm --filter @atom63/inform build
+          pnpm --filter @atom63/agent build
+          pnpm --filter @atom63/widgets build
+
       - name: Smoke-test packed packages
         run: pnpm check:ds-pack-smoke
 
@@ -227,6 +233,13 @@ jobs:
         run: |
           pnpm --filter @atom63/mdx typecheck
           pnpm --filter @atom63/mdx test
+
+      - name: Typecheck and test inform, agent and widgets
+        run: |
+          for pkg in inform agent widgets; do
+            pnpm --filter "@atom63/${pkg}" typecheck
+            pnpm --filter "@atom63/${pkg}" test
+          done
 
       - name: Check Changesets prerelease mode
         run: |
@@ -267,6 +280,9 @@ jobs:
           pnpm --filter @atom63/ui-foundation build
           pnpm --filter @atom63/ui-react build
           pnpm --filter @atom63/mdx build
+          pnpm --filter @atom63/inform build
+          pnpm --filter @atom63/agent build
+          pnpm --filter @atom63/widgets build
 
       # Trusted publishing needs npm 11.5.1 or later. Pinned so a new npm major
       # cannot change the publish step unreviewed; Dependabot does not track it.
