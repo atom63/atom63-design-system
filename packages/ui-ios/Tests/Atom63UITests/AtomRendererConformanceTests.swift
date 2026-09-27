@@ -20,6 +20,23 @@ struct AtomRendererConformanceTests {
     }
   }
 
+  /// A component with a SwiftUI renderer that is bound to an APG pattern must
+  /// have that pattern checked on iOS: its contract carries an `ios` section,
+  /// which the demo app's A11yContractUITests play against the showcase.
+  @Test
+  func everyBoundComponentWithARendererIsCheckedOnIOS() {
+    let bound = AtomComponentContracts.all.compactMap { contract in
+      AtomAccessibilityCoverage.patternByComponent[contract.id].map { (contract.id, $0) }
+    }
+    #expect(!bound.isEmpty)
+    for (component, pattern) in bound {
+      #expect(
+        AtomAccessibilityCoverage.patternsCheckedOnIOS.contains(pattern),
+        "\(component) implements \(pattern), which has no ios section in its pattern contract"
+      )
+    }
+  }
+
   @Test
   func semanticRendererVocabulariesCoverVerifiedStateContracts() {
     let alert = AtomRendererConformance.evidence(contractId: "alert")
