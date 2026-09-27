@@ -11,3 +11,4 @@
 @source not '../src/**/*.test.tsx';
 @source not '../src/**/*.stories.tsx';
 @source not '../src/test';
+@source not '../src/styles/utilities.css';
