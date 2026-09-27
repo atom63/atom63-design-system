@@ -39,7 +39,8 @@ export function importSpecifiers(source) {
  * A template may import only the design system, React, the icon set and
  * relative files inside the templates source; anything else is an app module
  * or a dependency a product would not have. `fromPath` is the importing file,
- * relative to packages/templates/src.
+ * relative to packages/templates/src. `catalogSource` is src/catalog.ts, which
+ * must import every template's metadata.
  */
 export function isAllowedImport(specifier, fromPath) {
   if (specifier.startsWith('./') || specifier.startsWith('../')) {
@@ -83,11 +84,12 @@ export function storyProblems(storySource) {
 /**
  * Check a set of templates. Each entry is { dir: 'blocks' | 'pages', id,
  * files: [{ path, source }], storySource: string | null }, with each path
- * relative to packages/templates/src. The template's own
+ * relative to packages/templates/src. `catalogSource` is src/catalog.ts, which
+ * must import every template's metadata. The template's own
  * file is `<id>.tsx`; every other non-story file in its folder is support code
  * held to the same import rule.
  */
-export function checkTemplates(entries) {
+export function checkTemplates(entries, catalogSource) {
   const problems = []
   const report = (entry, message) => problems.push(`${entry.dir}/${entry.id}: ${message}`)
   const usedBlocks = new Set()
@@ -114,6 +116,12 @@ export function checkTemplates(entries) {
   for (const entry of entries) {
     if (entry.dir === 'blocks' && !usedBlocks.has(entry.id)) {
       report(entry, 'is not used by any page')
+    }
+    if (
+      catalogSource !== undefined &&
+      !catalogSource.includes(`'./${entry.dir}/${entry.id}/${entry.id}'`)
+    ) {
+      report(entry, 'is missing from src/catalog.ts')
     }
   }
   return problems

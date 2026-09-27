@@ -2,7 +2,8 @@
  * check:templates — the mechanical gates for packages/templates (T5 in
  * docs/design-system/template-library-plan.md): complete metadata, imports
  * only from @atom63/*, react, lucide-react and the templates source, the
- * Desktop / Phone / Themes stories, and every block used by a page.
+ * Desktop / Phone / Themes stories, every block used by a page, and every
+ * template listed in src/catalog.ts.
  * Craft rules run over the same files in check:craft.
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
@@ -37,7 +38,7 @@ for (const dir of Object.keys(KINDS)) {
   }
 }
 
-const problems = checkTemplates(entries)
+const problems = checkTemplates(entries, readFileSync(path.join(srcDir, 'catalog.ts'), 'utf8'))
 if (problems.length > 0) {
   console.error(`check:templates found ${problems.length} problem(s):`)
   for (const problem of problems) console.error(`  ${problem}`)

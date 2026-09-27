@@ -7,14 +7,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@atom63/ui-react'
-import { Container, Page } from '@atom63/ui-react/layout'
-import { Ellipsis, Plus } from 'lucide-react'
+import { Container } from '@atom63/ui-react/layout'
+import { Ellipsis, FileText, LayoutDashboard, Plus, Settings } from 'lucide-react'
 import { useState } from 'react'
 
+import { AppShell } from '../../blocks/app-shell/app-shell'
 import {
   type DataTableColumn,
   DataTableSection,
 } from '../../blocks/data-table-section/data-table-section'
+import { DetailPanel } from '../../blocks/detail-panel/detail-panel'
 import { FilterBar } from '../../blocks/filter-bar/filter-bar'
 import { PageHeader } from '../../blocks/page-header/page-header'
 import { type Invoice, type InvoiceStatus, invoices as sampleInvoices } from './list-page-data'
@@ -24,11 +26,17 @@ export const template = {
   kind: 'page',
   title: 'List page',
   description:
-    'A filterable collection page: a header with one primary action, a search and status filter, and a table that becomes stacked rows on phones.',
+    'A filterable collection page inside the app shell: a header with one primary action, a search and status filter, a table that becomes stacked rows on phones, and a detail sheet for one row.',
   category: 'collections',
-  tags: ['list', 'table', 'index', 'invoices', 'orders', 'filter', 'search'],
+  tags: ['list', 'detail', 'table', 'index', 'invoices', 'orders', 'filter', 'search'],
   readiness: 'draft',
 } as const
+
+const nav = [
+  { href: '#overview', icon: <LayoutDashboard aria-hidden />, label: 'Overview' },
+  { current: true, href: '#invoices', icon: <FileText aria-hidden />, label: 'Invoices' },
+  { href: '#settings', icon: <Settings aria-hidden />, label: 'Settings' },
+]
 
 const statusOptions = [
   { label: 'All statuses', value: 'all' },
@@ -47,18 +55,14 @@ const statusBadge: Record<InvoiceStatus, { label: string; variant: 'success' | '
 const currency = new Intl.NumberFormat('en-US', { currency: 'USD', style: 'currency' })
 const date = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium', timeZone: 'UTC' })
 
+function StatusBadge({ status }: { status: InvoiceStatus }) {
+  return <Badge variant={statusBadge[status].variant}>{statusBadge[status].label}</Badge>
+}
+
 const columns: readonly DataTableColumn<Invoice>[] = [
   { cell: invoice => invoice.id, header: 'Invoice', key: 'id' },
   { cell: invoice => invoice.customer, header: 'Customer', key: 'customer' },
-  {
-    cell: invoice => (
-      <Badge variant={statusBadge[invoice.status].variant}>
-        {statusBadge[invoice.status].label}
-      </Badge>
-    ),
-    header: 'Status',
-    key: 'status',
-  },
+  { cell: invoice => <StatusBadge status={invoice.status} />, header: 'Status', key: 'status' },
   { cell: invoice => date.format(new Date(invoice.issued)), header: 'Issued', key: 'issued' },
   {
     align: 'end',
@@ -76,6 +80,8 @@ export interface ListPageProps {
 export function ListPage({ invoices = sampleInvoices }: ListPageProps) {
   const [query, setQuery] = useState('')
   const [status, setStatus] = useState('all')
+  const [openId, setOpenId] = useState<string | null>(null)
+  const open = invoices.find(invoice => invoice.id === openId)
 
   const needle = query.trim().toLowerCase()
   const visible = invoices.filter(
@@ -92,8 +98,8 @@ export function ListPage({ invoices = sampleInvoices }: ListPageProps) {
   }
 
   return (
-    <Page>
-      <Container maxWidth="wide">
+    <AppShell navItems={nav} productName="Tally">
+      <Container maxWidth="wide" padding="none">
         <PageHeader
           actions={
             <Button variant="primary">
@@ -148,7 +154,9 @@ export function ListPage({ invoices = sampleInvoices }: ListPageProps) {
                 }
               />
               <DropdownMenuContent align="end">
-                <DropdownMenuItem>View invoice</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setOpenId(invoice.id)}>
+                  View invoice
+                </DropdownMenuItem>
                 <DropdownMenuItem>Download PDF</DropdownMenuItem>
                 {invoice.status === 'paid' ? null : (
                   <DropdownMenuItem>Mark as paid</DropdownMenuItem>
@@ -166,6 +174,29 @@ export function ListPage({ invoices = sampleInvoices }: ListPageProps) {
           }
         />
       </Container>
-    </Page>
+      <DetailPanel
+        actions={
+          <>
+            <Button variant="outline">Download PDF</Button>
+            {open?.status === 'paid' ? null : <Button variant="primary">Mark as paid</Button>}
+          </>
+        }
+        description={open?.customer}
+        fields={
+          open
+            ? [
+                { label: 'Status', value: <StatusBadge status={open.status} /> },
+                { label: 'Issued', value: date.format(new Date(open.issued)) },
+                { label: 'Amount', value: currency.format(open.amount) },
+              ]
+            : []
+        }
+        onOpenChange={next => {
+          if (!next) setOpenId(null)
+        }}
+        open={open !== undefined}
+        title={open?.id ?? ''}
+      />
+    </AppShell>
   )
 }

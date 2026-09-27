@@ -1,19 +1,8 @@
-import {
-  Empty,
-  EmptyContent,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyMedia,
-  EmptyTitle,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@atom63/ui-react'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@atom63/ui-react'
 import { SearchX } from 'lucide-react'
 import type { ReactNode } from 'react'
+
+import { EmptyState } from '../empty-state/empty-state'
 
 export const template = {
   id: 'data-table-section',
@@ -48,6 +37,8 @@ export interface DataTableSectionProps<Row> {
   columns: readonly DataTableColumn<Row>[]
   empty: DataTableEmpty
   getRowKey: (row: Row) => string
+  /** Heading level of the empty state's title: one below the heading above the section. */
+  headingLevel?: 2 | 3 | 4
   rowActions?: (row: Row) => ReactNode
   rows: readonly Row[]
   /** A short count such as "12 of 25 invoices", announced when it changes. */
@@ -67,6 +58,7 @@ export function DataTableSection<Row>({
   columns,
   empty,
   getRowKey,
+  headingLevel = 2,
   label,
   rowActions,
   rows,
@@ -79,17 +71,13 @@ export function DataTableSection<Row>({
         {summary}
       </p>
       {rows.length === 0 ? (
-        <Empty>
-          <EmptyHeader>
-            <EmptyMedia variant="icon">
-              <SearchX aria-hidden />
-            </EmptyMedia>
-            {/* Level 2: the empty state sits directly under the page's h1. */}
-            <EmptyTitle aria-level={2}>{empty.title}</EmptyTitle>
-            <EmptyDescription>{empty.description}</EmptyDescription>
-          </EmptyHeader>
-          {empty.action ? <EmptyContent>{empty.action}</EmptyContent> : null}
-        </Empty>
+        <EmptyState
+          action={empty.action}
+          description={empty.description}
+          headingLevel={headingLevel}
+          icon={<SearchX aria-hidden />}
+          title={empty.title}
+        />
       ) : (
         <>
           {/* A `frame` ancestor draws the table as a bordered card, like the phone list. */}

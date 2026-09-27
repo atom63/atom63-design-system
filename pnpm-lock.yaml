@@ -165,6 +165,9 @@ importers:
       '@atom63/styles':
         specifier: workspace:*
         version: link:../../packages/styles
+      '@atom63/templates':
+        specifier: workspace:*
+        version: link:../../packages/templates
       '@atom63/ui-foundation':
         specifier: workspace:*
         version: link:../../packages/ui-foundation
