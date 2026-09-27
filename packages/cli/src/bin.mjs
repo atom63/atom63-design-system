@@ -66,7 +66,12 @@ export function runCli(argv) {
         allowPositionals: true,
         options: {
           json: { type: 'boolean', default: false },
-          ...Object.fromEntries(chosen.flags.map(flag => [flag.name, { type: 'string' }])),
+          ...Object.fromEntries(
+            chosen.flags.map(flag => [
+              flag.name,
+              { type: flag.type === 'boolean' ? 'boolean' : 'string' },
+            ])
+          ),
         },
       })
     } catch (error) {
@@ -96,7 +101,9 @@ export function runCli(argv) {
     for (const flag of chosen.flags) {
       const raw = parsed.values[flag.name]
       if (raw === undefined) continue
-      if (flag.type === 'number') {
+      if (flag.type === 'boolean') {
+        input[flag.name] = raw
+      } else if (flag.type === 'number') {
         const value = Number(raw)
         if (!Number.isInteger(value) || value < 1) {
           return fail(

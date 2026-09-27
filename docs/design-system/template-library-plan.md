@@ -213,9 +213,10 @@ Each step is its own pull request and ends green in CI.
    approve becomes `ready`.
 3. **The example app.** Rebuild `examples/product-shell` as a routed app composed from the pages.
    CI builds it and render-tests every route with axe.
-4. **CLI and MCP.** Index the templates; add `atom63 template list | show | copy`, search kind
-   `template` and `atom63 build [idea]`, with golden queries. MCP gets them from the command
-   table.
+4. **CLI and MCP.** Index the templates; add `atom63 template [id]` (list, or show one),
+   `atom63 copy <id> <dir>`, search kind `template` and `atom63 build [idea]`, with golden
+   queries. MCP gets them from the command table, except `copy`: MCP tools are read-only.
+   Until a template is `ready`, `template` and `build` list drafts too, marked as such.
 5. **The agent trial** (T7), with the report committed.
 6. **shadcn registry** (T8).
 

@@ -13,6 +13,7 @@ import {
   token,
 } from './core.mjs'
 import { synonyms } from './synonyms.mjs'
+import { build, template } from './templates.mjs'
 
 const index = loadIndex()
 const top = (query, options) => search(index, query, options).data.results.map(result => result.id)
@@ -40,9 +41,53 @@ const golden = [
   ['loading', 'spinner', 3],
   ['loading', 'skeleton', 3],
   ['popup', 'popover', 2],
-  ['empty state', 'empty', 2],
+  // The empty-state template ranks first; the component follows it.
+  ['empty state', 'empty', 3],
   ['toggle', 'switch', 3],
 ]
+
+/**
+ * How agents ask for a page or block. `search` and `build` must both put the
+ * expected template within the given position.
+ */
+const templateGolden = [
+  ['settings page', 'settings-page', 1],
+  ['login', 'sign-in-page', 2],
+  ['sign in form', 'sign-in-page', 1],
+  ['dashboard', 'dashboard-page', 1],
+  ['invoice list', 'list-page', 1],
+  ['table with filters', 'data-table-section', 2],
+  ['empty state', 'empty-state', 1],
+  ['onboarding', 'onboarding-page', 1],
+  ['sidebar navigation', 'app-shell', 1],
+  ['kpi', 'stat-row', 1],
+  ['activity feed', 'activity-list', 1],
+]
+
+describe('templates', () => {
+  for (const [query, expected, within] of templateGolden) {
+    it(`finds ${expected} within the top ${within} for "${query}"`, () => {
+      const ids = search(index, query, { kind: 'template' })
+        .data.results.map(result => result.id)
+        .slice(0, within)
+      assert.ok(ids.includes(expected), `"${query}" → ${ids.join(', ')}`)
+      const kit = build(index, query).data
+      const kitIds = [...kit.pages, ...kit.blocks].map(entry => entry.id)
+      assert.ok(kitIds.includes(expected), `build "${query}" → ${kitIds.join(', ')}`)
+    })
+  }
+
+  it('derives what each template uses from its imports', () => {
+    const listPage = template(index, 'list-page').data
+    assert.ok(listPage.componentsUsed.includes('dropdown-menu'))
+    assert.ok(listPage.blocksUsed.includes('data-table-section'))
+    assert.ok(listPage.files.every(file => !file.path.includes('.stories.')))
+  })
+
+  it('returns the playbook for build with no idea', () => {
+    assert.equal(build(index).type, 'build.playbook')
+  })
+})
 
 describe('search', () => {
   for (const [query, expected, within] of golden) {

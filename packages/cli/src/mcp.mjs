@@ -27,6 +27,7 @@ export function inputSchema(command) {
   for (const flag of command.flags) {
     let field
     if (flag.type === 'number') field = z.number().int().positive()
+    else if (flag.type === 'boolean') field = z.boolean()
     else if (flag.choices) field = z.enum(flag.choices)
     else field = z.string()
     shape[flag.name] = field.describe(flag.description).optional()
@@ -43,7 +44,7 @@ const result = (envelope, isError = false) => ({
 /** A new server instance with one read-only tool per query command. */
 export function createAtomServer(index = loadIndex()) {
   const server = new McpServer({ name: 'atom63', version: packageVersion })
-  for (const command of commands) {
+  for (const command of commands.filter(candidate => !candidate.writes)) {
     server.registerTool(
       command.name,
       {

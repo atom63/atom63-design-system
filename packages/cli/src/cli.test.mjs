@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict'
 import { execFileSync, spawnSync } from 'node:child_process'
+import { existsSync, mkdtempSync, readFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import path from 'node:path'
 import { describe, it } from 'node:test'
 import { fileURLToPath } from 'node:url'
 
@@ -18,6 +21,9 @@ const samples = {
   example: ['example', 'badge', 'Sizes'],
   token: ['token', '--a63-surface-page'],
   docs: ['docs', 'theme-system'],
+  build: ['build', 'billing', 'settings', 'page'],
+  template: ['template', 'settings-page'],
+  copy: ['copy', 'settings-page', mkdtempSync(path.join(tmpdir(), 'atom63-copy-'))],
   rules: ['rules'],
   agents: ['agents'],
   manifest: ['manifest'],
@@ -110,5 +116,42 @@ describe('atom63 CLI', () => {
     })
     assert.equal(missing.status, 1)
     assert.equal(JSON.parse(missing.stdout).data.code, 'component.not_found')
+  })
+})
+
+describe('atom63 copy', () => {
+  it('writes the template and every block it uses, keeping their imports resolvable', () => {
+    const dir = mkdtempSync(path.join(tmpdir(), 'atom63-copy-'))
+    const { exitCode, envelope } = json(['copy', 'list-page', dir])
+    assert.equal(exitCode, 0)
+    const written = envelope.data.written.map(file => path.resolve(file))
+    assert.ok(written.some(file => file.endsWith('pages/list-page/list-page.tsx')))
+    assert.ok(written.some(file => file.endsWith('blocks/empty-state/empty-state.tsx')))
+    for (const file of written) {
+      const source = readFileSync(file, 'utf8')
+      for (const [, specifier] of source.matchAll(/from '(\.[^']+)'/g)) {
+        const target = path.resolve(path.dirname(file), specifier)
+        assert.ok(
+          ['.tsx', '.ts'].some(extension => existsSync(target + extension)),
+          `${path.relative(dir, file)} imports ${specifier}, which was not copied`
+        )
+      }
+    }
+  })
+
+  it('leaves existing files alone unless --force is passed', () => {
+    const dir = mkdtempSync(path.join(tmpdir(), 'atom63-copy-'))
+    json(['copy', 'page-header', dir])
+    const again = json(['copy', 'page-header', dir]).envelope.data
+    assert.deepEqual(again.written, [])
+    assert.equal(again.skipped.length, 1)
+    assert.equal(json(['copy', 'page-header', dir, '--force']).envelope.data.written.length, 1)
+  })
+
+  it('suggests the closest template id for a typo', () => {
+    const { exitCode, envelope } = json(['copy', 'setings-page', tmpdir()])
+    assert.equal(exitCode, 1)
+    assert.equal(envelope.data.code, 'template.not_found')
+    assert.ok(envelope.data.suggestions.includes('settings-page'))
   })
 })
