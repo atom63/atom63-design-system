@@ -29,7 +29,7 @@ export function SwatchTokenControl<T extends string>({
     icon: (
       <span
         aria-hidden="true"
-        className="block size-4 rounded-full shadow-[inset_0_1px_0_rgb(255_255_255/0.28)] ring-1 ring-black/10 ring-inset dark:ring-white/15"
+        className="block size-4 rounded-full ring-1 ring-border ring-inset"
         data-slot="swatch"
         style={{ background: swatch(option.id) }}
       />
