@@ -1,6 +1,1 @@
-{
-  "focus-visible | packages/ui-react/src/components/calendar/calendar.css | .a63-Calendar-dropdown-root:has(:focus)": 1,
-  "raw-color | packages/ui-react/src/components/scrollable-list/scrollable-list.css | box-shadow: rgb(": 3,
-  "raw-color | packages/ui-react/src/theme/controls/swatch-token-control.tsx | dark:ring-white/15": 1,
-  "raw-color | packages/ui-react/src/theme/controls/swatch-token-control.tsx | ring-black/10": 1
-}
+{}

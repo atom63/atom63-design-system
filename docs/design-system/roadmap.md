@@ -2,6 +2,7 @@
 
 > 2026-09-24。根据你提出的 5 个目标，结合三份调研写成：对标库 Astryx、atom63-vite 各包评估、本仓库差距审计。
 > 2026-09-24 已拍板：D1–D5 全部采用推荐选项，按阶段 A → E 执行。决定记录见最后一节。
+> 2026-09-27：阶段 A–E 全部完成；模板库（`template-library-plan.md`）是阶段 C 唯一暂缓的一项。
 
 ## 结论先行
 
@@ -207,14 +208,14 @@ Astryx 是 Meta 开源的 React 设计系统（MIT，2026-06 公开 beta，0.6.x
 |---|---|---|---|
 | A. 正确性（近期、小） | Swift 颜色改从语义 token 生成；新增 Web / iOS 值级别一致性检查 | 修复已经存在的漂移 | 已完成（#24） |
 | B. 唯一源头（最大的一步） | 语义、品牌、contract、主题迁入 DTCG + resolver；公式写成派生规则；主题进入 Figma mode；打通 Figma 回写 | 消除黑盒，实现 Figma 1:1 | 已完成：B1–B7（#25–#32）、B8a（#45）、B8b（响应式字号） |
-| C. 流水线 | 脚手架、由 contract 生成文档、MCP / CLI、craft lint、模板库 | 流程化产出 | 进行中：craft lint 已上线（见下方 C 进度） |
-| D. pattern 迁入 | brand logo、icons 清理、mdx 通用部分、inform、agent runtime、widgets foundation | 完成分离 | DS 侧已完成：六项都已迁入或清理（见下方 D 进度）；atom63-vite 切换等 inform、agent、widgets 首次发布 |
-| E. 质量标杆 | a11y 规格合约、vibe tests、iOS 截图测试 | 把控 craft 与 taste | 进行中（见下方 E 进度） |
+| C. 流水线 | 脚手架、由 contract 生成文档、MCP / CLI、craft lint、模板库 | 流程化产出 | 已完成：craft lint、脚手架、contract 生成文档、CLI / MCP、starter；模板库暂缓（见下方 C 进度） |
+| D. pattern 迁入 | brand logo、icons 清理、mdx 通用部分、inform、agent runtime、widgets foundation | 完成分离 | 已完成：六项都已迁入或清理，七个包已发布，atom63-vite 全部改用 npm 上的 DS 包（见下方 D 进度） |
+| E. 质量标杆 | a11y 规格合约、vibe tests、iOS 截图测试 | 把控 craft 与 taste | 已完成：E1–E5 全部上线，vibe 有四个 brief 的完整基线（见下方 E 进度） |
 
 **C 进度（2026-09-25）：** craft lint 第一版（`pnpm check:craft`，已接入 CI）检查 ui-react 和 mdx 源码中的三条规则：原始颜色值（`raw-color`）、物理方向写法（`physical-properties`）、不经过 `:focus-visible` 的焦点样式（`focus-visible`）。
 存量违规记在 `docs/design-system/audits/craft-baseline.json`：新增违规会让 CI 失败；修复后基线必须同步缩小。基线最初有 103 处。
 之后几次修复：mdx 状态配色改用状态 token（#54）；全部改为逻辑方向（#56），有意保留的物理方向用 `craft-allow:` 注释说明；新增 `--a63-media-*` / `--a63-on-media-*` token，替换媒体控件里的字面颜色。
-剩余 6 处：ScrollableList 的玻璃阴影、色板控件的描边，以及 Calendar 下拉框的 `:has(:focus)`。
+最后 6 处已于 2026-09-27 修复，基线清零：ScrollableList 的玻璃阴影改用 与其他浮层相同的 `--a63-overlay-inner-shadow` 和 `--a63-overlay-shadow`，色板控件的描边改用 `ring-border`，Calendar 下拉框改为 `:has(:focus-visible)`。
 "禁用态不响应 hover" 静态扫描判断不可靠，改为之后用 Storybook 运行时测试来做。
 组件脚手架 `pnpm ds:new <name>` 已完成（Web 部分）：生成 contract、组件、recipe、story、测试和 changeset，插入所有登记表（导出、`recipes.css`、visual archetype、docs catalog），并重新生成 API 报告和审计文件。生成出来的组件直接能过 CI，只差 visual 基线。CI 里用 `--dry-run` 守住登记表的格式。加 `--ios` 时还会生成 iOS 部分：跨平台 contract、React 和 Swift 两端的 conformance 证据、`Atom<Name>.swift`，以及 iOS 演示目录的条目和 showcase。生成的组件在两个平台上都能直接过 CI，包括模拟器里的演示 app 测试。
 由 contract 生成文档已完成：每个组件文档页（以及给 agent 用的 markdown / llms 输出）新增 Contract 一节，直接从 `@atom63/ui-foundation` 读取轴与默认值、slot、状态、token slot、visual archetype；跨平台组件还会列出共同意图、parity、SwiftUI 渲染器、必需状态、共同结果、无障碍要求和两端的适配。
@@ -231,11 +232,13 @@ icons：atom63-vite 删除了重复的 `AnimatedCheck`、`Spinner`（atom63-vite
 inform 已迁入 `packages/inform`（`@atom63/inform`：消息模型、仲裁器，以及 banner、dialog、corner flyout、spotlight 四个 surface），样式改为包内自带的样式表，不再依赖使用方的 Tailwind；首次发布需要你手动发一次，之后 atom63-vite 再切换。
 agent runtime 及其 controller hooks 已迁入 `packages/agent`（`@atom63/agent`：运行时状态机与 transport 契约，`@atom63/agent/react` 提供 `useOwnedAgentRuntime`、`useAgentChromeController`），带样式的聊天 UI 和 LLM 客户端仍留在 atom63-vite；首次发布需要你手动发一次，之后 atom63-vite 再切换，届时 atom63-vite 自己的 `@atom63/agent` 包需要改名。
 widgets foundation 已迁入 `packages/widgets`（`@atom63/widgets`：layout、primitives、states、hosted shell，计划见 `widgets-foundation-plan.md`），host 和 collection 留在 atom63-vite，图标改为 lucide；首次发布需要你手动发一次，atom63-vite 切换前要先把自己的包改名。
+2026-09-27 更新：inform、agent、widgets 已完成首次发布并加入自动发布；atom63-vite 改用 npm 上的全部七个 DS 包（atom63-vite #427–#430），自己的 `@atom63/agent-chat` 和 `@atom63/portfolio-widgets` 改为 private。
 
 **E 进度（2026-09-26）：** Web 端的 a11y 规格合约已上线（计划见 `quality-plan.md` 的 E2）：dialog、alert dialog、menu button、tabs 四个 APG pattern 写成 `@atom63/ui-foundation` 里的数据，Dialog、AlertDialog、DropdownMenu、Tabs 在 contract 里声明所实现的 pattern，Storybook 的 `a11y` Vitest 项目据此生成测试，逐条检查结构和键盘交互（已接入 CI），Dialog 缺少 `aria-modal` 记为已知缺口。第二批（2026-09-26）加入 select-only combobox、switch、checkbox、accordion、radio group 五个 pattern，绑定 Select、Switch、Checkbox、Accordion、RadioGroup；Base UI 造成的偏差（Select 不用 `aria-activedescendant`、Tab 不提交选项，Accordion 折叠时的标题没有 `aria-controls` 等）记为已知缺口。
 craft rubric 已上线（E5）：docs 站的 Foundations 下新增 "Craft rubric" 页，间距节奏、层级、对齐、状态完整、动效克制、无障碍、token 使用七条标准各有 1–3 分描述、自动检查覆盖范围和现场好坏示例，标准数据放在 `scripts/design-system/lib/craft-rubric.mjs`，供设计评审和 E4 的模型评分共用。
 vibe tests 已上线（E4）：`pnpm vibe` 让无头 `claude -p` 按固定 brief 分别用 Atom63（starter + AGENTS.md + `atom63` MCP）和纯 React + Tailwind 各做一遍页面，测 craft 违规、类型错误、构建、axe、系统组件占比和字面颜色，再由盲评模型按 craft rubric 打分，报告提交在 `docs/design-system/audits/vibe-<日期>.md`。
 E3 iOS 截图测试已接入 CI：演示 app 的测试 target 用 swift-snapshot-testing 给目录里每个 showcase 拍亮色、暗色和大字号三张图，只在固定的模拟器（iPhone 17 Pro，iOS 26.2）上和提交的基线比较，基线由 iOS snapshots workflow 的 update 开关录制。
+vibe 完整基线（2026-09-27，`audits/vibe-2026-09-27.md`）：四个 brief 中，Atom63 组 craft 违规、类型错误、axe 违规均为 0，系统组件占比 92%，rubric 84 分得 79、四个全部通过；纯 React + Tailwind 组 84 分得 68、全部因 token 使用不及格。Atom63 组的扣分点（移动端宽表格溢出、link 按钮内边距造成的错位、空状态缺少下一步操作）作为模板库的输入。
 
 A 可以马上开始。B 需要先定下 D1；D 和 C 可以部分并行。（2026-09-25 更新：token manifest 的 1669 条中，1603 条由 DTCG 生成；其余 66 条是 DTCG 无法表达类型的 CSS 原生值，放在 `*.native.css` 中，每条都在 `native-values.json` 里写明原因；没有其他手写 token。）
 

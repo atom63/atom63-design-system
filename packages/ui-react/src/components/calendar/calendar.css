@@ -137,7 +137,7 @@
   border: var(--a63-control-border-width) solid var(--a63-border-control);
   border-radius: var(--a63-control-radius);
 }
-.a63-Calendar-dropdown-root:has(:focus) {
+.a63-Calendar-dropdown-root:has(:focus-visible) {
   border-color: var(--a63-focus-ring);
   outline: var(--a63-control-focus-ring-width) solid
     var(--a63-control-focus-ring-color, var(--a63-focus-ring));
