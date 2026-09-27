@@ -50,6 +50,8 @@
   --a63-badge-info-foreground: var(--color-info-700);
   --a63-badge-success-foreground: var(--color-success-700);
   --a63-badge-warning-foreground: var(--color-warning-800);
+  /* Error chips: the danger action color is a fill, too dark for text on its tint in dark mode. */
+  --a63-badge-error-foreground: var(--color-danger-700);
 }
 
 :is(.dark, [data-a63-mode='dark']) {
@@ -74,4 +76,5 @@
   --a63-badge-info-foreground: var(--color-info-400);
   --a63-badge-success-foreground: var(--color-success-400);
   --a63-badge-warning-foreground: var(--color-warning-400);
+  --a63-badge-error-foreground: var(--color-danger-400);
 }

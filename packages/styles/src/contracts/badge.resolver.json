@@ -207,6 +207,13 @@
                     "$type": "color",
                     "$value": "{color.warning.800}"
                   }
+                },
+                "error": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.danger.700}",
+                    "$description": "Error chips: the danger action color is a fill, too dark for text on its tint in dark mode."
+                  }
                 }
               }
             }
@@ -340,6 +347,12 @@
                   "foreground": {
                     "$type": "color",
                     "$value": "{color.warning.400}"
+                  }
+                },
+                "error": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{color.danger.400}"
                   }
                 }
               }

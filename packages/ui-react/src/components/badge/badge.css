@@ -97,7 +97,7 @@
 }
 .a63-Badge[data-variant='error'] {
   --badge-bg: color-mix(in oklch, var(--a63-action-danger) 12%, transparent);
-  --badge-fg: var(--a63-action-danger);
+  --badge-fg: var(--a63-badge-error-foreground);
 }
 .a63-Badge[data-variant='info'] {
   --badge-bg: color-mix(in oklch, var(--a63-status-info) 14%, transparent);
