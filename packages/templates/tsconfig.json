@@ -1,0 +1,11 @@
+{
+  "extends": "@atom63/tsconfig/react-package.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "noEmit": true
+  },
+  "include": ["src"],
+  // Stories depend on Storybook tooling owned by @atom63/storybook, not this
+  // package; the Storybook app compiles them, so exclude from the typecheck.
+  "exclude": ["**/*.stories.tsx"]
+}

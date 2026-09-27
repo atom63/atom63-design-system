@@ -1,8 +1,14 @@
 # Template library plan: templates, example app and `atom63 build`
 
-Status: deferred, 2026-09-25. A project starter comes first (`starter-plan.md`). This plan
-covers phase C's "templates" and "productized example app" items, plus the agent trial left over
-from the agent interface plan (step 5). Its decisions are still open.
+Status: in progress, 2026-09-27. The starter (`starter-plan.md`) and the vibe tests (E4) have
+landed. This plan covers phase C's "templates" and "productized example app" items, plus the
+agent trial left over from the agent interface plan (step 5).
+
+**Decided 2026-09-27:** T1–T6 and T8 take their recommendations. T7 is replaced by the vibe tests:
+after templates and `build` land, rerun `pnpm vibe` and compare against the baseline in
+`audits/vibe-2026-09-27.md`. The first seed (step 1) is the list page, because that baseline's
+weakest spots were a list and a table: a wide table overflowed at phone width, and a no-results
+state needs a next step.
 
 ## Goal
 
@@ -197,7 +203,9 @@ Each step is its own pull request and ends green in CI.
 
 1. **Package and gates.** `@atom63/templates` with the metadata convention, Storybook glob,
    `check:templates` (imports, metadata, block usage) and craft coverage. Seed it with 3 blocks
-   and the page that uses them, with phone and desktop visual baselines.
+   (page header, filter bar, data table section) and the list page that uses them. Every
+   template has `Desktop`, `Phone` and `Themes` stories; the visual project captures a story
+   whose id ends in `-phone` at 390 px wide.
    *Verify:* the gates fail on a template that imports a raw color or an app module; stories pass
    axe in every theme × mode.
 2. **The first set.** The remaining pages and blocks from T4, and a Templates gallery page on the
