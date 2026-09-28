@@ -182,9 +182,11 @@ function Atom63Sync() {
   return (
     <div className={styles.page}>
       <SectionHeader
-        description="Write the Atom63 design tokens into this file as Figma variables. Each personalization axis becomes a collection with its values as modes. Running it again changes nothing unless the tokens changed."
+        description="Write the Atom63 design tokens into this file as Figma variables. Each personalization axis becomes a collection with its values as modes. Variables show their CSS name in Dev Mode and appear only in the pickers they fit. Running it again changes nothing unless the tokens changed."
         title="Sync from code"
       />
+
+      <p className={styles.meta}>Tokens from @atom63/styles {__ATOM63_STYLES_VERSION__}.</p>
 
       {model && (
         <p className={styles.meta}>

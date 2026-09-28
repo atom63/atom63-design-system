@@ -1497,7 +1497,7 @@ aqua b1 n2 dark selectionThumb 1 1 1 1
 aqua b1 n2 light skeletonHighlight 1 1 1 0.6
 aqua b1 n2 dark skeletonHighlight 1 1 1 0.101961
 aqua b1 n2 light widgetBackground 0.992157 0.988235 0.992157 0.82
-aqua b1 n2 dark widgetBackground 0.168627 0.160784 0.17647 0.82
+aqua b1 n2 dark widgetBackground 0.168627 0.160784 0.176471 0.82
 aqua b1 n2 light widgetForeground 0.129412 0.121569 0.14902 1
 aqua b1 n2 dark widgetForeground 0.933333 0.933333 0.941176 1
 aqua b1 n2 light widgetBorder 0.917647 0.905882 0.92549 1
@@ -1747,7 +1747,7 @@ retro b1 n2 dark selectionThumb 1 1 1 1
 retro b1 n2 light skeletonHighlight 1 1 1 0.6
 retro b1 n2 dark skeletonHighlight 1 1 1 0.101961
 retro b1 n2 light widgetBackground 0.992157 0.988235 0.992157 1
-retro b1 n2 dark widgetBackground 0.168627 0.160784 0.17647 1
+retro b1 n2 dark widgetBackground 0.168627 0.160784 0.176471 1
 retro b1 n2 light widgetForeground 0.129412 0.121569 0.14902 1
 retro b1 n2 dark widgetForeground 0.933333 0.933333 0.941176 1
 retro b1 n2 light widgetBorder 0.917647 0.905882 0.92549 1
@@ -1997,7 +1997,7 @@ terminal b1 n2 dark selectionThumb 1 1 1 1
 terminal b1 n2 light skeletonHighlight 1 1 1 0.6
 terminal b1 n2 dark skeletonHighlight 1 1 1 0.101961
 terminal b1 n2 light widgetBackground 0.992157 0.988235 0.992157 0.82
-terminal b1 n2 dark widgetBackground 0.168627 0.160784 0.17647 0.82
+terminal b1 n2 dark widgetBackground 0.168627 0.160784 0.176471 0.82
 terminal b1 n2 light widgetForeground 0.006727 0.213731 0.507508 1
 terminal b1 n2 dark widgetForeground 0.432813 0.617392 0.907792 1
 terminal b1 n2 light widgetBorder 0.792826 0.838249 0.930178 1

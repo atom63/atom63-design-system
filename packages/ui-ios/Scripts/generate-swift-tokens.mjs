@@ -395,7 +395,9 @@ const variableLines = reachable
       const entry = variable.values[mode]
       const value = entry.alias
         ? `.alias(${swiftString(entry.alias)})`
-        : `.color(${swiftComponents(entry.value)})`
+        : entry.composed
+          ? `.composed(${swiftString(entry.composed.alias)}, opacity: ${entry.composed.opacity})`
+          : `.color(${swiftComponents(entry.value)})`
       return `${swiftString(key ? mode : '')}: ${value}`
     })
     return `        ${swiftString(token)}: Variable(selector: ${key ? selectors[key] : '.fixed'}, values: [${values.join(', ')}]),`

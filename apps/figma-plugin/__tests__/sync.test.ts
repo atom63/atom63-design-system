@@ -67,6 +67,25 @@ describe('Atom63 Figma sync', () => {
     expect(light).toEqual({ type: 'VARIABLE_ALIAS', id: byToken.get('--surface-light-2')?.id })
   })
 
+  it('writes a color at an opacity as a composed color, with code syntax and scopes', async () => {
+    const { api, variables } = createFakeApi()
+    await sync(api)
+    const byToken = new Map(
+      [...variables.values()].map(variable => [variable.getPluginData(TOKEN_KEY), variable])
+    )
+    const focusRing = byToken.get('--a63-focus-ring')
+    const [value] = Object.values(focusRing?.valuesByMode ?? {})
+
+    expect(value).toEqual({
+      color: { type: 'VARIABLE_ALIAS', id: byToken.get('--a63-brand-500')?.id },
+      opacity: 30,
+    })
+    expect(focusRing?.codeSyntax).toEqual({ WEB: 'var(--a63-focus-ring)' })
+    expect(focusRing?.scopes).toEqual(['STROKE_COLOR'])
+    expect(byToken.get('--color-b1-500')?.scopes).toEqual([])
+    expect(byToken.get('--a63-text-primary')?.scopes).toEqual(['TEXT_FILL'])
+  })
+
   it('updates only the mode whose value drifted', async () => {
     const { api, collections, variables } = createFakeApi()
     await sync(api)

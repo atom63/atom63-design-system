@@ -1,7 +1,13 @@
 # Cipher Plugin — Version History
 
-## Unreleased
-Sync has two modes. Atom63 syncs the bundled Atom63 tokens, as before. Project reads a project's own token CSS (the site template's `src/styles/tokens`, or any CSS custom properties under `:root`, `.light`, `.dark` and `data-*` attributes) and writes it as Figma variables: each `data-*` attribute becomes a collection with its values as modes, `var()` becomes an alias, a color at an opacity becomes a composed color, and `calc()` is computed per mode. Variables carry their CSS name as web code syntax, and raw ramps are hidden from pickers. Project mode also lists the variables edited in Figma as changes for a coding agent to apply to the CSS.
+## Version 14 — unreleased
+Sync has two modes, and both write variables the way code uses them.
+
+- **Project** reads a project's own token CSS (the Atom63 site template's `src/styles/tokens`, or any CSS custom properties under `:root`, `.light`, `.dark` and `data-*` attributes) and writes it as Figma variables: each `data-*` attribute becomes a collection with its values as modes, `var()` becomes an alias, and `calc()` is computed per mode. It also lists the variables edited in Figma as changes for a coding agent to apply to the CSS.
+- **Atom63** syncs the Atom63 tokens bundled from `@atom63/styles` and shows which version they come from.
+- A color at an opacity (`color-mix()` with `transparent`) becomes a composed color, which keeps its alias and follows it in every mode, using Figma's new opacity on color variables. In Atom63 the focus ring now follows the brand this way, and so do the borders that themes tint with the primary color.
+- Every variable shows its CSS name as web code syntax in Dev Mode.
+- Variables appear only in the pickers they fit: text colors in text fills, borders in strokes, radii in corner radius; raw palette steps are hidden but still aliasable.
 
 ## Version 13 — April 14, 2026
 Lock individual accent or neutral colors so they are skipped when shuffling — click the lock icon on any color row to pin it.

@@ -81,6 +81,12 @@ const codeContext = await esbuild.context({
   minify: !isDev,
 })
 
+// The @atom63/styles version the bundled sync model comes from, shown on the Sync page.
+const stylesVersion =
+  /"version":\s*"([^"]+)"/.exec(
+    readFileSync(resolve(__dirname, '../../packages/styles/package.json'), 'utf-8')
+  )?.[1] ?? 'unknown'
+
 // Build the UI (React app)
 const uiContext = await esbuild.context({
   entryPoints: [resolve(__dirname, 'src/ui.tsx')],
@@ -96,6 +102,7 @@ const uiContext = await esbuild.context({
   minify: !isDev,
   jsx: 'automatic',
   format: 'iife',
+  define: { __ATOM63_STYLES_VERSION__: JSON.stringify(stylesVersion) },
   plugins: [cssModulesPlugin],
 })
 

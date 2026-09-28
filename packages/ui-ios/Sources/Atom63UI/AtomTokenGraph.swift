@@ -17,6 +17,8 @@ extension AtomTokenGraph {
     enum Entry: Sendable {
         case color(AtomColorComponents)
         case alias(String)
+        /// A color token at an opacity from 0 to 100 (Figma's composed color).
+        case composed(String, opacity: Double)
     }
 
     struct Variable: Sendable {
@@ -56,6 +58,8 @@ extension AtomTokenGraph {
         let mode = dark ? "dark" : "light"
         var current = token
         var seen: Set<String> = []
+        // Composed colors on the way multiply the final opacity.
+        var opacity = 1.0
         while true {
             precondition(seen.insert(current).inserted, "Alias cycle at \(current)")
             if let table = computed[current] {
@@ -65,7 +69,7 @@ extension AtomTokenGraph {
                 guard let value = computedValues[current]?[key] else {
                     preconditionFailure("\(current) has no computed value for \(key)")
                 }
-                return value
+                return value.multiplyingOpacity(by: opacity)
             }
             guard let variable = variables[current] else {
                 preconditionFailure("\(current) is not in the token graph")
@@ -79,8 +83,11 @@ extension AtomTokenGraph {
             }
             switch variable.values[modeKey] {
             case let .color(components):
-                return components
+                return components.multiplyingOpacity(by: opacity)
             case let .alias(target):
+                current = target
+            case let .composed(target, composedOpacity):
+                opacity *= composedOpacity / 100
                 current = target
             case nil:
                 preconditionFailure("\(current) has no value for \(modeKey)")
@@ -122,5 +129,12 @@ extension AtomTokenGraph {
         case "window-size": "md"
         default: preconditionFailure("Unknown computed axis \(axis)")
         }
+    }
+}
+
+private extension AtomColorComponents {
+    /// The same color at `factor` times its opacity, for a composed color.
+    func multiplyingOpacity(by factor: Double) -> AtomColorComponents {
+        factor == 1 ? self : AtomColorComponents(red: red, green: green, blue: blue, opacity: opacity * factor)
     }
 }
