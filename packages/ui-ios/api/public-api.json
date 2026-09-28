@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "module": "Atom63UI",
-  "symbolCount": 346,
+  "symbolCount": 411,
   "symbols": [
     {
       "id": "s:8Atom63UI10AtomAvatarV",
@@ -1432,6 +1432,69 @@
       "source": "Generated/Atom63Tokens.generated.swift"
     },
     {
+      "id": "s:8Atom63UI16AtomInformActionV",
+      "kind": "swift.struct",
+      "path": "AtomInformAction",
+      "declaration": "struct AtomInformAction",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomInformActionV2id5label4role7performACSS_SSAC4RoleOyyYbScMYcctcfc",
+      "kind": "swift.init",
+      "path": "AtomInformAction.init(id:label:role:perform:)",
+      "declaration": "init(id: String, label: String, role: AtomInformAction.Role = .secondary, perform: @escaping () -> Void)",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomInformActionV2idSSvp",
+      "kind": "swift.property",
+      "path": "AtomInformAction.id",
+      "declaration": "let id: String",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomInformActionV4roleAC4RoleOvp",
+      "kind": "swift.property",
+      "path": "AtomInformAction.role",
+      "declaration": "let role: AtomInformAction.Role",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomInformActionV4RoleO",
+      "kind": "swift.enum",
+      "path": "AtomInformAction.Role",
+      "declaration": "enum Role",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomInformActionV4RoleO7primaryyA2EmF",
+      "kind": "swift.enum.case",
+      "path": "AtomInformAction.Role.primary",
+      "declaration": "case primary",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomInformActionV4RoleO9secondaryyA2EmF",
+      "kind": "swift.enum.case",
+      "path": "AtomInformAction.Role.secondary",
+      "declaration": "case secondary",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomInformActionV5labelSSvp",
+      "kind": "swift.property",
+      "path": "AtomInformAction.label",
+      "declaration": "let label: String",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomInformActionV7performyyYbScMYccvp",
+      "kind": "swift.property",
+      "path": "AtomInformAction.perform",
+      "declaration": "let perform: () -> Void",
+      "source": "AtomInform.swift"
+    },
+    {
       "id": "s:8Atom63UI16AtomLoadMoreViewV",
       "kind": "swift.struct",
       "path": "AtomLoadMoreView",
@@ -1607,6 +1670,251 @@
       "source": "AtomButton.swift"
     },
     {
+      "id": "s:8Atom63UI17AtomInformArbiterO",
+      "kind": "swift.enum",
+      "path": "AtomInformArbiter",
+      "declaration": "enum AtomInformArbiter",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformArbiterO16flyoutStackLimitSivpZ",
+      "kind": "swift.type.property",
+      "path": "AtomInformArbiter.flyoutStackLimit",
+      "declaration": "static let flyoutStackLimit: Int",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformArbiterO7resolve_7context10dismissals17isAnchorAvailableAA0cD10ResolutionVSayAA0cD7MessageVG_AA0cD7ContextVShySSGSbSSXEtFZ",
+      "kind": "swift.type.method",
+      "path": "AtomInformArbiter.resolve(_:context:dismissals:isAnchorAvailable:)",
+      "declaration": "static func resolve(_ messages: [AtomInformMessage], context: AtomInformContext, dismissals: Set<String>, isAnchorAvailable: (String) -> Bool = { _ in false }) -> AtomInformResolution",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformContentV",
+      "kind": "swift.struct",
+      "path": "AtomInformContent",
+      "declaration": "struct AtomInformContent",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformContentV11systemImageSSSgvp",
+      "kind": "swift.property",
+      "path": "AtomInformContent.systemImage",
+      "declaration": "var systemImage: String?",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformContentV4bodySSvp",
+      "kind": "swift.property",
+      "path": "AtomInformContent.body",
+      "declaration": "var body: String",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformContentV5title4body11systemImage7actionsACSSSg_SSAHSayAA0cD6ActionVGtcfc",
+      "kind": "swift.init",
+      "path": "AtomInformContent.init(title:body:systemImage:actions:)",
+      "declaration": "init(title: String? = nil, body: String, systemImage: String? = nil, actions: [AtomInformAction] = [])",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformContentV5titleSSSgvp",
+      "kind": "swift.property",
+      "path": "AtomInformContent.title",
+      "declaration": "var title: String?",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformContentV7actionsSayAA0cD6ActionVGvp",
+      "kind": "swift.property",
+      "path": "AtomInformContent.actions",
+      "declaration": "var actions: [AtomInformAction]",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformContextV",
+      "kind": "swift.struct",
+      "path": "AtomInformContext",
+      "declaration": "struct AtomInformContext",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformContextV3now10Foundation4DateVvp",
+      "kind": "swift.property",
+      "path": "AtomInformContext.now",
+      "declaration": "var now: Date",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformContextV5route6locale3nowACSS_10Foundation6LocaleVAG4DateVtcfc",
+      "kind": "swift.init",
+      "path": "AtomInformContext.init(route:locale:now:)",
+      "declaration": "init(route: String, locale: Locale = .current, now: Date = .now)",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformContextV5routeSSvp",
+      "kind": "swift.property",
+      "path": "AtomInformContext.route",
+      "declaration": "var route: String",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformContextV6locale10Foundation6LocaleVvp",
+      "kind": "swift.property",
+      "path": "AtomInformContext.locale",
+      "declaration": "var locale: Locale",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformMessageV",
+      "kind": "swift.struct",
+      "path": "AtomInformMessage",
+      "declaration": "struct AtomInformMessage",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformMessageV12dismissalKeySSvp",
+      "kind": "swift.property",
+      "path": "AtomInformMessage.dismissalKey",
+      "declaration": "var dismissalKey: String { get }",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformMessageV2id7surface8severity8priority7dismiss7version8startsAt04endsM06anchor4when7contentACSS_AA0cD7SurfaceOAA0cD8SeverityOSiAA0cD11DismissModeOSi10Foundation4DateVSgAXSSSgSbAA0cD7ContextVYbcSgAA0cD7ContentVA_Ybctcfc",
+      "kind": "swift.init",
+      "path": "AtomInformMessage.init(id:surface:severity:priority:dismiss:version:startsAt:endsAt:anchor:when:content:)",
+      "declaration": "init(id: String, surface: AtomInformSurface, severity: AtomInformSeverity = .info, priority: Int = 0, dismiss: AtomInformDismissMode = .persistent, version: Int = 1, startsAt: Date? = nil, endsAt: Date? = nil, anchor: String? = nil, when: ((AtomInformContext) -> Bool)? = nil, content: @escaping (AtomInformContext) -> AtomInformContent)",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformMessageV2id7surface8severity8priority7dismiss7version8startsAt04endsM06anchor4when7contentACSS_AA0cD7SurfaceOAA0cD8SeverityOSiAA0cD11DismissModeOSi10Foundation4DateVSgAXSSSgSbAA0cD7ContextVYbcSgAA0cD7ContentVtcfc",
+      "kind": "swift.init",
+      "path": "AtomInformMessage.init(id:surface:severity:priority:dismiss:version:startsAt:endsAt:anchor:when:content:)",
+      "declaration": "init(id: String, surface: AtomInformSurface, severity: AtomInformSeverity = .info, priority: Int = 0, dismiss: AtomInformDismissMode = .persistent, version: Int = 1, startsAt: Date? = nil, endsAt: Date? = nil, anchor: String? = nil, when: ((AtomInformContext) -> Bool)? = nil, content: AtomInformContent)",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformMessageV2idSSvp",
+      "kind": "swift.property",
+      "path": "AtomInformMessage.id",
+      "declaration": "let id: String",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformMessageV4whenSbAA0cD7ContextVYbcSgvp",
+      "kind": "swift.property",
+      "path": "AtomInformMessage.when",
+      "declaration": "let when: ((AtomInformContext) -> Bool)?",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformMessageV6anchorSSSgvp",
+      "kind": "swift.property",
+      "path": "AtomInformMessage.anchor",
+      "declaration": "let anchor: String?",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformMessageV6endsAt10Foundation4DateVSgvp",
+      "kind": "swift.property",
+      "path": "AtomInformMessage.endsAt",
+      "declaration": "let endsAt: Date?",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformMessageV7contentyAA0cD7ContentVAA0cD7ContextVYbcvp",
+      "kind": "swift.property",
+      "path": "AtomInformMessage.content",
+      "declaration": "let content: (AtomInformContext) -> AtomInformContent",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformMessageV7dismissAA0cD11DismissModeOvp",
+      "kind": "swift.property",
+      "path": "AtomInformMessage.dismiss",
+      "declaration": "let dismiss: AtomInformDismissMode",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformMessageV7surfaceAA0cD7SurfaceOvp",
+      "kind": "swift.property",
+      "path": "AtomInformMessage.surface",
+      "declaration": "let surface: AtomInformSurface",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformMessageV7versionSivp",
+      "kind": "swift.property",
+      "path": "AtomInformMessage.version",
+      "declaration": "let version: Int",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformMessageV8prioritySivp",
+      "kind": "swift.property",
+      "path": "AtomInformMessage.priority",
+      "declaration": "let priority: Int",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformMessageV8severityAA0cD8SeverityOvp",
+      "kind": "swift.property",
+      "path": "AtomInformMessage.severity",
+      "declaration": "let severity: AtomInformSeverity",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformMessageV8startsAt10Foundation4DateVSgvp",
+      "kind": "swift.property",
+      "path": "AtomInformMessage.startsAt",
+      "declaration": "let startsAt: Date?",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformSurfaceO",
+      "kind": "swift.enum",
+      "path": "AtomInformSurface",
+      "declaration": "enum AtomInformSurface",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformSurfaceO12cornerFlyoutyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomInformSurface.cornerFlyout",
+      "declaration": "case cornerFlyout",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformSurfaceO6banneryA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomInformSurface.banner",
+      "declaration": "case banner",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformSurfaceO6dialogyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomInformSurface.dialog",
+      "declaration": "case dialog",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformSurfaceO8blockingSayACGvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomInformSurface.blocking",
+      "declaration": "static let blocking: [AtomInformSurface]",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomInformSurfaceO9spotlightyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomInformSurface.spotlight",
+      "declaration": "case spotlight",
+      "source": "AtomInform.swift"
+    },
+    {
       "id": "s:8Atom63UI17AtomSectionHeaderV",
       "kind": "swift.struct",
       "path": "AtomSectionHeader",
@@ -1654,6 +1962,41 @@
       "path": "AtomContractParity.strict",
       "declaration": "case strict",
       "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomInformSeverityO",
+      "kind": "swift.enum",
+      "path": "AtomInformSeverity",
+      "declaration": "enum AtomInformSeverity",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomInformSeverityO4infoyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomInformSeverity.info",
+      "declaration": "case info",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomInformSeverityO6dangeryA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomInformSeverity.danger",
+      "declaration": "case danger",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomInformSeverityO7successyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomInformSeverity.success",
+      "declaration": "case success",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomInformSeverityO7warningyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomInformSeverity.warning",
+      "declaration": "case warning",
+      "source": "AtomInform.swift"
     },
     {
       "id": "s:8Atom63UI18AtomMotionContractV",
@@ -1922,6 +2265,48 @@
       "source": "AtomFormPresentation.swift"
     },
     {
+      "id": "s:8Atom63UI20AtomInformResolutionV",
+      "kind": "swift.struct",
+      "path": "AtomInformResolution",
+      "declaration": "struct AtomInformResolution",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomInformResolutionV13cornerFlyoutsSayAA0cD7MessageVGvp",
+      "kind": "swift.property",
+      "path": "AtomInformResolution.cornerFlyouts",
+      "declaration": "var cornerFlyouts: [AtomInformMessage]",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomInformResolutionV5emptyACvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomInformResolution.empty",
+      "declaration": "static let empty: AtomInformResolution",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomInformResolutionV6bannerAA0cD7MessageVSgvp",
+      "kind": "swift.property",
+      "path": "AtomInformResolution.banner",
+      "declaration": "var banner: AtomInformMessage?",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomInformResolutionV6dialogAA0cD7MessageVSgvp",
+      "kind": "swift.property",
+      "path": "AtomInformResolution.dialog",
+      "declaration": "var dialog: AtomInformMessage?",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomInformResolutionV9spotlightAA0cD7MessageVSgvp",
+      "kind": "swift.property",
+      "path": "AtomInformResolution.spotlight",
+      "declaration": "var spotlight: AtomInformMessage?",
+      "source": "AtomInform.swift"
+    },
+    {
       "id": "s:8Atom63UI20AtomMotionPreferenceO",
       "kind": "swift.enum",
       "path": "AtomMotionPreference",
@@ -2090,6 +2475,34 @@
       "source": "Generated/AtomComponentContracts.generated.swift"
     },
     {
+      "id": "s:8Atom63UI21AtomInformDismissModeO",
+      "kind": "swift.enum",
+      "path": "AtomInformDismissMode",
+      "declaration": "enum AtomInformDismissMode",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomInformDismissModeO10persistentyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomInformDismissMode.persistent",
+      "declaration": "case persistent",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomInformDismissModeO4noneyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomInformDismissMode.none",
+      "declaration": "case none",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI21AtomInformDismissModeO7sessionyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomInformDismissMode.session",
+      "declaration": "case session",
+      "source": "AtomInform.swift"
+    },
+    {
       "id": "s:8Atom63UI22AtomComponentContractsO",
       "kind": "swift.enum",
       "path": "AtomComponentContracts",
@@ -2151,6 +2564,48 @@
       "path": "AtomRendererConformance.verified",
       "declaration": "static let verified: [AtomRendererConformanceEvidence]",
       "source": "AtomRendererConformance.swift"
+    },
+    {
+      "id": "s:8Atom63UI24AtomInformDismissalStoreC",
+      "kind": "swift.class",
+      "path": "AtomInformDismissalStore",
+      "declaration": "final class AtomInformDismissalStore",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI24AtomInformDismissalStoreC11defaultsKeySSvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomInformDismissalStore.defaultsKey",
+      "declaration": "static let defaultsKey: String",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI24AtomInformDismissalStoreC5clearyySSSgF",
+      "kind": "swift.method",
+      "path": "AtomInformDismissalStore.clear(_:)",
+      "declaration": "func clear(_ key: String? = nil)",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI24AtomInformDismissalStoreC7dismiss_2atyAA0cD7MessageV_10Foundation4DateVtF",
+      "kind": "swift.method",
+      "path": "AtomInformDismissalStore.dismiss(_:at:)",
+      "declaration": "func dismiss(_ message: AtomInformMessage, at date: Date = .now)",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI24AtomInformDismissalStoreC8defaultsACSo14NSUserDefaultsC_tcfc",
+      "kind": "swift.init",
+      "path": "AtomInformDismissalStore.init(defaults:)",
+      "declaration": "init(defaults: UserDefaults = .standard)",
+      "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI24AtomInformDismissalStoreC9dismissedShySSGvp",
+      "kind": "swift.property",
+      "path": "AtomInformDismissalStore.dismissed",
+      "declaration": "var dismissed: Set<String> { get }",
+      "source": "AtomInform.swift"
     },
     {
       "id": "s:8Atom63UI31AtomRendererConformanceEvidenceV",
@@ -3658,6 +4113,76 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI16AtomInformActionV",
+      "target": "external:Identifiable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomInformActionV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomInformActionV2id5label4role7performACSS_SSAC4RoleOyyYbScMYcctcfc",
+      "target": "s:8Atom63UI16AtomInformActionV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomInformActionV2idSSvp",
+      "target": "s:8Atom63UI16AtomInformActionV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomInformActionV4roleAC4RoleOvp",
+      "target": "s:8Atom63UI16AtomInformActionV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomInformActionV4RoleO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomInformActionV4RoleO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomInformActionV4RoleO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomInformActionV4RoleO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomInformActionV4RoleO",
+      "target": "s:8Atom63UI16AtomInformActionV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomInformActionV4RoleO7primaryyA2EmF",
+      "target": "s:8Atom63UI16AtomInformActionV4RoleO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomInformActionV4RoleO9secondaryyA2EmF",
+      "target": "s:8Atom63UI16AtomInformActionV4RoleO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomInformActionV5labelSSvp",
+      "target": "s:8Atom63UI16AtomInformActionV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomInformActionV7performyyYbScMYccvp",
+      "target": "s:8Atom63UI16AtomInformActionV",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI16AtomLoadMoreViewV",
       "target": "external:Sendable",
       "kind": "conformsTo"
@@ -3833,6 +4358,201 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI17AtomInformArbiterO16flyoutStackLimitSivpZ",
+      "target": "s:8Atom63UI17AtomInformArbiterO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformArbiterO7resolve_7context10dismissals17isAnchorAvailableAA0cD10ResolutionVSayAA0cD7MessageVG_AA0cD7ContextVShySSGSbSSXEtFZ",
+      "target": "s:8Atom63UI17AtomInformArbiterO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformContentV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformContentV11systemImageSSSgvp",
+      "target": "s:8Atom63UI17AtomInformContentV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformContentV4bodySSvp",
+      "target": "s:8Atom63UI17AtomInformContentV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformContentV5title4body11systemImage7actionsACSSSg_SSAHSayAA0cD6ActionVGtcfc",
+      "target": "s:8Atom63UI17AtomInformContentV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformContentV5titleSSSgvp",
+      "target": "s:8Atom63UI17AtomInformContentV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformContentV7actionsSayAA0cD6ActionVGvp",
+      "target": "s:8Atom63UI17AtomInformContentV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformContextV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformContextV3now10Foundation4DateVvp",
+      "target": "s:8Atom63UI17AtomInformContextV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformContextV5route6locale3nowACSS_10Foundation6LocaleVAG4DateVtcfc",
+      "target": "s:8Atom63UI17AtomInformContextV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformContextV5routeSSvp",
+      "target": "s:8Atom63UI17AtomInformContextV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformContextV6locale10Foundation6LocaleVvp",
+      "target": "s:8Atom63UI17AtomInformContextV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformMessageV",
+      "target": "external:Identifiable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformMessageV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformMessageV12dismissalKeySSvp",
+      "target": "s:8Atom63UI17AtomInformMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformMessageV2id7surface8severity8priority7dismiss7version8startsAt04endsM06anchor4when7contentACSS_AA0cD7SurfaceOAA0cD8SeverityOSiAA0cD11DismissModeOSi10Foundation4DateVSgAXSSSgSbAA0cD7ContextVYbcSgAA0cD7ContentVA_Ybctcfc",
+      "target": "s:8Atom63UI17AtomInformMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformMessageV2id7surface8severity8priority7dismiss7version8startsAt04endsM06anchor4when7contentACSS_AA0cD7SurfaceOAA0cD8SeverityOSiAA0cD11DismissModeOSi10Foundation4DateVSgAXSSSgSbAA0cD7ContextVYbcSgAA0cD7ContentVtcfc",
+      "target": "s:8Atom63UI17AtomInformMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformMessageV2idSSvp",
+      "target": "s:8Atom63UI17AtomInformMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformMessageV4whenSbAA0cD7ContextVYbcSgvp",
+      "target": "s:8Atom63UI17AtomInformMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformMessageV6anchorSSSgvp",
+      "target": "s:8Atom63UI17AtomInformMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformMessageV6endsAt10Foundation4DateVSgvp",
+      "target": "s:8Atom63UI17AtomInformMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformMessageV7contentyAA0cD7ContentVAA0cD7ContextVYbcvp",
+      "target": "s:8Atom63UI17AtomInformMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformMessageV7dismissAA0cD11DismissModeOvp",
+      "target": "s:8Atom63UI17AtomInformMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformMessageV7surfaceAA0cD7SurfaceOvp",
+      "target": "s:8Atom63UI17AtomInformMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformMessageV7versionSivp",
+      "target": "s:8Atom63UI17AtomInformMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformMessageV8prioritySivp",
+      "target": "s:8Atom63UI17AtomInformMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformMessageV8severityAA0cD8SeverityOvp",
+      "target": "s:8Atom63UI17AtomInformMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformMessageV8startsAt10Foundation4DateVSgvp",
+      "target": "s:8Atom63UI17AtomInformMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformSurfaceO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformSurfaceO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformSurfaceO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformSurfaceO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformSurfaceO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformSurfaceO12cornerFlyoutyA2CmF",
+      "target": "s:8Atom63UI17AtomInformSurfaceO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformSurfaceO6banneryA2CmF",
+      "target": "s:8Atom63UI17AtomInformSurfaceO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformSurfaceO6dialogyA2CmF",
+      "target": "s:8Atom63UI17AtomInformSurfaceO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformSurfaceO8blockingSayACGvpZ",
+      "target": "s:8Atom63UI17AtomInformSurfaceO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomInformSurfaceO9spotlightyA2CmF",
+      "target": "s:8Atom63UI17AtomInformSurfaceO",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI17AtomSectionHeaderV",
       "target": "external:Sendable",
       "kind": "conformsTo"
@@ -3885,6 +4605,51 @@
     {
       "source": "s:8Atom63UI18AtomContractParityO6strictyA2CmF",
       "target": "s:8Atom63UI18AtomContractParityO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomInformSeverityO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomInformSeverityO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomInformSeverityO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomInformSeverityO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomInformSeverityO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomInformSeverityO4infoyA2CmF",
+      "target": "s:8Atom63UI18AtomInformSeverityO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomInformSeverityO6dangeryA2CmF",
+      "target": "s:8Atom63UI18AtomInformSeverityO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomInformSeverityO7successyA2CmF",
+      "target": "s:8Atom63UI18AtomInformSeverityO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomInformSeverityO7warningyA2CmF",
+      "target": "s:8Atom63UI18AtomInformSeverityO",
       "kind": "memberOf"
     },
     {
@@ -4158,6 +4923,36 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI20AtomInformResolutionV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomInformResolutionV13cornerFlyoutsSayAA0cD7MessageVGvp",
+      "target": "s:8Atom63UI20AtomInformResolutionV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomInformResolutionV5emptyACvpZ",
+      "target": "s:8Atom63UI20AtomInformResolutionV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomInformResolutionV6bannerAA0cD7MessageVSgvp",
+      "target": "s:8Atom63UI20AtomInformResolutionV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomInformResolutionV6dialogAA0cD7MessageVSgvp",
+      "target": "s:8Atom63UI20AtomInformResolutionV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomInformResolutionV9spotlightAA0cD7MessageVSgvp",
+      "target": "s:8Atom63UI20AtomInformResolutionV",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI20AtomMotionPreferenceO",
       "target": "external:Equatable",
       "kind": "conformsTo"
@@ -4318,6 +5113,46 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI21AtomInformDismissModeO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI21AtomInformDismissModeO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI21AtomInformDismissModeO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI21AtomInformDismissModeO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI21AtomInformDismissModeO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI21AtomInformDismissModeO10persistentyA2CmF",
+      "target": "s:8Atom63UI21AtomInformDismissModeO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI21AtomInformDismissModeO4noneyA2CmF",
+      "target": "s:8Atom63UI21AtomInformDismissModeO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI21AtomInformDismissModeO7sessionyA2CmF",
+      "target": "s:8Atom63UI21AtomInformDismissModeO",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI22AtomComponentContractsO3allSayAA0cD8ContractVGvpZ",
       "target": "s:8Atom63UI22AtomComponentContractsO",
       "kind": "memberOf"
@@ -4355,6 +5190,36 @@
     {
       "source": "s:8Atom63UI23AtomRendererConformanceO8verifiedSayAA0cdE8EvidenceVGvpZ",
       "target": "s:8Atom63UI23AtomRendererConformanceO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI24AtomInformDismissalStoreC",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI24AtomInformDismissalStoreC11defaultsKeySSvpZ",
+      "target": "s:8Atom63UI24AtomInformDismissalStoreC",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI24AtomInformDismissalStoreC5clearyySSSgF",
+      "target": "s:8Atom63UI24AtomInformDismissalStoreC",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI24AtomInformDismissalStoreC7dismiss_2atyAA0cD7MessageV_10Foundation4DateVtF",
+      "target": "s:8Atom63UI24AtomInformDismissalStoreC",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI24AtomInformDismissalStoreC8defaultsACSo14NSUserDefaultsC_tcfc",
+      "target": "s:8Atom63UI24AtomInformDismissalStoreC",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI24AtomInformDismissalStoreC9dismissedShySSGvp",
+      "target": "s:8Atom63UI24AtomInformDismissalStoreC",
       "kind": "memberOf"
     },
     {
