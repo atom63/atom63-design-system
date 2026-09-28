@@ -1,2 +1,2 @@
-export type { TextareaProps } from './Textarea'
-export { Textarea } from './Textarea'
+export type { TextareaProps } from '@atom63/ui-react'
+export { Textarea } from '@atom63/ui-react'

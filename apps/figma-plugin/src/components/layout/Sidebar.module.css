@@ -36,7 +36,10 @@
 }
 
 .sidebarSeparator {
-  margin: var(--spacing-xs) var(--spacing-sm);
+  /* The Atom63 Separator is full width; auto keeps the inset inside the sidebar. */
+  width: auto;
+  margin-block: var(--spacing-xs);
+  margin-inline: var(--spacing-sm);
   opacity: 0.5;
 }
 

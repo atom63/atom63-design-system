@@ -23,7 +23,7 @@ interface CopyButtonProps {
   /** The text to copy, or a function that returns it (for lazy evaluation) */
   text: string | (() => string)
   /** Button variant — defaults to ghost */
-  variant?: 'ghost' | 'outline' | 'soft'
+  variant?: 'ghost' | 'outline' | 'secondary'
 }
 
 const CHECK_DURATION = 1500
@@ -68,7 +68,7 @@ export function CopyButton({
 
   return (
     <Button
-      className={`${styles.copyButton} ${copied ? styles.copied : ''} ${className ?? ''}`}
+      className={`${copied ? styles.copied : ''} ${className ?? ''}`}
       disabled={disabled}
       onClick={handleClick}
       size={resolvedSize}

@@ -3,6 +3,7 @@
  * Author: You Zhang (ATOM63)
  */
 
+import { UIProvider } from '@atom63/ui-react'
 import { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { AppHeader, type PageId, Sidebar, type ViewMode } from './components/layout'
@@ -108,15 +109,20 @@ function App() {
 
 const container = document.getElementById('root')
 
+// Follow Figma's theme until the saved setting loads, so the first paint has a mode.
+applyTheme('system')
+
 if (container) {
   try {
     const root = createRoot(container)
     root.render(
       <ErrorBoundary>
-        <ToastProvider>
-          <App />
-          <TooltipPortal />
-        </ToastProvider>
+        <UIProvider className="plugin-root">
+          <ToastProvider>
+            <App />
+            <TooltipPortal />
+          </ToastProvider>
+        </UIProvider>
       </ErrorBoundary>
     )
   } catch (error) {

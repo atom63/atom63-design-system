@@ -1,32 +1,29 @@
-import { useState } from 'react'
-import { SectionHeader, TabPanel, Tabs } from '../components/ui'
+import { Tabs, TabsList, TabsPanel, TabsTab } from '@atom63/ui-react'
+
+import { SectionHeader } from '../components/ui'
 import { ManagePage } from './ManagePage'
 import { StylesPage } from './StylesPage'
 
-const TABS = [
-  { id: 'variables', label: 'Variables' },
-  { id: 'styles', label: 'Styles' },
-]
-
 export function ManageTabsPage({ onNavigate }: { onNavigate?: (page: string) => void }) {
-  const [activeTab, setActiveTab] = useState('variables')
-
   return (
-    <div className="manage-tabs-page">
+    <Tabs className="manage-tabs-page" defaultValue="variables">
       <div className="manage-tabs-header">
         <SectionHeader
           description="Browse and edit your variables and styles"
           title="Manage"
           variant="primary"
         />
-        <Tabs activeTab={activeTab} onTabChange={setActiveTab} size="sm" tabs={TABS} />
+        <TabsList size="sm">
+          <TabsTab value="variables">Variables</TabsTab>
+          <TabsTab value="styles">Styles</TabsTab>
+        </TabsList>
       </div>
-      <TabPanel activeTab={activeTab} id="variables">
+      <TabsPanel value="variables">
         <ManagePage onNavigate={onNavigate} />
-      </TabPanel>
-      <TabPanel activeTab={activeTab} id="styles">
+      </TabsPanel>
+      <TabsPanel value="styles">
         <StylesPage />
-      </TabPanel>
-    </div>
+      </TabsPanel>
+    </Tabs>
   )
 }

@@ -1,10 +1,10 @@
+import { SegmentedControl } from '@atom63/ui-react'
 import { ArrowRight, Check } from 'lucide-react'
 import type { RenamePreviewItem, UseRenameReturn } from '../../../hooks/useRename'
 import { Button } from '../Button'
 import { Checkbox } from '../Checkbox'
 import { Dialog, DialogActions } from '../Dialog'
 import { Input } from '../Input'
-import { Tabs } from '../Tabs'
 
 interface RenameDialogProps {
   disabled?: boolean
@@ -44,15 +44,15 @@ export function RenameDialog({
       onClose={onClose}
       title={`Rename ${itemLabel}`}
     >
-      <Tabs
-        activeTab={rename.renameMode}
-        onTabChange={tab => rename.setRenameMode(tab as 'find-replace' | 'prefix' | 'suffix')}
-        size="sm"
-        tabs={[
-          { id: 'find-replace', label: 'Replace' },
-          { id: 'prefix', label: 'Prefix' },
-          { id: 'suffix', label: 'Suffix' },
+      <SegmentedControl
+        items={[
+          { value: 'find-replace', label: 'Replace' },
+          { value: 'prefix', label: 'Prefix' },
+          { value: 'suffix', label: 'Suffix' },
         ]}
+        onValueChange={mode => rename.setRenameMode(mode as 'find-replace' | 'prefix' | 'suffix')}
+        size="sm"
+        value={rename.renameMode}
       />
 
       <div className="manage-rename-inputs">
@@ -81,7 +81,7 @@ export function RenameDialog({
               <Checkbox
                 checked={rename.useRegex}
                 id="rename-use-regex"
-                onChange={e => rename.setUseRegex(e.target.checked)}
+                onChange={checked => rename.setUseRegex(checked)}
                 size="sm"
               />
               Regex

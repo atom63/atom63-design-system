@@ -265,6 +265,12 @@ importers:
       '@atom63/styles':
         specifier: workspace:*
         version: link:../../packages/styles
+      '@atom63/ui-foundation':
+        specifier: workspace:*
+        version: link:../../packages/ui-foundation
+      '@atom63/ui-react':
+        specifier: workspace:*
+        version: link:../../packages/ui-react
       lucide-react:
         specifier: 1.34.0
         version: 1.34.0(react@19.2.7)

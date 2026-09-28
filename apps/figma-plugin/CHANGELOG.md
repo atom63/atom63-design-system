@@ -8,6 +8,7 @@ Sync has two modes, and both write variables the way code uses them.
 - A color at an opacity (`color-mix()` with `transparent`) becomes a composed color, which keeps its alias and follows it in every mode, using Figma's new opacity on color variables. In Atom63 the focus ring now follows the brand this way, and so do the borders that themes tint with the primary color.
 - Every variable shows its CSS name as web code syntax in Dev Mode.
 - Variables appear only in the pickers they fit: text colors in text fills, borders in strokes, radii in corner radius; raw palette steps are hidden but still aliasable.
+- A second sync reports no changes for decimal sizes such as 64.8, which Figma stores at 32-bit precision; they no longer show as updates on every run.
 
 ## Version 13 — April 14, 2026
 Lock individual accent or neutral colors so they are skipped when shuffling — click the lock icon on any color row to pin it.
