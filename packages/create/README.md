@@ -29,13 +29,16 @@ The generated app follows the [quickstart](../../docs/design-system/quickstart.m
 | `site` (default) | A landing page (hero, features, latest posts, sign-up) and an MDX blog |
 | `docs` | MDX documentation: a sidebar grouped from the pages' frontmatter, the docs typography, an "On this page" table of contents, and previous and next links |
 
-Each kind is a folder in `starter/`, layered over `starter/base`. Choose one with `--kind`, for
-example `pnpm create:app my-docs --kind docs`.
+Each kind is a folder in `starter/`, layered over shared layers: `starter/base` is what every app
+shares (the entry, the theme, TypeScript and shadcn setup), and `starter/content` adds MDX and the
+site header and footer to `site` and `docs`. Choose a kind with `--kind`, for example
+`pnpm create:app my-docs --kind docs`.
 
 ## How it works
 
-`src/generate.mjs` copies `starter/base` and `starter/<kind>` and fills `{{title}}` and
-`{{date}}`. It builds `package.json` itself: the `@atom63/*` packages take their exact versions
+`src/generate.mjs` copies the kind's layers in order (`kindLayers`; a later layer's file replaces
+an earlier one at the same path) and fills `{{title}}` and `{{date}}`. It builds `package.json`
+itself from the packages each layer adds (`layerPackages`): the `@atom63/*` packages take their exact versions
 from this repo (only the release that publishes them changes those), and every other package
 takes the range the repo already uses. Packages no workspace package uses are listed in
 `starterOnly`.
