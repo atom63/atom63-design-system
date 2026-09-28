@@ -78,6 +78,10 @@ export function planExport(model: SyncModel, snapshot: SnapshotCollection[]): Ex
           skipped.push({ name: label, reason: 'string tokens are not exported yet' })
           continue
         }
+        if ('composed' in to) {
+          skipped.push({ name: label, reason: 'a color at an opacity is not exported yet' })
+          continue
+        }
         if (from && 'alias' in from && 'value' in to) {
           skipped.push({
             name: label,
