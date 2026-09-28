@@ -77,7 +77,7 @@ export interface ListPageProps {
   invoices?: readonly Invoice[]
 }
 
-export function ListPage({ invoices = sampleInvoices }: ListPageProps) {
+export function ListContent({ invoices = sampleInvoices }: ListPageProps) {
   const [query, setQuery] = useState('')
   const [status, setStatus] = useState('all')
   const [openId, setOpenId] = useState<string | null>(null)
@@ -98,7 +98,7 @@ export function ListPage({ invoices = sampleInvoices }: ListPageProps) {
   }
 
   return (
-    <AppShell navItems={nav} productName="Tally">
+    <>
       <Container maxWidth="wide" padding="none">
         <PageHeader
           actions={
@@ -197,6 +197,16 @@ export function ListPage({ invoices = sampleInvoices }: ListPageProps) {
         open={open !== undefined}
         title={open?.id ?? ''}
       />
+    </>
+  )
+}
+
+/* The page in its app shell. An app that renders the shell once, around its
+   routes, renders `ListContent` inside it instead. */
+export function ListPage(props: ListPageProps) {
+  return (
+    <AppShell navItems={nav} productName="Tally">
+      <ListContent {...props} />
     </AppShell>
   )
 }

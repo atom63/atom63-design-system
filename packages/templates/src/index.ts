@@ -8,7 +8,12 @@ export {
   type ActivityItem,
   type ActivityListProps,
 } from './blocks/activity-list/activity-list'
-export { AppShell, type AppShellNavItem, type AppShellProps } from './blocks/app-shell/app-shell'
+export {
+  AppShell,
+  type AppShellLinkProps,
+  type AppShellNavItem,
+  type AppShellProps,
+} from './blocks/app-shell/app-shell'
 export { AuthCard, type AuthCardProps } from './blocks/auth-card/auth-card'
 export {
   DataTableSection,
@@ -40,9 +45,9 @@ export {
   type SettingsSwitchRowProps,
 } from './blocks/settings-section/settings-section'
 export { StatRow, type Stat, type StatRowProps } from './blocks/stat-row/stat-row'
-export { DashboardPage } from './pages/dashboard-page/dashboard-page'
-export { ListPage, type ListPageProps } from './pages/list-page/list-page'
-export { OnboardingPage } from './pages/onboarding-page/onboarding-page'
-export { SettingsPage } from './pages/settings-page/settings-page'
+export { DashboardContent, DashboardPage } from './pages/dashboard-page/dashboard-page'
+export { ListContent, ListPage, type ListPageProps } from './pages/list-page/list-page'
+export { OnboardingContent, OnboardingPage } from './pages/onboarding-page/onboarding-page'
+export { SettingsContent, SettingsPage } from './pages/settings-page/settings-page'
 export { SignInPage, type SignInPageProps } from './pages/sign-in-page/sign-in-page'
 export { templateCatalog, type TemplateEntry } from './catalog'

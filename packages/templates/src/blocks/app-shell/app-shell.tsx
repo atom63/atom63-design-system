@@ -11,7 +11,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@atom63/ui-react'
-import type { ReactNode } from 'react'
+import type { AnchorHTMLAttributes, ReactElement, ReactNode } from 'react'
 
 export const template = {
   id: 'app-shell',
@@ -39,9 +39,18 @@ export interface AppShellProps {
   homeHref?: string
   navItems: readonly AppShellNavItem[]
   productName: string
+  /**
+   * Renders a navigation link, for a router's own link component; a plain
+   * anchor by default. It receives the anchor's props, `href` included.
+   */
+  renderLink?: (props: AppShellLinkProps) => ReactElement
   /** Actions at the end of the top bar, such as an account menu. */
   topBarActions?: ReactNode
 }
+
+export type AppShellLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }
+
+const anchor = ({ children, ...props }: AppShellLinkProps) => <a {...props}>{children}</a>
 
 /*
  * On a phone the sidebar becomes a sheet the top-bar toggle opens; on wider
@@ -53,6 +62,7 @@ export function AppShell({
   homeHref,
   navItems,
   productName,
+  renderLink = anchor,
   topBarActions,
 }: AppShellProps) {
   return (
@@ -63,12 +73,11 @@ export function AppShell({
             own layout. */}
         <nav aria-label="Main" className="contents">
           <SidebarHeader>
-            <a
-              className="font-heading text-foreground truncate px-2 font-semibold"
-              href={homeHref ?? navItems[0]?.href ?? '#'}
-            >
-              {productName}
-            </a>
+            {renderLink({
+              children: productName,
+              className: 'font-heading text-foreground truncate px-2 font-semibold',
+              href: homeHref ?? navItems[0]?.href ?? '#',
+            })}
           </SidebarHeader>
           <SidebarContent>
             <SidebarGroup>
@@ -79,12 +88,16 @@ export function AppShell({
                       <SidebarMenuButton
                         isActive={item.current}
                         // With `render`, the anchor carries the content: the button drops its children.
-                        render={
-                          <a aria-current={item.current ? 'page' : undefined} href={item.href}>
-                            {item.icon}
-                            <span>{item.label}</span>
-                          </a>
-                        }
+                        render={renderLink({
+                          'aria-current': item.current ? 'page' : undefined,
+                          children: (
+                            <>
+                              {item.icon}
+                              <span>{item.label}</span>
+                            </>
+                          ),
+                          href: item.href,
+                        })}
                         tooltip={item.label}
                       />
                     </SidebarMenuItem>
