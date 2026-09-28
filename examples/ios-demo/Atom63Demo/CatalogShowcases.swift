@@ -507,6 +507,26 @@ private struct WidgetCardShowcase: View {
         }
       }
       .atomWidgetSize(.medium)
+
+      AtomWidgetCard {
+        AtomWidgetStateView(.loading, title: "Loading builds")
+      }
+      .atomWidgetSize(.small)
+
+      AtomWidgetCard {
+        AtomWidgetStateView(.empty, title: "No reviews yet")
+      }
+      .atomWidgetSize(.small)
+
+      AtomWidgetCard {
+        AtomWidgetStateView(
+          .error,
+          title: "Unable to load the release",
+          description: "The server did not respond.",
+          onRetry: {}
+        )
+      }
+      .atomWidgetSize(.medium)
     }
   }
 }
