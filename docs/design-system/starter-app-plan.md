@@ -1,6 +1,6 @@
 # Starter app plan: an `app` kind for `@atom63/create`
 
-Status: decided, 2026-09-28 (A1–A7 take their recommendations). Step 1 in progress.
+Status: decided, 2026-09-28 (A1–A7 take their recommendations). Steps 1–3 done.
 
 ## Goal
 
@@ -135,11 +135,15 @@ Each step is its own pull request and ends green in CI.
 1. **Layers** (done). Split `base` into `base` and `content`; each kind names its layers and
    dependencies. *Verify:* generated `site` and `docs` projects match the files they have today,
    and `check:starter` passes.
-2. **Templates.** `*Content` exports for the four shell pages, and an optional link renderer on
+2. **Templates** (done). `*Content` exports for the four shell pages, and an optional link renderer on
    `AppShell`. *Verify:* `check:templates`, the stories and `check:product-shell` pass unchanged.
-3. **The app kind.** `starter/app` (router with the layout route, not-found page, README and
+3. **The app kind** (done). `starter/app` (router with the layout route, not-found page, README and
    `AGENTS.md` additions) plus the template copy from the agent index at generation time.
    *Verify:* `check:starter` builds the app; the route check passes at both widths and modes.
+   The route check moved to `scripts/design-system/lib/route-check.mjs`, which
+   `check:product-shell` and `check:starter` share. On a phone the top bar hides the appearance
+   controls: two rows of switches do not fit its height, and the app keeps the stored or system
+   appearance there.
 4. **Product-shell.** Point the route check at the generated app and retire
    `examples/product-shell`, if A7-A is taken.
 

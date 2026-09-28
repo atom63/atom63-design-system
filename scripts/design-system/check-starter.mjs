@@ -1,7 +1,8 @@
 /**
  * Proves the project starter works: for every kind, generate an app, install
  * it against freshly packed design system tarballs, typecheck and build it,
- * and hold its source to the craft rules. With --shadcn it also adds a shadcn
+ * hold its source to the craft rules, and open every route of an app kind
+ * (lib/route-check.mjs). With --shadcn it also adds a shadcn
  * component to the first kind's app (the Tailwind + shadcn path the starter
  * promises), then installs the list page template from the Atom63 shadcn
  * registry, served locally, and typechecks and builds again.
@@ -23,6 +24,7 @@ import { fileURLToPath } from 'node:url'
 import { kinds, planProject, writeProject } from '../../packages/create/src/generate.mjs'
 import { scanCss, scanSource } from './lib/craft-rules.mjs'
 import { pnpmOverridesYaml } from './lib/pnpm-overrides.mjs'
+import { checkRoutes } from './lib/route-check.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const packages = {
@@ -30,6 +32,10 @@ const packages = {
   '@atom63/ui-foundation': 'packages/ui-foundation',
   '@atom63/ui-react': 'packages/ui-react',
   '@atom63/mdx': 'packages/mdx',
+}
+/* Routes each kind's route check opens; keep them in step with its router. */
+const kindRoutes = {
+  app: ['/', '/invoices', '/settings', '/welcome', '/sign-in'],
 }
 const withShadcn = process.argv.includes('--shadcn')
 const keep = process.argv.includes('--keep')
@@ -134,6 +140,14 @@ try {
       throw new Error(`The ${kind} starter breaks the craft rules:\n  ${violations.join('\n  ')}`)
     }
     process.stdout.write(`\nThe ${kind} starter passes the craft rules.\n`)
+
+    if (kindRoutes[kind]) {
+      const { problems, summary } = await checkRoutes({ appDir: app, routes: kindRoutes[kind] })
+      if (problems.length > 0) {
+        throw new Error(`The ${kind} starter fails its route check:\n  ${problems.join('\n  ')}`)
+      }
+      process.stdout.write(`The ${kind} starter passes its route check (${summary}).\n`)
+    }
 
     if (withShadcn && kind === checkedKinds[0]) {
       run(
