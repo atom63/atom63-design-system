@@ -146,8 +146,7 @@ export function valuesEqual(expected: SyncValue, actual: SyncValue | undefined):
   }
   const left = expected.value
   const right = actual.value
-  if (typeof left === 'number' && typeof right === 'number')
-    return numbersEqual(left, right)
+  if (typeof left === 'number' && typeof right === 'number') return numbersEqual(left, right)
   if (typeof left !== 'object' || typeof right !== 'object') return left === right
   return (['r', 'g', 'b', 'a'] as const).every(
     channel => Math.abs(left[channel] - right[channel]) < COLOR_EPSILON
