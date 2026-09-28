@@ -85,7 +85,7 @@ So the widget *chrome* (rim, material, radius, shadow) belongs to the host, and 
 
 Each step is its own pull request and ends green in CI.
 
-1. **Widget tokens in Swift** (IW2). Add the widget colors to the Swift color map and the rim width
+1. **Widget tokens in Swift** (IW2; done, #105). Add the widget colors to the Swift color map and the rim width
    and radius to the generated tokens, per skin, brand and mode. *Verify:* the Web/iOS parity test
    covers the new colors in every selection.
 2. **`AtomWidgetCard`, `AtomWidgetSize` and `AtomWidgetGrid`** (IW1, IW3; done). `AtomWidgetCard`

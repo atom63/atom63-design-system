@@ -1,6 +1,6 @@
 # iOS accessibility contracts plan
 
-Status: steps 1–3 done, 2026-09-27; I1–I5 take their recommendations. Item 3 of the handoff menu ("iOS parity"), first part: the E2
+Status: done, 2026-09-27; I1–I5 take their recommendations. Item 3 of the handoff menu ("iOS parity"), first part: the E2
 accessibility contracts on iOS. `quality-plan.md` E2 asked for this once the web contracts
 settled: "check the accessibility traits and values of the SwiftUI view in the same contract. This
 replaces the free-text `accessibilityOutcomes` step by step."
@@ -108,11 +108,14 @@ Each step is its own pull request and ends green in CI.
    the switch's label, or its value, fails the test.
 2. **Radio and tabs** (done, #102). Fix the two showcases (I3, I4), update the tabs renderer in the
    cross-renderer contract, and add their `ios` sections.
-3. **Accordion and dialog** (done). Add their `ios` sections (I5 for the accordion; the sheet's title and
+3. **Accordion and dialog** (done, #103). Add their `ios` sections (I5 for the accordion; the sheet's title and
    its Done button for the dialog).
-4. **Evidence.** For patterns with an `ios` section, `AtomRendererConformanceTests` requires the
-   UI test to cover them, and the hand-written `verifiedAccessibilityOutcomes` for those patterns
-   point at the contract instead of restating it.
+4. **Coverage** (done). `generate:a11y-ios` also writes `AtomAccessibilityCoverage` into
+   Atom63UI: each component bound to a pattern, and the patterns checked on iOS.
+   `AtomRendererConformanceTests` requires every bound component with a SwiftUI renderer to be
+   checked, so a new binding without an `ios` section fails `swift test`. The hand-written
+   `verifiedAccessibilityOutcomes` stay: they name the shared outcomes, and the UI test now
+   checks them against the rendered view.
 
 ## Out of scope
 
