@@ -75,6 +75,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
   case syncStatus
   case pagination
   case toast
+  case inform
 
   var id: Self { self }
 
@@ -93,7 +94,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
       .chip, .badge,
       .avatar, .asyncImage:
       .content
-    case .contentState, .notice, .progress, .skeleton, .syncStatus, .pagination, .toast:
+    case .contentState, .notice, .progress, .skeleton, .syncStatus, .pagination, .toast, .inform:
       .feedback
     }
   }
@@ -139,6 +140,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .syncStatus: "Sync status"
     case .pagination: "Pagination"
     case .toast: "Toast"
+    case .inform: "Inform"
     }
   }
 
@@ -183,6 +185,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .syncStatus: "arrow.triangle.2.circlepath"
     case .pagination: "ellipsis.circle"
     case .toast: "bell.badge"
+    case .inform: "megaphone"
     }
   }
 
@@ -266,6 +269,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
       "Load-more idle, loading, retry, and exhausted intent."
     case .toast:
       "Transient confirmation with automatic dismissal and reduced-motion support."
+    case .inform:
+      "One arbiter decides which messages show: a banner, a dialog, and up to three flyouts, never more than one blocking at a time."
     }
   }
 
@@ -310,6 +315,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .syncStatus: "AtomSyncStatusView / AtomSyncIntent"
     case .pagination: "AtomLoadMoreView / AtomPaginationIntent"
     case .toast: "AtomToast / atomToast(_:)"
+    case .inform: "atomInform(_:route:store:)"
     }
   }
 
@@ -393,6 +399,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
       "AtomLoadMoreView(intent: paginationIntent) {\n  Task { await loadNextPage() }\n}"
     case .toast:
       "ContentView()\n  .atomToast($toast)"
+    case .inform:
+      "ContentView()\n  .atomInform(messages, route: \"/projects\", store: dismissals)"
     }
   }
 

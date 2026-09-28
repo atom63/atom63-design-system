@@ -85,8 +85,14 @@ Each step is its own pull request and ends green in CI.
    on `UserDefaults` (persistent) and memory (session). Shared vectors: a script that runs the web
    arbiter over a fixture set and writes the expected resolutions; a Swift test that replays them.
    *Verify:* changing the flyout limit or the blocking order on one side fails the vectors.
-2. **Surfaces.** Banner, dialog and flyout stack, and an `atomInform(_:)` modifier that resolves
-   and presents them; a demo catalog showcase with snapshots.
+2. **Surfaces** (done). `atomInform(_:route:store:)` resolves the messages and presents a
+   banner in the top safe-area inset, a dialog as an alert (up to two actions) or a sheet, and up
+   to three flyouts at the bottom edge, each an `AtomNotice` with its actions and, when the
+   message can be dismissed, a close button. An alert closes on any button, so choosing a dialog
+   action also records its dismissal; otherwise the arbiter would present it again.
+   `AtomInformDismissalStore` is `@Observable`, so a dismissal updates the view. The demo's
+   Inform showcase and a UI test cover the blocking rule: the flyouts wait while the dialog is
+   open and return after it closes.
 3. **Spotlight spike** (IF4-A) and, if it holds, the TipKit spotlight.
 
 ## Out of scope

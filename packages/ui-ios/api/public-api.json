@@ -5073,6 +5073,21 @@
     },
     {
       "source": "s:8Atom63UI24AtomInformDismissalStoreC",
+      "target": "external:Copyable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI24AtomInformDismissalStoreC",
+      "target": "external:Escapable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI24AtomInformDismissalStoreC",
+      "target": "external:Observable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI24AtomInformDismissalStoreC",
       "target": "external:Sendable",
       "kind": "conformsTo"
     },

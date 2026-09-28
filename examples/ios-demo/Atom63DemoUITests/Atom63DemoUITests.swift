@@ -297,6 +297,38 @@ final class Atom63DemoUITests: XCTestCase {
     XCTAssertTrue(app.staticTexts["Profile opened"].waitForExistence(timeout: 2))
   }
 
+  func testInformShowsOneBlockingMessageAtATime() {
+    let app = XCUIApplication()
+    app.launchEnvironment["ATOM63_UI_TESTING"] = "1"
+    app.launchEnvironment["ATOM63_CATALOG_ITEM"] = "inform"
+    app.launch()
+
+    // AtomNotice prefixes its title with the tone ("Warning: …") for VoiceOver.
+    let notice = { (text: String) in
+      app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", text)).firstMatch
+    }
+    let banner = notice("Scheduled maintenance")
+    let flyout = notice("All projects are synced.")
+    XCTAssertTrue(banner.waitForExistence(timeout: 5))
+    XCTAssertTrue(flyout.exists)
+
+    // The dialog takes the blocking slot, so the flyouts wait; the banner stays.
+    app.buttons["Ask for a review"].tap()
+    XCTAssertTrue(app.alerts["Enjoying Atom63?"].waitForExistence(timeout: 3))
+    XCTAssertFalse(flyout.exists)
+
+    // Choosing an action dismisses the dialog for the session, and the flyouts return.
+    app.alerts.buttons["Not now"].tap()
+    XCTAssertTrue(flyout.waitForExistence(timeout: 3))
+    XCTAssertFalse(app.alerts["Enjoying Atom63?"].exists)
+
+    // The banner's close button records the dismissal; Reset clears it.
+    app.buttons["Dismiss"].firstMatch.tap()
+    XCTAssertTrue(banner.waitForNonExistence(timeout: 3))
+    app.buttons["Reset"].tap()
+    XCTAssertTrue(banner.waitForExistence(timeout: 3))
+  }
+
   private func launchApp() -> XCUIApplication {
     let app = XCUIApplication()
     app.launchEnvironment["ATOM63_UI_TESTING"] = "1"
