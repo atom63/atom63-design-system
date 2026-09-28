@@ -95,44 +95,52 @@ const columns: readonly DataTableColumn<Invoice>[] = [
 
 const recent = [...invoices].sort((a, b) => b.issued.localeCompare(a.issued)).slice(0, 4)
 
+export function DashboardContent() {
+  return (
+    <Container maxWidth="wide" padding="none">
+      <PageHeader
+        actions={
+          <Button variant="primary">
+            <Plus aria-hidden />
+            New invoice
+          </Button>
+        }
+        description="September 2026 at a glance."
+        title="Overview"
+      />
+      <StatRow comparison="vs. August" stats={stats} />
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+        <section className="flex flex-col gap-4">
+          <SectionHeader level={2} title="Recent invoices" variant="muted" />
+          <DataTableSection
+            columns={columns}
+            empty={{
+              action: <Button variant="primary">New invoice</Button>,
+              description: 'Invoices you create appear here.',
+              title: 'No invoices yet',
+            }}
+            getRowKey={invoice => invoice.id}
+            headingLevel={3}
+            label="Recent invoices"
+            rows={recent}
+            summary={`The ${recent.length} most recent of ${invoices.length}`}
+          />
+        </section>
+        <section className="flex flex-col gap-4">
+          <SectionHeader level={2} title="Activity" variant="muted" />
+          <ActivityList items={activity} label="Recent activity" />
+        </section>
+      </div>
+    </Container>
+  )
+}
+
+/* The page in its app shell. An app that renders the shell once, around its
+   routes, renders `DashboardContent` inside it instead. */
 export function DashboardPage() {
   return (
     <AppShell navItems={nav} productName="Tally">
-      <Container maxWidth="wide" padding="none">
-        <PageHeader
-          actions={
-            <Button variant="primary">
-              <Plus aria-hidden />
-              New invoice
-            </Button>
-          }
-          description="September 2026 at a glance."
-          title="Overview"
-        />
-        <StatRow comparison="vs. August" stats={stats} />
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-          <section className="flex flex-col gap-4">
-            <SectionHeader level={2} title="Recent invoices" variant="muted" />
-            <DataTableSection
-              columns={columns}
-              empty={{
-                action: <Button variant="primary">New invoice</Button>,
-                description: 'Invoices you create appear here.',
-                title: 'No invoices yet',
-              }}
-              getRowKey={invoice => invoice.id}
-              headingLevel={3}
-              label="Recent invoices"
-              rows={recent}
-              summary={`The ${recent.length} most recent of ${invoices.length}`}
-            />
-          </section>
-          <section className="flex flex-col gap-4">
-            <SectionHeader level={2} title="Activity" variant="muted" />
-            <ActivityList items={activity} label="Recent activity" />
-          </section>
-        </div>
-      </Container>
+      <DashboardContent />
     </AppShell>
   )
 }

@@ -32,56 +32,64 @@ const nav = [
   { href: '#settings', icon: <Settings aria-hidden />, label: 'Settings' },
 ]
 
+export function OnboardingContent() {
+  return (
+    <Container maxWidth="default" padding="none">
+      <PageHeader
+        description="Send your first invoice and Tally tracks it until it is paid."
+        title="Welcome to Tally"
+      />
+      <EmptyState
+        action={
+          <Button variant="primary">
+            <Plus aria-hidden />
+            Create your first invoice
+          </Button>
+        }
+        description="Invoices you create or import appear here, with their status and amount."
+        icon={<FileText aria-hidden />}
+        secondaryAction={
+          <Button variant="outline">
+            <Upload aria-hidden />
+            Import from CSV
+          </Button>
+        }
+        title="No invoices yet"
+      />
+      {/* The empty state already offers the first step's action, so the checklist repeats none. */}
+      <GettingStartedChecklist
+        steps={[
+          {
+            description: 'Tally sends it and tells you when it is opened and paid.',
+            done: false,
+            id: 'invoice',
+            title: 'Create your first invoice',
+          },
+          {
+            description: 'Save who you bill once, and pick them when you invoice.',
+            done: false,
+            id: 'customer',
+            title: 'Add a customer',
+          },
+          {
+            description: 'Tally follows up on overdue invoices so you do not have to.',
+            done: false,
+            id: 'reminders',
+            title: 'Turn on payment reminders',
+          },
+        ]}
+        title="Get started"
+      />
+    </Container>
+  )
+}
+
+/* The page in its app shell. An app that renders the shell once, around its
+   routes, renders `OnboardingContent` inside it instead. */
 export function OnboardingPage() {
   return (
     <AppShell navItems={nav} productName="Tally">
-      <Container maxWidth="default" padding="none">
-        <PageHeader
-          description="Send your first invoice and Tally tracks it until it is paid."
-          title="Welcome to Tally"
-        />
-        <EmptyState
-          action={
-            <Button variant="primary">
-              <Plus aria-hidden />
-              Create your first invoice
-            </Button>
-          }
-          description="Invoices you create or import appear here, with their status and amount."
-          icon={<FileText aria-hidden />}
-          secondaryAction={
-            <Button variant="outline">
-              <Upload aria-hidden />
-              Import from CSV
-            </Button>
-          }
-          title="No invoices yet"
-        />
-        {/* The empty state already offers the first step's action, so the checklist repeats none. */}
-        <GettingStartedChecklist
-          steps={[
-            {
-              description: 'Tally sends it and tells you when it is opened and paid.',
-              done: false,
-              id: 'invoice',
-              title: 'Create your first invoice',
-            },
-            {
-              description: 'Save who you bill once, and pick them when you invoice.',
-              done: false,
-              id: 'customer',
-              title: 'Add a customer',
-            },
-            {
-              description: 'Tally follows up on overdue invoices so you do not have to.',
-              done: false,
-              id: 'reminders',
-              title: 'Turn on payment reminders',
-            },
-          ]}
-          title="Get started"
-        />
-      </Container>
+      <OnboardingContent />
     </AppShell>
   )
 }
