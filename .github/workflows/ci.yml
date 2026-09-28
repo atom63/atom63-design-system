@@ -147,13 +147,6 @@ jobs:
       - name: Install Playwright browser
         run: pnpm exec playwright install --with-deps chromium
 
-      # The example app composed from @atom63/templates: build it, then open
-      # every route at desktop and phone widths in light and dark mode.
-      - name: Check the product-shell example
-        run: |
-          pnpm --filter atom63-product-shell-example typecheck
-          pnpm check:product-shell
-
       - name: Test styles
         run: pnpm --filter @atom63/styles test
 

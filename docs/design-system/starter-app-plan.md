@@ -1,6 +1,6 @@
 # Starter app plan: an `app` kind for `@atom63/create`
 
-Status: decided, 2026-09-28 (A1–A7 take their recommendations). Steps 1–3 done.
+Status: decided, 2026-09-28 (A1–A7 take their recommendations). Steps 1–4 done.
 
 ## Goal
 
@@ -141,11 +141,11 @@ Each step is its own pull request and ends green in CI.
    `AGENTS.md` additions) plus the template copy from the agent index at generation time.
    *Verify:* `check:starter` builds the app; the route check passes at both widths and modes.
    The route check moved to `scripts/design-system/lib/route-check.mjs`, which
-   `check:product-shell` and `check:starter` share. On a phone the top bar hides the appearance
+   `check:starter` runs on the app kind. On a phone the top bar hides the appearance
    controls: two rows of switches do not fit its height, and the app keeps the stored or system
    appearance there.
-4. **Product-shell.** Point the route check at the generated app and retire
-   `examples/product-shell`, if A7-A is taken.
+4. **Product-shell** (done). `examples/product-shell`, `check:product-shell` and its CI step are
+   gone; `check:starter` runs the route check on the generated app instead.
 
 ## Out of scope
 

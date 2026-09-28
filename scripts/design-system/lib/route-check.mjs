@@ -2,7 +2,7 @@
  * Opens every route of a built app with `vite preview`, at a desktop and a
  * phone width in light and dark mode, and reports axe violations, console
  * errors, a page without exactly one `h1`, and a page wider than the viewport.
- * check:product-shell and check:starter (for the app kind) share it.
+ * check:starter runs it on the app kind.
  *
  * Needs Playwright's Chromium, and `vite` resolvable from `appDir`.
  */

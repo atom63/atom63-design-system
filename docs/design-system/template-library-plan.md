@@ -212,6 +212,7 @@ Each step is its own pull request and ends green in CI.
    docs site generated from the metadata. Hand the set to you for the taste review; what you
    approve becomes `ready`.
 3. **The example app.** Rebuild `examples/product-shell` as a routed app composed from the pages.
+   (Later retired: the `app` kind of `@atom63/create` replaced it; see `starter-app-plan.md`.)
    CI builds it and render-tests every route with axe.
 4. **CLI and MCP.** Index the templates; add `atom63 template [id]` (list, or show one),
    `atom63 copy <id> <dir>`, search kind `template` and `atom63 build [idea]`, with golden
