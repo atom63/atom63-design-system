@@ -12,7 +12,7 @@ export const markers = {
 }
 
 const cliQueries = [
-  'Ask the design system before writing UI. The `atom63` CLI and its MCP server (`atom63 mcp`) answer from the same generated index as the packages:',
+  'Ask the design system before writing UI, and start each screen with `atom63 build <idea>`, the idea in your own words. The `atom63` CLI and its MCP server (`atom63 mcp`) answer from the same generated index as the packages:',
   '',
   '- `atom63 build <idea>`: a kit for what you are building: the closest page templates and blocks, the components they use, the foundation and the rules.',
   '- `atom63 template <id>` and `atom63 copy <id> <dir>`: read a page or block template, then copy it and the blocks it uses into your project to adapt.',
@@ -30,6 +30,7 @@ const docsQueries = [
   '',
   '- `https://system.atom63.io/llms.txt` lists every page with a one-line summary.',
   '- Every page has a Markdown twin at its path plus `.md`, for example `https://system.atom63.io/components/component-dialog.md`. A component page gives the import line, the contract (axes, defaults, slots, states, web and iOS) and related components.',
+  '- Start each screen from the closest page or block template: `https://system.atom63.io/r/registry.json` lists them with a description each, and `npx shadcn add https://system.atom63.io/r/<id>.json` installs one with the blocks it uses.',
   '- Start from a component that exists before writing markup of your own.',
 ]
 

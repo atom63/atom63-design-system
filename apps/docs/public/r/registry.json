@@ -97,7 +97,7 @@
       "name": "onboarding-page",
       "type": "registry:page",
       "title": "Onboarding page",
-      "description": "A first-run page inside the app shell: a welcome header and an empty state whose primary action creates the first record, with importing as the quieter alternative.",
+      "description": "A first-run page inside the app shell: a welcome header, an empty state whose primary action creates the first record with importing as the quieter alternative, and a getting-started checklist.",
       "dependencies": [
         "@atom63/ui-react",
         "lucide-react"
@@ -105,6 +105,7 @@
       "registryDependencies": [
         "https://system.atom63.io/r/app-shell.json",
         "https://system.atom63.io/r/empty-state.json",
+        "https://system.atom63.io/r/getting-started-checklist.json",
         "https://system.atom63.io/r/page-header.json"
       ],
       "categories": [
@@ -118,6 +119,7 @@
           "empty",
           "welcome",
           "getting started",
+          "checklist",
           "app shell"
         ]
       },
@@ -436,6 +438,41 @@
           "path": "templates/blocks/filter-bar/filter-bar.tsx",
           "type": "registry:component",
           "target": "@components/atom63/blocks/filter-bar/filter-bar.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "getting-started-checklist",
+      "type": "registry:block",
+      "title": "Getting started checklist",
+      "description": "A short list of first steps with a progress count: finished steps are checked, the first unfinished one is current and carries its action, and the rest wait.",
+      "dependencies": [
+        "@atom63/ui-react",
+        "lucide-react"
+      ],
+      "registryDependencies": [],
+      "categories": [
+        "feedback"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "onboarding",
+          "getting started",
+          "checklist",
+          "steps",
+          "setup",
+          "progress",
+          "first run"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/blocks/getting-started-checklist/getting-started-checklist.tsx",
+          "type": "registry:component",
+          "target": "@components/atom63/blocks/getting-started-checklist/getting-started-checklist.tsx"
         }
       ]
     },
