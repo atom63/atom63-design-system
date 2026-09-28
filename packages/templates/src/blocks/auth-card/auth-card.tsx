@@ -9,7 +9,7 @@ export const template = {
     'A centered card for signing in or up: the product name as the page heading, one short line of context, the form, and the way to the other flow.',
   category: 'forms',
   tags: ['sign in', 'login', 'sign up', 'register', 'auth', 'password', 'form'],
-  readiness: 'draft',
+  readiness: 'ready',
 } as const
 
 export interface AuthCardProps {

@@ -17,7 +17,7 @@ export const template = {
     "One record's fields in a side sheet over its list, with the record's actions in the footer, so people inspect a row without losing their place.",
   category: 'collections',
   tags: ['detail', 'inspector', 'side panel', 'sheet', 'record', 'view'],
-  readiness: 'draft',
+  readiness: 'ready',
 } as const
 
 export interface DetailField {

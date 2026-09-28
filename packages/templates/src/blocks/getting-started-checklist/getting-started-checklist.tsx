@@ -18,7 +18,7 @@ export const template = {
     'A short list of first steps with a progress count: finished steps are checked, the first unfinished one is current and carries its action, and the rest wait.',
   category: 'feedback',
   tags: ['onboarding', 'getting started', 'checklist', 'steps', 'setup', 'progress', 'first run'],
-  readiness: 'draft',
+  readiness: 'ready',
 } as const
 
 export interface ChecklistStep {

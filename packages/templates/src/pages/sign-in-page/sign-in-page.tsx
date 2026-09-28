@@ -25,7 +25,7 @@ export const template = {
     'Email and password sign-in with inline field errors, a form-level error for wrong credentials, a loading submit, and links to reset the password or create an account.',
   category: 'forms',
   tags: ['sign in', 'login', 'auth', 'password', 'form', 'validation'],
-  readiness: 'draft',
+  readiness: 'ready',
 } as const
 
 export interface SignInPageProps {

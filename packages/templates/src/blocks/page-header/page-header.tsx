@@ -9,7 +9,7 @@ export const template = {
     'The page title and a one-line description, with the page-level actions beside them on wide screens and below them on phones.',
   category: 'layout',
   tags: ['title', 'heading', 'actions', 'toolbar'],
-  readiness: 'draft',
+  readiness: 'ready',
 } as const
 
 export interface PageHeaderProps {

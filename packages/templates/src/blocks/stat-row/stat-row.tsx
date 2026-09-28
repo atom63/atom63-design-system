@@ -8,7 +8,7 @@ export const template = {
     'A row of headline numbers, each with its label and an optional change against the previous period that does not rely on color alone.',
   category: 'data',
   tags: ['stats', 'metrics', 'kpi', 'dashboard', 'numbers', 'summary'],
-  readiness: 'draft',
+  readiness: 'ready',
 } as const
 
 export interface Stat {
