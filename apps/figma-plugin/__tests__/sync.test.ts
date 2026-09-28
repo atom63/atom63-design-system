@@ -148,6 +148,19 @@ describe('Atom63 Figma sync', () => {
     expect(valuesEqual({ value: 44 }, { value: 40 })).toBe(false)
     expect(valuesEqual({ alias: '--a' }, { value: 1 })).toBe(false)
   })
+
+  it('treats a number Figma stored as a 32-bit float as unchanged', () => {
+    for (const value of [10.8, 51.6, 64.8, 73.2, 1234.56]) {
+      expect(valuesEqual({ value }, { value: Math.fround(value) })).toBe(true)
+    }
+    expect(valuesEqual({ value: 64.8 }, { value: 64.81 })).toBe(false)
+    expect(
+      valuesEqual(
+        { composed: { alias: '--a', opacity: 33.3 } },
+        { composed: { alias: '--a', opacity: Math.fround(33.3) } }
+      )
+    ).toBe(true)
+  })
 })
 
 describe('Atom63 Figma sync: a token moving to another collection', () => {

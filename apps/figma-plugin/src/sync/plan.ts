@@ -126,6 +126,11 @@ export interface SyncPlan {
 const COLOR_EPSILON = 1e-6
 const FLOAT_EPSILON = 1e-6
 
+/** Figma stores numbers as 32-bit floats, so the tolerance scales with the value. */
+function numbersEqual(left: number, right: number): boolean {
+  return Math.abs(left - right) < FLOAT_EPSILON * Math.max(1, Math.abs(left), Math.abs(right))
+}
+
 export function valuesEqual(expected: SyncValue, actual: SyncValue | undefined): boolean {
   if (!actual) return false
   if ('alias' in expected || 'alias' in actual) {
@@ -136,13 +141,13 @@ export function valuesEqual(expected: SyncValue, actual: SyncValue | undefined):
       'composed' in expected &&
       'composed' in actual &&
       expected.composed.alias === actual.composed.alias &&
-      Math.abs(expected.composed.opacity - actual.composed.opacity) < FLOAT_EPSILON
+      numbersEqual(expected.composed.opacity, actual.composed.opacity)
     )
   }
   const left = expected.value
   const right = actual.value
   if (typeof left === 'number' && typeof right === 'number')
-    return Math.abs(left - right) < FLOAT_EPSILON
+    return numbersEqual(left, right)
   if (typeof left !== 'object' || typeof right !== 'object') return left === right
   return (['r', 'g', 'b', 'a'] as const).every(
     channel => Math.abs(left[channel] - right[channel]) < COLOR_EPSILON
