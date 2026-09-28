@@ -16,6 +16,7 @@ import {
   Trash2,
   X,
 } from 'lucide-react'
+import { SegmentedControl } from '@atom63/ui-react'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   Badge,
@@ -34,7 +35,6 @@ import {
   RenameDialog,
   ScrollArea,
   Separator,
-  Tabs,
   useToast,
 } from '../components/ui'
 import { useDebouncedValue } from '../hooks/useDebouncedValue'
@@ -1012,17 +1012,17 @@ export function ManagePage({ onNavigate }: { onNavigate?: (page: string) => void
                       <span className="manage-edit-group-label">{group.collectionName}</span>
                     )}
                     {group.modes.length > 1 && (
-                      <Tabs
-                        activeTab={activeMode}
+                      <SegmentedControl
                         className="manage-edit-mode-tabs"
-                        onTabChange={id =>
+                        items={group.modes.map(m => ({ value: m, label: m }))}
+                        onValueChange={id =>
                           setEditActiveModes(prev => ({
                             ...prev,
                             [group.collectionName]: id,
                           }))
                         }
                         size="sm"
-                        tabs={group.modes.map(m => ({ id: m, label: m }))}
+                        value={activeMode}
                       />
                     )}
                   </div>
@@ -1118,7 +1118,7 @@ export function ManagePage({ onNavigate }: { onNavigate?: (page: string) => void
                                 data-tooltip="Remove reference"
                                 onClick={() => setEditField(v.id, activeMode, '')}
                                 size="icon-xs"
-                                variant="destructive-soft"
+                                variant="destructive"
                               >
                                 <X size={12} />
                               </Button>

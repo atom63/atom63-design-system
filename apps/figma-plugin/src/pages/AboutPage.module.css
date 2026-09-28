@@ -39,7 +39,7 @@
   letter-spacing: 0.02em;
   background: color-mix(in oklch, var(--primary) 8%, transparent);
   border: 1px solid color-mix(in oklch, var(--primary) 12%, transparent);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
 }
 
 .tagline {
@@ -166,7 +166,7 @@
   width: 2px;
   height: 2px;
   background: var(--muted-foreground);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   opacity: 0.4;
 }
 

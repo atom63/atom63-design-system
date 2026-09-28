@@ -1,107 +1,11 @@
 /* ============================================
-   Design Tokens
-   ============================================
+   Layout tokens
 
-   These tokens match the primitives in sample-tokens.json
-   to ensure consistency between the plugin UI and the
-   design system it manages. We "eat our own dog food"! 🐕
-
+   Colors, radii and modes come from the Atom63 design system
+   (src/atom63.css). These are the plugin's own layout scales.
    ============================================ */
 
 :root {
-  /* ============================================
-     Color Primitives (matches sample-tokens.json)
-     ============================================ */
-
-  /* Gray Light/Dark scales (Radix-style 12-step) */
-  --color-gray-light-1: rgba(252, 252, 252, 1);
-  --color-gray-light-2: rgba(249, 249, 249, 1);
-  --color-gray-light-3: rgba(240, 240, 240, 1);
-  --color-gray-light-4: rgba(232, 232, 232, 1);
-  --color-gray-light-5: rgba(224, 224, 224, 1);
-  --color-gray-light-6: rgba(217, 217, 217, 1);
-  --color-gray-light-7: rgba(206, 206, 206, 1);
-  --color-gray-light-8: rgba(187, 187, 187, 1);
-  --color-gray-light-9: rgba(141, 141, 141, 1);
-  --color-gray-light-10: rgba(131, 131, 131, 1);
-  --color-gray-light-11: rgba(100, 100, 100, 1);
-  --color-gray-light-12: rgba(32, 32, 32, 1);
-  --color-gray-dark-1: rgba(17, 17, 17, 1);
-  --color-gray-dark-2: rgba(25, 25, 25, 1);
-  --color-gray-dark-3: rgba(34, 34, 34, 1);
-  --color-gray-dark-4: rgba(42, 42, 42, 1);
-  --color-gray-dark-5: rgba(49, 49, 49, 1);
-  --color-gray-dark-6: rgba(58, 58, 58, 1);
-  --color-gray-dark-7: rgba(72, 72, 72, 1);
-  --color-gray-dark-8: rgba(96, 96, 96, 1);
-  --color-gray-dark-9: rgba(110, 110, 110, 1);
-  --color-gray-dark-10: rgba(123, 123, 123, 1);
-  --color-gray-dark-11: rgba(180, 180, 180, 1);
-  --color-gray-dark-12: rgba(238, 238, 238, 1);
-
-  --color-accent-primary-500: rgba(247, 107, 21, 1);
-
-  /* Status colors (from aliases) */
-  --color-accent-status-danger-500: rgba(229, 72, 77, 1);
-  --color-accent-status-success-500: rgba(48, 164, 108, 1);
-  --color-accent-status-warning-500: rgba(255, 197, 61, 1);
-  --color-accent-status-info-500: rgba(124, 226, 254, 1);
-
-  /* ============================================
-     Semantic Colors (following semantics.css ramp)
-     ============================================ */
-
-  /* Base colors */
-  --background: var(--color-gray-light-2);
-  --foreground: var(--color-gray-light-12);
-
-  /* Card colors */
-  --card: var(--color-gray-light-1);
-  --card-foreground: var(--color-gray-light-12);
-
-  /* Popover colors */
-  --popover: var(--color-gray-light-1);
-  --popover-foreground: var(--color-gray-light-12);
-
-  /* Primary brand colors */
-  --primary: var(--color-accent-primary-500);
-  --primary-foreground: var(--color-gray-light-1);
-
-  /* Secondary colors */
-  --secondary: var(--color-gray-light-3);
-  --secondary-foreground: var(--color-gray-light-11);
-
-  /* Muted/subtle colors */
-  --muted: var(--color-gray-light-3);
-  --muted-foreground: color-mix(in srgb, var(--color-gray-light-11), transparent 10%);
-
-  /* Accent colors */
-  --accent: color-mix(in srgb, var(--color-gray-light-4), transparent 20%);
-  --accent-foreground: var(--color-gray-light-12);
-
-  /* Status colors */
-  --destructive: var(--color-accent-status-danger-500);
-  --destructive-foreground: var(--color-gray-light-1);
-  --success: var(--color-accent-status-success-500);
-  --success-foreground: var(--color-gray-light-1);
-  --warning: var(--color-accent-status-warning-500);
-  --warning-foreground: var(--color-gray-light-12);
-  --info: var(--color-accent-status-info-500);
-  --info-foreground: var(--color-gray-light-12);
-
-  /* Border and input colors */
-  --border: var(--color-gray-light-4);
-  --input: var(--color-gray-light-5);
-  --ring: var(--color-gray-light-6);
-
-  /* Extended semantic tokens */
-  --muted-foreground-light: var(--color-gray-light-9);
-  --border-light: var(--color-gray-light-3);
-  --success-light: color-mix(in srgb, var(--color-accent-status-success-500), transparent 90%);
-  --error: var(--destructive);
-  --error-light: color-mix(in srgb, var(--color-accent-status-danger-500), transparent 90%);
-  --primary-muted: color-mix(in srgb, var(--color-accent-primary-500), transparent 85%);
-
   /* Spacing scale (matches primitives.spacing tokens) */
   --spacing-0: 0px;
   --spacing-2xs: 2px;
@@ -117,17 +21,8 @@
   --spacing-6xl: 96px;
   --spacing-7xl: 128px;
 
-  /* Border radius (matches primitives.radius tokens) */
+  /* Radius: the Atom63 scale (--radius-xs … --radius-3xl); --radius-pill is below. */
   --radius-0: 0px;
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius: 6px; /* Default/base radius */
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-2xl: 24px;
-  --radius-3xl: 32px;
-  --radius-full: 9999px;
 
   /* Sizes - Tailwind numeric scale (matches primitives.sizes tokens) */
   --size-0: 0px;
@@ -195,149 +90,70 @@
   --radius-pill: 9999px;
 }
 
-/* ============================================
-   Theme Overrides
-   ============================================
-   Figma adds .figma-dark to <html> when the user
-   has dark mode enabled (requires themeColors: true).
-   We support manual .light/.dark classes for user
-   theme preference, plus prefers-color-scheme fallback.
-   ============================================ */
+/* Global resets sit in @layer base, below the Atom63 component recipes
+   (@layer components), so they never undo a component's padding or margins. */
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 
-@mixin light-tokens {
-  --background: var(--color-gray-light-2);
-  --foreground: var(--color-gray-light-12);
-  --card: var(--color-gray-light-1);
-  --card-foreground: var(--color-gray-light-12);
-  --popover: var(--color-gray-light-1);
-  --popover-foreground: var(--color-gray-light-12);
-  --primary: var(--color-accent-primary-500);
-  --primary-foreground: var(--color-gray-light-1);
-  --secondary: var(--color-gray-light-3);
-  --secondary-foreground: var(--color-gray-light-11);
-  --muted: var(--color-gray-light-3);
-  --muted-foreground: color-mix(in srgb, var(--color-gray-light-11), transparent 10%);
-  --accent: color-mix(in srgb, var(--color-gray-light-4), transparent 20%);
-  --accent-foreground: var(--color-gray-light-12);
-  --destructive: var(--color-accent-status-danger-500);
-  --destructive-foreground: var(--color-gray-light-1);
-  --success: var(--color-accent-status-success-500);
-  --success-foreground: var(--color-gray-light-1);
-  --warning: var(--color-accent-status-warning-500);
-  --warning-foreground: var(--color-gray-light-12);
-  --info: var(--color-accent-status-info-500);
-  --info-foreground: var(--color-gray-light-12);
-  --border: var(--color-gray-light-4);
-  --input: var(--color-gray-light-5);
-  --ring: var(--color-gray-light-6);
-  --muted-foreground-light: var(--color-gray-light-9);
-  --border-light: var(--color-gray-light-3);
-  --success-light: color-mix(in srgb, var(--color-accent-status-success-500), transparent 90%);
-  --error: var(--destructive);
-  --error-light: color-mix(in srgb, var(--color-accent-status-danger-500), transparent 90%);
-  color-scheme: light;
-}
+    // Thin scrollbar for all scrollable containers
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--foreground) 15%, transparent) transparent;
 
-@mixin dark-tokens {
-  --background: var(--color-gray-dark-1);
-  --foreground: color-mix(in srgb, var(--color-gray-dark-12), transparent 10%);
-  --card: var(--color-gray-dark-2);
-  --card-foreground: var(--color-gray-dark-12);
-  --popover: var(--color-gray-dark-4);
-  --popover-foreground: var(--color-gray-dark-12);
-  --primary: var(--color-accent-primary-500);
-  --primary-foreground: var(--color-gray-dark-12);
-  --secondary: var(--color-gray-dark-3);
-  --secondary-foreground: color-mix(in srgb, var(--color-gray-dark-10), transparent 10%);
-  --muted: var(--color-gray-dark-3);
-  --muted-foreground: color-mix(in srgb, var(--color-gray-dark-11), transparent 10%);
-  --accent: color-mix(in srgb, var(--color-gray-dark-5), transparent 40%);
-  --accent-foreground: var(--color-gray-dark-12);
-  --destructive: var(--color-accent-status-danger-500);
-  --destructive-foreground: var(--color-gray-dark-12);
-  --success: var(--color-accent-status-success-500);
-  --success-foreground: var(--color-gray-dark-12);
-  --warning: var(--color-accent-status-warning-500);
-  --warning-foreground: var(--color-gray-dark-12);
-  --info: var(--color-accent-status-info-500);
-  --info-foreground: var(--color-gray-dark-12);
-  --border: var(--color-gray-dark-6);
-  --input: var(--color-gray-dark-7);
-  --ring: var(--color-gray-dark-8);
-  --muted-foreground-light: var(--color-gray-dark-9);
-  --border-light: var(--color-gray-dark-4);
-  --success-light: color-mix(in srgb, var(--color-accent-status-success-500), transparent 90%);
-  --error: var(--destructive);
-  --error-light: color-mix(in srgb, var(--color-accent-status-danger-500), transparent 90%);
-  color-scheme: dark;
-}
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
 
-/* Figma-injected dark mode class */
-.figma-dark {
-  @include dark-tokens;
-}
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
 
-/* OS-level dark mode fallback */
-@media (prefers-color-scheme: dark) {
-  :root {
-    @include dark-tokens;
-  }
-}
+    &::-webkit-scrollbar-thumb {
+      background: color-mix(in srgb, var(--foreground) 15%, transparent);
+      border-radius: var(--radius-pill);
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-
-  // Thin scrollbar for all scrollable containers
-  scrollbar-width: thin;
-  scrollbar-color: color-mix(in srgb, var(--foreground) 15%, transparent) transparent;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: color-mix(in srgb, var(--foreground) 15%, transparent);
-    border-radius: var(--radius-full);
-
-    &:hover {
-      background: color-mix(in srgb, var(--foreground) 25%, transparent);
+      &:hover {
+        background: color-mix(in srgb, var(--foreground) 25%, transparent);
+      }
     }
   }
+
+  /* === Form Input Reset === */
+  input[type='radio'],
+  input[type='checkbox'] {
+    outline: none;
+  }
+
+  input[type='radio']:focus-visible,
+  input[type='checkbox']:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  body {
+    font-family:
+      'Inter',
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      sans-serif;
+    font-size: var(--text-base);
+    color: var(--foreground);
+    background: var(--muted);
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+  }
 }
 
-/* === Form Input Reset === */
-input[type='radio'],
-input[type='checkbox'] {
-  outline: none;
-}
-
-input[type='radio']:focus-visible,
-input[type='checkbox']:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: 2px;
-}
-
-body {
-  font-family:
-    'Inter',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    sans-serif;
-  font-size: var(--text-base);
-  color: var(--foreground);
-  background: var(--muted);
-  overflow: hidden;
-  width: 100vw;
-  height: 100vh;
+/* The height chain from body (100vh) down to the layout. */
+#root,
+.plugin-root {
+  height: 100%;
 }
 
 .plugin-container {

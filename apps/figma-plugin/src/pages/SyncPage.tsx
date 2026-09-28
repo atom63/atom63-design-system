@@ -1,6 +1,8 @@
 import { useState } from 'react'
 
-import { Alert, Button, ScrollArea, SectionHeader, TabPanel, Tabs } from '../components/ui'
+import { Tabs, TabsList, TabsPanel, TabsTab } from '@atom63/ui-react'
+
+import { Alert, Button, ScrollArea, SectionHeader } from '../components/ui'
 import { useFigmaMessage, usePostMessage } from '../hooks/useFigmaMessage'
 import type {
   SyncApplyResultMessage,
@@ -99,24 +101,23 @@ export function SyncResults({
   )
 }
 
-const TABS = [
-  { id: 'atom63', label: 'Atom63' },
-  { id: 'project', label: 'Project' },
-]
-
 export function SyncPage() {
-  const [activeTab, setActiveTab] = useState('atom63')
   return (
     <ScrollArea>
-      <div className={styles.tabs}>
-        <Tabs activeTab={activeTab} onTabChange={setActiveTab} size="sm" tabs={TABS} />
-      </div>
-      <TabPanel activeTab={activeTab} id="atom63">
-        <Atom63Sync />
-      </TabPanel>
-      <TabPanel activeTab={activeTab} id="project">
-        <ProjectSync />
-      </TabPanel>
+      <Tabs defaultValue="atom63">
+        <div className={styles.tabs}>
+          <TabsList size="sm">
+            <TabsTab value="atom63">Atom63</TabsTab>
+            <TabsTab value="project">Project</TabsTab>
+          </TabsList>
+        </div>
+        <TabsPanel value="atom63">
+          <Atom63Sync />
+        </TabsPanel>
+        <TabsPanel value="project">
+          <ProjectSync />
+        </TabsPanel>
+      </Tabs>
     </ScrollArea>
   )
 }

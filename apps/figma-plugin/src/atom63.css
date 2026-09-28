@@ -1,0 +1,33 @@
+/*
+ * The plugin UI runs on the Atom63 design system: its tokens, component recipes
+ * and the shadcn bridge that maps --background, --primary, … onto --a63-*. Mode
+ * is the `dark` class and data-a63-mode on <html> (utils/theme.ts), and the
+ * brand is b2, the orange Cipher has always used.
+ */
+@import '@atom63/ui-react/styles.css';
+@import '@atom63/styles/compat/shadcn';
+
+/* Figma's own UI font, so the plugin reads as part of Figma. */
+:root {
+  --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Roles the plugin names that shadcn does not, onto Atom63 tokens. */
+:root,
+[data-a63-brand] {
+  --primary-muted: color-mix(in oklch, var(--a63-action-primary) 15%, transparent);
+}
+
+:root,
+.light,
+.dark {
+  --destructive-foreground: var(--a63-action-danger-foreground);
+  --success-foreground: var(--a63-status-success-foreground);
+  --warning-foreground: var(--a63-status-warning-foreground);
+  --info-foreground: var(--a63-status-info-foreground);
+  --muted-foreground-light: color-mix(in oklch, var(--a63-text-secondary) 70%, transparent);
+  --border-light: var(--a63-surface-muted);
+  --success-light: color-mix(in oklch, var(--a63-status-success) 10%, transparent);
+  --error: var(--a63-action-danger);
+  --error-light: color-mix(in oklch, var(--a63-action-danger) 10%, transparent);
+}

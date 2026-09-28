@@ -1,80 +1,21 @@
-# UI Components
+# UI components
 
-Reusable UI components with scoped styling support.
+The plugin UI runs on the Atom63 design system. `src/atom63.css` loads its tokens and component
+recipes; `utils/theme.ts` sets the mode (following Figma's theme), the b2 brand and the compact
+density on `<html>`; `ui.tsx` wraps the app in `UIProvider`.
 
-## Structure
+This folder is what the pages import from `components/ui`:
 
-Each component lives in its own folder with:
-- `ComponentName.tsx` - Component logic
-- `ComponentName.module.scss` - Scoped styles (optional)
-- `index.tsx` - Re-export for clean imports
+| Kind                                                                  | Components                                                                                                                                                                                                                                                    |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Atom63 components, re-exported                                        | `Button`, `Frame`, `ScrollArea`, `Separator`, `Textarea`                                                                                                                                                                                                      |
+| Atom63 components behind a thin adapter that keeps the plugin's props | `Alert` (title and per-variant icon), `Badge` (leading dot or icon), `Checkbox` (`onChange(checked)`), `Dialog` and `ConfirmDialog` (`isOpen`, `onClose`), `EmptyState`, `Input` (with a label), `LoadingState`, `Toast` (`useToast` over the Atom63 Toaster) |
+| Plugin-specific                                                       | `ColorSwatch`, `CopyButton` (the plugin's clipboard fallback for Figma's iframe), `ErrorBoundary`, `RenameDialog`, `SectionHeader`, `Tooltip`                                                                                                                 |
 
-```
-ui/
-├── Button/
-│   ├── Button.tsx
-│   ├── Button.module.scss
-│   └── index.tsx
-├── Input/
-│   ├── Input.tsx
-│   └── index.tsx
-├── Checkbox/
-│   ├── Checkbox.tsx
-│   └── index.tsx
-├── RadioGroup/
-│   ├── RadioGroup.tsx
-│   └── index.tsx
-├── SectionHeader/
-│   ├── SectionHeader.tsx
-│   └── index.tsx
-└── index.tsx  ← Central export
-```
+Pages may also import Atom63 components directly from `@atom63/ui-react` when no adapter is
+needed, as the Sync and Manage pages do for `Tabs` and `SegmentedControl`. Look components up
+with `pnpm atom63 component <name>` from the repository root.
 
-## Usage
-
-### Import from central index:
-```tsx
-import { Button, Input, Checkbox } from '../components/ui';
-```
-
-### Import individual component:
-```tsx
-import { Button } from '../components/ui/Button';
-```
-
-Both work! Use whichever you prefer.
-
-## Benefits
-
-✅ **Organized** - Each component has its own folder
-✅ **Co-located** - Styles live next to component
-✅ **Clean imports** - No messy relative paths
-✅ **Scalable** - Easy to add tests, stories, etc.
-✅ **Tree-shakeable** - Only imports what you use
-
-## Adding a New Component
-
-1. Create a folder: `components/ui/NewComponent/`
-2. Add `NewComponent.tsx`
-3. Add `index.tsx` that exports it
-4. (Optional) Add `NewComponent.module.scss` for scoped styles
-5. Export from `components/ui/index.tsx`
-
-Example:
-```tsx
-// components/ui/Badge/Badge.tsx
-export function Badge({ children }) {
-  return <span className="badge">{children}</span>;
-}
-
-// components/ui/Badge/index.tsx
-export { Badge } from './Badge';
-
-// components/ui/index.tsx
-export { Badge } from './Badge';
-```
-
-Done! Now import it:
-```tsx
-import { Badge } from '../components/ui';
-```
+Style plugin-specific pieces with CSS modules that read tokens (`var(--primary)`,
+`var(--border)`, `var(--a63-*)`), never literal colors. The plugin's global resets live in
+`@layer base` in `ui.scss` so they stay below the Atom63 recipes.

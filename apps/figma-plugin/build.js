@@ -102,6 +102,8 @@ const uiContext = await esbuild.context({
   minify: !isDev,
   jsx: 'automatic',
   format: 'iife',
+  // Workspace packages resolve to their TypeScript sources, as in the docs and Storybook.
+  conditions: ['@atom63/source'],
   define: { __ATOM63_STYLES_VERSION__: JSON.stringify(stylesVersion) },
   plugins: [cssModulesPlugin],
 })
@@ -130,11 +132,22 @@ const cssContext = await esbuild.context({
   plugins: [cssPlugin],
 })
 
+// The Atom63 design system: tokens, component recipes and the shadcn bridge.
+const atom63CssContext = await esbuild.context({
+  entryPoints: [resolve(__dirname, 'src/atom63.css')],
+  bundle: true,
+  outfile: resolve(__dirname, 'dist/atom63.css'),
+  logLevel: 'info',
+  minify: !isDev,
+  conditions: ['@atom63/source'],
+})
+
 // Generate the HTML file with INLINED JavaScript (Figma requires this)
 function generateHTML() {
   // Read the compiled JavaScript
   const jsContent = readFileSync(resolve(__dirname, 'dist/ui.js'), 'utf-8')
   const cssContent = readFileSync(resolve(__dirname, 'dist/ui.css'), 'utf-8')
+  const atom63CssContent = readFileSync(resolve(__dirname, 'dist/atom63.css'), 'utf-8')
 
   const html = `<!DOCTYPE html>
 <html>
@@ -142,6 +155,9 @@ function generateHTML() {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cipher by Atom63</title>
+  <style>
+    ${atom63CssContent}
+  </style>
   <style>
     ${cssContent}
   </style>
@@ -162,6 +178,7 @@ if (isDev) {
   await codeContext.watch()
   await uiContext.watch()
   await cssContext.watch()
+  await atom63CssContext.watch()
 
   // Generate HTML once at start
   generateHTML()
@@ -176,14 +193,20 @@ if (isDev) {
       try {
         const uiJsPath = resolve(__dirname, 'dist/ui.js')
         const uiCssPath = resolve(__dirname, 'dist/ui.css')
+        const atom63CssPath = resolve(__dirname, 'dist/atom63.css')
         const fs = await import('node:fs/promises')
 
-        const [jsStats, cssStats] = await Promise.all([
+        const [jsStats, cssStats, atom63CssStats] = await Promise.all([
           fs.stat(uiJsPath).catch(() => null),
           fs.stat(uiCssPath).catch(() => null),
+          fs.stat(atom63CssPath).catch(() => null),
         ])
 
-        const newestTime = Math.max(jsStats?.mtimeMs || 0, cssStats?.mtimeMs || 0)
+        const newestTime = Math.max(
+          jsStats?.mtimeMs || 0,
+          cssStats?.mtimeMs || 0,
+          atom63CssStats?.mtimeMs || 0
+        )
 
         if (newestTime > lastBuildTime) {
           lastBuildTime = newestTime
@@ -199,9 +222,19 @@ if (isDev) {
   // Keep the process alive
   process.stdin.on('data', () => {})
 } else {
-  await Promise.all([codeContext.rebuild(), uiContext.rebuild(), cssContext.rebuild()])
+  await Promise.all([
+    codeContext.rebuild(),
+    uiContext.rebuild(),
+    cssContext.rebuild(),
+    atom63CssContext.rebuild(),
+  ])
 
   generateHTML()
 
-  await Promise.all([codeContext.dispose(), uiContext.dispose(), cssContext.dispose()])
+  await Promise.all([
+    codeContext.dispose(),
+    uiContext.dispose(),
+    cssContext.dispose(),
+    atom63CssContext.dispose(),
+  ])
 }
