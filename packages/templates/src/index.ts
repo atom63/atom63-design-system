@@ -48,6 +48,10 @@ export { StatRow, type Stat, type StatRowProps } from './blocks/stat-row/stat-ro
 export { DashboardContent, DashboardPage } from './pages/dashboard-page/dashboard-page'
 export { ListContent, ListPage, type ListPageProps } from './pages/list-page/list-page'
 export { OnboardingContent, OnboardingPage } from './pages/onboarding-page/onboarding-page'
-export { SettingsContent, SettingsPage } from './pages/settings-page/settings-page'
+export {
+  SettingsContent,
+  type SettingsContentProps,
+  SettingsPage,
+} from './pages/settings-page/settings-page'
 export { SignInPage, type SignInPageProps } from './pages/sign-in-page/sign-in-page'
 export { templateCatalog, type TemplateEntry } from './catalog'

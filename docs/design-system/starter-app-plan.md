@@ -143,7 +143,8 @@ Each step is its own pull request and ends green in CI.
    The route check moved to `scripts/design-system/lib/route-check.mjs`, which
    `check:product-shell` and `check:starter` share. On a phone the top bar hides the appearance
    controls: two rows of switches do not fit its height, and the app keeps the stored or system
-   appearance there.
+   appearance there. Settings has an Appearance section (theme and mode as radio groups) that every
+   width reaches: the settings template takes extra sections as children.
 4. **Product-shell.** Point the route check at the generated app and retire
    `examples/product-shell`, if A7-A is taken.
 
