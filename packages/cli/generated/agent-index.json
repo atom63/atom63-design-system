@@ -14367,7 +14367,7 @@
     "path": "widget/background/color"
    },
    "layer": "contract",
-   "swift": null,
+   "swift": "AtomTokens.Color.widgetBackground",
    "type": "color",
    "values": [
     {
@@ -14415,7 +14415,7 @@
     "path": "widget/border/color"
    },
    "layer": "contract",
-   "swift": null,
+   "swift": "AtomTokens.Color.widgetBorder",
    "type": "color",
    "values": [
     {
@@ -14460,7 +14460,7 @@
     "path": "widget/foreground"
    },
    "layer": "contract",
-   "swift": null,
+   "swift": "AtomTokens.Color.widgetForeground",
    "type": "color",
    "values": [
     {
@@ -14577,7 +14577,7 @@
     "path": "widget/rim/color"
    },
    "layer": "contract",
-   "swift": null,
+   "swift": "AtomTokens.Color.widgetRim",
    "type": "color",
    "values": [
     {

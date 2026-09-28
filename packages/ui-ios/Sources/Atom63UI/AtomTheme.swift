@@ -22,6 +22,10 @@ public struct AtomThemeColors: Equatable, Sendable {
   public var selectionTrackOff: AtomDynamicColor
   public var selectionThumb: AtomDynamicColor
   public var skeletonHighlight: AtomDynamicColor
+  public var widgetBackground: AtomDynamicColor
+  public var widgetForeground: AtomDynamicColor
+  public var widgetBorder: AtomDynamicColor
+  public var widgetRim: AtomDynamicColor
 }
 
 public struct AtomTheme: Equatable, Sendable {
@@ -59,7 +63,11 @@ public struct AtomTheme: Equatable, Sendable {
       statusWarning: AtomTokens.Color.statusWarning,
       selectionTrackOff: AtomTokens.Color.selectionTrackOff,
       selectionThumb: AtomTokens.Color.selectionThumb,
-      skeletonHighlight: AtomTokens.Color.skeletonHighlight
+      skeletonHighlight: AtomTokens.Color.skeletonHighlight,
+      widgetBackground: AtomTokens.Color.widgetBackground,
+      widgetForeground: AtomTokens.Color.widgetForeground,
+      widgetBorder: AtomTokens.Color.widgetBorder,
+      widgetRim: AtomTokens.Color.widgetRim
     )
   )
 }

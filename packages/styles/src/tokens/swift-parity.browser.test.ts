@@ -59,6 +59,10 @@ function paint(token: string): Rgba {
 
 function setMode(mode: 'light' | 'dark') {
   root().setAttribute('data-a63-design-language', 'ios')
+  // Atom63Theme always sets a theme, modern by default; the static Swift colors
+  // resolve that selection, and some contracts (the widget face) differ from
+  // the theme-less :root under it.
+  root().setAttribute('data-a63-theme', 'modern')
   root().setAttribute('data-a63-mode', mode)
   root().classList.remove('light', 'dark')
   root().classList.add(mode)

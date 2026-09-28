@@ -105,6 +105,14 @@ public enum AtomTokens {
         public static let selectionThumb = AtomDynamicColor(light: AtomColorComponents(red: 1, green: 1, blue: 1, opacity: 1), dark: AtomColorComponents(red: 1, green: 1, blue: 1, opacity: 1))
         /// --a63-skeleton-highlight
         public static let skeletonHighlight = AtomDynamicColor(light: AtomColorComponents(red: 1, green: 1, blue: 1, opacity: 0.6), dark: AtomColorComponents(red: 1, green: 1, blue: 1, opacity: 0.101961))
+        /// --a63-widget-background-color
+        public static let widgetBackground = AtomDynamicColor(light: AtomColorComponents(red: 0.988235, green: 0.988235, blue: 0.988235, opacity: 0.82), dark: AtomColorComponents(red: 0.098039, green: 0.098039, blue: 0.098039, opacity: 0.9))
+        /// --a63-widget-foreground
+        public static let widgetForeground = AtomDynamicColor(light: AtomColorComponents(red: 0.12549, green: 0.12549, blue: 0.12549, opacity: 1), dark: AtomColorComponents(red: 0.933333, green: 0.933333, blue: 0.933333, opacity: 1))
+        /// --a63-widget-border-color
+        public static let widgetBorder = AtomDynamicColor(light: AtomColorComponents(red: 0.909804, green: 0.909804, blue: 0.909804, opacity: 1), dark: AtomColorComponents(red: 0.227451, green: 0.227451, blue: 0.227451, opacity: 1))
+        /// --a63-widget-rim-color
+        public static let widgetRim = AtomDynamicColor(light: AtomColorComponents(red: 0.909804, green: 0.909804, blue: 0.909804, opacity: 1), dark: AtomColorComponents(red: 0.227451, green: 0.227451, blue: 0.227451, opacity: 1))
     }
 
     public enum Space {
@@ -130,6 +138,23 @@ public enum AtomTokens {
         public static let skeletonShimmer: Double = 1.5
         /// --ease-emphasized, the iOS design-language control feedback curve.
         public static let emphasizedControlPoints: (Double, Double, Double, Double) = (0.3, 0, 0, 1)
+    }
+
+    /// The widget contract (`--a63-widget-*`): the card's corner radius and the
+    /// rim between the tile edge and the card face.
+    public enum Widget {
+        /// --a63-widget-radius, which is --radius-xl while no theme sets --a63-overlay-radius.
+        public static let radius: Double = 14
+
+        /// --a63-widget-rim-width for a skin.
+        public static func rimWidth(for skin: AtomSkin) -> Double {
+            switch skin {
+            case .modern: 4
+            case .aqua: 4
+            case .retro: 2
+            case .terminal: 4
+            }
+        }
     }
 
     /// Control geometry from the shared iOS design-language block in @atom63/styles.
