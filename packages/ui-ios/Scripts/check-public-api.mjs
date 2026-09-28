@@ -79,7 +79,13 @@ const symbols = symbolGraph.symbols
 const publicSymbolIds = new Set(symbols.map(symbol => symbol.id))
 const relationships = symbolGraph.relationships
   .filter(relationship => publicSymbolIds.has(relationship.source))
-  .filter(relationship => relationship.targetFallback !== 'Swift.SendableMetatype')
+  // Implicit conformances that toolchains list inconsistently.
+  .filter(
+    relationship =>
+      !['Swift.SendableMetatype', 'Swift.Copyable', 'Swift.Escapable'].includes(
+        relationship.targetFallback
+      )
+  )
   .map(relationship => ({
     source: relationship.source,
     target: publicSymbolIds.has(relationship.target)

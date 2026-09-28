@@ -2,6 +2,7 @@ import Atom63UI
 import Foundation
 import SwiftData
 import SwiftUI
+import TipKit
 
 @main
 struct Atom63DemoApp: App {
@@ -10,6 +11,9 @@ struct Atom63DemoApp: App {
 
   init() {
     let environment = ProcessInfo.processInfo.environment
+    // The inform spotlight is a TipKit tip. UI tests start with no tips closed.
+    if environment["ATOM63_UI_TESTING"] == "1" { try? Tips.resetDatastore() }
+    try? Tips.configure()
     remote =
       environment["ATOM63_UI_TESTING"] == "1"
       ? StaticProjectRemoteDataSource(projects: DemoProject.samples)
