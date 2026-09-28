@@ -52,7 +52,7 @@ model), which surfaces can build on.
 | banner | a banner inset at the top of the screen (`safeAreaInset(edge: .top)`) | `AtomNotice` |
 | dialog | a system `.alert` for a title, body and at most two actions; a `.sheet` otherwise | SwiftUI |
 | corner flyout | a stack at the bottom edge, above the tab bar, up to three | `AtomToast` styling |
-| spotlight | see IF4 | — |
+| spotlight | a TipKit popover on the view marked `atomInformAnchor(_:)` (IF4) | TipKit |
 
 - **Recommendation:** adopt the table. The corner becomes the bottom edge because a phone has no
   free corner; the stack limit and the "none while something blocks" rule stay.
@@ -76,6 +76,17 @@ model), which surfaces can build on.
 - **Recommendation: C now, then A** after a spike in the demo app confirms the arbiter can drive
   TipKit reliably. The arbiter already skips a spotlight whose anchor is missing, so an iOS app
   that registers none behaves correctly.
+- **Spike result (2026-09-28, iOS 26.2 simulator): A holds, driven by a rule, not by
+  `isPresented`.**
+  - `popoverTip(_:isPresented:)` (iOS 26) does not let the arbiter decide: with the binding
+    false, TipKit showed an eligible tip and set the binding to true itself.
+  - A `@Parameter` rule does: with the parameter set to the tip's id the tip shows, cleared it
+    hides, and with `IgnoresDisplayFrequency(true)` it shows again every time. This needs only
+    iOS 17's `popoverTip(_:)`.
+  - The tip's close button invalidates it (`tipClosed`), and TipKit keeps it invalidated across
+    launches. So persistent spotlights use the id `id:version` (a new version shows again), and
+    session ones add a per-launch suffix.
+  - Without `Tips.configure()` no tip shows, so an app that uses spotlights must call it.
 
 ## Steps
 
@@ -93,7 +104,13 @@ Each step is its own pull request and ends green in CI.
    `AtomInformDismissalStore` is `@Observable`, so a dismissal updates the view. The demo's
    Inform showcase and a UI test cover the blocking rule: the flyouts wait while the dialog is
    open and return after it closes.
-3. **Spotlight spike** (IF4-A) and, if it holds, the TipKit spotlight.
+3. **Spotlight** (done). The spike above, then the TipKit spotlight: `atomInformAnchor(_:)` marks
+   a view and reports its anchor to `atomInform`, which counts it as available. The resolved
+   spotlight becomes a tip whose one rule is a parameter holding the resolved tip's id, so the
+   arbiter alone decides. When the tip is invalidated (its close button, an action, or TipKit
+   closing it on an earlier launch) the dismissal is recorded, and a message whose dismissal is
+   never recorded stays out for the launch, since TipKit will not show it again. The demo's
+   Inform showcase points at a Filters label, and a UI test covers the blocking rule.
 
 ## Out of scope
 

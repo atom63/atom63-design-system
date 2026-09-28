@@ -1,8 +1,8 @@
 import SwiftUI
 
 // The inform surfaces on iOS (IF3 in docs/design-system/ios-inform-plan.md):
-// a banner inset at the top, a system alert or a sheet for a dialog, and a
-// stack of flyouts at the bottom edge. `atomInform(_:route:store:)` resolves
+// a banner inset at the top, a system alert or a sheet for a dialog, a stack
+// of flyouts at the bottom edge, and a spotlight on an anchor (AtomInformSpotlight). `atomInform(_:route:store:)` resolves
 // the messages with AtomInformArbiter and presents the result.
 
 extension AtomInformSeverity {
@@ -67,6 +67,7 @@ private struct AtomInformModifier: ViewModifier {
   let isAnchorAvailable: (String) -> Bool
 
   @Environment(\.locale) private var locale
+  @State private var anchors: Set<String> = []
 
   func body(content: Content) -> some View {
     let context = AtomInformContext(route: route, locale: locale, now: .now)
@@ -74,14 +75,26 @@ private struct AtomInformModifier: ViewModifier {
       messages,
       context: context,
       dismissals: store.dismissed,
-      isAnchorAvailable: isAnchorAvailable
+      isAnchorAvailable: { anchors.contains($0) || isAnchorAvailable($0) }
     )
+    let spotlight = resolution.spotlight.map { message in
+      AtomInformSpotlight(
+        message: message,
+        tip: AtomInformSpotlightTip(message: message, content: message.content(context)),
+        store: store
+      )
+    }
     let dialog = resolution.dialog
     let dialogContent = dialog.map { $0.content(context) }
     // A system alert holds a title, a message and two buttons; more needs a sheet.
     let usesAlert = (dialogContent?.actions.count ?? 0) <= 2
 
     content
+      .environment(\.atomInformSpotlight, spotlight)
+      .onPreferenceChange(AtomInformAnchorsKey.self) { anchors = $0 }
+      .onChange(of: spotlight?.tip.id, initial: true) { _, id in
+        AtomInformSpotlightTip.resolved = id
+      }
       .safeAreaInset(edge: .top, spacing: 0) {
         if let banner = resolution.banner {
           AtomInformCard(message: banner, content: banner.content(context)) {
@@ -188,8 +201,10 @@ extension View {
   }
 
   /// Show the inform messages the arbiter resolves for this route: a banner at
-  /// the top, a dialog as an alert or sheet, and up to three flyouts at the
-  /// bottom edge. Dismissals go to `store`, which updates the view.
+  /// the top, a dialog as an alert or sheet, up to three flyouts at the bottom
+  /// edge, and a spotlight on the view marked `atomInformAnchor(_:)`, which
+  /// needs `Tips.configure()` at launch. Dismissals go to `store`, which
+  /// updates the view. Anchors inside this view count as available on their own.
   public func atomInform(
     _ messages: [AtomInformMessage],
     route: String,

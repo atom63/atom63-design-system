@@ -273,6 +273,13 @@ public final class AtomInformDismissalStore {
     }
   }
 
+  /// Record a spotlight the user closed. TipKit keeps a closed tip closed, so
+  /// a message whose dismissal is never recorded stays out for this launch.
+  func dismissSpotlight(_ message: AtomInformMessage) {
+    guard message.dismiss == .none else { return dismiss(message) }
+    session[message.dismissalKey] = Date.now.timeIntervalSince1970 * 1000
+  }
+
   /// Forget one dismissal, or all of them.
   public func clear(_ key: String? = nil) {
     guard let key else {

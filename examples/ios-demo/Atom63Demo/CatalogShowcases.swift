@@ -517,6 +517,7 @@ private struct InformShowcase: View {
     defaults: UserDefaults(suiteName: "atom63.demo.inform") ?? .standard
   )
   @State private var asksForReview = false
+  @State private var pointsOutFilters = false
 
   private var messages: [AtomInformMessage] {
     [
@@ -560,20 +561,36 @@ private struct InformShowcase: View {
           ]
         )
       ),
+      AtomInformMessage(
+        id: "filters",
+        surface: .spotlight,
+        dismiss: .session,
+        anchor: "filters",
+        when: { [pointsOutFilters] _ in pointsOutFilters },
+        content: AtomInformContent(
+          title: "Filter your projects",
+          body: "Show only active, draft or archived work.",
+          systemImage: "line.3.horizontal.decrease.circle"
+        )
+      ),
     ]
   }
 
   var body: some View {
     VStack(alignment: .leading, spacing: AtomTokens.Space.x3) {
-      Text("While the dialog is open, the flyouts wait: only one blocking message shows at a time.")
+      Text("While the dialog or the tip is open, the flyouts wait: only one blocking message shows at a time.")
         .font(.footnote)
         .foregroundStyle(.secondary)
       HStack(spacing: AtomTokens.Space.x2) {
         AtomButton(variant: .primary, size: .compact, action: { asksForReview = true }) {
           Text("Ask for a review")
         }
+        AtomButton(variant: .outline, size: .compact, action: { pointsOutFilters = true }) {
+          Text("Show a tip")
+        }
         AtomButton(variant: .outline, size: .compact, action: {
           asksForReview = false
+          pointsOutFilters = false
           store.clear()
         }) {
           Text("Reset")
@@ -581,6 +598,12 @@ private struct InformShowcase: View {
       }
       Color.clear
         .frame(height: 440)
+        .overlay(alignment: .top) {
+          Label("Filters", systemImage: "line.3.horizontal.decrease.circle")
+            .font(.subheadline)
+            .padding(AtomTokens.Space.x4)
+            .atomInformAnchor("filters")
+        }
         .atomInform(messages, route: "/catalog/inform", store: store)
         .background(.quaternary.opacity(0.3), in: .rect(cornerRadius: AtomTokens.Radius.large))
     }
