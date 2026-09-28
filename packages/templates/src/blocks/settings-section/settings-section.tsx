@@ -10,7 +10,7 @@ export const template = {
     'A titled group of settings: the heading and why the group matters on the start side, and labelled rows with their controls in a card beside it.',
   category: 'forms',
   tags: ['settings', 'preferences', 'account', 'notifications', 'toggles', 'form'],
-  readiness: 'draft',
+  readiness: 'ready',
 } as const
 
 export interface SettingsSectionProps {

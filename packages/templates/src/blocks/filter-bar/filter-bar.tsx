@@ -19,7 +19,7 @@ export const template = {
     'A labelled search field and one select filter above a collection, with a clear action that appears once a filter is set.',
   category: 'collections',
   tags: ['search', 'filter', 'toolbar', 'list', 'table'],
-  readiness: 'draft',
+  readiness: 'ready',
 } as const
 
 export interface FilterBarOption {

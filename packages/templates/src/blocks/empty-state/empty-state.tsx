@@ -16,7 +16,7 @@ export const template = {
     'Explains why there is nothing here and offers the next step: one primary action, with an optional quieter second one.',
   category: 'feedback',
   tags: ['empty', 'zero state', 'no results', 'onboarding', 'first run'],
-  readiness: 'draft',
+  readiness: 'ready',
 } as const
 
 export interface EmptyStateProps {

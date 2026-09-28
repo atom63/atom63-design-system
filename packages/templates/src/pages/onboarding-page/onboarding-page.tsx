@@ -23,7 +23,7 @@ export const template = {
     'checklist',
     'app shell',
   ],
-  readiness: 'draft',
+  readiness: 'ready',
 } as const
 
 const nav = [

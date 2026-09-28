@@ -114,3 +114,18 @@ test('fails a template missing from the catalog', () => {
   assert.match(problems, /blocks\/page-header: is missing from src\/catalog\.ts/)
   assert.doesNotMatch(problems, /list-page: is missing/)
 })
+
+test('fails a ready template without its visual baselines', () => {
+  const ready = block(metadata({ readiness: 'ready' }))
+  const all = new Set(
+    ['desktop', 'phone', 'themes'].map(story => `templates-blocks-page-header-${story}`)
+  )
+  const missing = checkTemplates([ready, page()], undefined, new Set([...all].slice(0, 2)))
+  assert.match(
+    missing.join('\n'),
+    /is ready but has no visual baseline templates-blocks-page-header-themes/
+  )
+  assert.deepEqual(checkTemplates([ready, page()], undefined, all), [])
+  // A draft needs none.
+  assert.deepEqual(checkTemplates([block(metadata()), page()], undefined, new Set()), [])
+})

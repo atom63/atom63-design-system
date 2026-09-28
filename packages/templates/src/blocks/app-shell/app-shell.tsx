@@ -21,7 +21,7 @@ export const template = {
     'The frame of a product: a sidebar with the product name and main navigation, a top bar with the menu toggle, and the page as the main landmark.',
   category: 'layout',
   tags: ['shell', 'sidebar', 'navigation', 'layout', 'frame', 'top bar', 'dashboard'],
-  readiness: 'draft',
+  readiness: 'ready',
 } as const
 
 export interface AppShellNavItem {

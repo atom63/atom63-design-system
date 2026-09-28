@@ -24,7 +24,7 @@
         "data"
       ],
       "meta": {
-        "readiness": "draft",
+        "readiness": "ready",
         "tags": [
           "dashboard",
           "overview",
@@ -65,7 +65,7 @@
         "collections"
       ],
       "meta": {
-        "readiness": "draft",
+        "readiness": "ready",
         "tags": [
           "list",
           "detail",
@@ -112,7 +112,7 @@
         "feedback"
       ],
       "meta": {
-        "readiness": "draft",
+        "readiness": "ready",
         "tags": [
           "onboarding",
           "first run",
@@ -151,7 +151,7 @@
         "forms"
       ],
       "meta": {
-        "readiness": "draft",
+        "readiness": "ready",
         "tags": [
           "settings",
           "preferences",
@@ -188,7 +188,7 @@
         "forms"
       ],
       "meta": {
-        "readiness": "draft",
+        "readiness": "ready",
         "tags": [
           "sign in",
           "login",
@@ -221,7 +221,7 @@
         "data"
       ],
       "meta": {
-        "readiness": "draft",
+        "readiness": "ready",
         "tags": [
           "activity",
           "feed",
@@ -254,7 +254,7 @@
         "layout"
       ],
       "meta": {
-        "readiness": "draft",
+        "readiness": "ready",
         "tags": [
           "shell",
           "sidebar",
@@ -288,7 +288,7 @@
         "forms"
       ],
       "meta": {
-        "readiness": "draft",
+        "readiness": "ready",
         "tags": [
           "sign in",
           "login",
@@ -325,7 +325,7 @@
         "collections"
       ],
       "meta": {
-        "readiness": "draft",
+        "readiness": "ready",
         "tags": [
           "table",
           "list",
@@ -358,7 +358,7 @@
         "collections"
       ],
       "meta": {
-        "readiness": "draft",
+        "readiness": "ready",
         "tags": [
           "detail",
           "inspector",
@@ -391,7 +391,7 @@
         "feedback"
       ],
       "meta": {
-        "readiness": "draft",
+        "readiness": "ready",
         "tags": [
           "empty",
           "zero state",
@@ -423,7 +423,7 @@
         "collections"
       ],
       "meta": {
-        "readiness": "draft",
+        "readiness": "ready",
         "tags": [
           "search",
           "filter",
@@ -456,7 +456,7 @@
         "feedback"
       ],
       "meta": {
-        "readiness": "draft",
+        "readiness": "ready",
         "tags": [
           "onboarding",
           "getting started",
@@ -490,7 +490,7 @@
         "layout"
       ],
       "meta": {
-        "readiness": "draft",
+        "readiness": "ready",
         "tags": [
           "title",
           "heading",
@@ -521,7 +521,7 @@
         "forms"
       ],
       "meta": {
-        "readiness": "draft",
+        "readiness": "ready",
         "tags": [
           "settings",
           "preferences",
@@ -554,7 +554,7 @@
         "data"
       ],
       "meta": {
-        "readiness": "draft",
+        "readiness": "ready",
         "tags": [
           "stats",
           "metrics",
