@@ -60,6 +60,8 @@ const normalizeDeclaration = declaration =>
   declaration
     .replace(/@(?:_Concurrency\.)?MainActor\s+/g, '')
     .replace(/\bnonisolated\s+/g, '')
+    // Older toolchains leave @Sendable out of closure types in the symbol graph.
+    .replace(/@Sendable\s+/g, '')
     .replace(/\s+/g, ' ')
     .trim()
 const symbols = symbolGraph.symbols

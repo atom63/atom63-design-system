@@ -1407,7 +1407,7 @@
       "id": "s:8Atom63UI16AtomInformActionV2id5label4role7performACSS_SSAC4RoleOyyYbScMYcctcfc",
       "kind": "swift.init",
       "path": "AtomInformAction.init(id:label:role:perform:)",
-      "declaration": "init(id: String, label: String, role: AtomInformAction.Role = .secondary, perform: @escaping @Sendable () -> Void)",
+      "declaration": "init(id: String, label: String, role: AtomInformAction.Role = .secondary, perform: @escaping () -> Void)",
       "source": "AtomInform.swift"
     },
     {
@@ -1456,7 +1456,7 @@
       "id": "s:8Atom63UI16AtomInformActionV7performyyYbScMYccvp",
       "kind": "swift.property",
       "path": "AtomInformAction.perform",
-      "declaration": "let perform: @Sendable () -> Void",
+      "declaration": "let perform: () -> Void",
       "source": "AtomInform.swift"
     },
     {
@@ -1750,14 +1750,14 @@
       "id": "s:8Atom63UI17AtomInformMessageV2id7surface8severity8priority7dismiss7version8startsAt04endsM06anchor4when7contentACSS_AA0cD7SurfaceOAA0cD8SeverityOSiAA0cD11DismissModeOSi10Foundation4DateVSgAXSSSgSbAA0cD7ContextVYbcSgAA0cD7ContentVA_Ybctcfc",
       "kind": "swift.init",
       "path": "AtomInformMessage.init(id:surface:severity:priority:dismiss:version:startsAt:endsAt:anchor:when:content:)",
-      "declaration": "init(id: String, surface: AtomInformSurface, severity: AtomInformSeverity = .info, priority: Int = 0, dismiss: AtomInformDismissMode = .persistent, version: Int = 1, startsAt: Date? = nil, endsAt: Date? = nil, anchor: String? = nil, when: (@Sendable (AtomInformContext) -> Bool)? = nil, content: @escaping @Sendable (AtomInformContext) -> AtomInformContent)",
+      "declaration": "init(id: String, surface: AtomInformSurface, severity: AtomInformSeverity = .info, priority: Int = 0, dismiss: AtomInformDismissMode = .persistent, version: Int = 1, startsAt: Date? = nil, endsAt: Date? = nil, anchor: String? = nil, when: ((AtomInformContext) -> Bool)? = nil, content: @escaping (AtomInformContext) -> AtomInformContent)",
       "source": "AtomInform.swift"
     },
     {
       "id": "s:8Atom63UI17AtomInformMessageV2id7surface8severity8priority7dismiss7version8startsAt04endsM06anchor4when7contentACSS_AA0cD7SurfaceOAA0cD8SeverityOSiAA0cD11DismissModeOSi10Foundation4DateVSgAXSSSgSbAA0cD7ContextVYbcSgAA0cD7ContentVtcfc",
       "kind": "swift.init",
       "path": "AtomInformMessage.init(id:surface:severity:priority:dismiss:version:startsAt:endsAt:anchor:when:content:)",
-      "declaration": "init(id: String, surface: AtomInformSurface, severity: AtomInformSeverity = .info, priority: Int = 0, dismiss: AtomInformDismissMode = .persistent, version: Int = 1, startsAt: Date? = nil, endsAt: Date? = nil, anchor: String? = nil, when: (@Sendable (AtomInformContext) -> Bool)? = nil, content: AtomInformContent)",
+      "declaration": "init(id: String, surface: AtomInformSurface, severity: AtomInformSeverity = .info, priority: Int = 0, dismiss: AtomInformDismissMode = .persistent, version: Int = 1, startsAt: Date? = nil, endsAt: Date? = nil, anchor: String? = nil, when: ((AtomInformContext) -> Bool)? = nil, content: AtomInformContent)",
       "source": "AtomInform.swift"
     },
     {
@@ -1771,7 +1771,7 @@
       "id": "s:8Atom63UI17AtomInformMessageV4whenSbAA0cD7ContextVYbcSgvp",
       "kind": "swift.property",
       "path": "AtomInformMessage.when",
-      "declaration": "let when: (@Sendable (AtomInformContext) -> Bool)?",
+      "declaration": "let when: ((AtomInformContext) -> Bool)?",
       "source": "AtomInform.swift"
     },
     {
@@ -1792,7 +1792,7 @@
       "id": "s:8Atom63UI17AtomInformMessageV7contentyAA0cD7ContentVAA0cD7ContextVYbcvp",
       "kind": "swift.property",
       "path": "AtomInformMessage.content",
-      "declaration": "let content: @Sendable (AtomInformContext) -> AtomInformContent",
+      "declaration": "let content: (AtomInformContext) -> AtomInformContent",
       "source": "AtomInform.swift"
     },
     {
