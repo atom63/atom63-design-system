@@ -2,7 +2,7 @@
 
 > 2026-09-24。根据你提出的 5 个目标，结合三份调研写成：对标库 Astryx、atom63-vite 各包评估、本仓库差距审计。
 > 2026-09-24 已拍板：D1–D5 全部采用推荐选项，按阶段 A → E 执行。决定记录见最后一节。
-> 2026-09-27：阶段 A–E 全部完成；模板库（`template-library-plan.md`）是阶段 C 唯一暂缓的一项。
+> 2026-09-28：阶段 A–E 全部完成，模板库（`template-library-plan.md`）也已完成：16 个模板全部通过评审，标为 ready。
 
 ## 结论先行
 
@@ -208,7 +208,7 @@ Astryx 是 Meta 开源的 React 设计系统（MIT，2026-06 公开 beta，0.6.x
 |---|---|---|---|
 | A. 正确性（近期、小） | Swift 颜色改从语义 token 生成；新增 Web / iOS 值级别一致性检查 | 修复已经存在的漂移 | 已完成（#24） |
 | B. 唯一源头（最大的一步） | 语义、品牌、contract、主题迁入 DTCG + resolver；公式写成派生规则；主题进入 Figma mode；打通 Figma 回写 | 消除黑盒，实现 Figma 1:1 | 已完成：B1–B7（#25–#32）、B8a（#45）、B8b（响应式字号） |
-| C. 流水线 | 脚手架、由 contract 生成文档、MCP / CLI、craft lint、模板库 | 流程化产出 | 已完成：craft lint、脚手架、contract 生成文档、CLI / MCP、starter；模板库暂缓（见下方 C 进度） |
+| C. 流水线 | 脚手架、由 contract 生成文档、MCP / CLI、craft lint、模板库 | 流程化产出 | 已完成：craft lint、脚手架、contract 生成文档、CLI / MCP、starter（site、docs、app 三种类型）、模板库（见下方 C 进度） |
 | D. pattern 迁入 | brand logo、icons 清理、mdx 通用部分、inform、agent runtime、widgets foundation | 完成分离 | 已完成：六项都已迁入或清理，七个包已发布，atom63-vite 全部改用 npm 上的 DS 包（见下方 D 进度） |
 | E. 质量标杆 | a11y 规格合约、vibe tests、iOS 截图测试 | 把控 craft 与 taste | 已完成：E1–E5 全部上线，vibe 有四个 brief 的完整基线（见下方 E 进度） |
 
@@ -221,6 +221,7 @@ Astryx 是 Meta 开源的 React 设计系统（MIT，2026-06 公开 beta，0.6.x
 由 contract 生成文档已完成：每个组件文档页（以及给 agent 用的 markdown / llms 输出）新增 Contract 一节，直接从 `@atom63/ui-foundation` 读取轴与默认值、slot、状态、token slot、visual archetype；跨平台组件还会列出共同意图、parity、SwiftUI 渲染器、必需状态、共同结果、无障碍要求和两端的适配。
 agent 接口已完成（见 `docs/design-system/agent-interface-plan.md`）：`@atom63/cli` 带一份生成的 agent index（组件、contract、token、示例、文档，CI 检查漂移）；`atom63` 命令行支持 `search`、`component`、`example`、`token`、`docs`、`rules`、`agents`、`manifest`，可输出 `--json`；`atom63 mcp` 把同样的命令作为 MCP tool 提供；`AGENTS.md` 的规则部分由同一张规则表生成。模板库和 `build <想法>` 暂缓（`template-library-plan.md`）。
 项目 starter 已完成 `site` 类型（`starter-plan.md`）：`pnpm create:app <目录>`（发布后为 `pnpm create @atom63`）生成 Vite + React + Tailwind + MDX 项目，按 quickstart 接好 DS，带 shadcn 桥接和 AGENTS.md；CI 的 `check:starter` 用本地打包的 DS 包安装、构建，并实际加入一个 shadcn 组件再构建。`docs` 类型也已完成（按 frontmatter 分组的侧边栏、docs 排版、页内目录、上一篇 / 下一篇）。`app` 类型也已完成（`starter-app-plan.md`）：由页面模板组装的产品应用，外壳在布局路由里只渲染一次，`check:starter` 还会逐个路由跑 axe、单一 `h1` 和溢出检查。
+模板库已完成（`template-library-plan.md`，2026-09-28）：`@atom63/templates` 有 5 个页面和 11 个 block，`atom63 build` / `template` / `copy` 和 shadcn registry（`system.atom63.io/r`）都能取到；按 craft rubric 预审并修复后，16 个全部通过设计评审，标为 ready，`check:templates` 要求 ready 的模板有桌面、手机、主题三张视觉基线。`examples/product-shell` 已由 starter 的 `app` 类型取代。
 
 **D 进度（2026-09-25）：** `@atom63/mdx` 已从 atom63-vite 迁入 `packages/mdx`（除 `craft-demos` 外全部迁入），docs 站改为依赖它，`apps/docs/src/mdx-kit` 副本已删除。
 包暂时标为 `private`：npm 要求包先存在才能配置 trusted publishing，所以首次发布需要你在本机用自己的账号手动发一次，之后再配置 trusted publisher、加入 `publish-beta.mjs` 的包列表和 API / 包正确性检查。

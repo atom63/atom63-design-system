@@ -12,7 +12,7 @@ export const template = {
     'A collection shown as a table on wide screens and as stacked rows on phones, with a live result count, per-row actions and an empty state that offers a way out.',
   category: 'collections',
   tags: ['table', 'list', 'rows', 'responsive', 'empty state', 'results'],
-  readiness: 'draft',
+  readiness: 'ready',
 } as const
 
 export interface DataTableColumn<Row> {

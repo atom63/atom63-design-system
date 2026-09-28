@@ -20,7 +20,7 @@ export const template = {
     'An overview inside the app shell: headline numbers, the most recent records and an activity feed, with one primary action.',
   category: 'data',
   tags: ['dashboard', 'overview', 'home', 'stats', 'metrics', 'activity', 'app shell'],
-  readiness: 'draft',
+  readiness: 'ready',
 } as const
 
 const nav = [
