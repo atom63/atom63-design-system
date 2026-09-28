@@ -3,7 +3,8 @@
  * docs/design-system/template-library-plan.md): complete metadata, imports
  * only from @atom63/*, react, lucide-react and the templates source, the
  * Desktop / Phone / Themes stories, every block used by a page, and every
- * template listed in src/catalog.ts.
+ * template listed in src/catalog.ts. A `ready` template also needs a visual
+ * baseline for each of those stories.
  * Craft rules run over the same files in check:craft.
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
@@ -38,7 +39,16 @@ for (const dir of Object.keys(KINDS)) {
   }
 }
 
-const problems = checkTemplates(entries, readFileSync(path.join(srcDir, 'catalog.ts'), 'utf8'))
+const baselines = new Set(
+  readdirSync(path.join(root, 'apps/storybook/visual/__screenshots__'))
+    .filter(name => name.endsWith('-chromium-linux.png'))
+    .map(name => name.replace(/-chromium-linux\.png$/, ''))
+)
+const problems = checkTemplates(
+  entries,
+  readFileSync(path.join(srcDir, 'catalog.ts'), 'utf8'),
+  baselines
+)
 if (problems.length > 0) {
   console.error(`check:templates found ${problems.length} problem(s):`)
   for (const problem of problems) console.error(`  ${problem}`)

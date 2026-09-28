@@ -211,6 +211,11 @@ Each step is its own pull request and ends green in CI.
 2. **The first set.** The remaining pages and blocks from T4, and a Templates gallery page on the
    docs site generated from the metadata. Hand the set to you for the taste review; what you
    approve becomes `ready`.
+   Reviewed 2026-09-28: a pre-review against the craft rubric fixed the stat row's inset (#118),
+   and the review approved all 16 templates as they are, keeping the dashboard's column tops, the
+   sign-in card's top placement and the detail panel's default initial focus. All 16 are `ready`,
+   and `check:templates` now fails a `ready` template that lacks its Desktop, Phone or Themes
+   visual baseline.
 3. **The example app.** Rebuild `examples/product-shell` as a routed app composed from the pages.
    (Later retired: the `app` kind of `@atom63/create` replaced it; see `starter-app-plan.md`.)
    CI builds it and render-tests every route with axe.

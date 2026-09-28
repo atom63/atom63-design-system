@@ -22,7 +22,7 @@ export const template = {
     'switches',
     'app shell',
   ],
-  readiness: 'draft',
+  readiness: 'ready',
 } as const
 
 const nav = [

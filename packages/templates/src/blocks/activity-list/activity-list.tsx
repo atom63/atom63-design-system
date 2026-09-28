@@ -8,7 +8,7 @@ export const template = {
     'Recent events in time order: who did what to which item, and when, with a machine-readable time for each entry.',
   category: 'data',
   tags: ['activity', 'feed', 'timeline', 'history', 'audit log', 'recent'],
-  readiness: 'draft',
+  readiness: 'ready',
 } as const
 
 export interface ActivityItem {

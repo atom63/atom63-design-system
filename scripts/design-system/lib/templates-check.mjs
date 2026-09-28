@@ -81,15 +81,20 @@ export function storyProblems(storySource) {
   ).map(name => `stories file has no \`${name}\` story`)
 }
 
+/** The visual baseline name of a template story, as the visual project writes it. */
+export const baselineName = (dir, title, story) =>
+  `templates-${dir}-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${story.toLowerCase()}`
+
 /**
  * Check a set of templates. Each entry is { dir: 'blocks' | 'pages', id,
  * files: [{ path, source }], storySource: string | null }, with each path
  * relative to packages/templates/src. `catalogSource` is src/catalog.ts, which
  * must import every template's metadata. The template's own
  * file is `<id>.tsx`; every other non-story file in its folder is support code
- * held to the same import rule.
+ * held to the same import rule. `baselines`, when given, is the set of visual
+ * baseline names: a `ready` template needs one for each required story.
  */
-export function checkTemplates(entries, catalogSource) {
+export function checkTemplates(entries, catalogSource, baselines) {
   const problems = []
   const report = (entry, message) => problems.push(`${entry.dir}/${entry.id}: ${message}`)
   const usedBlocks = new Set()
@@ -99,8 +104,15 @@ export function checkTemplates(entries, catalogSource) {
       report(entry, `has no ${entry.id}.tsx`)
       continue
     }
-    for (const message of metadataProblems(parseTemplateMetadata(main.source), entry)) {
+    const metadata = parseTemplateMetadata(main.source)
+    for (const message of metadataProblems(metadata, entry)) {
       report(entry, message)
+    }
+    if (baselines && metadata.readiness === 'ready' && metadata.title) {
+      for (const story of REQUIRED_STORIES) {
+        const name = baselineName(entry.dir, metadata.title, story)
+        if (!baselines.has(name)) report(entry, `is ready but has no visual baseline ${name}`)
+      }
     }
     for (const file of entry.files) {
       for (const specifier of importSpecifiers(file.source)) {
