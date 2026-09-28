@@ -14,7 +14,17 @@ const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 const repoRoot = path.resolve(packageRoot, '../..')
 const starterRoot = path.join(packageRoot, 'starter')
 
-export const kinds = ['site', 'docs']
+/**
+ * The layers each kind is built from, in order; a later layer's file replaces
+ * an earlier one at the same path. `base` is what every app shares; `content`
+ * adds MDX and the site header and footer.
+ */
+const kindLayers = {
+  site: ['base', 'content', 'site'],
+  docs: ['base', 'content', 'docs'],
+}
+
+export const kinds = Object.keys(kindLayers)
 
 const atom63Packages = {
   '@atom63/mdx': 'packages/mdx',
@@ -32,34 +42,46 @@ const starterOnly = {
   'class-variance-authority': '^0.7.1',
 }
 
-const dependencies = [
-  '@atom63/mdx',
-  '@atom63/styles',
-  '@atom63/ui-foundation',
-  '@atom63/ui-react',
-  '@mdx-js/react',
-  '@tanstack/react-router',
-  'class-variance-authority',
-  'clsx',
-  'lucide-react',
-  'react',
-  'react-dom',
-  'tailwind-merge',
-]
+/** The packages each layer adds. */
+const layerPackages = {
+  base: {
+    dependencies: [
+      '@atom63/styles',
+      '@atom63/ui-foundation',
+      '@atom63/ui-react',
+      '@tanstack/react-router',
+      'class-variance-authority',
+      'clsx',
+      'lucide-react',
+      'react',
+      'react-dom',
+      'tailwind-merge',
+    ],
+    devDependencies: [
+      '@tailwindcss/vite',
+      '@types/react',
+      '@types/react-dom',
+      '@vitejs/plugin-react',
+      'tailwindcss',
+      'typescript',
+      'vite',
+    ],
+  },
+  content: {
+    dependencies: ['@atom63/mdx', '@mdx-js/react'],
+    devDependencies: [
+      '@mdx-js/rollup',
+      'remark-frontmatter',
+      'remark-gfm',
+      'remark-mdx-frontmatter',
+    ],
+  },
+}
 
-const devDependencies = [
-  '@mdx-js/rollup',
-  '@tailwindcss/vite',
-  '@types/react',
-  '@types/react-dom',
-  '@vitejs/plugin-react',
-  'remark-frontmatter',
-  'remark-gfm',
-  'remark-mdx-frontmatter',
-  'tailwindcss',
-  'typescript',
-  'vite',
-]
+const allPackages = Object.values(layerPackages).flatMap(layer => [
+  ...layer.dependencies,
+  ...layer.devDependencies,
+])
 
 const readJson = relative => JSON.parse(readFileSync(path.join(repoRoot, relative), 'utf8'))
 
@@ -91,7 +113,7 @@ export function resolveVersions() {
     { ...rootManifest.dependencies, ...rootManifest.devDependencies },
   ]
   const versions = {}
-  for (const name of [...dependencies, ...devDependencies]) {
+  for (const name of allPackages) {
     if (atom63Packages[name]) {
       versions[name] = readJson(`${atom63Packages[name]}/package.json`).version
       continue
@@ -144,7 +166,8 @@ export function planProject({ name, kind = 'site', title = titleFromName(name), 
   const fill = text => text.replaceAll('{{title}}', title).replaceAll('{{date}}', today)
 
   const files = new Map()
-  for (const layer of ['base', kind]) {
+  const layers = kindLayers[kind]
+  for (const layer of layers) {
     for (const { relative, source } of listFiles(path.join(starterRoot, layer))) {
       // npm drops .gitignore from published packages, so the template stores it as _gitignore.
       const target = relative === '_gitignore' ? '.gitignore' : relative
@@ -152,8 +175,13 @@ export function planProject({ name, kind = 'site', title = titleFromName(name), 
     }
   }
 
-  const pick = names =>
-    Object.fromEntries(names.map(dependency => [dependency, resolved[dependency]]))
+  const pick = field =>
+    Object.fromEntries(
+      layers
+        .flatMap(layer => layerPackages[layer]?.[field] ?? [])
+        .sort()
+        .map(dependency => [dependency, resolved[dependency]])
+    )
   const manifest = {
     name,
     version: '0.0.0',
@@ -165,8 +193,8 @@ export function planProject({ name, kind = 'site', title = titleFromName(name), 
       typecheck: 'tsc --noEmit',
       preview: 'vite preview',
     },
-    dependencies: pick(dependencies),
-    devDependencies: pick(devDependencies),
+    dependencies: pick('dependencies'),
+    devDependencies: pick('devDependencies'),
   }
   files.set('package.json', `${JSON.stringify(manifest, null, 2)}\n`)
   files.set(
