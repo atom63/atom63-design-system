@@ -1,6 +1,7 @@
 /**
- * Pure diff between the Atom63 Figma sync model (@atom63/styles/figma-sync.json)
- * and a snapshot of the document's local variables. No Figma API here, so the
+ * Pure diff between a Figma sync model and a snapshot of the document's local
+ * variables. The model is Atom63's (@atom63/styles/figma-sync.json) or one built
+ * from a project's token CSS (css-model.ts). No Figma API here, so the
  * plan is unit-testable; `apply.ts` turns the plan into document writes.
  *
  * Variables are matched by the `token` plugin data the sync writes, then by
@@ -21,13 +22,24 @@ export interface SyncColor {
   a: number
 }
 
-export type SyncValue = { alias: string } | { value: SyncColor | number | string }
+/**
+ * A literal, an alias to another token's variable, or a composed color: an alias
+ * to a color token at an opacity from 0 to 100 (Figma's composed color value).
+ */
+export type SyncValue =
+  | { alias: string }
+  | { composed: { alias: string; opacity: number } }
+  | { value: SyncColor | number | string }
 
 export interface SyncVariable {
   name: string
   token: string
   type: SyncVariableType
   values: Record<string, SyncValue>
+  /** Dev Mode's web code syntax, e.g. `var(--primary)`. Left alone when absent. */
+  codeSyntax?: string
+  /** Figma variable scopes; `[]` hides the variable from pickers. Left alone when absent. */
+  scopes?: string[]
 }
 
 export interface SyncCollection {
@@ -51,6 +63,8 @@ export interface SnapshotVariable {
   type: string
   /** Keyed by mode name. Aliases are resolved to the target variable's token. */
   values: Record<string, SyncValue | undefined>
+  codeSyntax?: string | null
+  scopes?: string[]
 }
 
 export interface SnapshotCollection {
@@ -75,6 +89,8 @@ export type VariableChange =
       id: string
       rename: boolean
       modes: string[]
+      /** The code syntax or scopes differ from the model. */
+      metadata: boolean
     }
 
 export interface CollectionPlan {
@@ -115,6 +131,14 @@ export function valuesEqual(expected: SyncValue, actual: SyncValue | undefined):
   if ('alias' in expected || 'alias' in actual) {
     return 'alias' in expected && 'alias' in actual && expected.alias === actual.alias
   }
+  if ('composed' in expected || 'composed' in actual) {
+    return (
+      'composed' in expected &&
+      'composed' in actual &&
+      expected.composed.alias === actual.composed.alias &&
+      Math.abs(expected.composed.opacity - actual.composed.opacity) < FLOAT_EPSILON
+    )
+  }
   const left = expected.value
   const right = actual.value
   if (typeof left === 'number' && typeof right === 'number')
@@ -123,6 +147,21 @@ export function valuesEqual(expected: SyncValue, actual: SyncValue | undefined):
   return (['r', 'g', 'b', 'a'] as const).every(
     channel => Math.abs(left[channel] - right[channel]) < COLOR_EPSILON
   )
+}
+
+/** Whether the document variable's code syntax or scopes differ from what the model sets. */
+export function metadataDiffers(
+  variable: SyncVariable,
+  current: Pick<SnapshotVariable, 'codeSyntax' | 'scopes'>
+): boolean {
+  if (variable.codeSyntax !== undefined && variable.codeSyntax !== (current.codeSyntax ?? null))
+    return true
+  if (variable.scopes !== undefined) {
+    const actual = new Set(current.scopes ?? [])
+    if (actual.size !== variable.scopes.length || variable.scopes.some(scope => !actual.has(scope)))
+      return true
+  }
+  return false
 }
 
 export function planSync(model: SyncModel, snapshot: SnapshotCollection[]): SyncPlan {
@@ -200,7 +239,8 @@ export function planSync(model: SyncModel, snapshot: SnapshotCollection[]): Sync
         return !valuesEqual(variable.values[mode], current.values[currentMode])
       })
       const rename = current.name !== variable.name
-      if (modes.length === 0 && !rename && current.token === variable.token) {
+      const metadata = metadataDiffers(variable, current)
+      if (modes.length === 0 && !rename && !metadata && current.token === variable.token) {
         plan.unchanged += 1
         continue
       }
@@ -212,6 +252,7 @@ export function planSync(model: SyncModel, snapshot: SnapshotCollection[]): Sync
         id: current.id,
         rename,
         modes,
+        metadata,
       })
     }
 

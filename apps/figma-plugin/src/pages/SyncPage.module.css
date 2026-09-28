@@ -45,3 +45,11 @@
   font-size: 11px;
   resize: vertical;
 }
+
+.tabs {
+  padding: var(--spacing-md) var(--spacing-xl) 0;
+}
+
+.files {
+  display: none;
+}

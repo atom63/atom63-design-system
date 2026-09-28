@@ -9,6 +9,7 @@ import type {
   SyncModel,
   SyncPlan,
   SyncValue,
+  SyncVariable,
   SyncVariableType,
 } from './plan'
 
@@ -30,6 +31,7 @@ export interface CollectionLike {
 
 export type RawValue =
   | { type: 'VARIABLE_ALIAS'; id: string }
+  | { color: { type: 'VARIABLE_ALIAS'; id: string }; opacity: number }
   | { r: number; g: number; b: number; a?: number }
   | number
   | string
@@ -46,6 +48,11 @@ export interface VariableLike {
   setPluginData(key: string, value: string): void
   /** Hides a retired variable from library publishing (Figma `Variable`). */
   hiddenFromPublishing?: boolean
+  /** Figma `Variable` scopes and code syntax; optional so tests can leave them out. */
+  scopes?: string[]
+  codeSyntax?: { WEB?: string }
+  setVariableCodeSyntax?(platform: 'WEB', value: string): void
+  removeVariableCodeSyntax?(platform: 'WEB'): void
 }
 
 export interface VariablesApi {
@@ -94,12 +101,28 @@ function isColor(value: unknown): value is { r: number; g: number; b: number; a?
   return typeof value === 'object' && value !== null && 'r' in value && 'g' in value && 'b' in value
 }
 
+/** A composed color with an alias color and a fixed opacity, the only form the sync writes. */
+function isComposed(
+  value: unknown
+): value is { color: { type: 'VARIABLE_ALIAS'; id: string }; opacity: number } {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    'color' in value &&
+    'opacity' in value &&
+    isAlias(value.color) &&
+    typeof value.opacity === 'number'
+  )
+}
+
 /** The snapshot form of a stored value; values the sync never writes read as absent. */
 async function snapshotValue(
   raw: unknown,
   tokenOf: (id: string) => Promise<string>
 ): Promise<SyncValue | undefined> {
   if (isAlias(raw)) return { alias: await tokenOf(raw.id) }
+  if (isComposed(raw))
+    return { composed: { alias: await tokenOf(raw.color.id), opacity: raw.opacity } }
   if (isColor(raw)) return { value: { r: raw.r, g: raw.g, b: raw.b, a: raw.a ?? 1 } }
   if (typeof raw === 'number' || typeof raw === 'string') return { value: raw }
   return undefined
@@ -147,6 +170,8 @@ export async function readSnapshot(
         token: variable.getPluginData(TOKEN_KEY) || null,
         type: variable.resolvedType,
         values,
+        codeSyntax: variable.codeSyntax?.WEB ?? null,
+        scopes: variable.scopes ? [...variable.scopes] : undefined,
       })
     }
     snapshot.push({
@@ -157,6 +182,15 @@ export async function readSnapshot(
     })
   }
   return snapshot
+}
+
+/** Writes the model's code syntax and scopes; leaves them alone when the model has none. */
+function writeMetadata(variable: VariableLike, model: SyncVariable) {
+  if (model.codeSyntax !== undefined) {
+    if (model.codeSyntax) variable.setVariableCodeSyntax?.('WEB', model.codeSyntax)
+    else variable.removeVariableCodeSyntax?.('WEB')
+  }
+  if (model.scopes !== undefined) variable.scopes = [...model.scopes]
 }
 
 export async function applyPlan(
@@ -233,19 +267,23 @@ export async function applyPlan(
   for (const { change, variable } of targets) {
     const collection = collectionByName.get(change.collection)
     if (!collection) continue
+    writeMetadata(variable, change.variable)
     const modeIds = new Map(collection.modes.map(mode => [mode.name, mode.modeId]))
     const modes = change.kind === 'create' ? Object.keys(change.variable.values) : change.modes
     for (const mode of modes) {
       const modeId = modeIds.get(mode)
       const value = change.variable.values[mode]
       if (!modeId || !value) continue
-      if ('alias' in value) {
-        const target = byToken.get(value.alias)
+      if ('alias' in value || 'composed' in value) {
+        const token = 'alias' in value ? value.alias : value.composed.alias
+        const target = byToken.get(token)
         if (!target)
-          throw new Error(
-            `${change.variable.name}: alias target ${value.alias} is not in the document`
-          )
-        variable.setValueForMode(modeId, api.createVariableAlias(target))
+          throw new Error(`${change.variable.name}: alias target ${token} is not in the document`)
+        const alias = api.createVariableAlias(target) as { type: 'VARIABLE_ALIAS'; id: string }
+        variable.setValueForMode(
+          modeId,
+          'alias' in value ? alias : { color: alias, opacity: value.composed.opacity }
+        )
       } else {
         variable.setValueForMode(modeId, value.value)
       }

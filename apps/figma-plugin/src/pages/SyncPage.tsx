@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Alert, Button, ScrollArea, SectionHeader } from '../components/ui'
+import { Alert, Button, ScrollArea, SectionHeader, TabPanel, Tabs } from '../components/ui'
 import { useFigmaMessage, usePostMessage } from '../hooks/useFigmaMessage'
 import type {
   SyncApplyResultMessage,
@@ -8,11 +8,12 @@ import type {
   SyncModelSummary,
   SyncPlanSummary,
 } from '../types/messages'
+import { ProjectSync } from './ProjectSync'
 import styles from './SyncPage.module.css'
 
 type Status = 'idle' | 'previewing' | 'applying' | 'exporting'
 
-function PlanTable({ plan }: { plan: SyncPlanSummary }) {
+export function PlanTable({ plan }: { plan: SyncPlanSummary }) {
   return (
     <table className={styles.table}>
       <thead>
@@ -44,7 +45,83 @@ function PlanTable({ plan }: { plan: SyncPlanSummary }) {
   )
 }
 
+/** The outcome of an apply and the current plan, shared by both sync modes. */
+export function SyncResults({
+  applied,
+  plan,
+}: {
+  applied: SyncApplyResultMessage['data'] | null
+  plan: SyncPlanSummary | null
+}) {
+  const verified =
+    applied && applied.verification.totals.create + applied.verification.totals.update === 0
+  return (
+    <>
+      {applied && (
+        <Alert
+          title={verified ? 'In sync' : 'Sync incomplete'}
+          variant={verified ? 'success' : 'warning'}
+        >
+          Created {applied.applied.createdCollections} collections, {applied.applied.addedModes}{' '}
+          modes, {applied.applied.created} variables; updated {applied.applied.updated}.{' '}
+          {verified
+            ? 'A fresh preview finds nothing left to change.'
+            : `A fresh preview still finds ${applied.verification.totals.create + applied.verification.totals.update} changes.`}
+        </Alert>
+      )}
+      {applied && applied.applied.moved > 0 && (
+        <Alert
+          title="Variables moved to another collection"
+          variant={applied.applied.bindingsRemaining > 0 ? 'warning' : 'success'}
+        >
+          {applied.applied.moved} variables moved to a new collection, and{' '}
+          {applied.applied.bindingsRebound} bindings in this file now use the new variables. The old
+          variables are kept, renamed with a “(moved)” prefix and hidden from publishing.{' '}
+          {applied.applied.bindingsRemaining > 0
+            ? `${applied.applied.bindingsRemaining} layers, styles or variables still use them (for example a binding inside a text range); rebind those by hand before deleting the (moved) group.`
+            : 'Nothing uses them any more, so you can delete the (moved) group.'}
+        </Alert>
+      )}
+      {plan && plan.totals.typeConflicts > 0 && (
+        <Alert title="Type conflicts" variant="warning">
+          {plan.totals.typeConflicts} variables exist with a different type and are left untouched.
+          Delete them to let the sync recreate them.
+        </Alert>
+      )}
+      {plan && plan.totals.orphaned > 0 && (
+        <Alert title="Orphaned variables" variant="info">
+          {plan.totals.orphaned} synced variables are no longer in the tokens. They are kept; hover
+          the count to see them.
+        </Alert>
+      )}
+      {plan && <PlanTable plan={plan} />}{' '}
+    </>
+  )
+}
+
+const TABS = [
+  { id: 'atom63', label: 'Atom63' },
+  { id: 'project', label: 'Project' },
+]
+
 export function SyncPage() {
+  const [activeTab, setActiveTab] = useState('atom63')
+  return (
+    <ScrollArea>
+      <div className={styles.tabs}>
+        <Tabs activeTab={activeTab} onTabChange={setActiveTab} size="sm" tabs={TABS} />
+      </div>
+      <TabPanel activeTab={activeTab} id="atom63">
+        <Atom63Sync />
+      </TabPanel>
+      <TabPanel activeTab={activeTab} id="project">
+        <ProjectSync />
+      </TabPanel>
+    </ScrollArea>
+  )
+}
+
+function Atom63Sync() {
   const postMessage = usePostMessage()
   const [status, setStatus] = useState<Status>('idle')
   const [model, setModel] = useState<SyncModelSummary | null>(null)
@@ -101,131 +178,86 @@ export function SyncPage() {
   }
 
   const pending = plan ? plan.totals.create + plan.totals.update : 0
-  const verified =
-    applied && applied.verification.totals.create + applied.verification.totals.update === 0
 
   return (
-    <ScrollArea>
-      <div className={styles.page}>
-        <SectionHeader
-          description="Write the Atom63 design tokens into this file as Figma variables. Each personalization axis becomes a collection with its values as modes. Running it again changes nothing unless the tokens changed."
-          title="Sync from code"
-        />
+    <div className={styles.page}>
+      <SectionHeader
+        description="Write the Atom63 design tokens into this file as Figma variables. Each personalization axis becomes a collection with its values as modes. Running it again changes nothing unless the tokens changed."
+        title="Sync from code"
+      />
 
-        {model && (
-          <p className={styles.meta}>
-            Bundled model: {model.variables} variables in {model.collections} collections,{' '}
-            {model.aliasValues} alias values, {model.skipped} tokens not representable as Figma
-            variables.
-          </p>
-        )}
+      {model && (
+        <p className={styles.meta}>
+          Bundled model: {model.variables} variables in {model.collections} collections,{' '}
+          {model.aliasValues} alias values, {model.skipped} tokens not representable as Figma
+          variables.
+        </p>
+      )}
 
-        <div className={styles.actions}>
-          <Button loading={status === 'previewing'} onClick={preview} variant="secondary">
-            Preview changes
-          </Button>
-          <Button
-            disabled={!plan || pending === 0}
-            loading={status === 'applying'}
-            onClick={apply}
-            variant="primary"
-          >
-            {plan ? `Apply ${pending} changes` : 'Apply'}
-          </Button>
-        </div>
-
-        {error && (
-          <Alert title="Sync failed" variant="error">
-            {error}
-          </Alert>
-        )}
-
-        {applied && (
-          <Alert
-            title={verified ? 'In sync' : 'Sync incomplete'}
-            variant={verified ? 'success' : 'warning'}
-          >
-            Created {applied.applied.createdCollections} collections, {applied.applied.addedModes}{' '}
-            modes, {applied.applied.created} variables; updated {applied.applied.updated}.{' '}
-            {verified
-              ? 'A fresh preview finds nothing left to change.'
-              : `A fresh preview still finds ${applied.verification.totals.create + applied.verification.totals.update} changes.`}
-          </Alert>
-        )}
-
-        {applied && applied.applied.moved > 0 && (
-          <Alert
-            title="Variables moved to another collection"
-            variant={applied.applied.bindingsRemaining > 0 ? 'warning' : 'success'}
-          >
-            {applied.applied.moved} variables moved to a new collection, and{' '}
-            {applied.applied.bindingsRebound} bindings in this file now use the new variables. The
-            old variables are kept, renamed with a “(moved)” prefix and hidden from publishing.{' '}
-            {applied.applied.bindingsRemaining > 0
-              ? `${applied.applied.bindingsRemaining} layers, styles or variables still use them (for example a binding inside a text range); rebind those by hand before deleting the (moved) group.`
-              : 'Nothing uses them any more, so you can delete the (moved) group.'}
-          </Alert>
-        )}
-
-        {plan && plan.totals.typeConflicts > 0 && (
-          <Alert title="Type conflicts" variant="warning">
-            {plan.totals.typeConflicts} variables exist with a different type and are left
-            untouched. Delete them to let the sync recreate them.
-          </Alert>
-        )}
-
-        {plan && plan.totals.orphaned > 0 && (
-          <Alert title="Orphaned variables" variant="info">
-            {plan.totals.orphaned} Atom63 variables are no longer in the model. They are kept; hover
-            the count to see them.
-          </Alert>
-        )}
-
-        {plan && <PlanTable plan={plan} />}
-
-        <SectionHeader
-          description="Collect the Atom63 variables you edited in this file into a token patch. Apply it in the repository with `pnpm --filter @atom63/styles tokens:apply <patch>`, which updates the DTCG sources and regenerates the CSS. Colors and numbers in the Foundation collection are exported; anything else is listed as skipped."
-          title="Export to code"
-        />
-
-        <div className={styles.actions}>
-          <Button loading={status === 'exporting'} onClick={exportChanges} variant="secondary">
-            Find edited variables
-          </Button>
-          <Button
-            disabled={!exported || exported.changes.length === 0}
-            onClick={downloadPatch}
-            variant="primary"
-          >
-            {exported ? `Download patch (${exported.changes.length})` : 'Download patch'}
-          </Button>
-        </div>
-
-        {exported && exported.changes.length === 0 && exported.skipped.length === 0 && (
-          <Alert title="Nothing to export" variant="info">
-            Every Atom63 variable in this file matches the code.
-          </Alert>
-        )}
-
-        {exported && exported.skipped.length > 0 && (
-          <Alert title="Not exported" variant="warning">
-            {exported.skipped.map(item => `${item.name}: ${item.reason}`).join('; ')}
-          </Alert>
-        )}
-
-        {exported && exported.changes.length > 0 && (
-          <>
-            <p className={styles.meta}>{exported.changes.map(change => change.name).join(', ')}</p>
-            <textarea
-              aria-label="Token patch"
-              className={styles.patch}
-              readOnly
-              rows={8}
-              value={exported.patch}
-            />
-          </>
-        )}
+      <div className={styles.actions}>
+        <Button loading={status === 'previewing'} onClick={preview} variant="secondary">
+          Preview changes
+        </Button>
+        <Button
+          disabled={!plan || pending === 0}
+          loading={status === 'applying'}
+          onClick={apply}
+          variant="primary"
+        >
+          {plan ? `Apply ${pending} changes` : 'Apply'}
+        </Button>
       </div>
-    </ScrollArea>
+
+      {error && (
+        <Alert title="Sync failed" variant="error">
+          {error}
+        </Alert>
+      )}
+
+      <SyncResults applied={applied} plan={plan} />
+
+      <SectionHeader
+        description="Collect the Atom63 variables you edited in this file into a token patch. Apply it in the repository with `pnpm --filter @atom63/styles tokens:apply <patch>`, which updates the DTCG sources and regenerates the CSS. Colors and numbers in the Foundation collection are exported; anything else is listed as skipped."
+        title="Export to code"
+      />
+
+      <div className={styles.actions}>
+        <Button loading={status === 'exporting'} onClick={exportChanges} variant="secondary">
+          Find edited variables
+        </Button>
+        <Button
+          disabled={!exported || exported.changes.length === 0}
+          onClick={downloadPatch}
+          variant="primary"
+        >
+          {exported ? `Download patch (${exported.changes.length})` : 'Download patch'}
+        </Button>
+      </div>
+
+      {exported && exported.changes.length === 0 && exported.skipped.length === 0 && (
+        <Alert title="Nothing to export" variant="info">
+          Every Atom63 variable in this file matches the code.
+        </Alert>
+      )}
+
+      {exported && exported.skipped.length > 0 && (
+        <Alert title="Not exported" variant="warning">
+          {exported.skipped.map(item => `${item.name}: ${item.reason}`).join('; ')}
+        </Alert>
+      )}
+
+      {exported && exported.changes.length > 0 && (
+        <>
+          <p className={styles.meta}>{exported.changes.map(change => change.name).join(', ')}</p>
+          <textarea
+            aria-label="Token patch"
+            className={styles.patch}
+            readOnly
+            rows={8}
+            value={exported.patch}
+          />
+        </>
+      )}
+    </div>
   )
 }

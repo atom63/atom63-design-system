@@ -282,8 +282,8 @@ importers:
         specifier: workspace:*
         version: link:../../config/tsconfig
       '@figma/plugin-typings':
-        specifier: ^1.123.0
-        version: 1.138.0
+        specifier: ^1.139.0
+        version: 1.139.0
       '@types/node':
         specifier: ^26.3.0
         version: 26.6.2
@@ -1749,8 +1749,8 @@ packages:
       '@noble/hashes':
         optional: true
 
-  '@figma/plugin-typings@1.138.0':
-    resolution: {integrity: sha512-bLP9wRf8c0e4z5GbXpDUXd7YNPXEDpgyeMmTe8Lm4EWMU8JEO1DFRfj1NaucIeRSurbde8y7xS1jas60LTTDaw==}
+  '@figma/plugin-typings@1.139.0':
+    resolution: {integrity: sha512-O1lUNRXpBsnODokqnIJW0AawVVrx4FUkm2ShDsLGsInWrxDYX0MIoy0yVKa+MXOy7Wfs3JE+utR+YTcxp6Yihw==}
 
   '@floating-ui/core@1.8.0':
     resolution: {integrity: sha512-0CIZ5itps/8x7BG8dEIhs53BvCUH2PCoogtakwRTut+Arm58sJooJ0AuZhLw2HJYIR5cMLNPBSS728sPho2khQ==}
@@ -6796,7 +6796,7 @@ snapshots:
 
   '@exodus/bytes@1.15.1': {}
 
-  '@figma/plugin-typings@1.138.0': {}
+  '@figma/plugin-typings@1.139.0': {}
 
   '@floating-ui/core@1.8.0':
     dependencies:

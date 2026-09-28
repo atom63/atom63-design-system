@@ -9,6 +9,7 @@
 import figmaSyncModel from '@atom63/styles/figma-sync.json'
 
 import { applyPlan, readSnapshot, type VariablesApi } from './sync/apply'
+import { formatChangeList, planChangeList } from './sync/change-list'
 import { planExport, toTokenPatch } from './sync/export'
 import { rebindBindings } from './sync/rebind'
 import { planSync, type SyncModel, type SyncPlan } from './sync/plan'
@@ -1716,10 +1717,11 @@ async function handleUIMessage(msg: UIToMainMessage) {
 
     case 'sync-preview': {
       try {
-        const plan = planSync(syncModel, await readSnapshot(variablesApi, syncModel))
+        const model = msg.model ?? syncModel
+        const plan = planSync(model, await readSnapshot(variablesApi, model))
         figma.ui.postMessage({
           type: 'sync-preview-result',
-          data: { model: syncModel.summary, plan: summarizePlan(plan) },
+          data: { model: model.summary, plan: summarizePlan(plan) },
         })
       } catch (error) {
         figma.ui.postMessage({ type: 'sync-error', data: { message: errorMessage(error) } })
@@ -1729,14 +1731,17 @@ async function handleUIMessage(msg: UIToMainMessage) {
 
     case 'sync-apply': {
       try {
-        const plan = planSync(syncModel, await readSnapshot(variablesApi, syncModel))
-        const applied = await applyPlan(variablesApi, syncModel, plan)
-        const verification = planSync(syncModel, await readSnapshot(variablesApi, syncModel))
+        const model = msg.model ?? syncModel
+        const plan = planSync(model, await readSnapshot(variablesApi, model))
+        const applied = await applyPlan(variablesApi, model, plan)
+        const verification = planSync(model, await readSnapshot(variablesApi, model))
         figma.ui.postMessage({
           type: 'sync-apply-result',
           data: { applied, verification: summarizePlan(verification) },
         })
-        figma.notify(`Atom63 sync: ${applied.created} created, ${applied.updated} updated`)
+        figma.notify(
+          `${msg.model ? 'Project' : 'Atom63'} sync: ${applied.created} created, ${applied.updated} updated`
+        )
       } catch (error) {
         figma.ui.postMessage({ type: 'sync-error', data: { message: errorMessage(error) } })
       }
@@ -1757,6 +1762,22 @@ async function handleUIMessage(msg: UIToMainMessage) {
             skipped: plan.skipped,
             patch: `${JSON.stringify(toTokenPatch(plan), null, 2)}\n`,
           },
+        })
+      } catch (error) {
+        figma.ui.postMessage({ type: 'sync-error', data: { message: errorMessage(error) } })
+      }
+      break
+    }
+
+    case 'sync-changes': {
+      try {
+        const changes = planChangeList(
+          msg.project,
+          await readSnapshot(variablesApi, msg.project.model)
+        )
+        figma.ui.postMessage({
+          type: 'sync-changes-result',
+          data: { count: changes.length, text: formatChangeList(changes) },
         })
       } catch (error) {
         figma.ui.postMessage({ type: 'sync-error', data: { message: errorMessage(error) } })

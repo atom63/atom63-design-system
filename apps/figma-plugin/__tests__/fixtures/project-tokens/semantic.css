@@ -1,0 +1,107 @@
+/*
+ * Semantic colors, in shadcn/ui's vocabulary: what each color is for. Every
+ * value points at the palette through the axes, so data-brand and
+ * data-surface restyle the whole site. Components use these (through the
+ * Tailwind utilities in theme.css: bg-background, text-muted-foreground, …),
+ * never the palette directly.
+ */
+
+/*
+ * Brand colors. Declared on every element that sets data-brand as well as on
+ * :root: a var() in a custom property resolves where the property is declared,
+ * so a section with its own data-brand needs its own copy.
+ */
+:root,
+[data-brand] {
+  /* Step 600, not 500: white text on a 500 fill falls below WCAG AA's 4.5:1. */
+  --primary: var(--brand-600);
+  /* Near-white on a dark primary, near-black on a light one. */
+  --primary-foreground: oklch(
+    from var(--primary) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h
+  );
+  --ring: color-mix(in oklch, var(--brand-500) 30%, transparent);
+
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-ring: var(--ring);
+
+  --chart-1: var(--brand-500);
+  --chart-2: var(--brand-300);
+  --chart-3: var(--brand-700);
+  --chart-4: var(--brand-400);
+  --chart-5: var(--brand-800);
+}
+
+/* Green (b3) is lighter than the other ramps: its primary steps one shade darker to reach AA. */
+[data-brand='b3'] {
+  --primary: var(--brand-700);
+}
+
+/* The lightest and darkest surfaces, the same in both modes. */
+:root {
+  --light: var(--surface-light-1);
+  --dark: var(--surface-dark-1);
+}
+
+/* Light mode */
+:root,
+.light {
+  --background: var(--surface-light-2);
+  --foreground: var(--surface-light-12);
+  --card: var(--surface-light-1);
+  --card-foreground: var(--foreground);
+  --popover: var(--surface-light-1);
+  --popover-foreground: var(--foreground);
+  --muted: var(--surface-light-3);
+  --muted-foreground: var(--surface-light-11);
+  --secondary: var(--muted);
+  --secondary-foreground: var(--muted-foreground);
+  /* A translucent hover plate, so it works on any surface. */
+  --accent: color-mix(in srgb, var(--surface-light-4), transparent 20%);
+  --accent-foreground: var(--foreground);
+  --border: var(--surface-light-4);
+  --input: var(--surface-light-5);
+
+  /* Status colors: step 600 on light surfaces reaches 3:1 for icons. */
+  --destructive: var(--color-danger-600);
+  --info: var(--color-info-600);
+  --success: var(--color-success-600);
+  --warning: var(--color-warning-600);
+
+  --sidebar: var(--muted);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+}
+
+/* Dark mode */
+.dark {
+  --background: var(--surface-dark-1);
+  --foreground: var(--surface-dark-12);
+  --card: var(--surface-dark-2);
+  --card-foreground: var(--foreground);
+  --popover: var(--surface-dark-4);
+  --popover-foreground: var(--foreground);
+  --muted: var(--surface-dark-3);
+  --muted-foreground: var(--surface-dark-11);
+  --secondary: var(--muted);
+  --secondary-foreground: var(--muted-foreground);
+  --accent: color-mix(in srgb, var(--surface-dark-6), transparent 20%);
+  --accent-foreground: var(--foreground);
+  --border: var(--surface-dark-6);
+  --input: var(--surface-dark-7);
+
+  /* Status colors: step 500 on dark surfaces; danger keeps 600 for its fill. */
+  --destructive: var(--color-danger-600);
+  --info: var(--color-info-500);
+  --success: var(--color-success-500);
+  --warning: var(--color-warning-500);
+
+  /* The dark sidebar sits on the page surface. */
+  --sidebar: var(--background);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+}

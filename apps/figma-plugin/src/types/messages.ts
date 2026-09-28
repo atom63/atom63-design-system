@@ -3,6 +3,9 @@
  * Type-safe message interfaces for UI ↔ Main thread communication
  */
 
+import type { ProjectModel } from '../sync/css-model'
+import type { SyncModel } from '../sync/plan'
+
 // ============================================================================
 // COLLECTION & STYLE DATA TYPES
 // ============================================================================
@@ -499,14 +502,23 @@ export interface CloseMessage {
   type: 'close'
 }
 
-/** Diff the Atom63 token model against the document without writing. */
+/** Diff a token model against the document without writing: Atom63's, or a project's. */
 export interface SyncPreviewMessage {
   type: 'sync-preview'
+  /** A project's model, built in the UI from its token CSS; the bundled Atom63 model when absent. */
+  model?: SyncModel
 }
 
-/** Apply the Atom63 token model, then re-plan to confirm nothing is left. */
+/** Apply a token model, then re-plan to confirm nothing is left. */
 export interface SyncApplyMessage {
   type: 'sync-apply'
+  model?: SyncModel
+}
+
+/** List the project variables edited in Figma as changes to apply to the token CSS. */
+export interface SyncChangesMessage {
+  type: 'sync-changes'
+  project: ProjectModel
 }
 
 /** Collect variables edited in Figma into a token patch for the repository. */
@@ -635,6 +647,7 @@ export type UIToMainMessage =
   | SyncPreviewMessage
   | SyncApplyMessage
   | SyncExportMessage
+  | SyncChangesMessage
 
 // ============================================================================
 // MAIN THREAD → UI MESSAGES
@@ -728,6 +741,15 @@ export interface SyncExportResultMessage {
   }
 }
 
+export interface SyncChangesResultMessage {
+  type: 'sync-changes-result'
+  data: {
+    count: number
+    /** Markdown for an agent: file, selector, token and new value per change. */
+    text: string
+  }
+}
+
 export interface SyncErrorMessage {
   type: 'sync-error'
   data: { message: string }
@@ -787,6 +809,7 @@ export type MainToUIMessage =
   | SyncPreviewResultMessage
   | SyncApplyResultMessage
   | SyncExportResultMessage
+  | SyncChangesResultMessage
   | SyncErrorMessage
 
 // ============================================================================

@@ -1,5 +1,8 @@
 # Cipher Plugin — Version History
 
+## Unreleased
+Sync has two modes. Atom63 syncs the bundled Atom63 tokens, as before. Project reads a project's own token CSS (the site template's `src/styles/tokens`, or any CSS custom properties under `:root`, `.light`, `.dark` and `data-*` attributes) and writes it as Figma variables: each `data-*` attribute becomes a collection with its values as modes, `var()` becomes an alias, a color at an opacity becomes a composed color, and `calc()` is computed per mode. Variables carry their CSS name as web code syntax, and raw ramps are hidden from pickers. Project mode also lists the variables edited in Figma as changes for a coding agent to apply to the CSS.
+
 ## Version 13 — April 14, 2026
 Lock individual accent or neutral colors so they are skipped when shuffling — click the lock icon on any color row to pin it.
 
