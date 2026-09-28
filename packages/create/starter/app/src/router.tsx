@@ -7,6 +7,7 @@ import {
 } from '@tanstack/react-router'
 
 import { AppLayout } from './components/app-layout'
+import { AppearanceSettings } from './components/appearance-settings'
 import { NotFoundPage } from './pages/not-found'
 import { DashboardContent } from './templates/pages/dashboard-page/dashboard-page'
 import { ListContent } from './templates/pages/list-page/list-page'
@@ -44,7 +45,12 @@ const invoicesRoute = createRoute({
 const settingsRoute = createRoute({
   getParentRoute: () => shellRoute,
   path: '/settings',
-  component: SettingsContent,
+  // The template's sections, then the app's own appearance settings.
+  component: () => (
+    <SettingsContent>
+      <AppearanceSettings />
+    </SettingsContent>
+  ),
 })
 const welcomeRoute = createRoute({
   getParentRoute: () => shellRoute,

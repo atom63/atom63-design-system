@@ -1,6 +1,6 @@
 import { Container } from '@atom63/ui-react/layout'
 import { FileText, LayoutDashboard, Settings } from 'lucide-react'
-import { useState } from 'react'
+import { type ReactNode, useState } from 'react'
 
 import { AppShell } from '../../blocks/app-shell/app-shell'
 import { PageHeader } from '../../blocks/page-header/page-header'
@@ -31,7 +31,12 @@ const nav = [
   { current: true, href: '#settings', icon: <Settings aria-hidden />, label: 'Settings' },
 ]
 
-export function SettingsContent() {
+export interface SettingsContentProps {
+  /** More sections, after the built-in ones: the product's own settings. */
+  children?: ReactNode
+}
+
+export function SettingsContent({ children }: SettingsContentProps) {
   const [settings, setSettings] = useState({
     digest: true,
     overdue: true,
@@ -75,6 +80,7 @@ export function SettingsContent() {
           onCheckedChange={toggle('twoFactor')}
         />
       </SettingsSection>
+      {children}
     </Container>
   )
 }

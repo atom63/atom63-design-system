@@ -57,7 +57,7 @@ export function useAppearance(): ThemeState {
   return state
 }
 
-const themeLabels: Record<Theme, string> = {
+export const themeLabels: Record<Theme, string> = {
   aqua: 'Aqua',
   modern: 'Modern',
   retro: 'Retro',
