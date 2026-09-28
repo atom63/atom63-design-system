@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "module": "Atom63UI",
-  "symbolCount": 403,
+  "symbolCount": 411,
   "symbols": [
     {
       "id": "s:8Atom63UI10AtomAvatarV",
@@ -1362,6 +1362,41 @@
       "source": "AtomTheme.swift"
     },
     {
+      "id": "s:8Atom63UI15AtomWidgetStateO",
+      "kind": "swift.enum",
+      "path": "AtomWidgetState",
+      "declaration": "enum AtomWidgetState",
+      "source": "AtomWidgetState.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomWidgetStateO5emptyyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomWidgetState.empty",
+      "declaration": "case empty",
+      "source": "AtomWidgetState.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomWidgetStateO5erroryA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomWidgetState.error",
+      "declaration": "case error",
+      "source": "AtomWidgetState.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomWidgetStateO7loadingyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomWidgetState.loading",
+      "declaration": "case loading",
+      "source": "AtomWidgetState.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomWidgetStateO7resolve8hasError9isLoading0I5EmptyACSgSb_S2btFZ",
+      "kind": "swift.type.method",
+      "path": "AtomWidgetState.resolve(hasError:isLoading:isEmpty:)",
+      "declaration": "static func resolve(hasError: Bool, isLoading: Bool, isEmpty: Bool) -> AtomWidgetState?",
+      "source": "AtomWidgetState.swift"
+    },
+    {
       "id": "s:8Atom63UI16AtomDynamicColorV",
       "kind": "swift.struct",
       "path": "AtomDynamicColor",
@@ -1407,7 +1442,7 @@
       "id": "s:8Atom63UI16AtomInformActionV2id5label4role7performACSS_SSAC4RoleOyyYbScMYcctcfc",
       "kind": "swift.init",
       "path": "AtomInformAction.init(id:label:role:perform:)",
-      "declaration": "init(id: String, label: String, role: AtomInformAction.Role = .secondary, perform: @escaping @Sendable () -> Void)",
+      "declaration": "init(id: String, label: String, role: AtomInformAction.Role = .secondary, perform: @escaping () -> Void)",
       "source": "AtomInform.swift"
     },
     {
@@ -1456,7 +1491,7 @@
       "id": "s:8Atom63UI16AtomInformActionV7performyyYbScMYccvp",
       "kind": "swift.property",
       "path": "AtomInformAction.perform",
-      "declaration": "let perform: @Sendable () -> Void",
+      "declaration": "let perform: () -> Void",
       "source": "AtomInform.swift"
     },
     {
@@ -1750,14 +1785,14 @@
       "id": "s:8Atom63UI17AtomInformMessageV2id7surface8severity8priority7dismiss7version8startsAt04endsM06anchor4when7contentACSS_AA0cD7SurfaceOAA0cD8SeverityOSiAA0cD11DismissModeOSi10Foundation4DateVSgAXSSSgSbAA0cD7ContextVYbcSgAA0cD7ContentVA_Ybctcfc",
       "kind": "swift.init",
       "path": "AtomInformMessage.init(id:surface:severity:priority:dismiss:version:startsAt:endsAt:anchor:when:content:)",
-      "declaration": "init(id: String, surface: AtomInformSurface, severity: AtomInformSeverity = .info, priority: Int = 0, dismiss: AtomInformDismissMode = .persistent, version: Int = 1, startsAt: Date? = nil, endsAt: Date? = nil, anchor: String? = nil, when: (@Sendable (AtomInformContext) -> Bool)? = nil, content: @escaping @Sendable (AtomInformContext) -> AtomInformContent)",
+      "declaration": "init(id: String, surface: AtomInformSurface, severity: AtomInformSeverity = .info, priority: Int = 0, dismiss: AtomInformDismissMode = .persistent, version: Int = 1, startsAt: Date? = nil, endsAt: Date? = nil, anchor: String? = nil, when: ((AtomInformContext) -> Bool)? = nil, content: @escaping (AtomInformContext) -> AtomInformContent)",
       "source": "AtomInform.swift"
     },
     {
       "id": "s:8Atom63UI17AtomInformMessageV2id7surface8severity8priority7dismiss7version8startsAt04endsM06anchor4when7contentACSS_AA0cD7SurfaceOAA0cD8SeverityOSiAA0cD11DismissModeOSi10Foundation4DateVSgAXSSSgSbAA0cD7ContextVYbcSgAA0cD7ContentVtcfc",
       "kind": "swift.init",
       "path": "AtomInformMessage.init(id:surface:severity:priority:dismiss:version:startsAt:endsAt:anchor:when:content:)",
-      "declaration": "init(id: String, surface: AtomInformSurface, severity: AtomInformSeverity = .info, priority: Int = 0, dismiss: AtomInformDismissMode = .persistent, version: Int = 1, startsAt: Date? = nil, endsAt: Date? = nil, anchor: String? = nil, when: (@Sendable (AtomInformContext) -> Bool)? = nil, content: AtomInformContent)",
+      "declaration": "init(id: String, surface: AtomInformSurface, severity: AtomInformSeverity = .info, priority: Int = 0, dismiss: AtomInformDismissMode = .persistent, version: Int = 1, startsAt: Date? = nil, endsAt: Date? = nil, anchor: String? = nil, when: ((AtomInformContext) -> Bool)? = nil, content: AtomInformContent)",
       "source": "AtomInform.swift"
     },
     {
@@ -1771,7 +1806,7 @@
       "id": "s:8Atom63UI17AtomInformMessageV4whenSbAA0cD7ContextVYbcSgvp",
       "kind": "swift.property",
       "path": "AtomInformMessage.when",
-      "declaration": "let when: (@Sendable (AtomInformContext) -> Bool)?",
+      "declaration": "let when: ((AtomInformContext) -> Bool)?",
       "source": "AtomInform.swift"
     },
     {
@@ -1792,7 +1827,7 @@
       "id": "s:8Atom63UI17AtomInformMessageV7contentyAA0cD7ContentVAA0cD7ContextVYbcvp",
       "kind": "swift.property",
       "path": "AtomInformMessage.content",
-      "declaration": "let content: @Sendable (AtomInformContext) -> AtomInformContent",
+      "declaration": "let content: (AtomInformContext) -> AtomInformContent",
       "source": "AtomInform.swift"
     },
     {
@@ -2137,6 +2172,27 @@
       "path": "AtomFormMessageTone.success",
       "declaration": "case success",
       "source": "AtomFormMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomWidgetStateViewV",
+      "kind": "swift.struct",
+      "path": "AtomWidgetStateView",
+      "declaration": "struct AtomWidgetStateView",
+      "source": "AtomWidgetState.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomWidgetStateViewV_5title11description7onRetryAcA0cdE0O_S2SSgyycSgtcfc",
+      "kind": "swift.init",
+      "path": "AtomWidgetStateView.init(_:title:description:onRetry:)",
+      "declaration": "init(_ state: AtomWidgetState, title: String, description: String? = nil, onRetry: (() -> Void)? = nil)",
+      "source": "AtomWidgetState.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomWidgetStateViewV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomWidgetStateView.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomWidgetState.swift"
     },
     {
       "id": "s:8Atom63UI20AtomContentStateToneO",
@@ -3982,6 +4038,51 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI15AtomWidgetStateO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomWidgetStateO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomWidgetStateO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomWidgetStateO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomWidgetStateO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomWidgetStateO5emptyyA2CmF",
+      "target": "s:8Atom63UI15AtomWidgetStateO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomWidgetStateO5erroryA2CmF",
+      "target": "s:8Atom63UI15AtomWidgetStateO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomWidgetStateO7loadingyA2CmF",
+      "target": "s:8Atom63UI15AtomWidgetStateO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomWidgetStateO7resolve8hasError9isLoading0I5EmptyACSgSb_S2btFZ",
+      "target": "s:8Atom63UI15AtomWidgetStateO",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI16AtomDynamicColorV",
       "target": "external:Equatable",
       "kind": "conformsTo"
@@ -4719,6 +4820,26 @@
     {
       "source": "s:8Atom63UI19AtomFormMessageToneO7successyA2CmF",
       "target": "s:8Atom63UI19AtomFormMessageToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI19AtomWidgetStateViewV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI19AtomWidgetStateViewV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI19AtomWidgetStateViewV_5title11description7onRetryAcA0cdE0O_S2SSgyycSgtcfc",
+      "target": "s:8Atom63UI19AtomWidgetStateViewV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI19AtomWidgetStateViewV4bodyQrvp",
+      "target": "s:8Atom63UI19AtomWidgetStateViewV",
       "kind": "memberOf"
     },
     {

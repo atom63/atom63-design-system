@@ -60,6 +60,8 @@ const normalizeDeclaration = declaration =>
   declaration
     .replace(/@(?:_Concurrency\.)?MainActor\s+/g, '')
     .replace(/\bnonisolated\s+/g, '')
+    // Older toolchains leave @Sendable out of closure types in the symbol graph.
+    .replace(/@Sendable\s+/g, '')
     .replace(/\s+/g, ' ')
     .trim()
 const symbols = symbolGraph.symbols
@@ -114,7 +116,38 @@ if (shouldWrite) {
   }
   const expected = readFileSync(manifestPath, 'utf8')
   if (expected !== manifest) {
+    printDifferences(JSON.parse(expected), { symbols, relationships })
     throw new Error('Atom63UI public API changed; run check:api:write and review the diff')
   }
   console.log(`Atom63UI public API matches ${symbols.length} frozen symbols`)
+}
+
+/* What differs, so a mismatch that only one toolchain produces can be read from the CI log. */
+function printDifferences(expected, actual) {
+  const byId = list => new Map(list.map(symbol => [symbol.id, symbol]))
+  const before = byId(expected.symbols)
+  const after = byId(actual.symbols)
+  const lines = []
+  for (const [id, symbol] of after) {
+    if (!before.has(id)) lines.push(`+ ${symbol.path}  ${symbol.declaration}`)
+    else if (before.get(id).declaration !== symbol.declaration) {
+      lines.push(
+        `~ ${symbol.path}\n    was: ${before.get(id).declaration}\n    now: ${symbol.declaration}`
+      )
+    }
+  }
+  for (const [id, symbol] of before) {
+    if (!after.has(id)) lines.push(`- ${symbol.path}  ${symbol.declaration}`)
+  }
+  const key = relationship => JSON.stringify(relationship)
+  const beforeRelationships = new Set(expected.relationships.map(key))
+  const afterRelationships = new Set(actual.relationships.map(key))
+  for (const relationship of afterRelationships) {
+    if (!beforeRelationships.has(relationship)) lines.push(`+ relationship ${relationship}`)
+  }
+  for (const relationship of beforeRelationships) {
+    if (!afterRelationships.has(relationship)) lines.push(`- relationship ${relationship}`)
+  }
+  console.error(`Public API differences (${lines.length}):`)
+  for (const line of lines.slice(0, 40)) console.error(line)
 }
