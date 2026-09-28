@@ -10,7 +10,8 @@
   },
   "exports": {
     ".": "./src/core.mjs",
-    "./agents-md": "./src/agents-md.mjs"
+    "./agents-md": "./src/agents-md.mjs",
+    "./agent-index.json": "./generated/agent-index.json"
   },
   "files": [
     "generated",

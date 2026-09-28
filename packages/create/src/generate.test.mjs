@@ -87,6 +87,40 @@ describe('planProject', () => {
     assert.match(docs.get('src/pages/doc-page.tsx'), /DocsMDXContentProvider/)
   })
 
+  it('writes the app kind from the page templates, without MDX', () => {
+    const app = planProject({ name: 'my-app', kind: 'app', date: '2026-09-25' })
+    const appManifest = JSON.parse(app.get('package.json'))
+    for (const file of [
+      'src/router.tsx',
+      'src/components/app-layout.tsx',
+      'src/templates/pages/dashboard-page/dashboard-page.tsx',
+      'src/templates/pages/sign-in-page/sign-in-page.tsx',
+      'src/templates/blocks/app-shell/app-shell.tsx',
+    ]) {
+      assert.ok(app.has(file), file)
+    }
+    assert.ok(!app.has('src/mdx.d.ts'))
+    assert.ok(!app.has('src/components/site-header.tsx'))
+    assert.equal(appManifest.dependencies['@atom63/mdx'], undefined)
+    assert.equal(appManifest.devDependencies['@mdx-js/rollup'], undefined)
+    assert.doesNotMatch(app.get('vite.config.ts'), /mdx/)
+    assert.match(app.get('src/app.ts'), /title: 'My app'/)
+  })
+
+  it('lists every package the copied templates import', () => {
+    const app = planProject({ name: 'my-app', kind: 'app', date: '2026-09-25' })
+    const appManifest = JSON.parse(app.get('package.json'))
+    for (const [file, source] of app) {
+      if (!file.startsWith('src/templates/')) continue
+      for (const [, specifier] of source.matchAll(/from '([^.][^']*)'/g)) {
+        const name = specifier.startsWith('@')
+          ? specifier.split('/').slice(0, 2).join('/')
+          : specifier.split('/')[0]
+        assert.ok(appManifest.dependencies[name], `${file} imports ${name}`)
+      }
+    }
+  })
+
   it('refuses an unknown kind', () => {
     assert.throws(() => planProject({ name: 'x', kind: 'shop' }), /Unknown kind "shop"/)
   })

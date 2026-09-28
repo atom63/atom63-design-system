@@ -5,6 +5,7 @@
  * else as the repo pins it).
  */
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { createRequire } from 'node:module'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -22,6 +23,16 @@ const starterRoot = path.join(packageRoot, 'starter')
 const kindLayers = {
   site: ['base', 'content', 'site'],
   docs: ['base', 'content', 'docs'],
+  app: ['base', 'app'],
+}
+
+/**
+ * The page templates a kind starts from. They are copied, with the blocks
+ * they use, from the agent index into `src/templates`, keeping the
+ * `pages/<id>/` and `blocks/<id>/` layout as `atom63 copy` does.
+ */
+const kindTemplates = {
+  app: ['dashboard-page', 'list-page', 'settings-page', 'onboarding-page', 'sign-in-page'],
 }
 
 export const kinds = Object.keys(kindLayers)
@@ -136,6 +147,26 @@ function listFiles(directory, prefix = '') {
   })
 }
 
+/** The template files for `ids` and every block they use, keyed by their path in the project. */
+export function templateFiles(ids) {
+  const index = createRequire(import.meta.url)('@atom63/cli/agent-index.json')
+  const byId = new Map(index.templates.map(entry => [entry.id, entry]))
+  const seen = new Map()
+  const visit = id => {
+    const entry = byId.get(id)
+    if (!entry) throw new Error(`No template "${id}" in the agent index`)
+    if (seen.has(id)) return
+    seen.set(id, entry)
+    for (const block of entry.blocksUsed) visit(block)
+  }
+  for (const id of ids) visit(id)
+  return new Map(
+    [...seen.values()].flatMap(entry =>
+      entry.files.map(file => [`src/templates/${file.path}`, file.source])
+    )
+  )
+}
+
 /** A package name from the directory name: lowercase, npm-safe. */
 export function packageName(directory) {
   const base = path.basename(path.resolve(directory))
@@ -173,6 +204,10 @@ export function planProject({ name, kind = 'site', title = titleFromName(name), 
       const target = relative === '_gitignore' ? '.gitignore' : relative
       files.set(target, fill(readFileSync(source, 'utf8')))
     }
+  }
+
+  for (const [target, source] of templateFiles(kindTemplates[kind] ?? [])) {
+    files.set(target, source)
   }
 
   const pick = field =>
