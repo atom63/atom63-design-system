@@ -373,17 +373,50 @@ jobs:
         working-directory: packages/ui-ios
         run: node Scripts/run-ios-tests.mjs
 
+      - name: Upload iOS test results
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: ios-test-results
+          path: ~/Library/Developer/Xcode/DerivedData/**/Logs/Test/*.xcresult
+          if-no-files-found: ignore
+
+  # The catalog snapshots run on their own runner, in parallel with the ios job's tests.
+  ios-snapshots:
+    needs: changes
+    if: needs.changes.outputs.ios == 'true'
+    runs-on: macos-15
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # The same Xcode as the ios job; the baselines depend on it.
+      - name: Select the latest stable Xcode
+        uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1.7.0
+        with:
+          xcode-version: latest-stable
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+
       # Compares every demo catalog showcase with its baseline screenshot on the simulator pinned in
       # examples/ios-demo/snapshot-simulator.json. The iOS snapshots workflow records baselines.
       - name: Compare iOS catalog snapshots
         working-directory: packages/ui-ios
         run: node Scripts/run-ios-snapshots.mjs
 
-      - name: Upload iOS test results
+      - name: Upload iOS snapshot results
         if: failure()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: ios-test-results
+          name: ios-snapshot-results
           path: ~/Library/Developer/Xcode/DerivedData/**/Logs/Test/*.xcresult
           if-no-files-found: ignore
 
@@ -398,11 +431,11 @@ jobs:
           if-no-files-found: ignore
 
   # The one check branch protection requires. It passes when every job passed or
-  # was skipped on purpose (ios on a pull request that cannot affect iOS), so
+  # was skipped on purpose (the iOS jobs on a pull request that cannot affect iOS), so
   # adding or splitting jobs never needs a settings change.
   ci-status:
     if: always()
-    needs: [changes, verify, docs, storybook, cross-browser, ios]
+    needs: [changes, verify, docs, storybook, cross-browser, ios, ios-snapshots]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
