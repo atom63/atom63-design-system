@@ -1,8 +1,8 @@
 name: iOS snapshots
 
 # Compares every iOS demo catalog showcase with its committed baseline screenshot, on the simulator
-# pinned in examples/ios-demo/snapshot-simulator.json. CI's `ios` job runs the same comparison on
-# every pull request that can affect iOS; this workflow exists to record baselines.
+# pinned in examples/ios-demo/snapshot-simulator.json. CI's `ios-snapshots` job runs the same
+# comparison on every pull request that can affect iOS; this workflow exists to record baselines.
 #
 # To create or update baselines after an intentional visual change, run this workflow manually on
 # your branch with `update` checked. It records the screenshots on the macOS runner, compares them
@@ -33,7 +33,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      # Keep in step with the `ios` job in ci.yml, which compares against these baselines.
+      # Keep in step with the `ios-snapshots` job in ci.yml, which compares against these baselines.
       - name: Select the latest stable Xcode
         uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1.7.0
         with:
