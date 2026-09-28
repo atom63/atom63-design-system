@@ -62,6 +62,8 @@ const templateGolden = [
   ['sidebar navigation', 'app-shell', 1],
   ['kpi', 'stat-row', 1],
   ['activity feed', 'activity-list', 1],
+  ['getting started checklist', 'getting-started-checklist', 1],
+  ['setup steps', 'getting-started-checklist', 2],
 ]
 
 describe('templates', () => {

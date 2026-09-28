@@ -4,6 +4,7 @@ import { FileText, LayoutDashboard, Plus, Settings, Upload } from 'lucide-react'
 
 import { AppShell } from '../../blocks/app-shell/app-shell'
 import { EmptyState } from '../../blocks/empty-state/empty-state'
+import { GettingStartedChecklist } from '../../blocks/getting-started-checklist/getting-started-checklist'
 import { PageHeader } from '../../blocks/page-header/page-header'
 
 export const template = {
@@ -11,9 +12,17 @@ export const template = {
   kind: 'page',
   title: 'Onboarding page',
   description:
-    'A first-run page inside the app shell: a welcome header and an empty state whose primary action creates the first record, with importing as the quieter alternative.',
+    'A first-run page inside the app shell: a welcome header, an empty state whose primary action creates the first record with importing as the quieter alternative, and a getting-started checklist.',
   category: 'feedback',
-  tags: ['onboarding', 'first run', 'empty', 'welcome', 'getting started', 'app shell'],
+  tags: [
+    'onboarding',
+    'first run',
+    'empty',
+    'welcome',
+    'getting started',
+    'checklist',
+    'app shell',
+  ],
   readiness: 'draft',
 } as const
 
@@ -47,6 +56,30 @@ export function OnboardingPage() {
             </Button>
           }
           title="No invoices yet"
+        />
+        {/* The empty state already offers the first step's action, so the checklist repeats none. */}
+        <GettingStartedChecklist
+          steps={[
+            {
+              description: 'Tally sends it and tells you when it is opened and paid.',
+              done: false,
+              id: 'invoice',
+              title: 'Create your first invoice',
+            },
+            {
+              description: 'Save who you bill once, and pick them when you invoice.',
+              done: false,
+              id: 'customer',
+              title: 'Add a customer',
+            },
+            {
+              description: 'Tally follows up on overdue invoices so you do not have to.',
+              done: false,
+              id: 'reminders',
+              title: 'Turn on payment reminders',
+            },
+          ]}
+          title="Get started"
         />
       </Container>
     </AppShell>

@@ -47,7 +47,7 @@ version for coding agents.
 
 ## Building UI with Atom63
 
-Ask the design system before writing UI. The `atom63` CLI and its MCP server (`atom63 mcp`) answer from the same generated index as the packages:
+Ask the design system before writing UI, and start each screen with `atom63 build <idea>`, the idea in your own words. The `atom63` CLI and its MCP server (`atom63 mcp`) answer from the same generated index as the packages:
 
 - `atom63 build <idea>`: a kit for what you are building: the closest page templates and blocks, the components they use, the foundation and the rules.
 - `atom63 template <id>` and `atom63 copy <id> <dir>`: read a page or block template, then copy it and the blocks it uses into your project to adapt.
@@ -61,7 +61,7 @@ Add `--json` for a typed `{ type, data }` envelope. `atom63 manifest` lists ever
 
 ### Rules
 
-1. Query the design system before writing UI: search for a component, read its contract, and start from a story example. The catalog, contracts and examples are the reviewed answers; guessing reinvents them with drift.
+1. Query the design system before writing UI: start a screen from the closest page template, then search for components, read their contracts, and start from story examples. The templates, catalog, contracts and examples are the reviewed answers; guessing reinvents them with drift.
 2. Compose existing components before writing new ones. Add a component to the system with `pnpm ds:new`, not by copying another. A new component must be wired into contracts, recipes, docs and tests; the scaffold does that, a copy does not.
 3. Pass only the axis values a component's contract lists (sizes, variants, orientations), and rely on its defaults. Recipes, the SwiftUI renderer and the Figma variables are built for exactly those values.
 4. Take every color, space, radius, shadow and duration from `--a63-*` tokens. No literal colors and no Tailwind palette utilities. Tokens follow the theme, brand, mode and density; literals break all four. In the design system repo, `check:craft` enforces it as `raw-color`.

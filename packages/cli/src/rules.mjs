@@ -7,8 +7,8 @@
 export const rules = [
   {
     id: 'query-first',
-    rule: 'Query the design system before writing UI: search for a component, read its contract, and start from a story example.',
-    why: 'The catalog, contracts and examples are the reviewed answers; guessing reinvents them with drift.',
+    rule: 'Query the design system before writing UI: start a screen from the closest page template, then search for components, read their contracts, and start from story examples.',
+    why: 'The templates, catalog, contracts and examples are the reviewed answers; guessing reinvents them with drift.',
   },
   {
     id: 'compose-before-create',

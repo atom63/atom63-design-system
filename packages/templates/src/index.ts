@@ -27,6 +27,11 @@ export {
   type FilterBarOption,
   type FilterBarProps,
 } from './blocks/filter-bar/filter-bar'
+export {
+  GettingStartedChecklist,
+  type ChecklistStep,
+  type GettingStartedChecklistProps,
+} from './blocks/getting-started-checklist/getting-started-checklist'
 export { PageHeader, type PageHeaderProps } from './blocks/page-header/page-header'
 export {
   SettingsSection,

@@ -224,9 +224,11 @@ Each step is its own pull request and ends green in CI.
    section and empty state, and notification-settings copied the page header and settings
    section, which removed the baseline's phone overflow. The other two wrote from scratch, and
    onboarding repeated the baseline's inset link button and added a heading-order axe violation.
-   Next: a getting-started checklist block (the onboarding brief needs one and no template has
-   it), and making agents reach for `atom63 build` before writing, since the brief's own words
-   already rank onboarding-page first.
+   Follow-ups (done): a `getting-started-checklist` block, which the onboarding page now uses
+   (the brief needs one and no template had it), and guidance that sends agents to
+   `atom63 build <idea>` before writing: the AGENTS.md block leads with it, rule 1 starts a
+   screen from the closest page template, and the docs-only variant the starter uses points at
+   the shadcn registry, since the CLI is not published yet.
 6. **shadcn registry** (T8). `pnpm build:registry` generates `apps/docs/public/r/` from the
    agent index: `registry.json` and one built item per template, served at
    `https://system.atom63.io/r/<id>.json`. Files install under `@components/atom63/` with their

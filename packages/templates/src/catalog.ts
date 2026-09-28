@@ -15,6 +15,7 @@ import { template as dataTableSection } from './blocks/data-table-section/data-t
 import { template as detailPanel } from './blocks/detail-panel/detail-panel'
 import { template as emptyState } from './blocks/empty-state/empty-state'
 import { template as filterBar } from './blocks/filter-bar/filter-bar'
+import { template as gettingStartedChecklist } from './blocks/getting-started-checklist/getting-started-checklist'
 import { template as pageHeader } from './blocks/page-header/page-header'
 import { template as settingsSection } from './blocks/settings-section/settings-section'
 import { template as statRow } from './blocks/stat-row/stat-row'
@@ -47,6 +48,7 @@ export const templateCatalog: readonly TemplateEntry[] = [
   detailPanel,
   emptyState,
   filterBar,
+  gettingStartedChecklist,
   pageHeader,
   settingsSection,
   statRow,

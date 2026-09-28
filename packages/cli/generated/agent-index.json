@@ -7989,7 +7989,7 @@
    "id": "onboarding-page",
    "kind": "page",
    "title": "Onboarding page",
-   "description": "A first-run page inside the app shell: a welcome header and an empty state whose primary action creates the first record, with importing as the quieter alternative.",
+   "description": "A first-run page inside the app shell: a welcome header, an empty state whose primary action creates the first record with importing as the quieter alternative, and a getting-started checklist.",
    "category": "feedback",
    "tags": [
     "onboarding",
@@ -7997,6 +7997,7 @@
     "empty",
     "welcome",
     "getting started",
+    "checklist",
     "app shell"
    ],
    "readiness": "draft",
@@ -8007,6 +8008,7 @@
    "blocksUsed": [
     "app-shell",
     "empty-state",
+    "getting-started-checklist",
     "page-header"
    ],
    "packages": [
@@ -8016,7 +8018,7 @@
    "files": [
     {
      "path": "pages/onboarding-page/onboarding-page.tsx",
-     "source": "import { Button } from '@atom63/ui-react'\nimport { Container } from '@atom63/ui-react/layout'\nimport { FileText, LayoutDashboard, Plus, Settings, Upload } from 'lucide-react'\n\nimport { AppShell } from '../../blocks/app-shell/app-shell'\nimport { EmptyState } from '../../blocks/empty-state/empty-state'\nimport { PageHeader } from '../../blocks/page-header/page-header'\n\nexport const template = {\n  id: 'onboarding-page',\n  kind: 'page',\n  title: 'Onboarding page',\n  description:\n    'A first-run page inside the app shell: a welcome header and an empty state whose primary action creates the first record, with importing as the quieter alternative.',\n  category: 'feedback',\n  tags: ['onboarding', 'first run', 'empty', 'welcome', 'getting started', 'app shell'],\n  readiness: 'draft',\n} as const\n\nconst nav = [\n  { href: '#overview', icon: <LayoutDashboard aria-hidden />, label: 'Overview' },\n  { current: true, href: '#invoices', icon: <FileText aria-hidden />, label: 'Invoices' },\n  { href: '#settings', icon: <Settings aria-hidden />, label: 'Settings' },\n]\n\nexport function OnboardingPage() {\n  return (\n    <AppShell navItems={nav} productName=\"Tally\">\n      <Container maxWidth=\"default\" padding=\"none\">\n        <PageHeader\n          description=\"Send your first invoice and Tally tracks it until it is paid.\"\n          title=\"Welcome to Tally\"\n        />\n        <EmptyState\n          action={\n            <Button variant=\"primary\">\n              <Plus aria-hidden />\n              Create your first invoice\n            </Button>\n          }\n          description=\"Invoices you create or import appear here, with their status and amount.\"\n          icon={<FileText aria-hidden />}\n          secondaryAction={\n            <Button variant=\"outline\">\n              <Upload aria-hidden />\n              Import from CSV\n            </Button>\n          }\n          title=\"No invoices yet\"\n        />\n      </Container>\n    </AppShell>\n  )\n}\n"
+     "source": "import { Button } from '@atom63/ui-react'\nimport { Container } from '@atom63/ui-react/layout'\nimport { FileText, LayoutDashboard, Plus, Settings, Upload } from 'lucide-react'\n\nimport { AppShell } from '../../blocks/app-shell/app-shell'\nimport { EmptyState } from '../../blocks/empty-state/empty-state'\nimport { GettingStartedChecklist } from '../../blocks/getting-started-checklist/getting-started-checklist'\nimport { PageHeader } from '../../blocks/page-header/page-header'\n\nexport const template = {\n  id: 'onboarding-page',\n  kind: 'page',\n  title: 'Onboarding page',\n  description:\n    'A first-run page inside the app shell: a welcome header, an empty state whose primary action creates the first record with importing as the quieter alternative, and a getting-started checklist.',\n  category: 'feedback',\n  tags: ['onboarding', 'first run', 'empty', 'welcome', 'getting started', 'checklist', 'app shell'],\n  readiness: 'draft',\n} as const\n\nconst nav = [\n  { href: '#overview', icon: <LayoutDashboard aria-hidden />, label: 'Overview' },\n  { current: true, href: '#invoices', icon: <FileText aria-hidden />, label: 'Invoices' },\n  { href: '#settings', icon: <Settings aria-hidden />, label: 'Settings' },\n]\n\nexport function OnboardingPage() {\n  return (\n    <AppShell navItems={nav} productName=\"Tally\">\n      <Container maxWidth=\"default\" padding=\"none\">\n        <PageHeader\n          description=\"Send your first invoice and Tally tracks it until it is paid.\"\n          title=\"Welcome to Tally\"\n        />\n        <EmptyState\n          action={\n            <Button variant=\"primary\">\n              <Plus aria-hidden />\n              Create your first invoice\n            </Button>\n          }\n          description=\"Invoices you create or import appear here, with their status and amount.\"\n          icon={<FileText aria-hidden />}\n          secondaryAction={\n            <Button variant=\"outline\">\n              <Upload aria-hidden />\n              Import from CSV\n            </Button>\n          }\n          title=\"No invoices yet\"\n        />\n        {/* The empty state already offers the first step's action, so the checklist repeats none. */}\n        <GettingStartedChecklist\n          steps={[\n            {\n              description: 'Tally sends it and tells you when it is opened and paid.',\n              done: false,\n              id: 'invoice',\n              title: 'Create your first invoice',\n            },\n            {\n              description: 'Save who you bill once, and pick them when you invoice.',\n              done: false,\n              id: 'customer',\n              title: 'Add a customer',\n            },\n            {\n              description: 'Tally follows up on overdue invoices so you do not have to.',\n              done: false,\n              id: 'reminders',\n              title: 'Turn on payment reminders',\n            },\n          ]}\n          title=\"Get started\"\n        />\n      </Container>\n    </AppShell>\n  )\n}\n"
     }
    ]
   },
@@ -8306,6 +8308,40 @@
     {
      "path": "blocks/filter-bar/filter-bar.tsx",
      "source": "import {\n  Button,\n  Field,\n  FieldLabel,\n  Input,\n  Select,\n  SelectItem,\n  SelectPopup,\n  SelectTrigger,\n  SelectValue,\n} from '@atom63/ui-react'\nimport { useId } from 'react'\n\nexport const template = {\n  id: 'filter-bar',\n  kind: 'block',\n  title: 'Filter bar',\n  description:\n    'A labelled search field and one select filter above a collection, with a clear action that appears once a filter is set.',\n  category: 'collections',\n  tags: ['search', 'filter', 'toolbar', 'list', 'table'],\n  readiness: 'draft',\n} as const\n\nexport interface FilterBarOption {\n  label: string\n  value: string\n}\n\nexport interface FilterBarProps {\n  /** Shown as the filter's visible label, for example \"Status\". */\n  filterLabel: string\n  filterOptions: readonly FilterBarOption[]\n  filterValue: string\n  onClear: () => void\n  onFilterChange: (value: string) => void\n  onQueryChange: (query: string) => void\n  query: string\n  /** Shown as the search field's visible label, for example \"Search invoices\". */\n  searchLabel: string\n  searchPlaceholder?: string\n  /** Whether any filter differs from its default; shows the clear action. */\n  showClear: boolean\n}\n\n/*\n * Controls stack on a phone and sit on one row from `sm`, the search taking\n * the remaining width. Both fields keep a\n * visible label, the row is a search landmark, and the clear action is a\n * ghost button so the page's primary action stays the only strong one.\n */\nexport function FilterBar({\n  filterLabel,\n  filterOptions,\n  filterValue,\n  onClear,\n  onFilterChange,\n  onQueryChange,\n  query,\n  searchLabel,\n  searchPlaceholder,\n  showClear,\n}: FilterBarProps) {\n  const searchId = useId()\n  const filterLabelId = useId()\n  return (\n    <div className=\"flex flex-col gap-4 sm:flex-row sm:items-end\" role=\"search\">\n      <Field className=\"sm:flex-1\">\n        <FieldLabel htmlFor={searchId}>{searchLabel}</FieldLabel>\n        <Input\n          id={searchId}\n          onChange={event => onQueryChange(event.target.value)}\n          placeholder={searchPlaceholder}\n          type=\"search\"\n          value={query}\n        />\n      </Field>\n      <Field className=\"sm:w-48\">\n        <FieldLabel id={filterLabelId}>{filterLabel}</FieldLabel>\n        <Select\n          items={filterOptions}\n          onValueChange={next => onFilterChange(next ?? filterOptions[0]?.value ?? '')}\n          value={filterValue}\n        >\n          <SelectTrigger aria-labelledby={filterLabelId}>\n            <SelectValue />\n          </SelectTrigger>\n          <SelectPopup>\n            {filterOptions.map(option => (\n              <SelectItem key={option.value} value={option.value}>\n                {option.label}\n              </SelectItem>\n            ))}\n          </SelectPopup>\n        </Select>\n      </Field>\n      {showClear ? (\n        <Button onClick={onClear} variant=\"ghost\">\n          Clear filters\n        </Button>\n      ) : null}\n    </div>\n  )\n}\n"
+    }
+   ]
+  },
+  {
+   "id": "getting-started-checklist",
+   "kind": "block",
+   "title": "Getting started checklist",
+   "description": "A short list of first steps with a progress count: finished steps are checked, the first unfinished one is current and carries its action, and the rest wait.",
+   "category": "feedback",
+   "tags": [
+    "onboarding",
+    "getting started",
+    "checklist",
+    "steps",
+    "setup",
+    "progress",
+    "first run"
+   ],
+   "readiness": "draft",
+   "componentsUsed": [
+    "SectionHeader",
+    "card",
+    "progress"
+   ],
+   "blocksUsed": [],
+   "packages": [
+    "@atom63/ui-react",
+    "lucide-react",
+    "react"
+   ],
+   "files": [
+    {
+     "path": "blocks/getting-started-checklist/getting-started-checklist.tsx",
+     "source": "import {\n  Card,\n  CardContent,\n  Progress,\n  ProgressIndicator,\n  ProgressTrack,\n  ProgressValue,\n} from '@atom63/ui-react'\nimport { SectionHeader } from '@atom63/ui-react/layout'\nimport { Circle, CircleCheck, CircleDot } from 'lucide-react'\nimport type { ReactNode } from 'react'\n\nexport const template = {\n  id: 'getting-started-checklist',\n  kind: 'block',\n  title: 'Getting started checklist',\n  description:\n    'A short list of first steps with a progress count: finished steps are checked, the first unfinished one is current and carries its action, and the rest wait.',\n  category: 'feedback',\n  tags: ['onboarding', 'getting started', 'checklist', 'steps', 'setup', 'progress', 'first run'],\n  readiness: 'draft',\n} as const\n\nexport interface ChecklistStep {\n  /** The current step's call to action, for example a button or link. */\n  action?: ReactNode\n  /** One line on why the step matters. */\n  description: string\n  done: boolean\n  id: string\n  title: string\n}\n\nexport interface GettingStartedChecklistProps {\n  description?: string\n  steps: readonly ChecklistStep[]\n  title: string\n}\n\n/*\n * The current step is the first one not done, so the list cannot mark two\n * steps current or skip ahead. Each step's state is spoken before its title,\n * since the icons are decorative.\n */\nexport function GettingStartedChecklist({\n  description,\n  steps,\n  title,\n}: GettingStartedChecklistProps) {\n  const done = steps.filter(step => step.done).length\n  const current = steps.find(step => !step.done)\n  const summary = (value: number | null) => `${value ?? 0} of ${steps.length} done`\n\n  return (\n    <Card className=\"w-full\" padding=\"none\">\n      <CardContent className=\"flex flex-col gap-4\" padding=\"lg\">\n        <SectionHeader description={description} level={2} title={title} variant=\"muted\" />\n        <Progress\n          aria-label={title}\n          getAriaValueText={(_, value) => summary(value)}\n          max={steps.length}\n          value={done}\n        >\n          <div className=\"flex justify-end\">\n            <ProgressValue className=\"text-muted-foreground text-xs\">\n              {(_, value) => summary(value)}\n            </ProgressValue>\n          </div>\n          <ProgressTrack>\n            <ProgressIndicator />\n          </ProgressTrack>\n        </Progress>\n        <ol className=\"flex flex-col gap-4\">\n          {steps.map(step => {\n            const isCurrent = step === current\n            const Icon = step.done ? CircleCheck : isCurrent ? CircleDot : Circle\n            return (\n              <li\n                aria-current={isCurrent ? 'step' : undefined}\n                className=\"flex items-start gap-3\"\n                key={step.id}\n              >\n                <Icon\n                  aria-hidden\n                  className={\n                    step.done || isCurrent\n                      ? 'text-primary mt-0.5 size-4 shrink-0'\n                      : 'text-muted-foreground mt-0.5 size-4 shrink-0'\n                  }\n                />\n                <div className=\"flex min-w-0 flex-1 flex-col gap-1 text-sm\">\n                  <p\n                    className={step.done ? 'text-muted-foreground' : 'text-foreground font-medium'}\n                  >\n                    <span className=\"sr-only\">\n                      {step.done ? 'Done: ' : isCurrent ? 'Next: ' : 'To do: '}\n                    </span>\n                    {step.title}\n                  </p>\n                  <p className=\"text-muted-foreground\">{step.description}</p>\n                  {isCurrent && step.action ? <div className=\"pt-1\">{step.action}</div> : null}\n                </div>\n              </li>\n            )\n          })}\n        </ol>\n      </CardContent>\n    </Card>\n  )\n}\n"
     }
    ]
   },
