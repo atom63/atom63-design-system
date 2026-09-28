@@ -329,6 +329,27 @@ final class Atom63DemoUITests: XCTestCase {
     XCTAssertTrue(banner.waitForExistence(timeout: 3))
   }
 
+  func testInformSpotlightBlocksTheFlyouts() {
+    let app = XCUIApplication()
+    app.launchEnvironment["ATOM63_UI_TESTING"] = "1"
+    app.launchEnvironment["ATOM63_CATALOG_ITEM"] = "inform"
+    app.launch()
+
+    let flyout = app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "All projects are synced.")).firstMatch
+    let tip = app.staticTexts["Filter your projects"]
+    XCTAssertTrue(flyout.waitForExistence(timeout: 5))
+
+    // The spotlight takes the blocking slot as a TipKit popover on its anchor.
+    app.buttons["Show a tip"].tap()
+    XCTAssertTrue(tip.waitForExistence(timeout: 3))
+    XCTAssertFalse(flyout.exists)
+
+    // Closing the tip records the dismissal, and the flyouts return.
+    app.popovers.buttons["Close"].tap()
+    XCTAssertTrue(tip.waitForNonExistence(timeout: 3))
+    XCTAssertTrue(flyout.waitForExistence(timeout: 3))
+  }
+
   private func launchApp() -> XCUIApplication {
     let app = XCUIApplication()
     app.launchEnvironment["ATOM63_UI_TESTING"] = "1"
