@@ -20,7 +20,11 @@ import { resetRoot, root } from '../test/apply-styles'
  */
 
 type Rgba = { r: number; g: number; b: number; a: number }
-type Value = { alias?: string; value?: Rgba | number | string }
+type Value = {
+  alias?: string
+  composed?: { alias: string; opacity: number }
+  value?: Rgba | number | string
+}
 interface Variable {
   name: string
   token: string
@@ -93,8 +97,9 @@ function modeOf(collection: Collection, context: Context): string {
 }
 
 /**
- * The value Figma shows for a token in a context, following aliases, and
- * whether the chain passed through a `computed` variable.
+ * The value Figma shows for a token in a context, following aliases (a composed
+ * color is its alias at an opacity), and whether the chain passed through a
+ * `computed` variable.
  */
 function resolveInModel(
   token: string,
@@ -108,6 +113,14 @@ function resolveInModel(
   if (entry?.alias) {
     const target = resolveInModel(entry.alias, context, [...seen, token])
     return { ...target, approximate: target.approximate || computedTokens.has(token) }
+  }
+  if (entry?.composed) {
+    const target = resolveInModel(entry.composed.alias, context, [...seen, token])
+    const color = target.value as Rgba
+    return {
+      value: { ...color, a: (color.a * entry.composed.opacity) / 100 },
+      approximate: target.approximate || computedTokens.has(token),
+    }
   }
   return { value: entry?.value, approximate: computedTokens.has(token) }
 }

@@ -90,6 +90,11 @@ export function createResolver(model, computedValues) {
     if (!found) throw new Error(`${token} is not in the Figma sync model`)
     const entry = found.variable.values[modeFor(found.collection, selection)]
     if (entry?.alias) return resolve(entry.alias, selection, [...seen, token])
+    // A composed color is its alias at an opacity (0–100).
+    if (entry?.composed) {
+      const target = resolve(entry.composed.alias, selection, [...seen, token])
+      return { ...target, a: (target.a * entry.composed.opacity) / 100 }
+    }
     const value = entry?.value
     if (typeof value !== 'object' || value === null || !('r' in value)) {
       throw new Error(`${token} does not resolve to a color for ${JSON.stringify(selection)}`)
@@ -106,7 +111,10 @@ export function createResolver(model, computedValues) {
       if (computedValues.tokens[token]) return
       const entry = byToken.get(token)
       if (!entry) throw new Error(`${token} is not in the Figma sync model`)
-      for (const value of Object.values(entry.variable.values)) if (value.alias) visit(value.alias)
+      for (const value of Object.values(entry.variable.values)) {
+        if (value.alias) visit(value.alias)
+        if (value.composed) visit(value.composed.alias)
+      }
     }
     roots.forEach(visit)
     return found

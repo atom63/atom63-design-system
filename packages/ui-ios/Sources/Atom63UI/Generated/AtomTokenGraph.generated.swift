@@ -85,6 +85,8 @@ enum AtomTokenGraph {
         "--a63-status-warning": Variable(selector: .mode, values: ["light": .alias("--color-warning-600"), "dark": .alias("--color-warning-500")]),
         "--a63-surface-control": Variable(selector: .mode, values: ["light": .alias("--surface-light-1"), "dark": .alias("--surface-dark-1")]),
         "--a63-surface-muted": Variable(selector: .mode, values: ["light": .alias("--surface-light-3"), "dark": .alias("--surface-dark-3")]),
+        "--a63-surface-overlay": Variable(selector: .mode, values: ["light": .alias("--surface-light-1"), "dark": .alias("--surface-dark-4")]),
+        "--a63-widget-background-color": Variable(selector: .skinMode, values: ["modern-light": .composed("--a63-surface-overlay", opacity: 82), "modern-dark": .composed("--a63-surface-panel", opacity: 90), "aqua-light": .composed("--a63-surface-overlay", opacity: 82), "aqua-dark": .composed("--a63-surface-overlay", opacity: 82), "retro-light": .alias("--a63-surface-overlay"), "retro-dark": .alias("--a63-surface-overlay"), "terminal-light": .composed("--a63-surface-overlay", opacity: 82), "terminal-dark": .composed("--a63-surface-overlay", opacity: 82)]),
         "--a63-widget-border-color": Variable(selector: .fixed, values: ["": .alias("--a63-border-subtle")]),
         "--a63-widget-foreground": Variable(selector: .fixed, values: ["": .alias("--a63-text-primary")]),
         "--a63-widget-rim-color": Variable(selector: .fixed, values: ["": .alias("--a63-border-subtle")]),
@@ -111,26 +113,32 @@ enum AtomTokenGraph {
         "--color-info-600": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.192157, green: 0.388235, blue: 0.764706, opacity: 1))]),
         "--color-n1-dark-1": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.066667, green: 0.066667, blue: 0.066667, opacity: 1))]),
         "--color-n1-dark-3": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.133333, green: 0.133333, blue: 0.133333, opacity: 1))]),
+        "--color-n1-dark-4": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.164706, green: 0.164706, blue: 0.164706, opacity: 1))]),
         "--color-n1-light-1": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.988235, green: 0.988235, blue: 0.988235, opacity: 1))]),
         "--color-n1-light-3": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.941176, green: 0.941176, blue: 0.941176, opacity: 1))]),
         "--color-n2-dark-1": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.070588, green: 0.066667, blue: 0.07451, opacity: 1))]),
         "--color-n2-dark-3": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.137255, green: 0.133333, blue: 0.145098, opacity: 1))]),
+        "--color-n2-dark-4": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.168627, green: 0.160784, blue: 0.176471, opacity: 1))]),
         "--color-n2-light-1": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.992157, green: 0.988235, blue: 0.992157, opacity: 1))]),
         "--color-n2-light-3": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.94902, green: 0.937255, blue: 0.952941, opacity: 1))]),
         "--color-n3-dark-1": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.066667, green: 0.066667, blue: 0.07451, opacity: 1))]),
         "--color-n3-dark-3": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.129412, green: 0.133333, blue: 0.145098, opacity: 1))]),
+        "--color-n3-dark-4": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.152941, green: 0.164706, blue: 0.176471, opacity: 1))]),
         "--color-n3-light-1": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.988235, green: 0.988235, blue: 0.992157, opacity: 1))]),
         "--color-n3-light-3": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.941176, green: 0.941176, blue: 0.952941, opacity: 1))]),
         "--color-n4-dark-1": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.062745, green: 0.070588, blue: 0.066667, opacity: 1))]),
         "--color-n4-dark-3": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.12549, green: 0.133333, blue: 0.129412, opacity: 1))]),
+        "--color-n4-dark-4": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.152941, green: 0.164706, blue: 0.160784, opacity: 1))]),
         "--color-n4-light-1": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.984314, green: 0.992157, blue: 0.988235, opacity: 1))]),
         "--color-n4-light-3": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.933333, green: 0.945098, blue: 0.941176, opacity: 1))]),
         "--color-n5-dark-1": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.066667, green: 0.070588, blue: 0.062745, opacity: 1))]),
         "--color-n5-dark-3": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.129412, green: 0.133333, blue: 0.12549, opacity: 1))]),
+        "--color-n5-dark-4": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.156863, green: 0.164706, blue: 0.152941, opacity: 1))]),
         "--color-n5-light-1": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.988235, green: 0.992157, blue: 0.988235, opacity: 1))]),
         "--color-n5-light-3": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.937255, green: 0.945098, blue: 0.937255, opacity: 1))]),
         "--color-n6-dark-1": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.066667, green: 0.066667, blue: 0.062745, opacity: 1))]),
         "--color-n6-dark-3": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.133333, green: 0.133333, blue: 0.129412, opacity: 1))]),
+        "--color-n6-dark-4": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.164706, green: 0.164706, blue: 0.156863, opacity: 1))]),
         "--color-n6-light-1": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.992157, green: 0.992157, blue: 0.988235, opacity: 1))]),
         "--color-n6-light-3": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.945098, green: 0.941176, blue: 0.937255, opacity: 1))]),
         "--color-success-500": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.12549, green: 0.737255, blue: 0.482353, opacity: 1))]),
@@ -141,6 +149,7 @@ enum AtomTokenGraph {
         "--color-white-60": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 1, green: 1, blue: 1, opacity: 0.6))]),
         "--surface-dark-1": Variable(selector: .surface, values: ["n1": .alias("--color-n1-dark-1"), "n2": .alias("--color-n2-dark-1"), "n3": .alias("--color-n3-dark-1"), "n4": .alias("--color-n4-dark-1"), "n5": .alias("--color-n5-dark-1"), "n6": .alias("--color-n6-dark-1")]),
         "--surface-dark-3": Variable(selector: .surface, values: ["n1": .alias("--color-n1-dark-3"), "n2": .alias("--color-n2-dark-3"), "n3": .alias("--color-n3-dark-3"), "n4": .alias("--color-n4-dark-3"), "n5": .alias("--color-n5-dark-3"), "n6": .alias("--color-n6-dark-3")]),
+        "--surface-dark-4": Variable(selector: .surface, values: ["n1": .alias("--color-n1-dark-4"), "n2": .alias("--color-n2-dark-4"), "n3": .alias("--color-n3-dark-4"), "n4": .alias("--color-n4-dark-4"), "n5": .alias("--color-n5-dark-4"), "n6": .alias("--color-n6-dark-4")]),
         "--surface-light-1": Variable(selector: .surface, values: ["n1": .alias("--color-n1-light-1"), "n2": .alias("--color-n2-light-1"), "n3": .alias("--color-n3-light-1"), "n4": .alias("--color-n4-light-1"), "n5": .alias("--color-n5-light-1"), "n6": .alias("--color-n6-light-1")]),
         "--surface-light-3": Variable(selector: .surface, values: ["n1": .alias("--color-n1-light-3"), "n2": .alias("--color-n2-light-3"), "n3": .alias("--color-n3-light-3"), "n4": .alias("--color-n4-light-3"), "n5": .alias("--color-n5-light-3"), "n6": .alias("--color-n6-light-3")]),
     ]
@@ -2488,59 +2497,6 @@ brand=b6,mode=dark,surface=n6,theme=modern 0.709804 0.701961 0.678431 1
 brand=b6,mode=dark,surface=n6,theme=aqua 0.709804 0.701961 0.678431 1
 brand=b6,mode=dark,surface=n6,theme=retro 0.709804 0.701961 0.678431 1
 brand=b6,mode=dark,surface=n6,theme=terminal 0.861018 0.63336 0.635502 1
-"""
-        ),
-        "--a63-widget-background-color": Computed(
-            variesOn: ["mode","surface","theme"],
-            rows: """
-mode=light,surface=n1,theme=modern 0.988235 0.988235 0.988235 0.82
-mode=light,surface=n1,theme=aqua 0.988235 0.988235 0.988235 0.82
-mode=light,surface=n1,theme=retro 0.988235 0.988235 0.988235 1
-mode=light,surface=n1,theme=terminal 0.988235 0.988235 0.988235 0.82
-mode=light,surface=n2,theme=modern 0.992157 0.988235 0.992157 0.82
-mode=light,surface=n2,theme=aqua 0.992157 0.988235 0.992157 0.82
-mode=light,surface=n2,theme=retro 0.992157 0.988235 0.992157 1
-mode=light,surface=n2,theme=terminal 0.992157 0.988235 0.992157 0.82
-mode=light,surface=n3,theme=modern 0.988235 0.988235 0.992157 0.82
-mode=light,surface=n3,theme=aqua 0.988235 0.988235 0.992157 0.82
-mode=light,surface=n3,theme=retro 0.988235 0.988235 0.992157 1
-mode=light,surface=n3,theme=terminal 0.988235 0.988235 0.992157 0.82
-mode=light,surface=n4,theme=modern 0.984314 0.992157 0.988235 0.82
-mode=light,surface=n4,theme=aqua 0.984314 0.992157 0.988235 0.82
-mode=light,surface=n4,theme=retro 0.984314 0.992157 0.988235 1
-mode=light,surface=n4,theme=terminal 0.984314 0.992157 0.988235 0.82
-mode=light,surface=n5,theme=modern 0.988235 0.992157 0.988235 0.82
-mode=light,surface=n5,theme=aqua 0.988235 0.992157 0.988235 0.82
-mode=light,surface=n5,theme=retro 0.988235 0.992157 0.988235 1
-mode=light,surface=n5,theme=terminal 0.988235 0.992157 0.988235 0.82
-mode=light,surface=n6,theme=modern 0.992157 0.992157 0.988235 0.82
-mode=light,surface=n6,theme=aqua 0.992157 0.992157 0.988235 0.82
-mode=light,surface=n6,theme=retro 0.992157 0.992157 0.988235 1
-mode=light,surface=n6,theme=terminal 0.992157 0.992157 0.988235 0.82
-mode=dark,surface=n1,theme=modern 0.098039 0.098039 0.098039 0.9
-mode=dark,surface=n1,theme=aqua 0.164706 0.164706 0.164706 0.82
-mode=dark,surface=n1,theme=retro 0.164706 0.164706 0.164706 1
-mode=dark,surface=n1,theme=terminal 0.164706 0.164706 0.164706 0.82
-mode=dark,surface=n2,theme=modern 0.101961 0.098039 0.105882 0.9
-mode=dark,surface=n2,theme=aqua 0.168627 0.160784 0.17647 0.82
-mode=dark,surface=n2,theme=retro 0.168627 0.160784 0.17647 1
-mode=dark,surface=n2,theme=terminal 0.168627 0.160784 0.17647 0.82
-mode=dark,surface=n3,theme=modern 0.094118 0.098039 0.105882 0.9
-mode=dark,surface=n3,theme=aqua 0.152941 0.164706 0.176471 0.82
-mode=dark,surface=n3,theme=retro 0.152941 0.164706 0.176471 1
-mode=dark,surface=n3,theme=terminal 0.152941 0.164706 0.176471 0.82
-mode=dark,surface=n4,theme=modern 0.090196 0.098039 0.094118 0.9
-mode=dark,surface=n4,theme=aqua 0.152941 0.164706 0.160784 0.82
-mode=dark,surface=n4,theme=retro 0.152941 0.164706 0.160784 1
-mode=dark,surface=n4,theme=terminal 0.152941 0.164706 0.160784 0.82
-mode=dark,surface=n5,theme=modern 0.094118 0.098039 0.090196 0.9
-mode=dark,surface=n5,theme=aqua 0.156863 0.164706 0.152941 0.82
-mode=dark,surface=n5,theme=retro 0.156863 0.164706 0.152941 1
-mode=dark,surface=n5,theme=terminal 0.156863 0.164706 0.152941 0.82
-mode=dark,surface=n6,theme=modern 0.098039 0.098039 0.094118 0.9
-mode=dark,surface=n6,theme=aqua 0.164706 0.164706 0.156863 0.82
-mode=dark,surface=n6,theme=retro 0.164706 0.164706 0.156863 1
-mode=dark,surface=n6,theme=terminal 0.164706 0.164706 0.156863 0.82
 """
         ),
     ]

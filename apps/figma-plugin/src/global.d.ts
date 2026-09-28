@@ -8,6 +8,9 @@
 
 declare const __html__: string
 
+/** The @atom63/styles version the bundled Figma sync model was built from (build.js). */
+declare const __ATOM63_STYLES_VERSION__: string
+
 // Figma plugin UI globals
 declare const parent: {
   postMessage: (message: { pluginMessage: any }, origin: string) => void

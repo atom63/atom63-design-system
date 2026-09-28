@@ -1,8 +1,9 @@
 # Figma plugin update plan
 
-Status: F8 (two modes) agreed and built on 2026-09-28, together with the sync engine's support
-for composed colors, code syntax and scopes that Project mode needs (Figma plugin typings 1.139).
-F1–F7 for Atom63 mode wait for review.
+Status: decided and built, 2026-09-28. F1–F4, F7 and F8 take their recommended options; F5
+(motion types) and F6 (extended collections) stay out, as recommended. F4 changed in the build:
+the plugin reads the `@atom63/styles` version at build time instead of the model carrying it,
+because a version in the model would make the committed model stale on every release.
 
 ## Goal
 

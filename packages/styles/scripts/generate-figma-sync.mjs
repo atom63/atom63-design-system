@@ -13,7 +13,9 @@
  * it as `computed` when it varies on more axes than one collection can hold.
  *
  * A value that is exactly var(--other) becomes a Figma alias when --other is a
- * synced variable. A color-mix() whose second weight resolves to 0% reduces to
+ * synced variable, and color-mix(… var(--other) N%, transparent) a composed
+ * color (the alias at an opacity). Every variable carries its CSS name as web
+ * code syntax and the Figma scopes from scripts/lib/figma-sync-rules.mjs. A color-mix() whose second weight resolves to 0% reduces to
  * its first operand, so tint-aware roles keep their alias at the default tint.
  * Everything else is resolved per mode to a literal.
  *
@@ -29,6 +31,8 @@ import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import { chromium } from 'playwright'
+
+import { codeSyntaxFor, composedTarget, scopesFor } from './lib/figma-sync-rules.mjs'
 
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const manifestPath = path.join(packageRoot, 'generated/atom63.tokens.json')
@@ -501,11 +505,11 @@ async function main() {
     )
     for (const collection of collections.values()) {
       collection.variables = collection.variables.filter(item => {
-        const dangling = Object.values(item.values).find(
-          value => value.alias && !emitted.has(value.alias)
-        )
+        const dangling = Object.values(item.values)
+          .map(value => value.alias ?? value.composed?.alias)
+          .find(target => target && !emitted.has(target))
         if (dangling)
-          skipped.push({ token: item.token, reason: `alias target not synced: ${dangling.alias}` })
+          skipped.push({ token: item.token, reason: `alias target not synced: ${dangling}` })
         return !dangling
       })
       collection.variables.sort((left, right) => left.name.localeCompare(right.name))
@@ -524,6 +528,20 @@ async function main() {
 
     alignAliasTypes([...collections.values()])
 
+    // Scopes follow the final collection (a variable can move to an axis above).
+    const unscoped = []
+    for (const collection of collections.values()) {
+      for (const item of collection.variables) {
+        const rule = scopesFor({ token: item.token, type: item.type, collection: collection.name })
+        if (rule) item.scopes = rule.scopes
+        else unscoped.push(`${item.token} (${item.type})`)
+      }
+    }
+    if (unscoped.length)
+      throw new Error(
+        `No Figma scope rule covers: ${unscoped.join(', ')}. Add one to scripts/lib/figma-sync-rules.mjs.`
+      )
+
     const ordered = [...collections.values()]
     const output = {
       schemaVersion: 1,
@@ -537,7 +555,8 @@ async function main() {
             sum +
             collection.variables.reduce(
               (count, item) =>
-                count + Object.values(item.values).filter(value => value.alias).length,
+                count +
+                Object.values(item.values).filter(value => value.alias || value.composed).length,
               0
             ),
           0
@@ -607,7 +626,7 @@ async function placeByMeasuredAxes({ collections, ensureCollection, byVar, resol
     collection.variables.map(item => ({ collection, item }))
   )
   const measured = variables
-    .filter(({ item }) => Object.values(item.values).some(value => !value.alias))
+    .filter(({ item }) => Object.values(item.values).some(value => !value.alias && !value.composed))
     .map(({ collection, item }) => ({ collection, item, record: byVar.get(item.token) }))
   const records = measured.map(({ record }) => {
     record.currentRaw = record.rawByMode.default ?? Object.values(record.rawByMode)[0] ?? ''
@@ -807,6 +826,8 @@ function safeParse(text) {
 function toValue(record, raw, result, synced) {
   const alias = aliasTarget(raw, result.mixWeights, synced)
   if (alias && alias !== record.entry.cssVar) return { alias }
+  const composed = record.type === 'COLOR' ? composedTarget(raw, synced) : null
+  if (composed && composed.alias !== record.entry.cssVar) return { composed }
   if (result.resolved === null || result.resolved === undefined || Number.isNaN(result.resolved))
     return null
   return { value: result.resolved }
@@ -849,7 +870,7 @@ function alignAliasTypes(collections) {
  * emitted as STRING so every mode of a variable shares one Figma type.
  */
 function variable(record, values) {
-  const literals = Object.values(values).filter(value => !value.alias)
+  const literals = Object.values(values).filter(value => !value.alias && !value.composed)
   const type =
     record.type === 'FLOAT' && literals.some(value => typeof value.value !== 'number')
       ? 'STRING'
@@ -862,6 +883,7 @@ function variable(record, values) {
     token: record.entry.cssVar,
     type,
     values,
+    codeSyntax: codeSyntaxFor(record.entry.cssVar),
   }
 }
 
