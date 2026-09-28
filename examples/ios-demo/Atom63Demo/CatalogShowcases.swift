@@ -50,6 +50,8 @@ struct CatalogShowcase: View {
       FormMessageShowcase()
     case .card:
       CardShowcase()
+    case .widgetCard:
+      WidgetCardShowcase()
     case .listRow:
       ListRowShowcase()
     case .valueRow:
@@ -459,6 +461,50 @@ private struct MenuShowcase: View {
       Text(lastAction)
         .font(.footnote)
         .foregroundStyle(.secondary)
+    }
+  }
+}
+
+private struct WidgetCardShowcase: View {
+  var body: some View {
+    AtomWidgetGrid {
+      AtomWidgetCard {
+        VStack(alignment: .leading, spacing: AtomTokens.Space.x2) {
+          AtomWidgetHeader("Builds", systemImage: "hammer")
+          Spacer(minLength: 0)
+          Text("12")
+            .font(.largeTitle.weight(.semibold))
+          Text("passing today")
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+        }
+      }
+      .atomWidgetSize(.small)
+
+      AtomWidgetCard {
+        VStack(alignment: .leading, spacing: AtomTokens.Space.x2) {
+          AtomWidgetHeader("Reviews", systemImage: "checkmark.bubble")
+          Spacer(minLength: 0)
+          Text("3")
+            .font(.largeTitle.weight(.semibold))
+          Text("waiting for you")
+            .font(.footnote)
+            .foregroundStyle(.secondary)
+        }
+      }
+      .atomWidgetSize(.small)
+
+      AtomWidgetCard {
+        VStack(alignment: .leading, spacing: AtomTokens.Space.x2) {
+          AtomWidgetHeader("Release", systemImage: "shippingbox")
+          Spacer(minLength: 0)
+          Text("0.2.0-beta.11")
+            .font(.title3.weight(.semibold))
+          ProgressView(value: 0.7)
+            .accessibilityLabel("Release checklist")
+        }
+      }
+      .atomWidgetSize(.medium)
     }
   }
 }

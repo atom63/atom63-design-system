@@ -58,6 +58,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
   case datePicker
   case formMessage
   case card
+  case widgetCard
   case listRow
   case valueRow
   case selectionRow
@@ -88,7 +89,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .formField, .textField, .textEditor, .toggle, .picker, .search, .segmentedControl,
       .radioGroup, .slider, .datePicker, .formMessage:
       .forms
-    case .card, .listRow, .valueRow, .selectionRow, .disclosureGroup, .sectionHeader,
+    case .card, .widgetCard, .listRow, .valueRow, .selectionRow, .disclosureGroup, .sectionHeader,
       .chip, .badge,
       .avatar, .asyncImage:
       .content
@@ -121,6 +122,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .datePicker: "Date picker"
     case .formMessage: "Form message"
     case .card: "Card"
+    case .widgetCard: "Widget card"
     case .listRow: "List row"
     case .valueRow: "Value row"
     case .selectionRow: "Selection row"
@@ -164,6 +166,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .datePicker: "calendar"
     case .formMessage: "exclamationmark.bubble"
     case .card: "rectangle"
+    case .widgetCard: "square.grid.2x2"
     case .listRow: "list.bullet.rectangle"
     case .valueRow: "equal"
     case .selectionRow: "checkmark.circle"
@@ -229,6 +232,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
       "Inline form-level information, success, and error feedback."
     case .card:
       "Token-driven static surface for related content composition."
+    case .widgetCard:
+      "A glanceable tile in the widget contract's rim and material, laid out on a board of square cells."
     case .listRow:
       "Reusable row anatomy with icon, supporting text, badge, and disclosure."
     case .valueRow:
@@ -288,6 +293,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .datePicker: "DatePicker"
     case .formMessage: "AtomFormMessage"
     case .card: "AtomCard"
+    case .widgetCard: "AtomWidgetCard"
     case .listRow: "AtomListRow"
     case .valueRow: "AtomValueRow"
     case .selectionRow: "AtomSelectionRow"
@@ -351,6 +357,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
       "DatePicker(\n  \"Start date\",\n  selection: $startDate,\n  in: Date.now...,\n  displayedComponents: .date\n)"
     case .formMessage:
       "AtomFormMessage(\n  \"Review required\",\n  message: \"Resolve the highlighted fields.\",\n  tone: .error\n)"
+    case .widgetCard:
+      "AtomWidgetGrid {\n  AtomWidgetCard {\n    AtomWidgetHeader(\"Builds\", systemImage: \"hammer\")\n    Text(\"12 passing\")\n  }\n  .atomWidgetSize(.small)\n}"
     case .card:
       "AtomCard(action: openProject) {\n  VStack(alignment: .leading) {\n    Text(\"Project\")\n    Text(\"Supporting details\")\n  }\n}"
     case .listRow:

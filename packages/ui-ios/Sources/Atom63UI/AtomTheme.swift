@@ -30,15 +30,19 @@ public struct AtomThemeColors: Equatable, Sendable {
 
 public struct AtomTheme: Equatable, Sendable {
   public var colors: AtomThemeColors
+  /// The web theme the colors come from. Geometry that varies by theme, such as
+  /// the widget rim, reads it.
+  public var skin: AtomSkin
 
-  public init(colors: AtomThemeColors) {
+  public init(colors: AtomThemeColors, skin: AtomSkin = .modern) {
     self.colors = colors
+    self.skin = skin
   }
 
   /// The colors the web renders for a skin, brand and surface. The defaults
   /// equal `.standard`.
   public init(skin: AtomSkin = .modern, brand: AtomBrand = .b1, surface: AtomSurface = .n1) {
-    self.init(colors: AtomThemeColors(skin: skin, brand: brand, surface: surface))
+    self.init(colors: AtomThemeColors(skin: skin, brand: brand, surface: surface), skin: skin)
   }
 
   public static let standard = AtomTheme(

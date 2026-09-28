@@ -88,9 +88,14 @@ Each step is its own pull request and ends green in CI.
 1. **Widget tokens in Swift** (IW2). Add the widget colors to the Swift color map and the rim width
    and radius to the generated tokens, per skin, brand and mode. *Verify:* the Web/iOS parity test
    covers the new colors in every selection.
-2. **`AtomWidgetCard`, `AtomWidgetSize` and `AtomWidgetGrid`** (IW1, IW3), through
-   `pnpm ds:new widget-card --ios` wiring: cross-renderer contract, catalog showcase, snapshot
-   baselines and an `ios` accessibility check where a pattern applies (a card has none).
+2. **`AtomWidgetCard`, `AtomWidgetSize` and `AtomWidgetGrid`** (IW1, IW3; done). `AtomWidgetCard`
+   draws the rim and face from the widget tokens around chrome-free content, `AtomWidgetHeader` is
+   the content's heading, `AtomWidgetSize` maps to `WidgetFamily`, and `AtomWidgetGrid` packs
+   tiles into square cells, first gap first. `AtomTheme` now keeps its `skin`, which the rim width
+   reads. A demo catalog showcase with snapshot baselines covers it. It has no cross-renderer
+   contract: those pair a `@atom63/ui-react` component with a SwiftUI one, and the web widget card
+   lives in `@atom63/widgets`. `pnpm ds:new --ios` would scaffold a duplicate React component, so
+   the iOS side was added by hand; parity rests on the shared widget tokens.
 3. **`AtomWidgetStateView`** (IW4) with the web's copy, a showcase and snapshots.
 4. **WidgetKit sample** (later, separate plan): a demo extension that uses the content views with
    `containerBackground`.
