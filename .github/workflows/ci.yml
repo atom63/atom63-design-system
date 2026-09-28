@@ -102,6 +102,7 @@ jobs:
           pnpm check:templates
           pnpm check:registry
           pnpm --filter @atom63/ui-foundation check:a11y-ios
+          node scripts/generate-inform-vectors.mjs --check
           pnpm check:agent-index
           pnpm check:agents-md
           pnpm --filter @atom63/cli test
