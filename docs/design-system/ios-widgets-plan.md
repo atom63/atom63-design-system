@@ -88,7 +88,7 @@ Each step is its own pull request and ends green in CI.
 1. **Widget tokens in Swift** (IW2; done, #105). Add the widget colors to the Swift color map and the rim width
    and radius to the generated tokens, per skin, brand and mode. *Verify:* the Web/iOS parity test
    covers the new colors in every selection.
-2. **`AtomWidgetCard`, `AtomWidgetSize` and `AtomWidgetGrid`** (IW1, IW3; done). `AtomWidgetCard`
+2. **`AtomWidgetCard`, `AtomWidgetSize` and `AtomWidgetGrid`** (IW1, IW3; done, #106). `AtomWidgetCard`
    draws the rim and face from the widget tokens around chrome-free content, `AtomWidgetHeader` is
    the content's heading, `AtomWidgetSize` maps to `WidgetFamily`, and `AtomWidgetGrid` packs
    tiles into square cells, first gap first. `AtomTheme` now keeps its `skin`, which the rim width
@@ -96,7 +96,11 @@ Each step is its own pull request and ends green in CI.
    contract: those pair a `@atom63/ui-react` component with a SwiftUI one, and the web widget card
    lives in `@atom63/widgets`. `pnpm ds:new --ios` would scaffold a duplicate React component, so
    the iOS side was added by hand; parity rests on the shared widget tokens.
-3. **`AtomWidgetStateView`** (IW4) with the web's copy, a showcase and snapshots.
+3. **`AtomWidgetStateView`** (IW4; done). `AtomWidgetState` has the web's three states and its
+   resolution order (an error wins over loading; empty counts once settled). The error state shows
+   its description under the title, where the web opens a popover, and "Try again" when `onRetry`
+   is set; WidgetKit callers leave it out, since widget buttons need an App Intent. The widget
+   card showcase shows all three.
 4. **WidgetKit sample** (later, separate plan): a demo extension that uses the content views with
    `containerBackground`.
 

@@ -31,4 +31,12 @@ struct AtomWidgetTests {
     #expect(AtomTheme(skin: .retro).skin == .retro)
     #expect(AtomTokens.Widget.rimWidth(for: .retro) < AtomTokens.Widget.rimWidth(for: .modern))
   }
+
+  @Test
+  func errorWinsOverLoadingAndEmptyCountsOnceSettled() {
+    #expect(AtomWidgetState.resolve(hasError: true, isLoading: true, isEmpty: true) == .error)
+    #expect(AtomWidgetState.resolve(hasError: false, isLoading: true, isEmpty: true) == .loading)
+    #expect(AtomWidgetState.resolve(hasError: false, isLoading: false, isEmpty: true) == .empty)
+    #expect(AtomWidgetState.resolve(hasError: false, isLoading: false, isEmpty: false) == nil)
+  }
 }
