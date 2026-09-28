@@ -1,4 +1,5 @@
 import Foundation
+import Observation
 
 // The inform pattern's core on iOS: the message model and the arbiter from
 // @atom63/inform (src/core), ported one to one. Shared test vectors generated
@@ -232,19 +233,24 @@ public enum AtomInformArbiter {
 
 /// Where dismissals live: `persistent` ones in `UserDefaults`, `session` ones
 /// in memory until the app quits. Keys are `id:version`, values the time.
+/// Views that read `dismissed` update when a message is dismissed.
 @MainActor
+@Observable
 public final class AtomInformDismissalStore {
   public static let defaultsKey = "a63.inform.dismissed"
 
-  private let defaults: UserDefaults
+  @ObservationIgnored private let defaults: UserDefaults
   private var session: [String: Double] = [:]
+  /// Bumped on every persistent write, since UserDefaults is not observed.
+  private var revision = 0
 
   public init(defaults: UserDefaults = .standard) {
     self.defaults = defaults
   }
 
   private var persisted: [String: Double] {
-    defaults.dictionary(forKey: Self.defaultsKey) as? [String: Double] ?? [:]
+    _ = revision
+    return defaults.dictionary(forKey: Self.defaultsKey) as? [String: Double] ?? [:]
   }
 
   /// Every dismissed key, persistent or for this session.
@@ -263,6 +269,7 @@ public final class AtomInformDismissalStore {
       var next = persisted
       next[message.dismissalKey] = at
       defaults.set(next, forKey: Self.defaultsKey)
+      revision += 1
     }
   }
 
@@ -271,11 +278,13 @@ public final class AtomInformDismissalStore {
     guard let key else {
       session = [:]
       defaults.removeObject(forKey: Self.defaultsKey)
+      revision += 1
       return
     }
     session[key] = nil
     var next = persisted
     next[key] = nil
     defaults.set(next, forKey: Self.defaultsKey)
+    revision += 1
   }
 }

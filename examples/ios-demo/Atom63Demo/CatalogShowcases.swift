@@ -84,6 +84,8 @@ struct CatalogShowcase: View {
       PaginationShowcase()
     case .toast:
       ToastShowcase()
+    case .inform:
+      InformShowcase()
     }
   }
 }
@@ -525,6 +527,82 @@ private struct WidgetCardShowcase: View {
         )
       }
       .atomWidgetSize(.medium)
+    }
+  }
+}
+
+private struct InformShowcase: View {
+  // Its own defaults suite, so the showcase never touches the app's dismissals.
+  @State private var store = AtomInformDismissalStore(
+    defaults: UserDefaults(suiteName: "atom63.demo.inform") ?? .standard
+  )
+  @State private var asksForReview = false
+
+  private var messages: [AtomInformMessage] {
+    [
+      AtomInformMessage(
+        id: "maintenance",
+        surface: .banner,
+        severity: .warning,
+        dismiss: .session,
+        content: AtomInformContent(
+          title: "Scheduled maintenance",
+          body: "Syncing pauses from 02:00 to 03:00 UTC."
+        )
+      ),
+      AtomInformMessage(
+        id: "synced",
+        surface: .cornerFlyout,
+        severity: .success,
+        priority: 2,
+        dismiss: .session,
+        content: AtomInformContent(body: "All projects are synced.")
+      ),
+      AtomInformMessage(
+        id: "offline-edits",
+        surface: .cornerFlyout,
+        severity: .info,
+        priority: 1,
+        dismiss: .session,
+        content: AtomInformContent(body: "Edits you make offline sync when you reconnect.")
+      ),
+      AtomInformMessage(
+        id: "review",
+        surface: .dialog,
+        dismiss: .session,
+        when: { [asksForReview] _ in asksForReview },
+        content: AtomInformContent(
+          title: "Enjoying Atom63?",
+          body: "A short review helps other teams find the design system.",
+          actions: [
+            AtomInformAction(id: "later", label: "Not now") {},
+            AtomInformAction(id: "review", label: "Write a review", role: .primary) {},
+          ]
+        )
+      ),
+    ]
+  }
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: AtomTokens.Space.x3) {
+      Text("While the dialog is open, the flyouts wait: only one blocking message shows at a time.")
+        .font(.footnote)
+        .foregroundStyle(.secondary)
+      HStack(spacing: AtomTokens.Space.x2) {
+        AtomButton(variant: .primary, size: .compact, action: { asksForReview = true }) {
+          Text("Ask for a review")
+        }
+        AtomButton(variant: .outline, size: .compact, action: {
+          asksForReview = false
+          store.clear()
+        }) {
+          Text("Reset")
+        }
+      }
+      Color.clear
+        .frame(height: 440)
+        .atomInform(messages, route: "/catalog/inform", store: store)
+        .background(.quaternary.opacity(0.3), in: .rect(cornerRadius: AtomTokens.Radius.large))
     }
   }
 }
