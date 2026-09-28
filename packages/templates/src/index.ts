@@ -1,7 +1,7 @@
 /*
- * Templates are starting points to copy into a product (`atom63 template copy`,
- * later), not components to import. The workspace example app imports them from
- * here to prove they compose.
+ * Templates are starting points to copy into a product (`atom63 copy`, the
+ * shadcn registry, or the app kind of @atom63/create), not components to
+ * import. The docs gallery reads the catalog from here.
  */
 export {
   ActivityList,

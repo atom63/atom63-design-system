@@ -81,8 +81,6 @@ AtomButton("Continue", variant: .primary) {
 ## Examples
 
 - [`examples/vite-basic`](./examples/vite-basic): the smallest React and Vite app.
-- [`examples/product-shell`](./examples/product-shell): a responsive app shell built from cards, tabs, inputs, and
-  empty states.
 - [`examples/ios-demo`](./examples/ios-demo): a SwiftUI demo app with UI tests.
 
 ## Contributing

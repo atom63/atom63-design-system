@@ -147,5 +147,5 @@ Web ↔ iOS component-token gap (including two commands above that are documente
 | [release-automation.md](./release-automation.md) | GitHub Actions beta release workflow, stable/latest no-publish preflight, and npm trusted publishing setup notes |
 | [stable-release-policy.json](./stable-release-policy.json) | Machine-readable stable/latest dist-tag, registry readback, and rollback policy |
 | [ui-react-root-api-audit.md](./ui-react-root-api-audit.md) | Proposed support tiers for the broad `@atom63/ui-react` root and public subpaths |
-| [../../examples/product-shell/README.md](../../examples/product-shell/README.md) | DS-owned application presentation layer; keeps `atom63-vite` as the real portfolio consumer |
+| [starter-app-plan.md](./starter-app-plan.md) | The `app` kind of `@atom63/create`: a product app built from the page templates, which replaced `examples/product-shell` |
 | [react-first-status.md](./react-first-status.md) | Historical checkpoint (not primary policy) |
