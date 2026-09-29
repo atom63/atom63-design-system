@@ -87,10 +87,17 @@ not a separate mode.
 
 ### System
 
-- **Text styles:** one per role in the token set (for example Display, Heading 1 to 3, Body,
-  Small, Caption), with font family, size, line height and weight bound to variables, so they
-  follow the Type scale mode.
-- **Effect styles:** one per shadow level, from the shadow tokens that variables cannot hold.
+- **Text styles:** `Text/<step>` (for example `Text/base`, `Text/2xl`), one per size token with
+  a matching line-height token, with font size and line height bound to those variables, so they
+  follow the Type scale mode. The family binds to a font variable only when every mode's value
+  is one family that loads in Figma (a CSS font stack never is); otherwise it is set from the
+  first mode as a literal, and the sync says so.
+  Weights and letter spacing come later.
+- **Effect styles:** `Shadow/<step>`, one per shadow level, from the shadow tokens that variables
+  cannot hold.
+- Styles are matched by name, since Figma styles have no code syntax; each description names its
+  tokens (`var(--text-base-size) / var(--text-base-leading)`) for Dev Mode readers. A sync never
+  changes or deletes a style that is not in the token set.
 - Components are out of scope for this version. A later phase generates Figma components from the
   component contracts and links them to code with Code Connect.
 

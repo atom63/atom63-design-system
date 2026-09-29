@@ -32,6 +32,22 @@ When a token moves to another collection, the sync creates it there and retires 
 as `(moved)/…`. A script cannot search the file's designs, so `applied.bindingsUnchecked` counts
 those moves: tell the user that designs bound to the retired variables need rebinding.
 
+The last script also writes styles, derived from the tokens:
+
+- **Text styles** `Text/<step>`, one per size token with a matching line-height token
+  (`--text-base-size` and `--text-base-leading`), with font size and line height bound to those
+  variables, so they follow the type-scale modes.
+- **Effect styles** `Shadow/<step>`, one per shadow token (`--shadow-md`).
+
+Styles are matched by name; a style made in Figma under another name is never touched. That
+script's result has `styles.verification`, which must plan no `create` or `update`.
+`styles.applied.fontFallbacks` lists text styles whose family is not bound to the code: the family
+could not load in Figma (tell the user which fonts to install), or the font variable holds a CSS
+font stack, which Figma reads as one family name, so the style takes the stack's first family as
+a literal. The
+summary lists the styles it could not derive under `styles.skipped`. Pass `--no-styles` to write
+variables only.
+
 ## Bring Figma edits into code
 
 1. `pnpm atom63-figma read --page 1 --out .figma-sync/read-1.js`

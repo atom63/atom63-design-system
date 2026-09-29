@@ -1153,4 +1153,3 @@ git commit -m "docs(figma): describe the text and effect styles a sync writes"
 - Listing style edits made in Figma in `diff` (check scripts report drift; a sync restores it).
 - Font weights and letter spacing in text styles.
 - Styles for colors (variables cover them) and grids.
-</content>
