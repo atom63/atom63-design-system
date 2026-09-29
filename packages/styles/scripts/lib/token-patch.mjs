@@ -9,7 +9,7 @@ import path from 'node:path'
  *     "tokens": { "--color-b1-500": { "type": "COLOR", "value": { r, g, b, a } } } }
  * Version 2 lists changes per collection mode, each a literal or an alias:
  *   { "format": "atom63-token-patch", "version": 2, "changes": [
- *     { "token": "--a63-text-accent", "collection": "Atom63 Mode", "mode": "dark",
+ *     { "token": "--a63-text-accent", "collection": "Mode", "mode": "dark",
  *       "type": "COLOR", "alias": "--a63-brand-300" } ] }
  * A literal is converted back into the token's existing DTCG $type and units. A
  * multi-mode collection's change is written into the resolver context of its mode.

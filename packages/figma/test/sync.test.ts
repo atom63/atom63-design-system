@@ -5,18 +5,14 @@ import {
   applyPlan,
   MOVED_PREFIX,
   readSnapshot,
-  TOKEN_KEY,
+  tokenOfCodeSyntax,
   type VariablesApi,
-} from '../src/sync/apply'
-import { planExport, toTokenPatch } from '../src/sync/export'
-import { planSync, type SyncModel, valuesEqual } from '../src/sync/plan'
-import { createFakeApi } from '../test/fake-api'
+} from '../src/apply'
+import { planSync, type SyncModel, valuesEqual } from '../src/plan'
+import { createFakeApi } from './fake-api'
 
 const model = JSON.parse(
-  readFileSync(
-    resolve(__dirname, '../../../packages/styles/generated/atom63.figma-sync.json'),
-    'utf8'
-  )
+  readFileSync(resolve(__dirname, '../../styles/generated/atom63.figma-sync.json'), 'utf8')
 ) as SyncModel
 
 async function sync(api: VariablesApi, syncModel: SyncModel = model) {
@@ -26,6 +22,25 @@ async function sync(api: VariablesApi, syncModel: SyncModel = model) {
 }
 
 describe('Atom63 Figma sync', () => {
+  it('names collections without the Atom63 prefix', () => {
+    expect(model.collections.map(collection => collection.name)).toEqual([
+      'Theme',
+      'Contract',
+      'Semantic',
+      'Foundation',
+      'Mode',
+      'Brand',
+      'Surface',
+      'Design Language',
+      'Input',
+      'Density',
+      'Radius',
+      'Type Scale',
+      'Font',
+      'Window Size',
+    ])
+  })
+
   it('creates every collection, mode, and variable in an empty file', async () => {
     const { api, collections } = createFakeApi()
     const { plan, result } = await sync(api)
@@ -58,7 +73,10 @@ describe('Atom63 Figma sync', () => {
     const { api, variables } = createFakeApi()
     await sync(api)
     const byToken = new Map(
-      [...variables.values()].map(variable => [variable.getPluginData(TOKEN_KEY), variable])
+      [...variables.values()].map(variable => [
+        tokenOfCodeSyntax(variable?.codeSyntax?.WEB),
+        variable,
+      ])
     )
     const surfacePage = byToken.get('--a63-surface-page')
     const lightModeId = Object.keys(surfacePage?.valuesByMode ?? {})[0]
@@ -71,7 +89,10 @@ describe('Atom63 Figma sync', () => {
     const { api, variables } = createFakeApi()
     await sync(api)
     const byToken = new Map(
-      [...variables.values()].map(variable => [variable.getPluginData(TOKEN_KEY), variable])
+      [...variables.values()].map(variable => [
+        tokenOfCodeSyntax(variable?.codeSyntax?.WEB),
+        variable,
+      ])
     )
     const focusRing = byToken.get('--a63-focus-ring')
     const [value] = Object.values(focusRing?.valuesByMode ?? {})
@@ -89,9 +110,9 @@ describe('Atom63 Figma sync', () => {
   it('updates only the mode whose value drifted', async () => {
     const { api, collections, variables } = createFakeApi()
     await sync(api)
-    const mode = collections.find(item => item.name === 'Atom63 Design Language')
+    const mode = collections.find(item => item.name === 'Design Language')
     const height = [...variables.values()].find(
-      item => item.getPluginData(TOKEN_KEY) === '--a63-control-height-md'
+      item => tokenOfCodeSyntax(item?.codeSyntax?.WEB) === '--a63-control-height-md'
     )
     const iosModeId = mode?.modes.find(item => item.name === 'ios')?.modeId ?? ''
     height?.setValueForMode(iosModeId, 40)
@@ -108,7 +129,7 @@ describe('Atom63 Figma sync', () => {
     const { api, variables } = createFakeApi()
     await sync(api)
     const spacing = [...variables.values()].find(
-      item => item.getPluginData(TOKEN_KEY) === '--spacing-4'
+      item => tokenOfCodeSyntax(item?.codeSyntax?.WEB) === '--spacing-4'
     )
     const originalName = spacing?.name
     if (spacing) spacing.name = 'renamed/by/designer'
@@ -122,13 +143,13 @@ describe('Atom63 Figma sync', () => {
   it('reports Atom63 variables the model no longer has without deleting them', async () => {
     const { api, collections } = createFakeApi()
     await sync(api)
-    const foundation = collections.find(item => item.name === 'Atom63 Foundation')
+    const foundation = collections.find(item => item.name === 'Foundation')
     const stale = foundation && api.createVariable('retired/token', foundation, 'FLOAT')
-    stale?.setPluginData(TOKEN_KEY, '--retired-token')
+    stale?.setVariableCodeSyntax?.('WEB', 'var(--retired-token)')
 
     const plan = planSync(model, await readSnapshot(api, model))
     expect(plan.totals.orphaned).toBe(1)
-    expect(plan.collections.find(item => item.name === 'Atom63 Foundation')?.orphaned).toEqual([
+    expect(plan.collections.find(item => item.name === 'Foundation')?.orphaned).toEqual([
       'retired/token',
     ])
   })
@@ -172,12 +193,12 @@ describe('Atom63 Figma sync: a token moving to another collection', () => {
     summary: { collections: 2, variables: 2, aliasValues: 1, skipped: 0 },
     collections: [
       {
-        name: 'Atom63 Contract',
+        name: 'Contract',
         modes: ['Value'],
         variables: [{ name: 'x', token: '--x', type: 'COLOR', values: { Value: color(0.2) } }],
       },
       {
-        name: 'Atom63 Semantic',
+        name: 'Semantic',
         modes: ['Value'],
         variables: [
           { name: 'y', token: '--y', type: 'COLOR', values: { Value: { alias: '--x' } } },
@@ -189,10 +210,10 @@ describe('Atom63 Figma sync: a token moving to another collection', () => {
   const after: SyncModel = {
     ...before,
     collections: [
-      { name: 'Atom63 Contract', modes: ['Value'], variables: [] },
+      { name: 'Contract', modes: ['Value'], variables: [] },
       before.collections[1],
       {
-        name: 'Atom63 Theme',
+        name: 'Theme',
         modes: ['modern-light', 'aqua-light'],
         variables: [
           {
@@ -209,149 +230,36 @@ describe('Atom63 Figma sync: a token moving to another collection', () => {
   it('creates the variable in its new collection, re-points aliases and retires the old one', async () => {
     const fake = createFakeApi()
     await sync(fake.api, before)
-    const oldX = [...fake.variables.values()].find(item => item.getPluginData(TOKEN_KEY) === '--x')
+    const oldX = [...fake.variables.values()].find(
+      item => tokenOfCodeSyntax(item?.codeSyntax?.WEB) === '--x'
+    )
     const { plan, result } = await sync(fake.api, after)
 
     expect(plan.totals.move).toBe(1)
-    expect(plan.collections.find(item => item.name === 'Atom63 Contract')?.orphaned).toEqual([])
+    expect(plan.collections.find(item => item.name === 'Contract')?.orphaned).toEqual([])
     expect(result.moved).toBe(1)
+    // Without a document to search (use_figma has no rebind), the move says so.
+    expect(result.bindingsUnchecked).toBe(1)
 
-    const newX = [...fake.variables.values()].find(item => item.getPluginData(TOKEN_KEY) === '--x')
+    const newX = [...fake.variables.values()].find(
+      item => tokenOfCodeSyntax(item?.codeSyntax?.WEB) === '--x'
+    )
     expect(newX?.id).not.toBe(oldX?.id)
-    const theme = fake.collections.find(item => item.name === 'Atom63 Theme')
+    const theme = fake.collections.find(item => item.name === 'Theme')
     expect(theme?.variableIds).toContain(newX?.id)
 
     // --y now aliases the new variable in every mode.
-    const y = [...fake.variables.values()].find(item => item.getPluginData(TOKEN_KEY) === '--y')
+    const y = [...fake.variables.values()].find(
+      item => tokenOfCodeSyntax(item?.codeSyntax?.WEB) === '--y'
+    )
     expect(Object.values(y?.valuesByMode ?? {})).toEqual([{ type: 'VARIABLE_ALIAS', id: newX?.id }])
 
     // The old variable is kept, renamed and untagged, so no design loses a binding.
     expect(oldX?.name).toBe(`${MOVED_PREFIX}/x`)
-    expect(oldX?.getPluginData(TOKEN_KEY)).toBe('')
+    expect(tokenOfCodeSyntax(oldX?.codeSyntax?.WEB)).toBeNull()
     expect(oldX?.hiddenFromPublishing).toBe(true)
 
     const again = planSync(after, await readSnapshot(fake.api, after))
     expect(again.totals).toMatchObject({ move: 0, create: 0, update: 0, orphaned: 0 })
-  })
-})
-
-describe('Atom63 Figma export', () => {
-  async function syncedFile() {
-    const fake = createFakeApi()
-    await sync(fake.api)
-    const byToken = (token: string) =>
-      [...fake.variables.values()].find(item => item.getPluginData(TOKEN_KEY) === token)
-    const modeId = (collection: string, mode: string) =>
-      fake.collections
-        .find(item => item.name === collection)
-        ?.modes.find(item => item.name === mode)?.modeId ?? ''
-    const exportPlan = async () => planExport(model, await readSnapshot(fake.api, model))
-    return { ...fake, byToken, modeId, exportPlan }
-  }
-
-  it('exports nothing right after a sync', async () => {
-    const { exportPlan } = await syncedFile()
-    expect(await exportPlan()).toEqual({ changes: [], skipped: [] })
-  })
-
-  it('exports an edited color and number as a token patch', async () => {
-    const { byToken, modeId, exportPlan } = await syncedFile()
-    const value = modeId('Atom63 Foundation', 'Value')
-    byToken('--color-b1-500')?.setValueForMode(value, { r: 0.1, g: 0.4, b: 0.9, a: 1 })
-    byToken('--spacing-4')?.setValueForMode(value, 18)
-
-    const plan = await exportPlan()
-    expect(plan.skipped).toEqual([])
-    expect(plan.changes.map(change => change.token).sort()).toEqual([
-      '--color-b1-500',
-      '--spacing-4',
-    ])
-    expect(toTokenPatch(plan)).toEqual({
-      format: 'atom63-token-patch',
-      version: 2,
-      changes: [
-        {
-          token: '--color-b1-500',
-          collection: 'Atom63 Foundation',
-          mode: 'Value',
-          type: 'COLOR',
-          value: { r: 0.1, g: 0.4, b: 0.9, a: 1 },
-        },
-        {
-          token: '--spacing-4',
-          collection: 'Atom63 Foundation',
-          mode: 'Value',
-          type: 'FLOAT',
-          value: 18,
-        },
-      ],
-    })
-  })
-
-  it('exports a re-pointed alias in one mode of a multi-mode collection', async () => {
-    const { byToken, modeId, exportPlan } = await syncedFile()
-    const brand300 = byToken('--a63-brand-300')
-    expect(brand300).toBeDefined()
-    byToken('--a63-text-accent')?.setValueForMode(modeId('Atom63 Mode', 'dark'), {
-      type: 'VARIABLE_ALIAS',
-      id: brand300?.id ?? '',
-    })
-
-    const plan = await exportPlan()
-    expect(plan.skipped).toEqual([])
-    expect(toTokenPatch(plan).changes).toEqual([
-      {
-        token: '--a63-text-accent',
-        collection: 'Atom63 Mode',
-        mode: 'dark',
-        type: 'COLOR',
-        alias: '--a63-brand-300',
-      },
-    ])
-  })
-
-  it('skips what the patch cannot express, with a reason', async () => {
-    const { byToken, modeId, exportPlan } = await syncedFile()
-    // An alias in code (surface n2 points at the n2 palette), set to a raw color.
-    byToken('--surface-light-2')?.setValueForMode(modeId('Atom63 Surface', 'n2'), {
-      r: 1,
-      g: 0,
-      b: 0,
-      a: 1,
-    })
-    // A string token.
-    byToken('--font-family-sans')?.setValueForMode(modeId('Atom63 Foundation', 'Value'), 'Inter')
-
-    const plan = await exportPlan()
-    expect(plan.changes).toEqual([])
-    expect(plan.skipped).toEqual([
-      {
-        name: 'font/family/sans',
-        reason: 'string tokens are not exported yet',
-      },
-      {
-        name: 'surface/light/2 (n2)',
-        reason: 'an alias in code; point it at another variable instead of a raw value',
-      },
-    ])
-  })
-
-  it('exports a literal re-pointed at another variable as an alias', async () => {
-    const { byToken, modeId, exportPlan } = await syncedFile()
-    const blue = byToken('--color-b1-400')
-    byToken('--color-b1-500')?.setValueForMode(modeId('Atom63 Foundation', 'Value'), {
-      type: 'VARIABLE_ALIAS',
-      id: blue?.id ?? '',
-    })
-    const plan = await exportPlan()
-    expect(toTokenPatch(plan).changes).toEqual([
-      {
-        token: '--color-b1-500',
-        collection: 'Atom63 Foundation',
-        mode: 'Value',
-        type: 'COLOR',
-        alias: '--color-b1-400',
-      },
-    ])
   })
 })

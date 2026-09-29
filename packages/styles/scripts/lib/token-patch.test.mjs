@@ -110,14 +110,14 @@ test('v2: writes a changed alias into the resolver context of its mode', () => {
     patchV2([
       {
         token: '--a63-text-accent',
-        collection: 'Atom63 Mode',
+        collection: 'Mode',
         mode: 'dark',
         type: 'COLOR',
         alias: '--a63-brand-300',
       },
       {
         token: '--color-b2-500',
-        collection: 'Atom63 Foundation',
+        collection: 'Foundation',
         mode: 'Value',
         type: 'COLOR',
         alias: '--color-b1-500',
@@ -150,7 +150,7 @@ test('v2: writes a literal into the context of a multi-mode collection', () => {
     patchV2([
       {
         token: '--surface-light-2',
-        collection: 'Atom63 Surface',
+        collection: 'Surface',
         mode: 'n2',
         type: 'COLOR',
         value: { r: 1, g: 0, b: 0, a: 1 },
@@ -169,7 +169,7 @@ test('v2: explains what it cannot write, and writes nothing', () => {
       // Shared by every brand in the base set; only b4 changed in Figma.
       {
         token: '--a63-action-primary',
-        collection: 'Atom63 Brand',
+        collection: 'Brand',
         mode: 'b4',
         type: 'COLOR',
         alias: '--a63-brand-700',
@@ -177,7 +177,7 @@ test('v2: explains what it cannot write, and writes nothing', () => {
       // Computed in CSS.
       {
         token: '--a63-surface-page',
-        collection: 'Atom63 Mode',
+        collection: 'Mode',
         mode: 'light',
         type: 'COLOR',
         alias: '--surface-light-1',
@@ -185,7 +185,7 @@ test('v2: explains what it cannot write, and writes nothing', () => {
       // An alias in code, set to a raw color in Figma.
       {
         token: '--a63-text-primary',
-        collection: 'Atom63 Mode',
+        collection: 'Mode',
         mode: 'dark',
         type: 'COLOR',
         value: { r: 1, g: 1, b: 1, a: 1 },
@@ -193,7 +193,7 @@ test('v2: explains what it cannot write, and writes nothing', () => {
       // An alias to something that is not a DTCG token.
       {
         token: '--a63-border-subtle',
-        collection: 'Atom63 Mode',
+        collection: 'Mode',
         mode: 'light',
         type: 'COLOR',
         alias: '--a63-no-such-token',

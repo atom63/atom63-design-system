@@ -4,8 +4,9 @@
  * from a project's token CSS (css-model.ts). No Figma API here, so the
  * plan is unit-testable; `apply.ts` turns the plan into document writes.
  *
- * Variables are matched by the `token` plugin data the sync writes, then by
- * name inside the collection, so a renamed token path updates in place.
+ * Variables are matched by the token in their web code syntax (`var(--token)`),
+ * then by name inside the collection, so a renamed token path updates in place
+ * and variables written without plugin data (an agent through MCP) are known.
  *
  * A token whose variable sits in another Atom63 collection than the model's
  * (Figma cannot move a variable between collections) is planned as a create
@@ -218,11 +219,18 @@ export function planSync(model: SyncModel, snapshot: SnapshotCollection[]): Sync
     const byToken = new Map(
       existing?.variables.filter(item => item.token).map(item => [item.token, item]) ?? []
     )
-    const byName = new Map(existing?.variables.map(item => [item.name, item]) ?? [])
+    // The name fallback adopts only variables that stand for no token yet (an
+    // older sync's, before code syntax), never one another token already claims.
+    const byName = new Map(
+      existing?.variables.filter(item => !item.token).map(item => [item.name, item]) ?? []
+    )
     const matched = new Set<string>()
 
     for (const variable of collection.variables) {
-      const current = byToken.get(variable.token) ?? byName.get(variable.name)
+      const byNameMatch = byName.get(variable.name)
+      const current =
+        byToken.get(variable.token) ??
+        (byNameMatch && !matched.has(byNameMatch.id) ? byNameMatch : undefined)
       if (!current) {
         plan.create += 1
         const elsewhere = documentVariableOf.get(variable.token)

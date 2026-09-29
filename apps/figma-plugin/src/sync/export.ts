@@ -9,8 +9,14 @@
  * of that mode. What a patch cannot express is reported as skipped with a
  * reason instead of being dropped silently.
  */
-import type { SnapshotCollection, SyncColor, SyncModel, SyncValue, SyncVariableType } from './plan'
-import { valuesEqual } from './plan'
+import type {
+  SnapshotCollection,
+  SyncColor,
+  SyncModel,
+  SyncValue,
+  SyncVariableType,
+} from '@atom63/figma'
+import { valuesEqual } from '@atom63/figma'
 
 type Literal = SyncColor | number | string
 

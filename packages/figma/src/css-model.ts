@@ -558,6 +558,27 @@ export function buildProjectModel(
     variablesByCollection.set(collection, list)
   }
 
+  // A token that points at one the model could not hold cannot be written
+  // either; drop it too, until every alias target is in the model.
+  const aliasTarget = (value: SyncValue) =>
+    'alias' in value ? value.alias : 'composed' in value ? value.composed.alias : null
+  for (let changed = true; changed;) {
+    changed = false
+    const present = new Set([...variablesByCollection.values()].flat().map(item => item.token))
+    for (const [collection, list] of variablesByCollection) {
+      const kept = list.filter(variable => {
+        const missing = Object.values(variable.values)
+          .map(aliasTarget)
+          .find(target => target !== null && !present.has(target))
+        if (!missing) return true
+        skipped.push({ token: variable.token, reason: `points at ${missing}, which is not synced` })
+        changed = true
+        return false
+      })
+      variablesByCollection.set(collection, kept)
+    }
+  }
+
   // An alias's type is its target's; a chain of aliases resolves in a few passes.
   const allVariables = [...variablesByCollection.values()].flat()
   const targetOf = (variable: SyncVariable) =>

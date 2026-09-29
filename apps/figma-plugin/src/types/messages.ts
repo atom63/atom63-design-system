@@ -3,8 +3,8 @@
  * Type-safe message interfaces for UI ↔ Main thread communication
  */
 
-import type { ProjectModel } from '../sync/css-model'
-import type { SyncModel } from '../sync/plan'
+import type { ProjectModel } from '@atom63/figma'
+import type { SyncModel } from '@atom63/figma'
 
 // ============================================================================
 // COLLECTION & STYLE DATA TYPES

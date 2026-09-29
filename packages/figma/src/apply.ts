@@ -13,8 +13,6 @@ import type {
   SyncVariableType,
 } from './plan'
 
-export const TOKEN_KEY = 'a63.token'
-
 export interface ModeLike {
   modeId: string
   name: string
@@ -44,8 +42,6 @@ export interface VariableLike {
   /** Figma also stores values the sync never writes (booleans, easing curves). */
   valuesByMode: Record<string, unknown>
   setValueForMode(modeId: string, value: RawValue): void
-  getPluginData(key: string): string
-  setPluginData(key: string, value: string): void
   /** Hides a retired variable from library publishing (Figma `Variable`). */
   hiddenFromPublishing?: boolean
   /** Figma `Variable` scopes and code syntax; optional so tests can leave them out. */
@@ -82,7 +78,20 @@ export interface ApplyResult {
   bindingsRebound: number
   /** Bindings still on a retired variable; the plugin reports them. */
   bindingsRemaining: number
+  /**
+   * Moves whose design bindings were not checked, because the API cannot search
+   * the document (a use_figma script): designs may still use the retired copy.
+   */
+  bindingsUnchecked: number
 }
+
+/** The token a variable stands for, from its web code syntax `var(--token)`. */
+export function tokenOfCodeSyntax(codeSyntax: string | undefined): string | null {
+  const match = codeSyntax?.match(/^var\(\s*(--[\w-]+)\s*\)$/)
+  return match ? match[1] : null
+}
+
+const tokenOfVariable = (variable: VariableLike) => tokenOfCodeSyntax(variable.codeSyntax?.WEB)
 
 /** Prefix of a retired variable's name: kept, so no design loses a binding. */
 export const MOVED_PREFIX = '(moved)'
@@ -151,7 +160,7 @@ export async function readSnapshot(
 
   const tokenOf = async (id: string) => {
     const target = variables.get(id) ?? (await api.getVariableByIdAsync(id))
-    return target?.getPluginData(TOKEN_KEY) || `id:${id}`
+    return (target && tokenOfVariable(target)) ?? `id:${id}`
   }
 
   const snapshot: SnapshotCollection[] = []
@@ -167,7 +176,7 @@ export async function readSnapshot(
       items.push({
         id,
         name: variable.name,
-        token: variable.getPluginData(TOKEN_KEY) || null,
+        token: tokenOfVariable(variable),
         type: variable.resolvedType,
         values,
         codeSyntax: variable.codeSyntax?.WEB ?? null,
@@ -184,12 +193,28 @@ export async function readSnapshot(
   return snapshot
 }
 
-/** Writes the model's code syntax and scopes; leaves them alone when the model has none. */
-function writeMetadata(variable: VariableLike, model: SyncVariable) {
-  if (model.codeSyntax !== undefined) {
-    if (model.codeSyntax) variable.setVariableCodeSyntax?.('WEB', model.codeSyntax)
-    else variable.removeVariableCodeSyntax?.('WEB')
+/** Every local collection and variable, for comparing a file with code. */
+export async function readDocument(api: VariablesApi): Promise<SnapshotCollection[]> {
+  const names = (await api.getLocalVariableCollectionsAsync()).map(item => item.name)
+  const everything: SyncModel = {
+    schemaVersion: 1,
+    summary: { collections: names.length, variables: 0, aliasValues: 0, skipped: 0 },
+    skipped: [],
+    // readSnapshot reads modes and variables from the document; the model only names collections.
+    collections: names.map(name => ({ name, modes: [], variables: [] })),
   }
+  return readSnapshot(api, everything)
+}
+
+/**
+ * Writes the model's code syntax and scopes. Code syntax is the variable's
+ * identity, so a token without one gets `var(<token>)`; scopes are left alone
+ * when the model has none.
+ */
+function writeMetadata(variable: VariableLike, model: SyncVariable) {
+  const codeSyntax = model.codeSyntax ?? `var(${model.token})`
+  if (codeSyntax) variable.setVariableCodeSyntax?.('WEB', codeSyntax)
+  else variable.removeVariableCodeSyntax?.('WEB')
   if (model.scopes !== undefined) variable.scopes = [...model.scopes]
 }
 
@@ -206,6 +231,7 @@ export async function applyPlan(
     moved: 0,
     bindingsRebound: 0,
     bindingsRemaining: 0,
+    bindingsUnchecked: 0,
   }
   const { collections, variables } = await loadCollections(api, model)
   const collectionByName = new Map(collections.map(collection => [collection.name, collection]))
@@ -237,7 +263,7 @@ export async function applyPlan(
 
   const byToken = new Map<string, VariableLike>()
   for (const variable of variables.values()) {
-    const token = variable.getPluginData(TOKEN_KEY)
+    const token = tokenOfVariable(variable)
     if (token) byToken.set(token, variable)
   }
 
@@ -249,7 +275,6 @@ export async function applyPlan(
     if (!collection) continue
     if (change.kind === 'create') {
       const variable = api.createVariable(change.variable.name, collection, change.variable.type)
-      variable.setPluginData(TOKEN_KEY, change.variable.token)
       byToken.set(change.variable.token, variable)
       targets.push({ change, variable })
       result.created += 1
@@ -257,7 +282,6 @@ export async function applyPlan(
       const variable = variables.get(change.id) ?? (await api.getVariableByIdAsync(change.id))
       if (!variable) continue
       if (change.rename) variable.name = change.variable.name
-      variable.setPluginData(TOKEN_KEY, change.variable.token)
       byToken.set(change.variable.token, variable)
       targets.push({ change, variable })
       result.updated += 1
@@ -307,9 +331,12 @@ export async function applyPlan(
       const { rebound, remaining } = await api.rebindBindings(old, variable)
       result.bindingsRebound += rebound
       result.bindingsRemaining += remaining
+    } else {
+      result.bindingsUnchecked += 1
     }
     old.name = `${MOVED_PREFIX}/${old.name}`
-    old.setPluginData(TOKEN_KEY, '')
+    // Without its code syntax the retired copy no longer stands for the token.
+    old.removeVariableCodeSyntax?.('WEB')
     old.hiddenFromPublishing = true
     result.moved += 1
   }

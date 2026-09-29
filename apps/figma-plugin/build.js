@@ -79,6 +79,8 @@ const codeContext = await esbuild.context({
   target: 'es2017',
   logLevel: 'info',
   minify: !isDev,
+  // The sync engine comes from @atom63/figma's TypeScript sources, like the UI's packages.
+  conditions: ['@atom63/source'],
 })
 
 // The @atom63/styles version the bundled sync model comes from, shown on the Sync page.

@@ -1,4 +1,4 @@
-import { type ColorResolver, parseColor } from '../sync/css-model'
+import { type ColorResolver, parseColor } from '@atom63/figma'
 
 /**
  * Resolves any CSS color the UI's browser understands (oklch(), relative

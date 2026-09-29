@@ -1,10 +1,4 @@
-import type {
-  CollectionLike,
-  ModeLike,
-  RawValue,
-  VariableLike,
-  VariablesApi,
-} from '../src/sync/apply'
+import type { CollectionLike, ModeLike, RawValue, VariableLike, VariablesApi } from '../src/apply'
 
 /** In-memory stand-in for the slice of `figma.variables` the sync uses. */
 export function createFakeApi({ maxModes = 10 } = {}) {
@@ -37,7 +31,6 @@ export function createFakeApi({ maxModes = 10 } = {}) {
       return collection
     },
     createVariable(name, collection, type) {
-      const pluginData = new Map<string, string>()
       const variable: VariableLike = {
         id: `v${nextId++}`,
         name,
@@ -59,12 +52,15 @@ export function createFakeApi({ maxModes = 10 } = {}) {
             throw new Error(`in setValueForMode: Mismatched variable resolved type for ${modeId}`)
           this.valuesByMode[modeId] = value
         },
-        getPluginData: key => pluginData.get(key) ?? '',
-        setPluginData: (key, value) => void pluginData.set(key, value),
         scopes: ['ALL_SCOPES'],
         codeSyntax: {},
         setVariableCodeSyntax(platform, value) {
           this.codeSyntax = { ...this.codeSyntax, [platform]: value }
+        },
+        removeVariableCodeSyntax(platform) {
+          const next = { ...this.codeSyntax }
+          delete next[platform]
+          this.codeSyntax = next
         },
       }
       variables.set(variable.id, variable)
