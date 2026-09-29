@@ -78,15 +78,15 @@ const defaults: Context = {
 
 // Which context key picks the mode of each axis collection.
 const collectionAxis: Record<string, keyof Context> = {
-  'Mode': 'mode',
-  'Brand': 'brand',
-  'Surface': 'surface',
+  Mode: 'mode',
+  Brand: 'brand',
+  Surface: 'surface',
   'Design Language': 'designLanguage',
-  'Input': 'input',
-  'Density': 'density',
-  'Radius': 'radius',
+  Input: 'input',
+  Density: 'density',
+  Radius: 'radius',
   'Type Scale': 'typeScale',
-  'Font': 'font',
+  Font: 'font',
   'Window Size': 'windowSize',
 }
 
