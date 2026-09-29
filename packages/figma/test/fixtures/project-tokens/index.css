@@ -1,0 +1,14 @@
+/*
+ * The site's design tokens. Plain CSS, owned by this project: edit any value.
+ *
+ * palette.css   raw colors (brand, neutral and status ramps)
+ * axes.css      data-brand, data-surface, data-radius, data-type-scale
+ * semantic.css  shadcn's color roles (--background, --primary, …), light and dark
+ * scale.css     radius anchor and text sizes
+ * theme.css     the Tailwind theme: utilities onto the tokens
+ */
+@import './palette.css';
+@import './axes.css';
+@import './semantic.css';
+@import './scale.css';
+@import './theme.css';

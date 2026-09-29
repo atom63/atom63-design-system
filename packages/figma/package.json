@@ -23,9 +23,11 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
+    "build:runtime": "tsup src/runtime.ts --format iife --global-name A63Figma --minify --platform neutral --target es2020 --out-dir dist/runtime --no-dts --no-sourcemap && node scripts/embed-runtime.mjs",
+    "build": "pnpm build:runtime && tsup",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --cache --max-warnings 0",
+    "pretest": "pnpm build:runtime",
     "test": "vitest run"
   },
   "devDependencies": {
