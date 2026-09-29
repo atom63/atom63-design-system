@@ -11,7 +11,7 @@
   },
   "collections": [
     {
-      "name": "Atom63 Theme",
+      "name": "Theme",
       "modes": [
         "modern-light",
         "modern-dark",
@@ -1989,7 +1989,7 @@
       ]
     },
     {
-      "name": "Atom63 Contract",
+      "name": "Contract",
       "modes": [
         "Value"
       ],
@@ -2833,7 +2833,7 @@
       ]
     },
     {
-      "name": "Atom63 Semantic",
+      "name": "Semantic",
       "modes": [
         "Value"
       ],
@@ -3184,7 +3184,7 @@
       ]
     },
     {
-      "name": "Atom63 Foundation",
+      "name": "Foundation",
       "modes": [
         "Value"
       ],
@@ -13880,7 +13880,7 @@
       ]
     },
     {
-      "name": "Atom63 Mode",
+      "name": "Mode",
       "modes": [
         "light",
         "dark"
@@ -15224,7 +15224,7 @@
       ]
     },
     {
-      "name": "Atom63 Brand",
+      "name": "Brand",
       "modes": [
         "b1",
         "b2",
@@ -15715,7 +15715,7 @@
       ]
     },
     {
-      "name": "Atom63 Surface",
+      "name": "Surface",
       "modes": [
         "n1",
         "n2",
@@ -16376,7 +16376,7 @@
       ]
     },
     {
-      "name": "Atom63 Design Language",
+      "name": "Design Language",
       "modes": [
         "web",
         "ios"
@@ -16825,7 +16825,7 @@
       ]
     },
     {
-      "name": "Atom63 Input",
+      "name": "Input",
       "modes": [
         "pointer",
         "touch",
@@ -16975,7 +16975,7 @@
       ]
     },
     {
-      "name": "Atom63 Density",
+      "name": "Density",
       "modes": [
         "comfortable",
         "compact"
@@ -17169,7 +17169,7 @@
       ]
     },
     {
-      "name": "Atom63 Radius",
+      "name": "Radius",
       "modes": [
         "default",
         "none",
@@ -17548,7 +17548,7 @@
       ]
     },
     {
-      "name": "Atom63 Type Scale",
+      "name": "Type Scale",
       "modes": [
         "normal",
         "compact",
@@ -17718,7 +17718,7 @@
       ]
     },
     {
-      "name": "Atom63 Font",
+      "name": "Font",
       "modes": [
         "sans",
         "serif",
@@ -17752,7 +17752,7 @@
       ]
     },
     {
-      "name": "Atom63 Window Size",
+      "name": "Window Size",
       "modes": [
         "md",
         "sm",
@@ -18899,7 +18899,7 @@
   "computed": [
     {
       "token": "--a63-action-neutral",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "mode",
@@ -18910,7 +18910,7 @@
     },
     {
       "token": "--a63-action-neutral-foreground",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "mode",
@@ -18921,7 +18921,7 @@
     },
     {
       "token": "--a63-border-control",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "mode",
@@ -18932,7 +18932,7 @@
     },
     {
       "token": "--a63-border-subtle",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "mode",
@@ -18943,7 +18943,7 @@
     },
     {
       "token": "--a63-choice-box-shadow",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "theme"
@@ -18952,7 +18952,7 @@
     },
     {
       "token": "--a63-choice-box-shadow-checked",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "theme"
@@ -18961,7 +18961,7 @@
     },
     {
       "token": "--a63-control-height-lg",
-      "collection": "Atom63 Design Language",
+      "collection": "Design Language",
       "variesOn": [
         "density",
         "design-language"
@@ -18970,7 +18970,7 @@
     },
     {
       "token": "--a63-control-height-md",
-      "collection": "Atom63 Design Language",
+      "collection": "Design Language",
       "variesOn": [
         "density",
         "design-language"
@@ -18979,7 +18979,7 @@
     },
     {
       "token": "--a63-control-height-sm",
-      "collection": "Atom63 Design Language",
+      "collection": "Design Language",
       "variesOn": [
         "density",
         "design-language"
@@ -18988,7 +18988,7 @@
     },
     {
       "token": "--a63-control-height-xl",
-      "collection": "Atom63 Design Language",
+      "collection": "Design Language",
       "variesOn": [
         "density",
         "design-language"
@@ -18997,7 +18997,7 @@
     },
     {
       "token": "--a63-control-height-xs",
-      "collection": "Atom63 Design Language",
+      "collection": "Design Language",
       "variesOn": [
         "density",
         "design-language"
@@ -19006,7 +19006,7 @@
     },
     {
       "token": "--a63-control-shadow",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "theme"
@@ -19015,7 +19015,7 @@
     },
     {
       "token": "--a63-control-shadow-active",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "theme"
@@ -19024,7 +19024,7 @@
     },
     {
       "token": "--a63-control-shadow-flat",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "theme"
@@ -19033,7 +19033,7 @@
     },
     {
       "token": "--a63-control-text-shadow",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "theme"
@@ -19042,7 +19042,7 @@
     },
     {
       "token": "--a63-field-shadow",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "theme"
@@ -19051,7 +19051,7 @@
     },
     {
       "token": "--a63-menu-gap",
-      "collection": "Atom63 Radius",
+      "collection": "Radius",
       "variesOn": [
         "density",
         "radius"
@@ -19060,7 +19060,7 @@
     },
     {
       "token": "--a63-menu-popup-padding",
-      "collection": "Atom63 Radius",
+      "collection": "Radius",
       "variesOn": [
         "density",
         "radius"
@@ -19069,7 +19069,7 @@
     },
     {
       "token": "--a63-overlay-drag-shadow",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "theme"
@@ -19078,7 +19078,7 @@
     },
     {
       "token": "--a63-overlay-shadow",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "theme"
@@ -19087,7 +19087,7 @@
     },
     {
       "token": "--a63-segment-primary-shadow",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "mode",
@@ -19097,7 +19097,7 @@
     },
     {
       "token": "--a63-segment-selected-shadow",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "mode",
@@ -19107,7 +19107,7 @@
     },
     {
       "token": "--a63-surface-control-hover",
-      "collection": "Atom63 Mode",
+      "collection": "Mode",
       "variesOn": [
         "mode",
         "surface"
@@ -19116,7 +19116,7 @@
     },
     {
       "token": "--a63-surface-page",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "mode",
@@ -19127,7 +19127,7 @@
     },
     {
       "token": "--a63-surface-panel",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "mode",
@@ -19138,7 +19138,7 @@
     },
     {
       "token": "--a63-surface-shadow",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "theme"
@@ -19147,7 +19147,7 @@
     },
     {
       "token": "--a63-text-primary",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "mode",
@@ -19158,7 +19158,7 @@
     },
     {
       "token": "--a63-text-secondary",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "mode",
@@ -19169,7 +19169,7 @@
     },
     {
       "token": "--a63-track-shadow",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "theme"
@@ -19178,7 +19178,7 @@
     },
     {
       "token": "--a63-weather-background-color",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "mode",
@@ -19189,7 +19189,7 @@
     },
     {
       "token": "--a63-weather-border-color",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "mode",
@@ -19200,7 +19200,7 @@
     },
     {
       "token": "--a63-weather-divider-color",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "mode",
@@ -19210,7 +19210,7 @@
     },
     {
       "token": "--a63-weather-foreground",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "mode",
@@ -19221,7 +19221,7 @@
     },
     {
       "token": "--a63-weather-muted-foreground",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "mode",
@@ -19232,7 +19232,7 @@
     },
     {
       "token": "--a63-weather-text-shadow",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "mode",
@@ -19242,7 +19242,7 @@
     },
     {
       "token": "--a63-widget-rim-border-color",
-      "collection": "Atom63 Contract",
+      "collection": "Contract",
       "variesOn": [
         "theme"
       ],
@@ -19250,7 +19250,7 @@
     },
     {
       "token": "--a63-widget-shadow",
-      "collection": "Atom63 Theme",
+      "collection": "Theme",
       "variesOn": [
         "brand",
         "theme"
@@ -19259,7 +19259,7 @@
     },
     {
       "token": "--typography-2xl-font-size",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19268,7 +19268,7 @@
     },
     {
       "token": "--typography-2xl-line-height",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19277,7 +19277,7 @@
     },
     {
       "token": "--typography-3xl-font-size",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19286,7 +19286,7 @@
     },
     {
       "token": "--typography-3xl-line-height",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19295,7 +19295,7 @@
     },
     {
       "token": "--typography-4xl-font-size",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19304,7 +19304,7 @@
     },
     {
       "token": "--typography-4xl-line-height",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19313,7 +19313,7 @@
     },
     {
       "token": "--typography-5xl-font-size",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19322,7 +19322,7 @@
     },
     {
       "token": "--typography-5xl-line-height",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19331,7 +19331,7 @@
     },
     {
       "token": "--typography-6xl-font-size",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19340,7 +19340,7 @@
     },
     {
       "token": "--typography-6xl-line-height",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19349,7 +19349,7 @@
     },
     {
       "token": "--typography-7xl-font-size",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19358,7 +19358,7 @@
     },
     {
       "token": "--typography-7xl-line-height",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19367,7 +19367,7 @@
     },
     {
       "token": "--typography-8xl-font-size",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19376,7 +19376,7 @@
     },
     {
       "token": "--typography-8xl-line-height",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19385,7 +19385,7 @@
     },
     {
       "token": "--typography-9xl-font-size",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19394,7 +19394,7 @@
     },
     {
       "token": "--typography-9xl-line-height",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19403,7 +19403,7 @@
     },
     {
       "token": "--typography-lg-font-size",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19412,7 +19412,7 @@
     },
     {
       "token": "--typography-lg-line-height",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19421,7 +19421,7 @@
     },
     {
       "token": "--typography-xl-font-size",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"
@@ -19430,7 +19430,7 @@
     },
     {
       "token": "--typography-xl-line-height",
-      "collection": "Atom63 Window Size",
+      "collection": "Window Size",
       "variesOn": [
         "type-scale",
         "window-size"

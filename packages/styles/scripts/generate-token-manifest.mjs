@@ -22,8 +22,8 @@ const sourceDirectories = [
 const lifecycleOverrides = new Map()
 
 const figmaOverrides = new Map([
-  ['--color-white-100', { collection: 'Atom63 Foundation', path: 'color/static/white' }],
-  ['--color-black-100', { collection: 'Atom63 Foundation', path: 'color/static/black' }],
+  ['--color-white-100', { collection: 'Foundation', path: 'color/static/white' }],
+  ['--color-black-100', { collection: 'Foundation', path: 'color/static/black' }],
 ])
 
 const figmaSupportedTypes = new Set([
@@ -154,10 +154,10 @@ function inferFigmaMapping(cssVar, type, layer, scope, conditions) {
   if (!figmaSupportedTypes.has(type)) return undefined
 
   const collection = {
-    foundation: 'Atom63 Foundation',
-    semantic: 'Atom63 Semantic',
-    contract: 'Atom63 Contract',
-    theme: 'Atom63 Theme',
+    foundation: 'Foundation',
+    semantic: 'Semantic',
+    contract: 'Contract',
+    theme: 'Theme',
   }[layer]
   if (!collection) return undefined
 

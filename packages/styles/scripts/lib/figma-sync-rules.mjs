@@ -93,7 +93,7 @@ const stringRules = [
  * `null` for a number no rule covers.
  */
 export function scopesFor({ token, type, collection }) {
-  if (collection === 'Atom63 Foundation') return { group: 'foundation', scopes: [] }
+  if (collection === 'Foundation') return { group: 'foundation', scopes: [] }
   const name = token.replace(/^--(a63-)?/, '')
   const rules = type === 'COLOR' ? colorRules : type === 'FLOAT' ? numberRules : stringRules
   const rule = rules.find(candidate => candidate.test.test(name))

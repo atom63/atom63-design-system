@@ -22,6 +22,25 @@ async function sync(api: VariablesApi, syncModel: SyncModel = model) {
 }
 
 describe('Atom63 Figma sync', () => {
+  it('names collections without the Atom63 prefix', () => {
+    expect(model.collections.map(collection => collection.name)).toEqual([
+      'Theme',
+      'Contract',
+      'Semantic',
+      'Foundation',
+      'Mode',
+      'Brand',
+      'Surface',
+      'Design Language',
+      'Input',
+      'Density',
+      'Radius',
+      'Type Scale',
+      'Font',
+      'Window Size',
+    ])
+  })
+
   it('creates every collection, mode, and variable in an empty file', async () => {
     const { api, collections } = createFakeApi()
     const { plan, result } = await sync(api)
@@ -91,7 +110,7 @@ describe('Atom63 Figma sync', () => {
   it('updates only the mode whose value drifted', async () => {
     const { api, collections, variables } = createFakeApi()
     await sync(api)
-    const mode = collections.find(item => item.name === 'Atom63 Design Language')
+    const mode = collections.find(item => item.name === 'Design Language')
     const height = [...variables.values()].find(
       item => tokenOfCodeSyntax(item?.codeSyntax?.WEB) === '--a63-control-height-md'
     )
@@ -124,13 +143,13 @@ describe('Atom63 Figma sync', () => {
   it('reports Atom63 variables the model no longer has without deleting them', async () => {
     const { api, collections } = createFakeApi()
     await sync(api)
-    const foundation = collections.find(item => item.name === 'Atom63 Foundation')
+    const foundation = collections.find(item => item.name === 'Foundation')
     const stale = foundation && api.createVariable('retired/token', foundation, 'FLOAT')
     stale?.setVariableCodeSyntax?.('WEB', 'var(--retired-token)')
 
     const plan = planSync(model, await readSnapshot(api, model))
     expect(plan.totals.orphaned).toBe(1)
-    expect(plan.collections.find(item => item.name === 'Atom63 Foundation')?.orphaned).toEqual([
+    expect(plan.collections.find(item => item.name === 'Foundation')?.orphaned).toEqual([
       'retired/token',
     ])
   })
@@ -174,12 +193,12 @@ describe('Atom63 Figma sync: a token moving to another collection', () => {
     summary: { collections: 2, variables: 2, aliasValues: 1, skipped: 0 },
     collections: [
       {
-        name: 'Atom63 Contract',
+        name: 'Contract',
         modes: ['Value'],
         variables: [{ name: 'x', token: '--x', type: 'COLOR', values: { Value: color(0.2) } }],
       },
       {
-        name: 'Atom63 Semantic',
+        name: 'Semantic',
         modes: ['Value'],
         variables: [
           { name: 'y', token: '--y', type: 'COLOR', values: { Value: { alias: '--x' } } },
@@ -191,10 +210,10 @@ describe('Atom63 Figma sync: a token moving to another collection', () => {
   const after: SyncModel = {
     ...before,
     collections: [
-      { name: 'Atom63 Contract', modes: ['Value'], variables: [] },
+      { name: 'Contract', modes: ['Value'], variables: [] },
       before.collections[1],
       {
-        name: 'Atom63 Theme',
+        name: 'Theme',
         modes: ['modern-light', 'aqua-light'],
         variables: [
           {
@@ -217,14 +236,14 @@ describe('Atom63 Figma sync: a token moving to another collection', () => {
     const { plan, result } = await sync(fake.api, after)
 
     expect(plan.totals.move).toBe(1)
-    expect(plan.collections.find(item => item.name === 'Atom63 Contract')?.orphaned).toEqual([])
+    expect(plan.collections.find(item => item.name === 'Contract')?.orphaned).toEqual([])
     expect(result.moved).toBe(1)
 
     const newX = [...fake.variables.values()].find(
       item => tokenOfCodeSyntax(item?.codeSyntax?.WEB) === '--x'
     )
     expect(newX?.id).not.toBe(oldX?.id)
-    const theme = fake.collections.find(item => item.name === 'Atom63 Theme')
+    const theme = fake.collections.find(item => item.name === 'Theme')
     expect(theme?.variableIds).toContain(newX?.id)
 
     // --y now aliases the new variable in every mode.

@@ -42,14 +42,14 @@ const cssEntries = ['src/tokens/index.css', 'src/contracts/index.css', 'src/them
 
 const themes = ['modern', 'aqua', 'retro', 'terminal']
 const themeCollection = {
-  name: 'Atom63 Theme',
+  name: 'Theme',
   modes: themes.flatMap(theme => ['light', 'dark'].map(mode => `${theme}-${mode}`)),
 }
 
 const layerCollections = {
-  foundation: 'Atom63 Foundation',
-  semantic: 'Atom63 Semantic',
-  contract: 'Atom63 Contract',
+  foundation: 'Foundation',
+  semantic: 'Semantic',
+  contract: 'Contract',
 }
 
 // Axis collections. `selector` recognizes the manifest scope that remaps a
@@ -57,7 +57,7 @@ const layerCollections = {
 const axes = [
   {
     id: 'mode',
-    collection: 'Atom63 Mode',
+    collection: 'Mode',
     attribute: 'data-a63-mode',
     pattern: /a63-mode=['"](\w+)['"]|\.(dark|light)\b/,
     modes: ['light', 'dark'],
@@ -65,7 +65,7 @@ const axes = [
   },
   {
     id: 'brand',
-    collection: 'Atom63 Brand',
+    collection: 'Brand',
     attribute: 'data-a63-brand',
     pattern: /a63-brand=['"](b\d)['"]/,
     modes: ['b1', 'b2', 'b3', 'b4', 'b5', 'b6'],
@@ -73,7 +73,7 @@ const axes = [
   },
   {
     id: 'surface',
-    collection: 'Atom63 Surface',
+    collection: 'Surface',
     attribute: 'data-a63-surface',
     pattern: /a63-surface=['"](n\d)['"]/,
     modes: ['n1', 'n2', 'n3', 'n4', 'n5', 'n6'],
@@ -81,7 +81,7 @@ const axes = [
   },
   {
     id: 'design-language',
-    collection: 'Atom63 Design Language',
+    collection: 'Design Language',
     attribute: 'data-a63-design-language',
     pattern: /a63-design-language=['"](\w+)['"]/,
     modes: ['web', 'ios'],
@@ -89,7 +89,7 @@ const axes = [
   },
   {
     id: 'input',
-    collection: 'Atom63 Input',
+    collection: 'Input',
     attribute: 'data-a63-input',
     pattern: /a63-input=['"](\w+)['"]/,
     modes: ['pointer', 'touch', 'keyboard'],
@@ -97,7 +97,7 @@ const axes = [
   },
   {
     id: 'density',
-    collection: 'Atom63 Density',
+    collection: 'Density',
     attribute: 'data-a63-density',
     pattern: /a63-density=['"](\w+)['"]/,
     modes: ['comfortable', 'compact'],
@@ -105,7 +105,7 @@ const axes = [
   },
   {
     id: 'radius',
-    collection: 'Atom63 Radius',
+    collection: 'Radius',
     attribute: 'data-a63-radius',
     pattern: /a63-radius=['"](\w+)['"]/,
     modes: ['default', 'none', 'subtle', 'round'],
@@ -113,7 +113,7 @@ const axes = [
   },
   {
     id: 'type-scale',
-    collection: 'Atom63 Type Scale',
+    collection: 'Type Scale',
     attribute: 'data-a63-type-scale',
     pattern: /a63-type-scale=['"](\w+)['"]/,
     modes: ['normal', 'compact', 'comfortable', 'large'],
@@ -121,7 +121,7 @@ const axes = [
   },
   {
     id: 'font',
-    collection: 'Atom63 Font',
+    collection: 'Font',
     attribute: 'data-a63-font',
     pattern: /a63-font=['"](\w+)['"]/,
     modes: ['sans', 'serif', 'mono', 'pixel'],
@@ -129,7 +129,7 @@ const axes = [
   },
   {
     id: 'window-size',
-    collection: 'Atom63 Window Size',
+    collection: 'Window Size',
     attribute: 'data-window-size',
     pattern: /window-size=['"](\w+)['"]/,
     modes: ['md', 'sm', 'xs'],

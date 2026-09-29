@@ -19,19 +19,19 @@ export const surfaces = ['n1', 'n2', 'n3', 'n4', 'n5', 'n6']
 
 /** The mode iOS uses for collections that are not part of the selection. */
 export const fixedModes = {
-  'Atom63 Design Language': 'ios',
+  'Design Language': 'ios',
 }
 
 /** Which selection field picks the mode of a collection, if any. */
 export function selectionKey(collectionName) {
   switch (collectionName) {
-    case 'Atom63 Theme':
+    case 'Theme':
       return 'skin-mode'
-    case 'Atom63 Mode':
+    case 'Mode':
       return 'mode'
-    case 'Atom63 Brand':
+    case 'Brand':
       return 'brand'
-    case 'Atom63 Surface':
+    case 'Surface':
       return 'surface'
     default:
       return null

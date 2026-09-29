@@ -78,20 +78,20 @@ const defaults: Context = {
 
 // Which context key picks the mode of each axis collection.
 const collectionAxis: Record<string, keyof Context> = {
-  'Atom63 Mode': 'mode',
-  'Atom63 Brand': 'brand',
-  'Atom63 Surface': 'surface',
-  'Atom63 Design Language': 'designLanguage',
-  'Atom63 Input': 'input',
-  'Atom63 Density': 'density',
-  'Atom63 Radius': 'radius',
-  'Atom63 Type Scale': 'typeScale',
-  'Atom63 Font': 'font',
-  'Atom63 Window Size': 'windowSize',
+  'Mode': 'mode',
+  'Brand': 'brand',
+  'Surface': 'surface',
+  'Design Language': 'designLanguage',
+  'Input': 'input',
+  'Density': 'density',
+  'Radius': 'radius',
+  'Type Scale': 'typeScale',
+  'Font': 'font',
+  'Window Size': 'windowSize',
 }
 
 function modeOf(collection: Collection, context: Context): string {
-  if (collection.name === 'Atom63 Theme') return `${context.theme}-${context.mode}`
+  if (collection.name === 'Theme') return `${context.theme}-${context.mode}`
   const axis = collectionAxis[collection.name]
   return axis ? context[axis] : collection.modes[0]
 }

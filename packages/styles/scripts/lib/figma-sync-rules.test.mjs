@@ -35,30 +35,30 @@ test('composedTarget leaves other mixes and unsynced targets alone', () => {
 test('scopesFor hides foundation primitives and raw neutral steps', () => {
   const hidden = { group: 'foundation', scopes: [] }
   assert.deepEqual(
-    scopesFor({ token: '--color-b1-500', type: 'COLOR', collection: 'Atom63 Foundation' }),
+    scopesFor({ token: '--color-b1-500', type: 'COLOR', collection: 'Foundation' }),
     hidden
   )
   assert.deepEqual(
-    scopesFor({ token: '--surface-light-3', type: 'COLOR', collection: 'Atom63 Surface' }).scopes,
+    scopesFor({ token: '--surface-light-3', type: 'COLOR', collection: 'Surface' }).scopes,
     []
   )
 })
 
 test('scopesFor sends semantic colors and numbers to the right pickers', () => {
-  const scopes = (token, type, collection = 'Atom63 Semantic') =>
+  const scopes = (token, type, collection = 'Semantic') =>
     scopesFor({ token, type, collection })?.scopes
   assert.deepEqual(scopes('--a63-text-secondary', 'COLOR'), ['TEXT_FILL'])
   assert.deepEqual(scopes('--a63-action-primary-foreground', 'COLOR'), ['TEXT_FILL'])
   assert.deepEqual(scopes('--a63-border-subtle', 'COLOR'), ['STROKE_COLOR'])
   assert.deepEqual(scopes('--a63-focus-ring', 'COLOR'), ['STROKE_COLOR'])
   assert.deepEqual(scopes('--a63-surface-page', 'COLOR'), ['FRAME_FILL', 'SHAPE_FILL'])
-  assert.deepEqual(scopes('--a63-control-radius', 'FLOAT', 'Atom63 Contract'), ['CORNER_RADIUS'])
-  assert.deepEqual(scopes('--a63-control-height-md', 'FLOAT', 'Atom63 Contract'), ['WIDTH_HEIGHT'])
-  assert.deepEqual(scopes('--a63-widget-rim-width', 'FLOAT', 'Atom63 Contract'), ['STROKE_FLOAT'])
-  assert.deepEqual(scopes('--a63-menu-item-gap', 'FLOAT', 'Atom63 Contract'), ['GAP'])
-  assert.deepEqual(scopes('--a63-control-font-size-md', 'FLOAT', 'Atom63 Contract'), ['FONT_SIZE'])
+  assert.deepEqual(scopes('--a63-control-radius', 'FLOAT', 'Contract'), ['CORNER_RADIUS'])
+  assert.deepEqual(scopes('--a63-control-height-md', 'FLOAT', 'Contract'), ['WIDTH_HEIGHT'])
+  assert.deepEqual(scopes('--a63-widget-rim-width', 'FLOAT', 'Contract'), ['STROKE_FLOAT'])
+  assert.deepEqual(scopes('--a63-menu-item-gap', 'FLOAT', 'Contract'), ['GAP'])
+  assert.deepEqual(scopes('--a63-control-font-size-md', 'FLOAT', 'Contract'), ['FONT_SIZE'])
   assert.deepEqual(scopes('--a63-motion-duration-fast', 'FLOAT'), [])
-  assert.deepEqual(scopes('--a63-font-app', 'STRING', 'Atom63 Font'), ['FONT_FAMILY'])
+  assert.deepEqual(scopes('--a63-font-app', 'STRING', 'Font'), ['FONT_FAMILY'])
 })
 
 test('scopesFor has no rule for an unknown number, so the generator fails', () => {

@@ -46,7 +46,7 @@ describe('Atom63 Figma export', () => {
 
   it('exports an edited color and number as a token patch', async () => {
     const { byToken, modeId, exportPlan } = await syncedFile()
-    const value = modeId('Atom63 Foundation', 'Value')
+    const value = modeId('Foundation', 'Value')
     byToken('--color-b1-500')?.setValueForMode(value, { r: 0.1, g: 0.4, b: 0.9, a: 1 })
     byToken('--spacing-4')?.setValueForMode(value, 18)
 
@@ -62,14 +62,14 @@ describe('Atom63 Figma export', () => {
       changes: [
         {
           token: '--color-b1-500',
-          collection: 'Atom63 Foundation',
+          collection: 'Foundation',
           mode: 'Value',
           type: 'COLOR',
           value: { r: 0.1, g: 0.4, b: 0.9, a: 1 },
         },
         {
           token: '--spacing-4',
-          collection: 'Atom63 Foundation',
+          collection: 'Foundation',
           mode: 'Value',
           type: 'FLOAT',
           value: 18,
@@ -82,7 +82,7 @@ describe('Atom63 Figma export', () => {
     const { byToken, modeId, exportPlan } = await syncedFile()
     const brand300 = byToken('--a63-brand-300')
     expect(brand300).toBeDefined()
-    byToken('--a63-text-accent')?.setValueForMode(modeId('Atom63 Mode', 'dark'), {
+    byToken('--a63-text-accent')?.setValueForMode(modeId('Mode', 'dark'), {
       type: 'VARIABLE_ALIAS',
       id: brand300?.id ?? '',
     })
@@ -92,7 +92,7 @@ describe('Atom63 Figma export', () => {
     expect(toTokenPatch(plan).changes).toEqual([
       {
         token: '--a63-text-accent',
-        collection: 'Atom63 Mode',
+        collection: 'Mode',
         mode: 'dark',
         type: 'COLOR',
         alias: '--a63-brand-300',
@@ -103,14 +103,14 @@ describe('Atom63 Figma export', () => {
   it('skips what the patch cannot express, with a reason', async () => {
     const { byToken, modeId, exportPlan } = await syncedFile()
     // An alias in code (surface n2 points at the n2 palette), set to a raw color.
-    byToken('--surface-light-2')?.setValueForMode(modeId('Atom63 Surface', 'n2'), {
+    byToken('--surface-light-2')?.setValueForMode(modeId('Surface', 'n2'), {
       r: 1,
       g: 0,
       b: 0,
       a: 1,
     })
     // A string token.
-    byToken('--font-family-sans')?.setValueForMode(modeId('Atom63 Foundation', 'Value'), 'Inter')
+    byToken('--font-family-sans')?.setValueForMode(modeId('Foundation', 'Value'), 'Inter')
 
     const plan = await exportPlan()
     expect(plan.changes).toEqual([])
@@ -129,7 +129,7 @@ describe('Atom63 Figma export', () => {
   it('exports a literal re-pointed at another variable as an alias', async () => {
     const { byToken, modeId, exportPlan } = await syncedFile()
     const blue = byToken('--color-b1-400')
-    byToken('--color-b1-500')?.setValueForMode(modeId('Atom63 Foundation', 'Value'), {
+    byToken('--color-b1-500')?.setValueForMode(modeId('Foundation', 'Value'), {
       type: 'VARIABLE_ALIAS',
       id: blue?.id ?? '',
     })
@@ -137,7 +137,7 @@ describe('Atom63 Figma export', () => {
     expect(toTokenPatch(plan).changes).toEqual([
       {
         token: '--color-b1-500',
-        collection: 'Atom63 Foundation',
+        collection: 'Foundation',
         mode: 'Value',
         type: 'COLOR',
         alias: '--color-b1-400',
