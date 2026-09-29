@@ -9,6 +9,8 @@ Sync has two modes, and both write variables the way code uses them.
 - Every variable shows its CSS name as web code syntax in Dev Mode.
 - Variables appear only in the pickers they fit: text colors in text fills, borders in strokes, radii in corner radius; raw palette steps are hidden but still aliasable.
 - A second sync reports no changes for decimal sizes such as 64.8, which Figma stores at 32-bit precision; they no longer show as updates on every run.
+- Project mode reads pasted CSS as it is pasted, so Preview is ready without leaving the field, and the field scrolls instead of growing with the CSS.
+- Apply and Download patch appear only when there is something to apply or download, and Finding edited variables clears the last sync result.
 
 ## Version 13 — April 14, 2026
 Lock individual accent or neutral colors so they are skipped when shuffling — click the lock icon on any color row to pin it.

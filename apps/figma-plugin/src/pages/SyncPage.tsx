@@ -164,6 +164,8 @@ function Atom63Sync() {
 
   const exportChanges = () => {
     setError(null)
+    setPlan(null)
+    setApplied(null)
     setStatus('exporting')
     postMessage({ type: 'sync-export' })
   }
@@ -201,14 +203,11 @@ function Atom63Sync() {
         <Button loading={status === 'previewing'} onClick={preview} variant="secondary">
           Preview changes
         </Button>
-        <Button
-          disabled={!plan || pending === 0}
-          loading={status === 'applying'}
-          onClick={apply}
-          variant="primary"
-        >
-          {plan ? `Apply ${pending} changes` : 'Apply'}
-        </Button>
+        {pending > 0 && (
+          <Button loading={status === 'applying'} onClick={apply} variant="primary">
+            {`Apply ${pending} ${pending === 1 ? 'change' : 'changes'}`}
+          </Button>
+        )}
       </div>
 
       {error && (
@@ -219,22 +218,22 @@ function Atom63Sync() {
 
       <SyncResults applied={applied} plan={plan} />
 
-      <SectionHeader
-        description="Collect the Atom63 variables you edited in this file into a token patch. Apply it in the repository with `pnpm --filter @atom63/styles tokens:apply <patch>`, which updates the DTCG sources and regenerates the CSS. Colors and numbers in the Foundation collection are exported; anything else is listed as skipped."
-        title="Export to code"
-      />
+      <div className={styles.nextSection}>
+        <SectionHeader
+          description="Collect the Atom63 variables you edited in this file into a token patch. Apply it in the repository with `pnpm --filter @atom63/styles tokens:apply <patch>`, which updates the DTCG sources and regenerates the CSS. Colors and numbers in the Foundation collection are exported; anything else is listed as skipped."
+          title="Export to code"
+        />
+      </div>
 
       <div className={styles.actions}>
         <Button loading={status === 'exporting'} onClick={exportChanges} variant="secondary">
           Find edited variables
         </Button>
-        <Button
-          disabled={!exported || exported.changes.length === 0}
-          onClick={downloadPatch}
-          variant="primary"
-        >
-          {exported ? `Download patch (${exported.changes.length})` : 'Download patch'}
-        </Button>
+        {exported && exported.changes.length > 0 && (
+          <Button onClick={downloadPatch} variant="primary">
+            {`Download patch (${exported.changes.length})`}
+          </Button>
+        )}
       </div>
 
       {exported && exported.changes.length === 0 && exported.skipped.length === 0 && (
