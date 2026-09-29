@@ -111,10 +111,45 @@ function sameEffects(spec: EffectStyleSpec, style: EffectStyleLike): boolean {
   )
 }
 
+async function loads(api: StylesApi, family: string): Promise<boolean> {
+  try {
+    await api.loadFontAsync({ family, style: 'Regular' })
+    return true
+  } catch {
+    return false
+  }
+}
+
+interface FamilyTarget {
+  /** The literal family: the code's, or Inter when it cannot load. */
+  family: string
+  /** The font variable to bind, when every mode's value loads. */
+  bind: VariableLike | null
+}
+
+/** What a text style's family should be in this file, for the plan and the apply alike. */
+async function familyTarget(
+  api: StylesApi,
+  spec: TextStyleSpec,
+  byToken: Map<string, VariableLike>,
+  byId: Map<string, VariableLike>
+): Promise<FamilyTarget> {
+  const literal = 'value' in spec.family ? spec.family.value : spec.family.fallback
+  const family = (await loads(api, literal)) ? literal : 'Inter'
+  if (!('alias' in spec.family)) return { family, bind: null }
+  // Figma refuses to bind a family it cannot load in every mode: load them first.
+  const variable = byToken.get(spec.family.alias)
+  const families = variable ? familiesOf(variable, byId) : []
+  const loaded = await Promise.all(families.map(item => loads(api, item)))
+  const bindable = variable && families.length > 0 && loaded.every(Boolean)
+  return { family, bind: bindable ? variable : null }
+}
+
 function sameText(
   spec: TextStyleSpec,
   style: TextStyleLike,
-  byToken: Map<string, VariableLike>
+  byToken: Map<string, VariableLike>,
+  target: FamilyTarget
 ): boolean {
   const bound = (field: string, alias: string) =>
     style.boundVariables?.[field]?.id === byToken.get(alias)?.id
@@ -124,14 +159,14 @@ function sameText(
       ? bound('fontSize', spec.fontSize.alias)
       : near(style.fontSize, spec.fontSize.value)) &&
     ('alias' in spec.lineHeight ? bound('lineHeight', spec.lineHeight.alias) : true) &&
-    ('value' in spec.family
-      ? style.fontName.family === spec.family.value || style.fontName.family === 'Inter'
-      : true)
+    style.fontName.style === 'Regular' &&
+    (style.boundVariables?.fontFamily?.id ?? null) === (target.bind?.id ?? null) &&
+    (target.bind !== null || style.fontName.family === target.family)
   )
 }
 
 export async function planStyles(api: StylesApi, styles: StyleSet): Promise<StylePlan> {
-  const { byToken } = await variablesOf(api.variables)
+  const { byToken, byId } = await variablesOf(api.variables)
   const text = new Map((await api.getLocalTextStylesAsync()).map(style => [style.name, style]))
   const effects = new Map((await api.getLocalEffectStylesAsync()).map(style => [style.name, style]))
   const plan: StylePlan = { create: [], update: [], unchanged: 0, skipped: [...styles.skipped] }
@@ -143,9 +178,18 @@ export async function planStyles(api: StylesApi, styles: StyleSet): Promise<Styl
       plan.skipped.push({ name: spec.name, reason: `variable ${missing} is not in the file` })
       continue
     }
+    // Binding a size or line height to a non-number fails and rolls back the whole script.
+    const notNumber = [spec.fontSize, spec.lineHeight]
+      .map(value => ('alias' in value ? value.alias : null))
+      .find(alias => alias && byToken.get(alias)?.resolvedType !== 'FLOAT')
+    if (notNumber) {
+      plan.skipped.push({ name: spec.name, reason: `variable ${notNumber} is not a number` })
+      continue
+    }
     const current = text.get(spec.name)
     if (!current) plan.create.push(spec.name)
-    else if (sameText(spec, current, byToken)) plan.unchanged += 1
+    else if (sameText(spec, current, byToken, await familyTarget(api, spec, byToken, byId)))
+      plan.unchanged += 1
     else plan.update.push(spec.name)
   }
   for (const spec of styles.effects) {
@@ -156,15 +200,6 @@ export async function planStyles(api: StylesApi, styles: StyleSet): Promise<Styl
     else plan.update.push(spec.name)
   }
   return plan
-}
-
-async function loads(api: StylesApi, family: string): Promise<boolean> {
-  try {
-    await api.loadFontAsync({ family, style: 'Regular' })
-    return true
-  } catch {
-    return false
-  }
 }
 
 export async function applyStyles(
@@ -188,21 +223,14 @@ export async function applyStyles(
     style.description = spec.description
 
     const literal = 'value' in spec.family ? spec.family.value : spec.family.fallback
-    const family = (await loads(api, literal)) ? literal : 'Inter'
+    const { family, bind } = await familyTarget(api, spec, byToken, byId)
     style.fontName = { family, style: 'Regular' }
     if (family !== literal)
       result.fontFallbacks.push({ style: spec.name, wanted: literal, used: family })
     if ('alias' in spec.family) {
-      // Figma refuses to bind a family it cannot load in every mode: load them first.
-      const variable = byToken.get(spec.family.alias)
-      const families = variable ? familiesOf(variable, byId) : []
-      const loaded = await Promise.all(families.map(item => loads(api, item)))
-      if (variable && families.length > 0 && loaded.every(Boolean))
-        style.setBoundVariable('fontFamily', variable)
-      else {
-        style.setBoundVariable('fontFamily', null)
+      style.setBoundVariable('fontFamily', bind)
+      if (!bind)
         result.fontFallbacks.push({ style: spec.name, wanted: spec.family.alias, used: family })
-      }
     }
     for (const [field, value] of [
       ['fontSize', spec.fontSize],

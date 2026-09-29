@@ -102,6 +102,27 @@ export function deriveStyles(model: SyncModel, raw: Record<string, string> = {})
     ? { alias: FONT_VARIABLE, fallback: firstFamily(fallbackStack || 'Inter') }
     : { value: firstFamily(raw[FONT_STACK] ?? 'Inter') }
 
+  // A token's number in its first mode, through aliases.
+  const numberOf = (token: string, depth = 0): number | null => {
+    const variable = variables.get(token)
+    const value = variable && Object.values(variable.values)[0]
+    if (!value || depth > 8) return null
+    if ('alias' in value) return numberOf(value.alias, depth + 1)
+    return 'value' in value && typeof value.value === 'number' ? value.value : null
+  }
+
+  // A model can list a token as skipped in one place and hold it as a variable in another.
+  const missingSizes = new Set(model.skipped.map(item => item.token).filter(t => !variables.has(t)))
+  for (const token of missingSizes)
+    for (const pair of TEXT_PAIRS) {
+      const step = pair.size.exec(token)?.[1]
+      if (step)
+        skipped.push({
+          name: `Text/${step}`,
+          reason: `the size token ${token} is not a Figma variable`,
+        })
+    }
+
   const text: TextStyleSpec[] = []
   for (const token of variables.keys()) {
     for (const pair of TEXT_PAIRS) {
@@ -111,6 +132,13 @@ export function deriveStyles(model: SyncModel, raw: Record<string, string> = {})
       const leading = pair.leading(step)
       if (!variables.has(leading)) {
         skipped.push({ name, reason: `no line height token (${leading})` })
+        continue
+      }
+      // A line height below its font size is a CSS ratio (1.5), not pixels.
+      const size = numberOf(token)
+      const height = numberOf(leading)
+      if (size !== null && height !== null && height < size) {
+        skipped.push({ name, reason: `unitless line height (${leading}); Figma needs pixels` })
         continue
       }
       text.push({

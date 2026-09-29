@@ -62,6 +62,7 @@ describe('deriveStyles', () => {
       lineHeight: { alias: '--typography-base-line-height' },
     })
     expect(styles.effects.map(style => style.name)).toContain('Shadow/2xl')
+    expect(styles.skipped).toEqual([])
   })
 
   it('skips a text step whose line height the model does not have', () => {
@@ -77,6 +78,45 @@ describe('deriveStyles', () => {
     expect(styles.skipped).toContainEqual({
       name: 'Text/xs',
       reason: 'no line height token (--text-xs-leading)',
+    })
+  })
+
+  it('skips a text step whose line height is unitless', () => {
+    const model: SyncModel = {
+      ...project.model,
+      collections: project.model.collections.map(collection => ({
+        ...collection,
+        variables: collection.variables.map(variable =>
+          variable.token === '--text-xs-leading'
+            ? {
+                ...variable,
+                values: Object.fromEntries(collection.modes.map(mode => [mode, { value: 1.5 }])),
+              }
+            : variable
+        ),
+      })),
+    }
+    const styles = deriveStyles(model, project.raw)
+    expect(styles.text.map(style => style.name)).not.toContain('Text/xs')
+    expect(styles.skipped).toContainEqual({
+      name: 'Text/xs',
+      reason: 'unitless line height (--text-xs-leading); Figma needs pixels',
+    })
+  })
+
+  it('says why a text step is missing when its size token was skipped', () => {
+    const model: SyncModel = {
+      ...project.model,
+      collections: project.model.collections.map(collection => ({
+        ...collection,
+        variables: collection.variables.filter(item => item.token !== '--text-xs-size'),
+      })),
+      skipped: [...project.model.skipped, { token: '--text-xs-size', reason: 'not a number' }],
+    }
+    const styles = deriveStyles(model, project.raw)
+    expect(styles.skipped).toContainEqual({
+      name: 'Text/xs',
+      reason: 'the size token --text-xs-size is not a Figma variable',
     })
   })
 })

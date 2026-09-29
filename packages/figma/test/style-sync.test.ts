@@ -185,4 +185,58 @@ describe('style sync', () => {
     expect(base?.boundVariables.fontFamily).toBeDefined()
     expect(result.fontFallbacks).toEqual([])
   })
+
+  it('repairs a style that fell back to Inter once its font loads', async () => {
+    const fonts = ['Inter']
+    const fake = await withVariables(fonts)
+    await applyStyles(fake.figma, styles, await planStyles(fake.figma, styles))
+    fonts.push('Geist')
+    expect((await planStyles(fake.figma, styles)).update).toContain('Text/base')
+  })
+
+  it('plans an update when a bound font family was unbound in Figma', async () => {
+    const model = fontModel('Geist', 'Inter')
+    const fake = await withVariables(['Inter', 'Geist'], model)
+    const derived = deriveStyles(model)
+    await applyStyles(fake.figma, derived, await planStyles(fake.figma, derived))
+    fake.textStyles.find(style => style.name === 'Text/base')?.setBoundVariable('fontFamily', null)
+    expect((await planStyles(fake.figma, derived)).update).toEqual(['Text/base'])
+  })
+
+  it('plans an update when the literal family of a font-variable style changed', async () => {
+    const model = fontModel("'Geist', sans-serif", "'Inter', sans-serif")
+    const fake = await withVariables(['Inter', 'Geist'], model)
+    const derived = deriveStyles(model)
+    await applyStyles(fake.figma, derived, await planStyles(fake.figma, derived))
+    const base = fake.textStyles.find(style => style.name === 'Text/base')
+    if (base) base.fontName = { family: 'Roboto', style: 'Bold' }
+    expect((await planStyles(fake.figma, derived)).update).toEqual(['Text/base'])
+  })
+
+  it('skips a text style whose size variable is not a number', async () => {
+    const model: SyncModel = {
+      ...project.model,
+      collections: project.model.collections.map(collection => ({
+        ...collection,
+        variables: collection.variables.map(variable =>
+          variable.token === '--text-base-size'
+            ? {
+                ...variable,
+                type: 'STRING' as const,
+                values: Object.fromEntries(
+                  collection.modes.map(mode => [mode, { value: 'large' }])
+                ),
+              }
+            : variable
+        ),
+      })),
+    }
+    const fake = await withVariables(undefined, model)
+    const plan = await planStyles(fake.figma, styles)
+    expect(plan.create).not.toContain('Text/base')
+    expect(plan.skipped).toContainEqual({
+      name: 'Text/base',
+      reason: 'variable --text-base-size is not a number',
+    })
+  })
 })
