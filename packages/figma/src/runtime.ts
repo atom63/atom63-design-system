@@ -3,13 +3,12 @@
  * VariablesApi, so the engine runs unchanged. Built into an IIFE, A63Figma,
  * and inlined into every script by scripts.ts.
  */
-import { applyPlan, readDocument, readSnapshot, type VariablesApi } from './apply'
+import { applyPlan, readDocument, readSnapshot } from './apply'
 import { type PackedModel, type PackedSnapshot, packSnapshot, unpackModel } from './pack'
 import { planSync, type SyncPlan } from './plan'
+import { applyStyles, planStyles, type StylesApi } from './style-sync'
 
-interface FigmaLike {
-  variables: VariablesApi
-}
+type FigmaLike = StylesApi
 
 /**
  * A script carries one part of the token set, so it cannot tell which variables
@@ -24,13 +23,30 @@ export async function sync(figma: FigmaLike, packed: PackedModel) {
   const plan = planSync(model, await readSnapshot(figma.variables, model))
   const applied = await applyPlan(figma.variables, model, plan)
   const after = planSync(model, await readSnapshot(figma.variables, model))
-  return { planned: partTotals(plan.totals), applied, verification: partTotals(after.totals) }
+  const result = {
+    planned: partTotals(plan.totals),
+    applied,
+    verification: partTotals(after.totals),
+  }
+  if (!model.styles) return result
+  const stylePlan = await planStyles(figma, model.styles)
+  const styleApplied = await applyStyles(figma, model.styles, stylePlan)
+  return {
+    ...result,
+    styles: {
+      planned: stylePlan,
+      applied: styleApplied,
+      verification: await planStyles(figma, model.styles),
+    },
+  }
 }
 
 export async function check(figma: FigmaLike, packed: PackedModel) {
   const model = unpackModel(packed)
   const plan = planSync(model, await readSnapshot(figma.variables, model))
-  return { planned: partTotals(plan.totals), verification: partTotals(plan.totals) }
+  const result = { planned: partTotals(plan.totals), verification: partTotals(plan.totals) }
+  if (!model.styles) return result
+  return { ...result, styles: await planStyles(figma, model.styles) }
 }
 
 /** Largest page a read returns, with room to spare; use_figma cuts a result at 20 KB. */

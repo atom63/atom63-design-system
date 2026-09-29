@@ -92,7 +92,7 @@ describe('Figma to code', () => {
     expect(pages.length).toBeGreaterThan(1)
     for (const page of pages) expect(JSON.stringify(page).length).toBeLessThan(15_000)
     const diff = diffTokens(
-      { model: atom63, sources: {}, notes: [] },
+      { model: atom63, sources: {}, raw: {}, notes: [] },
       unpackSnapshot(mergeSnapshots(pages))
     )
     expect(diff).toEqual({ changed: [], proposed: [], missing: [], orphaned: [] })
