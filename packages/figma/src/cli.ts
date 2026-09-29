@@ -11,7 +11,7 @@ import { parseArgs } from 'node:util'
 import { readTokenDirectory } from './css-files'
 import { buildProjectModel, type ProjectModel } from './css-model'
 import { diffTokens, formatDiff } from './diff'
-import { type PackedSnapshot, unpackSnapshot } from './pack'
+import { mergeSnapshots, type PackedSnapshot, unpackSnapshot } from './pack'
 import type { SyncModel } from './plan'
 import { buildReadScript, buildScripts } from './scripts'
 
@@ -46,7 +46,8 @@ const { values } = parseArgs({
     tokens: { type: 'string' },
     model: { type: 'string' },
     out: { type: 'string' },
-    figma: { type: 'string' },
+    figma: { type: 'string', multiple: true },
+    page: { type: 'string' },
   },
 })
 
@@ -66,10 +67,14 @@ try {
     }
     process.stdout.write(`${JSON.stringify(summary, null, 2)}\n`)
   } else if (command === 'read') {
-    writeFileSync(values.out ?? fail('pass --out <file>'), buildReadScript())
+    writeFileSync(
+      values.out ?? fail('pass --out <file>'),
+      buildReadScript(Number(values.page ?? 1))
+    )
   } else if (command === 'diff') {
-    const figmaFile = values.figma ?? fail('pass --figma <read-result.json>')
-    const figma = unpackSnapshot(JSON.parse(readFileSync(figmaFile, 'utf8')) as PackedSnapshot)
+    const figmaFiles = values.figma ?? fail('pass --figma <read-result.json> for every page')
+    const pages = figmaFiles.map(file => JSON.parse(readFileSync(file, 'utf8')) as PackedSnapshot)
+    const figma = unpackSnapshot(mergeSnapshots(pages))
     process.stdout.write(formatDiff(diffTokens(project(values), figma)))
   } else {
     fail('commands: sync, read, diff')

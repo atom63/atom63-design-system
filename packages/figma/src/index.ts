@@ -2,6 +2,7 @@ export * from './apply'
 export * from './diff'
 export * from './css-model'
 export {
+  mergeSnapshots,
   type PackedModel,
   packModel,
   type PackedValue,

@@ -120,6 +120,9 @@ export function unpackModel(packed: PackedModel): SyncModel {
  */
 export interface PackedSnapshot {
   r: 1
+  /** This page and how many there are; use_figma cuts a result at 20 KB, so reads come in pages. */
+  page?: number
+  pages?: number
   c: [
     name: string,
     modes: string[],
@@ -171,4 +174,20 @@ export function unpackSnapshot(packed: PackedSnapshot): SnapshotCollection[] {
       }
     }),
   }))
+}
+
+/** Joins every page of a read into one snapshot; throws when a page is missing. */
+export function mergeSnapshots(pages: PackedSnapshot[]): PackedSnapshot {
+  const count = pages[0]?.pages ?? 1
+  for (let page = 1; page <= count; page++)
+    if (!pages.some(item => (item.page ?? 1) === page))
+      throw new Error(`the read is missing page ${page} of ${count}; run that page's read script`)
+  const merged: PackedSnapshot = { r: 1, c: [] }
+  for (const page of [...pages].sort((left, right) => (left.page ?? 1) - (right.page ?? 1)))
+    for (const [name, modes, variables] of page.c) {
+      const found = merged.c.find(item => item[0] === name)
+      if (found) found[2].push(...variables)
+      else merged.c.push([name, modes, [...variables]])
+    }
+  return merged
 }

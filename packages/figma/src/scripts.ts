@@ -90,7 +90,10 @@ export function buildScripts(
   return scripts
 }
 
-/** A read-only script that returns every variable in the file, for diffTokens. */
-export function buildReadScript(): string {
-  return `${RUNTIME_SOURCE}\nreturn await A63Figma.read(figma);`
+/**
+ * A read-only script that returns one page of the file's variables; the result
+ * says how many pages there are. Merge the pages with mergeSnapshots.
+ */
+export function buildReadScript(page = 1): string {
+  return `${RUNTIME_SOURCE}\nreturn await A63Figma.read(figma, ${Math.max(1, Math.floor(page))});`
 }

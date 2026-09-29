@@ -5,7 +5,7 @@ import { applyPlan, readSnapshot } from '../src/apply'
 import { readTokenDirectory } from '../src/css-files'
 import { buildProjectModel } from '../src/css-model'
 import { diffTokens, formatDiff } from '../src/diff'
-import { type PackedSnapshot, unpackSnapshot } from '../src/pack'
+import { mergeSnapshots, type PackedSnapshot, unpackSnapshot } from '../src/pack'
 import { planSync, type SyncModel } from '../src/plan'
 import { buildReadScript, buildScripts } from '../src/scripts'
 import { createFakeFigma } from './fake-figma'
@@ -19,8 +19,18 @@ async function synced() {
   return fake
 }
 
+/** Every page of the read script, as an agent runs them. */
+async function readPages(run: (script: string) => Promise<unknown>) {
+  const pages: PackedSnapshot[] = []
+  for (let page = 1; ; page++) {
+    const result = (await run(buildReadScript(page))) as PackedSnapshot
+    pages.push(result)
+    if (page >= (result.pages ?? 1)) return pages
+  }
+}
+
 const read = async (run: (script: string) => Promise<unknown>) =>
-  unpackSnapshot((await run(buildReadScript())) as PackedSnapshot)
+  unpackSnapshot(mergeSnapshots(await readPages(run)))
 
 describe('Figma to code', () => {
   it('finds nothing right after a sync', async () => {
@@ -72,18 +82,26 @@ describe('Figma to code', () => {
     expect(formatDiff(diff)).toContain('Not in Figma yet')
   })
 
-  it('returns the whole Atom63 file compactly, and it reads back as in sync', async () => {
+  it('reads the whole Atom63 file in pages under the use_figma output limit', async () => {
     const atom63 = JSON.parse(
       readFileSync(resolve(__dirname, '../../styles/generated/atom63.figma-sync.json'), 'utf8')
     ) as SyncModel
     const { run } = createFakeFigma()
     for (const script of buildScripts(atom63, 'sync')) await run(script)
-    const result = await run(buildReadScript())
-    expect(JSON.stringify(result).length).toBeLessThan(100_000)
+    const pages = await readPages(run)
+    expect(pages.length).toBeGreaterThan(1)
+    for (const page of pages) expect(JSON.stringify(page).length).toBeLessThan(15_000)
     const diff = diffTokens(
       { model: atom63, sources: {}, notes: [] },
-      unpackSnapshot(result as PackedSnapshot)
+      unpackSnapshot(mergeSnapshots(pages))
     )
     expect(diff).toEqual({ changed: [], proposed: [], missing: [], orphaned: [] })
+  })
+
+  it('refuses a read with a page missing', async () => {
+    const { run } = await synced()
+    const pages = await readPages(run)
+    expect(pages.length).toBeGreaterThan(1)
+    expect(() => mergeSnapshots(pages.slice(1))).toThrow(/page 1/)
   })
 })

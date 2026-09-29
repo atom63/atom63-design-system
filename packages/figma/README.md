@@ -34,11 +34,14 @@ those moves: tell the user that designs bound to the retired variables need rebi
 
 ## Bring Figma edits into code
 
-1. `pnpm atom63-figma read --out .figma-sync/read.js`
-2. Run it with `use_figma`, and save what it returns as `.figma-sync/figma.json`.
-3. `pnpm atom63-figma diff --tokens src/styles/tokens --figma .figma-sync/figma.json` lists values
-   edited in Figma, variables made in Figma (no code syntax), tokens missing from the file, and
-   variables whose token the code no longer has.
+1. `pnpm atom63-figma read --page 1 --out .figma-sync/read-1.js`
+2. Run it with `use_figma`, and save what it returns as `.figma-sync/figma-1.json`. The result says
+   how many `pages` there are (`use_figma` cuts a result at 20 KB, so a read comes in pages of
+   about 14 KB); write, run and save pages 2 to N the same way.
+3. `pnpm atom63-figma diff --tokens src/styles/tokens --figma .figma-sync/figma-1.json --figma .figma-sync/figma-2.json …`
+   lists values edited in Figma, variables made in Figma (no code syntax), tokens missing from
+   the file, and variables whose token the code no longer has. It refuses a read with a page
+   missing.
 4. Apply the listed changes to the CSS. Keep a `var()` where the new value is another token, and
    where the code computes a value with `calc()`, change the input instead of the result.
 5. Sync again, and confirm the check scripts report no changes.

@@ -55,15 +55,20 @@ describe('atom63-figma', () => {
     expect(summary.skipped).toEqual([expect.objectContaining({ token: '--on-blue' })])
   })
 
-  it('diffs a read result against the code', async () => {
+  it('reads a file page by page and diffs the pages against the code', async () => {
     const out = temp('figma-')
-    run('read', '--out', join(out, 'read.js'))
     const { run: execute } = createFakeFigma()
-    const figma = await execute(readFileSync(join(out, 'read.js'), 'utf8'))
-    writeFileSync(join(out, 'figma.json'), JSON.stringify(figma))
-    expect(run('diff', '--tokens', tokens, '--figma', join(out, 'figma.json'))).toContain(
-      'Not in Figma yet'
-    )
+    const files: string[] = []
+    for (let page = 1; ; page++) {
+      run('read', '--page', String(page), '--out', join(out, `read-${page}.js`))
+      const result = (await execute(readFileSync(join(out, `read-${page}.js`), 'utf8'))) as {
+        pages: number
+      }
+      writeFileSync(join(out, `figma-${page}.json`), JSON.stringify(result))
+      files.push('--figma', join(out, `figma-${page}.json`))
+      if (page >= result.pages) break
+    }
+    expect(run('diff', '--tokens', tokens, ...files)).toContain('Not in Figma yet')
   })
 
   it('explains a missing input', () => {
