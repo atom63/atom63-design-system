@@ -12,11 +12,19 @@
   "sideEffects": false,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "bin": {
+    "atom63-figma": "./dist/cli.js"
+  },
   "exports": {
     ".": {
       "@atom63/source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./node": {
+      "@atom63/source": "./src/node.ts",
+      "types": "./dist/node.d.ts",
+      "import": "./dist/node.js"
     }
   },
   "files": [
@@ -27,7 +35,7 @@
     "build": "pnpm build:runtime && tsup",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --cache --max-warnings 0",
-    "pretest": "pnpm build:runtime",
+    "pretest": "pnpm build",
     "test": "vitest run"
   },
   "devDependencies": {
