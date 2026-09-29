@@ -3,7 +3,7 @@
  * VariablesApi, so the engine runs unchanged. Built into an IIFE, A63Figma,
  * and inlined into every script by scripts.ts.
  */
-import { applyPlan, readSnapshot, type VariablesApi } from './apply'
+import { applyPlan, readDocument, readSnapshot, type VariablesApi } from './apply'
 import { type PackedModel, unpackModel } from './pack'
 import { planSync } from './plan'
 
@@ -23,4 +23,9 @@ export async function check(figma: FigmaLike, packed: PackedModel) {
   const model = unpackModel(packed)
   const plan = planSync(model, await readSnapshot(figma.variables, model))
   return { planned: plan.totals, verification: plan.totals }
+}
+
+/** Every variable in the file, with tokens from code syntax, for diffing against code. */
+export async function read(figma: FigmaLike) {
+  return readDocument(figma.variables)
 }

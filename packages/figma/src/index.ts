@@ -1,5 +1,5 @@
 export * from './apply'
-export * from './change-list'
+export * from './diff'
 export * from './css-model'
 export {
   type PackedModel,
@@ -9,4 +9,4 @@ export {
   unpackModel,
 } from './pack'
 export * from './plan'
-export { buildScripts } from './scripts'
+export { buildReadScript, buildScripts } from './scripts'

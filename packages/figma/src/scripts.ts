@@ -89,3 +89,8 @@ export function buildScripts(
       throw new Error(`A sync script is ${script.length} characters, over ${maxLength}`)
   return scripts
 }
+
+/** A read-only script that returns every variable in the file, for diffTokens. */
+export function buildReadScript(): string {
+  return `${RUNTIME_SOURCE}\nreturn await A63Figma.read(figma);`
+}

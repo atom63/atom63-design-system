@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 import { applyPlan, readSnapshot, type VariablesApi } from '../src/apply'
-import { formatChangeList, planChangeList } from '../src/change-list'
+import { formatChangeList, planChangeList } from '../src/diff'
 import {
   buildProjectModel,
   type ColorResolver,
@@ -136,6 +136,23 @@ describe('Project mode: reading token CSS', () => {
     expect(plain.model.skipped.find(item => item.token === '--primary-foreground')?.reason).toBe(
       'a color that could not be computed here'
     )
+  })
+
+  it('skips a token that points at one it could not compute, and keeps the rest', () => {
+    const plain = buildProjectModel(files)
+    expect(
+      plain.model.skipped.find(item => item.token === '--sidebar-primary-foreground')?.reason
+    ).toBe('points at --primary-foreground, which is not synced')
+    const tokens = new Set(
+      plain.model.collections.flatMap(collection => collection.variables.map(item => item.token))
+    )
+    for (const collection of plain.model.collections)
+      for (const variable of collection.variables)
+        for (const value of Object.values(variable.values)) {
+          const target =
+            'alias' in value ? value.alias : 'composed' in value ? value.composed.alias : null
+          if (target) expect(tokens).toContain(target)
+        }
   })
 })
 

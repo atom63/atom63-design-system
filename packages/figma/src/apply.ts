@@ -188,6 +188,19 @@ export async function readSnapshot(
   return snapshot
 }
 
+/** Every local collection and variable, for comparing a file with code. */
+export async function readDocument(api: VariablesApi): Promise<SnapshotCollection[]> {
+  const names = (await api.getLocalVariableCollectionsAsync()).map(item => item.name)
+  const everything: SyncModel = {
+    schemaVersion: 1,
+    summary: { collections: names.length, variables: 0, aliasValues: 0, skipped: 0 },
+    skipped: [],
+    // readSnapshot reads modes and variables from the document; the model only names collections.
+    collections: names.map(name => ({ name, modes: [], variables: [] })),
+  }
+  return readSnapshot(api, everything)
+}
+
 /**
  * Writes the model's code syntax and scopes. Code syntax is the variable's
  * identity, so a token without one gets `var(<token>)`; scopes are left alone

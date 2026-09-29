@@ -1,5 +1,6 @@
 /**
- * Project mode, Figma → code: the variables edited in Figma since the last sync,
+ * Figma → code: how a Figma file differs from the code tokens. Code is the
+ * source, so the variables edited in Figma are the differences:
  * as a change list an agent (or a person) applies to the project's token CSS.
  * Code stays the source of truth, so nothing is written back automatically: the
  * list names the file, the selector and the value, and the edit happens in code,
@@ -25,10 +26,11 @@ export function planChangeList(
   snapshot: SnapshotCollection[]
 ): ProjectChange[] {
   const changes: ProjectChange[] = []
+  // A token is the same token in whichever collection the file holds it.
+  const byToken = new Map(
+    snapshot.flatMap(collection => collection.variables.map(item => [item.token, item] as const))
+  )
   for (const collection of project.model.collections) {
-    const current = snapshot.find(item => item.name === collection.name)
-    if (!current) continue
-    const byToken = new Map(current.variables.map(item => [item.token, item]))
     for (const variable of collection.variables) {
       const actual = byToken.get(variable.token)
       if (!actual) continue
@@ -101,4 +103,61 @@ export function formatChangeList(changes: ProjectChange[]): string {
     )
   }
   return `${lines.join('\n')}\n`
+}
+
+export interface TokenDiff {
+  /** Values that differ from the code, per token and mode. */
+  changed: ProjectChange[]
+  /** Variables with no code syntax: made in Figma, proposed as new tokens. */
+  proposed: { collection: string; name: string; values: Record<string, SyncValue | undefined> }[]
+  /** Code tokens the file does not have yet. */
+  missing: { token: string; collection: string }[]
+}
+
+export function diffTokens(project: ProjectModel, figma: SnapshotCollection[]): TokenDiff {
+  const tokensInFigma = new Set(
+    figma.flatMap(collection => collection.variables.map(variable => variable.token))
+  )
+  return {
+    changed: planChangeList(project, figma),
+    proposed: figma.flatMap(collection =>
+      collection.variables
+        .filter(variable => variable.token === null)
+        .map(variable => ({
+          collection: collection.name,
+          name: variable.name,
+          values: variable.values,
+        }))
+    ),
+    missing: project.model.collections.flatMap(collection =>
+      collection.variables
+        .filter(variable => !tokensInFigma.has(variable.token))
+        .map(variable => ({ token: variable.token, collection: collection.name }))
+    ),
+  }
+}
+
+/** The differences as a change list for an agent; empty when Figma matches the code. */
+export function formatDiff(diff: TokenDiff): string {
+  const parts = [formatChangeList(diff.changed).trimEnd()].filter(Boolean)
+  if (diff.proposed.length > 0)
+    parts.push(
+      [
+        '## Variables made in Figma',
+        '',
+        'These have no token in code. Add a token for each one the design keeps, then sync.',
+        '',
+        ...diff.proposed.map(
+          item =>
+            `- ${item.collection} / \`${item.name}\`: ${Object.entries(item.values)
+              .map(([mode, value]) => `${mode} \`${formatValue(value)}\``)
+              .join(', ')}`
+        ),
+      ].join('\n')
+    )
+  if (diff.missing.length > 0)
+    parts.push(
+      `## Not in Figma yet\n\n${diff.missing.length} tokens are missing from the file. Run the sync scripts.`
+    )
+  return parts.length > 0 ? `${parts.join('\n\n')}\n` : ''
 }
