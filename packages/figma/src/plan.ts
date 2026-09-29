@@ -14,6 +14,8 @@
  * aliases onto it, and retires the old one instead of leaving a stale copy.
  */
 
+import type { StyleSet } from './styles'
+
 export type SyncVariableType = 'COLOR' | 'FLOAT' | 'STRING'
 
 export interface SyncColor {
@@ -54,6 +56,8 @@ export interface SyncModel {
   summary: { collections: number; variables: number; aliasValues: number; skipped: number }
   collections: SyncCollection[]
   skipped: { token: string; reason: string }[]
+  /** Text and effect styles derived from the token set (styles.ts). */
+  styles?: StyleSet
 }
 
 /** Document state, reduced to what the plan compares. */

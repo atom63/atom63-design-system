@@ -26,6 +26,7 @@ function project(values: { tokens?: string; model?: string }): ProjectModel {
     return {
       model: JSON.parse(readFileSync(values.model, 'utf8')) as SyncModel,
       sources: {},
+      raw: {},
       notes: [],
     }
   return fail('pass --tokens <dir> or --model <json>')

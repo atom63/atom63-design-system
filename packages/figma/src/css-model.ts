@@ -39,6 +39,8 @@ export interface ProjectModel {
   model: SyncModel
   /** Where each variable's value comes from, per token and mode, for the change list. */
   sources: Record<string, Record<string, TokenSource>>
+  /** The effective `:root` expression of each skipped token, for styles. */
+  raw: Record<string, string>
   notes: string[]
 }
 
@@ -484,6 +486,11 @@ export function buildProjectModel(
 
   const skipped: SyncModel['skipped'] = []
   const sources: ProjectModel['sources'] = {}
+  const raw: ProjectModel['raw'] = {}
+  const remember = (token: string) => {
+    const declaration = effective(token, defaults)
+    if (declaration) raw[token] = declaration.expression
+  }
   const variablesByCollection = new Map<string, SyncVariable[]>()
   const syncedTokens = new Set(tokens)
 
@@ -521,6 +528,7 @@ export function buildProjectModel(
         token,
         reason: `varies on more than one axis (${axisNames.join(', ')}); Figma holds one per collection`,
       })
+      remember(token)
       continue
     }
     const axis = axisList.find(item => item.name === axisNames[0]) ?? null
@@ -549,6 +557,7 @@ export function buildProjectModel(
     }
     if (failure) {
       skipped.push({ token, reason: failure })
+      remember(token)
       continue
     }
     if (type) typeOf.set(token, type)
@@ -572,6 +581,7 @@ export function buildProjectModel(
           .find(target => target !== null && !present.has(target))
         if (!missing) return true
         skipped.push({ token: variable.token, reason: `points at ${missing}, which is not synced` })
+        remember(variable.token)
         changed = true
         return false
       })
@@ -638,6 +648,7 @@ export function buildProjectModel(
       skipped,
     },
     sources,
+    raw,
     notes,
   }
 }
