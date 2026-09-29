@@ -4,14 +4,15 @@
  * with its token CSS. `sync` writes use_figma scripts, `read` writes a script
  * that returns the file's variables, `diff` compares that result with the code.
  */
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { parseArgs } from 'node:util'
 
 import { readTokenDirectory } from './css-files'
 import { buildProjectModel, type ProjectModel } from './css-model'
 import { diffTokens, formatDiff } from './diff'
-import type { SnapshotCollection, SyncModel } from './plan'
+import { type PackedSnapshot, unpackSnapshot } from './pack'
+import type { SyncModel } from './plan'
 import { buildReadScript, buildScripts } from './scripts'
 
 function fail(message: string): never {
@@ -54,6 +55,9 @@ try {
     const { model } = project(values)
     const out = values.out ?? fail('pass --out <dir>')
     mkdirSync(out, { recursive: true })
+    // Scripts from an earlier run with more parts would write stale values.
+    for (const file of readdirSync(out))
+      if (/^(sync|check)-\d+\.js$/.test(file)) rmSync(join(out, file))
     const summary = {
       scripts: writeAll(out, 'sync', buildScripts(model, 'sync')),
       checks: writeAll(out, 'check', buildScripts(model, 'check')),
@@ -65,7 +69,7 @@ try {
     writeFileSync(values.out ?? fail('pass --out <file>'), buildReadScript())
   } else if (command === 'diff') {
     const figmaFile = values.figma ?? fail('pass --figma <read-result.json>')
-    const figma = JSON.parse(readFileSync(figmaFile, 'utf8')) as SnapshotCollection[]
+    const figma = unpackSnapshot(JSON.parse(readFileSync(figmaFile, 'utf8')) as PackedSnapshot)
     process.stdout.write(formatDiff(diffTokens(project(values), figma)))
   } else {
     fail('commands: sync, read, diff')

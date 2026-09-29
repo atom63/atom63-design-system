@@ -1,9 +1,16 @@
 /**
  * A compact encoding of a token set for use_figma scripts, which are limited
- * to 50,000 characters: colors as 16-bit hex, aliases as `@--token`, shared
+ * to 50,000 characters: colors as 24-bit hex per channel (close enough that
+ * the engine's 1e-6 comparison sees no change), aliases as `@--token`, shared
  * scope lists by index, and code syntax left out (it is always var(<token>)).
  */
-import type { SyncModel, SyncValue, SyncVariable, SyncVariableType } from './plan'
+import type {
+  SnapshotCollection,
+  SyncModel,
+  SyncValue,
+  SyncVariable,
+  SyncVariableType,
+} from './plan'
 
 export type PackedValue = number | string
 export type PackedVariable = [
@@ -22,16 +29,17 @@ export interface PackedModel {
 const TYPE_CODE: Record<SyncVariableType, 'C' | 'F' | 'S'> = { COLOR: 'C', FLOAT: 'F', STRING: 'S' }
 const CODE_TYPE = { C: 'COLOR', F: 'FLOAT', S: 'STRING' } as const
 
-const hex16 = (channel: number) =>
-  Math.round(Math.min(1, Math.max(0, channel)) * 65535)
+const CHANNEL_MAX = 0xffffff
+const hex24 = (channel: number) =>
+  Math.round(Math.min(1, Math.max(0, channel)) * CHANNEL_MAX)
     .toString(16)
-    .padStart(4, '0')
+    .padStart(6, '0')
 
 function packValue(value: SyncValue): PackedValue {
   if ('alias' in value) return `@${value.alias}`
   if ('composed' in value) return `@${value.composed.alias}*${value.composed.opacity}`
   if (typeof value.value === 'object')
-    return `#${[value.value.r, value.value.g, value.value.b, value.value.a].map(hex16).join('')}`
+    return `#${[value.value.r, value.value.g, value.value.b, value.value.a].map(hex24).join('')}`
   return value.value
 }
 
@@ -42,7 +50,7 @@ function unpackValue(packed: PackedValue, type: SyncVariableType): SyncValue {
   }
   if (type === 'COLOR' && typeof packed === 'string' && packed.startsWith('#')) {
     const channel = (index: number) =>
-      parseInt(packed.slice(1 + index * 4, 5 + index * 4), 16) / 65535
+      parseInt(packed.slice(1 + index * 6, 7 + index * 6), 16) / CHANNEL_MAX
     return { value: { r: channel(0), g: channel(1), b: channel(2), a: channel(3) } }
   }
   return { value: packed }
@@ -103,4 +111,64 @@ export function unpackModel(packed: PackedModel): SyncModel {
     collections,
     skipped: [],
   }
+}
+
+/**
+ * A file's variables as the read script returns them: small enough to pass
+ * through an agent. Ids are left out (diffing does not need them); a variable
+ * with no code syntax has token 0.
+ */
+export interface PackedSnapshot {
+  r: 1
+  c: [
+    name: string,
+    modes: string[],
+    variables: [name: string, token: string | 0, type: string, values: (PackedValue | null)[]][],
+  ][]
+}
+
+const SNAPSHOT_TYPES: Record<string, string> = { C: 'COLOR', F: 'FLOAT', S: 'STRING', B: 'BOOLEAN' }
+
+export function packSnapshot(snapshot: SnapshotCollection[]): PackedSnapshot {
+  return {
+    r: 1,
+    c: snapshot.map(collection => [
+      collection.name,
+      collection.modes,
+      collection.variables.map(variable => [
+        variable.name,
+        variable.token ?? 0,
+        variable.type[0],
+        collection.modes.map(mode => {
+          const value = variable.values[mode]
+          return value ? packValue(value) : null
+        }),
+      ]),
+    ]),
+  }
+}
+
+export function unpackSnapshot(packed: PackedSnapshot): SnapshotCollection[] {
+  if (packed?.r !== 1 || !Array.isArray(packed.c))
+    throw new Error('not a read result: run the read script and save what it returns')
+  return packed.c.map(([name, modes, variables], collectionIndex) => ({
+    id: `c${collectionIndex}`,
+    name,
+    modes,
+    variables: variables.map(([variableName, token, code, values], index) => {
+      const type = SNAPSHOT_TYPES[code] ?? code
+      return {
+        id: `c${collectionIndex}:${index}`,
+        name: variableName,
+        token: token === 0 ? null : token,
+        type,
+        values: Object.fromEntries(
+          modes.map((mode, position) => {
+            const value = values[position]
+            return [mode, value === null ? undefined : unpackValue(value, type as SyncVariableType)]
+          })
+        ),
+      }
+    }),
+  }))
 }

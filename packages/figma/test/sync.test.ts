@@ -238,6 +238,8 @@ describe('Atom63 Figma sync: a token moving to another collection', () => {
     expect(plan.totals.move).toBe(1)
     expect(plan.collections.find(item => item.name === 'Contract')?.orphaned).toEqual([])
     expect(result.moved).toBe(1)
+    // Without a document to search (use_figma has no rebind), the move says so.
+    expect(result.bindingsUnchecked).toBe(1)
 
     const newX = [...fake.variables.values()].find(
       item => tokenOfCodeSyntax(item?.codeSyntax?.WEB) === '--x'

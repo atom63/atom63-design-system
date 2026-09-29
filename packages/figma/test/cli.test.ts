@@ -30,6 +30,17 @@ describe('atom63-figma', () => {
       })
   })
 
+  it('removes scripts an earlier, larger run left behind', () => {
+    const out = temp('figma-')
+    writeFileSync(join(out, 'sync-9.js'), 'stale')
+    writeFileSync(join(out, 'check-9.js'), 'stale')
+    writeFileSync(join(out, 'notes.txt'), 'kept')
+    run('sync', '--tokens', tokens, '--out', out)
+    expect(readdirSync(out)).not.toContain('sync-9.js')
+    expect(readdirSync(out)).not.toContain('check-9.js')
+    expect(readdirSync(out)).toContain('notes.txt')
+  })
+
   it('reports a relative color it cannot compute, and syncs the rest', () => {
     const dir = temp('tokens-')
     writeFileSync(

@@ -112,9 +112,14 @@ export interface TokenDiff {
   proposed: { collection: string; name: string; values: Record<string, SyncValue | undefined> }[]
   /** Code tokens the file does not have yet. */
   missing: { token: string; collection: string }[]
+  /** Variables standing for a token the code no longer has; kept, so no design breaks. */
+  orphaned: { collection: string; name: string; token: string }[]
 }
 
 export function diffTokens(project: ProjectModel, figma: SnapshotCollection[]): TokenDiff {
+  const tokensInCode = new Set(
+    project.model.collections.flatMap(collection => collection.variables.map(item => item.token))
+  )
   const tokensInFigma = new Set(
     figma.flatMap(collection => collection.variables.map(variable => variable.token))
   )
@@ -133,6 +138,13 @@ export function diffTokens(project: ProjectModel, figma: SnapshotCollection[]): 
       collection.variables
         .filter(variable => !tokensInFigma.has(variable.token))
         .map(variable => ({ token: variable.token, collection: collection.name }))
+    ),
+    orphaned: figma.flatMap(collection =>
+      collection.variables.flatMap(variable =>
+        variable.token !== null && !tokensInCode.has(variable.token)
+          ? [{ collection: collection.name, name: variable.name, token: variable.token }]
+          : []
+      )
     ),
   }
 }
@@ -153,6 +165,16 @@ export function formatDiff(diff: TokenDiff): string {
               .map(([mode, value]) => `${mode} \`${formatValue(value)}\``)
               .join(', ')}`
         ),
+      ].join('\n')
+    )
+  if (diff.orphaned.length > 0)
+    parts.push(
+      [
+        '## Tokens the code no longer has',
+        '',
+        'Figma keeps these variables so no design loses a binding. Rebind designs, then delete them in Figma.',
+        '',
+        ...diff.orphaned.map(item => `- ${item.collection} / \`${item.name}\` (\`${item.token}\`)`),
       ].join('\n')
     )
   if (diff.missing.length > 0)

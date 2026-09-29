@@ -87,4 +87,21 @@ describe('identity by code syntax', () => {
     await applyPlan(api, model, plan)
     expect(made.valuesByMode[collections[0].modes[0].modeId]).toEqual({ r: 0, g: 1, b: 0, a: 1 })
   })
+
+  it('does not match by name a variable that already stands for another token', async () => {
+    const { api } = createFakeApi()
+    const color = { value: { r: 0, g: 0, b: 1, a: 1 } }
+    const one = (variables: SyncModel['collections'][number]['variables']): SyncModel => ({
+      ...model,
+      collections: [{ name: 'Base', modes: ['Value'], variables }],
+    })
+    const v1 = one([{ name: 'a', token: '--b', type: 'COLOR', values: { Value: color } }])
+    const v2 = one([
+      { name: 'b2', token: '--b', type: 'COLOR', values: { Value: color } },
+      { name: 'a', token: '--a', type: 'COLOR', values: { Value: color } },
+    ])
+    await applyPlan(api, v1, planSync(v1, await readSnapshot(api, v1)))
+    await applyPlan(api, v2, planSync(v2, await readSnapshot(api, v2)))
+    expect(planSync(v2, await readSnapshot(api, v2)).totals).toMatchObject({ create: 0, update: 0 })
+  })
 })

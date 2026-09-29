@@ -219,11 +219,18 @@ export function planSync(model: SyncModel, snapshot: SnapshotCollection[]): Sync
     const byToken = new Map(
       existing?.variables.filter(item => item.token).map(item => [item.token, item]) ?? []
     )
-    const byName = new Map(existing?.variables.map(item => [item.name, item]) ?? [])
+    // The name fallback adopts only variables that stand for no token yet (an
+    // older sync's, before code syntax), never one another token already claims.
+    const byName = new Map(
+      existing?.variables.filter(item => !item.token).map(item => [item.name, item]) ?? []
+    )
     const matched = new Set<string>()
 
     for (const variable of collection.variables) {
-      const current = byToken.get(variable.token) ?? byName.get(variable.name)
+      const byNameMatch = byName.get(variable.name)
+      const current =
+        byToken.get(variable.token) ??
+        (byNameMatch && !matched.has(byNameMatch.id) ? byNameMatch : undefined)
       if (!current) {
         plan.create += 1
         const elsewhere = documentVariableOf.get(variable.token)

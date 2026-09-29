@@ -1,11 +1,13 @@
+import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 import { applyPlan, readSnapshot } from '../src/apply'
 import { readTokenDirectory } from '../src/css-files'
 import { buildProjectModel } from '../src/css-model'
 import { diffTokens, formatDiff } from '../src/diff'
-import { planSync, type SnapshotCollection } from '../src/plan'
-import { buildReadScript } from '../src/scripts'
+import { type PackedSnapshot, unpackSnapshot } from '../src/pack'
+import { planSync, type SyncModel } from '../src/plan'
+import { buildReadScript, buildScripts } from '../src/scripts'
 import { createFakeFigma } from './fake-figma'
 
 const project = buildProjectModel(readTokenDirectory(resolve(__dirname, 'fixtures/project-tokens')))
@@ -18,13 +20,13 @@ async function synced() {
 }
 
 const read = async (run: (script: string) => Promise<unknown>) =>
-  (await run(buildReadScript())) as SnapshotCollection[]
+  unpackSnapshot((await run(buildReadScript())) as PackedSnapshot)
 
 describe('Figma to code', () => {
   it('finds nothing right after a sync', async () => {
     const { run } = await synced()
     const diff = diffTokens(project, await read(run))
-    expect(diff).toEqual({ changed: [], proposed: [], missing: [] })
+    expect(diff).toEqual({ changed: [], proposed: [], missing: [], orphaned: [] })
     expect(formatDiff(diff)).toBe('')
   })
 
@@ -52,10 +54,36 @@ describe('Figma to code', () => {
     expect(formatDiff(diff)).toContain('my-accent')
   })
 
+  it('lists variables whose token the code no longer has', async () => {
+    const { run, api, collections } = await synced()
+    const gone = api.createVariable('old/accent', collections[0], 'COLOR')
+    gone.setVariableCodeSyntax?.('WEB', 'var(--old-accent)')
+    const diff = diffTokens(project, await read(run))
+    expect(diff.orphaned).toEqual([
+      { collection: collections[0].name, name: 'old/accent', token: '--old-accent' },
+    ])
+    expect(formatDiff(diff)).toContain('--old-accent')
+  })
+
   it('lists tokens the file does not have', async () => {
     const { run } = createFakeFigma()
     const diff = diffTokens(project, await read(run))
     expect(diff.missing.length).toBe(project.model.summary.variables)
     expect(formatDiff(diff)).toContain('Not in Figma yet')
+  })
+
+  it('returns the whole Atom63 file compactly, and it reads back as in sync', async () => {
+    const atom63 = JSON.parse(
+      readFileSync(resolve(__dirname, '../../styles/generated/atom63.figma-sync.json'), 'utf8')
+    ) as SyncModel
+    const { run } = createFakeFigma()
+    for (const script of buildScripts(atom63, 'sync')) await run(script)
+    const result = await run(buildReadScript())
+    expect(JSON.stringify(result).length).toBeLessThan(100_000)
+    const diff = diffTokens(
+      { model: atom63, sources: {}, notes: [] },
+      unpackSnapshot(result as PackedSnapshot)
+    )
+    expect(diff).toEqual({ changed: [], proposed: [], missing: [], orphaned: [] })
   })
 })

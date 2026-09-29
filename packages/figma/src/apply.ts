@@ -78,6 +78,11 @@ export interface ApplyResult {
   bindingsRebound: number
   /** Bindings still on a retired variable; the plugin reports them. */
   bindingsRemaining: number
+  /**
+   * Moves whose design bindings were not checked, because the API cannot search
+   * the document (a use_figma script): designs may still use the retired copy.
+   */
+  bindingsUnchecked: number
 }
 
 /** The token a variable stands for, from its web code syntax `var(--token)`. */
@@ -226,6 +231,7 @@ export async function applyPlan(
     moved: 0,
     bindingsRebound: 0,
     bindingsRemaining: 0,
+    bindingsUnchecked: 0,
   }
   const { collections, variables } = await loadCollections(api, model)
   const collectionByName = new Map(collections.map(collection => [collection.name, collection]))
@@ -325,6 +331,8 @@ export async function applyPlan(
       const { rebound, remaining } = await api.rebindBindings(old, variable)
       result.bindingsRebound += rebound
       result.bindingsRemaining += remaining
+    } else {
+      result.bindingsUnchecked += 1
     }
     old.name = `${MOVED_PREFIX}/${old.name}`
     // Without its code syntax the retired copy no longer stands for the token.

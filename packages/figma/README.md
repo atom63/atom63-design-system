@@ -25,13 +25,20 @@ pnpm add -D @atom63/figma
    reason.
 
 Run the `check-N.js` scripts at any time to confirm the file still matches the code; they only
-read.
+read. Each script carries one part of the token set, so it does not report orphaned variables;
+`diff` does.
+
+When a token moves to another collection, the sync creates it there and retires the old variable
+as `(moved)/…`. A script cannot search the file's designs, so `applied.bindingsUnchecked` counts
+those moves: tell the user that designs bound to the retired variables need rebinding.
 
 ## Bring Figma edits into code
 
 1. `pnpm atom63-figma read --out .figma-sync/read.js`
 2. Run it with `use_figma`, and save what it returns as `.figma-sync/figma.json`.
-3. `pnpm atom63-figma diff --tokens src/styles/tokens --figma .figma-sync/figma.json`
+3. `pnpm atom63-figma diff --tokens src/styles/tokens --figma .figma-sync/figma.json` lists values
+   edited in Figma, variables made in Figma (no code syntax), tokens missing from the file, and
+   variables whose token the code no longer has.
 4. Apply the listed changes to the CSS. Keep a `var()` where the new value is another token, and
    where the code computes a value with `calc()`, change the input instead of the result.
 5. Sync again, and confirm the check scripts report no changes.
@@ -41,7 +48,9 @@ without it was made in Figma: syncs leave it alone, and `diff` lists it as a pro
 
 ## Atom63
 
-In the Atom63 repository, sync the generated token set instead of CSS:
+In the Atom63 repository, sync the generated token set instead of CSS. Its collections are named
+without a prefix (`Mode`, `Brand`, …); a file synced before that, with `Atom63 Mode` and so on, is
+not migrated, so sync into a new file.
 
 ```bash
 node packages/figma/dist/cli.js sync --model packages/styles/generated/atom63.figma-sync.json --out .figma-sync

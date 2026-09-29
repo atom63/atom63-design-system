@@ -1,10 +1,11 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
+import { readSnapshot } from '../src/apply'
 import { readTokenDirectory } from '../src/css-files'
 import { buildProjectModel } from '../src/css-model'
 import { packModel, unpackModel } from '../src/pack'
-import type { SyncModel } from '../src/plan'
+import { planSync, type SyncModel } from '../src/plan'
 import { buildScripts } from '../src/scripts'
 import { createFakeFigma } from './fake-figma'
 
@@ -53,8 +54,21 @@ describe('scripts for use_figma', () => {
     const { run } = createFakeFigma()
     for (const script of buildScripts(atom63, 'sync'))
       expect(await run(script)).toMatchObject({ verification: { create: 0, update: 0 } })
-    for (const script of buildScripts(atom63, 'check'))
-      expect(await run(script)).toMatchObject({ planned: { create: 0, update: 0 } })
+    for (const script of buildScripts(atom63, 'check')) {
+      const result = (await run(script)) as { planned: Record<string, number> }
+      expect(result).toMatchObject({ planned: { create: 0, update: 0 } })
+      // A part knows only its own tokens, so it cannot tell what is orphaned.
+      expect(result.planned).not.toHaveProperty('orphaned')
+    }
+  })
+
+  it('writes values the full-precision model reads as unchanged', async () => {
+    for (const model of [atom63, project]) {
+      const { run, api } = createFakeFigma()
+      for (const script of buildScripts(model, 'sync')) await run(script)
+      const plan = planSync(model, await readSnapshot(api, model))
+      expect(plan.totals).toMatchObject({ create: 0, update: 0 })
+    }
   })
 
   it('check scripts only read', async () => {
