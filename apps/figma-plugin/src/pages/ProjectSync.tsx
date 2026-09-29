@@ -75,6 +75,17 @@ export function ProjectSync() {
     }
   }
 
+  // Read pasted CSS shortly after it changes, so Preview is ready without leaving the field.
+  const pasteTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined)
+  const paste = (text: string) => {
+    setPasted(text)
+    clearTimeout(pasteTimer.current)
+    pasteTimer.current = setTimeout(
+      () => read(text.trim() ? [...files, { name: 'pasted.css', text }] : files),
+      300
+    )
+  }
+
   const pickFiles = async (list: FileList | null) => {
     if (!list) return
     const picked = await Promise.all(
@@ -104,6 +115,8 @@ export function ProjectSync() {
   const listChanges = () => {
     if (!project) return
     setError(null)
+    setPlan(null)
+    setApplied(null)
     setStatus('listing')
     postMessage({ type: 'sync-changes', project })
   }
@@ -140,8 +153,8 @@ export function ProjectSync() {
       </div>
       <Textarea
         aria-label="Token CSS"
-        onBlur={() => read(sources())}
-        onChange={event => setPasted(event.target.value)}
+        className={styles.paste}
+        onChange={event => paste(event.target.value)}
         placeholder="Or paste token CSS here"
         rows={4}
         value={pasted}
@@ -174,14 +187,15 @@ export function ProjectSync() {
         >
           Preview changes
         </Button>
-        <Button
-          disabled={!plan || pending === 0}
-          loading={status === 'applying'}
-          onClick={() => send('sync-apply')}
-          variant="primary"
-        >
-          {plan ? `Apply ${pending} changes` : 'Apply'}
-        </Button>
+        {pending > 0 && (
+          <Button
+            loading={status === 'applying'}
+            onClick={() => send('sync-apply')}
+            variant="primary"
+          >
+            {`Apply ${pending} ${pending === 1 ? 'change' : 'changes'}`}
+          </Button>
+        )}
       </div>
 
       {error && (
@@ -192,10 +206,12 @@ export function ProjectSync() {
 
       <SyncResults applied={applied} plan={plan} />
 
-      <SectionHeader
-        description="List the variables edited in this file as changes to the token CSS, with the file, the selector and the new value. Hand the list to your coding agent (or apply it yourself), then sync again."
-        title="Changes made in Figma"
-      />
+      <div className={styles.nextSection}>
+        <SectionHeader
+          description="List the variables edited in this file as changes to the token CSS, with the file, the selector and the new value. Hand the list to your coding agent (or apply it yourself), then sync again."
+          title="Changes made in Figma"
+        />
+      </div>
       <div className={styles.actions}>
         <Button
           disabled={!project}

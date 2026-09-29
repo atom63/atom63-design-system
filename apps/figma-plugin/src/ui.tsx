@@ -21,7 +21,8 @@ function App() {
   const [activePage, setActivePage] = useState<PageId>('sync')
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [viewMode, setViewMode] = useState<ViewMode>('default')
-  const [isDark, setIsDark] = useState(false)
+  // The mode in effect, so the toggle's first press always switches it.
+  const [isDark, setIsDark] = useState(() => document.documentElement.dataset.a63Mode === 'dark')
   const postMessage = usePostMessage()
   useDebugMode()
 
@@ -33,8 +34,8 @@ function App() {
   useFigmaMessage(msg => {
     if (msg.type === 'settings-loaded' && msg.data?.theme) {
       const t = msg.data.theme as PluginSettings['theme']
-      setIsDark(t === 'dark')
       applyTheme(t)
+      setIsDark(document.documentElement.dataset.a63Mode === 'dark')
     }
   })
 

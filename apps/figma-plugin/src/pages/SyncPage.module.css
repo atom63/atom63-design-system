@@ -53,3 +53,14 @@
 .files {
   display: none;
 }
+
+/* A second section on the page starts clear of the one above it. */
+.nextSection {
+  margin-block-start: var(--spacing-xl);
+}
+
+/* Pasted token CSS scrolls inside the field instead of growing the page. */
+.paste textarea {
+  max-block-size: 160px;
+  overflow-y: auto;
+}
