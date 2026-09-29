@@ -12,7 +12,8 @@ export function createFakeFigma({ fonts = ['Inter', 'Geist'] }: { fonts?: string
   const fake = createFakeApi()
   const familiesOf = (variable: VariableLike): string[] =>
     Object.values(variable.valuesByMode).flatMap(value => {
-      if (typeof value === 'string') return [value.split(',')[0].replace(/['"]/g, '').trim()]
+      // Figma takes a variable's whole string as one family name.
+      if (typeof value === 'string') return [value]
       if (value && typeof value === 'object' && 'id' in value) {
         const target = fake.variables.get((value as { id: string }).id)
         return target ? familiesOf(target) : []

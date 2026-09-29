@@ -17,6 +17,62 @@ async function withVariables(fonts?: string[], model: SyncModel = project.model)
   return fake
 }
 
+/** A model with one text step and a font variable over two family values. */
+function fontModel(sans: string, pixel: string): SyncModel {
+  return {
+    schemaVersion: 1,
+    summary: { collections: 2, variables: 5, aliasValues: 1, skipped: 0 },
+    skipped: [],
+    collections: [
+      {
+        name: 'Base',
+        modes: ['Value'],
+        variables: [
+          {
+            name: 'sans',
+            token: '--font-family-sans',
+            type: 'STRING',
+            values: { Value: { value: sans } },
+          },
+          {
+            name: 'pixel',
+            token: '--font-family-pixel',
+            type: 'STRING',
+            values: { Value: { value: pixel } },
+          },
+          {
+            name: 'size',
+            token: '--typography-base-font-size',
+            type: 'FLOAT',
+            values: { Value: { value: 15 } },
+          },
+          {
+            name: 'leading',
+            token: '--typography-base-line-height',
+            type: 'FLOAT',
+            values: { Value: { value: 23 } },
+          },
+        ],
+      },
+      {
+        name: 'Font',
+        modes: ['sans', 'pixel'],
+        variables: [
+          {
+            name: 'app',
+            token: '--a63-font-app',
+            type: 'STRING',
+            values: {
+              sans: { alias: '--font-family-sans' },
+              pixel: { alias: '--font-family-pixel' },
+            },
+          },
+        ],
+      },
+    ],
+  }
+}
+
 describe('style sync', () => {
   it('creates text styles bound to their variables, and effect styles', async () => {
     const fake = await withVariables()
@@ -90,58 +146,7 @@ describe('style sync', () => {
   })
 
   it('does not bind a font variable with a mode Figma cannot load', async () => {
-    const model: SyncModel = {
-      schemaVersion: 1,
-      summary: { collections: 2, variables: 5, aliasValues: 1, skipped: 0 },
-      skipped: [],
-      collections: [
-        {
-          name: 'Base',
-          modes: ['Value'],
-          variables: [
-            {
-              name: 'sans',
-              token: '--font-family-sans',
-              type: 'STRING',
-              values: { Value: { value: "'Geist', sans-serif" } },
-            },
-            {
-              name: 'pixel',
-              token: '--font-family-pixel',
-              type: 'STRING',
-              values: { Value: { value: "'Doto', monospace" } },
-            },
-            {
-              name: 'size',
-              token: '--typography-base-font-size',
-              type: 'FLOAT',
-              values: { Value: { value: 15 } },
-            },
-            {
-              name: 'leading',
-              token: '--typography-base-line-height',
-              type: 'FLOAT',
-              values: { Value: { value: 23 } },
-            },
-          ],
-        },
-        {
-          name: 'Font',
-          modes: ['sans', 'pixel'],
-          variables: [
-            {
-              name: 'app',
-              token: '--a63-font-app',
-              type: 'STRING',
-              values: {
-                sans: { alias: '--font-family-sans' },
-                pixel: { alias: '--font-family-pixel' },
-              },
-            },
-          ],
-        },
-      ],
-    }
+    const model = fontModel("'Geist', sans-serif", "'Doto', monospace")
     const fake = await withVariables(['Inter', 'Geist'], model)
     const derived = deriveStyles(model)
     const result = await applyStyles(fake.figma, derived, await planStyles(fake.figma, derived))
@@ -153,5 +158,31 @@ describe('style sync', () => {
       wanted: '--a63-font-app',
       used: 'Geist',
     })
+  })
+
+  it('does not bind a font variable whose values are CSS font stacks', async () => {
+    // Figma reads a variable's whole string as one family name.
+    const model = fontModel("'Geist', sans-serif", "'Inter', sans-serif")
+    const fake = await withVariables(['Inter', 'Geist'], model)
+    const derived = deriveStyles(model)
+    const result = await applyStyles(fake.figma, derived, await planStyles(fake.figma, derived))
+    const base = fake.textStyles.find(style => style.name === 'Text/base')
+    expect(base?.boundVariables.fontFamily).toBeUndefined()
+    expect(base?.fontName.family).toBe('Geist')
+    expect(result.fontFallbacks).toContainEqual({
+      style: 'Text/base',
+      wanted: '--a63-font-app',
+      used: 'Geist',
+    })
+  })
+
+  it('binds a font variable whose every mode is a family Figma loads', async () => {
+    const model = fontModel('Geist', 'Inter')
+    const fake = await withVariables(['Inter', 'Geist'], model)
+    const derived = deriveStyles(model)
+    const result = await applyStyles(fake.figma, derived, await planStyles(fake.figma, derived))
+    const base = fake.textStyles.find(style => style.name === 'Text/base')
+    expect(base?.boundVariables.fontFamily).toBeDefined()
+    expect(result.fontFallbacks).toEqual([])
   })
 })
