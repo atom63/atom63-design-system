@@ -1,7 +1,13 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
-import { applyPlan, MOVED_PREFIX, readSnapshot, TOKEN_KEY, type VariablesApi } from '../src/apply'
+import {
+  applyPlan,
+  MOVED_PREFIX,
+  readSnapshot,
+  tokenOfCodeSyntax,
+  type VariablesApi,
+} from '../src/apply'
 import { planSync, type SyncModel, valuesEqual } from '../src/plan'
 import { createFakeApi } from './fake-api'
 
@@ -48,7 +54,10 @@ describe('Atom63 Figma sync', () => {
     const { api, variables } = createFakeApi()
     await sync(api)
     const byToken = new Map(
-      [...variables.values()].map(variable => [variable.getPluginData(TOKEN_KEY), variable])
+      [...variables.values()].map(variable => [
+        tokenOfCodeSyntax(variable?.codeSyntax?.WEB),
+        variable,
+      ])
     )
     const surfacePage = byToken.get('--a63-surface-page')
     const lightModeId = Object.keys(surfacePage?.valuesByMode ?? {})[0]
@@ -61,7 +70,10 @@ describe('Atom63 Figma sync', () => {
     const { api, variables } = createFakeApi()
     await sync(api)
     const byToken = new Map(
-      [...variables.values()].map(variable => [variable.getPluginData(TOKEN_KEY), variable])
+      [...variables.values()].map(variable => [
+        tokenOfCodeSyntax(variable?.codeSyntax?.WEB),
+        variable,
+      ])
     )
     const focusRing = byToken.get('--a63-focus-ring')
     const [value] = Object.values(focusRing?.valuesByMode ?? {})
@@ -81,7 +93,7 @@ describe('Atom63 Figma sync', () => {
     await sync(api)
     const mode = collections.find(item => item.name === 'Atom63 Design Language')
     const height = [...variables.values()].find(
-      item => item.getPluginData(TOKEN_KEY) === '--a63-control-height-md'
+      item => tokenOfCodeSyntax(item?.codeSyntax?.WEB) === '--a63-control-height-md'
     )
     const iosModeId = mode?.modes.find(item => item.name === 'ios')?.modeId ?? ''
     height?.setValueForMode(iosModeId, 40)
@@ -98,7 +110,7 @@ describe('Atom63 Figma sync', () => {
     const { api, variables } = createFakeApi()
     await sync(api)
     const spacing = [...variables.values()].find(
-      item => item.getPluginData(TOKEN_KEY) === '--spacing-4'
+      item => tokenOfCodeSyntax(item?.codeSyntax?.WEB) === '--spacing-4'
     )
     const originalName = spacing?.name
     if (spacing) spacing.name = 'renamed/by/designer'
@@ -114,7 +126,7 @@ describe('Atom63 Figma sync', () => {
     await sync(api)
     const foundation = collections.find(item => item.name === 'Atom63 Foundation')
     const stale = foundation && api.createVariable('retired/token', foundation, 'FLOAT')
-    stale?.setPluginData(TOKEN_KEY, '--retired-token')
+    stale?.setVariableCodeSyntax?.('WEB', 'var(--retired-token)')
 
     const plan = planSync(model, await readSnapshot(api, model))
     expect(plan.totals.orphaned).toBe(1)
@@ -199,25 +211,31 @@ describe('Atom63 Figma sync: a token moving to another collection', () => {
   it('creates the variable in its new collection, re-points aliases and retires the old one', async () => {
     const fake = createFakeApi()
     await sync(fake.api, before)
-    const oldX = [...fake.variables.values()].find(item => item.getPluginData(TOKEN_KEY) === '--x')
+    const oldX = [...fake.variables.values()].find(
+      item => tokenOfCodeSyntax(item?.codeSyntax?.WEB) === '--x'
+    )
     const { plan, result } = await sync(fake.api, after)
 
     expect(plan.totals.move).toBe(1)
     expect(plan.collections.find(item => item.name === 'Atom63 Contract')?.orphaned).toEqual([])
     expect(result.moved).toBe(1)
 
-    const newX = [...fake.variables.values()].find(item => item.getPluginData(TOKEN_KEY) === '--x')
+    const newX = [...fake.variables.values()].find(
+      item => tokenOfCodeSyntax(item?.codeSyntax?.WEB) === '--x'
+    )
     expect(newX?.id).not.toBe(oldX?.id)
     const theme = fake.collections.find(item => item.name === 'Atom63 Theme')
     expect(theme?.variableIds).toContain(newX?.id)
 
     // --y now aliases the new variable in every mode.
-    const y = [...fake.variables.values()].find(item => item.getPluginData(TOKEN_KEY) === '--y')
+    const y = [...fake.variables.values()].find(
+      item => tokenOfCodeSyntax(item?.codeSyntax?.WEB) === '--y'
+    )
     expect(Object.values(y?.valuesByMode ?? {})).toEqual([{ type: 'VARIABLE_ALIAS', id: newX?.id }])
 
     // The old variable is kept, renamed and untagged, so no design loses a binding.
     expect(oldX?.name).toBe(`${MOVED_PREFIX}/x`)
-    expect(oldX?.getPluginData(TOKEN_KEY)).toBe('')
+    expect(tokenOfCodeSyntax(oldX?.codeSyntax?.WEB)).toBeNull()
     expect(oldX?.hiddenFromPublishing).toBe(true)
 
     const again = planSync(after, await readSnapshot(fake.api, after))

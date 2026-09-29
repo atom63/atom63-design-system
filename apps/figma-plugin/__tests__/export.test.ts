@@ -1,7 +1,13 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
-import { applyPlan, MOVED_PREFIX, readSnapshot, TOKEN_KEY, type VariablesApi } from '@atom63/figma'
+import {
+  applyPlan,
+  MOVED_PREFIX,
+  readSnapshot,
+  tokenOfCodeSyntax,
+  type VariablesApi,
+} from '@atom63/figma'
 import { planExport, toTokenPatch } from '../src/sync/export'
 import { planSync, type SyncModel, valuesEqual } from '@atom63/figma'
 import { createFakeApi } from '../../../packages/figma/test/fake-api'
@@ -24,7 +30,7 @@ describe('Atom63 Figma export', () => {
     const fake = createFakeApi()
     await sync(fake.api)
     const byToken = (token: string) =>
-      [...fake.variables.values()].find(item => item.getPluginData(TOKEN_KEY) === token)
+      [...fake.variables.values()].find(item => tokenOfCodeSyntax(item?.codeSyntax?.WEB) === token)
     const modeId = (collection: string, mode: string) =>
       fake.collections
         .find(item => item.name === collection)
