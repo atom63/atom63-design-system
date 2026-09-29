@@ -42,7 +42,7 @@ not a separate mode.
 ### 2. Existing project (a developer with an agent)
 
 1. Ask the agent to sync tokens to Figma, naming the Figma file.
-2. The agent calls the `figma_sync` tool, runs the scripts it returns through the Figma MCP
+2. The agent runs `atom63-figma sync`, runs the scripts it writes through the Figma MCP
    server, and runs the returned check, which must report zero creates and zero updates.
 3. After any token change in code, the agent syncs again.
 4. Without MCP, the developer uses the plugin's Import instead.
@@ -121,27 +121,27 @@ Published from the Atom63 repository. It contains:
   a read-only check script.
 - **Comparison:** takes the Figma variables read by a script and the code token set, and returns
   the differences with the CSS file and selector for each, for the agent to apply.
-- **CLI and MCP tools:** `atom63 figma sync` and `atom63 figma diff`, and the matching
-  `figma_sync` and `figma_diff` tools in `atom63 mcp`.
+- **CLI:** `atom63-figma sync`, `read` and `diff`, shipped in this package because `@atom63/cli`
+  is not published. MCP tools that wrap the same commands can come later.
 
 The site template takes `@atom63/figma` as a dev dependency only; nothing at run time depends on
 Atom63. Atom63 uses the same package with its own token CSS as input.
 
 ### Code to Figma
 
-1. The agent calls `figma_sync` with the project path.
-2. The tool parses the token CSS and returns the scripts in order, then the check script.
+1. The agent runs `atom63-figma sync` with the project's token directory.
+2. The CLI parses the token CSS and writes the sync scripts in order, and the check scripts.
 3. The agent runs each script with the Figma MCP server's `use_figma` on the named file.
-4. The check script plans the token set against the file and must report zero creates and zero
+4. The check scripts plan the token set against the file and must report zero creates and zero
    updates.
 
 ### Figma to code
 
-1. The agent calls `figma_diff`, which returns a read script.
+1. The agent runs `atom63-figma read`, which writes a read script.
 2. The agent runs it with `use_figma`; it returns the file's variables with their code syntax and
    values.
-3. The agent passes that result back to `figma_diff`, which compares it with the code and returns
-   the differences: changed values, proposed new tokens, and tokens missing in Figma.
+3. The agent saves that result and runs `atom63-figma diff`, which compares it with the code and
+   prints the differences: changed values, proposed new tokens, and tokens missing in Figma.
 4. The agent edits the CSS, then runs Code to Figma.
 
 No snapshot of the last sync is stored in the file: code is the source, so the Figma edits are
