@@ -1,5 +1,47 @@
 # @atom63/ui-react
 
+## 0.2.0-beta.11
+
+### Patch Changes
+
+- [#92](https://github.com/atom63/atom63-design-system/pull/92) [`b9170fd`](https://github.com/atom63/atom63-design-system/commit/b9170fd68cc540f22166cdd973f016778d86d5e6) Thanks [@atom63](https://github.com/atom63)! - Add `--a63-badge-error-foreground` (danger 700 in light mode, danger 400 in dark mode) and use it for the `error` Badge text. The badge used the danger action fill as its text color, which fell to about 2.5:1 contrast on its tint in every dark theme.
+
+- [#91](https://github.com/atom63/atom63-design-system/pull/91) [`5eae380`](https://github.com/atom63/atom63-design-system/commit/5eae38029e462db7ae671a4b5227d20d3cae8eb4) Thanks [@atom63](https://github.com/atom63)! - Clear the last craft-baseline violations: the ScrollableList glass control uses the overlay shadow tokens and follows the theme, the Calendar dropdown draws its focus ring on `:focus-visible` only, and the appearance swatches use the `border` token ring instead of palette colors and a `dark:` variant.
+
+- [#86](https://github.com/atom63/atom63-design-system/pull/86) [`aec1a7d`](https://github.com/atom63/atom63-design-system/commit/aec1a7d8f1c30ede29b16bbc57d89f9d342c3f19) Thanks [@atom63](https://github.com/atom63)! - `MediaLightbox` pages like a native photo viewer. The `MediaLightbox` props API is unchanged;
+  `useMediaLightbox` gains an optional `getOrigin`.
+  
+  - Page turns slide instead of crossfading. Once a drag locks horizontal, the photo follows the
+    pointer 1:1, and its neighbours sit beside it with a gap (`--a63-media-lightbox-gap`, default
+    `--a63-space-4`). On release it pages by distance or velocity and settles on a spring. Past the
+    first and last item the drag meets rubber-band resistance. A flick that reverses before release
+    springs back, and a press during a settle catches the photo. Arrow keys, the previous and next
+    buttons and an adjacent thumbnail animate the same track; a jump of more than one item cuts. A
+    two-finger trackpad swipe follows the fingers too and turns at most one page per gesture.
+    Right-to-left galleries mirror, and `prefers-reduced-motion` lands every turn instantly.
+  - On touch, a single tap on the photo or around it shows or hides the controls instead of
+    closing the viewer. A double-tap still zooms and does not toggle. Chrome hidden by a tap stays
+    hidden until the next tap; keyboard focus entering the chrome shows it. With a mouse, a click
+    outside the photo still closes, and the chrome still hides after idling.
+  - Below the `sm` breakpoint the photo has square corners on the black `--a63-media-stage`
+    backdrop, and the caption and counter use the on-media foreground.
+  - `Lightbox.Slides` now renders a `data-slot="media-lightbox-strip"` element inside the track,
+    and the track sets `touch-action: none`. Slides no longer carry an inline `opacity`.
+  - Closing into a thumbnail no longer flickers when the gallery was paged past it. Right before the
+    closing morph measures, the lightbox scrolls the return thumbnail into view instantly (the
+    overlay still covers the page), and it counts a thumbnail cut off by a scrolling ancestor as not
+    visible, so a still-clipped one cross-fades instead of morphing into a hidden box.
+  - `useMediaLightbox(count, { getOrigin })` takes the thumbnail for an item. With it, each page turn
+    scrolls that thumbnail into view behind the lightbox, so a row of tiles follows the gallery, and
+    `close()` without an argument morphs back into the thumbnail of the item on screen.
+  - Closing after a page turn morphs the photo on screen. The morph used to run on the slide the
+    gallery opened on, so the visible photo stayed full size and vanished with the overlay. Closing
+    also no longer restarts the opening zoom when it is handed a new origin, which drew the photo
+    full size for a frame just before the overlay left.
+- Updated dependencies [[`b9170fd`](https://github.com/atom63/atom63-design-system/commit/b9170fd68cc540f22166cdd973f016778d86d5e6), [`5047bc7`](https://github.com/atom63/atom63-design-system/commit/5047bc7b069223eb1949cbe4ce323bd7275a85cc), [`6c2845b`](https://github.com/atom63/atom63-design-system/commit/6c2845b4d4faeee76c0a08c10e289d6c7518c337), [`51070ad`](https://github.com/atom63/atom63-design-system/commit/51070ad6fdff5cd0666ff960b652dbee3c04a411), [`31fbb11`](https://github.com/atom63/atom63-design-system/commit/31fbb1165725b5b02abb2fefdd425882fdd6feaf), [`3d8dde4`](https://github.com/atom63/atom63-design-system/commit/3d8dde4f4ff22f529e4df60869df05bef74b8287)]:
+  - @atom63/styles@0.1.0-beta.7
+  - @atom63/ui-foundation@0.1.1-beta.4
+
 ## 0.2.0-beta.10
 
 ### Minor Changes
