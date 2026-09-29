@@ -1,10 +1,4 @@
-import type {
-  CollectionLike,
-  ModeLike,
-  RawValue,
-  VariableLike,
-  VariablesApi,
-} from '../src/sync/apply'
+import type { CollectionLike, ModeLike, RawValue, VariableLike, VariablesApi } from '../src/apply'
 
 /** In-memory stand-in for the slice of `figma.variables` the sync uses. */
 export function createFakeApi({ maxModes = 10 } = {}) {

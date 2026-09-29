@@ -1,8 +1,8 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
-import { applyPlan, readSnapshot, type VariablesApi } from '../src/sync/apply'
-import { formatChangeList, planChangeList } from '../src/sync/change-list'
+import { applyPlan, readSnapshot, type VariablesApi } from '../src/apply'
+import { formatChangeList, planChangeList } from '../src/change-list'
 import {
   buildProjectModel,
   type ColorResolver,
@@ -10,9 +10,9 @@ import {
   evaluateNumber,
   parseColor,
   variableName,
-} from '../src/sync/css-model'
-import { planSync, type SyncModel, type SyncVariable } from '../src/sync/plan'
-import { createFakeApi } from '../test/fake-api'
+} from '../src/css-model'
+import { planSync, type SyncModel, type SyncVariable } from '../src/plan'
+import { createFakeApi } from './fake-api'
 
 /** The site template's token files, in the order its index.css imports them. */
 const files: CssFile[] = ['palette', 'axes', 'semantic', 'scale', 'theme'].map(name => ({

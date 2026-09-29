@@ -8,11 +8,11 @@
 
 import figmaSyncModel from '@atom63/styles/figma-sync.json'
 
-import { applyPlan, readSnapshot, type VariablesApi } from './sync/apply'
-import { formatChangeList, planChangeList } from './sync/change-list'
+import { applyPlan, readSnapshot, type VariablesApi } from '@atom63/figma'
+import { formatChangeList, planChangeList } from '@atom63/figma'
 import { planExport, toTokenPatch } from './sync/export'
 import { rebindBindings } from './sync/rebind'
-import { planSync, type SyncModel, type SyncPlan } from './sync/plan'
+import { planSync, type SyncModel, type SyncPlan } from '@atom63/figma'
 import type { PluginSettings, SyncPlanSummary, UIToMainMessage } from './types/messages'
 
 // Show the plugin UI (resizable by default)
@@ -180,7 +180,7 @@ async function handleUIMessage(msg: UIToMainMessage) {
           const bv = (paint as any).boundVariables || {}
 
           if (paint.type === 'SOLID') {
-            const solid = paint as SolidPaint
+            const solid = paint
             paints.push({
               paintType: 'SOLID',
               color: rgbToHex(solid.color),
@@ -210,7 +210,7 @@ async function handleUIMessage(msg: UIToMainMessage) {
           } else if (paint.type === 'IMAGE') {
             paints.push({
               paintType: 'IMAGE',
-              opacity: (paint as ImagePaint).opacity ?? 1,
+              opacity: paint.opacity ?? 1,
             })
           } else {
             paints.push({
@@ -286,7 +286,7 @@ async function handleUIMessage(msg: UIToMainMessage) {
             if (e.type === 'LAYER_BLUR' || e.type === 'BACKGROUND_BLUR') {
               return {
                 effectType: e.type,
-                description: `${e.type === 'LAYER_BLUR' ? 'blur' : 'bg blur'} ${(e as BlurEffect).radius}px`,
+                description: `${e.type === 'LAYER_BLUR' ? 'blur' : 'bg blur'} ${e.radius}px`,
                 radiusVariable: await resolveVarName(bv.radius),
               }
             }
@@ -341,13 +341,10 @@ async function handleUIMessage(msg: UIToMainMessage) {
       for (const id of styleIds) {
         try {
           let style: BaseStyle | null = null
-          if (category === 'paint') style = (await figma.getStyleByIdAsync(id)) as PaintStyle | null
-          else if (category === 'text')
-            style = (await figma.getStyleByIdAsync(id)) as TextStyle | null
-          else if (category === 'effect')
-            style = (await figma.getStyleByIdAsync(id)) as EffectStyle | null
-          else if (category === 'grid')
-            style = (await figma.getStyleByIdAsync(id)) as GridStyle | null
+          if (category === 'paint') style = await figma.getStyleByIdAsync(id)
+          else if (category === 'text') style = await figma.getStyleByIdAsync(id)
+          else if (category === 'effect') style = await figma.getStyleByIdAsync(id)
+          else if (category === 'grid') style = await figma.getStyleByIdAsync(id)
           if (style) {
             style.remove()
             success++
@@ -409,7 +406,7 @@ async function handleUIMessage(msg: UIToMainMessage) {
           }
 
           if (style.type === 'PAINT') {
-            const src = style as PaintStyle
+            const src = style
             const dup = figma.createPaintStyle()
             dup.name = `${src.name} copy`
             dup.description = src.description
@@ -417,7 +414,7 @@ async function handleUIMessage(msg: UIToMainMessage) {
             newStyleIds.push(dup.id)
             success++
           } else if (style.type === 'TEXT') {
-            const src = style as TextStyle
+            const src = style
             const dup = figma.createTextStyle()
             dup.name = `${src.name} copy`
             dup.description = src.description
@@ -432,7 +429,7 @@ async function handleUIMessage(msg: UIToMainMessage) {
             newStyleIds.push(dup.id)
             success++
           } else if (style.type === 'EFFECT') {
-            const src = style as EffectStyle
+            const src = style
             const dup = figma.createEffectStyle()
             dup.name = `${src.name} copy`
             dup.description = src.description
@@ -440,7 +437,7 @@ async function handleUIMessage(msg: UIToMainMessage) {
             newStyleIds.push(dup.id)
             success++
           } else if (style.type === 'GRID') {
-            const src = style as GridStyle
+            const src = style
             const dup = figma.createGridStyle()
             dup.name = `${src.name} copy`
             dup.description = src.description
@@ -483,11 +480,11 @@ async function handleUIMessage(msg: UIToMainMessage) {
           }
 
           if (style.type === 'PAINT') {
-            const paintStyle = style as PaintStyle
+            const paintStyle = style
             if (edit.color != null || edit.opacity != null) {
               const paints = [...paintStyle.paints]
               if (paints.length > 0 && paints[0].type === 'SOLID') {
-                const solid = paints[0] as SolidPaint
+                const solid = paints[0]
                 let newColor = solid.color
                 if (edit.color) {
                   const hex = edit.color.replace('#', '')
@@ -503,12 +500,12 @@ async function handleUIMessage(msg: UIToMainMessage) {
                   opacity: edit.opacity ?? solid.opacity ?? 1,
                   visible: solid.visible,
                   blendMode: solid.blendMode,
-                } as SolidPaint
+                }
                 paintStyle.paints = paints
               }
             }
           } else if (style.type === 'TEXT') {
-            const textStyle = style as TextStyle
+            const textStyle = style
             if (edit.fontFamily || edit.fontStyle) {
               const newFont = {
                 family: edit.fontFamily || textStyle.fontName.family,
@@ -754,12 +751,12 @@ async function handleUIMessage(msg: UIToMainMessage) {
             if (!style) continue
 
             if (style.type === 'PAINT') {
-              const paintStyle = style as PaintStyle
+              const paintStyle = style
               paintStyle.paints.forEach((paint, pi) => {
                 if (paint.type === 'SOLID') {
                   const bv = (paint as any).boundVariables || {}
                   if (!bv.color) {
-                    const solid = paint as SolidPaint
+                    const solid = paint
                     const alpha = solid.opacity ?? 1
                     const key = colorKey(solid.color.r, solid.color.g, solid.color.b, alpha)
                     const match = findByColor(key) || findColorByName(paintStyle.name)
@@ -799,7 +796,7 @@ async function handleUIMessage(msg: UIToMainMessage) {
                 }
               })
             } else if (style.type === 'TEXT') {
-              const textStyle = style as TextStyle
+              const textStyle = style
               const bv = (textStyle as any).boundVariables || {}
               const styleName = textStyle.name
 
@@ -956,17 +953,13 @@ async function handleUIMessage(msg: UIToMainMessage) {
           }
 
           if (style.type === 'PAINT') {
-            const paintStyle = style as PaintStyle
+            const paintStyle = style
             const paints = [...paintStyle.paints]
 
             if (field.startsWith('solid:')) {
               const pi = Number.parseInt(field.split(':')[1], 10)
               if (paints[pi]?.type === 'SOLID') {
-                paints[pi] = figma.variables.setBoundVariableForPaint(
-                  paints[pi] as SolidPaint,
-                  'color',
-                  variable
-                )
+                paints[pi] = figma.variables.setBoundVariableForPaint(paints[pi], 'color', variable)
                 paintStyle.paints = paints
                 success++
                 applied.push({ styleId, field })
@@ -989,8 +982,8 @@ async function handleUIMessage(msg: UIToMainMessage) {
                     color: stop.color,
                     position: stop.position,
                     boundVariables: { color: alias },
-                  } as any
-                  paints[pi] = { ...grad, gradientStops: stops } as any
+                  }
+                  paints[pi] = { ...grad, gradientStops: stops }
                   paintStyle.paints = paints
                   success++
                   applied.push({ styleId, field })
@@ -1004,7 +997,7 @@ async function handleUIMessage(msg: UIToMainMessage) {
               failed++
             }
           } else if (style.type === 'TEXT') {
-            const textStyle = style as TextStyle
+            const textStyle = style
             const fieldMap: Record<string, string> = {
               fontSize: 'fontSize',
               lineHeight: 'lineHeight',
@@ -1053,17 +1046,13 @@ async function handleUIMessage(msg: UIToMainMessage) {
           }
 
           if (style.type === 'PAINT') {
-            const paintStyle = style as PaintStyle
+            const paintStyle = style
             const paints = [...paintStyle.paints]
 
             if (field.startsWith('solid:')) {
               const pi = Number.parseInt(field.split(':')[1], 10)
               if (paints[pi]?.type === 'SOLID') {
-                paints[pi] = figma.variables.setBoundVariableForPaint(
-                  paints[pi] as SolidPaint,
-                  'color',
-                  null as any
-                )
+                paints[pi] = figma.variables.setBoundVariableForPaint(paints[pi], 'color', null)
                 paintStyle.paints = paints
                 success++
               } else {
@@ -1082,8 +1071,8 @@ async function handleUIMessage(msg: UIToMainMessage) {
                   stops[si] = {
                     color: stop.color,
                     position: stop.position,
-                  } as any
-                  paints[pi] = { ...grad, gradientStops: stops } as any
+                  }
+                  paints[pi] = { ...grad, gradientStops: stops }
                   paintStyle.paints = paints
                   success++
                 } else {
@@ -1096,16 +1085,12 @@ async function handleUIMessage(msg: UIToMainMessage) {
               failed++
             }
           } else if (style.type === 'EFFECT') {
-            const effectStyle = style as EffectStyle
+            const effectStyle = style
             if (field.startsWith('effect:')) {
               const ei = Number.parseInt(field.split(':')[1], 10)
               const effects = [...effectStyle.effects]
               if (effects[ei]) {
-                effects[ei] = figma.variables.setBoundVariableForEffect(
-                  effects[ei],
-                  'color',
-                  null as any
-                )
+                effects[ei] = figma.variables.setBoundVariableForEffect(effects[ei], 'color', null)
                 effectStyle.effects = effects
                 success++
               } else {
@@ -1115,7 +1100,7 @@ async function handleUIMessage(msg: UIToMainMessage) {
               failed++
             }
           } else if (style.type === 'TEXT') {
-            const textStyle = style as TextStyle
+            const textStyle = style
             const textFields = ['fontSize', 'lineHeight', 'fontFamily', 'fontWeight', 'fontStyle']
             if (textFields.includes(field)) {
               textStyle.setBoundVariable(field as any, null)
@@ -1182,7 +1167,7 @@ async function handleUIMessage(msg: UIToMainMessage) {
               'type' in value &&
               value.type === 'VARIABLE_ALIAS'
             ) {
-              const refVar = await figma.variables.getVariableByIdAsync((value as VariableAlias).id)
+              const refVar = await figma.variables.getVariableByIdAsync(value.id)
               valuesByMode[modeName] = refVar ? `{${refVar.name}}` : String(value)
             } else if (typeof value === 'object' && value !== null && 'r' in value) {
               const c = value as RGBA
@@ -1444,7 +1429,7 @@ async function handleUIMessage(msg: UIToMainMessage) {
           const newVar = figma.variables.createVariable(
             variable.name,
             targetCollection,
-            variable.resolvedType as 'COLOR' | 'FLOAT' | 'STRING' | 'BOOLEAN'
+            variable.resolvedType
           )
           newVar.description = variable.description
 
@@ -1508,7 +1493,7 @@ async function handleUIMessage(msg: UIToMainMessage) {
           const newVar = figma.variables.createVariable(
             `${variable.name} copy`,
             collection,
-            variable.resolvedType as 'COLOR' | 'FLOAT' | 'STRING' | 'BOOLEAN'
+            variable.resolvedType
           )
           newVar.description = variable.description
 

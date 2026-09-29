@@ -262,6 +262,9 @@ importers:
 
   apps/figma-plugin:
     dependencies:
+      '@atom63/figma':
+        specifier: workspace:*
+        version: link:../../packages/figma
       '@atom63/styles':
         specifier: workspace:*
         version: link:../../packages/styles
@@ -625,6 +628,30 @@ importers:
       '@atom63/cli':
         specifier: workspace:*
         version: link:../cli
+
+  packages/figma:
+    devDependencies:
+      '@atom63/eslint-config':
+        specifier: workspace:*
+        version: link:../../config/eslint-config
+      '@atom63/tsconfig':
+        specifier: workspace:*
+        version: link:../../config/tsconfig
+      '@types/node':
+        specifier: ^26.3.0
+        version: 26.6.2
+      eslint:
+        specifier: 10.7.0
+        version: 10.7.0(jiti@2.7.0)
+      tsup:
+        specifier: ^8.3.5
+        version: 8.5.1(@microsoft/api-extractor@7.59.2(@types/node@26.6.2))(jiti@2.7.0)(postcss@8.5.28)(tsx@4.23.15)(typescript@5.8.3)(yaml@2.9.1)
+      typescript:
+        specifier: 'catalog:'
+        version: 5.8.3
+      vitest:
+        specifier: 'catalog:'
+        version: 4.1.11(@types/node@26.6.2)(@vitest/browser-playwright@4.1.11)(jsdom@29.1.1)(vite@8.1.4(@types/node@26.6.2)(esbuild@0.28.2)(jiti@2.7.0)(sass@1.105.0)(tsx@4.23.15)(yaml@2.9.1))
 
   packages/inform:
     dependencies:

@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from 'react'
 
 import { Alert, Button, CopyButton, SectionHeader, Textarea } from '../components/ui'
 import { useFigmaMessage, usePostMessage } from '../hooks/useFigmaMessage'
-import { buildProjectModel, type CssFile, type ProjectModel } from '../sync/css-model'
+import { buildProjectModel, type CssFile, type ProjectModel } from '@atom63/figma'
 import type { SyncApplyResultMessage, SyncPlanSummary } from '../types/messages'
 import { createBrowserColorResolver } from '../utils/css-color'
 import { SyncResults } from './SyncPage'

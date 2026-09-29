@@ -1,0 +1,7 @@
+{
+  "extends": "@atom63/tsconfig/node.json",
+  "compilerOptions": {
+    "types": ["node", "vitest/globals"]
+  },
+  "include": ["src", "test"]
+}
