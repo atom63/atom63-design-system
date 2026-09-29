@@ -7,16 +7,31 @@ import { buildProjectModel } from '../src/css-model'
 import { packModel, unpackModel } from '../src/pack'
 import { planSync, type SyncModel } from '../src/plan'
 import { buildScripts } from '../src/scripts'
+import { deriveStyles } from '../src/styles'
 import { createFakeFigma } from './fake-figma'
 
 const atom63 = JSON.parse(
   readFileSync(resolve(__dirname, '../../styles/generated/atom63.figma-sync.json'), 'utf8')
 ) as SyncModel
-const project = buildProjectModel(
+const projectTokens = buildProjectModel(
   readTokenDirectory(resolve(__dirname, 'fixtures/project-tokens'))
-).model
+)
+const project = projectTokens.model
+const projectRaw = projectTokens.raw
 
 describe('scripts for use_figma', () => {
+  it('writes styles in the last part, and a second run plans no style changes', async () => {
+    const model = { ...project, styles: deriveStyles(project, projectRaw) }
+    const { run, textStyles, effectStyles } = createFakeFigma()
+    const scripts = buildScripts(model, 'sync')
+    let last: { styles?: { verification: { create: string[]; update: string[] } } } = {}
+    for (const script of scripts) last = (await run(script)) as typeof last
+    expect(textStyles.length).toBe(model.styles.text.length)
+    expect(effectStyles.length).toBe(model.styles.effects.length)
+    expect(last.styles?.verification).toMatchObject({ create: [], update: [] })
+    for (const script of buildScripts(model, 'check')) last = (await run(script)) as typeof last
+  })
+
   it('packs and unpacks a token set without losing anything', () => {
     for (const model of [atom63, project]) {
       const back = unpackModel(packModel(model))

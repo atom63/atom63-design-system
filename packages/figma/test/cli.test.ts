@@ -17,13 +17,18 @@ describe('atom63-figma', () => {
     const summary = JSON.parse(run('sync', '--tokens', tokens, '--out', out)) as {
       scripts: string[]
       checks: string[]
+      styles: { text: number; effects: number }
     }
     expect(readdirSync(out).sort()).toEqual([...summary.checks, ...summary.scripts].sort())
-    const { run: execute } = createFakeFigma()
+    expect(summary.styles.text).toBeGreaterThan(0)
+    expect(summary.styles.effects).toBeGreaterThan(0)
+    const { run: execute, textStyles, effectStyles } = createFakeFigma()
     for (const file of summary.scripts)
       expect(await execute(readFileSync(join(out, file), 'utf8'))).toMatchObject({
         verification: { create: 0, update: 0 },
       })
+    expect(textStyles).toHaveLength(summary.styles.text)
+    expect(effectStyles).toHaveLength(summary.styles.effects)
     for (const file of summary.checks)
       expect(await execute(readFileSync(join(out, file), 'utf8'))).toMatchObject({
         planned: { create: 0, update: 0 },

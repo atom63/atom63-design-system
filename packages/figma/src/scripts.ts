@@ -81,9 +81,14 @@ export function buildScripts(
     groups[groups.length - 1].push(entry)
     used += size
   }
-  const scripts = groups.map((group, index) =>
-    wrap(packModel(partOf(model, group)), action, index + 1, groups.length)
-  )
+  // Styles ride in the last part, after every variable they bind to exists.
+  const stylesLength = model.styles ? JSON.stringify(model.styles).length + 8 : 0
+  if (stylesLength > 0 && used + stylesLength > budget) groups.push([])
+  const scripts = groups.map((group, index) => {
+    const last = index === groups.length - 1
+    const part = { ...partOf(model, group), styles: last ? model.styles : undefined }
+    return wrap(packModel(part), action, index + 1, groups.length)
+  })
   for (const script of scripts)
     if (script.length >= maxLength)
       throw new Error(`A sync script is ${script.length} characters, over ${maxLength}`)
