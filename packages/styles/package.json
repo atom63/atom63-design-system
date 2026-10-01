@@ -121,8 +121,8 @@
     "@atom63/eslint-config": "workspace:*",
     "@vitest/browser": "4.1.11",
     "@vitest/browser-playwright": "4.1.11",
-    "eslint": "10.7.0",
-    "playwright": "1.61.1",
+    "eslint": "10.11.0",
+    "playwright": "1.63.0",
     "vitest": "catalog:"
   }
 }
