@@ -73,3 +73,11 @@ Add `--json` for a typed `{ type, data }` envelope. `atom63 manifest` lists ever
 10. Keep the native semantics components render (buttons, links, labels, dialogs) and give every icon-only control an accessible name. Every story runs axe in CI; code that removes semantics fails it.
 
 <!-- atom63:agents:end -->
+
+## Cursor Cloud specific instructions
+
+- The image Node is 22, which satisfies `engines`. CI installs Node 24 from `.nvmrc`. Both are supported.
+- `pnpm install --frozen-lockfile` is not enough for commands that import published `dist` output. Build `@atom63/ui-foundation`, `@atom63/ui-react`, `@atom63/mdx`, `@atom63/brand`, `@atom63/inform`, `@atom63/agent`, `@atom63/widgets`, and `@atom63/figma` first. `pnpm dev:docs` (port 6200) and the Vite example resolve the `@atom63/source` condition and track source.
+- Storybook is `pnpm --filter @atom63/storybook dev` on port 6006. The Vite example is `pnpm --filter atom63-vite-basic-example dev` on port 5173.
+- Storybook browser tests need Playwright Chromium: `pnpm exec playwright install chromium`.
+- Swift package tests and the iOS demo need Xcode on macOS. They do not run in this Linux environment.
