@@ -10,12 +10,13 @@ import {
   TYPE_SCALES,
 } from '@atom63/figma'
 import { SegmentedControl } from '@atom63/ui-react'
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 
 import { Alert, Button, CopyButton, Input, SectionHeader } from '../components/ui'
 import { useFigmaMessage, usePostMessage } from '../hooks/useFigmaMessage'
 import { createBrowserColorResolver } from '../utils/css-color'
 import styles from './app.module.css'
+import { createdNote } from './create-state'
 import { downloadFile } from './download'
 import { Outcome } from './Outcome'
 import { previewValues } from './preview'
@@ -35,6 +36,9 @@ export function Create({ onDone }: { onDone: () => void }) {
   const [busy, setBusy] = useState(false)
   const [applied, setApplied] = useState<SyncOutcome | undefined>()
   const [error, setError] = useState<string | null>(null)
+  // The choices the file was created with; its default modes cannot change afterwards.
+  const [createdWith, setCreatedWith] = useState<TemplateChoices | null>(null)
+  const sending = useRef<TemplateChoices | null>(null)
 
   // Create and Export use these same files, so the exported CSS is what the file holds.
   const built = useMemo(():
@@ -47,15 +51,18 @@ export function Create({ onDone }: { onDone: () => void }) {
     }
   }, [choices, resolveColor])
   const preview = 'error' in built ? null : previewValues(built.model)
+  const note = createdNote(createdWith, choices)
 
   useFigmaMessage(message => {
-    if (message.type === 'applied') setApplied(message.data)
+    if (message.type === 'applied') {
+      setApplied(message.data)
+      setCreatedWith(sending.current)
+    }
     if (message.type === 'error') setError(message.data.message)
     if (message.type === 'applied' || message.type === 'error') setBusy(false)
   })
 
   const set = <K extends keyof TemplateChoices>(key: K, value: TemplateChoices[K]) => {
-    setApplied(undefined)
     setChoices(current => ({ ...current, [key]: value }))
   }
   const setBrand = (value: string) => {
@@ -66,6 +73,7 @@ export function Create({ onDone }: { onDone: () => void }) {
     if ('error' in built) return
     setError(null)
     setBusy(true)
+    sending.current = choices
     postMessage({ type: 'apply', model: built.model })
   }
 
@@ -161,7 +169,12 @@ export function Create({ onDone }: { onDone: () => void }) {
       )}
 
       <div className={styles.actions}>
-        <Button disabled={'error' in built} loading={busy} onClick={create} variant="primary">
+        <Button
+          disabled={'error' in built || createdWith !== null}
+          loading={busy}
+          onClick={create}
+          variant="primary"
+        >
           Create in this file
         </Button>
         <Button onClick={onDone} variant="ghost">
@@ -174,6 +187,14 @@ export function Create({ onDone }: { onDone: () => void }) {
         </Alert>
       )}
       <Outcome applied={applied} />
+      {note && (
+        <Alert
+          title="Default modes"
+          variant={note.startsWith('This file now') ? 'info' : 'warning'}
+        >
+          {note}
+        </Alert>
+      )}
 
       {!('error' in built) && (
         <>

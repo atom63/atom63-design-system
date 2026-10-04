@@ -1,10 +1,11 @@
-import type { CheckOutcome, CssFile, SyncOutcome } from '@atom63/figma'
+import type { CssFile } from '@atom63/figma'
 import { useMemo, useRef, useState } from 'react'
 
 import { Alert, Button, SectionHeader, Textarea } from '../components/ui'
 import { useFigmaMessage, usePostMessage } from '../hooks/useFigmaMessage'
 import { createBrowserColorResolver } from '../utils/css-color'
 import styles from './app.module.css'
+import { type ImportEvent, type ImportResults, nextResults } from './import-state'
 import { Outcome } from './Outcome'
 import { orderCssFiles, type ReadProject, readProject } from './read-css'
 
@@ -16,8 +17,8 @@ export function Import({ onDone }: { onDone: () => void }) {
   const [files, setFiles] = useState<CssFile[]>([])
   const [pasted, setPasted] = useState('')
   const [busy, setBusy] = useState<'plan' | 'apply' | null>(null)
-  const [planned, setPlanned] = useState<CheckOutcome | undefined>()
-  const [applied, setApplied] = useState<SyncOutcome | undefined>()
+  const [results, setResults] = useState<ImportResults>({})
+  const update = (event: ImportEvent) => setResults(current => nextResults(current, event))
   const [error, setError] = useState<string | null>(null)
 
   const project = useMemo((): ReadProject | { error: string } | null => {
@@ -31,8 +32,8 @@ export function Import({ onDone }: { onDone: () => void }) {
   }, [files, pasted, resolveColor])
 
   useFigmaMessage(message => {
-    if (message.type === 'planned') setPlanned(message.data)
-    if (message.type === 'applied') setApplied(message.data)
+    if (message.type === 'planned') update({ type: 'planned', data: message.data })
+    if (message.type === 'applied') update({ type: 'applied', data: message.data })
     if (message.type === 'error') setError(message.data.message)
     if (['planned', 'applied', 'error'].includes(message.type)) setBusy(null)
   })
@@ -44,15 +45,16 @@ export function Import({ onDone }: { onDone: () => void }) {
         Array.from(list).map(async file => ({ name: file.name, text: await file.text() }))
       )
     )
-    setPlanned(undefined)
-    setApplied(undefined)
+    update({ type: 'source-changed' })
   }
   const send = (type: 'plan' | 'apply') => {
     if (!project || 'error' in project) return
     setError(null)
     setBusy(type)
+    if (type === 'plan') update({ type: 'plan-sent' })
     postMessage({ type, model: project.model })
   }
+  const { planned, applied } = results
   const pending = planned
     ? planned.planned.create +
       planned.planned.update +
@@ -81,7 +83,10 @@ export function Import({ onDone }: { onDone: () => void }) {
       </div>
       <Textarea
         aria-label="Token CSS"
-        onChange={event => setPasted(event.target.value)}
+        onChange={event => {
+          setPasted(event.target.value)
+          update({ type: 'source-changed' })
+        }}
         placeholder="Or paste token CSS here"
         rows={4}
         value={pasted}
@@ -124,7 +129,7 @@ export function Import({ onDone }: { onDone: () => void }) {
           {error}
         </Alert>
       )}
-      <Outcome applied={applied} planned={applied ? undefined : planned} />
+      <Outcome applied={applied} planned={planned} />
     </div>
   )
 }
