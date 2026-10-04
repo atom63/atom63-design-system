@@ -3,10 +3,16 @@
  * VariablesApi, so the engine runs unchanged. Built into an IIFE, A63Figma,
  * and inlined into every script by scripts.ts.
  */
-import { applyPlan, readDocument, readSnapshot } from './apply'
+import { applyPlan, type ApplyResult, readDocument, readSnapshot } from './apply'
 import { type PackedModel, type PackedSnapshot, packSnapshot, unpackModel } from './pack'
-import { planSync, type SyncPlan } from './plan'
-import { applyStyles, planStyles, type StylesApi } from './style-sync'
+import { planSync, type SyncModel, type SyncPlan } from './plan'
+import {
+  applyStyles,
+  planStyles,
+  type StylePlan,
+  type StyleResult,
+  type StylesApi,
+} from './style-sync'
 
 type FigmaLike = StylesApi
 
@@ -18,8 +24,20 @@ function partTotals({ orphaned: _orphaned, ...totals }: SyncPlan['totals']) {
   return totals
 }
 
-export async function sync(figma: FigmaLike, packed: PackedModel) {
-  const model = unpackModel(packed)
+export type PartTotals = Omit<SyncPlan['totals'], 'orphaned'>
+export interface CheckOutcome {
+  planned: PartTotals
+  verification: PartTotals
+  styles?: StylePlan
+}
+export interface SyncOutcome {
+  planned: PartTotals
+  applied: ApplyResult
+  verification: PartTotals
+  styles?: { planned: StylePlan; applied: StyleResult; verification: StylePlan }
+}
+
+export async function syncModel(figma: FigmaLike, model: SyncModel): Promise<SyncOutcome> {
   const plan = planSync(model, await readSnapshot(figma.variables, model))
   const applied = await applyPlan(figma.variables, model, plan)
   const after = planSync(model, await readSnapshot(figma.variables, model))
@@ -41,13 +59,16 @@ export async function sync(figma: FigmaLike, packed: PackedModel) {
   }
 }
 
-export async function check(figma: FigmaLike, packed: PackedModel) {
-  const model = unpackModel(packed)
+export async function checkModel(figma: FigmaLike, model: SyncModel): Promise<CheckOutcome> {
   const plan = planSync(model, await readSnapshot(figma.variables, model))
   const result = { planned: partTotals(plan.totals), verification: partTotals(plan.totals) }
   if (!model.styles) return result
   return { ...result, styles: await planStyles(figma, model.styles) }
 }
+
+export const sync = (figma: FigmaLike, packed: PackedModel) => syncModel(figma, unpackModel(packed))
+export const check = (figma: FigmaLike, packed: PackedModel) =>
+  checkModel(figma, unpackModel(packed))
 
 /** Largest page a read returns, with room to spare; use_figma cuts a result at 20 KB. */
 const PAGE_LIMIT = 14_000
