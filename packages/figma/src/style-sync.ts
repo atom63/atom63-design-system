@@ -165,7 +165,15 @@ function sameText(
   )
 }
 
-export async function planStyles(api: StylesApi, styles: StyleSet): Promise<StylePlan> {
+/**
+ * `coming` names the variables the same sync is about to create, with their
+ * types, so a preview of an empty file plans the text styles bound to them.
+ */
+export async function planStyles(
+  api: StylesApi,
+  styles: StyleSet,
+  coming: ReadonlyMap<string, string> = new Map()
+): Promise<StylePlan> {
   const { byToken, byId } = await variablesOf(api.variables)
   const text = new Map((await api.getLocalTextStylesAsync()).map(style => [style.name, style]))
   const effects = new Map((await api.getLocalEffectStylesAsync()).map(style => [style.name, style]))
@@ -173,7 +181,7 @@ export async function planStyles(api: StylesApi, styles: StyleSet): Promise<Styl
   for (const spec of styles.text) {
     const missing = [spec.fontSize, spec.lineHeight]
       .map(value => ('alias' in value ? value.alias : null))
-      .find(alias => alias && !byToken.has(alias))
+      .find(alias => alias && !byToken.has(alias) && !coming.has(alias))
     if (missing) {
       plan.skipped.push({ name: spec.name, reason: `variable ${missing} is not in the file` })
       continue
@@ -181,7 +189,7 @@ export async function planStyles(api: StylesApi, styles: StyleSet): Promise<Styl
     // Binding a size or line height to a non-number fails and rolls back the whole script.
     const notNumber = [spec.fontSize, spec.lineHeight]
       .map(value => ('alias' in value ? value.alias : null))
-      .find(alias => alias && byToken.get(alias)?.resolvedType !== 'FLOAT')
+      .find(alias => alias && (byToken.get(alias)?.resolvedType ?? coming.get(alias)) !== 'FLOAT')
     if (notNumber) {
       plan.skipped.push({ name: spec.name, reason: `variable ${notNumber} is not a number` })
       continue

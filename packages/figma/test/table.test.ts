@@ -19,6 +19,14 @@ describe('in-process sync', () => {
     expect(outcome.styles?.verification).toMatchObject({ create: [], update: [] })
   })
 
+  it('plans text styles whose variables the same sync will create', async () => {
+    const outcome = await checkModel(createFakeFigma().figma, model)
+    expect(outcome.styles?.create).toHaveLength(
+      model.styles.text.length + model.styles.effects.length
+    )
+    expect(outcome.styles?.skipped).toEqual([])
+  })
+
   it('checks a synced file as unchanged', async () => {
     const fake = createFakeFigma()
     await syncModel(fake.figma, model)

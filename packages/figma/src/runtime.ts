@@ -63,7 +63,12 @@ export async function checkModel(figma: FigmaLike, model: SyncModel): Promise<Ch
   const plan = planSync(model, await readSnapshot(figma.variables, model))
   const result = { planned: partTotals(plan.totals), verification: partTotals(plan.totals) }
   if (!model.styles) return result
-  return { ...result, styles: await planStyles(figma, model.styles) }
+  const coming = new Map(
+    plan.changes.flatMap(change =>
+      change.kind === 'create' ? [[change.variable.token, change.variable.type] as const] : []
+    )
+  )
+  return { ...result, styles: await planStyles(figma, model.styles, coming) }
 }
 
 export const sync = (figma: FigmaLike, packed: PackedModel) => syncModel(figma, unpackModel(packed))
