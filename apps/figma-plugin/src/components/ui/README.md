@@ -13,7 +13,7 @@ This folder is what the pages import from `components/ui`:
 | Plugin-specific                                                       | `CopyButton` (the plugin's clipboard fallback for Figma's iframe), `ErrorBoundary`, `SectionHeader`, `Tooltip`             |
 
 Pages may also import Atom63 components directly from `@atom63/ui-react` when no adapter is
-needed, as the Sync and Manage pages do for `Tabs` and `SegmentedControl`. Look components up
+needed, as the Create view does for `SegmentedControl`. Look components up
 with `pnpm atom63 component <name>` from the repository root.
 
 Style plugin-specific pieces with CSS modules that read tokens (`var(--primary)`,

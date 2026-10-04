@@ -15,13 +15,13 @@ has the plugin: approved plugins are not reviewed again.
    ```
 
    The build writes `apps/figma-plugin/dist/code.js` and `dist/ui.html`, which `manifest.json`
-   points at. The Atom63 tokens are bundled from `packages/styles` as it is at that commit; the
-   Sync page shows the `@atom63/styles` version they come from.
+   points at. The site template's token CSS that Create builds on is bundled from
+   `packages/figma/template/tokens` as it is at that commit.
 
 2. Try the build in a real file: in the desktop app, **Plugins** > **Development** > **Import
-   plugin from manifest…**, pick `apps/figma-plugin/manifest.json`, then run both Sync modes
-   (Atom63, and Project with the site template's `src/styles/tokens`). Check that a second
-   Preview finds nothing to change.
+   plugin from manifest…**, pick `apps/figma-plugin/manifest.json`, then in a new file run Create,
+   and in another new file Import with the site template's `src/styles/tokens`. Check that a
+   second Preview finds nothing to change.
 
 3. Move the `CHANGELOG.md` entry's date from "unreleased" to the publish date. Its text is the
    release note.

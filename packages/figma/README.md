@@ -65,6 +65,19 @@ variables only.
 Variables are matched by their web code syntax, `var(--token)`, which Dev Mode shows. A variable
 without it was made in Figma: syncs leave it alone, and `diff` lists it as a proposed token.
 
+## For plugins
+
+The Figma plugin uses the same engine in process:
+
+- `buildTemplateFiles(choices)` writes the site template's token CSS (bundled in `template/tokens`)
+  with a brand ramp, the default neutral, radius, type scale and font. `TEMPLATE_DEFAULTS` returns
+  the template unchanged.
+- `brandRamp(hex)` generates the eleven steps of a brand ramp in OKLCH, kept inside sRGB.
+- `syncModel(figma, model)` and `checkModel(figma, model)` sync or check a token set against a
+  `StylesApi`. They return the same results as the scripts.
+- `readTokenTable(figma)` counts the collections and variables that carry a code syntax, and the
+  `Text/` and `Shadow/` styles.
+
 ## Atom63
 
 In the Atom63 repository, sync the generated token set instead of CSS. Its collections are named

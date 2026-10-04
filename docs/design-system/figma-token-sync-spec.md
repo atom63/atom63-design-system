@@ -1,6 +1,7 @@
 # Figma token sync: design
 
-Status: design agreed on 2026-09-28, waiting for review of this document. It replaces the plugin
+Status: agreed on 2026-09-28; plans 1 to 3 are implemented (the `@atom63/figma` package and CLI,
+text and effect styles, and the plugin's Create and Import). It replaces the plugin
 direction in [figma-plugin-update-plan.md](./figma-plugin-update-plan.md): the v14 plugin on
 `main` is not published, and the plugin is rebuilt from the needs below.
 
