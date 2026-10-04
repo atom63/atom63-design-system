@@ -11,6 +11,7 @@ import type {
   SyncVariable,
   SyncVariableType,
 } from './plan'
+import type { StyleSet } from './styles'
 
 export type PackedValue = number | string
 export type PackedVariable = [
@@ -24,6 +25,8 @@ export interface PackedModel {
   /** Distinct scope lists; variables point at them by index. `null` means "leave alone". */
   s: (string[] | null)[]
   c: [name: string, modes: string[], variables: PackedVariable[]][]
+  /** Text and effect styles; small, so they travel unpacked. */
+  y?: StyleSet
 }
 
 const TYPE_CODE: Record<SyncVariableType, 'C' | 'F' | 'S'> = { COLOR: 'C', FLOAT: 'F', STRING: 'S' }
@@ -79,7 +82,8 @@ export function packModel(model: SyncModel): PackedModel {
     })
     return [collection.name, collection.modes, variables] as PackedModel['c'][number]
   })
-  return { s: keys.map(key => JSON.parse(key) as string[] | null), c }
+  const s = keys.map(key => JSON.parse(key) as string[] | null)
+  return model.styles ? { s, c, y: model.styles } : { s, c }
 }
 
 export function unpackModel(packed: PackedModel): SyncModel {
@@ -110,6 +114,7 @@ export function unpackModel(packed: PackedModel): SyncModel {
     summary: { collections: collections.length, variables, aliasValues: 0, skipped: 0 },
     collections,
     skipped: [],
+    ...(packed.y ? { styles: packed.y } : {}),
   }
 }
 

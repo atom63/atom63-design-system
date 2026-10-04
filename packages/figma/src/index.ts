@@ -11,3 +11,5 @@ export {
 } from './pack'
 export * from './plan'
 export { buildReadScript, buildScripts } from './scripts'
+export * from './styles'
+export * from './style-sync'

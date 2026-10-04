@@ -14,6 +14,7 @@ import { diffTokens, formatDiff } from './diff'
 import { mergeSnapshots, type PackedSnapshot, unpackSnapshot } from './pack'
 import type { SyncModel } from './plan'
 import { buildReadScript, buildScripts } from './scripts'
+import { deriveStyles } from './styles'
 
 function fail(message: string): never {
   process.stderr.write(`atom63-figma: ${message}\n`)
@@ -26,6 +27,7 @@ function project(values: { tokens?: string; model?: string }): ProjectModel {
     return {
       model: JSON.parse(readFileSync(values.model, 'utf8')) as SyncModel,
       sources: {},
+      raw: {},
       notes: [],
     }
   return fail('pass --tokens <dir> or --model <json>')
@@ -48,12 +50,14 @@ const { values } = parseArgs({
     out: { type: 'string' },
     figma: { type: 'string', multiple: true },
     page: { type: 'string' },
+    'no-styles': { type: 'boolean' },
   },
 })
 
 try {
   if (command === 'sync') {
-    const { model } = project(values)
+    const { model, raw } = project(values)
+    model.styles = values['no-styles'] ? undefined : deriveStyles(model, raw)
     const out = values.out ?? fail('pass --out <dir>')
     mkdirSync(out, { recursive: true })
     // Scripts from an earlier run with more parts would write stale values.
@@ -64,6 +68,11 @@ try {
       checks: writeAll(out, 'check', buildScripts(model, 'check')),
       variables: model.collections.reduce((total, item) => total + item.variables.length, 0),
       skipped: model.skipped,
+      styles: model.styles && {
+        text: model.styles.text.length,
+        effects: model.styles.effects.length,
+        skipped: model.styles.skipped,
+      },
     }
     process.stdout.write(`${JSON.stringify(summary, null, 2)}\n`)
   } else if (command === 'read') {
