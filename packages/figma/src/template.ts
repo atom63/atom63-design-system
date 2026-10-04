@@ -32,14 +32,39 @@ export const TEMPLATE_DEFAULTS: TemplateChoices = {
   font: 'Geist',
 }
 
-/** Moves `:root` onto the block of the chosen value of a `data-*` axis. */
+/**
+ * Makes the chosen value of a `data-*` axis the default: its block takes
+ * `:root` and the place of the current default block, which moves to where the
+ * chosen block was. The default block has to come first, because `:root` and an
+ * attribute selector weigh the same and the later block wins.
+ */
 function moveDefault(css: string, attribute: string, value: string): string {
-  const current = new RegExp(`:root,\\s*(\\[data-${attribute}=["'][^"']+["']\\])`)
-  const target = new RegExp(`(\\[data-${attribute}=["']${value}["']\\]) \\{`)
-  const stripped = css.replace(current, '$1')
-  if (!target.test(stripped))
-    throw new Error(`The template has no data-${attribute}="${value}" block`)
-  return stripped.replace(target, ':root,\n$1 {')
+  const current = new RegExp(`:root,\\s*\\[data-${attribute}=["'][^"']+["']\\] \\{`).exec(css)
+  const target = new RegExp(`\\[data-${attribute}=["']${value}["']\\] \\{`).exec(css)
+  if (!target) throw new Error(`The template has no data-${attribute}="${value}" block`)
+  if (!current) throw new Error(`The template has no default data-${attribute} block`)
+  const currentEnd = css.indexOf('\n}', current.index) + 2
+  if (target.index >= current.index && target.index < currentEnd) return css
+  const targetEnd = css.indexOf('\n}', target.index) + 2
+  const currentBlock = css.slice(current.index, currentEnd).replace(/^:root,\s*/, '')
+  const targetBlock = `:root,\n${css.slice(target.index, targetEnd)}`
+  const [first, second] =
+    current.index < target.index
+      ? [
+          { start: current.index, end: currentEnd, text: targetBlock },
+          { start: target.index, end: targetEnd, text: currentBlock },
+        ]
+      : [
+          { start: target.index, end: targetEnd, text: targetBlock },
+          { start: current.index, end: currentEnd, text: currentBlock },
+        ]
+  return (
+    css.slice(0, first.start) +
+    first.text +
+    css.slice(first.end, second.start) +
+    second.text +
+    css.slice(second.end)
+  )
 }
 
 function replaceRamp(css: string, ramp: string[]): string {

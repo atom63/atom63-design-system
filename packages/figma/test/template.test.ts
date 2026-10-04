@@ -47,6 +47,26 @@ describe('buildTemplateFiles', () => {
     expect(modes('Surface')).toHaveLength(6)
   })
 
+  it('keeps the values of every other axis value', () => {
+    const files = buildTemplateFiles({
+      ...TEMPLATE_DEFAULTS,
+      neutral: 'n3',
+      radius: 'round',
+      typeScale: 'large',
+    })
+    const { model } = buildProjectModel(files)
+    const value = (collection: string, token: string, mode: string) =>
+      model.collections
+        .find(item => item.name === collection)
+        ?.variables.find(item => item.token === token)?.values[mode]
+    expect(value('Surface', '--surface-light-1', 'n1')).toEqual({ alias: '--color-n1-light-1' })
+    expect(value('Surface', '--surface-light-1', 'n3')).toEqual({ alias: '--color-n3-light-1' })
+    expect(value('Radius', '--radius-multiplier', 'default')).toEqual({ value: 1 })
+    expect(value('Radius', '--radius-multiplier', 'round')).toEqual({ value: 1.5 })
+    expect(value('Type scale', '--type-scale', 'normal')).toEqual({ value: 1 })
+    expect(value('Type scale', '--type-scale', 'large')).toEqual({ value: 1.2 })
+  })
+
   it('sets the first family of the sans stack', () => {
     const files = buildTemplateFiles({ ...TEMPLATE_DEFAULTS, font: 'Inter' })
     const { model, raw } = buildProjectModel(files)
