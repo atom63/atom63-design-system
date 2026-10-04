@@ -1,4 +1,4 @@
-import type { PluginSettings } from '../types/messages'
+import type { PluginSettings } from '../messages'
 
 const THEME_TRANSITION_ID = 'cipher-theme-transition'
 const THEME_TRANSITION_MS = 200
