@@ -13,3 +13,15 @@ export * from './plan'
 export { buildReadScript, buildScripts } from './scripts'
 export * from './styles'
 export * from './style-sync'
+export * from './ramp'
+export * from './template'
+export * from './table'
+export {
+  check,
+  checkModel,
+  type CheckOutcome,
+  type PartTotals,
+  sync,
+  syncModel,
+  type SyncOutcome,
+} from './runtime'

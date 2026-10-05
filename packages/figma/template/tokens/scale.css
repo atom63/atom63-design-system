@@ -1,0 +1,85 @@
+/*
+ * Scales that follow an axis: radius follows data-radius and text sizes follow
+ * data-type-scale (axes.css). theme.css hands them to Tailwind.
+ */
+
+/* Radius: the anchor (the lg step) that the radius scale in theme.css multiplies. */
+:root {
+  --corner-radius: 10px;
+}
+
+/* Text sizes and line heights, times the type scale. Larger steps grow on wider screens. */
+:root {
+  --text-xs-size: calc(12px * var(--type-scale));
+  --text-xs-leading: calc(18px * var(--type-scale));
+  --text-sm-size: calc(13px * var(--type-scale));
+  --text-sm-leading: calc(20px * var(--type-scale));
+  --text-base-size: calc(15px * var(--type-scale));
+  --text-base-leading: calc(23px * var(--type-scale));
+  --text-lg-size: calc(16px * var(--type-scale));
+  --text-lg-leading: calc(24px * var(--type-scale));
+  --text-xl-size: calc(18px * var(--type-scale));
+  --text-xl-leading: calc(23px * var(--type-scale));
+  --text-2xl-size: calc(19px * var(--type-scale));
+  --text-2xl-leading: calc(24px * var(--type-scale));
+  --text-3xl-size: calc(21px * var(--type-scale));
+  --text-3xl-leading: calc(26px * var(--type-scale));
+  --text-4xl-size: calc(23px * var(--type-scale));
+  --text-4xl-leading: calc(29px * var(--type-scale));
+  --text-5xl-size: calc(26px * var(--type-scale));
+  --text-5xl-leading: calc(33px * var(--type-scale));
+  --text-6xl-size: calc(28px * var(--type-scale));
+  --text-6xl-leading: calc(35px * var(--type-scale));
+  --text-7xl-size: calc(31px * var(--type-scale));
+  --text-7xl-leading: calc(39px * var(--type-scale));
+  --text-8xl-size: calc(35px * var(--type-scale));
+  --text-8xl-leading: calc(44px * var(--type-scale));
+  --text-9xl-size: calc(39px * var(--type-scale));
+  --text-9xl-leading: calc(49px * var(--type-scale));
+}
+
+@media (min-width: 40rem) {
+  :root {
+    --text-lg-size: calc(17px * var(--type-scale));
+    --text-lg-leading: calc(26px * var(--type-scale));
+    --text-2xl-size: calc(20px * var(--type-scale));
+    --text-2xl-leading: calc(25px * var(--type-scale));
+    --text-3xl-size: calc(23px * var(--type-scale));
+    --text-3xl-leading: calc(29px * var(--type-scale));
+    --text-4xl-size: calc(25px * var(--type-scale));
+    --text-4xl-leading: calc(31px * var(--type-scale));
+    --text-5xl-size: calc(28px * var(--type-scale));
+    --text-5xl-leading: calc(35px * var(--type-scale));
+    --text-6xl-size: calc(31px * var(--type-scale));
+    --text-6xl-leading: calc(39px * var(--type-scale));
+    --text-7xl-size: calc(35px * var(--type-scale));
+    --text-7xl-leading: calc(44px * var(--type-scale));
+    --text-8xl-size: calc(39px * var(--type-scale));
+    --text-8xl-leading: calc(49px * var(--type-scale));
+    --text-9xl-size: calc(44px * var(--type-scale));
+    --text-9xl-leading: calc(55px * var(--type-scale));
+  }
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --text-xl-size: calc(19px * var(--type-scale));
+    --text-xl-leading: calc(24px * var(--type-scale));
+    --text-2xl-size: calc(21px * var(--type-scale));
+    --text-2xl-leading: calc(26px * var(--type-scale));
+    --text-3xl-size: calc(24px * var(--type-scale));
+    --text-3xl-leading: calc(30px * var(--type-scale));
+    --text-4xl-size: calc(27px * var(--type-scale));
+    --text-4xl-leading: calc(34px * var(--type-scale));
+    --text-5xl-size: calc(30px * var(--type-scale));
+    --text-5xl-leading: calc(38px * var(--type-scale));
+    --text-6xl-size: calc(34px * var(--type-scale));
+    --text-6xl-leading: calc(43px * var(--type-scale));
+    --text-7xl-size: calc(38px * var(--type-scale));
+    --text-7xl-leading: calc(48px * var(--type-scale));
+    --text-8xl-size: calc(43px * var(--type-scale));
+    --text-8xl-leading: calc(54px * var(--type-scale));
+    --text-9xl-size: calc(49px * var(--type-scale));
+    --text-9xl-leading: calc(61px * var(--type-scale));
+  }
+}

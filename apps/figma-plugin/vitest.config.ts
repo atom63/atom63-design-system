@@ -16,12 +16,7 @@ export default defineConfig({
     include: ['__tests__/**/*.test.ts'],
     coverage: {
       provider: 'v8',
-      include: [
-        'src/parsers/**/*.ts',
-        'src/libraries/color-converters.ts',
-        'src/libraries/variable-binding.ts',
-        'src/types/messages.ts',
-      ],
+      include: ['src/main/**/*.ts', 'src/app/**/*.ts'],
       reporter: ['text', 'text-summary'],
     },
   },

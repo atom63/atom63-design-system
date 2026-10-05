@@ -10,7 +10,7 @@
     "dev": "node build.js --watch",
     "build": "node build.js",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint . --cache --max-warnings 159",
+    "lint": "eslint . --cache --max-warnings 36",
     "test": "vitest run"
   },
   "dependencies": {

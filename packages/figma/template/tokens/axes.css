@@ -1,0 +1,300 @@
+/*
+ * Personalization axes. Each axis is an attribute on <html> (or on any element,
+ * to restyle one part of the page) that swaps a set of tokens:
+ *
+ * - data-brand="b1"…"b6": the brand ramp (--brand-50…950) behind primary, ring
+ *   and every other brand color. b1 is the default.
+ * - data-surface="n1"…"n6": the neutral ramp (--surface-light-*, --surface-dark-*)
+ *   behind backgrounds, text and borders. n1 is the default.
+ * - data-radius="none" | "subtle" | "default" | "round": scales every radius.
+ * - data-type-scale="compact" | "normal" | "comfortable" | "large": scales
+ *   every text size.
+ *
+ * Mode is the `dark` class, handled in semantic.css.
+ */
+
+/* Brand */
+:root,
+[data-brand="b1"] {
+  --brand-50: var(--color-b1-50);
+  --brand-100: var(--color-b1-100);
+  --brand-200: var(--color-b1-200);
+  --brand-300: var(--color-b1-300);
+  --brand-400: var(--color-b1-400);
+  --brand-500: var(--color-b1-500);
+  --brand-600: var(--color-b1-600);
+  --brand-700: var(--color-b1-700);
+  --brand-800: var(--color-b1-800);
+  --brand-900: var(--color-b1-900);
+  --brand-950: var(--color-b1-950);
+}
+
+[data-brand="b2"] {
+  --brand-50: var(--color-b2-50);
+  --brand-100: var(--color-b2-100);
+  --brand-200: var(--color-b2-200);
+  --brand-300: var(--color-b2-300);
+  --brand-400: var(--color-b2-400);
+  --brand-500: var(--color-b2-500);
+  --brand-600: var(--color-b2-600);
+  --brand-700: var(--color-b2-700);
+  --brand-800: var(--color-b2-800);
+  --brand-900: var(--color-b2-900);
+  --brand-950: var(--color-b2-950);
+}
+
+[data-brand="b3"] {
+  --brand-50: var(--color-b3-50);
+  --brand-100: var(--color-b3-100);
+  --brand-200: var(--color-b3-200);
+  --brand-300: var(--color-b3-300);
+  --brand-400: var(--color-b3-400);
+  --brand-500: var(--color-b3-500);
+  --brand-600: var(--color-b3-600);
+  --brand-700: var(--color-b3-700);
+  --brand-800: var(--color-b3-800);
+  --brand-900: var(--color-b3-900);
+  --brand-950: var(--color-b3-950);
+}
+
+[data-brand="b4"] {
+  --brand-50: var(--color-b4-50);
+  --brand-100: var(--color-b4-100);
+  --brand-200: var(--color-b4-200);
+  --brand-300: var(--color-b4-300);
+  --brand-400: var(--color-b4-400);
+  --brand-500: var(--color-b4-500);
+  --brand-600: var(--color-b4-600);
+  --brand-700: var(--color-b4-700);
+  --brand-800: var(--color-b4-800);
+  --brand-900: var(--color-b4-900);
+  --brand-950: var(--color-b4-950);
+}
+
+[data-brand="b5"] {
+  --brand-50: var(--color-b5-50);
+  --brand-100: var(--color-b5-100);
+  --brand-200: var(--color-b5-200);
+  --brand-300: var(--color-b5-300);
+  --brand-400: var(--color-b5-400);
+  --brand-500: var(--color-b5-500);
+  --brand-600: var(--color-b5-600);
+  --brand-700: var(--color-b5-700);
+  --brand-800: var(--color-b5-800);
+  --brand-900: var(--color-b5-900);
+  --brand-950: var(--color-b5-950);
+}
+
+[data-brand="b6"] {
+  --brand-50: var(--color-b6-50);
+  --brand-100: var(--color-b6-100);
+  --brand-200: var(--color-b6-200);
+  --brand-300: var(--color-b6-300);
+  --brand-400: var(--color-b6-400);
+  --brand-500: var(--color-b6-500);
+  --brand-600: var(--color-b6-600);
+  --brand-700: var(--color-b6-700);
+  --brand-800: var(--color-b6-800);
+  --brand-900: var(--color-b6-900);
+  --brand-950: var(--color-b6-950);
+}
+
+/* Surface */
+:root,
+[data-surface="n1"] {
+  --surface-light-1: var(--color-n1-light-1);
+  --surface-light-2: var(--color-n1-light-2);
+  --surface-light-3: var(--color-n1-light-3);
+  --surface-light-4: var(--color-n1-light-4);
+  --surface-light-5: var(--color-n1-light-5);
+  --surface-light-6: var(--color-n1-light-6);
+  --surface-light-7: var(--color-n1-light-7);
+  --surface-light-8: var(--color-n1-light-8);
+  --surface-light-9: var(--color-n1-light-9);
+  --surface-light-10: var(--color-n1-light-10);
+  --surface-light-11: var(--color-n1-light-11);
+  --surface-light-12: var(--color-n1-light-12);
+  --surface-dark-1: var(--color-n1-dark-1);
+  --surface-dark-2: var(--color-n1-dark-2);
+  --surface-dark-3: var(--color-n1-dark-3);
+  --surface-dark-4: var(--color-n1-dark-4);
+  --surface-dark-5: var(--color-n1-dark-5);
+  --surface-dark-6: var(--color-n1-dark-6);
+  --surface-dark-7: var(--color-n1-dark-7);
+  --surface-dark-8: var(--color-n1-dark-8);
+  --surface-dark-9: var(--color-n1-dark-9);
+  --surface-dark-10: var(--color-n1-dark-10);
+  --surface-dark-11: var(--color-n1-dark-11);
+  --surface-dark-12: var(--color-n1-dark-12);
+}
+
+[data-surface="n2"] {
+  --surface-light-1: var(--color-n2-light-1);
+  --surface-light-2: var(--color-n2-light-2);
+  --surface-light-3: var(--color-n2-light-3);
+  --surface-light-4: var(--color-n2-light-4);
+  --surface-light-5: var(--color-n2-light-5);
+  --surface-light-6: var(--color-n2-light-6);
+  --surface-light-7: var(--color-n2-light-7);
+  --surface-light-8: var(--color-n2-light-8);
+  --surface-light-9: var(--color-n2-light-9);
+  --surface-light-10: var(--color-n2-light-10);
+  --surface-light-11: var(--color-n2-light-11);
+  --surface-light-12: var(--color-n2-light-12);
+  --surface-dark-1: var(--color-n2-dark-1);
+  --surface-dark-2: var(--color-n2-dark-2);
+  --surface-dark-3: var(--color-n2-dark-3);
+  --surface-dark-4: var(--color-n2-dark-4);
+  --surface-dark-5: var(--color-n2-dark-5);
+  --surface-dark-6: var(--color-n2-dark-6);
+  --surface-dark-7: var(--color-n2-dark-7);
+  --surface-dark-8: var(--color-n2-dark-8);
+  --surface-dark-9: var(--color-n2-dark-9);
+  --surface-dark-10: var(--color-n2-dark-10);
+  --surface-dark-11: var(--color-n2-dark-11);
+  --surface-dark-12: var(--color-n2-dark-12);
+}
+
+[data-surface="n3"] {
+  --surface-light-1: var(--color-n3-light-1);
+  --surface-light-2: var(--color-n3-light-2);
+  --surface-light-3: var(--color-n3-light-3);
+  --surface-light-4: var(--color-n3-light-4);
+  --surface-light-5: var(--color-n3-light-5);
+  --surface-light-6: var(--color-n3-light-6);
+  --surface-light-7: var(--color-n3-light-7);
+  --surface-light-8: var(--color-n3-light-8);
+  --surface-light-9: var(--color-n3-light-9);
+  --surface-light-10: var(--color-n3-light-10);
+  --surface-light-11: var(--color-n3-light-11);
+  --surface-light-12: var(--color-n3-light-12);
+  --surface-dark-1: var(--color-n3-dark-1);
+  --surface-dark-2: var(--color-n3-dark-2);
+  --surface-dark-3: var(--color-n3-dark-3);
+  --surface-dark-4: var(--color-n3-dark-4);
+  --surface-dark-5: var(--color-n3-dark-5);
+  --surface-dark-6: var(--color-n3-dark-6);
+  --surface-dark-7: var(--color-n3-dark-7);
+  --surface-dark-8: var(--color-n3-dark-8);
+  --surface-dark-9: var(--color-n3-dark-9);
+  --surface-dark-10: var(--color-n3-dark-10);
+  --surface-dark-11: var(--color-n3-dark-11);
+  --surface-dark-12: var(--color-n3-dark-12);
+}
+
+[data-surface="n4"] {
+  --surface-light-1: var(--color-n4-light-1);
+  --surface-light-2: var(--color-n4-light-2);
+  --surface-light-3: var(--color-n4-light-3);
+  --surface-light-4: var(--color-n4-light-4);
+  --surface-light-5: var(--color-n4-light-5);
+  --surface-light-6: var(--color-n4-light-6);
+  --surface-light-7: var(--color-n4-light-7);
+  --surface-light-8: var(--color-n4-light-8);
+  --surface-light-9: var(--color-n4-light-9);
+  --surface-light-10: var(--color-n4-light-10);
+  --surface-light-11: var(--color-n4-light-11);
+  --surface-light-12: var(--color-n4-light-12);
+  --surface-dark-1: var(--color-n4-dark-1);
+  --surface-dark-2: var(--color-n4-dark-2);
+  --surface-dark-3: var(--color-n4-dark-3);
+  --surface-dark-4: var(--color-n4-dark-4);
+  --surface-dark-5: var(--color-n4-dark-5);
+  --surface-dark-6: var(--color-n4-dark-6);
+  --surface-dark-7: var(--color-n4-dark-7);
+  --surface-dark-8: var(--color-n4-dark-8);
+  --surface-dark-9: var(--color-n4-dark-9);
+  --surface-dark-10: var(--color-n4-dark-10);
+  --surface-dark-11: var(--color-n4-dark-11);
+  --surface-dark-12: var(--color-n4-dark-12);
+}
+
+[data-surface="n5"] {
+  --surface-light-1: var(--color-n5-light-1);
+  --surface-light-2: var(--color-n5-light-2);
+  --surface-light-3: var(--color-n5-light-3);
+  --surface-light-4: var(--color-n5-light-4);
+  --surface-light-5: var(--color-n5-light-5);
+  --surface-light-6: var(--color-n5-light-6);
+  --surface-light-7: var(--color-n5-light-7);
+  --surface-light-8: var(--color-n5-light-8);
+  --surface-light-9: var(--color-n5-light-9);
+  --surface-light-10: var(--color-n5-light-10);
+  --surface-light-11: var(--color-n5-light-11);
+  --surface-light-12: var(--color-n5-light-12);
+  --surface-dark-1: var(--color-n5-dark-1);
+  --surface-dark-2: var(--color-n5-dark-2);
+  --surface-dark-3: var(--color-n5-dark-3);
+  --surface-dark-4: var(--color-n5-dark-4);
+  --surface-dark-5: var(--color-n5-dark-5);
+  --surface-dark-6: var(--color-n5-dark-6);
+  --surface-dark-7: var(--color-n5-dark-7);
+  --surface-dark-8: var(--color-n5-dark-8);
+  --surface-dark-9: var(--color-n5-dark-9);
+  --surface-dark-10: var(--color-n5-dark-10);
+  --surface-dark-11: var(--color-n5-dark-11);
+  --surface-dark-12: var(--color-n5-dark-12);
+}
+
+[data-surface="n6"] {
+  --surface-light-1: var(--color-n6-light-1);
+  --surface-light-2: var(--color-n6-light-2);
+  --surface-light-3: var(--color-n6-light-3);
+  --surface-light-4: var(--color-n6-light-4);
+  --surface-light-5: var(--color-n6-light-5);
+  --surface-light-6: var(--color-n6-light-6);
+  --surface-light-7: var(--color-n6-light-7);
+  --surface-light-8: var(--color-n6-light-8);
+  --surface-light-9: var(--color-n6-light-9);
+  --surface-light-10: var(--color-n6-light-10);
+  --surface-light-11: var(--color-n6-light-11);
+  --surface-light-12: var(--color-n6-light-12);
+  --surface-dark-1: var(--color-n6-dark-1);
+  --surface-dark-2: var(--color-n6-dark-2);
+  --surface-dark-3: var(--color-n6-dark-3);
+  --surface-dark-4: var(--color-n6-dark-4);
+  --surface-dark-5: var(--color-n6-dark-5);
+  --surface-dark-6: var(--color-n6-dark-6);
+  --surface-dark-7: var(--color-n6-dark-7);
+  --surface-dark-8: var(--color-n6-dark-8);
+  --surface-dark-9: var(--color-n6-dark-9);
+  --surface-dark-10: var(--color-n6-dark-10);
+  --surface-dark-11: var(--color-n6-dark-11);
+  --surface-dark-12: var(--color-n6-dark-12);
+}
+
+/* Radius: multiplies the radius scale in scale.css. */
+:root,
+[data-radius="default"] {
+  --radius-multiplier: 1;
+}
+
+[data-radius="none"] {
+  --radius-multiplier: 0;
+}
+
+[data-radius="subtle"] {
+  --radius-multiplier: 0.5;
+}
+
+[data-radius="round"] {
+  --radius-multiplier: 1.5;
+}
+
+/* Type scale: multiplies the text sizes in scale.css. */
+:root,
+[data-type-scale="normal"] {
+  --type-scale: 1;
+}
+
+[data-type-scale="compact"] {
+  --type-scale: 0.9;
+}
+
+[data-type-scale="comfortable"] {
+  --type-scale: 1.1;
+}
+
+[data-type-scale="large"] {
+  --type-scale: 1.2;
+}
