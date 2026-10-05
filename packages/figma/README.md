@@ -78,6 +78,10 @@ The Figma plugin uses the same engine in process:
 - `readTokenTable(figma)` counts the collections and variables that carry a code syntax, and the
   `Text/` and `Shadow/` styles.
 
+The template copy in `template/tokens` comes from `atom63-site-template`. After the template's
+tokens change, run `pnpm --filter @atom63/figma template:pull <path to the template checkout>`,
+review the diff and run the tests.
+
 ## Atom63
 
 In the Atom63 repository, sync the generated token set instead of CSS. Its collections are named
