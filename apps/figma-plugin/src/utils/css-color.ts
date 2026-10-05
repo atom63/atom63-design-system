@@ -4,7 +4,8 @@ import { type ColorResolver, parseColor } from '@atom63/figma'
  * Resolves any CSS color the UI's browser understands (oklch(), relative
  * colors, color-mix()) to sRGB channels, by letting the browser convert it:
  * `color(from <color> srgb r g b / alpha)` computes to `color(srgb r g b / a)`.
- * Simple literals skip the round trip.
+ * Colors the engine reads (literals and oklch(), absolute or relative) skip the
+ * round trip, so the plugin writes the same numbers as the CLI.
  */
 export function createBrowserColorResolver(): ColorResolver {
   const probe = document.createElement('i')

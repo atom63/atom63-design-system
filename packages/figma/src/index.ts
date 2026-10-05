@@ -1,6 +1,7 @@
 export * from './apply'
 export * from './diff'
 export * from './css-model'
+export * from './oklch-color'
 export {
   mergeSnapshots,
   type PackedModel,

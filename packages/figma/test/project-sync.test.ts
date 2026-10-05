@@ -5,7 +5,6 @@ import { applyPlan, readSnapshot, type VariablesApi } from '../src/apply'
 import { formatChangeList, planChangeList } from '../src/diff'
 import {
   buildProjectModel,
-  type ColorResolver,
   type CssFile,
   evaluateNumber,
   parseColor,
@@ -20,11 +19,7 @@ const files: CssFile[] = ['palette', 'axes', 'semantic', 'scale', 'theme'].map(n
   text: readFileSync(resolve(__dirname, `fixtures/project-tokens/${name}.css`), 'utf8'),
 }))
 
-/** Stands in for the browser's color conversion: gives relative colors a fixed value. */
-const resolveColor: ColorResolver = expression =>
-  parseColor(expression) ?? (expression.startsWith('oklch(') ? { r: 1, g: 1, b: 1, a: 1 } : null)
-
-const project = buildProjectModel(files, resolveColor)
+const project = buildProjectModel(files)
 
 function find(token: string): { collection: string; variable: SyncVariable } {
   for (const collection of project.model.collections) {
@@ -95,11 +90,13 @@ describe('Project mode: reading token CSS', () => {
     expect(project.notes.join(' ')).toContain('widest viewport')
   })
 
-  it('computes a relative color with the resolver, per mode', () => {
-    expect(find('--primary-foreground')).toMatchObject({
-      collection: 'Brand',
-      variable: { type: 'COLOR', values: { b1: { value: { r: 1, g: 1, b: 1, a: 1 } } } },
-    })
+  it('computes the relative foreground color per brand mode', () => {
+    const { collection, variable } = find('--primary-foreground')
+    expect(collection).toBe('Brand')
+    const b1 = variable.values.b1
+    if (!b1 || !('value' in b1) || typeof b1.value !== 'object') throw new Error('not a color')
+    expect(b1.value.r).toBeCloseTo(0.96259, 5)
+    expect(b1.value.b).toBeCloseTo(1, 10)
   })
 
   it('reads palette literals as colors and hides raw ramps from pickers', () => {
@@ -131,28 +128,24 @@ describe('Project mode: reading token CSS', () => {
     expect(skipped['--font-sans']).toContain('not a color or a number')
   })
 
-  it('reports a relative color it cannot compute without a browser', () => {
-    const plain = buildProjectModel(files)
-    expect(plain.model.skipped.find(item => item.token === '--primary-foreground')?.reason).toBe(
+  const uncomputable = buildProjectModel([
+    {
+      name: 'tokens.css',
+      text: ':root { --blue: #2563eb; --on-blue: lab(from var(--blue) 90 a b); --link: var(--on-blue); }',
+    },
+  ])
+
+  it('reports a color it cannot compute in Node', () => {
+    expect(uncomputable.model.skipped.find(item => item.token === '--on-blue')?.reason).toBe(
       'a color that could not be computed here'
     )
   })
 
   it('skips a token that points at one it could not compute, and keeps the rest', () => {
-    const plain = buildProjectModel(files)
-    expect(
-      plain.model.skipped.find(item => item.token === '--sidebar-primary-foreground')?.reason
-    ).toBe('points at --primary-foreground, which is not synced')
-    const tokens = new Set(
-      plain.model.collections.flatMap(collection => collection.variables.map(item => item.token))
+    expect(uncomputable.model.skipped.find(item => item.token === '--link')?.reason).toBe(
+      'points at --on-blue, which is not synced'
     )
-    for (const collection of plain.model.collections)
-      for (const variable of collection.variables)
-        for (const value of Object.values(variable.values)) {
-          const target =
-            'alias' in value ? value.alias : 'composed' in value ? value.composed.alias : null
-          if (target) expect(tokens).toContain(target)
-        }
+    expect(uncomputable.model.summary.variables).toBe(1)
   })
 })
 
@@ -247,6 +240,5 @@ describe('Project mode: values', () => {
     expect(parseColor('#fff')).toEqual({ r: 1, g: 1, b: 1, a: 1 })
     expect(parseColor('rgb(0 0 0 / 0.5)')).toEqual({ r: 0, g: 0, b: 0, a: 0.5 })
     expect(parseColor('rgba(255, 0, 0, 1)')).toEqual({ r: 1, g: 0, b: 0, a: 1 })
-    expect(parseColor('oklch(0.5 0.1 200)')).toBeNull()
   })
 })

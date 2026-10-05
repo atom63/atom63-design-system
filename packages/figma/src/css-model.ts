@@ -19,6 +19,7 @@
  * their target across every axis; any other value is evaluated per mode, so it
  * must vary on one axis at most. What Figma cannot hold is reported as skipped.
  */
+import { parseOklch } from './oklch-color'
 import type { SyncColor, SyncModel, SyncValue, SyncVariable, SyncVariableType } from './plan'
 
 /** Turns a CSS color with no var() left in it into sRGB channels, or null. */
@@ -335,7 +336,7 @@ export function evaluateNumber(expression: string): number | null {
   return value !== null && index === source.length ? value : null
 }
 
-/** A pure color reader for the literal forms token files use: rgb(a), hex, and keywords. */
+/** A pure color reader for the forms token files use: rgb(a), hex, keywords, and oklch(), absolute or relative. */
 export const parseColor: ColorResolver = expression => {
   const value = expression.trim().toLowerCase()
   if (value === 'transparent') return { r: 0, g: 0, b: 0, a: 0 }
@@ -360,7 +361,7 @@ export const parseColor: ColorResolver = expression => {
           : Number(rgb[4])
     return { r: Number(rgb[1]) / 255, g: Number(rgb[2]) / 255, b: Number(rgb[3]) / 255, a: alpha }
   }
-  return null
+  return parseOklch(value, parseColor)
 }
 
 // ── Model ────────────────────────────────────────────────────────────────────
