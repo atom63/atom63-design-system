@@ -50,7 +50,7 @@ describe('atom63-figma', () => {
     const dir = temp('tokens-')
     writeFileSync(
       join(dir, 'tokens.css'),
-      ':root { --blue: #2563eb; --on-blue: oklch(from var(--blue) 0.98 0.01 h); }'
+      ':root { --blue: #2563eb; --on-blue: lab(from var(--blue) 90 a b); }'
     )
     const summary = JSON.parse(run('sync', '--tokens', dir, '--out', temp('figma-'))) as {
       variables: number

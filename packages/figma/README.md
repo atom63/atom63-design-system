@@ -21,8 +21,8 @@ pnpm add -D @atom63/figma
 2. Run each `.figma-sync/sync-N.js` in order with the Figma MCP server's `use_figma` tool on the
    target file. Each returns `verification`; every one must report `create: 0` and `update: 0`.
 3. The printed summary lists under `skipped` the tokens that are not Figma variables (shadows,
-   font stacks, relative colors Node cannot compute, and tokens that point at those), each with the
-   reason.
+   font stacks, colors in forms the engine does not read (it reads hex, rgb(), keywords and
+   oklch(), relative ones included), and tokens that point at those), each with the reason.
 
 Run the `check-N.js` scripts at any time to confirm the file still matches the code; they only
 read. Each script carries one part of the token set, so it does not report orphaned variables;
@@ -77,6 +77,10 @@ The Figma plugin uses the same engine in process:
   `StylesApi`. They return the same results as the scripts.
 - `readTokenTable(figma)` counts the collections and variables that carry a code syntax, and the
   `Text/` and `Shadow/` styles.
+
+The template copy in `template/tokens` comes from `atom63-site-template`. After the template's
+tokens change, run `pnpm --filter @atom63/figma template:pull <path to the template checkout>`,
+review the diff and run the tests.
 
 ## Atom63
 

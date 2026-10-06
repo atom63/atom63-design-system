@@ -34,6 +34,7 @@
     "build:runtime": "tsup src/runtime.ts --format iife --global-name A63Figma --minify --platform neutral --target es2020 --out-dir dist/runtime --no-dts --no-sourcemap && node scripts/embed-runtime.mjs",
     "build": "pnpm embed:template && pnpm build:runtime && tsup",
     "embed:template": "node scripts/embed-template.mjs",
+    "template:pull": "node scripts/pull-template.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --cache --max-warnings 0",
     "pretest": "pnpm build",

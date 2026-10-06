@@ -85,3 +85,24 @@ describe('buildTemplateFiles', () => {
     )
   })
 })
+
+describe('the template set in Node', () => {
+  it('holds every color, the relative foreground included', () => {
+    const { model } = buildProjectModel(TEMPLATE_TOKENS)
+    expect(model.summary.variables).toBe(389)
+    const skipped = model.skipped.map(item => item.token)
+    expect(skipped).not.toContain('--primary-foreground')
+    expect(skipped).not.toContain('--sidebar-primary-foreground')
+  })
+
+  it('computes the same foreground twice', () => {
+    const first = buildProjectModel(TEMPLATE_TOKENS).model
+    const second = buildProjectModel(TEMPLATE_TOKENS).model
+    const foreground = (model: typeof first) =>
+      model.collections
+        .flatMap(item => item.variables)
+        .find(item => item.token === '--primary-foreground')
+    expect(foreground(first)).toBeDefined()
+    expect(foreground(second)).toEqual(foreground(first))
+  })
+})
