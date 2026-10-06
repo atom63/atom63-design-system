@@ -21,7 +21,7 @@
   "dependencies": {
     "@atom63/ui-foundation": "workspace:*",
     "@atom63/ui-react": "workspace:*",
-    "lucide-react": "^1.34.0"
+    "lucide-react": "^1.51.0"
   },
   "peerDependencies": {
     "react": "^19.1.0",
@@ -30,13 +30,13 @@
   "devDependencies": {
     "@atom63/eslint-config": "workspace:*",
     "@atom63/tsconfig": "workspace:*",
-    "@storybook/react-vite": "^10.6.0",
+    "@storybook/react-vite": "^10.6.1",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "eslint": "10.7.0",
-    "react": "^19.2.7",
-    "react-dom": "^19.2.7",
-    "storybook": "^10.6.0",
+    "eslint": "10.12.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "storybook": "^10.6.1",
     "typescript": "catalog:"
   }
 }
