@@ -25,7 +25,7 @@
     "check:agents-md": "node scripts/sync-agents-md.mjs --check"
   },
   "devDependencies": {
-    "@modelcontextprotocol/client": "2.1.0",
+    "@modelcontextprotocol/client": "2.2.0",
     "vite": "catalog:"
   },
   "dependencies": {
