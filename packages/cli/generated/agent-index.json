@@ -160,6 +160,7 @@
     "toggle",
     "copy-button"
    ],
+   "route": "/components/component-button",
    "slug": "button",
    "status": "stable",
    "stories": {
@@ -270,6 +271,7 @@
     "toggle-group",
     "segmented-control"
    ],
+   "route": "/components/component-button-group",
    "slug": "button-group",
    "status": "stable",
    "stories": {
@@ -395,6 +397,7 @@
     "toaster",
     "tooltip"
    ],
+   "route": "/components/component-copy-button",
    "slug": "copy-button",
    "status": "stable",
    "stories": {
@@ -501,6 +504,7 @@
     "navigation-menu",
     "button"
    ],
+   "route": "/components/component-destination-link",
    "slug": "destination-link",
    "status": "stable",
    "stories": {
@@ -630,6 +634,7 @@
     "command",
     "select"
    ],
+   "route": "/components/component-autocomplete",
    "slug": "autocomplete",
    "status": "stable",
    "stories": {
@@ -771,6 +776,7 @@
     "select",
     "popover"
    ],
+   "route": "/components/component-calendar",
    "slug": "calendar",
    "status": "stable",
    "stories": {
@@ -858,6 +864,7 @@
     "radio",
     "field"
    ],
+   "route": "/components/component-checkbox",
    "slug": "checkbox",
    "status": "stable",
    "stories": {
@@ -1007,6 +1014,7 @@
     "input",
     "label"
    ],
+   "route": "/components/component-field",
    "slug": "field",
    "status": "stable",
    "stories": {
@@ -1089,6 +1097,7 @@
     "input",
     "button"
    ],
+   "route": "/components/component-form",
    "slug": "form",
    "status": "stable",
    "stories": {
@@ -1228,6 +1237,7 @@
     "textarea",
     "autocomplete"
    ],
+   "route": "/components/component-input",
    "slug": "input",
    "status": "stable",
    "stories": {
@@ -1305,6 +1315,7 @@
     "input",
     "field"
    ],
+   "route": "/components/component-input-otp",
    "slug": "input-otp",
    "status": "stable",
    "stories": {
@@ -1377,6 +1388,7 @@
     "input",
     "checkbox"
    ],
+   "route": "/components/component-label",
    "slug": "label",
    "status": "stable",
    "stories": {
@@ -1453,6 +1465,7 @@
     "segmented-control",
     "button"
    ],
+   "route": "/components/component-panel-setting-button",
    "slug": "panel-setting-button",
    "status": "stable",
    "stories": {
@@ -1570,6 +1583,7 @@
     "segmented-control",
     "select"
    ],
+   "route": "/components/component-radio",
    "slug": "radio",
    "status": "stable",
    "stories": {
@@ -1702,6 +1716,7 @@
     "tabs",
     "radio"
    ],
+   "route": "/components/component-segmented-control",
    "slug": "segmented-control",
    "status": "stable",
    "stories": {
@@ -1812,6 +1827,7 @@
     "autocomplete",
     "command"
    ],
+   "route": "/components/component-search-field",
    "slug": "search-field",
    "status": "stable",
    "stories": {
@@ -2001,6 +2017,7 @@
     "radio",
     "dropdown-menu"
    ],
+   "route": "/components/component-select",
    "slug": "select",
    "status": "stable",
    "stories": {
@@ -2126,6 +2143,7 @@
     "progress",
     "input"
    ],
+   "route": "/components/component-slider",
    "slug": "slider",
    "status": "stable",
    "stories": {
@@ -2250,6 +2268,7 @@
     "toggle",
     "field"
    ],
+   "route": "/components/component-switch",
    "slug": "switch",
    "status": "stable",
    "stories": {
@@ -2374,6 +2393,7 @@
     "input",
     "field"
    ],
+   "route": "/components/component-textarea",
    "slug": "textarea",
    "status": "stable",
    "stories": {
@@ -2509,6 +2529,7 @@
     "button",
     "checkbox"
    ],
+   "route": "/components/component-toggle",
    "slug": "toggle",
    "status": "stable",
    "stories": {
@@ -2624,6 +2645,7 @@
     "segmented-control",
     "button-group"
    ],
+   "route": "/components/component-toggle-group",
    "slug": "toggle-group",
    "status": "stable",
    "stories": {
@@ -2715,6 +2737,7 @@
     "navigation-menu",
     "sidebar-nav-tree"
    ],
+   "route": "/components/component-breadcrumb",
    "slug": "breadcrumb",
    "status": "stable",
    "stories": {
@@ -2837,6 +2860,7 @@
     "dialog",
     "kbd"
    ],
+   "route": "/components/component-command",
    "slug": "command",
    "status": "stable",
    "stories": {
@@ -2953,6 +2977,7 @@
     "dropdown-menu",
     "menubar"
    ],
+   "route": "/components/component-context-menu",
    "slug": "context-menu",
    "status": "stable",
    "stories": {
@@ -3134,6 +3159,7 @@
     "menubar",
     "button"
    ],
+   "route": "/components/component-dropdown-menu",
    "slug": "dropdown-menu",
    "status": "stable",
    "stories": {
@@ -3253,6 +3279,7 @@
     "dropdown-menu",
     "navigation-menu"
    ],
+   "route": "/components/component-menubar",
    "slug": "menubar",
    "status": "stable",
    "stories": {
@@ -3356,6 +3383,7 @@
     "breadcrumb",
     "dropdown-menu"
    ],
+   "route": "/components/component-navigation-menu",
    "slug": "navigation-menu",
    "status": "stable",
    "stories": {
@@ -3459,6 +3487,7 @@
     "breadcrumb",
     "button"
    ],
+   "route": "/components/component-pagination",
    "slug": "pagination",
    "status": "stable",
    "stories": {
@@ -3646,6 +3675,7 @@
     "navigation-menu",
     "resizable"
    ],
+   "route": "/components/component-sidebar",
    "slug": "sidebar",
    "status": "stable",
    "stories": {
@@ -3745,6 +3775,7 @@
     "breadcrumb",
     "collapsible"
    ],
+   "route": "/components/component-sidebar-nav-tree",
    "slug": "sidebar-nav-tree",
    "status": "stable",
    "stories": {
@@ -3897,6 +3928,7 @@
     "collapsible",
     "navigation-menu"
    ],
+   "route": "/components/component-tabs",
    "slug": "tabs",
    "status": "stable",
    "stories": {
@@ -4072,6 +4104,7 @@
     "sheet",
     "drawer"
    ],
+   "route": "/components/component-alert-dialog",
    "slug": "alert-dialog",
    "status": "stable",
    "stories": {
@@ -4248,6 +4281,7 @@
     "sheet",
     "drawer"
    ],
+   "route": "/components/component-dialog",
    "slug": "dialog",
    "status": "stable",
    "stories": {
@@ -4378,6 +4412,7 @@
     "sheet",
     "dialog"
    ],
+   "route": "/components/component-drawer",
    "slug": "drawer",
    "status": "stable",
    "stories": {
@@ -4464,6 +4499,7 @@
     "tooltip",
     "popover"
    ],
+   "route": "/components/component-hover-card",
    "slug": "hover-card",
    "status": "stable",
    "stories": {
@@ -4565,6 +4601,7 @@
     "hover-card",
     "dialog"
    ],
+   "route": "/components/component-popover",
    "slug": "popover",
    "status": "stable",
    "stories": {
@@ -4638,6 +4675,7 @@
     "dialog",
     "tooltip"
    ],
+   "route": "/components/component-portal-container",
    "slug": "portal-container",
    "status": "stable",
    "stories": {
@@ -4722,6 +4760,7 @@
     "card",
     "popover"
    ],
+   "route": "/components/component-preview-card",
    "slug": "preview-card",
    "status": "stable",
    "stories": {
@@ -4864,6 +4903,7 @@
     "drawer",
     "alert-dialog"
    ],
+   "route": "/components/component-sheet",
    "slug": "sheet",
    "status": "stable",
    "stories": {
@@ -4976,6 +5016,7 @@
     "hover-card",
     "kbd"
    ],
+   "route": "/components/component-tooltip",
    "slug": "tooltip",
    "status": "stable",
    "stories": {
@@ -5114,6 +5155,7 @@
     "collapsible",
     "tabs"
    ],
+   "route": "/components/component-accordion",
    "slug": "accordion",
    "status": "stable",
    "stories": {
@@ -5228,6 +5270,7 @@
     "toaster",
     "alert-dialog"
    ],
+   "route": "/components/component-alert",
    "slug": "alert",
    "status": "stable",
    "stories": {
@@ -5355,6 +5398,7 @@
     "badge",
     "item"
    ],
+   "route": "/components/component-avatar",
    "slug": "avatar",
    "status": "stable",
    "stories": {
@@ -5501,6 +5545,7 @@
     "kbd",
     "alert"
    ],
+   "route": "/components/component-badge",
    "slug": "badge",
    "status": "stable",
    "stories": {
@@ -5682,6 +5727,7 @@
     "frame",
     "preview-card"
    ],
+   "route": "/components/component-card",
    "slug": "card",
    "status": "stable",
    "stories": {
@@ -5791,6 +5837,7 @@
     "scroll-area",
     "button"
    ],
+   "route": "/components/component-carousel",
    "slug": "carousel",
    "status": "stable",
    "stories": {
@@ -5872,6 +5919,7 @@
     "accordion",
     "connected-panel"
    ],
+   "route": "/components/component-collapsible",
    "slug": "collapsible",
    "status": "stable",
    "stories": {
@@ -5982,6 +6030,7 @@
     "popover",
     "button"
    ],
+   "route": "/components/component-connected-panel",
    "slug": "connected-panel",
    "status": "stable",
    "stories": {
@@ -6110,6 +6159,7 @@
     "alert",
     "button"
    ],
+   "route": "/components/component-empty",
    "slug": "empty",
    "status": "stable",
    "stories": {
@@ -6216,6 +6266,7 @@
     "alert",
     "toaster"
    ],
+   "route": "/components/component-feedback-state",
    "slug": "feedback-state",
    "status": "stable",
    "stories": {
@@ -6331,6 +6382,7 @@
     "card",
     "connected-panel"
    ],
+   "route": "/components/component-frame",
    "slug": "frame",
    "status": "stable",
    "stories": {
@@ -6450,6 +6502,7 @@
     "separator",
     "avatar"
    ],
+   "route": "/components/component-item",
    "slug": "item",
    "status": "stable",
    "stories": {
@@ -6546,6 +6599,7 @@
     "scrollable-list",
     "carousel"
    ],
+   "route": "/components/component-scroll-area",
    "slug": "scroll-area",
    "status": "stable",
    "stories": {
@@ -6644,6 +6698,7 @@
     "load-more-trigger",
     "carousel"
    ],
+   "route": "/components/component-scrollable-list",
    "slug": "scrollable-list",
    "status": "stable",
    "stories": {
@@ -6729,6 +6784,7 @@
     "button-group",
     "resizable"
    ],
+   "route": "/components/component-separator",
    "slug": "separator",
    "status": "stable",
    "stories": {
@@ -6829,6 +6885,7 @@
     "pagination",
     "scroll-area"
    ],
+   "route": "/components/component-table",
    "slug": "table",
    "status": "stable",
    "stories": {
@@ -6905,6 +6962,7 @@
     "progress",
     "feedback-state"
    ],
+   "route": "/components/component-animated-check",
    "slug": "animated-check",
    "status": "stable",
    "stories": {
@@ -6978,6 +7036,7 @@
     "command",
     "tooltip"
    ],
+   "route": "/components/component-kbd",
    "slug": "kbd",
    "status": "stable",
    "stories": {
@@ -7102,6 +7161,7 @@
     "spinner",
     "progress"
    ],
+   "route": "/components/component-load-more-trigger",
    "slug": "load-more-trigger",
    "status": "stable",
    "stories": {
@@ -7186,6 +7246,7 @@
     "text-ticker",
     "scroll-area"
    ],
+   "route": "/components/component-marquee",
    "slug": "marquee",
    "status": "stable",
    "stories": {
@@ -7289,6 +7350,7 @@
     "skeleton",
     "load-more-trigger"
    ],
+   "route": "/components/component-progress",
    "slug": "progress",
    "status": "stable",
    "stories": {
@@ -7341,6 +7403,7 @@
     "scroll-area",
     "marquee"
    ],
+   "route": "/components/component-progressive-blur",
    "slug": "progressive-blur",
    "status": "stable",
    "stories": {
@@ -7426,6 +7489,7 @@
     "separator",
     "sidebar"
    ],
+   "route": "/components/component-resizable",
    "slug": "resizable",
    "status": "stable",
    "stories": {
@@ -7514,6 +7578,7 @@
     "progress",
     "empty"
    ],
+   "route": "/components/component-skeleton",
    "slug": "skeleton",
    "status": "stable",
    "stories": {
@@ -7572,6 +7637,7 @@
     "skeleton",
     "load-more-trigger"
    ],
+   "route": "/components/component-spinner",
    "slug": "spinner",
    "status": "stable",
    "stories": {
@@ -7644,6 +7710,7 @@
     "marquee",
     "tooltip"
    ],
+   "route": "/components/component-text-ticker",
    "slug": "text-ticker",
    "status": "stable",
    "stories": {
@@ -7756,6 +7823,7 @@
     "feedback-state",
     "copy-button"
    ],
+   "route": "/components/component-toaster",
    "slug": "toaster",
    "status": "stable",
    "stories": {

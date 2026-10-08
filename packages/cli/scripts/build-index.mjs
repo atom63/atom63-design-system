@@ -64,6 +64,7 @@ try {
       label: doc.label,
       markdown: componentDocs.componentDocMarkdown(item.slug, uiReactIndexSource),
       related: [...item.relatedSlugs],
+      route: catalog.componentDocPath(item.slug),
       slug: item.slug,
       status: item.status,
       stories: storySource

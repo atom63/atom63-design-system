@@ -113,8 +113,16 @@ on that layer, not only the binding: Figma can leave a stale stored color (black
 token sync in the same session), and rebinding the same variable keeps it. The script rewrites
 such a paint through another variable, so a rerun repairs it.
 
-After a recipe or token change, regenerate the model with
-`pnpm --filter @atom63/figma generate:components` and run the scripts again.
+The model also carries a `doc` block — label, group, summary, usage, related components, one
+guidance line per modelled Variant, Size and State, and the docs path — read only from the agent
+index (`packages/cli/generated/agent-index.json`), which is generated from the component catalog.
+Generation fails, naming the keys, if the entry or a guidance line is missing. Only the last
+script part carries the block (it draws the spec card once every variant exists).
+
+After a recipe, token or catalog change, regenerate the model with
+`pnpm --filter @atom63/figma generate:components` and run the scripts again. The model depends on
+the index, so regenerate and check it first: `pnpm --filter @atom63/cli check:index` before
+`pnpm --filter @atom63/figma check:components`.
 
 Known limits: only Button, in sizes xs to xl. Icon and tile sizes, box shadows and the `.dark`
 outline override are not drawn, and a font family token holding a CSS font stack is left unbound

@@ -38,17 +38,28 @@ interface CheckPart {
   planned: Counts
 }
 
-/** The variant names a script carries, read back from its packed model. */
-const namesIn = (script: string) => {
+/** The model a script carries, read back from its packed form. */
+const modelIn = (script: string) => {
   const json = /A63Figma\.\w+\(figma, (.*)\);\nreturn/s.exec(script)?.[1]
   if (!json) throw new Error('no packed model in the script')
-  return unpackComponentModel(JSON.parse(json)).variants.map(variant => variant.name)
+  return unpackComponentModel(JSON.parse(json))
 }
+/** The variant names a script carries. */
+const namesIn = (script: string) => modelIn(script).variants.map(variant => variant.name)
 
 describe('packed component models', () => {
   it('unpack to the model they were packed from', () => {
     for (const model of [buttonModelFixture, realButtonModel])
       expect(unpackComponentModel(packComponentModel(model))).toEqual(model)
+  })
+
+  it('carry the doc block through a round trip', () => {
+    expect(realButtonModel.doc).toBeDefined()
+    const unpacked = unpackComponentModel(
+      JSON.parse(JSON.stringify(packComponentModel(realButtonModel)))
+    )
+    expect(unpacked.doc).toEqual(realButtonModel.doc)
+    expect('doc' in unpackComponentModel(packComponentModel(buttonModelFixture))).toBe(false)
   })
 
   it('are much smaller than the model', () => {
@@ -67,6 +78,28 @@ describe('component scripts for use_figma', () => {
       expect(new Set(names).size).toBe(names.length)
       expect(names).toEqual(realButtonModel.variants.map(variant => variant.name))
     }
+  })
+
+  it('carries the doc block in the last part only, every part still under the limit', () => {
+    for (const action of ['sync', 'check'] as const) {
+      const scripts = buildComponentScripts(realButtonModel, action)
+      const withDoc = scripts.map(script => modelIn(script).doc !== undefined)
+      expect(withDoc.filter(Boolean)).toHaveLength(1)
+      expect(withDoc.at(-1)).toBe(true)
+      expect(modelIn(scripts.at(-1)!).doc).toEqual(realButtonModel.doc)
+      for (const script of scripts) expect(script.length).toBeLessThan(49_000)
+    }
+  })
+
+  it('moves variants out of the last part when the doc block would push it over', () => {
+    const doc = { ...realButtonModel.doc!, usage: 'x'.repeat(6000) }
+    const model = { ...realButtonModel, doc }
+    const scripts = buildComponentScripts(model, 'sync')
+    const withoutDoc = buildComponentScripts({ ...model, doc: undefined }, 'sync')
+    expect(scripts.length).toBeGreaterThanOrEqual(withoutDoc.length)
+    for (const script of scripts) expect(script.length).toBeLessThan(49_000)
+    expect(modelIn(scripts.at(-1)!).doc).toEqual(doc)
+    expect(scripts.flatMap(namesIn)).toEqual(model.variants.map(variant => variant.name))
   })
 
   it('carries only the tokens and derived variables its variants bind', () => {

@@ -155,6 +155,11 @@ describe('component', () => {
     assert.equal(component(index, 'kbd').data.axisGuidance, null)
   })
 
+  it('records each component docs route, as the docs site builds it', () => {
+    const button = index.components.find(entry => entry.slug === 'button')
+    assert.equal(button.route, '/components/component-button')
+  })
+
   it('suggests the closest slug when one is missing', () => {
     assert.throws(
       () => component(index, 'buton'),

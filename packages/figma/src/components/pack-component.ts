@@ -8,7 +8,14 @@
  */
 import { DERIVED_COLLECTION, DERIVED_MODE, derivedToken, parseDerived } from '../derived'
 import type { SyncVariable } from '../plan'
-import type { ComponentModel, ComponentValue, FigmaProperty, LayerSpec, VariantSpec } from './model'
+import type {
+  ComponentDoc,
+  ComponentModel,
+  ComponentValue,
+  FigmaProperty,
+  LayerSpec,
+  VariantSpec,
+} from './model'
 
 export type PackedLayer = [
   name: string,
@@ -49,6 +56,8 @@ export interface PackedComponentModel {
   e: string[]
   l: PackedLiteral[]
   s: ComponentModel['skipped']
+  /** The doc block, as is: it is small and read once (only the last script part has it). */
+  c?: ComponentDoc
 }
 
 const nameOf = (axes: ComponentModel['axes'], v: number, s: number, t: number) =>
@@ -116,6 +125,7 @@ export function packComponentModel(model: ComponentModel): PackedComponentModel 
     e: expressions.items,
     l,
     s: model.skipped,
+    ...(model.doc ? { c: model.doc } : {}),
   }
 }
 
@@ -165,5 +175,6 @@ export function unpackComponentModel(packed: PackedComponentModel): ComponentMod
       expression: packed.e[expression],
     })),
     skipped: packed.s,
+    ...(packed.c ? { doc: packed.c } : {}),
   }
 }

@@ -29,6 +29,7 @@ export {
 } from './runtime'
 export { buttonAnatomy, type AnatomyLayer } from './components/button-anatomy'
 export type {
+  ComponentDoc,
   ComponentModel,
   ComponentValue,
   FigmaProperty,
@@ -36,6 +37,12 @@ export type {
   VariantSpec,
 } from './components/model'
 export { readRecipe, type RecipeInput } from './components/recipe'
+export {
+  type AgentIndex,
+  type AgentIndexComponent,
+  buildComponentModel,
+  readComponentDoc,
+} from './components/doc'
 export {
   type PackedComponentModel,
   packComponentModel,
