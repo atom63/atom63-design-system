@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "component": "Button",
   "page": "Components",
   "axes": {
@@ -139,16 +139,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -233,16 +227,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -685,16 +673,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -779,16 +761,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -1231,16 +1207,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -1325,16 +1295,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -1777,16 +1741,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -1871,16 +1829,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -2323,16 +2275,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -2417,16 +2363,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-neutral",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -5544,10 +5484,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-muted",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-muted) 90%, transparent)"
             },
             "stroke": {
               "value": {
@@ -5640,10 +5577,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-muted",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-muted) 90%, transparent)"
             },
             "stroke": {
               "value": {
@@ -6114,10 +6048,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-muted",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-muted) 90%, transparent)"
             },
             "stroke": {
               "value": {
@@ -6210,10 +6141,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-muted",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-muted) 90%, transparent)"
             },
             "stroke": {
               "value": {
@@ -6684,10 +6612,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-muted",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-muted) 90%, transparent)"
             },
             "stroke": {
               "value": {
@@ -6780,10 +6705,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-muted",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-muted) 90%, transparent)"
             },
             "stroke": {
               "value": {
@@ -7254,10 +7176,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-muted",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-muted) 90%, transparent)"
             },
             "stroke": {
               "value": {
@@ -7350,10 +7269,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-muted",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-muted) 90%, transparent)"
             },
             "stroke": {
               "value": {
@@ -7824,10 +7740,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-muted",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-muted) 90%, transparent)"
             },
             "stroke": {
               "value": {
@@ -7920,10 +7833,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-muted",
-                "opacity": 90
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-muted) 90%, transparent)"
             },
             "stroke": {
               "value": {
@@ -10971,16 +10881,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -11065,16 +10969,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 15
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 15%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 30%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -11159,16 +11057,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 15
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 15%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 30%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -11253,16 +11145,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -11347,16 +11233,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -11444,16 +11324,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -11541,16 +11415,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -11635,16 +11503,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 15
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 15%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 30%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -11729,16 +11591,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 15
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 15%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 30%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -11823,16 +11679,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -11917,16 +11767,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -12014,16 +11858,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -12111,16 +11949,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -12205,16 +12037,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 15
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 15%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 30%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -12299,16 +12125,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 15
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 15%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 30%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -12393,16 +12213,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -12487,16 +12301,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -12584,16 +12392,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -12681,16 +12483,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -12775,16 +12571,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 15
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 15%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 30%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -12869,16 +12659,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 15
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 15%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 30%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -12963,16 +12747,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -13057,16 +12835,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -13154,16 +12926,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -13251,16 +13017,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -13345,16 +13105,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 15
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 15%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 30%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -13439,16 +13193,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 15
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 15%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 30%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -13533,16 +13281,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -13627,16 +13369,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -13724,16 +13460,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 10
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--a63-action-danger",
-                "opacity": 20
-              }
+              "alias": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -13909,10 +13639,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-control-hover",
-                "opacity": 50
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
             },
             "stroke": {
               "alias": "--a63-border-subtle"
@@ -14000,10 +13727,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-control-hover",
-                "opacity": 50
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
             },
             "stroke": {
               "alias": "--a63-border-subtle"
@@ -14449,10 +14173,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-control-hover",
-                "opacity": 50
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
             },
             "stroke": {
               "alias": "--a63-border-subtle"
@@ -14540,10 +14261,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-control-hover",
-                "opacity": 50
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
             },
             "stroke": {
               "alias": "--a63-border-subtle"
@@ -14989,10 +14707,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-control-hover",
-                "opacity": 50
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
             },
             "stroke": {
               "alias": "--a63-border-subtle"
@@ -15080,10 +14795,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-control-hover",
-                "opacity": 50
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
             },
             "stroke": {
               "alias": "--a63-border-subtle"
@@ -15529,10 +15241,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-control-hover",
-                "opacity": 50
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
             },
             "stroke": {
               "alias": "--a63-border-subtle"
@@ -15620,10 +15329,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-control-hover",
-                "opacity": 50
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
             },
             "stroke": {
               "alias": "--a63-border-subtle"
@@ -16069,10 +15775,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-control-hover",
-                "opacity": 50
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
             },
             "stroke": {
               "alias": "--a63-border-subtle"
@@ -16160,10 +15863,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--a63-surface-control-hover",
-                "opacity": 50
-              }
+              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
             },
             "stroke": {
               "alias": "--a63-border-subtle"
@@ -22411,16 +22111,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -22505,16 +22199,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 30%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 22
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 22%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -22599,16 +22287,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 34
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 34%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 18
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 18%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -22693,16 +22375,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -22787,16 +22463,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -22884,16 +22554,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -22981,16 +22645,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -23075,16 +22733,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 30%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 22
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 22%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -23169,16 +22821,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 34
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 34%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 18
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 18%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -23263,16 +22909,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -23357,16 +22997,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -23454,16 +23088,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -23551,16 +23179,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -23645,16 +23267,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 30%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 22
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 22%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -23739,16 +23355,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 34
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 34%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 18
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 18%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -23833,16 +23443,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -23927,16 +23531,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -24024,16 +23622,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -24121,16 +23713,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -24215,16 +23801,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 30%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 22
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 22%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -24309,16 +23889,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 34
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 34%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 18
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 18%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -24403,16 +23977,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -24497,16 +24065,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -24594,16 +24156,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -24691,16 +24247,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -24785,16 +24335,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 30%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 22
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 22%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -24879,16 +24423,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 34
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 34%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 18
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 18%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -24973,16 +24511,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -25067,16 +24599,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -25164,16 +24690,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -25261,16 +24781,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -25355,16 +24869,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 30%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 22
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 22%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -25449,16 +24957,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 34
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 34%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 18
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 18%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -25543,16 +25045,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -25637,16 +25133,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -25734,16 +25224,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -25831,16 +25315,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -25925,16 +25403,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 30%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 22
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 22%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -26019,16 +25491,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 34
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 34%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 18
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 18%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -26113,16 +25579,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -26207,16 +25667,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -26304,16 +25758,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -26401,16 +25849,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -26495,16 +25937,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 30%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 22
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 22%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -26589,16 +26025,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 34
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 34%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 18
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 18%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -26683,16 +26113,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -26777,16 +26201,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -26874,16 +26292,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -26971,16 +26383,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -27065,16 +26471,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 30%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 22
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 22%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -27159,16 +26559,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 34
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 34%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 18
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 18%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -27253,16 +26647,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -27347,16 +26735,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -27444,16 +26826,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -27541,16 +26917,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -27635,16 +27005,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 30
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 30%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 22
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 22%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -27729,16 +27093,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 34
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 34%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 18
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 18%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -27823,16 +27181,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -27917,16 +27269,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -28014,16 +27360,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "composed": {
-                "alias": "--surface-dark-1",
-                "opacity": 26
-              }
+              "alias": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)"
             },
             "stroke": {
-              "composed": {
-                "alias": "--surface-light-1",
-                "opacity": 14
-              }
+              "alias": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -28145,6 +27485,244 @@
     "--typography-sm-line-height",
     "--typography-xs-line-height"
   ],
+  "derived": {
+    "name": "Component",
+    "modes": [
+      "Value"
+    ],
+    "variables": [
+      {
+        "name": "action/danger/alpha-10",
+        "token": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)",
+        "type": "COLOR",
+        "values": {
+          "Value": {
+            "composed": {
+              "alias": "--a63-action-danger",
+              "opacity": 10
+            }
+          }
+        },
+        "codeSyntax": "color-mix(in oklch, var(--a63-action-danger) 10%, transparent)",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ]
+      },
+      {
+        "name": "action/danger/alpha-15",
+        "token": "color-mix(in oklch, var(--a63-action-danger) 15%, transparent)",
+        "type": "COLOR",
+        "values": {
+          "Value": {
+            "composed": {
+              "alias": "--a63-action-danger",
+              "opacity": 15
+            }
+          }
+        },
+        "codeSyntax": "color-mix(in oklch, var(--a63-action-danger) 15%, transparent)",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ]
+      },
+      {
+        "name": "action/danger/alpha-20",
+        "token": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)",
+        "type": "COLOR",
+        "values": {
+          "Value": {
+            "composed": {
+              "alias": "--a63-action-danger",
+              "opacity": 20
+            }
+          }
+        },
+        "codeSyntax": "color-mix(in oklch, var(--a63-action-danger) 20%, transparent)",
+        "scopes": [
+          "STROKE_COLOR"
+        ]
+      },
+      {
+        "name": "action/danger/alpha-30",
+        "token": "color-mix(in oklch, var(--a63-action-danger) 30%, transparent)",
+        "type": "COLOR",
+        "values": {
+          "Value": {
+            "composed": {
+              "alias": "--a63-action-danger",
+              "opacity": 30
+            }
+          }
+        },
+        "codeSyntax": "color-mix(in oklch, var(--a63-action-danger) 30%, transparent)",
+        "scopes": [
+          "STROKE_COLOR"
+        ]
+      },
+      {
+        "name": "action/neutral/alpha-90",
+        "token": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)",
+        "type": "COLOR",
+        "values": {
+          "Value": {
+            "composed": {
+              "alias": "--a63-action-neutral",
+              "opacity": 90
+            }
+          }
+        },
+        "codeSyntax": "color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL",
+          "STROKE_COLOR"
+        ]
+      },
+      {
+        "name": "surface/control/hover/alpha-50",
+        "token": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)",
+        "type": "COLOR",
+        "values": {
+          "Value": {
+            "composed": {
+              "alias": "--a63-surface-control-hover",
+              "opacity": 50
+            }
+          }
+        },
+        "codeSyntax": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ]
+      },
+      {
+        "name": "surface/dark/1/alpha-26",
+        "token": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)",
+        "type": "COLOR",
+        "values": {
+          "Value": {
+            "composed": {
+              "alias": "--surface-dark-1",
+              "opacity": 26
+            }
+          }
+        },
+        "codeSyntax": "color-mix(in oklch, var(--surface-dark-1) 26%, transparent)",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ]
+      },
+      {
+        "name": "surface/dark/1/alpha-30",
+        "token": "color-mix(in oklch, var(--surface-dark-1) 30%, transparent)",
+        "type": "COLOR",
+        "values": {
+          "Value": {
+            "composed": {
+              "alias": "--surface-dark-1",
+              "opacity": 30
+            }
+          }
+        },
+        "codeSyntax": "color-mix(in oklch, var(--surface-dark-1) 30%, transparent)",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ]
+      },
+      {
+        "name": "surface/dark/1/alpha-34",
+        "token": "color-mix(in oklch, var(--surface-dark-1) 34%, transparent)",
+        "type": "COLOR",
+        "values": {
+          "Value": {
+            "composed": {
+              "alias": "--surface-dark-1",
+              "opacity": 34
+            }
+          }
+        },
+        "codeSyntax": "color-mix(in oklch, var(--surface-dark-1) 34%, transparent)",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ]
+      },
+      {
+        "name": "surface/light/1/alpha-14",
+        "token": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)",
+        "type": "COLOR",
+        "values": {
+          "Value": {
+            "composed": {
+              "alias": "--surface-light-1",
+              "opacity": 14
+            }
+          }
+        },
+        "codeSyntax": "color-mix(in oklch, var(--surface-light-1) 14%, transparent)",
+        "scopes": [
+          "STROKE_COLOR"
+        ]
+      },
+      {
+        "name": "surface/light/1/alpha-18",
+        "token": "color-mix(in oklch, var(--surface-light-1) 18%, transparent)",
+        "type": "COLOR",
+        "values": {
+          "Value": {
+            "composed": {
+              "alias": "--surface-light-1",
+              "opacity": 18
+            }
+          }
+        },
+        "codeSyntax": "color-mix(in oklch, var(--surface-light-1) 18%, transparent)",
+        "scopes": [
+          "STROKE_COLOR"
+        ]
+      },
+      {
+        "name": "surface/light/1/alpha-22",
+        "token": "color-mix(in oklch, var(--surface-light-1) 22%, transparent)",
+        "type": "COLOR",
+        "values": {
+          "Value": {
+            "composed": {
+              "alias": "--surface-light-1",
+              "opacity": 22
+            }
+          }
+        },
+        "codeSyntax": "color-mix(in oklch, var(--surface-light-1) 22%, transparent)",
+        "scopes": [
+          "STROKE_COLOR"
+        ]
+      },
+      {
+        "name": "surface/muted/alpha-90",
+        "token": "color-mix(in oklch, var(--a63-surface-muted) 90%, transparent)",
+        "type": "COLOR",
+        "values": {
+          "Value": {
+            "composed": {
+              "alias": "--a63-surface-muted",
+              "opacity": 90
+            }
+          }
+        },
+        "codeSyntax": "color-mix(in oklch, var(--a63-surface-muted) 90%, transparent)",
+        "scopes": [
+          "FRAME_FILL",
+          "SHAPE_FILL"
+        ]
+      }
+    ]
+  },
   "literals": [
     {
       "variant": "Variant=default, Size=xs, State=rest",

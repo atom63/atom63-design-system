@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs'
 import type { ComponentModel } from '../src/components/model'
 import { packComponentModel, unpackComponentModel } from '../src/components/pack-component'
 import { buildComponentScripts } from '../src/components/scripts'
+import { parseDerived } from '../src/derived'
 import type { SyncModel } from '../src/plan'
 import { syncModel } from '../src/runtime'
 import { buildScripts } from '../src/scripts'
@@ -16,6 +17,7 @@ const realButtonModel = read('../generated/atom63.figma-components.json') as Com
 
 interface Counts {
   missingVariables: string[]
+  variables: number
   create: number
   update: number
   unchanged: number
@@ -25,7 +27,7 @@ interface SyncPart {
   parts: number
   variants: number
   planned: Counts
-  applied: { created: number; updated: number; fontFallbacks: string[] }
+  applied: { variables: number; created: number; updated: number; fontFallbacks: string[] }
   verification: Counts
 }
 interface CheckPart {
@@ -66,7 +68,7 @@ describe('component scripts for use_figma', () => {
     }
   })
 
-  it('carries only the tokens its variants bind', () => {
+  it('carries only the tokens and derived variables its variants bind', () => {
     for (const script of buildComponentScripts(realButtonModel, 'sync')) {
       const json = /A63Figma\.\w+\(figma, (.*)\);\nreturn/s.exec(script)![1]
       const part = unpackComponentModel(JSON.parse(json))
@@ -74,16 +76,16 @@ describe('component scripts for use_figma', () => {
         part.variants.flatMap(variant =>
           variant.layers.flatMap(layer =>
             Object.values(layer.properties).flatMap(value =>
-              value && 'alias' in value
-                ? [value.alias]
-                : value && 'composed' in value
-                  ? [value.composed.alias]
-                  : []
+              value && 'alias' in value ? [value.alias] : []
             )
           )
         )
       )
-      expect(new Set(part.tokens)).toEqual(bound)
+      const derived = part.derived.variables.map(variable => variable.token)
+      expect(derived.every(token => bound.has(token))).toBe(true)
+      const codeTokens = [...bound].map(token => parseDerived(token)?.alias ?? token)
+      expect(new Set(part.tokens)).toEqual(new Set(codeTokens))
+      expect(new Set(derived)).toEqual(new Set([...bound].filter(token => parseDerived(token))))
     }
   })
 
@@ -147,5 +149,36 @@ describe('component scripts for use_figma', () => {
       expect(JSON.stringify(result).length).toBeLessThan(20_000)
     }
     expect(fake.writes).toBe(writes)
+  }, 120_000)
+
+  it('runs each real script on its own: it makes the derived variables it binds', async () => {
+    const fake = createFakeNodes()
+    for (const script of buildScripts(realSyncModel, 'sync')) await fake.run(script)
+    const derived = realButtonModel.derived.variables
+    // Before any component script, a check plans the derived variables, not missing tokens.
+    const checks = buildComponentScripts(realButtonModel, 'check')
+    let planned = 0
+    for (const script of checks) {
+      const result = (await fake.run(script)) as CheckPart
+      expect(result.planned.missingVariables).toEqual([])
+      planned += result.planned.variables
+    }
+    expect(planned).toBeGreaterThanOrEqual(derived.length)
+    // Last part first: each part syncs what it binds, whatever ran before it.
+    let made = 0
+    for (const script of buildComponentScripts(realButtonModel, 'sync').reverse()) {
+      const result = (await fake.run(script)) as SyncPart
+      expect(result.verification).toMatchObject({ missingVariables: [], variables: 0, update: 0 })
+      expect(result.verification.unchanged).toBe(result.variants)
+      made += result.applied.variables
+    }
+    expect(made).toBe(derived.length)
+    const component = fake.collections.find(item => item.name === 'Component')!
+    expect(component.modes.map(mode => mode.name)).toEqual(['Value'])
+    expect(component.variableIds).toHaveLength(derived.length)
+    for (const script of checks) {
+      const result = (await fake.run(script)) as CheckPart
+      expect(result.planned).toMatchObject({ variables: 0, update: 0, unchanged: result.variants })
+    }
   }, 120_000)
 })

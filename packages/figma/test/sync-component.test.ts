@@ -11,6 +11,36 @@ import { createFakeNodes } from './fake-nodes'
 import { buttonModelFixture, syncFixture } from './fixtures/button'
 
 describe('the Figma node fake', () => {
+  it('stores a bound paint as the variable resolves, as Figma does', () => {
+    const fake = createFakeNodes()
+    const collection = fake.api.createVariableCollection('Base')
+    const red = fake.api.createVariable('red', collection, 'COLOR')
+    red.setValueForMode(collection.modes[0].modeId, { r: 1, g: 0, b: 0, a: 1 })
+    const faded = fake.api.createVariable('faded', collection, 'COLOR')
+    faded.setValueForMode(collection.modes[0].modeId, {
+      color: { type: 'VARIABLE_ALIAS', id: red.id },
+      opacity: 90,
+    })
+    const frame = fake.figma.createFrame()
+    expect(faded.resolveForConsumer!(frame)).toEqual({
+      value: { r: 1, g: 0, b: 0, a: 0.9 },
+      resolvedType: 'COLOR',
+    })
+    // Binding overwrites the paint's color and opacity with the resolved value.
+    const paint = { type: 'SOLID' as const, color: { r: 0, g: 0, b: 1 }, opacity: 0.1 }
+    const bound = fake.figma.variables.setBoundVariableForPaint(paint, 'color', faded)
+    expect(bound).toMatchObject({ color: { r: 1, g: 0, b: 0 }, opacity: 0.9 })
+    frame.fills = [{ ...bound, opacity: 0.1 }]
+    expect(frame.fills[0]).toMatchObject({ color: { r: 1, g: 0, b: 0 }, opacity: 0.9 })
+    // Rebinding the same variable keeps a stale stored color; another variable first refreshes it.
+    fake.staleBinding(frame)
+    frame.fills = [bound]
+    expect(frame.fills[0]).toMatchObject({ color: { r: 0, g: 0, b: 0 }, opacity: 1 })
+    frame.fills = [fake.figma.variables.setBoundVariableForPaint(paint, 'color', red)]
+    frame.fills = [bound]
+    expect(frame.fills[0]).toMatchObject({ color: { r: 1, g: 0, b: 0 }, opacity: 0.9 })
+  })
+
   it('creates a page and a component and reads them back', async () => {
     const fake = createFakeNodes()
     const page = fake.figma.createPage()
@@ -121,8 +151,10 @@ describe('syncComponent', () => {
     const writes = fake.writes
     const result = await syncComponent(fake.figma, buttonModelFixture)
     expect(result.planned.missingVariables).toContain('--a63-action-neutral')
-    expect(result.applied).toEqual({ created: 0, updated: 0, fontFallbacks: [] })
+    expect(result.applied).toEqual({ variables: 0, created: 0, updated: 0, fontFallbacks: [] })
     expect(fake.writes).toBe(writes)
+    // Not even the derived variables: they alias the missing tokens.
+    expect(fake.collections).toEqual([])
   })
 
   it('builds the set, binds by code syntax, and a second run writes nothing', async () => {
@@ -137,6 +169,7 @@ describe('syncComponent', () => {
     expect(first.applied.created).toBe(12)
     expect(first.verification).toEqual({
       missingVariables: [],
+      variables: [],
       create: [],
       update: [],
       unchanged: 12,
@@ -159,8 +192,14 @@ describe('syncComponent', () => {
 
     const writes = fake.writes
     const second = await syncComponent(fake.figma, buttonModelFixture)
-    expect(second.planned).toEqual({ missingVariables: [], create: [], update: [], unchanged: 12 })
-    expect(second.applied).toEqual({ created: 0, updated: 0, fontFallbacks: [] })
+    expect(second.planned).toEqual({
+      missingVariables: [],
+      variables: [],
+      create: [],
+      update: [],
+      unchanged: 12,
+    })
+    expect(second.applied).toEqual({ variables: 0, created: 0, updated: 0, fontFallbacks: [] })
     expect(fake.writes).toBe(writes)
   })
 
@@ -251,6 +290,7 @@ describe('syncComponent', () => {
     const first = await syncComponent(fake.figma, buttonModelFixture, only)
     expect(first.verification).toEqual({
       missingVariables: [],
+      variables: [],
       create: [],
       update: [],
       unchanged: 2,
@@ -320,6 +360,33 @@ describe('syncComponent', () => {
     expect(rest.effects).toEqual([shadow])
   })
 
+  it('binds a color-mix focus ring to its derived variable', async () => {
+    const { sync, model } = modelOf(
+      `.a63-Button {
+        --button-focus-ring: color-mix(in oklch, var(--a63-control-focus-ring-color) 50%, transparent);
+        background-color: var(--a63-action-neutral);
+      }`,
+      [
+        {
+          token: '--a63-control-focus-ring-color',
+          type: 'COLOR',
+          value: { r: 0, g: 0, b: 1, a: 1 },
+        },
+        { token: '--a63-control-focus-ring-width', type: 'FLOAT', value: 3 },
+      ]
+    )
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, sync)
+    const result = await syncComponent(fake.figma, model)
+    expect(result.verification.update).toEqual([])
+    const mix = 'color-mix(in oklch, var(--a63-control-focus-ring-color) 50%, transparent)'
+    const derived = [...fake.variables.values()].find(item => item.codeSyntax?.WEB === mix)!
+    expect(derived.scopes).toEqual(['EFFECT_COLOR'])
+    const focused = fake.findVariant('Button', 'Variant=default, Size=md, State=focusVisible')
+    expect(focused.effects[0].boundVariables?.color?.id).toBe(derived.id)
+    expect(focused.effects[0].color).toEqual({ r: 0, g: 0, b: 1, a: 0.5 })
+  })
+
   it('keeps a designer effect on a component with no focus ring', async () => {
     const fake = createFakeNodes()
     await syncModel(fake.figma, syncFixture)
@@ -342,26 +409,81 @@ describe('syncComponent', () => {
     expect(root.effects).toEqual([shadow])
   })
 
-  it('uses a composed paint for color-mix values', async () => {
+  it('binds a color-mix value to a derived variable, with the paint at its alpha', async () => {
     const fake = createFakeNodes()
     await syncModel(fake.figma, syncFixture)
-    await syncComponent(fake.figma, buttonModelFixture)
-    const neutralId = fake.variableOf('--a63-action-neutral').id
+    const first = await syncComponent(fake.figma, buttonModelFixture)
+    expect(first.verification.update).toEqual([])
+    expect(first.verification.unchanged).toBe(12)
+    const mix = 'color-mix(in oklch, var(--a63-action-neutral) 10%, transparent)'
+    const derived = [...fake.variables.values()].find(item => item.codeSyntax?.WEB === mix)!
+    expect(derived).toMatchObject({ name: 'action-neutral/alpha-10', resolvedType: 'COLOR' })
+    const component = fake.collections.find(item => item.variableIds.includes(derived.id))!
+    expect(component.name).toBe('Component')
+    expect(component.modes.map(mode => mode.name)).toEqual(['Value'])
+    expect(Object.values(derived.valuesByMode)).toEqual([
+      { color: alias(fake.variableOf('--a63-action-neutral').id), opacity: 10 },
+    ])
     const secondary = fake.findVariant('Button', 'Variant=secondary, Size=md, State=rest')
     expect(secondary.fills).toHaveLength(1)
-    expect(secondary.fills[0].boundVariables?.color?.id).toBe(neutralId)
+    expect(secondary.fills[0].boundVariables?.color?.id).toBe(derived.id)
+    // The stored paint is the variable's resolved value: black at 10%.
+    expect(secondary.fills[0].color).toEqual({ r: 0, g: 0, b: 0 })
     expect(secondary.fills[0].opacity).toBeCloseTo(0.1)
     // `transparent` is a literal: an unbound paint at zero opacity.
     expect(secondary.strokes).toHaveLength(1)
     expect(secondary.strokes[0].boundVariables?.color).toBeUndefined()
     expect(secondary.strokes[0].opacity).toBe(0)
 
-    // A drifted opacity is an update; the binding is kept.
-    secondary.fills = [{ ...secondary.fills[0], opacity: 0.5 }]
-    const result = await syncComponent(fake.figma, buttonModelFixture)
-    expect(result.planned.update).toEqual(['Variant=secondary, Size=md, State=rest'])
+    const writes = fake.writes
+    const second = await syncComponent(fake.figma, buttonModelFixture)
+    expect(second.planned).toEqual({
+      missingVariables: [],
+      variables: [],
+      create: [],
+      update: [],
+      unchanged: 12,
+    })
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('repairs a stale stored color on a binding Figma kept, and is idle after', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    await syncComponent(fake.figma, buttonModelFixture)
+    const name = 'Variant=secondary, Size=md, State=rest'
+    const secondary = fake.findVariant('Button', name)
+    const id = secondary.fills[0].boundVariables?.color?.id
+    fake.staleBinding(secondary)
+    expect(secondary.fills[0].opacity).toBe(1)
+
+    const repaired = await syncComponent(fake.figma, buttonModelFixture)
+    expect(repaired.planned.update).toEqual([name])
+    expect(repaired.verification.update).toEqual([])
+    expect(secondary.fills[0].boundVariables?.color?.id).toBe(id)
     expect(secondary.fills[0].opacity).toBeCloseTo(0.1)
-    expect(secondary.fills[0].boundVariables?.color?.id).toBe(neutralId)
+
+    const writes = fake.writes
+    const again = await syncComponent(fake.figma, buttonModelFixture)
+    expect(again.planned.update).toEqual([])
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('repairs bindings Figma stored black on a first run, in the same run', async () => {
+    const { sync, model } = modelOf(
+      '.a63-Button { background-color: var(--a63-action-neutral-hover); }',
+      []
+    )
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, sync)
+    fake.staleNextBinds(2)
+    const first = await syncComponent(fake.figma, model)
+    expect(first.verification.update).toEqual([])
+    const root = fake.findVariant('Button', neutral)
+    expect(root.fills[0].color).toEqual({ r: 0.1, g: 0.1, b: 0.1 })
+    expect(root.fills[0].boundVariables?.color?.id).toBe(
+      fake.variableOf('--a63-action-neutral-hover').id
+    )
   })
 
   it('fades the disabled label and hides the spinner and icon by default', async () => {
@@ -508,7 +630,13 @@ describe('syncComponent', () => {
     ])
     const writes = fake.writes
     const again = await syncComponent(fake.figma, model)
-    expect(again.planned).toEqual({ missingVariables: [], create: [], update: [], unchanged: 1 })
+    expect(again.planned).toEqual({
+      missingVariables: [],
+      variables: [],
+      create: [],
+      update: [],
+      unchanged: 1,
+    })
     expect(fake.writes).toBe(writes)
   })
 
@@ -628,11 +756,14 @@ describe('the real Button model', () => {
     expect(first.planned.missingVariables).toEqual([])
     expect(first.verification).toEqual({
       missingVariables: [],
+      variables: [],
       create: [],
       update: [],
       unchanged: 300,
     })
     expect(first.applied.created).toBe(300)
+    expect(first.applied.variables).toBe(model.derived.variables.length)
+    expect(model.derived.variables).toHaveLength(13)
     // The family token holds a CSS stack: Geist is the literal, the variable stays unbound.
     expect(first.applied.fontFallbacks).toEqual([
       'Label: --a63-control-font-family not bound in every mode; used Geist',

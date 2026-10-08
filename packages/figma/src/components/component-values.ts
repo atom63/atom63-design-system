@@ -33,13 +33,11 @@ export interface Check {
 }
 
 type Color = { r: number; g: number; b: number; a: number }
-type Alias = { alias: string } | { composed: { alias: string; opacity: number } }
+type Alias = { alias: string }
 
 export const INTER: FontNameLike = { family: 'Inter', style: 'Regular' }
 
-const isAlias = (value: ComponentValue | undefined): value is Alias =>
-  !!value && ('alias' in value || 'composed' in value)
-const tokenOf = (value: Alias) => ('alias' in value ? value.alias : value.composed.alias)
+const isAlias = (value: ComponentValue | undefined): value is Alias => !!value && 'alias' in value
 const isColor = (value: unknown): value is Color =>
   typeof value === 'object' && value !== null && 'r' in value && 'g' in value && 'b' in value
 const literal = (value: ComponentValue | undefined) =>
@@ -71,7 +69,7 @@ function boundTo(node: SceneNodeLike, field: BindableField, id: string): boolean
 
 /** Tokens a layer binds, for the C8 check that every one has a variable. */
 export function tokensOf(layer: LayerSpec): string[] {
-  return Object.values(layer.properties).flatMap(value => (isAlias(value) ? [tokenOf(value)] : []))
+  return Object.values(layer.properties).flatMap(value => (isAlias(value) ? [value.alias] : []))
 }
 
 export async function loads(context: ValueContext, font: FontNameLike): Promise<boolean> {
@@ -87,16 +85,45 @@ export async function loads(context: ValueContext, font: FontNameLike): Promise<
   return loaded
 }
 
-/** A variable's value in its collection's first mode, through aliases. */
+/**
+ * A variable's value in its collection's first mode, through aliases and
+ * composed colors (an alias at an opacity scales the color's alpha).
+ */
 function firstValue(context: ValueContext, variable: VariableLike, depth = 0): unknown {
   const raw = variable.valuesByMode[context.firstMode.get(variable.id) ?? '']
-  const alias = raw as { type?: string; id?: string } | undefined
-  if (alias && typeof alias === 'object' && alias.type === 'VARIABLE_ALIAS' && depth < 16) {
-    const target = context.byId.get(alias.id ?? '')
+  if (!raw || typeof raw !== 'object' || depth >= 16) return raw
+  const follow = (id: string | undefined) => {
+    const target = context.byId.get(id ?? '')
     return target ? firstValue(context, target, depth + 1) : undefined
+  }
+  const alias = raw as { type?: string; id?: string }
+  if (alias.type === 'VARIABLE_ALIAS') return follow(alias.id)
+  const composed = raw as { color?: { id?: string }; opacity?: number }
+  if (composed.color && typeof composed.opacity === 'number') {
+    const color = follow(composed.color.id)
+    return isColor(color) ? { ...color, a: (color.a ?? 1) * (composed.opacity / 100) } : undefined
   }
   return raw
 }
+
+/**
+ * The color a variable shows on `node`: Figma's `resolveForConsumer` (the node's
+ * effective modes), else the first-mode value. This is what Figma stores in a
+ * paint bound to it: rgb as the color, alpha as the paint opacity.
+ */
+function resolvedColor(context: ValueContext, node: SceneNodeLike, variable: VariableLike) {
+  const value = variable.resolveForConsumer
+    ? variable.resolveForConsumer(node).value
+    : firstValue(context, variable)
+  return isColor(value) ? { r: value.r, g: value.g, b: value.b, a: value.a ?? 1 } : null
+}
+
+/** A solid paint of `color`, or black when the color is unknown. */
+const solid = (color: Color | null): PaintLike => ({
+  type: 'SOLID',
+  color: color ? { r: color.r, g: color.g, b: color.b } : { r: 0, g: 0, b: 0 },
+  opacity: color ? color.a : 1,
+})
 
 // Numbers ────────────────────────────────────────────────────────────────────
 
@@ -165,7 +192,11 @@ function fieldCheck(
 
 // Paints and the focus ring ──────────────────────────────────────────────────
 
-/** One solid paint: bound (with the composed opacity) or a literal color. */
+/**
+ * One solid paint: bound to a variable, or a literal color. A bound paint holds
+ * the variable's binding and, as Figma stores it, its resolved color with the
+ * alpha as the paint opacity; a paint Figma left with a stale color is an update.
+ */
 function paintCheck(
   context: ValueContext,
   node: SceneNodeLike,
@@ -173,33 +204,57 @@ function paintCheck(
   value: ComponentValue
 ): Check | null {
   const what = `${node.name}.${key}`
+  const single = () => {
+    const paints = node[key]
+    const paint = paints[0]
+    return paints.length === 1 && paint.type === 'SOLID' && paint.visible !== false ? paint : null
+  }
+  if (isAlias(value)) {
+    const variable = context.byToken.get(value.alias)
+    const holds = () => {
+      const paint = single()
+      if (!paint || !variable || paint.boundVariables?.color?.id !== variable.id) return false
+      const resolved = resolvedColor(context, node, variable)
+      return !resolved || (sameColor(paint.color, resolved) && near(paint.opacity ?? 1, resolved.a))
+    }
+    const bind = (target: VariableLike) => {
+      const paint = solid(resolvedColor(context, node, target))
+      node[key] = [context.figma.variables.setBoundVariableForPaint(paint, 'color', target)]
+    }
+    return {
+      what,
+      same: holds,
+      write: () => {
+        if (!variable) return
+        bind(variable)
+        if (holds()) return
+        // Rebinding the variable a paint already holds keeps Figma's stale stored
+        // color; binding another variable first refreshes it. The unbound paint
+        // before it is a second, unproven way to reset the binding.
+        node[key] = [solid(resolvedColor(context, node, variable))]
+        const other = [...context.byId.values()].find(
+          item => item.resolvedType === 'COLOR' && item.id !== variable.id
+        )
+        if (other) bind(other)
+        bind(variable)
+      },
+    }
+  }
   const color = literal(value)
-  if (!isAlias(value) && !isColor(color)) return null
-  const variable = isAlias(value) ? context.byToken.get(tokenOf(value)) : undefined
-  const opacity = isAlias(value)
-    ? 'composed' in value
-      ? value.composed.opacity / 100
-      : 1
-    : (color as Color).a
+  if (!isColor(color)) return null
   return {
     what,
     same: () => {
-      const paints = node[key]
-      const paint = paints[0]
-      if (paints.length !== 1 || paint.type !== 'SOLID' || paint.visible === false) return false
-      if (!near(paint.opacity ?? 1, opacity)) return false
-      if (isAlias(value)) return !!variable && paint.boundVariables?.color?.id === variable.id
-      return !paint.boundVariables?.color && sameColor(paint.color, color as Color)
+      const paint = single()
+      return (
+        !!paint &&
+        !paint.boundVariables?.color &&
+        sameColor(paint.color, color) &&
+        near(paint.opacity ?? 1, color.a)
+      )
     },
     write: () => {
-      const base: PaintLike = {
-        type: 'SOLID',
-        color: isColor(color) ? { r: color.r, g: color.g, b: color.b } : { r: 0, g: 0, b: 0 },
-        opacity,
-      }
-      node[key] = [
-        variable ? context.figma.variables.setBoundVariableForPaint(base, 'color', variable) : base,
-      ]
+      node[key] = [solid(color)]
     },
   }
 }
@@ -222,9 +277,9 @@ function ringCheck(
   if (!ring || !width || 'skipped' in ring || 'skipped' in width) return null
   if (state !== 'focusVisible')
     return { what, same: () => node.effects.length === 0, write: () => (node.effects = []) }
-  // A composed ring binds its color; Figma cannot scale a bound effect color's alpha.
-  const colorVariable = isAlias(ring) ? context.byToken.get(tokenOf(ring)) : undefined
-  const spreadVariable = isAlias(width) ? context.byToken.get(tokenOf(width)) : undefined
+  // A color-mix ring binds its derived variable, whose alpha is the mix's.
+  const colorVariable = isAlias(ring) ? context.byToken.get(ring.alias) : undefined
+  const spreadVariable = isAlias(width) ? context.byToken.get(width.alias) : undefined
   const color = literal(ring)
   const spread = literal(width)
   const literalColor: Color = isColor(color) ? color : { r: 0, g: 0, b: 0, a: 1 }
@@ -253,7 +308,9 @@ function ringCheck(
     write: () => {
       let effect: EffectLike = {
         type: 'DROP_SHADOW',
-        color: { ...literalColor },
+        color: {
+          ...((colorVariable && resolvedColor(context, node, colorVariable)) ?? literalColor),
+        },
         offset: { x: 0, y: 0 },
         radius: 0,
         spread: literalSpread,
@@ -297,7 +354,7 @@ export async function fontTarget(
 ): Promise<FontTarget | null> {
   const { fontFamily, fontWeight } = layer.properties
   const usable = (value: ComponentValue | undefined) =>
-    value && !('skipped' in value) && !('composed' in value) ? value : undefined
+    value && !('skipped' in value) ? value : undefined
   const family = usable(fontFamily)
   const weight = usable(fontWeight)
   if (!family && !weight) return null

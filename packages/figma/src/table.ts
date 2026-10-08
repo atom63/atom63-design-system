@@ -4,11 +4,15 @@
  * the styles a sync writes.
  */
 import { readDocument } from './apply'
+import { isDerivedToken } from './derived'
 import type { StylesApi } from './style-sync'
 
 export interface TokenTable {
   collections: { name: string; modes: number; variables: number }[]
-  /** Variables with a code syntax, so written from code by a sync, the plugin or an agent. */
+  /**
+   * Variables with a token's code syntax, so written from code by a sync, the
+   * plugin or an agent. A component's derived variables are not counted.
+   */
   variables: number
   textStyles: number
   effectStyles: number
@@ -19,7 +23,10 @@ export async function readTokenTable(figma: StylesApi): Promise<TokenTable> {
     .map(collection => ({
       name: collection.name,
       modes: collection.modes.length,
-      variables: collection.variables.filter(variable => variable.token).length,
+      // A component's derived variables are not tokens.
+      variables: collection.variables.filter(
+        variable => variable.token && !isDerivedToken(variable.token)
+      ).length,
     }))
     .filter(collection => collection.variables > 0)
   const textStyles = (await figma.getLocalTextStylesAsync()).filter(style =>

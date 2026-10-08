@@ -8,7 +8,11 @@ import { diffTokens, formatDiff } from '../src/diff'
 import { mergeSnapshots, type PackedSnapshot, unpackSnapshot } from '../src/pack'
 import { planSync, type SyncModel } from '../src/plan'
 import { buildReadScript, buildScripts } from '../src/scripts'
+import { syncComponent } from '../src/components/sync-component'
+import { syncModel } from '../src/runtime'
 import { createFakeFigma } from './fake-figma'
+import { createFakeNodes } from './fake-nodes'
+import { buttonModelFixture, syncFixture } from './fixtures/button'
 
 const project = buildProjectModel(readTokenDirectory(resolve(__dirname, 'fixtures/project-tokens')))
 
@@ -94,6 +98,18 @@ describe('Figma to code', () => {
     const diff = diffTokens(
       { model: atom63, sources: {}, raw: {}, notes: [] },
       unpackSnapshot(mergeSnapshots(pages))
+    )
+    expect(diff).toEqual({ changed: [], proposed: [], missing: [], orphaned: [] })
+  })
+
+  it("reports no orphan or proposal for a component's derived variables", async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    const outcome = await syncComponent(fake.figma, buttonModelFixture)
+    expect(outcome.applied.variables).toBe(buttonModelFixture.derived.variables.length)
+    const diff = diffTokens(
+      { model: syncFixture, sources: {}, raw: {}, notes: [] },
+      await read(fake.run)
     )
     expect(diff).toEqual({ changed: [], proposed: [], missing: [], orphaned: [] })
   })

@@ -134,7 +134,7 @@ describe('atom63-figma', () => {
     const out = resolve(__dirname, '../.never-written')
     for (const model of [atom63Sync, resolve(__dirname, '../package.json')])
       expect(() => run('components', '--model', model, '--out', out)).toThrow(
-        /is not a component model \(schemaVersion 1 with a variants array\)/
+        /is not a component model \(schemaVersion 2 with a variants array\)/
       )
   })
 

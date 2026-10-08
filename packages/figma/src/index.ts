@@ -1,4 +1,5 @@
 export * from './apply'
+export * from './derived'
 export * from './diff'
 export * from './css-model'
 export * from './oklch-color'

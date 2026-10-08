@@ -3,9 +3,11 @@
  * slice of the variants, each under Figma MCP's 50,000-character limit.
  * Variants are taken in model order and cut greedily, so the first script
  * makes the page and the set and later ones add to it. A slice carries only
- * the tokens its variants bind; the reporting lists (`literals`, `skipped`)
- * stay with the CLI summary.
+ * the tokens and derived variables its variants bind, so each script can run on
+ * its own: it makes its derived variables before it binds them. The reporting
+ * lists (`literals`, `skipped`) stay with the CLI summary.
  */
+import { parseDerived } from '../derived'
 import { RUNTIME_SOURCE } from '../runtime-source.generated'
 import { tokensOf } from './component-values'
 import type { ComponentModel, VariantSpec } from './model'
@@ -17,8 +19,17 @@ const LIMIT = 49_000
 const ACTIONS = { sync: 'syncComponentPart', check: 'checkComponentPart' } as const
 
 function sliceOf(model: ComponentModel, variants: VariantSpec[]): ComponentModel {
-  const tokens = [...new Set(variants.flatMap(variant => variant.layers.flatMap(tokensOf)))]
-  return { ...model, variants, tokens, literals: [], skipped: [] }
+  const bound = new Set(variants.flatMap(variant => variant.layers.flatMap(tokensOf)))
+  const variables = model.derived.variables.filter(variable => bound.has(variable.token))
+  const tokens = [...new Set([...bound].map(token => parseDerived(token)?.alias ?? token))].sort()
+  return {
+    ...model,
+    variants,
+    tokens,
+    derived: { ...model.derived, variables },
+    literals: [],
+    skipped: [],
+  }
 }
 
 function wrap(packed: PackedComponentModel, action: 'sync' | 'check', part: number, parts: number) {

@@ -141,6 +141,35 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
   const pageContainers = new Map<PageLike, Container>()
   const pageState = new Map<PageLike, { loaded: boolean; children: SceneNodeLike[] }>()
   const stateOf = new WeakMap<object, State>()
+  /** Bindings still to store black, as Figma did on a first run (see `staleNextBinds`). */
+  let staleBinds = 0
+
+  /** A color variable's value, resolved as Figma resolves it for `consumer`. */
+  const resolvedColor = (variable: VariableLike, consumer: object) => {
+    const value = variable.resolveForConsumer?.(consumer).value as
+      { r: number; g: number; b: number; a?: number } | undefined
+    return value && { color: { r: value.r, g: value.g, b: value.b }, opacity: value.a ?? 1 }
+  }
+
+  /**
+   * What Figma stores for a paint assigned at `index`. A bound paint holds the
+   * variable's resolved color and alpha (a paint opacity of its own is
+   * overwritten), except that rebinding the variable the paint at that index
+   * already holds keeps the stored color, stale or not.
+   */
+  const storedPaint = (paint: PaintLike, previous: PaintLike | undefined, consumer: object) => {
+    const id = paint.boundVariables?.color?.id
+    if (!id) return paint
+    if (previous?.boundVariables?.color?.id === id)
+      return { ...paint, color: previous.color, opacity: previous.opacity }
+    if (staleBinds > 0) {
+      staleBinds -= 1
+      return { ...paint, color: { r: 0, g: 0, b: 0 }, opacity: 1 }
+    }
+    const variable = base.variables.get(id)
+    const resolved = variable && resolvedColor(variable, consumer)
+    return resolved ? { ...paint, ...resolved } : paint
+  }
 
   const firstModeValue = (variable: VariableLike): unknown => {
     const collection = base.collections.find(item => item.variableIds.includes(variable.id))
@@ -381,6 +410,12 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
             if (paint.opacity !== undefined && !(paint.opacity >= 0 && paint.opacity <= 1))
               throw new RangeError(`${key}: paint opacity must be between 0 and 1`)
           if (key === 'effects') requireSpreadAccepted(state, value as EffectLike[])
+          else {
+            const previous = target[key] as PaintLike[]
+            value = (value as PaintLike[]).map((paint, index) =>
+              storedPaint(paint, previous[index], proxy)
+            )
+          }
           value = frozenCopy(value)
         } else if (key === 'layoutPositioning' && value === 'ABSOLUTE') {
           const parent = state.parent && stateOf.get(state.parent.node)
@@ -453,8 +488,10 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       if (field !== 'color' || variable.resolvedType !== 'COLOR')
         throw new Error('A paint binds a color variable to "color"')
       writes += 1
+      // Figma overwrites the paint's color and opacity with the variable's resolved value.
       return frozenCopy({
         ...paint,
+        ...resolvedColor(variable, {}),
         boundVariables: {
           ...paint.boundVariables,
           color: { type: 'VARIABLE_ALIAS', id: variable.id },
@@ -530,6 +567,25 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
           if (variant) return variant
         }
       throw new Error(`No variant "${variantName}" in a set "${setName}"`)
+    },
+    /**
+     * Makes a node's stored paint stale, as Figma left some bindings after a first
+     * run: the binding is kept, the stored color is not the variable's.
+     */
+    staleBinding(
+      node: SceneNodeLike,
+      key: 'fills' | 'strokes' = 'fills',
+      stale: { color: { r: number; g: number; b: number }; opacity: number } = {
+        color: { r: 0, g: 0, b: 0 },
+        opacity: 1,
+      }
+    ) {
+      const state = stateOf.get(node)!
+      state[key] = frozenCopy((state[key] as PaintLike[]).map(paint => ({ ...paint, ...stale })))
+    },
+    /** The next `count` new bindings store black, as on Figma's first run. */
+    staleNextBinds(count: number) {
+      staleBinds = count
     },
     variableOf(token: string): VariableLike {
       for (const variable of base.variables.values())

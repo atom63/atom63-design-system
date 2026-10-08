@@ -81,12 +81,15 @@ export const check = (figma: FigmaLike, packed: PackedModel) =>
 /** A component plan as counts, so a script's result stays well under use_figma's 20 KB. */
 export interface ComponentCounts {
   missingVariables: string[]
+  /** Derived variables to create or update. */
+  variables: number
   create: number
   update: number
   unchanged: number
 }
 const countsOf = (plan: ComponentPlan): ComponentCounts => ({
   missingVariables: plan.missingVariables,
+  variables: plan.variables.length,
   create: plan.create.length,
   update: plan.update.length,
   unchanged: plan.unchanged,

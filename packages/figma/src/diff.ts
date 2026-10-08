@@ -8,6 +8,7 @@
  * its result. A sync after that brings Figma back in line.
  */
 import type { ProjectModel, TokenSource } from './css-model'
+import { isDerivedToken } from './derived'
 import type { SnapshotCollection, SyncColor, SyncValue } from './plan'
 import { valuesEqual } from './plan'
 
@@ -112,7 +113,11 @@ export interface TokenDiff {
   proposed: { collection: string; name: string; values: Record<string, SyncValue | undefined> }[]
   /** Code tokens the file does not have yet. */
   missing: { token: string; collection: string }[]
-  /** Variables standing for a token the code no longer has; kept, so no design breaks. */
+  /**
+   * Variables standing for a token the code no longer has; kept, so no design
+   * breaks. A component's derived variables (`color-mix(…)` code syntax) are
+   * not tokens, so they are neither orphans nor proposals.
+   */
   orphaned: { collection: string; name: string; token: string }[]
 }
 
@@ -141,7 +146,9 @@ export function diffTokens(project: ProjectModel, figma: SnapshotCollection[]): 
     ),
     orphaned: figma.flatMap(collection =>
       collection.variables.flatMap(variable =>
-        variable.token !== null && !tokensInCode.has(variable.token)
+        variable.token !== null &&
+        !tokensInCode.has(variable.token) &&
+        !isDerivedToken(variable.token)
           ? [{ collection: collection.name, name: variable.name, token: variable.token }]
           : []
       )

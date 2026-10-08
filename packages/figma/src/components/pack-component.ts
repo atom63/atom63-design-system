@@ -6,6 +6,8 @@
  * left out when it is the usual `Variant=…, Size=…, State=…`.
  * Bundled into the runtime IIFE: no Node or DOM imports.
  */
+import { DERIVED_COLLECTION, DERIVED_MODE, derivedToken, parseDerived } from '../derived'
+import type { SyncVariable } from '../plan'
 import type { ComponentModel, ComponentValue, FigmaProperty, LayerSpec, VariantSpec } from './model'
 
 export type PackedLayer = [name: string, kind: 'f' | 't', properties: (FigmaProperty | number)[]]
@@ -19,9 +21,12 @@ export type PackedLiteral = [
   expression: number,
 ]
 
+/** A derived variable: its token and opacity rebuild the key, value and code syntax. */
+export type PackedDerived = [token: string, opacity: number, name: string, scopes: string[]]
+
 export interface PackedComponentModel {
   /** Format version. */
-  k: 1
+  k: 2
   /** Component, page and default label. */
   m: [component: string, page: string, label: string]
   a: [Variant: string[], Size: string[], State: string[]]
@@ -34,6 +39,8 @@ export interface PackedComponentModel {
   /** Variants as axis indexes and layer indexes, root first. */
   n: PackedVariant[]
   t: string[]
+  /** Derived variables, in the `Component` collection's one mode. */
+  x: PackedDerived[]
   /** Literal expressions, by index from `l`. */
   e: string[]
   l: PackedLiteral[]
@@ -89,7 +96,7 @@ export function packComponentModel(model: ComponentModel): PackedComponentModel 
     expressions.indexOf(literal.expression),
   ])
   return {
-    k: 1,
+    k: 2,
     m: [model.component, model.page, model.label],
     a: [axes.Variant, axes.Size, axes.State],
     d: [model.defaults.Variant, model.defaults.Size],
@@ -97,6 +104,11 @@ export function packComponentModel(model: ComponentModel): PackedComponentModel 
     y: layers.items,
     n,
     t: model.tokens,
+    x: model.derived.variables.map((variable): PackedDerived => {
+      const derived = parseDerived(variable.token)
+      if (!derived) throw new Error(`${variable.name}: not a derived variable`)
+      return [derived.alias, derived.opacity, variable.name, variable.scopes ?? []]
+    }),
     e: expressions.items,
     l,
     s: model.skipped,
@@ -104,7 +116,7 @@ export function packComponentModel(model: ComponentModel): PackedComponentModel 
 }
 
 export function unpackComponentModel(packed: PackedComponentModel): ComponentModel {
-  if (packed?.k !== 1) throw new Error('not a packed component model')
+  if (packed?.k !== 2) throw new Error('not a packed component model')
   const [Variant, Size, State] = packed.a
   const axes = { Variant, Size, State }
   const layers = packed.y.map(([name, kind, flat]): LayerSpec => {
@@ -119,7 +131,7 @@ export function unpackComponentModel(packed: PackedComponentModel): ComponentMod
     layers: layerIndexes.map(index => layers[index]),
   }))
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     component: packed.m[0],
     page: packed.m[1],
     axes,
@@ -127,6 +139,21 @@ export function unpackComponentModel(packed: PackedComponentModel): ComponentMod
     label: packed.m[2],
     variants,
     tokens: packed.t,
+    derived: {
+      name: DERIVED_COLLECTION,
+      modes: [DERIVED_MODE],
+      variables: packed.x.map(([alias, opacity, name, scopes]): SyncVariable => {
+        const token = derivedToken(alias, opacity)
+        return {
+          name,
+          token,
+          type: 'COLOR',
+          values: { [DERIVED_MODE]: { composed: { alias, opacity } } },
+          codeSyntax: token,
+          scopes,
+        }
+      }),
+    },
     literals: packed.l.map(([variant, layer, property, expression]) => ({
       variant: typeof variant === 'number' ? variants[variant].name : variant,
       layer,

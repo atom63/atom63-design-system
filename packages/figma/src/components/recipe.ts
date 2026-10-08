@@ -5,7 +5,8 @@
  */
 
 import { evaluateNumber } from '../css-model'
-import type { SyncModel, SyncVariable } from '../plan'
+import { DERIVED_COLLECTION, DERIVED_MODE, derivedName, derivedToken } from '../derived'
+import type { SyncModel, SyncValue, SyncVariable } from '../plan'
 import type { buttonAnatomy } from './button-anatomy'
 import { readRules } from './css-rules'
 import type { ComponentModel, ComponentValue, FigmaProperty, LayerSpec, VariantSpec } from './model'
@@ -33,6 +34,9 @@ export interface Coordinate {
   state?: string
   layer: 'root' | 'Label'
 }
+
+/** What the recipe says: a color-mix is still a composed value here. */
+export type RecipeValue = SyncValue | { value: boolean } | { skipped: string }
 
 type Declarations = Record<string, string>
 type Skip = { what: string; reason: string }
@@ -143,6 +147,13 @@ function expandBorder(selector: string, declarations: Declarations, skip: (s: Sk
   return out
 }
 
+/** Figma scopes a derived variable offers, by the property that uses it. */
+const DERIVED_SCOPES: Partial<Record<FigmaProperty, string[]>> = {
+  fill: ['FRAME_FILL', 'SHAPE_FILL'],
+  stroke: ['STROKE_COLOR'],
+  focusRing: ['EFFECT_COLOR'],
+}
+
 const indexes = new WeakMap<SyncModel, TokenIndex>()
 function indexOf(sync: SyncModel): TokenIndex {
   let index = indexes.get(sync)
@@ -210,7 +221,7 @@ function resolveExpression(
   context: Context,
   seen: Set<string>,
   onLiteral: (expression: string) => void
-): ComponentValue {
+): RecipeValue {
   const value = expression.trim()
   if (value === 'transparent') return { value: TRANSPARENT }
   if (/(^|[^\w-])(calc|max|min)\(/.test(value)) {
@@ -249,7 +260,7 @@ export function resolve(
   declarations: Declarations,
   sync: SyncModel,
   onLiteral: (expression: string) => void = () => {}
-): ComponentValue | 'unset' {
+): RecipeValue | 'unset' {
   const context = { declarations, index: indexOf(sync) }
   if (name.startsWith('--')) {
     if (!(name in declarations) && !context.index.has(name)) return 'unset'
@@ -291,6 +302,30 @@ export function readRecipe(input: RecipeInput): ComponentModel {
   entries.sort((a, b) => rankOf(a.coordinate) - rankOf(b.coordinate) || a.order - b.order)
 
   const tokens = new Set<string>()
+  const derived = new Map<string, SyncVariable>()
+  /** A composed value → an alias to its derived variable (C4). */
+  const derive = (
+    { alias, opacity }: { alias: string; opacity: number },
+    property: FigmaProperty
+  ): ComponentValue => {
+    const token = derivedToken(alias, opacity)
+    let variable = derived.get(token)
+    if (!variable) {
+      const source = indexOf(sync).get(alias)?.variable.name ?? alias.replace(/^--(a63-)?/, '')
+      variable = {
+        name: derivedName(source, opacity),
+        token,
+        type: 'COLOR',
+        values: { [DERIVED_MODE]: { composed: { alias, opacity } } },
+        codeSyntax: token,
+        scopes: [],
+      }
+      derived.set(token, variable)
+    }
+    const scopes = new Set([...(variable.scopes ?? []), ...(DERIVED_SCOPES[property] ?? [])])
+    variable.scopes = [...scopes].sort()
+    return { alias: token }
+  }
   const literals: ComponentModel['literals'] = []
   const variants: VariantSpec[] = []
   for (const variant of contract.variants)
@@ -316,9 +351,13 @@ export function readRecipe(input: RecipeInput): ComponentModel {
               literals.push({ variant: name, layer: layer.name, property, expression })
             )
             if (value === 'unset') continue
+            if ('composed' in value) {
+              properties[property] = derive(value.composed, property)
+              tokens.add(value.composed.alias)
+              continue
+            }
             properties[property] = value
             if ('alias' in value) tokens.add(value.alias)
-            if ('composed' in value) tokens.add(value.composed.alias)
           }
           for (const [property, fixed] of Object.entries(layer.byState?.[state] ?? {}) as [
             FigmaProperty,
@@ -342,7 +381,7 @@ export function readRecipe(input: RecipeInput): ComponentModel {
       }
 
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     component: anatomy.component,
     page: 'Components',
     axes: { Variant: [...contract.variants], Size: sizes, State: [...contract.states] },
@@ -350,6 +389,11 @@ export function readRecipe(input: RecipeInput): ComponentModel {
     label: anatomy.component,
     variants,
     tokens: [...tokens].sort(),
+    derived: {
+      name: DERIVED_COLLECTION,
+      modes: [DERIVED_MODE],
+      variables: [...derived.values()].sort((a, b) => a.name.localeCompare(b.name)),
+    },
     literals,
     skipped: [...skippedByKey.values()],
   }

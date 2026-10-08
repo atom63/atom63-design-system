@@ -6,6 +6,29 @@ export function createFakeApi({ maxModes = 10 } = {}) {
   const collections: (CollectionLike & { modes: ModeLike[]; variableIds: string[] })[] = []
   const variables = new Map<string, VariableLike>()
 
+  /**
+   * A variable's value as Figma resolves it for a consumer: through aliases and
+   * composed colors (an alias at an opacity scales the color's alpha). The fake
+   * has no explicit modes, so every collection resolves in its first mode.
+   */
+  const resolve = (variable: VariableLike, depth = 0): unknown => {
+    const collection = collections.find(item => item.variableIds.includes(variable.id))
+    const raw = collection ? variable.valuesByMode[collection.modes[0].modeId] : undefined
+    const target = (id: string) => {
+      const next = variables.get(id)
+      return next && depth < 16 ? resolve(next, depth + 1) : undefined
+    }
+    if (raw && typeof raw === 'object' && 'type' in raw && raw.type === 'VARIABLE_ALIAS')
+      return target((raw as unknown as { id: string }).id)
+    if (raw && typeof raw === 'object' && 'color' in raw && 'opacity' in raw) {
+      const { color, opacity } = raw as { color: { id: string }; opacity: number }
+      const resolved = target(color.id) as { r: number; g: number; b: number; a?: number }
+      return resolved && { ...resolved, a: (resolved.a ?? 1) * (opacity / 100) }
+    }
+    if (raw && typeof raw === 'object' && 'r' in raw) return { a: 1, ...raw }
+    return raw
+  }
+
   const api: VariablesApi = {
     getLocalVariableCollectionsAsync: () => Promise.resolve([...collections]),
     getVariableByIdAsync: id => Promise.resolve(variables.get(id) ?? null),
@@ -54,6 +77,9 @@ export function createFakeApi({ maxModes = 10 } = {}) {
         },
         scopes: ['ALL_SCOPES'],
         codeSyntax: {},
+        resolveForConsumer() {
+          return { value: resolve(this), resolvedType: this.resolvedType }
+        },
         setVariableCodeSyntax(platform, value) {
           this.codeSyntax = { ...this.codeSyntax, [platform]: value }
         },
@@ -70,5 +96,5 @@ export function createFakeApi({ maxModes = 10 } = {}) {
     },
     createVariableAlias: variable => ({ type: 'VARIABLE_ALIAS', id: variable.id }),
   }
-  return { api, collections, variables }
+  return { api, collections, variables, resolve }
 }

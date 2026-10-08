@@ -5,6 +5,9 @@
  * in place; layers and variants the model does not list are never touched.
  * Bundled into the runtime IIFE: no Node or DOM imports.
  */
+import { applyPlan, readSnapshot } from '../apply'
+import { parseDerived } from '../derived'
+import { planSync, type SyncModel } from '../plan'
 import { variablesOf } from '../style-sync'
 import {
   type Check,
@@ -19,8 +22,10 @@ import type { ComponentModel, LayerSpec, VariantSpec } from './model'
 import type { NodesApi, PageLike, SceneNodeLike } from './nodes-api'
 
 export interface ComponentPlan {
-  /** C8: non-empty → nothing is written. */
+  /** C8: code tokens with no variable; non-empty → nothing is written. */
   missingVariables: string[]
+  /** Derived variables (the `Component` collection) to create or update, by name. */
+  variables: string[]
   /** Variant names (and 'page', 'set') that do not exist yet. */
   create: string[]
   /** Variant names whose layers or bindings differ. */
@@ -28,6 +33,8 @@ export interface ComponentPlan {
   unchanged: number
 }
 export interface ComponentResult {
+  /** Derived variables created or updated before binding. */
+  variables: number
   created: number
   updated: number
   fontFallbacks: string[]
@@ -46,6 +53,22 @@ interface Run extends ValueContext {
   page: PageLike | undefined
   set: SceneNodeLike | undefined
   keys: PropertyKeys
+}
+
+const boundTokens = (variants: VariantSpec[]) => [
+  ...new Set(variants.flatMap(variant => variant.layers.flatMap(tokensOf))),
+]
+
+/** The derived variables `variants` bind, as a sync model for the token engine. */
+function derivedModel(model: ComponentModel, variants: VariantSpec[]): SyncModel {
+  const bound = new Set(boundTokens(variants))
+  const variables = model.derived.variables.filter(variable => bound.has(variable.token))
+  return {
+    schemaVersion: 1,
+    summary: { collections: 1, variables: variables.length, aliasValues: 0, skipped: 0 },
+    collections: variables.length > 0 ? [{ ...model.derived, variables }] : [],
+    skipped: [],
+  }
 }
 
 async function open(figma: NodesApi, model: ComponentModel, only?: string[]): Promise<Run> {
@@ -212,9 +235,16 @@ async function differs(run: Run, node: SceneNodeLike, spec: VariantSpec): Promis
 }
 
 async function planRun(run: Run): Promise<ComponentPlan> {
-  const tokens = [...new Set(run.variants.flatMap(v => v.layers.flatMap(tokensOf)))]
+  const derived = derivedModel(run.model, run.variants)
+  const known = new Set(derived.collections.flatMap(c => c.variables.map(v => v.token)))
+  // A derived variable needs its code token; one the model does not define cannot be made.
+  const needed = boundTokens(run.variants).map(token =>
+    known.has(token) ? (parseDerived(token)?.alias ?? token) : token
+  )
+  const variablePlan = planSync(derived, await readSnapshot(run.figma.variables, derived))
   const plan: ComponentPlan = {
-    missingVariables: tokens.filter(token => !run.byToken.has(token)),
+    missingVariables: [...new Set(needed)].filter(token => !run.byToken.has(token)),
+    variables: variablePlan.changes.map(change => change.variable.name),
     create: [],
     update: [],
     unchanged: 0,
@@ -311,8 +341,16 @@ function place(run: Run, set: SceneNodeLike, added: { node: SceneNodeLike; spec:
 }
 
 async function applyRun(run: Run, plan: ComponentPlan): Promise<ComponentResult> {
-  const result: ComponentResult = { created: 0, updated: 0, fontFallbacks: [] }
+  const result: ComponentResult = { variables: 0, created: 0, updated: 0, fontFallbacks: [] }
   if (plan.missingVariables.length > 0) return result
+  if (plan.variables.length > 0) {
+    // Derived variables first, through the token engine, so the paints can bind them.
+    const derived = derivedModel(run.model, run.variants)
+    const variablePlan = planSync(derived, await readSnapshot(run.figma.variables, derived))
+    const applied = await applyPlan(run.figma.variables, derived, variablePlan)
+    result.variables = applied.created + applied.updated
+    Object.assign(run, await variablesOf(run.figma.variables))
+  }
   if (plan.create.length === 0 && plan.update.length === 0) return result
   const fallbacks = new Set<string>()
   // New text layers start in Inter Regular, and a font that does not load falls back to it.

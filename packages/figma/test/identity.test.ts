@@ -1,4 +1,5 @@
 import { applyPlan, readSnapshot, tokenOfCodeSyntax, type VariablesApi } from '../src/apply'
+import { derivedToken, parseDerived } from '../src/derived'
 import { planSync, type SyncModel } from '../src/plan'
 import { createFakeApi } from './fake-api'
 
@@ -47,6 +48,22 @@ describe('identity by code syntax', () => {
     expect(tokenOfCodeSyntax('var( --a63-surface-page )')).toBe('--a63-surface-page')
     expect(tokenOfCodeSyntax(undefined)).toBeNull()
     expect(tokenOfCodeSyntax('16px')).toBeNull()
+  })
+
+  it("reads a derived variable's color-mix code syntax as its canonical key", () => {
+    const key = 'color-mix(in oklch, var(--a63-action-danger) 10%, transparent)'
+    expect(tokenOfCodeSyntax(key)).toBe(key)
+    expect(
+      tokenOfCodeSyntax('color-mix( in  oklch,var( --a63-action-danger )  10.0%,transparent )')
+    ).toBe(key)
+    expect(parseDerived(key)).toEqual({ alias: '--a63-action-danger', opacity: 10 })
+    expect(derivedToken('--a63-action-danger', 12.5)).toBe(
+      'color-mix(in oklch, var(--a63-action-danger) 12.5%, transparent)'
+    )
+    // Only the form the recipe writes: another space, color or a 0% mix is not a derived variable.
+    expect(tokenOfCodeSyntax('color-mix(in srgb, var(--a) 10%, transparent)')).toBeNull()
+    expect(tokenOfCodeSyntax('color-mix(in oklch, var(--a) 10%, white)')).toBeNull()
+    expect(tokenOfCodeSyntax('color-mix(in oklch, var(--a) 0%, transparent)')).toBeNull()
   })
 
   it('recognizes variables written without plugin data', async () => {

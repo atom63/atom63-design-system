@@ -82,9 +82,9 @@ try {
     const path =
       values.model ?? fail('pass --model <json> (generated/atom63.figma-components.json)')
     const read = JSON.parse(readFileSync(path, 'utf8')) as Partial<ComponentModel> | null
-    if (read?.schemaVersion !== 1 || !Array.isArray(read.variants))
+    if (read?.schemaVersion !== 2 || !Array.isArray(read.variants))
       fail(
-        `${path} is not a component model (schemaVersion 1 with a variants array); ` +
+        `${path} is not a component model (schemaVersion 2 with a variants array); ` +
           'pass generated/atom63.figma-components.json'
       )
     const model = read as ComponentModel
@@ -97,6 +97,7 @@ try {
       checks: writeAll(out, 'components-check', buildComponentScripts(model, 'check')),
       variants: model.variants.length,
       tokens: model.tokens.length,
+      derivedVariables: model.derived.variables.length,
       literals: model.literals.length,
       skipped: model.skipped,
     }

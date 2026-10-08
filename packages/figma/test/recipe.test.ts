@@ -37,10 +37,28 @@ it('applies state, variant and size rules in cascade order', () => {
   })
 })
 
-it('reads color-mix with transparent as a composed alias, and transparent as a literal', () => {
+it('reads color-mix with transparent as a derived variable, and transparent as a literal', () => {
   const root = layer('Variant=secondary, Size=md, State=rest')
-  expect(root.properties.fill).toEqual({ composed: { alias: '--a63-action-neutral', opacity: 10 } })
+  const mix = 'color-mix(in oklch, var(--a63-action-neutral) 10%, transparent)'
+  expect(root.properties.fill).toEqual({ alias: mix })
   expect(root.properties.stroke).toEqual({ value: { r: 0, g: 0, b: 0, a: 0 } })
+  // One variable per (token, opacity), in the Component collection, named by meaning.
+  expect(buttonModelFixture.derived).toEqual({
+    name: 'Component',
+    modes: ['Value'],
+    variables: [
+      {
+        name: 'action-neutral/alpha-10',
+        token: mix,
+        type: 'COLOR',
+        values: { Value: { composed: { alias: '--a63-action-neutral', opacity: 10 } } },
+        codeSyntax: mix,
+        scopes: ['FRAME_FILL', 'SHAPE_FILL'],
+      },
+    ],
+  })
+  // The code token behind it is what the model needs from the token sync (C8).
+  expect(buttonModelFixture.tokens).toContain('--a63-action-neutral')
 })
 
 it('fades the label when disabled and keeps the anatomy in step with the recipe', () => {
@@ -132,8 +150,11 @@ describe('values beyond the trimmed recipe', () => {
         background-color: var(--button-background);
       }`)
     expect(rootOf(recipeModel).fill).toEqual({
-      composed: { alias: '--surface-dark-1', opacity: 26 },
+      alias: 'color-mix(in oklch, var(--surface-dark-1) 26%, transparent)',
     })
+    expect(recipeModel.derived.variables.map(variable => variable.name)).toEqual([
+      'surface/alpha-26',
+    ])
   })
 
   it('evaluates calc() and max() with first-mode values as literals', () => {
@@ -245,7 +266,9 @@ describe('the real Button recipe', () => {
       realModel.variants.find(v => v.name === `Variant=default, Size=md, State=${state}`)!.layers[0]
         .properties.fill
     expect(fill('rest')).toEqual({ alias: '--a63-action-neutral' })
-    expect(fill('hover')).toEqual({ composed: { alias: '--a63-action-neutral', opacity: 90 } })
+    expect(fill('hover')).toEqual({
+      alias: 'color-mix(in oklch, var(--a63-action-neutral) 90%, transparent)',
+    })
     // The recipe sets --button-state-active-background to the hover background.
     expect(fill('pressed')).toEqual(fill('hover'))
     expect(fill('hover')).not.toEqual(fill('rest'))
@@ -260,7 +283,6 @@ describe('the real Button recipe', () => {
           !fill ||
           !(
             'alias' in fill ||
-            'composed' in fill ||
             JSON.stringify(fill) === JSON.stringify({ value: { r: 0, g: 0, b: 0, a: 0 } })
           )
       )
