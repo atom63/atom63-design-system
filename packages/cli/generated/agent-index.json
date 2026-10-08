@@ -3,6 +3,35 @@
  "generatedBy": "packages/cli/scripts/build-index.mjs",
  "components": [
   {
+   "axisGuidance": {
+    "variant": {
+     "primary": "The one primary action per view.",
+     "default": "Neutral action; the usual alternative next to primary (Cancel).",
+     "secondary": "Muted neutral action for supporting tasks.",
+     "outline": "Lower-emphasis alternative (Duplicate).",
+     "ghost": "Lowest emphasis; toolbars and dismissals.",
+     "link": "Inline action styled as text; navigation should use a real link.",
+     "destructive": "Only when the outcome destroys data.",
+     "destructive-outline": "Quieter destructive action, beside a safe default.",
+     "overlay": "Forced contrast over media and imagery.",
+     "glass": "Compatibility alias of overlay; new work uses overlay."
+    },
+    "size": {
+     "xs": "Dense UI.",
+     "sm": "Compact rows and toolbars.",
+     "md": "Default.",
+     "lg": "Prominent calls to action.",
+     "xl": "Hero and marketing surfaces."
+    },
+    "state": {
+     "rest": "Resting appearance.",
+     "hover": "Pointer over an enabled button.",
+     "pressed": "While pressed, or held with data-pressed.",
+     "focusVisible": "Keyboard focus only; drawn as an outline.",
+     "disabled": "Fill stays at full strength; only the label fades.",
+     "loading": "Label keeps its width; the spinner overlays it."
+    }
+   },
    "contract": {
     "archetypes": [
      {
@@ -158,6 +187,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -266,6 +296,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -386,6 +417,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -488,6 +520,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -622,6 +655,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -759,6 +793,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [],
@@ -845,6 +880,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -998,6 +1034,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -1076,6 +1113,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -1216,6 +1254,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -1291,6 +1330,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -1359,6 +1399,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -1432,6 +1473,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [],
@@ -1551,6 +1593,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -1683,6 +1726,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -1786,6 +1830,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [
@@ -1983,6 +2028,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -2103,6 +2149,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [],
@@ -2227,6 +2274,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -2349,6 +2397,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -2484,6 +2533,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -2602,6 +2652,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [
@@ -2689,6 +2740,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -2810,6 +2862,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -2923,6 +2976,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [],
@@ -3104,6 +3158,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -3221,6 +3276,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -3324,6 +3380,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -3424,6 +3481,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -3614,6 +3672,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -3708,6 +3767,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [],
@@ -3863,6 +3923,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [],
@@ -4035,6 +4096,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [],
@@ -4209,6 +4271,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -4337,6 +4400,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -4421,6 +4485,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -4522,6 +4587,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [
@@ -4592,6 +4658,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -4676,6 +4743,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -4820,6 +4888,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -4932,6 +5001,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [],
@@ -5067,6 +5137,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -5181,6 +5252,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -5308,6 +5380,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -5451,6 +5524,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -5634,6 +5708,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -5741,6 +5816,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -5817,6 +5893,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -5928,6 +6005,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -6057,6 +6135,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -6160,6 +6239,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -6275,6 +6355,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -6395,6 +6476,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -6486,6 +6568,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -6583,6 +6666,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [
@@ -6668,6 +6752,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -6769,6 +6854,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [
@@ -6837,6 +6923,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -6914,6 +7001,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -7038,6 +7126,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [
@@ -7119,6 +7208,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -7223,6 +7313,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": null,
    "exports": {
     "types": [
@@ -7269,6 +7360,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [
@@ -7358,6 +7450,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [],
@@ -7441,6 +7534,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [],
@@ -7496,6 +7590,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [
@@ -7571,6 +7666,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {

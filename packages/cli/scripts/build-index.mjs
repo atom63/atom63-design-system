@@ -55,6 +55,7 @@ try {
     const storyPath = `packages/ui-react/src/components/${item.slug}/${item.slug}.stories.tsx`
     const storySource = existsSync(path.join(root, storyPath)) ? read(storyPath) : null
     return {
+      axisGuidance: item.axisGuidance ?? null,
       contract: contracts.getComponentContractDoc(item.slug),
       exports: componentDocs.componentExportSurface(item.slug, uiReactIndexSource),
       group: group ? { id: group.id, title: group.title } : null,

@@ -12,6 +12,7 @@ import {
   search,
   token,
 } from './core.mjs'
+import { formatEnvelope } from './format.mjs'
 import { synonyms } from './synonyms.mjs'
 import { build, template } from './templates.mjs'
 
@@ -140,6 +141,18 @@ describe('component', () => {
 
   it('prefers the hand-written docs page when there is one', () => {
     assert.match(component(index, 'button').data.docsMarkdown, /^# Button/)
+  })
+
+  it('carries one guidance line per variant, size and state where the catalog has them', () => {
+    const { data } = component(index, 'button')
+    assert.equal(data.axisGuidance.variant.primary, 'The one primary action per view.')
+    assert.deepEqual(Object.keys(data.axisGuidance), ['variant', 'size', 'state'])
+    assert.match(data.docsMarkdown, /## Variants, sizes and states/)
+    assert.match(
+      formatEnvelope(component(index, 'button')),
+      /\| State \| `loading` \| Label keeps its width; the spinner overlays it\. \|/
+    )
+    assert.equal(component(index, 'kbd').data.axisGuidance, null)
   })
 
   it('suggests the closest slug when one is missing', () => {

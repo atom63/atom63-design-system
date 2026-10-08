@@ -26,7 +26,7 @@ export const commands = [
   {
     name: 'component',
     summary:
-      'How to use a component: import line, contract (axes, defaults, slots, states, web + iOS), related components and examples.',
+      'How to use a component: import line, one line of guidance per variant, size and state where written, contract (axes, defaults, slots, states, web + iOS), related components and examples.',
     args: [{ name: 'slug', description: 'Component slug, e.g. dialog or segmented-control.' }],
     flags: [],
     returns: ['component.detail'],

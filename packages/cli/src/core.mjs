@@ -286,6 +286,7 @@ export function component(index, slug) {
       summary: found.summary,
       usage: found.usage,
       guidance: found.guidance,
+      axisGuidance: found.axisGuidance ?? null,
       import: `import { ${found.usageExports.join(', ')} } from '${found.importPath}'`,
       exports: found.exports,
       contract: found.contract,
