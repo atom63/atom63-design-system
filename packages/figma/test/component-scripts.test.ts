@@ -92,11 +92,19 @@ describe('component scripts for use_figma', () => {
   })
 
   it('moves variants out of the last part when the doc block would push it over', () => {
-    const doc = { ...realButtonModel.doc!, usage: 'x'.repeat(12_000) }
-    const model = { ...realButtonModel, doc }
-    const withoutDoc = buildComponentScripts({ ...model, doc: undefined }, 'sync')
-    // The last part has room for some of the doc, but not all of it.
+    const withoutDoc = buildComponentScripts({ ...realButtonModel, doc: undefined }, 'sync')
+    // A doc a little larger than the room the last part has left, whatever the runtime's size:
+    // most of a part is the runtime and its value tables, so moving variants frees little.
     const room = 49_000 - withoutDoc.at(-1)!.length
+    const rest = JSON.stringify({ ...realButtonModel.doc!, usage: '' }).length
+    const last = realButtonModel.variants.at(-1)!
+    const alone = buildComponentScripts(
+      { ...realButtonModel, doc: undefined, variants: [last] },
+      'sync'
+    )
+    const freed = withoutDoc.at(-1)!.length - alone[0].length
+    const doc = { ...realButtonModel.doc!, usage: 'x'.repeat(room - rest + Math.floor(freed / 2)) }
+    const model = { ...realButtonModel, doc }
     expect(room).toBeGreaterThan(0)
     expect(room).toBeLessThan(JSON.stringify(doc).length)
     const scripts = buildComponentScripts(model, 'sync')

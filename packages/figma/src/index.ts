@@ -58,4 +58,4 @@ export {
   syncComponent,
 } from './components/sync-component'
 export type { NodesApi } from './components/nodes-api'
-export { checkComponentPart, type ComponentCounts, syncComponentPart } from './runtime'
+export { checkComponentPart, type ComponentCounts, syncComponentPart } from './runtime-components'

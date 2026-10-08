@@ -1,5 +1,5 @@
 /**
- * Turns a component model into use_figma scripts: the runtime plus a packed
+ * Turns a component model into use_figma scripts: the component runtime plus a packed
  * slice of the variants, each under Figma MCP's 50,000-character limit.
  * Variants are taken in model order and cut greedily, so the first script
  * makes the page and the set and later ones add to it. A slice carries only
@@ -11,7 +11,7 @@
  * if the doc would push it over the limit.
  */
 import { parseDerived } from '../derived'
-import { RUNTIME_SOURCE } from '../runtime-source.generated'
+import { COMPONENT_RUNTIME_SOURCE } from '../runtime-source.generated'
 import { tokensOf } from './component-values'
 import type { ComponentModel, VariantSpec } from './model'
 import { type PackedComponentModel, packComponentModel } from './pack-component'
@@ -38,7 +38,7 @@ function sliceOf(model: ComponentModel, variants: VariantSpec[], last: boolean):
 }
 
 function wrap(packed: PackedComponentModel, action: 'sync' | 'check', part: number, parts: number) {
-  return `${RUNTIME_SOURCE}\nconst result = await A63Figma.${ACTIONS[action]}(figma, ${JSON.stringify(packed)});\nreturn { part: ${part}, parts: ${parts}, ...result };`
+  return `${COMPONENT_RUNTIME_SOURCE}\nconst result = await A63Figma.${ACTIONS[action]}(figma, ${JSON.stringify(packed)});\nreturn { part: ${part}, parts: ${parts}, ...result };`
 }
 
 export function buildComponentScripts(
