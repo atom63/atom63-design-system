@@ -260,6 +260,7 @@ jobs:
       - name: Check Figma token sync package
         run: |
           pnpm --filter @atom63/figma test
+          pnpm --filter @atom63/figma check:components
           pnpm --filter @atom63/figma typecheck
           pnpm --filter @atom63/figma lint
           pnpm --filter @atom63/figma build

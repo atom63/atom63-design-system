@@ -26,3 +26,12 @@ export {
   syncModel,
   type SyncOutcome,
 } from './runtime'
+export { buttonAnatomy, type AnatomyLayer } from './components/button-anatomy'
+export type {
+  ComponentModel,
+  ComponentValue,
+  FigmaProperty,
+  LayerSpec,
+  VariantSpec,
+} from './components/model'
+export { readRecipe, type RecipeInput } from './components/recipe'
