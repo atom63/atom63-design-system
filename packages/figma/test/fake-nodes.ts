@@ -82,10 +82,23 @@ const frameFields = [
   'topRightRadius',
   'bottomLeftRadius',
   'bottomRightRadius',
+  'cornerRadius',
   'strokeWeight',
+  'strokeTopWeight',
+  'strokeRightWeight',
+  'strokeBottomWeight',
+  'strokeLeftWeight',
   'opacity',
   'visible',
 ]
+/**
+ * Shorthand fields Figma never stores: binding one binds (or unbinds) each of
+ * its individual fields, and `boundVariables` reports only those.
+ */
+const storedAs: Record<string, string[]> = {
+  strokeWeight: ['strokeTopWeight', 'strokeRightWeight', 'strokeBottomWeight', 'strokeLeftWeight'],
+  cornerRadius: ['topLeftRadius', 'topRightRadius', 'bottomLeftRadius', 'bottomRightRadius'],
+}
 const textFields = [
   'width',
   'height',
@@ -347,8 +360,9 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
         if (type === 'TEXT' && field !== 'opacity' && field !== 'visible')
           requireFont(state.fontName as FontNameLike)
         writes += 1
+        const stored = storedAs[field] ?? [field]
         if (!variable) {
-          delete state.boundVariables[field]
+          for (const each of stored) delete state.boundVariables[each]
           return
         }
         if (variable.resolvedType !== fieldType(field))
@@ -366,8 +380,9 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
           state.fontName = frozenCopy(wanted)
         }
         const alias: Alias = { type: 'VARIABLE_ALIAS', id: variable.id }
-        state.boundVariables[field] =
-          type === 'TEXT' && textRangeFields.has(field) ? [alias] : alias
+        for (const each of stored)
+          state.boundVariables[each] =
+            type === 'TEXT' && textRangeFields.has(each) ? [alias] : { ...alias }
       },
       resize(width: number, height: number) {
         if (!(width >= 0.01 && height >= 0.01)) throw new Error('Size must be at least 0.01')
@@ -637,7 +652,7 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       if (!variant.visible) return false
       const layer = variant.children?.find(c => c.name === 'Focus ring' && c.type === 'FRAME')
       if (layer?.visible && layer.opacity > 0) {
-        const bound = layer.boundVariables?.strokeWeight
+        const bound = layer.boundVariables?.strokeTopWeight
         const variable = bound && base.variables.get(bound.id)
         const weight = Number(variable ? firstModeValue(variable) : layer.strokeWeight)
         const align = (layer as { strokeAlign?: string }).strokeAlign

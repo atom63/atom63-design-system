@@ -70,13 +70,31 @@ const sameColor = (left: { r: number; g: number; b: number }, right: Color) =>
  * (`fontSize`, `fontWeight`, …) as an array, one alias per styled range; any
  * other field holds one alias.
  */
-function aliasesOf(node: SceneNodeLike, field: BindableField): readonly VariableAlias[] {
+function storedAliases(node: SceneNodeLike, field: BindableField): readonly VariableAlias[] {
   const bound = (
     node.boundVariables as
       Partial<Record<BindableField, VariableAlias | readonly VariableAlias[]>> | undefined
   )?.[field]
   if (!bound) return []
   return 'id' in bound ? [bound] : bound
+}
+
+/**
+ * Shorthand fields Figma binds but never stores: `boundVariables` reports a
+ * `strokeWeight` binding on the four sides and a `cornerRadius` one on the four
+ * corners. A legacy shorthand key, if a file has one, still counts.
+ */
+const storedAs: Partial<Record<BindableField, readonly BindableField[]>> = {
+  strokeWeight: ['strokeTopWeight', 'strokeRightWeight', 'strokeBottomWeight', 'strokeLeftWeight'],
+  cornerRadius: ['topLeftRadius', 'topRightRadius', 'bottomLeftRadius', 'bottomRightRadius'],
+}
+
+/** Every alias a field holds: a shorthand's own key, else each of its individual fields. */
+function aliasesOf(node: SceneNodeLike, field: BindableField): readonly VariableAlias[] {
+  const own = storedAliases(node, field)
+  const parts = storedAs[field]
+  if (own.length > 0 || !parts) return own
+  return parts.flatMap(part => storedAliases(node, part))
 }
 
 const isBound = (node: SceneNodeLike, field: BindableField) => aliasesOf(node, field).length > 0
@@ -90,6 +108,9 @@ const boundNames = (context: ValueContext, node: SceneNodeLike, field: BindableF
 
 /** Bound to `id` across the whole node: every range of a text field, or the one alias. */
 function boundTo(node: SceneNodeLike, field: BindableField, id: string): boolean {
+  const parts = storedAs[field]
+  if (parts && storedAliases(node, field).length === 0)
+    return parts.every(part => boundTo(node, part, id))
   const aliases = aliasesOf(node, field)
   return aliases.length > 0 && aliases.every(alias => alias.id === id)
 }

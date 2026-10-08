@@ -41,6 +41,30 @@ describe('the Figma node fake', () => {
     expect(frame.fills[0]).toMatchObject({ color: { r: 1, g: 0, b: 0 }, opacity: 0.9 })
   })
 
+  it('stores shorthand bindings on their individual fields, as Figma does', () => {
+    const fake = createFakeNodes()
+    const collection = fake.api.createVariableCollection('Base')
+    const width = fake.api.createVariable('width', collection, 'FLOAT')
+    width.setValueForMode(collection.modes[0].modeId, 2)
+    const frame = fake.figma.createFrame()
+    frame.setBoundVariable('strokeWeight', width)
+    frame.setBoundVariable('cornerRadius', width)
+    const alias = { type: 'VARIABLE_ALIAS', id: width.id }
+    expect(frame.boundVariables).toEqual({
+      strokeTopWeight: alias,
+      strokeRightWeight: alias,
+      strokeBottomWeight: alias,
+      strokeLeftWeight: alias,
+      topLeftRadius: alias,
+      topRightRadius: alias,
+      bottomLeftRadius: alias,
+      bottomRightRadius: alias,
+    })
+    frame.setBoundVariable('strokeWeight', null)
+    frame.setBoundVariable('cornerRadius', null)
+    expect(frame.boundVariables).toEqual({})
+  })
+
   it('creates a page and a component and reads them back', async () => {
     const fake = createFakeNodes()
     const page = fake.figma.createPage()
@@ -73,7 +97,7 @@ describe('the Figma node fake', () => {
     expect(() => {
       ;(frame as { width: number }).width = 10
     }).toThrow()
-    expect(() => frame.setBoundVariable('cornerRadius', null)).toThrow()
+    expect(() => frame.setBoundVariable('fontSize', null)).toThrow() // a text-only field
     const text = fake.figma.createText()
     expect(() => {
       text.characters = 'Hi'
@@ -779,9 +803,16 @@ describe('the focus ring', () => {
     expect(ring.strokes[0].boundVariables?.color).toEqual(
       alias(fake.variableOf('--a63-control-focus-ring-color').id)
     )
-    expect(ring.boundVariables?.strokeWeight).toEqual(
-      alias(fake.variableOf('--a63-control-focus-ring-width').id)
-    )
+    // Figma stores a stroke-weight binding on the four sides, never as `strokeWeight`.
+    const sides = [
+      'strokeTopWeight',
+      'strokeRightWeight',
+      'strokeBottomWeight',
+      'strokeLeftWeight',
+    ] as const
+    const ringWidth = alias(fake.variableOf('--a63-control-focus-ring-width').id)
+    expect(ring.boundVariables).not.toHaveProperty('strokeWeight')
+    for (const side of sides) expect(ring.boundVariables?.[side]).toEqual(ringWidth)
     for (const corner of ['topLeftRadius', 'bottomRightRadius'] as const)
       expect(ring.boundVariables?.[corner]).toEqual(
         alias(fake.variableOf('--a63-control-radius').id)
@@ -974,9 +1005,20 @@ describe('the real Button model', () => {
     }
     const focused = fake.findVariant('Button', 'Variant=default, Size=md, State=focusVisible')
     const ring = focused.children!.find(c => c.name === 'Focus ring')!
-    expect(ring.boundVariables?.strokeWeight).toEqual(
-      alias(fake.variableOf('--a63-control-focus-ring-width').id)
-    )
+    // Figma stores a stroke-weight binding on the four sides, never as `strokeWeight`.
+    const sides = [
+      'strokeTopWeight',
+      'strokeRightWeight',
+      'strokeBottomWeight',
+      'strokeLeftWeight',
+    ] as const
+    const ringWidth = alias(fake.variableOf('--a63-control-focus-ring-width').id)
+    for (const node of [ring, focused])
+      expect(node.boundVariables).not.toHaveProperty('strokeWeight')
+    for (const side of sides) expect(ring.boundVariables?.[side]).toEqual(ringWidth)
+    const border = focused.boundVariables?.strokeTopWeight
+    expect(border).toBeDefined()
+    for (const side of sides) expect(focused.boundVariables?.[side]).toEqual(border)
     expect(ring.strokes[0].boundVariables?.color).toEqual(
       alias(fake.variableOf('--a63-control-focus-ring-color').id)
     )
