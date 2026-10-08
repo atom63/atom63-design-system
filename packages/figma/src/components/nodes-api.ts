@@ -76,7 +76,7 @@ export interface SceneNodeLike {
   resize(width: number, height: number): void
   /** Containers only; Figma reparents a node that already has a parent. */
   appendChild(child: SceneNodeLike): void
-  insertChild?(index: number, child: SceneNodeLike): void
+  insertChild(index: number, child: SceneNodeLike): void
   remove(): void
 
   // Frames and components

@@ -330,8 +330,13 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
           requireFont(state.fontName as FontNameLike)
           if (key === 'fontName') requireFont(value as FontNameLike)
         }
+        if (key === 'opacity' && !((value as number) >= 0 && (value as number) <= 1))
+          throw new RangeError('opacity must be between 0 and 1')
         if (key === 'fills' || key === 'strokes' || key === 'effects') {
           if (!Array.isArray(value)) throw new TypeError(`${key} must be an array`)
+          for (const paint of value as { opacity?: number }[])
+            if (paint.opacity !== undefined && !(paint.opacity >= 0 && paint.opacity <= 1))
+              throw new RangeError(`${key}: paint opacity must be between 0 and 1`)
           value = frozenCopy(value)
         } else if (key === 'componentPropertyReferences' && value) {
           const set = owner(state)

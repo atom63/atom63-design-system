@@ -1,4 +1,14 @@
+import { readFileSync } from 'node:fs'
+
+import { buttonAnatomy } from '../src/components/button-anatomy'
+import type { ComponentModel } from '../src/components/model'
+import type { SceneNodeLike } from '../src/components/nodes-api'
+import { readRecipe } from '../src/components/recipe'
+import { syncComponent } from '../src/components/sync-component'
+import type { SyncModel, SyncVariable } from '../src/plan'
+import { syncModel } from '../src/runtime'
 import { createFakeNodes } from './fake-nodes'
+import { buttonModelFixture, syncFixture } from './fixtures/button'
 
 describe('the Figma node fake', () => {
   it('creates a page and a component and reads them back', async () => {
@@ -61,4 +71,366 @@ describe('the Figma node fake', () => {
     expect(frame.fills[0].boundVariables?.color?.id).toBe(color.id)
     expect(fake.writes).toBe(before + 2)
   })
+})
+
+const neutral = 'Variant=default, Size=md, State=rest'
+
+/** A one-variant, one-size model over `css` and extra single-mode tokens. */
+function modelOf(
+  css: string,
+  tokens: { token: string; type: 'COLOR' | 'FLOAT' | 'STRING'; value: unknown }[],
+  states = ['rest', 'focusVisible']
+) {
+  const sync: SyncModel = {
+    ...syncFixture,
+    collections: [
+      {
+        ...syncFixture.collections[0],
+        variables: [
+          ...syncFixture.collections[0].variables,
+          ...tokens.map(({ token, type, value }) => ({
+            name: token.slice(2),
+            token,
+            type,
+            values: { default: { value } } as SyncVariable['values'],
+          })),
+        ],
+      },
+    ],
+  }
+  const model = readRecipe({
+    css,
+    sync,
+    anatomy: buttonAnatomy,
+    sizes: ['md'],
+    contract: {
+      variants: ['default'],
+      sizes: ['md'],
+      states,
+      defaultVariant: 'default',
+      defaultSize: 'md',
+    },
+  })
+  return { sync, model }
+}
+
+describe('syncComponent', () => {
+  it('refuses to write when a bound token has no variable', async () => {
+    const fake = createFakeNodes()
+    const writes = fake.writes
+    const result = await syncComponent(fake.figma, buttonModelFixture)
+    expect(result.planned.missingVariables).toContain('--a63-action-neutral')
+    expect(result.applied).toEqual({ created: 0, updated: 0, fontFallbacks: [] })
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('builds the set, binds by code syntax, and a second run writes nothing', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture) // variables first, as in real use
+    const first = await syncComponent(fake.figma, buttonModelFixture)
+    expect(first.planned.create).toEqual([
+      'page',
+      'set',
+      ...buttonModelFixture.variants.map(v => v.name),
+    ])
+    expect(first.applied.created).toBe(12)
+    expect(first.verification).toEqual({
+      missingVariables: [],
+      create: [],
+      update: [],
+      unchanged: 12,
+    })
+    const root = fake.findVariant('Button', neutral)
+    expect(root.fills[0].boundVariables?.color?.id).toBe(fake.variableOf('--a63-action-neutral').id)
+    expect(root.boundVariables?.paddingLeft?.id).toBe(
+      fake.variableOf('--a63-control-padding-inline-md').id
+    )
+    expect(root.boundVariables?.paddingRight?.id).toBe(root.boundVariables?.paddingLeft?.id)
+    expect(root.children!.map(c => c.name)).toEqual(['Icon', 'Label', 'Spinner'])
+    expect(root).toMatchObject({
+      layoutMode: 'HORIZONTAL',
+      primaryAxisAlignItems: 'CENTER',
+      counterAxisAlignItems: 'CENTER',
+      primaryAxisSizingMode: 'AUTO',
+      counterAxisSizingMode: 'FIXED',
+      effects: [],
+    })
+
+    const writes = fake.writes
+    const second = await syncComponent(fake.figma, buttonModelFixture)
+    expect(second.planned).toEqual({ missingVariables: [], create: [], update: [], unchanged: 12 })
+    expect(second.applied).toEqual({ created: 0, updated: 0, fontFallbacks: [] })
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('wires the Label and Icon component properties once', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    await syncComponent(fake.figma, buttonModelFixture)
+    await syncComponent(fake.figma, buttonModelFixture)
+    const root = fake.findVariant('Button', neutral)
+    const set = root.parent as SceneNodeLike
+    const own = Object.entries(set.componentPropertyDefinitions!).filter(
+      ([, definition]) => definition.type !== 'VARIANT'
+    )
+    expect(own.map(([key, definition]) => [key.split('#')[0], definition])).toEqual([
+      ['Label', { type: 'TEXT', defaultValue: 'Button' }],
+      ['Icon', { type: 'BOOLEAN', defaultValue: false }],
+    ])
+    const [label, icon] = ['Label', 'Icon'].map(name => root.children!.find(c => c.name === name)!)
+    expect(label.componentPropertyReferences).toEqual({ characters: own[0][0] })
+    expect(label.characters).toBe('Button')
+    expect(icon.componentPropertyReferences).toEqual({ visible: own[1][0] })
+  })
+
+  it('lays a new set out as a grid: rows Variant × Size, columns State', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    await syncComponent(fake.figma, buttonModelFixture)
+    const at = (name: string) => {
+      const { x, y } = fake.findVariant('Button', name)
+      return [x, y]
+    }
+    const [x0, y0] = at('Variant=default, Size=sm, State=rest')
+    const [x1, y1] = at('Variant=default, Size=sm, State=hover')
+    const [x2, y2] = at('Variant=default, Size=md, State=rest')
+    const [, y3] = at('Variant=secondary, Size=sm, State=rest')
+    expect(y1).toBe(y0)
+    expect(x1).toBeGreaterThan(x0)
+    expect(x2).toBe(x0)
+    expect(y2).toBeGreaterThan(y0)
+    expect(y3).toBeGreaterThan(y2)
+
+    // A designer's arrangement survives a run that changes the variant.
+    const moved = fake.findVariant('Button', 'Variant=default, Size=sm, State=hover')
+    moved.x = 999
+    moved.fills = []
+    const again = await syncComponent(fake.figma, buttonModelFixture)
+    expect(again.planned.update).toEqual(['Variant=default, Size=sm, State=hover'])
+    expect(moved.x).toBe(999)
+    expect(moved.fills).toHaveLength(1)
+  })
+
+  it('keeps layers a designer added and variants it does not list', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    await syncComponent(fake.figma, buttonModelFixture)
+    const root = fake.findVariant('Button', neutral)
+    const note = fake.figma.createFrame()
+    note.name = 'Designer note'
+    root.appendChild(note)
+    const extra = fake.figma.createComponent()
+    extra.name = 'Variant=ghost, Size=md, State=rest'
+    ;(root.parent as SceneNodeLike).appendChild(extra)
+    const result = await syncComponent(fake.figma, buttonModelFixture)
+    expect(result.planned.update).toEqual([])
+    expect(root.children!.map(c => c.name)).toContain('Designer note')
+    expect(fake.findVariant('Button', 'Variant=ghost, Size=md, State=rest')).toBe(extra)
+  })
+
+  it('repairs a deleted layer in place and adds a missing variant to the set', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    await syncComponent(fake.figma, buttonModelFixture)
+    const root = fake.findVariant('Button', neutral)
+    root.children!.find(c => c.name === 'Label')!.remove()
+    fake.findVariant('Button', 'Variant=secondary, Size=md, State=hover').remove()
+    fake.unloadPages()
+    const result = await syncComponent(fake.figma, buttonModelFixture)
+    expect(result.planned.create).toEqual(['Variant=secondary, Size=md, State=hover'])
+    expect(result.planned.update).toEqual([neutral])
+    expect(result.verification.unchanged).toBe(12)
+    expect(root.children!.map(c => c.name)).toEqual(['Icon', 'Label', 'Spinner'])
+  })
+
+  it('runs only the named variants', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    const only = [neutral, 'Variant=secondary, Size=md, State=rest']
+    const first = await syncComponent(fake.figma, buttonModelFixture, only)
+    expect(first.verification).toEqual({
+      missingVariables: [],
+      create: [],
+      update: [],
+      unchanged: 2,
+    })
+    const rest = await syncComponent(fake.figma, buttonModelFixture)
+    expect(rest.planned.create).toHaveLength(10)
+    expect(rest.verification.unchanged).toBe(12)
+  })
+
+  it('draws the focus ring as a bound drop shadow only on focusVisible', async () => {
+    const { sync, model } = modelOf(
+      `.a63-Button {
+        --button-focus-ring: var(--a63-control-focus-ring-color);
+        background-color: var(--a63-action-neutral);
+      }`,
+      [
+        {
+          token: '--a63-control-focus-ring-color',
+          type: 'COLOR',
+          value: { r: 0, g: 0, b: 1, a: 1 },
+        },
+        { token: '--a63-control-focus-ring-width', type: 'FLOAT', value: 3 },
+      ]
+    )
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, sync)
+    const result = await syncComponent(fake.figma, model)
+    expect(result.verification.unchanged).toBe(2)
+
+    expect(fake.findVariant('Button', neutral).effects).toEqual([])
+    const focused = fake.findVariant('Button', 'Variant=default, Size=md, State=focusVisible')
+    expect(focused.effects).toHaveLength(1)
+    expect(focused.effects[0]).toMatchObject({
+      type: 'DROP_SHADOW',
+      offset: { x: 0, y: 0 },
+      radius: 0,
+      visible: true,
+      boundVariables: {
+        color: { type: 'VARIABLE_ALIAS', id: fake.variableOf('--a63-control-focus-ring-color').id },
+        spread: {
+          type: 'VARIABLE_ALIAS',
+          id: fake.variableOf('--a63-control-focus-ring-width').id,
+        },
+      },
+    })
+
+    // A ring a designer removed comes back; a second run is idle.
+    focused.effects = []
+    const repaired = await syncComponent(fake.figma, model)
+    expect(repaired.planned.update).toEqual(['Variant=default, Size=md, State=focusVisible'])
+    expect(focused.effects).toHaveLength(1)
+    const writes = fake.writes
+    await syncComponent(fake.figma, model)
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('uses a composed paint for color-mix values', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    await syncComponent(fake.figma, buttonModelFixture)
+    const neutralId = fake.variableOf('--a63-action-neutral').id
+    const secondary = fake.findVariant('Button', 'Variant=secondary, Size=md, State=rest')
+    expect(secondary.fills).toHaveLength(1)
+    expect(secondary.fills[0].boundVariables?.color?.id).toBe(neutralId)
+    expect(secondary.fills[0].opacity).toBeCloseTo(0.1)
+    // `transparent` is a literal: an unbound paint at zero opacity.
+    expect(secondary.strokes).toHaveLength(1)
+    expect(secondary.strokes[0].boundVariables?.color).toBeUndefined()
+    expect(secondary.strokes[0].opacity).toBe(0)
+
+    // A drifted opacity is an update; the binding is kept.
+    secondary.fills = [{ ...secondary.fills[0], opacity: 0.5 }]
+    const result = await syncComponent(fake.figma, buttonModelFixture)
+    expect(result.planned.update).toEqual(['Variant=secondary, Size=md, State=rest'])
+    expect(secondary.fills[0].opacity).toBeCloseTo(0.1)
+    expect(secondary.fills[0].boundVariables?.color?.id).toBe(neutralId)
+  })
+
+  it('fades the disabled label and hides the spinner and icon by default', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    await syncComponent(fake.figma, buttonModelFixture)
+    const layer = (state: string, name: string) =>
+      fake
+        .findVariant('Button', `Variant=default, Size=md, State=${state}`)
+        .children!.find(c => c.name === name)!
+    expect(layer('disabled', 'Label').opacity).toBe(0.56)
+    expect(layer('rest', 'Label').opacity).toBe(1)
+    expect(layer('rest', 'Spinner').visible).toBe(false)
+    expect(layer('rest', 'Icon').visible).toBe(false)
+  })
+
+  it('binds a loadable font and falls back to Inter Regular otherwise', async () => {
+    const css = `.a63-Button {
+      font-family: var(--a63-control-font-family);
+      font-weight: var(--a63-control-font-weight);
+      font-size: var(--a63-control-padding-inline-md);
+    }`
+    const weight = { token: '--a63-control-font-weight', type: 'FLOAT' as const, value: 600 }
+    const loadable = modelOf(
+      css,
+      [{ token: '--a63-control-font-family', type: 'STRING', value: 'Geist' }, weight],
+      ['rest']
+    )
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, loadable.sync)
+    const bound = await syncComponent(fake.figma, loadable.model)
+    expect(bound.applied.fontFallbacks).toEqual([])
+    expect(bound.verification.unchanged).toBe(1)
+    const label = fake.findVariant('Button', neutral).children!.find(c => c.name === 'Label')!
+    expect(label.fontName).toEqual({ family: 'Geist', style: 'Semi Bold' })
+    expect(label.boundVariables?.fontFamily?.id).toBe(
+      fake.variableOf('--a63-control-font-family').id
+    )
+    expect(label.boundVariables?.fontWeight?.id).toBe(
+      fake.variableOf('--a63-control-font-weight').id
+    )
+    expect(label.boundVariables?.fontSize?.id).toBe(
+      fake.variableOf('--a63-control-padding-inline-md').id
+    )
+
+    const stack = modelOf(
+      css,
+      [
+        { token: '--a63-control-font-family', type: 'STRING', value: "'Geist', sans-serif" },
+        weight,
+      ],
+      ['rest']
+    )
+    const other = createFakeNodes()
+    await syncModel(other.figma, stack.sync)
+    const fallback = await syncComponent(other.figma, stack.model)
+    expect(fallback.applied.fontFallbacks).toHaveLength(1)
+    expect(fallback.verification.unchanged).toBe(1)
+    const plain = other.findVariant('Button', neutral).children!.find(c => c.name === 'Label')!
+    expect(plain.fontName).toEqual({ family: 'Inter', style: 'Regular' })
+    expect(plain.boundVariables?.fontFamily).toBeUndefined()
+  })
+
+  it('runs as a use_figma script body', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    ;(globalThis as { __syncComponent?: unknown }).__syncComponent = syncComponent
+    const result = (await fake.run(
+      `return globalThis.__syncComponent(figma, ${JSON.stringify(buttonModelFixture)})`
+    )) as Awaited<ReturnType<typeof syncComponent>>
+    delete (globalThis as { __syncComponent?: unknown }).__syncComponent
+    expect(result.verification.unchanged).toBe(12)
+  })
+})
+
+describe('the real Button model', () => {
+  it('syncs the real token set and component model cleanly, and a second run writes nothing', async () => {
+    const read = (path: string) =>
+      JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8')) as unknown
+    const sync = read('../../styles/generated/atom63.figma-sync.json') as SyncModel
+    const model = read('../generated/atom63.figma-components.json') as ComponentModel
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, sync)
+    const first = await syncComponent(fake.figma, model)
+    expect(first.planned.missingVariables).toEqual([])
+    expect(first.verification).toEqual({
+      missingVariables: [],
+      create: [],
+      update: [],
+      unchanged: 300,
+    })
+    expect(first.applied.created).toBe(300)
+    // The font tokens hold CSS stacks, which Figma reads as one family name.
+    expect(first.applied.fontFallbacks).not.toEqual([])
+    const focused = fake.findVariant('Button', 'Variant=default, Size=md, State=focusVisible')
+    expect(focused.effects).toHaveLength(1)
+    expect(fake.findVariant('Button', neutral).effects).toEqual([])
+    const label = focused.children!.find(c => c.name === 'Label')!
+    expect(label.boundVariables?.fontSize?.id).toBe(
+      fake.variableOf('--a63-control-font-size-md').id
+    )
+
+    const writes = fake.writes
+    const second = await syncComponent(fake.figma, model)
+    expect(second.planned.unchanged).toBe(300)
+    expect(fake.writes).toBe(writes)
+  }, 60_000)
 })

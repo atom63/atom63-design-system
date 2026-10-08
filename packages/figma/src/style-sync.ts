@@ -47,21 +47,28 @@ export interface StyleResult {
   fontFallbacks: { style: string; wanted: string; used: string }[]
 }
 
-const near = (left: number, right: number) =>
+/** Equal within a relative 1e-6: Figma stores numbers as 32-bit floats. */
+export const near = (left: number, right: number) =>
   Math.abs(left - right) < 1e-6 * Math.max(1, Math.abs(left), Math.abs(right))
 
-async function variablesOf(api: VariablesApi) {
+/**
+ * The file's variables by token (their code syntax) and by id, and each
+ * variable's first mode, the value a component shows by default.
+ */
+export async function variablesOf(api: VariablesApi) {
   const byToken = new Map<string, VariableLike>()
   const byId = new Map<string, VariableLike>()
+  const firstMode = new Map<string, string>()
   for (const collection of await api.getLocalVariableCollectionsAsync())
     for (const id of collection.variableIds) {
       const variable = await api.getVariableByIdAsync(id)
       if (!variable) continue
       byId.set(variable.id, variable)
+      if (collection.modes[0]) firstMode.set(variable.id, collection.modes[0].modeId)
       const token = tokenOfCodeSyntax(variable.codeSyntax?.WEB)
       if (token) byToken.set(token, variable)
     }
-  return { byToken, byId }
+  return { byToken, byId, firstMode }
 }
 
 /**

@@ -1,0 +1,339 @@
+/**
+ * One layer property at a time: what Figma should hold for a model value, whether
+ * the node already holds it, and how to write it. A plan asks `same`; an apply
+ * writes only what is not. Bundled into the runtime IIFE: no Node or DOM imports.
+ */
+import type { VariableLike } from '../apply'
+import { near } from '../style-sync'
+import type { ComponentValue, FigmaProperty, LayerSpec } from './model'
+import type { EffectLike, FontNameLike, NodesApi, PaintLike, SceneNodeLike } from './nodes-api'
+
+export interface ValueContext {
+  figma: NodesApi
+  byToken: Map<string, VariableLike>
+  byId: Map<string, VariableLike>
+  firstMode: Map<string, string>
+  /** `family|style` → whether it loads, so a run tries each font once. */
+  fonts: Map<string, Promise<boolean>>
+}
+
+export interface Check {
+  what: string
+  same(): boolean
+  write(): void
+}
+
+type Color = { r: number; g: number; b: number; a: number }
+type Alias = { alias: string } | { composed: { alias: string; opacity: number } }
+
+export const INTER: FontNameLike = { family: 'Inter', style: 'Regular' }
+
+const isAlias = (value: ComponentValue | undefined): value is Alias =>
+  !!value && ('alias' in value || 'composed' in value)
+const tokenOf = (value: Alias) => ('alias' in value ? value.alias : value.composed.alias)
+const isColor = (value: unknown): value is Color =>
+  typeof value === 'object' && value !== null && 'r' in value && 'g' in value && 'b' in value
+const literal = (value: ComponentValue | undefined) =>
+  value && 'value' in value ? value.value : undefined
+const sameColor = (left: { r: number; g: number; b: number }, right: Color) =>
+  near(left.r, right.r) && near(left.g, right.g) && near(left.b, right.b)
+
+/** Tokens a layer binds, for the C8 check that every one has a variable. */
+export function tokensOf(layer: LayerSpec): string[] {
+  return Object.values(layer.properties).flatMap(value => (isAlias(value) ? [tokenOf(value)] : []))
+}
+
+export async function loads(context: ValueContext, font: FontNameLike): Promise<boolean> {
+  const key = `${font.family}|${font.style}`
+  let loaded = context.fonts.get(key)
+  if (!loaded) {
+    loaded = context.figma.loadFontAsync(font).then(
+      () => true,
+      () => false
+    )
+    context.fonts.set(key, loaded)
+  }
+  return loaded
+}
+
+/** A variable's value in its collection's first mode, through aliases. */
+function firstValue(context: ValueContext, variable: VariableLike, depth = 0): unknown {
+  const raw = variable.valuesByMode[context.firstMode.get(variable.id) ?? '']
+  const alias = raw as { type?: string; id?: string } | undefined
+  if (alias && typeof alias === 'object' && alias.type === 'VARIABLE_ALIAS' && depth < 16) {
+    const target = context.byId.get(alias.id ?? '')
+    return target ? firstValue(context, target, depth + 1) : undefined
+  }
+  return raw
+}
+
+// Numbers ────────────────────────────────────────────────────────────────────
+
+/** Figma fields each numeric model property writes. */
+const numberFields: Partial<Record<FigmaProperty, string[]>> = {
+  strokeWeight: ['strokeWeight'],
+  cornerRadius: ['topLeftRadius', 'topRightRadius', 'bottomLeftRadius', 'bottomRightRadius'],
+  height: ['height'],
+  size: ['width', 'height'],
+  paddingInline: ['paddingLeft', 'paddingRight'],
+  itemSpacing: ['itemSpacing'],
+  fontSize: ['fontSize'],
+  lineHeight: ['lineHeight'],
+  opacity: ['opacity'],
+}
+
+function readNumber(node: SceneNodeLike, field: string): number {
+  if (field === 'lineHeight')
+    return node.lineHeight?.unit === 'PIXELS' ? node.lineHeight.value : Number.NaN
+  return (node as unknown as Record<string, number>)[field]
+}
+
+function writeNumber(node: SceneNodeLike, field: string, value: number) {
+  if (field === 'width') node.resize(value, node.height)
+  else if (field === 'height') node.resize(node.width, value)
+  else if (field === 'lineHeight') node.lineHeight = { unit: 'PIXELS', value }
+  else (node as unknown as Record<string, number>)[field] = value
+}
+
+/** A bound field, or a literal with any binding cleared; other values are left alone. */
+function fieldCheck(
+  context: ValueContext,
+  node: SceneNodeLike,
+  field: string,
+  value: ComponentValue
+): Check | null {
+  const what = `${node.name}.${field}`
+  if ('alias' in value) {
+    const variable = context.byToken.get(value.alias)
+    return {
+      what,
+      same: () => !!variable && node.boundVariables?.[field]?.id === variable.id,
+      write: () => node.setBoundVariable(field, variable ?? null),
+    }
+  }
+  const wanted = literal(value)
+  if (typeof wanted === 'boolean' && field === 'visible')
+    return {
+      what,
+      same: () => !node.boundVariables?.visible && node.visible === wanted,
+      write: () => {
+        if (node.boundVariables?.visible) node.setBoundVariable('visible', null)
+        node.visible = wanted
+      },
+    }
+  if (typeof wanted !== 'number' || field === 'visible') return null
+  return {
+    what,
+    same: () => !node.boundVariables?.[field] && near(readNumber(node, field), wanted),
+    write: () => {
+      if (node.boundVariables?.[field]) node.setBoundVariable(field, null)
+      writeNumber(node, field, wanted)
+    },
+  }
+}
+
+// Paints and the focus ring ──────────────────────────────────────────────────
+
+/** One solid paint: bound (with the composed opacity) or a literal color. */
+function paintCheck(
+  context: ValueContext,
+  node: SceneNodeLike,
+  key: 'fills' | 'strokes',
+  value: ComponentValue
+): Check | null {
+  const what = `${node.name}.${key}`
+  const color = literal(value)
+  if (!isAlias(value) && !isColor(color)) return null
+  const variable = isAlias(value) ? context.byToken.get(tokenOf(value)) : undefined
+  const opacity = isAlias(value)
+    ? 'composed' in value
+      ? value.composed.opacity / 100
+      : 1
+    : (color as Color).a
+  return {
+    what,
+    same: () => {
+      const paints = node[key]
+      const paint = paints[0]
+      if (paints.length !== 1 || paint.type !== 'SOLID' || paint.visible === false) return false
+      if (!near(paint.opacity ?? 1, opacity)) return false
+      if (isAlias(value)) return !!variable && paint.boundVariables?.color?.id === variable.id
+      return !paint.boundVariables?.color && sameColor(paint.color, color as Color)
+    },
+    write: () => {
+      const base: PaintLike = {
+        type: 'SOLID',
+        color: isColor(color) ? { r: color.r, g: color.g, b: color.b } : { r: 0, g: 0, b: 0 },
+        opacity,
+      }
+      node[key] = [
+        variable ? context.figma.variables.setBoundVariableForPaint(base, 'color', variable) : base,
+      ]
+    },
+  }
+}
+
+/**
+ * `focusVisible` draws the ring as one spread-only drop shadow (C6); every other
+ * state owns no effects. A skipped ring value leaves the effects alone.
+ */
+function ringCheck(
+  context: ValueContext,
+  node: SceneNodeLike,
+  layer: LayerSpec,
+  state: string
+): Check | null {
+  const ring = layer.properties.focusRing
+  const width = layer.properties.focusRingWidth
+  const what = `${node.name}.effects`
+  if (state !== 'focusVisible' || !ring || !width)
+    return { what, same: () => node.effects.length === 0, write: () => (node.effects = []) }
+  if ('skipped' in ring || 'skipped' in width) return null
+  // A composed ring binds its color; Figma cannot scale a bound effect color's alpha.
+  const colorVariable = isAlias(ring) ? context.byToken.get(tokenOf(ring)) : undefined
+  const spreadVariable = isAlias(width) ? context.byToken.get(tokenOf(width)) : undefined
+  const color = literal(ring)
+  const spread = literal(width)
+  const literalColor: Color = isColor(color) ? color : { r: 0, g: 0, b: 0, a: 1 }
+  const literalSpread = typeof spread === 'number' ? spread : 0
+  return {
+    what,
+    same: () => {
+      const effect = node.effects[0]
+      if (node.effects.length !== 1 || effect.type !== 'DROP_SHADOW' || !effect.visible)
+        return false
+      const bound = effect.boundVariables ?? {}
+      return (
+        near(effect.offset.x, 0) &&
+        near(effect.offset.y, 0) &&
+        near(effect.radius, 0) &&
+        (isAlias(ring)
+          ? !!colorVariable && bound.color?.id === colorVariable.id
+          : !bound.color &&
+            sameColor(effect.color, literalColor) &&
+            near(effect.color.a, literalColor.a)) &&
+        (isAlias(width)
+          ? !!spreadVariable && bound.spread?.id === spreadVariable.id
+          : !bound.spread && near(effect.spread, literalSpread))
+      )
+    },
+    write: () => {
+      let effect: EffectLike = {
+        type: 'DROP_SHADOW',
+        color: { ...literalColor },
+        offset: { x: 0, y: 0 },
+        radius: 0,
+        spread: literalSpread,
+        visible: true,
+        blendMode: 'NORMAL',
+        showShadowBehindNode: false,
+      }
+      const variables = context.figma.variables
+      if (colorVariable)
+        effect = variables.setBoundVariableForEffect(effect, 'color', colorVariable)
+      if (spreadVariable)
+        effect = variables.setBoundVariableForEffect(effect, 'spread', spreadVariable)
+      node.effects = [effect]
+    },
+  }
+}
+
+// Fonts ──────────────────────────────────────────────────────────────────────
+
+const styleOfWeight = (weight: unknown) =>
+  ({ 400: 'Regular', 500: 'Medium', 600: 'Semi Bold', 700: 'Bold' })[Number(weight)] ?? 'Regular'
+
+export interface FontTarget {
+  font: FontNameLike
+  family: VariableLike | null
+  weight: VariableLike | null
+  /** Set when the wanted font did not load and Inter Regular stands in. */
+  fallback?: string
+}
+
+/** The font a text layer should use: the first-mode family and weight, else Inter Regular. */
+export async function fontTarget(
+  context: ValueContext,
+  node: SceneNodeLike,
+  layer: LayerSpec
+): Promise<FontTarget | null> {
+  const { fontFamily, fontWeight } = layer.properties
+  const usable = (value: ComponentValue | undefined) =>
+    value && !('skipped' in value) && !('composed' in value) ? value : undefined
+  const family = usable(fontFamily)
+  const weight = usable(fontWeight)
+  if (!family && !weight) return null
+  const familyVariable = family && 'alias' in family ? context.byToken.get(family.alias) : undefined
+  const weightVariable = weight && 'alias' in weight ? context.byToken.get(weight.alias) : undefined
+  const current = node.fontName ?? INTER
+  const font = {
+    family: String(
+      familyVariable ? firstValue(context, familyVariable) : (literal(family) ?? current.family)
+    ),
+    style: weight
+      ? styleOfWeight(weightVariable ? firstValue(context, weightVariable) : literal(weight))
+      : current.style,
+  }
+  if (await loads(context, font))
+    return { font, family: familyVariable ?? null, weight: weightVariable ?? null }
+  return {
+    font: INTER,
+    family: null,
+    weight: null,
+    fallback: `${layer.name}: ${font.family} ${font.style} did not load; used Inter Regular`,
+  }
+}
+
+function fontCheck(node: SceneNodeLike, target: FontTarget): Check {
+  const bound = (field: string) => node.boundVariables?.[field]?.id ?? null
+  return {
+    what: `${node.name}.fontName`,
+    same: () =>
+      node.fontName?.family === target.font.family &&
+      node.fontName.style === target.font.style &&
+      bound('fontFamily') === (target.family?.id ?? null) &&
+      bound('fontWeight') === (target.weight?.id ?? null),
+    write: () => {
+      node.fontName = { ...target.font }
+      for (const [field, variable] of [
+        ['fontFamily', target.family],
+        ['fontWeight', target.weight],
+      ] as const)
+        if (variable || bound(field)) node.setBoundVariable(field, variable)
+    },
+  }
+}
+
+// A layer ────────────────────────────────────────────────────────────────────
+
+/**
+ * Every check for one layer, in write order. `Icon.visible` belongs to the Icon
+ * boolean property; the root's focus ring is `ringCheck`.
+ */
+export function layerChecks(
+  context: ValueContext,
+  node: SceneNodeLike,
+  layer: LayerSpec,
+  state: string,
+  font: FontTarget | null,
+  root: boolean
+): Check[] {
+  const checks: (Check | null)[] = []
+  if (font) checks.push(fontCheck(node, font))
+  for (const [property, value] of Object.entries(layer.properties) as [
+    FigmaProperty,
+    ComponentValue,
+  ][]) {
+    if (!value || 'skipped' in value) continue
+    if (property === 'fill') checks.push(paintCheck(context, node, 'fills', value))
+    else if (property === 'stroke') checks.push(paintCheck(context, node, 'strokes', value))
+    else if (property === 'visible') {
+      if (layer.name !== 'Icon') checks.push(fieldCheck(context, node, 'visible', value))
+    } else
+      for (const field of numberFields[property] ?? [])
+        checks.push(fieldCheck(context, node, field, value))
+  }
+  // The ring is the root's only effect, so the root owns its effects (C6).
+  if (root) checks.push(ringCheck(context, node, layer, state))
+  return checks.filter((check): check is Check => check !== null)
+}
