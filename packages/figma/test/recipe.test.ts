@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { isDeepStrictEqual } from 'node:util'
 import { readRules } from '../src/components/css-rules'
-import { readRecipe } from '../src/components/recipe'
+import { readRecipe, resolve } from '../src/components/recipe'
 import { buttonAnatomy } from '../src/components/button-anatomy'
 import { buttonModelFixture, syncFixture } from './fixtures/button'
 import type { SyncModel } from '../src/plan'
@@ -196,6 +196,23 @@ describe('values beyond the trimmed recipe', () => {
     expect(recipeModel.skipped).toContainEqual({
       what: 'Label opacity in State=disabled',
       reason: 'the anatomy says 0.56, the recipe says 0.5',
+    })
+  })
+
+  it('keeps a unitless line-height out of the length read, but reads 0 and px', () => {
+    const lineHeight = (value: string) =>
+      rootOf(read(`.a63-Button { line-height: ${value}; }`), 'rest', 'Label').lineHeight
+    expect(lineHeight('1.5')).toEqual({ skipped: 'unsupported value 1.5' })
+    expect(lineHeight('0')).toEqual({ value: 0 })
+    expect(lineHeight('2px')).toEqual({ value: 2 })
+  })
+
+  it('reads a unitless number where the property is unitless', () => {
+    expect(resolve('opacity', { opacity: '0.56' }, twoModes, undefined, 'opacity')).toEqual({
+      value: 0.56,
+    })
+    expect(resolve('opacity', { opacity: '0.56' }, twoModes)).toEqual({
+      skipped: 'unsupported value 0.56',
     })
   })
 })

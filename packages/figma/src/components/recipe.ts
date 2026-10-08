@@ -205,7 +205,12 @@ function parseVar(text: string): { name: string; fallback?: string } | null {
 interface Context {
   declarations: Declarations
   index: TokenIndex
+  /** Whether a bare number is the value itself (opacity, font-weight), not a CSS multiplier or a length missing its unit. */
+  unitless: boolean
 }
+
+/** Figma properties whose CSS value is a plain number; every other number read is a length. */
+const UNITLESS: ReadonlySet<FigmaProperty> = new Set<FigmaProperty>(['opacity', 'fontWeight'])
 
 /** A number for `calc()` / `max()` / `min()`, or why there is none. */
 function toNumber(expression: string, context: Context, seen: Set<string>): number | string {
@@ -244,7 +249,8 @@ function resolveExpression(
 ): RecipeValue {
   const value = expression.trim()
   if (value === 'transparent') return { value: TRANSPARENT }
-  if (/^-?(\d+\.?\d*|\.\d+)(px|rem)?$/.test(value)) {
+  const number = /^-?(\d+\.?\d*|\.\d+)(px|rem)?$/.exec(value)
+  if (number && (number[2] || context.unitless || Number(number[1]) === 0)) {
     onLiteral(value)
     return { value: evaluateNumber(value) as number }
   }
@@ -283,9 +289,14 @@ export function resolve(
   name: string,
   declarations: Declarations,
   sync: SyncModel,
-  onLiteral: (expression: string) => void = () => {}
+  onLiteral: (expression: string) => void = () => {},
+  property?: FigmaProperty
 ): RecipeValue | 'unset' {
-  const context = { declarations, index: indexOf(sync) }
+  const context = {
+    declarations,
+    index: indexOf(sync),
+    unitless: property !== undefined && UNITLESS.has(property),
+  }
   if (name.startsWith('--')) {
     if (!(name in declarations) && !context.index.has(name)) return 'unset'
     return resolveExpression(`var(${name})`, context, new Set(), onLiteral)
@@ -419,8 +430,13 @@ export function readRecipe(input: RecipeInput): ComponentModel {
               properties.visible = { value: !!style && style !== 'none' && style !== 'hidden' }
               continue
             }
-            const value = resolve(read, declarations, sync, expression =>
-              literals.push({ variant: name, layer: layer.name, property, expression })
+            const value = resolve(
+              read,
+              declarations,
+              sync,
+              expression =>
+                literals.push({ variant: name, layer: layer.name, property, expression }),
+              property
             )
             if (value === 'unset') continue
             if ('composed' in value) {
