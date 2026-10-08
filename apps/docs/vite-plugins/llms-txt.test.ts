@@ -69,7 +69,7 @@ describe('LLM documentation inventory', () => {
     expect(markdown).toContain(
       'Use it for an in-place action such as submitting, saving, confirming or changing state'
     )
-    expect(markdown).not.toContain('<ComponentGuidanceTable')
+    expect(markdown).not.toContain('<ComponentGuidanceSection')
     expect(markdown).not.toContain('<ComponentUsage')
     expect(markdown).toContain('<Button variant="primary">Save changes</Button>')
     expect(markdown).toContain("import { Button } from '@atom63/ui-react'")

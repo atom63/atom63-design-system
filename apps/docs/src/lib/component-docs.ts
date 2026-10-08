@@ -128,6 +128,12 @@ export type ComponentAxisGuidanceRow = {
 
 export const componentAxisGuidanceHeading = 'Variants, sizes and states'
 
+/** The heading's anchor, slugified the way the page table of contents and search derive anchors. */
+export const componentAxisGuidanceHeadingId = componentAxisGuidanceHeading
+  .toLowerCase()
+  .replace(/[^a-z0-9]+/g, '-')
+  .replace(/(^-|-$)/g, '')
+
 const axisGuidanceLabels: Record<keyof ComponentAxisGuidance, string> = {
   variant: 'Variant',
   size: 'Size',
@@ -152,7 +158,7 @@ export function componentAxisGuidanceRows(slug: string): ComponentAxisGuidanceRo
 }
 
 /** The axis guidance as a Markdown table, or an empty string when the component has none. */
-export function componentAxisGuidanceMarkdown(slug: string): string {
+function componentAxisGuidanceMarkdown(slug: string): string {
   const rows = componentAxisGuidanceRows(slug)
   if (rows.length === 0) {
     return ''
@@ -164,6 +170,12 @@ export function componentAxisGuidanceMarkdown(slug: string): string {
     '| --- | --- | --- |',
     ...rows.map(row => `| ${row.label} | \`${row.value}\` | ${cell(row.text)} |`),
   ].join('\n')
+}
+
+/** The heading plus the axis guidance table, or an empty string when the component has none. */
+export function componentAxisGuidanceSectionMarkdown(slug: string): string {
+  const table = componentAxisGuidanceMarkdown(slug)
+  return table ? `## ${componentAxisGuidanceHeading}\n\n${table}` : ''
 }
 
 export type ComponentDoc = {
@@ -242,7 +254,7 @@ export function componentDocMarkdown(slug: string, uiReactIndexSource: string): 
 
   const status = doc.item.status === 'stable' ? 'Stable' : 'Preview'
   const guidance = doc.guidance.map(item => `- ${item}`).join('\n')
-  const axisGuidance = componentAxisGuidanceMarkdown(slug)
+  const axisGuidance = componentAxisGuidanceSectionMarkdown(slug)
   const reference = componentReferenceMarkdown(slug, uiReactIndexSource)
 
   return `# ${doc.label}
@@ -258,7 +270,7 @@ The live documentation page renders the \`${doc.item.storyExport}\` story mainta
 ## Guidance
 
 ${guidance}
-${axisGuidance ? `\n## ${componentAxisGuidanceHeading}\n\n${axisGuidance}\n` : ''}
+${axisGuidance ? `\n${axisGuidance}\n` : ''}
 ${reference}
 `
 }

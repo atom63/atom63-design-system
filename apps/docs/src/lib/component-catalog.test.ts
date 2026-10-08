@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buttonStates, buttonVariants } from '@atom63/ui-foundation'
+import { buttonSizes, buttonStates, buttonVariants } from '@atom63/ui-foundation'
 import * as uiReactApi from '@atom63/ui-react'
 import uiReactPackageSource from '../../../../packages/ui-react/package.json?raw'
 import uiReactIndexSource from '../../../../packages/ui-react/src/index.ts?raw'
@@ -110,20 +110,21 @@ describe('component catalog inventory', () => {
       }
 
       const contract = getComponentContractDoc(item.slug)
+      expect(contract, `${item.slug} has axis guidance but no contract`).not.toBeNull()
       const axisValues = (name: string) => contract?.axes.find(axis => axis.name === name)?.values
-      const allowed = {
+      const allowed: Record<string, readonly string[] | undefined> = {
         size: axisValues('sizes'),
         state: contract?.states,
         variant: axisValues('variants'),
       }
 
       for (const [axis, lines] of Object.entries(item.axisGuidance)) {
-        const values = allowed[axis as keyof typeof allowed]
+        expect(Object.keys(allowed), `${item.slug} axis ${axis}`).toContain(axis)
+        const values = allowed[axis]
+        expect(values, `${item.slug} contract has no ${axis} values`).toBeDefined()
         for (const [value, line] of Object.entries(lines ?? {})) {
           const where = `${item.slug} ${axis} ${value}`
-          if (values) {
-            expect(values, where).toContain(value)
-          }
+          expect(values, where).toContain(value)
           expect(line.trim(), where).toBe(line)
           expect(line, where).toMatch(/^[A-Z].*\.$/)
           expect(line.length, where).toBeLessThan(120)
@@ -140,7 +141,9 @@ describe('component catalog inventory', () => {
       Object.keys(lines ?? {}).sort()
 
     expect(keys(button?.axisGuidance?.variant)).toEqual([...buttonVariants].sort())
-    expect(keys(button?.axisGuidance?.size)).toEqual(['lg', 'md', 'sm', 'xl', 'xs'])
+    // Rendered sizes only: icon-only steps and the tile are layouts of the same sizes.
+    const renderedSizes = buttonSizes.filter(size => !size.startsWith('icon') && size !== 'tile')
+    expect(keys(button?.axisGuidance?.size)).toEqual([...renderedSizes].sort())
     expect(keys(button?.axisGuidance?.state)).toEqual([...buttonStates].sort())
   })
 

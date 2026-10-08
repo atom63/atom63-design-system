@@ -2,7 +2,8 @@ import { act, type ReactNode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { describe, expect, it } from 'vitest'
 import { componentCatalogItems } from '../lib/component-catalog'
-import { ComponentGuidanceTable, ComponentUsage } from './component-guidance'
+import { componentAxisGuidanceHeading } from '../lib/component-docs'
+import { ComponentGuidanceSection, ComponentUsage } from './component-guidance'
 import { ComponentPreview } from './component-reference-page'
 
 Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true })
@@ -111,7 +112,7 @@ describe('component guidance from the catalog', () => {
   it('renders one row per variant, size and state', async () => {
     const button = componentCatalogItems.find(item => item.slug === 'button')
     const guidance = button?.axisGuidance
-    const { container, cleanup } = await render(<ComponentGuidanceTable slug="button" />)
+    const { container, cleanup } = await render(<ComponentGuidanceSection slug="button" />)
 
     const rows = [...container.querySelectorAll('tbody tr')].map(row =>
       [...row.querySelectorAll('td')].map(cell => cell.textContent)
@@ -126,11 +127,14 @@ describe('component guidance from the catalog', () => {
     expect(expected.length).toBeGreaterThan(0)
     expect(rows).toEqual(expected)
     expect(rows[0]).toEqual(['Variant', 'primary', 'The one primary action per view.'])
+    const heading = container.querySelector('h2')
+    expect(heading?.id).toBe('variants-sizes-and-states')
+    expect(heading?.textContent).toBe(componentAxisGuidanceHeading)
     await cleanup()
   })
 
   it('renders nothing for a component without axis guidance', async () => {
-    const { container, cleanup } = await render(<ComponentGuidanceTable slug="kbd" />)
+    const { container, cleanup } = await render(<ComponentGuidanceSection slug="kbd" />)
     expect(container.innerHTML).toBe('')
     await cleanup()
   })

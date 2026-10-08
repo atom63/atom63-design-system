@@ -11,7 +11,7 @@ import {
   componentDocSlug,
 } from '../src/lib/component-catalog'
 import {
-  componentAxisGuidanceMarkdown,
+  componentAxisGuidanceSectionMarkdown,
   componentDocMarkdown,
   componentReferenceMarkdown,
   isComponentDocSlug,
@@ -151,8 +151,8 @@ function expandCraftCriteria(source: string): string {
 function expandComponentGuidance(source: string): string {
   return source
     .replace(
-      /^<ComponentGuidanceTable slug="([^"]+)" \/>$/gm,
-      (tag, slug: string) => componentAxisGuidanceMarkdown(slug) || tag
+      /^<ComponentGuidanceSection slug="([^"]+)" \/>$/gm,
+      (tag, slug: string) => componentAxisGuidanceSectionMarkdown(slug) || tag
     )
     .replace(
       /^<ComponentUsage slug="([^"]+)" \/>$/gm,
