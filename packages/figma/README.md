@@ -48,6 +48,39 @@ a literal. The
 summary lists the styles it could not derive under `styles.skipped`. Pass `--no-styles` to write
 variables only.
 
+## Components
+
+The Button component set is drawn from code (the contract and the recipe CSS) and bound to the
+variables the token sync writes, so sync the tokens first.
+
+1. Run the token sync above, and confirm its `verification`.
+2. Write the component scripts:
+
+   ```bash
+   pnpm atom63-figma components --model generated/atom63.figma-components.json --out .figma-sync
+   ```
+
+3. Run each `.figma-sync/components-N.js` in order with `use_figma` on the same file. The first
+   makes the `Components` page and the `Button` set; later ones add their variants to it. Each
+   returns `verification`, which must plan no `create` or `update`. A non-empty
+   `missingVariables` means the file lacks variables the variants bind, and nothing was written:
+   sync the tokens again, then rerun the script.
+
+Run the `components-check-N.js` scripts at any time; they only read, and `planned.unchanged`
+equals the script's `variants` when the file matches the code. Variants and layers are found by
+name, so a rerun updates them in place and never touches layers the model does not list.
+
+The printed summary counts the variants, the tokens they bind, and the `literals` (values the
+recipe computes, such as heights, written as numbers), and lists what was `skipped` with the
+reason. `applied.fontFallbacks` lists labels whose font family is not bound to the code.
+
+After a recipe or token change, regenerate the model with
+`pnpm --filter @atom63/figma generate:components` and run the scripts again.
+
+Known limits: only Button, in sizes xs to xl. Icon and tile sizes, box shadows and the `.dark`
+outline override are not drawn, and a font family token holding a CSS font stack is left unbound
+(the label takes the stack's first family) and reported in `fontFallbacks`.
+
 ## Bring Figma edits into code
 
 1. `pnpm atom63-figma read --page 1 --out .figma-sync/read-1.js`

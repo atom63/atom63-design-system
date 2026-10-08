@@ -35,3 +35,18 @@ export type {
   VariantSpec,
 } from './components/model'
 export { readRecipe, type RecipeInput } from './components/recipe'
+export {
+  type PackedComponentModel,
+  packComponentModel,
+  unpackComponentModel,
+} from './components/pack-component'
+export { buildComponentScripts } from './components/scripts'
+export {
+  type ComponentPlan,
+  type ComponentResult,
+  planComponent,
+  applyComponent,
+  syncComponent,
+} from './components/sync-component'
+export type { NodesApi } from './components/nodes-api'
+export { checkComponentPart, type ComponentCounts, syncComponentPart } from './runtime'

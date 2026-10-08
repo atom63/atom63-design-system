@@ -1,14 +1,17 @@
 #!/usr/bin/env node
 /**
  * atom63-figma: what an agent runs from a project to keep a Figma file in step
- * with its token CSS. `sync` writes use_figma scripts, `read` writes a script
- * that returns the file's variables, `diff` compares that result with the code.
+ * with its token CSS. `sync` writes use_figma scripts, `components` writes the
+ * scripts that draw the component sets on those variables, `read` writes a
+ * script that returns the file's variables, `diff` compares that result with the code.
  */
 import { mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { parseArgs } from 'node:util'
 
 import { readTokenDirectory } from './css-files'
+import type { ComponentModel } from './components/model'
+import { buildComponentScripts } from './components/scripts'
 import { buildProjectModel, type ProjectModel } from './css-model'
 import { diffTokens, formatDiff } from './diff'
 import { mergeSnapshots, type PackedSnapshot, unpackSnapshot } from './pack'
@@ -75,6 +78,23 @@ try {
       },
     }
     process.stdout.write(`${JSON.stringify(summary, null, 2)}\n`)
+  } else if (command === 'components') {
+    const path =
+      values.model ?? fail('pass --model <json> (generated/atom63.figma-components.json)')
+    const model = JSON.parse(readFileSync(path, 'utf8')) as ComponentModel
+    const out = values.out ?? fail('pass --out <dir>')
+    mkdirSync(out, { recursive: true })
+    for (const file of readdirSync(out))
+      if (/^components-(check-)?\d+\.js$/.test(file)) rmSync(join(out, file))
+    const summary = {
+      scripts: writeAll(out, 'components', buildComponentScripts(model, 'sync')),
+      checks: writeAll(out, 'components-check', buildComponentScripts(model, 'check')),
+      variants: model.variants.length,
+      tokens: model.tokens.length,
+      literals: model.literals.length,
+      skipped: model.skipped,
+    }
+    process.stdout.write(`${JSON.stringify(summary, null, 2)}\n`)
   } else if (command === 'read') {
     writeFileSync(
       values.out ?? fail('pass --out <file>'),
@@ -86,7 +106,7 @@ try {
     const figma = unpackSnapshot(mergeSnapshots(pages))
     process.stdout.write(formatDiff(diffTokens(project(values), figma)))
   } else {
-    fail('commands: sync, read, diff')
+    fail('commands: sync, components, read, diff')
   }
 } catch (error) {
   fail(error instanceof Error ? error.message : String(error))
