@@ -53,6 +53,60 @@ export interface FontNameLike {
 
 export type SizingMode = 'FIXED' | 'AUTO'
 
+/** Figma's `VariableBindableNodeField`: a scene node holds one alias per field. */
+export type NodeBindableField =
+  | 'height'
+  | 'width'
+  | 'characters'
+  | 'itemSpacing'
+  | 'paddingLeft'
+  | 'paddingRight'
+  | 'paddingTop'
+  | 'paddingBottom'
+  | 'visible'
+  | 'cornerRadius'
+  | 'topLeftRadius'
+  | 'topRightRadius'
+  | 'bottomLeftRadius'
+  | 'bottomRightRadius'
+  | 'minWidth'
+  | 'maxWidth'
+  | 'minHeight'
+  | 'maxHeight'
+  | 'counterAxisSpacing'
+  | 'strokeWeight'
+  | 'strokeTopWeight'
+  | 'strokeRightWeight'
+  | 'strokeBottomWeight'
+  | 'strokeLeftWeight'
+  | 'opacity'
+  | 'gridRowGap'
+  | 'gridColumnGap'
+/**
+ * Figma's `VariableBindableTextField`. A text node reports these as an array of
+ * aliases (one per styled range); only a text style holds a single alias.
+ */
+export type TextBindableField =
+  | 'fontFamily'
+  | 'fontSize'
+  | 'fontStyle'
+  | 'fontWeight'
+  | 'letterSpacing'
+  | 'lineHeight'
+  | 'paragraphSpacing'
+  | 'paragraphIndent'
+export type BindableField = NodeBindableField | TextBindableField
+export type NodeBoundVariables = {
+  readonly [field in NodeBindableField]?: VariableAlias
+} & {
+  readonly [field in TextBindableField]?: readonly VariableAlias[]
+}
+
+export interface ConstraintsLike {
+  horizontal: 'MIN' | 'CENTER' | 'MAX' | 'STRETCH' | 'SCALE'
+  vertical: 'MIN' | 'CENTER' | 'MAX' | 'STRETCH' | 'SCALE'
+}
+
 export interface SceneNodeLike {
   readonly id: string
   name: string
@@ -71,8 +125,8 @@ export interface SceneNodeLike {
   strokes: readonly PaintLike[]
   effects: readonly EffectLike[]
   strokeWeight?: number
-  readonly boundVariables?: Readonly<Record<string, VariableAlias | undefined>>
-  setBoundVariable(field: string, variable: VariableLike | null): void
+  readonly boundVariables?: NodeBoundVariables
+  setBoundVariable(field: BindableField, variable: VariableLike | null): void
   resize(width: number, height: number): void
   /** Containers only; Figma reparents a node that already has a parent. */
   appendChild(child: SceneNodeLike): void
@@ -92,6 +146,11 @@ export interface SceneNodeLike {
   topRightRadius?: number
   bottomLeftRadius?: number
   bottomRightRadius?: number
+  /** Clips children only; a spread shadow on a frame needs it (and a visible fill). */
+  clipsContent?: boolean
+  /** Children of an auto-layout frame; 'ABSOLUTE' takes the child out of the flow. */
+  layoutPositioning?: 'AUTO' | 'ABSOLUTE'
+  constraints?: ConstraintsLike
 
   // Text
   characters?: string

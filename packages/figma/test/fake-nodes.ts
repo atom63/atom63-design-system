@@ -16,12 +16,13 @@ const AsyncFunction = Object.getPrototypeOf(async () => {}).constructor as new (
 ) => Script
 
 type NodeType = SceneNodeLike['type']
+type Alias = { type: 'VARIABLE_ALIAS'; id: string }
 type State = Record<string, unknown> & {
   id: string
   type: NodeType
   parent: Container | null
   children: SceneNodeLike[]
-  boundVariables: Record<string, { type: 'VARIABLE_ALIAS'; id: string }>
+  boundVariables: Record<string, Alias | Alias[]>
   properties: Record<string, ComponentPropertyDefinition>
   removed: boolean
 }
@@ -39,6 +40,8 @@ const common = [
   'effects',
   'strokeWeight',
   'componentPropertyReferences',
+  'layoutPositioning',
+  'constraints',
 ]
 const frameKeys = [
   'layoutMode',
@@ -92,6 +95,20 @@ const textFields = [
   'fontFamily',
   'fontWeight',
 ]
+/**
+ * Figma's `VariableBindableTextField`: a text node reports these as an array of
+ * aliases, one per styled range. A whole-node bind gives a one-range array.
+ */
+const textRangeFields = new Set([
+  'fontFamily',
+  'fontSize',
+  'fontStyle',
+  'fontWeight',
+  'letterSpacing',
+  'lineHeight',
+  'paragraphSpacing',
+  'paragraphIndent',
+])
 const fieldType = (field: string) =>
   field === 'fontFamily' ? 'STRING' : field === 'visible' ? 'BOOLEAN' : 'FLOAT'
 const fontStyle = (weight: number) =>
@@ -121,6 +138,7 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
   let writes = 0
   const loadedFonts = new Set<string>()
   const pages: PageLike[] = []
+  const pageContainers = new Map<PageLike, Container>()
   const pageState = new Map<PageLike, { loaded: boolean; children: SceneNodeLike[] }>()
   const stateOf = new WeakMap<object, State>()
 
@@ -138,6 +156,24 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
   const requireFont = (font: FontNameLike) => {
     if (!loadedFonts.has(fontKey(font)))
       throw new Error(`Cannot write to node with unloaded font "${font.family} ${font.style}"`)
+  }
+
+  /**
+   * Figma: "`spread` values are only accepted on rectangles and ellipses, or on
+   * frames, components, and instances with visible fill paints and
+   * `clipsContent` enabled."
+   */
+  const requireSpreadAccepted = (state: State, effects: EffectLike[]) => {
+    if (!effects.some(effect => effect.spread || effect.boundVariables?.spread)) return
+    const fills = state.fills as PaintLike[]
+    if (
+      state.type === 'TEXT' ||
+      state.clipsContent !== true ||
+      !fills.some(paint => paint.visible !== false)
+    )
+      throw new Error(
+        'A shadow spread needs a frame or component with a visible fill and clipsContent on'
+      )
   }
 
   const detach = (child: SceneNodeLike) => {
@@ -212,6 +248,8 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       effects: frozenCopy([]),
       strokeWeight: 1,
       componentPropertyReferences: null,
+      layoutPositioning: 'AUTO',
+      constraints: frozenCopy({ horizontal: 'MIN', vertical: 'MIN' }),
       ...(type === 'TEXT'
         ? {
             characters: '',
@@ -235,6 +273,8 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
             topRightRadius: 0,
             bottomLeftRadius: 0,
             bottomRightRadius: 0,
+            // Unknown for a new component in Figma; off here so the sync must turn it on.
+            clipsContent: false,
           }),
     }
     const container: Container = { node: undefined as never, children: state.children }
@@ -264,7 +304,9 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
           requireFont(wanted)
           state.fontName = frozenCopy(wanted)
         }
-        state.boundVariables[field] = { type: 'VARIABLE_ALIAS', id: variable.id }
+        const alias: Alias = { type: 'VARIABLE_ALIAS', id: variable.id }
+        state.boundVariables[field] =
+          type === 'TEXT' && textRangeFields.has(field) ? [alias] : alias
       },
       resize(width: number, height: number) {
         if (!(width >= 0.01 && height >= 0.01)) throw new Error('Size must be at least 0.01')
@@ -338,7 +380,12 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
           for (const paint of value as { opacity?: number }[])
             if (paint.opacity !== undefined && !(paint.opacity >= 0 && paint.opacity <= 1))
               throw new RangeError(`${key}: paint opacity must be between 0 and 1`)
+          if (key === 'effects') requireSpreadAccepted(state, value as EffectLike[])
           value = frozenCopy(value)
+        } else if (key === 'layoutPositioning' && value === 'ABSOLUTE') {
+          const parent = state.parent && stateOf.get(state.parent.node)
+          if (!parent || !parent.layoutMode || parent.layoutMode === 'NONE')
+            throw new Error('layoutPositioning applies only to children of auto-layout frames')
         } else if (key === 'componentPropertyReferences' && value) {
           const set = owner(state)
           if (!set) throw new Error('Only a layer inside a component can reference its properties')
@@ -387,11 +434,18 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       },
     }
     const container: Container = { node: page, children }
+    pageContainers.set(page, container)
     pages.push(page)
     pageState.set(page, own)
     return page
   }
-  createPage()
+  /** Figma's current page: the first page, where `create*` puts a new node. */
+  const currentPage = createPage()
+  /** Like Figma, a new node starts on the current page. */
+  const onCurrentPage = (node: SceneNodeLike) => {
+    attach(pageContainers.get(currentPage)!, node)
+    return node
+  }
 
   const variables = {
     ...base.figma.variables,
@@ -425,8 +479,9 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
     },
   }
 
-  const figma: NodesApi = {
+  const figma: NodesApi & { readonly currentPage: PageLike } = {
     ...base.figma,
+    currentPage,
     variables,
     async loadFontAsync(font) {
       await base.figma.loadFontAsync(font)
@@ -438,9 +493,9 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       },
     },
     createPage,
-    createFrame: () => createNode('FRAME'),
-    createText: () => createNode('TEXT'),
-    createComponent: () => createNode('COMPONENT'),
+    createFrame: () => onCurrentPage(createNode('FRAME')),
+    createText: () => onCurrentPage(createNode('TEXT')),
+    createComponent: () => onCurrentPage(createNode('COMPONENT')),
     combineAsVariants(nodes, parent) {
       if (nodes.length === 0) throw new Error('combineAsVariants needs at least one component')
       for (const node of nodes)

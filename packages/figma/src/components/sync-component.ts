@@ -81,7 +81,12 @@ const findLayer = (variant: SceneNodeLike, layer: LayerSpec) =>
 const findVariant = (set: SceneNodeLike, name: string) =>
   set.children?.find(child => child.type === 'COMPONENT' && child.name === name)
 
-/** The root's auto layout: a horizontal row, centered, hugging its width at a fixed height. */
+/**
+ * The root's auto layout: a horizontal row, centered, hugging its width at a
+ * fixed height. `clipsContent` lets the focus ring's spread apply: Figma
+ * accepts a shadow spread on a frame or component only with a visible fill and
+ * clipping on, and clipping affects children, not the node's own shadow.
+ */
 function rootChecks(root: SceneNodeLike): { before: Check[]; after: Check[] } {
   const check = <K extends keyof SceneNodeLike>(key: K, value: SceneNodeLike[K]): Check => ({
     what: `${root.name}.${String(key)}`,
@@ -95,10 +100,59 @@ function rootChecks(root: SceneNodeLike): { before: Check[]; after: Check[] } {
       check('layoutMode', 'HORIZONTAL'),
       check('primaryAxisAlignItems', 'CENTER'),
       check('counterAxisAlignItems', 'CENTER'),
+      check('clipsContent', true),
     ],
     // After the height: Figma fixes both axes when an auto-layout frame is resized.
     after: [check('primaryAxisSizingMode', 'AUTO'), check('counterAxisSizingMode', 'FIXED')],
   }
+}
+
+const OVERLAY = 'Spinner'
+const nearPixel = (left: number, right: number) => Math.abs(left - right) < 0.01
+
+/**
+ * The Spinner sits over the row, as CSS `position: absolute; inset: 0` places
+ * it: out of the auto-layout flow (so a loading variant is no wider) and
+ * centered, with center constraints so it stays centered as the root hugs.
+ */
+function overlayChecks(root: SceneNodeLike): Check[] {
+  const layer = root.children?.find(child => child.name === OVERLAY && child.type === 'FRAME')
+  if (!layer) return []
+  const center = () => ({
+    x: (root.width - layer.width) / 2,
+    y: (root.height - layer.height) / 2,
+  })
+  return [
+    {
+      what: `${OVERLAY}.layoutPositioning`,
+      same: () => layer.layoutPositioning === 'ABSOLUTE',
+      write: () => {
+        layer.layoutPositioning = 'ABSOLUTE'
+      },
+    },
+    {
+      what: `${OVERLAY}.constraints`,
+      same: () =>
+        layer.constraints?.horizontal === 'CENTER' && layer.constraints.vertical === 'CENTER',
+      write: () => {
+        layer.constraints = { horizontal: 'CENTER', vertical: 'CENTER' }
+      },
+    },
+    {
+      what: `${OVERLAY}.x`,
+      same: () => nearPixel(layer.x, center().x),
+      write: () => {
+        layer.x = center().x
+      },
+    },
+    {
+      what: `${OVERLAY}.y`,
+      same: () => nearPixel(layer.y, center().y),
+      write: () => {
+        layer.y = center().y
+      },
+    },
+  ]
 }
 
 /** `Label.characters` and `Icon.visible` follow the set's Label and Icon properties. */
@@ -142,7 +196,11 @@ async function variantChecks(run: Run, node: SceneNodeLike, spec: VariantSpec) {
       fallbacks: font?.fallbacks,
     })
   }
-  groups.push({ node, checks: [...layout.after, ...referenceChecks(run, node)] })
+  // Last: the overlay centers on the root's final size.
+  groups.push({
+    node,
+    checks: [...layout.after, ...overlayChecks(node), ...referenceChecks(run, node)],
+  })
   return groups
 }
 
@@ -270,8 +328,14 @@ async function applyRun(run: Run, plan: ComponentPlan): Promise<ComponentResult>
   const created: { node: SceneNodeLike; spec: VariantSpec }[] = []
   for (const spec of run.variants) {
     if (run.set && findVariant(run.set, spec.name)) continue
-    const node = run.figma.createComponent()
-    node.name = spec.name
+    // A run that failed before the set took its variants left them loose on the page.
+    let node = page.children.find(child => child.type === 'COMPONENT' && child.name === spec.name)
+    if (!node) {
+      node = run.figma.createComponent()
+      // Figma puts a new node on the current page; keep it on ours until the set takes it.
+      page.appendChild(node)
+      node.name = spec.name
+    }
     await writeVariant(run, node, spec, fallbacks, false)
     created.push({ node, spec })
   }

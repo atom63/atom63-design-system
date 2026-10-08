@@ -74,6 +74,7 @@ describe('the Figma node fake', () => {
 })
 
 const neutral = 'Variant=default, Size=md, State=rest'
+const alias = (id: string) => ({ type: 'VARIABLE_ALIAS', id })
 
 /** A one-variant, one-size model over `css` and extra single-mode tokens. */
 function modelOf(
@@ -396,15 +397,15 @@ describe('syncComponent', () => {
     expect(bound.verification.unchanged).toBe(1)
     const label = fake.findVariant('Button', neutral).children!.find(c => c.name === 'Label')!
     expect(label.fontName).toEqual({ family: 'Geist', style: 'Semi Bold' })
-    expect(label.boundVariables?.fontFamily?.id).toBe(
-      fake.variableOf('--a63-control-font-family').id
-    )
-    expect(label.boundVariables?.fontWeight?.id).toBe(
-      fake.variableOf('--a63-control-font-weight').id
-    )
-    expect(label.boundVariables?.fontSize?.id).toBe(
-      fake.variableOf('--a63-control-padding-inline-md').id
-    )
+    expect(label.boundVariables?.fontFamily).toEqual([
+      alias(fake.variableOf('--a63-control-font-family').id),
+    ])
+    expect(label.boundVariables?.fontWeight).toEqual([
+      alias(fake.variableOf('--a63-control-font-weight').id),
+    ])
+    expect(label.boundVariables?.fontSize).toEqual([
+      alias(fake.variableOf('--a63-control-padding-inline-md').id),
+    ])
 
     // A CSS stack: its first family is the literal; Figma cannot bind the whole string.
     const stack = modelOf(
@@ -425,9 +426,9 @@ describe('syncComponent', () => {
     const geist = other.findVariant('Button', neutral).children!.find(c => c.name === 'Label')!
     expect(geist.fontName).toEqual({ family: 'Geist', style: 'Semi Bold' })
     expect(geist.boundVariables?.fontFamily).toBeUndefined()
-    expect(geist.boundVariables?.fontWeight?.id).toBe(
-      other.variableOf('--a63-control-font-weight').id
-    )
+    expect(geist.boundVariables?.fontWeight).toEqual([
+      alias(other.variableOf('--a63-control-font-weight').id),
+    ])
     // Figma refuses that binding, and so does the fake.
     expect(() =>
       geist.setBoundVariable('fontFamily', other.variableOf('--a63-control-font-family'))
@@ -485,6 +486,124 @@ describe('syncComponent', () => {
     expect(plain.boundVariables?.fontWeight).toBeUndefined()
   })
 
+  it('reads text-field bindings as Figma reports them on a text node: one alias per range', async () => {
+    const { sync, model } = modelOf(
+      `.a63-Button {
+        font-size: var(--a63-control-padding-inline-md);
+        font-weight: var(--a63-control-font-weight);
+      }`,
+      [{ token: '--a63-control-font-weight', type: 'FLOAT', value: 500 }],
+      ['rest']
+    )
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, sync)
+    await syncComponent(fake.figma, model)
+    const label = fake.findVariant('Button', neutral).children!.find(c => c.name === 'Label')!
+    // Figma's typings: `readonly [field in VariableBindableTextField]?: VariableAlias[]`.
+    expect(label.boundVariables?.fontSize).toEqual([
+      alias(fake.variableOf('--a63-control-padding-inline-md').id),
+    ])
+    expect(label.boundVariables?.fontWeight).toEqual([
+      alias(fake.variableOf('--a63-control-font-weight').id),
+    ])
+    const writes = fake.writes
+    const again = await syncComponent(fake.figma, model)
+    expect(again.planned).toEqual({ missingVariables: [], create: [], update: [], unchanged: 1 })
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('turns clipping on so Figma accepts the focus ring spread', async () => {
+    const fake = createFakeNodes()
+    const component = fake.figma.createComponent()
+    const ring = {
+      type: 'DROP_SHADOW' as const,
+      color: { r: 0, g: 0, b: 1, a: 1 },
+      offset: { x: 0, y: 0 },
+      radius: 0,
+      spread: 3,
+      visible: true,
+      blendMode: 'NORMAL' as const,
+    }
+    expect(() => (component.effects = [ring])).toThrow(/clipsContent/)
+    component.clipsContent = true
+    component.fills = []
+    expect(() => (component.effects = [ring])).toThrow(/visible fill/)
+
+    const { sync, model } = modelOf(
+      `.a63-Button {
+        --button-focus-ring: var(--a63-control-focus-ring-color);
+        background-color: var(--a63-action-neutral);
+      }`,
+      [
+        {
+          token: '--a63-control-focus-ring-color',
+          type: 'COLOR',
+          value: { r: 0, g: 0, b: 1, a: 1 },
+        },
+        { token: '--a63-control-focus-ring-width', type: 'FLOAT', value: 3 },
+      ]
+    )
+    await syncModel(fake.figma, sync)
+    const result = await syncComponent(fake.figma, model)
+    expect(result.verification.unchanged).toBe(2)
+    const focused = fake.findVariant('Button', 'Variant=default, Size=md, State=focusVisible')
+    expect(focused.clipsContent).toBe(true)
+    expect(focused.effects).toHaveLength(1)
+    expect(fake.findVariant('Button', neutral).clipsContent).toBe(true)
+  })
+
+  it('places the spinner over the row, out of the flow and centered', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    await syncComponent(fake.figma, buttonModelFixture)
+    const root = fake.findVariant('Button', neutral)
+    const spinner = root.children!.find(c => c.name === 'Spinner')!
+    expect(spinner).toMatchObject({
+      layoutPositioning: 'ABSOLUTE',
+      constraints: { horizontal: 'CENTER', vertical: 'CENTER' },
+      x: (root.width - spinner.width) / 2,
+      y: (root.height - spinner.height) / 2,
+    })
+
+    // A spinner that is off center is an update and comes back to the center.
+    spinner.resize(12, 12)
+    const again = await syncComponent(fake.figma, buttonModelFixture)
+    expect(again.planned.update).toEqual([neutral])
+    expect([spinner.x, spinner.y]).toEqual([(root.width - 12) / 2, (root.height - 12) / 2])
+    const writes = fake.writes
+    await syncComponent(fake.figma, buttonModelFixture)
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('recovers from a run that failed before the set existed: one set, no orphans', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    const create = fake.figma.createComponent
+    let calls = 0
+    fake.figma.createComponent = () => {
+      calls += 1
+      if (calls === 3) throw new Error('injected failure')
+      return create()
+    }
+    await expect(syncComponent(fake.figma, buttonModelFixture)).rejects.toThrow('injected failure')
+    fake.figma.createComponent = create
+    const page = fake.pages.find(item => item.name === 'Components')!
+    // The partial run's components wait on the Components page, not the user's page.
+    expect(page.children.map(node => node.type)).toEqual(['COMPONENT', 'COMPONENT'])
+    expect(fake.figma.currentPage.children).toEqual([])
+
+    const result = await syncComponent(fake.figma, buttonModelFixture)
+    expect(result.applied.created).toBe(12)
+    expect(result.verification.unchanged).toBe(12)
+    for (const item of fake.pages)
+      expect(item.children.filter(node => node.type === 'COMPONENT')).toEqual([])
+    expect(page.children.map(node => [node.type, node.name])).toEqual([['COMPONENT_SET', 'Button']])
+    const names = page.children[0].children!.map(node => node.name)
+    expect(names).toHaveLength(12)
+    expect(new Set(names).size).toBe(12)
+    expect(fake.figma.currentPage.children).toEqual([])
+  })
+
   it('runs as a use_figma script body', async () => {
     const fake = createFakeNodes()
     await syncModel(fake.figma, syncFixture)
@@ -522,14 +641,14 @@ describe('the real Button model', () => {
     expect(focused.effects).toHaveLength(1)
     expect(fake.findVariant('Button', neutral).effects).toEqual([])
     const label = focused.children!.find(c => c.name === 'Label')!
-    expect(label.boundVariables?.fontSize?.id).toBe(
-      fake.variableOf('--a63-control-font-size-md').id
-    )
+    expect(label.boundVariables?.fontSize).toEqual([
+      alias(fake.variableOf('--a63-control-font-size-md').id),
+    ])
     expect(label.fontName).toEqual({ family: 'Geist', style: 'Medium' })
     expect(label.boundVariables?.fontFamily).toBeUndefined()
-    expect(label.boundVariables?.fontWeight?.id).toBe(
-      fake.variableOf('--a63-control-font-weight').id
-    )
+    expect(label.boundVariables?.fontWeight).toEqual([
+      alias(fake.variableOf('--a63-control-font-weight').id),
+    ])
 
     const writes = fake.writes
     const second = await syncComponent(fake.figma, model)

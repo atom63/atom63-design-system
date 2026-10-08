@@ -7,7 +7,15 @@ import type { VariableLike } from '../apply'
 import { familiesOf, near } from '../style-sync'
 import { firstFamily } from '../styles'
 import type { ComponentValue, FigmaProperty, LayerSpec } from './model'
-import type { EffectLike, FontNameLike, NodesApi, PaintLike, SceneNodeLike } from './nodes-api'
+import type {
+  BindableField,
+  EffectLike,
+  FontNameLike,
+  NodesApi,
+  PaintLike,
+  SceneNodeLike,
+  VariableAlias,
+} from './nodes-api'
 
 export interface ValueContext {
   figma: NodesApi
@@ -38,6 +46,28 @@ const literal = (value: ComponentValue | undefined) =>
   value && 'value' in value ? value.value : undefined
 const sameColor = (left: { r: number; g: number; b: number }, right: Color) =>
   near(left.r, right.r) && near(left.g, right.g) && near(left.b, right.b)
+
+/**
+ * Every alias bound to a node field. A text node reports a text field
+ * (`fontSize`, `fontWeight`, …) as an array, one alias per styled range; any
+ * other field holds one alias.
+ */
+function aliasesOf(node: SceneNodeLike, field: BindableField): readonly VariableAlias[] {
+  const bound = (
+    node.boundVariables as
+      Partial<Record<BindableField, VariableAlias | readonly VariableAlias[]>> | undefined
+  )?.[field]
+  if (!bound) return []
+  return 'id' in bound ? [bound] : bound
+}
+
+const isBound = (node: SceneNodeLike, field: BindableField) => aliasesOf(node, field).length > 0
+
+/** Bound to `id` across the whole node: every range of a text field, or the one alias. */
+function boundTo(node: SceneNodeLike, field: BindableField, id: string): boolean {
+  const aliases = aliasesOf(node, field)
+  return aliases.length > 0 && aliases.every(alias => alias.id === id)
+}
 
 /** Tokens a layer binds, for the C8 check that every one has a variable. */
 export function tokensOf(layer: LayerSpec): string[] {
@@ -71,7 +101,7 @@ function firstValue(context: ValueContext, variable: VariableLike, depth = 0): u
 // Numbers ────────────────────────────────────────────────────────────────────
 
 /** Figma fields each numeric model property writes. */
-const numberFields: Partial<Record<FigmaProperty, string[]>> = {
+const numberFields: Partial<Record<FigmaProperty, BindableField[]>> = {
   strokeWeight: ['strokeWeight'],
   cornerRadius: ['topLeftRadius', 'topRightRadius', 'bottomLeftRadius', 'bottomRightRadius'],
   height: ['height'],
@@ -100,7 +130,7 @@ function writeNumber(node: SceneNodeLike, field: string, value: number) {
 function fieldCheck(
   context: ValueContext,
   node: SceneNodeLike,
-  field: string,
+  field: BindableField,
   value: ComponentValue
 ): Check | null {
   const what = `${node.name}.${field}`
@@ -108,7 +138,7 @@ function fieldCheck(
     const variable = context.byToken.get(value.alias)
     return {
       what,
-      same: () => !!variable && node.boundVariables?.[field]?.id === variable.id,
+      same: () => !!variable && boundTo(node, field, variable.id),
       write: () => node.setBoundVariable(field, variable ?? null),
     }
   }
@@ -116,18 +146,18 @@ function fieldCheck(
   if (typeof wanted === 'boolean' && field === 'visible')
     return {
       what,
-      same: () => !node.boundVariables?.visible && node.visible === wanted,
+      same: () => !isBound(node, 'visible') && node.visible === wanted,
       write: () => {
-        if (node.boundVariables?.visible) node.setBoundVariable('visible', null)
+        if (isBound(node, 'visible')) node.setBoundVariable('visible', null)
         node.visible = wanted
       },
     }
   if (typeof wanted !== 'number' || field === 'visible') return null
   return {
     what,
-    same: () => !node.boundVariables?.[field] && near(readNumber(node, field), wanted),
+    same: () => !isBound(node, field) && near(readNumber(node, field), wanted),
     write: () => {
-      if (node.boundVariables?.[field]) node.setBoundVariable(field, null)
+      if (isBound(node, field)) node.setBoundVariable(field, null)
       writeNumber(node, field, wanted)
     },
   }
@@ -303,21 +333,23 @@ export async function fontTarget(
 }
 
 function fontCheck(node: SceneNodeLike, target: FontTarget): Check {
-  const bound = (field: string) => node.boundVariables?.[field]?.id ?? null
+  /** Bound to the variable on every range, or unbound when there is none. */
+  const holds = (field: 'fontFamily' | 'fontWeight', variable: VariableLike | null) =>
+    variable ? boundTo(node, field, variable.id) : !isBound(node, field)
   return {
     what: `${node.name}.fontName`,
     same: () =>
       node.fontName?.family === target.font.family &&
       node.fontName.style === target.font.style &&
-      bound('fontFamily') === (target.family?.id ?? null) &&
-      bound('fontWeight') === (target.weight?.id ?? null),
+      holds('fontFamily', target.family) &&
+      holds('fontWeight', target.weight),
     write: () => {
       node.fontName = { ...target.font }
       for (const [field, variable] of [
         ['fontFamily', target.family],
         ['fontWeight', target.weight],
       ] as const)
-        if (variable || bound(field)) node.setBoundVariable(field, variable)
+        if (variable || isBound(node, field)) node.setBoundVariable(field, variable)
     },
   }
 }
