@@ -100,8 +100,9 @@ and plan 1's decisions C1–C8.
 `nodes-api.ts`, `test/fake-nodes.ts`; tests in `test/spec-card.test.ts`.
 
 - [x] Plan/apply/verify the card with the same `Check` pattern (S5, S6): frame, title, rows,
-  header labels, row labels, chrome bindings (surface fill, text fills, divider strokes, text
-  styles), set placement inside the card. Text writes load fonts first.
+  header labels, row labels, chrome bindings (surface fill, text fills, divider strokes, the
+  `Text/xs` style on row values; variables on the Bold/Medium texts, which no Regular-only synced
+  style matches), set placement inside the card. Text writes load fonts first.
 - [x] The set's `description` (S7).
 - [x] The card is written by the LAST component part (it needs the whole set); earlier parts
   leave it alone. A part that runs alone still verifies its own variants.
@@ -114,8 +115,11 @@ Done 2026-10-08 on the fake (Task 6 is the real-Figma gate). Choices made here: 
 `--a63-surface-panel` (fill), `--a63-border-subtle` (border, dividers),
 `--a63-surface-border-width`, `--radius-md`, `--a63-text-primary` / `--a63-text-secondary`, and
 the `--typography-xs-*` (values) and `--typography-lg-*` (title) size and line-height variables;
-labels are a literal 11px, and texts take Geist from `--font-family-sans` unbound (reported in
-`fontFallbacks`), since the Atom63 sync writes no `Text/` styles. A script that must make the set
+labels are a literal 11px, and texts take Geist from `--a63-font-app` unbound (reported in
+`fontFallbacks`). Row values link the synced `Text/xs` style (the sync derives 13 `Text/` styles
+from the token set, all Regular); the Bold title and labels and the Medium grid labels bind
+variables, and values fall back to variables when the style is absent. The card has a fixed width
+(Grid + 48) and hugs its height, so its stretched rows converge. A script that must make the set
 makes it on the page and the last part moves it into the card's `Grid` (the same path migrates a
 plan-1 file). Component and token scripts now carry separate runtimes, so the card's code does
 not cost the token scripts room (token sync 9 → 4 parts; components 3 → 4).
