@@ -124,7 +124,7 @@ function referenceChecks(run: Run, variant: SceneNodeLike): Check[] {
 interface CheckGroup {
   node: SceneNodeLike
   checks: Check[]
-  fallback?: string
+  fallbacks?: string[]
 }
 
 /** Every check for a variant's existing layers, in write order. */
@@ -139,7 +139,7 @@ async function variantChecks(run: Run, node: SceneNodeLike, spec: VariantSpec) {
     groups.push({
       node: target,
       checks: index === 0 ? [...layout.before, ...own] : own,
-      fallback: font?.fallback,
+      fallbacks: font?.fallbacks,
     })
   }
   groups.push({ node, checks: [...layout.after, ...referenceChecks(run, node)] })
@@ -211,7 +211,7 @@ async function writeVariant(
   for (const layer of spec.layers.slice(1))
     previous = findLayer(node, layer) ?? addLayer(run, node, layer, previous)
   for (const group of await variantChecks(run, node, spec)) {
-    if (group.fallback) fallbacks.add(group.fallback)
+    for (const fallback of group.fallbacks ?? []) fallbacks.add(fallback)
     const pending = group.checks.filter(
       check => (references || !check.what.endsWith(REFERENCES)) && !check.same()
     )

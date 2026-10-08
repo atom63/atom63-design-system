@@ -75,7 +75,7 @@ export async function variablesOf(api: VariablesApi) {
  * Every value a font variable resolves to, in any mode, through aliases. Figma
  * reads each whole string as one family name, so a CSS stack never loads.
  */
-function familiesOf(variable: VariableLike, byId: Map<string, VariableLike>): string[] {
+export function familiesOf(variable: VariableLike, byId: Map<string, VariableLike>): string[] {
   return Object.values(variable.valuesByMode).flatMap(value => {
     if (typeof value === 'string') return [value]
     if (value && typeof value === 'object' && (value as Alias).type === 'VARIABLE_ALIAS') {

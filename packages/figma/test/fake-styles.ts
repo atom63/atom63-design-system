@@ -25,9 +25,15 @@ export function createFakeStyles(
   const textStyles: FakeTextStyle[] = []
   const effectStyles: FakeEffectStyle[] = []
   const loaded = new Set<string>()
+  /** Figma refuses to bind a family variable unless every mode's family is loaded. */
+  const requireFamilies = (variable: VariableLike) => {
+    for (const family of familiesOf(variable))
+      if (!loaded.has(family)) throw new Error(`Cannot use unloaded font "${family}"`)
+  }
   return {
     textStyles,
     effectStyles,
+    requireFamilies,
     api: {
       getLocalTextStylesAsync: async () => [...textStyles],
       getLocalEffectStylesAsync: async () => [...effectStyles],
@@ -50,9 +56,7 @@ export function createFakeStyles(
               delete this.boundVariables[field]
               return
             }
-            if (field === 'fontFamily')
-              for (const family of familiesOf(variable))
-                if (!loaded.has(family)) throw new Error(`Cannot use unloaded font "${family}"`)
+            if (field === 'fontFamily') requireFamilies(variable)
             this.boundVariables[field] = { type: 'VARIABLE_ALIAS', id: variable.id }
           },
         }

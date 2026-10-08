@@ -253,6 +253,7 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
         if (variable.resolvedType !== fieldType(field))
           throw new Error(`Cannot bind a ${variable.resolvedType} variable to "${field}"`)
         const font = state.fontName as FontNameLike | undefined
+        if (field === 'fontFamily') base.requireFamilies(variable)
         if (field === 'fontFamily' && font) {
           const wanted = { family: String(firstModeValue(variable)), style: font.style }
           requireFont(wanted)

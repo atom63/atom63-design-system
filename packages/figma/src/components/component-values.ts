@@ -4,7 +4,8 @@
  * writes only what is not. Bundled into the runtime IIFE: no Node or DOM imports.
  */
 import type { VariableLike } from '../apply'
-import { near } from '../style-sync'
+import { familiesOf, near } from '../style-sync'
+import { firstFamily } from '../styles'
 import type { ComponentValue, FigmaProperty, LayerSpec } from './model'
 import type { EffectLike, FontNameLike, NodesApi, PaintLike, SceneNodeLike } from './nodes-api'
 
@@ -175,7 +176,8 @@ function paintCheck(
 
 /**
  * `focusVisible` draws the ring as one spread-only drop shadow (C6); every other
- * state owns no effects. A skipped ring value leaves the effects alone.
+ * state of a layer with a ring owns no effects. A skipped or absent ring leaves
+ * the effects alone.
  */
 function ringCheck(
   context: ValueContext,
@@ -186,9 +188,10 @@ function ringCheck(
   const ring = layer.properties.focusRing
   const width = layer.properties.focusRingWidth
   const what = `${node.name}.effects`
-  if (state !== 'focusVisible' || !ring || !width)
+  // An absent or skipped ring leaves the effects to the designer.
+  if (!ring || !width || 'skipped' in ring || 'skipped' in width) return null
+  if (state !== 'focusVisible')
     return { what, same: () => node.effects.length === 0, write: () => (node.effects = []) }
-  if ('skipped' in ring || 'skipped' in width) return null
   // A composed ring binds its color; Figma cannot scale a bound effect color's alpha.
   const colorVariable = isAlias(ring) ? context.byToken.get(tokenOf(ring)) : undefined
   const spreadVariable = isAlias(width) ? context.byToken.get(tokenOf(width)) : undefined
@@ -247,11 +250,16 @@ export interface FontTarget {
   font: FontNameLike
   family: VariableLike | null
   weight: VariableLike | null
-  /** Set when the wanted font did not load and Inter Regular stands in. */
-  fallback?: string
+  /** What did not hold, as text styles report it: a font that did not load, a family left unbound. */
+  fallbacks: string[]
 }
 
-/** The font a text layer should use: the first-mode family and weight, else Inter Regular. */
+/**
+ * The font a text layer should use, as text styles do: the first family of the
+ * first-mode stack in the weight's style, else Inter Regular. The family
+ * variable binds only when every mode's family loads, since Figma refuses to
+ * bind one that does not.
+ */
 export async function fontTarget(
   context: ValueContext,
   node: SceneNodeLike,
@@ -266,22 +274,32 @@ export async function fontTarget(
   const familyVariable = family && 'alias' in family ? context.byToken.get(family.alias) : undefined
   const weightVariable = weight && 'alias' in weight ? context.byToken.get(weight.alias) : undefined
   const current = node.fontName ?? INTER
-  const font = {
-    family: String(
-      familyVariable ? firstValue(context, familyVariable) : (literal(family) ?? current.family)
-    ),
+  const stack = familyVariable ? firstValue(context, familyVariable) : literal(family)
+  const wanted = {
+    family: typeof stack === 'string' ? firstFamily(stack) : current.family,
     style: weight
       ? styleOfWeight(weightVariable ? firstValue(context, weightVariable) : literal(weight))
       : current.style,
   }
-  if (await loads(context, font))
-    return { font, family: familyVariable ?? null, weight: weightVariable ?? null }
-  return {
-    font: INTER,
-    family: null,
-    weight: null,
-    fallback: `${layer.name}: ${font.family} ${font.style} did not load; used Inter Regular`,
+  const alias = family && 'alias' in family ? family.alias : undefined
+  const fallbacks: string[] = []
+  if (!(await loads(context, wanted))) {
+    fallbacks.push(
+      `${layer.name}: ${wanted.family} ${wanted.style} did not load; used Inter Regular`
+    )
+    if (alias) fallbacks.push(`${layer.name}: ${alias} not bound; used Inter`)
+    return { font: INTER, family: null, weight: null, fallbacks }
   }
+  let bind: VariableLike | null = null
+  if (familyVariable) {
+    const families = familiesOf(familyVariable, context.byId)
+    const loaded = await Promise.all(
+      families.map(item => loads(context, { family: item, style: wanted.style }))
+    )
+    if (families.length > 0 && loaded.every(Boolean)) bind = familyVariable
+    else fallbacks.push(`${layer.name}: ${alias} not bound in every mode; used ${wanted.family}`)
+  }
+  return { font: wanted, family: bind, weight: weightVariable ?? null, fallbacks }
 }
 
 function fontCheck(node: SceneNodeLike, target: FontTarget): Check {

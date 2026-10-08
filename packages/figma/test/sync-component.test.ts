@@ -304,6 +304,41 @@ describe('syncComponent', () => {
     const writes = fake.writes
     await syncComponent(fake.figma, model)
     expect(fake.writes).toBe(writes)
+
+    // A skipped ring leaves a designer's effect alone, on every state.
+    const skipped = structuredClone(model)
+    for (const variant of skipped.variants)
+      variant.layers[0].properties.focusRing = { skipped: 'unresolved' }
+    const shadow = { ...focused.effects[0], spread: 8 }
+    focused.effects = [shadow]
+    const rest = fake.findVariant('Button', neutral)
+    rest.effects = [shadow]
+    const kept = await syncComponent(fake.figma, skipped)
+    expect(kept.planned.update).toEqual([])
+    expect(focused.effects).toEqual([shadow])
+    expect(rest.effects).toEqual([shadow])
+  })
+
+  it('keeps a designer effect on a component with no focus ring', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    await syncComponent(fake.figma, buttonModelFixture)
+    const shadow = {
+      type: 'DROP_SHADOW' as const,
+      color: { r: 0, g: 0, b: 0, a: 0.25 },
+      offset: { x: 0, y: 2 },
+      radius: 4,
+      spread: 0,
+      visible: true,
+      blendMode: 'NORMAL' as const,
+    }
+    const root = fake.findVariant('Button', neutral)
+    root.effects = [shadow]
+    const writes = fake.writes
+    const again = await syncComponent(fake.figma, buttonModelFixture)
+    expect(again.planned.update).toEqual([])
+    expect(fake.writes).toBe(writes)
+    expect(root.effects).toEqual([shadow])
   })
 
   it('uses a composed paint for color-mix values', async () => {
@@ -342,7 +377,7 @@ describe('syncComponent', () => {
     expect(layer('rest', 'Icon').visible).toBe(false)
   })
 
-  it('binds a loadable font and falls back to Inter Regular otherwise', async () => {
+  it('binds a loadable font like a text style and falls back to Inter Regular otherwise', async () => {
     const css = `.a63-Button {
       font-family: var(--a63-control-font-family);
       font-weight: var(--a63-control-font-weight);
@@ -371,6 +406,7 @@ describe('syncComponent', () => {
       fake.variableOf('--a63-control-padding-inline-md').id
     )
 
+    // A CSS stack: its first family is the literal; Figma cannot bind the whole string.
     const stack = modelOf(
       css,
       [
@@ -381,12 +417,72 @@ describe('syncComponent', () => {
     )
     const other = createFakeNodes()
     await syncModel(other.figma, stack.sync)
-    const fallback = await syncComponent(other.figma, stack.model)
-    expect(fallback.applied.fontFallbacks).toHaveLength(1)
+    const literal = await syncComponent(other.figma, stack.model)
+    expect(literal.applied.fontFallbacks).toEqual([
+      'Label: --a63-control-font-family not bound in every mode; used Geist',
+    ])
+    expect(literal.verification.unchanged).toBe(1)
+    const geist = other.findVariant('Button', neutral).children!.find(c => c.name === 'Label')!
+    expect(geist.fontName).toEqual({ family: 'Geist', style: 'Semi Bold' })
+    expect(geist.boundVariables?.fontFamily).toBeUndefined()
+    expect(geist.boundVariables?.fontWeight?.id).toBe(
+      other.variableOf('--a63-control-font-weight').id
+    )
+    // Figma refuses that binding, and so does the fake.
+    expect(() =>
+      geist.setBoundVariable('fontFamily', other.variableOf('--a63-control-font-family'))
+    ).toThrow(/unloaded font/)
+
+    // A family that loads in the first mode only stays a literal too.
+    const modes = modelOf(
+      css,
+      [{ token: '--a63-control-font-family', type: 'STRING', value: 'Geist' }, weight],
+      ['rest']
+    )
+    const base = modes.sync.collections[0]
+    const familyVariable = base.variables.find(v => v.token === '--a63-control-font-family')!
+    modes.sync.collections = [
+      { ...base, variables: base.variables.filter(v => v !== familyVariable) },
+      {
+        name: 'Fonts',
+        modes: ['brand', 'other'],
+        variables: [
+          {
+            ...familyVariable,
+            values: { brand: { value: 'Geist' }, other: { value: 'Comic Sans' } },
+          } as SyncVariable,
+        ],
+      },
+    ]
+    const mixed = createFakeNodes()
+    await syncModel(mixed.figma, modes.sync)
+    const partly = await syncComponent(mixed.figma, modes.model)
+    expect(partly.applied.fontFallbacks).toEqual([
+      'Label: --a63-control-font-family not bound in every mode; used Geist',
+    ])
+    expect(partly.verification.unchanged).toBe(1)
+    const half = mixed.findVariant('Button', neutral).children!.find(c => c.name === 'Label')!
+    expect(half.fontName).toEqual({ family: 'Geist', style: 'Semi Bold' })
+    expect(half.boundVariables?.fontFamily).toBeUndefined()
+
+    // A family that does not load at all falls back to Inter Regular, unbound.
+    const missing = modelOf(
+      css,
+      [{ token: '--a63-control-font-family', type: 'STRING', value: 'Comic Sans' }, weight],
+      ['rest']
+    )
+    const none = createFakeNodes()
+    await syncModel(none.figma, missing.sync)
+    const fallback = await syncComponent(none.figma, missing.model)
+    expect(fallback.applied.fontFallbacks).toEqual([
+      'Label: Comic Sans Semi Bold did not load; used Inter Regular',
+      'Label: --a63-control-font-family not bound; used Inter',
+    ])
     expect(fallback.verification.unchanged).toBe(1)
-    const plain = other.findVariant('Button', neutral).children!.find(c => c.name === 'Label')!
+    const plain = none.findVariant('Button', neutral).children!.find(c => c.name === 'Label')!
     expect(plain.fontName).toEqual({ family: 'Inter', style: 'Regular' })
     expect(plain.boundVariables?.fontFamily).toBeUndefined()
+    expect(plain.boundVariables?.fontWeight).toBeUndefined()
   })
 
   it('runs as a use_figma script body', async () => {
@@ -418,14 +514,21 @@ describe('the real Button model', () => {
       unchanged: 300,
     })
     expect(first.applied.created).toBe(300)
-    // The font tokens hold CSS stacks, which Figma reads as one family name.
-    expect(first.applied.fontFallbacks).not.toEqual([])
+    // The family token holds a CSS stack: Geist is the literal, the variable stays unbound.
+    expect(first.applied.fontFallbacks).toEqual([
+      'Label: --a63-control-font-family not bound in every mode; used Geist',
+    ])
     const focused = fake.findVariant('Button', 'Variant=default, Size=md, State=focusVisible')
     expect(focused.effects).toHaveLength(1)
     expect(fake.findVariant('Button', neutral).effects).toEqual([])
     const label = focused.children!.find(c => c.name === 'Label')!
     expect(label.boundVariables?.fontSize?.id).toBe(
       fake.variableOf('--a63-control-font-size-md').id
+    )
+    expect(label.fontName).toEqual({ family: 'Geist', style: 'Medium' })
+    expect(label.boundVariables?.fontFamily).toBeUndefined()
+    expect(label.boundVariables?.fontWeight?.id).toBe(
+      fake.variableOf('--a63-control-font-weight').id
     )
 
     const writes = fake.writes
