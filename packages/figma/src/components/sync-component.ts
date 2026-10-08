@@ -16,6 +16,7 @@ import {
   layerChecks,
   loads,
   tokensOf,
+  shown,
   type ValueContext,
 } from './component-values'
 import type { ComponentModel, LayerSpec, VariantSpec } from './model'
@@ -32,6 +33,15 @@ export interface ComponentPlan {
   /** Variant names whose layers or bindings differ. */
   update: string[]
   unchanged: number
+  /** The first check that differs on each differing variant, at most `DIFFERENCES`; only when any. */
+  differences?: Difference[]
+}
+/** A check that does not hold on a variant, with what the node holds and what it should. */
+export interface Difference {
+  variant: string
+  what: string
+  actual?: string
+  expected?: string
 }
 export interface ComponentResult {
   /** Derived variables created or updated before binding. */
@@ -42,6 +52,8 @@ export interface ComponentResult {
 }
 
 const GAP = 24
+/** Differences a plan reports, so a script's result stays well under use_figma's 20 KB. */
+export const DIFFERENCES = 12
 const REFERENCES = '.componentPropertyReferences'
 
 interface PropertyKeys {
@@ -118,6 +130,7 @@ function rootChecks(run: Run, root: SceneNodeLike): { before: Check[]; after: Ch
     write: () => {
       root[key] = value
     },
+    describe: () => ({ actual: root[key], expected: value }),
   })
   return {
     before: [
@@ -154,6 +167,7 @@ function overlayChecks(root: SceneNodeLike): Check[] {
       write: () => {
         layer.layoutPositioning = 'ABSOLUTE'
       },
+      describe: () => ({ actual: layer.layoutPositioning, expected: 'ABSOLUTE' }),
     },
     {
       what: `${OVERLAY}.constraints`,
@@ -162,6 +176,10 @@ function overlayChecks(root: SceneNodeLike): Check[] {
       write: () => {
         layer.constraints = { horizontal: 'CENTER', vertical: 'CENTER' }
       },
+      describe: () => ({
+        actual: layer.constraints,
+        expected: { horizontal: 'CENTER', vertical: 'CENTER' },
+      }),
     },
     {
       what: `${OVERLAY}.x`,
@@ -169,6 +187,7 @@ function overlayChecks(root: SceneNodeLike): Check[] {
       write: () => {
         layer.x = center().x
       },
+      describe: () => ({ actual: layer.x, expected: center().x }),
     },
     {
       what: `${OVERLAY}.y`,
@@ -176,6 +195,7 @@ function overlayChecks(root: SceneNodeLike): Check[] {
       write: () => {
         layer.y = center().y
       },
+      describe: () => ({ actual: layer.y, expected: center().y }),
     },
   ]
 }
@@ -195,6 +215,10 @@ function referenceChecks(run: Run, variant: SceneNodeLike): Check[] {
       write: () => {
         layer.componentPropertyReferences = { [field]: key }
       },
+      describe: () => ({
+        actual: layer.componentPropertyReferences ?? null,
+        expected: { [field]: key ?? 'no property' },
+      }),
     })
   }
   return checks
@@ -233,11 +257,37 @@ async function variantChecks(run: Run, node: SceneNodeLike, spec: VariantSpec) {
   return groups
 }
 
-async function differs(run: Run, node: SceneNodeLike, spec: VariantSpec): Promise<boolean> {
-  if (spec.layers.slice(1).some(layer => !findLayer(node, layer))) return true
-  for (const group of await variantChecks(run, node, spec))
-    if (group.checks.some(check => !check.same())) return true
-  return false
+/** A failing check as a difference, with short actual and expected values when it can say. */
+function difference(variant: string, check: Check): Difference {
+  let described: { actual: unknown; expected: unknown } | undefined
+  try {
+    described = check.describe?.()
+  } catch {
+    described = undefined
+  }
+  return described
+    ? {
+        variant,
+        what: check.what,
+        actual: shown(described.actual),
+        expected: shown(described.expected),
+      }
+    : { variant, what: check.what }
+}
+
+/** The first thing that differs on a variant, or null when it holds the model. */
+async function differs(
+  run: Run,
+  node: SceneNodeLike,
+  spec: VariantSpec
+): Promise<Difference | null> {
+  const missing = spec.layers.slice(1).find(layer => !findLayer(node, layer))
+  if (missing) return { variant: spec.name, what: `${missing.name} missing` }
+  for (const group of await variantChecks(run, node, spec)) {
+    const failing = group.checks.find(check => !check.same())
+    if (failing) return difference(spec.name, failing)
+  }
+  return null
 }
 
 async function planRun(run: Run): Promise<ComponentPlan> {
@@ -257,12 +307,17 @@ async function planRun(run: Run): Promise<ComponentPlan> {
   }
   if (!run.page) plan.create.push('page')
   if (!run.set) plan.create.push('set')
+  const differences: Difference[] = []
   for (const spec of run.variants) {
     const node = run.set && findVariant(run.set, spec.name)
+    const found = node ? await differs(run, node, spec) : null
     if (!node) plan.create.push(spec.name)
-    else if (await differs(run, node, spec)) plan.update.push(spec.name)
-    else plan.unchanged += 1
+    else if (found) {
+      plan.update.push(spec.name)
+      if (differences.length < DIFFERENCES) differences.push(found)
+    } else plan.unchanged += 1
   }
+  if (differences.length > 0) plan.differences = differences
   return plan
 }
 

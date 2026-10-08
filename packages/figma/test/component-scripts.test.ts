@@ -21,6 +21,7 @@ interface Counts {
   create: number
   update: number
   unchanged: number
+  differences?: { variant: string; what: string; actual?: string; expected?: string }[]
 }
 interface SyncPart {
   part: number
@@ -149,6 +150,36 @@ describe('component scripts for use_figma', () => {
       expect(JSON.stringify(result).length).toBeLessThan(20_000)
     }
     expect(fake.writes).toBe(writes)
+  }, 120_000)
+
+  it('names what differs, capped and under 20 KB, when every variant still differs', async () => {
+    const fake = createFakeNodes()
+    for (const script of buildScripts(realSyncModel, 'sync')) await fake.run(script)
+    // Figma drops every paint binding: nothing verifies.
+    const variables = fake.figma.variables
+    const bind = variables.setBoundVariableForPaint.bind(variables)
+    variables.setBoundVariableForPaint = (paint, field, variable) => ({
+      ...bind(paint, field, variable),
+      boundVariables: {},
+    })
+    const scripts = buildComponentScripts(realButtonModel, 'sync')
+    for (const script of scripts) {
+      const result = (await fake.run(script)) as SyncPart
+      expect(result.verification.update).toBe(result.variants)
+      expect(result.verification.differences).toHaveLength(Math.min(12, result.variants))
+      for (const entry of result.verification.differences!) {
+        expect(namesIn(script)).toContain(entry.variant)
+        expect(entry.what).toMatch(/\.(fills|strokes)$/)
+        expect(entry.actual!.length).toBeLessThanOrEqual(120)
+        expect(entry.expected!.length).toBeLessThanOrEqual(120)
+      }
+      expect(JSON.stringify(result).length).toBeLessThan(20_000)
+    }
+    for (const script of buildComponentScripts(realButtonModel, 'check')) {
+      const result = (await fake.run(script)) as CheckPart
+      expect(result.planned.differences).toHaveLength(Math.min(12, result.variants))
+      expect(JSON.stringify(result).length).toBeLessThan(20_000)
+    }
   }, 120_000)
 
   it('runs each real script on its own: it makes the derived variables it binds', async () => {

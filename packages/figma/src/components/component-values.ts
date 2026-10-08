@@ -29,6 +29,27 @@ export interface Check {
   what: string
   same(): boolean
   write(): void
+  /** What the node holds and what the check wants, for a difference report. */
+  describe?(): { actual: unknown; expected: unknown }
+}
+
+const SHOWN = 120
+
+/** A value as a short string for a difference report: numbers rounded, at most 120 characters. */
+export function shown(value: unknown): string {
+  let text: string | undefined
+  try {
+    text = JSON.stringify(value, (_key, item: unknown) => {
+      if (typeof item === 'number')
+        return Number.isFinite(item) ? Math.round(item * 1000) / 1000 : String(item)
+      if (typeof item === 'symbol') return 'mixed'
+      return item
+    })
+  } catch {
+    text = undefined
+  }
+  text ??= String(value)
+  return text.length > SHOWN ? `${text.slice(0, SHOWN - 1)}…` : text
 }
 
 type Color = { r: number; g: number; b: number; a: number }
@@ -59,6 +80,13 @@ function aliasesOf(node: SceneNodeLike, field: BindableField): readonly Variable
 }
 
 const isBound = (node: SceneNodeLike, field: BindableField) => aliasesOf(node, field).length > 0
+
+const nameOf = (context: ValueContext, id: string | undefined) =>
+  id === undefined ? undefined : (context.byId.get(id)?.name ?? id)
+
+/** The variables bound to a field, by name; one per text range. */
+const boundNames = (context: ValueContext, node: SceneNodeLike, field: BindableField) =>
+  aliasesOf(node, field).map(alias => nameOf(context, alias.id))
 
 /** Bound to `id` across the whole node: every range of a text field, or the one alias. */
 function boundTo(node: SceneNodeLike, field: BindableField, id: string): boolean {
@@ -166,6 +194,10 @@ function fieldCheck(
       what,
       same: () => !!variable && boundTo(node, field, variable.id),
       write: () => node.setBoundVariable(field, variable ?? null),
+      describe: () => ({
+        actual: { bound: boundNames(context, node, field) },
+        expected: { bound: variable?.name ?? `no variable for ${value.alias}` },
+      }),
     }
   }
   const wanted = literal(value)
@@ -177,6 +209,10 @@ function fieldCheck(
         if (isBound(node, 'visible')) node.setBoundVariable('visible', null)
         node.visible = wanted
       },
+      describe: () => ({
+        actual: { value: node.visible, bound: boundNames(context, node, 'visible') },
+        expected: { value: wanted },
+      }),
     }
   if (typeof wanted !== 'number' || field === 'visible') return null
   return {
@@ -186,6 +222,10 @@ function fieldCheck(
       if (isBound(node, field)) node.setBoundVariable(field, null)
       writeNumber(node, field, wanted)
     },
+    describe: () => ({
+      actual: { value: readNumber(node, field), bound: boundNames(context, node, field) },
+      expected: { value: wanted },
+    }),
   }
 }
 
@@ -203,6 +243,16 @@ function paintCheck(
   value: ComponentValue
 ): Check | null {
   const what = `${node.name}.${key}`
+  const paints = () =>
+    node[key].map(paint => ({
+      type: paint.type,
+      ...(paint.color ? { color: paint.color } : {}),
+      opacity: paint.opacity ?? 1,
+      ...(paint.visible === false ? { visible: false } : {}),
+      ...(paint.boundVariables?.color
+        ? { bound: nameOf(context, paint.boundVariables.color.id) }
+        : {}),
+    }))
   const single = () => {
     const paints = node[key]
     const paint = paints[0]
@@ -237,6 +287,16 @@ function paintCheck(
         if (other) bind(other)
         bind(variable)
       },
+      describe: () => {
+        const resolved = variable && resolvedColor(context, node, variable)
+        return {
+          actual: paints(),
+          expected: {
+            bound: variable?.name ?? `no variable for ${value.alias}`,
+            ...(resolved ? { color: resolved } : {}),
+          },
+        }
+      },
     }
   }
   const color = literal(value)
@@ -255,6 +315,7 @@ function paintCheck(
     write: () => {
       node[key] = [solid(color)]
     },
+    describe: () => ({ actual: paints(), expected: { color } }),
   }
 }
 
@@ -319,7 +380,7 @@ export async function fontTarget(
   return { font: wanted, family: bind, weight: weightVariable ?? null, fallbacks }
 }
 
-function fontCheck(node: SceneNodeLike, target: FontTarget): Check {
+function fontCheck(context: ValueContext, node: SceneNodeLike, target: FontTarget): Check {
   /** Bound to the variable on every range, or unbound when there is none. */
   const holds = (field: 'fontFamily' | 'fontWeight', variable: VariableLike | null) =>
     variable ? boundTo(node, field, variable.id) : !isBound(node, field)
@@ -338,6 +399,18 @@ function fontCheck(node: SceneNodeLike, target: FontTarget): Check {
       ] as const)
         if (variable || isBound(node, field)) node.setBoundVariable(field, variable)
     },
+    describe: () => ({
+      actual: {
+        font: node.fontName,
+        family: boundNames(context, node, 'fontFamily'),
+        weight: boundNames(context, node, 'fontWeight'),
+      },
+      expected: {
+        font: target.font,
+        family: target.family?.name ?? null,
+        weight: target.weight?.name ?? null,
+      },
+    }),
   }
 }
 
@@ -354,7 +427,7 @@ export function layerChecks(
   font: FontTarget | null
 ): Check[] {
   const checks: (Check | null)[] = []
-  if (font) checks.push(fontCheck(node, font))
+  if (font) checks.push(fontCheck(context, node, font))
   for (const [property, value] of Object.entries(layer.properties) as [
     FigmaProperty,
     ComponentValue,

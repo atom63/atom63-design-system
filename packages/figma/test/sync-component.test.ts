@@ -4,7 +4,7 @@ import { buttonAnatomy } from '../src/components/button-anatomy'
 import type { ComponentModel } from '../src/components/model'
 import type { SceneNodeLike } from '../src/components/nodes-api'
 import { readRecipe } from '../src/components/recipe'
-import { syncComponent } from '../src/components/sync-component'
+import { planComponent, syncComponent } from '../src/components/sync-component'
 import type { SyncModel, SyncVariable } from '../src/plan'
 import { syncModel } from '../src/runtime'
 import { createFakeNodes } from './fake-nodes'
@@ -350,6 +350,34 @@ describe('syncComponent', () => {
     expect(result.planned.update).toEqual([neutral])
     expect(result.verification.unchanged).toBe(12)
     expect(root.children!.map(c => c.name)).toEqual(['Icon', 'Label', 'Spinner', 'Focus ring'])
+  })
+
+  it('names the first differing check of each differing variant, with its values', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    await syncComponent(fake.figma, buttonModelFixture)
+    const root = fake.findVariant('Button', neutral)
+    root.layoutMode = 'VERTICAL'
+    const secondary = 'Variant=secondary, Size=md, State=rest'
+    const other = fake.findVariant('Button', secondary)
+    other.fills = [{ type: 'SOLID', color: { r: 1, g: 0, b: 0 }, opacity: 1 }]
+    const clean = await syncComponent(fake.figma, buttonModelFixture, [neutral])
+    expect(clean.planned.differences).toEqual([
+      {
+        variant: neutral,
+        what: `${neutral}.layoutMode`,
+        actual: '"VERTICAL"',
+        expected: '"HORIZONTAL"',
+      },
+    ])
+    expect(clean.verification.differences).toBeUndefined()
+
+    const plan = await planComponent(fake.figma, buttonModelFixture)
+    expect(plan.update).toEqual([secondary])
+    const [entry] = plan.differences!
+    expect(entry).toMatchObject({ variant: secondary, what: `${secondary}.fills` })
+    expect(entry.actual).toContain('"color":{"r":1,"g":0,"b":0}')
+    expect(entry.expected).toContain('"bound":')
   })
 
   it('runs only the named variants', async () => {

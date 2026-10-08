@@ -6,7 +6,12 @@
 import { applyPlan, type ApplyResult, readDocument, readSnapshot } from './apply'
 import type { NodesApi } from './components/nodes-api'
 import { type PackedComponentModel, unpackComponentModel } from './components/pack-component'
-import { type ComponentPlan, planComponent, syncComponent } from './components/sync-component'
+import {
+  type ComponentPlan,
+  type Difference,
+  planComponent,
+  syncComponent,
+} from './components/sync-component'
 import { type PackedModel, type PackedSnapshot, packSnapshot, unpackModel } from './pack'
 import { planSync, type SyncModel, type SyncPlan } from './plan'
 import {
@@ -86,6 +91,8 @@ export interface ComponentCounts {
   create: number
   update: number
   unchanged: number
+  /** The first differing check of up to 12 differing variants; only when any. */
+  differences?: Difference[]
 }
 const countsOf = (plan: ComponentPlan): ComponentCounts => ({
   missingVariables: plan.missingVariables,
@@ -93,6 +100,7 @@ const countsOf = (plan: ComponentPlan): ComponentCounts => ({
   create: plan.create.length,
   update: plan.update.length,
   unchanged: plan.unchanged,
+  ...(plan.differences ? { differences: plan.differences } : {}),
 })
 
 /** Syncs the variants a component script carries: plan, apply, plan again. */

@@ -23,6 +23,7 @@ const property = <K extends keyof SceneNodeLike>(
   write: () => {
     node[key] = value()
   },
+  describe: () => ({ actual: node[key], expected: value() }),
 })
 
 /**
@@ -80,6 +81,10 @@ export function outlineChecks(root: SceneNodeLike, node: SceneNodeLike, layer: L
       same: () =>
         near(node.width, root.width + 2 * offset) && near(node.height, root.height + 2 * offset),
       write: () => node.resize(root.width + 2 * offset, root.height + 2 * offset),
+      describe: () => ({
+        actual: [node.width, node.height],
+        expected: [root.width + 2 * offset, root.height + 2 * offset],
+      }),
     },
   ]
 }
@@ -153,5 +158,9 @@ export function legacyRingCheck(
     write: () => {
       root.effects = root.effects.filter(effect => !isLegacyRing(effect, ring()))
     },
+    describe: () => ({
+      actual: { legacyRings: root.effects.filter(effect => isLegacyRing(effect, ring())).length },
+      expected: { legacyRings: 0 },
+    }),
   }
 }
