@@ -1,6 +1,7 @@
 import { DocExample } from '@atom63/mdx/blocks'
 import { Button } from '@atom63/ui-react'
 import { ArrowRight, Trash2 } from 'lucide-react'
+import { ComponentGuidanceTable, ComponentUsage } from '../components/component-guidance'
 
 # Button
 
@@ -27,7 +28,7 @@ Button is the reference action primitive for the current system: typed variants 
 
 ## When to use
 
-Use Button for an in-place action such as submitting, saving, confirming, or changing state. Use a link when the primary outcome is navigation. Choose emphasis from the action hierarchy rather than styling every available action as primary.
+<ComponentUsage slug="button" />
 
 ## Why it exists
 
@@ -44,15 +45,15 @@ The root always renders `data-slot="button"` and carries `data-variant` and `dat
 | Local recipe vars | `--button-background`, `--button-foreground`, `--button-shadow`, `--button-radius`. |
 | System vars | `--a63-action-*`, `--a63-control-*`, `--a63-density-scale`, `--a63-focus-ring`. |
 
-## Variant decisions
+## Variants, sizes and states
 
-The emphasis ladder above is the useful part of the variant set: one primary action, quieter neutral alternatives, and danger only when the outcome is destructive. `overlay` is the forced-contrast option for media surfaces. `glass` remains a compatibility alias for that use case, but new work should choose `overlay` so the intent is explicit.
+<ComponentGuidanceTable slug="button" />
 
 ## Sizes and icons
 
 The size ramp scales height, inline padding, gap, and icon size together through `--a63-density-scale`. Icon-only buttons use the `icon-*` steps so the control stays square. Button owns the icon gap — never add `mr-`/`ml-` margins to an icon inside one.
 
-Icon-only buttons require an accessible name. Hide decorative icons from assistive technology when the visible label already names the action.
+Hide decorative icons from assistive technology when the visible label already names the action.
 
 <DocExample
   title="Size ramp and icon composition"

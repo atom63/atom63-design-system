@@ -5,6 +5,7 @@ import {
   componentDocPath,
   componentDocSlug,
   componentLabel,
+  type ComponentAxisGuidance,
   type ComponentCatalogItem,
 } from './component-catalog'
 
@@ -118,6 +119,53 @@ export function componentExportSurface(
   }
 }
 
+export type ComponentAxisGuidanceRow = {
+  axis: keyof ComponentAxisGuidance
+  label: string
+  text: string
+  value: string
+}
+
+export const componentAxisGuidanceHeading = 'Variants, sizes and states'
+
+const axisGuidanceLabels: Record<keyof ComponentAxisGuidance, string> = {
+  variant: 'Variant',
+  size: 'Size',
+  state: 'State',
+}
+
+/** The catalog's axis guidance as table rows: variants, then sizes, then states. */
+export function componentAxisGuidanceRows(slug: string): ComponentAxisGuidanceRow[] {
+  const guidance = componentCatalogItems.find(item => item.slug === slug)?.axisGuidance
+  if (!guidance) {
+    return []
+  }
+
+  return Object.entries(axisGuidanceLabels).flatMap(([axis, label]) =>
+    Object.entries(guidance[axis as keyof ComponentAxisGuidance] ?? {}).map(([value, text]) => ({
+      axis: axis as keyof ComponentAxisGuidance,
+      label,
+      text,
+      value,
+    }))
+  )
+}
+
+/** The axis guidance as a Markdown table, or an empty string when the component has none. */
+export function componentAxisGuidanceMarkdown(slug: string): string {
+  const rows = componentAxisGuidanceRows(slug)
+  if (rows.length === 0) {
+    return ''
+  }
+
+  const cell = (text: string) => text.replaceAll('|', '\\|')
+  return [
+    '| Axis | Value | Guidance |',
+    '| --- | --- | --- |',
+    ...rows.map(row => `| ${row.label} | \`${row.value}\` | ${cell(row.text)} |`),
+  ].join('\n')
+}
+
 export type ComponentDoc = {
   guidance: readonly string[]
   item: ComponentCatalogItem
@@ -194,6 +242,7 @@ export function componentDocMarkdown(slug: string, uiReactIndexSource: string): 
 
   const status = doc.item.status === 'stable' ? 'Stable' : 'Preview'
   const guidance = doc.guidance.map(item => `- ${item}`).join('\n')
+  const axisGuidance = componentAxisGuidanceMarkdown(slug)
   const reference = componentReferenceMarkdown(slug, uiReactIndexSource)
 
   return `# ${doc.label}
@@ -209,7 +258,7 @@ The live documentation page renders the \`${doc.item.storyExport}\` story mainta
 ## Guidance
 
 ${guidance}
-
+${axisGuidance ? `\n## ${componentAxisGuidanceHeading}\n\n${axisGuidance}\n` : ''}
 ${reference}
 `
 }

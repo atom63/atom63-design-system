@@ -14,8 +14,13 @@ import {
   componentLabel,
   type ComponentCatalogItem,
 } from '../lib/component-catalog'
-import { getComponentDoc } from '../lib/component-docs'
+import {
+  componentAxisGuidanceHeading,
+  componentAxisGuidanceRows,
+  getComponentDoc,
+} from '../lib/component-docs'
 import { ComponentContractSection } from './component-contract-section'
+import { ComponentGuidanceTable } from './component-guidance'
 import { ComponentReferenceUtilities } from './component-reference-utilities'
 
 type StoryArgs = Record<string, unknown>
@@ -299,6 +304,13 @@ export function ComponentReferencePage({ componentSlug }: { componentSlug: strin
           <Li key={item}>{item}</Li>
         ))}
       </Ul>
+
+      {componentAxisGuidanceRows(componentSlug).length > 0 ? (
+        <>
+          <H2 id="variants-sizes-and-states">{componentAxisGuidanceHeading}</H2>
+          <ComponentGuidanceTable slug={componentSlug} />
+        </>
+      ) : null}
 
       <ComponentContractSection componentSlug={componentSlug} />
 

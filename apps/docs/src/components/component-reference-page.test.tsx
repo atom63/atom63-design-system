@@ -1,7 +1,8 @@
-import { act } from 'react'
+import { act, type ReactNode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { describe, expect, it } from 'vitest'
 import { componentCatalogItems } from '../lib/component-catalog'
+import { ComponentGuidanceTable, ComponentUsage } from './component-guidance'
 import { ComponentPreview } from './component-reference-page'
 
 Object.assign(globalThis, { IS_REACT_ACT_ENVIRONMENT: true })
@@ -86,4 +87,58 @@ describe('generated component references', () => {
       container.remove()
     }
   }, 120_000)
+})
+
+describe('component guidance from the catalog', () => {
+  async function render(node: ReactNode) {
+    const container = document.createElement('div')
+    document.body.append(container)
+    const root = createRoot(container)
+    await act(async () => {
+      root.render(node)
+    })
+    return {
+      container,
+      async cleanup() {
+        await act(async () => {
+          root.unmount()
+        })
+        container.remove()
+      },
+    }
+  }
+
+  it('renders one row per variant, size and state', async () => {
+    const button = componentCatalogItems.find(item => item.slug === 'button')
+    const guidance = button?.axisGuidance
+    const { container, cleanup } = await render(<ComponentGuidanceTable slug="button" />)
+
+    const rows = [...container.querySelectorAll('tbody tr')].map(row =>
+      [...row.querySelectorAll('td')].map(cell => cell.textContent)
+    )
+    const expected = (['variant', 'size', 'state'] as const).flatMap(axis =>
+      Object.entries(guidance?.[axis] ?? {}).map(([value, text]) => [
+        `${axis[0]?.toUpperCase()}${axis.slice(1)}`,
+        value,
+        text,
+      ])
+    )
+    expect(expected.length).toBeGreaterThan(0)
+    expect(rows).toEqual(expected)
+    expect(rows[0]).toEqual(['Variant', 'primary', 'The one primary action per view.'])
+    await cleanup()
+  })
+
+  it('renders nothing for a component without axis guidance', async () => {
+    const { container, cleanup } = await render(<ComponentGuidanceTable slug="kbd" />)
+    expect(container.innerHTML).toBe('')
+    await cleanup()
+  })
+
+  it('renders the catalog usage line', async () => {
+    const button = componentCatalogItems.find(item => item.slug === 'button')
+    const { container, cleanup } = await render(<ComponentUsage slug="button" />)
+    expect(container.textContent).toBe(button?.usage)
+    await cleanup()
+  })
 })

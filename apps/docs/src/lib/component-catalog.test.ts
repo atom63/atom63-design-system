@@ -144,6 +144,18 @@ describe('component catalog inventory', () => {
     expect(keys(button?.axisGuidance?.state)).toEqual([...buttonStates].sort())
   })
 
+  it('carries axis guidance into the component Markdown only when present', () => {
+    const buttonMarkdown = componentDocMarkdown('button', uiReactIndexSource)
+    expect(buttonMarkdown).toContain('## Variants, sizes and states')
+    expect(buttonMarkdown).toContain('| Size | `md` | Default. |')
+    expect(buttonMarkdown.indexOf('## Variants, sizes and states')).toBeLessThan(
+      buttonMarkdown.indexOf('## Usage')
+    )
+    expect(componentDocMarkdown('kbd', uiReactIndexSource)).not.toContain(
+      '## Variants, sizes and states'
+    )
+  })
+
   it('only resolves canonical component document slugs', () => {
     expect(componentSlugFromDocSlug('component-sidebar')).toBe('sidebar')
     expect(componentSlugFromDocSlug('component-not-real')).toBeNull()
