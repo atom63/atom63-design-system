@@ -4,7 +4,7 @@ Status: agreed on 2026-09-28; plans 1 to 3 are implemented (the `@atom63/figma` 
 text and effect styles, and the plugin's Create and Import). It replaces the plugin
 direction in [figma-plugin-update-plan.md](./figma-plugin-update-plan.md): the v14 plugin on
 `main` is not published, and the plugin is rebuilt from the needs below.
-[figma-components-plan-1](./figma-components-plan-1.md) (Button) is implemented on this branch.
+[figma-components-plan-1](./figma-components-plan-1.md) adds the Button component set.
 
 ## Goal
 

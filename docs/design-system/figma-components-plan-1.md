@@ -4,7 +4,7 @@
 > (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use
 > checkbox (`- [ ]`) syntax for tracking.
 
-Status: draft, not agreed. The decisions below need sign-off before Task 1 starts.
+Status: agreed on 2026-10-08; implemented.
 
 **Goal:** An agent runs one command and the Figma file gets a `Button` component set whose
 variants match the code's contract and whose fills, strokes, radii, padding, gap, height and type

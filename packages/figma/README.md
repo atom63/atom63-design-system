@@ -53,18 +53,28 @@ variables only.
 The Button component set is drawn from code (the contract and the recipe CSS) and bound to the
 variables the token sync writes, so sync the tokens first.
 
+The component model lives in this repository, not in the published package, so this runs from
+the monorepo.
+
 1. Run the token sync above, and confirm its `verification`.
-2. Write the component scripts:
+2. Build the package and write the component scripts, from the repository root:
 
    ```bash
-   pnpm atom63-figma components --model generated/atom63.figma-components.json --out .figma-sync
+   pnpm --filter @atom63/figma build
+   pnpm --filter @atom63/figma exec node dist/cli.js components \
+     --model generated/atom63.figma-components.json --out .figma-sync
    ```
+
+   `exec` runs in `packages/figma`, so both paths are relative to it and the scripts land in
+   `packages/figma/.figma-sync`.
 
 3. Run each `.figma-sync/components-N.js` in order with `use_figma` on the same file. The first
    makes the `Components` page and the `Button` set; later ones add their variants to it. Each
    returns `verification`, which must plan no `create` or `update`. A non-empty
    `missingVariables` means the file lacks variables the variants bind, and nothing was written:
-   sync the tokens again, then rerun the script.
+   sync the tokens again, then rerun the script. A script that stops partway leaves its new
+   variants on the `Components` page; rerunning it takes them into the set instead of drawing
+   them again.
 
 Run the `components-check-N.js` scripts at any time; they only read, and `planned.unchanged`
 equals the script's `variants` when the file matches the code. Variants and layers are found by
