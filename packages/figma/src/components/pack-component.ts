@@ -10,7 +10,11 @@ import { DERIVED_COLLECTION, DERIVED_MODE, derivedToken, parseDerived } from '..
 import type { SyncVariable } from '../plan'
 import type { ComponentModel, ComponentValue, FigmaProperty, LayerSpec, VariantSpec } from './model'
 
-export type PackedLayer = [name: string, kind: 'f' | 't', properties: (FigmaProperty | number)[]]
+export type PackedLayer = [
+  name: string,
+  kind: 'f' | 't' | 'o',
+  properties: (FigmaProperty | number)[],
+]
 export type PackedVariant =
   | [variant: number, size: number, state: number, layers: number[]]
   | [variant: number, size: number, state: number, layers: number[], name: string]
@@ -72,7 +76,7 @@ export function packComponentModel(model: ComponentModel): PackedComponentModel 
   const packLayer = (layer: LayerSpec) =>
     layers.indexOf([
       layer.name,
-      layer.kind === 'text' ? 't' : 'f',
+      layer.kind === 'text' ? 't' : layer.kind === 'outline' ? 'o' : 'f',
       Object.entries(layer.properties).flatMap(([property, value]) => [
         property as FigmaProperty,
         values.indexOf(value),
@@ -123,7 +127,7 @@ export function unpackComponentModel(packed: PackedComponentModel): ComponentMod
     const properties: LayerSpec['properties'] = {}
     for (let index = 0; index < flat.length; index += 2)
       properties[flat[index] as FigmaProperty] = packed.v[flat[index + 1] as number]
-    return { name, kind: kind === 't' ? 'text' : 'frame', properties }
+    return { name, kind: kind === 't' ? 'text' : kind === 'o' ? 'outline' : 'frame', properties }
   })
   const variants = packed.n.map(([v, s, t, layerIndexes, name]): VariantSpec => ({
     name: name ?? nameOf(axes, v, s, t),

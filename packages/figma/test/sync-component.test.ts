@@ -101,6 +101,74 @@ describe('the Figma node fake', () => {
     expect(frame.fills[0].boundVariables?.color?.id).toBe(color.id)
     expect(fake.writes).toBe(before + 2)
   })
+
+  it('renders a spread shadow only from visible content, as Figma does', () => {
+    const fake = createFakeNodes()
+    const root = fake.figma.createComponent()
+    const ring = {
+      type: 'DROP_SHADOW' as const,
+      color: { r: 0, g: 0, b: 1, a: 1 },
+      offset: { x: 0, y: 0 },
+      radius: 0,
+      spread: 3,
+      visible: true,
+      blendMode: 'NORMAL' as const,
+    }
+    // Figma accepts a spread only with clipping on and a visible fill.
+    expect(() => (root.effects = [ring])).toThrow(/clipsContent/)
+    root.clipsContent = true
+    root.effects = [ring]
+    expect(fake.visibleFocusRing(root)).toBe(true)
+    // A fully transparent fill is "visible" to the API but casts nothing.
+    root.fills = [{ type: 'SOLID', color: { r: 0, g: 0, b: 0 }, opacity: 0 }]
+    expect(fake.visibleFocusRing(root)).toBe(false)
+  })
+
+  it('draws a ring layer only outside an unclipped root, and stretches it with the root', () => {
+    const fake = createFakeNodes()
+    const collection = fake.api.createVariableCollection('Base')
+    const blue = fake.api.createVariable('blue', collection, 'COLOR')
+    blue.setValueForMode(collection.modes[0].modeId, { r: 0, g: 0, b: 1, a: 1 })
+    const root = fake.figma.createComponent()
+    root.layoutMode = 'HORIZONTAL'
+    root.fills = []
+    const ring = fake.figma.createFrame()
+    ring.name = 'Focus ring'
+    root.appendChild(ring)
+    ring.fills = []
+    ring.strokes = [
+      fake.figma.variables.setBoundVariableForPaint(
+        { type: 'SOLID', color: { r: 0, g: 0, b: 0 } },
+        'color',
+        blue
+      ),
+    ]
+    ring.strokeWeight = 3
+    expect(() => {
+      ;(ring as { strokeAlign: string }).strokeAlign = 'OUTER'
+    }).toThrow(/strokeAlign/)
+    expect(() => {
+      ring.constraints = { horizontal: 'FILL', vertical: 'MIN' } as never
+    }).toThrow(/constraints/)
+    // An inside stroke on a frame the root's size draws inside the button.
+    expect(fake.visibleFocusRing(root)).toBe(false)
+    ring.strokeAlign = 'OUTSIDE'
+    // In the auto-layout flow until it is absolute.
+    expect(fake.visibleFocusRing(root)).toBe(false)
+    ring.layoutPositioning = 'ABSOLUTE'
+    expect(fake.visibleFocusRing(root)).toBe(true)
+    root.clipsContent = true
+    expect(fake.visibleFocusRing(root)).toBe(false)
+    root.clipsContent = false
+    // MIN constraints leave it behind as the root grows; STRETCH tracks it.
+    root.resize(140, 100)
+    expect(fake.visibleFocusRing(root)).toBe(false)
+    ring.resize(140, 100)
+    ring.constraints = { horizontal: 'STRETCH', vertical: 'STRETCH' }
+    root.resize(160, 40)
+    expect([ring.width, ring.height]).toEqual([160, 40])
+    expect(fake.visibleFocusRing(root)).toBe(true)
+  })
 })
 
 const neutral = 'Variant=default, Size=md, State=rest'
@@ -110,7 +178,8 @@ const alias = (id: string) => ({ type: 'VARIABLE_ALIAS', id })
 function modelOf(
   css: string,
   tokens: { token: string; type: 'COLOR' | 'FLOAT' | 'STRING'; value: unknown }[],
-  states = ['rest', 'focusVisible']
+  states = ['rest', 'focusVisible'],
+  variants = ['default']
 ) {
   const sync: SyncModel = {
     ...syncFixture,
@@ -135,7 +204,7 @@ function modelOf(
     anatomy: buttonAnatomy,
     sizes: ['md'],
     contract: {
-      variants: ['default'],
+      variants,
       sizes: ['md'],
       states,
       defaultVariant: 'default',
@@ -180,7 +249,7 @@ describe('syncComponent', () => {
       fake.variableOf('--a63-control-padding-inline-md').id
     )
     expect(root.boundVariables?.paddingRight?.id).toBe(root.boundVariables?.paddingLeft?.id)
-    expect(root.children!.map(c => c.name)).toEqual(['Icon', 'Label', 'Spinner'])
+    expect(root.children!.map(c => c.name)).toEqual(['Icon', 'Label', 'Spinner', 'Focus ring'])
     expect(root).toMatchObject({
       layoutMode: 'HORIZONTAL',
       primaryAxisAlignItems: 'CENTER',
@@ -280,7 +349,7 @@ describe('syncComponent', () => {
     expect(result.planned.create).toEqual(['Variant=secondary, Size=md, State=hover'])
     expect(result.planned.update).toEqual([neutral])
     expect(result.verification.unchanged).toBe(12)
-    expect(root.children!.map(c => c.name)).toEqual(['Icon', 'Label', 'Spinner'])
+    expect(root.children!.map(c => c.name)).toEqual(['Icon', 'Label', 'Spinner', 'Focus ring'])
   })
 
   it('runs only the named variants', async () => {
@@ -298,93 +367,6 @@ describe('syncComponent', () => {
     const rest = await syncComponent(fake.figma, buttonModelFixture)
     expect(rest.planned.create).toHaveLength(10)
     expect(rest.verification.unchanged).toBe(12)
-  })
-
-  it('draws the focus ring as a bound drop shadow only on focusVisible', async () => {
-    const { sync, model } = modelOf(
-      `.a63-Button {
-        --button-focus-ring: var(--a63-control-focus-ring-color);
-        background-color: var(--a63-action-neutral);
-      }`,
-      [
-        {
-          token: '--a63-control-focus-ring-color',
-          type: 'COLOR',
-          value: { r: 0, g: 0, b: 1, a: 1 },
-        },
-        { token: '--a63-control-focus-ring-width', type: 'FLOAT', value: 3 },
-      ]
-    )
-    const fake = createFakeNodes()
-    await syncModel(fake.figma, sync)
-    const result = await syncComponent(fake.figma, model)
-    expect(result.verification.unchanged).toBe(2)
-
-    expect(fake.findVariant('Button', neutral).effects).toEqual([])
-    const focused = fake.findVariant('Button', 'Variant=default, Size=md, State=focusVisible')
-    expect(focused.effects).toHaveLength(1)
-    expect(focused.effects[0]).toMatchObject({
-      type: 'DROP_SHADOW',
-      offset: { x: 0, y: 0 },
-      radius: 0,
-      visible: true,
-      boundVariables: {
-        color: { type: 'VARIABLE_ALIAS', id: fake.variableOf('--a63-control-focus-ring-color').id },
-        spread: {
-          type: 'VARIABLE_ALIAS',
-          id: fake.variableOf('--a63-control-focus-ring-width').id,
-        },
-      },
-    })
-
-    // A ring a designer removed comes back; a second run is idle.
-    focused.effects = []
-    const repaired = await syncComponent(fake.figma, model)
-    expect(repaired.planned.update).toEqual(['Variant=default, Size=md, State=focusVisible'])
-    expect(focused.effects).toHaveLength(1)
-    const writes = fake.writes
-    await syncComponent(fake.figma, model)
-    expect(fake.writes).toBe(writes)
-
-    // A skipped ring leaves a designer's effect alone, on every state.
-    const skipped = structuredClone(model)
-    for (const variant of skipped.variants)
-      variant.layers[0].properties.focusRing = { skipped: 'unresolved' }
-    const shadow = { ...focused.effects[0], spread: 8 }
-    focused.effects = [shadow]
-    const rest = fake.findVariant('Button', neutral)
-    rest.effects = [shadow]
-    const kept = await syncComponent(fake.figma, skipped)
-    expect(kept.planned.update).toEqual([])
-    expect(focused.effects).toEqual([shadow])
-    expect(rest.effects).toEqual([shadow])
-  })
-
-  it('binds a color-mix focus ring to its derived variable', async () => {
-    const { sync, model } = modelOf(
-      `.a63-Button {
-        --button-focus-ring: color-mix(in oklch, var(--a63-control-focus-ring-color) 50%, transparent);
-        background-color: var(--a63-action-neutral);
-      }`,
-      [
-        {
-          token: '--a63-control-focus-ring-color',
-          type: 'COLOR',
-          value: { r: 0, g: 0, b: 1, a: 1 },
-        },
-        { token: '--a63-control-focus-ring-width', type: 'FLOAT', value: 3 },
-      ]
-    )
-    const fake = createFakeNodes()
-    await syncModel(fake.figma, sync)
-    const result = await syncComponent(fake.figma, model)
-    expect(result.verification.update).toEqual([])
-    const mix = 'color-mix(in oklch, var(--a63-control-focus-ring-color) 50%, transparent)'
-    const derived = [...fake.variables.values()].find(item => item.codeSyntax?.WEB === mix)!
-    expect(derived.scopes).toEqual(['EFFECT_COLOR'])
-    const focused = fake.findVariant('Button', 'Variant=default, Size=md, State=focusVisible')
-    expect(focused.effects[0].boundVariables?.color?.id).toBe(derived.id)
-    expect(focused.effects[0].color).toEqual({ r: 0, g: 0, b: 1, a: 0.5 })
   })
 
   it('keeps a designer effect on a component with no focus ring', async () => {
@@ -640,46 +622,6 @@ describe('syncComponent', () => {
     expect(fake.writes).toBe(writes)
   })
 
-  it('turns clipping on so Figma accepts the focus ring spread', async () => {
-    const fake = createFakeNodes()
-    const component = fake.figma.createComponent()
-    const ring = {
-      type: 'DROP_SHADOW' as const,
-      color: { r: 0, g: 0, b: 1, a: 1 },
-      offset: { x: 0, y: 0 },
-      radius: 0,
-      spread: 3,
-      visible: true,
-      blendMode: 'NORMAL' as const,
-    }
-    expect(() => (component.effects = [ring])).toThrow(/clipsContent/)
-    component.clipsContent = true
-    component.fills = []
-    expect(() => (component.effects = [ring])).toThrow(/visible fill/)
-
-    const { sync, model } = modelOf(
-      `.a63-Button {
-        --button-focus-ring: var(--a63-control-focus-ring-color);
-        background-color: var(--a63-action-neutral);
-      }`,
-      [
-        {
-          token: '--a63-control-focus-ring-color',
-          type: 'COLOR',
-          value: { r: 0, g: 0, b: 1, a: 1 },
-        },
-        { token: '--a63-control-focus-ring-width', type: 'FLOAT', value: 3 },
-      ]
-    )
-    await syncModel(fake.figma, sync)
-    const result = await syncComponent(fake.figma, model)
-    expect(result.verification.unchanged).toBe(2)
-    const focused = fake.findVariant('Button', 'Variant=default, Size=md, State=focusVisible')
-    expect(focused.clipsContent).toBe(true)
-    expect(focused.effects).toHaveLength(1)
-    expect(fake.findVariant('Button', neutral).clipsContent).toBe(true)
-  })
-
   it('places the spinner over the row, out of the flow and centered', async () => {
     const fake = createFakeNodes()
     await syncModel(fake.figma, syncFixture)
@@ -744,6 +686,227 @@ describe('syncComponent', () => {
   })
 })
 
+/** The recipe's ring, as button.css draws it: an outline only on :focus-visible. */
+const ringCss = (focus = '') => `
+.a63-Button {
+  --button-focus-ring: var(--a63-control-focus-ring-color);
+  --button-radius: var(--a63-control-radius);
+  background-color: var(--a63-action-neutral);
+  outline: none;
+}
+.a63-Button[data-variant='ghost'] {
+  background-color: transparent;
+  border-color: transparent;
+}
+.a63-Button:focus-visible {
+  outline: var(--a63-control-focus-ring-width) solid var(--button-focus-ring);
+  ${focus}
+}`
+const ringTokens = [
+  {
+    token: '--a63-control-focus-ring-color',
+    type: 'COLOR' as const,
+    value: { r: 0, g: 0, b: 1, a: 1 },
+  },
+  { token: '--a63-control-focus-ring-width', type: 'FLOAT' as const, value: 3 },
+  { token: '--a63-control-radius', type: 'FLOAT' as const, value: 6 },
+]
+const ringModel = (focus = '') =>
+  modelOf(ringCss(focus), ringTokens, ['rest', 'hover', 'focusVisible'], ['default', 'ghost'])
+const ghostFocused = 'Variant=ghost, Size=md, State=focusVisible'
+const defaultFocused = 'Variant=default, Size=md, State=focusVisible'
+const ringOf = (variant: SceneNodeLike) =>
+  variant.children!.find(c => c.name === 'Focus ring' && c.type === 'FRAME')!
+
+describe('the focus ring', () => {
+  it('shows a ring on every focusVisible variant, a transparent ghost included, and only there', async () => {
+    const { sync, model } = ringModel()
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, sync)
+    const result = await syncComponent(fake.figma, model)
+    expect(result.verification).toMatchObject({ create: [], update: [], unchanged: 6 })
+    for (const variant of model.variants) {
+      const node = fake.findVariant('Button', variant.name)
+      const focused = variant.coord.state === 'focusVisible'
+      expect([variant.name, fake.visibleFocusRing(node)]).toEqual([variant.name, focused])
+      // The same layer in every variant, shown only on focus, so a swap keeps overrides.
+      expect(ringOf(node).visible).toBe(focused)
+      expect(node.effects).toEqual([])
+    }
+    const ghost = fake.findVariant('Button', ghostFocused)
+    const ring = ringOf(ghost)
+    expect(ghost.fills[0].opacity).toBe(0)
+    expect(ghost.clipsContent).toBe(false)
+    expect(ring).toMatchObject({
+      layoutPositioning: 'ABSOLUTE',
+      constraints: { horizontal: 'STRETCH', vertical: 'STRETCH' },
+      strokeAlign: 'OUTSIDE',
+      fills: [],
+      x: 0,
+      y: 0,
+      width: ghost.width,
+      height: ghost.height,
+    })
+    expect(ring.strokes).toHaveLength(1)
+    expect(ring.strokes[0].boundVariables?.color).toEqual(
+      alias(fake.variableOf('--a63-control-focus-ring-color').id)
+    )
+    expect(ring.boundVariables?.strokeWeight).toEqual(
+      alias(fake.variableOf('--a63-control-focus-ring-width').id)
+    )
+    for (const corner of ['topLeftRadius', 'bottomRightRadius'] as const)
+      expect(ring.boundVariables?.[corner]).toEqual(
+        alias(fake.variableOf('--a63-control-radius').id)
+      )
+
+    // The ring tracks the root as it resizes: its constraints stretch it.
+    ghost.resize(180, 44)
+    expect([ring.x, ring.y, ring.width, ring.height]).toEqual([0, 0, 180, 44])
+    expect(fake.visibleFocusRing(ghost)).toBe(true)
+    await syncComponent(fake.figma, model)
+    const writes = fake.writes
+    const idle = await syncComponent(fake.figma, model)
+    expect(idle.planned.update).toEqual([])
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('brings back a ring a designer hid, deleted or clipped', async () => {
+    const { sync, model } = ringModel()
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, sync)
+    await syncComponent(fake.figma, model)
+    const ghost = fake.findVariant('Button', ghostFocused)
+    const solid = fake.findVariant('Button', defaultFocused)
+    ringOf(ghost).visible = false
+    ringOf(solid).remove()
+    const rest = fake.findVariant('Button', 'Variant=ghost, Size=md, State=rest')
+    rest.clipsContent = true
+    ringOf(rest).strokeAlign = 'INSIDE'
+    const repaired = await syncComponent(fake.figma, model)
+    expect(repaired.planned.update.sort()).toEqual(
+      [defaultFocused, 'Variant=ghost, Size=md, State=rest', ghostFocused].sort()
+    )
+    expect(fake.visibleFocusRing(ghost)).toBe(true)
+    expect(fake.visibleFocusRing(solid)).toBe(true)
+    expect(rest.clipsContent).toBe(false)
+    expect(ringOf(rest).strokeAlign).toBe('OUTSIDE')
+    const writes = fake.writes
+    await syncComponent(fake.figma, model)
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('outsets the ring by outline-offset, with the radius grown to match', async () => {
+    const { sync, model } = ringModel('outline-offset: 2px;')
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, sync)
+    const result = await syncComponent(fake.figma, model)
+    expect(result.verification.update).toEqual([])
+    const ghost = fake.findVariant('Button', ghostFocused)
+    const ring = ringOf(ghost)
+    expect([ring.x, ring.y, ring.width, ring.height]).toEqual([
+      -2,
+      -2,
+      ghost.width + 4,
+      ghost.height + 4,
+    ])
+    // A radius plus an offset has no variable: the first-mode sum, reported as a literal.
+    expect(ring.topLeftRadius).toBe(8)
+    expect(ring.boundVariables?.topLeftRadius).toBeUndefined()
+    expect(model.literals).toContainEqual({
+      variant: ghostFocused,
+      layer: 'Focus ring',
+      property: 'cornerRadius',
+      expression: 'var(--button-radius) + outline-offset 2',
+    })
+    expect(fake.visibleFocusRing(ghost)).toBe(true)
+    const writes = fake.writes
+    await syncComponent(fake.figma, model)
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('binds a color-mix ring to its derived variable, scoped to strokes', async () => {
+    const { sync, model } = modelOf(
+      `.a63-Button {
+        --button-focus-ring: color-mix(in oklch, var(--a63-control-focus-ring-color) 50%, transparent);
+        background-color: var(--a63-action-neutral);
+      }
+      .a63-Button:focus-visible {
+        outline: var(--a63-control-focus-ring-width) solid var(--button-focus-ring);
+      }`,
+      ringTokens
+    )
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, sync)
+    const result = await syncComponent(fake.figma, model)
+    expect(result.verification.update).toEqual([])
+    const mix = 'color-mix(in oklch, var(--a63-control-focus-ring-color) 50%, transparent)'
+    const derived = [...fake.variables.values()].find(item => item.codeSyntax?.WEB === mix)!
+    expect(derived.scopes).toEqual(['STROKE_COLOR'])
+    const ring = ringOf(fake.findVariant('Button', defaultFocused))
+    expect(ring.strokes[0].boundVariables?.color?.id).toBe(derived.id)
+    expect(ring.strokes[0]).toMatchObject({ color: { r: 0, g: 0, b: 1 }, opacity: 0.5 })
+  })
+
+  it('migrates a file the drop-shadow version wrote, keeping a designer’s effects', async () => {
+    const { sync, model } = ringModel()
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, sync)
+    await syncComponent(fake.figma, model)
+    const color = fake.variableOf('--a63-control-focus-ring-color')
+    const width = fake.variableOf('--a63-control-focus-ring-width')
+    const effects = fake.figma.variables
+    const shadow = (spread: number) => ({
+      type: 'DROP_SHADOW' as const,
+      color: { r: 0, g: 0, b: 1, a: 1 },
+      offset: { x: 0, y: 0 },
+      radius: 0,
+      spread,
+      visible: true,
+      blendMode: 'NORMAL' as const,
+      showShadowBehindNode: false,
+    })
+    // What the previous version wrote on a focusVisible root (C6 before 2026-10-08).
+    const oldRing = effects.setBoundVariableForEffect(
+      effects.setBoundVariableForEffect(shadow(3), 'color', color),
+      'spread',
+      width
+    )
+    const literalSpread = effects.setBoundVariableForEffect(shadow(3), 'color', color)
+    const designer = { ...shadow(0), offset: { x: 0, y: 2 }, radius: 4 }
+    // Same shape, another color variable: a designer's, not Bridge's.
+    const lookalike = effects.setBoundVariableForEffect(
+      shadow(3),
+      'color',
+      fake.variableOf('--a63-action-neutral')
+    )
+    const old = [ghostFocused, defaultFocused].map(name => fake.findVariant('Button', name))
+    for (const [index, root] of old.entries()) {
+      ringOf(root).remove()
+      root.clipsContent = true
+      root.effects = [index === 0 ? oldRing : literalSpread, designer, lookalike]
+    }
+    const rest = fake.findVariant('Button', 'Variant=ghost, Size=md, State=rest')
+    rest.clipsContent = true
+    expect(old.map(root => fake.visibleFocusRing(root))).toEqual([false, true])
+
+    const migrated = await syncComponent(fake.figma, model)
+    expect(migrated.planned.update.sort()).toEqual(
+      [defaultFocused, 'Variant=ghost, Size=md, State=rest', ghostFocused].sort()
+    )
+    expect(migrated.verification).toMatchObject({ update: [], unchanged: 6 })
+    for (const root of old) {
+      expect(root.effects).toEqual([designer, lookalike])
+      expect(root.clipsContent).toBe(false)
+      expect(fake.visibleFocusRing(root)).toBe(true)
+    }
+    expect(rest.clipsContent).toBe(false)
+    const writes = fake.writes
+    const second = await syncComponent(fake.figma, model)
+    expect(second.planned.update).toEqual([])
+    expect(fake.writes).toBe(writes)
+  })
+})
+
 describe('the real Button model', () => {
   it('syncs the real token set and component model cleanly, and a second run writes nothing', async () => {
     const read = (path: string) =>
@@ -768,9 +931,28 @@ describe('the real Button model', () => {
     expect(first.applied.fontFallbacks).toEqual([
       'Label: --a63-control-font-family not bound in every mode; used Geist',
     ])
+    // Every focusVisible variant shows its ring, transparent ghost and link included.
+    const wrongRing = model.variants
+      .filter(variant => {
+        const node = fake.findVariant('Button', variant.name)
+        return fake.visibleFocusRing(node) !== (variant.coord.state === 'focusVisible')
+      })
+      .map(variant => variant.name)
+    expect(wrongRing).toEqual([])
+    for (const variant of model.variants) {
+      const node = fake.findVariant('Button', variant.name)
+      expect(node.effects).toEqual([])
+      expect(node.clipsContent).toBe(false)
+    }
     const focused = fake.findVariant('Button', 'Variant=default, Size=md, State=focusVisible')
-    expect(focused.effects).toHaveLength(1)
-    expect(fake.findVariant('Button', neutral).effects).toEqual([])
+    const ring = focused.children!.find(c => c.name === 'Focus ring')!
+    expect(ring.boundVariables?.strokeWeight).toEqual(
+      alias(fake.variableOf('--a63-control-focus-ring-width').id)
+    )
+    expect(ring.strokes[0].boundVariables?.color).toEqual(
+      alias(fake.variableOf('--a63-control-focus-ring-color').id)
+    )
+    expect(ring.boundVariables?.topLeftRadius).toEqual(focused.boundVariables?.topLeftRadius)
     const label = focused.children!.find(c => c.name === 'Label')!
     expect(label.boundVariables?.fontSize).toEqual([
       alias(fake.variableOf('--a63-control-font-size-md').id),

@@ -42,6 +42,7 @@ const common = [
   'componentPropertyReferences',
   'layoutPositioning',
   'constraints',
+  'strokeAlign',
 ]
 const frameKeys = [
   'layoutMode',
@@ -109,6 +110,8 @@ const textRangeFields = new Set([
   'paragraphSpacing',
   'paragraphIndent',
 ])
+const strokeAligns = new Set(['CENTER', 'INSIDE', 'OUTSIDE'])
+const constraintTypes = new Set(['MIN', 'CENTER', 'MAX', 'STRETCH', 'SCALE'])
 const fieldType = (field: string) =>
   field === 'fontFamily' ? 'STRING' : field === 'visible' ? 'BOOLEAN' : 'FLOAT'
 const fontStyle = (weight: number) =>
@@ -205,6 +208,33 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       )
   }
 
+  /**
+   * Like Figma's `resize`: a child the parent does not lay out (any child of a
+   * frame without auto layout, an `ABSOLUTE` child of one with it) follows its
+   * constraints. `resizeWithoutConstraints` is not modeled.
+   */
+  const applyConstraints = (parent: State, dw: number, dh: number) => {
+    const free = !parent.layoutMode || parent.layoutMode === 'NONE'
+    for (const child of parent.children) {
+      const state = stateOf.get(child)!
+      if (!free && state.layoutPositioning !== 'ABSOLUTE') continue
+      const { horizontal, vertical } = state.constraints as { horizontal: string; vertical: string }
+      const axis = (rule: string, at: 'x' | 'y', size: 'width' | 'height', delta: number) => {
+        const extent = parent[size] as number
+        if (rule === 'MAX') state[at] = (state[at] as number) + delta
+        else if (rule === 'CENTER') state[at] = (state[at] as number) + delta / 2
+        else if (rule === 'STRETCH') state[size] = (state[size] as number) + delta
+        else if (rule === 'SCALE' && extent > 0) {
+          const scale = (extent + delta) / extent
+          state[at] = (state[at] as number) * scale
+          state[size] = (state[size] as number) * scale
+        }
+      }
+      axis(horizontal, 'x', 'width', dw)
+      axis(vertical, 'y', 'height', dh)
+    }
+  }
+
   const detach = (child: SceneNodeLike) => {
     const state = stateOf.get(child)!
     if (!state.parent) return
@@ -279,6 +309,8 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       componentPropertyReferences: null,
       layoutPositioning: 'AUTO',
       constraints: frozenCopy({ horizontal: 'MIN', vertical: 'MIN' }),
+      // Figma's defaults: a frame's stroke sits inside it, a text node's outside.
+      strokeAlign: type === 'TEXT' ? 'OUTSIDE' : 'INSIDE',
       ...(type === 'TEXT'
         ? {
             characters: '',
@@ -340,6 +372,7 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       resize(width: number, height: number) {
         if (!(width >= 0.01 && height >= 0.01)) throw new Error('Size must be at least 0.01')
         writes += 1
+        applyConstraints(state, width - (state.width as number), height - (state.height as number))
         state.width = width
         state.height = height
         // Like Figma: resizing an auto-layout frame fixes both axes.
@@ -417,6 +450,13 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
             )
           }
           value = frozenCopy(value)
+        } else if (key === 'strokeAlign' && !strokeAligns.has(value as string)) {
+          throw new Error(`Invalid strokeAlign "${String(value)}"`)
+        } else if (key === 'constraints') {
+          const { horizontal, vertical } = (value ?? {}) as Record<string, string>
+          if (!constraintTypes.has(horizontal) || !constraintTypes.has(vertical))
+            throw new Error('constraints needs a horizontal and a vertical ConstraintType')
+          value = frozenCopy({ horizontal, vertical })
         } else if (key === 'layoutPositioning' && value === 'ABSOLUTE') {
           const parent = state.parent && stateOf.get(state.parent.node)
           if (!parent || !parent.layoutMode || parent.layoutMode === 'NONE')
@@ -516,7 +556,8 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
     },
   }
 
-  const figma: NodesApi & { readonly currentPage: PageLike } = {
+  /** Figma's API; effect binding stays so a test can build what an earlier version wrote. */
+  const figma: NodesApi & { readonly currentPage: PageLike; variables: typeof variables } = {
     ...base.figma,
     currentPage,
     variables,
@@ -582,6 +623,48 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
     ) {
       const state = stateOf.get(node)!
       state[key] = frozenCopy((state[key] as PaintLike[]).map(paint => ({ ...paint, ...stale })))
+    },
+    /**
+     * Whether `variant` shows a focus ring as Figma renders it: a visible `Focus
+     * ring` frame whose bound stroke reaches outside the root on every side and
+     * that the root does not clip, or a spread drop shadow on the root. Figma
+     * casts a shadow from the node's visible content, so a shadow on a root whose
+     * fills are fully transparent and that has no visible stroke draws nothing
+     * (the real file's ghost and link variants).
+     */
+    visibleFocusRing(variant: SceneNodeLike): boolean {
+      const shows = (paint: PaintLike) => paint.visible !== false && (paint.opacity ?? 1) > 0
+      if (!variant.visible) return false
+      const layer = variant.children?.find(c => c.name === 'Focus ring' && c.type === 'FRAME')
+      if (layer?.visible && layer.opacity > 0) {
+        const bound = layer.boundVariables?.strokeWeight
+        const variable = bound && base.variables.get(bound.id)
+        const weight = Number(variable ? firstModeValue(variable) : layer.strokeWeight)
+        const align = (layer as { strokeAlign?: string }).strokeAlign
+        const outset = align === 'OUTSIDE' ? weight : align === 'CENTER' ? weight / 2 : 0
+        const placed = !variant.layoutMode || variant.layoutMode === 'NONE'
+        const free = placed || layer.layoutPositioning === 'ABSOLUTE'
+        const outside =
+          layer.x - outset < 0 &&
+          layer.y - outset < 0 &&
+          layer.x + layer.width + outset > variant.width &&
+          layer.y + layer.height + outset > variant.height
+        const stroked = layer.strokes.some(paint => shows(paint) && !!paint.boundVariables?.color)
+        if (free && outside && stroked && weight > 0 && variant.clipsContent !== true) return true
+      }
+      const content =
+        variant.fills.some(shows) ||
+        (variant.strokes.some(shows) && (variant.strokeWeight ?? 0) > 0)
+      return (
+        content &&
+        variant.effects.some(
+          effect =>
+            effect.type === 'DROP_SHADOW' &&
+            effect.visible &&
+            (effect.spread > 0 || !!effect.boundVariables?.spread) &&
+            effect.color.a > 0
+        )
+      )
     },
     /** The next `count` new bindings store black, as on Figma's first run. */
     staleNextBinds(count: number) {

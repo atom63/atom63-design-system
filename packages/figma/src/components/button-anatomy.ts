@@ -1,9 +1,12 @@
-import type { FigmaProperty } from './model'
+import type { FigmaProperty, LayerKind } from './model'
 
 export interface AnatomyLayer {
   name: string
-  kind: 'frame' | 'text'
-  /** Figma property → the CSS property or custom property it reads, in cascade terms. */
+  kind: LayerKind
+  /**
+   * Figma property → the CSS property or custom property it reads, in cascade
+   * terms. `visible` may read a `*-style` property: drawn unless `none`/`hidden`.
+   */
   reads: Partial<Record<FigmaProperty, string>>
   /** Values fixed by state, applied after the cascade (C6). */
   byState?: Partial<Record<string, Partial<Record<FigmaProperty, number | boolean>>>>
@@ -28,8 +31,6 @@ export const buttonAnatomy: {
         height: '--button-height',
         paddingInline: '--button-padding-inline',
         itemSpacing: '--button-gap',
-        focusRing: '--button-focus-ring',
-        focusRingWidth: '--a63-control-focus-ring-width',
       },
     },
     { name: 'Icon', kind: 'frame', reads: { size: '--button-icon-size' } },
@@ -56,6 +57,18 @@ export const buttonAnatomy: {
         focusVisible: { visible: false },
         disabled: { visible: false },
         loading: { visible: true },
+      },
+    },
+    {
+      // The root's `outline` (C6): drawn only where the recipe draws it, on :focus-visible.
+      name: 'Focus ring',
+      kind: 'outline',
+      reads: {
+        visible: 'outline-style',
+        stroke: 'outline-color',
+        strokeWeight: 'outline-width',
+        outlineOffset: 'outline-offset',
+        cornerRadius: '--button-radius',
       },
     },
   ],

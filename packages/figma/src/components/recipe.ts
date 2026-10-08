@@ -126,22 +126,43 @@ const matches = (c: Coordinate, variant: string, size: string, state: string) =>
   (c.sizePrefix === undefined || size.startsWith(c.sizePrefix)) &&
   (c.state === undefined || c.state === state)
 
-/** `border: <width> <style> <color>` → `border-width` + `border-color`. */
-function expandBorder(selector: string, declarations: Declarations, skip: (s: Skip) => void) {
+const OUTLINE_STYLES = new Set([
+  'none',
+  'hidden',
+  'dotted',
+  'dashed',
+  'solid',
+  'double',
+  'groove',
+  'ridge',
+  'inset',
+  'outset',
+  'auto',
+])
+
+/**
+ * `border: <width> <style> <color>` → `border-width` + `border-color`;
+ * `outline: <width> <style> <color>` → its three longhands, and `outline: none`
+ * (or another lone style) → `outline-style`.
+ */
+function expandShorthands(selector: string, declarations: Declarations, skip: (s: Skip) => void) {
   const out: Declarations = {}
   for (const [property, value] of Object.entries(declarations)) {
-    if (property !== 'border') {
+    if (property !== 'border' && property !== 'outline') {
       out[property] = value
       continue
     }
     const parts = splitTopLevel(value, ' ')
-    if (parts.length === 3) {
-      out['border-width'] = parts[0]
-      out['border-color'] = parts[2]
+    if (property === 'outline' && parts.length === 1 && OUTLINE_STYLES.has(parts[0])) {
+      out['outline-style'] = parts[0]
+    } else if (parts.length === 3 && (property === 'border' || OUTLINE_STYLES.has(parts[1]))) {
+      out[`${property}-width`] = parts[0]
+      if (property === 'outline') out['outline-style'] = parts[1]
+      out[`${property}-color`] = parts[2]
     } else
       skip({
-        what: `${selector} border: ${value}`,
-        reason: 'only `border: <width> <style> <color>` is read',
+        what: `${selector} ${property}: ${value}`,
+        reason: `only \`${property}: <width> <style> <color>\` is read`,
       })
   }
   return out
@@ -151,7 +172,6 @@ function expandBorder(selector: string, declarations: Declarations, skip: (s: Sk
 const DERIVED_SCOPES: Partial<Record<FigmaProperty, string[]>> = {
   fill: ['FRAME_FILL', 'SHAPE_FILL'],
   stroke: ['STROKE_COLOR'],
-  focusRing: ['EFFECT_COLOR'],
 }
 
 const indexes = new WeakMap<SyncModel, TokenIndex>()
@@ -224,6 +244,10 @@ function resolveExpression(
 ): RecipeValue {
   const value = expression.trim()
   if (value === 'transparent') return { value: TRANSPARENT }
+  if (/^-?(\d+\.?\d*|\.\d+)(px|rem)?$/.test(value)) {
+    onLiteral(value)
+    return { value: evaluateNumber(value) as number }
+  }
   if (/(^|[^\w-])(calc|max|min)\(/.test(value)) {
     const number = toNumber(value, context, seen)
     if (typeof number === 'string') return { skipped: number }
@@ -272,6 +296,48 @@ export function resolve(
     : resolveExpression(expression, context, new Set(), onLiteral)
 }
 
+/**
+ * An outline layer (C6) is the CSS `outline`: a hidden one carries only its
+ * visibility and radius; a drawn one gets CSS's initial `outline-offset` of 0
+ * when the recipe sets none. Its radius follows the root's, which an offset
+ * grows by as much: a sum no variable holds, so it is the first-mode literal.
+ */
+function finishOutline(
+  properties: LayerSpec['properties'],
+  index: TokenIndex,
+  onOffsetRadius: (offset: number) => void
+) {
+  const visible = properties.visible
+  if (!(visible && 'value' in visible && visible.value === true)) {
+    delete properties.stroke
+    delete properties.strokeWeight
+    delete properties.outlineOffset
+    return
+  }
+  let offset = properties.outlineOffset ?? { value: 0 }
+  if ('alias' in offset) {
+    const number = defaultNumber(offset.alias, index)
+    offset = number === null ? { skipped: `${offset.alias} has no number` } : { value: number }
+  }
+  properties.outlineOffset = offset
+  const radius = properties.cornerRadius
+  if (!('value' in offset) || typeof offset.value !== 'number' || offset.value === 0 || !radius)
+    return
+  if ('skipped' in radius) return
+  const base =
+    'alias' in radius
+      ? defaultNumber(radius.alias, index)
+      : typeof radius.value === 'number'
+        ? radius.value
+        : null
+  if (base === null) {
+    properties.cornerRadius = { skipped: 'the root radius has no number to add the offset to' }
+    return
+  }
+  properties.cornerRadius = { value: Math.max(0, base + offset.value) }
+  onOffsetRadius(offset.value)
+}
+
 export function readRecipe(input: RecipeInput): ComponentModel {
   const { anatomy, contract, sync } = input
   const skippedByKey = new Map<string, Skip>()
@@ -295,7 +361,7 @@ export function readRecipe(input: RecipeInput): ComponentModel {
       else
         entries.push({
           coordinate,
-          declarations: expandBorder(selector, rule.declarations, skip),
+          declarations: expandShorthands(selector, rule.declarations, skip),
           order: entries.length,
         })
     }
@@ -347,6 +413,12 @@ export function readRecipe(input: RecipeInput): ComponentModel {
           const declarations = layer.name === 'Label' ? labelDeclarations : rootDeclarations
           const properties: LayerSpec['properties'] = {}
           for (const [property, read] of Object.entries(layer.reads) as [FigmaProperty, string][]) {
+            if (property === 'visible' && read.endsWith('-style')) {
+              // CSS's initial style is `none`: an undeclared outline or border is not drawn.
+              const style = declarations[read]?.trim()
+              properties.visible = { value: !!style && style !== 'none' && style !== 'hidden' }
+              continue
+            }
             const value = resolve(read, declarations, sync, expression =>
               literals.push({ variant: name, layer: layer.name, property, expression })
             )
@@ -375,6 +447,15 @@ export function readRecipe(input: RecipeInput): ComponentModel {
                 reason: `the anatomy says ${fixed}, the recipe says ${declared}`,
               })
           }
+          if (layer.kind === 'outline')
+            finishOutline(properties, indexOf(sync), offsetRadius =>
+              literals.push({
+                variant: name,
+                layer: layer.name,
+                property: 'cornerRadius',
+                expression: `var(${layer.reads.cornerRadius}) + outline-offset ${offsetRadius}`,
+              })
+            )
           return { name: layer.name, kind: layer.kind, properties }
         })
         variants.push({ name, coord: { variant, size, state }, layers })

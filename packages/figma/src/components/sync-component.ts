@@ -20,6 +20,7 @@ import {
 } from './component-values'
 import type { ComponentModel, LayerSpec, VariantSpec } from './model'
 import type { NodesApi, PageLike, SceneNodeLike } from './nodes-api'
+import { legacyRingCheck, outlineChecks } from './outline'
 
 export interface ComponentPlan {
   /** C8: code tokens with no variable; non-empty → nothing is written. */
@@ -106,11 +107,11 @@ const findVariant = (set: SceneNodeLike, name: string) =>
 
 /**
  * The root's auto layout: a horizontal row, centered, hugging its width at a
- * fixed height. `clipsContent` lets the focus ring's spread apply: Figma
- * accepts a shadow spread on a frame or component only with a visible fill and
- * clipping on, and clipping affects children, not the node's own shadow.
+ * fixed height. Clipping stays off so the focus ring layer, which sits outside
+ * the root as CSS `outline` does, is not cut away (C6); the earlier ring's
+ * drop shadow goes first, while the clipping Figma required for it is still on.
  */
-function rootChecks(root: SceneNodeLike): { before: Check[]; after: Check[] } {
+function rootChecks(run: Run, root: SceneNodeLike): { before: Check[]; after: Check[] } {
   const check = <K extends keyof SceneNodeLike>(key: K, value: SceneNodeLike[K]): Check => ({
     what: `${root.name}.${String(key)}`,
     same: () => root[key] === value,
@@ -123,7 +124,8 @@ function rootChecks(root: SceneNodeLike): { before: Check[]; after: Check[] } {
       check('layoutMode', 'HORIZONTAL'),
       check('primaryAxisAlignItems', 'CENTER'),
       check('counterAxisAlignItems', 'CENTER'),
-      check('clipsContent', true),
+      legacyRingCheck(root, run.model, run),
+      check('clipsContent', false),
     ],
     // After the height: Figma fixes both axes when an auto-layout frame is resized.
     after: [check('primaryAxisSizingMode', 'AUTO'), check('counterAxisSizingMode', 'FIXED')],
@@ -206,23 +208,27 @@ interface CheckGroup {
 
 /** Every check for a variant's existing layers, in write order. */
 async function variantChecks(run: Run, node: SceneNodeLike, spec: VariantSpec) {
-  const layout = rootChecks(node)
+  const layout = rootChecks(run, node)
   const groups: CheckGroup[] = []
   for (const [index, layer] of spec.layers.entries()) {
     const target = index === 0 ? node : findLayer(node, layer)
     if (!target) continue
     const font = layer.kind === 'text' ? await fontTarget(run, target, layer) : null
-    const own = layerChecks(run, target, layer, spec.coord.state, font, index === 0)
+    const own = layerChecks(run, target, layer, font)
     groups.push({
       node: target,
       checks: index === 0 ? [...layout.before, ...own] : own,
       fallbacks: font?.fallbacks,
     })
   }
-  // Last: the overlay centers on the root's final size.
+  // Last, on the root's final size: outline layers leave the flow before the overlay centers.
+  const outlines = spec.layers.flatMap(layer => {
+    const target = layer.kind === 'outline' ? findLayer(node, layer) : undefined
+    return target ? outlineChecks(node, target, layer) : []
+  })
   groups.push({
     node,
-    checks: [...layout.after, ...overlayChecks(node), ...referenceChecks(run, node)],
+    checks: [...layout.after, ...outlines, ...overlayChecks(node), ...referenceChecks(run, node)],
   })
   return groups
 }

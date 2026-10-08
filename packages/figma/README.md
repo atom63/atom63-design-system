@@ -95,6 +95,15 @@ semi-transparent. Each script makes the derived variables its variants bind befo
 (`applied.variables` counts them), so the scripts can run in any order; `diff` and the plugin's
 token table do not count them as tokens.
 
+The focus ring is a `Focus ring` layer in every variant, drawn as CSS draws the recipe's
+`outline`: absolutely placed over the root and stretched with it, no fill, an outside stroke whose
+color and weight are bound to the ring variables, corners bound to the root's radius. It is
+visible only in `State=focusVisible`, and the root does not clip its content, so the ring shows
+on transparent variants (ghost, link) too; a drop shadow would not, since Figma casts it from the
+node's visible content. A file written by an earlier version, which drew the ring as a drop
+shadow on the root, is migrated on the next run: that one effect is removed and any other effect
+a designer added is kept.
+
 A bound paint verifies when Figma's stored color and opacity match what the variable resolves to
 on that layer, not only the binding: Figma can leave a stale stored color (black, right after a
 token sync in the same session), and rebinding the same variable keeps it. The script rewrites

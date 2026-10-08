@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs'
+import { isDeepStrictEqual } from 'node:util'
 import { readRules } from '../src/components/css-rules'
 import { readRecipe } from '../src/components/recipe'
 import { buttonAnatomy } from '../src/components/button-anatomy'
@@ -246,6 +247,42 @@ describe('the real Button recipe', () => {
   // Anatomy properties allowed to be absent or skipped, as `Layer.property` → reason.
   // None today: every `reads` key resolves on all 300 variants.
   const exemptions: Record<string, string> = {}
+  const outlineOnly = new Set([
+    'Focus ring.stroke',
+    'Focus ring.strokeWeight',
+    'Focus ring.outlineOffset',
+  ])
+
+  it('reads the focus ring from the outline on :focus-visible, as a layer hidden elsewhere', () => {
+    const wrong: string[] = []
+    for (const v of realModel.variants) {
+      const [root] = v.layers
+      const ring = v.layers.find(l => l.name === 'Focus ring')!
+      const expected =
+        v.coord.state === 'focusVisible'
+          ? {
+              visible: { value: true },
+              stroke: { alias: '--a63-control-focus-ring-color' },
+              strokeWeight: { alias: '--a63-control-focus-ring-width' },
+              // button.css sets no outline-offset: CSS's initial 0.
+              outlineOffset: { value: 0 },
+              cornerRadius: root.properties.cornerRadius,
+            }
+          : { visible: { value: false }, cornerRadius: root.properties.cornerRadius }
+      if (ring.kind !== 'outline' || !isDeepStrictEqual(ring.properties, expected))
+        wrong.push(`${v.name}: ${ring.kind} ${JSON.stringify(ring.properties)}`)
+      if ('focusRing' in root.properties || 'focusRingWidth' in root.properties)
+        wrong.push(`${v.name}: the root still reads the ring`)
+    }
+    expect(wrong).toEqual([])
+    expect(realModel.variants.at(-1)!.layers.map(l => l.name)).toEqual([
+      'Button',
+      'Icon',
+      'Label',
+      'Spinner',
+      'Focus ring',
+    ])
+  })
 
   it('reads every anatomy property on every variant, so a renamed custom property fails', () => {
     const missing: string[] = []
@@ -254,6 +291,9 @@ describe('the real Button recipe', () => {
         const properties = v.layers.find(l => l.name === anatomyLayer.name)?.properties ?? {}
         for (const key of Object.keys(anatomyLayer.reads) as (keyof typeof properties)[]) {
           if (`${anatomyLayer.name}.${key}` in exemptions) continue
+          // An outline that is not drawn (`outline: none`) has no color, width or offset.
+          if (outlineOnly.has(`${anatomyLayer.name}.${key}`) && v.coord.state !== 'focusVisible')
+            continue
           const value = properties[key]
           if (!value || 'skipped' in value) missing.push(`${v.name} ${anatomyLayer.name}.${key}`)
         }

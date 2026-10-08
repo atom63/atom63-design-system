@@ -9,7 +9,6 @@ import { firstFamily } from '../styles'
 import type { ComponentValue, FigmaProperty, LayerSpec } from './model'
 import type {
   BindableField,
-  EffectLike,
   FontNameLike,
   NodesApi,
   PaintLike,
@@ -89,7 +88,7 @@ export async function loads(context: ValueContext, font: FontNameLike): Promise<
  * A variable's value in its collection's first mode, through aliases and
  * composed colors (an alias at an opacity scales the color's alpha).
  */
-function firstValue(context: ValueContext, variable: VariableLike, depth = 0): unknown {
+export function firstValue(context: ValueContext, variable: VariableLike, depth = 0): unknown {
   const raw = variable.valuesByMode[context.firstMode.get(variable.id) ?? '']
   if (!raw || typeof raw !== 'object' || depth >= 16) return raw
   const follow = (id: string | undefined) => {
@@ -190,7 +189,7 @@ function fieldCheck(
   }
 }
 
-// Paints and the focus ring ──────────────────────────────────────────────────
+// Paints ─────────────────────────────────────────────────────────────────────
 
 /**
  * One solid paint: bound to a variable, or a literal color. A bound paint holds
@@ -255,75 +254,6 @@ function paintCheck(
     },
     write: () => {
       node[key] = [solid(color)]
-    },
-  }
-}
-
-/**
- * `focusVisible` draws the ring as one spread-only drop shadow (C6); every other
- * state of a layer with a ring owns no effects. A skipped or absent ring leaves
- * the effects alone.
- */
-function ringCheck(
-  context: ValueContext,
-  node: SceneNodeLike,
-  layer: LayerSpec,
-  state: string
-): Check | null {
-  const ring = layer.properties.focusRing
-  const width = layer.properties.focusRingWidth
-  const what = `${node.name}.effects`
-  // An absent or skipped ring leaves the effects to the designer.
-  if (!ring || !width || 'skipped' in ring || 'skipped' in width) return null
-  if (state !== 'focusVisible')
-    return { what, same: () => node.effects.length === 0, write: () => (node.effects = []) }
-  // A color-mix ring binds its derived variable, whose alpha is the mix's.
-  const colorVariable = isAlias(ring) ? context.byToken.get(ring.alias) : undefined
-  const spreadVariable = isAlias(width) ? context.byToken.get(width.alias) : undefined
-  const color = literal(ring)
-  const spread = literal(width)
-  const literalColor: Color = isColor(color) ? color : { r: 0, g: 0, b: 0, a: 1 }
-  const literalSpread = typeof spread === 'number' ? spread : 0
-  return {
-    what,
-    same: () => {
-      const effect = node.effects[0]
-      if (node.effects.length !== 1 || effect.type !== 'DROP_SHADOW' || !effect.visible)
-        return false
-      const bound = effect.boundVariables ?? {}
-      return (
-        near(effect.offset.x, 0) &&
-        near(effect.offset.y, 0) &&
-        near(effect.radius, 0) &&
-        (isAlias(ring)
-          ? !!colorVariable && bound.color?.id === colorVariable.id
-          : !bound.color &&
-            sameColor(effect.color, literalColor) &&
-            near(effect.color.a, literalColor.a)) &&
-        (isAlias(width)
-          ? !!spreadVariable && bound.spread?.id === spreadVariable.id
-          : !bound.spread && near(effect.spread, literalSpread))
-      )
-    },
-    write: () => {
-      let effect: EffectLike = {
-        type: 'DROP_SHADOW',
-        color: {
-          ...((colorVariable && resolvedColor(context, node, colorVariable)) ?? literalColor),
-        },
-        offset: { x: 0, y: 0 },
-        radius: 0,
-        spread: literalSpread,
-        visible: true,
-        blendMode: 'NORMAL',
-        showShadowBehindNode: false,
-      }
-      const variables = context.figma.variables
-      if (colorVariable)
-        effect = variables.setBoundVariableForEffect(effect, 'color', colorVariable)
-      if (spreadVariable)
-        effect = variables.setBoundVariableForEffect(effect, 'spread', spreadVariable)
-      node.effects = [effect]
     },
   }
 }
@@ -415,15 +345,13 @@ function fontCheck(node: SceneNodeLike, target: FontTarget): Check {
 
 /**
  * Every check for one layer, in write order. `Icon.visible` belongs to the Icon
- * boolean property; the root's focus ring is `ringCheck`.
+ * boolean property; an outline layer's offset is geometry (sync-component).
  */
 export function layerChecks(
   context: ValueContext,
   node: SceneNodeLike,
   layer: LayerSpec,
-  state: string,
-  font: FontTarget | null,
-  root: boolean
+  font: FontTarget | null
 ): Check[] {
   const checks: (Check | null)[] = []
   if (font) checks.push(fontCheck(node, font))
@@ -440,7 +368,5 @@ export function layerChecks(
       for (const field of numberFields[property] ?? [])
         checks.push(fieldCheck(context, node, field, value))
   }
-  // The ring is the root's only effect, so the root owns its effects (C6).
-  if (root) checks.push(ringCheck(context, node, layer, state))
   return checks.filter((check): check is Check => check !== null)
 }

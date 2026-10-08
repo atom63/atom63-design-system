@@ -23,6 +23,10 @@ export interface PaintLike {
   boundVariables?: { color?: VariableAlias }
 }
 
+/**
+ * An effect as Figma reports it. The sync writes none; it removes the focus-ring
+ * shadow an earlier version wrote (C6) and leaves every other effect alone.
+ */
 export interface EffectLike {
   type: 'DROP_SHADOW'
   color: RgbLike & { a: number }
@@ -125,6 +129,8 @@ export interface SceneNodeLike {
   strokes: readonly PaintLike[]
   effects: readonly EffectLike[]
   strokeWeight?: number
+  /** Where the stroke sits on the outline: an `OUTSIDE` stroke grows the node, as CSS `outline` does. */
+  strokeAlign?: 'CENTER' | 'INSIDE' | 'OUTSIDE'
   readonly boundVariables?: NodeBoundVariables
   setBoundVariable(field: BindableField, variable: VariableLike | null): void
   resize(width: number, height: number): void
@@ -146,7 +152,7 @@ export interface SceneNodeLike {
   topRightRadius?: number
   bottomLeftRadius?: number
   bottomRightRadius?: number
-  /** Clips children only; a spread shadow on a frame needs it (and a visible fill). */
+  /** Clips children to the frame's bounds, an outside stroke included; not the frame's own effects. */
   clipsContent?: boolean
   /** Children of an auto-layout frame; 'ABSOLUTE' takes the child out of the flow. */
   layoutPositioning?: 'AUTO' | 'ABSOLUTE'
@@ -188,10 +194,5 @@ export interface NodesApi extends StylesApi {
   combineAsVariants(nodes: readonly SceneNodeLike[], parent: PageLike): SceneNodeLike
   variables: VariablesApi & {
     setBoundVariableForPaint(paint: PaintLike, field: 'color', variable: VariableLike): PaintLike
-    setBoundVariableForEffect(
-      effect: EffectLike,
-      field: 'color' | 'spread',
-      variable: VariableLike
-    ): EffectLike
   }
 }

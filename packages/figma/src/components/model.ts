@@ -15,8 +15,8 @@ export type FigmaProperty =
   | 'opacity'
   | 'visible'
   | 'size'
-  | 'focusRing'
-  | 'focusRingWidth'
+  /** An outline layer's outset from the root, in px (CSS `outline-offset`). */
+  | 'outlineOffset'
 
 /**
  * A resolved value, or why it is not written. Booleans come from the anatomy
@@ -26,10 +26,16 @@ export type FigmaProperty =
 export type ComponentValue =
   Exclude<SyncValue, { composed: unknown }> | { value: boolean } | { skipped: string }
 
+/**
+ * `outline` is a frame that draws the root's CSS `outline`: absolutely placed
+ * over the root, no fill, an outside stroke, outset by `outlineOffset` (C6).
+ */
+export type LayerKind = 'frame' | 'text' | 'outline'
+
 export interface LayerSpec {
-  /** Figma layer name: 'Button', 'Icon', 'Label', 'Spinner'. */
+  /** Figma layer name: 'Button', 'Icon', 'Label', 'Spinner', 'Focus ring'. */
   name: string
-  kind: 'frame' | 'text'
+  kind: LayerKind
   properties: Partial<Record<FigmaProperty, ComponentValue>>
 }
 
