@@ -245,6 +245,62 @@ describe('the real Button recipe', () => {
     expect(realModel.variants).toHaveLength(300)
   })
 
+  it('skips exactly the known rules, so a rewritten selector cannot slip into `skipped`', () => {
+    expect(realModel.skipped).toEqual([
+      { what: 'Size=tile', reason: 'not in this plan (C2)' },
+      { what: 'Size=icon-xs', reason: 'not in this plan (C2)' },
+      { what: 'Size=icon-sm', reason: 'not in this plan (C2)' },
+      { what: 'Size=icon', reason: 'not in this plan (C2)' },
+      { what: 'Size=icon-lg', reason: 'not in this plan (C2)' },
+      { what: 'Size=icon-xl', reason: 'not in this plan (C2)' },
+      { what: '.a63-Button::after', reason: 'pseudo-element' },
+      { what: ".a63-Button:not([data-size='tile'])::before", reason: 'pseudo-element' },
+      { what: '.a63-Button > span:not(.a63-Button-spinner)', reason: 'descendant' },
+      {
+        what: "[data-a63-theme='aqua'] .a63-Button[data-size^='icon']",
+        reason: 'context selector',
+      },
+      { what: ".a63-Button[data-size^='icon']::after", reason: 'pseudo-element' },
+      {
+        what: ":is(.dark, [data-a63-mode='dark']) .a63-Button[data-variant='outline']",
+        reason: 'context selector',
+      },
+      { what: ".a63-Button[data-size='tile'].h-full", reason: 'unsupported selector' },
+      { what: ".a63-Button[data-size='tile'].size-full", reason: 'unsupported selector' },
+      { what: '.a63-Button :where(svg)', reason: 'descendant' },
+    ])
+  })
+
+  // Anatomy properties allowed to be absent or skipped, as `Layer.property` → reason.
+  // None today: every `reads` key resolves on all 300 variants.
+  const exemptions: Record<string, string> = {}
+
+  it('reads every anatomy property on every variant, so a renamed custom property fails', () => {
+    const missing: string[] = []
+    for (const v of realModel.variants)
+      for (const anatomyLayer of buttonAnatomy.layers) {
+        const properties = v.layers.find(l => l.name === anatomyLayer.name)?.properties ?? {}
+        for (const key of Object.keys(anatomyLayer.reads) as (keyof typeof properties)[]) {
+          if (`${anatomyLayer.name}.${key}` in exemptions) continue
+          const value = properties[key]
+          if (!value || 'skipped' in value) missing.push(`${v.name} ${anatomyLayer.name}.${key}`)
+        }
+      }
+    expect(missing).toEqual([])
+  })
+
+  it('gives Variant=default, Size=md its own hover and pressed fills', () => {
+    const fill = (state: string) =>
+      realModel.variants.find(v => v.name === `Variant=default, Size=md, State=${state}`)!.layers[0]
+        .properties.fill
+    expect(fill('rest')).toEqual({ alias: '--a63-action-neutral' })
+    expect(fill('hover')).toEqual({ composed: { alias: '--a63-action-neutral', opacity: 90 } })
+    // The recipe sets --button-state-active-background to the hover background.
+    expect(fill('pressed')).toEqual(fill('hover'))
+    expect(fill('hover')).not.toEqual(fill('rest'))
+    expect(fill('pressed')).not.toEqual(fill('rest'))
+  })
+
   it('binds every root fill to a token or the transparent literal', () => {
     const unbound = realModel.variants
       .map(v => ({ name: v.name, fill: v.layers[0].properties.fill }))
