@@ -1167,6 +1167,7 @@ describe('the real Button model', () => {
       create: [],
       update: [],
       unchanged: 300,
+      card: { create: [], update: [], unchanged: expect.any(Number) as number },
     })
     expect(first.applied.created).toBe(300)
     expect(first.applied.variables).toBe(model.derived.variables.length)
@@ -1174,6 +1175,7 @@ describe('the real Button model', () => {
     // The family token holds a CSS stack: Geist is the literal, the variable stays unbound.
     expect(first.applied.fontFallbacks).toEqual([
       'Label: --a63-control-font-family not bound in every mode; used Geist',
+      'Spec card: --font-family-sans not bound in every mode; used Geist',
     ])
     // Every focusVisible variant shows its ring, transparent ghost and link included.
     const wrongRing = model.variants

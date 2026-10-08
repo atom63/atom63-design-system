@@ -24,6 +24,8 @@ export interface ComponentCounts {
   differences?: Difference[]
   /** Up to 12 variants whose Label reference Figma is still reconciling; only when any. */
   pendingReferences?: string[]
+  /** Spec card parts to create, to update and as the model says; only in the part with the doc. */
+  card?: { create: number; update: number; unchanged: number }
 }
 const countsOf = (plan: ComponentPlan): ComponentCounts => ({
   missingVariables: plan.missingVariables,
@@ -33,6 +35,15 @@ const countsOf = (plan: ComponentPlan): ComponentCounts => ({
   unchanged: plan.unchanged,
   ...(plan.differences ? { differences: plan.differences } : {}),
   ...(plan.pendingReferences ? { pendingReferences: plan.pendingReferences } : {}),
+  ...(plan.card
+    ? {
+        card: {
+          create: plan.card.create.length,
+          update: plan.card.update.length,
+          unchanged: plan.card.unchanged,
+        },
+      }
+    : {}),
 })
 
 /**

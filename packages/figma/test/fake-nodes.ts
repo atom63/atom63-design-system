@@ -43,6 +43,8 @@ const common = [
   'layoutPositioning',
   'constraints',
   'strokeAlign',
+  'layoutAlign',
+  'layoutGrow',
 ]
 const frameKeys = [
   'layoutMode',
@@ -65,8 +67,8 @@ const frameKeys = [
 const fontKeys = ['characters', 'fontName', 'fontSize', 'lineHeight', 'textAutoResize']
 const writable: Record<NodeType, Set<string>> = {
   FRAME: new Set([...common, ...frameKeys]),
-  COMPONENT: new Set([...common, ...frameKeys]),
-  COMPONENT_SET: new Set([...common, ...frameKeys]),
+  COMPONENT: new Set([...common, ...frameKeys, 'description']),
+  COMPONENT_SET: new Set([...common, ...frameKeys, 'description']),
   TEXT: new Set([...common, ...fontKeys]),
 }
 /** `setBoundVariable` fields per node kind, and the variable type each takes. */
@@ -124,6 +126,7 @@ const textRangeFields = new Set([
   'paragraphIndent',
 ])
 const strokeAligns = new Set(['CENTER', 'INSIDE', 'OUTSIDE'])
+const layoutAligns = new Set(['MIN', 'CENTER', 'MAX', 'STRETCH', 'INHERIT'])
 const constraintTypes = new Set(['MIN', 'CENTER', 'MAX', 'STRETCH', 'SCALE'])
 const fieldType = (field: string) =>
   field === 'fontFamily' ? 'STRING' : field === 'visible' ? 'BOOLEAN' : 'FLOAT'
@@ -338,6 +341,9 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       strokeWeight: 1,
       componentPropertyReferences: null,
       layoutPositioning: 'AUTO',
+      layoutAlign: 'INHERIT',
+      layoutGrow: 0,
+      ...(type === 'COMPONENT' || type === 'COMPONENT_SET' ? { description: '' } : {}),
       constraints: frozenCopy({ horizontal: 'MIN', vertical: 'MIN' }),
       // Figma's defaults: a frame's stroke sits inside it, a text node's outside.
       strokeAlign: type === 'TEXT' ? 'OUTSIDE' : 'INSIDE',
@@ -407,6 +413,8 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
         applyConstraints(state, width - (state.width as number), height - (state.height as number))
         state.width = width
         state.height = height
+        // Like Figma: a resized text box has a fixed size.
+        if (type === 'TEXT') state.textAutoResize = 'NONE'
         // Like Figma: resizing an auto-layout frame fixes both axes.
         if (state.layoutMode && state.layoutMode !== 'NONE') {
           state.primaryAxisSizingMode = 'FIXED'
@@ -501,6 +509,16 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
           if (!constraintTypes.has(horizontal) || !constraintTypes.has(vertical))
             throw new Error('constraints needs a horizontal and a vertical ConstraintType')
           value = frozenCopy({ horizontal, vertical })
+        } else if (key === 'layoutAlign' || key === 'layoutGrow') {
+          if (
+            key === 'layoutAlign' ? !layoutAligns.has(value as string) : value !== 0 && value !== 1
+          )
+            throw new Error(`Invalid ${key} "${String(value)}"`)
+          // Stricter than Figma, which ignores it: it only means something in an auto-layout parent.
+          const parent = state.parent && stateOf.get(state.parent.node)
+          const stretches = value === 'STRETCH' || value === 1
+          if (stretches && (!parent || !parent.layoutMode || parent.layoutMode === 'NONE'))
+            throw new Error(`${key} applies only to children of auto-layout frames`)
         } else if (key === 'layoutPositioning' && value === 'ABSOLUTE') {
           const parent = state.parent && stateOf.get(state.parent.node)
           if (!parent || !parent.layoutMode || parent.layoutMode === 'NONE')
@@ -665,13 +683,24 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
     unloadPages() {
       for (const [page, own] of pageState) if (page !== pages[0]) own.loaded = false
     },
+    /** A variant of a set named `setName`, on a page or inside a frame on it (the spec card). */
     findVariant(setName: string, variantName: string): SceneNodeLike {
-      for (const page of pages)
-        for (const node of pageState.get(page)!.children) {
-          if (node.type !== 'COMPONENT_SET' || node.name !== setName) continue
-          const variant = node.children?.find(child => child.name === variantName)
-          if (variant) return variant
+      const search = (nodes: readonly SceneNodeLike[]): SceneNodeLike | undefined => {
+        for (const node of nodes) {
+          if (node.type === 'COMPONENT_SET' && node.name === setName) {
+            const variant = node.children?.find(child => child.name === variantName)
+            if (variant) return variant
+          } else if (node.type === 'FRAME') {
+            const found = search(node.children ?? [])
+            if (found) return found
+          }
         }
+        return undefined
+      }
+      for (const page of pages) {
+        const found = search(pageState.get(page)!.children)
+        if (found) return found
+      }
       throw new Error(`No variant "${variantName}" in a set "${setName}"`)
     },
     /**

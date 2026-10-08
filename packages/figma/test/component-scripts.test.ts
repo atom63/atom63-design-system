@@ -22,6 +22,7 @@ interface Counts {
   update: number
   unchanged: number
   differences?: { variant: string; what: string; actual?: string; expected?: string }[]
+  card?: { create: number; update: number; unchanged: number }
 }
 interface SyncPart {
   part: number
@@ -185,6 +186,7 @@ describe('component scripts for use_figma', () => {
     const fake = createFakeNodes()
     for (const script of buildScripts(realSyncModel, 'sync')) await fake.run(script)
     let created = 0
+    const cards: Counts['card'][] = []
     for (const script of buildComponentScripts(realButtonModel, 'sync')) {
       const result = (await fake.run(script)) as SyncPart
       expect(result.verification.missingVariables).toEqual([])
@@ -193,12 +195,19 @@ describe('component scripts for use_figma', () => {
       expect(result.verification.unchanged).toBe(result.variants)
       expect(JSON.stringify(result).length).toBeLessThan(20_000)
       created += result.applied.created
+      cards.push(result.verification.card)
     }
     expect(created).toBe(realButtonModel.variants.length)
+    // Only the last part draws the spec card, and it verifies.
+    expect(cards.slice(0, -1).every(card => card === undefined)).toBe(true)
+    expect(cards.at(-1)).toMatchObject({ create: 0, update: 0 })
+    expect(cards.at(-1)!.unchanged).toBeGreaterThan(0)
     const writes = fake.writes
     for (const script of buildComponentScripts(realButtonModel, 'check')) {
       const result = (await fake.run(script)) as CheckPart
       expect(result.planned.unchanged).toBe(result.variants)
+      if (result.part === result.parts)
+        expect(result.planned.card).toMatchObject({ create: 0, update: 0 })
       expect(result.variants).toBe(namesIn(script).length)
       expect(JSON.stringify(result).length).toBeLessThan(20_000)
     }
@@ -219,8 +228,17 @@ describe('component scripts for use_figma', () => {
     for (const script of scripts) {
       const result = (await fake.run(script)) as SyncPart
       expect(result.verification.update).toBe(result.variants)
-      expect(result.verification.differences).toHaveLength(Math.min(12, result.variants))
+      // The last part also names the spec card's parts, after its variants.
+      const card = result.verification.card
+      expect(card === undefined).toBe(script !== scripts.at(-1))
+      expect(result.verification.differences).toHaveLength(
+        Math.min(12, result.variants + (card?.update ?? 0))
+      )
       for (const entry of result.verification.differences!) {
+        if (entry.variant.startsWith('card ')) {
+          expect(card!.update).toBeGreaterThan(0)
+          continue
+        }
         expect(namesIn(script)).toContain(entry.variant)
         expect(entry.what).toMatch(/\.(fills|strokes)$/)
         expect(entry.actual!.length).toBeLessThanOrEqual(120)
@@ -230,7 +248,9 @@ describe('component scripts for use_figma', () => {
     }
     for (const script of buildComponentScripts(realButtonModel, 'check')) {
       const result = (await fake.run(script)) as CheckPart
-      expect(result.planned.differences).toHaveLength(Math.min(12, result.variants))
+      expect(result.planned.differences).toHaveLength(
+        Math.min(12, result.variants + (result.planned.card?.update ?? 0))
+      )
       expect(JSON.stringify(result).length).toBeLessThan(20_000)
     }
   }, 120_000)

@@ -25,6 +25,7 @@ import {
 import type { ComponentModel, LayerSpec, VariantSpec } from './model'
 import type { NodesApi, PageLike, SceneNodeLike } from './nodes-api'
 import { legacyRingCheck, outlineChecks } from './outline'
+import { applyCard, CARD_TOKENS, type CardPlan, findCard, findSetIn, planCard } from './spec-card'
 
 export interface ComponentPlan {
   /** C8: code tokens with no variable; non-empty → nothing is written. */
@@ -43,6 +44,8 @@ export interface ComponentPlan {
    * `DIFFERENCES`: neither `update` nor `unchanged`; only when any.
    */
   pendingReferences?: string[]
+  /** The spec card's parts (spec-card.ts), by name; only in the part that carries `doc`. */
+  card?: CardPlan
 }
 /** A check that does not hold on a variant, with what the node holds and what it should. */
 export interface Difference {
@@ -57,6 +60,8 @@ export interface ComponentResult {
   created: number
   updated: number
   fontFallbacks: string[]
+  /** Spec card parts created and updated; only in the part that carries `doc`. */
+  card?: { created: number; updated: number }
 }
 /** A variant the retry could not write, with the error Figma threw. */
 export interface RetryError {
@@ -92,6 +97,8 @@ interface Run extends ValueContext {
   model: ComponentModel
   variants: VariantSpec[]
   page: PageLike | undefined
+  /** The spec card frame, when the page has one. */
+  card: SceneNodeLike | undefined
   set: SceneNodeLike | undefined
   keys: PropertyKeys
 }
@@ -117,9 +124,11 @@ async function open(figma: NodesApi, model: ComponentModel, only?: string[]): Pr
   const variants = model.variants.filter(variant => !wanted || wanted.has(variant.name))
   const page = figma.root.children.find(item => item.name === model.page)
   if (page) await page.loadAsync()
-  const set = page?.children.find(
-    node => node.type === 'COMPONENT_SET' && node.name === model.component
-  )
+  // In the spec card (S6), else on the page: a file from before the card, or a set the card has not adopted yet.
+  const card = findCard(page, model)
+  const set =
+    findSetIn(card, model.component) ??
+    page?.children.find(node => node.type === 'COMPONENT_SET' && node.name === model.component)
   return {
     figma,
     ...(await variablesOf(figma.variables)),
@@ -127,6 +136,7 @@ async function open(figma: NodesApi, model: ComponentModel, only?: string[]): Pr
     model,
     variants,
     page,
+    card,
     set,
     keys: set ? propertyKeys(set) : {},
   }
@@ -352,6 +362,7 @@ async function planRun(run: Run, pending = new Set<string>()): Promise<Component
   const needed = boundTokens(run.variants).map(token =>
     known.has(token) ? (parseDerived(token)?.alias ?? token) : token
   )
+  if (run.model.doc) needed.push(...Object.values(CARD_TOKENS))
   const variablePlan = planSync(derived, await readSnapshot(run.figma.variables, derived))
   const plan: ComponentPlan = {
     missingVariables: [...new Set(needed)].filter(token => !run.byToken.has(token)),
@@ -377,10 +388,19 @@ async function planRun(run: Run, pending = new Set<string>()): Promise<Component
       if (differences.length < DIFFERENCES) differences.push(found.difference)
     } else if (!found.pending) plan.unchanged += 1
   }
+  if (run.model.doc) {
+    const card = await planCard(run)
+    plan.card = card.plan
+    for (const found of card.differences)
+      if (differences.length < DIFFERENCES) differences.push(difference(found.variant, found.check))
+  }
   if (differences.length > 0) plan.differences = differences
   if (unsettled.length > 0) plan.pendingReferences = unsettled
   return plan
 }
+
+const cardWork = (plan: ComponentPlan) =>
+  !!plan.card && plan.card.create.length + plan.card.update.length > 0
 
 export async function planComponent(
   figma: NodesApi,
@@ -533,7 +553,7 @@ async function applyRun(
     result.variables = applied.created + applied.updated
     Object.assign(run, await variablesOf(run.figma.variables))
   }
-  if (plan.create.length === 0 && plan.update.length === 0) return result
+  if (plan.create.length === 0 && plan.update.length === 0 && !cardWork(plan)) return result
   // New text layers start in Inter Regular, and a font that does not load falls back to it.
   await loads(run, INTER)
 
@@ -542,6 +562,7 @@ async function applyRun(
     page = run.figma.createPage()
     page.name = run.model.page
     await page.loadAsync()
+    run.page = page
   }
 
   const created: { node: SceneNodeLike; spec: VariantSpec }[] = []
@@ -560,6 +581,8 @@ async function applyRun(
   }
 
   let set = run.set
+  // A new set starts on the page; the part that carries the doc moves it into the card.
+  if (!set && created.length === 0) return finish(run, plan, result, fallbacks, 0, outcome)
   if (!set) {
     set = run.figma.combineAsVariants(
       created.map(item => item.node),
@@ -579,8 +602,32 @@ async function applyRun(
     const node = spec && findVariant(set, name)
     if (spec && node) await write(node, spec, true)
   }
-  result.created = created.length
+  return finish(run, plan, result, fallbacks, created.length, outcome)
+}
+
+/** Draws the spec card, in the part that carries the doc, once every variant is written. */
+async function finish(
+  run: Run,
+  plan: ComponentPlan,
+  result: ComponentResult,
+  fallbacks: Set<string>,
+  created: number,
+  outcome: Outcome
+): Promise<ComponentResult> {
+  result.created = created
   result.updated = plan.update.length
+  if (run.model.doc) {
+    try {
+      const card = await applyCard(run, named)
+      result.card = { created: card.created, updated: card.updated }
+      for (const fallback of card.fallbacks) fallbacks.add(fallback)
+    } catch (error) {
+      // As for a variant: a retry records what it could not write, a first apply throws.
+      if (!outcome.errors) throw error
+      if (outcome.errors.length < RETRY_ERRORS)
+        outcome.errors.push({ variant: 'card', error: messageOf(error) })
+    }
+  }
   result.fontFallbacks = [...fallbacks]
   return result
 }
@@ -624,31 +671,41 @@ export async function syncComponent(
   const applied = await applyRun(first, planned, outcome)
   await settle()
   const verification = await planRun(await open(figma, model, only), outcome.pending)
-  // Only variants: with the page or the set missing, a second apply would make them again.
-  const retry =
+  // Only variants and the card: with the page or the set missing, a second apply would make them again.
+  const again =
     verification.missingVariables.length === 0 &&
     !verification.create.includes('page') &&
     !verification.create.includes('set')
-      ? [...verification.create, ...verification.update]
-      : []
-  if (retry.length === 0) return { planned, applied, verification }
+  const retry = again ? [...verification.create, ...verification.update] : []
+  if (retry.length === 0 && !(again && cardWork(verification)))
+    return { planned, applied, verification }
   const run = await open(figma, model, retry)
   const errors: RetryError[] = []
-  const again = await applyRun(run, await planRun(run, outcome.pending), {
+  const second = await applyRun(run, await planRun(run, outcome.pending), {
     pending: outcome.pending,
     errors,
   })
   await settle()
+  const card =
+    applied.card || second.card
+      ? {
+          card: {
+            created: (applied.card?.created ?? 0) + (second.card?.created ?? 0),
+            updated: (applied.card?.updated ?? 0) + (second.card?.updated ?? 0),
+          },
+        }
+      : {}
   return {
     planned,
     applied: {
-      variables: applied.variables + again.variables,
-      created: applied.created + again.created,
-      updated: applied.updated + again.updated,
-      fontFallbacks: [...new Set([...applied.fontFallbacks, ...again.fontFallbacks])],
+      variables: applied.variables + second.variables,
+      created: applied.created + second.created,
+      updated: applied.updated + second.updated,
+      fontFallbacks: [...new Set([...applied.fontFallbacks, ...second.fontFallbacks])],
+      ...card,
     },
     verification: await planRun(await open(figma, model, only), outcome.pending),
-    retried: retry.length,
+    ...(retry.length > 0 ? { retried: retry.length } : {}),
     ...(errors.length > 0 ? { retryErrors: errors } : {}),
   }
 }
