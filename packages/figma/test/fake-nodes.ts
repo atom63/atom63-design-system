@@ -159,6 +159,8 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
   const stateOf = new WeakMap<object, State>()
   /** Bindings still to store black, as Figma did on a first run (see `staleNextBinds`). */
   let staleBinds = 0
+  /** Stored property references still to read as `{}` once, as Figma did right after creating a set. */
+  let staleReferenceReads = 0
 
   /** A color variable's value, resolved as Figma resolves it for `consumer`. */
   const resolvedColor = (variable: VariableLike, consumer: object) => {
@@ -440,6 +442,15 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
         if (key === 'componentPropertyDefinitions')
           return type === 'COMPONENT_SET' || type === 'COMPONENT' ? definitions(state) : undefined
         if (key === 'removed' || key === 'properties') return undefined
+        if (
+          key === 'componentPropertyReferences' &&
+          staleReferenceReads > 0 &&
+          target[key] &&
+          Object.keys(target[key] as object).length > 0
+        ) {
+          staleReferenceReads -= 1
+          return Object.freeze({})
+        }
         return target[key]
       },
       set(target, key, value) {
@@ -684,6 +695,10 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
     /** The next `count` new bindings store black, as on Figma's first run. */
     staleNextBinds(count: number) {
       staleBinds = count
+    },
+    /** The next `count` reads of a stored property reference return `{}`, as Figma's did once. */
+    staleNextReferenceReads(count: number) {
+      staleReferenceReads = count
     },
     variableOf(token: string): VariableLike {
       for (const variable of base.variables.values())

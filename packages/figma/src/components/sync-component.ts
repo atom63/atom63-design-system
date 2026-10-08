@@ -1,8 +1,9 @@
 /**
  * Writes a component set from a `ComponentModel`, bound to the variables the
  * token sync made: plan (a read-only diff per variant), apply (write what
- * differs), plan again to verify. Nodes are found by name, so a re-run updates
- * in place; layers and variants the model does not list are never touched.
+ * differs), plan again to verify, and re-apply once the variants that still
+ * differ. Nodes are found by name, so a re-run updates in place; layers and
+ * variants the model does not list are never touched.
  * Bundled into the runtime IIFE: no Node or DOM imports.
  */
 import { applyPlan, readSnapshot } from '../apply'
@@ -473,13 +474,45 @@ export async function applyComponent(
   return applyRun(run, await planRun(run))
 }
 
+export interface ComponentSync {
+  planned: ComponentPlan
+  applied: ComponentResult
+  verification: ComponentPlan
+  /** Variants applied a second time because the first verification still listed them; only when any. */
+  retried?: number
+}
+
+/**
+ * Plan, apply, plan again. Right after Figma makes a set it can read a value
+ * back stale, so a variant the first verification still lists is applied once
+ * more, alone, and planned again; never more than once.
+ */
 export async function syncComponent(
   figma: NodesApi,
   model: ComponentModel,
   only?: string[]
-): Promise<{ planned: ComponentPlan; applied: ComponentResult; verification: ComponentPlan }> {
+): Promise<ComponentSync> {
   const planned = await planComponent(figma, model, only)
   const applied = await applyComponent(figma, model, only)
   const verification = await planComponent(figma, model, only)
-  return { planned, applied, verification }
+  // Only variants: with the page or the set missing, a second apply would make them again.
+  const retry =
+    verification.missingVariables.length === 0 &&
+    !verification.create.includes('page') &&
+    !verification.create.includes('set')
+      ? [...verification.create, ...verification.update]
+      : []
+  if (retry.length === 0) return { planned, applied, verification }
+  const again = await applyComponent(figma, model, retry)
+  return {
+    planned,
+    applied: {
+      variables: applied.variables + again.variables,
+      created: applied.created + again.created,
+      updated: applied.updated + again.updated,
+      fontFallbacks: [...new Set([...applied.fontFallbacks, ...again.fontFallbacks])],
+    },
+    verification: await planComponent(figma, model, only),
+    retried: retry.length,
+  }
 }

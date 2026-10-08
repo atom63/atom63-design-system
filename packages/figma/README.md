@@ -72,9 +72,10 @@ the monorepo.
    makes the `Components` page and the `Button` set; later ones add their variants to it. Each
    returns `verification`, which must plan no `create` or `update`. A non-empty
    `missingVariables` means the file lacks variables the variants bind, and nothing was written:
-   sync the tokens again, then rerun the script. A script that stops partway leaves its new
-   variants on the `Components` page; rerunning it takes them into the set instead of drawing
-   them again.
+   sync the tokens again, then rerun the script. A variant its first verification still lists is
+   applied once more and checked again, and the result counts it as `retried`. A script that
+   stops partway leaves its new variants on the `Components` page; rerunning it takes them into
+   the set instead of drawing them again.
 
 Run the `components-check-N.js` scripts at any time; they only read, and `planned.unchanged`
 equals the script's `variants` when the file matches the code. Variants and layers are found by

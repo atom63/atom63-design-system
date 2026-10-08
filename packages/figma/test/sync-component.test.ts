@@ -260,6 +260,7 @@ describe('syncComponent', () => {
       ...buttonModelFixture.variants.map(v => v.name),
     ])
     expect(first.applied.created).toBe(12)
+    expect(first.retried).toBeUndefined()
     expect(first.verification).toEqual({
       missingVariables: [],
       variables: [],
@@ -293,7 +294,51 @@ describe('syncComponent', () => {
       unchanged: 12,
     })
     expect(second.applied).toEqual({ variables: 0, created: 0, updated: 0, fontFallbacks: [] })
+    expect(second.retried).toBeUndefined()
     expect(fake.writes).toBe(writes)
+  })
+
+  it('re-applies once a variant that its first verification reads stale, then is clean', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    // Figma once read a Label's property reference back as {} right after making the set.
+    fake.staleNextReferenceReads(1)
+    const first = await syncComponent(fake.figma, buttonModelFixture)
+    expect(first.applied.created).toBe(12)
+    expect(first.retried).toBe(1)
+    expect(first.verification).toEqual({
+      missingVariables: [],
+      variables: [],
+      create: [],
+      update: [],
+      unchanged: 12,
+    })
+    const page = fake.pages.find(item => item.name === 'Components')!
+    expect(page.children.map(node => node.type)).toEqual(['COMPONENT_SET'])
+    expect(page.children[0].children).toHaveLength(12)
+    for (const variant of page.children[0].children!)
+      expect(variant.children!.find(c => c.name === 'Label')!.componentPropertyReferences).toEqual({
+        characters: expect.stringMatching(/^Label#/),
+      })
+
+    const writes = fake.writes
+    const second = await syncComponent(fake.figma, buttonModelFixture)
+    expect(second.planned.unchanged).toBe(12)
+    expect(second.retried).toBeUndefined()
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('re-applies a variant whose reference is lost after the first apply, at most once', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    await syncComponent(fake.figma, buttonModelFixture)
+    // Every Label reference reads stale twice: the retry cannot clear it, and stops.
+    fake.staleNextReferenceReads(100)
+    const result = await syncComponent(fake.figma, buttonModelFixture, [neutral])
+    expect(result.retried).toBe(1)
+    expect(result.verification.update).toEqual([neutral])
+    fake.staleNextReferenceReads(0)
+    expect((await planComponent(fake.figma, buttonModelFixture)).unchanged).toBe(12)
   })
 
   it('wires the Label and Icon component properties once', async () => {
