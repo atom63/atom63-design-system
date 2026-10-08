@@ -41,7 +41,7 @@ sync (variables, text and effect styles) is the base this plan binds to.
 | C3 | How is the component matched in Figma? | By name, as styles are: page `Components`, component set `Button`, each variant by its property values (`Variant=primary, Size=md, State=rest`). Layers are matched by the anatomy's layer names. Layers a designer adds are never touched or removed. |
 | C4 | What CSS does the reader understand? | Only what Button needs, and it says so. Selectors: `.a63-Button`, with `[data-variant='…']`, `[data-size='…']`, and state selectors (below), `:where()` unwrapped. Values: `var(--x)` (following `--button-*` locals to an `--a63-*` token that the sync model holds), `var(--x, fallback)`, `transparent`, and `color-mix(in oklch, var(--t) N%, transparent)` → an alias to a **derived variable** (amended 2026-10-08, see below): one per (token, N) in the generated `Component` collection, whose value is Figma's composed color (an alias to `--t` at N% alpha) and whose web code syntax is the expression itself. Paints bind it with no opacity of their own. `calc()`/`max()` are evaluated with the model's default-mode values and written as **literals** (listed under `literals`, not bound). Anything else is skipped with a reason. Pseudo-elements (`::before`, `::after`) are skipped. |
 | C5 | How do states map? | `:hover` → `hover`; `:active`, `[data-pressed]` → `pressed`; `:focus-visible` → `focusVisible`; `:disabled`, `[data-disabled]` → `disabled`; `[data-loading]` → `loading`. Cascade order: base → variant → size → state → variant+state, later wins. |
-| C6 | How are effects drawn? | Focus ring (an `outline` in CSS) → a `DROP_SHADOW` effect with spread = ring width, blur 0, color bound to the ring token (a `color-mix` ring binds its derived variable, C4). Disabled → label opacity `0.56` (literal from the recipe). Loading → label opacity 0, spinner layer visible. Box shadows are skipped in this plan. |
+| C6 | How are effects drawn? | Focus ring (an `outline` in CSS) → ~~a `DROP_SHADOW` effect with spread = ring width, blur 0, color bound to the ring token~~ a `Focus ring` layer drawing the outline (amended 2026-10-08, see below), its stroke bound to the ring token (a `color-mix` ring binds its derived variable, C4). Disabled → label opacity `0.56` (literal from the recipe). Loading → label opacity 0, spinner layer visible. Box shadows are skipped in this plan. |
 | C7 | Which entry point? | The agent path only (`atom63-figma components`), as Atom63 itself is synced by the agent (plugin ARCHITECTURE "Atom63"). The plugin gets no component UI in this plan. |
 | C8 | What blocks a build? | The token sync must have run: if a token the model binds has no variable with code syntax `var(--token)`, the script reports it under `missingVariables` and writes nothing. A derived variable counts as its token: the script makes the derived variables it binds (through the token engine, before binding) only when their tokens exist. |
 
@@ -68,6 +68,31 @@ another variable first, then the intended one, refreshes it). So a bound paint v
 when its binding and its stored color and opacity match `variable.resolveForConsumer(node)`; a
 stale one is an `update`, written by binding, and if the stored color is still stale, by an
 unbound paint, another color variable, then the intended one.
+
+**C6 amendment, 2026-10-08 (real-Figma finding).** The drop-shadow ring rendered on opaque
+variants only: in the real file the ghost and link `focusVisible` variants (root fill at opacity
+0, no stroke) showed no ring although the effect was there (spread 3, color bound). Figma casts a
+drop shadow from the node's visible content, so a fully transparent fill casts nothing. The ring
+is now its own layer, as CSS draws an `outline`: the anatomy has a `Focus ring` layer of kind
+`outline` that reads `outline-style` (visibility), `outline-color` (stroke), `outline-width`
+(stroke weight), `outline-offset` and the root's `--button-radius`; the reader expands the
+`outline` shorthand (`outline: none` on the base rule, `outline: <width> solid <color>` on
+`:focus-visible`), so the layer comes from the recipe, not from writer constants. The writer
+makes it a frame child of every variant root: `layoutPositioning = 'ABSOLUTE'`, constraints
+`STRETCH` on both axes (it tracks the root as the root hugs), no fill, `strokeAlign = 'OUTSIDE'`,
+stroke color and `strokeWeight` bound to the ring variables, corner radii bound to the root's
+radius variable. It is placed at `(-offset, -offset)` and sized to the root plus `2 × offset`;
+`button.css` sets no `outline-offset`, so the offset is CSS's initial 0 and the radius stays
+bound. A non-zero offset grows the radius by as much, a sum no variable holds, so that radius is
+the first-mode literal and is listed under `literals`. The layer exists in every variant and is
+visible only in `State=focusVisible`, so variant swapping keeps one layer structure. The root's
+`clipsContent` is now `false`, since an outside stroke is clipped by its parent; the Spinner and
+Label sit inside the root, so nothing else depends on clipping. Migration: a file written by the
+earlier version holds a Bridge-owned `DROP_SHADOW` on its `focusVisible` roots (offset 0, blur 0,
+color bound to the ring color variable, spread bound to the ring width variable or equal to its
+value). The writer removes exactly that effect, before it turns clipping off, and leaves any other
+effect, including a look-alike bound to another color; a ring with a literal color is not
+recognized and stays. A rerun then plans no update.
 
 
 ## Global constraints
@@ -595,8 +620,8 @@ export async function syncComponent(figma: NodesApi, model: ComponentModel, only
   `setBoundVariableForPaint` for paints; a `color-mix` value is an alias to its derived variable,
   see the C4 amendment); `{ value }` → write the literal and clear any binding;
   `{ skipped }` → leave the property alone. `paddingInline` writes `paddingLeft` and
-  `paddingRight`. `focusRing` + `focusRingWidth` → one `DROP_SHADOW` (C6), only in
-  `State=focusVisible`.
+  `paddingRight`. ~~`focusRing` + `focusRingWidth` → one `DROP_SHADOW` (C6), only in
+  `State=focusVisible`.~~ The `Focus ring` outline layer (C6 amendment, 2026-10-08).
 - Text: `loadFontAsync` the family/style from the model's font token (fallback `Inter Regular`,
   reported in `fontFallbacks`, as `style-sync.ts` does).
 - Layout of the set: a grid, rows = `Variant × Size`, columns = `State`, 24 px gaps, only when
