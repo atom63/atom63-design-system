@@ -174,8 +174,8 @@ for the other's size.
 
 After a recipe, token or catalog change, regenerate the model with
 `pnpm --filter @atom63/figma generate:components` and run the scripts again. The model depends on
-the index, so regenerate and check it first: `pnpm --filter @atom63/cli check:index` before
-`pnpm --filter @atom63/figma check:components`.
+the index, so regenerate and check it first: `pnpm --filter @atom63/cli generate:index`, then
+`pnpm --filter @atom63/cli check:index`, before `pnpm --filter @atom63/figma check:components`.
 
 Known limits: only Button, in sizes xs to xl. Icon and tile sizes, box shadows and the `.dark`
 outline override are not drawn, and a font family token holding a CSS font stack is left unbound

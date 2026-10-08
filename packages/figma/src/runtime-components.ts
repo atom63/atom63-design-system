@@ -22,7 +22,10 @@ export interface ComponentCounts {
   unchanged: number
   /** The first differing check of up to 12 differing variants; only when any. */
   differences?: Difference[]
-  /** Up to 12 variants whose Label reference Figma is still reconciling; only when any. */
+  /**
+   * Up to 12 variants with a component property reference on the default
+   * variant (Label or Icon) Figma is still reconciling; only when any.
+   */
   pendingReferences?: string[]
   /** Spec card parts to create, to update and as the model says; only in the part with the doc. */
   card?: { create: number; update: number; unchanged: number }
@@ -49,8 +52,9 @@ const countsOf = (plan: ComponentPlan): ComponentCounts => ({
 /**
  * Syncs the variants a component script carries: plan, apply, plan again, and
  * re-apply once the variants that verification still lists (`retried`,
- * with `retryErrors` for any the retry could not write). A Label reference
- * Figma is still reconciling is listed in `pendingReferences`.
+ * with `retryErrors` for any the retry could not write). A variant with a
+ * component property reference on the default variant (Label or Icon) Figma
+ * is still reconciling is listed in `pendingReferences`.
  */
 export async function syncComponentPart(figma: NodesApi, packed: PackedComponentModel) {
   const model = unpackComponentModel(packed)
