@@ -418,6 +418,43 @@ describe('syncComponent', () => {
     expect(fake.writes).toBe(writes)
   })
 
+  it('writes a missing default-variant reference before treating it as pending', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    await syncComponent(fake.figma, buttonModelFixture)
+    const [first] = buttonModelFixture.variants.map(variant => variant.name)
+    const layers = fake.findVariant('Button', first).children!
+    for (const name of ['Label', 'Icon'])
+      layers.find(c => c.name === name)!.componentPropertyReferences = {}
+    // A check still excuses the default variant; a sync writes it.
+    expect((await planComponent(fake.figma, buttonModelFixture)).pendingReferences).toEqual([first])
+    const result = await syncComponent(fake.figma, buttonModelFixture)
+    expect(result.planned.update).toEqual([first])
+    expect(result.planned.pendingReferences).toBeUndefined()
+    expect(result.retried).toBeUndefined()
+    expect(result.verification.update).toEqual([])
+    expect(result.verification.pendingReferences).toBeUndefined()
+    expect(result.verification.unchanged).toBe(12)
+    for (const name of ['Label', 'Icon'])
+      expect(layers.find(c => c.name === name)!.componentPropertyReferences).not.toEqual({})
+    const writes = fake.writes
+    const second = await syncComponent(fake.figma, buttonModelFixture)
+    expect(second.planned.unchanged).toBe(12)
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('reports a reconciling default reference as pending in a check, not as an update', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    fake.reconcileDefaultReference(['Label', 'Icon'])
+    const [first] = buttonModelFixture.variants.map(variant => variant.name)
+    await syncComponent(fake.figma, buttonModelFixture)
+    const check = await planComponent(fake.figma, buttonModelFixture)
+    expect(check.update).toEqual([])
+    expect(check.differences).toBeUndefined()
+    expect(check.pendingReferences).toEqual([first])
+  })
+
   it('keeps an apply going when Figma refuses a reference it is still reconciling', async () => {
     const fake = createFakeNodes()
     await syncModel(fake.figma, syncFixture)

@@ -335,14 +335,21 @@ const isDefault = (run: Run, node: SceneNodeLike) => run.set?.children?.[0] === 
 
 /**
  * The first thing that differs on a variant, or null when it holds the model,
- * and whether a property reference is pending: unsettled on the set's default
- * variant, or on a variant in `pending`, whose write Figma refused as such.
+ * and whether a property reference is pending: unsettled on a variant in
+ * `pending`, whose write Figma refused as such, or, with `excuseDefault`, on
+ * the set's default variant.
  */
-async function differs(run: Run, node: SceneNodeLike, spec: VariantSpec, pending: Set<string>) {
+async function differs(
+  run: Run,
+  node: SceneNodeLike,
+  spec: VariantSpec,
+  pending: Set<string>,
+  excuseDefault: boolean
+) {
   const missing = spec.layers.slice(1).find(layer => !findLayer(node, layer))
   if (missing)
     return { difference: { variant: spec.name, what: `${missing.name} missing` }, pending: false }
-  const excused = isDefault(run, node) || pending.has(spec.name)
+  const excused = (excuseDefault && isDefault(run, node)) || pending.has(spec.name)
   let unsettled = false
   for (const group of await variantChecks(run, node, spec))
     for (const check of group.checks as ReferenceCheck[]) {
@@ -356,7 +363,16 @@ async function differs(run: Run, node: SceneNodeLike, spec: VariantSpec, pending
   return { difference: null, pending: unsettled }
 }
 
-async function planRun(run: Run, pending = new Set<string>()): Promise<ComponentPlan> {
+/**
+ * Plans a run. A plan made before an apply excuses nothing, so a missing
+ * reference is written; a check or a verification (`excuseDefault`) excuses the
+ * default variant's unsettled reference, which Figma reconciles by itself.
+ */
+async function planRun(
+  run: Run,
+  pending = new Set<string>(),
+  { excuseDefault = false } = {}
+): Promise<ComponentPlan> {
   const derived = derivedModel(run.model, run.variants)
   const known = new Set(derived.collections.flatMap(c => c.variables.map(v => v.token)))
   // A derived variable needs its code token; one the model does not define cannot be made.
@@ -382,7 +398,7 @@ async function planRun(run: Run, pending = new Set<string>()): Promise<Component
       plan.create.push(spec.name)
       continue
     }
-    const found = await differs(run, node, spec, pending)
+    const found = await differs(run, node, spec, pending, excuseDefault)
     if (found.pending && unsettled.length < DIFFERENCES) unsettled.push(spec.name)
     if (found.difference) {
       plan.update.push(spec.name)
@@ -408,7 +424,7 @@ export async function planComponent(
   model: ComponentModel,
   only?: string[]
 ): Promise<ComponentPlan> {
-  return planRun(await open(figma, model, only))
+  return planRun(await open(figma, model, only), undefined, { excuseDefault: true })
 }
 
 /** Adds a missing anatomy layer after the anatomy layer before it. */
@@ -671,7 +687,9 @@ export async function syncComponent(
   const outcome: Outcome = { pending: new Set() }
   const applied = await applyRun(first, planned, outcome)
   await settle()
-  const verification = await planRun(await open(figma, model, only), outcome.pending)
+  const verify = async () =>
+    planRun(await open(figma, model, only), outcome.pending, { excuseDefault: true })
+  const verification = await verify()
   // Only variants and the card: with the page or the set missing, a second apply would make them again.
   const again =
     verification.missingVariables.length === 0 &&
@@ -682,7 +700,7 @@ export async function syncComponent(
     return { planned, applied, verification }
   const run = await open(figma, model, retry)
   const errors: RetryError[] = []
-  const second = await applyRun(run, await planRun(run, outcome.pending), {
+  const second = await applyRun(run, await planRun(run, outcome.pending, { excuseDefault: true }), {
     pending: outcome.pending,
     errors,
   })
@@ -705,7 +723,7 @@ export async function syncComponent(
       fontFallbacks: [...new Set([...applied.fontFallbacks, ...second.fontFallbacks])],
       ...card,
     },
-    verification: await planRun(await open(figma, model, only), outcome.pending),
+    verification: await verify(),
     ...(retry.length > 0 ? { retried: retry.length } : {}),
     ...(errors.length > 0 ? { retryErrors: errors } : {}),
   }
