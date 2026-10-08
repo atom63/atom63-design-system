@@ -90,6 +90,34 @@ describe('the Figma node fake', () => {
     })
   })
 
+  it("reads a new set's first Label reference stale until a macrotask or a fresh lookup", async () => {
+    const exists =
+      'in set_componentPropertyReferences: Could not create a new component property reference.'
+    for (const untilLookup of [false, true]) {
+      const fake = createFakeNodes({ lookup: true })
+      const page = fake.figma.createPage()
+      const component = fake.figma.createComponent()
+      component.name = 'Variant=default'
+      const label = fake.figma.createText()
+      label.name = 'Label'
+      component.appendChild(label)
+      fake.staleNewSetReference({ untilLookup })
+      const set = fake.figma.combineAsVariants([component], page)
+      const key = set.addComponentProperty!('Label', 'TEXT', 'Button')
+      label.componentPropertyReferences = { characters: key }
+      expect(label.componentPropertyReferences).toEqual({})
+      expect(() => {
+        label.componentPropertyReferences = { characters: key }
+      }).toThrow(exists)
+      await new Promise(resolve => setTimeout(resolve, 0))
+      if (untilLookup) {
+        expect(label.componentPropertyReferences).toEqual({})
+        expect(await fake.figma.getNodeByIdAsync!(label.id)).toBe(label)
+      }
+      expect(label.componentPropertyReferences).toEqual({ characters: key })
+    }
+  })
+
   it('fails where Figma fails', async () => {
     const fake = createFakeNodes()
     const frame = fake.figma.createFrame()
@@ -326,6 +354,71 @@ describe('syncComponent', () => {
     expect(second.planned.unchanged).toBe(12)
     expect(second.retried).toBeUndefined()
     expect(fake.writes).toBe(writes)
+  })
+
+  it("waits a macrotask before verifying, so a new set's stale reference is clean", async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    fake.staleNewSetReference()
+    const first = await syncComponent(fake.figma, buttonModelFixture)
+    expect(first.retried).toBeUndefined()
+    expect(first.settled).toBeUndefined()
+    expect(first.verification).toEqual({
+      missingVariables: [],
+      variables: [],
+      create: [],
+      update: [],
+      unchanged: 12,
+    })
+    const writes = fake.writes
+    const second = await syncComponent(fake.figma, buttonModelFixture)
+    expect(second.planned.unchanged).toBe(12)
+    expect(fake.writes).toBe(writes)
+  })
+
+  it("reads a new set's reference through a fresh lookup when Figma offers one", async () => {
+    const fake = createFakeNodes({ lookup: true })
+    await syncModel(fake.figma, syncFixture)
+    fake.staleNewSetReference({ untilLookup: true })
+    const first = await syncComponent(fake.figma, buttonModelFixture)
+    expect(first.retried).toBeUndefined()
+    expect(first.verification.unchanged).toBe(12)
+    expect(first.verification.update).toEqual([])
+    const writes = fake.writes
+    const second = await syncComponent(fake.figma, buttonModelFixture)
+    expect(second.planned.unchanged).toBe(12)
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('counts a refused reference write that holds when read again as settled', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    // Stale through the first verification; the retry's refused write settles after a macrotask.
+    fake.staleNewSetReference({ macrotasks: 2 })
+    const first = await syncComponent(fake.figma, buttonModelFixture)
+    expect(first.retried).toBe(1)
+    expect(first.settled).toBe(1)
+    expect(first.retryErrors).toBeUndefined()
+    expect(first.verification.unchanged).toBe(12)
+    expect(first.verification.update).toEqual([])
+  })
+
+  it('keeps a refused reference write as a retry error when it still reads stale', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    // No fresh lookup to clear it: the reference reads stale for the whole run.
+    fake.staleNewSetReference({ untilLookup: true })
+    const first = await syncComponent(fake.figma, buttonModelFixture)
+    const [stale] = buttonModelFixture.variants.map(variant => variant.name)
+    expect(first.retried).toBe(1)
+    expect(first.settled).toBeUndefined()
+    expect(first.retryErrors).toEqual([
+      {
+        variant: stale,
+        error: expect.stringContaining('Could not create a new component property reference'),
+      },
+    ])
+    expect(first.verification.update).toEqual([stale])
   })
 
   it('re-applies a variant whose reference is lost after the first apply, at most once', async () => {

@@ -2,7 +2,7 @@
  * Writes a component set from a `ComponentModel`, bound to the variables the
  * token sync made: plan (a read-only diff per variant), apply (write what
  * differs), plan again to verify, and re-apply once the variants that still
- * differ. Nodes are found by name, so a re-run updates in place; layers and
+ * differ; each verification waits a macrotask first, so Figma can settle. Nodes are found by name, so a re-run updates in place; layers and
  * variants the model does not list are never touched.
  * Bundled into the runtime IIFE: no Node or DOM imports.
  */
@@ -63,6 +63,19 @@ export const DIFFERENCES = 12
 /** Retry errors a sync reports, for the same reason. */
 export const RETRY_ERRORS = 12
 const REFERENCES = '.componentPropertyReferences'
+/** Figma's error for a reference write when the layer already holds that reference. */
+const REFERENCE_EXISTS = 'Could not create a new component property reference'
+
+/**
+ * Yields one macrotask, where the host has timers, else a microtask: right
+ * after a set is made, Figma can read a layer's property reference back as
+ * `{}` until the execution yields.
+ */
+export function settle(): Promise<void> {
+  return typeof setTimeout === 'function'
+    ? new Promise<void>(resolve => setTimeout(resolve, 0))
+    : Promise.resolve()
+}
 
 interface PropertyKeys {
   label?: string
@@ -208,9 +221,16 @@ function overlayChecks(root: SceneNodeLike): Check[] {
   ]
 }
 
+/** A property-reference check, which can read the reference again through a fresh handle. */
+interface ReferenceCheck extends Check {
+  /** Whether the reference holds, read through `getNodeByIdAsync` where offered. */
+  fresh(): Promise<boolean>
+}
+const isReference = (check: Check): check is ReferenceCheck => 'fresh' in check
+
 /** `Label.characters` and `Icon.visible` follow the set's Label and Icon properties. */
-function referenceChecks(run: Run, variant: SceneNodeLike): Check[] {
-  const checks: Check[] = []
+function referenceChecks(run: Run, variant: SceneNodeLike): ReferenceCheck[] {
+  const checks: ReferenceCheck[] = []
   for (const [layerName, field, key] of [
     ['Label', 'characters', run.keys.label],
     ['Icon', 'visible', run.keys.icon],
@@ -227,6 +247,12 @@ function referenceChecks(run: Run, variant: SceneNodeLike): Check[] {
         actual: layer.componentPropertyReferences ?? null,
         expected: { [field]: key ?? 'no property' },
       }),
+      fresh: async () => {
+        const node = run.figma.getNodeByIdAsync
+          ? ((await run.figma.getNodeByIdAsync(layer.id)) as SceneNodeLike | null)
+          : layer
+        return !!key && node?.componentPropertyReferences?.[field] === key
+      },
     })
   }
   return checks
@@ -291,10 +317,13 @@ async function differs(
 ): Promise<Difference | null> {
   const missing = spec.layers.slice(1).find(layer => !findLayer(node, layer))
   if (missing) return { variant: spec.name, what: `${missing.name} missing` }
-  for (const group of await variantChecks(run, node, spec)) {
-    const failing = group.checks.find(check => !check.same())
-    if (failing) return difference(spec.name, failing)
-  }
+  for (const group of await variantChecks(run, node, spec))
+    for (const check of group.checks) {
+      if (check.same()) continue
+      // A reference the variant's old handle reads stale can hold on a fresh one.
+      if (isReference(check) && run.figma.getNodeByIdAsync && (await check.fresh())) continue
+      return difference(spec.name, check)
+    }
   return null
 }
 
@@ -368,17 +397,36 @@ function named<T>(variant: string, what: string, write: () => T): T {
   }
 }
 
+/** What a retry records: the variants it could not write, and the references that settled. */
+interface Retry {
+  errors: RetryError[]
+  settled: number
+}
+
 /**
  * Writes what differs on one variant. Property references wait until the
  * variant is in the set (`references`), since Figma checks them against it.
+ * In a retry, a reference write Figma refuses because the reference exists is
+ * read again after a macrotask; one that now holds counts as settled.
  */
 async function writeVariant(
   run: Run,
   node: SceneNodeLike,
   spec: VariantSpec,
   fallbacks: Set<string>,
-  references: boolean
+  references: boolean,
+  retry?: Retry
 ) {
+  const write = async (check: Check) => {
+    try {
+      named(spec.name, check.what, () => check.write())
+    } catch (error) {
+      if (!retry || !isReference(check) || !messageOf(error).includes(REFERENCE_EXISTS)) throw error
+      await settle()
+      if (!(await check.fresh())) throw error
+      retry.settled += 1
+    }
+  }
   let previous: SceneNodeLike | undefined
   for (const layer of spec.layers.slice(1))
     previous =
@@ -392,8 +440,7 @@ async function writeVariant(
     // Figma changes a text layer only once its current font is loaded.
     if (pending.length > 0 && group.node.type === 'TEXT' && group.node.fontName)
       await loads(run, group.node.fontName)
-    for (const check of pending)
-      if (!check.same()) named(spec.name, check.what, () => check.write())
+    for (const check of pending) if (!check.same()) await write(check)
   }
 }
 
@@ -428,21 +475,18 @@ function place(run: Run, set: SceneNodeLike, added: { node: SceneNodeLike; spec:
 }
 
 /**
- * Applies a plan. With `errors`, a variant whose write throws is recorded
- * there and the others still run; without, the first throw ends the apply.
+ * Applies a plan. With `retry`, a variant whose write throws is recorded in
+ * its errors and the others still run; without, the first throw ends the apply.
  */
-async function applyRun(
-  run: Run,
-  plan: ComponentPlan,
-  errors?: RetryError[]
-): Promise<ComponentResult> {
+async function applyRun(run: Run, plan: ComponentPlan, retry?: Retry): Promise<ComponentResult> {
   const fallbacks = new Set<string>()
   const write = async (node: SceneNodeLike, spec: VariantSpec, references: boolean) => {
-    if (!errors) return writeVariant(run, node, spec, fallbacks, references)
+    if (!retry) return writeVariant(run, node, spec, fallbacks, references)
     try {
-      await writeVariant(run, node, spec, fallbacks, references)
+      await writeVariant(run, node, spec, fallbacks, references, retry)
     } catch (error) {
-      if (errors.length < RETRY_ERRORS) errors.push({ variant: spec.name, error: messageOf(error) })
+      if (retry.errors.length < RETRY_ERRORS)
+        retry.errors.push({ variant: spec.name, error: messageOf(error) })
     }
   }
   const result: ComponentResult = { variables: 0, created: 0, updated: 0, fontFallbacks: [] }
@@ -523,14 +567,17 @@ export interface ComponentSync {
   retried?: number
   /** Variants the retry could not write, at most `RETRY_ERRORS`; only when any. */
   retryErrors?: RetryError[]
+  /** Reference writes the retry found refused as existing, that held when read again; only when any. */
+  settled?: number
 }
 
 /**
  * Plan, apply, plan again. Right after Figma makes a set it can read a value
- * back stale, so a variant the first verification still lists is applied once
- * more, alone, and planned again; never more than once. The retry does not
- * throw: a variant it cannot write is reported in `retryErrors`, the others
- * still run, and the final verification says what holds.
+ * back stale until the execution yields, so each verification waits a
+ * macrotask first; a variant the first verification still lists is applied
+ * once more, alone, and planned again; never more than once. The retry does
+ * not throw: a variant it cannot write is reported in `retryErrors`, the
+ * others still run, and the final verification says what holds.
  */
 export async function syncComponent(
   figma: NodesApi,
@@ -539,6 +586,7 @@ export async function syncComponent(
 ): Promise<ComponentSync> {
   const planned = await planComponent(figma, model, only)
   const applied = await applyComponent(figma, model, only)
+  await settle()
   const verification = await planComponent(figma, model, only)
   // Only variants: with the page or the set missing, a second apply would make them again.
   const retry =
@@ -549,8 +597,9 @@ export async function syncComponent(
       : []
   if (retry.length === 0) return { planned, applied, verification }
   const run = await open(figma, model, retry)
-  const errors: RetryError[] = []
-  const again = await applyRun(run, await planRun(run), errors)
+  const outcome: Retry = { errors: [], settled: 0 }
+  const again = await applyRun(run, await planRun(run), outcome)
+  await settle()
   return {
     planned,
     applied: {
@@ -561,6 +610,7 @@ export async function syncComponent(
     },
     verification: await planComponent(figma, model, only),
     retried: retry.length,
-    ...(errors.length > 0 ? { retryErrors: errors } : {}),
+    ...(outcome.errors.length > 0 ? { retryErrors: outcome.errors } : {}),
+    ...(outcome.settled > 0 ? { settled: outcome.settled } : {}),
   }
 }

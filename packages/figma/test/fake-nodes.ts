@@ -148,7 +148,7 @@ const black: PaintLike = { type: 'SOLID', color: { r: 0, g: 0, b: 0 } }
  * must be loaded, component property references checked against the set.
  * `writes` counts every mutation of the tree so a test can prove a run idle.
  */
-export function createFakeNodes(options: { fonts?: string[] } = {}) {
+export function createFakeNodes(options: { fonts?: string[]; lookup?: boolean } = {}) {
   const base = createFakeFigma(options)
   let next = 1
   let writes = 0
@@ -168,6 +168,10 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
   /** Reference writes still to be dropped (see `dropNextReferenceWrites`). */
   let droppedReferenceWrites = 0
   const referenced = new WeakSet<object>()
+  /** The next set's first-variant Label to read stale (see `staleNewSetReference`). */
+  let staleNewSet: { macrotasks: number; untilLookup: boolean } | null = null
+  const staleLayers = new WeakSet<object>()
+  const byId = new Map<string, SceneNodeLike>()
 
   /** A color variable's value, resolved as Figma resolves it for `consumer`. */
   const resolvedColor = (variable: VariableLike, consumer: object) => {
@@ -449,6 +453,8 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
         if (key === 'componentPropertyDefinitions')
           return type === 'COMPONENT_SET' || type === 'COMPONENT' ? definitions(state) : undefined
         if (key === 'removed' || key === 'properties') return undefined
+        if (key === 'componentPropertyReferences' && staleLayers.has(state))
+          return Object.freeze({})
         if (
           key === 'componentPropertyReferences' &&
           staleReferenceReads > 0 &&
@@ -495,6 +501,10 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
           if (!parent || !parent.layoutMode || parent.layoutMode === 'NONE')
             throw new Error('layoutPositioning applies only to children of auto-layout frames')
         } else if (key === 'componentPropertyReferences' && value) {
+          if (staleLayers.has(state) && target[key])
+            throw new Error(
+              'in set_componentPropertyReferences: Could not create a new component property reference.'
+            )
           const repeat = referenced.has(state)
           referenced.add(state)
           if (failingReferenceWrites > 0 && (repeat || !failRepeatOnly)) {
@@ -524,6 +534,7 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
     }) as unknown as SceneNodeLike
     container.node = proxy
     stateOf.set(proxy, state)
+    byId.set(state.id as string, proxy)
     return proxy
   }
 
@@ -625,8 +636,31 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       for (const node of nodes) set.appendChild(node)
       parent.appendChild(set)
       writes += 1
+      const label = nodes[0].children?.find(child => child.name === 'Label')
+      if (staleNewSet && label) {
+        const state = stateOf.get(label)!
+        staleLayers.add(state)
+        const { macrotasks, untilLookup } = staleNewSet
+        staleNewSet = null
+        const after = (count: number) => {
+          if (count === 0) staleLayers.delete(state)
+          else setTimeout(() => after(count - 1), 0)
+        }
+        if (!untilLookup) after(macrotasks)
+      }
       return set
     },
+    ...(options.lookup
+      ? {
+          async getNodeByIdAsync(id: string) {
+            const node = byId.get(id)
+            const state = node && stateOf.get(node)
+            if (!state || state.removed) return null
+            staleLayers.delete(state)
+            return node
+          },
+        }
+      : {}),
   }
 
   const run = (script: string) => new AsyncFunction('figma', script)(figma)
@@ -712,6 +746,15 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
     /** The next `count` new bindings store black, as on Figma's first run. */
     staleNextBinds(count: number) {
       staleBinds = count
+    },
+    /**
+     * Like Figma right after it makes a set: the next set's first variant's Label
+     * reads its property reference as `{}`, and refuses a new one once it holds
+     * one, until `macrotasks` macrotasks pass or, with `untilLookup`, until a
+     * `getNodeByIdAsync` lookup of the layer.
+     */
+    staleNewSetReference({ macrotasks = 1, untilLookup = false } = {}) {
+      staleNewSet = { macrotasks, untilLookup }
     },
     /** The next `count` reads of a stored property reference return `{}`, as Figma's did once. */
     staleNextReferenceReads(count: number) {

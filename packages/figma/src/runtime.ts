@@ -106,17 +106,22 @@ const countsOf = (plan: ComponentPlan): ComponentCounts => ({
 /**
  * Syncs the variants a component script carries: plan, apply, plan again, and
  * re-apply once the variants that verification still lists (`retried`,
- * with `retryErrors` for any the retry could not write).
+ * with `retryErrors` for any the retry could not write, and `settled` for
+ * reference writes it found already held).
  */
 export async function syncComponentPart(figma: NodesApi, packed: PackedComponentModel) {
   const model = unpackComponentModel(packed)
-  const { planned, applied, verification, retried, retryErrors } = await syncComponent(figma, model)
+  const { planned, applied, verification, retried, retryErrors, settled } = await syncComponent(
+    figma,
+    model
+  )
   return {
     variants: model.variants.length,
     planned: countsOf(planned),
     applied: { ...applied, fontFallbacks: [...new Set(applied.fontFallbacks)] },
     ...(retried ? { retried } : {}),
     ...(retryErrors ? { retryErrors } : {}),
+    ...(settled ? { settled } : {}),
     verification: countsOf(verification),
   }
 }
