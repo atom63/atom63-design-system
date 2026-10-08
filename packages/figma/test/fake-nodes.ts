@@ -125,6 +125,20 @@ const textRangeFields = new Set([
   'paragraphSpacing',
   'paragraphIndent',
 ])
+/** Text properties a text style holds: setting one detaches the style. */
+const styledKeys = new Set(['fontName', 'fontSize', 'lineHeight'])
+/** The other direction of an auto-layout frame. */
+const counterOf = (state: Record<string, unknown>) =>
+  state.layoutMode === 'HORIZONTAL' ? 'VERTICAL' : 'HORIZONTAL'
+/**
+ * An auto-layout frame's sizing mode along a direction; undefined for a node
+ * without auto layout. Figma's typings: AUTO must not be used on an axis where
+ * the node stretches (`layoutAlign` STRETCH, `layoutGrow` 1).
+ */
+const sizingAlong = (state: Record<string, unknown>, direction: string) => {
+  if (!state.layoutMode || state.layoutMode === 'NONE') return undefined
+  return state.layoutMode === direction ? state.primaryAxisSizingMode : state.counterAxisSizingMode
+}
 const strokeAligns = new Set(['CENTER', 'INSIDE', 'OUTSIDE'])
 const layoutAligns = new Set(['MIN', 'CENTER', 'MAX', 'STRETCH', 'INHERIT'])
 const constraintTypes = new Set(['MIN', 'CENTER', 'MAX', 'STRETCH', 'SCALE'])
@@ -354,6 +368,7 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
             fontSize: 12,
             lineHeight: frozenCopy({ unit: 'AUTO' }),
             textAutoResize: 'NONE',
+            textStyleId: '',
           }
         : {
             layoutMode: 'NONE',
@@ -402,6 +417,8 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
           requireFont(wanted)
           state.fontName = frozenCopy(wanted)
         }
+        // Like Figma: a text property of the node's own detaches its text style.
+        if (type === 'TEXT' && textRangeFields.has(field)) state.textStyleId = ''
         const alias: Alias = { type: 'VARIABLE_ALIAS', id: variable.id }
         for (const each of stored)
           state.boundVariables[each] =
@@ -429,6 +446,30 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
         if (!containers.has(type)) throw new Error(`A ${type} node has no children`)
         attach(container, child, index)
       },
+      ...(type === 'TEXT'
+        ? {
+            /**
+             * Like Figma: the style's font must be loaded; its font, size and line
+             * height replace the node's, and the node's own text bindings go.
+             */
+            async setTextStyleIdAsync(styleId: string) {
+              if (state.removed) throw new Error('The node has been removed')
+              writes += 1
+              if (styleId === '') {
+                state.textStyleId = ''
+                return
+              }
+              const style = base.textStyles.find(item => item.id === styleId)
+              if (!style) throw new Error(`No text style "${styleId}"`)
+              requireFont(style.fontName)
+              state.fontName = frozenCopy(style.fontName)
+              state.fontSize = style.fontSize
+              state.lineHeight = frozenCopy(style.lineHeight)
+              for (const field of textRangeFields) delete state.boundVariables[field]
+              state.textStyleId = styleId
+            },
+          }
+        : {}),
       remove() {
         writes += 1
         detach(proxy)
@@ -486,6 +527,7 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
         if (type === 'TEXT' && fontKeys.includes(key)) {
           requireFont(state.fontName as FontNameLike)
           if (key === 'fontName') requireFont(value as FontNameLike)
+          if (styledKeys.has(key)) state.textStyleId = ''
         }
         if (key === 'opacity' && !((value as number) >= 0 && (value as number) <= 1))
           throw new RangeError('opacity must be between 0 and 1')
@@ -519,6 +561,29 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
           const stretches = value === 'STRETCH' || value === 1
           if (stretches && (!parent || !parent.layoutMode || parent.layoutMode === 'NONE'))
             throw new Error(`${key} applies only to children of auto-layout frames`)
+          if (stretches && parent) {
+            const along = key === 'layoutAlign' ? counterOf(parent) : parent.layoutMode
+            const mode = sizingAlong(state, along as string)
+            if (mode === 'AUTO')
+              throw new Error(`AUTO sizing cannot be used on an axis where ${key} stretches`)
+          }
+        } else if (
+          (key === 'primaryAxisSizingMode' || key === 'counterAxisSizingMode') &&
+          value === 'AUTO' &&
+          state.layoutMode !== 'NONE'
+        ) {
+          const parent = state.parent && stateOf.get(state.parent.node)
+          const auto = parent?.layoutMode && parent.layoutMode !== 'NONE'
+          const axis = (horizontal: boolean) =>
+            key === 'primaryAxisSizingMode'
+              ? (state.layoutMode === 'HORIZONTAL') === horizontal
+              : (state.layoutMode === 'HORIZONTAL') !== horizontal
+          const stretched = (direction: string) =>
+            axis(direction === 'HORIZONTAL') &&
+            ((state.layoutAlign === 'STRETCH' && counterOf(parent!) === direction) ||
+              (state.layoutGrow === 1 && parent!.layoutMode === direction))
+          if (auto && (stretched('HORIZONTAL') || stretched('VERTICAL')))
+            throw new Error(`AUTO sizing cannot be used on an axis that stretches`)
         } else if (key === 'layoutPositioning' && value === 'ABSOLUTE') {
           const parent = state.parent && stateOf.get(state.parent.node)
           if (!parent || !parent.layoutMode || parent.layoutMode === 'NONE')

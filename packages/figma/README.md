@@ -123,8 +123,9 @@ script part carries the block (it draws the spec card once every variant exists)
 ### The spec card
 
 The last component script draws a spec card on the `Components` page, as the Bridge Builder
-plugin does: a frame named `Button` with vertical auto layout (padding 24, spacing 12, hugging its
-content) that holds
+plugin does: a frame named `Button` with vertical auto layout (padding 24, spacing 12) that hugs
+its rows' height and has a fixed width, the `Grid`'s plus 48 (both paddings), recomputed every run;
+a fixed width keeps the stretched rows well defined, where a hugging one would size from them. It holds
 
 - `Group` (the catalog group, `Actions`) and `Title` (the slug, `button`);
 - one row per doc field, each after a 1px divider (`Divider/<row>`, and `Divider/end` after the
@@ -145,10 +146,15 @@ The chrome binds atom63 variables, so the card re-themes with the file: fill
 and `--a63-text-secondary` (group, row labels, grid labels), values at
 `--typography-xs-font-size` / `--typography-xs-line-height` and the title at
 `--typography-lg-font-size` / `--typography-lg-line-height`; labels are 11px, which no token
-holds. The texts take the first family of `--font-family-sans` (Geist), unbound for the reason
-the Button label's family is, and `applied.fontFallbacks` says so. The file has no `Text/` styles
-(the token sync writes none for Atom63), so the texts bind variables rather than styles. In the last
-script these tokens count toward `missingVariables`: in a file without them it writes nothing.
+holds. The row values link the `Text/xs` text style the token sync derives (12/18 Regular on
+`--a63-font-app`), found by name and checked by id, and set nothing of their own beside their fill
+(a font, size or line height of its own would detach the style). In a file without that style, or
+when its font does not load, they bind the `--typography-xs-*` variables instead. The title, group
+and labels are Bold and the grid labels Medium, and the synced text styles are Regular only, so
+those bind variables. Every card text takes the first family of `--a63-font-app` (Geist), the
+family the text styles bind, unbound for the reason the Button label's family is, and
+`applied.fontFallbacks` says so. In the last script these tokens count toward
+`missingVariables`: in a file without them it writes nothing.
 
 Every part is matched by layer name and checked like a variant's layers: a second run writes
 nothing, a changed doc string rewrites only its row, a deleted part comes back in its place, and

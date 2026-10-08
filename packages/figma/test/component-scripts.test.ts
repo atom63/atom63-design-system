@@ -7,6 +7,7 @@ import { parseDerived } from '../src/derived'
 import type { SyncModel } from '../src/plan'
 import { syncModel } from '../src/runtime'
 import { buildScripts } from '../src/scripts'
+import { deriveStyles } from '../src/styles'
 import { createFakeNodes } from './fake-nodes'
 import { buttonModelFixture, syncFixture } from './fixtures/button'
 
@@ -14,6 +15,8 @@ const read = (path: string) =>
   JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8')) as unknown
 const realSyncModel = read('../../styles/generated/atom63.figma-sync.json') as SyncModel
 const realButtonModel = read('../generated/atom63.figma-components.json') as ComponentModel
+/** The token set as `sync --model` writes it: with the styles derived from it (cli.ts). */
+const realSyncWithStyles: SyncModel = { ...realSyncModel, styles: deriveStyles(realSyncModel, {}) }
 
 interface Counts {
   missingVariables: string[]
@@ -182,9 +185,26 @@ describe('component scripts for use_figma', () => {
     expect(fake.writes).toBe(writes)
   })
 
+  it('keeps every real script under the limit and the doc part 500 characters under it', () => {
+    // The splitter measures each script exactly, so none can reach 49,000, and the variant parts
+    // are filled to it on purpose. The doc part is the one whose size moves with the doc text and
+    // the card's code: this margin warns before it has no room left.
+    for (const action of ['sync', 'check'] as const) {
+      const scripts = buildComponentScripts(realButtonModel, action)
+      for (const script of scripts) expect(script.length).toBeLessThan(49_000)
+      expect(scripts.at(-1)!.length).toBeLessThanOrEqual(49_000 - 500)
+    }
+  })
+
   it('runs every real script in order against the fake and verifies clean', async () => {
     const fake = createFakeNodes()
-    for (const script of buildScripts(realSyncModel, 'sync')) await fake.run(script)
+    // Token sync as the CLI writes it, styles included: the card's values link Text/xs.
+    for (const script of buildScripts(realSyncWithStyles, 'sync')) {
+      const result = (await fake.run(script)) as { styles?: { verification: unknown } }
+      if (result.styles)
+        expect(result.styles.verification).toMatchObject({ create: [], update: [] })
+    }
+    expect(fake.textStyles.map(style => style.name)).toContain('Text/xs')
     let created = 0
     const cards: Counts['card'][] = []
     for (const script of buildComponentScripts(realButtonModel, 'sync')) {
@@ -203,6 +223,14 @@ describe('component scripts for use_figma', () => {
     expect(cards.at(-1)).toMatchObject({ create: 0, update: 0 })
     expect(cards.at(-1)!.unchanged).toBeGreaterThan(0)
     const writes = fake.writes
+    const textXs = fake.textStyles.find(style => style.name === 'Text/xs')!.id
+    const card = fake.pages
+      .find(page => page.name === realButtonModel.page)!
+      .children.find(node => node.type === 'FRAME' && node.name === 'Button')!
+    const values = card.children!.flatMap(
+      row => row.children?.filter(node => node.name === 'Value') ?? []
+    )
+    expect(values.map(value => value.textStyleId)).toEqual(values.map(() => textXs))
     for (const script of buildComponentScripts(realButtonModel, 'check')) {
       const result = (await fake.run(script)) as CheckPart
       expect(result.planned.unchanged).toBe(result.variants)
@@ -211,6 +239,10 @@ describe('component scripts for use_figma', () => {
       expect(result.variants).toBe(namesIn(script).length)
       expect(JSON.stringify(result).length).toBeLessThan(20_000)
     }
+    expect(fake.writes).toBe(writes)
+    // A second run of every sync script, tokens and styles too, writes nothing.
+    for (const script of buildScripts(realSyncWithStyles, 'sync')) await fake.run(script)
+    for (const script of buildComponentScripts(realButtonModel, 'sync')) await fake.run(script)
     expect(fake.writes).toBe(writes)
   }, 120_000)
 

@@ -7,6 +7,7 @@ import { readRecipe } from '../src/components/recipe'
 import { planComponent, syncComponent } from '../src/components/sync-component'
 import type { SyncModel, SyncVariable } from '../src/plan'
 import { syncModel } from '../src/runtime'
+import { deriveStyles } from '../src/styles'
 import { createFakeNodes } from './fake-nodes'
 import { buttonModelFixture, syncFixture } from './fixtures/button'
 
@@ -1158,7 +1159,9 @@ describe('the real Button model', () => {
     const sync = read('../../styles/generated/atom63.figma-sync.json') as SyncModel
     const model = read('../generated/atom63.figma-components.json') as ComponentModel
     const fake = createFakeNodes()
-    await syncModel(fake.figma, sync)
+    // As the CLI syncs it: with the text and effect styles derived from the token set.
+    const tokens = await syncModel(fake.figma, { ...sync, styles: deriveStyles(sync) })
+    expect(tokens.styles?.verification).toMatchObject({ create: [], update: [] })
     const first = await syncComponent(fake.figma, model)
     expect(first.planned.missingVariables).toEqual([])
     expect(first.verification).toEqual({
@@ -1175,8 +1178,19 @@ describe('the real Button model', () => {
     // The family token holds a CSS stack: Geist is the literal, the variable stays unbound.
     expect(first.applied.fontFallbacks).toEqual([
       'Label: --a63-control-font-family not bound in every mode; used Geist',
-      'Spec card: --font-family-sans not bound in every mode; used Geist',
+      'Spec card: --a63-font-app not bound in every mode; used Geist',
     ])
+    // The card's values link the synced Text/xs style.
+    const textXs = fake.textStyles.find(style => style.name === 'Text/xs')!
+    expect(textXs).toBeDefined()
+    const card = fake.pages
+      .find(page => page.name === model.page)!
+      .children.find(node => node.type === 'FRAME' && node.name === 'Button')!
+    const values = card.children!.flatMap(
+      row => row.children?.filter(node => node.name === 'Value') ?? []
+    )
+    expect(values).toHaveLength(7)
+    for (const value of values) expect(value.textStyleId).toBe(textXs.id)
     // Every focusVisible variant shows its ring, transparent ghost and link included.
     const wrongRing = model.variants
       .filter(variant => {

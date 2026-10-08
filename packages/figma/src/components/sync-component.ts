@@ -312,7 +312,7 @@ async function variantChecks(run: Run, node: SceneNodeLike, spec: VariantSpec) {
 }
 
 /** A failing check as a difference, with short actual and expected values when it can say. */
-function difference(variant: string, check: Check): Difference {
+function difference(variant: string, check: Pick<Check, 'what' | 'describe'>): Difference {
   let described: { actual: unknown; expected: unknown } | undefined
   try {
     described = check.describe?.()

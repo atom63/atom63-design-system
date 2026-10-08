@@ -1,7 +1,7 @@
 import type { ComponentDoc, ComponentModel } from '../src/components/model'
 import type { PageLike, SceneNodeLike } from '../src/components/nodes-api'
 import { buildComponentScripts } from '../src/components/scripts'
-import { CARD_TOKENS, GRID_LEFT, GRID_TOP } from '../src/components/spec-card'
+import { BODY_STYLE, CARD_TOKENS, GRID_LEFT, GRID_TOP } from '../src/components/spec-card'
 import { planComponent, syncComponent } from '../src/components/sync-component'
 import type { SyncModel } from '../src/plan'
 import { syncModel } from '../src/runtime'
@@ -58,12 +58,30 @@ const cardSync: SyncModel = {
   ],
 }
 
+/** The synced style the row values link, as styles.ts derives it from the xs step. */
+const withBodyStyle: SyncModel = {
+  ...cardSync,
+  styles: {
+    text: [
+      {
+        name: BODY_STYLE,
+        description: 'xs',
+        family: { alias: CARD_TOKENS.fontFamily, fallback: 'Geist' },
+        fontSize: { alias: CARD_TOKENS.bodySize },
+        lineHeight: { alias: CARD_TOKENS.bodyLine },
+      },
+    ],
+    effects: [],
+    skipped: [],
+  },
+}
+
 const ROWS = ['Summary', 'When to use', 'Variant', 'Size', 'State', 'Related', 'Docs']
 const alias = (id: string) => ({ type: 'VARIABLE_ALIAS', id })
 
-async function setup() {
+async function setup(tokens: SyncModel = cardSync) {
   const fake = createFakeNodes()
-  await syncModel(fake.figma, cardSync)
+  await syncModel(fake.figma, tokens)
   return fake
 }
 async function pageOf(fake: ReturnType<typeof createFakeNodes>): Promise<PageLike> {
@@ -95,9 +113,12 @@ describe('the spec card', () => {
     expect(result.verification).toMatchObject({ create: [], update: [], unchanged: 12 })
     expect(result.verification.card).toMatchObject({ create: [], update: [] })
     expect(result.planned.card!.create).toEqual(
-      expect.arrayContaining(['Button', 'Group', 'Title', ...ROWS, 'Grid', 'Set'])
+      expect.arrayContaining(['Button', 'Group', 'Title', ...ROWS, 'Grid'])
     )
-    expect(result.applied.card!.created).toBe(result.planned.card!.create.length - 1)
+    // The variants make the set; the card only moves and describes it.
+    expect(result.planned.card!.create).not.toContain('Set')
+    expect(result.planned.card!.update).toEqual(['Set'])
+    expect(result.applied.card!.created).toBe(result.planned.card!.create.length)
 
     const { page, card, set } = await cardOf(fake)
     // The set lives in the card, nowhere else on the page.
@@ -126,11 +147,12 @@ describe('the spec card', () => {
     // S7: the set's own description, shown in Assets and Dev Mode.
     expect(set.description).toBe(`${doc.summary}\n${doc.docsPath}`)
 
-    // Layout: a hugging vertical card, stretched rows, wrapping texts.
+    // Layout: a vertical card as tall as its rows and as wide as the Grid, stretched rows.
     expect(card).toMatchObject({
       layoutMode: 'VERTICAL',
       primaryAxisSizingMode: 'AUTO',
-      counterAxisSizingMode: 'AUTO',
+      counterAxisSizingMode: 'FIXED',
+      width: childOf(card, 'Grid').width + 48,
       paddingLeft: 24,
       paddingRight: 24,
       paddingTop: 24,
@@ -369,5 +391,120 @@ describe('the spec card', () => {
       if (last) expect(result.verification.card).toMatchObject({ create: 0, update: 0 })
       expect(JSON.stringify(result).length).toBeLessThan(20_000)
     }
+  })
+  it('fixes the card’s width to the Grid’s plus padding, following the set', async () => {
+    const fake = await setup()
+    await syncComponent(fake.figma, model)
+    const { card, grid, set } = await cardOf(fake)
+    expect(card.counterAxisSizingMode).toBe('FIXED')
+    expect(card.width).toBeCloseTo(grid.width + 48, 2)
+    // A designer widens the set: the Grid and then the card follow on the next run.
+    const variant = set.children![0]
+    variant.x = set.width + 200
+    set.resize(variant.x + variant.width, set.height)
+    const again = await syncComponent(fake.figma, model)
+    // The plan sees the Grid; the card's width follows it in the final card pass.
+    expect(again.planned.card!.update).toEqual(expect.arrayContaining(['Grid']))
+    expect(again.applied.card!.updated).toBeGreaterThanOrEqual(2)
+    expect(again.verification.card).toMatchObject({ create: [], update: [] })
+    expect(grid.width).toBeCloseTo(GRID_LEFT + set.width, 2)
+    expect(card.width).toBeCloseTo(grid.width + 48, 2)
+    expect(card.counterAxisSizingMode).toBe('FIXED')
+    expect(card.primaryAxisSizingMode).toBe('AUTO')
+  })
+
+  it('fixes a row’s width before stretching it, as Figma’s typings require', async () => {
+    const fake = await setup()
+    // The fake refuses a stretch on an axis that hugs.
+    const card = fake.figma.createFrame()
+    card.layoutMode = 'VERTICAL'
+    const row = fake.figma.createFrame()
+    card.appendChild(row)
+    row.layoutMode = 'HORIZONTAL'
+    expect(() => {
+      row.layoutAlign = 'STRETCH'
+    }).toThrow(/AUTO sizing/)
+    row.primaryAxisSizingMode = 'FIXED'
+    row.layoutAlign = 'STRETCH'
+    expect(() => {
+      row.primaryAxisSizingMode = 'AUTO'
+    }).toThrow(/AUTO sizing/)
+    // The card's rows are written in that order, and verify.
+    const result = await syncComponent(fake.figma, model)
+    expect(result.verification.card).toMatchObject({ create: [], update: [] })
+    const { card: drawn } = await cardOf(fake)
+    for (const name of ROWS)
+      expect(childOf(drawn, name)).toMatchObject({
+        layoutAlign: 'STRETCH',
+        primaryAxisSizingMode: 'FIXED',
+      })
+  })
+
+  it('links the row values to the synced Text/xs style, and labels keep variables', async () => {
+    const fake = await setup(withBodyStyle)
+    const style = fake.textStyles.find(item => item.name === BODY_STYLE)!
+    expect(style).toBeDefined()
+    const result = await syncComponent(fake.figma, model)
+    expect(result.verification.card).toMatchObject({ create: [], update: [] })
+    const { card } = await cardOf(fake)
+    const id = (token: string) => fake.variableOf(token).id
+    for (const name of ROWS) {
+      const value = childOf(childOf(card, name), 'Value')
+      expect(value.textStyleId).toBe(style.id)
+      // No text property of its own: it would detach the style.
+      expect(value.boundVariables?.fontSize).toBeUndefined()
+      expect(value.boundVariables?.lineHeight).toBeUndefined()
+      expect(value.boundVariables?.fontFamily).toBeUndefined()
+      expect(value.fontName).toEqual(style.fontName)
+      expect(value.fills[0].boundVariables?.color?.id).toBe(id(CARD_TOKENS.textPrimary))
+      // Bold 11px: no Regular-only synced style matches, so variables.
+      const label = childOf(childOf(card, name), 'Label')
+      expect(label.textStyleId).toBe('')
+      expect(label.boundVariables?.lineHeight).toEqual([alias(id(CARD_TOKENS.bodyLine))])
+    }
+    expect(childOf(card, 'Title').textStyleId).toBe('')
+
+    const writes = fake.writes
+    const second = await syncComponent(fake.figma, model)
+    expect(second.planned.card).toMatchObject({ create: [], update: [] })
+    expect(second.planned.differences).toBeUndefined()
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('binds variables on the values without the style, and links it once it is synced', async () => {
+    const fake = await setup()
+    await syncComponent(fake.figma, model)
+    const { card } = await cardOf(fake)
+    const id = (token: string) => fake.variableOf(token).id
+    const value = childOf(childOf(card, 'Summary'), 'Value')
+    expect(value.textStyleId).toBe('')
+    expect(value.boundVariables?.fontSize).toEqual([alias(id(CARD_TOKENS.bodySize))])
+
+    await syncModel(fake.figma, withBodyStyle)
+    const style = fake.textStyles.find(item => item.name === BODY_STYLE)!
+    const linked = await syncComponent(fake.figma, model)
+    expect(linked.planned.card!.update).toEqual(ROWS)
+    expect(linked.planned.differences![0]).toMatchObject({
+      variant: 'card Summary',
+      what: 'Value.textStyleId',
+    })
+    expect(linked.verification.card).toMatchObject({ create: [], update: [] })
+    expect(value.textStyleId).toBe(style.id)
+    expect(value.boundVariables?.fontSize).toBeUndefined()
+  })
+
+  it('finds the style by name and checks it by id', async () => {
+    const fake = await setup(withBodyStyle)
+    await syncComponent(fake.figma, model)
+    const { card } = await cardOf(fake)
+    const value = childOf(childOf(card, 'Docs'), 'Value')
+    // Another style of the same font linked by hand: the run relinks Text/xs.
+    const other = fake.figma.createTextStyle()
+    other.name = 'Text/other'
+    other.fontName = { family: 'Geist', style: 'Regular' }
+    await value.setTextStyleIdAsync!(other.id)
+    const result = await syncComponent(fake.figma, model)
+    expect(result.planned.card!.update).toEqual(['Docs'])
+    expect(value.textStyleId).toBe(fake.textStyles.find(item => item.name === BODY_STYLE)!.id)
   })
 })

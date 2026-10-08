@@ -170,6 +170,10 @@ export interface SceneNodeLike {
   fontSize?: number
   lineHeight?: LineHeightLike
   textAutoResize?: 'NONE' | 'WIDTH_AND_HEIGHT' | 'HEIGHT' | 'TRUNCATE'
+  /** The linked text style's id, '' when none; read-only in a dynamic-page file. */
+  readonly textStyleId?: string | symbol
+  /** Links the text style (its font must be loaded); the style's values replace the node's. */
+  setTextStyleIdAsync?(styleId: string): Promise<void>
 
   /** Components and sets: the description Assets and Dev Mode show. */
   description?: string

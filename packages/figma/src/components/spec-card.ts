@@ -10,6 +10,7 @@
  * Bundled into the runtime IIFE: no Node or DOM imports.
  */
 import { type Check, fontTarget, layerChecks, loads, type ValueContext } from './component-values'
+import type { TextStyleLike } from '../style-sync'
 import type { ComponentModel, ComponentValue, FigmaProperty, LayerSpec } from './model'
 import type { PageLike, SceneNodeLike } from './nodes-api'
 
@@ -23,8 +24,11 @@ export const CARD_TOKENS = {
   radius: '--radius-md',
   textPrimary: '--a63-text-primary',
   textSecondary: '--a63-text-secondary',
-  /** A CSS stack: its first family is used, as the Label's is (`fontFallbacks`). */
-  fontFamily: '--font-family-sans',
+  /**
+   * The family the synced text styles bind (style-sync.ts), so the card's own
+   * texts match `Text/xs`. A CSS stack: its first family is used, as the Label's is.
+   */
+  fontFamily: '--a63-font-app',
   bodySize: '--typography-xs-font-size',
   bodyLine: '--typography-xs-line-height',
   titleSize: '--typography-lg-font-size',
@@ -40,6 +44,12 @@ export const GRID_LEFT = 176
 export const GRID_TOP = 24
 /** The name fontFallbacks report card texts under. */
 const FONT_LAYER = 'Spec card'
+/**
+ * The synced text style the row values use: 12/18 Regular on the app font, the
+ * docs site's body copy. Styles are Regular only, so the Bold title and labels
+ * bind variables instead; so do the values in a file without the style.
+ */
+export const BODY_STYLE = 'Text/xs'
 
 export interface CardContext extends ValueContext {
   model: ComponentModel
@@ -52,15 +62,17 @@ export interface CardPlan {
   update: string[]
   unchanged: number
 }
+/** A card check; linking a text style is asynchronous in Figma. */
+type CardCheck = Omit<Check, 'write'> & { write(): void | Promise<void> }
 export interface CardDifference {
   variant: string
-  check: Check
+  check: CardCheck
 }
 
 type Parent = NodeSpec | 'page'
 interface NodeSpec {
   name: string
-  type: 'FRAME' | 'TEXT'
+  type: 'FRAME' | 'TEXT' | 'COMPONENT_SET'
   parent: Parent
   /** The sibling it is created after; first when there is none. */
   after?: string
@@ -69,7 +81,7 @@ interface NodeSpec {
   checks(node: SceneNodeLike): Checks | Promise<Checks>
 }
 interface Checks {
-  checks: Check[]
+  checks: CardCheck[]
   fallbacks?: string[]
 }
 /** What the plan counts as one: a node and the nodes inside it. */
@@ -156,13 +168,68 @@ async function textChecks(
   node: SceneNodeLike,
   style: Style,
   characters: string,
-  extra: Check[] = []
-) {
+  extra: CardCheck[] = []
+): Promise<Checks> {
   const layer: LayerSpec = { name: FONT_LAYER, kind: 'text', properties: style }
   const font = await fontTarget(context, node, layer)
   const checks = [...layerChecks(context, node, layer, font), prop(node, 'characters', characters)]
   return { checks: [...checks, ...extra], fallbacks: font?.fallbacks }
 }
+/** `Text/xs` once per run, found by name; undefined when the file has no such style. */
+const bodyStyles = new WeakMap<ValueContext, Promise<TextStyleLike | undefined>>()
+function bodyStyle(context: ValueContext) {
+  let style = bodyStyles.get(context)
+  if (!style) {
+    style = context.figma
+      .getLocalTextStylesAsync()
+      .then(styles => styles.find(item => item.name === BODY_STYLE))
+    bodyStyles.set(context, style)
+  }
+  return style
+}
+
+/**
+ * A row value's checks: linked to `Text/xs` (by id) and only its fill set
+ * beside it, since a font, size or line height of its own would detach the
+ * style; else the body variables, as the other texts bind them.
+ */
+async function bodyChecks(
+  context: ValueContext,
+  node: SceneNodeLike,
+  characters: string,
+  extra: CardCheck[]
+): Promise<Checks> {
+  const style = await bodyStyle(context)
+  if (!style || !(await loads(context, style.fontName))) {
+    const result = await textChecks(context, node, STYLES.body, characters, extra)
+    if (style)
+      result.fallbacks = [
+        ...(result.fallbacks ?? []),
+        `${FONT_LAYER}: ${style.fontName.family} ${style.fontName.style} did not load; values bind variables, not ${BODY_STYLE}`,
+      ]
+    return result
+  }
+  const linked: CardCheck = {
+    what: `${node.name}.textStyleId`,
+    same: () => node.textStyleId === style.id,
+    write: () => node.setTextStyleIdAsync!(style.id),
+    describe: () => ({ actual: node.textStyleId, expected: `${BODY_STYLE} ${style.id}` }),
+  }
+  const fill: LayerSpec = {
+    name: FONT_LAYER,
+    kind: 'text',
+    properties: { fill: alias(CARD_TOKENS.textPrimary) },
+  }
+  return {
+    checks: [
+      linked,
+      ...layerChecks(context, node, fill, null),
+      prop(node, 'characters', characters),
+      ...extra,
+    ],
+  }
+}
+
 const frameChecks = (context: ValueContext, node: SceneNodeLike, style: Style) =>
   layerChecks(context, node, { name: node.name, kind: 'frame', properties: style }, null)
 
@@ -233,25 +300,31 @@ function cardItems(context: CardContext): Item[] {
     name: model.component,
     type: 'FRAME',
     parent: 'page',
-    checks: node => ({
-      checks: [
-        prop(node, 'layoutMode', 'VERTICAL'),
-        prop(node, 'counterAxisAlignItems', 'MIN'),
-        ...frameChecks(context, node, {
-          fill: alias(CARD_TOKENS.surface),
-          stroke: alias(CARD_TOKENS.border),
-          strokeWeight: alias(CARD_TOKENS.borderWidth),
-          cornerRadius: alias(CARD_TOKENS.radius),
-          paddingInline: value(PADDING),
-          itemSpacing: value(SPACING),
-        }),
-        prop(node, 'paddingTop', PADDING),
-        prop(node, 'paddingBottom', PADDING),
-        // Hugs both ways: as tall as its rows, as wide as the Grid (rows stretch to it).
-        prop(node, 'primaryAxisSizingMode', 'AUTO'),
-        prop(node, 'counterAxisSizingMode', 'AUTO'),
-      ],
-    }),
+    checks: node => {
+      const grid = node.children?.find(child => child.name === 'Grid' && child.type === 'FRAME')
+      return {
+        checks: [
+          prop(node, 'layoutMode', 'VERTICAL'),
+          prop(node, 'counterAxisAlignItems', 'MIN'),
+          ...frameChecks(context, node, {
+            fill: alias(CARD_TOKENS.surface),
+            stroke: alias(CARD_TOKENS.border),
+            strokeWeight: alias(CARD_TOKENS.borderWidth),
+            cornerRadius: alias(CARD_TOKENS.radius),
+            paddingInline: value(PADDING),
+            itemSpacing: value(SPACING),
+          }),
+          prop(node, 'paddingTop', PADDING),
+          prop(node, 'paddingBottom', PADDING),
+          // As wide as the Grid, fixed: stretched rows fill a fixed width, where a hugging one
+          // would size from them. Resized first, since a resize fixes both axes.
+          ...(grid ? [size(node, () => grid.width + 2 * PADDING)] : []),
+          // As tall as its rows.
+          prop(node, 'primaryAxisSizingMode', 'AUTO'),
+          prop(node, 'counterAxisSizingMode', 'FIXED'),
+        ],
+      }
+    },
   }
   const items: Item[] = [{ name: card.name, nodes: [card] }]
   let previous: string | undefined
@@ -305,9 +378,10 @@ function cardItems(context: CardContext): Item[] {
           prop(node, 'layoutMode', 'HORIZONTAL'),
           prop(node, 'counterAxisAlignItems', 'MIN'),
           ...frameChecks(context, node, { itemSpacing: value(ROW_SPACING) }),
-          stretch(node),
-          // Stretched across the card, as tall as its texts.
+          // Stretched across the card, as tall as its texts. Fixed before the stretch:
+          // Figma's typings rule out AUTO on an axis that stretches.
           prop(node, 'primaryAxisSizingMode', 'FIXED'),
+          stretch(node),
           prop(node, 'counterAxisSizingMode', 'AUTO'),
         ],
       }),
@@ -333,7 +407,7 @@ function cardItems(context: CardContext): Item[] {
           parent: row,
           after: 'Label',
           checks: node =>
-            textChecks(context, node, STYLES.body, body, [
+            bodyChecks(context, node, body, [
               prop(node, 'layoutGrow', 1),
               prop(node, 'textAutoResize', 'HEIGHT'),
             ]),
@@ -369,11 +443,11 @@ function cardItems(context: CardContext): Item[] {
     nodes: [
       {
         name: model.component,
-        type: 'FRAME',
+        type: 'COMPONENT_SET',
         parent: grid,
         find: () => context.set,
         checks: set => {
-          const inGrid: Check = {
+          const inGrid: CardCheck = {
             what: `${set.name}.parent`,
             same: () => !!set.parent && set.parent === nodeOf(context, grid),
             write: () => nodeOf(context, grid)?.appendChild(set),
@@ -495,8 +569,12 @@ export async function planCard(context: CardContext) {
     let status: 'create' | 'update' | 'unchanged' = 'unchanged'
     for (const [index, spec] of item.nodes.entries()) {
       const node = nodeOf(context, spec)
+      // The set is made by the variants, never by the card, which only moves and describes it.
+      if (!node && spec.find) {
+        status = 'update'
+        break
+      }
       if (!node) {
-        // The set is made by the variants, never by the card.
         status = index === 0 ? 'create' : 'update'
         if (status === 'update')
           differences.push({ variant: `card ${item.name}`, check: missing(spec) })
@@ -514,13 +592,14 @@ export async function planCard(context: CardContext) {
   }
   return { plan, differences }
 }
-const missing = (spec: NodeSpec): Check => ({
+const missing = (spec: NodeSpec): CardCheck => ({
   what: `${spec.name} missing`,
   same: () => false,
   write: () => undefined,
 })
 
 function create(context: CardContext, spec: NodeSpec): SceneNodeLike | undefined {
+  if (spec.type === 'COMPONENT_SET') return undefined
   const node = spec.type === 'TEXT' ? context.figma.createText() : context.figma.createFrame()
   node.name = spec.name
   if (spec.parent === 'page') {
@@ -555,13 +634,23 @@ export async function applyCard(
   const writeNode = async (item: Item, spec: NodeSpec, node: SceneNodeLike) => {
     const { checks, fallbacks } = await spec.checks(node)
     result.fallbacks.push(...(fallbacks ?? []))
-    const pending = checks.filter(check => !check.same())
+    if (checks.every(check => check.same())) return false
     // Figma changes a text layer only once its current font is loaded.
-    if (pending.length > 0 && isText(node) && node.fontName) await loads(context, node.fontName)
-    for (const check of pending)
-      if (!check.same()) named(`card ${item.name}`, check.what, () => check.write())
-    return pending.length > 0
+    if (isText(node) && node.fontName) await loads(context, node.fontName)
+    // Every check, asked again: an earlier write (a resize) can undo one that held.
+    for (const check of checks) {
+      if (check.same()) continue
+      try {
+        await check.write()
+      } catch (error) {
+        named(`card ${item.name}`, check.what, () => {
+          throw error
+        })
+      }
+    }
+    return true
   }
+  const written = new Set<Item>()
   for (const item of items) {
     let made = false
     let changed = false
@@ -576,9 +665,12 @@ export async function applyCard(
     }
     if (made) result.created += 1
     else if (changed) result.updated += 1
+    if (made || changed) written.add(item)
   }
-  // Last, once every row and the Grid are in: the card's own sizing, which a stretch can change.
-  const card = nodeOf(context, items[0].nodes[0])
-  if (card) await writeNode(items[0], items[0].nodes[0], card)
+  // Last, once the Grid has its size: the card's width, which follows it.
+  const [first] = items
+  const card = nodeOf(context, first.nodes[0])
+  if (card && (await writeNode(first, first.nodes[0], card)) && !written.has(first))
+    result.updated += 1
   return result
 }
