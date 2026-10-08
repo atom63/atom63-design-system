@@ -92,12 +92,24 @@ describe('component scripts for use_figma', () => {
   })
 
   it('moves variants out of the last part when the doc block would push it over', () => {
-    const doc = { ...realButtonModel.doc!, usage: 'x'.repeat(6000) }
+    const doc = { ...realButtonModel.doc!, usage: 'x'.repeat(12_000) }
     const model = { ...realButtonModel, doc }
-    const scripts = buildComponentScripts(model, 'sync')
     const withoutDoc = buildComponentScripts({ ...model, doc: undefined }, 'sync')
-    expect(scripts.length).toBeGreaterThanOrEqual(withoutDoc.length)
+    // The last part has room for some of the doc, but not all of it.
+    const room = 49_000 - withoutDoc.at(-1)!.length
+    expect(room).toBeGreaterThan(0)
+    expect(room).toBeLessThan(JSON.stringify(doc).length)
+    const scripts = buildComponentScripts(model, 'sync')
+    expect(scripts.length).toBeGreaterThan(withoutDoc.length)
     for (const script of scripts) expect(script.length).toBeLessThan(49_000)
+    // Variants the last part held without the doc moved on to a new last part.
+    const lastWithoutDoc = namesIn(withoutDoc.at(-1)!)
+    const lastWithDoc = namesIn(scripts.at(-1)!)
+    expect(lastWithDoc.length).toBeGreaterThan(0)
+    expect(lastWithoutDoc.some(name => !lastWithDoc.includes(name))).toBe(true)
+    expect(lastWithoutDoc.slice(-lastWithDoc.length)).toEqual(lastWithDoc)
+    const withDoc = scripts.map(script => modelIn(script).doc !== undefined)
+    expect(withDoc.filter(Boolean)).toHaveLength(1)
     expect(modelIn(scripts.at(-1)!).doc).toEqual(doc)
     expect(scripts.flatMap(namesIn)).toEqual(model.variants.map(variant => variant.name))
   })

@@ -52,11 +52,15 @@ export function readComponentDoc(
   for (const field of ['label', 'summary', 'usage', 'route'] as const)
     if (!present(entry[field])) missing.push(field)
   if (!entry.group || !present(entry.group.id) || !present(entry.group.title)) missing.push('group')
-  const related = entry.related.map(relatedSlug => {
-    const label = entries.get(relatedSlug)?.label
-    if (!present(label)) missing.push(`related.${relatedSlug}`)
-    return { slug: relatedSlug, label: label ?? '' }
-  })
+  const relatedSlugs: unknown = entry.related
+  if (!Array.isArray(relatedSlugs)) missing.push('related')
+  const related = (Array.isArray(relatedSlugs) ? (relatedSlugs as string[]) : []).map(
+    relatedSlug => {
+      const label = entries.get(relatedSlug)?.label
+      if (!present(label)) missing.push(`related.${relatedSlug}`)
+      return { slug: relatedSlug, label: label ?? '' }
+    }
+  )
   const axisGuidance: ComponentDoc['axisGuidance'] = { variant: {}, size: {}, state: {} }
   for (const [axis, key] of AXES)
     for (const value of axes[axis]) {

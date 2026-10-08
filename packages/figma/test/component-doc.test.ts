@@ -97,6 +97,15 @@ describe('the component doc block', () => {
     )
   })
 
+  it('fails naming related when it is not a list', () => {
+    const index = editButton(entry => {
+      ;(entry as { related: unknown }).related = 'link'
+    })
+    expect(() => readComponentDoc(index, 'button', axes)).toThrow(
+      /component "button" is missing related;/
+    )
+  })
+
   it('covers every value the real Button model renders', () => {
     const model = JSON.parse(checkedIn) as ReturnType<typeof buildComponentModel>
     const { doc } = model
