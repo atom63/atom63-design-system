@@ -1,8 +1,19 @@
 export type ComponentPreviewProfile = 'canvas' | 'compact' | 'standard'
 export type ComponentStatus = 'preview' | 'stable'
 
+/**
+ * One line of guidance per contract value, keyed by the value. The docs pages,
+ * the agent index and the Figma spec card all read these lines from here.
+ */
+export type ComponentAxisGuidance = {
+  size?: Readonly<Record<string, string>>
+  state?: Readonly<Record<string, string>>
+  variant?: Readonly<Record<string, string>>
+}
+
 export type ComponentCatalogItem = {
   additionalValueExports?: readonly string[]
+  axisGuidance?: ComponentAxisGuidance
   category: string
   importPath: '@atom63/ui-react'
   previewProfile: ComponentPreviewProfile
@@ -24,7 +35,7 @@ export type ComponentCatalogGroup = {
 
 type ComponentDefinition = Pick<
   ComponentCatalogItem,
-  'additionalValueExports' | 'relatedSlugs' | 'summary' | 'usage' | 'usageExports'
+  'additionalValueExports' | 'axisGuidance' | 'relatedSlugs' | 'summary' | 'usage' | 'usageExports'
 >
 
 const componentDefinitions: Record<string, ComponentDefinition> = {

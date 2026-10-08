@@ -7,6 +7,7 @@ import {
   componentCatalogItems,
   componentSlugFromDocSlug,
 } from './component-catalog'
+import { getComponentContractDoc } from './component-contract'
 import { componentDocMarkdown, componentExportSurface, getComponentDoc } from './component-docs'
 
 const componentIndexSources = import.meta.glob<string>(
@@ -98,6 +99,35 @@ describe('component catalog inventory', () => {
       const doc = getComponentDoc(item.slug)
       expect(doc?.related.map(related => related.slug)).toEqual(item.relatedSlugs)
       expect(doc?.guidance[0]).toBe(item.usage)
+    }
+  })
+
+  it('keys axis guidance by contract values, one short sentence each', () => {
+    for (const item of componentCatalogItems) {
+      if (!item.axisGuidance) {
+        continue
+      }
+
+      const contract = getComponentContractDoc(item.slug)
+      const axisValues = (name: string) => contract?.axes.find(axis => axis.name === name)?.values
+      const allowed = {
+        size: axisValues('sizes'),
+        state: contract?.states,
+        variant: axisValues('variants'),
+      }
+
+      for (const [axis, lines] of Object.entries(item.axisGuidance)) {
+        const values = allowed[axis as keyof typeof allowed]
+        for (const [value, line] of Object.entries(lines ?? {})) {
+          const where = `${item.slug} ${axis} ${value}`
+          if (values) {
+            expect(values, where).toContain(value)
+          }
+          expect(line.trim(), where).toBe(line)
+          expect(line, where).toMatch(/^[A-Z].*\.$/)
+          expect(line.length, where).toBeLessThan(120)
+        }
+      }
     }
   })
 
