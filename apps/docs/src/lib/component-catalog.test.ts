@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { buttonStates, buttonVariants } from '@atom63/ui-foundation'
 import * as uiReactApi from '@atom63/ui-react'
 import uiReactPackageSource from '../../../../packages/ui-react/package.json?raw'
 import uiReactIndexSource from '../../../../packages/ui-react/src/index.ts?raw'
@@ -129,6 +130,18 @@ describe('component catalog inventory', () => {
         }
       }
     }
+  })
+
+  // Components with a Figma model need a line for every modelled value: the
+  // generated spec card shows one per variant, rendered size and state.
+  it('gives Button a guidance line for every variant, rendered size and state', () => {
+    const button = componentCatalogItems.find(item => item.slug === 'button')
+    const keys = (lines: Readonly<Record<string, string>> | undefined) =>
+      Object.keys(lines ?? {}).sort()
+
+    expect(keys(button?.axisGuidance?.variant)).toEqual([...buttonVariants].sort())
+    expect(keys(button?.axisGuidance?.size)).toEqual(['lg', 'md', 'sm', 'xl', 'xs'])
+    expect(keys(button?.axisGuidance?.state)).toEqual([...buttonStates].sort())
   })
 
   it('only resolves canonical component document slugs', () => {
