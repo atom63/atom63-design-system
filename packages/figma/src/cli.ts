@@ -81,7 +81,13 @@ try {
   } else if (command === 'components') {
     const path =
       values.model ?? fail('pass --model <json> (generated/atom63.figma-components.json)')
-    const model = JSON.parse(readFileSync(path, 'utf8')) as ComponentModel
+    const read = JSON.parse(readFileSync(path, 'utf8')) as Partial<ComponentModel> | null
+    if (read?.schemaVersion !== 1 || !Array.isArray(read.variants))
+      fail(
+        `${path} is not a component model (schemaVersion 1 with a variants array); ` +
+          'pass generated/atom63.figma-components.json'
+      )
+    const model = read as ComponentModel
     const out = values.out ?? fail('pass --out <dir>')
     mkdirSync(out, { recursive: true })
     for (const file of readdirSync(out))
