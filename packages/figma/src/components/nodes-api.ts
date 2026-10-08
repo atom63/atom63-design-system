@@ -192,8 +192,6 @@ export interface NodesApi extends StylesApi {
   createText(): SceneNodeLike
   createComponent(): SceneNodeLike
   combineAsVariants(nodes: readonly SceneNodeLike[], parent: PageLike): SceneNodeLike
-  /** A fresh handle on a node; where offered, the sync re-reads a property reference through it. */
-  getNodeByIdAsync?(id: string): Promise<SceneNodeLike | PageLike | null>
   variables: VariablesApi & {
     setBoundVariableForPaint(paint: PaintLike, field: 'color', variable: VariableLike): PaintLike
   }

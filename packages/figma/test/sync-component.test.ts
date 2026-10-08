@@ -90,32 +90,28 @@ describe('the Figma node fake', () => {
     })
   })
 
-  it("reads a new set's first Label reference stale until a macrotask or a fresh lookup", async () => {
-    const exists =
+  it("reconciles a new set's default Label reference after a yield, until settled", async () => {
+    const reconciling =
       'in set_componentPropertyReferences: Could not create a new component property reference.'
-    for (const untilLookup of [false, true]) {
-      const fake = createFakeNodes({ lookup: true })
-      const page = fake.figma.createPage()
-      const component = fake.figma.createComponent()
-      component.name = 'Variant=default'
-      const label = fake.figma.createText()
-      label.name = 'Label'
-      component.appendChild(label)
-      fake.staleNewSetReference({ untilLookup })
-      const set = fake.figma.combineAsVariants([component], page)
-      const key = set.addComponentProperty!('Label', 'TEXT', 'Button')
+    const fake = createFakeNodes()
+    const page = fake.figma.createPage()
+    const component = fake.figma.createComponent()
+    component.name = 'Variant=default'
+    const label = fake.figma.createText()
+    label.name = 'Label'
+    component.appendChild(label)
+    fake.reconcileDefaultReference()
+    const set = fake.figma.combineAsVariants([component], page)
+    const key = set.addComponentProperty!('Label', 'TEXT', 'Button')
+    label.componentPropertyReferences = { characters: key }
+    expect(label.componentPropertyReferences).toEqual({ characters: key })
+    await new Promise(resolve => setTimeout(resolve, 0))
+    expect(label.componentPropertyReferences).toEqual({})
+    expect(() => {
       label.componentPropertyReferences = { characters: key }
-      expect(label.componentPropertyReferences).toEqual({})
-      expect(() => {
-        label.componentPropertyReferences = { characters: key }
-      }).toThrow(exists)
-      await new Promise(resolve => setTimeout(resolve, 0))
-      if (untilLookup) {
-        expect(label.componentPropertyReferences).toEqual({})
-        expect(await fake.figma.getNodeByIdAsync!(label.id)).toBe(label)
-      }
-      expect(label.componentPropertyReferences).toEqual({ characters: key })
-    }
+    }).toThrow(reconciling)
+    fake.settleReferences()
+    expect(label.componentPropertyReferences).toEqual({ characters: key })
   })
 
   it('fails where Figma fails', async () => {
@@ -330,7 +326,7 @@ describe('syncComponent', () => {
     const fake = createFakeNodes()
     await syncModel(fake.figma, syncFixture)
     // Figma once read a Label's property reference back as {} right after making the set.
-    fake.staleNextReferenceReads(1)
+    fake.staleNextReferenceReads(1, neutral)
     const first = await syncComponent(fake.figma, buttonModelFixture)
     expect(first.applied.created).toBe(12)
     expect(first.retried).toBe(1)
@@ -356,69 +352,73 @@ describe('syncComponent', () => {
     expect(fake.writes).toBe(writes)
   })
 
-  it("waits a macrotask before verifying, so a new set's stale reference is clean", async () => {
+  it('reports the default Label reference Figma is still reconciling as pending', async () => {
     const fake = createFakeNodes()
     await syncModel(fake.figma, syncFixture)
-    fake.staleNewSetReference()
-    const first = await syncComponent(fake.figma, buttonModelFixture)
-    expect(first.retried).toBeUndefined()
-    expect(first.settled).toBeUndefined()
-    expect(first.verification).toEqual({
+    fake.reconcileDefaultReference()
+    const [first] = buttonModelFixture.variants.map(variant => variant.name)
+    const result = await syncComponent(fake.figma, buttonModelFixture)
+    expect(result.retried).toBeUndefined()
+    expect(result.retryErrors).toBeUndefined()
+    expect(result.verification).toEqual({
       missingVariables: [],
       variables: [],
       create: [],
       update: [],
-      unchanged: 12,
+      unchanged: 11,
+      pendingReferences: [first],
     })
+    // A check before Figma settles still says pending, and nothing else.
+    const early = await planComponent(fake.figma, buttonModelFixture)
+    expect(early.update).toEqual([])
+    expect(early.pendingReferences).toEqual([first])
+
+    fake.settleReferences()
+    const check = await planComponent(fake.figma, buttonModelFixture)
+    expect(check.pendingReferences).toBeUndefined()
+    expect(check.unchanged).toBe(12)
     const writes = fake.writes
     const second = await syncComponent(fake.figma, buttonModelFixture)
     expect(second.planned.unchanged).toBe(12)
+    expect(second.verification.pendingReferences).toBeUndefined()
     expect(fake.writes).toBe(writes)
   })
 
-  it("reads a new set's reference through a fresh lookup when Figma offers one", async () => {
-    const fake = createFakeNodes({ lookup: true })
-    await syncModel(fake.figma, syncFixture)
-    fake.staleNewSetReference({ untilLookup: true })
-    const first = await syncComponent(fake.figma, buttonModelFixture)
-    expect(first.retried).toBeUndefined()
-    expect(first.verification.unchanged).toBe(12)
-    expect(first.verification.update).toEqual([])
-    const writes = fake.writes
-    const second = await syncComponent(fake.figma, buttonModelFixture)
-    expect(second.planned.unchanged).toBe(12)
-    expect(fake.writes).toBe(writes)
-  })
-
-  it('counts a refused reference write that holds when read again as settled', async () => {
+  it('keeps an apply going when Figma refuses a reference it is still reconciling', async () => {
     const fake = createFakeNodes()
     await syncModel(fake.figma, syncFixture)
-    // Stale through the first verification; the retry's refused write settles after a macrotask.
-    fake.staleNewSetReference({ macrotasks: 2 })
-    const first = await syncComponent(fake.figma, buttonModelFixture)
-    expect(first.retried).toBe(1)
-    expect(first.settled).toBe(1)
-    expect(first.retryErrors).toBeUndefined()
-    expect(first.verification.unchanged).toBe(12)
-    expect(first.verification.update).toEqual([])
+    fake.reconcileDefaultReference()
+    const [first] = buttonModelFixture.variants.map(variant => variant.name)
+    await syncComponent(fake.figma, buttonModelFixture)
+    // Another difference on the default variant applies it again; Figma refuses its reference.
+    fake.findVariant('Button', first).fills = []
+    const result = await syncComponent(fake.figma, buttonModelFixture, [first])
+    expect(result.planned.update).toEqual([first])
+    expect(result.retried).toBeUndefined()
+    expect(fake.findVariant('Button', first).fills).toHaveLength(1)
+    expect(result.verification.update).toEqual([])
+    expect(result.verification.pendingReferences).toEqual([first])
   })
 
-  it('keeps a refused reference write as a retry error when it still reads stale', async () => {
+  it('still reports a missing reference on a variant other than the default as an update', async () => {
     const fake = createFakeNodes()
     await syncModel(fake.figma, syncFixture)
-    // No fresh lookup to clear it: the reference reads stale for the whole run.
-    fake.staleNewSetReference({ untilLookup: true })
-    const first = await syncComponent(fake.figma, buttonModelFixture)
-    const [stale] = buttonModelFixture.variants.map(variant => variant.name)
-    expect(first.retried).toBe(1)
-    expect(first.settled).toBeUndefined()
-    expect(first.retryErrors).toEqual([
+    await syncComponent(fake.figma, buttonModelFixture)
+    const label = fake.findVariant('Button', neutral).children!.find(c => c.name === 'Label')!
+    fake.staleNextReferenceReads(100, neutral)
+    const plan = await planComponent(fake.figma, buttonModelFixture)
+    expect(plan.update).toEqual([neutral])
+    expect(plan.pendingReferences).toBeUndefined()
+    expect(plan.differences).toEqual([
       {
-        variant: stale,
-        error: expect.stringContaining('Could not create a new component property reference'),
+        variant: neutral,
+        what: 'Label.componentPropertyReferences',
+        actual: '{}',
+        expected: expect.stringContaining('Label#'),
       },
     ])
-    expect(first.verification.update).toEqual([stale])
+    fake.staleNextReferenceReads(0)
+    expect(label.componentPropertyReferences).toEqual({ characters: expect.any(String) })
   })
 
   it('re-applies a variant whose reference is lost after the first apply, at most once', async () => {
@@ -438,7 +438,8 @@ describe('syncComponent', () => {
     const fake = createFakeNodes()
     await syncModel(fake.figma, syncFixture)
     // The first apply loses three references (two variants: Label and Icon, then Label);
-    // re-writing the first Label throws once.
+    // the retry leaves the default variant's unsettled Label pending, and re-writing its
+    // Icon throws once.
     fake.dropNextReferenceWrites(3)
     fake.failReferenceWrites(1, 'in-execution inconsistency', true)
     const result = await syncComponent(fake.figma, buttonModelFixture)
@@ -447,17 +448,18 @@ describe('syncComponent', () => {
     expect(result.retryErrors).toEqual([
       {
         variant: failed,
-        error: `${failed} — Label.componentPropertyReferences: in-execution inconsistency`,
+        error: `${failed} — Icon.componentPropertyReferences: in-execution inconsistency`,
       },
     ])
     expect(result.verification.update).toEqual([failed])
     expect(result.verification.unchanged).toBe(11)
+    expect(result.verification.pendingReferences).toEqual([failed])
     expect(result.verification.differences).toEqual([
       {
         variant: failed,
-        what: 'Label.componentPropertyReferences',
+        what: 'Icon.componentPropertyReferences',
         actual: 'null',
-        expected: expect.stringContaining('Label#'),
+        expected: expect.stringContaining('Icon#'),
       },
     ])
     expect(result.verification.update).not.toContain(repaired)
@@ -466,6 +468,7 @@ describe('syncComponent', () => {
     expect(again.applied.updated).toBe(1)
     expect(again.retryErrors).toBeUndefined()
     expect(again.verification.unchanged).toBe(12)
+    expect(again.verification.pendingReferences).toBeUndefined()
   })
 
   it('names the variant and the write when the first apply throws', async () => {

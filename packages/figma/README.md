@@ -73,10 +73,10 @@ the monorepo.
    returns `verification`, which must plan no `create` or `update`. A non-empty
    `missingVariables` means the file lacks variables the variants bind, and nothing was written:
    sync the tokens again, then rerun the script. A variant its first verification still lists is
-   applied once more and checked again, and the result counts it as `retried`. Each verification
-   waits one macrotask first, because right after Figma makes a set it can read a layer's
-   property reference back as `{}` until the script yields; a retry's reference write that Figma
-   refuses as existing and that then reads correctly counts as `settled`. A script that
+   applied once more and checked again, and the result counts it as `retried`. Right after a set
+   is created, Figma reconciles its default variant's text-property reference asynchronously, so
+   a run may report that variant under `pendingReferences` rather than as an `update`. Run the
+   check scripts afterwards: they must be clean, with no `pendingReferences`. A script that
    stops partway leaves its new variants on the `Components` page; rerunning it takes them into
    the set instead of drawing them again.
 

@@ -93,6 +93,8 @@ export interface ComponentCounts {
   unchanged: number
   /** The first differing check of up to 12 differing variants; only when any. */
   differences?: Difference[]
+  /** Up to 12 variants whose Label reference Figma is still reconciling; only when any. */
+  pendingReferences?: string[]
 }
 const countsOf = (plan: ComponentPlan): ComponentCounts => ({
   missingVariables: plan.missingVariables,
@@ -101,27 +103,24 @@ const countsOf = (plan: ComponentPlan): ComponentCounts => ({
   update: plan.update.length,
   unchanged: plan.unchanged,
   ...(plan.differences ? { differences: plan.differences } : {}),
+  ...(plan.pendingReferences ? { pendingReferences: plan.pendingReferences } : {}),
 })
 
 /**
  * Syncs the variants a component script carries: plan, apply, plan again, and
  * re-apply once the variants that verification still lists (`retried`,
- * with `retryErrors` for any the retry could not write, and `settled` for
- * reference writes it found already held).
+ * with `retryErrors` for any the retry could not write). A Label reference
+ * Figma is still reconciling is listed in `pendingReferences`.
  */
 export async function syncComponentPart(figma: NodesApi, packed: PackedComponentModel) {
   const model = unpackComponentModel(packed)
-  const { planned, applied, verification, retried, retryErrors, settled } = await syncComponent(
-    figma,
-    model
-  )
+  const { planned, applied, verification, retried, retryErrors } = await syncComponent(figma, model)
   return {
     variants: model.variants.length,
     planned: countsOf(planned),
     applied: { ...applied, fontFallbacks: [...new Set(applied.fontFallbacks)] },
     ...(retried ? { retried } : {}),
     ...(retryErrors ? { retryErrors } : {}),
-    ...(settled ? { settled } : {}),
     verification: countsOf(verification),
   }
 }
