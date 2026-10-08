@@ -51,10 +51,17 @@ export interface ComponentResult {
   updated: number
   fontFallbacks: string[]
 }
+/** A variant the retry could not write, with the error Figma threw. */
+export interface RetryError {
+  variant: string
+  error: string
+}
 
 const GAP = 24
 /** Differences a plan reports, so a script's result stays well under use_figma's 20 KB. */
 export const DIFFERENCES = 12
+/** Retry errors a sync reports, for the same reason. */
+export const RETRY_ERRORS = 12
 const REFERENCES = '.componentPropertyReferences'
 
 interface PropertyKeys {
@@ -346,6 +353,21 @@ function addLayer(run: Run, variant: SceneNodeLike, layer: LayerSpec, after?: Sc
   return node
 }
 
+const messageOf = (error: unknown) =>
+  error && typeof error === 'object' && 'message' in error ? String(error.message) : String(error)
+
+/**
+ * Runs one write, naming the variant and what it wrote if it throws: Figma's
+ * sandbox drops the stack, and with it where the message came from.
+ */
+function named<T>(variant: string, what: string, write: () => T): T {
+  try {
+    return write()
+  } catch (error) {
+    throw Object.assign(new Error(`${variant} — ${what}: ${messageOf(error)}`), { cause: error })
+  }
+}
+
 /**
  * Writes what differs on one variant. Property references wait until the
  * variant is in the set (`references`), since Figma checks them against it.
@@ -359,7 +381,9 @@ async function writeVariant(
 ) {
   let previous: SceneNodeLike | undefined
   for (const layer of spec.layers.slice(1))
-    previous = findLayer(node, layer) ?? addLayer(run, node, layer, previous)
+    previous =
+      findLayer(node, layer) ??
+      named(spec.name, `add ${layer.name}`, () => addLayer(run, node, layer, previous))
   for (const group of await variantChecks(run, node, spec)) {
     for (const fallback of group.fallbacks ?? []) fallbacks.add(fallback)
     const pending = group.checks.filter(
@@ -368,7 +392,8 @@ async function writeVariant(
     // Figma changes a text layer only once its current font is loaded.
     if (pending.length > 0 && group.node.type === 'TEXT' && group.node.fontName)
       await loads(run, group.node.fontName)
-    for (const check of pending) if (!check.same()) check.write()
+    for (const check of pending)
+      if (!check.same()) named(spec.name, check.what, () => check.write())
   }
 }
 
@@ -402,7 +427,24 @@ function place(run: Run, set: SceneNodeLike, added: { node: SceneNodeLike; spec:
   if (right !== set.width || bottom !== set.height) set.resize(right, bottom)
 }
 
-async function applyRun(run: Run, plan: ComponentPlan): Promise<ComponentResult> {
+/**
+ * Applies a plan. With `errors`, a variant whose write throws is recorded
+ * there and the others still run; without, the first throw ends the apply.
+ */
+async function applyRun(
+  run: Run,
+  plan: ComponentPlan,
+  errors?: RetryError[]
+): Promise<ComponentResult> {
+  const fallbacks = new Set<string>()
+  const write = async (node: SceneNodeLike, spec: VariantSpec, references: boolean) => {
+    if (!errors) return writeVariant(run, node, spec, fallbacks, references)
+    try {
+      await writeVariant(run, node, spec, fallbacks, references)
+    } catch (error) {
+      if (errors.length < RETRY_ERRORS) errors.push({ variant: spec.name, error: messageOf(error) })
+    }
+  }
   const result: ComponentResult = { variables: 0, created: 0, updated: 0, fontFallbacks: [] }
   if (plan.missingVariables.length > 0) return result
   if (plan.variables.length > 0) {
@@ -414,7 +456,6 @@ async function applyRun(run: Run, plan: ComponentPlan): Promise<ComponentResult>
     Object.assign(run, await variablesOf(run.figma.variables))
   }
   if (plan.create.length === 0 && plan.update.length === 0) return result
-  const fallbacks = new Set<string>()
   // New text layers start in Inter Regular, and a font that does not load falls back to it.
   await loads(run, INTER)
 
@@ -436,7 +477,7 @@ async function applyRun(run: Run, plan: ComponentPlan): Promise<ComponentResult>
       page.appendChild(node)
       node.name = spec.name
     }
-    await writeVariant(run, node, spec, fallbacks, false)
+    await write(node, spec, false)
     created.push({ node, spec })
   }
 
@@ -453,11 +494,11 @@ async function applyRun(run: Run, plan: ComponentPlan): Promise<ComponentResult>
   ensureProperties(run, set)
   if (created.length > 0) place(run, set, created)
 
-  for (const { node, spec } of created) await writeVariant(run, node, spec, fallbacks, true)
+  for (const { node, spec } of created) await write(node, spec, true)
   for (const name of plan.update) {
     const spec = run.variants.find(variant => variant.name === name)
     const node = spec && findVariant(set, name)
-    if (spec && node) await writeVariant(run, node, spec, fallbacks, true)
+    if (spec && node) await write(node, spec, true)
   }
   result.created = created.length
   result.updated = plan.update.length
@@ -480,12 +521,16 @@ export interface ComponentSync {
   verification: ComponentPlan
   /** Variants applied a second time because the first verification still listed them; only when any. */
   retried?: number
+  /** Variants the retry could not write, at most `RETRY_ERRORS`; only when any. */
+  retryErrors?: RetryError[]
 }
 
 /**
  * Plan, apply, plan again. Right after Figma makes a set it can read a value
  * back stale, so a variant the first verification still lists is applied once
- * more, alone, and planned again; never more than once.
+ * more, alone, and planned again; never more than once. The retry does not
+ * throw: a variant it cannot write is reported in `retryErrors`, the others
+ * still run, and the final verification says what holds.
  */
 export async function syncComponent(
   figma: NodesApi,
@@ -503,7 +548,9 @@ export async function syncComponent(
       ? [...verification.create, ...verification.update]
       : []
   if (retry.length === 0) return { planned, applied, verification }
-  const again = await applyComponent(figma, model, retry)
+  const run = await open(figma, model, retry)
+  const errors: RetryError[] = []
+  const again = await applyRun(run, await planRun(run), errors)
   return {
     planned,
     applied: {
@@ -514,5 +561,6 @@ export async function syncComponent(
     },
     verification: await planComponent(figma, model, only),
     retried: retry.length,
+    ...(errors.length > 0 ? { retryErrors: errors } : {}),
   }
 }

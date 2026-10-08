@@ -161,6 +161,13 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
   let staleBinds = 0
   /** Stored property references still to read as `{}` once, as Figma did right after creating a set. */
   let staleReferenceReads = 0
+  /** Reference writes still to throw (see `failReferenceWrites`), and layers already written. */
+  let failingReferenceWrites = 0
+  let failRepeatOnly = false
+  let failMessage = ''
+  /** Reference writes still to be dropped (see `dropNextReferenceWrites`). */
+  let droppedReferenceWrites = 0
+  const referenced = new WeakSet<object>()
 
   /** A color variable's value, resolved as Figma resolves it for `consumer`. */
   const resolvedColor = (variable: VariableLike, consumer: object) => {
@@ -488,6 +495,16 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
           if (!parent || !parent.layoutMode || parent.layoutMode === 'NONE')
             throw new Error('layoutPositioning applies only to children of auto-layout frames')
         } else if (key === 'componentPropertyReferences' && value) {
+          const repeat = referenced.has(state)
+          referenced.add(state)
+          if (failingReferenceWrites > 0 && (repeat || !failRepeatOnly)) {
+            failingReferenceWrites -= 1
+            throw new Error(failMessage)
+          }
+          if (droppedReferenceWrites > 0) {
+            droppedReferenceWrites -= 1
+            return true
+          }
           const set = owner(state)
           if (!set) throw new Error('Only a layer inside a component can reference its properties')
           const available = definitions(set)
@@ -699,6 +716,19 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
     /** The next `count` reads of a stored property reference return `{}`, as Figma's did once. */
     staleNextReferenceReads(count: number) {
       staleReferenceReads = count
+    },
+    /**
+     * The next `count` property-reference writes throw `message`; with
+     * `repeatOnly`, only writes to a layer whose reference was written before.
+     */
+    failReferenceWrites(count: number, message: string, repeatOnly = false) {
+      failingReferenceWrites = count
+      failMessage = message
+      failRepeatOnly = repeatOnly
+    },
+    /** The next `count` property-reference writes succeed but are not stored. */
+    dropNextReferenceWrites(count: number) {
+      droppedReferenceWrites = count
     },
     variableOf(token: string): VariableLike {
       for (const variable of base.variables.values())

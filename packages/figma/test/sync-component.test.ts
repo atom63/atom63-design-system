@@ -341,6 +341,50 @@ describe('syncComponent', () => {
     expect((await planComponent(fake.figma, buttonModelFixture)).unchanged).toBe(12)
   })
 
+  it('records a write the retry cannot make, still retries the others, and verifies what holds', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    // The first apply loses three references (two variants: Label and Icon, then Label);
+    // re-writing the first Label throws once.
+    fake.dropNextReferenceWrites(3)
+    fake.failReferenceWrites(1, 'in-execution inconsistency', true)
+    const result = await syncComponent(fake.figma, buttonModelFixture)
+    expect(result.retried).toBe(2)
+    const [failed, repaired] = buttonModelFixture.variants.map(variant => variant.name)
+    expect(result.retryErrors).toEqual([
+      {
+        variant: failed,
+        error: `${failed} — Label.componentPropertyReferences: in-execution inconsistency`,
+      },
+    ])
+    expect(result.verification.update).toEqual([failed])
+    expect(result.verification.unchanged).toBe(11)
+    expect(result.verification.differences).toEqual([
+      {
+        variant: failed,
+        what: 'Label.componentPropertyReferences',
+        actual: 'null',
+        expected: expect.stringContaining('Label#'),
+      },
+    ])
+    expect(result.verification.update).not.toContain(repaired)
+
+    const again = await syncComponent(fake.figma, buttonModelFixture)
+    expect(again.applied.updated).toBe(1)
+    expect(again.retryErrors).toBeUndefined()
+    expect(again.verification.unchanged).toBe(12)
+  })
+
+  it('names the variant and the write when the first apply throws', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    fake.failReferenceWrites(1, 'in-execution inconsistency')
+    const [first] = buttonModelFixture.variants.map(variant => variant.name)
+    await expect(syncComponent(fake.figma, buttonModelFixture)).rejects.toThrow(
+      `${first} — Label.componentPropertyReferences: in-execution inconsistency`
+    )
+  })
+
   it('wires the Label and Icon component properties once', async () => {
     const fake = createFakeNodes()
     await syncModel(fake.figma, syncFixture)

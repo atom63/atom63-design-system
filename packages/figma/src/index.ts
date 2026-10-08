@@ -45,6 +45,7 @@ export { buildComponentScripts } from './components/scripts'
 export {
   type ComponentPlan,
   type ComponentResult,
+  type RetryError,
   planComponent,
   applyComponent,
   syncComponent,
