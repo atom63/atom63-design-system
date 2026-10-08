@@ -385,6 +385,39 @@ describe('syncComponent', () => {
     expect(fake.writes).toBe(writes)
   })
 
+  it('reports default Label and Icon references Figma is still reconciling as pending', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    fake.reconcileDefaultReference(['Label', 'Icon'])
+    const [first] = buttonModelFixture.variants.map(variant => variant.name)
+    const result = await syncComponent(fake.figma, buttonModelFixture)
+    expect(result.retried).toBeUndefined()
+    expect(result.retryErrors).toBeUndefined()
+    expect(result.verification.update).toEqual([])
+    expect(result.verification.unchanged).toBe(11)
+    expect(result.verification.pendingReferences).toEqual([first])
+    const icon = fake.findVariant('Button', first).children!.find(c => c.name === 'Icon')!
+    expect(icon.componentPropertyReferences).toEqual({})
+
+    // Another difference applies the default variant again; Figma refuses both references.
+    fake.findVariant('Button', first).fills = []
+    const again = await syncComponent(fake.figma, buttonModelFixture, [first])
+    expect(again.retryErrors).toBeUndefined()
+    expect(again.verification.update).toEqual([])
+    expect(again.verification.pendingReferences).toEqual([first])
+
+    fake.settleReferences()
+    const check = await planComponent(fake.figma, buttonModelFixture)
+    expect(check.update).toEqual([])
+    expect(check.pendingReferences).toBeUndefined()
+    expect(check.unchanged).toBe(12)
+    const writes = fake.writes
+    const second = await syncComponent(fake.figma, buttonModelFixture)
+    expect(second.planned.unchanged).toBe(12)
+    expect(second.verification.pendingReferences).toBeUndefined()
+    expect(fake.writes).toBe(writes)
+  })
+
   it('keeps an apply going when Figma refuses a reference it is still reconciling', async () => {
     const fake = createFakeNodes()
     await syncModel(fake.figma, syncFixture)
@@ -420,6 +453,13 @@ describe('syncComponent', () => {
     ])
     fake.staleNextReferenceReads(0)
     expect(label.componentPropertyReferences).toEqual({ characters: expect.any(String) })
+
+    const icon = fake.findVariant('Button', neutral).children!.find(c => c.name === 'Icon')!
+    icon.componentPropertyReferences = {}
+    const iconPlan = await planComponent(fake.figma, buttonModelFixture)
+    expect(iconPlan.update).toEqual([neutral])
+    expect(iconPlan.pendingReferences).toBeUndefined()
+    expect(iconPlan.differences?.[0].what).toBe('Icon.componentPropertyReferences')
   })
 
   it('re-applies a variant whose reference is lost after the first apply, at most once', async () => {
@@ -438,29 +478,28 @@ describe('syncComponent', () => {
   it('records a write the retry cannot make, still retries the others, and verifies what holds', async () => {
     const fake = createFakeNodes()
     await syncModel(fake.figma, syncFixture)
-    // The first apply loses three references (two variants: Label and Icon, then Label);
-    // the retry leaves the default variant's unsettled Label pending, and re-writing its
-    // Icon throws once.
-    fake.dropNextReferenceWrites(3)
+    // After the default variant's two, the first apply loses three references (two
+    // variants: Label and Icon, then Label); re-writing the first one's Label throws once.
+    fake.dropNextReferenceWrites(3, 2)
     fake.failReferenceWrites(1, 'in-execution inconsistency', true)
     const result = await syncComponent(fake.figma, buttonModelFixture)
     expect(result.retried).toBe(2)
-    const [failed, repaired] = buttonModelFixture.variants.map(variant => variant.name)
+    const [, failed, repaired] = buttonModelFixture.variants.map(variant => variant.name)
     expect(result.retryErrors).toEqual([
       {
         variant: failed,
-        error: `${failed} — Icon.componentPropertyReferences: in-execution inconsistency`,
+        error: `${failed} — Label.componentPropertyReferences: in-execution inconsistency`,
       },
     ])
     expect(result.verification.update).toEqual([failed])
     expect(result.verification.unchanged).toBe(11)
-    expect(result.verification.pendingReferences).toEqual([failed])
+    expect(result.verification.pendingReferences).toBeUndefined()
     expect(result.verification.differences).toEqual([
       {
         variant: failed,
-        what: 'Icon.componentPropertyReferences',
+        what: 'Label.componentPropertyReferences',
         actual: 'null',
-        expected: expect.stringContaining('Icon#'),
+        expected: expect.stringContaining('Label#'),
       },
     ])
     expect(result.verification.update).not.toContain(repaired)

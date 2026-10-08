@@ -185,10 +185,11 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
   let failMessage = ''
   /** Reference writes still to be dropped (see `dropNextReferenceWrites`). */
   let droppedReferenceWrites = 0
+  let keptReferenceWrites = 0
   const referenced = new WeakSet<object>()
-  /** Whether the next set's default Label reconciles (see `reconcileDefaultReference`). */
-  let reconcileNext = false
-  /** Labels whose next reference write starts reconciling, and labels reconciling now. */
+  /** The next set's default-variant layers that reconcile (see `reconcileDefaultReference`). */
+  let reconcileNext: string[] = []
+  /** Layers whose next reference write starts reconciling, and layers reconciling now. */
   const armed = new WeakSet<object>()
   const reconciling = new Set<object>()
   const reconcilingError =
@@ -596,7 +597,8 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
             failingReferenceWrites -= 1
             throw new Error(failMessage)
           }
-          if (droppedReferenceWrites > 0) {
+          if (droppedReferenceWrites > 0 && keptReferenceWrites > 0) keptReferenceWrites -= 1
+          else if (droppedReferenceWrites > 0) {
             droppedReferenceWrites -= 1
             return true
           }
@@ -725,11 +727,9 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       for (const node of nodes) set.appendChild(node)
       parent.appendChild(set)
       writes += 1
-      const label = nodes[0].children?.find(child => child.name === 'Label')
-      if (reconcileNext && label) {
-        reconcileNext = false
-        armed.add(stateOf.get(label)!)
-      }
+      for (const child of nodes[0].children ?? [])
+        if (reconcileNext.includes(child.name)) armed.add(stateOf.get(child)!)
+      reconcileNext = []
       return set
     },
   }
@@ -830,13 +830,13 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       staleBinds = count
     },
     /**
-     * Like Figma right after it makes a set: once the next set's default
-     * (first) variant's Label reference is written and the execution yields,
-     * the Label reads its reference as `{}` and refuses every reference write,
-     * until `settleReferences`.
+     * Like Figma right after it makes a set: once a reference on one of the
+     * next set's default (first) variant's `layers` is written and the
+     * execution yields, that layer reads its references as `{}` and refuses
+     * every reference write, until `settleReferences`.
      */
-    reconcileDefaultReference() {
-      reconcileNext = true
+    reconcileDefaultReference(layers: string[] = ['Label']) {
+      reconcileNext = layers
     },
     /** Ends every reconciliation `reconcileDefaultReference` started. */
     settleReferences() {
@@ -859,9 +859,13 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       failMessage = message
       failRepeatOnly = repeatOnly
     },
-    /** The next `count` property-reference writes succeed but are not stored. */
-    dropNextReferenceWrites(count: number) {
+    /**
+     * The next `count` property-reference writes, after the next `skip` stored
+     * ones, succeed but are not stored.
+     */
+    dropNextReferenceWrites(count: number, skip = 0) {
       droppedReferenceWrites = count
+      keptReferenceWrites = skip
     },
     variableOf(token: string): VariableLike {
       for (const variable of base.variables.values())

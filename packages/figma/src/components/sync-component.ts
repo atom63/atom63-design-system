@@ -2,8 +2,9 @@
  * Writes a component set from a `ComponentModel`, bound to the variables the
  * token sync made: plan (a read-only diff per variant), apply (write what
  * differs), plan again to verify, and re-apply once the variants that still
- * differ; each verification waits a macrotask first. A Label reference Figma
- * is still reconciling is reported as pending, not as a difference. Nodes are
+ * differ; each verification waits a macrotask first. A component property
+ * reference Figma is still reconciling on the set's default variant is
+ * reported as pending, not as a difference. Nodes are
  * found by name, so a re-run updates in place; layers and variants the model
  * does not list are never touched.
  * Bundled into the runtime IIFE: no Node or DOM imports.
@@ -40,7 +41,7 @@ export interface ComponentPlan {
   /** The first check that differs on each differing variant, at most `DIFFERENCES`; only when any. */
   differences?: Difference[]
   /**
-   * Variants whose Label reference Figma is still reconciling, at most
+   * Variants whose property references Figma is still reconciling, at most
    * `DIFFERENCES`: neither `update` nor `unchanged`; only when any.
    */
   pendingReferences?: string[]
@@ -240,10 +241,10 @@ function overlayChecks(root: SceneNodeLike): Check[] {
 
 /**
  * A property-reference check. Right after a set is made, Figma reconciles its
- * default variant's text-property reference asynchronously: meanwhile the
- * layer reads `{}` and a write is refused with `REFERENCE_EXISTS`, and it
- * settles by itself. `unsettled` says the Label reads so while its property
- * is defined.
+ * default variant's component property references (text and boolean alike)
+ * asynchronously: meanwhile a layer reads `{}` and a write is refused with
+ * `REFERENCE_EXISTS`, and it settles by itself. `unsettled` says the layer
+ * reads no reference for its field while the set defines the property.
  */
 interface ReferenceCheck extends Check {
   unsettled?(): boolean
@@ -260,7 +261,7 @@ function referenceChecks(run: Run, variant: SceneNodeLike): ReferenceCheck[] {
     if (!layer) continue
     const unsettled = () => {
       const references = layer.componentPropertyReferences
-      return !!key && (!references || Object.keys(references).length === 0)
+      return !!key && !references?.[field]
     }
     checks.push({
       what: `${layerName}${REFERENCES}`,
@@ -272,7 +273,7 @@ function referenceChecks(run: Run, variant: SceneNodeLike): ReferenceCheck[] {
         actual: layer.componentPropertyReferences ?? null,
         expected: { [field]: key ?? 'no property' },
       }),
-      ...(field === 'characters' ? { unsettled } : {}),
+      unsettled,
     })
   }
   return checks
@@ -334,7 +335,7 @@ const isDefault = (run: Run, node: SceneNodeLike) => run.set?.children?.[0] === 
 
 /**
  * The first thing that differs on a variant, or null when it holds the model,
- * and whether its Label reference is pending: unsettled on the set's default
+ * and whether a property reference is pending: unsettled on the set's default
  * variant, or on a variant in `pending`, whose write Figma refused as such.
  */
 async function differs(run: Run, node: SceneNodeLike, spec: VariantSpec, pending: Set<string>) {
@@ -442,7 +443,7 @@ function named<T>(variant: string, what: string, write: () => T): T {
 }
 
 /**
- * What an apply records: the variants whose Label reference Figma is still
+ * What an apply records: the variants whose property references Figma is still
  * reconciling (`pending`) and, in a retry, the variants it could not write.
  */
 interface Outcome {
@@ -453,7 +454,7 @@ interface Outcome {
 /**
  * Writes what differs on one variant. Property references wait until the
  * variant is in the set (`references`), since Figma checks them against it.
- * A Label reference write Figma refuses while it reads unsettled is pending,
+ * A reference write Figma refuses while it reads unsettled is pending,
  * not an error; a retry does not write the default variant's unsettled one.
  */
 async function writeVariant(
@@ -657,7 +658,7 @@ export interface ComponentSync {
  * first verification still lists is applied once more, alone, and planned
  * again; never more than once. The retry does not throw: a variant it cannot
  * write is reported in `retryErrors`, the others still run, and the final
- * verification says what holds. A Label reference Figma is still reconciling
+ * verification says what holds. A property reference Figma is still reconciling
  * is reported in `pendingReferences` and not written again.
  */
 export async function syncComponent(

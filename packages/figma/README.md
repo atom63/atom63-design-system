@@ -75,7 +75,7 @@ the monorepo.
    `missingVariables` means the file lacks variables the variants bind, and nothing was written:
    sync the tokens again, then rerun the script. A variant its first verification still lists is
    applied once more and checked again, and the result counts it as `retried`. Right after a set
-   is created, Figma reconciles its default variant's text-property reference asynchronously, so
+   is created, Figma reconciles its default variant's component property references asynchronously, so
    a run may report that variant under `pendingReferences` rather than as an `update`. Run the
    check scripts afterwards: they must be clean, with no `pendingReferences`. A script that
    stops partway leaves its new variants on the `Components` page; rerunning it takes them into
