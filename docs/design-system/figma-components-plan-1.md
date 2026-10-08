@@ -14,7 +14,7 @@ are bound to the variables the token sync already wrote. Running it again change
 
 - **Read (Node, pure):** `readRecipe` reads `button.css` with a deliberately small CSS reader and,
   for every `Variant × Size × State` the contract lists, resolves each Figma property to a token
-  alias, a composed alias (token at an opacity), a literal, or a skip with a reason. The result is
+  alias, a derived variable's alias (token at an opacity, C4), a literal, or a skip with a reason. The result is
   a `ComponentModel`, generated and checked in like `atom63.figma-sync.json`.
 - **Write (Figma, runs in `use_figma` and in tests):** `syncComponent(figma, model)` builds or
   updates the page, the component set and its variants, and binds properties with
@@ -39,11 +39,36 @@ sync (variables, text and effect styles) is the base this plan binds to.
 | C1 | What is the source? | `buttonContract` (axes, slots, token slots) and `button.css` (values). No hand-written value table. A small per-component **anatomy** (which layers exist and which recipe property drives which Figma property) is code in `@atom63/figma`. |
 | C2 | Which variant properties? | `Variant` (10) × `Size` (`xs`, `sm`, `md`, `lg`, `xl`) × `State` (`rest`, `hover`, `pressed`, `focusVisible`, `disabled`, `loading`) = 300 variants. `icon-*` sizes and `tile` are a later plan (different anatomy); they are listed under `skipped`. Component properties: `Label` (text), `Icon` (boolean, leading icon). |
 | C3 | How is the component matched in Figma? | By name, as styles are: page `Components`, component set `Button`, each variant by its property values (`Variant=primary, Size=md, State=rest`). Layers are matched by the anatomy's layer names. Layers a designer adds are never touched or removed. |
-| C4 | What CSS does the reader understand? | Only what Button needs, and it says so. Selectors: `.a63-Button`, with `[data-variant='…']`, `[data-size='…']`, and state selectors (below), `:where()` unwrapped. Values: `var(--x)` (following `--button-*` locals to an `--a63-*` token that the sync model holds), `var(--x, fallback)`, `transparent`, and `color-mix(in oklch, var(--t) N%, transparent)` → composed alias at N%. `calc()`/`max()` are evaluated with the model's default-mode values and written as **literals** (listed under `literals`, not bound). Anything else is skipped with a reason. Pseudo-elements (`::before`, `::after`) are skipped. |
+| C4 | What CSS does the reader understand? | Only what Button needs, and it says so. Selectors: `.a63-Button`, with `[data-variant='…']`, `[data-size='…']`, and state selectors (below), `:where()` unwrapped. Values: `var(--x)` (following `--button-*` locals to an `--a63-*` token that the sync model holds), `var(--x, fallback)`, `transparent`, and `color-mix(in oklch, var(--t) N%, transparent)` → an alias to a **derived variable** (amended 2026-10-08, see below): one per (token, N) in the generated `Component` collection, whose value is Figma's composed color (an alias to `--t` at N% alpha) and whose web code syntax is the expression itself. Paints bind it with no opacity of their own. `calc()`/`max()` are evaluated with the model's default-mode values and written as **literals** (listed under `literals`, not bound). Anything else is skipped with a reason. Pseudo-elements (`::before`, `::after`) are skipped. |
 | C5 | How do states map? | `:hover` → `hover`; `:active`, `[data-pressed]` → `pressed`; `:focus-visible` → `focusVisible`; `:disabled`, `[data-disabled]` → `disabled`; `[data-loading]` → `loading`. Cascade order: base → variant → size → state → variant+state, later wins. |
-| C6 | How are effects drawn? | Focus ring (an `outline` in CSS) → a `DROP_SHADOW` effect with spread = ring width, blur 0, color bound to the ring token. Disabled → label opacity `0.56` (literal from the recipe). Loading → label opacity 0, spinner layer visible. Box shadows are skipped in this plan. |
+| C6 | How are effects drawn? | Focus ring (an `outline` in CSS) → a `DROP_SHADOW` effect with spread = ring width, blur 0, color bound to the ring token (a `color-mix` ring binds its derived variable, C4). Disabled → label opacity `0.56` (literal from the recipe). Loading → label opacity 0, spinner layer visible. Box shadows are skipped in this plan. |
 | C7 | Which entry point? | The agent path only (`atom63-figma components`), as Atom63 itself is synced by the agent (plugin ARCHITECTURE "Atom63"). The plugin gets no component UI in this plan. |
-| C8 | What blocks a build? | The token sync must have run: if a token the model binds has no variable with code syntax `var(--token)`, the script reports it under `missingVariables` and writes nothing. |
+| C8 | What blocks a build? | The token sync must have run: if a token the model binds has no variable with code syntax `var(--token)`, the script reports it under `missingVariables` and writes nothing. A derived variable counts as its token: the script makes the derived variables it binds (through the token engine, before binding) only when their tokens exist. |
+
+**C4 amendment, 2026-10-08 (real-Figma acceptance).** The first real run wrote each `color-mix`
+value as a paint bound to the token's variable with paint opacity N/100. Measured with the Plugin
+API on the real file: `figma.variables.setBoundVariableForPaint` overwrites the paint's `color`
+and `opacity` with the variable's resolved value, and assigning a bound paint with another
+opacity is forced back to the variable's alpha, so a bound paint can never carry an opacity of
+its own. 220 of 1,060 bound paints (the hover and pressed fills of default, secondary, outline
+and ghost, every destructive-outline paint, overlay and glass) were stored opaque and could never
+verify. A variable whose value is a composed color does resolve to the right alpha
+(`resolveForConsumer` gives `a: 0.9` for a 90% mix), so each `color-mix` value is now a derived
+variable in a generated `Component` collection (one `Value` mode), one per (token, opacity),
+named by meaning as the token's variable name plus `alpha-N` (`action/danger/alpha-10`; a
+decimal N writes `_` for `.`, which Figma names cannot hold), with scopes from the properties
+that use it (fills, strokes, effects). Its web code syntax is the CSS expression,
+`color-mix(in oklch, var(--a63-action-danger) 10%, transparent)`, so Dev Mode shows the code;
+the sync engine reads that back to a canonical key, so matching stays by code syntax (D5) and is
+idempotent. Theming holds: the alias resolves in the consumer's modes.
+
+The same run showed a second Figma behavior: right after a token sync in the same session, some
+bindings stored black, and rebinding the same variable keeps the stale stored color (binding
+another variable first, then the intended one, refreshes it). So a bound paint verifies only
+when its binding and its stored color and opacity match `variable.resolveForConsumer(node)`; a
+stale one is an `update`, written by binding, and if the stored color is still stale, by an
+unbound paint, another color variable, then the intended one.
+
 
 ## Global constraints
 
@@ -567,8 +592,8 @@ export async function syncComponent(figma: NodesApi, model: ComponentModel, only
   Children in order `Icon`, `Label`, `Spinner`; `Icon` visibility bound to the `Icon` boolean
   property, `Label.characters` to the `Label` text property.
 - Each `ComponentValue`: `{ alias }` → bind (`setBoundVariable` for numbers,
-  `setBoundVariableForPaint` for paints); `{ composed }` → bound paint with
-  `opacity = composed.opacity / 100`; `{ value }` → write the literal and clear any binding;
+  `setBoundVariableForPaint` for paints; a `color-mix` value is an alias to its derived variable,
+  see the C4 amendment); `{ value }` → write the literal and clear any binding;
   `{ skipped }` → leave the property alone. `paddingInline` writes `paddingLeft` and
   `paddingRight`. `focusRing` + `focusRingWidth` → one `DROP_SHADOW` (C6), only in
   `State=focusVisible`.

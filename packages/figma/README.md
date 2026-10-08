@@ -80,9 +80,25 @@ Run the `components-check-N.js` scripts at any time; they only read, and `planne
 equals the script's `variants` when the file matches the code. Variants and layers are found by
 name, so a rerun updates them in place and never touches layers the model does not list.
 
-The printed summary counts the variants, the tokens they bind, and the `literals` (values the
-recipe computes, such as heights, written as numbers), and lists what was `skipped` with the
-reason. `applied.fontFallbacks` lists labels whose font family is not bound to the code.
+The printed summary counts the variants, the tokens they bind, the `derivedVariables`, and the
+`literals` (values the recipe computes, such as heights, written as numbers), and lists what was
+`skipped` with the reason. `applied.fontFallbacks` lists labels whose font family is not bound to
+the code.
+
+A token at an opacity (`color-mix(in oklch, var(--a63-action-danger) 10%, transparent)` in the
+recipe) is bound through a **derived variable** in a `Component` collection with one `Value`
+mode: its value is the token's variable at that alpha, so it follows the theme, and its Dev Mode
+code syntax is the CSS expression itself. There is one per token and opacity, named by meaning as
+the token's variable plus `alpha-N` (`action/danger/alpha-10`). Figma overwrites a bound paint's
+own opacity with the variable's alpha, so this is the only way a bound paint can be
+semi-transparent. Each script makes the derived variables its variants bind before binding them
+(`applied.variables` counts them), so the scripts can run in any order; `diff` and the plugin's
+token table do not count them as tokens.
+
+A bound paint verifies when Figma's stored color and opacity match what the variable resolves to
+on that layer, not only the binding: Figma can leave a stale stored color (black, right after a
+token sync in the same session), and rebinding the same variable keeps it. The script rewrites
+such a paint through another variable, so a rerun repairs it.
 
 After a recipe or token change, regenerate the model with
 `pnpm --filter @atom63/figma generate:components` and run the scripts again.

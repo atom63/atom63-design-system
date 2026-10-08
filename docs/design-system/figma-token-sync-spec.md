@@ -78,6 +78,11 @@ not a separate mode.
   plugin data, and it survives a designer renaming or regrouping a variable.
 - A variable without code syntax was made in Figma. Sync leaves it alone, and the agent's
   comparison lists it as a proposed new token.
+- A component's derived variable (a token at an opacity, in the generated `Component`
+  collection) has the CSS expression as its code syntax,
+  `color-mix(in oklch, var(--a63-action-danger) 10%, transparent)`. The engine matches it by that
+  expression in canonical form; it is not a token, so the comparison never lists it as an orphan
+  or a proposal ([figma-components-plan-1](./figma-components-plan-1.md), C4).
 
 ### Values
 
