@@ -66,6 +66,8 @@ export interface CardPlan {
 type CardCheck = Omit<Check, 'write'> & { write(): void | Promise<void> }
 export interface CardDifference {
   variant: string
+  /** The part the check reads; for a missing part, the part it belongs in. */
+  nodeId: string
   check: CardCheck
 }
 
@@ -567,6 +569,7 @@ export async function planCard(context: CardContext) {
   const differences: CardDifference[] = []
   for (const item of cardItems(context)) {
     let status: 'create' | 'update' | 'unchanged' = 'unchanged'
+    let first: SceneNodeLike | undefined
     for (const [index, spec] of item.nodes.entries()) {
       const node = nodeOf(context, spec)
       // The set is made by the variants, never by the card, which only moves and describes it.
@@ -576,14 +579,19 @@ export async function planCard(context: CardContext) {
       }
       if (!node) {
         status = index === 0 ? 'create' : 'update'
-        if (status === 'update')
-          differences.push({ variant: `card ${item.name}`, check: missing(spec) })
+        if (status === 'update') {
+          const parent = spec.parent === 'page' ? undefined : nodeOf(context, spec.parent)
+          const nodeId = (parent ?? first ?? context.card)?.id
+          if (nodeId)
+            differences.push({ variant: `card ${item.name}`, nodeId, check: missing(spec) })
+        }
         break
       }
+      first ??= node
       const differing = (await spec.checks(node)).checks.find(check => !check.same())
       if (differing) {
         status = 'update'
-        differences.push({ variant: `card ${item.name}`, check: differing })
+        differences.push({ variant: `card ${item.name}`, nodeId: node.id, check: differing })
         break
       }
     }

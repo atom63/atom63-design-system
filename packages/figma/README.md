@@ -166,7 +166,9 @@ deleted) makes it on the page; the last script adopts it. Only the last script w
 the others find the set inside it and write their own variants. Its result counts the card's
 parts, `card: { create, update, unchanged }` in `planned` and `verification` and
 `card: { created, updated }` in `applied`, and names a differing part in `differences` as
-`card <part>`. Run the scripts in order: a script that adds variants after the last one has run
+`card <part>`. Every difference carries `nodeId`, the node its check reads (the variant, its layer
+or the card part, or for a missing one the node it belongs in), so a caller can select it with
+`figma.getNodeByIdAsync`. Run the scripts in order: a script that adds variants after the last one has run
 leaves the grid labels short until the last script runs again.
 
 Component scripts and token scripts each carry only the runtime code they use, so neither pays

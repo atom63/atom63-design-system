@@ -230,6 +230,59 @@ describe('nextAtom63', () => {
   })
 })
 
+describe('showing a difference in Figma', () => {
+  const failed = () =>
+    run(
+      initialAtom63State,
+      { type: 'build-sent' },
+      { type: 'built', data: { ...outcome(), table: built } },
+      { type: 'checked', data: outcome({ status: 'fail' }) }
+    ).state
+
+  it('ignores the selected reply: Figma’s selection is the feedback', () => {
+    const state = failed()
+    const { state: next, send } = run(state, { type: 'select-sent' }, { type: 'selected' })
+    expect(next).toBe(state)
+    expect(send).toBeUndefined()
+  })
+
+  it('shows a select-node error under the list, keeping the result and the phase', () => {
+    const state = failed()
+    const { state: next } = run(state, {
+      type: 'error',
+      message: 'That layer is no longer in the file.',
+      for: 'select-node',
+    })
+    expect(next).toEqual({ ...state, selectError: 'That layer is no longer in the file.' })
+    expect(checkAction(next)).toBeNull()
+  })
+
+  it('takes a refused select-node as inline too, not as a failed check', () => {
+    const { state } = run(failed(), {
+      type: 'error',
+      message: 'A build or check is already running',
+      for: 'select-node',
+    })
+    expect(state.error).toBeNull()
+    expect(state.checked?.status).toBe('fail')
+    expect(state.selectError).toBe('A build or check is already running')
+  })
+
+  it('clears the select error on the next click, check or build', () => {
+    const errored = run(failed(), {
+      type: 'error',
+      message: 'That layer is no longer in the file.',
+      for: 'select-node',
+    }).state
+    for (const event of [
+      { type: 'select-sent' },
+      { type: 'check-sent' },
+      { type: 'build-sent' },
+    ] as const)
+      expect(nextAtom63(errored, event).state.selectError).toBeNull()
+  })
+})
+
 describe('startAtom63', () => {
   it('uses the table Home scanned and sends no scan', () => {
     const { state, send } = startAtom63(table)
@@ -385,7 +438,13 @@ describe('results', () => {
             ...counts,
             update: 1,
             differences: [
-              { variant: 'Size=Small', what: 'padding', actual: '4', expected: '6' },
+              {
+                variant: 'Size=Small',
+                nodeId: '12:3',
+                what: 'padding',
+                actual: '4',
+                expected: '6',
+              },
               { variant: 'Size=Large', what: 'Label property' },
             ],
             card: { create: 1, update: 0, unchanged: 29 },
@@ -405,13 +464,13 @@ describe('results', () => {
       ],
     })
     expect(failureLines(checked, build)).toEqual([
-      '1 variable to create or update',
-      '2 variables with another type in this file, left alone',
-      'Styles to create or update: Body',
-      'Button · Small — padding: 4 → 6',
-      'Button · Large — Label property',
-      'Button spec card: 1 item to create or update',
-      'Button · Small could not be written: locked',
+      { text: '1 variable to create or update' },
+      { text: '2 variables with another type in this file, left alone' },
+      { text: 'Styles to create or update: Body' },
+      { text: 'Button · Small — padding: 4 → 6', nodeId: '12:3' },
+      { text: 'Button · Large — Label property', nodeId: undefined },
+      { text: 'Button spec card: 1 item to create or update' },
+      { text: 'Button · Small could not be written: locked' },
     ])
   })
 })

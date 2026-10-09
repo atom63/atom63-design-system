@@ -71,11 +71,12 @@ export function Atom63({
     if (message.type === 'progress') update({ type: 'progress', data: message.data })
     if (message.type === 'atom63-built') update({ type: 'built', data: message.data })
     if (message.type === 'atom63-checked') update({ type: 'checked', data: message.data })
+    if (message.type === 'selected') update({ type: 'selected' })
     if (message.type === 'error')
       update({ type: 'error', message: message.data.message, for: message.data.for })
   })
 
-  const { phase, table, progress, blocked, built, checked, error } = state
+  const { phase, table, progress, blocked, built, checked, error, selectError } = state
   const result = blocked ?? checked ?? error
   useEffect(() => {
     if (result) resultRef.current?.focus()
@@ -91,6 +92,10 @@ export function Atom63({
     postMessage({ type: 'atom63-build' })
   }
   const failures = checked?.status === 'fail' ? failureLines(checked, built) : []
+  const show = (id: string) => {
+    update({ type: 'select-sent' })
+    postMessage({ type: 'select-node', id })
+  }
   // A failed check lists them already.
   const retries = checked && checked.status !== 'fail' ? retryLines(built) : []
   const fonts = fontNote(built)
@@ -163,10 +168,29 @@ export function Atom63({
         {checked?.status === 'fail' && (
           <Alert title="The file does not match Atom63" titleRef={resultRef} variant="error">
             <ul className={styles.lines}>
-              {failures.map((line, index) => (
-                <li key={`${index}-${line}`}>{line}</li>
+              {failures.map(({ text, nodeId }, index) => (
+                <li key={`${index}-${text}`}>
+                  {nodeId ? (
+                    <Button
+                      aria-label={`Show ${text} in Figma`}
+                      className={styles.differenceButton}
+                      onClick={() => show(nodeId)}
+                      size="sm"
+                      variant="ghost"
+                    >
+                      {text}
+                    </Button>
+                  ) : (
+                    text
+                  )}
+                </li>
               ))}
             </ul>
+            {selectError && (
+              <span className={styles.selectError} role="alert">
+                {selectError}
+              </span>
+            )}
           </Alert>
         )}
         {error && (

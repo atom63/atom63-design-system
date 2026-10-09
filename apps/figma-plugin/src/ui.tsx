@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import { Atom63 } from './app/Atom63'
+import styles from './app/app.module.css'
 import { Create } from './app/Create'
 import { Home } from './app/Home'
 import { Import } from './app/Import'
@@ -22,6 +23,8 @@ type View = 'home' | 'create' | 'import' | 'atom63'
 
 function App() {
   const [view, setView] = useState<View>('home')
+  // Home reading the file: the main region is busy until it has.
+  const [busy, setBusy] = useState(false)
   const [atom63Table, setAtom63Table] = useState<DesignSystemTable | null>(null)
   const [isDark, setIsDark] = useState(() => document.documentElement.dataset.a63Mode === 'dark')
   const postMessage = usePostMessage()
@@ -45,10 +48,11 @@ function App() {
   return (
     <div className="plugin-container">
       <AppHeader isDark={isDark} onToggleTheme={toggleTheme} />
-      <main className="plugin-main">
+      <main aria-busy={busy || undefined} className="plugin-main">
         <PageErrorBoundary pageName={view}>
           {view === 'home' && (
             <Home
+              onBusy={setBusy}
               onAtom63={table => {
                 setAtom63Table(table)
                 setView('atom63')
@@ -62,6 +66,10 @@ function App() {
           {view === 'atom63' && <Atom63 initialTable={atom63Table} onDone={home} />}
         </PageErrorBoundary>
       </main>
+      {/* Outside the busy region, so a screen reader announces it while main is busy. */}
+      <p className={styles.srOnly} role="status">
+        {busy ? 'Reading this file…' : ''}
+      </p>
     </div>
   )
 }

@@ -77,10 +77,8 @@
 }
 
 .resetButton:focus-visible {
-  outline: none;
-  box-shadow:
-    0 0 0 2px var(--background),
-    0 0 0 4px var(--ring);
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }
 
 .resetButton:active {
@@ -92,7 +90,7 @@
   width: 100%;
   max-width: 400px;
   margin-top: var(--spacing-lg);
-  text-align: left;
+  text-align: start;
 }
 
 .errorDetails summary {

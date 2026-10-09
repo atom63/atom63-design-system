@@ -233,8 +233,13 @@ describe('the spec card', () => {
     const changed = { ...model, doc: { ...doc, usage } }
     const plan = await planComponent(fake.figma, changed)
     expect(plan.card!.update).toEqual(['When to use'])
+    const row = childOf(card, 'When to use')
     expect(plan.differences).toEqual([
-      expect.objectContaining({ variant: 'card When to use', what: 'Value.characters' }),
+      expect.objectContaining({
+        variant: 'card When to use',
+        nodeId: childOf(row, 'Value').id,
+        what: 'Value.characters',
+      }),
     ])
     const writes = fake.writes
     const result = await syncComponent(fake.figma, changed)
@@ -271,6 +276,18 @@ describe('the spec card', () => {
     expect(names.indexOf('Related')).toBe(names.indexOf('Divider/Related') + 1)
     expect(names).toContain('Designer note')
     expect(valueOf(card, 'Related')).toBe('Button Group, Toggle')
+  })
+
+  it('names the part a card difference reads, or the part a missing one belongs in', async () => {
+    const fake = await setup()
+    await syncComponent(fake.figma, model)
+    const { card } = await cardOf(fake)
+    const row = childOf(card, 'Summary')
+    childOf(row, 'Value').remove()
+    const plan = await planComponent(fake.figma, model)
+    expect(plan.differences).toEqual([
+      expect.objectContaining({ variant: 'card Summary', nodeId: row.id, what: 'Value missing' }),
+    ])
   })
 
   it('aligns header labels with the State columns and row labels with the grid rows', async () => {

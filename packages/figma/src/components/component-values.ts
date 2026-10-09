@@ -31,6 +31,8 @@ export interface Check {
   write(): void
   /** What the node holds and what the check wants, for a difference report. */
   describe?(): { actual: unknown; expected: unknown }
+  /** The node the check reads when it is not its group's node, for a difference report. */
+  reads?: { id: string }
 }
 
 const SHOWN = 120

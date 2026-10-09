@@ -51,6 +51,11 @@ export interface ComponentPlan {
 /** A check that does not hold on a variant, with what the node holds and what it should. */
 export interface Difference {
   variant: string
+  /**
+   * The node the check reads, so a UI can select it: the variant or its layer,
+   * or the card part; a missing layer or part gives the node it belongs in.
+   */
+  nodeId: string
   what: string
   actual?: string
   expected?: string
@@ -187,6 +192,10 @@ function rootChecks(run: Run, root: SceneNodeLike): { before: Check[]; after: Ch
 const OVERLAY = 'Spinner'
 const nearPixel = (left: number, right: number) => Math.abs(left - right) < 0.01
 
+/** Checks that read `node` rather than their group's node. */
+const reading = (node: SceneNodeLike, checks: Check[]): Check[] =>
+  checks.map(check => ({ ...check, reads: node }))
+
 /**
  * The Spinner sits over the row, as CSS `position: absolute; inset: 0` places
  * it: out of the auto-layout flow (so a loading variant is no wider) and
@@ -199,7 +208,7 @@ function overlayChecks(root: SceneNodeLike): Check[] {
     x: (root.width - layer.width) / 2,
     y: (root.height - layer.height) / 2,
   })
-  return [
+  return reading(layer, [
     {
       what: `${OVERLAY}.layoutPositioning`,
       same: () => layer.layoutPositioning === 'ABSOLUTE',
@@ -236,7 +245,7 @@ function overlayChecks(root: SceneNodeLike): Check[] {
       },
       describe: () => ({ actual: layer.y, expected: center().y }),
     },
-  ]
+  ])
 }
 
 /**
@@ -274,6 +283,7 @@ function referenceChecks(run: Run, variant: SceneNodeLike): ReferenceCheck[] {
         expected: { [field]: key ?? 'no property' },
       }),
       unsettled,
+      reads: layer,
     })
   }
   return checks
@@ -303,7 +313,7 @@ async function variantChecks(run: Run, node: SceneNodeLike, spec: VariantSpec) {
   // Last, on the root's final size: outline layers leave the flow before the overlay centers.
   const outlines = spec.layers.flatMap(layer => {
     const target = layer.kind === 'outline' ? findLayer(node, layer) : undefined
-    return target ? outlineChecks(node, target, layer) : []
+    return target ? reading(target, outlineChecks(node, target, layer)) : []
   })
   groups.push({
     node,
@@ -313,7 +323,11 @@ async function variantChecks(run: Run, node: SceneNodeLike, spec: VariantSpec) {
 }
 
 /** A failing check as a difference, with short actual and expected values when it can say. */
-function difference(variant: string, check: Pick<Check, 'what' | 'describe'>): Difference {
+function difference(
+  variant: string,
+  nodeId: string,
+  check: Pick<Check, 'what' | 'describe'>
+): Difference {
   let described: { actual: unknown; expected: unknown } | undefined
   try {
     described = check.describe?.()
@@ -323,11 +337,12 @@ function difference(variant: string, check: Pick<Check, 'what' | 'describe'>): D
   return described
     ? {
         variant,
+        nodeId,
         what: check.what,
         actual: shown(described.actual),
         expected: shown(described.expected),
       }
-    : { variant, what: check.what }
+    : { variant, nodeId, what: check.what }
 }
 
 /** The set's default variant: its first child. */
@@ -348,7 +363,10 @@ async function differs(
 ) {
   const missing = spec.layers.slice(1).find(layer => !findLayer(node, layer))
   if (missing)
-    return { difference: { variant: spec.name, what: `${missing.name} missing` }, pending: false }
+    return {
+      difference: { variant: spec.name, nodeId: node.id, what: `${missing.name} missing` },
+      pending: false,
+    }
   const excused = (excuseDefault && isDefault(run, node)) || pending.has(spec.name)
   let unsettled = false
   for (const group of await variantChecks(run, node, spec))
@@ -358,7 +376,10 @@ async function differs(
         unsettled = true
         continue
       }
-      return { difference: difference(spec.name, check), pending: unsettled }
+      return {
+        difference: difference(spec.name, (check.reads ?? group.node).id, check),
+        pending: unsettled,
+      }
     }
   return { difference: null, pending: unsettled }
 }
@@ -409,7 +430,8 @@ async function planRun(
     const card = await planCard(run)
     plan.card = card.plan
     for (const found of card.differences)
-      if (differences.length < DIFFERENCES) differences.push(difference(found.variant, found.check))
+      if (differences.length < DIFFERENCES)
+        differences.push(difference(found.variant, found.nodeId, found.check))
   }
   if (differences.length > 0) plan.differences = differences
   if (unsettled.length > 0) plan.pendingReferences = unsettled

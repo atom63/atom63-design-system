@@ -3,7 +3,7 @@ import { resolve } from 'node:path'
 import { buildProjectModel, deriveStyles } from '@atom63/figma'
 import { readTokenDirectory } from '@atom63/figma/node'
 import { atom63Models } from '../src/main/atom63-models'
-import { handle } from '../src/main/handle'
+import { handle, type SelectionApi } from '../src/main/handle'
 import type { DesignSystemProgress } from '../src/messages'
 import { createFakeFigma } from '../../../packages/figma/test/fake-figma'
 import { createFakeNodes } from '../../../packages/figma/test/fake-nodes'
@@ -72,16 +72,18 @@ describe('the Atom63 design system', () => {
     const progress: DesignSystemProgress[] = []
     const context = {
       nodes: () => fake.figma,
+      selection: () => fake.figma as unknown as SelectionApi,
       progress: (p: DesignSystemProgress) => progress.push(p),
     }
     return { fake, progress, context }
   }
 
   it('bundles the generated token and component models', () => {
-    expect(atom63Models.sync.summary.variables).toBeGreaterThan(0)
-    expect(atom63Models.sync.styles).toBeUndefined()
-    expect(atom63Models.components.map(model => model.component)).toEqual(['Button'])
-    expect(atom63Models.components[0].doc).toBeDefined()
+    expect(atom63Models()).toBe(atom63Models())
+    expect(atom63Models().sync.summary.variables).toBeGreaterThan(0)
+    expect(atom63Models().sync.styles).toBeUndefined()
+    expect(atom63Models().components.map(model => model.component)).toEqual(['Button'])
+    expect(atom63Models().components[0].doc).toBeDefined()
   })
 
   it('reads what an empty file holds', async () => {
@@ -104,7 +106,7 @@ describe('the Atom63 design system', () => {
     if (reply.data.status === 'blocked') throw new Error('blocked')
     expect(reply.data.status).toBe('pass')
     expect(reply.data.components[0].verification).toMatchObject({ create: 0, update: 0 })
-    expect(reply.data.table.atom63?.variables).toBe(atom63Models.sync.summary.variables)
+    expect(reply.data.table.atom63?.variables).toBe(atom63Models().sync.summary.variables)
     expect(reply.data.table.components).toEqual([
       expect.objectContaining({ name: 'Button', card: true, setOnPage: false }),
     ])
@@ -161,5 +163,77 @@ describe('the Atom63 design system', () => {
   it('needs the node API for the Atom63 messages', async () => {
     const { figma } = createFakeFigma()
     await expect(handle(figma, { type: 'atom63-build' })).rejects.toThrow(/node API/)
+  })
+
+  describe('select-node', () => {
+    /** A built file whose Button variant reads a broken fill, on a page not yet current. */
+    const broken = async () => {
+      const { fake, context } = setup()
+      await handle(fake.figma, { type: 'atom63-build' }, context)
+      const variant = fake.findVariant('Button', 'Variant=primary, Size=md, State=rest')
+      variant.fills = []
+      const check = await handle(fake.figma, { type: 'atom63-check' }, context)
+      if (check?.type !== 'atom63-checked') throw new Error(`unexpected ${check?.type}`)
+      const [difference] = check.data.components[0].verification.differences ?? []
+      fake.unloadPages()
+      return { fake, context, variant, difference }
+    }
+
+    it('loads the node’s page, makes it current, selects it and zooms to it', async () => {
+      const { fake, context, variant, difference } = await broken()
+      expect(difference.nodeId).toBe(variant.id)
+      const page = fake.pages.find(item => item.name === 'Components')!
+      expect(fake.figma.currentPage === page).toBe(false)
+      const writes = fake.writes
+      const reply = await handle(
+        fake.figma,
+        { type: 'select-node', id: difference.nodeId },
+        context
+      )
+      expect(reply).toEqual({ type: 'selected', data: { id: variant.id } })
+      expect(fake.figma.currentPage === page).toBe(true)
+      expect(fake.figma.currentPage.selection).toHaveLength(1)
+      expect(fake.figma.currentPage.selection[0] === variant).toBe(true)
+      expect(fake.shown).toHaveLength(1)
+      expect(fake.shown[0] === variant).toBe(true)
+      expect(fake.writes).toBe(writes)
+    })
+
+    it('replies with an error for a node that is no longer in the file', async () => {
+      const { fake, context, variant } = await broken()
+      const id = variant.id
+      variant.remove()
+      const gone = {
+        type: 'error',
+        data: { message: 'That layer is no longer in the file.', for: 'select-node' },
+      }
+      expect(await handle(fake.figma, { type: 'select-node', id }, context)).toEqual(gone)
+      expect(await handle(fake.figma, { type: 'select-node', id: '0:999999' }, context)).toEqual(
+        gone
+      )
+      expect(fake.shown).toEqual([])
+    })
+
+    it('is refused while a build or check is running, and leaves the page alone', async () => {
+      const { fake, context, variant } = await broken()
+      const page = fake.figma.currentPage
+      const build = handle(fake.figma, { type: 'atom63-check' }, context)
+      await expect(
+        handle(fake.figma, { type: 'select-node', id: variant.id }, context)
+      ).rejects.toThrow('A build or check is already running')
+      await build
+      expect(fake.figma.currentPage === page).toBe(true)
+      expect(
+        (await handle(fake.figma, { type: 'select-node', id: variant.id }, context))?.type
+      ).toBe('selected')
+    })
+
+    it('does not take the busy lock: a check can start while it runs', async () => {
+      const { fake, context, variant } = await broken()
+      const select = handle(fake.figma, { type: 'select-node', id: variant.id }, context)
+      const check = handle(fake.figma, { type: 'atom63-check' }, context)
+      expect((await select)?.type).toBe('selected')
+      expect((await check)?.type).toBe('atom63-checked')
+    })
   })
 })
