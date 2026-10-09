@@ -27,3 +27,10 @@ export function nextResults(state: ImportResults, event: ImportEvent): ImportRes
       return { applied: event.data }
   }
 }
+
+/** Why Preview changes is unavailable, shown beside it; null when there is CSS to preview. */
+export function previewReason(project: { error: string } | object | null): string | null {
+  if (!project) return 'Choose or paste CSS first.'
+  if ('error' in project) return 'Fix the CSS first.'
+  return null
+}

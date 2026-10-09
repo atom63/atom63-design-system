@@ -2,7 +2,28 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
+  box-sizing: border-box;
+  min-block-size: 100%;
   padding: var(--spacing-xl);
+}
+
+/*
+ * A view's own actions, pinned to the bottom of the window so the primary
+ * action stays in reach while the content above it scrolls.
+ */
+.bar {
+  position: sticky;
+  inset-block-end: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  align-items: center;
+  margin-block: auto calc(-1 * var(--spacing-xl));
+  margin-inline: calc(-1 * var(--spacing-xl));
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--muted);
+  border-block-start: 1px solid var(--a63-border-subtle);
 }
 
 .actions {
@@ -86,8 +107,21 @@
   font-size: 12px;
 }
 
+.entries {
+  gap: var(--spacing-md);
+}
+
+/* An entry card: its title, one line and its action, stacked and start-aligned. */
 .entry {
-  display: grid;
-  gap: var(--spacing-xs);
-  justify-items: start;
+  align-items: stretch;
+}
+
+.entryFooter {
+  justify-content: flex-start;
+}
+
+.reason {
+  margin: 0;
+  font-size: 12px;
+  color: var(--a63-text-secondary);
 }

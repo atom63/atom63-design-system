@@ -110,20 +110,6 @@ export function Atom63({
           ))}
         </ul>
       )}
-      <div className={styles.actions}>
-        <Button
-          aria-describedby={refused ? refusedId : undefined}
-          disabled={busy || !!refused}
-          loading={phase === 'building'}
-          onClick={build}
-          variant="primary"
-        >
-          {table?.atom63 ? 'Update' : 'Build'}
-        </Button>
-        <Button disabled={busy} onClick={onDone} variant="ghost">
-          Back
-        </Button>
-      </div>
       <div aria-live="polite" className={styles.progress}>
         {phase === 'building' && (
           <>
@@ -198,6 +184,20 @@ export function Atom63({
           </Button>
         </div>
       )}
+      <div className={styles.bar}>
+        <Button
+          aria-describedby={refused ? refusedId : undefined}
+          disabled={busy || !!refused}
+          loading={phase === 'building'}
+          onClick={build}
+          variant="primary"
+        >
+          {table?.atom63 ? 'Update' : 'Build'}
+        </Button>
+        <Button disabled={busy} onClick={onDone} variant="ghost">
+          Back
+        </Button>
+      </div>
     </div>
   )
 }
