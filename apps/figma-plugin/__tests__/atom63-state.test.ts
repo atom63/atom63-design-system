@@ -2,11 +2,14 @@ import type { DesignSystemBlocked, DesignSystemOutcome, DesignSystemTable } from
 import {
   type Atom63State,
   builtSummary,
+  canCheckAgain,
   failureLines,
   initialAtom63State,
   nextAtom63,
   progressLabel,
   progressValue,
+  retryLines,
+  startAtom63,
 } from '../src/app/atom63-state'
 
 const table: DesignSystemTable = {
@@ -124,6 +127,57 @@ describe('nextAtom63', () => {
     )
     expect(state.phase).toBe('checking')
     expect(state.checked).toBeNull()
+    // The button stays in place, disabled, while the check runs.
+    expect(canCheckAgain(state)).toBe(true)
+  })
+
+  it('offers Check again after a check that failed to run', () => {
+    const { state } = run(
+      initialAtom63State,
+      { type: 'build-sent' },
+      { type: 'built', data: { ...outcome(), table: built } },
+      { type: 'error', message: 'Boom', for: 'atom63-check' }
+    )
+    expect(state.error?.during).toBe('checking')
+    expect(canCheckAgain(state)).toBe(true)
+    const again = run(state, { type: 'check-sent' }, { type: 'checked', data: outcome() })
+    expect(again.state.error).toBeNull()
+    expect(canCheckAgain(again.state)).toBe(false)
+  })
+
+  it('offers no Check again after a passing check or a build error', () => {
+    expect(canCheckAgain(run(initialAtom63State, { type: 'checked', data: outcome() }).state)).toBe(
+      false
+    )
+    const failedBuild = run(
+      initialAtom63State,
+      { type: 'build-sent' },
+      { type: 'error', message: 'Boom', for: 'atom63-build' }
+    )
+    expect(canCheckAgain(failedBuild.state)).toBe(false)
+  })
+
+  it('ignores an error from another message, so a build keeps running', () => {
+    const { state } = run(
+      initialAtom63State,
+      { type: 'table', data: table },
+      { type: 'build-sent' },
+      { type: 'error', message: 'Storage full', for: 'save-settings' }
+    )
+    expect(state.phase).toBe('building')
+    expect(state.error).toBeNull()
+  })
+
+  it('takes an Atom63 error, and an untagged one, as its own', () => {
+    for (const failed of ['atom63-build', undefined] as const) {
+      const { state } = run(
+        initialAtom63State,
+        { type: 'build-sent' },
+        { type: 'error', message: 'Boom', for: failed }
+      )
+      expect(state.phase).toBe('idle')
+      expect(state.error).toEqual({ message: 'Boom', during: 'building' })
+    }
   })
 
   it('shows an error from the main thread and stops being busy', () => {
@@ -150,6 +204,24 @@ describe('nextAtom63', () => {
   })
 })
 
+describe('startAtom63', () => {
+  it('uses the table Home scanned and sends no scan', () => {
+    const { state, send } = startAtom63(table)
+    expect(send).toBeUndefined()
+    expect(state.phase).toBe('idle')
+    expect(state.table).toBe(table)
+  })
+
+  it('scans when Home has no table', () => {
+    for (const missing of [null, undefined]) {
+      const { state, send } = startAtom63(missing)
+      expect(send).toBe('atom63-scan')
+      expect(state.phase).toBe('scanning')
+      expect(state.table).toBeNull()
+    }
+  })
+})
+
 describe('progress', () => {
   it('names the phase and counts components', () => {
     expect(progressLabel(null)).toBe('Starting…')
@@ -168,6 +240,22 @@ describe('progress', () => {
 })
 
 describe('results', () => {
+  it('lists the variants a retry could not write, by component', () => {
+    const build = outcome({
+      components: [
+        {
+          name: 'Button',
+          variants: 24,
+          planned: counts,
+          verification: counts,
+          retryErrors: [{ variant: 'Size=Small', error: 'locked' }],
+        },
+      ],
+    })
+    expect(retryLines(build)).toEqual(['Button · Size=Small could not be written: locked'])
+    expect(retryLines(null)).toEqual([])
+  })
+
   it('sums up a passing build', () => {
     const build = outcome({
       tokens: {
@@ -242,10 +330,10 @@ describe('results', () => {
       '1 variable to create or update',
       '2 variables with another type in this file, left alone',
       'Styles to create or update: Body',
-      'Size=Small — padding: 4 → 6',
-      'Size=Large — Label property',
+      'Button · Size=Small — padding: 4 → 6',
+      'Button · Size=Large — Label property',
       'Button spec card: 1 part to create or update',
-      'Size=Small could not be written: locked',
+      'Button · Size=Small could not be written: locked',
     ])
   })
 })

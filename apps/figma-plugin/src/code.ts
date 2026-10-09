@@ -34,7 +34,10 @@ async function receive(message: UIToMain) {
   } catch (error) {
     post({
       type: 'error',
-      data: { message: error instanceof Error ? error.message : String(error) },
+      data: {
+        message: error instanceof Error ? error.message : String(error),
+        for: message.type,
+      },
     })
   }
 }

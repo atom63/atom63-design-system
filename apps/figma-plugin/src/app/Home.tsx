@@ -19,7 +19,8 @@ export function Home({
   onCreate,
   onImport,
 }: {
-  onAtom63: () => void
+  /** Opens the Atom63 view with the table this view already scanned, if any. */
+  onAtom63: (table: DesignSystemTable | null) => void
   onCreate: () => void
   onImport: () => void
 }) {
@@ -35,7 +36,8 @@ export function Home({
   useFigmaMessage(message => {
     if (message.type === 'table') setTable(message.data)
     if (message.type === 'atom63-table') setAtom63(message.data)
-    if (message.type === 'error') setAtom63(current => current ?? null)
+    if (message.type === 'error' && (!message.data.for || message.data.for === 'atom63-scan'))
+      setAtom63(current => current ?? null)
   })
 
   if (!table || atom63 === undefined) return <LoadingState />
@@ -43,7 +45,7 @@ export function Home({
   const isAtom63 = !!atom63?.atom63 && !atom63.template
   const atom63Entry = (
     <div className={styles.entry}>
-      <Button onClick={onAtom63} variant="secondary">
+      <Button onClick={() => onAtom63(atom63)} variant="secondary">
         Atom63 design system
       </Button>
       <p className={styles.meta}>{ATOM63_LINE}</p>
@@ -78,7 +80,7 @@ export function Home({
         />
         <p className={styles.meta}>{ATOM63_LINE}</p>
         <div className={styles.actions}>
-          <Button onClick={onAtom63} variant="primary">
+          <Button onClick={() => onAtom63(atom63)} variant="primary">
             Update Atom63 design system
           </Button>
         </div>

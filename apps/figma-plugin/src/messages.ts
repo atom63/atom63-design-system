@@ -46,4 +46,8 @@ export type MainToUI =
     }
   | { type: 'atom63-checked'; data: DesignSystemOutcome }
   | { type: 'settings'; data: PluginSettings }
-  | { type: 'error'; data: { message: string } }
+  /**
+   * A message failed. `for` names the UIToMain message that failed, so a view
+   * only takes its own errors; replies from before it was added carry none.
+   */
+  | { type: 'error'; data: { message: string; for?: UIToMain['type'] } }

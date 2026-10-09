@@ -5,6 +5,8 @@ import type { ReactNode, Ref } from 'react'
 export interface AlertProps {
   children: ReactNode
   className?: string
+  /** An id for the message, so a control can be described by it. */
+  descriptionId?: string
   /** Replaces the variant's icon. */
   icon?: ReactNode
   showIcon?: boolean
@@ -25,6 +27,7 @@ const icons = {
 export function Alert({
   children,
   className,
+  descriptionId,
   icon,
   showIcon = true,
   title,
@@ -42,7 +45,7 @@ export function Alert({
         ) : (
           <AlertTitle>{title}</AlertTitle>
         ))}
-      <AlertDescription>{children}</AlertDescription>
+      <AlertDescription id={descriptionId}>{children}</AlertDescription>
     </Atom63Alert>
   )
 }

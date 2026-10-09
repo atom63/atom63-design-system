@@ -5,6 +5,7 @@
  */
 import type {
   DesignSystemBlocked,
+  UIToMain,
   DesignSystemOutcome,
   DesignSystemProgress,
   DesignSystemTable,
@@ -23,6 +24,8 @@ export interface Atom63State {
   checked: DesignSystemOutcome | null
   /** The phase an error came in, so a late scan reply can clear one from a scan. */
   error: { message: string; during: Atom63Phase } | null
+  /** A check was sent again by hand, so Check again stays in place while it runs. */
+  rechecking: boolean
 }
 
 export type Atom63Event =
@@ -36,7 +39,8 @@ export type Atom63Event =
     }
   | { type: 'check-sent' }
   | { type: 'checked'; data: DesignSystemOutcome }
-  | { type: 'error'; message: string }
+  /** `for` is the message that failed; untagged errors are taken as this view's. */
+  | { type: 'error'; message: string; for?: UIToMain['type'] }
 
 export const initialAtom63State: Atom63State = {
   phase: 'scanning',
@@ -46,13 +50,33 @@ export const initialAtom63State: Atom63State = {
   built: null,
   checked: null,
   error: null,
+  rechecking: false,
 }
+
+/**
+ * Where the view starts: with the table Home already scanned, or scanning
+ * itself when Home has none, so two scans never overlap.
+ */
+export function startAtom63(initialTable?: DesignSystemTable | null): {
+  state: Atom63State
+  send?: 'atom63-scan'
+} {
+  if (initialTable) return { state: { ...initialAtom63State, phase: 'idle', table: initialTable } }
+  return { state: initialAtom63State, send: 'atom63-scan' }
+}
+
+/** Whether an error belongs to this view: one from an Atom63 message, or an untagged one. */
+export const isAtom63Error = (failed?: UIToMain['type']) => !failed || failed.startsWith('atom63-')
+
+/** Check again follows a pending check or a check that failed to run, and stays while it reruns. */
+export const canCheckAgain = (state: Atom63State) =>
+  state.checked?.status === 'pending' || state.error?.during === 'checking' || state.rechecking
 
 /** The next state, and the message to send now, if any. */
 export function nextAtom63(
   state: Atom63State,
   event: Atom63Event
-): { state: Atom63State; send?: 'atom63-check' } {
+): { state: Atom63State; send?: 'atom63-check' | 'atom63-scan' } {
   switch (event.type) {
     case 'scan-sent':
       return { state: { ...state, phase: 'scanning', error: null } }
@@ -76,6 +100,7 @@ export function nextAtom63(
           built: null,
           checked: null,
           error: null,
+          rechecking: false,
         },
       }
     case 'progress':
@@ -90,15 +115,20 @@ export function nextAtom63(
       }
     }
     case 'check-sent':
-      return { state: { ...state, phase: 'checking', checked: null, error: null } }
+      return {
+        state: { ...state, phase: 'checking', checked: null, error: null, rechecking: true },
+      }
     case 'checked':
-      return { state: { ...state, phase: 'idle', checked: event.data } }
+      return { state: { ...state, phase: 'idle', checked: event.data, rechecking: false } }
     case 'error':
+      // A failed settings save, or a token flow's message, must not stop a build.
+      if (!isAtom63Error(event.for)) return { state }
       return {
         state: {
           ...state,
           phase: 'idle',
           progress: null,
+          rechecking: false,
           error: { message: event.message, during: state.phase },
         },
       }
@@ -170,7 +200,7 @@ export function failureLines(
       lines.push(`${component.name}: ${plural(left, 'part')} to create or update`)
     for (const { variant, what, actual, expected } of plan.differences ?? [])
       lines.push(
-        `${variant} — ${what}${actual !== undefined || expected !== undefined ? `: ${actual ?? 'none'} → ${expected ?? 'none'}` : ''}`
+        `${component.name} · ${variant} — ${what}${actual !== undefined || expected !== undefined ? `: ${actual ?? 'none'} → ${expected ?? 'none'}` : ''}`
       )
     const card = plan.card
     if (card && card.create + card.update > 0)
@@ -178,9 +208,15 @@ export function failureLines(
         `${component.name} spec card: ${plural(card.create + card.update, 'part')} to create or update`
       )
   }
+  return [...lines, ...retryLines(built)]
+}
+
+/** The variants a build's retry could not write, shown whatever the check says. */
+export function retryLines(built: DesignSystemOutcome | null): string[] {
+  const lines: string[] = []
   for (const component of built?.components ?? [])
     for (const { variant, error } of component.retryErrors ?? [])
-      lines.push(`${variant} could not be written: ${error}`)
+      lines.push(`${component.name} · ${variant} could not be written: ${error}`)
   return lines
 }
 

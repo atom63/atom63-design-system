@@ -15,12 +15,14 @@ import { AppHeader } from './components/layout'
 import { ErrorBoundary, PageErrorBoundary, ToastProvider } from './components/ui'
 import { TooltipPortal } from './components/ui/Tooltip'
 import { useFigmaMessage, usePostMessage } from './hooks/useFigmaMessage'
+import type { DesignSystemTable } from './messages'
 import { applyTheme } from './utils/theme'
 
 type View = 'home' | 'create' | 'import' | 'atom63'
 
 function App() {
   const [view, setView] = useState<View>('home')
+  const [atom63Table, setAtom63Table] = useState<DesignSystemTable | null>(null)
   const [isDark, setIsDark] = useState(() => document.documentElement.dataset.a63Mode === 'dark')
   const postMessage = usePostMessage()
 
@@ -47,14 +49,17 @@ function App() {
         <PageErrorBoundary pageName={view}>
           {view === 'home' && (
             <Home
-              onAtom63={() => setView('atom63')}
+              onAtom63={table => {
+                setAtom63Table(table)
+                setView('atom63')
+              }}
               onCreate={() => setView('create')}
               onImport={() => setView('import')}
             />
           )}
           {view === 'create' && <Create onDone={home} />}
           {view === 'import' && <Import onDone={home} />}
-          {view === 'atom63' && <Atom63 onDone={home} />}
+          {view === 'atom63' && <Atom63 initialTable={atom63Table} onDone={home} />}
         </PageErrorBoundary>
       </div>
     </div>

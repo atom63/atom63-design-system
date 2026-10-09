@@ -1,17 +1,20 @@
 import { Progress } from '@atom63/ui-react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 
 import { Alert, Button, LoadingState, SectionHeader } from '../components/ui'
 import { useFigmaMessage, usePostMessage } from '../hooks/useFigmaMessage'
+import type { DesignSystemTable } from '../messages'
 import styles from './app.module.css'
 import {
   type Atom63Event,
   builtSummary,
+  canCheckAgain,
   failureLines,
-  initialAtom63State,
   nextAtom63,
   progressLabel,
   progressValue,
+  retryLines,
+  startAtom63,
 } from './atom63-state'
 
 const ERROR_TITLES = {
@@ -21,12 +24,23 @@ const ERROR_TITLES = {
   checking: 'The check did not finish',
 } as const
 
-/** Build the bundled Atom63 design system into this file, then check it. */
-export function Atom63({ onDone }: { onDone: () => void }) {
+/**
+ * Build the bundled Atom63 design system into this file, then check it.
+ * `initialTable` is what Home already scanned; without it the view scans.
+ */
+export function Atom63({
+  initialTable,
+  onDone,
+}: {
+  initialTable?: DesignSystemTable | null
+  onDone: () => void
+}) {
   const postMessage = usePostMessage()
-  const [state, setState] = useState(initialAtom63State)
+  const [start] = useState(() => startAtom63(initialTable))
+  const [state, setState] = useState(start.state)
   const stateRef = useRef(state)
   const resultRef = useRef<HTMLDivElement>(null)
+  const refusedId = useId()
 
   const update = (event: Atom63Event) => {
     const next = nextAtom63(stateRef.current, event)
@@ -36,15 +50,15 @@ export function Atom63({ onDone }: { onDone: () => void }) {
   }
 
   useEffect(() => {
-    stateRef.current = nextAtom63(stateRef.current, { type: 'scan-sent' }).state
-    postMessage({ type: 'atom63-scan' })
-  }, [postMessage])
+    if (start.send) postMessage({ type: start.send })
+  }, [postMessage, start])
   useFigmaMessage(message => {
     if (message.type === 'atom63-table') update({ type: 'table', data: message.data })
     if (message.type === 'progress') update({ type: 'progress', data: message.data })
     if (message.type === 'atom63-built') update({ type: 'built', data: message.data })
     if (message.type === 'atom63-checked') update({ type: 'checked', data: message.data })
-    if (message.type === 'error') update({ type: 'error', message: message.data.message })
+    if (message.type === 'error')
+      update({ type: 'error', message: message.data.message, for: message.data.for })
   })
 
   const { phase, table, progress, blocked, built, checked, error } = state
@@ -65,6 +79,8 @@ export function Atom63({ onDone }: { onDone: () => void }) {
     postMessage({ type: 'atom63-check' })
   }
   const failures = checked?.status === 'fail' ? failureLines(checked, built) : []
+  // A failed check lists them already.
+  const retries = checked && checked.status !== 'fail' ? retryLines(built) : []
 
   return (
     <div className={styles.view}>
@@ -73,7 +89,7 @@ export function Atom63({ onDone }: { onDone: () => void }) {
         title="Atom63 design system"
       />
       {refused && (
-        <Alert title="This file holds another token set" variant="error">
+        <Alert descriptionId={refusedId} title="This file holds another token set" variant="error">
           {refused}
         </Alert>
       )}
@@ -101,7 +117,7 @@ export function Atom63({ onDone }: { onDone: () => void }) {
       )}
       <div className={styles.actions}>
         <Button
-          aria-describedby={refused ? 'atom63-refused' : undefined}
+          aria-describedby={refused ? refusedId : undefined}
           disabled={busy || !!refused}
           loading={phase === 'building'}
           onClick={build}
@@ -113,11 +129,6 @@ export function Atom63({ onDone }: { onDone: () => void }) {
           Back
         </Button>
       </div>
-      {refused && (
-        <p className={styles.meta} id="atom63-refused">
-          Start the Atom63 design system in a new file.
-        </p>
-      )}
       <div aria-live="polite" className={styles.progress}>
         {phase === 'building' && (
           <>
@@ -146,11 +157,7 @@ export function Atom63({ onDone }: { onDone: () => void }) {
           titleRef={resultRef}
           variant="info"
         >
-          <div className={styles.actions}>
-            <Button onClick={checkAgain} variant="secondary">
-              Check again
-            </Button>
-          </div>
+          Figma reconciles component properties after a build; a second check reads them settled.
         </Alert>
       )}
       {checked?.status === 'fail' && (
@@ -158,6 +165,15 @@ export function Atom63({ onDone }: { onDone: () => void }) {
           <ul className={styles.lines}>
             {failures.map((line, index) => (
               <li key={`${index}-${line}`}>{line}</li>
+            ))}
+          </ul>
+        </Alert>
+      )}
+      {retries.length > 0 && (
+        <Alert title="Some variants could not be written on retry" variant="info">
+          <ul className={styles.lines}>
+            {retries.map(line => (
+              <li key={line}>{line}</li>
             ))}
           </ul>
         </Alert>
@@ -179,6 +195,13 @@ export function Atom63({ onDone }: { onDone: () => void }) {
         >
           {error.message}
         </Alert>
+      )}
+      {canCheckAgain(state) && (
+        <div className={styles.actions}>
+          <Button disabled={busy} onClick={checkAgain} variant="secondary">
+            Check again
+          </Button>
+        </div>
       )}
     </div>
   )
