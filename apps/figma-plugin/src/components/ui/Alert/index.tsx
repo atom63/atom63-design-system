@@ -1,6 +1,6 @@
 import { Alert as Atom63Alert, AlertDescription, AlertIcon, AlertTitle } from '@atom63/ui-react'
 import { AlertTriangle, CheckCircle2, Info, XCircle } from 'lucide-react'
-import type { ReactNode } from 'react'
+import type { ReactNode, Ref } from 'react'
 
 export interface AlertProps {
   children: ReactNode
@@ -9,6 +9,8 @@ export interface AlertProps {
   icon?: ReactNode
   showIcon?: boolean
   title?: string
+  /** Makes the title a focusable heading, so a result can take focus when it appears. */
+  titleRef?: Ref<HTMLDivElement>
   variant?: 'info' | 'success' | 'warning' | 'error'
 }
 
@@ -26,12 +28,20 @@ export function Alert({
   icon,
   showIcon = true,
   title,
+  titleRef,
   variant = 'info',
 }: AlertProps) {
   return (
     <Atom63Alert className={className} variant={variant}>
       {showIcon && <AlertIcon>{icon ?? icons[variant]}</AlertIcon>}
-      {title && <AlertTitle>{title}</AlertTitle>}
+      {title &&
+        (titleRef ? (
+          <AlertTitle aria-level={3} ref={titleRef} role="heading" tabIndex={-1}>
+            {title}
+          </AlertTitle>
+        ) : (
+          <AlertTitle>{title}</AlertTitle>
+        ))}
       <AlertDescription>{children}</AlertDescription>
     </Atom63Alert>
   )

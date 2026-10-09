@@ -1,11 +1,13 @@
 /**
  * Cipher by Atom63: a token table for this Figma file, created from a few
- * choices or imported from a project's token CSS. You Zhang (ATOM63).
+ * choices or imported from a project's token CSS, or the Atom63 design system
+ * itself. You Zhang (ATOM63).
  */
 import { UIProvider } from '@atom63/ui-react'
 import { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 
+import { Atom63 } from './app/Atom63'
 import { Create } from './app/Create'
 import { Home } from './app/Home'
 import { Import } from './app/Import'
@@ -15,7 +17,7 @@ import { TooltipPortal } from './components/ui/Tooltip'
 import { useFigmaMessage, usePostMessage } from './hooks/useFigmaMessage'
 import { applyTheme } from './utils/theme'
 
-type View = 'home' | 'create' | 'import'
+type View = 'home' | 'create' | 'import' | 'atom63'
 
 function App() {
   const [view, setView] = useState<View>('home')
@@ -44,10 +46,15 @@ function App() {
       <div className="plugin-main">
         <PageErrorBoundary pageName={view}>
           {view === 'home' && (
-            <Home onCreate={() => setView('create')} onImport={() => setView('import')} />
+            <Home
+              onAtom63={() => setView('atom63')}
+              onCreate={() => setView('create')}
+              onImport={() => setView('import')}
+            />
           )}
           {view === 'create' && <Create onDone={home} />}
           {view === 'import' && <Import onDone={home} />}
+          {view === 'atom63' && <Atom63 onDone={home} />}
         </PageErrorBoundary>
       </div>
     </div>
