@@ -70,8 +70,16 @@ real-Figma run for the parts the harness can't prove (selection and viewport).
 
 ### Task 5: Input focus ring (R5)
 
-- [ ] Measure the ring contrast in light and dark (harness or Storybook) and record it here.
-- [ ] Only if it fails 3:1: token fix in `@atom63/styles`, regenerate, Storybook visual baseline update per repo rules, changeset.
+- [x] Measured on 2026-10-09 in the QA harness (compact density, 3px ring, composited pixels). Every combination failed 3:1:
+
+  | Brand | Mode | Ring | vs page | vs field |
+  | --- | --- | --- | --- | --- |
+  | b2 | light | #f3c7ac | 1.36 | 1.51 |
+  | b2 | dark | #63371c | 1.59 | 1.88 |
+  | b1 | light | #b5cef5 | 1.41 | 1.56 |
+  | b1 | dark | #253e65 | 1.48 | 1.76 |
+
+- [x] The token fix (`--a63-focus-ring` = brand 600 in light, 400 in dark; 4.4–9.6:1) changes every focusable control in the system, so it ships separately in the `fix/focus-ring-contrast` PR, with its Storybook visual baselines.
 
 ### Task 6: Acceptance
 
