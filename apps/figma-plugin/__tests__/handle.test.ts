@@ -91,6 +91,7 @@ describe('the Atom63 design system', () => {
       data: {
         atom63: null,
         template: null,
+        collisions: [],
         components: [{ name: 'Button', variants: 0, card: false, setOnPage: false }],
       },
     })
@@ -100,6 +101,7 @@ describe('the Atom63 design system', () => {
     const { fake, progress, context } = setup()
     const reply = await handle(fake.figma, { type: 'atom63-build' }, context)
     if (reply?.type !== 'atom63-built') throw new Error(`unexpected ${reply?.type}`)
+    if (reply.data.status === 'blocked') throw new Error('blocked')
     expect(reply.data.status).toBe('pass')
     expect(reply.data.components[0].verification).toMatchObject({ create: 0, update: 0 })
     expect(reply.data.table.atom63?.variables).toBe(atom63Models.sync.summary.variables)
@@ -121,6 +123,38 @@ describe('the Atom63 design system', () => {
     if (check?.type !== 'atom63-checked') throw new Error(`unexpected ${check?.type}`)
     expect(check.data.status).toBe('pass')
     expect(fake.writes).toBe(writes)
+  })
+
+  it('blocks a build into template collections until the user allows it', async () => {
+    const { fake, context } = setup()
+    await handle(fake.figma, { type: 'apply', model: project.model })
+    const blocked = await handle(fake.figma, { type: 'atom63-build' }, context)
+    if (blocked?.type !== 'atom63-built') throw new Error(`unexpected ${blocked?.type}`)
+    expect(blocked.data).toMatchObject({
+      status: 'blocked',
+      collisions: ['Brand', 'Surface', 'Radius', 'Mode'],
+      table: { atom63: null },
+    })
+
+    const built = await handle(fake.figma, { type: 'atom63-build', allowCollisions: true }, context)
+    if (built?.type !== 'atom63-built') throw new Error(`unexpected ${built?.type}`)
+    expect(built.data.status).toBe('pass')
+    expect(built.data.table.collisions).toEqual(['Brand', 'Mode'])
+  })
+
+  it('rejects a build or check while another is running, then accepts the next', async () => {
+    const { fake, context } = setup()
+    const first = handle(fake.figma, { type: 'atom63-build' }, context)
+    await expect(handle(fake.figma, { type: 'atom63-check' }, context)).rejects.toThrow(
+      'A build is already running'
+    )
+    await expect(handle(fake.figma, { type: 'atom63-build' }, context)).rejects.toThrow(
+      'A build is already running'
+    )
+    expect((await first)?.type).toBe('atom63-built')
+    expect((await handle(fake.figma, { type: 'atom63-check' }, context))?.type).toBe(
+      'atom63-checked'
+    )
   })
 
   it('needs the node API for the Atom63 messages', async () => {

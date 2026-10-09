@@ -34,6 +34,19 @@ function atom63Of(context: Atom63Context | undefined) {
   return { figma: context.nodes(), models: context.models ?? atom63Models }
 }
 
+/** A build or check in flight: they yield to Figma, so the UI could start another. */
+let busy = false
+
+async function exclusive<T>(run: () => Promise<T>): Promise<T> {
+  if (busy) throw new Error('A build is already running')
+  busy = true
+  try {
+    return await run()
+  } finally {
+    busy = false
+  }
+}
+
 export async function handle(
   figma: StylesApi,
   message: UIToMain,
@@ -54,15 +67,22 @@ export async function handle(
     }
     case 'atom63-build': {
       const { figma: nodes, models } = atom63Of(context)
-      const outcome = await buildDesignSystem(nodes, models, context?.progress)
-      return {
-        type: 'atom63-built',
-        data: { ...outcome, table: await readDesignSystemTable(nodes, models) },
-      }
+      return exclusive(async () => {
+        const outcome = await buildDesignSystem(nodes, models, context?.progress, {
+          allowCollisions: message.allowCollisions,
+        })
+        return {
+          type: 'atom63-built',
+          data: { ...outcome, table: await readDesignSystemTable(nodes, models) },
+        }
+      })
     }
     case 'atom63-check': {
       const { figma: nodes, models } = atom63Of(context)
-      return { type: 'atom63-checked', data: await checkDesignSystem(nodes, models) }
+      return exclusive(async () => ({
+        type: 'atom63-checked',
+        data: await checkDesignSystem(nodes, models),
+      }))
     }
     default:
       return null
