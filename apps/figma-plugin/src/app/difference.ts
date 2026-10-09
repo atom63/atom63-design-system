@@ -8,6 +8,8 @@ import { formatCount } from './format'
 
 export interface Difference {
   variant: string
+  /** The node to show in Figma; replies from before it was added carry none. */
+  nodeId?: string
   what: string
   actual?: string
   expected?: string

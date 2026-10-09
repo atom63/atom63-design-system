@@ -159,6 +159,26 @@
   align-self: flex-start;
 }
 
+/* A difference line that shows its node in Figma: the line's text, full width, wrapping. */
+.lines .differenceButton {
+  inline-size: 100%;
+  block-size: auto;
+  min-block-size: 0;
+  justify-content: flex-start;
+  margin-inline-start: calc(-1 * var(--spacing-xs));
+  padding-block: var(--spacing-xs);
+  padding-inline: var(--spacing-xs);
+  font-size: inherit;
+  line-height: inherit;
+  text-align: start;
+  white-space: normal;
+}
+
+.selectError {
+  display: block;
+  margin-block-start: var(--spacing-xs);
+}
+
 .note {
   display: grid;
   gap: var(--spacing-xs);

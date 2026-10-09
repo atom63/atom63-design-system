@@ -27,10 +27,13 @@ The two threads exchange only the messages in `src/messages.ts`:
 | `atom63-scan` | `atom63-table`: what the file holds of Atom63, any other token set, and whether a build would be refused (`readDesignSystemTable`) |
 | `atom63-build` | `progress` while it works, then `atom63-built`: the build's outcome, or `status: 'blocked'` with the reason, and the new table (`buildDesignSystem`) |
 | `atom63-check` | `atom63-checked`: the read-only check, pass, pending or fail (`checkDesignSystem`) |
+| `select-node` with a node id | `selected`: the node's page loaded and made current, the node selected and zoomed into view; or `error` when the node is gone |
 | `load-settings` | `settings` |
 | `save-settings` | nothing |
 
 The main thread runs one `atom63-*` message at a time; another one meanwhile is an error.
+`select-node` writes no node, so it takes no turn, but it is refused while a build, check or scan
+runs: switching the current page mid-build would move where Figma creates nodes.
 
 Any failure comes back as `error` with its message and, in `for`, the type of the message that
 failed. The Atom63 view takes only errors `for` an `atom63-*` message (or untagged ones) as its
@@ -85,7 +88,10 @@ lives in the plugin.
 - **Check:** the view then sends `atom63-check`, a separate main-thread task, so Figma has
   settled its component property references. The result is pass with a summary, fail with every
   named difference in words (`Button · primary / md / rest — fill: none → action/primary`), or
-  pending while Figma is still reconciling a property. A pending result is checked again by
+  pending while Figma is still reconciling a property. Each difference carries the id of the node
+  its check reads (the variant, its layer, or the spec card part), so its line is a button
+  ("Show … in Figma") that sends `select-node`; Figma's selection is the feedback, and a node
+  that is gone is said under the list without touching the result. A pending result is checked again by
   itself once, 1.5 seconds later, and offers **Check again**, as does a check that failed to run.
   A build that did not finish offers **Check the file**. Progress, Verifying… and the result
   share one slot; retry errors and a one-line font note (with the fallbacks in a disclosure)

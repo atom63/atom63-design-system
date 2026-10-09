@@ -5,6 +5,8 @@
  */
 import type { EffectStyleLike, NodesApi, StylesApi, TextStyleLike } from '@atom63/figma'
 
+import type { SelectableNode, SelectionApi } from './handle'
+
 type Made<K extends keyof NodesApi> = NodesApi[K] extends (...args: never[]) => infer R ? R : never
 
 export function figmaApi(): StylesApi {
@@ -56,5 +58,30 @@ export function nodesApi(): NodesApi {
         nodes as unknown as ComponentNode[],
         parent as unknown as PageNode
       ) as unknown as Made<'combineAsVariants'>,
+  }
+}
+
+/** The nodes `select-node` passes back are the ones `getNodeByIdAsync` gave it. */
+const sceneNodes = (nodes: readonly SelectableNode[]) => nodes.map(node => node as SceneNode)
+
+/**
+ * The figma global's selection and viewport, for `select-node`. In a
+ * dynamic-page file `currentPage` is read-only: `setCurrentPageAsync` switches it.
+ */
+export function selectionApi(): SelectionApi {
+  return {
+    getNodeByIdAsync: id => figma.getNodeByIdAsync(id),
+    setCurrentPageAsync: page => figma.setCurrentPageAsync(page as PageNode),
+    currentPage: {
+      get selection() {
+        return figma.currentPage.selection
+      },
+      set selection(nodes) {
+        figma.currentPage.selection = sceneNodes(nodes)
+      },
+    },
+    viewport: {
+      scrollAndZoomIntoView: nodes => figma.viewport.scrollAndZoomIntoView(sceneNodes(nodes)),
+    },
   }
 }

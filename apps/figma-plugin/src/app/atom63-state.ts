@@ -28,6 +28,8 @@ export interface Atom63State {
   error: { message: string; during: Atom63Phase } | null
   /** The one automatic re-check after a pending result was sent; once per build. */
   autoRechecked: boolean
+  /** Why the last difference could not be shown in Figma, under the list; never a failed run. */
+  selectError: string | null
 }
 
 export type Atom63Event =
@@ -42,6 +44,10 @@ export type Atom63Event =
   /** `auto` is the one re-check the view sends itself after a pending result. */
   | { type: 'check-sent'; auto?: boolean }
   | { type: 'checked'; data: DesignSystemOutcome }
+  /** A difference was clicked: `select-node` is on its way. */
+  | { type: 'select-sent' }
+  /** The main thread showed the node; Figma's selection is the feedback. */
+  | { type: 'selected' }
   /** `for` is the message that failed; untagged errors are taken as this view's. */
   | { type: 'error'; message: string; for?: UIToMain['type'] }
 
@@ -54,6 +60,7 @@ export const initialAtom63State: Atom63State = {
   checked: null,
   error: null,
   autoRechecked: false,
+  selectError: null,
 }
 
 /**
@@ -134,6 +141,7 @@ export function nextAtom63(
           checked: null,
           error: null,
           autoRechecked: false,
+          selectError: null,
         },
       }
     case 'progress':
@@ -155,11 +163,18 @@ export function nextAtom63(
           checked: null,
           error: null,
           autoRechecked: state.autoRechecked || !!event.auto,
+          selectError: null,
         },
       }
     case 'checked':
       return { state: { ...state, phase: 'idle', checked: event.data } }
+    case 'select-sent':
+      return { state: state.selectError ? { ...state, selectError: null } : state }
+    case 'selected':
+      return { state }
     case 'error':
+      // Showing a difference in Figma failed: say so under the list; the result stands.
+      if (event.for === 'select-node') return { state: { ...state, selectError: event.message } }
       // A failed settings save, or a token flow's message, must not stop a build.
       if (!isAtom63Error(event.for)) return { state }
       return {
@@ -241,38 +256,43 @@ export function builtSummary(built: DesignSystemOutcome | null, checked: DesignS
   return lines
 }
 
+/** A line of a failed check; a difference carries the node it can show in Figma. */
+export interface FailureLine {
+  text: string
+  nodeId?: string
+}
+
 /** Every named difference a failed check reports, in the engine's caps. */
 export function failureLines(
   checked: DesignSystemOutcome,
   built: DesignSystemOutcome | null
-): string[] {
-  const lines: string[] = []
+): FailureLine[] {
+  const lines: FailureLine[] = []
+  const add = (text: string) => lines.push({ text })
   const tokens = checked.tokens.verification
   const variablesLeft = tokens.create + tokens.update
-  if (variablesLeft > 0) lines.push(`${plural(variablesLeft, 'variable')} to create or update`)
+  if (variablesLeft > 0) add(`${plural(variablesLeft, 'variable')} to create or update`)
   if (tokens.typeConflicts > 0)
-    lines.push(
-      `${plural(tokens.typeConflicts, 'variable')} with another type in this file, left alone`
-    )
+    add(`${plural(tokens.typeConflicts, 'variable')} with another type in this file, left alone`)
   const styles = checked.styles?.verification
   const stylesLeft = [...(styles?.create ?? []), ...(styles?.update ?? [])]
-  if (stylesLeft.length > 0) lines.push(`Styles to create or update: ${stylesLeft.join(', ')}`)
+  if (stylesLeft.length > 0) add(`Styles to create or update: ${stylesLeft.join(', ')}`)
   for (const component of checked.components) {
     const plan = component.verification
     if (plan.missingVariables.length > 0)
-      lines.push(`${component.name}: missing variables ${plan.missingVariables.join(', ')}`)
+      add(`${component.name}: missing variables ${plan.missingVariables.join(', ')}`)
     const left = plan.create + plan.update + plan.variables
     if (left > 0 && !plan.differences)
-      lines.push(`${component.name}: ${plural(left, 'part')} to create or update`)
+      add(`${component.name}: ${plural(left, 'part')} to create or update`)
     for (const difference of plan.differences ?? [])
-      lines.push(differenceLine(component.name, difference))
+      lines.push({ text: differenceLine(component.name, difference), nodeId: difference.nodeId })
     const card = plan.card
     if (card && card.create + card.update > 0)
-      lines.push(
+      add(
         `${component.name} spec card: ${plural(card.create + card.update, 'item')} to create or update`
       )
   }
-  return [...lines, ...retryLines(built)]
+  return [...lines, ...retryLines(built).map(text => ({ text }))]
 }
 
 /** The variants a build's retry could not write, shown whatever the check says. */

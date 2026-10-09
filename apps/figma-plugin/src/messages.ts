@@ -31,6 +31,12 @@ export type UIToMain =
   | { type: 'atom63-build' }
   /** Checks it read-only, in a later task so Figma's reconciliation has settled (P3). */
   | { type: 'atom63-check' }
+  /**
+   * Shows a node (a difference's `nodeId`) in Figma: its page made current, the
+   * node selected and zoomed into view. `selected`, or an `error` when the node
+   * is gone or a build or check is running.
+   */
+  | { type: 'select-node'; id: string }
   | { type: 'load-settings' }
   | { type: 'save-settings'; data: Partial<PluginSettings> }
 
@@ -45,6 +51,7 @@ export type MainToUI =
       data: (DesignSystemOutcome | DesignSystemBlocked) & { table: DesignSystemTable }
     }
   | { type: 'atom63-checked'; data: DesignSystemOutcome }
+  | { type: 'selected'; data: { id: string } }
   | { type: 'settings'; data: PluginSettings }
   /**
    * A message failed. `for` names the UIToMain message that failed, so a view

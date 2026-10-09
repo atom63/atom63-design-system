@@ -3,7 +3,7 @@
 // Cipher by Atom63, You Zhang (ATOM63).
 /// <reference types="@figma/plugin-typings" />
 
-import { figmaApi, nodesApi } from './main/figma-api'
+import { figmaApi, nodesApi, selectionApi } from './main/figma-api'
 import { handle } from './main/handle'
 import type { MainToUI, PluginSettings, UIToMain } from './messages'
 
@@ -28,6 +28,7 @@ async function receive(message: UIToMain) {
     }
     const reply = await handle(figmaApi(), message, {
       nodes: nodesApi,
+      selection: selectionApi,
       progress: data => post({ type: 'progress', data }),
     })
     if (reply) post(reply)
