@@ -314,11 +314,11 @@ async function readTokenTables(figma: NodesApi, sync: SyncModel) {
     template: other.length > 0 ? { variables: sum(other), collections } : null,
     blocked:
       other.length > 0
-        ? `This file already holds another token set (collections: ${collections.join(', ')}). Start the Atom63 design system in a new file${
+        ? `This file already holds another token set (collections: ${collections.join(', ')}). Start the Atom63 design system in a new file.${
             other.some(item => item.atom63Name)
-              ? ', or this file holds an older Atom63 token set that this version cannot update'
+              ? " If this file holds an older Atom63 token set, this version can't update it."
               : ''
-          }.`
+          }`
         : null,
   }
 }
