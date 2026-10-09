@@ -91,7 +91,7 @@ describe('the Atom63 design system', () => {
       data: {
         atom63: null,
         template: null,
-        collisions: [],
+        blocked: null,
         components: [{ name: 'Button', variants: 0, card: false, setOnPage: false }],
       },
     })
@@ -125,32 +125,33 @@ describe('the Atom63 design system', () => {
     expect(fake.writes).toBe(writes)
   })
 
-  it('blocks a build into template collections until the user allows it', async () => {
-    const { fake, context } = setup()
+  it('returns a refused build as its result, writing nothing, when the file holds another token set', async () => {
+    const { fake, progress, context } = setup()
     await handle(fake.figma, { type: 'apply', model: project.model })
-    const blocked = await handle(fake.figma, { type: 'atom63-build' }, context)
-    if (blocked?.type !== 'atom63-built') throw new Error(`unexpected ${blocked?.type}`)
-    expect(blocked.data).toMatchObject({
+    const writes = fake.writes
+    const reply = await handle(fake.figma, { type: 'atom63-build' }, context)
+    if (reply?.type !== 'atom63-built') throw new Error(`unexpected ${reply?.type}`)
+    const collections = project.model.collections.map(item => item.name)
+    expect(reply.data).toMatchObject({
       status: 'blocked',
-      collisions: ['Brand', 'Surface', 'Radius', 'Mode'],
-      table: { atom63: null },
+      reason: expect.stringContaining('This file already holds another token set'),
+      collections,
+      table: { atom63: null, template: { collections } },
     })
-
-    const built = await handle(fake.figma, { type: 'atom63-build', allowCollisions: true }, context)
-    if (built?.type !== 'atom63-built') throw new Error(`unexpected ${built?.type}`)
-    expect(built.data.status).toBe('pass')
-    expect(built.data.table.collisions).toEqual(['Brand', 'Mode'])
+    expect(reply.data.table.blocked).toBe(
+      reply.data.status === 'blocked' ? reply.data.reason : undefined
+    )
+    expect(progress).toEqual([])
+    expect(fake.writes).toBe(writes)
   })
 
-  it('rejects a build or check while another is running, then accepts the next', async () => {
+  it('rejects a build, check or scan while another is running, then accepts the next', async () => {
     const { fake, context } = setup()
     const first = handle(fake.figma, { type: 'atom63-build' }, context)
-    await expect(handle(fake.figma, { type: 'atom63-check' }, context)).rejects.toThrow(
-      'A build is already running'
-    )
-    await expect(handle(fake.figma, { type: 'atom63-build' }, context)).rejects.toThrow(
-      'A build is already running'
-    )
+    for (const type of ['atom63-check', 'atom63-build', 'atom63-scan'] as const)
+      await expect(handle(fake.figma, { type }, context)).rejects.toThrow(
+        'A build or check is already running'
+      )
     expect((await first)?.type).toBe('atom63-built')
     expect((await handle(fake.figma, { type: 'atom63-check' }, context))?.type).toBe(
       'atom63-checked'

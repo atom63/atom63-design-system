@@ -34,11 +34,11 @@ function atom63Of(context: Atom63Context | undefined) {
   return { figma: context.nodes(), models: context.models ?? atom63Models }
 }
 
-/** A build or check in flight: they yield to Figma, so the UI could start another. */
+/** A build, check or scan in flight: they yield to Figma, so the UI could start another. */
 let busy = false
 
 async function exclusive<T>(run: () => Promise<T>): Promise<T> {
-  if (busy) throw new Error('A build is already running')
+  if (busy) throw new Error('A build or check is already running')
   busy = true
   try {
     return await run()
@@ -63,14 +63,15 @@ export async function handle(
     }
     case 'atom63-scan': {
       const { figma: nodes, models } = atom63Of(context)
-      return { type: 'atom63-table', data: await readDesignSystemTable(nodes, models) }
+      return exclusive(async () => ({
+        type: 'atom63-table',
+        data: await readDesignSystemTable(nodes, models),
+      }))
     }
     case 'atom63-build': {
       const { figma: nodes, models } = atom63Of(context)
       return exclusive(async () => {
-        const outcome = await buildDesignSystem(nodes, models, context?.progress, {
-          allowCollisions: message.allowCollisions,
-        })
+        const outcome = await buildDesignSystem(nodes, models, context?.progress)
         return {
           type: 'atom63-built',
           data: { ...outcome, table: await readDesignSystemTable(nodes, models) },

@@ -24,11 +24,11 @@ export type UIToMain =
   | { type: 'atom63-scan' }
   /**
    * Builds the bundled Atom63 design system: `progress`* then `atom63-built`.
-   * Template collections named as Atom63's block it (`status: 'blocked'`,
-   * nothing written) unless the user confirmed `allowCollisions`. One build
-   * or check at a time: another meanwhile is an `error`.
+   * A file that already holds another token set is refused: `atom63-built`
+   * with `status: 'blocked'` and its reason, nothing written. One build,
+   * check or scan at a time: another meanwhile is an `error`.
    */
-  | { type: 'atom63-build'; allowCollisions?: boolean }
+  | { type: 'atom63-build' }
   /** Checks it read-only, in a later task so Figma's reconciliation has settled (P3). */
   | { type: 'atom63-check' }
   | { type: 'load-settings' }
