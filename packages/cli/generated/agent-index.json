@@ -11499,8 +11499,12 @@
    "type": "color",
    "values": [
     {
-     "scope": ":root, [data-a63-brand]",
-     "value": "color-mix(in oklch, var(--a63-brand-500) 30%, transparent)"
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-brand-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--a63-brand-600)"
     }
    ]
   },

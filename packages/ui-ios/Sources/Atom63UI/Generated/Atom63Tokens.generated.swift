@@ -78,7 +78,7 @@ public enum AtomTokens {
         /// --a63-status-warning
         public static let statusWarning = AtomDynamicColor(light: AtomColorComponents(red: 0.760784, green: 0.458824, blue: 0, opacity: 1), dark: AtomColorComponents(red: 0.952941, green: 0.623529, blue: 0, opacity: 1))
         /// --a63-focus-ring
-        public static let focusRing = AtomDynamicColor(light: AtomColorComponents(red: 0.172549, green: 0.498039, blue: 1, opacity: 0.3), dark: AtomColorComponents(red: 0.172549, green: 0.498039, blue: 1, opacity: 0.3))
+        public static let focusRing = AtomDynamicColor(light: AtomColorComponents(red: 0.019608, green: 0.364706, blue: 0.823529, opacity: 1), dark: AtomColorComponents(red: 0.462745, green: 0.74902, blue: 1, opacity: 1))
         /// --a63-scrim
         public static let scrim = AtomDynamicColor(light: AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 0.4), dark: AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 0.4))
         /// --a63-media-stage

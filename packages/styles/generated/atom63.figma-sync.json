@@ -5,7 +5,7 @@
   "summary": {
     "collections": 14,
     "variables": 1009,
-    "aliasValues": 599,
+    "aliasValues": 600,
     "skipped": 183,
     "computed": 57
   },
@@ -2849,23 +2849,6 @@
           },
           "codeSyntax": "var(--a63-action-primary-text-shadow)",
           "scopes": []
-        },
-        {
-          "name": "focus/ring",
-          "token": "--a63-focus-ring",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "composed": {
-                "alias": "--a63-brand-500",
-                "opacity": 30
-              }
-            }
-          },
-          "codeSyntax": "var(--a63-focus-ring)",
-          "scopes": [
-            "STROKE_COLOR"
-          ]
         },
         {
           "name": "font/weight/medium",
@@ -14878,6 +14861,23 @@
           },
           "codeSyntax": "var(--effect-shadow-xs)",
           "scopes": []
+        },
+        {
+          "name": "focus/ring",
+          "token": "--a63-focus-ring",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-brand-600"
+            },
+            "dark": {
+              "alias": "--a63-brand-400"
+            }
+          },
+          "codeSyntax": "var(--a63-focus-ring)",
+          "scopes": [
+            "STROKE_COLOR"
+          ]
         },
         {
           "name": "skeleton/highlight",
