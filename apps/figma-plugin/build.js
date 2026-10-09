@@ -64,6 +64,35 @@ const cssModulesPlugin = {
   },
 }
 
+/*
+ * A `?raw` import is the file's text as one string literal. For JSON the text
+ * is minified first, and the importer parses it when it needs it: code.js
+ * holds the Atom63 models this way, so loading the plugin only scans two
+ * strings instead of building their objects (R3).
+ */
+/** @type {import('esbuild').Plugin} */
+const rawPlugin = {
+  name: 'raw',
+  setup(build) {
+    build.onResolve({ filter: /\?raw$/ }, async args => {
+      const result = await build.resolve(args.path.slice(0, -'?raw'.length), {
+        kind: args.kind,
+        resolveDir: args.resolveDir,
+      })
+      if (result.errors.length > 0) return { errors: result.errors }
+      return { path: result.path, namespace: 'raw' }
+    })
+    build.onLoad({ filter: /.*/, namespace: 'raw' }, args => {
+      const text = readFileSync(args.path, 'utf-8')
+      return {
+        contents: args.path.endsWith('.json') ? JSON.stringify(JSON.parse(text)) : text,
+        loader: 'text',
+        watchFiles: [args.path],
+      }
+    })
+  },
+}
+
 // Ensure dist directory exists
 const distDir = resolve(__dirname, 'dist')
 if (!existsSync(distDir)) {
@@ -81,6 +110,7 @@ const codeContext = await esbuild.context({
   minify: !isDev,
   // The sync engine comes from @atom63/figma's TypeScript sources, like the UI's packages.
   conditions: ['@atom63/source'],
+  plugins: [rawPlugin],
 })
 
 // Build the UI (React app)

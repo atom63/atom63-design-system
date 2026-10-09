@@ -59,8 +59,8 @@ real-Figma run for the parts the harness can't prove (selection and viewport).
 
 **Files:** `apps/figma-plugin/build.js`, `src/main/atom63-models.ts`, handler tests.
 
-- [ ] Models emitted as JSON strings and parsed on first use; test that token-only messages never parse them.
-- [ ] Measure `dist/code.js` evaluate time before/after in Node (report numbers).
+- [x] Models emitted as JSON strings and parsed on first use; test that token-only messages never parse them.
+- [x] Measure `dist/code.js` evaluate time before/after in Node (report numbers): compile and run its top level, `figma` and `__html__` stubbed, median of 10 fresh processes: 7.9 ms before, 3.2 ms after; `dist/code.js` 693 KB before, 761 KB after (a JSON string keeps its keys' quotes). The first `atom63-*` message then parses both models in about 1.6 ms.
 
 ### Task 4: Craft rules cover the plugin (R4)
 

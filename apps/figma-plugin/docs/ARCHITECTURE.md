@@ -89,7 +89,9 @@ variables, the text and effect styles, and every generated component (Button tod
 card. `code.js` bundles the generated, CI-guarded models at build time
 (`packages/styles/generated/atom63.figma-sync.json` and
 `packages/figma/generated/atom63.figma-components.json`, `src/main/atom63-models.ts`); no copy
-lives in the plugin.
+lives in the plugin. `build.js` emits each as one minified JSON string literal (a `?raw` import),
+and `atom63Models()` parses them on the first `atom63-*` message, so loading `code.js` and the
+token flows never build them.
 
 - **What the file holds:** the view lists Atom63's variables and collections and, for each
   component, its variants and whether the spec card is there.

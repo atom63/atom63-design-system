@@ -43,7 +43,7 @@ export interface Atom63Context {
   nodes: () => NodesApi
   /** Posts each step of a build to the UI. */
   progress?: (progress: DesignSystemProgress) => void
-  /** The bundled models unless a test passes others. */
+  /** The bundled models (parsed on first use) unless a test passes others. */
   models?: DesignSystemModels
   /** The figma global's selection and viewport, for `select-node`. */
   selection?: () => SelectionApi
@@ -51,7 +51,7 @@ export interface Atom63Context {
 
 function atom63Of(context: Atom63Context | undefined) {
   if (!context) throw new Error('The Atom63 design system needs the node API')
-  return { figma: context.nodes(), models: context.models ?? atom63Models }
+  return { figma: context.nodes(), models: context.models ?? atom63Models() }
 }
 
 /** A build, check or scan in flight: they yield to Figma, so the UI could start another. */

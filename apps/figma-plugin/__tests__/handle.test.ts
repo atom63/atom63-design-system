@@ -79,10 +79,11 @@ describe('the Atom63 design system', () => {
   }
 
   it('bundles the generated token and component models', () => {
-    expect(atom63Models.sync.summary.variables).toBeGreaterThan(0)
-    expect(atom63Models.sync.styles).toBeUndefined()
-    expect(atom63Models.components.map(model => model.component)).toEqual(['Button'])
-    expect(atom63Models.components[0].doc).toBeDefined()
+    expect(atom63Models()).toBe(atom63Models())
+    expect(atom63Models().sync.summary.variables).toBeGreaterThan(0)
+    expect(atom63Models().sync.styles).toBeUndefined()
+    expect(atom63Models().components.map(model => model.component)).toEqual(['Button'])
+    expect(atom63Models().components[0].doc).toBeDefined()
   })
 
   it('reads what an empty file holds', async () => {
@@ -105,7 +106,7 @@ describe('the Atom63 design system', () => {
     if (reply.data.status === 'blocked') throw new Error('blocked')
     expect(reply.data.status).toBe('pass')
     expect(reply.data.components[0].verification).toMatchObject({ create: 0, update: 0 })
-    expect(reply.data.table.atom63?.variables).toBe(atom63Models.sync.summary.variables)
+    expect(reply.data.table.atom63?.variables).toBe(atom63Models().sync.summary.variables)
     expect(reply.data.table.components).toEqual([
       expect.objectContaining({ name: 'Button', card: true, setOnPage: false }),
     ])

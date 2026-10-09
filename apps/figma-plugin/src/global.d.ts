@@ -26,3 +26,9 @@ declare module '*.module.scss' {
   const classes: { [key: string]: string }
   export default classes
 }
+
+// A file's text (`?raw`): build.js and Vite emit it as a string.
+declare module '*?raw' {
+  const text: string
+  export default text
+}
