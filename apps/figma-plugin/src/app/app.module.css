@@ -203,3 +203,40 @@
 .details[open] summary {
   margin-block-end: var(--spacing-xs);
 }
+
+/*
+ * Home's skeleton while it reads the file: the header, then each entry card's
+ * title, line and action. The skeleton's base is the muted surface, which is
+ * this window's page, so here it takes the subtle border colour to show.
+ */
+.skeletons {
+  --a63-skeleton-base: var(--a63-border-subtle);
+
+  display: contents;
+}
+
+.skeletonHeader {
+  display: grid;
+  gap: var(--spacing-sm);
+}
+
+.skeletonHeading {
+  inline-size: 45%;
+  block-size: 1.25rem;
+}
+
+.skeletonTitle {
+  inline-size: 40%;
+  block-size: 1rem;
+}
+
+.skeletonLine {
+  inline-size: 85%;
+  block-size: 0.75rem;
+}
+
+.skeletonAction {
+  inline-size: 4.5rem;
+  block-size: 1.75rem;
+  border-radius: var(--radius-sm);
+}

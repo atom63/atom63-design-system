@@ -53,18 +53,28 @@ colors. The main thread receives a finished model.
 ## Home
 
 Home asks for the token table (`scan`) and for what the file holds of Atom63 (`atom63-scan`). It
-finds the table by code syntax (`var(--token)`), so it also sees a table an agent wrote:
+finds the table by code syntax (`var(--token)`), so it also sees a table an agent wrote. While
+both scans run, Home shows skeletons of its entry cards, the main region is `aria-busy`, and a
+visually hidden status outside it says "Reading this file…".
 
-Each way in is an entry card (the Atom63 `Item`): a title, one line of what it does, and its
-action.
+Home then leads with one **file status** line and the entry cards that apply (`fileStatus` in
+`src/app/home-state.ts`). Each way in is an entry card (the Atom63 `Item`): a title, one line of
+what it does, and its action. The recommended entry's action is the primary button; entries that
+don't apply are hidden.
 
-- **An empty file:** Home offers three entries: Create, Import, and the Atom63 design system.
-- **A file with Atom63's table:** Home says the file holds the Atom63 design system and offers
-  one entry, **Update Atom63 design system**.
-- **A file with another table:** Home lists the collections and says that code is the source.
-  After the CSS changes, the user asks their agent to sync, or imports again. The Atom63 entry
-  stays with its action disabled and the reason beside it ("Needs a new file — this file holds
-  another token set").
+| The file holds | Status line | Entries (recommended in bold) |
+| --- | --- | --- |
+| Nothing | "This file has no tokens yet." | Create, Import, Atom63 design system (none recommended) |
+| The site template's table | The table's summary, with its collections and "code is the source" | **Import again**, Atom63 design system (disabled with its reason) |
+| The Atom63 design system | "This file holds the Atom63 design system: …" | **Update Atom63 design system** |
+| Another token set | "This file holds a token set the site template didn't write: …", with its collections | Import, Atom63 design system (disabled with its reason) |
+
+The site template's table is whatever the site template's model wrote, by Create, Import, the CLI
+or an agent: they write the same table, so Home can't tell them apart and doesn't try. That model
+always puts its axis-free tokens (the palette) in a `Base` collection, so a token set without
+`Base` is another tool's, or an older Atom63 version's that this one can't update; Import again
+is not recommended for it. The Atom63 entry's reason on a file with any other set is P5's
+("Needs a new file — this file holds another token set").
 
 Create, Import and the Atom63 view keep their actions in a bar pinned to the bottom of the window,
 so the primary action is in reach while the content above it scrolls.

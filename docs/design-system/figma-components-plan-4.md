@@ -51,9 +51,9 @@ real-Figma run for the parts the harness can't prove (selection and viewport).
 
 **Files:** `src/app/Home.tsx`, a pure `home-state.ts` helper + tests, `app.module.css`.
 
-- [ ] `fileStatus(table, atom63)` → `{ kind, line, recommended }` with tests for the four kinds.
-- [ ] Home renders the status line, the recommended entry as primary, hides entries that don't apply (R2).
-- [ ] Skeleton cards while scanning (R3 UI part).
+- [x] `fileStatus(table, atom63)` → `{ kind, line, recommended, entries }` with tests for the four kinds. Another token set is one with no `Base` collection, which the site template's model always writes; Cipher, the CLI and an agent write the same table, so they are not told apart.
+- [x] Home renders the status line, the recommended entry as primary, hides entries that don't apply (R2).
+- [x] Skeleton cards while scanning (R3 UI part), `aria-busy` on main and a hidden "Reading this file…" status.
 
 ### Task 3: Faster open (R3)
 
