@@ -48,6 +48,78 @@ a literal. The
 summary lists the styles it could not derive under `styles.skipped`. Pass `--no-styles` to write
 variables only.
 
+## Components
+
+The Button component set is drawn from code (the contract and the recipe CSS) and bound to the
+variables the token sync writes, so sync the tokens first.
+
+The component model lives in this repository, not in the published package, so this runs from
+the monorepo.
+
+1. Run the token sync above, and confirm its `verification`.
+2. Build the package and write the component scripts, from the repository root:
+
+   ```bash
+   pnpm --filter @atom63/figma build
+   pnpm --filter @atom63/figma exec node dist/cli.js components \
+     --model generated/atom63.figma-components.json --out .figma-sync
+   ```
+
+   `exec` runs in `packages/figma`, so both paths are relative to it and the scripts land in
+   `packages/figma/.figma-sync`.
+
+3. Run each `.figma-sync/components-N.js` in order with `use_figma` on the same file. The first
+   makes the `Components` page and the `Button` set; later ones add their variants to it. Each
+   returns `verification`, which must plan no `create` or `update`. A non-empty
+   `missingVariables` means the file lacks variables the variants bind, and nothing was written:
+   sync the tokens again, then rerun the script. A variant its first verification still lists is
+   applied once more and checked again, and the result counts it as `retried`. Right after a set
+   is created, Figma reconciles its default variant's text-property reference asynchronously, so
+   a run may report that variant under `pendingReferences` rather than as an `update`. Run the
+   check scripts afterwards: they must be clean, with no `pendingReferences`. A script that
+   stops partway leaves its new variants on the `Components` page; rerunning it takes them into
+   the set instead of drawing them again.
+
+Run the `components-check-N.js` scripts at any time; they only read, and `planned.unchanged`
+equals the script's `variants` when the file matches the code. Variants and layers are found by
+name, so a rerun updates them in place and never touches layers the model does not list.
+
+The printed summary counts the variants, the tokens they bind, the `derivedVariables`, and the
+`literals` (values the recipe computes, such as heights, written as numbers), and lists what was
+`skipped` with the reason. `applied.fontFallbacks` lists labels whose font family is not bound to
+the code.
+
+A token at an opacity (`color-mix(in oklch, var(--a63-action-danger) 10%, transparent)` in the
+recipe) is bound through a **derived variable** in a `Component` collection with one `Value`
+mode: its value is the token's variable at that alpha, so it follows the theme, and its Dev Mode
+code syntax is the CSS expression itself. There is one per token and opacity, named by meaning as
+the token's variable plus `alpha-N` (`action/danger/alpha-10`). Figma overwrites a bound paint's
+own opacity with the variable's alpha, so this is the only way a bound paint can be
+semi-transparent. Each script makes the derived variables its variants bind before binding them
+(`applied.variables` counts them), so the scripts can run in any order; `diff` and the plugin's
+token table do not count them as tokens.
+
+The focus ring is a `Focus ring` layer in every variant, drawn as CSS draws the recipe's
+`outline`: absolutely placed over the root and stretched with it, no fill, an outside stroke whose
+color and weight are bound to the ring variables, corners bound to the root's radius. It is
+visible only in `State=focusVisible`, and the root does not clip its content, so the ring shows
+on transparent variants (ghost, link) too; a drop shadow would not, since Figma casts it from the
+node's visible content. A file written by an earlier version, which drew the ring as a drop
+shadow on the root, is migrated on the next run: that one effect is removed and any other effect
+a designer added is kept.
+
+A bound paint verifies when Figma's stored color and opacity match what the variable resolves to
+on that layer, not only the binding: Figma can leave a stale stored color (black, right after a
+token sync in the same session), and rebinding the same variable keeps it. The script rewrites
+such a paint through another variable, so a rerun repairs it.
+
+After a recipe or token change, regenerate the model with
+`pnpm --filter @atom63/figma generate:components` and run the scripts again.
+
+Known limits: only Button, in sizes xs to xl. Icon and tile sizes, box shadows and the `.dark`
+outline override are not drawn, and a font family token holding a CSS font stack is left unbound
+(the label takes the stack's first family) and reported in `fontFallbacks`.
+
 ## Bring Figma edits into code
 
 1. `pnpm atom63-figma read --page 1 --out .figma-sync/read-1.js`

@@ -1,4 +1,5 @@
 export * from './apply'
+export * from './derived'
 export * from './diff'
 export * from './css-model'
 export * from './oklch-color'
@@ -26,3 +27,28 @@ export {
   syncModel,
   type SyncOutcome,
 } from './runtime'
+export { buttonAnatomy, type AnatomyLayer } from './components/button-anatomy'
+export type {
+  ComponentModel,
+  ComponentValue,
+  FigmaProperty,
+  LayerSpec,
+  VariantSpec,
+} from './components/model'
+export { readRecipe, type RecipeInput } from './components/recipe'
+export {
+  type PackedComponentModel,
+  packComponentModel,
+  unpackComponentModel,
+} from './components/pack-component'
+export { buildComponentScripts } from './components/scripts'
+export {
+  type ComponentPlan,
+  type ComponentResult,
+  type RetryError,
+  planComponent,
+  applyComponent,
+  syncComponent,
+} from './components/sync-component'
+export type { NodesApi } from './components/nodes-api'
+export { checkComponentPart, type ComponentCounts, syncComponentPart } from './runtime'

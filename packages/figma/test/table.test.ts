@@ -5,7 +5,10 @@ import { buildProjectModel } from '../src/css-model'
 import { checkModel, syncModel } from '../src/runtime'
 import { deriveStyles } from '../src/styles'
 import { readTokenTable } from '../src/table'
+import { syncComponent } from '../src/components/sync-component'
 import { createFakeFigma } from './fake-figma'
+import { createFakeNodes } from './fake-nodes'
+import { buttonModelFixture, syncFixture } from './fixtures/button'
 
 const project = buildProjectModel(readTokenDirectory(resolve(__dirname, 'fixtures/project-tokens')))
 const model = { ...project.model, styles: deriveStyles(project.model, project.raw) }
@@ -56,6 +59,16 @@ describe('readTokenTable', () => {
     )
     expect(table.textStyles).toBe(model.styles.text.length)
     expect(table.effectStyles).toBe(model.styles.effects.length)
+  })
+
+  it("does not count a component's derived variables", async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    await syncComponent(fake.figma, buttonModelFixture)
+    expect(fake.collections.map(item => item.name)).toContain('Component')
+    const table = await readTokenTable(fake.figma)
+    expect(table.collections.map(item => item.name)).toEqual(['Base'])
+    expect(table.variables).toBe(syncFixture.collections[0].variables.length)
   })
 
   it('does not count a variable made in Figma', async () => {

@@ -4,6 +4,7 @@ Status: agreed on 2026-09-28; plans 1 to 3 are implemented (the `@atom63/figma` 
 text and effect styles, and the plugin's Create and Import). It replaces the plugin
 direction in [figma-plugin-update-plan.md](./figma-plugin-update-plan.md): the v14 plugin on
 `main` is not published, and the plugin is rebuilt from the needs below.
+[figma-components-plan-1](./figma-components-plan-1.md) adds the Button component set.
 
 ## Goal
 
@@ -25,7 +26,7 @@ not a separate mode.
 | D3 | How do code changes reach Figma? | An agent runs the sync through the Figma MCP server. The plugin's CSS import is the fallback without MCP. |
 | D4 | How are variables named in Figma? | By meaning, with no `Atom63` or `--a63-` prefix. The CSS name lives in code syntax. |
 | D5 | How is a variable matched to its token? | By its web code syntax (`var(--token)`), not plugin data. |
-| D6 | What does the first version write? | Variables, text styles and effect styles. Components come in a later phase. |
+| D6 | What does the first version write? | Variables, text styles and effect styles. Components come in a later phase. Plan [figma-components-plan-1](./figma-components-plan-1.md) adds the Button component set, bound to these variables. |
 | D7 | Where do Figma edits get listed? | On the agent side, by comparing the Figma file with the code. The plugin has no change list. |
 | D8 | What happens to today's plugin pages? | Manage, Rebind, Styles and patch export are dropped. The plugin has Create and Import. |
 
@@ -77,6 +78,11 @@ not a separate mode.
   plugin data, and it survives a designer renaming or regrouping a variable.
 - A variable without code syntax was made in Figma. Sync leaves it alone, and the agent's
   comparison lists it as a proposed new token.
+- A component's derived variable (a token at an opacity, in the generated `Component`
+  collection) has the CSS expression as its code syntax,
+  `color-mix(in oklch, var(--a63-action-danger) 10%, transparent)`. The engine matches it by that
+  expression in canonical form; it is not a token, so the comparison never lists it as an orphan
+  or a proposal ([figma-components-plan-1](./figma-components-plan-1.md), C4).
 
 ### Values
 
@@ -99,8 +105,9 @@ not a separate mode.
 - Styles are matched by name, since Figma styles have no code syntax; each description names its
   tokens (`var(--text-base-size) / var(--text-base-leading)`) for Dev Mode readers. A sync never
   changes or deletes a style that is not in the token set.
-- Components are out of scope for this version. A later phase generates Figma components from the
-  component contracts and links them to code with Code Connect.
+- The Button component set is generated from its contract and recipe
+  ([figma-components-plan-1](./figma-components-plan-1.md)). Other components, icon and tile
+  sizes, box shadows and Code Connect come later.
 
 ## Architecture
 
@@ -196,7 +203,8 @@ The plugin UI runs on the Atom63 design system, as it does now.
 
 ## Out of scope
 
-- Figma components and Code Connect (a later phase).
+- Figma components other than Button, icon and tile sizes, box shadows, and Code Connect (later
+  phases).
 - Two-way merge and conflict resolution between Figma and code.
 - Pulling tokens from a URL or a repository inside the plugin.
 - Figma's extended collections (Enterprise only).

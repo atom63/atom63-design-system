@@ -35,6 +35,8 @@
     "build": "pnpm embed:template && pnpm build:runtime && tsup",
     "embed:template": "node scripts/embed-template.mjs",
     "template:pull": "node scripts/pull-template.mjs",
+    "generate:components": "node --disable-warning=ExperimentalWarning scripts/generate-components.mjs",
+    "check:components": "node --disable-warning=ExperimentalWarning scripts/generate-components.mjs --check",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --cache --max-warnings 0",
     "pretest": "pnpm build",

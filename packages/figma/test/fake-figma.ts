@@ -23,6 +23,6 @@ export function createFakeFigma({ fonts = ['Inter', 'Geist'] }: { fonts?: string
   const styles = createFakeStyles(fonts, familiesOf)
   const figma = { variables: fake.api, ...styles.api }
   const run = (script: string) => new AsyncFunction('figma', script)(figma)
-  const { textStyles, effectStyles } = styles
-  return { ...fake, textStyles, effectStyles, figma, run }
+  const { textStyles, effectStyles, requireFamilies } = styles
+  return { ...fake, textStyles, effectStyles, requireFamilies, figma, run }
 }

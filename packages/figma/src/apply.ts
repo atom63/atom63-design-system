@@ -3,6 +3,7 @@
  * against the small slice of `figma.variables` it needs, so tests can run it
  * on an in-memory fake and prove a second sync plans zero changes.
  */
+import { derivedToken, parseDerived } from './derived'
 import type {
   SnapshotCollection,
   SnapshotVariable,
@@ -49,6 +50,11 @@ export interface VariableLike {
   codeSyntax?: { WEB?: string }
   setVariableCodeSyntax?(platform: 'WEB', value: string): void
   removeVariableCodeSyntax?(platform: 'WEB'): void
+  /**
+   * Figma `Variable.resolveForConsumer(node)`: the value in the node's effective
+   * modes, through aliases and composed colors. Optional so tests can leave it out.
+   */
+  resolveForConsumer?(consumer: object): { value: unknown; resolvedType: string }
 }
 
 export interface VariablesApi {
@@ -85,10 +91,16 @@ export interface ApplyResult {
   bindingsUnchecked: number
 }
 
-/** The token a variable stands for, from its web code syntax `var(--token)`. */
+/**
+ * The token a variable stands for, from its web code syntax: `var(--token)`, or
+ * a derived variable's `color-mix(in oklch, var(--token) N%, transparent)`, whose
+ * token is that expression in canonical form (derived.ts).
+ */
 export function tokenOfCodeSyntax(codeSyntax: string | undefined): string | null {
   const match = codeSyntax?.match(/^var\(\s*(--[\w-]+)\s*\)$/)
-  return match ? match[1] : null
+  if (match) return match[1]
+  const derived = parseDerived(codeSyntax)
+  return derived ? derivedToken(derived.alias, derived.opacity) : null
 }
 
 const tokenOfVariable = (variable: VariableLike) => tokenOfCodeSyntax(variable.codeSyntax?.WEB)
@@ -266,6 +278,23 @@ export async function applyPlan(
     const token = tokenOfVariable(variable)
     if (token) byToken.set(token, variable)
   }
+  // An alias may point outside the model's collections (a derived variable's
+  // token): those are looked up across the document once, on first need.
+  let elsewhere: Map<string, VariableLike> | undefined
+  const targetOf = async (token: string) => {
+    const found = byToken.get(token)
+    if (found) return found
+    if (!elsewhere) {
+      elsewhere = new Map()
+      for (const collection of await api.getLocalVariableCollectionsAsync())
+        for (const id of collection.variableIds) {
+          const variable = variables.get(id) ?? (await api.getVariableByIdAsync(id))
+          const key = variable && tokenOfVariable(variable)
+          if (variable && key && !elsewhere.has(key)) elsewhere.set(key, variable)
+        }
+    }
+    return elsewhere.get(token)
+  }
 
   // Create every new variable before writing values so aliases can point at
   // variables created in the same run.
@@ -300,7 +329,7 @@ export async function applyPlan(
       if (!modeId || !value) continue
       if ('alias' in value || 'composed' in value) {
         const token = 'alias' in value ? value.alias : value.composed.alias
-        const target = byToken.get(token)
+        const target = await targetOf(token)
         if (!target)
           throw new Error(`${change.variable.name}: alias target ${token} is not in the document`)
         const alias = api.createVariableAlias(target) as { type: 'VARIABLE_ALIAS'; id: string }
