@@ -33,7 +33,7 @@ Vitest, the `@atom63/figma` fake for tests, Figma desktop for acceptance.
 | P2 | Where do the models come from? | The generated, CI-guarded files, bundled at plugin build time: `packages/styles/generated/atom63.figma-sync.json` (styles derived with `deriveStyles`, as the CLI does) and `packages/figma/generated/atom63.figma-components.json`. No copy is committed in the plugin. |
 | P3 | How is the build verified? | The build message returns the sync outcome; the UI then sends a separate **check** message (a new main-thread task). A check that still reports `pendingReferences` shows "Figma is still settling — check again" with a button, never a failure. |
 | P4 | Progress | The main thread posts `progress` messages (phase, done/total) while it works; the UI shows them. Long loops yield to Figma between components so the UI stays responsive. |
-| P5 | Conflicts with an existing template table | If the file already holds a template project's table (variables with code syntax but no `--a63-` tokens), the Atom63 entry warns and requires confirmation; it never deletes the other table. |
+| P5 | Conflicts with an existing template table | (Revised 2026-10-08, owner decision; replaces warn-and-confirm.) If the file holds any token table that is not provably Atom63's, the Atom63 build refuses: `status: 'blocked'`, zero writes, and the reason "This file already holds another token set (collections: …). Start the Atom63 design system in a new file." There is no confirmation path. The ownership rule is in `packages/figma/README.md` (Building the whole design system in a file). |
 
 ## Global constraints
 
@@ -75,8 +75,8 @@ Vitest, the `@atom63/figma` fake for tests, Figma desktop for acceptance.
 `src/ui.tsx`, `src/app/Home.tsx`, `src/app/Outcome.tsx` if shared.
 
 - [ ] Home shows a third entry **Atom63 design system** with one line of what it writes.
-- [ ] The view: what the file holds (from `atom63-scan`), a **Build** button (with P5 confirmation),
-  progress, then the result: PASS, or the named differences; pending → "check again".
+- [ ] The view: what the file holds (from `atom63-scan`), a **Build** button (refused with the P5
+  reason when the file holds another token set), progress, then the result: PASS, or the named differences; pending → "check again".
 - [ ] Tests for the state helper (like `create-state.ts`).
 
 ### Task 4: Docs
