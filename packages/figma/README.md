@@ -210,6 +210,8 @@ The Figma plugin uses the same engine in process:
   `StylesApi`. They return the same results as the scripts.
 - `readTokenTable(figma)` counts the collections and variables that carry a code syntax, and the
   `Text/` and `Shadow/` styles.
+- `buildDesignSystem`, `checkDesignSystem` and `readDesignSystemTable` build, check and read the
+  whole Atom63 design system for the plugin's Atom63 entry (see below).
 
 The template copy in `template/tokens` comes from `atom63-site-template`. After the template's
 tokens change, run `pnpm --filter @atom63/figma template:pull <path to the template checkout>`,
@@ -225,6 +227,11 @@ not migrated, so sync into a new file.
 node packages/figma/dist/cli.js sync --model packages/styles/generated/atom63.figma-sync.json --out .figma-sync
 ```
 
+**Plugin path:** without an agent, the Cipher plugin's **Atom63 design system** entry does the
+same in one click: it builds the bundled token set, its styles, and every component with its spec
+card into the open file (`buildDesignSystem`), then checks it in a separate step
+(`checkDesignSystem`). Both paths write the same file.
+
 ### Building the whole design system in a file
 
 `buildDesignSystem(figma, models, onProgress?)` writes the token set, its text and effect styles,
@@ -233,8 +240,8 @@ then every component with its spec card; `checkDesignSystem` reads the same with
 
 A build refuses a file that already holds another token set: it returns `status: 'blocked'` with a
 reason and the collections, and writes nothing. Atom63 never builds into or beside a template's
-table, so start the design system in a new file. The rule is conservative, so it never claims a
-user's collection:
+table, so start the design system in a new file. The rule is conservative: it claims a collection
+only when the collection matches Atom63's exactly.
 
 - A token variable is one whose web code syntax is `var(--x)`. Derived variables and Atom63's
   retired `(moved)/…` copies are Atom63's own and are ignored.
@@ -248,5 +255,16 @@ user's collection:
   collection that fails the rule and holds any variable, with or without code syntax (a template's
   `Mode` collection has other modes). Variables without code syntax elsewhere are ignored.
 
+One case remains: an exact copy of an Atom63 collection (the same name, modes and tokens), in a
+file that already holds Atom63 but lacks that collection, is treated as Atom63's, and the build
+updates it.
+
+The rule decides only whether a build refuses a file. In a file it builds into, the sync still
+adopts by name, as it always does, a variable without code syntax inside an Atom63 collection and
+a text or effect style with an Atom63 style's name; that adoption is out of scope of the refusal
+rule.
+
 A token that an older Atom63 version had and this one dropped or moved also reads as another token
-set, and the build refuses that file too.
+set, and the build refuses that file too. The refusal then adds "or this file holds an older Atom63
+token set that this version cannot update"; that wording also appears for a designer's collection
+that is merely named like an Atom63 collection.

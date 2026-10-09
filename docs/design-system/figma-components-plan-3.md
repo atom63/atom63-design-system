@@ -7,6 +7,10 @@
 Status: agreed on 2026-10-08 (decision P1 by the owner); builds on
 [figma-components-plan-2](./figma-components-plan-2.md).
 
+Progress: Tasks 1–4 are done (engine entry, main thread, the Atom63 view, docs) on
+`feat/cipher-atom63`; Task 5, the acceptance in real Figma, is open. P5 was made strict during
+Tasks 1–2, so Task 5's template-table file expects the refusal, not a warning.
+
 **Goal:** In the Cipher plugin, one click on **Atom63 design system** writes the Atom63 token
 set (variables, text and effect styles), every generated component (Button today) and its spec
 card into the open file, shows progress, then verifies and reports the result. A second click
@@ -49,13 +53,13 @@ Vitest, the `@atom63/figma` fake for tests, Figma desktop for acceptance.
 
 **Files:** Create `packages/figma/src/design-system.ts` (+ export), `test/design-system.test.ts`.
 
-- [ ] `buildDesignSystem(figma, { sync, components }, onProgress?)`: derive styles if absent,
+- [x] `buildDesignSystem(figma, { sync, components }, onProgress?)`: derive styles if absent,
   `syncModel`, then `syncComponent` for each component model; returns one outcome with token,
   style, component and card counts, `differences`, `pendingReferences`, `fontFallbacks`.
-- [ ] `checkDesignSystem(figma, …)`: read-only, same shape.
-- [ ] `readDesignSystemTable(figma)`: what the file holds now (Atom63 table present? template
+- [x] `checkDesignSystem(figma, …)`: read-only, same shape.
+- [x] `readDesignSystemTable(figma)`: what the file holds now (Atom63 table present? template
   table present? Button set and card present?) for the Home view and P5.
-- [ ] Tests on the fake: fresh file → clean; second run zero writes; plan-1 file (set on the
+- [x] Tests on the fake: fresh file → clean; second run zero writes; plan-1 file (set on the
   page) migrates into the card keeping its id; template table present → reported.
 
 ### Task 2: The plugin main thread
@@ -63,25 +67,25 @@ Vitest, the `@atom63/figma` fake for tests, Figma desktop for acceptance.
 **Files:** Modify `apps/figma-plugin/src/messages.ts`, `src/main/handle.ts`, `src/main/figma-api.ts`,
 `build.js` (bundle the two JSON models into `code.js`); tests in `apps/figma-plugin/__tests__/`.
 
-- [ ] Messages: `atom63-scan` → `atom63-table`; `atom63-build` → `progress`* then `atom63-built`;
+- [x] Messages: `atom63-scan` → `atom63-table`; `atom63-build` → `progress`* then `atom63-built`;
   `atom63-check` → `atom63-checked`.
-- [ ] The main thread passes the real `figma` global as `NodesApi` (the narrow `figmaApi()` stays
+- [x] The main thread passes the real `figma` global as `NodesApi` (the narrow `figmaApi()` stays
   for the token-only flows).
-- [ ] Bundle size reported; the plugin still loads quickly (measure `code.js` size).
+- [x] Bundle size reported; the plugin still loads quickly (measure `code.js` size).
 
 ### Task 3: The plugin UI
 
 **Files:** Create `apps/figma-plugin/src/app/Atom63.tsx` (+ state helper and test), modify
 `src/ui.tsx`, `src/app/Home.tsx`, `src/app/Outcome.tsx` if shared.
 
-- [ ] Home shows a third entry **Atom63 design system** with one line of what it writes.
-- [ ] The view: what the file holds (from `atom63-scan`), a **Build** button (refused with the P5
+- [x] Home shows a third entry **Atom63 design system** with one line of what it writes.
+- [x] The view: what the file holds (from `atom63-scan`), a **Build** button (refused with the P5
   reason when the file holds another token set), progress, then the result: PASS, or the named differences; pending → "check again".
-- [ ] Tests for the state helper (like `create-state.ts`).
+- [x] Tests for the state helper (like `create-state.ts`).
 
 ### Task 4: Docs
 
-- [ ] ARCHITECTURE.md (Atom63 section rewritten), spec D8 note, plugin README/description if
+- [x] ARCHITECTURE.md (Atom63 section rewritten), spec D8 note, plugin README/description if
   user-facing, `packages/figma/README.md` (plugin path next to the agent path), changesets.
 
 ### Task 5: Real-Figma acceptance

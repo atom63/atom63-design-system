@@ -4,7 +4,9 @@ Status: agreed on 2026-09-28; plans 1 to 3 are implemented (the `@atom63/figma` 
 text and effect styles, and the plugin's Create and Import). It replaces the plugin
 direction in [figma-plugin-update-plan.md](./figma-plugin-update-plan.md): the v14 plugin on
 `main` is not published, and the plugin is rebuilt from the needs below.
-[figma-components-plan-1](./figma-components-plan-1.md) adds the Button component set.
+[figma-components-plan-1](./figma-components-plan-1.md) adds the Button component set, and
+[figma-components-plan-3](./figma-components-plan-3.md) gives the plugin a third entry that builds
+the Atom63 design system.
 
 ## Goal
 
@@ -14,8 +16,9 @@ source of truth. An agent keeps Figma in step with code through MCP; the plugin 
 agent cannot do or what a designer does by hand.
 
 It serves two token sets the same way: a project started from the site template (shadcn names,
-personalization axes as `data-*` attributes) and Atom63 itself. Atom63 is one more token source,
-not a separate mode.
+personalization axes as `data-*` attributes) and Atom63 itself. For the sync, Atom63 is one more
+token source, not a separate mode. Since [figma-components-plan-3](./figma-components-plan-3.md) the plugin also has an **Atom63 design system**
+entry, which builds Atom63's tokens, styles and components together (D8).
 
 ## Decisions
 
@@ -28,7 +31,7 @@ not a separate mode.
 | D5 | How is a variable matched to its token? | By its web code syntax (`var(--token)`), not plugin data. |
 | D6 | What does the first version write? | Variables, text styles and effect styles. Components come in a later phase. Plan [figma-components-plan-1](./figma-components-plan-1.md) adds the Button component set, bound to these variables. |
 | D7 | Where do Figma edits get listed? | On the agent side, by comparing the Figma file with the code. The plugin has no change list. |
-| D8 | What happens to today's plugin pages? | Manage, Rebind, Styles and patch export are dropped. The plugin has Create and Import. |
+| D8 | What happens to today's plugin pages? | Manage, Rebind, Styles and patch export are dropped. The plugin has Create and Import. [figma-components-plan-3](./figma-components-plan-3.md) adds a third entry, **Atom63 design system**: tokens, styles, components and spec cards, refused in a file that holds another token set. |
 
 ## User journeys
 
@@ -174,6 +177,10 @@ The plugin is a thin interface over the same engine and parser.
   chosen values as the default mode of each axis and every axis mode kept. Brand ramps are
   generated in OKLCH from the chosen color. Export CSS gives the template's token files.
 - **Import:** pick or paste token CSS, preview the plan, apply it.
+- **Atom63 design system:** builds the bundled Atom63 tokens, text and effect styles, components
+  and spec cards, then checks them in a separate step. A file that holds another token set is
+  refused with nothing written. See
+  [the plugin's architecture](../../apps/figma-plugin/docs/ARCHITECTURE.md#atom63).
 
 The plugin UI runs on the Atom63 design system, as it does now.
 
