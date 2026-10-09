@@ -191,6 +191,16 @@ export function progressLabel(progress: DesignSystemProgress | null): string {
     : named
 }
 
+/**
+ * The progress live region's text: empty when idle, so the region stays in the
+ * accessibility tree and only its text changes when work starts.
+ */
+export function liveText(state: Pick<Atom63State, 'phase' | 'progress'>): string {
+  if (state.phase === 'building') return progressLabel(state.progress)
+  if (state.phase === 'checking') return 'Verifying…'
+  return ''
+}
+
 /** What the file holds of Atom63's tokens, for the table. */
 export function tokensStatus(atom63: DesignSystemTable['atom63']): string {
   if (!atom63) return 'None yet'

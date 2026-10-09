@@ -12,8 +12,8 @@ import {
   componentStatus,
   failureLines,
   fontNote,
+  liveText,
   nextAtom63,
-  progressLabel,
   progressValue,
   retryLines,
   scheduleAutoRecheck,
@@ -129,12 +129,9 @@ export function Atom63({
       )}
       {/* One slot: the progress, then the result that replaces it. */}
       <div className={busy || result ? styles.result : undefined}>
-        <p aria-live="polite" className={busy ? styles.meta : styles.hidden}>
-          {phase === 'building'
-            ? progressLabel(progress)
-            : phase === 'checking'
-              ? 'Verifying…'
-              : ''}
+        {/* Always rendered so the first update after going busy is announced. */}
+        <p aria-live="polite" className={busy ? styles.meta : styles.srOnly}>
+          {liveText(state)}
         </p>
         {phase === 'building' && (
           <Progress

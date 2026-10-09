@@ -6,6 +6,7 @@ import {
   componentStatus,
   failureLines,
   initialAtom63State,
+  liveText,
   nextAtom63,
   progressLabel,
   progressValue,
@@ -303,6 +304,16 @@ describe('progress', () => {
     expect(progressValue({ phase: 'tokens', done: 1, total: 1 }, 2)).toBe(25)
     expect(progressValue({ phase: 'card', done: 2, total: 2 }, 2)).toBe(100)
     expect(progressValue({ phase: 'done', done: 1, total: 1 }, 2)).toBe(100)
+  })
+
+  it('keeps the live region text empty when idle and fills it while busy', () => {
+    expect(liveText({ phase: 'idle', progress: null })).toBe('')
+    expect(liveText({ phase: 'scanning', progress: null })).toBe('')
+    expect(liveText({ phase: 'checking', progress: null })).toBe('Verifying…')
+    expect(liveText({ phase: 'building', progress: null })).toBe('Starting…')
+    expect(liveText({ phase: 'building', progress: { phase: 'tokens', done: 0, total: 1 } })).toBe(
+      'Writing variables'
+    )
   })
 })
 
