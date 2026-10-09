@@ -61,6 +61,16 @@ describe('LLM documentation inventory', () => {
     const markdown = await readEntryMarkdown(pagesDir, button, uiReactIndexSource)
 
     expect(markdown).toContain('## When to use')
+    expect(markdown).toContain('## Variants, sizes and states')
+    expect(markdown).toContain('| Variant | `primary` | The one primary action per view. |')
+    expect(markdown).toContain(
+      '| State | `loading` | Label keeps its width; the spinner overlays it. |'
+    )
+    expect(markdown).toContain(
+      'Use it for an in-place action such as submitting, saving, confirming or changing state'
+    )
+    expect(markdown).not.toContain('<ComponentGuidanceSection')
+    expect(markdown).not.toContain('<ComponentUsage')
     expect(markdown).toContain('<Button variant="primary">Save changes</Button>')
     expect(markdown).toContain("import { Button } from '@atom63/ui-react'")
     expect(markdown).toContain('## API surface')

@@ -111,6 +111,10 @@ describe('atom63 CLI', () => {
       encoding: 'utf8',
     })
     assert.equal(JSON.parse(ok).type, 'component.detail')
+    const button = JSON.parse(
+      execFileSync(process.execPath, [bin, 'component', 'button', '--json'], { encoding: 'utf8' })
+    )
+    assert.equal(button.data.axisGuidance.size.md, 'Default.')
     const missing = spawnSync(process.execPath, [bin, 'component', 'buton', '--json'], {
       encoding: 'utf8',
     })

@@ -3,6 +3,35 @@
  "generatedBy": "packages/cli/scripts/build-index.mjs",
  "components": [
   {
+   "axisGuidance": {
+    "variant": {
+     "primary": "The one primary action per view.",
+     "default": "Neutral action; the usual alternative next to primary (Cancel).",
+     "secondary": "Muted neutral action for supporting tasks.",
+     "outline": "Lower-emphasis alternative (Duplicate).",
+     "ghost": "Lowest emphasis; toolbars and dismissals.",
+     "link": "Inline action styled as text; navigation should use a real link.",
+     "destructive": "Only when the outcome destroys data.",
+     "destructive-outline": "Quieter destructive action, beside a safe default.",
+     "overlay": "Forced contrast over media and imagery.",
+     "glass": "Compatibility alias of overlay; new work uses overlay."
+    },
+    "size": {
+     "xs": "Dense UI.",
+     "sm": "Compact rows and toolbars.",
+     "md": "Default.",
+     "lg": "Prominent calls to action.",
+     "xl": "Hero and marketing surfaces."
+    },
+    "state": {
+     "rest": "Resting appearance.",
+     "hover": "Pointer over an enabled button.",
+     "pressed": "While pressed, or held with data-pressed.",
+     "focusVisible": "Keyboard focus only; drawn as an outline.",
+     "disabled": "Fill stays at full strength; only the label fades.",
+     "loading": "Label keeps its width; the spinner overlays it."
+    }
+   },
    "contract": {
     "archetypes": [
      {
@@ -119,18 +148,19 @@
     "title": "Actions"
    },
    "guidance": [
-    "Choose emphasis from the action hierarchy and label icon-only buttons accessibly.",
+    "Use it for an in-place action such as submitting, saving, confirming or changing state; use a link when the outcome is navigation. Choose emphasis from the action hierarchy rather than making every action primary, and give icon-only buttons an accessible name.",
     "Keep the semantic action or link element intact when composing custom content.",
     "Make loading, disabled, and destructive behavior explicit in the product flow."
    ],
    "importPath": "@atom63/ui-react",
    "label": "Button",
-   "markdown": "# Button\n\nButton is the shared action primitive and defaults to safe non-submit behavior.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Choose emphasis from the action hierarchy and label icon-only buttons accessibly.\n- Keep the semantic action or link element intact when composing custom content.\n- Make loading, disabled, and destructive behavior explicit in the product flow.\n\n## Usage\n\n```tsx\nimport { Button } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Button`\n\n**Types:** `ButtonProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/src/components/button/button-contract.ts` (`buttonContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `variants` | `default`, `primary`, `secondary`, `destructive`, `destructive-outline`, `outline`, `ghost`, `link`, `overlay`, `glass` | `default` |\n| `sizes` | `xs`, `sm`, `md`, `lg`, `xl`, `tile`, `icon-xs`, `icon-sm`, `icon`, `icon-lg`, `icon-xl` | `md` |\n\n**Slots:** `root`, `label`, `icon`, `spinner`\n\n**States:** `rest`, `hover`, `pressed`, `focusVisible`, `disabled`, `loading`\n\n**Token slots:** `button.background`, `button.foreground`, `button.border.color`, `button.border.width`, `button.radius`, `button.shadow`, `button.focusRing`, `button.height`, `button.paddingInline`, `button.gap`, `button.iconSize`, `button.motion.press`\n\n**Visual archetype:** Action controls — Momentary controls that perform an action now.\n\n### Web and iOS\n\nTrigger a user-initiated action with explicit hierarchy and feedback. Rendered by `AtomButton` in SwiftUI, with `recipe` parity.\n\n**Required states:** `rest`, `pressed`, `disabled`, `loading`\n\n**Shared outcomes:**\n\n- Action fires once\n- Loading blocks repeat activation\n- Disabled prevents activation\n\n**Accessibility outcomes:**\n\n- Exposes label\n- Announces loading\n- Disabled while loading\n\n**Platform adaptations:**\n\n- React: Uses HTML button semantics with pointer and focus-visible feedback.\n- SwiftUI: Uses SwiftUI Button with native touch and keyboard activation.\n\n## Related components\n\n- [Button Group](/components/component-button-group)\n- [Toggle](/components/component-toggle)\n- [Copy Button](/components/component-copy-button)\n",
+   "markdown": "# Button\n\nButton is the shared action primitive and defaults to safe non-submit behavior.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Use it for an in-place action such as submitting, saving, confirming or changing state; use a link when the outcome is navigation. Choose emphasis from the action hierarchy rather than making every action primary, and give icon-only buttons an accessible name.\n- Keep the semantic action or link element intact when composing custom content.\n- Make loading, disabled, and destructive behavior explicit in the product flow.\n\n## Variants, sizes and states\n\n| Axis | Value | Guidance |\n| --- | --- | --- |\n| Variant | `primary` | The one primary action per view. |\n| Variant | `default` | Neutral action; the usual alternative next to primary (Cancel). |\n| Variant | `secondary` | Muted neutral action for supporting tasks. |\n| Variant | `outline` | Lower-emphasis alternative (Duplicate). |\n| Variant | `ghost` | Lowest emphasis; toolbars and dismissals. |\n| Variant | `link` | Inline action styled as text; navigation should use a real link. |\n| Variant | `destructive` | Only when the outcome destroys data. |\n| Variant | `destructive-outline` | Quieter destructive action, beside a safe default. |\n| Variant | `overlay` | Forced contrast over media and imagery. |\n| Variant | `glass` | Compatibility alias of overlay; new work uses overlay. |\n| Size | `xs` | Dense UI. |\n| Size | `sm` | Compact rows and toolbars. |\n| Size | `md` | Default. |\n| Size | `lg` | Prominent calls to action. |\n| Size | `xl` | Hero and marketing surfaces. |\n| State | `rest` | Resting appearance. |\n| State | `hover` | Pointer over an enabled button. |\n| State | `pressed` | While pressed, or held with data-pressed. |\n| State | `focusVisible` | Keyboard focus only; drawn as an outline. |\n| State | `disabled` | Fill stays at full strength; only the label fades. |\n| State | `loading` | Label keeps its width; the spinner overlays it. |\n\n## Usage\n\n```tsx\nimport { Button } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Button`\n\n**Types:** `ButtonProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/src/components/button/button-contract.ts` (`buttonContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `variants` | `default`, `primary`, `secondary`, `destructive`, `destructive-outline`, `outline`, `ghost`, `link`, `overlay`, `glass` | `default` |\n| `sizes` | `xs`, `sm`, `md`, `lg`, `xl`, `tile`, `icon-xs`, `icon-sm`, `icon`, `icon-lg`, `icon-xl` | `md` |\n\n**Slots:** `root`, `label`, `icon`, `spinner`\n\n**States:** `rest`, `hover`, `pressed`, `focusVisible`, `disabled`, `loading`\n\n**Token slots:** `button.background`, `button.foreground`, `button.border.color`, `button.border.width`, `button.radius`, `button.shadow`, `button.focusRing`, `button.height`, `button.paddingInline`, `button.gap`, `button.iconSize`, `button.motion.press`\n\n**Visual archetype:** Action controls — Momentary controls that perform an action now.\n\n### Web and iOS\n\nTrigger a user-initiated action with explicit hierarchy and feedback. Rendered by `AtomButton` in SwiftUI, with `recipe` parity.\n\n**Required states:** `rest`, `pressed`, `disabled`, `loading`\n\n**Shared outcomes:**\n\n- Action fires once\n- Loading blocks repeat activation\n- Disabled prevents activation\n\n**Accessibility outcomes:**\n\n- Exposes label\n- Announces loading\n- Disabled while loading\n\n**Platform adaptations:**\n\n- React: Uses HTML button semantics with pointer and focus-visible feedback.\n- SwiftUI: Uses SwiftUI Button with native touch and keyboard activation.\n\n## Related components\n\n- [Button Group](/components/component-button-group)\n- [Toggle](/components/component-toggle)\n- [Copy Button](/components/component-copy-button)\n",
    "related": [
     "button-group",
     "toggle",
     "copy-button"
    ],
+   "route": "/components/component-button",
    "slug": "button",
    "status": "stable",
    "stories": {
@@ -152,12 +182,13 @@
     "source": "import {\n  brands,\n  buttonContract,\n  buttonSizes,\n  buttonVariants,\n  densities,\n  designLanguages,\n  inputs,\n} from '@atom63/ui-foundation'\nimport { Button, UIProvider } from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\nimport { EnvironmentShell, PreviewCard, ThemeMatrix } from '../story-probes'\n\nconst meta = {\n  title: 'UI React/Button',\n  component: Button,\n  argTypes: {\n    variant: {\n      control: 'select',\n      options: buttonVariants,\n    },\n    size: {\n      control: 'select',\n      options: buttonSizes,\n    },\n    loading: { control: 'boolean' },\n    disabled: { control: 'boolean' },\n    children: { control: 'text' },\n  },\n  args: {\n    children: 'Continue',\n    disabled: false,\n    loading: false,\n    size: 'md',\n    variant: 'default',\n  },\n} satisfies Meta<typeof Button>\n\nexport default meta\n\ntype Story = StoryObj<typeof meta>\n\nfunction PlusIcon() {\n  return (\n    <svg aria-hidden=\"true\" viewBox=\"0 0 16 16\">\n      <path\n        d=\"M8 3.25v9.5M3.25 8h9.5\"\n        fill=\"none\"\n        stroke=\"currentColor\"\n        strokeLinecap=\"round\"\n        strokeWidth=\"1.7\"\n      />\n    </svg>\n  )\n}\n\nexport const Playground: Story = {\n  render: args => (\n    <EnvironmentShell>\n      <Button {...args} />\n    </EnvironmentShell>\n  ),\n}\n\nexport const Variants: Story = {\n  render: () => (\n    <EnvironmentShell>\n      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>\n        {buttonVariants.map(variant => (\n          <Button key={variant} variant={variant}>\n            {variant}\n          </Button>\n        ))}\n      </div>\n    </EnvironmentShell>\n  ),\n}\n\n/* The parity sweep added two media-facing variants — `overlay` (frosted, sits\n   on light imagery) and `glass` (dark-glass, sits on busy or bright imagery).\n   Both are meant to float over media, so they only read correctly against a\n   backdrop; render them over an image scrim rather than a flat panel. */\nexport const OverMedia: Story = {\n  render: () => (\n    <EnvironmentShell>\n      <div\n        style={{\n          alignItems: 'center',\n          backgroundImage:\n            'linear-gradient(135deg, oklch(72% 0.16 250), oklch(64% 0.2 320) 55%, oklch(58% 0.18 30))',\n          borderRadius: '0.875rem',\n          display: 'flex',\n          flexWrap: 'wrap',\n          gap: '0.75rem',\n          minHeight: '7rem',\n          padding: '1.5rem',\n        }}\n      >\n        <Button variant=\"overlay\">Overlay</Button>\n        <Button variant=\"glass\">Glass</Button>\n        <Button aria-label=\"Add\" size=\"icon\" variant=\"glass\">\n          <PlusIcon />\n        </Button>\n      </div>\n    </EnvironmentShell>\n  ),\n}\n\nexport const Sizes: Story = {\n  render: () => (\n    <EnvironmentShell>\n      <div style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>\n        {buttonSizes.map(size => (\n          <Button aria-label={size.startsWith('icon') ? 'Add' : undefined} key={size} size={size}>\n            {size.startsWith('icon') ? <PlusIcon /> : size}\n          </Button>\n        ))}\n      </div>\n    </EnvironmentShell>\n  ),\n}\n\n/* Tile size — full-width, icon-over-label; the launcher / app-grid shape ported\n   from the legacy @atom63/ui button. Composes with any variant, and the caption\n   wraps + stays centered. */\nexport const Tile: Story = {\n  render: () => (\n    <EnvironmentShell>\n      <div style={{ display: 'grid', gap: '0.75rem', gridTemplateColumns: 'repeat(3, 1fr)' }}>\n        <Button size=\"tile\" variant=\"outline\">\n          <PlusIcon />\n          New\n        </Button>\n        <Button size=\"tile\" variant=\"outline\">\n          <PlusIcon />\n          Import\n        </Button>\n        <Button size=\"tile\" variant=\"ghost\">\n          <PlusIcon />A longer tile caption that wraps\n        </Button>\n      </div>\n    </EnvironmentShell>\n  ),\n}\n\nexport const States: Story = {\n  render: () => (\n    <EnvironmentShell>\n      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>\n        <Button>Default</Button>\n        <Button loading>Loading</Button>\n        <Button disabled>Disabled</Button>\n        <Button data-pressed=\"\">Pressed</Button>\n        <Button variant=\"outline\">\n          <PlusIcon />\n          With icon\n        </Button>\n      </div>\n    </EnvironmentShell>\n  ),\n}\n\n/* Loading treatment across every variant. */\nexport const Loading: Story = {\n  render: () => (\n    <EnvironmentShell>\n      <div style={{ display: 'grid', gap: '0.875rem' }}>\n        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>\n          {buttonVariants\n            .filter(variant => variant !== 'overlay' && variant !== 'glass')\n            .map(variant => (\n              <Button key={variant} loading variant={variant}>\n                {variant}\n              </Button>\n            ))}\n        </div>\n        <div\n          style={{\n            backgroundImage:\n              'linear-gradient(135deg, oklch(72% 0.16 250), oklch(64% 0.2 320) 55%, oklch(58% 0.18 30))',\n            borderRadius: '0.875rem',\n            display: 'flex',\n            flexWrap: 'wrap',\n            gap: '0.75rem',\n            padding: '1.25rem',\n          }}\n        >\n          <Button loading variant=\"overlay\">\n            Overlay\n          </Button>\n          <Button loading variant=\"glass\">\n            Glass\n          </Button>\n          <Button aria-label=\"Add\" loading size=\"icon\" variant=\"glass\">\n            <PlusIcon />\n          </Button>\n        </div>\n      </div>\n    </EnvironmentShell>\n  ),\n}\n\nexport const EnvironmentMatrix: Story = {\n  parameters: {\n    layout: 'fullscreen',\n  },\n  render: () => (\n    <div\n      style={{\n        display: 'grid',\n        gap: '1rem',\n        gridTemplateColumns: 'repeat(auto-fit, minmax(19rem, 1fr))',\n        padding: '1rem',\n      }}\n    >\n      {designLanguages.map(designLanguage =>\n        densities.map(density =>\n          inputs.map(input => (\n            <UIProvider\n              density={density}\n              designLanguage={designLanguage}\n              input={input}\n              key={`${designLanguage}-${density}-${input}`}\n              mode=\"light\"\n            >\n              <PreviewCard label={`${designLanguage} / ${density} / ${input}`}>\n                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>\n                  <Button>Continue</Button>\n                  <Button variant=\"ghost\">Maybe</Button>\n                  <Button variant=\"ghost\">Cancel</Button>\n                </div>\n              </PreviewCard>\n            </UIProvider>\n          ))\n        )\n      )}\n    </div>\n  ),\n}\n\nexport const Endpoints: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {[\n        {\n          label: 'Web',\n          props: { density: 'comfortable', designLanguage: 'web', input: 'pointer' } as const,\n        },\n        {\n          label: 'iOS touch',\n          props: { density: 'comfortable', designLanguage: 'ios', input: 'touch' } as const,\n        },\n        {\n          label: 'Compact extension',\n          props: {\n            density: 'compact',\n            designLanguage: 'web',\n            input: 'pointer',\n            surface: 'n2',\n          } as const,\n        },\n      ].map(endpoint => (\n        <UIProvider key={endpoint.label} {...endpoint.props}>\n          <div\n            style={{\n              alignItems: 'center',\n              background: 'var(--a63-surface-panel)',\n              borderRadius: 'var(--radius-lg)',\n              color: 'var(--a63-text-primary)',\n              display: 'flex',\n              flexWrap: 'wrap',\n              gap: '0.5rem',\n              padding: '0.75rem',\n            }}\n          >\n            <span style={{ color: 'var(--a63-text-secondary)', fontSize: 12, width: 112 }}>\n              {endpoint.label}\n            </span>\n            <Button variant=\"primary\">Primary</Button>\n            <Button>Default</Button>\n            <Button variant=\"outline\">Outline</Button>\n            <Button variant=\"ghost\">Ghost</Button>\n            <Button aria-label=\"Add\" size=\"icon\">\n              <PlusIcon />\n            </Button>\n          </div>\n        </UIProvider>\n      ))}\n    </div>\n  ),\n}\n\nexport const BrandRamps: Story = {\n  render: () => (\n    <div\n      style={{\n        display: 'grid',\n        gap: '1rem',\n        gridTemplateColumns: 'repeat(auto-fit, minmax(11rem, 1fr))',\n      }}\n    >\n      {brands.map(brand => (\n        <UIProvider brand={brand} key={brand} mode=\"light\">\n          <PreviewCard label={`brand / ${brand}`}>\n            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>\n              <Button variant=\"primary\">Primary</Button>\n              <Button variant=\"outline\">Outline</Button>\n            </div>\n          </PreviewCard>\n        </UIProvider>\n      ))}\n    </div>\n  ),\n}\n\n/* Theme probe — the four skins x light/dark via the shared ThemeMatrix. */\nexport const Themes: Story = {\n  parameters: { layout: 'fullscreen' },\n  render: () => (\n    <ThemeMatrix>\n      <div style={{ display: 'grid', gap: '0.5rem' }}>\n        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>\n          <Button variant=\"primary\">Primary</Button>\n          <Button>Default</Button>\n          <Button variant=\"destructive\">Delete</Button>\n          <Button variant=\"outline\">Outline</Button>\n          <Button variant=\"ghost\">Ghost</Button>\n        </div>\n        <div\n          style={{\n            backgroundImage: 'linear-gradient(135deg, oklch(70% 0.16 250), oklch(60% 0.2 320))',\n            borderRadius: '0.625rem',\n            display: 'flex',\n            flexWrap: 'wrap',\n            gap: '0.5rem',\n            padding: '0.75rem',\n          }}\n        >\n          <Button variant=\"overlay\">Overlay</Button>\n          <Button variant=\"glass\">Glass</Button>\n        </div>\n      </div>\n    </ThemeMatrix>\n  ),\n}\n\nexport const ContractMetadata: Story = {\n  render: () => (\n    <pre style={{ fontSize: 12, margin: 0, whiteSpace: 'pre-wrap' }}>\n      {JSON.stringify(buttonContract, null, 2)}\n    </pre>\n  ),\n}\n"
    },
    "summary": "Button is the shared action primitive and defaults to safe non-submit behavior.",
-   "usage": "Choose emphasis from the action hierarchy and label icon-only buttons accessibly.",
+   "usage": "Use it for an in-place action such as submitting, saving, confirming or changing state; use a link when the outcome is navigation. Choose emphasis from the action hierarchy rather than making every action primary, and give icon-only buttons an accessible name.",
    "usageExports": [
     "Button"
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -240,6 +271,7 @@
     "toggle-group",
     "segmented-control"
    ],
+   "route": "/components/component-button-group",
    "slug": "button-group",
    "status": "stable",
    "stories": {
@@ -266,6 +298,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -364,6 +397,7 @@
     "toaster",
     "tooltip"
    ],
+   "route": "/components/component-copy-button",
    "slug": "copy-button",
    "status": "stable",
    "stories": {
@@ -386,6 +420,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -469,6 +504,7 @@
     "navigation-menu",
     "button"
    ],
+   "route": "/components/component-destination-link",
    "slug": "destination-link",
    "status": "stable",
    "stories": {
@@ -488,6 +524,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -597,6 +634,7 @@
     "command",
     "select"
    ],
+   "route": "/components/component-autocomplete",
    "slug": "autocomplete",
    "status": "stable",
    "stories": {
@@ -622,6 +660,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -737,6 +776,7 @@
     "select",
     "popover"
    ],
+   "route": "/components/component-calendar",
    "slug": "calendar",
    "status": "stable",
    "stories": {
@@ -759,6 +799,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [],
@@ -823,6 +864,7 @@
     "radio",
     "field"
    ],
+   "route": "/components/component-checkbox",
    "slug": "checkbox",
    "status": "stable",
    "stories": {
@@ -845,6 +887,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -971,6 +1014,7 @@
     "input",
     "label"
    ],
+   "route": "/components/component-field",
    "slug": "field",
    "status": "stable",
    "stories": {
@@ -998,6 +1042,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -1052,6 +1097,7 @@
     "input",
     "button"
    ],
+   "route": "/components/component-form",
    "slug": "form",
    "status": "stable",
    "stories": {
@@ -1076,6 +1122,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -1190,6 +1237,7 @@
     "textarea",
     "autocomplete"
    ],
+   "route": "/components/component-input",
    "slug": "input",
    "status": "stable",
    "stories": {
@@ -1216,6 +1264,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -1266,6 +1315,7 @@
     "input",
     "field"
    ],
+   "route": "/components/component-input-otp",
    "slug": "input-otp",
    "status": "stable",
    "stories": {
@@ -1291,6 +1341,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -1337,6 +1388,7 @@
     "input",
     "checkbox"
    ],
+   "route": "/components/component-label",
    "slug": "label",
    "status": "stable",
    "stories": {
@@ -1359,6 +1411,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -1412,6 +1465,7 @@
     "segmented-control",
     "button"
    ],
+   "route": "/components/component-panel-setting-button",
    "slug": "panel-setting-button",
    "status": "stable",
    "stories": {
@@ -1432,6 +1486,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [],
@@ -1528,6 +1583,7 @@
     "segmented-control",
     "select"
    ],
+   "route": "/components/component-radio",
    "slug": "radio",
    "status": "stable",
    "stories": {
@@ -1551,6 +1607,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -1659,6 +1716,7 @@
     "tabs",
     "radio"
    ],
+   "route": "/components/component-segmented-control",
    "slug": "segmented-control",
    "status": "stable",
    "stories": {
@@ -1683,6 +1741,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -1768,6 +1827,7 @@
     "autocomplete",
     "command"
    ],
+   "route": "/components/component-search-field",
    "slug": "search-field",
    "status": "stable",
    "stories": {
@@ -1786,6 +1846,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [
@@ -1956,6 +2017,7 @@
     "radio",
     "dropdown-menu"
    ],
+   "route": "/components/component-select",
    "slug": "select",
    "status": "stable",
    "stories": {
@@ -1983,6 +2045,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -2080,6 +2143,7 @@
     "progress",
     "input"
    ],
+   "route": "/components/component-slider",
    "slug": "slider",
    "status": "stable",
    "stories": {
@@ -2103,6 +2167,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [],
@@ -2203,6 +2268,7 @@
     "toggle",
     "field"
    ],
+   "route": "/components/component-switch",
    "slug": "switch",
    "status": "stable",
    "stories": {
@@ -2227,6 +2293,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -2326,6 +2393,7 @@
     "input",
     "field"
    ],
+   "route": "/components/component-textarea",
    "slug": "textarea",
    "status": "stable",
    "stories": {
@@ -2349,6 +2417,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -2460,6 +2529,7 @@
     "button",
     "checkbox"
    ],
+   "route": "/components/component-toggle",
    "slug": "toggle",
    "status": "stable",
    "stories": {
@@ -2484,6 +2554,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -2574,6 +2645,7 @@
     "segmented-control",
     "button-group"
    ],
+   "route": "/components/component-toggle-group",
    "slug": "toggle-group",
    "status": "stable",
    "stories": {
@@ -2602,6 +2674,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [
@@ -2664,6 +2737,7 @@
     "navigation-menu",
     "sidebar-nav-tree"
    ],
+   "route": "/components/component-breadcrumb",
    "slug": "breadcrumb",
    "status": "stable",
    "stories": {
@@ -2689,6 +2763,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -2785,6 +2860,7 @@
     "dialog",
     "kbd"
    ],
+   "route": "/components/component-command",
    "slug": "command",
    "status": "stable",
    "stories": {
@@ -2810,6 +2886,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -2900,6 +2977,7 @@
     "dropdown-menu",
     "menubar"
    ],
+   "route": "/components/component-context-menu",
    "slug": "context-menu",
    "status": "stable",
    "stories": {
@@ -2923,6 +3001,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [],
@@ -3080,6 +3159,7 @@
     "menubar",
     "button"
    ],
+   "route": "/components/component-dropdown-menu",
    "slug": "dropdown-menu",
    "status": "stable",
    "stories": {
@@ -3104,6 +3184,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -3198,6 +3279,7 @@
     "dropdown-menu",
     "navigation-menu"
    ],
+   "route": "/components/component-menubar",
    "slug": "menubar",
    "status": "stable",
    "stories": {
@@ -3221,6 +3303,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -3300,6 +3383,7 @@
     "breadcrumb",
     "dropdown-menu"
    ],
+   "route": "/components/component-navigation-menu",
    "slug": "navigation-menu",
    "status": "stable",
    "stories": {
@@ -3324,6 +3408,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -3402,6 +3487,7 @@
     "breadcrumb",
     "button"
    ],
+   "route": "/components/component-pagination",
    "slug": "pagination",
    "status": "stable",
    "stories": {
@@ -3424,6 +3510,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -3588,6 +3675,7 @@
     "navigation-menu",
     "resizable"
    ],
+   "route": "/components/component-sidebar",
    "slug": "sidebar",
    "status": "stable",
    "stories": {
@@ -3614,6 +3702,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -3686,6 +3775,7 @@
     "breadcrumb",
     "collapsible"
    ],
+   "route": "/components/component-sidebar-nav-tree",
    "slug": "sidebar-nav-tree",
    "status": "stable",
    "stories": {
@@ -3708,6 +3798,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [],
@@ -3837,6 +3928,7 @@
     "collapsible",
     "navigation-menu"
    ],
+   "route": "/components/component-tabs",
    "slug": "tabs",
    "status": "stable",
    "stories": {
@@ -3863,6 +3955,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [],
@@ -4011,6 +4104,7 @@
     "sheet",
     "drawer"
    ],
+   "route": "/components/component-alert-dialog",
    "slug": "alert-dialog",
    "status": "stable",
    "stories": {
@@ -4035,6 +4129,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [],
@@ -4186,6 +4281,7 @@
     "sheet",
     "drawer"
    ],
+   "route": "/components/component-dialog",
    "slug": "dialog",
    "status": "stable",
    "stories": {
@@ -4209,6 +4305,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -4315,6 +4412,7 @@
     "sheet",
     "dialog"
    ],
+   "route": "/components/component-drawer",
    "slug": "drawer",
    "status": "stable",
    "stories": {
@@ -4337,6 +4435,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -4400,6 +4499,7 @@
     "tooltip",
     "popover"
    ],
+   "route": "/components/component-hover-card",
    "slug": "hover-card",
    "status": "stable",
    "stories": {
@@ -4421,6 +4521,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -4500,6 +4601,7 @@
     "hover-card",
     "dialog"
    ],
+   "route": "/components/component-popover",
    "slug": "popover",
    "status": "stable",
    "stories": {
@@ -4522,6 +4624,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [
@@ -4572,6 +4675,7 @@
     "dialog",
     "tooltip"
    ],
+   "route": "/components/component-portal-container",
    "slug": "portal-container",
    "status": "stable",
    "stories": {
@@ -4592,6 +4696,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -4655,6 +4760,7 @@
     "card",
     "popover"
    ],
+   "route": "/components/component-preview-card",
    "slug": "preview-card",
    "status": "stable",
    "stories": {
@@ -4676,6 +4782,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -4796,6 +4903,7 @@
     "drawer",
     "alert-dialog"
    ],
+   "route": "/components/component-sheet",
    "slug": "sheet",
    "status": "stable",
    "stories": {
@@ -4820,6 +4928,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -4907,6 +5016,7 @@
     "hover-card",
     "kbd"
    ],
+   "route": "/components/component-tooltip",
    "slug": "tooltip",
    "status": "stable",
    "stories": {
@@ -4932,6 +5042,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "accessibility": {
      "knownGaps": [],
@@ -5044,6 +5155,7 @@
     "collapsible",
     "tabs"
    ],
+   "route": "/components/component-accordion",
    "slug": "accordion",
    "status": "stable",
    "stories": {
@@ -5067,6 +5179,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -5157,6 +5270,7 @@
     "toaster",
     "alert-dialog"
    ],
+   "route": "/components/component-alert",
    "slug": "alert",
    "status": "stable",
    "stories": {
@@ -5181,6 +5295,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -5283,6 +5398,7 @@
     "badge",
     "item"
    ],
+   "route": "/components/component-avatar",
    "slug": "avatar",
    "status": "stable",
    "stories": {
@@ -5308,6 +5424,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -5428,6 +5545,7 @@
     "kbd",
     "alert"
    ],
+   "route": "/components/component-badge",
    "slug": "badge",
    "status": "stable",
    "stories": {
@@ -5451,6 +5569,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -5608,6 +5727,7 @@
     "frame",
     "preview-card"
    ],
+   "route": "/components/component-card",
    "slug": "card",
    "status": "stable",
    "stories": {
@@ -5634,6 +5754,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -5716,6 +5837,7 @@
     "scroll-area",
     "button"
    ],
+   "route": "/components/component-carousel",
    "slug": "carousel",
    "status": "stable",
    "stories": {
@@ -5741,6 +5863,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -5796,6 +5919,7 @@
     "accordion",
     "connected-panel"
    ],
+   "route": "/components/component-collapsible",
    "slug": "collapsible",
    "status": "stable",
    "stories": {
@@ -5817,6 +5941,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -5905,6 +6030,7 @@
     "popover",
     "button"
    ],
+   "route": "/components/component-connected-panel",
    "slug": "connected-panel",
    "status": "stable",
    "stories": {
@@ -5928,6 +6054,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -6032,6 +6159,7 @@
     "alert",
     "button"
    ],
+   "route": "/components/component-empty",
    "slug": "empty",
    "status": "stable",
    "stories": {
@@ -6057,6 +6185,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -6137,6 +6266,7 @@
     "alert",
     "toaster"
    ],
+   "route": "/components/component-feedback-state",
    "slug": "feedback-state",
    "status": "stable",
    "stories": {
@@ -6160,6 +6290,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -6251,6 +6382,7 @@
     "card",
     "connected-panel"
    ],
+   "route": "/components/component-frame",
    "slug": "frame",
    "status": "stable",
    "stories": {
@@ -6275,6 +6407,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -6369,6 +6502,7 @@
     "separator",
     "avatar"
    ],
+   "route": "/components/component-item",
    "slug": "item",
    "status": "stable",
    "stories": {
@@ -6395,6 +6529,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -6464,6 +6599,7 @@
     "scrollable-list",
     "carousel"
    ],
+   "route": "/components/component-scroll-area",
    "slug": "scroll-area",
    "status": "stable",
    "stories": {
@@ -6486,6 +6622,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -6561,6 +6698,7 @@
     "load-more-trigger",
     "carousel"
    ],
+   "route": "/components/component-scrollable-list",
    "slug": "scrollable-list",
    "status": "stable",
    "stories": {
@@ -6583,6 +6721,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [
@@ -6645,6 +6784,7 @@
     "button-group",
     "resizable"
    ],
+   "route": "/components/component-separator",
    "slug": "separator",
    "status": "stable",
    "stories": {
@@ -6668,6 +6808,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -6744,6 +6885,7 @@
     "pagination",
     "scroll-area"
    ],
+   "route": "/components/component-table",
    "slug": "table",
    "status": "stable",
    "stories": {
@@ -6769,6 +6911,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [
@@ -6819,6 +6962,7 @@
     "progress",
     "feedback-state"
    ],
+   "route": "/components/component-animated-check",
    "slug": "animated-check",
    "status": "stable",
    "stories": {
@@ -6837,6 +6981,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -6891,6 +7036,7 @@
     "command",
     "tooltip"
    ],
+   "route": "/components/component-kbd",
    "slug": "kbd",
    "status": "stable",
    "stories": {
@@ -6914,6 +7060,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -7014,6 +7161,7 @@
     "spinner",
     "progress"
    ],
+   "route": "/components/component-load-more-trigger",
    "slug": "load-more-trigger",
    "status": "stable",
    "stories": {
@@ -7038,6 +7186,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [
@@ -7097,6 +7246,7 @@
     "text-ticker",
     "scroll-area"
    ],
+   "route": "/components/component-marquee",
    "slug": "marquee",
    "status": "stable",
    "stories": {
@@ -7119,6 +7269,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -7199,6 +7350,7 @@
     "skeleton",
     "load-more-trigger"
    ],
+   "route": "/components/component-progress",
    "slug": "progress",
    "status": "stable",
    "stories": {
@@ -7223,6 +7375,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": null,
    "exports": {
     "types": [
@@ -7250,6 +7403,7 @@
     "scroll-area",
     "marquee"
    ],
+   "route": "/components/component-progressive-blur",
    "slug": "progressive-blur",
    "status": "stable",
    "stories": {
@@ -7269,6 +7423,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [
@@ -7334,6 +7489,7 @@
     "separator",
     "sidebar"
    ],
+   "route": "/components/component-resizable",
    "slug": "resizable",
    "status": "stable",
    "stories": {
@@ -7358,6 +7514,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [],
@@ -7421,6 +7578,7 @@
     "progress",
     "empty"
    ],
+   "route": "/components/component-skeleton",
    "slug": "skeleton",
    "status": "stable",
    "stories": {
@@ -7441,6 +7599,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [],
@@ -7478,6 +7637,7 @@
     "skeleton",
     "load-more-trigger"
    ],
+   "route": "/components/component-spinner",
    "slug": "spinner",
    "status": "stable",
    "stories": {
@@ -7496,6 +7656,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [],
     "axes": [
@@ -7549,6 +7710,7 @@
     "marquee",
     "tooltip"
    ],
+   "route": "/components/component-text-ticker",
    "slug": "text-ticker",
    "status": "stable",
    "stories": {
@@ -7571,6 +7733,7 @@
    ]
   },
   {
+   "axisGuidance": null,
    "contract": {
     "archetypes": [
      {
@@ -7660,6 +7823,7 @@
     "feedback-state",
     "copy-button"
    ],
+   "route": "/components/component-toaster",
    "slug": "toaster",
    "status": "stable",
    "stories": {
@@ -7696,7 +7860,7 @@
   {
    "area": "components",
    "label": "Button",
-   "markdown": "# Button\n\nButton is the reference action primitive for the current system: typed variants from `@atom63/ui-foundation`, Base UI-compatible rendering in `@atom63/ui-react`, and material values from the `control` and `action` contracts.\n\n```tsx\nimport { Button } from '@atom63/ui-react'\n\n<Button variant=\"primary\">Save changes</Button>\n<Button>Cancel</Button>\n<Button variant=\"outline\">Duplicate</Button>\n<Button variant=\"ghost\">Dismiss</Button>\n<Button variant=\"destructive\">Delete</Button>\n```\n\n## When to use\n\nUse Button for an in-place action such as submitting, saving, confirming, or changing state. Use a link when the primary outcome is navigation. Choose emphasis from the action hierarchy rather than styling every available action as primary.\n\n## Why it exists\n\nRaw buttons are easy until they need to survive themes, density, loading, icon-only sizing, pressed states, and form safety. The shared Button exists so every product surface gets those decisions once.\n\n## Contract shape\n\nThe root always renders `data-slot=\"button\"` and carries `data-variant` and `data-size`. Trigger-specific composition can mirror a different slot through `data-trigger-slot`, while the anatomy stays a button.\n\n| Layer | Examples |\n|-------|----------|\n| Public API | `variant`, `size`, `loading`, `disabled`, `render`, `type`. |\n| Stable metadata | `data-slot=\"button\"`, `data-size`, `data-variant`, `data-loading`, `data-disabled`. |\n| Local recipe vars | `--button-background`, `--button-foreground`, `--button-shadow`, `--button-radius`. |\n| System vars | `--a63-action-*`, `--a63-control-*`, `--a63-density-scale`, `--a63-focus-ring`. |\n\n## Variant decisions\n\nThe emphasis ladder above is the useful part of the variant set: one primary action, quieter neutral alternatives, and danger only when the outcome is destructive. `overlay` is the forced-contrast option for media surfaces. `glass` remains a compatibility alias for that use case, but new work should choose `overlay` so the intent is explicit.\n\n## Sizes and icons\n\nThe size ramp scales height, inline padding, gap, and icon size together through `--a63-density-scale`. Icon-only buttons use the `icon-*` steps so the control stays square. Button owns the icon gap — never add `mr-`/`ml-` margins to an icon inside one.\n\nIcon-only buttons require an accessible name. Hide decorative icons from assistive technology when the visible label already names the action.\n\n```tsx\n<Button size=\"xs\">Extra small</Button>\n<Button size=\"sm\">Small</Button>\n<Button size=\"md\">Medium</Button>\n<Button size=\"lg\">Large</Button>\n\n<Button variant=\"primary\">\n  Continue\n  <ArrowRight />\n</Button>\n<Button aria-label=\"Delete\" size=\"icon\" variant=\"destructive\">\n  <Trash2 />\n</Button>\n```\n\n## Decisions worth knowing\n\n### Button sets `type=\"button\"`\n\nI make the safe form behavior explicit. A shared Button should not accidentally submit a form because it was mounted inside one.\n\n### Loading preserves layout\n\nLoading hides the label visually and overlays a spinner rather than swapping content. That keeps button width stable and avoids a small but very noticeable layout jump.\n\n```tsx\n<Button loading variant=\"primary\">Save changes</Button>\n<Button loading>Save changes</Button>\n<Button disabled variant=\"primary\">Save changes</Button>\n```\n\nCompare the loading and resting buttons above: the label reserves its width, so the row never reflows when a request starts.\n\n### Themes change material, not intent\n\nAqua adds gloss and tint through `--a63-control-gloss`, `--a63-control-highlight`, and `--a63-control-shadow`. Terminal can flatten those values. The Button recipe does not branch on `theme`; it consumes the same variables in every theme.\n\n## Usage\n\n```tsx\nimport { Button } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Button`\n\n**Types:** `ButtonProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/src/components/button/button-contract.ts` (`buttonContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `variants` | `default`, `primary`, `secondary`, `destructive`, `destructive-outline`, `outline`, `ghost`, `link`, `overlay`, `glass` | `default` |\n| `sizes` | `xs`, `sm`, `md`, `lg`, `xl`, `tile`, `icon-xs`, `icon-sm`, `icon`, `icon-lg`, `icon-xl` | `md` |\n\n**Slots:** `root`, `label`, `icon`, `spinner`\n\n**States:** `rest`, `hover`, `pressed`, `focusVisible`, `disabled`, `loading`\n\n**Token slots:** `button.background`, `button.foreground`, `button.border.color`, `button.border.width`, `button.radius`, `button.shadow`, `button.focusRing`, `button.height`, `button.paddingInline`, `button.gap`, `button.iconSize`, `button.motion.press`\n\n**Visual archetype:** Action controls — Momentary controls that perform an action now.\n\n### Web and iOS\n\nTrigger a user-initiated action with explicit hierarchy and feedback. Rendered by `AtomButton` in SwiftUI, with `recipe` parity.\n\n**Required states:** `rest`, `pressed`, `disabled`, `loading`\n\n**Shared outcomes:**\n\n- Action fires once\n- Loading blocks repeat activation\n- Disabled prevents activation\n\n**Accessibility outcomes:**\n\n- Exposes label\n- Announces loading\n- Disabled while loading\n\n**Platform adaptations:**\n\n- React: Uses HTML button semantics with pointer and focus-visible feedback.\n- SwiftUI: Uses SwiftUI Button with native touch and keyboard activation.\n\n## Related components\n\n- [Button Group](/components/component-button-group)\n- [Toggle](/components/component-toggle)\n- [Copy Button](/components/component-copy-button)",
+   "markdown": "# Button\n\nButton is the reference action primitive for the current system: typed variants from `@atom63/ui-foundation`, Base UI-compatible rendering in `@atom63/ui-react`, and material values from the `control` and `action` contracts.\n\n```tsx\nimport { Button } from '@atom63/ui-react'\n\n<Button variant=\"primary\">Save changes</Button>\n<Button>Cancel</Button>\n<Button variant=\"outline\">Duplicate</Button>\n<Button variant=\"ghost\">Dismiss</Button>\n<Button variant=\"destructive\">Delete</Button>\n```\n\n## When to use\n\nUse it for an in-place action such as submitting, saving, confirming or changing state; use a link when the outcome is navigation. Choose emphasis from the action hierarchy rather than making every action primary, and give icon-only buttons an accessible name.\n\n## Why it exists\n\nRaw buttons are easy until they need to survive themes, density, loading, icon-only sizing, pressed states, and form safety. The shared Button exists so every product surface gets those decisions once.\n\n## Contract shape\n\nThe root always renders `data-slot=\"button\"` and carries `data-variant` and `data-size`. Trigger-specific composition can mirror a different slot through `data-trigger-slot`, while the anatomy stays a button.\n\n| Layer | Examples |\n|-------|----------|\n| Public API | `variant`, `size`, `loading`, `disabled`, `render`, `type`. |\n| Stable metadata | `data-slot=\"button\"`, `data-size`, `data-variant`, `data-loading`, `data-disabled`. |\n| Local recipe vars | `--button-background`, `--button-foreground`, `--button-shadow`, `--button-radius`. |\n| System vars | `--a63-action-*`, `--a63-control-*`, `--a63-density-scale`, `--a63-focus-ring`. |\n\n## Variants, sizes and states\n\n| Axis | Value | Guidance |\n| --- | --- | --- |\n| Variant | `primary` | The one primary action per view. |\n| Variant | `default` | Neutral action; the usual alternative next to primary (Cancel). |\n| Variant | `secondary` | Muted neutral action for supporting tasks. |\n| Variant | `outline` | Lower-emphasis alternative (Duplicate). |\n| Variant | `ghost` | Lowest emphasis; toolbars and dismissals. |\n| Variant | `link` | Inline action styled as text; navigation should use a real link. |\n| Variant | `destructive` | Only when the outcome destroys data. |\n| Variant | `destructive-outline` | Quieter destructive action, beside a safe default. |\n| Variant | `overlay` | Forced contrast over media and imagery. |\n| Variant | `glass` | Compatibility alias of overlay; new work uses overlay. |\n| Size | `xs` | Dense UI. |\n| Size | `sm` | Compact rows and toolbars. |\n| Size | `md` | Default. |\n| Size | `lg` | Prominent calls to action. |\n| Size | `xl` | Hero and marketing surfaces. |\n| State | `rest` | Resting appearance. |\n| State | `hover` | Pointer over an enabled button. |\n| State | `pressed` | While pressed, or held with data-pressed. |\n| State | `focusVisible` | Keyboard focus only; drawn as an outline. |\n| State | `disabled` | Fill stays at full strength; only the label fades. |\n| State | `loading` | Label keeps its width; the spinner overlays it. |\n\n## Sizes and icons\n\nThe size ramp scales height, inline padding, gap, and icon size together through `--a63-density-scale`. Icon-only buttons use the `icon-*` steps so the control stays square. Button owns the icon gap — never add `mr-`/`ml-` margins to an icon inside one.\n\nHide decorative icons from assistive technology when the visible label already names the action.\n\n```tsx\n<Button size=\"xs\">Extra small</Button>\n<Button size=\"sm\">Small</Button>\n<Button size=\"md\">Medium</Button>\n<Button size=\"lg\">Large</Button>\n\n<Button variant=\"primary\">\n  Continue\n  <ArrowRight />\n</Button>\n<Button aria-label=\"Delete\" size=\"icon\" variant=\"destructive\">\n  <Trash2 />\n</Button>\n```\n\n## Decisions worth knowing\n\n### Button sets `type=\"button\"`\n\nI make the safe form behavior explicit. A shared Button should not accidentally submit a form because it was mounted inside one.\n\n### Loading preserves layout\n\nLoading hides the label visually and overlays a spinner rather than swapping content. That keeps button width stable and avoids a small but very noticeable layout jump.\n\n```tsx\n<Button loading variant=\"primary\">Save changes</Button>\n<Button loading>Save changes</Button>\n<Button disabled variant=\"primary\">Save changes</Button>\n```\n\nCompare the loading and resting buttons above: the label reserves its width, so the row never reflows when a request starts.\n\n### Themes change material, not intent\n\nAqua adds gloss and tint through `--a63-control-gloss`, `--a63-control-highlight`, and `--a63-control-shadow`. Terminal can flatten those values. The Button recipe does not branch on `theme`; it consumes the same variables in every theme.\n\n## Usage\n\n```tsx\nimport { Button } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Button`\n\n**Types:** `ButtonProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/src/components/button/button-contract.ts` (`buttonContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `variants` | `default`, `primary`, `secondary`, `destructive`, `destructive-outline`, `outline`, `ghost`, `link`, `overlay`, `glass` | `default` |\n| `sizes` | `xs`, `sm`, `md`, `lg`, `xl`, `tile`, `icon-xs`, `icon-sm`, `icon`, `icon-lg`, `icon-xl` | `md` |\n\n**Slots:** `root`, `label`, `icon`, `spinner`\n\n**States:** `rest`, `hover`, `pressed`, `focusVisible`, `disabled`, `loading`\n\n**Token slots:** `button.background`, `button.foreground`, `button.border.color`, `button.border.width`, `button.radius`, `button.shadow`, `button.focusRing`, `button.height`, `button.paddingInline`, `button.gap`, `button.iconSize`, `button.motion.press`\n\n**Visual archetype:** Action controls — Momentary controls that perform an action now.\n\n### Web and iOS\n\nTrigger a user-initiated action with explicit hierarchy and feedback. Rendered by `AtomButton` in SwiftUI, with `recipe` parity.\n\n**Required states:** `rest`, `pressed`, `disabled`, `loading`\n\n**Shared outcomes:**\n\n- Action fires once\n- Loading blocks repeat activation\n- Disabled prevents activation\n\n**Accessibility outcomes:**\n\n- Exposes label\n- Announces loading\n- Disabled while loading\n\n**Platform adaptations:**\n\n- React: Uses HTML button semantics with pointer and focus-visible feedback.\n- SwiftUI: Uses SwiftUI Button with native touch and keyboard activation.\n\n## Related components\n\n- [Button Group](/components/component-button-group)\n- [Toggle](/components/component-toggle)\n- [Copy Button](/components/component-copy-button)",
    "route": "/components/component-button",
    "slug": "component-button"
   },

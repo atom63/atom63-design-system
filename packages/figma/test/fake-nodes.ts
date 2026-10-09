@@ -43,6 +43,8 @@ const common = [
   'layoutPositioning',
   'constraints',
   'strokeAlign',
+  'layoutAlign',
+  'layoutGrow',
 ]
 const frameKeys = [
   'layoutMode',
@@ -65,8 +67,8 @@ const frameKeys = [
 const fontKeys = ['characters', 'fontName', 'fontSize', 'lineHeight', 'textAutoResize']
 const writable: Record<NodeType, Set<string>> = {
   FRAME: new Set([...common, ...frameKeys]),
-  COMPONENT: new Set([...common, ...frameKeys]),
-  COMPONENT_SET: new Set([...common, ...frameKeys]),
+  COMPONENT: new Set([...common, ...frameKeys, 'description']),
+  COMPONENT_SET: new Set([...common, ...frameKeys, 'description']),
   TEXT: new Set([...common, ...fontKeys]),
 }
 /** `setBoundVariable` fields per node kind, and the variable type each takes. */
@@ -123,7 +125,22 @@ const textRangeFields = new Set([
   'paragraphSpacing',
   'paragraphIndent',
 ])
+/** Text properties a text style holds: setting one detaches the style. */
+const styledKeys = new Set(['fontName', 'fontSize', 'lineHeight'])
+/** The other direction of an auto-layout frame. */
+const counterOf = (state: Record<string, unknown>) =>
+  state.layoutMode === 'HORIZONTAL' ? 'VERTICAL' : 'HORIZONTAL'
+/**
+ * An auto-layout frame's sizing mode along a direction; undefined for a node
+ * without auto layout. Figma's typings: AUTO must not be used on an axis where
+ * the node stretches (`layoutAlign` STRETCH, `layoutGrow` 1).
+ */
+const sizingAlong = (state: Record<string, unknown>, direction: string) => {
+  if (!state.layoutMode || state.layoutMode === 'NONE') return undefined
+  return state.layoutMode === direction ? state.primaryAxisSizingMode : state.counterAxisSizingMode
+}
 const strokeAligns = new Set(['CENTER', 'INSIDE', 'OUTSIDE'])
+const layoutAligns = new Set(['MIN', 'CENTER', 'MAX', 'STRETCH', 'INHERIT'])
 const constraintTypes = new Set(['MIN', 'CENTER', 'MAX', 'STRETCH', 'SCALE'])
 const fieldType = (field: string) =>
   field === 'fontFamily' ? 'STRING' : field === 'visible' ? 'BOOLEAN' : 'FLOAT'
@@ -168,10 +185,11 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
   let failMessage = ''
   /** Reference writes still to be dropped (see `dropNextReferenceWrites`). */
   let droppedReferenceWrites = 0
+  let keptReferenceWrites = 0
   const referenced = new WeakSet<object>()
-  /** Whether the next set's default Label reconciles (see `reconcileDefaultReference`). */
-  let reconcileNext = false
-  /** Labels whose next reference write starts reconciling, and labels reconciling now. */
+  /** The next set's default-variant layers that reconcile (see `reconcileDefaultReference`). */
+  let reconcileNext: string[] = []
+  /** Layers whose next reference write starts reconciling, and layers reconciling now. */
   const armed = new WeakSet<object>()
   const reconciling = new Set<object>()
   const reconcilingError =
@@ -338,6 +356,9 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       strokeWeight: 1,
       componentPropertyReferences: null,
       layoutPositioning: 'AUTO',
+      layoutAlign: 'INHERIT',
+      layoutGrow: 0,
+      ...(type === 'COMPONENT' || type === 'COMPONENT_SET' ? { description: '' } : {}),
       constraints: frozenCopy({ horizontal: 'MIN', vertical: 'MIN' }),
       // Figma's defaults: a frame's stroke sits inside it, a text node's outside.
       strokeAlign: type === 'TEXT' ? 'OUTSIDE' : 'INSIDE',
@@ -348,6 +369,7 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
             fontSize: 12,
             lineHeight: frozenCopy({ unit: 'AUTO' }),
             textAutoResize: 'NONE',
+            textStyleId: '',
           }
         : {
             layoutMode: 'NONE',
@@ -396,6 +418,8 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
           requireFont(wanted)
           state.fontName = frozenCopy(wanted)
         }
+        // Like Figma: a text property of the node's own detaches its text style.
+        if (type === 'TEXT' && textRangeFields.has(field)) state.textStyleId = ''
         const alias: Alias = { type: 'VARIABLE_ALIAS', id: variable.id }
         for (const each of stored)
           state.boundVariables[each] =
@@ -407,6 +431,8 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
         applyConstraints(state, width - (state.width as number), height - (state.height as number))
         state.width = width
         state.height = height
+        // Like Figma: a resized text box has a fixed size.
+        if (type === 'TEXT') state.textAutoResize = 'NONE'
         // Like Figma: resizing an auto-layout frame fixes both axes.
         if (state.layoutMode && state.layoutMode !== 'NONE') {
           state.primaryAxisSizingMode = 'FIXED'
@@ -421,6 +447,30 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
         if (!containers.has(type)) throw new Error(`A ${type} node has no children`)
         attach(container, child, index)
       },
+      ...(type === 'TEXT'
+        ? {
+            /**
+             * Like Figma: the style's font must be loaded; its font, size and line
+             * height replace the node's, and the node's own text bindings go.
+             */
+            async setTextStyleIdAsync(styleId: string) {
+              if (state.removed) throw new Error('The node has been removed')
+              writes += 1
+              if (styleId === '') {
+                state.textStyleId = ''
+                return
+              }
+              const style = base.textStyles.find(item => item.id === styleId)
+              if (!style) throw new Error(`No text style "${styleId}"`)
+              requireFont(style.fontName)
+              state.fontName = frozenCopy(style.fontName)
+              state.fontSize = style.fontSize
+              state.lineHeight = frozenCopy(style.lineHeight)
+              for (const field of textRangeFields) delete state.boundVariables[field]
+              state.textStyleId = styleId
+            },
+          }
+        : {}),
       remove() {
         writes += 1
         detach(proxy)
@@ -478,6 +528,7 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
         if (type === 'TEXT' && fontKeys.includes(key)) {
           requireFont(state.fontName as FontNameLike)
           if (key === 'fontName') requireFont(value as FontNameLike)
+          if (styledKeys.has(key)) state.textStyleId = ''
         }
         if (key === 'opacity' && !((value as number) >= 0 && (value as number) <= 1))
           throw new RangeError('opacity must be between 0 and 1')
@@ -501,6 +552,39 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
           if (!constraintTypes.has(horizontal) || !constraintTypes.has(vertical))
             throw new Error('constraints needs a horizontal and a vertical ConstraintType')
           value = frozenCopy({ horizontal, vertical })
+        } else if (key === 'layoutAlign' || key === 'layoutGrow') {
+          if (
+            key === 'layoutAlign' ? !layoutAligns.has(value as string) : value !== 0 && value !== 1
+          )
+            throw new Error(`Invalid ${key} "${String(value)}"`)
+          // Stricter than Figma, which ignores it: it only means something in an auto-layout parent.
+          const parent = state.parent && stateOf.get(state.parent.node)
+          const stretches = value === 'STRETCH' || value === 1
+          if (stretches && (!parent || !parent.layoutMode || parent.layoutMode === 'NONE'))
+            throw new Error(`${key} applies only to children of auto-layout frames`)
+          if (stretches && parent) {
+            const along = key === 'layoutAlign' ? counterOf(parent) : parent.layoutMode
+            const mode = sizingAlong(state, along as string)
+            if (mode === 'AUTO')
+              throw new Error(`AUTO sizing cannot be used on an axis where ${key} stretches`)
+          }
+        } else if (
+          (key === 'primaryAxisSizingMode' || key === 'counterAxisSizingMode') &&
+          value === 'AUTO' &&
+          state.layoutMode !== 'NONE'
+        ) {
+          const parent = state.parent && stateOf.get(state.parent.node)
+          const auto = parent?.layoutMode && parent.layoutMode !== 'NONE'
+          const axis = (horizontal: boolean) =>
+            key === 'primaryAxisSizingMode'
+              ? (state.layoutMode === 'HORIZONTAL') === horizontal
+              : (state.layoutMode === 'HORIZONTAL') !== horizontal
+          const stretched = (direction: string) =>
+            axis(direction === 'HORIZONTAL') &&
+            ((state.layoutAlign === 'STRETCH' && counterOf(parent!) === direction) ||
+              (state.layoutGrow === 1 && parent!.layoutMode === direction))
+          if (auto && (stretched('HORIZONTAL') || stretched('VERTICAL')))
+            throw new Error(`AUTO sizing cannot be used on an axis that stretches`)
         } else if (key === 'layoutPositioning' && value === 'ABSOLUTE') {
           const parent = state.parent && stateOf.get(state.parent.node)
           if (!parent || !parent.layoutMode || parent.layoutMode === 'NONE')
@@ -513,7 +597,8 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
             failingReferenceWrites -= 1
             throw new Error(failMessage)
           }
-          if (droppedReferenceWrites > 0) {
+          if (droppedReferenceWrites > 0 && keptReferenceWrites > 0) keptReferenceWrites -= 1
+          else if (droppedReferenceWrites > 0) {
             droppedReferenceWrites -= 1
             return true
           }
@@ -642,11 +727,9 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       for (const node of nodes) set.appendChild(node)
       parent.appendChild(set)
       writes += 1
-      const label = nodes[0].children?.find(child => child.name === 'Label')
-      if (reconcileNext && label) {
-        reconcileNext = false
-        armed.add(stateOf.get(label)!)
-      }
+      for (const child of nodes[0].children ?? [])
+        if (reconcileNext.includes(child.name)) armed.add(stateOf.get(child)!)
+      reconcileNext = []
       return set
     },
   }
@@ -665,13 +748,24 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
     unloadPages() {
       for (const [page, own] of pageState) if (page !== pages[0]) own.loaded = false
     },
+    /** A variant of a set named `setName`, on a page or inside a frame on it (the spec card). */
     findVariant(setName: string, variantName: string): SceneNodeLike {
-      for (const page of pages)
-        for (const node of pageState.get(page)!.children) {
-          if (node.type !== 'COMPONENT_SET' || node.name !== setName) continue
-          const variant = node.children?.find(child => child.name === variantName)
-          if (variant) return variant
+      const search = (nodes: readonly SceneNodeLike[]): SceneNodeLike | undefined => {
+        for (const node of nodes) {
+          if (node.type === 'COMPONENT_SET' && node.name === setName) {
+            const variant = node.children?.find(child => child.name === variantName)
+            if (variant) return variant
+          } else if (node.type === 'FRAME') {
+            const found = search(node.children ?? [])
+            if (found) return found
+          }
         }
+        return undefined
+      }
+      for (const page of pages) {
+        const found = search(pageState.get(page)!.children)
+        if (found) return found
+      }
       throw new Error(`No variant "${variantName}" in a set "${setName}"`)
     },
     /**
@@ -736,13 +830,13 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       staleBinds = count
     },
     /**
-     * Like Figma right after it makes a set: once the next set's default
-     * (first) variant's Label reference is written and the execution yields,
-     * the Label reads its reference as `{}` and refuses every reference write,
-     * until `settleReferences`.
+     * Like Figma right after it makes a set: once a reference on one of the
+     * next set's default (first) variant's `layers` is written and the
+     * execution yields, that layer reads its references as `{}` and refuses
+     * every reference write, until `settleReferences`.
      */
-    reconcileDefaultReference() {
-      reconcileNext = true
+    reconcileDefaultReference(layers: string[] = ['Label']) {
+      reconcileNext = layers
     },
     /** Ends every reconciliation `reconcileDefaultReference` started. */
     settleReferences() {
@@ -765,9 +859,13 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       failMessage = message
       failRepeatOnly = repeatOnly
     },
-    /** The next `count` property-reference writes succeed but are not stored. */
-    dropNextReferenceWrites(count: number) {
+    /**
+     * The next `count` property-reference writes, after the next `skip` stored
+     * ones, succeed but are not stored.
+     */
+    dropNextReferenceWrites(count: number, skip = 0) {
       droppedReferenceWrites = count
+      keptReferenceWrites = skip
     },
     variableOf(token: string): VariableLike {
       for (const variable of base.variables.values())

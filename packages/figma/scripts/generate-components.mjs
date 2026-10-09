@@ -1,20 +1,23 @@
 import { existsSync, readFileSync, writeFileSync } from 'node:fs'
-import { buttonAnatomy, readRecipe } from '../dist/index.js'
+import { buildComponentModel, buttonAnatomy } from '../dist/index.js'
 import {
   buttonContract,
   buttonSizes,
 } from '../../ui-foundation/src/components/button/button-contract.ts'
 
-// Generates the Button component model from the code contract, the recipe CSS and the token sync model.
+// Generates the Button component model from the code contract, the recipe CSS, the token sync model
+// and the agent index (its doc block: catalog → agent index → Figma model; run check:index first).
 const read = path => readFileSync(new URL(path, import.meta.url), 'utf8')
 const output = new URL('../generated/atom63.figma-components.json', import.meta.url)
 
-const model = readRecipe({
+const model = buildComponentModel({
   css: read('../../ui-react/src/components/button/button.css'),
   contract: { ...buttonContract, sizes: buttonSizes },
   anatomy: buttonAnatomy,
   sync: JSON.parse(read('../../styles/generated/atom63.figma-sync.json')),
   sizes: ['xs', 'sm', 'md', 'lg', 'xl'],
+  index: JSON.parse(read('../../cli/generated/agent-index.json')),
+  slug: 'button',
 })
 const text = `${JSON.stringify(model, null, 2)}\n`
 

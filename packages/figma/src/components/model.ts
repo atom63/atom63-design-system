@@ -47,6 +47,26 @@ export interface VariantSpec {
   layers: LayerSpec[]
 }
 
+/**
+ * A component's documentation, read from the agent index (S3): what the spec
+ * card shows. `axisGuidance` has one line per value on the model's axes.
+ */
+export interface ComponentDoc {
+  slug: string
+  label: string
+  group: { id: string; title: string }
+  summary: string
+  usage: string
+  related: { slug: string; label: string }[]
+  axisGuidance: {
+    variant: Record<string, string>
+    size: Record<string, string>
+    state: Record<string, string>
+  }
+  /** The docs site route, `componentDocPath(slug)`. */
+  docsPath: string
+}
+
 export interface ComponentModel {
   schemaVersion: 2
   component: string
@@ -69,4 +89,9 @@ export interface ComponentModel {
   derived: SyncCollection
   literals: { variant: string; layer: string; property: FigmaProperty; expression: string }[]
   skipped: { what: string; reason: string }[]
+  /**
+   * Always present in the generated model. A model read straight from a recipe
+   * has none, and of a model's scripts only the last part carries it.
+   */
+  doc?: ComponentDoc
 }

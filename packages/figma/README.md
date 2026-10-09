@@ -69,12 +69,13 @@ the monorepo.
    `packages/figma/.figma-sync`.
 
 3. Run each `.figma-sync/components-N.js` in order with `use_figma` on the same file. The first
-   makes the `Components` page and the `Button` set; later ones add their variants to it. Each
+   makes the `Components` page and the `Button` set; later ones add their variants to it, and the
+   last one also draws the spec card around the set (below). Each
    returns `verification`, which must plan no `create` or `update`. A non-empty
    `missingVariables` means the file lacks variables the variants bind, and nothing was written:
    sync the tokens again, then rerun the script. A variant its first verification still lists is
    applied once more and checked again, and the result counts it as `retried`. Right after a set
-   is created, Figma reconciles its default variant's text-property reference asynchronously, so
+   is created, Figma reconciles its default variant's component property references asynchronously, so
    a run may report that variant under `pendingReferences` rather than as an `update`. Run the
    check scripts afterwards: they must be clean, with no `pendingReferences`. A script that
    stops partway leaves its new variants on the `Components` page; rerunning it takes them into
@@ -113,8 +114,68 @@ on that layer, not only the binding: Figma can leave a stale stored color (black
 token sync in the same session), and rebinding the same variable keeps it. The script rewrites
 such a paint through another variable, so a rerun repairs it.
 
-After a recipe or token change, regenerate the model with
-`pnpm --filter @atom63/figma generate:components` and run the scripts again.
+The model also carries a `doc` block — label, group, summary, usage, related components, one
+guidance line per modelled Variant, Size and State, and the docs path — read only from the agent
+index (`packages/cli/generated/agent-index.json`), which is generated from the component catalog.
+Generation fails, naming the keys, if the entry or a guidance line is missing. Only the last
+script part carries the block (it draws the spec card once every variant exists).
+
+### The spec card
+
+The last component script draws a spec card on the `Components` page, as the Bridge Builder
+plugin does: a frame named `Button` with vertical auto layout (padding 24, spacing 12) that hugs
+its rows' height and has a fixed width, the `Grid`'s plus 48 (both paddings), recomputed every run;
+a fixed width keeps the stretched rows well defined, where a hugging one would size from them. It holds
+
+- `Group` (the catalog group, `Actions`) and `Title` (the slug, `button`);
+- one row per doc field, each after a 1px divider (`Divider/<row>`, and `Divider/end` after the
+  last): `Summary`, `When to use`, `Variant`, `Size`, `State` (one line per value,
+  `value — guidance`), `Related` (labels, comma-separated) and `Docs` (the docs path). A row is a
+  horizontal frame stretched to the card, with a `Label` text 128px wide and a `Value` text that
+  fills the rest; both wrap;
+- `Grid`, a frame without auto layout holding the component set at (176, 24), a `Header/<state>`
+  label over each State column and a `Row/<variant> · <size>` label beside each grid row. The
+  labels are placed from where the set's variants are, so they follow a designer's arrangement
+  on the next run.
+
+The set's `description` is the summary and the docs path, shown in Assets and Dev Mode.
+
+The chrome binds atom63 variables, so the card re-themes with the file: fill
+`--a63-surface-panel`, border and dividers `--a63-border-subtle`, border width
+`--a63-surface-border-width`, corners `--radius-md`, texts `--a63-text-primary` (title, values)
+and `--a63-text-secondary` (group, row labels, grid labels), values at
+`--typography-xs-font-size` / `--typography-xs-line-height` and the title at
+`--typography-lg-font-size` / `--typography-lg-line-height`; labels are 11px, which no token
+holds. The row values link the `Text/xs` text style the token sync derives (12/18 Regular on
+`--a63-font-app`), found by name and checked by id, and set nothing of their own beside their fill
+(a font, size or line height of its own would detach the style). In a file without that style, or
+when its font does not load, they bind the `--typography-xs-*` variables instead. The title, group
+and labels are Bold and the grid labels Medium, and the synced text styles are Regular only, so
+those bind variables. Every card text takes the first family of `--a63-font-app` (Geist), the
+family the text styles bind, unbound for the reason the Button label's family is, and
+`applied.fontFallbacks` says so. In the last script these tokens count toward
+`missingVariables`: in a file without them it writes nothing.
+
+Every part is matched by layer name and checked like a variant's layers: a second run writes
+nothing, a changed doc string rewrites only its row, a deleted part comes back in its place, and
+layers a designer adds inside the card stay. The card frame is found by name and type on the
+page; the set is found inside it, else on the page — a file written before the card had the set
+on the page, and the last script moves it into the card's `Grid`, which keeps its node id, so
+instances keep working. A script that has to make the set (the first, or any after the set was
+deleted) makes it on the page; the last script adopts it. Only the last script writes the card;
+the others find the set inside it and write their own variants. Its result counts the card's
+parts, `card: { create, update, unchanged }` in `planned` and `verification` and
+`card: { created, updated }` in `applied`, and names a differing part in `differences` as
+`card <part>`. Run the scripts in order: a script that adds variants after the last one has run
+leaves the grid labels short until the last script runs again.
+
+Component scripts and token scripts each carry only the runtime code they use, so neither pays
+for the other's size.
+
+After a recipe, token or catalog change, regenerate the model with
+`pnpm --filter @atom63/figma generate:components` and run the scripts again. The model depends on
+the index, so regenerate and check it first: `pnpm --filter @atom63/cli generate:index`, then
+`pnpm --filter @atom63/cli check:index`, before `pnpm --filter @atom63/figma check:components`.
 
 Known limits: only Button, in sizes xs to xl. Icon and tile sizes, box shadows and the `.dark`
 outline override are not drawn, and a font family token holding a CSS font stack is left unbound

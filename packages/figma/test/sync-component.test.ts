@@ -7,6 +7,7 @@ import { readRecipe } from '../src/components/recipe'
 import { planComponent, syncComponent } from '../src/components/sync-component'
 import type { SyncModel, SyncVariable } from '../src/plan'
 import { syncModel } from '../src/runtime'
+import { deriveStyles } from '../src/styles'
 import { createFakeNodes } from './fake-nodes'
 import { buttonModelFixture, syncFixture } from './fixtures/button'
 
@@ -384,6 +385,76 @@ describe('syncComponent', () => {
     expect(fake.writes).toBe(writes)
   })
 
+  it('reports default Label and Icon references Figma is still reconciling as pending', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    fake.reconcileDefaultReference(['Label', 'Icon'])
+    const [first] = buttonModelFixture.variants.map(variant => variant.name)
+    const result = await syncComponent(fake.figma, buttonModelFixture)
+    expect(result.retried).toBeUndefined()
+    expect(result.retryErrors).toBeUndefined()
+    expect(result.verification.update).toEqual([])
+    expect(result.verification.unchanged).toBe(11)
+    expect(result.verification.pendingReferences).toEqual([first])
+    const icon = fake.findVariant('Button', first).children!.find(c => c.name === 'Icon')!
+    expect(icon.componentPropertyReferences).toEqual({})
+
+    // Another difference applies the default variant again; Figma refuses both references.
+    fake.findVariant('Button', first).fills = []
+    const again = await syncComponent(fake.figma, buttonModelFixture, [first])
+    expect(again.retryErrors).toBeUndefined()
+    expect(again.verification.update).toEqual([])
+    expect(again.verification.pendingReferences).toEqual([first])
+
+    fake.settleReferences()
+    const check = await planComponent(fake.figma, buttonModelFixture)
+    expect(check.update).toEqual([])
+    expect(check.pendingReferences).toBeUndefined()
+    expect(check.unchanged).toBe(12)
+    const writes = fake.writes
+    const second = await syncComponent(fake.figma, buttonModelFixture)
+    expect(second.planned.unchanged).toBe(12)
+    expect(second.verification.pendingReferences).toBeUndefined()
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('writes a missing default-variant reference before treating it as pending', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    await syncComponent(fake.figma, buttonModelFixture)
+    const [first] = buttonModelFixture.variants.map(variant => variant.name)
+    const layers = fake.findVariant('Button', first).children!
+    for (const name of ['Label', 'Icon'])
+      layers.find(c => c.name === name)!.componentPropertyReferences = {}
+    // A check still excuses the default variant; a sync writes it.
+    expect((await planComponent(fake.figma, buttonModelFixture)).pendingReferences).toEqual([first])
+    const result = await syncComponent(fake.figma, buttonModelFixture)
+    expect(result.planned.update).toEqual([first])
+    expect(result.planned.pendingReferences).toBeUndefined()
+    expect(result.retried).toBeUndefined()
+    expect(result.verification.update).toEqual([])
+    expect(result.verification.pendingReferences).toBeUndefined()
+    expect(result.verification.unchanged).toBe(12)
+    for (const name of ['Label', 'Icon'])
+      expect(layers.find(c => c.name === name)!.componentPropertyReferences).not.toEqual({})
+    const writes = fake.writes
+    const second = await syncComponent(fake.figma, buttonModelFixture)
+    expect(second.planned.unchanged).toBe(12)
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('reports a reconciling default reference as pending in a check, not as an update', async () => {
+    const fake = createFakeNodes()
+    await syncModel(fake.figma, syncFixture)
+    fake.reconcileDefaultReference(['Label', 'Icon'])
+    const [first] = buttonModelFixture.variants.map(variant => variant.name)
+    await syncComponent(fake.figma, buttonModelFixture)
+    const check = await planComponent(fake.figma, buttonModelFixture)
+    expect(check.update).toEqual([])
+    expect(check.differences).toBeUndefined()
+    expect(check.pendingReferences).toEqual([first])
+  })
+
   it('keeps an apply going when Figma refuses a reference it is still reconciling', async () => {
     const fake = createFakeNodes()
     await syncModel(fake.figma, syncFixture)
@@ -419,6 +490,13 @@ describe('syncComponent', () => {
     ])
     fake.staleNextReferenceReads(0)
     expect(label.componentPropertyReferences).toEqual({ characters: expect.any(String) })
+
+    const icon = fake.findVariant('Button', neutral).children!.find(c => c.name === 'Icon')!
+    icon.componentPropertyReferences = {}
+    const iconPlan = await planComponent(fake.figma, buttonModelFixture)
+    expect(iconPlan.update).toEqual([neutral])
+    expect(iconPlan.pendingReferences).toBeUndefined()
+    expect(iconPlan.differences?.[0].what).toBe('Icon.componentPropertyReferences')
   })
 
   it('re-applies a variant whose reference is lost after the first apply, at most once', async () => {
@@ -437,29 +515,28 @@ describe('syncComponent', () => {
   it('records a write the retry cannot make, still retries the others, and verifies what holds', async () => {
     const fake = createFakeNodes()
     await syncModel(fake.figma, syncFixture)
-    // The first apply loses three references (two variants: Label and Icon, then Label);
-    // the retry leaves the default variant's unsettled Label pending, and re-writing its
-    // Icon throws once.
-    fake.dropNextReferenceWrites(3)
+    // After the default variant's two, the first apply loses three references (two
+    // variants: Label and Icon, then Label); re-writing the first one's Label throws once.
+    fake.dropNextReferenceWrites(3, 2)
     fake.failReferenceWrites(1, 'in-execution inconsistency', true)
     const result = await syncComponent(fake.figma, buttonModelFixture)
     expect(result.retried).toBe(2)
-    const [failed, repaired] = buttonModelFixture.variants.map(variant => variant.name)
+    const [, failed, repaired] = buttonModelFixture.variants.map(variant => variant.name)
     expect(result.retryErrors).toEqual([
       {
         variant: failed,
-        error: `${failed} — Icon.componentPropertyReferences: in-execution inconsistency`,
+        error: `${failed} — Label.componentPropertyReferences: in-execution inconsistency`,
       },
     ])
     expect(result.verification.update).toEqual([failed])
     expect(result.verification.unchanged).toBe(11)
-    expect(result.verification.pendingReferences).toEqual([failed])
+    expect(result.verification.pendingReferences).toBeUndefined()
     expect(result.verification.differences).toEqual([
       {
         variant: failed,
-        what: 'Icon.componentPropertyReferences',
+        what: 'Label.componentPropertyReferences',
         actual: 'null',
-        expected: expect.stringContaining('Icon#'),
+        expected: expect.stringContaining('Label#'),
       },
     ])
     expect(result.verification.update).not.toContain(repaired)
@@ -1158,7 +1235,9 @@ describe('the real Button model', () => {
     const sync = read('../../styles/generated/atom63.figma-sync.json') as SyncModel
     const model = read('../generated/atom63.figma-components.json') as ComponentModel
     const fake = createFakeNodes()
-    await syncModel(fake.figma, sync)
+    // As the CLI syncs it: with the text and effect styles derived from the token set.
+    const tokens = await syncModel(fake.figma, { ...sync, styles: deriveStyles(sync) })
+    expect(tokens.styles?.verification).toMatchObject({ create: [], update: [] })
     const first = await syncComponent(fake.figma, model)
     expect(first.planned.missingVariables).toEqual([])
     expect(first.verification).toEqual({
@@ -1167,6 +1246,7 @@ describe('the real Button model', () => {
       create: [],
       update: [],
       unchanged: 300,
+      card: { create: [], update: [], unchanged: expect.any(Number) as number },
     })
     expect(first.applied.created).toBe(300)
     expect(first.applied.variables).toBe(model.derived.variables.length)
@@ -1174,7 +1254,19 @@ describe('the real Button model', () => {
     // The family token holds a CSS stack: Geist is the literal, the variable stays unbound.
     expect(first.applied.fontFallbacks).toEqual([
       'Label: --a63-control-font-family not bound in every mode; used Geist',
+      'Spec card: --a63-font-app not bound in every mode; used Geist',
     ])
+    // The card's values link the synced Text/xs style.
+    const textXs = fake.textStyles.find(style => style.name === 'Text/xs')!
+    expect(textXs).toBeDefined()
+    const card = fake.pages
+      .find(page => page.name === model.page)!
+      .children.find(node => node.type === 'FRAME' && node.name === 'Button')!
+    const values = card.children!.flatMap(
+      row => row.children?.filter(node => node.name === 'Value') ?? []
+    )
+    expect(values).toHaveLength(7)
+    for (const value of values) expect(value.textStyleId).toBe(textXs.id)
     // Every focusVisible variant shows its ring, transparent ghost and link included.
     const wrongRing = model.variants
       .filter(variant => {

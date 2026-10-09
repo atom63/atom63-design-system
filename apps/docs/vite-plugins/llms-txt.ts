@@ -11,6 +11,7 @@ import {
   componentDocSlug,
 } from '../src/lib/component-catalog'
 import {
+  componentAxisGuidanceSectionMarkdown,
   componentDocMarkdown,
   componentReferenceMarkdown,
   isComponentDocSlug,
@@ -146,6 +147,19 @@ function expandCraftCriteria(source: string): string {
   })
 }
 
+/** Authored component pages render catalog text through components; spell it out for the Markdown twin. */
+function expandComponentGuidance(source: string): string {
+  return source
+    .replace(
+      /^<ComponentGuidanceSection slug="([^"]+)" \/>$/gm,
+      (tag, slug: string) => componentAxisGuidanceSectionMarkdown(slug) || tag
+    )
+    .replace(
+      /^<ComponentUsage slug="([^"]+)" \/>$/gm,
+      (tag, slug: string) => componentCatalogItems.find(item => item.slug === slug)?.usage ?? tag
+    )
+}
+
 async function readUiReactIndexSource(pagesDir: string): Promise<string> {
   return fs.readFile(path.resolve(pagesDir, '../../../../packages/ui-react/src/index.ts'), 'utf8')
 }
@@ -164,7 +178,7 @@ export async function readEntryMarkdown(
   }
 
   const source = await fs.readFile(path.join(pagesDir, `${entry.slug}.mdx`), 'utf8')
-  const markdown = mdxToMarkdown(expandCraftCriteria(source))
+  const markdown = mdxToMarkdown(expandComponentGuidance(expandCraftCriteria(source)))
   if (!isComponentDocSlug(entry.slug)) {
     return markdown
   }

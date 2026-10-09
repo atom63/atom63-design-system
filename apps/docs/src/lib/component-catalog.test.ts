@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { buttonSizes, buttonStates, buttonVariants } from '@atom63/ui-foundation'
 import * as uiReactApi from '@atom63/ui-react'
 import uiReactPackageSource from '../../../../packages/ui-react/package.json?raw'
 import uiReactIndexSource from '../../../../packages/ui-react/src/index.ts?raw'
@@ -7,6 +8,7 @@ import {
   componentCatalogItems,
   componentSlugFromDocSlug,
 } from './component-catalog'
+import { getComponentContractDoc } from './component-contract'
 import { componentDocMarkdown, componentExportSurface, getComponentDoc } from './component-docs'
 
 const componentIndexSources = import.meta.glob<string>(
@@ -99,6 +101,62 @@ describe('component catalog inventory', () => {
       expect(doc?.related.map(related => related.slug)).toEqual(item.relatedSlugs)
       expect(doc?.guidance[0]).toBe(item.usage)
     }
+  })
+
+  it('keys axis guidance by contract values, one short sentence each', () => {
+    for (const item of componentCatalogItems) {
+      if (!item.axisGuidance) {
+        continue
+      }
+
+      const contract = getComponentContractDoc(item.slug)
+      expect(contract, `${item.slug} has axis guidance but no contract`).not.toBeNull()
+      const axisValues = (name: string) => contract?.axes.find(axis => axis.name === name)?.values
+      const allowed: Record<string, readonly string[] | undefined> = {
+        size: axisValues('sizes'),
+        state: contract?.states,
+        variant: axisValues('variants'),
+      }
+
+      for (const [axis, lines] of Object.entries(item.axisGuidance)) {
+        expect(Object.keys(allowed), `${item.slug} axis ${axis}`).toContain(axis)
+        const values = allowed[axis]
+        expect(values, `${item.slug} contract has no ${axis} values`).toBeDefined()
+        for (const [value, line] of Object.entries(lines ?? {})) {
+          const where = `${item.slug} ${axis} ${value}`
+          expect(values, where).toContain(value)
+          expect(line.trim(), where).toBe(line)
+          expect(line, where).toMatch(/^[A-Z].*\.$/)
+          expect(line.length, where).toBeLessThan(120)
+        }
+      }
+    }
+  })
+
+  // Components with a Figma model need a line for every modelled value: the
+  // generated spec card shows one per variant, rendered size and state.
+  it('gives Button a guidance line for every variant, rendered size and state', () => {
+    const button = componentCatalogItems.find(item => item.slug === 'button')
+    const keys = (lines: Readonly<Record<string, string>> | undefined) =>
+      Object.keys(lines ?? {}).sort()
+
+    expect(keys(button?.axisGuidance?.variant)).toEqual([...buttonVariants].sort())
+    // Rendered sizes only: icon-only steps and the tile are layouts of the same sizes.
+    const renderedSizes = buttonSizes.filter(size => !size.startsWith('icon') && size !== 'tile')
+    expect(keys(button?.axisGuidance?.size)).toEqual([...renderedSizes].sort())
+    expect(keys(button?.axisGuidance?.state)).toEqual([...buttonStates].sort())
+  })
+
+  it('carries axis guidance into the component Markdown only when present', () => {
+    const buttonMarkdown = componentDocMarkdown('button', uiReactIndexSource)
+    expect(buttonMarkdown).toContain('## Variants, sizes and states')
+    expect(buttonMarkdown).toContain('| Size | `md` | Default. |')
+    expect(buttonMarkdown.indexOf('## Variants, sizes and states')).toBeLessThan(
+      buttonMarkdown.indexOf('## Usage')
+    )
+    expect(componentDocMarkdown('kbd', uiReactIndexSource)).not.toContain(
+      '## Variants, sizes and states'
+    )
   })
 
   it('only resolves canonical component document slugs', () => {

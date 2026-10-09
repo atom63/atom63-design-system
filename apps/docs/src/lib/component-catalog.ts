@@ -1,8 +1,19 @@
 export type ComponentPreviewProfile = 'canvas' | 'compact' | 'standard'
 export type ComponentStatus = 'preview' | 'stable'
 
+/**
+ * One line of guidance per contract value, keyed by the value. The docs pages,
+ * the agent index and the Figma spec card all read these lines from here.
+ */
+export type ComponentAxisGuidance = {
+  size?: Readonly<Record<string, string>>
+  state?: Readonly<Record<string, string>>
+  variant?: Readonly<Record<string, string>>
+}
+
 export type ComponentCatalogItem = {
   additionalValueExports?: readonly string[]
+  axisGuidance?: ComponentAxisGuidance
   category: string
   importPath: '@atom63/ui-react'
   previewProfile: ComponentPreviewProfile
@@ -24,7 +35,7 @@ export type ComponentCatalogGroup = {
 
 type ComponentDefinition = Pick<
   ComponentCatalogItem,
-  'additionalValueExports' | 'relatedSlugs' | 'summary' | 'usage' | 'usageExports'
+  'additionalValueExports' | 'axisGuidance' | 'relatedSlugs' | 'summary' | 'usage' | 'usageExports'
 >
 
 const componentDefinitions: Record<string, ComponentDefinition> = {
@@ -90,9 +101,39 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     ],
   },
   button: {
+    axisGuidance: {
+      variant: {
+        primary: 'The one primary action per view.',
+        default: 'Neutral action; the usual alternative next to primary (Cancel).',
+        secondary: 'Muted neutral action for supporting tasks.',
+        outline: 'Lower-emphasis alternative (Duplicate).',
+        ghost: 'Lowest emphasis; toolbars and dismissals.',
+        link: 'Inline action styled as text; navigation should use a real link.',
+        destructive: 'Only when the outcome destroys data.',
+        'destructive-outline': 'Quieter destructive action, beside a safe default.',
+        overlay: 'Forced contrast over media and imagery.',
+        glass: 'Compatibility alias of overlay; new work uses overlay.',
+      },
+      size: {
+        xs: 'Dense UI.',
+        sm: 'Compact rows and toolbars.',
+        md: 'Default.',
+        lg: 'Prominent calls to action.',
+        xl: 'Hero and marketing surfaces.',
+      },
+      state: {
+        rest: 'Resting appearance.',
+        hover: 'Pointer over an enabled button.',
+        pressed: 'While pressed, or held with data-pressed.',
+        focusVisible: 'Keyboard focus only; drawn as an outline.',
+        disabled: 'Fill stays at full strength; only the label fades.',
+        loading: 'Label keeps its width; the spinner overlays it.',
+      },
+    },
     relatedSlugs: ['button-group', 'toggle', 'copy-button'],
     summary: 'Button is the shared action primitive and defaults to safe non-submit behavior.',
-    usage: 'Choose emphasis from the action hierarchy and label icon-only buttons accessibly.',
+    usage:
+      'Use it for an in-place action such as submitting, saving, confirming or changing state; use a link when the outcome is navigation. Choose emphasis from the action hierarchy rather than making every action primary, and give icon-only buttons an accessible name.',
     usageExports: ['Button'],
   },
   'button-group': {

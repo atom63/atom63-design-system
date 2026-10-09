@@ -16,6 +16,7 @@ import {
 } from '../lib/component-catalog'
 import { getComponentDoc } from '../lib/component-docs'
 import { ComponentContractSection } from './component-contract-section'
+import { ComponentGuidanceSection } from './component-guidance'
 import { ComponentReferenceUtilities } from './component-reference-utilities'
 
 type StoryArgs = Record<string, unknown>
@@ -299,6 +300,8 @@ export function ComponentReferencePage({ componentSlug }: { componentSlug: strin
           <Li key={item}>{item}</Li>
         ))}
       </Ul>
+
+      <ComponentGuidanceSection slug={componentSlug} />
 
       <ComponentContractSection componentSlug={componentSlug} />
 

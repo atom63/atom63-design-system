@@ -147,6 +147,8 @@ export interface SceneNodeLike {
   counterAxisSizingMode?: SizingMode
   paddingLeft?: number
   paddingRight?: number
+  paddingTop?: number
+  paddingBottom?: number
   itemSpacing?: number
   topLeftRadius?: number
   topRightRadius?: number
@@ -156,6 +158,10 @@ export interface SceneNodeLike {
   clipsContent?: boolean
   /** Children of an auto-layout frame; 'ABSOLUTE' takes the child out of the flow. */
   layoutPositioning?: 'AUTO' | 'ABSOLUTE'
+  /** Children of an auto-layout frame: 'STRETCH' fills the parent's counter axis. */
+  layoutAlign?: 'MIN' | 'CENTER' | 'MAX' | 'STRETCH' | 'INHERIT'
+  /** Children of an auto-layout frame: 1 fills the parent's primary axis, 0 keeps the size. */
+  layoutGrow?: number
   constraints?: ConstraintsLike
 
   // Text
@@ -164,6 +170,13 @@ export interface SceneNodeLike {
   fontSize?: number
   lineHeight?: LineHeightLike
   textAutoResize?: 'NONE' | 'WIDTH_AND_HEIGHT' | 'HEIGHT' | 'TRUNCATE'
+  /** The linked text style's id, '' when none; read-only in a dynamic-page file. */
+  readonly textStyleId?: string | symbol
+  /** Links the text style (its font must be loaded); the style's values replace the node's. */
+  setTextStyleIdAsync?(styleId: string): Promise<void>
+
+  /** Components and sets: the description Assets and Dev Mode show. */
+  description?: string
 
   // Component properties: definitions on a set, references on its layers
   readonly componentPropertyDefinitions?: Readonly<Record<string, ComponentPropertyDefinition>>

@@ -7,6 +7,7 @@ import { parseDerived } from '../src/derived'
 import type { SyncModel } from '../src/plan'
 import { syncModel } from '../src/runtime'
 import { buildScripts } from '../src/scripts'
+import { deriveStyles } from '../src/styles'
 import { createFakeNodes } from './fake-nodes'
 import { buttonModelFixture, syncFixture } from './fixtures/button'
 
@@ -14,6 +15,8 @@ const read = (path: string) =>
   JSON.parse(readFileSync(new URL(path, import.meta.url), 'utf8')) as unknown
 const realSyncModel = read('../../styles/generated/atom63.figma-sync.json') as SyncModel
 const realButtonModel = read('../generated/atom63.figma-components.json') as ComponentModel
+/** The token set as `sync --model` writes it: with the styles derived from it (cli.ts). */
+const realSyncWithStyles: SyncModel = { ...realSyncModel, styles: deriveStyles(realSyncModel, {}) }
 
 interface Counts {
   missingVariables: string[]
@@ -22,6 +25,7 @@ interface Counts {
   update: number
   unchanged: number
   differences?: { variant: string; what: string; actual?: string; expected?: string }[]
+  card?: { create: number; update: number; unchanged: number }
 }
 interface SyncPart {
   part: number
@@ -38,17 +42,28 @@ interface CheckPart {
   planned: Counts
 }
 
-/** The variant names a script carries, read back from its packed model. */
-const namesIn = (script: string) => {
+/** The model a script carries, read back from its packed form. */
+const modelIn = (script: string) => {
   const json = /A63Figma\.\w+\(figma, (.*)\);\nreturn/s.exec(script)?.[1]
   if (!json) throw new Error('no packed model in the script')
-  return unpackComponentModel(JSON.parse(json)).variants.map(variant => variant.name)
+  return unpackComponentModel(JSON.parse(json))
 }
+/** The variant names a script carries. */
+const namesIn = (script: string) => modelIn(script).variants.map(variant => variant.name)
 
 describe('packed component models', () => {
   it('unpack to the model they were packed from', () => {
     for (const model of [buttonModelFixture, realButtonModel])
       expect(unpackComponentModel(packComponentModel(model))).toEqual(model)
+  })
+
+  it('carry the doc block through a round trip', () => {
+    expect(realButtonModel.doc).toBeDefined()
+    const unpacked = unpackComponentModel(
+      JSON.parse(JSON.stringify(packComponentModel(realButtonModel)))
+    )
+    expect(unpacked.doc).toEqual(realButtonModel.doc)
+    expect('doc' in unpackComponentModel(packComponentModel(buttonModelFixture))).toBe(false)
   })
 
   it('are much smaller than the model', () => {
@@ -67,6 +82,48 @@ describe('component scripts for use_figma', () => {
       expect(new Set(names).size).toBe(names.length)
       expect(names).toEqual(realButtonModel.variants.map(variant => variant.name))
     }
+  })
+
+  it('carries the doc block in the last part only, every part still under the limit', () => {
+    for (const action of ['sync', 'check'] as const) {
+      const scripts = buildComponentScripts(realButtonModel, action)
+      const withDoc = scripts.map(script => modelIn(script).doc !== undefined)
+      expect(withDoc.filter(Boolean)).toHaveLength(1)
+      expect(withDoc.at(-1)).toBe(true)
+      expect(modelIn(scripts.at(-1)!).doc).toEqual(realButtonModel.doc)
+      for (const script of scripts) expect(script.length).toBeLessThan(49_000)
+    }
+  })
+
+  it('moves variants out of the last part when the doc block would push it over', () => {
+    const withoutDoc = buildComponentScripts({ ...realButtonModel, doc: undefined }, 'sync')
+    // A doc a little larger than the room the last part has left, whatever the runtime's size:
+    // most of a part is the runtime and its value tables, so moving variants frees little.
+    const room = 49_000 - withoutDoc.at(-1)!.length
+    const rest = JSON.stringify({ ...realButtonModel.doc!, usage: '' }).length
+    const last = realButtonModel.variants.at(-1)!
+    const alone = buildComponentScripts(
+      { ...realButtonModel, doc: undefined, variants: [last] },
+      'sync'
+    )
+    const freed = withoutDoc.at(-1)!.length - alone[0].length
+    const doc = { ...realButtonModel.doc!, usage: 'x'.repeat(room - rest + Math.floor(freed / 2)) }
+    const model = { ...realButtonModel, doc }
+    expect(room).toBeGreaterThan(0)
+    expect(room).toBeLessThan(JSON.stringify(doc).length)
+    const scripts = buildComponentScripts(model, 'sync')
+    expect(scripts.length).toBeGreaterThan(withoutDoc.length)
+    for (const script of scripts) expect(script.length).toBeLessThan(49_000)
+    // Variants the last part held without the doc moved on to a new last part.
+    const lastWithoutDoc = namesIn(withoutDoc.at(-1)!)
+    const lastWithDoc = namesIn(scripts.at(-1)!)
+    expect(lastWithDoc.length).toBeGreaterThan(0)
+    expect(lastWithoutDoc.some(name => !lastWithDoc.includes(name))).toBe(true)
+    expect(lastWithoutDoc.slice(-lastWithDoc.length)).toEqual(lastWithDoc)
+    const withDoc = scripts.map(script => modelIn(script).doc !== undefined)
+    expect(withDoc.filter(Boolean)).toHaveLength(1)
+    expect(modelIn(scripts.at(-1)!).doc).toEqual(doc)
+    expect(scripts.flatMap(namesIn)).toEqual(model.variants.map(variant => variant.name))
   })
 
   it('carries only the tokens and derived variables its variants bind', () => {
@@ -128,10 +185,28 @@ describe('component scripts for use_figma', () => {
     expect(fake.writes).toBe(writes)
   })
 
+  it('keeps every real script under the limit and the doc part 500 characters under it', () => {
+    // The splitter measures each script exactly, so none can reach 49,000, and the variant parts
+    // are filled to it on purpose. The doc part is the one whose size moves with the doc text and
+    // the card's code: this margin warns before it has no room left.
+    for (const action of ['sync', 'check'] as const) {
+      const scripts = buildComponentScripts(realButtonModel, action)
+      for (const script of scripts) expect(script.length).toBeLessThan(49_000)
+      expect(scripts.at(-1)!.length).toBeLessThanOrEqual(49_000 - 500)
+    }
+  })
+
   it('runs every real script in order against the fake and verifies clean', async () => {
     const fake = createFakeNodes()
-    for (const script of buildScripts(realSyncModel, 'sync')) await fake.run(script)
+    // Token sync as the CLI writes it, styles included: the card's values link Text/xs.
+    for (const script of buildScripts(realSyncWithStyles, 'sync')) {
+      const result = (await fake.run(script)) as { styles?: { verification: unknown } }
+      if (result.styles)
+        expect(result.styles.verification).toMatchObject({ create: [], update: [] })
+    }
+    expect(fake.textStyles.map(style => style.name)).toContain('Text/xs')
     let created = 0
+    const cards: Counts['card'][] = []
     for (const script of buildComponentScripts(realButtonModel, 'sync')) {
       const result = (await fake.run(script)) as SyncPart
       expect(result.verification.missingVariables).toEqual([])
@@ -140,15 +215,34 @@ describe('component scripts for use_figma', () => {
       expect(result.verification.unchanged).toBe(result.variants)
       expect(JSON.stringify(result).length).toBeLessThan(20_000)
       created += result.applied.created
+      cards.push(result.verification.card)
     }
     expect(created).toBe(realButtonModel.variants.length)
+    // Only the last part draws the spec card, and it verifies.
+    expect(cards.slice(0, -1).every(card => card === undefined)).toBe(true)
+    expect(cards.at(-1)).toMatchObject({ create: 0, update: 0 })
+    expect(cards.at(-1)!.unchanged).toBeGreaterThan(0)
     const writes = fake.writes
+    const textXs = fake.textStyles.find(style => style.name === 'Text/xs')!.id
+    const card = fake.pages
+      .find(page => page.name === realButtonModel.page)!
+      .children.find(node => node.type === 'FRAME' && node.name === 'Button')!
+    const values = card.children!.flatMap(
+      row => row.children?.filter(node => node.name === 'Value') ?? []
+    )
+    expect(values.map(value => value.textStyleId)).toEqual(values.map(() => textXs))
     for (const script of buildComponentScripts(realButtonModel, 'check')) {
       const result = (await fake.run(script)) as CheckPart
       expect(result.planned.unchanged).toBe(result.variants)
+      if (result.part === result.parts)
+        expect(result.planned.card).toMatchObject({ create: 0, update: 0 })
       expect(result.variants).toBe(namesIn(script).length)
       expect(JSON.stringify(result).length).toBeLessThan(20_000)
     }
+    expect(fake.writes).toBe(writes)
+    // A second run of every sync script, tokens and styles too, writes nothing.
+    for (const script of buildScripts(realSyncWithStyles, 'sync')) await fake.run(script)
+    for (const script of buildComponentScripts(realButtonModel, 'sync')) await fake.run(script)
     expect(fake.writes).toBe(writes)
   }, 120_000)
 
@@ -166,8 +260,17 @@ describe('component scripts for use_figma', () => {
     for (const script of scripts) {
       const result = (await fake.run(script)) as SyncPart
       expect(result.verification.update).toBe(result.variants)
-      expect(result.verification.differences).toHaveLength(Math.min(12, result.variants))
+      // The last part also names the spec card's parts, after its variants.
+      const card = result.verification.card
+      expect(card === undefined).toBe(script !== scripts.at(-1))
+      expect(result.verification.differences).toHaveLength(
+        Math.min(12, result.variants + (card?.update ?? 0))
+      )
       for (const entry of result.verification.differences!) {
+        if (entry.variant.startsWith('card ')) {
+          expect(card!.update).toBeGreaterThan(0)
+          continue
+        }
         expect(namesIn(script)).toContain(entry.variant)
         expect(entry.what).toMatch(/\.(fills|strokes)$/)
         expect(entry.actual!.length).toBeLessThanOrEqual(120)
@@ -177,7 +280,9 @@ describe('component scripts for use_figma', () => {
     }
     for (const script of buildComponentScripts(realButtonModel, 'check')) {
       const result = (await fake.run(script)) as CheckPart
-      expect(result.planned.differences).toHaveLength(Math.min(12, result.variants))
+      expect(result.planned.differences).toHaveLength(
+        Math.min(12, result.variants + (result.planned.card?.update ?? 0))
+      )
       expect(JSON.stringify(result).length).toBeLessThan(20_000)
     }
   }, 120_000)
