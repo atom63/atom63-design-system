@@ -59,3 +59,4 @@ export {
 } from './components/sync-component'
 export type { NodesApi } from './components/nodes-api'
 export { checkComponentPart, type ComponentCounts, syncComponentPart } from './runtime-components'
+export * from './design-system'
