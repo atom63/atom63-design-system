@@ -1,5 +1,5 @@
 import { Progress } from '@atom63/ui-react'
-import { useEffect, useId, useRef, useState } from 'react'
+import { useCallback, useEffect, useId, useRef, useState } from 'react'
 
 import { Alert, Button, LoadingState, SectionHeader } from '../components/ui'
 import { useFigmaMessage, usePostMessage } from '../hooks/useFigmaMessage'
@@ -8,13 +8,15 @@ import styles from './app.module.css'
 import {
   type Atom63Event,
   builtSummary,
-  canCheckAgain,
+  checkAction,
   componentStatus,
   failureLines,
+  fontNote,
   nextAtom63,
   progressLabel,
   progressValue,
   retryLines,
+  scheduleAutoRecheck,
   startAtom63,
   tokensStatus,
 } from './atom63-state'
@@ -44,12 +46,22 @@ export function Atom63({
   const resultRef = useRef<HTMLDivElement>(null)
   const refusedId = useId()
 
-  const update = (event: Atom63Event) => {
-    const next = nextAtom63(stateRef.current, event)
-    stateRef.current = next.state
-    setState(next.state)
-    if (next.send) postMessage({ type: next.send })
-  }
+  const update = useCallback(
+    (event: Atom63Event) => {
+      const next = nextAtom63(stateRef.current, event)
+      stateRef.current = next.state
+      setState(next.state)
+      if (next.send) postMessage({ type: next.send })
+    },
+    [postMessage]
+  )
+  const sendCheck = useCallback(
+    (auto = false) => {
+      update({ type: 'check-sent', auto })
+      postMessage({ type: 'atom63-check' })
+    },
+    [postMessage, update]
+  )
 
   useEffect(() => {
     if (start.send) postMessage({ type: start.send })
@@ -68,6 +80,8 @@ export function Atom63({
   useEffect(() => {
     if (result) resultRef.current?.focus()
   }, [result])
+  // A pending result is checked again once by itself; Back or a new state cancels it.
+  useEffect(() => scheduleAutoRecheck(state, () => sendCheck(true)), [state, sendCheck])
 
   if (!table && phase === 'scanning') return <LoadingState />
   const busy = phase === 'building' || phase === 'checking'
@@ -76,13 +90,16 @@ export function Atom63({
     update({ type: 'build-sent' })
     postMessage({ type: 'atom63-build' })
   }
-  const checkAgain = () => {
-    update({ type: 'check-sent' })
-    postMessage({ type: 'atom63-check' })
-  }
   const failures = checked?.status === 'fail' ? failureLines(checked, built) : []
   // A failed check lists them already.
   const retries = checked && checked.status !== 'fail' ? retryLines(built) : []
+  const fonts = fontNote(built)
+  const action = checkAction(state)
+  const checkButton = action && (
+    <Button className={styles.alertAction} onClick={() => sendCheck()} size="sm" variant="outline">
+      {action}
+    </Button>
+  )
 
   return (
     <div className={styles.view}>
@@ -110,46 +127,67 @@ export function Atom63({
           ))}
         </ul>
       )}
-      <div aria-live="polite" className={styles.progress}>
+      {/* One slot: the progress, then the result that replaces it. */}
+      <div className={busy || result ? styles.result : undefined}>
+        <p aria-live="polite" className={busy ? styles.meta : styles.hidden}>
+          {phase === 'building'
+            ? progressLabel(progress)
+            : phase === 'checking'
+              ? 'Verifying…'
+              : ''}
+        </p>
         {phase === 'building' && (
-          <>
-            <p className={styles.meta}>{progressLabel(progress)}</p>
-            <Progress
-              aria-label="Build progress"
-              value={progressValue(progress, table?.components.length ?? 1)}
-            />
-          </>
+          <Progress
+            aria-label="Build progress"
+            value={progressValue(progress, table?.components.length ?? 1)}
+          />
         )}
-        {phase === 'checking' && <p className={styles.meta}>Verifying…</p>}
+        {phase === 'checking' && <Progress aria-label="Verifying" value={null} />}
+        {blocked && (
+          <Alert title="Nothing was written" titleRef={resultRef} variant="error">
+            {blocked.reason}
+          </Alert>
+        )}
+        {checked?.status === 'pass' && (
+          <Alert title="The file matches Atom63" titleRef={resultRef} variant="success">
+            {builtSummary(built, checked).join(' ')}
+          </Alert>
+        )}
+        {checked?.status === 'pending' && (
+          <Alert
+            title="Figma is still settling a component property"
+            titleRef={resultRef}
+            variant="info"
+          >
+            Figma reconciles component properties after a build; a second check reads them settled.
+            {checkButton}
+          </Alert>
+        )}
+        {checked?.status === 'fail' && (
+          <Alert title="The file does not match Atom63" titleRef={resultRef} variant="error">
+            <ul className={styles.lines}>
+              {failures.map((line, index) => (
+                <li key={`${index}-${line}`}>{line}</li>
+              ))}
+            </ul>
+          </Alert>
+        )}
+        {error && (
+          <Alert
+            title={ERROR_TITLES[error.during]}
+            titleRef={blocked || checked ? undefined : resultRef}
+            variant="error"
+          >
+            {error.message}
+            {error.during === 'building' && (
+              <span className={styles.nextStep}>
+                Nothing after this point was written. Check the file, then try again.
+              </span>
+            )}
+            {checkButton}
+          </Alert>
+        )}
       </div>
-      {blocked && (
-        <Alert title="Nothing was written" titleRef={resultRef} variant="error">
-          {blocked.reason}
-        </Alert>
-      )}
-      {checked?.status === 'pass' && (
-        <Alert title="The file matches Atom63" titleRef={resultRef} variant="success">
-          {builtSummary(built, checked).join(' ')}
-        </Alert>
-      )}
-      {checked?.status === 'pending' && (
-        <Alert
-          title="Figma is still settling a component property — check again"
-          titleRef={resultRef}
-          variant="info"
-        >
-          Figma reconciles component properties after a build; a second check reads them settled.
-        </Alert>
-      )}
-      {checked?.status === 'fail' && (
-        <Alert title="The file does not match Atom63" titleRef={resultRef} variant="error">
-          <ul className={styles.lines}>
-            {failures.map((line, index) => (
-              <li key={`${index}-${line}`}>{line}</li>
-            ))}
-          </ul>
-        </Alert>
-      )}
       {retries.length > 0 && (
         <Alert title="Some variants could not be written on retry" variant="info">
           <ul className={styles.lines}>
@@ -159,29 +197,17 @@ export function Atom63({
           </ul>
         </Alert>
       )}
-      {built && built.fontFallbacks.length > 0 && (
-        <Alert title={`${built.fontFallbacks.length} fonts fell back`} variant="info">
-          <ul className={styles.lines}>
-            {built.fontFallbacks.map(line => (
-              <li key={line}>{line}</li>
-            ))}
-          </ul>
-        </Alert>
-      )}
-      {error && (
-        <Alert
-          title={ERROR_TITLES[error.during]}
-          titleRef={blocked || checked ? undefined : resultRef}
-          variant="error"
-        >
-          {error.message}
-        </Alert>
-      )}
-      {canCheckAgain(state) && (
-        <div className={styles.actions}>
-          <Button disabled={busy} onClick={checkAgain} variant="secondary">
-            Check again
-          </Button>
+      {fonts && (
+        <div className={styles.note}>
+          <p className={styles.meta}>{fonts.sentence}</p>
+          <details className={styles.details}>
+            <summary>Where it fell back</summary>
+            <ul className={styles.lines}>
+              {fonts.lines.map(line => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
+          </details>
         </div>
       )}
       <div className={styles.bar}>

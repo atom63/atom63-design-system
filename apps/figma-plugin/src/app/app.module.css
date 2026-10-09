@@ -125,3 +125,52 @@
   font-size: 12px;
   color: var(--a63-text-secondary);
 }
+
+/*
+ * The Atom63 view's one result slot: the progress, then the result that
+ * replaces it. Its minimum height keeps the swap from jumping the page.
+ */
+.result {
+  display: grid;
+  gap: var(--spacing-sm);
+  min-block-size: 4.5rem;
+  align-content: start;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Inside an Alert's description, a flex column: the next step, then the action. */
+.nextStep {
+  display: block;
+}
+
+.alertAction {
+  align-self: flex-start;
+}
+
+.note {
+  display: grid;
+  gap: var(--spacing-xs);
+}
+
+.details {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+
+.details summary {
+  inline-size: fit-content;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+.details summary:focus-visible {
+  outline: 2px solid var(--a63-focus-ring);
+  outline-offset: 2px;
+}
+
+.details[open] summary {
+  margin-block-end: var(--spacing-xs);
+}

@@ -84,8 +84,12 @@ lives in the plugin.
   then each component) that the view announces. A second build changes nothing.
 - **Check:** the view then sends `atom63-check`, a separate main-thread task, so Figma has
   settled its component property references. The result is pass with a summary, fail with every
-  named difference, or pending ("check again") while Figma is still reconciling a property.
-  Check again is also offered after a check that failed to run.
+  named difference in words (`Button · primary / md / rest — fill: none → action/primary`), or
+  pending while Figma is still reconciling a property. A pending result is checked again by
+  itself once, 1.5 seconds later, and offers **Check again**, as does a check that failed to run.
+  A build that did not finish offers **Check the file**. Progress, Verifying… and the result
+  share one slot; retry errors and a one-line font note (with the fallbacks in a disclosure)
+  follow it.
 - **Refusal:** a file that holds any token set that is not provably Atom63's, such as a
   template's table, is refused before anything is written: `status: 'blocked'` with the reason
   ("Start the Atom63 design system in a new file."). There is no way to build beside another
