@@ -224,3 +224,29 @@ not migrated, so sync into a new file.
 ```bash
 node packages/figma/dist/cli.js sync --model packages/styles/generated/atom63.figma-sync.json --out .figma-sync
 ```
+
+### Building the whole design system in a file
+
+`buildDesignSystem(figma, models, onProgress?)` writes the token set, its text and effect styles,
+then every component with its spec card; `checkDesignSystem` reads the same without writing, and
+`readDesignSystemTable(figma, models)` says what a file holds now.
+
+A build refuses a file that already holds another token set: it returns `status: 'blocked'` with a
+reason and the collections, and writes nothing. Atom63 never builds into or beside a template's
+table, so start the design system in a new file. The rule is conservative, so it never claims a
+user's collection:
+
+- A token variable is one whose web code syntax is `var(--x)`. Derived variables and Atom63's
+  retired `(moved)/…` copies are Atom63's own and are ignored.
+- A collection is Atom63's only when all of these hold: its name is an Atom63 collection's, and no
+  other collection has that name; its modes are the model's modes for it, with the same first
+  (default) mode; and each token variable in it stands for a token the model puts in that
+  collection, with no other variable in the file standing for the same token. And the file holds
+  such a collection with an `--a63-*` token: a template's `Surface` can hold exactly Atom63's
+  Surface tokens, but no template holds those.
+- Any other collection with a token variable holds another token set. So does an Atom63-named
+  collection that fails the rule and holds any variable, with or without code syntax (a template's
+  `Mode` collection has other modes). Variables without code syntax elsewhere are ignored.
+
+A token that an older Atom63 version had and this one dropped or moved also reads as another token
+set, and the build refuses that file too.

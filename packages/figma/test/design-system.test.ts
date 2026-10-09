@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 import { MOVED_PREFIX } from '../src/apply'
+import type { CollectionLike } from '../src/apply'
 
 import type { ComponentModel } from '../src/components/model'
 import { readTokenDirectory } from '../src/css-files'
@@ -31,7 +32,7 @@ const template = buildProjectModel(
 /** A build that was not blocked. */
 async function build(...args: Parameters<typeof buildDesignSystem>) {
   const outcome = await buildDesignSystem(...args)
-  if (outcome.status === 'blocked') throw new Error(`blocked by ${outcome.collisions.join(', ')}`)
+  if (outcome.status === 'blocked') throw new Error(outcome.reason)
   return outcome
 }
 
@@ -193,143 +194,186 @@ describe('buildDesignSystem', () => {
   })
 })
 
+/** Adds a collection with these modes and one COLOR variable per token, with code syntax. */
+function addCollection(fake: Fake, name: string, modes: string[], tokens: string[]) {
+  const collection: CollectionLike = fake.api.createVariableCollection(name)
+  collection.renameMode(collection.modes[0].modeId, modes[0])
+  for (const mode of modes.slice(1)) collection.addMode(mode)
+  for (const token of tokens) {
+    const variable = fake.api.createVariable(token.slice(2), collection, 'COLOR')
+    variable.setVariableCodeSyntax?.('WEB', `var(${token})`)
+    for (const mode of collection.modes)
+      variable.setValueForMode(mode.modeId, { r: 1, g: 0, b: 0, a: 1 })
+  }
+  return collection
+}
+
+/** A refused build: blocked by these collections, no progress and the whole file unchanged. */
+async function expectBlocked(fake: Fake, collections: string[]) {
+  const before = await fileOf(fake)
+  const seen: DesignSystemProgress[] = []
+  const outcome = await buildDesignSystem(fake.figma, models, item => seen.push(item))
+  expect(outcome).toEqual({
+    status: 'blocked',
+    reason: expect.stringContaining(
+      `This file already holds another token set (collections: ${collections.join(', ')}). Start the Atom63 design system in a new file`
+    ),
+    collections,
+  })
+  expect(seen).toEqual([])
+  expect(await fileOf(fake)).toEqual(before)
+  const table = await readDesignSystemTable(fake.figma, models)
+  expect(table.template?.collections).toEqual(collections)
+  expect(table.blocked).toBe(outcome.status === 'blocked' ? outcome.reason : null)
+}
+
+const allAtom63 = {
+  variables: sync.summary.variables,
+  collections: sync.collections.map(item => ({
+    name: item.name,
+    variables: item.variables.length,
+  })),
+}
+
 describe('readDesignSystemTable', () => {
   it('reads an empty file as holding nothing', async () => {
     const fake = createFakeNodes()
     expect(await readDesignSystemTable(fake.figma, models)).toEqual({
       atom63: null,
       template: null,
-      collisions: [],
+      blocked: null,
       components: [{ name: 'Button', variants: 0, card: false, setOnPage: false }],
     })
   })
 
-  it('reports a template table next to the Atom63 one, and never counts it as Atom63', async () => {
+  it('reads a file the build made as Atom63 only, which a second build leaves alone', async () => {
     const fake = createFakeNodes()
-    const collection = fake.api.createVariableCollection('Tokens')
-    for (const token of ['--brand-primary', '--radius-card']) {
-      const variable = fake.api.createVariable(token.slice(2), collection, 'COLOR')
-      variable.setVariableCodeSyntax?.('WEB', `var(${token})`)
-    }
-    // A variable without code syntax is a designer's, not a table's.
-    fake.api.createVariable('loose', collection, 'COLOR')
-    const before = await readDesignSystemTable(fake.figma, models)
-    expect(before.atom63).toBeNull()
-    expect(before.template).toEqual({ variables: 2, collections: ['Tokens'] })
-    expect(before.collisions).toEqual([])
-
     await build(fake.figma, models)
-    const after = await readDesignSystemTable(fake.figma, models)
-    expect(after.template).toEqual({ variables: 2, collections: ['Tokens'] })
-    expect(after.collisions).toEqual([])
-    expect(after.atom63?.variables).toBe(sync.summary.variables)
-    expect(after.atom63?.collections.map(item => item.name)).toEqual(
-      sync.collections.map(item => item.name)
-    )
-    expect(after.components[0]).toMatchObject({ card: true, setOnPage: false })
+    expect(await readDesignSystemTable(fake.figma, models)).toEqual({
+      atom63: allAtom63,
+      template: null,
+      blocked: null,
+      components: [
+        { name: 'Button', variants: button.variants.length, card: true, setOnPage: false },
+      ],
+    })
+    const writes = fake.writes
+    expect(writesPlanned(await build(fake.figma, models))).toEqual({
+      tokens: 0,
+      styles: 0,
+      variants: 0,
+      card: 0,
+    })
+    expect(fake.writes).toBe(writes)
+  })
+
+  it("counts Atom63's retired copies and a designer's loose variables as no token set", async () => {
+    const fake = createFakeNodes()
+    await build(fake.figma, models)
+    const collections = await fake.api.getLocalVariableCollectionsAsync()
+    const foundation = collections.find(item => item.name === 'Foundation')!
+    // A retired copy whose code syntax the host could not remove.
+    const retired = fake.api.createVariable(`${MOVED_PREFIX}/old`, foundation, 'COLOR')
+    retired.setVariableCodeSyntax?.('WEB', 'var(--retired-token)')
+    fake.api.createVariable('loose', fake.api.createVariableCollection('Scratch'), 'COLOR')
+    const table = await readDesignSystemTable(fake.figma, models)
+    expect(table).toMatchObject({ atom63: allAtom63, template: null, blocked: null })
+    expect((await build(fake.figma, models)).status).toBe('pass')
   })
 })
 
-describe('a template table that shares names with Atom63', () => {
-  const collisions = ['Brand', 'Surface', 'Radius', 'Mode']
+describe('a file that holds another token set', () => {
   const templateNames = template.collections.map(item => item.name)
-  const templateVariables = template.collections.reduce(
-    (total, item) => total + item.variables.length,
-    0
-  )
 
-  async function templateFile() {
+  async function templateFile(model = template) {
     const fake = createFakeNodes()
-    await syncModel(fake.figma, template)
+    await syncModel(fake.figma, model)
     return fake
   }
 
-  it('reads the template fixture as a template, though most of its tokens are in the Atom63 set', async () => {
+  it('reads the template fixture as another token set, though it shares most tokens and Mode', async () => {
     const atom63Tokens = new Set(sync.collections.flatMap(item => item.variables.map(v => v.token)))
     const shared = template.collections
       .flatMap(item => item.variables)
       .filter(item => atom63Tokens.has(item.token))
     expect(shared.length).toBeGreaterThan(300)
+    expect(templateNames).toContain('Mode')
 
     const table = await readDesignSystemTable((await templateFile()).figma, models)
     expect(table.atom63).toBeNull()
-    expect(table.template).toEqual({ variables: templateVariables, collections: templateNames })
-    expect(table.collisions).toEqual(collisions)
+    expect(table.template).toEqual({
+      variables: template.collections.reduce((total, item) => total + item.variables.length, 0),
+      collections: templateNames,
+    })
+    expect(table.blocked).toBe(
+      `This file already holds another token set (collections: ${templateNames.join(', ')}). Start the Atom63 design system in a new file, or this file holds an older Atom63 token set that this version cannot update.`
+    )
   })
 
-  it('blocks a build into colliding collections, writing nothing', async () => {
-    const fake = await templateFile()
-    const before = await fileOf(fake)
-    const seen: DesignSystemProgress[] = []
-    const outcome = await buildDesignSystem(fake.figma, models, item => seen.push(item))
-    expect(outcome).toEqual({ status: 'blocked', collisions })
-    expect(seen).toEqual([])
-    expect(await fileOf(fake)).toEqual(before)
+  it('refuses to build into the template fixture, writing nothing', async () => {
+    await expectBlocked(await templateFile(), templateNames)
   })
 
-  it('with allowCollisions, builds beside the template and leaves its own variables untouched', async () => {
-    const fake = await templateFile()
-    const atom63Tokens = new Set(sync.collections.flatMap(item => item.variables.map(v => v.token)))
-    const templateOnly = new Map(
-      [...(await variablesOf(fake))].filter(([, item]) => {
-        const { codeSyntax } = item as { codeSyntax: string }
-        return !atom63Tokens.has(codeSyntax.slice(4, -1))
-      })
-    )
-    const inMode = [...templateOnly.values()].filter(
-      item => (item as { collection: string }).collection === 'Mode'
-    )
-    expect(inMode.length).toBeGreaterThan(0)
+  it('refuses the template fixture with other values too', async () => {
+    const variant: SyncModel = {
+      ...template,
+      collections: template.collections.map(collection => ({
+        ...collection,
+        variables: collection.variables.map(variable => ({
+          ...variable,
+          values: Object.fromEntries(
+            Object.entries(variable.values).map(([mode, value]) => [
+              mode,
+              variable.type === 'COLOR' ? { r: 0.5, g: 0.25, b: 0.75, a: 1 } : value,
+            ])
+          ),
+        })),
+      })),
+    } as SyncModel
+    await expectBlocked(await templateFile(variant), templateNames)
+  })
 
-    const outcome = await build(fake.figma, models, undefined, { allowCollisions: true })
-    expect(outcome.status).toBe('pass')
-    expect(outcome.tokens.applied?.moved).toBe(0)
-    const after = await variablesOf(fake)
-    for (const [id, item] of templateOnly) expect(after.get(id)).toEqual(item)
-
+  it('refuses a token collection next to a built Atom63, without a message about older Atom63', async () => {
+    const fake = createFakeNodes()
+    await build(fake.figma, models)
+    addCollection(fake, 'Tokens', ['Default'], ['--brand-primary', '--radius-card'])
+    await expectBlocked(fake, ['Tokens'])
     const table = await readDesignSystemTable(fake.figma, models)
-    expect(table.atom63?.variables).toBe(sync.summary.variables)
-    expect(table.template?.collections).toEqual(expect.arrayContaining(['Base', 'Mode']))
-    // Surface and Radius held only tokens Atom63 shares, which the build adopted.
-    expect(table.collisions).toEqual(['Brand', 'Mode'])
-    expect((await checkDesignSystem(fake.figma, models)).status).toBe('pass')
+    expect(table.atom63).toEqual(allAtom63)
+    expect(table.template).toEqual({ variables: 2, collections: ['Tokens'] })
+    expect(table.blocked).not.toContain('older Atom63')
   })
 
-  it('never renames a template mode or retires a template variable', async () => {
-    const [foundation] = sync.collections.find(item => item.name === 'Foundation')!.variables
-    const seed = async () => {
-      const fake = createFakeNodes()
-      const collection = fake.api.createVariableCollection('Mode')
-      collection.renameMode(collection.modes[0].modeId, 'Default')
-      const variables = ['--brand-ink', foundation.token].map(token => {
-        const variable = fake.api.createVariable(token.slice(2), collection, 'COLOR')
-        variable.setVariableCodeSyntax?.('WEB', `var(${token})`)
-        variable.setValueForMode(collection.modes[0].modeId, { r: 1, g: 0, b: 0, a: 1 })
-        return variable
-      })
-      return { fake, variables }
-    }
+  it("never claims a second Atom63-named collection that holds only that collection's tokens", async () => {
+    const fake = createFakeNodes()
+    await build(fake.figma, models)
+    const radius = sync.collections.find(item => item.name === 'Radius')!
+    addCollection(
+      fake,
+      'Radius',
+      radius.modes,
+      radius.variables.slice(0, 3).map(item => item.token)
+    )
+    // Both Radius collections are suspect: neither can be told apart as Atom63's.
+    await expectBlocked(fake, ['Radius', 'Radius'])
+  })
 
-    // What the engine alone does to such a collection: renames its mode onto
-    // Atom63's and retires the template's variable for the token it moves.
-    const bare = await seed()
-    await syncModel(bare.fake.figma, sync)
-    const [bareMode] = await bare.fake.api.getLocalVariableCollectionsAsync()
-    expect(bareMode.modes.map(item => item.name)).not.toContain('Default')
-    expect(bare.variables[1].name.startsWith(MOVED_PREFIX)).toBe(true)
+  it('refuses an Atom63-named collection with other modes, even with no code syntax in it', async () => {
+    const fake = createFakeNodes()
+    const mode = fake.api.createVariableCollection('Mode')
+    mode.renameMode(mode.modes[0].modeId, 'Default')
+    fake.api.createVariable('ink', mode, 'COLOR')
+    await expectBlocked(fake, ['Mode'])
+  })
 
-    const { fake, variables } = await seed()
-    const before = await variablesOf(fake)
-    expect((await readDesignSystemTable(fake.figma, models)).collisions).toEqual(['Mode'])
-    const outcome = await build(fake.figma, models, undefined, { allowCollisions: true })
-    expect(outcome.status).toBe('pass')
-    expect(outcome.tokens.planned.move).toBe(0)
-    const [mode] = await fake.api.getLocalVariableCollectionsAsync()
-    expect(mode.modes.map(item => item.name)).toEqual(['Default', 'light', 'dark'])
-    const after = await variablesOf(fake)
-    for (const variable of variables)
-      expect(after.get(variable.id)).toEqual(before.get(variable.id))
-    expect((await checkDesignSystem(fake.figma, models)).status).toBe('pass')
+  it('refuses a template token inside an Atom63 collection', async () => {
+    const fake = createFakeNodes()
+    await build(fake.figma, models)
+    const collections = await fake.api.getLocalVariableCollectionsAsync()
+    const surface = collections.find(item => item.name === 'Surface')!
+    const variable = fake.api.createVariable('brand/ink', surface, 'COLOR')
+    variable.setVariableCodeSyntax?.('WEB', 'var(--brand-ink)')
+    await expectBlocked(fake, ['Surface'])
   })
 })
 
