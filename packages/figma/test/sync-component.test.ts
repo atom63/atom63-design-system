@@ -483,6 +483,7 @@ describe('syncComponent', () => {
     expect(plan.differences).toEqual([
       {
         variant: neutral,
+        nodeId: label.id,
         what: 'Label.componentPropertyReferences',
         actual: '{}',
         expected: expect.stringContaining('Label#'),
@@ -496,7 +497,10 @@ describe('syncComponent', () => {
     const iconPlan = await planComponent(fake.figma, buttonModelFixture)
     expect(iconPlan.update).toEqual([neutral])
     expect(iconPlan.pendingReferences).toBeUndefined()
-    expect(iconPlan.differences?.[0].what).toBe('Icon.componentPropertyReferences')
+    expect(iconPlan.differences?.[0]).toMatchObject({
+      what: 'Icon.componentPropertyReferences',
+      nodeId: icon.id,
+    })
   })
 
   it('re-applies a variant whose reference is lost after the first apply, at most once', async () => {
@@ -534,6 +538,7 @@ describe('syncComponent', () => {
     expect(result.verification.differences).toEqual([
       {
         variant: failed,
+        nodeId: fake.findVariant('Button', failed).children!.find(c => c.name === 'Label')!.id,
         what: 'Label.componentPropertyReferences',
         actual: 'null',
         expected: expect.stringContaining('Label#'),
@@ -651,6 +656,7 @@ describe('syncComponent', () => {
     expect(clean.planned.differences).toEqual([
       {
         variant: neutral,
+        nodeId: root.id,
         what: `${neutral}.layoutMode`,
         actual: '"VERTICAL"',
         expected: '"HORIZONTAL"',
@@ -661,7 +667,11 @@ describe('syncComponent', () => {
     const plan = await planComponent(fake.figma, buttonModelFixture)
     expect(plan.update).toEqual([secondary])
     const [entry] = plan.differences!
-    expect(entry).toMatchObject({ variant: secondary, what: `${secondary}.fills` })
+    expect(entry).toMatchObject({
+      variant: secondary,
+      nodeId: other.id,
+      what: `${secondary}.fills`,
+    })
     expect(entry.actual).toContain('"color":{"r":1,"g":0,"b":0}')
     expect(entry.expected).toContain('"bound":')
   })

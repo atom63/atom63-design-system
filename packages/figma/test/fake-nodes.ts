@@ -174,6 +174,11 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
   const pageContainers = new Map<PageLike, Container>()
   const pageState = new Map<PageLike, { loaded: boolean; children: SceneNodeLike[] }>()
   const stateOf = new WeakMap<object, State>()
+  /** Every node and page by id, for `getNodeByIdAsync`. */
+  const byId = new Map<string, SceneNodeLike | PageLike>()
+  /** Each page's selection (`page.selection`), and the nodes the viewport last showed. */
+  const selections = new Map<PageLike, readonly SceneNodeLike[]>()
+  let shown: readonly SceneNodeLike[] = []
   /** Bindings still to store black, as Figma did on a first run (see `staleNextBinds`). */
   let staleBinds = 0
   /** Stored property references still to read as `{}` once, as Figma did right after creating a set. */
@@ -626,6 +631,7 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
     }) as unknown as SceneNodeLike
     container.node = proxy
     stateOf.set(proxy, state)
+    byId.set(state.id, proxy)
     return proxy
   }
 
@@ -652,15 +658,33 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
       async loadAsync() {
         own.loaded = true
       },
-    }
+      /** Like Figma's `PageNode.selection`: only nodes on this page. */
+      get selection() {
+        return selections.get(page) ?? Object.freeze([])
+      },
+      set selection(nodes: readonly SceneNodeLike[]) {
+        for (const node of nodes)
+          if (pageOf(node) !== page) throw new Error('Cannot select a node on another page')
+        selections.set(page, Object.freeze([...new Set(nodes)]))
+      },
+    } as PageLike
     const container: Container = { node: page, children }
     pageContainers.set(page, container)
     pages.push(page)
     pageState.set(page, own)
+    byId.set(page.id, page)
     return page
   }
-  /** Figma's current page: the first page, where `create*` puts a new node. */
-  const currentPage = createPage()
+  /** The page a node is on, through its parents; undefined when it is on none. */
+  function pageOf(node: SceneNodeLike): PageLike | undefined {
+    for (let cursor = stateOf.get(node)?.parent; cursor;) {
+      if (cursor.node.type === 'PAGE') return cursor.node as PageLike
+      cursor = stateOf.get(cursor.node)?.parent ?? null
+    }
+    return undefined
+  }
+  /** Figma's current page: the first page until `setCurrentPageAsync`; `create*` puts a new node there. */
+  let currentPage = createPage()
   /** Like Figma, a new node starts on the current page. */
   const onCurrentPage = (node: SceneNodeLike) => {
     attach(pageContainers.get(currentPage)!, node)
@@ -702,10 +726,39 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
   }
 
   /** Figma's API; effect binding stays so a test can build what an earlier version wrote. */
-  const figma: NodesApi & { readonly currentPage: PageLike; variables: typeof variables } = {
+  const figma: NodesApi & {
+    readonly currentPage: PageLike & { selection: readonly SceneNodeLike[] }
+    variables: typeof variables
+    getNodeByIdAsync(id: string): Promise<SceneNodeLike | PageLike | null>
+    setCurrentPageAsync(page: PageLike): Promise<void>
+    viewport: { scrollAndZoomIntoView(nodes: readonly SceneNodeLike[]): void }
+  } = {
     ...base.figma,
-    currentPage,
+    /** Read-only, as in a dynamic-page file: `setCurrentPageAsync` switches it. */
+    get currentPage() {
+      return currentPage as PageLike & { selection: readonly SceneNodeLike[] }
+    },
     variables,
+    /** Like Figma: null for an id the file does not hold or a removed node. */
+    async getNodeByIdAsync(id: string) {
+      const node = byId.get(id)
+      if (!node) return null
+      if (node.type !== 'PAGE' && stateOf.get(node)?.removed) return null
+      return node
+    },
+    async setCurrentPageAsync(page: PageLike) {
+      if (!pages.includes(page)) throw new Error('setCurrentPageAsync takes a page in the file')
+      await page.loadAsync()
+      currentPage = page
+    },
+    viewport: {
+      /** Like Shift-1 on the current page: the nodes must be on it. */
+      scrollAndZoomIntoView(nodes: readonly SceneNodeLike[]) {
+        for (const node of nodes)
+          if (pageOf(node) !== currentPage) throw new Error('The node is not on the current page')
+        shown = Object.freeze([...nodes])
+      },
+    },
     async loadFontAsync(font) {
       await base.figma.loadFontAsync(font)
       loadedFonts.add(fontKey(font))
@@ -743,6 +796,10 @@ export function createFakeNodes(options: { fonts?: string[] } = {}) {
     pages,
     get writes() {
       return writes
+    },
+    /** The nodes `viewport.scrollAndZoomIntoView` last showed. */
+    get shown() {
+      return shown
     },
     /** Unloads every page but the first, as when a file is reopened. */
     unloadPages() {
