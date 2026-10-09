@@ -52,13 +52,19 @@ colors. The main thread receives a finished model.
 Home asks for the token table (`scan`) and for what the file holds of Atom63 (`atom63-scan`). It
 finds the table by code syntax (`var(--token)`), so it also sees a table an agent wrote:
 
-- **An empty file:** Home offers Create and Import, and the Atom63 design system entry with one
-  line of what it writes.
+Each way in is an entry card (the Atom63 `Item`): a title, one line of what it does, and its
+action.
+
+- **An empty file:** Home offers three entries: Create, Import, and the Atom63 design system.
 - **A file with Atom63's table:** Home says the file holds the Atom63 design system and offers
-  **Update Atom63 design system**.
+  one entry, **Update Atom63 design system**.
 - **A file with another table:** Home lists the collections and says that code is the source.
   After the CSS changes, the user asks their agent to sync, or imports again. The Atom63 entry
-  stays, and its view explains why this file is refused.
+  stays with its action disabled and the reason beside it ("Needs a new file — this file holds
+  another token set").
+
+Create, Import and the Atom63 view keep their actions in a bar pinned to the bottom of the window,
+so the primary action is in reach while the content above it scrolls.
 
 Home passes its Atom63 table to the Atom63 view, which scans only when Home has none, so two
 scans never overlap.
@@ -78,8 +84,12 @@ lives in the plugin.
   then each component) that the view announces. A second build changes nothing.
 - **Check:** the view then sends `atom63-check`, a separate main-thread task, so Figma has
   settled its component property references. The result is pass with a summary, fail with every
-  named difference, or pending ("check again") while Figma is still reconciling a property.
-  Check again is also offered after a check that failed to run.
+  named difference in words (`Button · primary / md / rest — fill: none → action/primary`), or
+  pending while Figma is still reconciling a property. A pending result is checked again by
+  itself once, 1.5 seconds later, and offers **Check again**, as does a check that failed to run.
+  A build that did not finish offers **Check the file**. Progress, Verifying… and the result
+  share one slot; retry errors and a one-line font note (with the fallbacks in a disclosure)
+  follow it.
 - **Refusal:** a file that holds any token set that is not provably Atom63's, such as a
   template's table, is refused before anything is written: `status: 'blocked'` with the reason
   ("Start the Atom63 design system in a new file."). There is no way to build beside another

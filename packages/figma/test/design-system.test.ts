@@ -306,7 +306,7 @@ describe('a file that holds another token set', () => {
       collections: templateNames,
     })
     expect(table.blocked).toBe(
-      `This file already holds another token set (collections: ${templateNames.join(', ')}). Start the Atom63 design system in a new file, or this file holds an older Atom63 token set that this version cannot update.`
+      `This file already holds another token set (collections: ${templateNames.join(', ')}). Start the Atom63 design system in a new file. If this file holds an older Atom63 token set, this version can't update it.`
     )
   })
 

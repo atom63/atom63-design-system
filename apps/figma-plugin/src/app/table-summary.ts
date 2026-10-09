@@ -1,6 +1,7 @@
 import type { TokenTable } from '@atom63/figma'
 
-const count = (value: number, one: string, many: string) => `${value} ${value === 1 ? one : many}`
+import type { DesignSystemTable } from '../messages'
+import { plural } from './format'
 
 /** One line that says what token table the file holds. */
 export function summarizeTable(table: TokenTable): { empty: boolean; line: string } {
@@ -8,9 +9,18 @@ export function summarizeTable(table: TokenTable): { empty: boolean; line: strin
   return {
     empty: false,
     line:
-      `${count(table.variables, 'variable', 'variables')} in ` +
-      `${count(table.collections.length, 'collection', 'collections')}, ` +
-      `${count(table.textStyles, 'text style', 'text styles')} and ` +
-      `${count(table.effectStyles, 'effect style', 'effect styles')}.`,
+      `${plural(table.variables, 'variable')} in ` +
+      `${plural(table.collections.length, 'collection')}, ` +
+      `${plural(table.textStyles, 'text style')} and ` +
+      `${plural(table.effectStyles, 'effect style')}.`,
   }
+}
+
+/**
+ * Why Home's Atom63 entry is unavailable, or null when it is available. A file
+ * whose scan says a build would be refused needs a new file; a scan that could
+ * not run leaves the entry open, and the Atom63 view scans again.
+ */
+export function atom63Unavailable(atom63: DesignSystemTable | null): string | null {
+  return atom63?.blocked ? 'Needs a new file — this file holds another token set.' : null
 }

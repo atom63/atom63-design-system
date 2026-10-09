@@ -2,15 +2,23 @@ import type { DesignSystemBlocked, DesignSystemOutcome, DesignSystemTable } from
 import {
   type Atom63State,
   builtSummary,
-  canCheckAgain,
+  checkAction,
+  componentStatus,
   failureLines,
   initialAtom63State,
+  liveText,
   nextAtom63,
   progressLabel,
   progressValue,
   retryLines,
+  scheduleAutoRecheck,
+  shouldAutoRecheck,
+  AUTO_RECHECK_MS,
+  fontNote,
   startAtom63,
+  tokensStatus,
 } from '../src/app/atom63-state'
+import { formatCount, plural } from '../src/app/format'
 
 const table: DesignSystemTable = {
   atom63: null,
@@ -127,8 +135,16 @@ describe('nextAtom63', () => {
     )
     expect(state.phase).toBe('checking')
     expect(state.checked).toBeNull()
-    // The button stays in place, disabled, while the check runs.
-    expect(canCheckAgain(state)).toBe(true)
+    // Verifying takes the result's place; no action while it runs.
+    expect(checkAction(state)).toBeNull()
+  })
+
+  it('offers Check again with a pending result', () => {
+    const { state } = run(initialAtom63State, {
+      type: 'checked',
+      data: outcome({ status: 'pending' }),
+    })
+    expect(checkAction(state)).toBe('Check again')
   })
 
   it('offers Check again after a check that failed to run', () => {
@@ -139,22 +155,32 @@ describe('nextAtom63', () => {
       { type: 'error', message: 'Boom', for: 'atom63-check' }
     )
     expect(state.error?.during).toBe('checking')
-    expect(canCheckAgain(state)).toBe(true)
+    expect(checkAction(state)).toBe('Check again')
     const again = run(state, { type: 'check-sent' }, { type: 'checked', data: outcome() })
     expect(again.state.error).toBeNull()
-    expect(canCheckAgain(again.state)).toBe(false)
+    expect(checkAction(again.state)).toBeNull()
   })
 
-  it('offers no Check again after a passing check or a build error', () => {
-    expect(canCheckAgain(run(initialAtom63State, { type: 'checked', data: outcome() }).state)).toBe(
-      false
-    )
+  it('offers Check the file after a build that did not finish', () => {
     const failedBuild = run(
       initialAtom63State,
       { type: 'build-sent' },
       { type: 'error', message: 'Boom', for: 'atom63-build' }
     )
-    expect(canCheckAgain(failedBuild.state)).toBe(false)
+    expect(checkAction(failedBuild.state)).toBe('Check the file')
+    const checking = nextAtom63(failedBuild.state, { type: 'check-sent' })
+    expect(checking.state.phase).toBe('checking')
+    expect(checking.state.error).toBeNull()
+  })
+
+  it('offers no check after a passing or failing check, or a scan error', () => {
+    for (const status of ['pass', 'fail'] as const)
+      expect(
+        checkAction(run(initialAtom63State, { type: 'checked', data: outcome({ status }) }).state)
+      ).toBeNull()
+    expect(
+      checkAction(run(initialAtom63State, { type: 'error', message: 'Boom' }).state)
+    ).toBeNull()
   })
 
   it('ignores an error from another message, so a build keeps running', () => {
@@ -222,6 +248,48 @@ describe('startAtom63', () => {
   })
 })
 
+describe('what the file holds', () => {
+  const component = { name: 'Button', variants: 300, card: true, setOnPage: false }
+
+  it('shows a component built inside its spec card as built', () => {
+    expect(componentStatus(component)).toBe('300 variants, spec card')
+  })
+
+  it('says a set on the page has no spec card yet', () => {
+    expect(componentStatus({ ...component, card: false, setOnPage: true })).toBe(
+      '300 variants on the page, no spec card yet'
+    )
+    expect(componentStatus({ ...component, card: false })).toBe('300 variants, no spec card')
+  })
+
+  it('shows a component with no variants as not built', () => {
+    expect(componentStatus({ ...component, variants: 0, card: false })).toBe('Not built yet')
+    expect(componentStatus({ ...component, variants: 1 })).toBe('1 variant, spec card')
+  })
+
+  it('counts Atom63 tokens with thousands separators', () => {
+    expect(tokensStatus(null)).toBe('None yet')
+    expect(
+      tokensStatus({
+        variables: 1009,
+        collections: [
+          { name: 'Theme', variables: 1008 },
+          { name: 'Font', variables: 1 },
+        ],
+      })
+    ).toBe('1,009 variables in 2 collections')
+  })
+})
+
+describe('counts', () => {
+  it('groups thousands and picks the singular for one', () => {
+    expect(formatCount(1009)).toBe('1,009')
+    expect(plural(1, 'variable')).toBe('1 variable')
+    expect(plural(12345, 'mode')).toBe('12,345 modes')
+    expect(plural(0, 'style')).toBe('0 styles')
+  })
+})
+
 describe('progress', () => {
   it('names the phase and counts components', () => {
     expect(progressLabel(null)).toBe('Starting…')
@@ -236,6 +304,16 @@ describe('progress', () => {
     expect(progressValue({ phase: 'tokens', done: 1, total: 1 }, 2)).toBe(25)
     expect(progressValue({ phase: 'card', done: 2, total: 2 }, 2)).toBe(100)
     expect(progressValue({ phase: 'done', done: 1, total: 1 }, 2)).toBe(100)
+  })
+
+  it('keeps the live region text empty when idle and fills it while busy', () => {
+    expect(liveText({ phase: 'idle', progress: null })).toBe('')
+    expect(liveText({ phase: 'scanning', progress: null })).toBe('')
+    expect(liveText({ phase: 'checking', progress: null })).toBe('Verifying…')
+    expect(liveText({ phase: 'building', progress: null })).toBe('Starting…')
+    expect(liveText({ phase: 'building', progress: { phase: 'tokens', done: 0, total: 1 } })).toBe(
+      'Writing variables'
+    )
   })
 })
 
@@ -252,7 +330,7 @@ describe('results', () => {
         },
       ],
     })
-    expect(retryLines(build)).toEqual(['Button · Size=Small could not be written: locked'])
+    expect(retryLines(build)).toEqual(['Button · Small could not be written: locked'])
     expect(retryLines(null)).toEqual([])
   })
 
@@ -286,7 +364,7 @@ describe('results', () => {
     })
     expect(builtSummary(build, outcome())).toEqual([
       '300 variables created, 2 updated; 10 styles created, 0 updated.',
-      'Button: 24 variants, spec card (30 parts created, 0 updated).',
+      'Button: 24 variants, spec card (30 items created, 0 updated).',
     ])
   })
 
@@ -330,10 +408,89 @@ describe('results', () => {
       '1 variable to create or update',
       '2 variables with another type in this file, left alone',
       'Styles to create or update: Body',
-      'Button · Size=Small — padding: 4 → 6',
-      'Button · Size=Large — Label property',
-      'Button spec card: 1 part to create or update',
-      'Button · Size=Small could not be written: locked',
+      'Button · Small — padding: 4 → 6',
+      'Button · Large — Label property',
+      'Button spec card: 1 item to create or update',
+      'Button · Small could not be written: locked',
     ])
+  })
+})
+
+describe('automatic re-check', () => {
+  const pending = () =>
+    run(
+      initialAtom63State,
+      { type: 'build-sent' },
+      { type: 'built', data: { ...outcome(), table: built } },
+      { type: 'checked', data: outcome({ status: 'pending' }) }
+    ).state
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  it('checks a pending result again once per build', () => {
+    const first = pending()
+    expect(shouldAutoRecheck(first)).toBe(true)
+    const again = run(
+      first,
+      { type: 'check-sent', auto: true },
+      { type: 'checked', data: outcome({ status: 'pending' }) }
+    ).state
+    expect(again.autoRechecked).toBe(true)
+    expect(shouldAutoRecheck(again)).toBe(false)
+    // Check again by hand does not count; a new build allows one more.
+    expect(run(again, { type: 'build-sent' }).state.autoRechecked).toBe(false)
+  })
+
+  it('does not re-check a passing or failing result', () => {
+    for (const status of ['pass', 'fail'] as const)
+      expect(
+        shouldAutoRecheck(
+          run(initialAtom63State, { type: 'checked', data: outcome({ status }) }).state
+        )
+      ).toBe(false)
+  })
+
+  it('runs the re-check after the delay, and not when cancelled first', () => {
+    vi.useFakeTimers()
+    const recheck = vi.fn()
+    const cancel = scheduleAutoRecheck(pending(), recheck)
+    expect(cancel).toBeTypeOf('function')
+    vi.advanceTimersByTime(AUTO_RECHECK_MS - 1)
+    expect(recheck).not.toHaveBeenCalled()
+    vi.advanceTimersByTime(1)
+    expect(recheck).toHaveBeenCalledTimes(1)
+
+    const cancelled = vi.fn()
+    scheduleAutoRecheck(pending(), cancelled)?.()
+    vi.advanceTimersByTime(AUTO_RECHECK_MS * 2)
+    expect(cancelled).not.toHaveBeenCalled()
+  })
+
+  it('schedules nothing when no re-check is due', () => {
+    expect(scheduleAutoRecheck(initialAtom63State, vi.fn())).toBeUndefined()
+  })
+})
+
+describe('fontNote', () => {
+  it('says which font stands in, in one sentence, and keeps the lines', () => {
+    const lines = [
+      '13 text styles: --a63-font-app not bound in every mode; used Geist',
+      'Label: --a63-control-font-family not bound in every mode; used Geist',
+    ]
+    expect(fontNote(outcome({ fontFallbacks: lines }))).toEqual({
+      sentence: "Fonts: Geist is used where Figma can't bind a CSS font stack.",
+      lines,
+    })
+  })
+
+  it('names every font, and has no note without fallbacks', () => {
+    expect(
+      fontNote(outcome({ fontFallbacks: ['A: used Geist', 'B: used Inter', 'C: odd line'] }))
+        ?.sentence
+    ).toBe("Fonts: Geist and Inter are used where Figma can't bind a CSS font stack.")
+    expect(fontNote(outcome())).toBeNull()
+    expect(fontNote(null)).toBeNull()
   })
 })

@@ -10,6 +10,8 @@ import type {
   DesignSystemProgress,
   DesignSystemTable,
 } from '../messages'
+import { differenceLine, variantName } from './difference'
+import { formatCount, plural } from './format'
 
 export type Atom63Phase = 'scanning' | 'idle' | 'building' | 'checking'
 
@@ -24,8 +26,8 @@ export interface Atom63State {
   checked: DesignSystemOutcome | null
   /** The phase an error came in, so a late scan reply can clear one from a scan. */
   error: { message: string; during: Atom63Phase } | null
-  /** A check was sent again by hand, so Check again stays in place while it runs. */
-  rechecking: boolean
+  /** The one automatic re-check after a pending result was sent; once per build. */
+  autoRechecked: boolean
 }
 
 export type Atom63Event =
@@ -37,7 +39,8 @@ export type Atom63Event =
       type: 'built'
       data: (DesignSystemOutcome | DesignSystemBlocked) & { table: DesignSystemTable }
     }
-  | { type: 'check-sent' }
+  /** `auto` is the one re-check the view sends itself after a pending result. */
+  | { type: 'check-sent'; auto?: boolean }
   | { type: 'checked'; data: DesignSystemOutcome }
   /** `for` is the message that failed; untagged errors are taken as this view's. */
   | { type: 'error'; message: string; for?: UIToMain['type'] }
@@ -50,7 +53,7 @@ export const initialAtom63State: Atom63State = {
   built: null,
   checked: null,
   error: null,
-  rechecking: false,
+  autoRechecked: false,
 }
 
 /**
@@ -68,9 +71,39 @@ export function startAtom63(initialTable?: DesignSystemTable | null): {
 /** Whether an error belongs to this view: one from an Atom63 message, or an untagged one. */
 export const isAtom63Error = (failed?: UIToMain['type']) => !failed || failed.startsWith('atom63-')
 
-/** Check again follows a pending check or a check that failed to run, and stays while it reruns. */
-export const canCheckAgain = (state: Atom63State) =>
-  state.checked?.status === 'pending' || state.error?.during === 'checking' || state.rechecking
+/**
+ * The check a result offers, by its label: Check again after a pending check
+ * or a check that failed to run, and Check the file after a build that did
+ * not finish, so the user sees what it left. Null when there is none.
+ */
+export function checkAction(state: Atom63State): 'Check again' | 'Check the file' | null {
+  if (state.phase !== 'idle') return null
+  if (state.checked?.status === 'pending' || state.error?.during === 'checking')
+    return 'Check again'
+  if (state.error?.during === 'building') return 'Check the file'
+  return null
+}
+
+/** How long the view waits after a pending result before it checks again by itself. */
+export const AUTO_RECHECK_MS = 1500
+
+/** Whether a pending result should be checked again automatically: once per build. */
+export const shouldAutoRecheck = (state: Atom63State) =>
+  state.phase === 'idle' && state.checked?.status === 'pending' && !state.autoRechecked
+
+/**
+ * Runs `recheck` once after `AUTO_RECHECK_MS` when the state calls for it, and
+ * returns the cancel, for an effect's cleanup (a new state, Back or unmount).
+ */
+export function scheduleAutoRecheck(
+  state: Atom63State,
+  recheck: () => void,
+  delay = AUTO_RECHECK_MS
+): (() => void) | undefined {
+  if (!shouldAutoRecheck(state)) return undefined
+  const timer = setTimeout(recheck, delay)
+  return () => clearTimeout(timer)
+}
 
 /** The next state, and the message to send now, if any. */
 export function nextAtom63(
@@ -100,7 +133,7 @@ export function nextAtom63(
           built: null,
           checked: null,
           error: null,
-          rechecking: false,
+          autoRechecked: false,
         },
       }
     case 'progress':
@@ -116,10 +149,16 @@ export function nextAtom63(
     }
     case 'check-sent':
       return {
-        state: { ...state, phase: 'checking', checked: null, error: null, rechecking: true },
+        state: {
+          ...state,
+          phase: 'checking',
+          checked: null,
+          error: null,
+          autoRechecked: state.autoRechecked || !!event.auto,
+        },
       }
     case 'checked':
-      return { state: { ...state, phase: 'idle', checked: event.data, rechecking: false } }
+      return { state: { ...state, phase: 'idle', checked: event.data } }
     case 'error':
       // A failed settings save, or a token flow's message, must not stop a build.
       if (!isAtom63Error(event.for)) return { state }
@@ -128,7 +167,6 @@ export function nextAtom63(
           ...state,
           phase: 'idle',
           progress: null,
-          rechecking: false,
           error: { message: event.message, during: state.phase },
         },
       }
@@ -149,26 +187,54 @@ export function progressLabel(progress: DesignSystemProgress | null): string {
   const what = PHASES[progress.phase]
   const named = progress.label ? `${what} ${progress.label}` : what
   return progress.phase === 'components' || progress.phase === 'card'
-    ? `${named} (${progress.done} of ${progress.total} components)`
+    ? `${named} (${formatCount(progress.done)} of ${plural(progress.total, 'component')})`
     : named
 }
 
-const plural = (count: number, one: string, many = `${one}s`) =>
-  `${count} ${count === 1 ? one : many}`
+/**
+ * The progress live region's text: empty when idle, so the region stays in the
+ * accessibility tree and only its text changes when work starts.
+ */
+export function liveText(state: Pick<Atom63State, 'phase' | 'progress'>): string {
+  if (state.phase === 'building') return progressLabel(state.progress)
+  if (state.phase === 'checking') return 'Verifying…'
+  return ''
+}
+
+/** What the file holds of Atom63's tokens, for the table. */
+export function tokensStatus(atom63: DesignSystemTable['atom63']): string {
+  if (!atom63) return 'None yet'
+  return `${plural(atom63.variables, 'variable')} in ${plural(atom63.collections.length, 'collection')}`
+}
+
+/**
+ * Whether a component is built, for the table. The set lives inside its spec
+ * card, so a built component is one with variants; a set left on the page
+ * without a card is built too, its card still to come.
+ */
+export function componentStatus(component: DesignSystemTable['components'][number]): string {
+  if (component.variants === 0) return 'Not built yet'
+  const variants = plural(component.variants, 'variant')
+  if (component.card) return `${variants}, spec card`
+  if (component.setOnPage) return `${variants} on the page, no spec card yet`
+  return `${variants}, no spec card`
+}
 
 /** What a build changed, for the result: variables, styles, and each component. */
 export function builtSummary(built: DesignSystemOutcome | null, checked: DesignSystemOutcome) {
   const tokens = built?.tokens.applied
   const styles = built?.styles?.applied
   const lines = [
-    `${tokens?.created ?? 0} variables created, ${tokens?.updated ?? 0} updated; ${styles?.created ?? 0} styles created, ${styles?.updated ?? 0} updated.`,
+    `${plural(tokens?.created ?? 0, 'variable')} created, ${formatCount(tokens?.updated ?? 0)} updated; ${plural(styles?.created ?? 0, 'style')} created, ${formatCount(styles?.updated ?? 0)} updated.`,
   ]
   for (const component of checked.components) {
     const applied = built?.components.find(item => item.name === component.name)?.applied
     const card = applied?.card
     lines.push(
       `${component.name}: ${plural(component.variants, 'variant')}, spec card${
-        card ? ` (${card.created} parts created, ${card.updated} updated)` : ''
+        card
+          ? ` (${plural(card.created, 'item')} created, ${formatCount(card.updated)} updated)`
+          : ''
       }.`
     )
   }
@@ -198,14 +264,12 @@ export function failureLines(
     const left = plan.create + plan.update + plan.variables
     if (left > 0 && !plan.differences)
       lines.push(`${component.name}: ${plural(left, 'part')} to create or update`)
-    for (const { variant, what, actual, expected } of plan.differences ?? [])
-      lines.push(
-        `${component.name} · ${variant} — ${what}${actual !== undefined || expected !== undefined ? `: ${actual ?? 'none'} → ${expected ?? 'none'}` : ''}`
-      )
+    for (const difference of plan.differences ?? [])
+      lines.push(differenceLine(component.name, difference))
     const card = plan.card
     if (card && card.create + card.update > 0)
       lines.push(
-        `${component.name} spec card: ${plural(card.create + card.update, 'part')} to create or update`
+        `${component.name} spec card: ${plural(card.create + card.update, 'item')} to create or update`
       )
   }
   return [...lines, ...retryLines(built)]
@@ -216,8 +280,34 @@ export function retryLines(built: DesignSystemOutcome | null): string[] {
   const lines: string[] = []
   for (const component of built?.components ?? [])
     for (const { variant, error } of component.retryErrors ?? [])
-      lines.push(`${component.name} · ${variant} could not be written: ${error}`)
+      lines.push(`${component.name} · ${variantName(variant)} could not be written: ${error}`)
   return lines
+}
+
+/**
+ * The build's font fallbacks as one plain sentence and the engine's own lines
+ * for a disclosure. A fallback is expected (Figma cannot bind a CSS font
+ * stack), so it is a note, not a warning. Null when there is none.
+ */
+export function fontNote(built: DesignSystemOutcome | null): {
+  sentence: string
+  lines: string[]
+} | null {
+  const lines = built?.fontFallbacks ?? []
+  if (lines.length === 0) return null
+  const families = [
+    ...new Set(
+      lines.flatMap(line => {
+        const used = /used (.+)$/.exec(line)?.[1]?.trim()
+        return used ? [used] : []
+      })
+    ),
+  ]
+  const used =
+    families.length === 0
+      ? 'A fallback font is'
+      : `${families.join(' and ')} ${families.length === 1 ? 'is' : 'are'}`
+  return { sentence: `Fonts: ${used} used where Figma can't bind a CSS font stack.`, lines }
 }
 
 /** How far a build is, 0–100: variables, styles, then each component. */

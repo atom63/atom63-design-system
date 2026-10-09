@@ -2,7 +2,28 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
+  box-sizing: border-box;
+  min-block-size: 100%;
   padding: var(--spacing-xl);
+}
+
+/*
+ * A view's own actions, pinned to the bottom of the window so the primary
+ * action stays in reach while the content above it scrolls.
+ */
+.bar {
+  position: sticky;
+  inset-block-end: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  align-items: center;
+  margin-block: auto calc(-1 * var(--spacing-xl));
+  margin-inline: calc(-1 * var(--spacing-xl));
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--muted);
+  border-block-start: 1px solid var(--a63-border-subtle);
 }
 
 .actions {
@@ -86,8 +107,79 @@
   font-size: 12px;
 }
 
+.entries {
+  gap: var(--spacing-md);
+}
+
+/* An entry card: its title, one line and its action, stacked and start-aligned. */
 .entry {
+  align-items: stretch;
+}
+
+.entryFooter {
+  justify-content: flex-start;
+}
+
+.reason {
+  margin: 0;
+  font-size: 12px;
+  color: var(--a63-text-secondary);
+}
+
+/*
+ * The Atom63 view's one result slot: the progress, then the result that
+ * replaces it. Its minimum height keeps the swap from jumping the page.
+ */
+.result {
+  display: grid;
+  gap: var(--spacing-sm);
+  min-block-size: 4.5rem;
+  align-content: start;
+}
+
+/* Visually hidden but kept in the accessibility tree (an idle live region). */
+.srOnly {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Inside an Alert's description, a flex column: the next step, then the action. */
+.nextStep {
+  display: block;
+}
+
+.alertAction {
+  align-self: flex-start;
+}
+
+.note {
   display: grid;
   gap: var(--spacing-xs);
-  justify-items: start;
+}
+
+.details {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+
+.details summary {
+  inline-size: fit-content;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+.details summary:focus-visible {
+  outline: 2px solid var(--a63-focus-ring);
+  outline-offset: 2px;
+}
+
+.details[open] summary {
+  margin-block-end: var(--spacing-xs);
 }

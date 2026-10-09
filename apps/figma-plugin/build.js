@@ -145,7 +145,7 @@ function generateHTML() {
   const atom63CssContent = readFileSync(resolve(__dirname, 'dist/atom63.css'), 'utf-8')
 
   const html = `<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

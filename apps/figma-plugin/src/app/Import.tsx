@@ -1,11 +1,12 @@
 import type { CssFile } from '@atom63/figma'
-import { useMemo, useRef, useState } from 'react'
+import { useId, useMemo, useRef, useState } from 'react'
 
 import { Alert, Button, SectionHeader, Textarea } from '../components/ui'
 import { useFigmaMessage, usePostMessage } from '../hooks/useFigmaMessage'
 import { createBrowserColorResolver } from '../utils/css-color'
 import styles from './app.module.css'
-import { type ImportEvent, type ImportResults, nextResults } from './import-state'
+import { formatCount, plural } from './format'
+import { type ImportEvent, type ImportResults, nextResults, previewReason } from './import-state'
 import { Outcome } from './Outcome'
 import { orderCssFiles, type ReadProject, readProject } from './read-css'
 
@@ -13,6 +14,7 @@ import { orderCssFiles, type ReadProject, readProject } from './read-css'
 export function Import({ onDone }: { onDone: () => void }) {
   const postMessage = usePostMessage()
   const fileInput = useRef<HTMLInputElement>(null)
+  const previewReasonId = useId()
   const resolveColor = useMemo(() => createBrowserColorResolver(), [])
   const [files, setFiles] = useState<CssFile[]>([])
   const [pasted, setPasted] = useState('')
@@ -54,6 +56,7 @@ export function Import({ onDone }: { onDone: () => void }) {
     if (type === 'plan') update({ type: 'plan-sent' })
     postMessage({ type, model: project.model })
   }
+  const previewBlocked = previewReason(project)
   const { planned, applied } = results
   const pending = planned
     ? planned.planned.create +
@@ -66,6 +69,7 @@ export function Import({ onDone }: { onDone: () => void }) {
     <div className={styles.view}>
       <SectionHeader
         description="Pick the CSS files that hold your design tokens (src/styles/tokens in the site template), or paste them. Each data-* attribute becomes a collection with its values as modes; light and dark become the Mode collection."
+        level={1}
         title="Import from CSS"
       />
       <input
@@ -77,8 +81,8 @@ export function Import({ onDone }: { onDone: () => void }) {
         type="file"
       />
       <div className={styles.actions}>
-        <Button onClick={() => fileInput.current?.click()} variant="secondary">
-          {files.length > 0 ? `${files.length} files chosen` : 'Choose CSS files'}
+        <Button onClick={() => fileInput.current?.click()} variant="outline">
+          {files.length > 0 ? `${plural(files.length, 'file')} chosen` : 'Choose CSS files'}
         </Button>
       </div>
       <Textarea
@@ -98,38 +102,45 @@ export function Import({ onDone }: { onDone: () => void }) {
       )}
       {project && !('error' in project) && (
         <p className={styles.meta}>
-          {project.model.summary.variables} variables in {project.model.summary.collections}{' '}
-          collections, {project.model.styles?.text.length ?? 0} text styles and{' '}
-          {project.model.styles?.effects.length ?? 0} effect styles.
+          {plural(project.model.summary.variables, 'variable')} in{' '}
+          {plural(project.model.summary.collections, 'collection')},{' '}
+          {plural(project.model.styles?.text.length ?? 0, 'text style')} and{' '}
+          {plural(project.model.styles?.effects.length ?? 0, 'effect style')}.
           {project.skipped.length > 0 &&
-            ` ${project.skipped.length} tokens are not Figma variables (shadows, font stacks and colors computed from others).`}{' '}
+            ` ${formatCount(project.skipped.length)} tokens are not Figma variables (shadows, font stacks and colors computed from others).`}{' '}
           {project.notes.join(' ')}
         </p>
       )}
-      <div className={styles.actions}>
-        <Button
-          disabled={!project || 'error' in project}
-          loading={busy === 'plan'}
-          onClick={() => send('plan')}
-          variant="secondary"
-        >
-          Preview changes
-        </Button>
-        {pending > 0 && (
-          <Button loading={busy === 'apply'} onClick={() => send('apply')} variant="primary">
-            {`Apply ${pending} ${pending === 1 ? 'change' : 'changes'}`}
-          </Button>
-        )}
-        <Button onClick={onDone} variant="ghost">
-          Back
-        </Button>
-      </div>
       {error && (
         <Alert title="Import failed" variant="error">
           {error}
         </Alert>
       )}
       <Outcome applied={applied} planned={planned} />
+      <div className={styles.bar}>
+        <Button
+          aria-describedby={previewBlocked ? previewReasonId : undefined}
+          disabled={!!previewBlocked}
+          loading={busy === 'plan'}
+          onClick={() => send('plan')}
+          variant={pending > 0 ? 'default' : 'primary'}
+        >
+          Preview changes
+        </Button>
+        {pending > 0 && (
+          <Button loading={busy === 'apply'} onClick={() => send('apply')} variant="primary">
+            {`Apply ${plural(pending, 'change')}`}
+          </Button>
+        )}
+        <Button onClick={onDone} variant="ghost">
+          Back
+        </Button>
+        {previewBlocked && (
+          <p className={styles.meta} id={previewReasonId}>
+            {previewBlocked}
+          </p>
+        )}
+      </div>
     </div>
   )
 }

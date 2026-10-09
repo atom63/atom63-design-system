@@ -39,7 +39,7 @@ export function Alert({
       {showIcon && <AlertIcon>{icon ?? icons[variant]}</AlertIcon>}
       {title &&
         (titleRef ? (
-          <AlertTitle aria-level={3} ref={titleRef} role="heading" tabIndex={-1}>
+          <AlertTitle aria-level={2} ref={titleRef} role="heading" tabIndex={-1}>
             {title}
           </AlertTitle>
         ) : (

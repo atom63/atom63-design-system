@@ -81,6 +81,7 @@ export function Create({ onDone }: { onDone: () => void }) {
     <div className={styles.view}>
       <SectionHeader
         description="Pick a brand color and the defaults of each axis. The file gets the site template's variables and styles with your choices as the default modes; every other mode stays, so designs can switch them."
+        level={1}
         title="Create a token system"
       />
       <div className={styles.choices}>
@@ -168,19 +169,6 @@ export function Create({ onDone }: { onDone: () => void }) {
         </div>
       )}
 
-      <div className={styles.actions}>
-        <Button
-          disabled={'error' in built || createdWith !== null}
-          loading={busy}
-          onClick={create}
-          variant="primary"
-        >
-          Create in this file
-        </Button>
-        <Button onClick={onDone} variant="ghost">
-          Back
-        </Button>
-      </div>
       {error && (
         <Alert title="Create failed" variant="error">
           {error}
@@ -223,6 +211,19 @@ export function Create({ onDone }: { onDone: () => void }) {
           </ul>
         </>
       )}
+      <div className={styles.bar}>
+        <Button
+          disabled={'error' in built || createdWith !== null}
+          loading={busy}
+          onClick={create}
+          variant="primary"
+        >
+          Create in this file
+        </Button>
+        <Button onClick={onDone} variant="ghost">
+          Back
+        </Button>
+      </div>
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import { Badge } from '@atom63/ui-react'
 import { Moon, Sun } from 'lucide-react'
 import { AnimatedLogo } from '../common/icon/cipher/app-logo'
 import { Button } from '../ui'
@@ -13,13 +14,16 @@ export function AppHeader({ isDark, onToggleTheme }: AppHeaderProps) {
     <header className={styles.header}>
       <div className={styles.brand}>
         <AnimatedLogo colored height={18} />
-        <span className={styles.beta}>BETA</span>
+        <Badge className={styles.beta} variant="outline">
+          Beta
+        </Badge>
       </div>
       <div className={styles.actions}>
         <Button
+          aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
           onClick={onToggleTheme}
           size="icon-sm"
-          title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
           variant="ghost"
         >
           {isDark ? <Sun size={14} /> : <Moon size={14} />}
