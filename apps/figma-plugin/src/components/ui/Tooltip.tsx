@@ -79,7 +79,7 @@ export function TooltipPortal() {
     position: 'fixed',
     zIndex: 10_000,
     padding: '4px 8px',
-    fontSize: '11px',
+    fontSize: 'var(--text-xs)',
     fontWeight: 500,
     lineHeight: 1.3,
     whiteSpace: 'nowrap',

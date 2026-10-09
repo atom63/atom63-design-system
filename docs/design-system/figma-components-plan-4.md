@@ -66,7 +66,7 @@ real-Figma run for the parts the harness can't prove (selection and viewport).
 
 **Files:** `scripts/design-system/check-craft.mjs`, `docs/design-system/audits/craft-baseline.json`, plugin CSS/TSX fixes.
 
-- [ ] Add the root; fix cheap violations (literal font sizes → tokens, physical properties → logical); baseline the rest; `pnpm check:craft` passes.
+- [x] Add the root; fix cheap violations (literal font sizes → tokens, physical properties → logical); baseline the rest; `pnpm check:craft` passes. The check now reads `.scss` too, so `ui.scss` is covered. Before: 20 violations in the plugin (18 in `ui.scss`: 10 `focus-ring-outline`, 6 `physical-properties`, 2 `focus-visible`; 2 in `ErrorBoundary.module.css`). `ui.scss` held 138 legacy classes from the token manager of which the UI used 3 (`plugin-root`, `plugin-container`, `plugin-main`, no dynamic class names); the rest and the layout variables nothing reads are deleted, and the QA harness screenshots are pixel-identical. The error boundary's ring is an outline and its details start-aligned; literal 12px/11px font sizes read `--typography-xs-font-size` and `--text-xs`. After: 0, and the craft baseline stays empty.
 
 ### Task 5: Input focus ring (R5)
 

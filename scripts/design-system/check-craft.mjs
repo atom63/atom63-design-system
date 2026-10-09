@@ -27,6 +27,7 @@ const sourceRoots = [
   'packages/agent/src',
   'packages/widgets/src',
   'packages/templates/src',
+  'apps/figma-plugin/src',
 ]
 // Generated from the recipes, so its literals are the recipes' literals.
 const generated = new Set(['packages/ui-react/src/styles/utilities.css'])
@@ -41,7 +42,7 @@ function walk(dir, acc = []) {
 }
 
 const isScanned = file =>
-  /\.(css|ts|tsx)$/.test(file) &&
+  /\.(s?css|ts|tsx)$/.test(file) &&
   !/\.(test|stories)\.(ts|tsx)$/.test(file) &&
   !file.endsWith('.d.ts') &&
   !file.includes(`${path.sep}test${path.sep}`)
@@ -52,7 +53,7 @@ for (const sourceRoot of sourceRoots) {
     const file = path.relative(root, absolute).split(path.sep).join('/')
     if (generated.has(file)) continue
     const text = readFileSync(absolute, 'utf8')
-    const found = file.endsWith('.css') ? scanCss(text) : scanSource(text)
+    const found = /\.s?css$/.test(file) ? scanCss(text) : scanSource(text)
     for (const violation of found) violations.push({ file, ...violation })
   }
 }
