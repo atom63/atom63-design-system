@@ -9,12 +9,14 @@ import {
   type Atom63Event,
   builtSummary,
   canCheckAgain,
+  componentStatus,
   failureLines,
   nextAtom63,
   progressLabel,
   progressValue,
   retryLines,
   startAtom63,
+  tokensStatus,
 } from './atom63-state'
 
 const ERROR_TITLES = {
@@ -86,6 +88,7 @@ export function Atom63({
     <div className={styles.view}>
       <SectionHeader
         description="Variables, text and effect styles, and the Atom63 components with their spec cards."
+        level={1}
         title="Atom63 design system"
       />
       {refused && (
@@ -97,20 +100,12 @@ export function Atom63({
         <ul aria-label="What this file holds" className={styles.list}>
           <li>
             <span>Atom63 tokens</span>
-            <span>
-              {table.atom63
-                ? `${table.atom63.variables} variables in ${table.atom63.collections.length} collections`
-                : 'None yet'}
-            </span>
+            <span>{tokensStatus(table.atom63)}</span>
           </li>
           {table.components.map(component => (
             <li key={component.name}>
               <span>{component.name}</span>
-              <span>
-                {component.setOnPage
-                  ? `${component.variants} variants, ${component.card ? 'spec card' : 'no spec card'}`
-                  : 'Not built yet'}
-              </span>
+              <span>{componentStatus(component)}</span>
             </li>
           ))}
         </ul>

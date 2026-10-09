@@ -1,6 +1,6 @@
 import type { TokenTable } from '@atom63/figma'
 
-const count = (value: number, one: string, many: string) => `${value} ${value === 1 ? one : many}`
+import { plural } from './format'
 
 /** One line that says what token table the file holds. */
 export function summarizeTable(table: TokenTable): { empty: boolean; line: string } {
@@ -8,9 +8,9 @@ export function summarizeTable(table: TokenTable): { empty: boolean; line: strin
   return {
     empty: false,
     line:
-      `${count(table.variables, 'variable', 'variables')} in ` +
-      `${count(table.collections.length, 'collection', 'collections')}, ` +
-      `${count(table.textStyles, 'text style', 'text styles')} and ` +
-      `${count(table.effectStyles, 'effect style', 'effect styles')}.`,
+      `${plural(table.variables, 'variable')} in ` +
+      `${plural(table.collections.length, 'collection')}, ` +
+      `${plural(table.textStyles, 'text style')} and ` +
+      `${plural(table.effectStyles, 'effect style')}.`,
   }
 }

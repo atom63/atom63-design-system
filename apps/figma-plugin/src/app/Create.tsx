@@ -81,6 +81,7 @@ export function Create({ onDone }: { onDone: () => void }) {
     <div className={styles.view}>
       <SectionHeader
         description="Pick a brand color and the defaults of each axis. The file gets the site template's variables and styles with your choices as the default modes; every other mode stays, so designs can switch them."
+        level={1}
         title="Create a token system"
       />
       <div className={styles.choices}>

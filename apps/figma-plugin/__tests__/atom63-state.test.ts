@@ -3,6 +3,7 @@ import {
   type Atom63State,
   builtSummary,
   canCheckAgain,
+  componentStatus,
   failureLines,
   initialAtom63State,
   nextAtom63,
@@ -10,7 +11,9 @@ import {
   progressValue,
   retryLines,
   startAtom63,
+  tokensStatus,
 } from '../src/app/atom63-state'
+import { formatCount, plural } from '../src/app/format'
 
 const table: DesignSystemTable = {
   atom63: null,
@@ -222,6 +225,48 @@ describe('startAtom63', () => {
   })
 })
 
+describe('what the file holds', () => {
+  const component = { name: 'Button', variants: 300, card: true, setOnPage: false }
+
+  it('shows a component built inside its spec card as built', () => {
+    expect(componentStatus(component)).toBe('300 variants, spec card')
+  })
+
+  it('says a set on the page has no spec card yet', () => {
+    expect(componentStatus({ ...component, card: false, setOnPage: true })).toBe(
+      '300 variants on the page, no spec card yet'
+    )
+    expect(componentStatus({ ...component, card: false })).toBe('300 variants, no spec card')
+  })
+
+  it('shows a component with no variants as not built', () => {
+    expect(componentStatus({ ...component, variants: 0, card: false })).toBe('Not built yet')
+    expect(componentStatus({ ...component, variants: 1 })).toBe('1 variant, spec card')
+  })
+
+  it('counts Atom63 tokens with thousands separators', () => {
+    expect(tokensStatus(null)).toBe('None yet')
+    expect(
+      tokensStatus({
+        variables: 1009,
+        collections: [
+          { name: 'Theme', variables: 1008 },
+          { name: 'Font', variables: 1 },
+        ],
+      })
+    ).toBe('1,009 variables in 2 collections')
+  })
+})
+
+describe('counts', () => {
+  it('groups thousands and picks the singular for one', () => {
+    expect(formatCount(1009)).toBe('1,009')
+    expect(plural(1, 'variable')).toBe('1 variable')
+    expect(plural(12345, 'mode')).toBe('12,345 modes')
+    expect(plural(0, 'style')).toBe('0 styles')
+  })
+})
+
 describe('progress', () => {
   it('names the phase and counts components', () => {
     expect(progressLabel(null)).toBe('Starting…')
@@ -286,7 +331,7 @@ describe('results', () => {
     })
     expect(builtSummary(build, outcome())).toEqual([
       '300 variables created, 2 updated; 10 styles created, 0 updated.',
-      'Button: 24 variants, spec card (30 parts created, 0 updated).',
+      'Button: 24 variants, spec card (30 items created, 0 updated).',
     ])
   })
 
@@ -332,7 +377,7 @@ describe('results', () => {
       'Styles to create or update: Body',
       'Button · Size=Small — padding: 4 → 6',
       'Button · Size=Large — Label property',
-      'Button spec card: 1 part to create or update',
+      'Button spec card: 1 item to create or update',
       'Button · Size=Small could not be written: locked',
     ])
   })

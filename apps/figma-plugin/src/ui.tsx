@@ -45,7 +45,7 @@ function App() {
   return (
     <div className="plugin-container">
       <AppHeader isDark={isDark} onToggleTheme={toggleTheme} />
-      <div className="plugin-main">
+      <main className="plugin-main">
         <PageErrorBoundary pageName={view}>
           {view === 'home' && (
             <Home
@@ -61,7 +61,7 @@ function App() {
           {view === 'import' && <Import onDone={home} />}
           {view === 'atom63' && <Atom63 initialTable={atom63Table} onDone={home} />}
         </PageErrorBoundary>
-      </div>
+      </main>
     </div>
   )
 }

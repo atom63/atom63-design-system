@@ -5,6 +5,7 @@ import { Button, LoadingState, SectionHeader } from '../components/ui'
 import { useFigmaMessage, usePostMessage } from '../hooks/useFigmaMessage'
 import type { DesignSystemTable } from '../messages'
 import styles from './app.module.css'
+import { plural } from './format'
 import { summarizeTable } from './table-summary'
 
 const ATOM63_LINE =
@@ -57,6 +58,7 @@ export function Home({
       <div className={styles.view}>
         <SectionHeader
           description="Create a token system from a brand color and a few choices, or import the token CSS of a project. Either way this file gets variables, text styles and effect styles that match the code."
+          level={1}
           title="Start a token table"
         />
         <div className={styles.actions}>
@@ -76,6 +78,7 @@ export function Home({
       <div className={styles.view}>
         <SectionHeader
           description={`This file holds the Atom63 design system: ${summary.line}`}
+          level={1}
           title="Atom63 design system"
         />
         <p className={styles.meta}>{ATOM63_LINE}</p>
@@ -89,14 +92,13 @@ export function Home({
 
   return (
     <div className={styles.view}>
-      <SectionHeader description={summary.line} title="Token table" />
+      <SectionHeader description={summary.line} level={1} title="Token table" />
       <ul className={styles.list}>
         {table.collections.map(collection => (
           <li key={collection.name}>
             <span>{collection.name}</span>
             <span>
-              {collection.variables} variables, {collection.modes}{' '}
-              {collection.modes === 1 ? 'mode' : 'modes'}
+              {plural(collection.variables, 'variable')}, {plural(collection.modes, 'mode')}
             </span>
           </li>
         ))}

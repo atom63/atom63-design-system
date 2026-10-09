@@ -5,6 +5,7 @@ import { Alert, Button, SectionHeader, Textarea } from '../components/ui'
 import { useFigmaMessage, usePostMessage } from '../hooks/useFigmaMessage'
 import { createBrowserColorResolver } from '../utils/css-color'
 import styles from './app.module.css'
+import { formatCount, plural } from './format'
 import { type ImportEvent, type ImportResults, nextResults } from './import-state'
 import { Outcome } from './Outcome'
 import { orderCssFiles, type ReadProject, readProject } from './read-css'
@@ -66,6 +67,7 @@ export function Import({ onDone }: { onDone: () => void }) {
     <div className={styles.view}>
       <SectionHeader
         description="Pick the CSS files that hold your design tokens (src/styles/tokens in the site template), or paste them. Each data-* attribute becomes a collection with its values as modes; light and dark become the Mode collection."
+        level={1}
         title="Import from CSS"
       />
       <input
@@ -98,11 +100,12 @@ export function Import({ onDone }: { onDone: () => void }) {
       )}
       {project && !('error' in project) && (
         <p className={styles.meta}>
-          {project.model.summary.variables} variables in {project.model.summary.collections}{' '}
-          collections, {project.model.styles?.text.length ?? 0} text styles and{' '}
-          {project.model.styles?.effects.length ?? 0} effect styles.
+          {plural(project.model.summary.variables, 'variable')} in{' '}
+          {plural(project.model.summary.collections, 'collection')},{' '}
+          {plural(project.model.styles?.text.length ?? 0, 'text style')} and{' '}
+          {plural(project.model.styles?.effects.length ?? 0, 'effect style')}.
           {project.skipped.length > 0 &&
-            ` ${project.skipped.length} tokens are not Figma variables (shadows, font stacks and colors computed from others).`}{' '}
+            ` ${formatCount(project.skipped.length)} tokens are not Figma variables (shadows, font stacks and colors computed from others).`}{' '}
           {project.notes.join(' ')}
         </p>
       )}
@@ -117,7 +120,7 @@ export function Import({ onDone }: { onDone: () => void }) {
         </Button>
         {pending > 0 && (
           <Button loading={busy === 'apply'} onClick={() => send('apply')} variant="primary">
-            {`Apply ${pending} ${pending === 1 ? 'change' : 'changes'}`}
+            {`Apply ${plural(pending, 'change')}`}
           </Button>
         )}
         <Button onClick={onDone} variant="ghost">

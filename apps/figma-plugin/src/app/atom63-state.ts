@@ -10,6 +10,7 @@ import type {
   DesignSystemProgress,
   DesignSystemTable,
 } from '../messages'
+import { formatCount, plural } from './format'
 
 export type Atom63Phase = 'scanning' | 'idle' | 'building' | 'checking'
 
@@ -149,26 +150,44 @@ export function progressLabel(progress: DesignSystemProgress | null): string {
   const what = PHASES[progress.phase]
   const named = progress.label ? `${what} ${progress.label}` : what
   return progress.phase === 'components' || progress.phase === 'card'
-    ? `${named} (${progress.done} of ${progress.total} components)`
+    ? `${named} (${formatCount(progress.done)} of ${plural(progress.total, 'component')})`
     : named
 }
 
-const plural = (count: number, one: string, many = `${one}s`) =>
-  `${count} ${count === 1 ? one : many}`
+/** What the file holds of Atom63's tokens, for the table. */
+export function tokensStatus(atom63: DesignSystemTable['atom63']): string {
+  if (!atom63) return 'None yet'
+  return `${plural(atom63.variables, 'variable')} in ${plural(atom63.collections.length, 'collection')}`
+}
+
+/**
+ * Whether a component is built, for the table. The set lives inside its spec
+ * card, so a built component is one with variants; a set left on the page
+ * without a card is built too, its card still to come.
+ */
+export function componentStatus(component: DesignSystemTable['components'][number]): string {
+  if (component.variants === 0) return 'Not built yet'
+  const variants = plural(component.variants, 'variant')
+  if (component.card) return `${variants}, spec card`
+  if (component.setOnPage) return `${variants} on the page, no spec card yet`
+  return `${variants}, no spec card`
+}
 
 /** What a build changed, for the result: variables, styles, and each component. */
 export function builtSummary(built: DesignSystemOutcome | null, checked: DesignSystemOutcome) {
   const tokens = built?.tokens.applied
   const styles = built?.styles?.applied
   const lines = [
-    `${tokens?.created ?? 0} variables created, ${tokens?.updated ?? 0} updated; ${styles?.created ?? 0} styles created, ${styles?.updated ?? 0} updated.`,
+    `${plural(tokens?.created ?? 0, 'variable')} created, ${formatCount(tokens?.updated ?? 0)} updated; ${plural(styles?.created ?? 0, 'style')} created, ${formatCount(styles?.updated ?? 0)} updated.`,
   ]
   for (const component of checked.components) {
     const applied = built?.components.find(item => item.name === component.name)?.applied
     const card = applied?.card
     lines.push(
       `${component.name}: ${plural(component.variants, 'variant')}, spec card${
-        card ? ` (${card.created} parts created, ${card.updated} updated)` : ''
+        card
+          ? ` (${plural(card.created, 'item')} created, ${formatCount(card.updated)} updated)`
+          : ''
       }.`
     )
   }
@@ -205,7 +224,7 @@ export function failureLines(
     const card = plan.card
     if (card && card.create + card.update > 0)
       lines.push(
-        `${component.name} spec card: ${plural(card.create + card.update, 'part')} to create or update`
+        `${component.name} spec card: ${plural(card.create + card.update, 'item')} to create or update`
       )
   }
   return [...lines, ...retryLines(built)]
