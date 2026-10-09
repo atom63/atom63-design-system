@@ -1,8 +1,9 @@
 // The plugin's main thread: shows the UI, keeps settings, and runs the token
-// sync engine against this file. Cipher by Atom63, You Zhang (ATOM63).
+// sync engine and the Atom63 design system build against this file.
+// Cipher by Atom63, You Zhang (ATOM63).
 /// <reference types="@figma/plugin-typings" />
 
-import { figmaApi } from './main/figma-api'
+import { figmaApi, nodesApi } from './main/figma-api'
 import { handle } from './main/handle'
 import type { MainToUI, PluginSettings, UIToMain } from './messages'
 
@@ -25,12 +26,18 @@ async function receive(message: UIToMain) {
       await figma.clientStorage.setAsync('settings', { ...(await loadSettings()), ...message.data })
       return
     }
-    const reply = await handle(figmaApi(), message)
+    const reply = await handle(figmaApi(), message, {
+      nodes: nodesApi,
+      progress: data => post({ type: 'progress', data }),
+    })
     if (reply) post(reply)
   } catch (error) {
     post({
       type: 'error',
-      data: { message: error instanceof Error ? error.message : String(error) },
+      data: {
+        message: error instanceof Error ? error.message : String(error),
+        for: message.type,
+      },
     })
   }
 }

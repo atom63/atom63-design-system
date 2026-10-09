@@ -2,8 +2,11 @@ import { resolve } from 'node:path'
 
 import { buildProjectModel, deriveStyles } from '@atom63/figma'
 import { readTokenDirectory } from '@atom63/figma/node'
+import { atom63Models } from '../src/main/atom63-models'
 import { handle } from '../src/main/handle'
+import type { DesignSystemProgress } from '../src/messages'
 import { createFakeFigma } from '../../../packages/figma/test/fake-figma'
+import { createFakeNodes } from '../../../packages/figma/test/fake-nodes'
 
 const project = buildProjectModel(
   readTokenDirectory(resolve(__dirname, '../../../packages/figma/test/fixtures/project-tokens'))
@@ -60,5 +63,103 @@ describe('the main thread', () => {
       wanted: 'Geist',
       used: 'Inter',
     })
+  })
+})
+
+describe('the Atom63 design system', () => {
+  const setup = () => {
+    const fake = createFakeNodes()
+    const progress: DesignSystemProgress[] = []
+    const context = {
+      nodes: () => fake.figma,
+      progress: (p: DesignSystemProgress) => progress.push(p),
+    }
+    return { fake, progress, context }
+  }
+
+  it('bundles the generated token and component models', () => {
+    expect(atom63Models.sync.summary.variables).toBeGreaterThan(0)
+    expect(atom63Models.sync.styles).toBeUndefined()
+    expect(atom63Models.components.map(model => model.component)).toEqual(['Button'])
+    expect(atom63Models.components[0].doc).toBeDefined()
+  })
+
+  it('reads what an empty file holds', async () => {
+    const { fake, context } = setup()
+    expect(await handle(fake.figma, { type: 'atom63-scan' }, context)).toEqual({
+      type: 'atom63-table',
+      data: {
+        atom63: null,
+        template: null,
+        blocked: null,
+        components: [{ name: 'Button', variants: 0, card: false, setOnPage: false }],
+      },
+    })
+  })
+
+  it('builds with progress, returns the outcome and the new table, then checks clean', async () => {
+    const { fake, progress, context } = setup()
+    const reply = await handle(fake.figma, { type: 'atom63-build' }, context)
+    if (reply?.type !== 'atom63-built') throw new Error(`unexpected ${reply?.type}`)
+    if (reply.data.status === 'blocked') throw new Error('blocked')
+    expect(reply.data.status).toBe('pass')
+    expect(reply.data.components[0].verification).toMatchObject({ create: 0, update: 0 })
+    expect(reply.data.table.atom63?.variables).toBe(atom63Models.sync.summary.variables)
+    expect(reply.data.table.components).toEqual([
+      expect.objectContaining({ name: 'Button', card: true, setOnPage: false }),
+    ])
+    expect(progress.map(item => item.phase)).toEqual([
+      'tokens',
+      'tokens',
+      'styles',
+      'styles',
+      'components',
+      'card',
+      'done',
+    ])
+
+    const writes = fake.writes
+    const check = await handle(fake.figma, { type: 'atom63-check' }, context)
+    if (check?.type !== 'atom63-checked') throw new Error(`unexpected ${check?.type}`)
+    expect(check.data.status).toBe('pass')
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('returns a refused build as its result, writing nothing, when the file holds another token set', async () => {
+    const { fake, progress, context } = setup()
+    await handle(fake.figma, { type: 'apply', model: project.model })
+    const writes = fake.writes
+    const reply = await handle(fake.figma, { type: 'atom63-build' }, context)
+    if (reply?.type !== 'atom63-built') throw new Error(`unexpected ${reply?.type}`)
+    const collections = project.model.collections.map(item => item.name)
+    expect(reply.data).toMatchObject({
+      status: 'blocked',
+      reason: expect.stringContaining('This file already holds another token set'),
+      collections,
+      table: { atom63: null, template: { collections } },
+    })
+    expect(reply.data.table.blocked).toBe(
+      reply.data.status === 'blocked' ? reply.data.reason : undefined
+    )
+    expect(progress).toEqual([])
+    expect(fake.writes).toBe(writes)
+  })
+
+  it('rejects a build, check or scan while another is running, then accepts the next', async () => {
+    const { fake, context } = setup()
+    const first = handle(fake.figma, { type: 'atom63-build' }, context)
+    for (const type of ['atom63-check', 'atom63-build', 'atom63-scan'] as const)
+      await expect(handle(fake.figma, { type }, context)).rejects.toThrow(
+        'A build or check is already running'
+      )
+    expect((await first)?.type).toBe('atom63-built')
+    expect((await handle(fake.figma, { type: 'atom63-check' }, context))?.type).toBe(
+      'atom63-checked'
+    )
+  })
+
+  it('needs the node API for the Atom63 messages', async () => {
+    const { figma } = createFakeFigma()
+    await expect(handle(figma, { type: 'atom63-build' })).rejects.toThrow(/node API/)
   })
 })

@@ -1,14 +1,18 @@
 import { Alert as Atom63Alert, AlertDescription, AlertIcon, AlertTitle } from '@atom63/ui-react'
 import { AlertTriangle, CheckCircle2, Info, XCircle } from 'lucide-react'
-import type { ReactNode } from 'react'
+import type { ReactNode, Ref } from 'react'
 
 export interface AlertProps {
   children: ReactNode
   className?: string
+  /** An id for the message, so a control can be described by it. */
+  descriptionId?: string
   /** Replaces the variant's icon. */
   icon?: ReactNode
   showIcon?: boolean
   title?: string
+  /** Makes the title a focusable heading, so a result can take focus when it appears. */
+  titleRef?: Ref<HTMLDivElement>
   variant?: 'info' | 'success' | 'warning' | 'error'
 }
 
@@ -23,16 +27,25 @@ const icons = {
 export function Alert({
   children,
   className,
+  descriptionId,
   icon,
   showIcon = true,
   title,
+  titleRef,
   variant = 'info',
 }: AlertProps) {
   return (
     <Atom63Alert className={className} variant={variant}>
       {showIcon && <AlertIcon>{icon ?? icons[variant]}</AlertIcon>}
-      {title && <AlertTitle>{title}</AlertTitle>}
-      <AlertDescription>{children}</AlertDescription>
+      {title &&
+        (titleRef ? (
+          <AlertTitle aria-level={3} ref={titleRef} role="heading" tabIndex={-1}>
+            {title}
+          </AlertTitle>
+        ) : (
+          <AlertTitle>{title}</AlertTitle>
+        ))}
+      <AlertDescription id={descriptionId}>{children}</AlertDescription>
     </Atom63Alert>
   )
 }

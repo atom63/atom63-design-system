@@ -3,21 +3,54 @@ import { useEffect, useState } from 'react'
 
 import { Button, LoadingState, SectionHeader } from '../components/ui'
 import { useFigmaMessage, usePostMessage } from '../hooks/useFigmaMessage'
+import type { DesignSystemTable } from '../messages'
 import styles from './app.module.css'
 import { summarizeTable } from './table-summary'
 
-/** What the file holds: two ways in for an empty file, a summary for a file with a table. */
-export function Home({ onCreate, onImport }: { onCreate: () => void; onImport: () => void }) {
+const ATOM63_LINE =
+  'Variables, text and effect styles, and the Atom63 components with their spec cards.'
+
+/**
+ * What the file holds: three ways in for an empty file, a summary for a file
+ * with a table, and an update when that table is Atom63's.
+ */
+export function Home({
+  onAtom63,
+  onCreate,
+  onImport,
+}: {
+  /** Opens the Atom63 view with the table this view already scanned, if any. */
+  onAtom63: (table: DesignSystemTable | null) => void
+  onCreate: () => void
+  onImport: () => void
+}) {
   const postMessage = usePostMessage()
   const [table, setTable] = useState<TokenTable | null>(null)
+  // undefined while the Atom63 scan runs; null when it could not run.
+  const [atom63, setAtom63] = useState<DesignSystemTable | null | undefined>(undefined)
 
-  useEffect(() => postMessage({ type: 'scan' }), [postMessage])
+  useEffect(() => {
+    postMessage({ type: 'scan' })
+    postMessage({ type: 'atom63-scan' })
+  }, [postMessage])
   useFigmaMessage(message => {
     if (message.type === 'table') setTable(message.data)
+    if (message.type === 'atom63-table') setAtom63(message.data)
+    if (message.type === 'error' && (!message.data.for || message.data.for === 'atom63-scan'))
+      setAtom63(current => current ?? null)
   })
 
-  if (!table) return <LoadingState />
+  if (!table || atom63 === undefined) return <LoadingState />
   const summary = summarizeTable(table)
+  const isAtom63 = !!atom63?.atom63 && !atom63.template
+  const atom63Entry = (
+    <div className={styles.entry}>
+      <Button onClick={() => onAtom63(atom63)} variant="secondary">
+        Atom63 design system
+      </Button>
+      <p className={styles.meta}>{ATOM63_LINE}</p>
+    </div>
+  )
 
   if (summary.empty)
     return (
@@ -32,6 +65,23 @@ export function Home({ onCreate, onImport }: { onCreate: () => void; onImport: (
           </Button>
           <Button onClick={onImport} variant="secondary">
             Import from CSS
+          </Button>
+        </div>
+        {atom63Entry}
+      </div>
+    )
+
+  if (isAtom63)
+    return (
+      <div className={styles.view}>
+        <SectionHeader
+          description={`This file holds the Atom63 design system: ${summary.line}`}
+          title="Atom63 design system"
+        />
+        <p className={styles.meta}>{ATOM63_LINE}</p>
+        <div className={styles.actions}>
+          <Button onClick={() => onAtom63(atom63)} variant="primary">
+            Update Atom63 design system
           </Button>
         </div>
       </div>
@@ -61,6 +111,7 @@ export function Home({ onCreate, onImport }: { onCreate: () => void; onImport: (
           Import again
         </Button>
       </div>
+      {atom63Entry}
     </div>
   )
 }

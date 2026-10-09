@@ -72,3 +72,22 @@
   padding: var(--spacing-xl);
   border: 1px solid;
 }
+
+.progress {
+  display: grid;
+  gap: var(--spacing-sm);
+}
+
+.lines {
+  display: grid;
+  gap: var(--spacing-xs);
+  margin: 0;
+  padding-inline-start: var(--spacing-xl);
+  font-size: 12px;
+}
+
+.entry {
+  display: grid;
+  gap: var(--spacing-xs);
+  justify-items: start;
+}
