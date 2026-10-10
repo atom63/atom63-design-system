@@ -79,6 +79,9 @@
     ),
     transparent 20%
   );
+  /* The sidebar surface (shadcn `sidebar`): the muted surface in light mode and
+     the page surface in dark mode. */
+  --a63-surface-sidebar: var(--a63-surface-muted);
   /* Text */
   --a63-text-primary: var(--surface-light-12);
   --a63-text-secondary: var(--surface-light-11);
@@ -117,11 +120,34 @@
      Step 600 on light surfaces and 500 on dark ones (the .dark block), so icons
      drawn in the accent reach WCAG's 3:1 for graphics in both modes. */
   --a63-status-info: var(--color-info-600);
-  --a63-status-info-foreground: white;
+  /* Text and icons on a solid fill of this status. Same auto-contrast step as
+     the primary foreground: near-black on bright fills, near-white on dark ones. */
+  --a63-status-info-foreground: oklch(
+    from var(--a63-status-info) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h
+  );
   --a63-status-success: var(--color-success-600);
-  --a63-status-success-foreground: white;
+  /* Text and icons on a solid fill of this status. Same auto-contrast step as
+     the primary foreground: near-black on bright fills, near-white on dark ones. */
+  --a63-status-success-foreground: oklch(
+    from var(--a63-status-success) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h
+  );
   --a63-status-warning: var(--color-warning-600);
-  --a63-status-warning-foreground: white;
+  /* Text and icons on a solid fill of this status. Same auto-contrast step as
+     the primary foreground: near-black on bright fills, near-white on dark ones. */
+  --a63-status-warning-foreground: oklch(
+    from var(--a63-status-warning) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h
+  );
+  /* Chart series colors. Series 1 is the primary; 2–5 are fixed hues that stay
+     distinct from it and from each other (500 on light surfaces, 400 on dark). */
+  --a63-chart-1: var(--a63-action-primary);
+  --a63-chart-2: var(--color-teal-500);
+  --a63-chart-3: var(--color-amber-500);
+  --a63-chart-4: var(--color-violet-500);
+  --a63-chart-5: var(--color-rose-500);
+  /* A selected item in a list, menu or grid: a light wash of the primary. */
+  --a63-selected-background: color-mix(in oklch, var(--a63-action-primary) 12%, transparent);
+  /* Text and icons of a selected item. */
+  --a63-selected-foreground: var(--a63-text-accent);
 }
 
 :is(.dark, [data-a63-mode='dark']) {
@@ -163,6 +189,7 @@
     ),
     transparent 20%
   );
+  --a63-surface-sidebar: var(--a63-surface-page);
   --a63-text-primary: var(--surface-dark-12);
   --a63-text-secondary: var(--surface-dark-11);
   /* The primary fill is too dark to read as text on dark surfaces. */
@@ -188,4 +215,11 @@
   --a63-status-info: var(--color-info-500);
   --a63-status-success: var(--color-success-500);
   --a63-status-warning: var(--color-warning-500);
+  --a63-chart-1: var(--a63-action-primary);
+  --a63-chart-2: var(--color-teal-400);
+  --a63-chart-3: var(--color-amber-400);
+  --a63-chart-4: var(--color-violet-400);
+  --a63-chart-5: var(--color-rose-400);
+  --a63-selected-background: color-mix(in oklch, var(--a63-action-primary) 12%, transparent);
+  --a63-selected-foreground: var(--a63-text-accent);
 }

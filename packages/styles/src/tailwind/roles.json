@@ -1,0 +1,88 @@
+{
+  "$description": "Semantic color roles: the shadcn role names, kept verbatim, mapped onto the canonical --a63-* tokens. scripts/generate-role-bridges.mjs writes the semantic block of tailwind/theme.css (as --color-<role>) and compat/shadcn.css (as --<role>) from this file. `accent` is the neutral hover and highlight plate, not the brand color.",
+  "groups": [
+    {
+      "label": "Surfaces and text",
+      "roles": {
+        "background": "--a63-surface-page",
+        "foreground": "--a63-text-primary",
+        "card": "--a63-surface-panel",
+        "card-foreground": "--a63-text-primary",
+        "popover": "--a63-surface-overlay",
+        "popover-foreground": "--a63-text-primary",
+        "muted": "--a63-surface-muted",
+        "muted-foreground": "--a63-text-secondary",
+        "secondary": "--a63-surface-muted",
+        "secondary-foreground": "--a63-text-secondary",
+        "accent": "--a63-surface-control-hover",
+        "accent-foreground": "--a63-text-primary",
+        "surface-sunken": "--a63-surface-control"
+      }
+    },
+    {
+      "label": "Borders and focus",
+      "roles": {
+        "border": "--a63-border-subtle",
+        "input": "--a63-border-control",
+        "ring": "--a63-focus-ring"
+      }
+    },
+    {
+      "label": "Actions",
+      "roles": {
+        "primary": "--a63-action-primary",
+        "primary-foreground": "--a63-action-primary-foreground",
+        "destructive": "--a63-action-danger",
+        "destructive-foreground": "--a63-action-danger-foreground"
+      }
+    },
+    {
+      "label": "Status",
+      "roles": {
+        "info": "--a63-status-info",
+        "info-foreground": "--a63-status-info-foreground",
+        "success": "--a63-status-success",
+        "success-foreground": "--a63-status-success-foreground",
+        "warning": "--a63-status-warning",
+        "warning-foreground": "--a63-status-warning-foreground"
+      }
+    },
+    {
+      "label": "Selection",
+      "roles": {
+        "selected": "--a63-selected-background",
+        "selected-foreground": "--a63-selected-foreground"
+      }
+    },
+    {
+      "label": "Charts",
+      "roles": {
+        "chart-1": "--a63-chart-1",
+        "chart-2": "--a63-chart-2",
+        "chart-3": "--a63-chart-3",
+        "chart-4": "--a63-chart-4",
+        "chart-5": "--a63-chart-5"
+      }
+    },
+    {
+      "label": "Sidebar",
+      "roles": {
+        "sidebar": "--a63-surface-sidebar",
+        "sidebar-foreground": "--a63-text-primary",
+        "sidebar-primary": "--a63-action-primary",
+        "sidebar-primary-foreground": "--a63-action-primary-foreground",
+        "sidebar-accent": "--a63-surface-control-hover",
+        "sidebar-accent-foreground": "--a63-text-primary",
+        "sidebar-border": "--a63-border-subtle",
+        "sidebar-ring": "--a63-focus-ring"
+      }
+    },
+    {
+      "label": "Fixed mode references",
+      "roles": {
+        "light": "--surface-light-1",
+        "dark": "--surface-dark-1"
+      }
+    }
+  ]
+}

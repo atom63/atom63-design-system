@@ -61,9 +61,9 @@
   ],
   "summary": {
     "sourceFiles": 56,
-    "declarations": 1683,
-    "uniqueCssVariables": 1059,
-    "figmaMappedDeclarations": 1622
+    "declarations": 1699,
+    "uniqueCssVariables": 1067,
+    "figmaMappedDeclarations": 1638
   },
   "entries": [
     {
@@ -3003,6 +3003,166 @@
       "lifecycle": "preview",
       "aliases": ["--a63-brand-700"],
       "scope": "[data-a63-brand='b3']"
+    },
+    {
+      "name": "a63-chart-1",
+      "cssVar": "--a63-chart-1",
+      "type": "color",
+      "value": "var(--a63-action-primary)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "chart/1",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-chart-1",
+      "cssVar": "--a63-chart-1",
+      "type": "color",
+      "value": "var(--a63-action-primary)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "chart/1",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-chart-2",
+      "cssVar": "--a63-chart-2",
+      "type": "color",
+      "value": "var(--color-teal-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "chart/2",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-teal-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-chart-2",
+      "cssVar": "--a63-chart-2",
+      "type": "color",
+      "value": "var(--color-teal-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "chart/2",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-teal-500"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-chart-3",
+      "cssVar": "--a63-chart-3",
+      "type": "color",
+      "value": "var(--color-amber-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "chart/3",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-amber-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-chart-3",
+      "cssVar": "--a63-chart-3",
+      "type": "color",
+      "value": "var(--color-amber-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "chart/3",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-amber-500"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-chart-4",
+      "cssVar": "--a63-chart-4",
+      "type": "color",
+      "value": "var(--color-violet-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "chart/4",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-violet-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-chart-4",
+      "cssVar": "--a63-chart-4",
+      "type": "color",
+      "value": "var(--color-violet-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "chart/4",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-violet-500"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-chart-5",
+      "cssVar": "--a63-chart-5",
+      "type": "color",
+      "value": "var(--color-rose-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "chart/5",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-rose-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-chart-5",
+      "cssVar": "--a63-chart-5",
+      "type": "color",
+      "value": "var(--color-rose-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "chart/5",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-rose-500"],
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-choice-border-width",
@@ -7181,6 +7341,70 @@
       "scope": "[data-a63-theme='aqua']"
     },
     {
+      "name": "a63-selected-background",
+      "cssVar": "--a63-selected-background",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 12%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "selected/background",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-selected-background",
+      "cssVar": "--a63-selected-background",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 12%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "selected/background",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-selected-foreground",
+      "cssVar": "--a63-selected-foreground",
+      "type": "color",
+      "value": "var(--a63-text-accent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "selected/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-accent"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-selected-foreground",
+      "cssVar": "--a63-selected-foreground",
+      "type": "color",
+      "value": "var(--a63-text-accent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "selected/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-accent"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
       "name": "a63-selection-thumb",
       "cssVar": "--a63-selection-thumb",
       "type": "color",
@@ -7487,7 +7711,7 @@
       "name": "a63-status-info-foreground",
       "cssVar": "--a63-status-info-foreground",
       "type": "color",
-      "value": "white",
+      "value": "oklch( from var(--a63-status-info) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -7496,6 +7720,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
+      "aliases": ["--a63-status-info"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -7534,7 +7759,7 @@
       "name": "a63-status-success-foreground",
       "cssVar": "--a63-status-success-foreground",
       "type": "color",
-      "value": "white",
+      "value": "oklch( from var(--a63-status-success) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -7543,6 +7768,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
+      "aliases": ["--a63-status-success"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -7581,7 +7807,7 @@
       "name": "a63-status-warning-foreground",
       "cssVar": "--a63-status-warning-foreground",
       "type": "color",
-      "value": "white",
+      "value": "oklch( from var(--a63-status-warning) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -7590,6 +7816,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
+      "aliases": ["--a63-status-warning"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -8161,6 +8388,38 @@
       "lifecycle": "preview",
       "aliases": ["--a63-action-primary"],
       "scope": "[data-a63-theme='terminal']"
+    },
+    {
+      "name": "a63-surface-sidebar",
+      "cssVar": "--a63-surface-sidebar",
+      "type": "color",
+      "value": "var(--a63-surface-page)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "surface/sidebar",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-page"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-surface-sidebar",
+      "cssVar": "--a63-surface-sidebar",
+      "type": "color",
+      "value": "var(--a63-surface-muted)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "surface/sidebar",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-muted"],
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-surface-texture-blend",

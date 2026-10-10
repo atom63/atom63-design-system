@@ -4,8 +4,8 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1009,
-    "aliasValues": 600,
+    "variables": 1017,
+    "aliasValues": 616,
     "skipped": 183,
     "computed": 57
   },
@@ -14758,6 +14758,96 @@
           ]
         },
         {
+          "name": "chart/1",
+          "token": "--a63-chart-1",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-action-primary"
+            },
+            "dark": {
+              "alias": "--a63-action-primary"
+            }
+          },
+          "codeSyntax": "var(--a63-chart-1)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "chart/2",
+          "token": "--a63-chart-2",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-teal-500"
+            },
+            "dark": {
+              "alias": "--color-teal-400"
+            }
+          },
+          "codeSyntax": "var(--a63-chart-2)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "chart/3",
+          "token": "--a63-chart-3",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-amber-500"
+            },
+            "dark": {
+              "alias": "--color-amber-400"
+            }
+          },
+          "codeSyntax": "var(--a63-chart-3)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "chart/4",
+          "token": "--a63-chart-4",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-violet-500"
+            },
+            "dark": {
+              "alias": "--color-violet-400"
+            }
+          },
+          "codeSyntax": "var(--a63-chart-4)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "chart/5",
+          "token": "--a63-chart-5",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-rose-500"
+            },
+            "dark": {
+              "alias": "--color-rose-400"
+            }
+          },
+          "codeSyntax": "var(--a63-chart-5)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
           "name": "effect/shadow/2xl",
           "token": "--effect-shadow-2xl",
           "type": "STRING",
@@ -14880,6 +14970,47 @@
           ]
         },
         {
+          "name": "selected/background",
+          "token": "--a63-selected-background",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "composed": {
+                "alias": "--a63-action-primary",
+                "opacity": 12
+              }
+            },
+            "dark": {
+              "composed": {
+                "alias": "--a63-action-primary",
+                "opacity": 12
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-selected-background)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "selected/foreground",
+          "token": "--a63-selected-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-text-accent"
+            },
+            "dark": {
+              "alias": "--a63-text-accent"
+            }
+          },
+          "codeSyntax": "var(--a63-selected-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
           "name": "skeleton/highlight",
           "token": "--a63-skeleton-highlight",
           "type": "COLOR",
@@ -14922,17 +15053,17 @@
           "values": {
             "light": {
               "value": {
-                "r": 1,
-                "g": 1,
+                "r": 0.966718,
+                "g": 0.98156,
                 "b": 1,
                 "a": 1
               }
             },
             "dark": {
               "value": {
-                "r": 1,
-                "g": 1,
-                "b": 1,
+                "r": 0.034602,
+                "g": 0.044008,
+                "b": 0.060799,
                 "a": 1
               }
             }
@@ -14967,17 +15098,17 @@
           "values": {
             "light": {
               "value": {
-                "r": 1,
-                "g": 1,
-                "b": 1,
+                "r": 0.032973,
+                "g": 0.048009,
+                "b": 0.038035,
                 "a": 1
               }
             },
             "dark": {
               "value": {
-                "r": 1,
-                "g": 1,
-                "b": 1,
+                "r": 0.031373,
+                "g": 0.048568,
+                "b": 0.037995,
                 "a": 1
               }
             }
@@ -15012,17 +15143,17 @@
           "values": {
             "light": {
               "value": {
-                "r": 1,
-                "g": 1,
-                "b": 1,
+                "r": 0.053612,
+                "g": 0.041074,
+                "b": 0.029855,
                 "a": 1
               }
             },
             "dark": {
               "value": {
-                "r": 1,
-                "g": 1,
-                "b": 1,
+                "r": 0.054112,
+                "g": 0.041215,
+                "b": 0.027188,
                 "a": 1
               }
             }
@@ -15109,6 +15240,24 @@
             }
           },
           "codeSyntax": "var(--a63-surface-overlay)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "surface/sidebar",
+          "token": "--a63-surface-sidebar",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-surface-muted"
+            },
+            "dark": {
+              "alias": "--a63-surface-page"
+            }
+          },
+          "codeSyntax": "var(--a63-surface-sidebar)",
           "scopes": [
             "FRAME_FILL",
             "SHAPE_FILL"
