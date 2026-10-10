@@ -8,7 +8,8 @@ agent about to change tokens, themes, contracts, or shared UI.
 
 Executable styles package: [`packages/styles/README.md`](../../packages/styles/README.md).
 Runnable adopter example: [`examples/vite-basic`](../../examples/vite-basic).
-Current direction and progress: [roadmap.md](./roadmap.md) (phases A–E) and
+Current direction and progress: [roadmap.md](./roadmap.md) (phases A–E, done),
+[roadmap-next.md](./roadmap-next.md) (next phase, draft) and
 [token-single-source.md](./token-single-source.md) (DTCG as the only token source).
 
 ## What this system is
@@ -50,7 +51,7 @@ Full policy: [authoring-surfaces.md](./authoring-surfaces.md) ← **canonical fo
 ### Humans (new teammate)
 
 1. This page
-2. [roadmap.md](./roadmap.md) — direction, phases and what is done
+2. [roadmap.md](./roadmap.md) — direction, phases and what is done; [roadmap-next.md](./roadmap-next.md) for the next phase
 3. [authoring-surfaces.md](./authoring-surfaces.md) — where to edit
 4. Design-system site: Architecture → Overview, then Foundation → Designing in code
 5. [cross-renderer-contracts.md](./cross-renderer-contracts.md) for React/SwiftUI parity
