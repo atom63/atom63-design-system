@@ -99,7 +99,11 @@
     var(--surface-light-5) calc(100% - var(--a63-surface-tint)),
     var(--a63-brand-400) var(--a63-surface-tint)
   );
-  /* Action — primary + focus ring live in tokens/brand.css (brand-ramp scoped).
+  /* The keyboard focus ring. WCAG 1.4.11 needs 3:1 against the control and the
+     page around it; step 600 reaches that on every brand's light surfaces (the
+     translucent 500 it replaced was about 1.4:1). */
+  --a63-focus-ring: var(--a63-brand-600);
+  /* Action — primary lives in tokens/brand-action.css (brand-ramp scoped).
      Neutral = the default variant's fill; sourced from surfaces (NOT --a63-text-*)
      so a theme can recolor text without turning the default button into a fill. */
   --a63-action-neutral: var(--surface-light-12);
@@ -176,6 +180,8 @@
     var(--surface-dark-7) calc(100% - var(--a63-surface-tint)),
     var(--a63-brand-500) var(--a63-surface-tint)
   );
+  /* Step 400 on dark surfaces: 600 and some brands' 500 fall below 3:1 there. */
+  --a63-focus-ring: var(--a63-brand-400);
   --a63-action-neutral: var(--surface-dark-12);
   --a63-action-neutral-foreground: var(--surface-dark-1);
   --a63-action-danger-hover: color-mix(in oklch, var(--a63-action-danger) 82%, white 8%);

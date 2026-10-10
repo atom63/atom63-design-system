@@ -176,12 +176,17 @@
                   }
                 }
               },
+              "focus-ring": {
+                "$type": "color",
+                "$value": "{a63.brand.600}",
+                "$description": "The keyboard focus ring. WCAG 1.4.11 needs 3:1 against the control and the\npage around it; step 600 reaches that on every brand's light surfaces (the\ntranslucent 500 it replaced was about 1.4:1)."
+              },
               "action": {
                 "neutral": {
                   "$root": {
                     "$type": "color",
                     "$value": "{surface.light.12}",
-                    "$description": "Action — primary + focus ring live in tokens/brand.css (brand-ramp scoped).\nNeutral = the default variant's fill; sourced from surfaces (NOT --a63-text-*)\nso a theme can recolor text without turning the default button into a fill."
+                    "$description": "Action — primary lives in tokens/brand-action.css (brand-ramp scoped).\nNeutral = the default variant's fill; sourced from surfaces (NOT --a63-text-*)\nso a theme can recolor text without turning the default button into a fill."
                   },
                   "foreground": {
                     "$type": "color",
@@ -340,6 +345,11 @@
                     "io.atom63.derive": "color-mix( in oklab, {surface.dark.7} calc(100% - {a63.surface.tint}), {a63.brand.500} {a63.surface.tint} )"
                   }
                 }
+              },
+              "focus-ring": {
+                "$type": "color",
+                "$value": "{a63.brand.400}",
+                "$description": "Step 400 on dark surfaces: 600 and some brands' 500 fall below 3:1 there."
               },
               "action": {
                 "neutral": {

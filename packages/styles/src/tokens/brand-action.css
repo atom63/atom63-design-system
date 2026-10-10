@@ -32,7 +32,6 @@
   --a63-action-primary-text-shadow: none;
   /* The brand as text on light surfaces (semantics.css --a63-text-accent). */
   --a63-brand-text: var(--a63-brand-600);
-  --a63-focus-ring: color-mix(in oklch, var(--a63-brand-500) 30%, transparent);
 }
 
 [data-a63-brand='b3'] {

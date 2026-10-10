@@ -154,6 +154,11 @@ const brands = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6'] as const
 const brandPairs = [
   { fg: '--a63-action-primary-foreground', bg: '--a63-action-primary', min: AA_TEXT },
   { fg: '--a63-text-accent', bg: '--a63-surface-page', min: AA_TEXT },
+  // WCAG 1.4.11: a focus ring is the graphic that shows focus, so it reaches 3:1
+  // against the field it surrounds and the page around it.
+  { fg: '--a63-focus-ring', bg: '--a63-surface-page', min: AA_UI },
+  { fg: '--a63-focus-ring', bg: '--a63-surface-panel', min: AA_UI },
+  { fg: '--a63-focus-ring', bg: '--a63-surface-control', min: AA_UI },
 ] as const
 
 describe('brand contrast (WCAG AA)', () => {

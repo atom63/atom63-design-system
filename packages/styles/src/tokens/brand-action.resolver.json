@@ -38,13 +38,6 @@
                 "$value": "{a63.brand.600}",
                 "$description": "The brand as text on light surfaces (semantics.css --a63-text-accent)."
               }
-            },
-            "focus-ring": {
-              "$type": "color",
-              "$value": "{a63.brand.500}",
-              "$extensions": {
-                "io.atom63.derive": "color-mix(in oklch, {a63.brand.500} 30%, transparent)"
-              }
             }
           }
         }
