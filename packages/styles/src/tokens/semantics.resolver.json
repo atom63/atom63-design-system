@@ -1015,8 +1015,10 @@
               },
               "status": {
                 "info": {
-                  "$type": "color",
-                  "$value": "{color.info.500}",
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{color.info.500}"
+                  },
                   "subtle": {
                     "foreground": {
                       "$type": "color",
@@ -1025,8 +1027,10 @@
                   }
                 },
                 "success": {
-                  "$type": "color",
-                  "$value": "{color.success.500}",
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{color.success.500}"
+                  },
                   "subtle": {
                     "foreground": {
                       "$type": "color",
@@ -1035,8 +1039,10 @@
                   }
                 },
                 "warning": {
-                  "$type": "color",
-                  "$value": "{color.warning.500}",
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{color.warning.500}"
+                  },
                   "subtle": {
                     "foreground": {
                       "$type": "color",

@@ -292,8 +292,11 @@
   --a63-action-danger-hover: color-mix(in oklch, var(--a63-action-danger) 82%, white 8%);
   --a63-action-danger-subtle-foreground: var(--color-danger-400);
   --a63-status-info: var(--color-info-500);
+  --a63-status-info-subtle-foreground: var(--color-info-400);
   --a63-status-success: var(--color-success-500);
+  --a63-status-success-subtle-foreground: var(--color-success-400);
   --a63-status-warning: var(--color-warning-500);
+  --a63-status-warning-subtle-foreground: var(--color-warning-400);
   --a63-chart-2: var(--color-teal-400);
   --a63-chart-3: var(--color-amber-400);
   --a63-chart-4: var(--color-violet-400);

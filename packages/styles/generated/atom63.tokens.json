@@ -61,9 +61,9 @@
   ],
   "summary": {
     "sourceFiles": 56,
-    "declarations": 1771,
+    "declarations": 1774,
     "uniqueCssVariables": 1141,
-    "figmaMappedDeclarations": 1710
+    "figmaMappedDeclarations": 1713
   },
   "entries": [
     {
@@ -8750,6 +8750,22 @@
       "name": "a63-status-info-subtle-foreground",
       "cssVar": "--a63-status-info-subtle-foreground",
       "type": "color",
+      "value": "var(--color-info-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/info/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-info-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-status-info-subtle-foreground",
+      "cssVar": "--a63-status-info-subtle-foreground",
+      "type": "color",
       "value": "var(--color-info-700)",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
@@ -8829,6 +8845,22 @@
       "name": "a63-status-success-subtle-foreground",
       "cssVar": "--a63-status-success-subtle-foreground",
       "type": "color",
+      "value": "var(--color-success-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/success/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-success-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-status-success-subtle-foreground",
+      "cssVar": "--a63-status-success-subtle-foreground",
+      "type": "color",
       "value": "var(--color-success-700)",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
@@ -8903,6 +8935,22 @@
       "lifecycle": "preview",
       "aliases": ["--a63-status-warning"],
       "scope": ":root"
+    },
+    {
+      "name": "a63-status-warning-subtle-foreground",
+      "cssVar": "--a63-status-warning-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-warning-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/warning/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-warning-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-status-warning-subtle-foreground",

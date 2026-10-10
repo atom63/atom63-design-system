@@ -16259,7 +16259,7 @@
               "alias": "--color-info-700"
             },
             "dark": {
-              "alias": "--color-info-700"
+              "alias": "--color-info-400"
             }
           },
           "codeSyntax": "var(--a63-status-info-subtle-foreground)",
@@ -16321,7 +16321,7 @@
               "alias": "--color-success-700"
             },
             "dark": {
-              "alias": "--color-success-700"
+              "alias": "--color-success-400"
             }
           },
           "codeSyntax": "var(--a63-status-success-subtle-foreground)",
@@ -16383,7 +16383,7 @@
               "alias": "--color-warning-800"
             },
             "dark": {
-              "alias": "--color-warning-800"
+              "alias": "--color-warning-400"
             }
           },
           "codeSyntax": "var(--a63-status-warning-subtle-foreground)",
