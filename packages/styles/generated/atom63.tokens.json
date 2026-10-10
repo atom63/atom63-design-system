@@ -61,9 +61,9 @@
   ],
   "summary": {
     "sourceFiles": 56,
-    "declarations": 1696,
-    "uniqueCssVariables": 1067,
-    "figmaMappedDeclarations": 1635
+    "declarations": 1771,
+    "uniqueCssVariables": 1141,
+    "figmaMappedDeclarations": 1710
   },
   "entries": [
     {
@@ -295,6 +295,53 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-action-danger"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-action-danger-subtle",
+      "cssVar": "--a63-action-danger-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-action-danger) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "action/danger/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-danger"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-action-danger-subtle-foreground",
+      "cssVar": "--a63-action-danger-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-danger-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "action/danger/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-danger-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-action-danger-subtle-foreground",
+      "cssVar": "--a63-action-danger-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-danger-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "action/danger/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-danger-700"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -609,7 +656,7 @@
       "name": "a63-badge-amber-accent",
       "cssVar": "--a63-badge-amber-accent",
       "type": "color",
-      "value": "var(--color-amber-500)",
+      "value": "var(--a63-category-amber)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -618,30 +665,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-amber-500"],
+      "aliases": ["--a63-category-amber"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-amber-foreground",
       "cssVar": "--a63-badge-amber-foreground",
       "type": "color",
-      "value": "var(--color-amber-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/amber/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-amber-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-amber-foreground",
-      "cssVar": "--a63-badge-amber-foreground",
-      "type": "color",
-      "value": "var(--color-amber-800)",
+      "value": "var(--a63-category-amber-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -650,14 +681,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-amber-800"],
+      "aliases": ["--a63-category-amber-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-blue-accent",
       "cssVar": "--a63-badge-blue-accent",
       "type": "color",
-      "value": "var(--color-blue-500)",
+      "value": "var(--a63-category-blue)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -666,30 +697,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-blue-500"],
+      "aliases": ["--a63-category-blue"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-blue-foreground",
       "cssVar": "--a63-badge-blue-foreground",
       "type": "color",
-      "value": "var(--color-blue-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/blue/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-blue-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-blue-foreground",
-      "cssVar": "--a63-badge-blue-foreground",
-      "type": "color",
-      "value": "var(--color-blue-700)",
+      "value": "var(--a63-category-blue-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -698,14 +713,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-blue-700"],
+      "aliases": ["--a63-category-blue-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-cyan-accent",
       "cssVar": "--a63-badge-cyan-accent",
       "type": "color",
-      "value": "var(--color-cyan-500)",
+      "value": "var(--a63-category-cyan)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -714,30 +729,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-cyan-500"],
+      "aliases": ["--a63-category-cyan"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-cyan-foreground",
       "cssVar": "--a63-badge-cyan-foreground",
       "type": "color",
-      "value": "var(--color-cyan-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/cyan/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-cyan-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-cyan-foreground",
-      "cssVar": "--a63-badge-cyan-foreground",
-      "type": "color",
-      "value": "var(--color-cyan-800)",
+      "value": "var(--a63-category-cyan-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -746,14 +745,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-cyan-800"],
+      "aliases": ["--a63-category-cyan-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-emerald-accent",
       "cssVar": "--a63-badge-emerald-accent",
       "type": "color",
-      "value": "var(--color-emerald-500)",
+      "value": "var(--a63-category-emerald)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -762,30 +761,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-emerald-500"],
+      "aliases": ["--a63-category-emerald"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-emerald-foreground",
       "cssVar": "--a63-badge-emerald-foreground",
       "type": "color",
-      "value": "var(--color-emerald-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/emerald/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-emerald-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-emerald-foreground",
-      "cssVar": "--a63-badge-emerald-foreground",
-      "type": "color",
-      "value": "var(--color-emerald-800)",
+      "value": "var(--a63-category-emerald-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -794,30 +777,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-emerald-800"],
+      "aliases": ["--a63-category-emerald-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-error-foreground",
       "cssVar": "--a63-badge-error-foreground",
       "type": "color",
-      "value": "var(--color-danger-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/error/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-danger-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-error-foreground",
-      "cssVar": "--a63-badge-error-foreground",
-      "type": "color",
-      "value": "var(--color-danger-700)",
+      "value": "var(--a63-action-danger-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -826,14 +793,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-danger-700"],
+      "aliases": ["--a63-action-danger-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-fuchsia-accent",
       "cssVar": "--a63-badge-fuchsia-accent",
       "type": "color",
-      "value": "var(--color-fuchsia-500)",
+      "value": "var(--a63-category-fuchsia)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -842,30 +809,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-fuchsia-500"],
+      "aliases": ["--a63-category-fuchsia"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-fuchsia-foreground",
       "cssVar": "--a63-badge-fuchsia-foreground",
       "type": "color",
-      "value": "var(--color-fuchsia-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/fuchsia/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-fuchsia-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-fuchsia-foreground",
-      "cssVar": "--a63-badge-fuchsia-foreground",
-      "type": "color",
-      "value": "var(--color-fuchsia-700)",
+      "value": "var(--a63-category-fuchsia-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -874,14 +825,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-fuchsia-700"],
+      "aliases": ["--a63-category-fuchsia-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-green-accent",
       "cssVar": "--a63-badge-green-accent",
       "type": "color",
-      "value": "var(--color-green-500)",
+      "value": "var(--a63-category-green)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -890,30 +841,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-green-500"],
+      "aliases": ["--a63-category-green"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-green-foreground",
       "cssVar": "--a63-badge-green-foreground",
       "type": "color",
-      "value": "var(--color-green-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/green/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-green-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-green-foreground",
-      "cssVar": "--a63-badge-green-foreground",
-      "type": "color",
-      "value": "var(--color-green-800)",
+      "value": "var(--a63-category-green-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -922,14 +857,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-green-800"],
+      "aliases": ["--a63-category-green-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-indigo-accent",
       "cssVar": "--a63-badge-indigo-accent",
       "type": "color",
-      "value": "var(--color-indigo-500)",
+      "value": "var(--a63-category-indigo)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -938,30 +873,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-indigo-500"],
+      "aliases": ["--a63-category-indigo"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-indigo-foreground",
       "cssVar": "--a63-badge-indigo-foreground",
       "type": "color",
-      "value": "var(--color-indigo-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/indigo/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-indigo-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-indigo-foreground",
-      "cssVar": "--a63-badge-indigo-foreground",
-      "type": "color",
-      "value": "var(--color-indigo-700)",
+      "value": "var(--a63-category-indigo-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -970,30 +889,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-indigo-700"],
+      "aliases": ["--a63-category-indigo-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-info-foreground",
       "cssVar": "--a63-badge-info-foreground",
       "type": "color",
-      "value": "var(--color-info-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/info/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-info-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-info-foreground",
-      "cssVar": "--a63-badge-info-foreground",
-      "type": "color",
-      "value": "var(--color-info-700)",
+      "value": "var(--a63-status-info-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1002,14 +905,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-info-700"],
+      "aliases": ["--a63-status-info-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-lime-accent",
       "cssVar": "--a63-badge-lime-accent",
       "type": "color",
-      "value": "var(--color-lime-500)",
+      "value": "var(--a63-category-lime)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1018,30 +921,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-lime-500"],
+      "aliases": ["--a63-category-lime"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-lime-foreground",
       "cssVar": "--a63-badge-lime-foreground",
       "type": "color",
-      "value": "var(--color-lime-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/lime/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-lime-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-lime-foreground",
-      "cssVar": "--a63-badge-lime-foreground",
-      "type": "color",
-      "value": "var(--color-lime-800)",
+      "value": "var(--a63-category-lime-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1050,14 +937,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-lime-800"],
+      "aliases": ["--a63-category-lime-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-neutral-accent",
       "cssVar": "--a63-badge-neutral-accent",
       "type": "color",
-      "value": "var(--color-neutral-500)",
+      "value": "var(--a63-category-neutral)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1066,30 +953,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-neutral-500"],
+      "aliases": ["--a63-category-neutral"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-neutral-foreground",
       "cssVar": "--a63-badge-neutral-foreground",
       "type": "color",
-      "value": "var(--color-neutral-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/neutral/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-neutral-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-neutral-foreground",
-      "cssVar": "--a63-badge-neutral-foreground",
-      "type": "color",
-      "value": "var(--color-neutral-700)",
+      "value": "var(--a63-category-neutral-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1098,14 +969,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-neutral-700"],
+      "aliases": ["--a63-category-neutral-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-orange-accent",
       "cssVar": "--a63-badge-orange-accent",
       "type": "color",
-      "value": "var(--color-orange-500)",
+      "value": "var(--a63-category-orange)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1114,30 +985,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-orange-500"],
+      "aliases": ["--a63-category-orange"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-orange-foreground",
       "cssVar": "--a63-badge-orange-foreground",
       "type": "color",
-      "value": "var(--color-orange-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/orange/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-orange-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-orange-foreground",
-      "cssVar": "--a63-badge-orange-foreground",
-      "type": "color",
-      "value": "var(--color-orange-800)",
+      "value": "var(--a63-category-orange-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1146,14 +1001,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-orange-800"],
+      "aliases": ["--a63-category-orange-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-pink-accent",
       "cssVar": "--a63-badge-pink-accent",
       "type": "color",
-      "value": "var(--color-pink-500)",
+      "value": "var(--a63-category-pink)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1162,30 +1017,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-pink-500"],
+      "aliases": ["--a63-category-pink"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-pink-foreground",
       "cssVar": "--a63-badge-pink-foreground",
       "type": "color",
-      "value": "var(--color-pink-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/pink/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-pink-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-pink-foreground",
-      "cssVar": "--a63-badge-pink-foreground",
-      "type": "color",
-      "value": "var(--color-pink-700)",
+      "value": "var(--a63-category-pink-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1194,14 +1033,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-pink-700"],
+      "aliases": ["--a63-category-pink-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-purple-accent",
       "cssVar": "--a63-badge-purple-accent",
       "type": "color",
-      "value": "var(--color-purple-500)",
+      "value": "var(--a63-category-purple)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1210,30 +1049,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-purple-500"],
+      "aliases": ["--a63-category-purple"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-purple-foreground",
       "cssVar": "--a63-badge-purple-foreground",
       "type": "color",
-      "value": "var(--color-purple-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/purple/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-purple-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-purple-foreground",
-      "cssVar": "--a63-badge-purple-foreground",
-      "type": "color",
-      "value": "var(--color-purple-700)",
+      "value": "var(--a63-category-purple-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1242,14 +1065,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-purple-700"],
+      "aliases": ["--a63-category-purple-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-red-accent",
       "cssVar": "--a63-badge-red-accent",
       "type": "color",
-      "value": "var(--color-red-500)",
+      "value": "var(--a63-category-red)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1258,30 +1081,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-red-500"],
+      "aliases": ["--a63-category-red"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-red-foreground",
       "cssVar": "--a63-badge-red-foreground",
       "type": "color",
-      "value": "var(--color-red-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/red/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-red-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-red-foreground",
-      "cssVar": "--a63-badge-red-foreground",
-      "type": "color",
-      "value": "var(--color-red-700)",
+      "value": "var(--a63-category-red-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1290,14 +1097,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-red-700"],
+      "aliases": ["--a63-category-red-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-rose-accent",
       "cssVar": "--a63-badge-rose-accent",
       "type": "color",
-      "value": "var(--color-rose-500)",
+      "value": "var(--a63-category-rose)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1306,30 +1113,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-rose-500"],
+      "aliases": ["--a63-category-rose"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-rose-foreground",
       "cssVar": "--a63-badge-rose-foreground",
       "type": "color",
-      "value": "var(--color-rose-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/rose/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-rose-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-rose-foreground",
-      "cssVar": "--a63-badge-rose-foreground",
-      "type": "color",
-      "value": "var(--color-rose-700)",
+      "value": "var(--a63-category-rose-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1338,14 +1129,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-rose-700"],
+      "aliases": ["--a63-category-rose-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-sky-accent",
       "cssVar": "--a63-badge-sky-accent",
       "type": "color",
-      "value": "var(--color-sky-500)",
+      "value": "var(--a63-category-sky)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1354,30 +1145,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-sky-500"],
+      "aliases": ["--a63-category-sky"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-sky-foreground",
       "cssVar": "--a63-badge-sky-foreground",
       "type": "color",
-      "value": "var(--color-sky-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/sky/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-sky-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-sky-foreground",
-      "cssVar": "--a63-badge-sky-foreground",
-      "type": "color",
-      "value": "var(--color-sky-700)",
+      "value": "var(--a63-category-sky-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1386,30 +1161,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-sky-700"],
+      "aliases": ["--a63-category-sky-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-success-foreground",
       "cssVar": "--a63-badge-success-foreground",
       "type": "color",
-      "value": "var(--color-success-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/success/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-success-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-success-foreground",
-      "cssVar": "--a63-badge-success-foreground",
-      "type": "color",
-      "value": "var(--color-success-700)",
+      "value": "var(--a63-status-success-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1418,14 +1177,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-success-700"],
+      "aliases": ["--a63-status-success-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-teal-accent",
       "cssVar": "--a63-badge-teal-accent",
       "type": "color",
-      "value": "var(--color-teal-500)",
+      "value": "var(--a63-category-teal)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1434,30 +1193,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-teal-500"],
+      "aliases": ["--a63-category-teal"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-teal-foreground",
       "cssVar": "--a63-badge-teal-foreground",
       "type": "color",
-      "value": "var(--color-teal-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/teal/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-teal-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-teal-foreground",
-      "cssVar": "--a63-badge-teal-foreground",
-      "type": "color",
-      "value": "var(--color-teal-800)",
+      "value": "var(--a63-category-teal-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1466,14 +1209,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-teal-800"],
+      "aliases": ["--a63-category-teal-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-violet-accent",
       "cssVar": "--a63-badge-violet-accent",
       "type": "color",
-      "value": "var(--color-violet-500)",
+      "value": "var(--a63-category-violet)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1482,30 +1225,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-violet-500"],
+      "aliases": ["--a63-category-violet"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-violet-foreground",
       "cssVar": "--a63-badge-violet-foreground",
       "type": "color",
-      "value": "var(--color-violet-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/violet/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-violet-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-violet-foreground",
-      "cssVar": "--a63-badge-violet-foreground",
-      "type": "color",
-      "value": "var(--color-violet-700)",
+      "value": "var(--a63-category-violet-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1514,30 +1241,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-violet-700"],
+      "aliases": ["--a63-category-violet-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-warning-foreground",
       "cssVar": "--a63-badge-warning-foreground",
       "type": "color",
-      "value": "var(--color-warning-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/warning/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-warning-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-warning-foreground",
-      "cssVar": "--a63-badge-warning-foreground",
-      "type": "color",
-      "value": "var(--color-warning-800)",
+      "value": "var(--a63-status-warning-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1546,14 +1257,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-warning-800"],
+      "aliases": ["--a63-status-warning-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-yellow-accent",
       "cssVar": "--a63-badge-yellow-accent",
       "type": "color",
-      "value": "var(--color-yellow-500)",
+      "value": "var(--a63-category-yellow)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1562,30 +1273,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-yellow-500"],
+      "aliases": ["--a63-category-yellow"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-badge-yellow-foreground",
       "cssVar": "--a63-badge-yellow-foreground",
       "type": "color",
-      "value": "var(--color-yellow-400)",
-      "sourceFile": "packages/styles/src/contracts/badge.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "badge/yellow/foreground",
-        "mode": "Dark"
-      },
-      "lifecycle": "preview",
-      "aliases": ["--color-yellow-400"],
-      "scope": ":is(.dark, [data-a63-mode='dark'])"
-    },
-    {
-      "name": "a63-badge-yellow-foreground",
-      "cssVar": "--a63-badge-yellow-foreground",
-      "type": "color",
-      "value": "var(--color-yellow-800)",
+      "value": "var(--a63-category-yellow-subtle-foreground)",
       "sourceFile": "packages/styles/src/contracts/badge.css",
       "layer": "contract",
       "figma": {
@@ -1594,7 +1289,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-yellow-800"],
+      "aliases": ["--a63-category-yellow-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -3003,6 +2698,1370 @@
       "lifecycle": "preview",
       "aliases": ["--a63-brand-700"],
       "scope": "[data-a63-brand='b3']"
+    },
+    {
+      "name": "a63-category-amber",
+      "cssVar": "--a63-category-amber",
+      "type": "color",
+      "value": "var(--color-warning-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/amber"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-warning-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-amber-subtle",
+      "cssVar": "--a63-category-amber-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-amber) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/amber/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-amber"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-amber-subtle-foreground",
+      "cssVar": "--a63-category-amber-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-warning-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/amber/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-warning-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-amber-subtle-foreground",
+      "cssVar": "--a63-category-amber-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-warning-800)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/amber/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-warning-800"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-blue",
+      "cssVar": "--a63-category-blue",
+      "type": "color",
+      "value": "var(--color-blue-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/blue"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-blue-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-blue-subtle",
+      "cssVar": "--a63-category-blue-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-blue) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/blue/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-blue"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-blue-subtle-foreground",
+      "cssVar": "--a63-category-blue-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-blue-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/blue/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-blue-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-blue-subtle-foreground",
+      "cssVar": "--a63-category-blue-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-blue-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/blue/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-blue-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-cyan",
+      "cssVar": "--a63-category-cyan",
+      "type": "color",
+      "value": "var(--color-cyan-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/cyan"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-cyan-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-cyan-subtle",
+      "cssVar": "--a63-category-cyan-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-cyan) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/cyan/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-cyan"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-cyan-subtle-foreground",
+      "cssVar": "--a63-category-cyan-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-cyan-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/cyan/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-cyan-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-cyan-subtle-foreground",
+      "cssVar": "--a63-category-cyan-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-cyan-800)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/cyan/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-cyan-800"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-emerald",
+      "cssVar": "--a63-category-emerald",
+      "type": "color",
+      "value": "var(--color-emerald-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/emerald"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-emerald-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-emerald-subtle",
+      "cssVar": "--a63-category-emerald-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-emerald) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/emerald/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-emerald"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-emerald-subtle-foreground",
+      "cssVar": "--a63-category-emerald-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-emerald-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/emerald/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-emerald-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-emerald-subtle-foreground",
+      "cssVar": "--a63-category-emerald-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-emerald-800)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/emerald/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-emerald-800"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-fuchsia",
+      "cssVar": "--a63-category-fuchsia",
+      "type": "color",
+      "value": "var(--color-fuchsia-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/fuchsia"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-fuchsia-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-fuchsia-subtle",
+      "cssVar": "--a63-category-fuchsia-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-fuchsia) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/fuchsia/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-fuchsia"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-fuchsia-subtle-foreground",
+      "cssVar": "--a63-category-fuchsia-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-fuchsia-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/fuchsia/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-fuchsia-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-fuchsia-subtle-foreground",
+      "cssVar": "--a63-category-fuchsia-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-fuchsia-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/fuchsia/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-fuchsia-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-gray",
+      "cssVar": "--a63-category-gray",
+      "type": "color",
+      "value": "var(--color-gray-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/gray"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-gray-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-gray-subtle",
+      "cssVar": "--a63-category-gray-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-gray) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/gray/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-gray"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-gray-subtle-foreground",
+      "cssVar": "--a63-category-gray-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-gray-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/gray/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-gray-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-gray-subtle-foreground",
+      "cssVar": "--a63-category-gray-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-gray-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/gray/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-gray-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-green",
+      "cssVar": "--a63-category-green",
+      "type": "color",
+      "value": "var(--color-green-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/green"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-green-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-green-subtle",
+      "cssVar": "--a63-category-green-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-green) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/green/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-green"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-green-subtle-foreground",
+      "cssVar": "--a63-category-green-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-green-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/green/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-green-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-green-subtle-foreground",
+      "cssVar": "--a63-category-green-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-green-800)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/green/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-green-800"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-indigo",
+      "cssVar": "--a63-category-indigo",
+      "type": "color",
+      "value": "var(--color-indigo-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/indigo"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-indigo-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-indigo-subtle",
+      "cssVar": "--a63-category-indigo-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-indigo) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/indigo/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-indigo"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-indigo-subtle-foreground",
+      "cssVar": "--a63-category-indigo-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-indigo-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/indigo/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-indigo-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-indigo-subtle-foreground",
+      "cssVar": "--a63-category-indigo-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-indigo-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/indigo/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-indigo-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-lime",
+      "cssVar": "--a63-category-lime",
+      "type": "color",
+      "value": "var(--color-lime-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/lime"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-lime-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-lime-subtle",
+      "cssVar": "--a63-category-lime-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-lime) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/lime/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-lime"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-lime-subtle-foreground",
+      "cssVar": "--a63-category-lime-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-lime-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/lime/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-lime-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-lime-subtle-foreground",
+      "cssVar": "--a63-category-lime-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-lime-800)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/lime/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-lime-800"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-neutral",
+      "cssVar": "--a63-category-neutral",
+      "type": "color",
+      "value": "var(--color-neutral-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/neutral"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-neutral-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-neutral-subtle",
+      "cssVar": "--a63-category-neutral-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-neutral) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/neutral/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-neutral"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-neutral-subtle-foreground",
+      "cssVar": "--a63-category-neutral-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-neutral-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/neutral/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-neutral-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-neutral-subtle-foreground",
+      "cssVar": "--a63-category-neutral-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-neutral-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/neutral/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-neutral-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-orange",
+      "cssVar": "--a63-category-orange",
+      "type": "color",
+      "value": "var(--color-orange-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/orange"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-orange-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-orange-subtle",
+      "cssVar": "--a63-category-orange-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-orange) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/orange/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-orange"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-orange-subtle-foreground",
+      "cssVar": "--a63-category-orange-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-orange-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/orange/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-orange-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-orange-subtle-foreground",
+      "cssVar": "--a63-category-orange-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-orange-800)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/orange/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-orange-800"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-pink",
+      "cssVar": "--a63-category-pink",
+      "type": "color",
+      "value": "var(--color-pink-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/pink"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-pink-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-pink-subtle",
+      "cssVar": "--a63-category-pink-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-pink) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/pink/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-pink"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-pink-subtle-foreground",
+      "cssVar": "--a63-category-pink-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-pink-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/pink/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-pink-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-pink-subtle-foreground",
+      "cssVar": "--a63-category-pink-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-pink-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/pink/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-pink-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-purple",
+      "cssVar": "--a63-category-purple",
+      "type": "color",
+      "value": "var(--color-purple-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/purple"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-purple-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-purple-subtle",
+      "cssVar": "--a63-category-purple-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-purple) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/purple/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-purple"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-purple-subtle-foreground",
+      "cssVar": "--a63-category-purple-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-purple-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/purple/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-purple-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-purple-subtle-foreground",
+      "cssVar": "--a63-category-purple-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-purple-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/purple/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-purple-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-red",
+      "cssVar": "--a63-category-red",
+      "type": "color",
+      "value": "var(--color-red-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/red"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-red-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-red-subtle",
+      "cssVar": "--a63-category-red-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-red) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/red/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-red"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-red-subtle-foreground",
+      "cssVar": "--a63-category-red-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-red-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/red/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-red-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-red-subtle-foreground",
+      "cssVar": "--a63-category-red-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-red-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/red/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-red-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-rose",
+      "cssVar": "--a63-category-rose",
+      "type": "color",
+      "value": "var(--color-rose-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/rose"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-rose-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-rose-subtle",
+      "cssVar": "--a63-category-rose-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-rose) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/rose/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-rose"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-rose-subtle-foreground",
+      "cssVar": "--a63-category-rose-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-rose-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/rose/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-rose-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-rose-subtle-foreground",
+      "cssVar": "--a63-category-rose-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-rose-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/rose/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-rose-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-sky",
+      "cssVar": "--a63-category-sky",
+      "type": "color",
+      "value": "var(--color-sky-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/sky"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-sky-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-sky-subtle",
+      "cssVar": "--a63-category-sky-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-sky) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/sky/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-sky"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-sky-subtle-foreground",
+      "cssVar": "--a63-category-sky-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-sky-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/sky/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-sky-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-sky-subtle-foreground",
+      "cssVar": "--a63-category-sky-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-sky-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/sky/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-sky-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-slate",
+      "cssVar": "--a63-category-slate",
+      "type": "color",
+      "value": "var(--color-slate-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/slate"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-slate-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-slate-subtle",
+      "cssVar": "--a63-category-slate-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-slate) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/slate/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-slate"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-slate-subtle-foreground",
+      "cssVar": "--a63-category-slate-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-slate-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/slate/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-slate-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-slate-subtle-foreground",
+      "cssVar": "--a63-category-slate-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-slate-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/slate/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-slate-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-stone",
+      "cssVar": "--a63-category-stone",
+      "type": "color",
+      "value": "var(--color-stone-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/stone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-stone-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-stone-subtle",
+      "cssVar": "--a63-category-stone-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-stone) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/stone/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-stone"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-stone-subtle-foreground",
+      "cssVar": "--a63-category-stone-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-stone-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/stone/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-stone-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-stone-subtle-foreground",
+      "cssVar": "--a63-category-stone-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-stone-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/stone/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-stone-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-teal",
+      "cssVar": "--a63-category-teal",
+      "type": "color",
+      "value": "var(--color-teal-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/teal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-teal-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-teal-subtle",
+      "cssVar": "--a63-category-teal-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-teal) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/teal/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-teal"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-teal-subtle-foreground",
+      "cssVar": "--a63-category-teal-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-teal-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/teal/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-teal-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-teal-subtle-foreground",
+      "cssVar": "--a63-category-teal-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-teal-800)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/teal/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-teal-800"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-violet",
+      "cssVar": "--a63-category-violet",
+      "type": "color",
+      "value": "var(--color-violet-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/violet"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-violet-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-violet-subtle",
+      "cssVar": "--a63-category-violet-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-violet) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/violet/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-violet"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-violet-subtle-foreground",
+      "cssVar": "--a63-category-violet-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-violet-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/violet/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-violet-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-violet-subtle-foreground",
+      "cssVar": "--a63-category-violet-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-violet-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/violet/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-violet-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-yellow",
+      "cssVar": "--a63-category-yellow",
+      "type": "color",
+      "value": "var(--color-yellow-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/yellow"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-yellow-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-yellow-subtle",
+      "cssVar": "--a63-category-yellow-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-yellow) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/yellow/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-yellow"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-yellow-subtle-foreground",
+      "cssVar": "--a63-category-yellow-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-yellow-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/yellow/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-yellow-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-yellow-subtle-foreground",
+      "cssVar": "--a63-category-yellow-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-yellow-800)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/yellow/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-yellow-800"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-category-zinc",
+      "cssVar": "--a63-category-zinc",
+      "type": "color",
+      "value": "var(--color-zinc-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/zinc"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-zinc-500"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-zinc-subtle",
+      "cssVar": "--a63-category-zinc-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-category-zinc) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/zinc/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-zinc"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-category-zinc-subtle-foreground",
+      "cssVar": "--a63-category-zinc-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-zinc-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/zinc/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-zinc-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-category-zinc-subtle-foreground",
+      "cssVar": "--a63-category-zinc-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-zinc-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "category/zinc/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-zinc-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-chart-1",
@@ -7673,6 +8732,37 @@
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
+      "name": "a63-status-info-subtle",
+      "cssVar": "--a63-status-info-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-status-info) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/info/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-status-info"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-status-info-subtle-foreground",
+      "cssVar": "--a63-status-info-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-info-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/info/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-info-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
       "name": "a63-status-success",
       "cssVar": "--a63-status-success",
       "type": "color",
@@ -7721,6 +8811,37 @@
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
+      "name": "a63-status-success-subtle",
+      "cssVar": "--a63-status-success-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-status-success) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/success/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-status-success"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-status-success-subtle-foreground",
+      "cssVar": "--a63-status-success-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-success-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/success/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-success-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
       "name": "a63-status-warning",
       "cssVar": "--a63-status-warning",
       "type": "color",
@@ -7766,6 +8887,37 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-status-warning"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-status-warning-subtle",
+      "cssVar": "--a63-status-warning-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-status-warning) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/warning/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-status-warning"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-status-warning-subtle-foreground",
+      "cssVar": "--a63-status-warning-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-warning-800)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/warning/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-warning-800"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {

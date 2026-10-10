@@ -1,6 +1,6 @@
 {
   "version": "2025.10",
-  "description": "Badge palette contract — category/tag hues owned by @atom63/styles.\n\nRecipes read --a63-badge-*-accent / --a63-badge-*-foreground only. Accent\nreferences foundation primitives; foreground flips for dark mode contrast.",
+  "description": "Badge palette contract: aliases of the semantic category and status tints (--a63-category-*, --a63-status-*-subtle-*), kept so recipes and themes that read --a63-badge-* keep working.",
   "modifiers": {
     "mode": {
       "default": "light",
@@ -12,353 +12,212 @@
                 "red": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.red.500}"
+                    "$value": "{a63.category.red}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.red.700}"
+                    "$value": "{a63.category.red.subtle.foreground}"
                   }
                 },
                 "orange": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.orange.500}"
+                    "$value": "{a63.category.orange}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.orange.800}"
+                    "$value": "{a63.category.orange.subtle.foreground}"
                   }
                 },
                 "amber": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.amber.500}"
+                    "$value": "{a63.category.amber}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.amber.800}"
+                    "$value": "{a63.category.amber.subtle.foreground}"
                   }
                 },
                 "yellow": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.yellow.500}"
+                    "$value": "{a63.category.yellow}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.yellow.800}"
+                    "$value": "{a63.category.yellow.subtle.foreground}"
                   }
                 },
                 "lime": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.lime.500}"
+                    "$value": "{a63.category.lime}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.lime.800}"
+                    "$value": "{a63.category.lime.subtle.foreground}"
                   }
                 },
                 "green": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.green.500}"
+                    "$value": "{a63.category.green}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.green.800}"
+                    "$value": "{a63.category.green.subtle.foreground}"
                   }
                 },
                 "emerald": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.emerald.500}"
+                    "$value": "{a63.category.emerald}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.emerald.800}"
+                    "$value": "{a63.category.emerald.subtle.foreground}"
                   }
                 },
                 "teal": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.teal.500}"
+                    "$value": "{a63.category.teal}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.teal.800}"
+                    "$value": "{a63.category.teal.subtle.foreground}"
                   }
                 },
                 "cyan": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.cyan.500}"
+                    "$value": "{a63.category.cyan}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.cyan.800}"
+                    "$value": "{a63.category.cyan.subtle.foreground}"
                   }
                 },
                 "sky": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.sky.500}"
+                    "$value": "{a63.category.sky}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.sky.700}"
+                    "$value": "{a63.category.sky.subtle.foreground}"
                   }
                 },
                 "blue": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.blue.500}"
+                    "$value": "{a63.category.blue}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.blue.700}"
+                    "$value": "{a63.category.blue.subtle.foreground}"
                   }
                 },
                 "indigo": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.indigo.500}"
+                    "$value": "{a63.category.indigo}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.indigo.700}"
+                    "$value": "{a63.category.indigo.subtle.foreground}"
                   }
                 },
                 "violet": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.violet.500}"
+                    "$value": "{a63.category.violet}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.violet.700}"
+                    "$value": "{a63.category.violet.subtle.foreground}"
                   }
                 },
                 "purple": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.purple.500}"
+                    "$value": "{a63.category.purple}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.purple.700}"
+                    "$value": "{a63.category.purple.subtle.foreground}"
                   }
                 },
                 "fuchsia": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.fuchsia.500}"
+                    "$value": "{a63.category.fuchsia}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.fuchsia.700}"
+                    "$value": "{a63.category.fuchsia.subtle.foreground}"
                   }
                 },
                 "pink": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.pink.500}"
+                    "$value": "{a63.category.pink}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.pink.700}"
+                    "$value": "{a63.category.pink.subtle.foreground}"
                   }
                 },
                 "rose": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.rose.500}"
+                    "$value": "{a63.category.rose}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.rose.700}"
+                    "$value": "{a63.category.rose.subtle.foreground}"
                   }
                 },
                 "neutral": {
                   "accent": {
                     "$type": "color",
-                    "$value": "{color.neutral.500}"
+                    "$value": "{a63.category.neutral}"
                   },
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.neutral.700}"
+                    "$value": "{a63.category.neutral.subtle.foreground}"
                   }
                 },
                 "info": {
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.info.700}",
-                    "$description": "Status chips: the status color itself is too light for text on its tint."
+                    "$value": "{a63.status.info.subtle.foreground}"
                   }
                 },
                 "success": {
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.success.700}"
+                    "$value": "{a63.status.success.subtle.foreground}"
                   }
                 },
                 "warning": {
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.warning.800}"
+                    "$value": "{a63.status.warning.subtle.foreground}"
                   }
                 },
                 "error": {
                   "foreground": {
                     "$type": "color",
-                    "$value": "{color.danger.700}",
-                    "$description": "Error chips: the danger action color is a fill, too dark for text on its tint in dark mode."
+                    "$value": "{a63.action.danger.subtle.foreground}"
                   }
                 }
               }
             }
           }
         ],
-        "dark": [
-          {
-            "a63": {
-              "badge": {
-                "red": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.red.400}"
-                  }
-                },
-                "orange": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.orange.400}"
-                  }
-                },
-                "amber": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.amber.400}"
-                  }
-                },
-                "yellow": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.yellow.400}"
-                  }
-                },
-                "lime": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.lime.400}"
-                  }
-                },
-                "green": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.green.400}"
-                  }
-                },
-                "emerald": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.emerald.400}"
-                  }
-                },
-                "teal": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.teal.400}"
-                  }
-                },
-                "cyan": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.cyan.400}"
-                  }
-                },
-                "sky": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.sky.400}"
-                  }
-                },
-                "blue": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.blue.400}"
-                  }
-                },
-                "indigo": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.indigo.400}"
-                  }
-                },
-                "violet": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.violet.400}"
-                  }
-                },
-                "purple": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.purple.400}"
-                  }
-                },
-                "fuchsia": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.fuchsia.400}"
-                  }
-                },
-                "pink": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.pink.400}"
-                  }
-                },
-                "rose": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.rose.400}"
-                  }
-                },
-                "neutral": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.neutral.400}"
-                  }
-                },
-                "info": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.info.400}"
-                  }
-                },
-                "success": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.success.400}"
-                  }
-                },
-                "warning": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.warning.400}"
-                  }
-                },
-                "error": {
-                  "foreground": {
-                    "$type": "color",
-                    "$value": "{color.danger.400}"
-                  }
-                }
-              }
-            }
-          }
-        ]
+        "dark": []
       }
     }
   },

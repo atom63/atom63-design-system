@@ -44,6 +44,16 @@
   --warning: var(--a63-status-warning);
   --warning-foreground: var(--a63-status-warning-foreground);
 
+  /* Tints */
+  --destructive-subtle: var(--a63-action-danger-subtle);
+  --destructive-subtle-foreground: var(--a63-action-danger-subtle-foreground);
+  --info-subtle: var(--a63-status-info-subtle);
+  --info-subtle-foreground: var(--a63-status-info-subtle-foreground);
+  --success-subtle: var(--a63-status-success-subtle);
+  --success-subtle-foreground: var(--a63-status-success-subtle-foreground);
+  --warning-subtle: var(--a63-status-warning-subtle);
+  --warning-subtle-foreground: var(--a63-status-warning-subtle-foreground);
+
   /* Selection */
   --selected: var(--a63-selected-background);
   --selected-foreground: var(--a63-selected-foreground);
@@ -54,6 +64,74 @@
   --chart-3: var(--a63-chart-3);
   --chart-4: var(--a63-chart-4);
   --chart-5: var(--a63-chart-5);
+
+  /* Categories */
+  --category-red: var(--a63-category-red);
+  --category-red-subtle: var(--a63-category-red-subtle);
+  --category-red-subtle-foreground: var(--a63-category-red-subtle-foreground);
+  --category-orange: var(--a63-category-orange);
+  --category-orange-subtle: var(--a63-category-orange-subtle);
+  --category-orange-subtle-foreground: var(--a63-category-orange-subtle-foreground);
+  --category-amber: var(--a63-category-amber);
+  --category-amber-subtle: var(--a63-category-amber-subtle);
+  --category-amber-subtle-foreground: var(--a63-category-amber-subtle-foreground);
+  --category-yellow: var(--a63-category-yellow);
+  --category-yellow-subtle: var(--a63-category-yellow-subtle);
+  --category-yellow-subtle-foreground: var(--a63-category-yellow-subtle-foreground);
+  --category-lime: var(--a63-category-lime);
+  --category-lime-subtle: var(--a63-category-lime-subtle);
+  --category-lime-subtle-foreground: var(--a63-category-lime-subtle-foreground);
+  --category-green: var(--a63-category-green);
+  --category-green-subtle: var(--a63-category-green-subtle);
+  --category-green-subtle-foreground: var(--a63-category-green-subtle-foreground);
+  --category-emerald: var(--a63-category-emerald);
+  --category-emerald-subtle: var(--a63-category-emerald-subtle);
+  --category-emerald-subtle-foreground: var(--a63-category-emerald-subtle-foreground);
+  --category-teal: var(--a63-category-teal);
+  --category-teal-subtle: var(--a63-category-teal-subtle);
+  --category-teal-subtle-foreground: var(--a63-category-teal-subtle-foreground);
+  --category-cyan: var(--a63-category-cyan);
+  --category-cyan-subtle: var(--a63-category-cyan-subtle);
+  --category-cyan-subtle-foreground: var(--a63-category-cyan-subtle-foreground);
+  --category-sky: var(--a63-category-sky);
+  --category-sky-subtle: var(--a63-category-sky-subtle);
+  --category-sky-subtle-foreground: var(--a63-category-sky-subtle-foreground);
+  --category-blue: var(--a63-category-blue);
+  --category-blue-subtle: var(--a63-category-blue-subtle);
+  --category-blue-subtle-foreground: var(--a63-category-blue-subtle-foreground);
+  --category-indigo: var(--a63-category-indigo);
+  --category-indigo-subtle: var(--a63-category-indigo-subtle);
+  --category-indigo-subtle-foreground: var(--a63-category-indigo-subtle-foreground);
+  --category-violet: var(--a63-category-violet);
+  --category-violet-subtle: var(--a63-category-violet-subtle);
+  --category-violet-subtle-foreground: var(--a63-category-violet-subtle-foreground);
+  --category-purple: var(--a63-category-purple);
+  --category-purple-subtle: var(--a63-category-purple-subtle);
+  --category-purple-subtle-foreground: var(--a63-category-purple-subtle-foreground);
+  --category-fuchsia: var(--a63-category-fuchsia);
+  --category-fuchsia-subtle: var(--a63-category-fuchsia-subtle);
+  --category-fuchsia-subtle-foreground: var(--a63-category-fuchsia-subtle-foreground);
+  --category-pink: var(--a63-category-pink);
+  --category-pink-subtle: var(--a63-category-pink-subtle);
+  --category-pink-subtle-foreground: var(--a63-category-pink-subtle-foreground);
+  --category-rose: var(--a63-category-rose);
+  --category-rose-subtle: var(--a63-category-rose-subtle);
+  --category-rose-subtle-foreground: var(--a63-category-rose-subtle-foreground);
+  --category-slate: var(--a63-category-slate);
+  --category-slate-subtle: var(--a63-category-slate-subtle);
+  --category-slate-subtle-foreground: var(--a63-category-slate-subtle-foreground);
+  --category-gray: var(--a63-category-gray);
+  --category-gray-subtle: var(--a63-category-gray-subtle);
+  --category-gray-subtle-foreground: var(--a63-category-gray-subtle-foreground);
+  --category-zinc: var(--a63-category-zinc);
+  --category-zinc-subtle: var(--a63-category-zinc-subtle);
+  --category-zinc-subtle-foreground: var(--a63-category-zinc-subtle-foreground);
+  --category-neutral: var(--a63-category-neutral);
+  --category-neutral-subtle: var(--a63-category-neutral-subtle);
+  --category-neutral-subtle-foreground: var(--a63-category-neutral-subtle-foreground);
+  --category-stone: var(--a63-category-stone);
+  --category-stone-subtle: var(--a63-category-stone-subtle);
+  --category-stone-subtle-foreground: var(--a63-category-stone-subtle-foreground);
 
   /* Sidebar */
   --sidebar: var(--a63-surface-sidebar);

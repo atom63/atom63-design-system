@@ -8837,6 +8837,42 @@
    ]
   },
   {
+   "cssVar": "--a63-action-danger-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "action/danger/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-action-danger) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-action-danger-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "action/danger/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-danger-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-danger-700)"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-action-disabled-opacity",
    "figma": {
     "collection": "Contract",
@@ -9024,7 +9060,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-amber-500)"
+     "value": "var(--a63-category-amber)"
     }
    ]
   },
@@ -9039,12 +9075,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-amber-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-amber-800)"
+     "value": "var(--a63-category-amber-subtle-foreground)"
     }
    ]
   },
@@ -9060,7 +9092,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-blue-500)"
+     "value": "var(--a63-category-blue)"
     }
    ]
   },
@@ -9075,12 +9107,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-blue-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-blue-700)"
+     "value": "var(--a63-category-blue-subtle-foreground)"
     }
    ]
   },
@@ -9096,7 +9124,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-cyan-500)"
+     "value": "var(--a63-category-cyan)"
     }
    ]
   },
@@ -9111,12 +9139,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-cyan-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-cyan-800)"
+     "value": "var(--a63-category-cyan-subtle-foreground)"
     }
    ]
   },
@@ -9132,7 +9156,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-emerald-500)"
+     "value": "var(--a63-category-emerald)"
     }
    ]
   },
@@ -9147,12 +9171,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-emerald-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-emerald-800)"
+     "value": "var(--a63-category-emerald-subtle-foreground)"
     }
    ]
   },
@@ -9167,12 +9187,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-danger-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-danger-700)"
+     "value": "var(--a63-action-danger-subtle-foreground)"
     }
    ]
   },
@@ -9188,7 +9204,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-fuchsia-500)"
+     "value": "var(--a63-category-fuchsia)"
     }
    ]
   },
@@ -9203,12 +9219,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-fuchsia-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-fuchsia-700)"
+     "value": "var(--a63-category-fuchsia-subtle-foreground)"
     }
    ]
   },
@@ -9224,7 +9236,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-green-500)"
+     "value": "var(--a63-category-green)"
     }
    ]
   },
@@ -9239,12 +9251,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-green-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-green-800)"
+     "value": "var(--a63-category-green-subtle-foreground)"
     }
    ]
   },
@@ -9260,7 +9268,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-indigo-500)"
+     "value": "var(--a63-category-indigo)"
     }
    ]
   },
@@ -9275,12 +9283,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-indigo-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-indigo-700)"
+     "value": "var(--a63-category-indigo-subtle-foreground)"
     }
    ]
   },
@@ -9295,12 +9299,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-info-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-info-700)"
+     "value": "var(--a63-status-info-subtle-foreground)"
     }
    ]
   },
@@ -9316,7 +9316,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-lime-500)"
+     "value": "var(--a63-category-lime)"
     }
    ]
   },
@@ -9331,12 +9331,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-lime-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-lime-800)"
+     "value": "var(--a63-category-lime-subtle-foreground)"
     }
    ]
   },
@@ -9352,7 +9348,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-neutral-500)"
+     "value": "var(--a63-category-neutral)"
     }
    ]
   },
@@ -9367,12 +9363,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-neutral-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-neutral-700)"
+     "value": "var(--a63-category-neutral-subtle-foreground)"
     }
    ]
   },
@@ -9388,7 +9380,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-orange-500)"
+     "value": "var(--a63-category-orange)"
     }
    ]
   },
@@ -9403,12 +9395,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-orange-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-orange-800)"
+     "value": "var(--a63-category-orange-subtle-foreground)"
     }
    ]
   },
@@ -9424,7 +9412,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-pink-500)"
+     "value": "var(--a63-category-pink)"
     }
    ]
   },
@@ -9439,12 +9427,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-pink-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-pink-700)"
+     "value": "var(--a63-category-pink-subtle-foreground)"
     }
    ]
   },
@@ -9460,7 +9444,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-purple-500)"
+     "value": "var(--a63-category-purple)"
     }
    ]
   },
@@ -9475,12 +9459,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-purple-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-purple-700)"
+     "value": "var(--a63-category-purple-subtle-foreground)"
     }
    ]
   },
@@ -9496,7 +9476,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-red-500)"
+     "value": "var(--a63-category-red)"
     }
    ]
   },
@@ -9511,12 +9491,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-red-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-red-700)"
+     "value": "var(--a63-category-red-subtle-foreground)"
     }
    ]
   },
@@ -9532,7 +9508,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-rose-500)"
+     "value": "var(--a63-category-rose)"
     }
    ]
   },
@@ -9547,12 +9523,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-rose-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-rose-700)"
+     "value": "var(--a63-category-rose-subtle-foreground)"
     }
    ]
   },
@@ -9568,7 +9540,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-sky-500)"
+     "value": "var(--a63-category-sky)"
     }
    ]
   },
@@ -9583,12 +9555,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-sky-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-sky-700)"
+     "value": "var(--a63-category-sky-subtle-foreground)"
     }
    ]
   },
@@ -9603,12 +9571,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-success-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-success-700)"
+     "value": "var(--a63-status-success-subtle-foreground)"
     }
    ]
   },
@@ -9624,7 +9588,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-teal-500)"
+     "value": "var(--a63-category-teal)"
     }
    ]
   },
@@ -9639,12 +9603,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-teal-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-teal-800)"
+     "value": "var(--a63-category-teal-subtle-foreground)"
     }
    ]
   },
@@ -9660,7 +9620,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-violet-500)"
+     "value": "var(--a63-category-violet)"
     }
    ]
   },
@@ -9675,12 +9635,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-violet-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-violet-700)"
+     "value": "var(--a63-category-violet-subtle-foreground)"
     }
    ]
   },
@@ -9695,12 +9651,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-warning-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-warning-800)"
+     "value": "var(--a63-status-warning-subtle-foreground)"
     }
    ]
   },
@@ -9716,7 +9668,7 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-yellow-500)"
+     "value": "var(--a63-category-yellow)"
     }
    ]
   },
@@ -9731,12 +9683,8 @@
    "type": "color",
    "values": [
     {
-     "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-yellow-400)"
-    },
-    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-yellow-800)"
+     "value": "var(--a63-category-yellow-subtle-foreground)"
     }
    ]
   },
@@ -10257,6 +10205,1150 @@
     {
      "scope": "[data-a63-brand='b3']",
      "value": "var(--a63-brand-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-amber",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/amber"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-warning-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-amber-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/amber/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-amber) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-amber-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/amber/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-warning-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-warning-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-blue",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/blue"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-blue-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-blue-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/blue/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-blue) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-blue-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/blue/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-blue-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-blue-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-cyan",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/cyan"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-cyan-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-cyan-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/cyan/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-cyan) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-cyan-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/cyan/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-cyan-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-cyan-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-emerald",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/emerald"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-emerald-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-emerald-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/emerald/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-emerald) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-emerald-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/emerald/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-emerald-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-emerald-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-fuchsia",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/fuchsia"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-fuchsia-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-fuchsia-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/fuchsia/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-fuchsia) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-fuchsia-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/fuchsia/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-fuchsia-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-fuchsia-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-gray",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/gray"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-gray-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-gray-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/gray/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-gray) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-gray-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/gray/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-gray-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-gray-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-green",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/green"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-green-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-green-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/green/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-green) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-green-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/green/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-green-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-green-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-indigo",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/indigo"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-indigo-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-indigo-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/indigo/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-indigo) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-indigo-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/indigo/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-indigo-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-indigo-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-lime",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/lime"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-lime-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-lime-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/lime/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-lime) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-lime-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/lime/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-lime-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-lime-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-neutral",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/neutral"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-neutral-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-neutral-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/neutral/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-neutral) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-neutral-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/neutral/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-neutral-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-neutral-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-orange",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/orange"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-orange-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-orange-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/orange/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-orange) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-orange-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/orange/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-orange-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-orange-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-pink",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/pink"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-pink-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-pink-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/pink/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-pink) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-pink-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/pink/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-pink-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-pink-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-purple",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/purple"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-purple-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-purple-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/purple/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-purple) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-purple-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/purple/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-purple-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-purple-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-red",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/red"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-red-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-red-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/red/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-red) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-red-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/red/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-red-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-red-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-rose",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/rose"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-rose-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-rose-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/rose/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-rose) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-rose-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/rose/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-rose-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-rose-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-sky",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/sky"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-sky-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-sky-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/sky/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-sky) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-sky-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/sky/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-sky-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-sky-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-slate",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/slate"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-slate-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-slate-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/slate/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-slate) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-slate-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/slate/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-slate-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-slate-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-stone",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/stone"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-stone-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-stone-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/stone/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-stone) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-stone-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/stone/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-stone-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-stone-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-teal",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/teal"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-teal-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-teal-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/teal/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-teal) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-teal-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/teal/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-teal-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-teal-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-violet",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/violet"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-violet-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-violet-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/violet/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-violet) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-violet-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/violet/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-violet-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-violet-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-yellow",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/yellow"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-yellow-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-yellow-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/yellow/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-yellow) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-yellow-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/yellow/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-yellow-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-yellow-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-zinc",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/zinc"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-zinc-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-zinc-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/zinc/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-zinc) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-zinc-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/zinc/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-zinc-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-zinc-700)"
     }
    ]
   },
@@ -13351,6 +14443,38 @@
    ]
   },
   {
+   "cssVar": "--a63-status-info-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/info/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-status-info) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-status-info-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/info/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-info-700)"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-status-success",
    "figma": {
     "collection": "Semantic",
@@ -13387,6 +14511,38 @@
    ]
   },
   {
+   "cssVar": "--a63-status-success-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/success/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-status-success) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-status-success-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/success/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-success-700)"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-status-warning",
    "figma": {
     "collection": "Semantic",
@@ -13419,6 +14575,38 @@
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "oklch( from var(--a63-status-warning) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h )"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-status-warning-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/warning/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-status-warning) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-status-warning-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/warning/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-warning-800)"
     }
    ]
   },

@@ -39,6 +39,58 @@
   /* Chart series colors. Series 1 is the primary; 2–5 are fixed hues that stay
      distinct from it and from each other (500 on light surfaces, 400 on dark). */
   --a63-chart-1: var(--a63-action-primary);
+  /* Category hues for tags, labels and charts, one per palette hue. `subtle` is a
+     14% tint of the hue for chip backgrounds, mixed in oklab so tinted neutrals render
+     alike in every engine; `subtle.foreground` is the text on that tint (step 700 or 800
+     on light surfaces, 400 on dark). Amber uses the warning ramp. */
+  --a63-category-red: var(--color-red-500);
+  --a63-category-red-subtle: color-mix(in oklab, var(--a63-category-red) 14%, transparent);
+  --a63-category-orange: var(--color-orange-500);
+  --a63-category-orange-subtle: color-mix(in oklab, var(--a63-category-orange) 14%, transparent);
+  --a63-category-amber: var(--color-warning-500);
+  --a63-category-amber-subtle: color-mix(in oklab, var(--a63-category-amber) 14%, transparent);
+  --a63-category-yellow: var(--color-yellow-500);
+  --a63-category-yellow-subtle: color-mix(in oklab, var(--a63-category-yellow) 14%, transparent);
+  --a63-category-lime: var(--color-lime-500);
+  --a63-category-lime-subtle: color-mix(in oklab, var(--a63-category-lime) 14%, transparent);
+  --a63-category-green: var(--color-green-500);
+  --a63-category-green-subtle: color-mix(in oklab, var(--a63-category-green) 14%, transparent);
+  --a63-category-emerald: var(--color-emerald-500);
+  --a63-category-emerald-subtle: color-mix(in oklab, var(--a63-category-emerald) 14%, transparent);
+  --a63-category-teal: var(--color-teal-500);
+  --a63-category-teal-subtle: color-mix(in oklab, var(--a63-category-teal) 14%, transparent);
+  --a63-category-cyan: var(--color-cyan-500);
+  --a63-category-cyan-subtle: color-mix(in oklab, var(--a63-category-cyan) 14%, transparent);
+  --a63-category-sky: var(--color-sky-500);
+  --a63-category-sky-subtle: color-mix(in oklab, var(--a63-category-sky) 14%, transparent);
+  --a63-category-blue: var(--color-blue-500);
+  --a63-category-blue-subtle: color-mix(in oklab, var(--a63-category-blue) 14%, transparent);
+  --a63-category-indigo: var(--color-indigo-500);
+  --a63-category-indigo-subtle: color-mix(in oklab, var(--a63-category-indigo) 14%, transparent);
+  --a63-category-violet: var(--color-violet-500);
+  --a63-category-violet-subtle: color-mix(in oklab, var(--a63-category-violet) 14%, transparent);
+  --a63-category-purple: var(--color-purple-500);
+  --a63-category-purple-subtle: color-mix(in oklab, var(--a63-category-purple) 14%, transparent);
+  --a63-category-fuchsia: var(--color-fuchsia-500);
+  --a63-category-fuchsia-subtle: color-mix(in oklab, var(--a63-category-fuchsia) 14%, transparent);
+  --a63-category-pink: var(--color-pink-500);
+  --a63-category-pink-subtle: color-mix(in oklab, var(--a63-category-pink) 14%, transparent);
+  --a63-category-rose: var(--color-rose-500);
+  --a63-category-rose-subtle: color-mix(in oklab, var(--a63-category-rose) 14%, transparent);
+  --a63-category-slate: var(--color-slate-500);
+  --a63-category-slate-subtle: color-mix(in oklab, var(--a63-category-slate) 14%, transparent);
+  --a63-category-gray: var(--color-gray-500);
+  --a63-category-gray-subtle: color-mix(in oklab, var(--a63-category-gray) 14%, transparent);
+  --a63-category-zinc: var(--color-zinc-500);
+  --a63-category-zinc-subtle: color-mix(in oklab, var(--a63-category-zinc) 14%, transparent);
+  --a63-category-neutral: var(--color-neutral-500);
+  --a63-category-neutral-subtle: color-mix(in oklab, var(--a63-category-neutral) 14%, transparent);
+  --a63-category-stone: var(--color-stone-500);
+  --a63-category-stone-subtle: color-mix(in oklab, var(--a63-category-stone) 14%, transparent);
+  --a63-status-info-subtle: color-mix(in oklab, var(--a63-status-info) 14%, transparent);
+  --a63-status-success-subtle: color-mix(in oklab, var(--a63-status-success) 14%, transparent);
+  --a63-status-warning-subtle: color-mix(in oklab, var(--a63-status-warning) 14%, transparent);
+  --a63-action-danger-subtle: color-mix(in oklab, var(--a63-action-danger) 14%, transparent);
 }
 
 :root,
@@ -121,6 +173,7 @@
   --a63-action-danger: var(--color-danger-600);
   --a63-action-danger-hover: color-mix(in oklch, var(--a63-action-danger) 90%, transparent);
   --a63-action-danger-foreground: white;
+  --a63-action-danger-subtle-foreground: var(--color-danger-700);
   /* Status (danger's status role is served by --a63-action-danger). The base is
      the accent used for tinted callouts (bg = mix toward transparent, text/border
      = the accent); -foreground is the text/icon color ON a SOLID status fill.
@@ -132,22 +185,47 @@
   --a63-status-info-foreground: oklch(
     from var(--a63-status-info) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h
   );
+  --a63-status-info-subtle-foreground: var(--color-info-700);
   --a63-status-success: var(--color-success-600);
   /* Text and icons on a solid fill of this status. Same auto-contrast step as
      the primary foreground: near-black on bright fills, near-white on dark ones. */
   --a63-status-success-foreground: oklch(
     from var(--a63-status-success) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h
   );
+  --a63-status-success-subtle-foreground: var(--color-success-700);
   --a63-status-warning: var(--color-warning-600);
   /* Text and icons on a solid fill of this status. Same auto-contrast step as
      the primary foreground: near-black on bright fills, near-white on dark ones. */
   --a63-status-warning-foreground: oklch(
     from var(--a63-status-warning) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h
   );
+  --a63-status-warning-subtle-foreground: var(--color-warning-800);
   --a63-chart-2: var(--color-teal-500);
   --a63-chart-3: var(--color-amber-500);
   --a63-chart-4: var(--color-violet-500);
   --a63-chart-5: var(--color-rose-500);
+  --a63-category-red-subtle-foreground: var(--color-red-700);
+  --a63-category-orange-subtle-foreground: var(--color-orange-800);
+  --a63-category-amber-subtle-foreground: var(--color-warning-800);
+  --a63-category-yellow-subtle-foreground: var(--color-yellow-800);
+  --a63-category-lime-subtle-foreground: var(--color-lime-800);
+  --a63-category-green-subtle-foreground: var(--color-green-800);
+  --a63-category-emerald-subtle-foreground: var(--color-emerald-800);
+  --a63-category-teal-subtle-foreground: var(--color-teal-800);
+  --a63-category-cyan-subtle-foreground: var(--color-cyan-800);
+  --a63-category-sky-subtle-foreground: var(--color-sky-700);
+  --a63-category-blue-subtle-foreground: var(--color-blue-700);
+  --a63-category-indigo-subtle-foreground: var(--color-indigo-700);
+  --a63-category-violet-subtle-foreground: var(--color-violet-700);
+  --a63-category-purple-subtle-foreground: var(--color-purple-700);
+  --a63-category-fuchsia-subtle-foreground: var(--color-fuchsia-700);
+  --a63-category-pink-subtle-foreground: var(--color-pink-700);
+  --a63-category-rose-subtle-foreground: var(--color-rose-700);
+  --a63-category-slate-subtle-foreground: var(--color-slate-700);
+  --a63-category-gray-subtle-foreground: var(--color-gray-700);
+  --a63-category-zinc-subtle-foreground: var(--color-zinc-700);
+  --a63-category-neutral-subtle-foreground: var(--color-neutral-700);
+  --a63-category-stone-subtle-foreground: var(--color-stone-700);
 }
 
 :is(.dark, [data-a63-mode='dark']) {
@@ -212,6 +290,7 @@
   --a63-action-neutral: var(--surface-dark-12);
   --a63-action-neutral-foreground: var(--surface-dark-1);
   --a63-action-danger-hover: color-mix(in oklch, var(--a63-action-danger) 82%, white 8%);
+  --a63-action-danger-subtle-foreground: var(--color-danger-400);
   --a63-status-info: var(--color-info-500);
   --a63-status-success: var(--color-success-500);
   --a63-status-warning: var(--color-warning-500);
@@ -219,4 +298,26 @@
   --a63-chart-3: var(--color-amber-400);
   --a63-chart-4: var(--color-violet-400);
   --a63-chart-5: var(--color-rose-400);
+  --a63-category-red-subtle-foreground: var(--color-red-400);
+  --a63-category-orange-subtle-foreground: var(--color-orange-400);
+  --a63-category-amber-subtle-foreground: var(--color-warning-400);
+  --a63-category-yellow-subtle-foreground: var(--color-yellow-400);
+  --a63-category-lime-subtle-foreground: var(--color-lime-400);
+  --a63-category-green-subtle-foreground: var(--color-green-400);
+  --a63-category-emerald-subtle-foreground: var(--color-emerald-400);
+  --a63-category-teal-subtle-foreground: var(--color-teal-400);
+  --a63-category-cyan-subtle-foreground: var(--color-cyan-400);
+  --a63-category-sky-subtle-foreground: var(--color-sky-400);
+  --a63-category-blue-subtle-foreground: var(--color-blue-400);
+  --a63-category-indigo-subtle-foreground: var(--color-indigo-400);
+  --a63-category-violet-subtle-foreground: var(--color-violet-400);
+  --a63-category-purple-subtle-foreground: var(--color-purple-400);
+  --a63-category-fuchsia-subtle-foreground: var(--color-fuchsia-400);
+  --a63-category-pink-subtle-foreground: var(--color-pink-400);
+  --a63-category-rose-subtle-foreground: var(--color-rose-400);
+  --a63-category-slate-subtle-foreground: var(--color-slate-400);
+  --a63-category-gray-subtle-foreground: var(--color-gray-400);
+  --a63-category-zinc-subtle-foreground: var(--color-zinc-400);
+  --a63-category-neutral-subtle-foreground: var(--color-neutral-400);
+  --a63-category-stone-subtle-foreground: var(--color-stone-400);
 }
