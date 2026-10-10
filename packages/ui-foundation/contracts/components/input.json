@@ -63,6 +63,66 @@
       }
     }
   },
+  "intent": {
+    "description": "What a text field is, independent of any platform: its size. Chrome options and the native character-width size are web extensions.",
+    "sizes": {
+      "sm": {
+        "platforms": {
+          "web": {
+            "visualHeight": "--a63-control-height-sm"
+          }
+        }
+      },
+      "md": {
+        "platforms": {
+          "web": {
+            "visualHeight": "--a63-control-height-md"
+          }
+        }
+      },
+      "lg": {
+        "platforms": {
+          "web": {
+            "visualHeight": "--a63-control-height-lg"
+          }
+        }
+      }
+    },
+    "platforms": {
+      "web": {
+        "minHitTarget": {
+          "pointer": 24,
+          "touch": 44
+        },
+        "props": {
+          "size": {
+            "list": "sizes",
+            "map": {
+              "sm": {
+                "size": "sm"
+              },
+              "md": {
+                "size": "md"
+              },
+              "lg": {
+                "size": "lg"
+              }
+            },
+            "extensions": {}
+          }
+        },
+        "extensionProps": {
+          "unstyled": "Drops the field chrome so the input nests inside another field.",
+          "shadow": "false drops the recessed field shadow.",
+          "nativeInput": "Renders a native input element instead of the Base UI one.",
+          "size": "A number is forwarded to the native size attribute for character-width sizing."
+        }
+      }
+    },
+    "stateAliases": {
+      "focus": "focus-visible"
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "textField",
