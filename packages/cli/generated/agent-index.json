@@ -10271,7 +10271,11 @@
    "type": "color",
    "values": [
     {
-     "scope": ":root",
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-action-primary)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-action-primary)"
     }
    ]
@@ -13041,7 +13045,11 @@
    "type": "color",
    "values": [
     {
-     "scope": ":root",
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklch, var(--a63-action-primary) 12%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
      "value": "color-mix(in oklch, var(--a63-action-primary) 12%, transparent)"
     }
    ]
@@ -13057,7 +13065,11 @@
    "type": "color",
    "values": [
     {
-     "scope": ":root",
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-text-accent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-text-accent)"
     }
    ]

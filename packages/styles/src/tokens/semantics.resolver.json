@@ -71,28 +71,6 @@
                 "$value": "{color.black.20}",
                 "$description": "On media — the veil over a poster while a control on it is shown."
               }
-            },
-            "selected": {
-              "background": {
-                "$type": "color",
-                "$value": "{a63.action.primary}",
-                "$description": "A selected item in a list, menu or grid: a light wash of the primary.",
-                "$extensions": {
-                  "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 12%, transparent)"
-                }
-              },
-              "foreground": {
-                "$type": "color",
-                "$value": "{a63.text.accent}",
-                "$description": "Text and icons of a selected item."
-              }
-            },
-            "chart": {
-              "1": {
-                "$type": "color",
-                "$value": "{a63.action.primary}",
-                "$description": "Chart series colors. Series 1 is the primary; 2–5 are fixed hues that stay\ndistinct from it and from each other (500 on light surfaces, 400 on dark)."
-              }
             }
           }
         }
@@ -287,6 +265,11 @@
                 }
               },
               "chart": {
+                "1": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$description": "Chart series colors. Series 1 is the primary; 2–5 are fixed hues that stay\ndistinct from it and from each other (500 on light surfaces, 400 on dark)."
+                },
                 "2": {
                   "$type": "color",
                   "$value": "{color.teal.500}"
@@ -302,6 +285,21 @@
                 "5": {
                   "$type": "color",
                   "$value": "{color.rose.500}"
+                }
+              },
+              "selected": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$description": "A selected item in a list, menu or grid: a light wash of the primary.",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 12%, transparent)"
+                  }
+                },
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.text.accent}",
+                  "$description": "Text and icons of a selected item."
                 }
               }
             }
@@ -439,6 +437,10 @@
                 }
               },
               "chart": {
+                "1": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}"
+                },
                 "2": {
                   "$type": "color",
                   "$value": "{color.teal.400}"
@@ -454,6 +456,19 @@
                 "5": {
                   "$type": "color",
                   "$value": "{color.rose.400}"
+                }
+              },
+              "selected": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 12%, transparent)"
+                  }
+                },
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.text.accent}"
                 }
               }
             }

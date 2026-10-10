@@ -61,9 +61,9 @@
   ],
   "summary": {
     "sourceFiles": 56,
-    "declarations": 1696,
+    "declarations": 1699,
     "uniqueCssVariables": 1067,
-    "figmaMappedDeclarations": 1635
+    "figmaMappedDeclarations": 1638
   },
   "entries": [
     {
@@ -3013,11 +3013,28 @@
       "layer": "semantic",
       "figma": {
         "collection": "Semantic",
-        "path": "chart/1"
+        "path": "chart/1",
+        "mode": "Dark"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-action-primary"],
-      "scope": ":root"
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-chart-1",
+      "cssVar": "--a63-chart-1",
+      "type": "color",
+      "value": "var(--a63-action-primary)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "chart/1",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-chart-2",
@@ -7332,11 +7349,28 @@
       "layer": "semantic",
       "figma": {
         "collection": "Semantic",
-        "path": "selected/background"
+        "path": "selected/background",
+        "mode": "Dark"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-action-primary"],
-      "scope": ":root"
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-selected-background",
+      "cssVar": "--a63-selected-background",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 12%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "selected/background",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-selected-foreground",
@@ -7347,11 +7381,28 @@
       "layer": "semantic",
       "figma": {
         "collection": "Semantic",
-        "path": "selected/foreground"
+        "path": "selected/foreground",
+        "mode": "Dark"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-text-accent"],
-      "scope": ":root"
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-selected-foreground",
+      "cssVar": "--a63-selected-foreground",
+      "type": "color",
+      "value": "var(--a63-text-accent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "selected/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-accent"],
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-selection-thumb",

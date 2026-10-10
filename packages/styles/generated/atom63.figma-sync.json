@@ -5,7 +5,7 @@
   "summary": {
     "collections": 14,
     "variables": 1017,
-    "aliasValues": 613,
+    "aliasValues": 616,
     "skipped": 183,
     "computed": 57
   },
@@ -2851,21 +2851,6 @@
           "scopes": []
         },
         {
-          "name": "chart/1",
-          "token": "--a63-chart-1",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "alias": "--a63-action-primary"
-            }
-          },
-          "codeSyntax": "var(--a63-chart-1)",
-          "scopes": [
-            "FRAME_FILL",
-            "SHAPE_FILL"
-          ]
-        },
-        {
           "name": "font/weight/medium",
           "token": "--font-weight-medium",
           "type": "FLOAT",
@@ -3151,38 +3136,6 @@
           "scopes": [
             "FRAME_FILL",
             "SHAPE_FILL"
-          ]
-        },
-        {
-          "name": "selected/background",
-          "token": "--a63-selected-background",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "composed": {
-                "alias": "--a63-action-primary",
-                "opacity": 12
-              }
-            }
-          },
-          "codeSyntax": "var(--a63-selected-background)",
-          "scopes": [
-            "FRAME_FILL",
-            "SHAPE_FILL"
-          ]
-        },
-        {
-          "name": "selected/foreground",
-          "token": "--a63-selected-foreground",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "alias": "--a63-text-accent"
-            }
-          },
-          "codeSyntax": "var(--a63-selected-foreground)",
-          "scopes": [
-            "TEXT_FILL"
           ]
         },
         {
@@ -14805,6 +14758,24 @@
           ]
         },
         {
+          "name": "chart/1",
+          "token": "--a63-chart-1",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-action-primary"
+            },
+            "dark": {
+              "alias": "--a63-action-primary"
+            }
+          },
+          "codeSyntax": "var(--a63-chart-1)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
           "name": "chart/2",
           "token": "--a63-chart-2",
           "type": "COLOR",
@@ -14996,6 +14967,47 @@
           "codeSyntax": "var(--a63-focus-ring)",
           "scopes": [
             "STROKE_COLOR"
+          ]
+        },
+        {
+          "name": "selected/background",
+          "token": "--a63-selected-background",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "composed": {
+                "alias": "--a63-action-primary",
+                "opacity": 12
+              }
+            },
+            "dark": {
+              "composed": {
+                "alias": "--a63-action-primary",
+                "opacity": 12
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-selected-background)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "selected/foreground",
+          "token": "--a63-selected-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-text-accent"
+            },
+            "dark": {
+              "alias": "--a63-text-accent"
+            }
+          },
+          "codeSyntax": "var(--a63-selected-foreground)",
+          "scopes": [
+            "TEXT_FILL"
           ]
         },
         {
