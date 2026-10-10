@@ -20,7 +20,6 @@
  * Usage: node scripts/design-system/vibe.mjs [--brief <id>] [--arms ds,plain]
  *   [--model <id>] [--dry-run] [--keep] [--yes]
  */
-import { execFileSync, spawn } from 'node:child_process'
 import {
   cpSync,
   existsSync,
@@ -42,6 +41,7 @@ import { chromium } from 'playwright'
 
 import { planProject, resolveVersions, writeProject } from '../../packages/create/src/generate.mjs'
 import { syncAgentsBlock } from '../../packages/cli/src/agents-md.mjs'
+import { execCommandSync, spawnCommand, stopCommand } from './lib/command.mjs'
 import {
   changedFiles,
   countTypeErrors,
@@ -120,7 +120,7 @@ if (!dryRun && briefs.length > 1 && !flag('--yes')) {
 
 const run = (command, args, cwd, { quiet = false } = {}) => {
   if (!quiet) process.stdout.write(`\n$ ${command} ${args.join(' ')}   (in ${cwd})\n`)
-  execFileSync(command, args, {
+  execCommandSync(command, args, {
     cwd,
     stdio: quiet ? 'pipe' : 'inherit',
     env: { ...process.env, CI: 'true' },
@@ -130,7 +130,7 @@ const run = (command, args, cwd, { quiet = false } = {}) => {
 /** Run and capture; never throws. */
 const capture = (command, args, cwd) => {
   try {
-    const output = execFileSync(command, args, {
+    const output = execCommandSync(command, args, {
       cwd,
       encoding: 'utf8',
       stdio: 'pipe',
@@ -161,12 +161,12 @@ function snapshot(directory, prefix = '') {
 /** `claude -p` with JSON output; resolves with the parsed result. */
 function claude(args, cwd) {
   return new Promise((resolve, reject) => {
-    const child = spawn('claude', args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] })
+    const child = spawnCommand('claude', args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] })
     let stdout = ''
     let stderr = ''
     child.stdout.on('data', chunk => (stdout += chunk))
     child.stderr.on('data', chunk => (stderr += chunk))
-    const timer = setTimeout(() => child.kill('SIGTERM'), agentTimeoutMs)
+    const timer = setTimeout(() => stopCommand(child), agentTimeoutMs)
     child.on('close', code => {
       clearTimeout(timer)
       try {
@@ -191,7 +191,7 @@ const freePort = () =>
 /** Serve a built project with `vite preview` until `stop()` is called. */
 async function preview(directory) {
   const port = await freePort()
-  const child = spawn(
+  const child = spawnCommand(
     'pnpm',
     ['exec', 'vite', 'preview', '--port', String(port), '--strictPort', '--host', '127.0.0.1'],
     { cwd: directory, stdio: 'ignore' }
@@ -199,13 +199,13 @@ async function preview(directory) {
   const url = `http://127.0.0.1:${port}`
   for (let attempt = 0; attempt < 60; attempt++) {
     try {
-      if ((await fetch(url)).ok) return { url, stop: () => child.kill('SIGTERM') }
+      if ((await fetch(url)).ok) return { url, stop: () => stopCommand(child) }
     } catch {
       // not up yet
     }
     await new Promise(resolve => setTimeout(resolve, 500))
   }
-  child.kill('SIGTERM')
+  stopCommand(child)
   throw new Error('vite preview did not start')
 }
 

@@ -6,12 +6,13 @@
  *
  * `--check` fails when the checked-in file no longer matches the components.
  */
-import { spawnSync } from 'node:child_process'
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
+
+import { spawnCommandSync } from '../../../scripts/design-system/lib/command.mjs'
 
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const inputPath = path.join(packageRoot, 'scripts/utilities.input.css')
@@ -28,7 +29,7 @@ const header = `/*
 const directory = await mkdtemp(path.join(tmpdir(), 'atom63-ui-react-utilities-'))
 try {
   const compiledPath = path.join(directory, 'utilities.css')
-  const result = spawnSync(tailwindBin, ['--input', inputPath, '--output', compiledPath], {
+  const result = spawnCommandSync(tailwindBin, ['--input', inputPath, '--output', compiledPath], {
     cwd: packageRoot,
     encoding: 'utf8',
   })

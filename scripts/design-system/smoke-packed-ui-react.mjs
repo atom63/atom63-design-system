@@ -1,9 +1,10 @@
-import { spawn } from 'node:child_process'
 import { createRequire } from 'node:module'
 import { access, mkdir, mkdtemp, readFile, readdir, rm, unlink, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { basename, dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+
+import { spawnCommand } from './lib/command.mjs'
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url))
 const repositoryRoot = resolve(scriptDirectory, '../..')
@@ -27,7 +28,7 @@ const tarballSearchDirectories = [
 
 function run(command, args, { cwd = repositoryRoot, capture = false } = {}) {
   return new Promise((resolvePromise, reject) => {
-    const child = spawn(command, args, {
+    const child = spawnCommand(command, args, {
       cwd,
       env: process.env,
       shell: false,

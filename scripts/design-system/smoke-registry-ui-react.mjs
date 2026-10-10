@@ -1,9 +1,10 @@
-import { spawn } from 'node:child_process'
 import { mkdir, mkdtemp, readFile, realpath, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { dirname, relative, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import prettier from 'prettier'
+
+import { spawnCommand } from './lib/command.mjs'
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url))
 const repositoryRoot = resolve(scriptDirectory, '../..')
@@ -47,7 +48,7 @@ function assert(condition, message) {
 
 function run(command, args, { cwd } = {}) {
   return new Promise((resolvePromise, reject) => {
-    const child = spawn(command, args, {
+    const child = spawnCommand(command, args, {
       cwd,
       env: process.env,
       shell: false,
