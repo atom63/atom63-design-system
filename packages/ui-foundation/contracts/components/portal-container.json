@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "portal-container",
+  "maturity": "stable",
   "lists": {
     "targets": ["element", "shadow-root", "null", "undefined"],
     "states": ["unprovided", "pending", "resolved"],

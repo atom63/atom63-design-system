@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "input-otp",
+  "maturity": "stable",
   "exportPrefix": "inputOTP",
   "lists": {
     "states": ["rest", "active", "disabled", "invalid"],

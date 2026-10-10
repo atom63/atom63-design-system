@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "context-menu",
+  "maturity": "stable",
   "lists": {
     "slots": [
       "context-menu",

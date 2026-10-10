@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "search-field",
+  "maturity": "stable",
   "lists": {
     "states": ["empty", "query", "focus", "disabled"],
     "slots": ["search-field", "search-field-icon", "search-field-input", "search-field-clear"],

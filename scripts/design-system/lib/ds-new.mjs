@@ -157,6 +157,8 @@ export function contractSource({ slug }, archetype) {
   const source = {
     $schema: '../schema/component-intent.schema.json',
     component: slug,
+    // A new component is shown as Preview in the docs catalog until it is marked stable.
+    maturity: 'preview',
     lists: {
       sizes: ['sm', 'md'],
       slots: [slug],

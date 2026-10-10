@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "table",
+  "maturity": "stable",
   "lists": {
     "variants": ["plain", "framed"],
     "states": ["rest", "row-hover", "row-selected"],

@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "button-group",
+  "maturity": "stable",
   "description": "Faithful to prod @atom63/ui button-group: horizontal|vertical orientation and the full text/icon size ramp. Sizes drive the welded control heights; the text sizes (xs..xl) size the text/label runs, the icon-* sizes make square icon-button runs. The DS recipe reads these off data-orientation / data-size.",
   "lists": {
     "orientations": ["horizontal", "vertical"],
