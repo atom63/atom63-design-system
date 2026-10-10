@@ -1,0 +1,78 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "dialog",
+  "lists": {
+    "sizes": ["sm", "default", "lg"],
+    "mobilePlacements": ["bottom", "center"],
+    "footerVariants": ["default", "bare"],
+    "states": ["closed", "open", "starting", "ending", "focus-visible"],
+    "slots": [
+      "dialog-portal",
+      "dialog-trigger",
+      "dialog-backdrop",
+      "dialog-viewport",
+      "dialog-popup",
+      "dialog-close",
+      "dialog-close-button",
+      "dialog-header",
+      "dialog-title",
+      "dialog-description",
+      "dialog-panel",
+      "dialog-footer"
+    ],
+    "visualArchetypes": ["overlay", "surface", "trigger", "action"]
+  },
+  "contract": {
+    "accessibility": {
+      "pattern": "dialog-modal"
+    },
+    "defaultFooterVariant": "default",
+    "defaultMobilePlacement": "bottom",
+    "defaultSize": "default",
+    "footerVariants": {
+      "$ref": "#/lists/footerVariants"
+    },
+    "mobilePlacements": {
+      "$ref": "#/lists/mobilePlacements"
+    },
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "sheet",
+    "reactRenderer": "Dialog",
+    "swiftUIRenderer": "sheet(isPresented:) / presentationDetents(_:)",
+    "intent": "Temporarily move the user into a focused modal task without losing the originating context.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["closed", "open", "focus-visible"],
+    "sharedOutcomes": [
+      "opening-presents-a-modal-context",
+      "background-interaction-is-blocked-while-open",
+      "dismissal-returns-to-the-originating-context"
+    ],
+    "accessibilityOutcomes": [
+      "exposes-modal-title",
+      "keeps-assistive-focus-in-the-modal-context",
+      "restores-access-to-the-originating-control"
+    ],
+    "platformAdaptations": {
+      "react": [
+        "Uses a compound modal dialog with a portal, focus containment, Escape dismissal, and trigger focus restoration."
+      ],
+      "swiftUI": [
+        "Uses the native sheet presentation, adaptive detents, swipe dismissal, and a NavigationStack for modal task hierarchy."
+      ]
+    }
+  }
+}

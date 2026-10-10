@@ -1,0 +1,93 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "button",
+  "lists": {
+    "variants": [
+      "default",
+      "primary",
+      "secondary",
+      "destructive",
+      "destructive-outline",
+      "outline",
+      "ghost",
+      "link",
+      "overlay",
+      "glass"
+    ],
+    "sizes": [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+      "tile",
+      "icon-xs",
+      "icon-sm",
+      "icon",
+      "icon-lg",
+      "icon-xl"
+    ],
+    "states": ["rest", "hover", "pressed", "focusVisible", "disabled", "loading"],
+    "slots": ["root", "label", "icon", "spinner"],
+    "tokenSlots": [
+      "button.background",
+      "button.foreground",
+      "button.border.color",
+      "button.border.width",
+      "button.radius",
+      "button.shadow",
+      "button.focusRing",
+      "button.height",
+      "button.paddingInline",
+      "button.gap",
+      "button.iconSize",
+      "button.motion.press"
+    ],
+    "visualArchetypes": ["action"]
+  },
+  "contract": {
+    "defaultSize": "md",
+    "defaultVariant": "default",
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "tokenSlots": {
+      "$ref": "#/lists/tokenSlots"
+    },
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "button",
+    "reactRenderer": "Button",
+    "swiftUIRenderer": "AtomButton",
+    "intent": "Trigger a user-initiated action with explicit hierarchy and feedback.",
+    "parity": "recipe",
+    "requiredStates": ["rest", "pressed", "disabled", "loading"],
+    "sharedOutcomes": [
+      "action-fires-once",
+      "loading-blocks-repeat-activation",
+      "disabled-prevents-activation"
+    ],
+    "accessibilityOutcomes": ["exposes-label", "announces-loading", "disabled-while-loading"],
+    "motion": {
+      "kind": "press-feedback",
+      "durationToken": "motion-control-feedback",
+      "easing": "ease-out",
+      "direction": "none",
+      "reducedMotion": "none"
+    },
+    "platformAdaptations": {
+      "react": ["Uses HTML button semantics with pointer and focus-visible feedback."],
+      "swiftUI": ["Uses SwiftUI Button with native touch and keyboard activation."]
+    }
+  }
+}

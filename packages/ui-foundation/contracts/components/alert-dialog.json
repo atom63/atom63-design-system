@@ -1,0 +1,79 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "alert-dialog",
+  "lists": {
+    "variants": ["default", "destructive", "info", "success", "warning"],
+    "footerVariants": ["default", "bare"],
+    "sizes": ["default", "sm"],
+    "states": ["closed", "open"],
+    "slots": [
+      "alert-dialog-portal",
+      "alert-dialog-trigger",
+      "alert-dialog-backdrop",
+      "alert-dialog-viewport",
+      "alert-dialog-popup",
+      "alert-dialog-header",
+      "alert-dialog-footer",
+      "alert-dialog-media",
+      "alert-dialog-title",
+      "alert-dialog-description",
+      "alert-dialog-close",
+      "alert-dialog-action",
+      "alert-dialog-cancel"
+    ],
+    "visualArchetypes": ["overlay", "surface", "trigger", "action"]
+  },
+  "contract": {
+    "accessibility": {
+      "pattern": "alertdialog"
+    },
+    "defaultFooterVariant": "default",
+    "defaultSize": "default",
+    "defaultVariant": "default",
+    "footerVariants": {
+      "$ref": "#/lists/footerVariants"
+    },
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "confirmationDialog",
+    "reactRenderer": "AlertDialog",
+    "swiftUIRenderer": "alert(_:isPresented:actions:message:)",
+    "intent": "Require an explicit decision before committing or abandoning a consequential action.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["closed", "open"],
+    "sharedOutcomes": [
+      "consequential-action-requires-explicit-confirmation",
+      "cancel-dismisses-without-performing-the-action",
+      "confirmation-performs-the-action-once-and-dismisses"
+    ],
+    "accessibilityOutcomes": [
+      "exposes-alert-dialog-title",
+      "exposes-consequence-description",
+      "identifies-cancel-and-confirm-actions"
+    ],
+    "platformAdaptations": {
+      "react": [
+        "Uses an alertdialog portal with guarded outside and Escape dismissal plus explicit action and cancel controls."
+      ],
+      "swiftUI": [
+        "Uses a native alert or confirmationDialog with platform button roles, ordering, and compact presentation."
+      ]
+    }
+  }
+}

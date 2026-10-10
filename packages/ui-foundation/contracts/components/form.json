@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "form",
+  "lists": {
+    "slots": ["form-item", "form-label", "form-control", "form-description", "form-message"],
+    "states": ["default", "invalid"],
+    "visualArchetypes": ["field"]
+  },
+  "contract": {
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

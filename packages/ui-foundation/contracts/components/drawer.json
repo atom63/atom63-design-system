@@ -1,0 +1,43 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "drawer",
+  "lists": {
+    "directions": ["top", "bottom", "left", "right"],
+    "footerVariants": ["default", "bare"],
+    "states": ["closed", "open", "dragging", "snapped"],
+    "slots": [
+      "drawer",
+      "drawer-trigger",
+      "drawer-portal",
+      "drawer-overlay",
+      "drawer-content",
+      "drawer-handle",
+      "drawer-header",
+      "drawer-title",
+      "drawer-description",
+      "drawer-body",
+      "drawer-footer",
+      "drawer-close"
+    ],
+    "visualArchetypes": ["overlay", "surface", "trigger", "action"]
+  },
+  "contract": {
+    "defaultDirection": "bottom",
+    "defaultFooterVariant": "default",
+    "directions": {
+      "$ref": "#/lists/directions"
+    },
+    "footerVariants": {
+      "$ref": "#/lists/footerVariants"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

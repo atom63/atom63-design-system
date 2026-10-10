@@ -1,0 +1,32 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "carousel",
+  "lists": {
+    "orientations": ["horizontal", "vertical"],
+    "slots": [
+      "carousel",
+      "carousel-content",
+      "carousel-item",
+      "carousel-previous",
+      "carousel-next",
+      "carousel-cursor"
+    ],
+    "states": ["rest", "hover", "focus-visible", "disabled", "cursor-active", "can-scroll"],
+    "visualArchetypes": ["surface", "overlay", "action"]
+  },
+  "contract": {
+    "defaultOrientation": "horizontal",
+    "orientations": {
+      "$ref": "#/lists/orientations"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "spinner",
+  "lists": {
+    "states": ["loading", "reduced-motion"],
+    "slots": ["spinner"],
+    "visualArchetypes": []
+  },
+  "contract": {
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

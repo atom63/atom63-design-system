@@ -1,0 +1,78 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "sidebar",
+  "description": "Faithful to prod @atom63/ui sidebar.tsx: the Sidebar has three variant unions (side / variant / collapsible) plus the two menu-button ramps (variant + size) and the sub-button size ramp. The many structural parts each get a data-slot; these are enumerated as the contract's slots so consumers can target them.",
+  "lists": {
+    "sides": ["left", "right"],
+    "variants": ["sidebar", "floating", "inset"],
+    "collapsibles": ["offcanvas", "icon", "none"],
+    "menuButtonVariants": ["default", "outline"],
+    "menuButtonSizes": ["default", "sm", "lg"],
+    "menuSubButtonSizes": ["sm", "md"],
+    "states": ["expanded", "collapsed"],
+    "slots": [
+      "sidebar-wrapper",
+      "sidebar",
+      "sidebar-gap",
+      "sidebar-container",
+      "sidebar-inner",
+      "sidebar-trigger",
+      "sidebar-rail",
+      "sidebar-inset",
+      "sidebar-input",
+      "sidebar-header",
+      "sidebar-footer",
+      "sidebar-separator",
+      "sidebar-content",
+      "sidebar-group",
+      "sidebar-group-label",
+      "sidebar-group-action",
+      "sidebar-group-content",
+      "sidebar-menu",
+      "sidebar-menu-item",
+      "sidebar-menu-button",
+      "sidebar-menu-action",
+      "sidebar-menu-badge",
+      "sidebar-menu-skeleton",
+      "sidebar-menu-sub",
+      "sidebar-menu-sub-item",
+      "sidebar-menu-sub-button"
+    ],
+    "visualArchetypes": ["surface", "action", "field", "trigger"]
+  },
+  "contract": {
+    "defaultSide": "left",
+    "defaultVariant": "sidebar",
+    "defaultCollapsible": "offcanvas",
+    "defaultMenuButtonVariant": "default",
+    "defaultMenuButtonSize": "default",
+    "defaultMenuSubButtonSize": "md",
+    "sides": {
+      "$ref": "#/lists/sides"
+    },
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
+    "collapsibles": {
+      "$ref": "#/lists/collapsibles"
+    },
+    "menuButtonVariants": {
+      "$ref": "#/lists/menuButtonVariants"
+    },
+    "menuButtonSizes": {
+      "$ref": "#/lists/menuButtonSizes"
+    },
+    "menuSubButtonSizes": {
+      "$ref": "#/lists/menuSubButtonSizes"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

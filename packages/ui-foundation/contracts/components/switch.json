@@ -1,0 +1,50 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "switch",
+  "lists": {
+    "sizes": ["sm", "md"],
+    "states": ["off", "on", "hover", "pressed", "focus-visible", "disabled"],
+    "slots": ["switch", "switch-thumb"],
+    "visualArchetypes": ["choice"]
+  },
+  "contract": {
+    "accessibility": {
+      "pattern": "switch"
+    },
+    "defaultSize": "md",
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "tokenSlots": {
+      "$ref": "../shared/selection.json#/lists/tokenSlots"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "toggle",
+    "reactRenderer": "Switch",
+    "swiftUIRenderer": "AtomToggle",
+    "intent": "Change a persistent boolean setting.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["off", "on", "disabled"],
+    "sharedOutcomes": ["value-is-boolean", "activation-toggles-value", "disabled-prevents-change"],
+    "accessibilityOutcomes": [
+      "exposes-label",
+      "exposes-boolean-value",
+      "preserves-native-control-role"
+    ],
+    "platformAdaptations": {
+      "react": ["Uses web switch semantics with pointer and focus-visible feedback."],
+      "swiftUI": ["Uses native Toggle geometry and platform interaction feedback."]
+    }
+  }
+}

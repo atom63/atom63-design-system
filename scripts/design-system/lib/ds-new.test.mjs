@@ -3,6 +3,7 @@ import { describe, it } from 'node:test'
 
 import {
   addCrossRendererContract,
+  addCrossRendererIndex,
   addDemoCatalogItem,
   addDemoShowcase,
   addReactConformance,
@@ -13,6 +14,7 @@ import {
   catalogCategories,
   catalogSlugs,
   componentNames,
+  contractSource,
   demoSections,
   foundationFamily,
   insertCatalogDefinition,
@@ -199,15 +201,25 @@ describe('catalog', () => {
 describe('iOS tier', () => {
   const names = { slug: 'stat-meter', camel: 'statMeter', pascal: 'StatMeter' }
 
-  it('appends a strict cross-renderer contract with scaffold outcomes', () => {
-    const json = JSON.stringify({ version: 2, contracts: [{ id: 'badge' }] })
-    const contract = JSON.parse(addCrossRendererContract(json, names, 'Shows a value.'))
-      .contracts[1]
-    assert.equal(contract.id, 'stat-meter')
+  it('adds a strict cross-renderer contract with scaffold outcomes', () => {
+    const json = contractSource(names, 'marker')
+    const contract = JSON.parse(
+      addCrossRendererContract(json, names, 'Shows a value.')
+    ).crossRenderer
     assert.equal(contract.catalogItem, 'statMeter')
     assert.equal(contract.swiftUIRenderer, 'AtomStatMeter')
     assert.deepEqual(contract.requiredStates, ['rest'])
-    assert.throws(() => addCrossRendererContract(json.replace('badge', 'stat-meter'), names, 'x'))
+    const twice = addCrossRendererContract(json, names, 'x')
+    assert.throws(() => addCrossRendererContract(twice, names, 'x'))
+  })
+
+  it('lists the component in the cross-renderer catalog order once', () => {
+    const json = JSON.stringify({ version: 3, components: ['badge'] })
+    assert.deepEqual(JSON.parse(addCrossRendererIndex(json, names)).components, [
+      'badge',
+      'stat-meter',
+    ])
+    assert.throws(() => addCrossRendererIndex(json.replace('badge', 'stat-meter'), names))
   })
 
   it('adds React evidence before the end of the list', () => {

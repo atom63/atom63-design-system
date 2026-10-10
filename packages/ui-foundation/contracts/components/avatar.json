@@ -1,0 +1,55 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "avatar",
+  "lists": {
+    "sizes": ["sm", "default", "lg"],
+    "states": ["loading", "loaded", "fallback"],
+    "compositions": ["standalone", "badge", "group"],
+    "slots": [
+      "avatar",
+      "avatar-image",
+      "avatar-fallback",
+      "avatar-badge",
+      "avatar-group",
+      "avatar-group-count"
+    ],
+    "visualArchetypes": ["marker"]
+  },
+  "contract": {
+    "compositions": {
+      "$ref": "#/lists/compositions"
+    },
+    "defaultSize": "default",
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "avatar",
+    "reactRenderer": "Avatar",
+    "swiftUIRenderer": "AtomAvatar",
+    "intent": "Represent a person or entity with an image and identity-preserving fallback.",
+    "parity": "strict",
+    "requiredStates": ["loading", "loaded", "fallback"],
+    "sharedOutcomes": [
+      "accessible-name-is-preserved",
+      "fallback-preserves-identity",
+      "loading-does-not-expose-empty-image"
+    ],
+    "accessibilityOutcomes": ["exposes-accessible-name", "fallback-preserves-identity"],
+    "platformAdaptations": {
+      "react": ["Uses browser image loading and DOM fallback composition."],
+      "swiftUI": ["Uses native image decoding and SwiftUI loading phases."]
+    }
+  }
+}

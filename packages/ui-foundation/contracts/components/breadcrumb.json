@@ -1,0 +1,32 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "breadcrumb",
+  "lists": {
+    "compositions": ["full", "collapsed", "custom-separator"],
+    "states": ["rest", "hover", "focus", "current"],
+    "slots": [
+      "breadcrumb",
+      "breadcrumb-list",
+      "breadcrumb-item",
+      "breadcrumb-link",
+      "breadcrumb-page",
+      "breadcrumb-separator",
+      "breadcrumb-ellipsis"
+    ],
+    "visualArchetypes": []
+  },
+  "contract": {
+    "compositions": {
+      "$ref": "#/lists/compositions"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

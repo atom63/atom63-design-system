@@ -27,8 +27,8 @@ reachable from one place:
 | Data | Source | Kept honest by |
 | --- | --- | --- |
 | Component catalog: slug, group, summary, usage, related, status | `apps/docs/src/lib/component-catalog.ts` | `component-catalog.test.ts` |
-| Contracts: axes, defaults, slots, states, token slots, archetype | `@atom63/ui-foundation` `*-contract.ts` | typecheck, docs contract tests |
-| Web + iOS shared contracts | `cross-renderer-contracts.json` | generator `--check`, conformance tests |
+| Contracts: axes, defaults, slots, states, token slots, archetype | `@atom63/ui-foundation` `contracts/components/*.json` (generates `*-contract.ts`) | typecheck, docs contract tests |
+| Web + iOS shared contracts | `crossRenderer` in `contracts/components/*.json` | generator `--check`, conformance tests |
 | Guidance and contract as Markdown | `component-docs.ts`, `component-contract.ts` (#60) | docs tests |
 | Tokens: CSS var, value, layer, Figma path, Swift name | `packages/styles/generated/atom63.tokens.json`, Swift map | `check:tokens`, `check:figma`, parity tests |
 | Examples | co-located `*.stories.tsx` in ui-react and mdx | Storybook render, axe and visual tests |

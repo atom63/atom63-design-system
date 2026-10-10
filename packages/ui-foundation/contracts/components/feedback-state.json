@@ -1,0 +1,38 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "feedback-state",
+  "description": "FeedbackState is a status pattern hosted by another surface. Its optional actions consume the action contract; the status media carries semantic tone.",
+  "lists": {
+    "kinds": ["empty", "error", "loading", "not-found", "no-results", "offline", "stale"],
+    "sizes": ["inline", "panel", "page", "widget"],
+    "slots": [
+      "feedback-state",
+      "feedback-state-header",
+      "feedback-state-media",
+      "feedback-state-title",
+      "feedback-state-description",
+      "feedback-state-content"
+    ],
+    "states": ["idle", "busy", "actionable"],
+    "visualArchetypes": ["action"]
+  },
+  "contract": {
+    "defaultKind": "empty",
+    "defaultSize": "panel",
+    "kinds": {
+      "$ref": "#/lists/kinds"
+    },
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

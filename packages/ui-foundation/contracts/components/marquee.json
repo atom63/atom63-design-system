@@ -1,0 +1,29 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "marquee",
+  "lists": {
+    "orientations": ["horizontal", "vertical"],
+    "states": ["running", "paused", "hover-paused", "reduced-motion"],
+    "slots": ["marquee", "marquee-track"],
+    "visualArchetypes": {
+      "values": [],
+      "typed": false
+    }
+  },
+  "contract": {
+    "defaultGap": "var(--a63-space-4, 1rem)",
+    "defaultRepeat": 4,
+    "orientations": {
+      "$ref": "#/lists/orientations"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

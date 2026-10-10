@@ -1,0 +1,46 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "skeleton",
+  "lists": {
+    "states": ["loading", "reduced-motion"],
+    "slots": ["skeleton"],
+    "visualArchetypes": []
+  },
+  "contract": {
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "skeleton",
+    "reactRenderer": "Skeleton",
+    "swiftUIRenderer": "AtomSkeletonRow / atomSkeleton(_:)",
+    "intent": "Preserve layout while content loads without exposing placeholder content as real content.",
+    "parity": "recipe",
+    "requiredStates": ["loading", "reduced-motion"],
+    "sharedOutcomes": [
+      "placeholder-is-hidden-from-assistive-technology",
+      "interaction-is-blocked-while-loading",
+      "reduced-motion-result-is-static"
+    ],
+    "accessibilityOutcomes": ["hidden-from-accessibility-tree", "blocks-interaction-while-active"],
+    "motion": {
+      "kind": "shimmer",
+      "durationToken": "motion-skeleton-shimmer",
+      "easing": "linear",
+      "direction": "leading-to-trailing",
+      "reducedMotion": "static"
+    },
+    "platformAdaptations": {
+      "react": ["Uses a CSS pseudo-element shimmer and media-query motion preference."],
+      "swiftUI": ["Uses a TimelineView gradient mask and environment motion preference."]
+    }
+  }
+}

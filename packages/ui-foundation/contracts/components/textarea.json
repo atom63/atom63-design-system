@@ -1,0 +1,62 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "textarea",
+  "lists": {
+    "sizes": ["sm", "md", "lg"],
+    "states": ["rest", "hover", "focus", "disabled", "invalid"],
+    "slots": ["textarea-control", "textarea"],
+    "tokenSlots": [
+      "field.background",
+      "field.border",
+      "field.radius",
+      "field.shadow",
+      "field.focusRing",
+      "field.focusBorder",
+      "field.paddingInline",
+      "field.paddingBlock",
+      "field.fontSize",
+      "field.minHeight"
+    ],
+    "visualArchetypes": ["field"]
+  },
+  "contract": {
+    "defaultSize": "md",
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "tokenSlots": {
+      "$ref": "#/lists/tokenSlots"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "textEditor",
+    "reactRenderer": "Textarea",
+    "swiftUIRenderer": "AtomTextEditor",
+    "intent": "Capture a multi-line text value while preserving editing and validation semantics.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["rest", "focus", "disabled", "invalid"],
+    "sharedOutcomes": [
+      "multi-line-value-remains-editable",
+      "focus-is-visible",
+      "invalid-state-is-announced"
+    ],
+    "accessibilityOutcomes": ["exposes-label", "exposes-value", "announces-invalid"],
+    "platformAdaptations": {
+      "react": ["Uses native browser textarea scrolling and selection."],
+      "swiftUI": [
+        "Uses TextEditor scrolling, selection, and keyboard behavior.",
+        "Adapts visual chrome when a grouped Form or sheet container owns the row surface without changing editing, focus, disabled, or validation semantics."
+      ]
+    }
+  }
+}
