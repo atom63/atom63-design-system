@@ -7916,7 +7916,7 @@
   {
    "area": "foundations",
    "label": "Colors",
-   "markdown": "# Colors\n\nThe color system is built around executable indirection. **Foundation** owns the literal palette (`tokens/foundation/*`). **Semantics** (`--a63-*`) name UI jobs. **App JSX** may sketch with Tailwind/shadcn role utilities (`bg-background`, `text-muted-foreground`) because those adapters re-reference `--a63-*`. **Shared package recipes** consume `--a63-*` (and family contracts), not primitives and not raw shadcn CSS variables.\n\nAuthoring lanes: `docs/design-system/authoring-surfaces.md`.\n\nThe goal is simple: components describe the job a color performs, while `@atom63/styles` owns how that job resolves across mode, brand, neutral-surface, surface-tint, and theme axes.\n\n## Design intent\n\nThe Atom63-specific palette has six brand hues, six neutral families, and four status families. Foundation also carries the Tailwind named palette for fixed-hue cases. Both sit behind enough structure that changing an appearance axis does not require auditing every component:\n\n- **Foundation primitives** define stable palette material (the only place for new color dictionaries).\n- **Aliases** (brand / surface axes) select which primitive families a mood uses.\n- **Semantic roles** expose stable UI decisions through `--a63-*` variables.\n- **Themes** remap material/role resolution; they do not invent new palette ramps.\n- **Component recipes** consume those roles in React and CSS.\n\n## Layer stack\n\nImported in order from `@atom63/styles`:\n\n## Mental model\n\nColor moves from stable to contextual:\n\n```txt\nfoundation palette -> brand/surface alias -> a63 semantic role -> component recipe\n     (values)              (which family)         (UI job)              (wiring)\n```\n\nProduct theme skins (`modern` / `aqua` / …) sit beside this chain: they remap contract/semantic knobs, they are not a second palette dictionary.\n\nEach layer answers a different question:\n\n| Layer | Question | Example |\n|-------|----------|---------|\n| Foundation | What raw color exists? | `--color-b1-500`, `--color-n1-light-3` |\n| Alias | Which palette family does this mood use? | brand and surface aliases |\n| Semantic | What UI job does this color perform? | `--a63-surface-panel`, `--a63-action-primary`, `--a63-border-control` |\n| Component | How does the role appear in context? | button fill, input border, dialog surface |\n\nThis is the reason component code should feel boring. A component should say \"I need the primary action color\" or \"I need the subtle border color\", not \"I need this exact blue.\"\n\n## How the scale works\n\n### Semantic roles\n\nComponents use the `--a63-*` semantic layer. These variables are the design-system API for product UI.\n\n### Surface scale\n\n12-step neutral ramps (`surface-light-*` / `surface-dark-*`) form the backbone of the UI. Semantic tokens like `--a63-surface-page`, `--a63-surface-panel`, and `--a63-border-subtle` reference the appropriate steps. The default surface family is `n1`, a true neutral gray with no color cast.\n\n### Brand primitives\n\nSix brand hues (`b1`–`b6`), each with steps `50`–`950`, provide enough range for product accents, visualization, and expressive surfaces. The default primary action resolves through the brand alias layer rather than hardcoding a primitive in a component.\n\n### Neutral families\n\nSix neutral palettes (`n1`–`n6`) give the system different neutral personalities without creating one-off product palettes. The `data-a63-surface` axis remaps the aliases; components keep consuming the same semantic roles. Themes may separately re-skin semantic surfaces when material character requires it.\n\n### Status primitives\n\n`danger`, `success`, `warning`, and `info` carry fixed meaning. They can be tuned for contrast across modes, but they should not be repurposed as decorative brand colors.\n\n  {STATUS_PRIMITIVES.map(({ id, utility }) => (\n  ))}\n\n## Compatibility\n\nThe shadcn vocabulary (`background`, `primary`, `muted-foreground`, …) is an **opt-in adapter** (`@atom63/styles/compat/shadcn` + Tailwind theme keys). It re-references `--a63-*`; it does not own values (mirror rule).\n\nBoth the Tailwind theme keys and the compat variables are generated from one role table, `packages/styles/src/tailwind/roles.json` (`pnpm --filter @atom63/styles generate:roles`). Beyond the shadcn defaults it adds `destructive-foreground`, `info`/`success`/`warning` with `-foreground`, `surface-sunken`, `selected` with `-foreground`, and `chart-1`–`chart-5`. `accent` is the neutral hover and highlight plate, not the brand color; use `primary` for the brand.\n\n| Surface | Prefer | Avoid |\n|---------|--------|-------|\n| App / page JSX | Tailwind utilities: `bg-background`, `text-foreground`, `bg-primary`, … | Hardcoded hex; reaching into `--a63-control-*` for sketching |\n| Shared package recipes (`ui-react`, widgets, …) | `--a63-*` roles (+ family contracts) | Baking `var(--background)` / `var(--primary)` into package CSS |\n| Third-party / copy-pasted shadcn CSS | Compat aliases OK at the consumer boundary | Treating `--primary` as the system SSOT |\n\nCanonical design-system contract for shared UI is `--a63-*`. Tailwind/shadcn names are the **human design dialect** for product screens — not “legacy only.” See Designing in code and `docs/design-system/authoring-surfaces.md`.\n\n## Decisions worth knowing\n\n### Semantic-first, not palette-first\n\nShared components never use primitive color values directly. Not `--color-b1-500`, not `--color-n1-light-3`, and not one-off hex values. Shared UI consumes semantic roles such as `--a63-action-primary`, `--a63-text-primary`, `--a63-border-subtle`, and `--a63-surface-panel`. App JSX may use the equivalent Tailwind role utilities.\n\nThe exception is deliberate brand or visualization work that needs a fixed hue regardless of theme. Those cases should be explicit and rare. **Adding** a new hue step still happens in foundation.\n\n### Six neutrals, not one\n\nMost systems ship one neutral ramp. Atom63 has six because portfolio, docs, OS, and learning surfaces can need different neutral personalities. Having six families pre-built makes theme creation alias reassignment rather than palette generation.\n\n### Contrast as a contract\n\nEvery semantic foreground/background pair is designed together. `--a63-action-primary` and `--a63-action-primary-foreground` are a pair. Text roles and surface roles are reviewed together. If a component introduces a new semantic pair, the pair needs contrast review before it becomes part of the shared system.\n\n### Color should express role before personality\n\nThe palette can be expressive, but role comes first. A primary button is primary because it is the main action, not because blue looks good in that location. A muted panel is muted because it is secondary to the current task, not because the screen needs another shade.\n\n## Usage guidance\n\n| Need | In app JSX | In package recipes |\n|------|------------|--------------------|\n| App surfaces | `bg-background`, `bg-card`, `bg-muted` | `--a63-surface-page`, `--a63-surface-panel`, `--a63-surface-muted` |\n| Text | `text-foreground`, `text-muted-foreground` | `--a63-text-primary`, `--a63-text-secondary` |\n| Borders | `border-border` | `--a63-border-subtle`, `--a63-border-control` |\n| Primary actions | `bg-primary`, `text-primary-foreground` | `--a63-action-primary`, `--a63-action-primary-foreground` |\n| Feedback states | `text-destructive`, status utilities | `--a63-status-*`, `--a63-action-danger` |\n| Brand moments (fixed hue) | `bg-b1-500`, … | foundation `--color-b*` only when intentional |\n\n## Anti-patterns\n\n```tsx\n// Avoid: component owns a palette decision.\n```\n\nThe button now depends on one theme's brand hue and one foreground assumption.\n\n```tsx\n// Prefer: component owns a semantic role.\n```\n\nThe component can survive theme changes because the semantic pair owns contrast.\n\n## Review checklist\n\nWhen reviewing color usage, ask:\n\n1. Is this a semantic role (Tailwind/shadcn utility or `--a63-*`), or a foundation palette value?\n2. If adding a new literal color, does it live in `tokens/foundation/*`?\n3. Does the foreground/background pair have a contrast contract?\n4. Would this still work if the brand hue changed?\n5. Is a status color being used for real status meaning?\n6. Is color the only cue for the state?",
+   "markdown": "# Colors\n\nThe color system is built around executable indirection. **Foundation** owns the literal palette (`tokens/foundation/*`). **Semantics** (`--a63-*`) name UI jobs. **App JSX** may sketch with Tailwind/shadcn role utilities (`bg-background`, `text-muted-foreground`) because those adapters re-reference `--a63-*`. **Shared package recipes** consume `--a63-*` (and family contracts), not primitives and not raw shadcn CSS variables.\n\nAuthoring lanes: `docs/design-system/authoring-surfaces.md`.\n\nThe goal is simple: components describe the job a color performs, while `@atom63/styles` owns how that job resolves across mode, brand, neutral-surface, surface-tint, and theme axes.\n\n## Design intent\n\nThe Atom63-specific palette has six brand hues, six neutral families, and four status families. Foundation also carries the Tailwind named palette for fixed-hue cases. Both sit behind enough structure that changing an appearance axis does not require auditing every component:\n\n- **Foundation primitives** define stable palette material (the only place for new color dictionaries).\n- **Aliases** (brand / surface axes) select which primitive families a mood uses.\n- **Semantic roles** expose stable UI decisions through `--a63-*` variables.\n- **Themes** remap material/role resolution; they do not invent new palette ramps.\n- **Component recipes** consume those roles in React and CSS.\n\n## Layer stack\n\nImported in order from `@atom63/styles`:\n\n## Mental model\n\nColor moves from stable to contextual:\n\n```txt\nfoundation palette -> brand/surface alias -> a63 semantic role -> component recipe\n     (values)              (which family)         (UI job)              (wiring)\n```\n\nProduct theme skins (`modern` / `aqua` / …) sit beside this chain: they remap contract/semantic knobs, they are not a second palette dictionary.\n\nEach layer answers a different question:\n\n| Layer | Question | Example |\n|-------|----------|---------|\n| Foundation | What raw color exists? | `--color-b1-500`, `--color-n1-light-3` |\n| Alias | Which palette family does this mood use? | brand and surface aliases |\n| Semantic | What UI job does this color perform? | `--a63-surface-panel`, `--a63-action-primary`, `--a63-border-control` |\n| Component | How does the role appear in context? | button fill, input border, dialog surface |\n\nThis is the reason component code should feel boring. A component should say \"I need the primary action color\" or \"I need the subtle border color\", not \"I need this exact blue.\"\n\n## How the scale works\n\n### Semantic roles\n\nComponents use the `--a63-*` semantic layer. These variables are the design-system API for product UI.\n\n### Surface scale\n\n12-step neutral ramps (`surface-light-*` / `surface-dark-*`) form the backbone of the UI. Semantic tokens like `--a63-surface-page`, `--a63-surface-panel`, and `--a63-border-subtle` reference the appropriate steps. The default surface family is `n1`, a true neutral gray with no color cast.\n\n### Brand primitives\n\nSix brand hues (`b1`–`b6`), each with steps `50`–`950`, provide enough range for product accents, visualization, and expressive surfaces. The default primary action resolves through the brand alias layer rather than hardcoding a primitive in a component.\n\n### Neutral families\n\nSix neutral palettes (`n1`–`n6`) give the system different neutral personalities without creating one-off product palettes. The `data-a63-surface` axis remaps the aliases; components keep consuming the same semantic roles. Themes may separately re-skin semantic surfaces when material character requires it.\n\n### Status primitives\n\n`danger`, `success`, `warning`, and `info` carry fixed meaning. They can be tuned for contrast across modes, but they should not be repurposed as decorative brand colors.\n\n  {STATUS_PRIMITIVES.map(({ id, utility }) => (\n  ))}\n\n## Compatibility\n\nThe shadcn vocabulary (`background`, `primary`, `muted-foreground`, …) is an **opt-in adapter** (`@atom63/styles/compat/shadcn` + Tailwind theme keys). It re-references `--a63-*`; it does not own values (mirror rule).\n\nBoth the Tailwind theme keys and the compat variables are generated from one role table, `packages/styles/src/tailwind/roles.json` (`pnpm --filter @atom63/styles generate:roles`). Beyond the shadcn defaults it adds `destructive-foreground`, `info`/`success`/`warning` with `-foreground`, `surface-sunken`, `selected` with `-foreground`, and `chart-1`–`chart-5`. Tinted chips use the `-subtle` pairs: `destructive-subtle`, `info-subtle`, `success-subtle` and `warning-subtle`, each with `-subtle-foreground`, and `category-<hue>` with `-subtle` and `-subtle-foreground` for the 22 palette hues (amber shares the warning ramp). Every tint is the same 14% wash. `accent` is the neutral hover and highlight plate, not the brand color; use `primary` for the brand.\n\n| Surface | Prefer | Avoid |\n|---------|--------|-------|\n| App / page JSX | Tailwind utilities: `bg-background`, `text-foreground`, `bg-primary`, … | Hardcoded hex; reaching into `--a63-control-*` for sketching |\n| Shared package recipes (`ui-react`, widgets, …) | `--a63-*` roles (+ family contracts) | Baking `var(--background)` / `var(--primary)` into package CSS |\n| Third-party / copy-pasted shadcn CSS | Compat aliases OK at the consumer boundary | Treating `--primary` as the system SSOT |\n\nCanonical design-system contract for shared UI is `--a63-*`. Tailwind/shadcn names are the **human design dialect** for product screens — not “legacy only.” See Designing in code and `docs/design-system/authoring-surfaces.md`.\n\n## Decisions worth knowing\n\n### Semantic-first, not palette-first\n\nShared components never use primitive color values directly. Not `--color-b1-500`, not `--color-n1-light-3`, and not one-off hex values. Shared UI consumes semantic roles such as `--a63-action-primary`, `--a63-text-primary`, `--a63-border-subtle`, and `--a63-surface-panel`. App JSX may use the equivalent Tailwind role utilities.\n\nThe exception is deliberate brand or visualization work that needs a fixed hue regardless of theme. Those cases should be explicit and rare. **Adding** a new hue step still happens in foundation.\n\n### Six neutrals, not one\n\nMost systems ship one neutral ramp. Atom63 has six because portfolio, docs, OS, and learning surfaces can need different neutral personalities. Having six families pre-built makes theme creation alias reassignment rather than palette generation.\n\n### Contrast as a contract\n\nEvery semantic foreground/background pair is designed together. `--a63-action-primary` and `--a63-action-primary-foreground` are a pair. Text roles and surface roles are reviewed together. If a component introduces a new semantic pair, the pair needs contrast review before it becomes part of the shared system.\n\n### Color should express role before personality\n\nThe palette can be expressive, but role comes first. A primary button is primary because it is the main action, not because blue looks good in that location. A muted panel is muted because it is secondary to the current task, not because the screen needs another shade.\n\n## Usage guidance\n\n| Need | In app JSX | In package recipes |\n|------|------------|--------------------|\n| App surfaces | `bg-background`, `bg-card`, `bg-muted` | `--a63-surface-page`, `--a63-surface-panel`, `--a63-surface-muted` |\n| Text | `text-foreground`, `text-muted-foreground` | `--a63-text-primary`, `--a63-text-secondary` |\n| Borders | `border-border` | `--a63-border-subtle`, `--a63-border-control` |\n| Primary actions | `bg-primary`, `text-primary-foreground` | `--a63-action-primary`, `--a63-action-primary-foreground` |\n| Feedback states | `text-destructive`, status utilities | `--a63-status-*`, `--a63-action-danger` |\n| Brand moments (fixed hue) | `bg-b1-500`, … | foundation `--color-b*` only when intentional |\n\n## Anti-patterns\n\n```tsx\n// Avoid: component owns a palette decision.\n```\n\nThe button now depends on one theme's brand hue and one foreground assumption.\n\n```tsx\n// Prefer: component owns a semantic role.\n```\n\nThe component can survive theme changes because the semantic pair owns contrast.\n\n## Review checklist\n\nWhen reviewing color usage, ask:\n\n1. Is this a semantic role (Tailwind/shadcn utility or `--a63-*`), or a foundation palette value?\n2. If adding a new literal color, does it live in `tokens/foundation/*`?\n3. Does the foreground/background pair have a contrast contract?\n4. Would this still work if the brand hue changed?\n5. Is a status color being used for real status meaning?\n6. Is color the only cue for the state?",
    "route": "/foundations/foundation-colors",
    "slug": "foundation-colors"
   },
@@ -8837,6 +8837,46 @@
    ]
   },
   {
+   "cssVar": "--a63-action-danger-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "action/danger/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklab, var(--a63-action-danger) 14%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "color-mix(in oklab, var(--a63-action-danger) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-action-danger-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "action/danger/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-danger-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-danger-700)"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-action-disabled-opacity",
    "figma": {
     "collection": "Contract",
@@ -9023,8 +9063,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-amber)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-amber-500)"
+     "value": "var(--a63-category-amber)"
     }
    ]
   },
@@ -9040,11 +9084,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-amber-400)"
+     "value": "var(--a63-category-amber-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-amber-800)"
+     "value": "var(--a63-category-amber-subtle-foreground)"
     }
    ]
   },
@@ -9059,8 +9103,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-blue)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-blue-500)"
+     "value": "var(--a63-category-blue)"
     }
    ]
   },
@@ -9076,11 +9124,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-blue-400)"
+     "value": "var(--a63-category-blue-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-blue-700)"
+     "value": "var(--a63-category-blue-subtle-foreground)"
     }
    ]
   },
@@ -9095,8 +9143,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-cyan)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-cyan-500)"
+     "value": "var(--a63-category-cyan)"
     }
    ]
   },
@@ -9112,11 +9164,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-cyan-400)"
+     "value": "var(--a63-category-cyan-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-cyan-800)"
+     "value": "var(--a63-category-cyan-subtle-foreground)"
     }
    ]
   },
@@ -9131,8 +9183,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-emerald)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-emerald-500)"
+     "value": "var(--a63-category-emerald)"
     }
    ]
   },
@@ -9148,11 +9204,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-emerald-400)"
+     "value": "var(--a63-category-emerald-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-emerald-800)"
+     "value": "var(--a63-category-emerald-subtle-foreground)"
     }
    ]
   },
@@ -9168,11 +9224,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-danger-400)"
+     "value": "var(--a63-action-danger-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-danger-700)"
+     "value": "var(--a63-action-danger-subtle-foreground)"
     }
    ]
   },
@@ -9187,8 +9243,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-fuchsia)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-fuchsia-500)"
+     "value": "var(--a63-category-fuchsia)"
     }
    ]
   },
@@ -9204,11 +9264,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-fuchsia-400)"
+     "value": "var(--a63-category-fuchsia-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-fuchsia-700)"
+     "value": "var(--a63-category-fuchsia-subtle-foreground)"
     }
    ]
   },
@@ -9223,8 +9283,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-green)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-green-500)"
+     "value": "var(--a63-category-green)"
     }
    ]
   },
@@ -9240,11 +9304,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-green-400)"
+     "value": "var(--a63-category-green-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-green-800)"
+     "value": "var(--a63-category-green-subtle-foreground)"
     }
    ]
   },
@@ -9259,8 +9323,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-indigo)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-indigo-500)"
+     "value": "var(--a63-category-indigo)"
     }
    ]
   },
@@ -9276,11 +9344,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-indigo-400)"
+     "value": "var(--a63-category-indigo-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-indigo-700)"
+     "value": "var(--a63-category-indigo-subtle-foreground)"
     }
    ]
   },
@@ -9296,11 +9364,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-info-400)"
+     "value": "var(--a63-status-info-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-info-700)"
+     "value": "var(--a63-status-info-subtle-foreground)"
     }
    ]
   },
@@ -9315,8 +9383,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-lime)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-lime-500)"
+     "value": "var(--a63-category-lime)"
     }
    ]
   },
@@ -9332,11 +9404,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-lime-400)"
+     "value": "var(--a63-category-lime-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-lime-800)"
+     "value": "var(--a63-category-lime-subtle-foreground)"
     }
    ]
   },
@@ -9351,8 +9423,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-neutral)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-neutral-500)"
+     "value": "var(--a63-category-neutral)"
     }
    ]
   },
@@ -9368,11 +9444,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-neutral-400)"
+     "value": "var(--a63-category-neutral-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-neutral-700)"
+     "value": "var(--a63-category-neutral-subtle-foreground)"
     }
    ]
   },
@@ -9387,8 +9463,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-orange)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-orange-500)"
+     "value": "var(--a63-category-orange)"
     }
    ]
   },
@@ -9404,11 +9484,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-orange-400)"
+     "value": "var(--a63-category-orange-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-orange-800)"
+     "value": "var(--a63-category-orange-subtle-foreground)"
     }
    ]
   },
@@ -9423,8 +9503,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-pink)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-pink-500)"
+     "value": "var(--a63-category-pink)"
     }
    ]
   },
@@ -9440,11 +9524,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-pink-400)"
+     "value": "var(--a63-category-pink-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-pink-700)"
+     "value": "var(--a63-category-pink-subtle-foreground)"
     }
    ]
   },
@@ -9459,8 +9543,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-purple)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-purple-500)"
+     "value": "var(--a63-category-purple)"
     }
    ]
   },
@@ -9476,11 +9564,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-purple-400)"
+     "value": "var(--a63-category-purple-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-purple-700)"
+     "value": "var(--a63-category-purple-subtle-foreground)"
     }
    ]
   },
@@ -9495,8 +9583,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-red)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-red-500)"
+     "value": "var(--a63-category-red)"
     }
    ]
   },
@@ -9512,11 +9604,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-red-400)"
+     "value": "var(--a63-category-red-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-red-700)"
+     "value": "var(--a63-category-red-subtle-foreground)"
     }
    ]
   },
@@ -9531,8 +9623,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-rose)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-rose-500)"
+     "value": "var(--a63-category-rose)"
     }
    ]
   },
@@ -9548,11 +9644,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-rose-400)"
+     "value": "var(--a63-category-rose-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-rose-700)"
+     "value": "var(--a63-category-rose-subtle-foreground)"
     }
    ]
   },
@@ -9567,8 +9663,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-sky)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-sky-500)"
+     "value": "var(--a63-category-sky)"
     }
    ]
   },
@@ -9584,11 +9684,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-sky-400)"
+     "value": "var(--a63-category-sky-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-sky-700)"
+     "value": "var(--a63-category-sky-subtle-foreground)"
     }
    ]
   },
@@ -9604,11 +9704,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-success-400)"
+     "value": "var(--a63-status-success-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-success-700)"
+     "value": "var(--a63-status-success-subtle-foreground)"
     }
    ]
   },
@@ -9623,8 +9723,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-teal)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-teal-500)"
+     "value": "var(--a63-category-teal)"
     }
    ]
   },
@@ -9640,11 +9744,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-teal-400)"
+     "value": "var(--a63-category-teal-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-teal-800)"
+     "value": "var(--a63-category-teal-subtle-foreground)"
     }
    ]
   },
@@ -9659,8 +9763,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-violet)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-violet-500)"
+     "value": "var(--a63-category-violet)"
     }
    ]
   },
@@ -9676,11 +9784,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-violet-400)"
+     "value": "var(--a63-category-violet-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-violet-700)"
+     "value": "var(--a63-category-violet-subtle-foreground)"
     }
    ]
   },
@@ -9696,11 +9804,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-warning-400)"
+     "value": "var(--a63-status-warning-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-warning-800)"
+     "value": "var(--a63-status-warning-subtle-foreground)"
     }
    ]
   },
@@ -9715,8 +9823,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-yellow)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-yellow-500)"
+     "value": "var(--a63-category-yellow)"
     }
    ]
   },
@@ -9732,11 +9844,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-yellow-400)"
+     "value": "var(--a63-category-yellow-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-yellow-800)"
+     "value": "var(--a63-category-yellow-subtle-foreground)"
     }
    ]
   },
@@ -10257,6 +10369,1150 @@
     {
      "scope": "[data-a63-brand='b3']",
      "value": "var(--a63-brand-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-amber",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/amber"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-warning-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-amber-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/amber/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-amber) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-amber-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/amber/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-warning-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-warning-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-blue",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/blue"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-blue-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-blue-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/blue/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-blue) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-blue-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/blue/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-blue-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-blue-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-cyan",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/cyan"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-cyan-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-cyan-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/cyan/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-cyan) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-cyan-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/cyan/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-cyan-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-cyan-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-emerald",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/emerald"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-emerald-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-emerald-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/emerald/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-emerald) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-emerald-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/emerald/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-emerald-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-emerald-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-fuchsia",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/fuchsia"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-fuchsia-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-fuchsia-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/fuchsia/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-fuchsia) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-fuchsia-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/fuchsia/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-fuchsia-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-fuchsia-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-gray",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/gray"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-gray-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-gray-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/gray/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-gray) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-gray-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/gray/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-gray-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-gray-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-green",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/green"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-green-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-green-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/green/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-green) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-green-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/green/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-green-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-green-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-indigo",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/indigo"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-indigo-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-indigo-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/indigo/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-indigo) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-indigo-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/indigo/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-indigo-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-indigo-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-lime",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/lime"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-lime-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-lime-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/lime/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-lime) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-lime-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/lime/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-lime-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-lime-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-neutral",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/neutral"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-neutral-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-neutral-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/neutral/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-neutral) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-neutral-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/neutral/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-neutral-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-neutral-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-orange",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/orange"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-orange-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-orange-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/orange/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-orange) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-orange-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/orange/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-orange-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-orange-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-pink",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/pink"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-pink-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-pink-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/pink/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-pink) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-pink-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/pink/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-pink-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-pink-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-purple",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/purple"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-purple-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-purple-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/purple/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-purple) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-purple-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/purple/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-purple-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-purple-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-red",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/red"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-red-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-red-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/red/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-red) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-red-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/red/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-red-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-red-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-rose",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/rose"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-rose-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-rose-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/rose/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-rose) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-rose-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/rose/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-rose-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-rose-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-sky",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/sky"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-sky-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-sky-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/sky/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-sky) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-sky-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/sky/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-sky-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-sky-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-slate",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/slate"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-slate-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-slate-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/slate/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-slate) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-slate-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/slate/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-slate-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-slate-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-stone",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/stone"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-stone-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-stone-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/stone/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-stone) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-stone-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/stone/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-stone-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-stone-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-teal",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/teal"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-teal-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-teal-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/teal/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-teal) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-teal-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/teal/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-teal-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-teal-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-violet",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/violet"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-violet-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-violet-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/violet/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-violet) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-violet-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/violet/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-violet-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-violet-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-yellow",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/yellow"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-yellow-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-yellow-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/yellow/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-yellow) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-yellow-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/yellow/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-yellow-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-yellow-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-zinc",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/zinc"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-zinc-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-zinc-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/zinc/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-zinc) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-zinc-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/zinc/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-zinc-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-zinc-700)"
     }
    ]
   },
@@ -13363,6 +14619,46 @@
    ]
   },
   {
+   "cssVar": "--a63-status-info-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/info/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklab, var(--a63-status-info) 14%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "color-mix(in oklab, var(--a63-status-info) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-status-info-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/info/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-info-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-info-700)"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-status-success",
    "figma": {
     "collection": "Semantic",
@@ -13399,6 +14695,46 @@
    ]
   },
   {
+   "cssVar": "--a63-status-success-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/success/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklab, var(--a63-status-success) 14%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "color-mix(in oklab, var(--a63-status-success) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-status-success-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/success/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-success-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-success-700)"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-status-warning",
    "figma": {
     "collection": "Semantic",
@@ -13431,6 +14767,46 @@
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "oklch( from var(--a63-status-warning) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h )"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-status-warning-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/warning/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklab, var(--a63-status-warning) 14%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "color-mix(in oklab, var(--a63-status-warning) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-status-warning-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/warning/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-warning-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-warning-800)"
     }
    ]
   },

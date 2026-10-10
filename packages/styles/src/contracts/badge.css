@@ -2,79 +2,92 @@
  * Generated from src/contracts/badge.resolver.json by scripts/build-css-from-dtcg.mjs. Do not edit;
  * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
  *
- * Badge palette contract — category/tag hues owned by @atom63/styles.
- *
- * Recipes read --a63-badge-*-accent / --a63-badge-*-foreground only. Accent
- * references foundation primitives; foreground flips for dark mode contrast.
+ * Badge palette contract: aliases of the semantic category and status tints (--a63-category-*, --a63-status-*-subtle-*), kept so recipes and themes that read --a63-badge-* keep working. The dark block repeats the aliases so a nested dark scope resolves them against its own roles.
  */
 :root,
 .light,
 [data-a63-mode='light'] {
-  --a63-badge-red-accent: var(--color-red-500);
-  --a63-badge-red-foreground: var(--color-red-700);
-  --a63-badge-orange-accent: var(--color-orange-500);
-  --a63-badge-orange-foreground: var(--color-orange-800);
-  --a63-badge-amber-accent: var(--color-amber-500);
-  --a63-badge-amber-foreground: var(--color-amber-800);
-  --a63-badge-yellow-accent: var(--color-yellow-500);
-  --a63-badge-yellow-foreground: var(--color-yellow-800);
-  --a63-badge-lime-accent: var(--color-lime-500);
-  --a63-badge-lime-foreground: var(--color-lime-800);
-  --a63-badge-green-accent: var(--color-green-500);
-  --a63-badge-green-foreground: var(--color-green-800);
-  --a63-badge-emerald-accent: var(--color-emerald-500);
-  --a63-badge-emerald-foreground: var(--color-emerald-800);
-  --a63-badge-teal-accent: var(--color-teal-500);
-  --a63-badge-teal-foreground: var(--color-teal-800);
-  --a63-badge-cyan-accent: var(--color-cyan-500);
-  --a63-badge-cyan-foreground: var(--color-cyan-800);
-  --a63-badge-sky-accent: var(--color-sky-500);
-  --a63-badge-sky-foreground: var(--color-sky-700);
-  --a63-badge-blue-accent: var(--color-blue-500);
-  --a63-badge-blue-foreground: var(--color-blue-700);
-  --a63-badge-indigo-accent: var(--color-indigo-500);
-  --a63-badge-indigo-foreground: var(--color-indigo-700);
-  --a63-badge-violet-accent: var(--color-violet-500);
-  --a63-badge-violet-foreground: var(--color-violet-700);
-  --a63-badge-purple-accent: var(--color-purple-500);
-  --a63-badge-purple-foreground: var(--color-purple-700);
-  --a63-badge-fuchsia-accent: var(--color-fuchsia-500);
-  --a63-badge-fuchsia-foreground: var(--color-fuchsia-700);
-  --a63-badge-pink-accent: var(--color-pink-500);
-  --a63-badge-pink-foreground: var(--color-pink-700);
-  --a63-badge-rose-accent: var(--color-rose-500);
-  --a63-badge-rose-foreground: var(--color-rose-700);
-  --a63-badge-neutral-accent: var(--color-neutral-500);
-  --a63-badge-neutral-foreground: var(--color-neutral-700);
-  /* Status chips: the status color itself is too light for text on its tint. */
-  --a63-badge-info-foreground: var(--color-info-700);
-  --a63-badge-success-foreground: var(--color-success-700);
-  --a63-badge-warning-foreground: var(--color-warning-800);
-  /* Error chips: the danger action color is a fill, too dark for text on its tint in dark mode. */
-  --a63-badge-error-foreground: var(--color-danger-700);
+  --a63-badge-red-accent: var(--a63-category-red);
+  --a63-badge-red-foreground: var(--a63-category-red-subtle-foreground);
+  --a63-badge-orange-accent: var(--a63-category-orange);
+  --a63-badge-orange-foreground: var(--a63-category-orange-subtle-foreground);
+  --a63-badge-amber-accent: var(--a63-category-amber);
+  --a63-badge-amber-foreground: var(--a63-category-amber-subtle-foreground);
+  --a63-badge-yellow-accent: var(--a63-category-yellow);
+  --a63-badge-yellow-foreground: var(--a63-category-yellow-subtle-foreground);
+  --a63-badge-lime-accent: var(--a63-category-lime);
+  --a63-badge-lime-foreground: var(--a63-category-lime-subtle-foreground);
+  --a63-badge-green-accent: var(--a63-category-green);
+  --a63-badge-green-foreground: var(--a63-category-green-subtle-foreground);
+  --a63-badge-emerald-accent: var(--a63-category-emerald);
+  --a63-badge-emerald-foreground: var(--a63-category-emerald-subtle-foreground);
+  --a63-badge-teal-accent: var(--a63-category-teal);
+  --a63-badge-teal-foreground: var(--a63-category-teal-subtle-foreground);
+  --a63-badge-cyan-accent: var(--a63-category-cyan);
+  --a63-badge-cyan-foreground: var(--a63-category-cyan-subtle-foreground);
+  --a63-badge-sky-accent: var(--a63-category-sky);
+  --a63-badge-sky-foreground: var(--a63-category-sky-subtle-foreground);
+  --a63-badge-blue-accent: var(--a63-category-blue);
+  --a63-badge-blue-foreground: var(--a63-category-blue-subtle-foreground);
+  --a63-badge-indigo-accent: var(--a63-category-indigo);
+  --a63-badge-indigo-foreground: var(--a63-category-indigo-subtle-foreground);
+  --a63-badge-violet-accent: var(--a63-category-violet);
+  --a63-badge-violet-foreground: var(--a63-category-violet-subtle-foreground);
+  --a63-badge-purple-accent: var(--a63-category-purple);
+  --a63-badge-purple-foreground: var(--a63-category-purple-subtle-foreground);
+  --a63-badge-fuchsia-accent: var(--a63-category-fuchsia);
+  --a63-badge-fuchsia-foreground: var(--a63-category-fuchsia-subtle-foreground);
+  --a63-badge-pink-accent: var(--a63-category-pink);
+  --a63-badge-pink-foreground: var(--a63-category-pink-subtle-foreground);
+  --a63-badge-rose-accent: var(--a63-category-rose);
+  --a63-badge-rose-foreground: var(--a63-category-rose-subtle-foreground);
+  --a63-badge-neutral-accent: var(--a63-category-neutral);
+  --a63-badge-neutral-foreground: var(--a63-category-neutral-subtle-foreground);
+  --a63-badge-info-foreground: var(--a63-status-info-subtle-foreground);
+  --a63-badge-success-foreground: var(--a63-status-success-subtle-foreground);
+  --a63-badge-warning-foreground: var(--a63-status-warning-subtle-foreground);
+  --a63-badge-error-foreground: var(--a63-action-danger-subtle-foreground);
 }
 
 :is(.dark, [data-a63-mode='dark']) {
-  --a63-badge-red-foreground: var(--color-red-400);
-  --a63-badge-orange-foreground: var(--color-orange-400);
-  --a63-badge-amber-foreground: var(--color-amber-400);
-  --a63-badge-yellow-foreground: var(--color-yellow-400);
-  --a63-badge-lime-foreground: var(--color-lime-400);
-  --a63-badge-green-foreground: var(--color-green-400);
-  --a63-badge-emerald-foreground: var(--color-emerald-400);
-  --a63-badge-teal-foreground: var(--color-teal-400);
-  --a63-badge-cyan-foreground: var(--color-cyan-400);
-  --a63-badge-sky-foreground: var(--color-sky-400);
-  --a63-badge-blue-foreground: var(--color-blue-400);
-  --a63-badge-indigo-foreground: var(--color-indigo-400);
-  --a63-badge-violet-foreground: var(--color-violet-400);
-  --a63-badge-purple-foreground: var(--color-purple-400);
-  --a63-badge-fuchsia-foreground: var(--color-fuchsia-400);
-  --a63-badge-pink-foreground: var(--color-pink-400);
-  --a63-badge-rose-foreground: var(--color-rose-400);
-  --a63-badge-neutral-foreground: var(--color-neutral-400);
-  --a63-badge-info-foreground: var(--color-info-400);
-  --a63-badge-success-foreground: var(--color-success-400);
-  --a63-badge-warning-foreground: var(--color-warning-400);
-  --a63-badge-error-foreground: var(--color-danger-400);
+  --a63-badge-red-accent: var(--a63-category-red);
+  --a63-badge-red-foreground: var(--a63-category-red-subtle-foreground);
+  --a63-badge-orange-accent: var(--a63-category-orange);
+  --a63-badge-orange-foreground: var(--a63-category-orange-subtle-foreground);
+  --a63-badge-amber-accent: var(--a63-category-amber);
+  --a63-badge-amber-foreground: var(--a63-category-amber-subtle-foreground);
+  --a63-badge-yellow-accent: var(--a63-category-yellow);
+  --a63-badge-yellow-foreground: var(--a63-category-yellow-subtle-foreground);
+  --a63-badge-lime-accent: var(--a63-category-lime);
+  --a63-badge-lime-foreground: var(--a63-category-lime-subtle-foreground);
+  --a63-badge-green-accent: var(--a63-category-green);
+  --a63-badge-green-foreground: var(--a63-category-green-subtle-foreground);
+  --a63-badge-emerald-accent: var(--a63-category-emerald);
+  --a63-badge-emerald-foreground: var(--a63-category-emerald-subtle-foreground);
+  --a63-badge-teal-accent: var(--a63-category-teal);
+  --a63-badge-teal-foreground: var(--a63-category-teal-subtle-foreground);
+  --a63-badge-cyan-accent: var(--a63-category-cyan);
+  --a63-badge-cyan-foreground: var(--a63-category-cyan-subtle-foreground);
+  --a63-badge-sky-accent: var(--a63-category-sky);
+  --a63-badge-sky-foreground: var(--a63-category-sky-subtle-foreground);
+  --a63-badge-blue-accent: var(--a63-category-blue);
+  --a63-badge-blue-foreground: var(--a63-category-blue-subtle-foreground);
+  --a63-badge-indigo-accent: var(--a63-category-indigo);
+  --a63-badge-indigo-foreground: var(--a63-category-indigo-subtle-foreground);
+  --a63-badge-violet-accent: var(--a63-category-violet);
+  --a63-badge-violet-foreground: var(--a63-category-violet-subtle-foreground);
+  --a63-badge-purple-accent: var(--a63-category-purple);
+  --a63-badge-purple-foreground: var(--a63-category-purple-subtle-foreground);
+  --a63-badge-fuchsia-accent: var(--a63-category-fuchsia);
+  --a63-badge-fuchsia-foreground: var(--a63-category-fuchsia-subtle-foreground);
+  --a63-badge-pink-accent: var(--a63-category-pink);
+  --a63-badge-pink-foreground: var(--a63-category-pink-subtle-foreground);
+  --a63-badge-rose-accent: var(--a63-category-rose);
+  --a63-badge-rose-foreground: var(--a63-category-rose-subtle-foreground);
+  --a63-badge-neutral-accent: var(--a63-category-neutral);
+  --a63-badge-neutral-foreground: var(--a63-category-neutral-subtle-foreground);
+  --a63-badge-info-foreground: var(--a63-status-info-subtle-foreground);
+  --a63-badge-success-foreground: var(--a63-status-success-subtle-foreground);
+  --a63-badge-warning-foreground: var(--a63-status-warning-subtle-foreground);
+  --a63-badge-error-foreground: var(--a63-action-danger-subtle-foreground);
 }

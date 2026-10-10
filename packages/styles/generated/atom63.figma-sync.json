@@ -4,8 +4,8 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1017,
-    "aliasValues": 616,
+    "variables": 1091,
+    "aliasValues": 720,
     "skipped": 183,
     "computed": 57
   },
@@ -2849,6 +2849,732 @@
           },
           "codeSyntax": "var(--a63-action-primary-text-shadow)",
           "scopes": []
+        },
+        {
+          "name": "category/amber",
+          "token": "--a63-category-amber",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-warning-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-amber)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/amber/subtle",
+          "token": "--a63-category-amber-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-amber",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-amber-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/blue",
+          "token": "--a63-category-blue",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-blue-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-blue)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/blue/subtle",
+          "token": "--a63-category-blue-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-blue",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-blue-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/cyan",
+          "token": "--a63-category-cyan",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-cyan-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-cyan)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/cyan/subtle",
+          "token": "--a63-category-cyan-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-cyan",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-cyan-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/emerald",
+          "token": "--a63-category-emerald",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-emerald-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-emerald)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/emerald/subtle",
+          "token": "--a63-category-emerald-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-emerald",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-emerald-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/fuchsia",
+          "token": "--a63-category-fuchsia",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-fuchsia-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-fuchsia)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/fuchsia/subtle",
+          "token": "--a63-category-fuchsia-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-fuchsia",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-fuchsia-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/gray",
+          "token": "--a63-category-gray",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-gray-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-gray)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/gray/subtle",
+          "token": "--a63-category-gray-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-gray",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-gray-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/green",
+          "token": "--a63-category-green",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-green-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-green)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/green/subtle",
+          "token": "--a63-category-green-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-green",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-green-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/indigo",
+          "token": "--a63-category-indigo",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-indigo-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-indigo)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/indigo/subtle",
+          "token": "--a63-category-indigo-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-indigo",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-indigo-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/lime",
+          "token": "--a63-category-lime",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-lime-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-lime)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/lime/subtle",
+          "token": "--a63-category-lime-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-lime",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-lime-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/neutral",
+          "token": "--a63-category-neutral",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-neutral-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-neutral)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/neutral/subtle",
+          "token": "--a63-category-neutral-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-neutral",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-neutral-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/orange",
+          "token": "--a63-category-orange",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-orange-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-orange)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/orange/subtle",
+          "token": "--a63-category-orange-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-orange",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-orange-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/pink",
+          "token": "--a63-category-pink",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-pink-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-pink)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/pink/subtle",
+          "token": "--a63-category-pink-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-pink",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-pink-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/purple",
+          "token": "--a63-category-purple",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-purple-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-purple)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/purple/subtle",
+          "token": "--a63-category-purple-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-purple",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-purple-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/red",
+          "token": "--a63-category-red",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-red-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-red)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/red/subtle",
+          "token": "--a63-category-red-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-red",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-red-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/rose",
+          "token": "--a63-category-rose",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-rose-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-rose)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/rose/subtle",
+          "token": "--a63-category-rose-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-rose",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-rose-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/sky",
+          "token": "--a63-category-sky",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-sky-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-sky)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/sky/subtle",
+          "token": "--a63-category-sky-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-sky",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-sky-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/slate",
+          "token": "--a63-category-slate",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-slate-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-slate)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/slate/subtle",
+          "token": "--a63-category-slate-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-slate",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-slate-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/stone",
+          "token": "--a63-category-stone",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-stone-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-stone)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/stone/subtle",
+          "token": "--a63-category-stone-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-stone",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-stone-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/teal",
+          "token": "--a63-category-teal",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-teal-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-teal)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/teal/subtle",
+          "token": "--a63-category-teal-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-teal",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-teal-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/violet",
+          "token": "--a63-category-violet",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-violet-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-violet)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/violet/subtle",
+          "token": "--a63-category-violet-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-violet",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-violet-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/yellow",
+          "token": "--a63-category-yellow",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-yellow-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-yellow)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/yellow/subtle",
+          "token": "--a63-category-yellow-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-yellow",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-yellow-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/zinc",
+          "token": "--a63-category-zinc",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-zinc-500"
+            }
+          },
+          "codeSyntax": "var(--a63-category-zinc)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "category/zinc/subtle",
+          "token": "--a63-category-zinc-subtle",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "composed": {
+                "alias": "--a63-category-zinc",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-category-zinc-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
         },
         {
           "name": "font/weight/medium",
@@ -13941,15 +14667,56 @@
           ]
         },
         {
+          "name": "action/danger/subtle",
+          "token": "--a63-action-danger-subtle",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "composed": {
+                "alias": "--a63-action-danger",
+                "opacity": 14
+              }
+            },
+            "dark": {
+              "composed": {
+                "alias": "--a63-action-danger",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-action-danger-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "action/danger/subtle/foreground",
+          "token": "--a63-action-danger-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-danger-700"
+            },
+            "dark": {
+              "alias": "--color-danger-400"
+            }
+          },
+          "codeSyntax": "var(--a63-action-danger-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
           "name": "badge/amber/accent",
           "token": "--a63-badge-amber-accent",
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-amber-500"
+              "alias": "--a63-category-amber"
             },
             "dark": {
-              "alias": "--color-amber-500"
+              "alias": "--a63-category-amber"
             }
           },
           "codeSyntax": "var(--a63-badge-amber-accent)",
@@ -13964,10 +14731,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-amber-800"
+              "alias": "--a63-category-amber-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-amber-400"
+              "alias": "--a63-category-amber-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-amber-foreground)",
@@ -13981,10 +14748,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-blue-500"
+              "alias": "--a63-category-blue"
             },
             "dark": {
-              "alias": "--color-blue-500"
+              "alias": "--a63-category-blue"
             }
           },
           "codeSyntax": "var(--a63-badge-blue-accent)",
@@ -13999,10 +14766,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-blue-700"
+              "alias": "--a63-category-blue-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-blue-400"
+              "alias": "--a63-category-blue-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-blue-foreground)",
@@ -14016,10 +14783,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-cyan-500"
+              "alias": "--a63-category-cyan"
             },
             "dark": {
-              "alias": "--color-cyan-500"
+              "alias": "--a63-category-cyan"
             }
           },
           "codeSyntax": "var(--a63-badge-cyan-accent)",
@@ -14034,10 +14801,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-cyan-800"
+              "alias": "--a63-category-cyan-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-cyan-400"
+              "alias": "--a63-category-cyan-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-cyan-foreground)",
@@ -14051,10 +14818,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-emerald-500"
+              "alias": "--a63-category-emerald"
             },
             "dark": {
-              "alias": "--color-emerald-500"
+              "alias": "--a63-category-emerald"
             }
           },
           "codeSyntax": "var(--a63-badge-emerald-accent)",
@@ -14069,10 +14836,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-emerald-800"
+              "alias": "--a63-category-emerald-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-emerald-400"
+              "alias": "--a63-category-emerald-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-emerald-foreground)",
@@ -14086,10 +14853,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-danger-700"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-danger-400"
+              "alias": "--a63-action-danger-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-error-foreground)",
@@ -14103,10 +14870,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-fuchsia-500"
+              "alias": "--a63-category-fuchsia"
             },
             "dark": {
-              "alias": "--color-fuchsia-500"
+              "alias": "--a63-category-fuchsia"
             }
           },
           "codeSyntax": "var(--a63-badge-fuchsia-accent)",
@@ -14121,10 +14888,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-fuchsia-700"
+              "alias": "--a63-category-fuchsia-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-fuchsia-400"
+              "alias": "--a63-category-fuchsia-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-fuchsia-foreground)",
@@ -14138,10 +14905,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-green-500"
+              "alias": "--a63-category-green"
             },
             "dark": {
-              "alias": "--color-green-500"
+              "alias": "--a63-category-green"
             }
           },
           "codeSyntax": "var(--a63-badge-green-accent)",
@@ -14156,10 +14923,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-green-800"
+              "alias": "--a63-category-green-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-green-400"
+              "alias": "--a63-category-green-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-green-foreground)",
@@ -14173,10 +14940,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-indigo-500"
+              "alias": "--a63-category-indigo"
             },
             "dark": {
-              "alias": "--color-indigo-500"
+              "alias": "--a63-category-indigo"
             }
           },
           "codeSyntax": "var(--a63-badge-indigo-accent)",
@@ -14191,10 +14958,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-indigo-700"
+              "alias": "--a63-category-indigo-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-indigo-400"
+              "alias": "--a63-category-indigo-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-indigo-foreground)",
@@ -14208,10 +14975,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-info-700"
+              "alias": "--a63-status-info-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-info-400"
+              "alias": "--a63-status-info-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-info-foreground)",
@@ -14225,10 +14992,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-lime-500"
+              "alias": "--a63-category-lime"
             },
             "dark": {
-              "alias": "--color-lime-500"
+              "alias": "--a63-category-lime"
             }
           },
           "codeSyntax": "var(--a63-badge-lime-accent)",
@@ -14243,10 +15010,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-lime-800"
+              "alias": "--a63-category-lime-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-lime-400"
+              "alias": "--a63-category-lime-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-lime-foreground)",
@@ -14260,10 +15027,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-neutral-500"
+              "alias": "--a63-category-neutral"
             },
             "dark": {
-              "alias": "--color-neutral-500"
+              "alias": "--a63-category-neutral"
             }
           },
           "codeSyntax": "var(--a63-badge-neutral-accent)",
@@ -14278,10 +15045,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-neutral-700"
+              "alias": "--a63-category-neutral-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-neutral-400"
+              "alias": "--a63-category-neutral-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-neutral-foreground)",
@@ -14295,10 +15062,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-orange-500"
+              "alias": "--a63-category-orange"
             },
             "dark": {
-              "alias": "--color-orange-500"
+              "alias": "--a63-category-orange"
             }
           },
           "codeSyntax": "var(--a63-badge-orange-accent)",
@@ -14313,10 +15080,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-orange-800"
+              "alias": "--a63-category-orange-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-orange-400"
+              "alias": "--a63-category-orange-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-orange-foreground)",
@@ -14330,10 +15097,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-pink-500"
+              "alias": "--a63-category-pink"
             },
             "dark": {
-              "alias": "--color-pink-500"
+              "alias": "--a63-category-pink"
             }
           },
           "codeSyntax": "var(--a63-badge-pink-accent)",
@@ -14348,10 +15115,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-pink-700"
+              "alias": "--a63-category-pink-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-pink-400"
+              "alias": "--a63-category-pink-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-pink-foreground)",
@@ -14365,10 +15132,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-purple-500"
+              "alias": "--a63-category-purple"
             },
             "dark": {
-              "alias": "--color-purple-500"
+              "alias": "--a63-category-purple"
             }
           },
           "codeSyntax": "var(--a63-badge-purple-accent)",
@@ -14383,10 +15150,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-purple-700"
+              "alias": "--a63-category-purple-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-purple-400"
+              "alias": "--a63-category-purple-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-purple-foreground)",
@@ -14400,10 +15167,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-red-500"
+              "alias": "--a63-category-red"
             },
             "dark": {
-              "alias": "--color-red-500"
+              "alias": "--a63-category-red"
             }
           },
           "codeSyntax": "var(--a63-badge-red-accent)",
@@ -14418,10 +15185,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-red-700"
+              "alias": "--a63-category-red-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-red-400"
+              "alias": "--a63-category-red-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-red-foreground)",
@@ -14435,10 +15202,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-rose-500"
+              "alias": "--a63-category-rose"
             },
             "dark": {
-              "alias": "--color-rose-500"
+              "alias": "--a63-category-rose"
             }
           },
           "codeSyntax": "var(--a63-badge-rose-accent)",
@@ -14453,10 +15220,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-rose-700"
+              "alias": "--a63-category-rose-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-rose-400"
+              "alias": "--a63-category-rose-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-rose-foreground)",
@@ -14470,10 +15237,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-sky-500"
+              "alias": "--a63-category-sky"
             },
             "dark": {
-              "alias": "--color-sky-500"
+              "alias": "--a63-category-sky"
             }
           },
           "codeSyntax": "var(--a63-badge-sky-accent)",
@@ -14488,10 +15255,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-sky-700"
+              "alias": "--a63-category-sky-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-sky-400"
+              "alias": "--a63-category-sky-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-sky-foreground)",
@@ -14505,10 +15272,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-success-700"
+              "alias": "--a63-status-success-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-success-400"
+              "alias": "--a63-status-success-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-success-foreground)",
@@ -14522,10 +15289,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-teal-500"
+              "alias": "--a63-category-teal"
             },
             "dark": {
-              "alias": "--color-teal-500"
+              "alias": "--a63-category-teal"
             }
           },
           "codeSyntax": "var(--a63-badge-teal-accent)",
@@ -14540,10 +15307,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-teal-800"
+              "alias": "--a63-category-teal-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-teal-400"
+              "alias": "--a63-category-teal-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-teal-foreground)",
@@ -14557,10 +15324,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-violet-500"
+              "alias": "--a63-category-violet"
             },
             "dark": {
-              "alias": "--color-violet-500"
+              "alias": "--a63-category-violet"
             }
           },
           "codeSyntax": "var(--a63-badge-violet-accent)",
@@ -14575,10 +15342,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-violet-700"
+              "alias": "--a63-category-violet-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-violet-400"
+              "alias": "--a63-category-violet-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-violet-foreground)",
@@ -14592,10 +15359,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-warning-800"
+              "alias": "--a63-status-warning-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-warning-400"
+              "alias": "--a63-status-warning-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-warning-foreground)",
@@ -14609,10 +15376,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-yellow-500"
+              "alias": "--a63-category-yellow"
             },
             "dark": {
-              "alias": "--color-yellow-500"
+              "alias": "--a63-category-yellow"
             }
           },
           "codeSyntax": "var(--a63-badge-yellow-accent)",
@@ -14627,10 +15394,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-yellow-800"
+              "alias": "--a63-category-yellow-subtle-foreground"
             },
             "dark": {
-              "alias": "--color-yellow-400"
+              "alias": "--a63-category-yellow-subtle-foreground"
             }
           },
           "codeSyntax": "var(--a63-badge-yellow-foreground)",
@@ -14755,6 +15522,380 @@
           "codeSyntax": "var(--blur-xs)",
           "scopes": [
             "EFFECT_FLOAT"
+          ]
+        },
+        {
+          "name": "category/amber/subtle/foreground",
+          "token": "--a63-category-amber-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-warning-800"
+            },
+            "dark": {
+              "alias": "--color-warning-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-amber-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/blue/subtle/foreground",
+          "token": "--a63-category-blue-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-blue-700"
+            },
+            "dark": {
+              "alias": "--color-blue-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-blue-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/cyan/subtle/foreground",
+          "token": "--a63-category-cyan-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-cyan-800"
+            },
+            "dark": {
+              "alias": "--color-cyan-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-cyan-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/emerald/subtle/foreground",
+          "token": "--a63-category-emerald-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-emerald-800"
+            },
+            "dark": {
+              "alias": "--color-emerald-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-emerald-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/fuchsia/subtle/foreground",
+          "token": "--a63-category-fuchsia-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-fuchsia-700"
+            },
+            "dark": {
+              "alias": "--color-fuchsia-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-fuchsia-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/gray/subtle/foreground",
+          "token": "--a63-category-gray-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-gray-700"
+            },
+            "dark": {
+              "alias": "--color-gray-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-gray-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/green/subtle/foreground",
+          "token": "--a63-category-green-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-green-800"
+            },
+            "dark": {
+              "alias": "--color-green-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-green-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/indigo/subtle/foreground",
+          "token": "--a63-category-indigo-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-indigo-700"
+            },
+            "dark": {
+              "alias": "--color-indigo-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-indigo-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/lime/subtle/foreground",
+          "token": "--a63-category-lime-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-lime-800"
+            },
+            "dark": {
+              "alias": "--color-lime-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-lime-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/neutral/subtle/foreground",
+          "token": "--a63-category-neutral-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-neutral-700"
+            },
+            "dark": {
+              "alias": "--color-neutral-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-neutral-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/orange/subtle/foreground",
+          "token": "--a63-category-orange-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-orange-800"
+            },
+            "dark": {
+              "alias": "--color-orange-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-orange-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/pink/subtle/foreground",
+          "token": "--a63-category-pink-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-pink-700"
+            },
+            "dark": {
+              "alias": "--color-pink-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-pink-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/purple/subtle/foreground",
+          "token": "--a63-category-purple-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-purple-700"
+            },
+            "dark": {
+              "alias": "--color-purple-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-purple-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/red/subtle/foreground",
+          "token": "--a63-category-red-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-red-700"
+            },
+            "dark": {
+              "alias": "--color-red-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-red-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/rose/subtle/foreground",
+          "token": "--a63-category-rose-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-rose-700"
+            },
+            "dark": {
+              "alias": "--color-rose-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-rose-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/sky/subtle/foreground",
+          "token": "--a63-category-sky-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-sky-700"
+            },
+            "dark": {
+              "alias": "--color-sky-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-sky-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/slate/subtle/foreground",
+          "token": "--a63-category-slate-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-slate-700"
+            },
+            "dark": {
+              "alias": "--color-slate-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-slate-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/stone/subtle/foreground",
+          "token": "--a63-category-stone-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-stone-700"
+            },
+            "dark": {
+              "alias": "--color-stone-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-stone-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/teal/subtle/foreground",
+          "token": "--a63-category-teal-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-teal-800"
+            },
+            "dark": {
+              "alias": "--color-teal-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-teal-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/violet/subtle/foreground",
+          "token": "--a63-category-violet-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-violet-700"
+            },
+            "dark": {
+              "alias": "--color-violet-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-violet-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/yellow/subtle/foreground",
+          "token": "--a63-category-yellow-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-yellow-800"
+            },
+            "dark": {
+              "alias": "--color-yellow-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-yellow-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "category/zinc/subtle/foreground",
+          "token": "--a63-category-zinc-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-zinc-700"
+            },
+            "dark": {
+              "alias": "--color-zinc-400"
+            }
+          },
+          "codeSyntax": "var(--a63-category-zinc-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
           ]
         },
         {
@@ -15074,6 +16215,47 @@
           ]
         },
         {
+          "name": "status/info/subtle",
+          "token": "--a63-status-info-subtle",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "composed": {
+                "alias": "--a63-status-info",
+                "opacity": 14
+              }
+            },
+            "dark": {
+              "composed": {
+                "alias": "--a63-status-info",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-status-info-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "status/info/subtle/foreground",
+          "token": "--a63-status-info-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-info-700"
+            },
+            "dark": {
+              "alias": "--color-info-400"
+            }
+          },
+          "codeSyntax": "var(--a63-status-info-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
           "name": "status/success",
           "token": "--a63-status-success",
           "type": "COLOR",
@@ -15119,6 +16301,47 @@
           ]
         },
         {
+          "name": "status/success/subtle",
+          "token": "--a63-status-success-subtle",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "composed": {
+                "alias": "--a63-status-success",
+                "opacity": 14
+              }
+            },
+            "dark": {
+              "composed": {
+                "alias": "--a63-status-success",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-status-success-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "status/success/subtle/foreground",
+          "token": "--a63-status-success-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-success-700"
+            },
+            "dark": {
+              "alias": "--color-success-400"
+            }
+          },
+          "codeSyntax": "var(--a63-status-success-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
           "name": "status/warning",
           "token": "--a63-status-warning",
           "type": "COLOR",
@@ -15159,6 +16382,47 @@
             }
           },
           "codeSyntax": "var(--a63-status-warning-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "status/warning/subtle",
+          "token": "--a63-status-warning-subtle",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "composed": {
+                "alias": "--a63-status-warning",
+                "opacity": 14
+              }
+            },
+            "dark": {
+              "composed": {
+                "alias": "--a63-status-warning",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-status-warning-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "status/warning/subtle/foreground",
+          "token": "--a63-status-warning-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-warning-800"
+            },
+            "dark": {
+              "alias": "--color-warning-400"
+            }
+          },
+          "codeSyntax": "var(--a63-status-warning-subtle-foreground)",
           "scopes": [
             "TEXT_FILL"
           ]
