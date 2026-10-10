@@ -7,8 +7,11 @@ import { fileURLToPath } from 'node:url'
 import {
   renderCompat,
   renderThemeBlock,
+  renderTypeBlock,
   replaceThemeBlock,
+  replaceTypeBlock,
   roleEntries,
+  typeRoleNames,
   unknownTokens,
 } from './role-bridges.mjs'
 
@@ -74,4 +77,39 @@ test('every role in the shipped table maps to a token the manifest declares', ()
   const roles = JSON.parse(readFileSync(path.join(root, 'src/tailwind/roles.json'), 'utf8'))
   const manifest = JSON.parse(readFileSync(path.join(root, 'generated/atom63.tokens.json'), 'utf8'))
   assert.deepEqual(unknownTokens(roles, new Set(manifest.entries.map(entry => entry.cssVar))), [])
+})
+
+const typeDoc = { a63: { type: { body: {}, 'title-1': {} } } }
+
+test('renders a text utility and a strong variant per text role', () => {
+  const block = renderTypeBlock(typeDoc)
+  assert.ok(block.includes('--text-body: var(--a63-type-body-font-size);'))
+  assert.ok(block.includes('--text-body--font-weight: var(--a63-type-body-font-weight);'))
+  assert.ok(
+    block.includes(
+      '--text-title-1-strong--font-weight: var(--a63-type-title-1-font-weight-strong);'
+    )
+  )
+})
+
+test('appends the text role block once, then replaces it in place', () => {
+  const css = '@theme inline {\n  --breakpoint-sm: 40rem;\n}\n'
+  const once = replaceTypeBlock(css, renderTypeBlock(typeDoc))
+  assert.match(once, /--breakpoint-sm: 40rem;/)
+  assert.match(once, /--text-body:/)
+  assert.equal(replaceTypeBlock(once, renderTypeBlock(typeDoc)), once)
+})
+
+test('every shipped text role has its four tokens in the manifest', () => {
+  const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
+  const doc = JSON.parse(readFileSync(path.join(root, 'src/tokens/type-roles.tokens.json'), 'utf8'))
+  const manifest = JSON.parse(readFileSync(path.join(root, 'generated/atom63.tokens.json'), 'utf8'))
+  const declared = new Set(manifest.entries.map(entry => entry.cssVar))
+  const missing = typeRoleNames(doc).flatMap(role =>
+    ['font-size', 'line-height', 'font-weight', 'font-weight-strong']
+      .map(part => `--a63-type-${role}-${part}`)
+      .filter(token => !declared.has(token))
+  )
+  assert.deepEqual(missing, [])
+  assert.equal(typeRoleNames(doc).length, 11)
 })

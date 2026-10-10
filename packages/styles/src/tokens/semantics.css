@@ -18,6 +18,9 @@
   --a63-media-stage: var(--color-black-100);
   /* Media scrim — the dim behind a video dialog; heavier than --a63-scrim because the video is the only thing on screen. */
   --a63-media-scrim: var(--color-black-70);
+  /* An opaque dark neutral for media areas (players, lightboxes, posters). It follows the
+     surface palette but not the mode: media reads on dark in both. */
+  --a63-media-surface: var(--surface-dark-2);
   /* On media — icons and text on controls that float over photos and video, whose colors are unknowable. */
   --a63-on-media-foreground: var(--color-white-100);
   /* On media — the backplate of a floating control, dark enough that its foreground reads over any picture. */

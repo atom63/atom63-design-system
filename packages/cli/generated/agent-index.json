@@ -7916,7 +7916,7 @@
   {
    "area": "foundations",
    "label": "Colors",
-   "markdown": "# Colors\n\nThe color system is built around executable indirection. **Foundation** owns the literal palette (`tokens/foundation/*`). **Semantics** (`--a63-*`) name UI jobs. **App JSX** may sketch with Tailwind/shadcn role utilities (`bg-background`, `text-muted-foreground`) because those adapters re-reference `--a63-*`. **Shared package recipes** consume `--a63-*` (and family contracts), not primitives and not raw shadcn CSS variables.\n\nAuthoring lanes: `docs/design-system/authoring-surfaces.md`.\n\nThe goal is simple: components describe the job a color performs, while `@atom63/styles` owns how that job resolves across mode, brand, neutral-surface, surface-tint, and theme axes.\n\n## Design intent\n\nThe Atom63-specific palette has six brand hues, six neutral families, and four status families. Foundation also carries the Tailwind named palette for fixed-hue cases. Both sit behind enough structure that changing an appearance axis does not require auditing every component:\n\n- **Foundation primitives** define stable palette material (the only place for new color dictionaries).\n- **Aliases** (brand / surface axes) select which primitive families a mood uses.\n- **Semantic roles** expose stable UI decisions through `--a63-*` variables.\n- **Themes** remap material/role resolution; they do not invent new palette ramps.\n- **Component recipes** consume those roles in React and CSS.\n\n## Layer stack\n\nImported in order from `@atom63/styles`:\n\n## Mental model\n\nColor moves from stable to contextual:\n\n```txt\nfoundation palette -> brand/surface alias -> a63 semantic role -> component recipe\n     (values)              (which family)         (UI job)              (wiring)\n```\n\nProduct theme skins (`modern` / `aqua` / …) sit beside this chain: they remap contract/semantic knobs, they are not a second palette dictionary.\n\nEach layer answers a different question:\n\n| Layer | Question | Example |\n|-------|----------|---------|\n| Foundation | What raw color exists? | `--color-b1-500`, `--color-n1-light-3` |\n| Alias | Which palette family does this mood use? | brand and surface aliases |\n| Semantic | What UI job does this color perform? | `--a63-surface-panel`, `--a63-action-primary`, `--a63-border-control` |\n| Component | How does the role appear in context? | button fill, input border, dialog surface |\n\nThis is the reason component code should feel boring. A component should say \"I need the primary action color\" or \"I need the subtle border color\", not \"I need this exact blue.\"\n\n## How the scale works\n\n### Semantic roles\n\nComponents use the `--a63-*` semantic layer. These variables are the design-system API for product UI.\n\n### Surface scale\n\n12-step neutral ramps (`surface-light-*` / `surface-dark-*`) form the backbone of the UI. Semantic tokens like `--a63-surface-page`, `--a63-surface-panel`, and `--a63-border-subtle` reference the appropriate steps. The default surface family is `n1`, a true neutral gray with no color cast.\n\n### Brand primitives\n\nSix brand hues (`b1`–`b6`), each with steps `50`–`950`, provide enough range for product accents, visualization, and expressive surfaces. The default primary action resolves through the brand alias layer rather than hardcoding a primitive in a component.\n\n### Neutral families\n\nSix neutral palettes (`n1`–`n6`) give the system different neutral personalities without creating one-off product palettes. The `data-a63-surface` axis remaps the aliases; components keep consuming the same semantic roles. Themes may separately re-skin semantic surfaces when material character requires it.\n\n### Status primitives\n\n`danger`, `success`, `warning`, and `info` carry fixed meaning. They can be tuned for contrast across modes, but they should not be repurposed as decorative brand colors.\n\n  {STATUS_PRIMITIVES.map(({ id, utility }) => (\n  ))}\n\n## Compatibility\n\nThe shadcn vocabulary (`background`, `primary`, `muted-foreground`, …) is an **opt-in adapter** (`@atom63/styles/compat/shadcn` + Tailwind theme keys). It re-references `--a63-*`; it does not own values (mirror rule).\n\nBoth the Tailwind theme keys and the compat variables are generated from one role table, `packages/styles/src/tailwind/roles.json` (`pnpm --filter @atom63/styles generate:roles`). Beyond the shadcn defaults it adds `destructive-foreground`, `info`/`success`/`warning` with `-foreground`, `surface-sunken`, `selected` with `-foreground`, and `chart-1`–`chart-5`. `accent` is the neutral hover and highlight plate, not the brand color; use `primary` for the brand.\n\n| Surface | Prefer | Avoid |\n|---------|--------|-------|\n| App / page JSX | Tailwind utilities: `bg-background`, `text-foreground`, `bg-primary`, … | Hardcoded hex; reaching into `--a63-control-*` for sketching |\n| Shared package recipes (`ui-react`, widgets, …) | `--a63-*` roles (+ family contracts) | Baking `var(--background)` / `var(--primary)` into package CSS |\n| Third-party / copy-pasted shadcn CSS | Compat aliases OK at the consumer boundary | Treating `--primary` as the system SSOT |\n\nCanonical design-system contract for shared UI is `--a63-*`. Tailwind/shadcn names are the **human design dialect** for product screens — not “legacy only.” See Designing in code and `docs/design-system/authoring-surfaces.md`.\n\n## Decisions worth knowing\n\n### Semantic-first, not palette-first\n\nShared components never use primitive color values directly. Not `--color-b1-500`, not `--color-n1-light-3`, and not one-off hex values. Shared UI consumes semantic roles such as `--a63-action-primary`, `--a63-text-primary`, `--a63-border-subtle`, and `--a63-surface-panel`. App JSX may use the equivalent Tailwind role utilities.\n\nThe exception is deliberate brand or visualization work that needs a fixed hue regardless of theme. Those cases should be explicit and rare. **Adding** a new hue step still happens in foundation.\n\n### Six neutrals, not one\n\nMost systems ship one neutral ramp. Atom63 has six because portfolio, docs, OS, and learning surfaces can need different neutral personalities. Having six families pre-built makes theme creation alias reassignment rather than palette generation.\n\n### Contrast as a contract\n\nEvery semantic foreground/background pair is designed together. `--a63-action-primary` and `--a63-action-primary-foreground` are a pair. Text roles and surface roles are reviewed together. If a component introduces a new semantic pair, the pair needs contrast review before it becomes part of the shared system.\n\n### Color should express role before personality\n\nThe palette can be expressive, but role comes first. A primary button is primary because it is the main action, not because blue looks good in that location. A muted panel is muted because it is secondary to the current task, not because the screen needs another shade.\n\n## Usage guidance\n\n| Need | In app JSX | In package recipes |\n|------|------------|--------------------|\n| App surfaces | `bg-background`, `bg-card`, `bg-muted` | `--a63-surface-page`, `--a63-surface-panel`, `--a63-surface-muted` |\n| Text | `text-foreground`, `text-muted-foreground` | `--a63-text-primary`, `--a63-text-secondary` |\n| Borders | `border-border` | `--a63-border-subtle`, `--a63-border-control` |\n| Primary actions | `bg-primary`, `text-primary-foreground` | `--a63-action-primary`, `--a63-action-primary-foreground` |\n| Feedback states | `text-destructive`, status utilities | `--a63-status-*`, `--a63-action-danger` |\n| Brand moments (fixed hue) | `bg-b1-500`, … | foundation `--color-b*` only when intentional |\n\n## Anti-patterns\n\n```tsx\n// Avoid: component owns a palette decision.\n```\n\nThe button now depends on one theme's brand hue and one foreground assumption.\n\n```tsx\n// Prefer: component owns a semantic role.\n```\n\nThe component can survive theme changes because the semantic pair owns contrast.\n\n## Review checklist\n\nWhen reviewing color usage, ask:\n\n1. Is this a semantic role (Tailwind/shadcn utility or `--a63-*`), or a foundation palette value?\n2. If adding a new literal color, does it live in `tokens/foundation/*`?\n3. Does the foreground/background pair have a contrast contract?\n4. Would this still work if the brand hue changed?\n5. Is a status color being used for real status meaning?\n6. Is color the only cue for the state?",
+   "markdown": "# Colors\n\nThe color system is built around executable indirection. **Foundation** owns the literal palette (`tokens/foundation/*`). **Semantics** (`--a63-*`) name UI jobs. **App JSX** may sketch with Tailwind/shadcn role utilities (`bg-background`, `text-muted-foreground`) because those adapters re-reference `--a63-*`. **Shared package recipes** consume `--a63-*` (and family contracts), not primitives and not raw shadcn CSS variables.\n\nAuthoring lanes: `docs/design-system/authoring-surfaces.md`.\n\nThe goal is simple: components describe the job a color performs, while `@atom63/styles` owns how that job resolves across mode, brand, neutral-surface, surface-tint, and theme axes.\n\n## Design intent\n\nThe Atom63-specific palette has six brand hues, six neutral families, and four status families. Foundation also carries the Tailwind named palette for fixed-hue cases. Both sit behind enough structure that changing an appearance axis does not require auditing every component:\n\n- **Foundation primitives** define stable palette material (the only place for new color dictionaries).\n- **Aliases** (brand / surface axes) select which primitive families a mood uses.\n- **Semantic roles** expose stable UI decisions through `--a63-*` variables.\n- **Themes** remap material/role resolution; they do not invent new palette ramps.\n- **Component recipes** consume those roles in React and CSS.\n\n## Layer stack\n\nImported in order from `@atom63/styles`:\n\n## Mental model\n\nColor moves from stable to contextual:\n\n```txt\nfoundation palette -> brand/surface alias -> a63 semantic role -> component recipe\n     (values)              (which family)         (UI job)              (wiring)\n```\n\nProduct theme skins (`modern` / `aqua` / …) sit beside this chain: they remap contract/semantic knobs, they are not a second palette dictionary.\n\nEach layer answers a different question:\n\n| Layer | Question | Example |\n|-------|----------|---------|\n| Foundation | What raw color exists? | `--color-b1-500`, `--color-n1-light-3` |\n| Alias | Which palette family does this mood use? | brand and surface aliases |\n| Semantic | What UI job does this color perform? | `--a63-surface-panel`, `--a63-action-primary`, `--a63-border-control` |\n| Component | How does the role appear in context? | button fill, input border, dialog surface |\n\nThis is the reason component code should feel boring. A component should say \"I need the primary action color\" or \"I need the subtle border color\", not \"I need this exact blue.\"\n\n## How the scale works\n\n### Semantic roles\n\nComponents use the `--a63-*` semantic layer. These variables are the design-system API for product UI.\n\n### Surface scale\n\n12-step neutral ramps (`surface-light-*` / `surface-dark-*`) form the backbone of the UI. Semantic tokens like `--a63-surface-page`, `--a63-surface-panel`, and `--a63-border-subtle` reference the appropriate steps. The default surface family is `n1`, a true neutral gray with no color cast.\n\n### Brand primitives\n\nSix brand hues (`b1`–`b6`), each with steps `50`–`950`, provide enough range for product accents, visualization, and expressive surfaces. The default primary action resolves through the brand alias layer rather than hardcoding a primitive in a component.\n\n### Neutral families\n\nSix neutral palettes (`n1`–`n6`) give the system different neutral personalities without creating one-off product palettes. The `data-a63-surface` axis remaps the aliases; components keep consuming the same semantic roles. Themes may separately re-skin semantic surfaces when material character requires it.\n\n### Status primitives\n\n`danger`, `success`, `warning`, and `info` carry fixed meaning. They can be tuned for contrast across modes, but they should not be repurposed as decorative brand colors.\n\n  {STATUS_PRIMITIVES.map(({ id, utility }) => (\n  ))}\n\n## Compatibility\n\nThe shadcn vocabulary (`background`, `primary`, `muted-foreground`, …) is an **opt-in adapter** (`@atom63/styles/compat/shadcn` + Tailwind theme keys). It re-references `--a63-*`; it does not own values (mirror rule).\n\nBoth the Tailwind theme keys and the compat variables are generated from one role table, `packages/styles/src/tailwind/roles.json` (`pnpm --filter @atom63/styles generate:roles`). Beyond the shadcn defaults it adds `destructive-foreground`, `info`/`success`/`warning` with `-foreground`, `surface-sunken`, `selected` with `-foreground`, and `chart-1`–`chart-5`. Tinted chips use the `-subtle` pairs: `destructive-subtle`, `info-subtle`, `success-subtle` and `warning-subtle`, each with `-subtle-foreground`, and `category-<hue>` with `-subtle` and `-subtle-foreground` for the 22 palette hues (amber shares the warning ramp). Every tint is the same 14% wash. `accent` is the neutral hover and highlight plate, not the brand color; use `primary` for the brand.\n\n| Surface | Prefer | Avoid |\n|---------|--------|-------|\n| App / page JSX | Tailwind utilities: `bg-background`, `text-foreground`, `bg-primary`, … | Hardcoded hex; reaching into `--a63-control-*` for sketching |\n| Shared package recipes (`ui-react`, widgets, …) | `--a63-*` roles (+ family contracts) | Baking `var(--background)` / `var(--primary)` into package CSS |\n| Third-party / copy-pasted shadcn CSS | Compat aliases OK at the consumer boundary | Treating `--primary` as the system SSOT |\n\nCanonical design-system contract for shared UI is `--a63-*`. Tailwind/shadcn names are the **human design dialect** for product screens — not “legacy only.” See Designing in code and `docs/design-system/authoring-surfaces.md`.\n\n## Decisions worth knowing\n\n### Semantic-first, not palette-first\n\nShared components never use primitive color values directly. Not `--color-b1-500`, not `--color-n1-light-3`, and not one-off hex values. Shared UI consumes semantic roles such as `--a63-action-primary`, `--a63-text-primary`, `--a63-border-subtle`, and `--a63-surface-panel`. App JSX may use the equivalent Tailwind role utilities.\n\nThe exception is deliberate brand or visualization work that needs a fixed hue regardless of theme. Those cases should be explicit and rare. **Adding** a new hue step still happens in foundation.\n\n### Six neutrals, not one\n\nMost systems ship one neutral ramp. Atom63 has six because portfolio, docs, OS, and learning surfaces can need different neutral personalities. Having six families pre-built makes theme creation alias reassignment rather than palette generation.\n\n### Contrast as a contract\n\nEvery semantic foreground/background pair is designed together. `--a63-action-primary` and `--a63-action-primary-foreground` are a pair. Text roles and surface roles are reviewed together. If a component introduces a new semantic pair, the pair needs contrast review before it becomes part of the shared system.\n\n### Color should express role before personality\n\nThe palette can be expressive, but role comes first. A primary button is primary because it is the main action, not because blue looks good in that location. A muted panel is muted because it is secondary to the current task, not because the screen needs another shade.\n\n## Usage guidance\n\n| Need | In app JSX | In package recipes |\n|------|------------|--------------------|\n| App surfaces | `bg-background`, `bg-card`, `bg-muted` | `--a63-surface-page`, `--a63-surface-panel`, `--a63-surface-muted` |\n| Text | `text-foreground`, `text-muted-foreground` | `--a63-text-primary`, `--a63-text-secondary` |\n| Borders | `border-border` | `--a63-border-subtle`, `--a63-border-control` |\n| Primary actions | `bg-primary`, `text-primary-foreground` | `--a63-action-primary`, `--a63-action-primary-foreground` |\n| Feedback states | `text-destructive`, status utilities | `--a63-status-*`, `--a63-action-danger` |\n| Brand moments (fixed hue) | `bg-b1-500`, … | foundation `--color-b*` only when intentional |\n\n## Anti-patterns\n\n```tsx\n// Avoid: component owns a palette decision.\n```\n\nThe button now depends on one theme's brand hue and one foreground assumption.\n\n```tsx\n// Prefer: component owns a semantic role.\n```\n\nThe component can survive theme changes because the semantic pair owns contrast.\n\n## Review checklist\n\nWhen reviewing color usage, ask:\n\n1. Is this a semantic role (Tailwind/shadcn utility or `--a63-*`), or a foundation palette value?\n2. If adding a new literal color, does it live in `tokens/foundation/*`?\n3. Does the foreground/background pair have a contrast contract?\n4. Would this still work if the brand hue changed?\n5. Is a status color being used for real status meaning?\n6. Is color the only cue for the state?",
    "route": "/foundations/foundation-colors",
    "slug": "foundation-colors"
   },
@@ -12785,6 +12785,22 @@
    ]
   },
   {
+   "cssVar": "--a63-media-surface",
+   "figma": {
+    "collection": "Semantic",
+    "path": "media/surface"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--surface-dark-2)"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-menu-disabled-opacity",
    "figma": {
     "collection": "Contract",
@@ -15415,6 +15431,710 @@
     {
      "scope": ":root",
      "value": "0 0 #0000"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-body-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/body/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-base-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-body-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/body/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-body-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/body/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-body-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/body/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-base-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-callout-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/callout/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-base-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-callout-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/callout/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-callout-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/callout/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-callout-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/callout/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-base-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-caption-1-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/caption/1/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-xs-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-caption-1-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/caption/1/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-caption-1-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/caption/1/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-caption-1-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/caption/1/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-xs-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-caption-2-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/caption/2/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-2xs-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-caption-2-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/caption/2/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-caption-2-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/caption/2/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-caption-2-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/caption/2/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-2xs-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-footnote-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/footnote/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-xs-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-footnote-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/footnote/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-footnote-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/footnote/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-footnote-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/footnote/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-xs-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-headline-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/headline/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-base-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-headline-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/headline/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-headline-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/headline/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-headline-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/headline/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-base-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-large-title-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/large/title/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-6xl-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-large-title-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/large/title/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-large-title-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/large/title/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "700"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-large-title-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/large/title/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-6xl-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-subhead-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/subhead/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-sm-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-subhead-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/subhead/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-subhead-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/subhead/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-subhead-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/subhead/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-sm-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-1-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/1/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-5xl-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-1-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/1/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-1-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/1/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "700"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-1-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/1/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-5xl-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-2-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/2/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-3xl-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-2-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/2/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-2-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/2/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "700"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-2-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/2/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-3xl-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-3-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/3/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-2xl-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-3-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/3/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-3-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/3/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-3-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/3/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--typography-2xl-line-height)"
     }
    ]
   },
@@ -28014,6 +28734,62 @@
     {
      "scope": "[data-window-size='xs']",
      "value": "calc(24px * var(--typography-scale, 1))"
+    }
+   ]
+  },
+  {
+   "cssVar": "--typography-2xs-font-size",
+   "figma": {
+    "collection": "Foundation",
+    "path": "typography/2xs/font/size"
+   },
+   "layer": "foundation",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "calc(11px * var(--typography-scale, 1))"
+    },
+    {
+     "scope": "[data-window-size='md'], [data-window-size='lg'], [data-window-size='xl']",
+     "value": "calc(11px * var(--typography-scale, 1))"
+    },
+    {
+     "scope": "[data-window-size='sm']",
+     "value": "calc(11px * var(--typography-scale, 1))"
+    },
+    {
+     "scope": "[data-window-size='xs']",
+     "value": "calc(11px * var(--typography-scale, 1))"
+    }
+   ]
+  },
+  {
+   "cssVar": "--typography-2xs-line-height",
+   "figma": {
+    "collection": "Foundation",
+    "path": "typography/2xs/line/height"
+   },
+   "layer": "foundation",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "calc(13px * var(--typography-scale, 1))"
+    },
+    {
+     "scope": "[data-window-size='md'], [data-window-size='lg'], [data-window-size='xl']",
+     "value": "calc(13px * var(--typography-scale, 1))"
+    },
+    {
+     "scope": "[data-window-size='sm']",
+     "value": "calc(13px * var(--typography-scale, 1))"
+    },
+    {
+     "scope": "[data-window-size='xs']",
+     "value": "calc(13px * var(--typography-scale, 1))"
     }
    ]
   },

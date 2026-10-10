@@ -1,0 +1,293 @@
+{
+  "$description": "Text roles, named after the Apple HIG text styles so one intent maps to every platform. Each\nrole takes a step of the web type scale (and so follows the window size and type scale) and\nrecords its iOS text style in $extensions[\"io.atom63.platforms\"]; on iOS the role uses that\nFont.TextStyle and Dynamic Type. -strong is the emphasized weight: bold for the three largest\ntitles, semibold for the rest. Web sizes follow web conventions (body is 15px here, 17pt on\niOS); the role, not the number, is what stays the same.",
+  "a63": {
+    "type": {
+      "large-title": {
+        "font-size": {
+          "$type": "dimension",
+          "$value": "{typography.6xl.font.size}",
+          "$extensions": {
+            "io.atom63.platforms": {
+              "ios": {
+                "textStyle": "largeTitle",
+                "dynamicType": "system"
+              }
+            }
+          }
+        },
+        "line-height": {
+          "$type": "dimension",
+          "$value": "{typography.6xl.line.height}"
+        },
+        "font-weight": {
+          "$type": "fontWeight",
+          "$value": 400
+        },
+        "font-weight-strong": {
+          "$type": "fontWeight",
+          "$value": 700
+        }
+      },
+      "title-1": {
+        "font-size": {
+          "$type": "dimension",
+          "$value": "{typography.5xl.font.size}",
+          "$extensions": {
+            "io.atom63.platforms": {
+              "ios": {
+                "textStyle": "title",
+                "dynamicType": "system"
+              }
+            }
+          }
+        },
+        "line-height": {
+          "$type": "dimension",
+          "$value": "{typography.5xl.line.height}"
+        },
+        "font-weight": {
+          "$type": "fontWeight",
+          "$value": 400
+        },
+        "font-weight-strong": {
+          "$type": "fontWeight",
+          "$value": 700
+        }
+      },
+      "title-2": {
+        "font-size": {
+          "$type": "dimension",
+          "$value": "{typography.3xl.font.size}",
+          "$extensions": {
+            "io.atom63.platforms": {
+              "ios": {
+                "textStyle": "title2",
+                "dynamicType": "system"
+              }
+            }
+          }
+        },
+        "line-height": {
+          "$type": "dimension",
+          "$value": "{typography.3xl.line.height}"
+        },
+        "font-weight": {
+          "$type": "fontWeight",
+          "$value": 400
+        },
+        "font-weight-strong": {
+          "$type": "fontWeight",
+          "$value": 700
+        }
+      },
+      "title-3": {
+        "font-size": {
+          "$type": "dimension",
+          "$value": "{typography.2xl.font.size}",
+          "$extensions": {
+            "io.atom63.platforms": {
+              "ios": {
+                "textStyle": "title3",
+                "dynamicType": "system"
+              }
+            }
+          }
+        },
+        "line-height": {
+          "$type": "dimension",
+          "$value": "{typography.2xl.line.height}"
+        },
+        "font-weight": {
+          "$type": "fontWeight",
+          "$value": 400
+        },
+        "font-weight-strong": {
+          "$type": "fontWeight",
+          "$value": 600
+        }
+      },
+      "headline": {
+        "font-size": {
+          "$type": "dimension",
+          "$value": "{typography.base.font.size}",
+          "$extensions": {
+            "io.atom63.platforms": {
+              "ios": {
+                "textStyle": "headline",
+                "dynamicType": "system"
+              }
+            }
+          }
+        },
+        "line-height": {
+          "$type": "dimension",
+          "$value": "{typography.base.line.height}"
+        },
+        "font-weight": {
+          "$type": "fontWeight",
+          "$value": 600
+        },
+        "font-weight-strong": {
+          "$type": "fontWeight",
+          "$value": 600
+        }
+      },
+      "body": {
+        "font-size": {
+          "$type": "dimension",
+          "$value": "{typography.base.font.size}",
+          "$extensions": {
+            "io.atom63.platforms": {
+              "ios": {
+                "textStyle": "body",
+                "dynamicType": "system"
+              }
+            }
+          }
+        },
+        "line-height": {
+          "$type": "dimension",
+          "$value": "{typography.base.line.height}"
+        },
+        "font-weight": {
+          "$type": "fontWeight",
+          "$value": 400
+        },
+        "font-weight-strong": {
+          "$type": "fontWeight",
+          "$value": 600
+        }
+      },
+      "callout": {
+        "font-size": {
+          "$type": "dimension",
+          "$value": "{typography.base.font.size}",
+          "$extensions": {
+            "io.atom63.platforms": {
+              "ios": {
+                "textStyle": "callout",
+                "dynamicType": "system"
+              }
+            }
+          }
+        },
+        "line-height": {
+          "$type": "dimension",
+          "$value": "{typography.base.line.height}"
+        },
+        "font-weight": {
+          "$type": "fontWeight",
+          "$value": 400
+        },
+        "font-weight-strong": {
+          "$type": "fontWeight",
+          "$value": 600
+        }
+      },
+      "subhead": {
+        "font-size": {
+          "$type": "dimension",
+          "$value": "{typography.sm.font.size}",
+          "$extensions": {
+            "io.atom63.platforms": {
+              "ios": {
+                "textStyle": "subheadline",
+                "dynamicType": "system"
+              }
+            }
+          }
+        },
+        "line-height": {
+          "$type": "dimension",
+          "$value": "{typography.sm.line.height}"
+        },
+        "font-weight": {
+          "$type": "fontWeight",
+          "$value": 400
+        },
+        "font-weight-strong": {
+          "$type": "fontWeight",
+          "$value": 600
+        }
+      },
+      "footnote": {
+        "font-size": {
+          "$type": "dimension",
+          "$value": "{typography.xs.font.size}",
+          "$extensions": {
+            "io.atom63.platforms": {
+              "ios": {
+                "textStyle": "footnote",
+                "dynamicType": "system"
+              }
+            }
+          }
+        },
+        "line-height": {
+          "$type": "dimension",
+          "$value": "{typography.xs.line.height}"
+        },
+        "font-weight": {
+          "$type": "fontWeight",
+          "$value": 400
+        },
+        "font-weight-strong": {
+          "$type": "fontWeight",
+          "$value": 600
+        }
+      },
+      "caption-1": {
+        "font-size": {
+          "$type": "dimension",
+          "$value": "{typography.xs.font.size}",
+          "$extensions": {
+            "io.atom63.platforms": {
+              "ios": {
+                "textStyle": "caption",
+                "dynamicType": "system"
+              }
+            }
+          }
+        },
+        "line-height": {
+          "$type": "dimension",
+          "$value": "{typography.xs.line.height}"
+        },
+        "font-weight": {
+          "$type": "fontWeight",
+          "$value": 400
+        },
+        "font-weight-strong": {
+          "$type": "fontWeight",
+          "$value": 600
+        }
+      },
+      "caption-2": {
+        "font-size": {
+          "$type": "dimension",
+          "$value": "{typography.2xs.font.size}",
+          "$extensions": {
+            "io.atom63.platforms": {
+              "ios": {
+                "textStyle": "caption2",
+                "dynamicType": "system"
+              }
+            }
+          }
+        },
+        "line-height": {
+          "$type": "dimension",
+          "$value": "{typography.2xs.line.height}"
+        },
+        "font-weight": {
+          "$type": "fontWeight",
+          "$value": 400
+        },
+        "font-weight-strong": {
+          "$type": "fontWeight",
+          "$value": 600
+        }
+      }
+    }
+  }
+}

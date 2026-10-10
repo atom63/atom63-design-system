@@ -149,6 +149,21 @@
       }
     },
     {
+      "label": "Media",
+      "roles": {
+        "media-stage": "--a63-media-stage",
+        "media-surface": "--a63-media-surface",
+        "media-scrim": "--a63-media-scrim",
+        "on-media-foreground": "--a63-on-media-foreground",
+        "on-media-surface": "--a63-on-media-surface",
+        "on-media-surface-strong": "--a63-on-media-surface-strong",
+        "on-media-border": "--a63-on-media-border",
+        "on-media-ring": "--a63-on-media-ring",
+        "on-media-veil": "--a63-on-media-veil",
+        "on-media-veil-strong": "--a63-on-media-veil-strong"
+      }
+    },
+    {
       "label": "Sidebar",
       "roles": {
         "sidebar": "--a63-surface-sidebar",

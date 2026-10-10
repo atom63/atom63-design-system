@@ -22,7 +22,7 @@ I chose Geist because it's optimized for interfaces — generous x-height, clear
 
 ## How the scale works
 
-Thirteen steps from `xs` (12px) to `9xl` (39px at mobile, 49px at `768px+`). The scale grows at `640px` and `768px`, and `[data-window-size='xs'|'sm'|'md'|'lg'|'xl']` applies the same bands inside OS windows.
+Fourteen steps from `2xs` (11px) to `9xl` (39px at mobile, 49px at `768px+`). The scale grows at `640px` and `768px`, and `[data-window-size='xs'|'sm'|'md'|'lg'|'xl']` applies the same bands inside OS windows.
 
 <TypographyScale />
 
@@ -63,6 +63,26 @@ I don't automatically map `h1` to `9xl` or `h2` to `8xl` in the base tokens. Dif
 ### Visual hierarchy and semantics are separate
 
 A semantic `h2` does not always need to look like the second-largest text on the page. The `SectionHeader` pattern follows this rule: `variant` controls visual scale, while `level` can control document outline. That keeps accessibility and visual rhythm from fighting each other.
+
+## Text roles
+
+Text roles name what text is for, after the Apple HIG text styles, so one intent works on every platform. Each role picks a step of the scale on the web and a `Font.TextStyle` (with Dynamic Type) on iOS. The source is `packages/styles/src/tokens/type-roles.tokens.json`; each role has `--a63-type-<role>-font-size`, `-line-height`, `-font-weight` and `-font-weight-strong`, and the Tailwind utilities `text-<role>` and `text-<role>-strong` set all three at once.
+
+| Role | Web step | iOS text style |
+|------|----------|----------------|
+| `large-title` | `6xl` | `largeTitle` |
+| `title-1` | `5xl` | `title` |
+| `title-2` | `3xl` | `title2` |
+| `title-3` | `2xl` | `title3` |
+| `headline` | `base`, weight 600 | `headline` |
+| `body` | `base` | `body` |
+| `callout` | `base` | `callout` |
+| `subhead` | `sm` | `subheadline` |
+| `footnote` | `xs` | `footnote` |
+| `caption-1` | `xs` | `caption` |
+| `caption-2` | `2xs` | `caption2` |
+
+`-strong` is the emphasized weight: bold for `large-title`, `title-1` and `title-2`, semibold for the rest. Web sizes follow web conventions (body is 15px; iOS body is 17pt); the role is what stays the same. Size steps are fine while exploring; settled UI should use roles.
 
 ## Usage guidance
 

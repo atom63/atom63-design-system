@@ -33,6 +33,11 @@
                 "$type": "color",
                 "$value": "{color.black.70}",
                 "$description": "Media scrim — the dim behind a video dialog; heavier than --a63-scrim because the video is the only thing on screen."
+              },
+              "surface": {
+                "$type": "color",
+                "$value": "{surface.dark.2}",
+                "$description": "An opaque dark neutral for media areas (players, lightboxes, posters). It follows the\nsurface palette but not the mode: media reads on dark in both."
               }
             },
             "on-media": {

@@ -49,6 +49,42 @@ export function replaceThemeBlock(css, block) {
   return css.slice(0, start) + block + css.slice(close + 3)
 }
 
+const TYPE_MARKER =
+  '/* Text roles — generated from src/tokens/type-roles.tokens.json by scripts/generate-role-bridges.mjs; do not edit. */'
+
+/** The text role names in src/tokens/type-roles.tokens.json, in file order. */
+export function typeRoleNames(doc) {
+  return Object.keys(doc.a63.type)
+}
+
+/**
+ * Tailwind text utilities for the text roles: `text-<role>` sets size, line
+ * height and weight together; `text-<role>-strong` uses the emphasized weight.
+ */
+export function renderTypeBlock(doc) {
+  const lines = typeRoleNames(doc).flatMap(role => {
+    const v = name => `var(--a63-type-${role}-${name})`
+    return [
+      `  --text-${role}: ${v('font-size')};`,
+      `  --text-${role}--line-height: ${v('line-height')};`,
+      `  --text-${role}--font-weight: ${v('font-weight')};`,
+      `  --text-${role}-strong: ${v('font-size')};`,
+      `  --text-${role}-strong--line-height: ${v('line-height')};`,
+      `  --text-${role}-strong--font-weight: ${v('font-weight-strong')};`,
+    ]
+  })
+  return `${TYPE_MARKER}\n@theme inline {\n${lines.join('\n')}\n}\n`
+}
+
+/** Replaces the text role block of tailwind/theme.css, or appends it the first time. */
+export function replaceTypeBlock(css, block) {
+  const start = css.indexOf(TYPE_MARKER)
+  if (start < 0) return `${css.trimEnd()}\n\n${block}`
+  const close = css.indexOf('\n}\n', css.indexOf('@theme inline {', start))
+  if (close < 0) throw new Error('tailwind/theme.css: the text role block is not closed')
+  return css.slice(0, start) + block + css.slice(close + 3)
+}
+
 export function renderCompat(table) {
   const groups = table.groups.map(group => {
     const lines = Object.entries(group.roles).map(([role, token]) => `  --${role}: var(${token});`)
