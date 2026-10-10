@@ -1,0 +1,50 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "toaster",
+  "lists": {
+    "states": ["visible", "dismissing", "reduced-motion"],
+    "tones": ["default", "info", "success", "warning", "error", "loading"],
+    "slots": ["toaster", "toast", "toast-icon", "toast-message"],
+    "visualArchetypes": ["surface"]
+  },
+  "contract": {
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "tones": {
+      "$ref": "#/lists/tones"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "toast",
+    "reactRenderer": "Toaster",
+    "swiftUIRenderer": "AtomToast / atomToast(_:)",
+    "intent": "Announce transient feedback without interrupting the current task.",
+    "parity": "recipe",
+    "requiredStates": ["visible", "dismissing", "reduced-motion"],
+    "sharedOutcomes": [
+      "message-is-announced",
+      "focus-is-not-trapped",
+      "dismissal-respects-motion-preference"
+    ],
+    "accessibilityOutcomes": ["announces-message", "does-not-trap-focus"],
+    "motion": {
+      "kind": "toast-enter-exit",
+      "durationToken": "motion-standard",
+      "easing": "ease-out",
+      "direction": "block-start",
+      "reducedMotion": "none"
+    },
+    "platformAdaptations": {
+      "react": ["Portal placement follows the viewport and DOM stacking context."],
+      "swiftUI": ["Overlay placement follows safe areas and native transition composition."]
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "animated-check",
+  "lists": {
+    "variants": ["animated", "static"],
+    "states": ["mounting", "drawn", "reduced-motion"],
+    "slots": ["animated-check", "animated-check-path"],
+    "visualArchetypes": []
+  },
+  "contract": {
+    "defaultVariant": "animated",
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

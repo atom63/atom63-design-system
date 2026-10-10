@@ -8,10 +8,10 @@ const repositoryRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..',
 // The consumer must see every contract in the source, however many there are.
 const contractCount = JSON.parse(
   readFileSync(
-    join(repositoryRoot, 'packages', 'ui-foundation', 'contracts', 'cross-renderer-contracts.json'),
+    join(repositoryRoot, 'packages', 'ui-foundation', 'contracts', 'cross-renderer.json'),
     'utf8'
   )
-).contracts.length
+).components.length
 const temporaryRoot = mkdtempSync(join(tmpdir(), 'atom63-ui-consumer-'))
 const packageCopy = join(temporaryRoot, 'Atom63UI')
 const consumerRoot = join(temporaryRoot, 'Consumer')

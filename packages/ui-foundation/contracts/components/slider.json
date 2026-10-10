@@ -1,0 +1,63 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "slider",
+  "lists": {
+    "orientations": ["horizontal", "vertical"],
+    "modes": ["single", "range"],
+    "states": ["rest", "focus-visible", "dragging", "disabled"],
+    "slots": [
+      "slider",
+      "slider-value",
+      "slider-control",
+      "slider-track",
+      "slider-indicator",
+      "slider-thumb"
+    ],
+    "visualArchetypes": ["range"]
+  },
+  "contract": {
+    "defaultOrientation": "horizontal",
+    "orientations": {
+      "$ref": "#/lists/orientations"
+    },
+    "modes": {
+      "$ref": "#/lists/modes"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "slider",
+    "reactRenderer": "Slider",
+    "swiftUIRenderer": "Slider",
+    "intent": "Adjust a bounded numeric value through direct manipulation or assistive increment and decrement actions.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["rest", "dragging", "disabled"],
+    "sharedOutcomes": [
+      "value-remains-within-the-declared-range",
+      "interaction-updates-value-using-the-declared-step",
+      "disabled-control-prevents-value-change"
+    ],
+    "accessibilityOutcomes": [
+      "exposes-label",
+      "exposes-current-value-and-range",
+      "supports-adjustable-actions"
+    ],
+    "platformAdaptations": {
+      "react": [
+        "Supports horizontal or vertical orientation and optional multi-thumb ranges through web pointer and keyboard input."
+      ],
+      "swiftUI": [
+        "Uses the native horizontal Slider with platform drag, keyboard, and accessibility-adjustable behavior."
+      ]
+    }
+  }
+}

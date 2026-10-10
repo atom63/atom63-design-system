@@ -1,0 +1,20 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "collapsible",
+  "lists": {
+    "states": ["closed", "open", "starting", "ending", "disabled"],
+    "slots": ["collapsible", "collapsible-trigger", "collapsible-indicator", "collapsible-content"],
+    "visualArchetypes": ["trigger"]
+  },
+  "contract": {
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

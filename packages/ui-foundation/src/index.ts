@@ -471,7 +471,7 @@ export {
   frameVariants,
   frameVisualArchetypes,
   resolveFrameChrome,
-} from './components/frame/frame-contract'
+} from './components/frame'
 export type {
   FrameBorder,
   FrameContract,
@@ -918,8 +918,9 @@ export type {
   SidebarVariant,
   SidebarVisualArchetype,
 } from './components/sidebar/sidebar-contract'
+export { selectionTokenSlots } from './components/selection'
+export type { SelectionTokenSlot } from './components/selection'
 export {
-  selectionTokenSlots,
   switchContract,
   switchSizes,
   switchSlots,
@@ -941,7 +942,6 @@ export type {
   TableVisualArchetype,
 } from './components/table'
 export type {
-  SelectionTokenSlot,
   SwitchContract,
   SwitchSize,
   SwitchSlot,

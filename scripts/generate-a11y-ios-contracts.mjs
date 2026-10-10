@@ -16,17 +16,14 @@ import { fileURLToPath } from 'node:url'
 
 import { createServer, defaultServerConditions } from 'vite'
 
+import { loadContractSources } from './design-system/lib/component-contracts.mjs'
+
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const outputPath = path.join(
   root,
   'examples/ios-demo/Atom63DemoUITests/A11yContracts.generated.swift'
 )
-const crossRenderer = JSON.parse(
-  readFileSync(
-    path.join(root, 'packages/ui-foundation/contracts/cross-renderer-contracts.json'),
-    'utf8'
-  )
-)
+const contractSources = loadContractSources(root)
 
 const conditions = ['@atom63/source', ...defaultServerConditions]
 const server = await createServer({
@@ -103,10 +100,7 @@ for (const pattern of Object.values(foundation.a11yPatterns).sort((a, b) =>
   if (!pattern.ios) continue
   const components = componentsByPattern.get(pattern.id) ?? []
   const catalogItems = components
-    .map(
-      id =>
-        crossRenderer.contracts.find(contract => contract.foundationContract === id)?.catalogItem
-    )
+    .map(id => contractSources.get(`components/${id}`)?.doc.crossRenderer?.catalogItem)
     .filter(Boolean)
   if (catalogItems.length !== 1) {
     throw new Error(

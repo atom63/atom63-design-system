@@ -1,0 +1,61 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "field",
+  "lists": {
+    "orientations": ["vertical", "horizontal", "responsive"],
+    "legendVariants": ["legend", "label"],
+    "states": ["default", "invalid", "disabled"],
+    "slots": [
+      "field-set",
+      "field-legend",
+      "field-group",
+      "field",
+      "field-content",
+      "field-label",
+      "field-title",
+      "field-description",
+      "field-separator",
+      "field-separator-content",
+      "field-error"
+    ],
+    "visualArchetypes": ["field", "choice"]
+  },
+  "contract": {
+    "defaultLegendVariant": "legend",
+    "defaultOrientation": "vertical",
+    "legendVariants": {
+      "$ref": "#/lists/legendVariants"
+    },
+    "orientations": {
+      "$ref": "#/lists/orientations"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "formField",
+    "reactRenderer": "Field",
+    "swiftUIRenderer": "AtomFormField",
+    "intent": "Associate a control with its label, supporting description, and validation feedback.",
+    "parity": "strict",
+    "requiredStates": ["default", "invalid", "disabled"],
+    "sharedOutcomes": [
+      "label-identifies-control",
+      "description-explains-input",
+      "invalid-state-exposes-error"
+    ],
+    "accessibilityOutcomes": ["associates-label", "associates-description", "announces-error"],
+    "platformAdaptations": {
+      "react": ["Uses DOM label and description relationships."],
+      "swiftUI": ["Uses native Form layout and may reflow vertically for Dynamic Type."]
+    }
+  }
+}

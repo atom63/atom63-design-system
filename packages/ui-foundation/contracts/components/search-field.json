@@ -1,0 +1,48 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "search-field",
+  "lists": {
+    "states": ["empty", "query", "focus", "disabled"],
+    "slots": ["search-field", "search-field-icon", "search-field-input", "search-field-clear"],
+    "visualArchetypes": ["field", "action"]
+  },
+  "contract": {
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "search",
+    "reactRenderer": "SearchField",
+    "swiftUIRenderer": "searchable(text:prompt:)",
+    "intent": "Find or filter relevant content by editing a query without leaving the current collection.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["empty", "query", "focus", "disabled"],
+    "sharedOutcomes": [
+      "editing-updates-the-query",
+      "clear-empties-the-query-and-preserves-input-context",
+      "submit-commits-the-current-query-once",
+      "disabled-search-prevents-editing-and-clear"
+    ],
+    "accessibilityOutcomes": [
+      "exposes-search-input-role-and-label",
+      "clear-action-has-an-accessible-label",
+      "disabled-state-is-exposed"
+    ],
+    "platformAdaptations": {
+      "react": [
+        "Uses a labeled native search input with an explicit clear button and native form submission."
+      ],
+      "swiftUI": [
+        "Uses searchable so placement, cancel, clear, suggestions, keyboard, and focus presentation follow the active Apple platform."
+      ]
+    }
+  }
+}

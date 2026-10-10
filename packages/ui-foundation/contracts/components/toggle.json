@@ -1,0 +1,67 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "toggle",
+  "lists": {
+    "sizes": ["sm", "md", "lg"],
+    "tones": ["neutral", "accent"],
+    "states": ["off", "on", "rest", "hover", "pressed", "disabled", "focus"],
+    "slots": ["toggle", "toggle-content"],
+    "tokenSlots": [
+      "toggle.background",
+      "toggle.foreground",
+      "toggle.hoverBackground",
+      "toggle.onBackground",
+      "toggle.onForeground",
+      "toggle.primaryBackground",
+      "toggle.primaryForeground",
+      "toggle.borderWidth",
+      "toggle.radius",
+      "toggle.gloss",
+      "toggle.shadow",
+      "toggle.shadowActive",
+      "toggle.textShadow"
+    ],
+    "visualArchetypes": ["toggle"]
+  },
+  "contract": {
+    "defaultSize": "md",
+    "defaultTone": "neutral",
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "tokenSlots": {
+      "$ref": "#/lists/tokenSlots"
+    },
+    "tones": {
+      "$ref": "#/lists/tones"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "chip",
+    "reactRenderer": "Toggle",
+    "swiftUIRenderer": "AtomChip",
+    "intent": "Select or deselect a compact option without leaving the current context.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["off", "on", "disabled"],
+    "sharedOutcomes": [
+      "selected-state-is-visible",
+      "activation-toggles-selection",
+      "disabled-prevents-change"
+    ],
+    "accessibilityOutcomes": ["exposes-label", "announces-selected-state", "preserves-button-role"],
+    "platformAdaptations": {
+      "react": ["Uses a pressed-state web toggle with hover and focus-visible feedback."],
+      "swiftUI": ["Uses a touch-sized button-backed chip for compact filter selection."]
+    }
+  }
+}

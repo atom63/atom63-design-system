@@ -1,0 +1,61 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "empty",
+  "description": "Empty is a composed low-emphasis state surface. EmptyMedia carries its only variant axis; EmptyErrorDetail adds a disclosure action inside that surface.",
+  "lists": {
+    "mediaVariants": ["default", "icon"],
+    "slots": [
+      "empty",
+      "empty-header",
+      "empty-icon",
+      "empty-title",
+      "empty-description",
+      "empty-content",
+      "empty-error-detail",
+      "empty-error-toggle",
+      "empty-error-box",
+      "empty-error-text",
+      "empty-error-copy"
+    ],
+    "states": ["empty", "error", "collapsed", "expanded"],
+    "visualArchetypes": ["surface", "action"]
+  },
+  "contract": {
+    "defaultMediaVariant": "default",
+    "mediaVariants": {
+      "$ref": "#/lists/mediaVariants"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "contentState",
+    "reactRenderer": "Empty",
+    "swiftUIRenderer": "AtomContentStateView",
+    "intent": "Explain absent or unavailable content and provide an appropriate recovery path.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["empty", "error"],
+    "sharedOutcomes": [
+      "heading-explains-state",
+      "supporting-copy-provides-context",
+      "recovery-action-remains-available"
+    ],
+    "accessibilityOutcomes": [
+      "exposes-heading",
+      "exposes-recovery-action",
+      "preserves-reading-order"
+    ],
+    "platformAdaptations": {
+      "react": ["Uses composable Empty slots for illustration, copy, and action."],
+      "swiftUI": ["Uses ContentUnavailableView while preserving recovery intent and hierarchy."]
+    }
+  }
+}

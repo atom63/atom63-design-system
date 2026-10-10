@@ -27,7 +27,7 @@ A static, in-flow container — the **surface** archetype. The anatomy is ported
 - **Variants:** `default` (bordered panel) · `ghost` (no shell, pseudo hover wash) · `interactive` (hover lift) · `overlay` (rounded-2xl, hover lift; padding defaults to `none`).
 - **Padding presets:** `Card` + `CardHeader` take `none`/`sm`/`md`/`lg`; `CardContent`/`CardFooter` add `xs` and also accept a **responsive** form `padding={{ base, sm }}` — the `sm` step applies once the **card's own width** crosses ~24rem (a CSS `@container` query on the root, so a card in a narrow grid cell keeps its base padding regardless of viewport). `lineClamp`: 1–3.
 - **Composition (header · content · footer):** every slot is optional — compose what the layout needs. `CardHeader` and `CardFooter` are flex rows and each can carry a trailing `CardAction` (`margin-inline-start: auto`), so an action can live in the header *and* the footer; `CardLabel` is the leading header label, `CardTags` the wrap row in content. The footer sits **flush** (`padding-top: 0`) under the content block. See the **Compositions** story (full "composable slots" card + article / ghost-list / stat variations). The root `padding` also sets the concentric media radius, so `CardMedia` corners always nest inside the card corner.
-- Source of truth: `@atom63/ui-foundation` → `card/card-contract.ts`.
+- Source of truth: `@atom63/ui-foundation` → `contracts/components/card.json`.
 
 ## Theme sheet
 

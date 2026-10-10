@@ -1,0 +1,45 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "progress",
+  "lists": {
+    "states": ["indeterminate", "progressing", "complete"],
+    "slots": [
+      "progress",
+      "progress-label",
+      "progress-track",
+      "progress-indicator",
+      "progress-value"
+    ],
+    "visualArchetypes": ["range"]
+  },
+  "contract": {
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "progress",
+    "reactRenderer": "Progress",
+    "swiftUIRenderer": "AtomProgressView",
+    "intent": "Communicate an ongoing operation or measured completion.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["indeterminate", "progressing", "complete"],
+    "sharedOutcomes": [
+      "label-identifies-operation",
+      "determinate-value-is-exposed",
+      "completion-is-distinguishable"
+    ],
+    "accessibilityOutcomes": ["exposes-label", "announces-progress-value"],
+    "platformAdaptations": {
+      "react": ["May use a custom CSS indicator that follows web geometry."],
+      "swiftUI": ["Uses native ProgressView styles and platform progress animation."]
+    }
+  }
+}

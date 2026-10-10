@@ -1,0 +1,26 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "preview-card",
+  "lists": {
+    "states": ["closed", "open", "starting", "ending"],
+    "slots": [
+      "preview-card",
+      "preview-card-trigger",
+      "preview-card-portal",
+      "preview-card-positioner",
+      "preview-card-content"
+    ],
+    "visualArchetypes": ["trigger", "overlay", "surface"]
+  },
+  "contract": {
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

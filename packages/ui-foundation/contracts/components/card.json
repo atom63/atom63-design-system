@@ -1,0 +1,74 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "card",
+  "lists": {
+    "variants": ["default", "ghost", "interactive", "overlay"],
+    "paddings": ["none", "sm", "md", "lg"],
+    "contentPaddings": ["none", "xs", "sm", "md", "lg"],
+    "lineClamps": [1, 2, 3],
+    "slots": [
+      "card",
+      "card-header",
+      "card-label",
+      "card-media",
+      "card-media-overlay",
+      "card-media-overlay-image",
+      "card-media-overlay-scrim",
+      "card-media-overlay-top-right",
+      "card-media-overlay-bottom",
+      "card-media-overlay-icon-button",
+      "card-content",
+      "card-title",
+      "card-description",
+      "card-tags",
+      "card-footer",
+      "card-action",
+      "card-cursor-label"
+    ],
+    "states": ["rest", "hover", "focus-visible", "interactive", "cursor-active"],
+    "visualArchetypes": ["surface"]
+  },
+  "contract": {
+    "defaultVariant": "default",
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
+    "paddings": {
+      "$ref": "#/lists/paddings"
+    },
+    "contentPaddings": {
+      "$ref": "#/lists/contentPaddings"
+    },
+    "lineClamps": {
+      "$ref": "#/lists/lineClamps"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "card",
+    "reactRenderer": "Card",
+    "swiftUIRenderer": "AtomCard",
+    "intent": "Group related content and optionally expose one primary action.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["rest", "interactive", "focus-visible"],
+    "sharedOutcomes": [
+      "content-order-is-preserved",
+      "static-card-does-not-imply-action",
+      "interactive-card-has-one-primary-action"
+    ],
+    "accessibilityOutcomes": ["preserves-content-order", "does-not-imply-action-when-static"],
+    "platformAdaptations": {
+      "react": ["Hover and focus-visible may communicate interactivity."],
+      "swiftUI": ["Touch and keyboard feedback replace pointer-only hover affordances."]
+    }
+  }
+}

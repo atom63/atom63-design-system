@@ -1,7 +1,9 @@
 /**
  * Scaffold a new web component and wire it into every registry the checks
  * read, then regenerate the audit files. The component starts presentational
- * (a sized, token-styled block); shape it from there.
+ * (a sized, token-styled block); shape it from there. The foundation contract
+ * is written as JSON (packages/ui-foundation/contracts/components/<slug>.json)
+ * and its TypeScript is generated from it.
  *
  * Usage:
  *   pnpm ds:new <slug> --archetype <id> --category <id> --summary <text>
@@ -27,6 +29,7 @@ import { fileURLToPath } from 'node:url'
 import { execCommandSync } from './lib/command.mjs'
 import {
   addCrossRendererContract,
+  addCrossRendererIndex,
   addDemoCatalogItem,
   addDemoShowcase,
   addReactConformance,
@@ -40,7 +43,7 @@ import {
   componentFile,
   componentIndexFile,
   componentNames,
-  contractFile,
+  contractSource,
   demoSections,
   foundationExportBlock,
   foundationFamily,
@@ -97,10 +100,10 @@ const paths = {
   reactPackage: 'packages/ui-react/package.json',
   recipes: 'packages/ui-react/src/styles/recipes.css',
   catalog: 'apps/docs/src/lib/component-catalog.ts',
-  contract: `packages/ui-foundation/src/components/${slug}/${slug}-contract.ts`,
+  contract: `packages/ui-foundation/contracts/components/${slug}.json`,
   component: `packages/ui-react/src/components/${slug}`,
   changeset: `.changeset/add-${slug}.md`,
-  crossRenderer: 'packages/ui-foundation/contracts/cross-renderer-contracts.json',
+  crossRenderer: 'packages/ui-foundation/contracts/cross-renderer.json',
   reactConformance: 'packages/ui-react/src/conformance/renderer-conformance.ts',
   swiftConformance: 'packages/ui-ios/Sources/Atom63UI/AtomRendererConformance.swift',
   swiftView: `packages/ui-ios/Sources/Atom63UI/Atom${pascal}.swift`,
@@ -176,10 +179,7 @@ try {
     )
   )
   if (values.ios) {
-    edits.set(
-      paths.crossRenderer,
-      addCrossRendererContract(read(paths.crossRenderer), names, values.summary)
-    )
+    edits.set(paths.crossRenderer, addCrossRendererIndex(read(paths.crossRenderer), names))
     edits.set(paths.reactConformance, addReactConformance(read(paths.reactConformance), names))
     edits.set(paths.swiftConformance, addSwiftConformance(read(paths.swiftConformance), names))
     edits.set(
@@ -197,7 +197,12 @@ try {
 }
 
 const created = new Map([
-  [paths.contract, contractFile(names, values.archetype)],
+  [
+    paths.contract,
+    values.ios
+      ? addCrossRendererContract(contractSource(names, values.archetype), names, values.summary)
+      : contractSource(names, values.archetype),
+  ],
   [`${paths.component}/index.ts`, componentIndexFile(names)],
   [`${paths.component}/${slug}.tsx`, componentFile(names)],
   [`${paths.component}/${slug}.css`, recipeFile(names, values.archetype)],
@@ -228,6 +233,7 @@ const run = (command, args) => {
 const formatted = [...edits.keys(), ...created.keys()].filter(file => !file.endsWith('.swift'))
 run('pnpm', ['exec', 'prettier', '--write', ...formatted])
 // The generated TypeScript and Swift contracts follow the JSON source.
+run('node', ['scripts/generate-component-contracts.mjs'])
 if (values.ios) run('node', ['scripts/generate-cross-renderer-contracts.mjs'])
 
 if (!values['no-generate']) {
@@ -245,7 +251,8 @@ if (!values['no-generate']) {
 }
 
 const iosNext = values.ios
-  ? `  5. Fill in the TODO(ds:new) intent, outcomes and adaptations in cross-renderer-contracts.json,
+  ? `  5. Fill in the TODO(ds:new) intent, outcomes and adaptations under crossRenderer in
+     packages/ui-foundation/contracts/components/${slug}.json,
      keep both conformance entries in step, and shape Atom${pascal}.swift and its showcase.
      Run \`pnpm --filter @atom63/ui-ios test:swift\` and \`test:app\` on a Mac.
 `
@@ -254,7 +261,9 @@ const iosNext = values.ios
 
 process.stdout.write(`
 Scaffolded ${pascal}. Next:
-  1. Shape the contract, component, recipe and stories (search for TODO(ds:new)).
+  1. Shape the contract in packages/ui-foundation/contracts/components/${slug}.json (then run
+     \`pnpm --filter @atom63/ui-foundation generate:contracts\`), the component, recipe and
+     stories (search for TODO(ds:new)).
   2. Rerun \`pnpm api:report\` and \`pnpm check:ui-react-exports --write\` after the API settles.
   3. Push, then run the visual workflow with "update" on the branch to record baselines.
   4. Optional: a hand-written page at apps/docs/src/pages/component-${slug}.mdx.

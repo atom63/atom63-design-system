@@ -1,0 +1,69 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "segmented-control",
+  "lists": {
+    "sizes": ["sm", "md", "lg"],
+    "variants": ["icon", "label"],
+    "tones": ["neutral", "accent"],
+    "states": ["rest", "hover", "selected", "disabled", "focus-visible"],
+    "slots": [
+      "segmented-control",
+      "segmented-control-track",
+      "segmented-control-item",
+      "segmented-control-icon",
+      "segmented-control-label",
+      "segmented-control-indicator"
+    ],
+    "visualArchetypes": ["segment"]
+  },
+  "contract": {
+    "defaultSize": "md",
+    "defaultTone": "neutral",
+    "defaultVariant": "label",
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "tones": {
+      "$ref": "#/lists/tones"
+    },
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "segmentedControl",
+    "reactRenderer": "SegmentedControl",
+    "swiftUIRenderer": "Picker(.segmented)",
+    "intent": "Switch a compact local mode or view between a small set of mutually exclusive options.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["rest", "selected", "disabled"],
+    "sharedOutcomes": [
+      "one-segment-is-selected-at-a-time",
+      "activation-updates-the-selection-once",
+      "disabled-segment-prevents-selection"
+    ],
+    "accessibilityOutcomes": [
+      "exposes-each-segment-label",
+      "exposes-selected-state",
+      "preserves-single-selection-semantics"
+    ],
+    "platformAdaptations": {
+      "react": [
+        "Uses a tab-backed segmented track with focus-visible feedback and an optional animated selection backplate."
+      ],
+      "swiftUI": [
+        "Uses Picker with segmented style so geometry, typography, and selection feedback remain platform-native."
+      ]
+    }
+  }
+}
