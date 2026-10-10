@@ -102,7 +102,9 @@ test('appends the text role block once, then replaces it in place', () => {
 
 test('every shipped text role has its four tokens in the manifest', () => {
   const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
-  const doc = JSON.parse(readFileSync(path.join(root, 'src/tokens/type-roles.tokens.json'), 'utf8'))
+  const doc = JSON.parse(
+    readFileSync(path.join(root, 'src/tokens/type-roles.resolver.json'), 'utf8')
+  )
   const manifest = JSON.parse(readFileSync(path.join(root, 'generated/atom63.tokens.json'), 'utf8'))
   const declared = new Set(manifest.entries.map(entry => entry.cssVar))
   const missing = typeRoleNames(doc).flatMap(role =>

@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 1824,
+    "declarations": 1879,
     "uniqueCssVariables": 1188,
-    "figmaMappedDeclarations": 1763
+    "figmaMappedDeclarations": 1818
   },
   "entries": [
     {
@@ -307,11 +307,28 @@
       "layer": "semantic",
       "figma": {
         "collection": "Semantic",
-        "path": "action/danger/subtle"
+        "path": "action/danger/subtle",
+        "mode": "Dark"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-action-danger"],
-      "scope": ":root"
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-action-danger-subtle",
+      "cssVar": "--a63-action-danger-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-action-danger) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "action/danger/subtle",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-danger"],
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-action-danger-subtle-foreground",
@@ -663,11 +680,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/amber/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-amber"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-amber-accent",
+      "cssVar": "--a63-badge-amber-accent",
+      "type": "color",
+      "value": "var(--a63-category-amber)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/amber/accent",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-amber"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-amber-foreground",
+      "cssVar": "--a63-badge-amber-foreground",
+      "type": "color",
+      "value": "var(--a63-category-amber-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/amber/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-amber-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-amber-foreground",
@@ -695,11 +744,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/blue/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-blue"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-blue-accent",
+      "cssVar": "--a63-badge-blue-accent",
+      "type": "color",
+      "value": "var(--a63-category-blue)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/blue/accent",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-blue"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-blue-foreground",
+      "cssVar": "--a63-badge-blue-foreground",
+      "type": "color",
+      "value": "var(--a63-category-blue-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/blue/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-blue-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-blue-foreground",
@@ -727,11 +808,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/cyan/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-cyan"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-cyan-accent",
+      "cssVar": "--a63-badge-cyan-accent",
+      "type": "color",
+      "value": "var(--a63-category-cyan)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/cyan/accent",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-cyan"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-cyan-foreground",
+      "cssVar": "--a63-badge-cyan-foreground",
+      "type": "color",
+      "value": "var(--a63-category-cyan-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/cyan/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-cyan-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-cyan-foreground",
@@ -759,11 +872,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/emerald/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-emerald"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-emerald-accent",
+      "cssVar": "--a63-badge-emerald-accent",
+      "type": "color",
+      "value": "var(--a63-category-emerald)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/emerald/accent",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-emerald"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-emerald-foreground",
+      "cssVar": "--a63-badge-emerald-foreground",
+      "type": "color",
+      "value": "var(--a63-category-emerald-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/emerald/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-emerald-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-emerald-foreground",
@@ -791,11 +936,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/error/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-danger-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-error-foreground",
+      "cssVar": "--a63-badge-error-foreground",
+      "type": "color",
+      "value": "var(--a63-action-danger-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/error/foreground",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-action-danger-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-fuchsia-accent",
+      "cssVar": "--a63-badge-fuchsia-accent",
+      "type": "color",
+      "value": "var(--a63-category-fuchsia)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/fuchsia/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-fuchsia"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-fuchsia-accent",
@@ -823,11 +1000,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/fuchsia/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-fuchsia-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-fuchsia-foreground",
+      "cssVar": "--a63-badge-fuchsia-foreground",
+      "type": "color",
+      "value": "var(--a63-category-fuchsia-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/fuchsia/foreground",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-fuchsia-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-green-accent",
+      "cssVar": "--a63-badge-green-accent",
+      "type": "color",
+      "value": "var(--a63-category-green)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/green/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-green"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-green-accent",
@@ -855,11 +1064,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/green/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-green-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-green-foreground",
+      "cssVar": "--a63-badge-green-foreground",
+      "type": "color",
+      "value": "var(--a63-category-green-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/green/foreground",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-green-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-indigo-accent",
+      "cssVar": "--a63-badge-indigo-accent",
+      "type": "color",
+      "value": "var(--a63-category-indigo)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/indigo/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-indigo"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-indigo-accent",
@@ -887,11 +1128,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/indigo/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-indigo-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-indigo-foreground",
+      "cssVar": "--a63-badge-indigo-foreground",
+      "type": "color",
+      "value": "var(--a63-category-indigo-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/indigo/foreground",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-indigo-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-info-foreground",
+      "cssVar": "--a63-badge-info-foreground",
+      "type": "color",
+      "value": "var(--a63-status-info-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/info/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-status-info-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-info-foreground",
@@ -919,11 +1192,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/lime/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-lime"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-lime-accent",
+      "cssVar": "--a63-badge-lime-accent",
+      "type": "color",
+      "value": "var(--a63-category-lime)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/lime/accent",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-lime"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-lime-foreground",
+      "cssVar": "--a63-badge-lime-foreground",
+      "type": "color",
+      "value": "var(--a63-category-lime-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/lime/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-lime-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-lime-foreground",
@@ -951,11 +1256,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/neutral/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-neutral"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-neutral-accent",
+      "cssVar": "--a63-badge-neutral-accent",
+      "type": "color",
+      "value": "var(--a63-category-neutral)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/neutral/accent",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-neutral"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-neutral-foreground",
+      "cssVar": "--a63-badge-neutral-foreground",
+      "type": "color",
+      "value": "var(--a63-category-neutral-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/neutral/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-neutral-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-neutral-foreground",
@@ -983,11 +1320,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/orange/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-orange"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-orange-accent",
+      "cssVar": "--a63-badge-orange-accent",
+      "type": "color",
+      "value": "var(--a63-category-orange)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/orange/accent",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-orange"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-orange-foreground",
+      "cssVar": "--a63-badge-orange-foreground",
+      "type": "color",
+      "value": "var(--a63-category-orange-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/orange/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-orange-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-orange-foreground",
@@ -1015,11 +1384,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/pink/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-pink"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-pink-accent",
+      "cssVar": "--a63-badge-pink-accent",
+      "type": "color",
+      "value": "var(--a63-category-pink)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/pink/accent",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-pink"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-pink-foreground",
+      "cssVar": "--a63-badge-pink-foreground",
+      "type": "color",
+      "value": "var(--a63-category-pink-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/pink/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-pink-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-pink-foreground",
@@ -1047,11 +1448,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/purple/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-purple"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-purple-accent",
+      "cssVar": "--a63-badge-purple-accent",
+      "type": "color",
+      "value": "var(--a63-category-purple)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/purple/accent",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-purple"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-purple-foreground",
+      "cssVar": "--a63-badge-purple-foreground",
+      "type": "color",
+      "value": "var(--a63-category-purple-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/purple/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-purple-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-purple-foreground",
@@ -1079,11 +1512,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/red/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-red"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-red-accent",
+      "cssVar": "--a63-badge-red-accent",
+      "type": "color",
+      "value": "var(--a63-category-red)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/red/accent",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-red"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-red-foreground",
+      "cssVar": "--a63-badge-red-foreground",
+      "type": "color",
+      "value": "var(--a63-category-red-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/red/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-red-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-red-foreground",
@@ -1111,11 +1576,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/rose/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-rose"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-rose-accent",
+      "cssVar": "--a63-badge-rose-accent",
+      "type": "color",
+      "value": "var(--a63-category-rose)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/rose/accent",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-rose"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-rose-foreground",
+      "cssVar": "--a63-badge-rose-foreground",
+      "type": "color",
+      "value": "var(--a63-category-rose-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/rose/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-rose-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-rose-foreground",
@@ -1143,11 +1640,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/sky/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-sky"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-sky-accent",
+      "cssVar": "--a63-badge-sky-accent",
+      "type": "color",
+      "value": "var(--a63-category-sky)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/sky/accent",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-sky"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-sky-foreground",
+      "cssVar": "--a63-badge-sky-foreground",
+      "type": "color",
+      "value": "var(--a63-category-sky-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/sky/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-sky-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-sky-foreground",
@@ -1175,11 +1704,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/success/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-status-success-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-success-foreground",
+      "cssVar": "--a63-badge-success-foreground",
+      "type": "color",
+      "value": "var(--a63-status-success-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/success/foreground",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-status-success-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-teal-accent",
+      "cssVar": "--a63-badge-teal-accent",
+      "type": "color",
+      "value": "var(--a63-category-teal)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/teal/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-teal"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-teal-accent",
@@ -1207,11 +1768,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/teal/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-teal-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-teal-foreground",
+      "cssVar": "--a63-badge-teal-foreground",
+      "type": "color",
+      "value": "var(--a63-category-teal-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/teal/foreground",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-teal-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-violet-accent",
+      "cssVar": "--a63-badge-violet-accent",
+      "type": "color",
+      "value": "var(--a63-category-violet)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/violet/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-violet"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-violet-accent",
@@ -1239,11 +1832,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/violet/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-violet-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-violet-foreground",
+      "cssVar": "--a63-badge-violet-foreground",
+      "type": "color",
+      "value": "var(--a63-category-violet-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/violet/foreground",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-violet-subtle-foreground"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-warning-foreground",
+      "cssVar": "--a63-badge-warning-foreground",
+      "type": "color",
+      "value": "var(--a63-status-warning-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/warning/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-status-warning-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-warning-foreground",
@@ -1271,11 +1896,43 @@
       "figma": {
         "collection": "Contract",
         "path": "badge/yellow/accent",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-yellow"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-badge-yellow-accent",
+      "cssVar": "--a63-badge-yellow-accent",
+      "type": "color",
+      "value": "var(--a63-category-yellow)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/yellow/accent",
         "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-category-yellow"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-badge-yellow-foreground",
+      "cssVar": "--a63-badge-yellow-foreground",
+      "type": "color",
+      "value": "var(--a63-category-yellow-subtle-foreground)",
+      "sourceFile": "packages/styles/src/contracts/badge.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "badge/yellow/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-category-yellow-subtle-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-badge-yellow-foreground",
@@ -4073,11 +4730,28 @@
       "layer": "semantic",
       "figma": {
         "collection": "Semantic",
-        "path": "chart/1"
+        "path": "chart/1",
+        "mode": "Dark"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-action-primary"],
-      "scope": ":root"
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-chart-1",
+      "cssVar": "--a63-chart-1",
+      "type": "color",
+      "value": "var(--a63-action-primary)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "chart/1",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-chart-2",
@@ -6450,15 +7124,96 @@
       "cssVar": "--a63-media-surface",
       "type": "color",
       "value": "var(--surface-dark-2)",
-      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "sourceFile": "packages/styles/src/tokens/surface.css",
       "layer": "semantic",
       "figma": {
         "collection": "Semantic",
-        "path": "media/surface"
+        "path": "media/surface",
+        "mode": "surface: n1"
       },
       "lifecycle": "preview",
       "aliases": ["--surface-dark-2"],
-      "scope": ":root"
+      "scope": ":root, [data-a63-surface='n1']"
+    },
+    {
+      "name": "a63-media-surface",
+      "cssVar": "--a63-media-surface",
+      "type": "color",
+      "value": "var(--surface-dark-2)",
+      "sourceFile": "packages/styles/src/tokens/surface.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "media/surface",
+        "mode": "surface: n2"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--surface-dark-2"],
+      "scope": "[data-a63-surface='n2']"
+    },
+    {
+      "name": "a63-media-surface",
+      "cssVar": "--a63-media-surface",
+      "type": "color",
+      "value": "var(--surface-dark-2)",
+      "sourceFile": "packages/styles/src/tokens/surface.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "media/surface",
+        "mode": "surface: n3"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--surface-dark-2"],
+      "scope": "[data-a63-surface='n3']"
+    },
+    {
+      "name": "a63-media-surface",
+      "cssVar": "--a63-media-surface",
+      "type": "color",
+      "value": "var(--surface-dark-2)",
+      "sourceFile": "packages/styles/src/tokens/surface.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "media/surface",
+        "mode": "surface: n4"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--surface-dark-2"],
+      "scope": "[data-a63-surface='n4']"
+    },
+    {
+      "name": "a63-media-surface",
+      "cssVar": "--a63-media-surface",
+      "type": "color",
+      "value": "var(--surface-dark-2)",
+      "sourceFile": "packages/styles/src/tokens/surface.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "media/surface",
+        "mode": "surface: n5"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--surface-dark-2"],
+      "scope": "[data-a63-surface='n5']"
+    },
+    {
+      "name": "a63-media-surface",
+      "cssVar": "--a63-media-surface",
+      "type": "color",
+      "value": "var(--surface-dark-2)",
+      "sourceFile": "packages/styles/src/tokens/surface.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "media/surface",
+        "mode": "surface: n6"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--surface-dark-2"],
+      "scope": "[data-a63-surface='n6']"
     },
     {
       "name": "a63-menu-disabled-opacity",
@@ -8407,11 +9162,28 @@
       "layer": "semantic",
       "figma": {
         "collection": "Semantic",
-        "path": "selected/background"
+        "path": "selected/background",
+        "mode": "Dark"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-action-primary"],
-      "scope": ":root"
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-selected-background",
+      "cssVar": "--a63-selected-background",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 12%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "selected/background",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-selected-foreground",
@@ -8422,11 +9194,28 @@
       "layer": "semantic",
       "figma": {
         "collection": "Semantic",
-        "path": "selected/foreground"
+        "path": "selected/foreground",
+        "mode": "Dark"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-text-accent"],
-      "scope": ":root"
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-selected-foreground",
+      "cssVar": "--a63-selected-foreground",
+      "type": "color",
+      "value": "var(--a63-text-accent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "selected/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-accent"],
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-selection-thumb",
@@ -8756,11 +9545,44 @@
       "layer": "semantic",
       "figma": {
         "collection": "Semantic",
-        "path": "status/info/subtle"
+        "path": "status/info/subtle",
+        "mode": "Dark"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-status-info"],
-      "scope": ":root"
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-status-info-subtle",
+      "cssVar": "--a63-status-info-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-status-info) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/info/subtle",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-status-info"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-status-info-subtle-foreground",
+      "cssVar": "--a63-status-info-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-info-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/info/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-info-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-status-info-subtle-foreground",
@@ -8835,11 +9657,44 @@
       "layer": "semantic",
       "figma": {
         "collection": "Semantic",
-        "path": "status/success/subtle"
+        "path": "status/success/subtle",
+        "mode": "Dark"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-status-success"],
-      "scope": ":root"
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-status-success-subtle",
+      "cssVar": "--a63-status-success-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-status-success) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/success/subtle",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-status-success"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-status-success-subtle-foreground",
+      "cssVar": "--a63-status-success-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-success-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/success/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-success-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-status-success-subtle-foreground",
@@ -8914,11 +9769,44 @@
       "layer": "semantic",
       "figma": {
         "collection": "Semantic",
-        "path": "status/warning/subtle"
+        "path": "status/warning/subtle",
+        "mode": "Dark"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-status-warning"],
-      "scope": ":root"
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-status-warning-subtle",
+      "cssVar": "--a63-status-warning-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-status-warning) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/warning/subtle",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-status-warning"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-status-warning-subtle-foreground",
+      "cssVar": "--a63-status-warning-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-warning-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/warning/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-warning-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-status-warning-subtle-foreground",
@@ -10154,7 +11042,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-base-font-size"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-body-font-weight",
@@ -10168,7 +11056,7 @@
         "path": "type/body/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-body-font-weight-strong",
@@ -10182,7 +11070,7 @@
         "path": "type/body/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-body-line-height",
@@ -10197,7 +11085,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-base-line-height"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-callout-font-size",
@@ -10212,7 +11100,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-base-font-size"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-callout-font-weight",
@@ -10226,7 +11114,7 @@
         "path": "type/callout/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-callout-font-weight-strong",
@@ -10240,7 +11128,7 @@
         "path": "type/callout/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-callout-line-height",
@@ -10255,7 +11143,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-base-line-height"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-caption-1-font-size",
@@ -10270,7 +11158,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-xs-font-size"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-caption-1-font-weight",
@@ -10284,7 +11172,7 @@
         "path": "type/caption/1/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-caption-1-font-weight-strong",
@@ -10298,7 +11186,7 @@
         "path": "type/caption/1/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-caption-1-line-height",
@@ -10313,7 +11201,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-xs-line-height"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-caption-2-font-size",
@@ -10328,7 +11216,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-2xs-font-size"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-caption-2-font-weight",
@@ -10342,7 +11230,7 @@
         "path": "type/caption/2/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-caption-2-font-weight-strong",
@@ -10356,7 +11244,7 @@
         "path": "type/caption/2/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-caption-2-line-height",
@@ -10371,7 +11259,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-2xs-line-height"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-footnote-font-size",
@@ -10386,7 +11274,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-xs-font-size"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-footnote-font-weight",
@@ -10400,7 +11288,7 @@
         "path": "type/footnote/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-footnote-font-weight-strong",
@@ -10414,7 +11302,7 @@
         "path": "type/footnote/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-footnote-line-height",
@@ -10429,7 +11317,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-xs-line-height"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-headline-font-size",
@@ -10444,7 +11332,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-base-font-size"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-headline-font-weight",
@@ -10458,7 +11346,7 @@
         "path": "type/headline/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-headline-font-weight-strong",
@@ -10472,7 +11360,7 @@
         "path": "type/headline/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-headline-line-height",
@@ -10487,7 +11375,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-base-line-height"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-large-title-font-size",
@@ -10502,7 +11390,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-6xl-font-size"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-large-title-font-weight",
@@ -10516,7 +11404,7 @@
         "path": "type/large/title/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-large-title-font-weight-strong",
@@ -10530,7 +11418,7 @@
         "path": "type/large/title/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-large-title-line-height",
@@ -10545,7 +11433,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-6xl-line-height"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-subhead-font-size",
@@ -10560,7 +11448,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-sm-font-size"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-subhead-font-weight",
@@ -10574,7 +11462,7 @@
         "path": "type/subhead/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-subhead-font-weight-strong",
@@ -10588,7 +11476,7 @@
         "path": "type/subhead/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-subhead-line-height",
@@ -10603,7 +11491,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-sm-line-height"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-title-1-font-size",
@@ -10618,7 +11506,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-5xl-font-size"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-title-1-font-weight",
@@ -10632,7 +11520,7 @@
         "path": "type/title/1/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-title-1-font-weight-strong",
@@ -10646,7 +11534,7 @@
         "path": "type/title/1/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-title-1-line-height",
@@ -10661,7 +11549,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-5xl-line-height"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-title-2-font-size",
@@ -10676,7 +11564,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-3xl-font-size"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-title-2-font-weight",
@@ -10690,7 +11578,7 @@
         "path": "type/title/2/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-title-2-font-weight-strong",
@@ -10704,7 +11592,7 @@
         "path": "type/title/2/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-title-2-line-height",
@@ -10719,7 +11607,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-3xl-line-height"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-title-3-font-size",
@@ -10734,7 +11622,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-2xl-font-size"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-title-3-font-weight",
@@ -10748,7 +11636,7 @@
         "path": "type/title/3/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-title-3-font-weight-strong",
@@ -10762,7 +11650,7 @@
         "path": "type/title/3/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-type-title-3-line-height",
@@ -10777,7 +11665,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-2xl-line-height"],
-      "scope": ":root"
+      "scope": ":root, [data-window-size]"
     },
     {
       "name": "a63-viewport-height",

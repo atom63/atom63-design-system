@@ -1,7 +1,7 @@
 /**
  * Writes the semantic role block of src/tailwind/theme.css and the whole of
  * src/compat/shadcn.css from src/tailwind/roles.json, and the text role block of
- * theme.css from src/tokens/type-roles.tokens.json. Fails when a role points at
+ * theme.css from src/tokens/type-roles.resolver.json. Fails when a role points at
  * a token the manifest does not declare. Run after
  * generate-token-manifest.mjs, which writes the manifest it reads.
  *
@@ -29,7 +29,7 @@ const rolesPath = path.join(packageRoot, 'src/tailwind/roles.json')
 const themePath = path.join(packageRoot, 'src/tailwind/theme.css')
 const compatPath = path.join(packageRoot, 'src/compat/shadcn.css')
 const manifestPath = path.join(packageRoot, 'generated/atom63.tokens.json')
-const typeRolesPath = path.join(packageRoot, 'src/tokens/type-roles.tokens.json')
+const typeRolesPath = path.join(packageRoot, 'src/tokens/type-roles.resolver.json')
 
 const table = JSON.parse(await readFile(rolesPath, 'utf8'))
 const manifest = JSON.parse(await readFile(manifestPath, 'utf8'))

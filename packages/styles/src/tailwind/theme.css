@@ -611,7 +611,7 @@
   }
 }
 
-/* Text roles — generated from src/tokens/type-roles.tokens.json by scripts/generate-role-bridges.mjs; do not edit. */
+/* Text roles — generated from src/tokens/type-roles.resolver.json by scripts/generate-role-bridges.mjs; do not edit. */
 @theme inline {
   --text-large-title: var(--a63-type-large-title-font-size);
   --text-large-title--line-height: var(--a63-type-large-title-line-height);

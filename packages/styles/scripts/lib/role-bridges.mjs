@@ -50,11 +50,12 @@ export function replaceThemeBlock(css, block) {
 }
 
 const TYPE_MARKER =
-  '/* Text roles — generated from src/tokens/type-roles.tokens.json by scripts/generate-role-bridges.mjs; do not edit. */'
+  '/* Text roles — generated from src/tokens/type-roles.resolver.json by scripts/generate-role-bridges.mjs; do not edit. */'
 
-/** The text role names in src/tokens/type-roles.tokens.json, in file order. */
+/** The text role names in src/tokens/type-roles.resolver.json, in file order. */
 export function typeRoleNames(doc) {
-  return Object.keys(doc.a63.type)
+  const tokens = doc.sets?.base?.sources?.[0] ?? doc
+  return Object.keys(tokens.a63.type)
 }
 
 /**
