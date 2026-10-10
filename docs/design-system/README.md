@@ -13,15 +13,19 @@ Current direction and progress: [roadmap.md](./roadmap.md) (phases A–E) and
 
 ## What this system is
 
-Three first-wave packages own the extracted public-beta surface:
+Seven packages are published on the npm `beta` tag:
 
 | Package | Role |
 | --- | --- |
 | `@atom63/styles` | CSS: shared scales, semantic roles, contracts, themes, OS chrome styles, adapters |
 | `@atom63/ui-foundation` | TypeScript contracts + personalization axis SSOT (`axes.ts`) |
 | `@atom63/ui-react` | React renderer, recipes, layout/media/theme subpaths, and appearance UI |
+| `@atom63/mdx` | MDX prose components and blocks |
+| `@atom63/inform` | The inform pattern: message registry, arbiter and surfaces |
+| `@atom63/agent` | The headless agent (chat) runtime and its React hooks |
+| `@atom63/widgets` | The widget foundation: units, card, surface, states and hosted shell |
 
-Product apps such as `atom63-vite` should eventually consume these packages from the published npm beta instead of redefining or importing their source workspace directly.
+Product apps, such as the ones in `atom63-vite`, install these from npm rather than from this workspace.
 
 ## Mental model (5 minutes)
 

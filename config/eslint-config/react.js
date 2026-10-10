@@ -9,7 +9,7 @@ import { base, fixtureGlobs, ratchet } from './base.js'
  *
  * RATCHET: everything lands as `warn`, and each package gates with
  * `--max-warnings <baseline>` so the count can only go down. Landing these as
- * `error` would wedge CI on pre-existing debt across 33 packages.
+ * `error` would wedge CI on pre-existing debt.
  *
  * `rules-of-hooks` is the exception — it is `error`. A hook called conditionally
  * is a real bug, not style debt.

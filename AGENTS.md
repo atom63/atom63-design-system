@@ -38,7 +38,9 @@ version for coding agents.
   package's `dist` before checking code that newly imports it.
 - **Score UI with the craft rubric** (`scripts/design-system/lib/craft-rubric.mjs`, docs page "Craft rubric").
 - **Changesets:** a change to a published package (`@atom63/styles`, `@atom63/ui-foundation`,
-  `@atom63/ui-react`) needs `pnpm changeset`; tooling-only changes need `pnpm changeset --empty`.
+  `@atom63/ui-react`, `@atom63/mdx`, `@atom63/inform`, `@atom63/agent`, `@atom63/widgets`;
+  the list is `scripts/design-system/published-packages.mjs`) needs `pnpm changeset`; tooling-only
+  changes need `pnpm changeset --empty`.
 - **Commits and pull requests:** Conventional Commit titles (`feat(scope): …`, `fix: …`), with
   English bodies that say what changed. `main` accepts pull requests only, and the `ci-status`
   check must pass.
