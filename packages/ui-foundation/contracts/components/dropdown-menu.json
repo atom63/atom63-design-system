@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "dropdown-menu",
+  "maturity": "stable",
   "lists": {
     "itemVariants": ["default", "destructive"],
     "states": [

@@ -1,4 +1,6 @@
 export type ComponentPreviewProfile = 'canvas' | 'compact' | 'standard'
+import { getComponentMaturity } from './component-contract'
+
 export type ComponentStatus = 'preview' | 'stable'
 
 /**
@@ -647,7 +649,8 @@ function component(slug: string, category: string): ComponentCatalogItem {
         ? 'standard'
         : 'compact',
     slug,
-    status: 'stable',
+    // From the contract's maturity; a component with no contract (Progressive Blur) is stable.
+    status: getComponentMaturity(slug) ?? 'stable',
     storyExport: storyExportOverrides[slug] ?? 'Playground',
   }
 }

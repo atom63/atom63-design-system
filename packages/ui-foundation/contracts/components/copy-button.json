@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "copy-button",
+  "maturity": "stable",
   "lists": {
     "variants": ["ghost", "outline", "secondary"],
     "sizePairs": [

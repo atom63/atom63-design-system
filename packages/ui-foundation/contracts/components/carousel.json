@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "carousel",
+  "maturity": "stable",
   "lists": {
     "orientations": ["horizontal", "vertical"],
     "slots": [

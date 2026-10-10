@@ -6,7 +6,7 @@
   "type": "object",
   "oneOf": [
     {
-      "required": ["component", "contract"]
+      "required": ["component", "maturity", "contract"]
     },
     {
       "required": ["shared"]
@@ -19,6 +19,10 @@
     "component": {
       "description": "The component name, the same as the file name: contracts/components/<name>.json.",
       "$ref": "#/$defs/name"
+    },
+    "maturity": {
+      "description": "How settled the component is. The docs catalog shows preview components with a Preview badge; ds:new starts a component as preview.",
+      "enum": ["preview", "stable"]
     },
     "shared": {
       "description": "A list file several components use, the same as the file name: contracts/shared/<name>.json. It has lists and no contract.",

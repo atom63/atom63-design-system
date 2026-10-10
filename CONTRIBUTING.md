@@ -176,8 +176,9 @@ pnpm ds:new stat-meter --archetype marker --category feedback-and-utilities \
   --related progress,badge
 ```
 
-It creates the contract in `@atom63/ui-foundation`, then the component, recipe, stories, test and a
-changeset in `@atom63/ui-react`. It adds the component to every registry the checks read: the
+It creates the contract in `@atom63/ui-foundation` (as JSON, with `"maturity": "preview"`, so
+the docs catalog marks the component Preview until you change it to `stable`), then the
+component, recipe, stories, test and a changeset in `@atom63/ui-react`. It adds the component to every registry the checks read: the
 package exports, `recipes.css`, the visual archetype and the docs catalog. It then rebuilds the
 packages and rewrites the API reports and audit files. The result passes CI as it stands, apart
 from the visual baselines: run the visual workflow with **update** on the branch to record them.

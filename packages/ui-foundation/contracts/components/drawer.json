@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "drawer",
+  "maturity": "stable",
   "lists": {
     "directions": ["top", "bottom", "left", "right"],
     "footerVariants": ["default", "bare"],

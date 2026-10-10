@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "sheet",
+  "maturity": "stable",
   "lists": {
     "sides": ["right", "left", "top", "bottom"],
     "variants": ["default", "inset"],

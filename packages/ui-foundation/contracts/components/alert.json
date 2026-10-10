@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "alert",
+  "maturity": "stable",
   "description": "Faithful to prod @atom63/ui alert.tsx: a status callout with a default (neutral) variant plus four semantic tones. Visually, Alert is a static content/status surface; interactive controls only appear inside its action slot.",
   "lists": {
     "variants": ["default", "error", "info", "success", "warning"],
