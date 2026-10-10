@@ -359,6 +359,30 @@
   - C 成本最高，和目标不符。
 - **推荐：B。** 先覆盖组件内部用到的图标，再扩展到常用的产品图标。
 
+### N15. 拆分遗留中需要拍板的事项
+
+DS 从 atom63-vite 拆出来之后，机械性的残留已经由两个清理 PR 处理掉（本仓库一个，私有的 atom63-vite 一个）。下面四项需要先做决定；涉及私有仓库的部分只写概括。
+
+**N15a. “使用方证据”现在指什么**
+- **背景：** `beta-release-notes.md`、`benchmark-parity-source.json`（以及生成的 `benchmark-parity.md`）、`visual-qa-matrix.json` 引用的 4 个 atom63-vite 检查（`check:fixture-published-ds`、`check:website-ds-resolution`、`check:website-published-ds`、`A63_USE_PUBLISHED_DS`）已经不存在。发布说明里还写着“mdx、agent、widgets 不在首批发布”“atom63-vite 默认仍用工作区包”。
+- **选项：** A. 改为引用本仓库的 `check:ds-pack-smoke`、`check:ds-registry-smoke`、`check:starter`；B. 以 F2 之后使用方项目里的 `atom63 check` 结果作为证据；C. 删掉这类证据。
+- **推荐：A，F2 完成后补上 B。** 先让文档不再引用不存在的东西，再用真实使用方的门禁结果补强。
+
+**N15b. 两个脚手架**
+- **背景：** atom63-vite 里还有一个更早的私有脚手架。它生成的项目把 `@atom63` 作用域指向 GitHub Packages，于是装不上发布在 npmjs 的 DS 包；改回 npmjs，又会装不上它依赖的几个从未发布到 npmjs 的内部包。本仓库的 `@atom63/create` 做的是同一件事。
+- **选项：** A. 退役旧脚手架，统一用 `@atom63/create`；B. 两个都留，修旧脚手架的依赖；C. 反过来退役 `@atom63/create`。
+- **推荐：A。** `@atom63/create` 已经有 CI 里的 `check:starter`，而且是 F2 里 harness 的落点。
+
+**N15c. 只在 GitHub Packages 的包**
+- **背景：** atom63-vite 里有几个内部包既没有标 `private`，也不在 npmjs 上（发布目标是 GitHub Packages）。其中一个和本仓库的 private 包 `@atom63/brand` 同名，代码已经分叉。
+- **选项：** A. 全部标 `private`，只在工作区内使用；B. 保留 GitHub Packages 发布；C. 发布到 npmjs。
+- **推荐：A。** 目前没有外部使用方；同名的 `@atom63/brand` 两边都只在内部用。
+
+**N15d. OS63 兼容别名和 atom63-vite 里与 DS 重复的工具**
+- **背景：** `@atom63/styles` 的 `src/os/macos.css`、`windows.css` 带着 OS63 专用的旧变量名（`--os-window-*`、`--os-launcher-*`）。atom63-vite 仍在用这些旧名字，`--a63-os-*` 一处也没用。私有仓库里还有几套和本仓库重复的工具（harness 注册表、vibe test、fixture 应用、inform 的 stories），以及两个实际没扫到任何内容的设计系统检查。
+- **选项：** A. 先让 atom63-vite 迁移到新名字，再在一个 breaking beta 里删别名；同时删掉重复的工具，那两个检查由 F2 的使用方检查取代；B. 保持现状。
+- **推荐：A。** 别名删除排在 F1 冻结词汇之后，和其他破坏性改动一起发布。
+
 ---
 
 ## 三、早期 Figma 文件的取舍（Design System - A63）
@@ -390,7 +414,7 @@
 
 | 阶段 | 内容 | 主要服务的目标 | 依赖 |
 |---|---|---|---|
-| **F0 前置清理** | Windows 兼容（`.gitattributes`、pnpm 子进程）、发布积压（Version PR #89、`latest` 标签、`@atom63/figma` 的发布状态）、CI 漏洞 | 2 | 无 |
+| **F0 前置清理** | Windows 兼容（`.gitattributes`、pnpm 子进程）、发布积压（Version PR #89、`latest` 标签、`@atom63/figma` 的发布状态）、CI 漏洞、拆分遗留（机械部分已有两个清理 PR，其余见 N15） | 2 | 无 |
 | **F1 冻结意图** | N1–N4、N13、N14：组件意图迁到中立数据、轴按语义重整、角色名、轴收窄和正交化；一套主题 API | 1、2 | F0 |
 | **F2 harness 进自有项目** | N5–N7：lint 加 Tailwind 锁定，`atom63 check` 写进 starter 和完成定义；反例 fixture 规则；评测拆成两层 | 2、1 | F1（第四节的实验可以提前做） |
 | **F3 iOS 按需** | N8 | 2 | F1 |
@@ -441,3 +465,7 @@ F3 和 F4 互相独立，可以并行。
 | N12 pattern 包 | B：保持 beta | |
 | N13 字体角色 | B：HIG 字体角色做语义层 | |
 | N14 图标命名 | B：语义图标注册表 | |
+| N15a 使用方证据 | A，F2 后补 B | |
+| N15b 两个脚手架 | A：统一用 `@atom63/create` | |
+| N15c GitHub Packages 包 | A：标 private | |
+| N15d OS63 别名与重复工具 | A：迁移后删除 | |
