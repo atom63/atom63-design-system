@@ -7,18 +7,18 @@
  *
  * Build the packages first (`pnpm --filter @atom63/ui-react build`).
  */
-import { execFileSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import { execCommandSync } from './lib/command.mjs'
 import { publishedPackageDirs } from './published-packages.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const packageDirs = publishedPackageDirs
 
 function run(args) {
-  execFileSync('pnpm', ['exec', ...args], { cwd: repoRoot, stdio: 'inherit' })
+  execCommandSync('pnpm', ['exec', ...args], { cwd: repoRoot, stdio: 'inherit' })
 }
 
 const failures = []

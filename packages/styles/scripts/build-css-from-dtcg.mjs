@@ -317,7 +317,8 @@ function tokensOf(rules) {
 }
 
 function render(sourcePath, document, rules, knownNames) {
-  const relativeSource = path.relative(packageRoot, sourcePath)
+  // POSIX separators, so the header is the same when generated on Windows.
+  const relativeSource = path.relative(packageRoot, sourcePath).split(path.sep).join('/')
   const summary = document.$description ?? document.description
   const description = summary
     ? `\n *\n${summary

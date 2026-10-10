@@ -1,0 +1,7 @@
+# Text files are stored and checked out with LF on every platform, so generated
+# artifacts and the byte-exact --check scripts agree on Windows too.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.ico binary

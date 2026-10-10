@@ -18,13 +18,13 @@
  * --no-generate  writes the files but skips the builds and audit rewrites.
 
  */
-import { execFileSync } from 'node:child_process'
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import { parseArgs } from 'node:util'
 import { fileURLToPath } from 'node:url'
 
+import { execCommandSync } from './lib/command.mjs'
 import {
   addCrossRendererContract,
   addDemoCatalogItem,
@@ -222,7 +222,7 @@ for (const [file, text] of created) {
 
 const run = (command, args) => {
   process.stdout.write(`\n$ ${command} ${args.join(' ')}\n`)
-  execFileSync(command, args, { cwd: root, stdio: 'inherit' })
+  execCommandSync(command, args, { cwd: root, stdio: 'inherit' })
 }
 
 const formatted = [...edits.keys(), ...created.keys()].filter(file => !file.endsWith('.swift'))
