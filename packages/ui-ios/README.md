@@ -11,7 +11,7 @@ Add a local Swift package dependency pointing at `packages/ui-ios`, then import:
 ```swift
 import Atom63UI
 
-AtomButton("Continue", variant: .primary) {
+AtomButton("Continue", tone: .primary) {
     continueFlow()
 }
 ```

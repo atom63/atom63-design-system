@@ -47,7 +47,8 @@ struct AtomInformCard: View {
         HStack(spacing: AtomTokens.Space.x2) {
           ForEach(content.actions) { action in
             AtomButton(
-              variant: action.role == .primary ? .primary : .outline,
+              tone: action.role == .primary ? .primary : .neutral,
+              emphasis: action.role == .primary ? .solid : .outline,
               size: .compact,
               action: action.perform
             ) {
@@ -166,7 +167,8 @@ struct AtomInformSheet: View {
           .frame(maxWidth: .infinity, alignment: .leading)
         ForEach(content.actions) { action in
           AtomButton(
-            variant: action.role == .primary ? .primary : .outline,
+            tone: action.role == .primary ? .primary : .neutral,
+            emphasis: action.role == .primary ? .solid : .outline,
             fullWidth: true,
             action: {
               action.perform()

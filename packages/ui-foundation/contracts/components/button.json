@@ -208,7 +208,66 @@
         }
       },
       "ios": {
-        "minHitTarget": 44
+        "minHitTarget": 44,
+        "enums": {
+          "tone": "AtomButtonTone",
+          "emphasis": "AtomButtonEmphasis"
+        },
+        "props": {
+          "variant": {
+            "swiftType": "AtomButtonVariant",
+            "deprecated": "Use tone and emphasis.",
+            "map": {
+              "primary": {
+                "tone": "primary",
+                "emphasis": "solid"
+              },
+              "neutral": {
+                "tone": "neutral",
+                "emphasis": "solid"
+              },
+              "secondary": {
+                "tone": "neutral",
+                "emphasis": "soft"
+              },
+              "destructive": {
+                "tone": "destructive",
+                "emphasis": "solid"
+              },
+              "outline": {
+                "tone": "neutral",
+                "emphasis": "outline"
+              },
+              "ghost": {
+                "tone": "neutral",
+                "emphasis": "ghost"
+              }
+            },
+            "extensions": {}
+          },
+          "size": {
+            "swiftType": "AtomControlSize",
+            "map": {
+              "compact": {
+                "size": "sm",
+                "content": "label"
+              },
+              "regular": {
+                "size": "md",
+                "content": "label"
+              },
+              "large": {
+                "size": "lg",
+                "content": "label"
+              },
+              "icon": {
+                "size": "md",
+                "content": "icon-only"
+              }
+            },
+            "extensions": {}
+          }
+        }
       }
     },
     "stateAliases": {

@@ -1,28 +1,14 @@
 import SwiftUI
 
-public enum AtomButtonVariant: Sendable {
-  case primary
-  case neutral
-  case secondary
-  case destructive
-  case outline
-  case ghost
-}
-
-public enum AtomControlSize: Sendable {
-  case compact
-  case regular
-  case large
-  case icon
-}
+// AtomButtonTone, AtomButtonEmphasis, AtomButtonVariant and AtomControlSize are
+// generated from the button contract in AtomComponentIntent.generated.swift.
 
 public struct AtomButton<Label: View>: View {
   @Environment(\.atomTheme) private var theme
   @Environment(\.colorScheme) private var colorScheme
-  @Environment(\.accessibilityReduceMotion) private var reduceMotion
-  @Environment(\.atomMotionPreference) private var motionPreference
 
-  private let variant: AtomButtonVariant
+  private let tone: AtomButtonTone
+  private let emphasis: AtomButtonEmphasis
   private let size: AtomControlSize
   private let fullWidth: Bool
   private let isLoading: Bool
@@ -31,7 +17,8 @@ public struct AtomButton<Label: View>: View {
   private let label: Label
 
   public init(
-    variant: AtomButtonVariant = .neutral,
+    tone: AtomButtonTone = .neutral,
+    emphasis: AtomButtonEmphasis = .solid,
     size: AtomControlSize = .regular,
     fullWidth: Bool = false,
     isLoading: Bool = false,
@@ -39,7 +26,8 @@ public struct AtomButton<Label: View>: View {
     action: @escaping () -> Void,
     @ViewBuilder label: () -> Label
   ) {
-    self.variant = variant
+    self.tone = tone
+    self.emphasis = emphasis
     self.size = size
     self.fullWidth = fullWidth
     self.isLoading = isLoading
@@ -48,35 +36,161 @@ public struct AtomButton<Label: View>: View {
     self.label = label()
   }
 
+  @available(*, deprecated, message: "Use tone and emphasis.")
+  public init(
+    variant: AtomButtonVariant,
+    size: AtomControlSize = .regular,
+    fullWidth: Bool = false,
+    isLoading: Bool = false,
+    loadingAccessibilityLabel: String = "Loading",
+    action: @escaping () -> Void,
+    @ViewBuilder label: () -> Label
+  ) {
+    self.init(
+      tone: variant.tone,
+      emphasis: variant.emphasis,
+      size: size,
+      fullWidth: fullWidth,
+      isLoading: isLoading,
+      loadingAccessibilityLabel: loadingAccessibilityLabel,
+      action: action,
+      label: label
+    )
+  }
+
   public var body: some View {
     Button(action: action) {
       label
-        .font(font)
-        .fontWeight(.semibold)
         .lineLimit(2)
         .opacity(isLoading ? 0 : 1)
         .overlay {
           ProgressView()
-            .tint(foregroundColor)
+            .tint(palette.foreground)
             .opacity(isLoading ? 1 : 0)
             .accessibilityHidden(true)
         }
         .frame(maxWidth: fullWidth && size != .icon ? .infinity : nil)
     }
-    .buttonStyle(
-      AtomButtonStyle(
-        variant: variant,
-        minimumHeight: minimumHeight,
-        horizontalPadding: horizontalPadding,
-        cornerRadius: cornerRadius,
-        theme: theme,
-        colorScheme: colorScheme,
-        reduceMotion: motionPreference.resolvesReduceMotion(systemValue: reduceMotion)
-      )
-    )
+    .buttonStyle(AtomButtonStyle(tone: tone, emphasis: emphasis, size: size))
     .disabled(isLoading)
     .accessibilityValue(isLoading ? loadingAccessibilityLabel : "")
     .accessibilityAddTraits(isLoading ? .updatesFrequently : [])
+  }
+
+  private var palette: AtomButtonPalette {
+    AtomButtonPalette(tone: tone, emphasis: emphasis, theme: theme, colorScheme: colorScheme)
+  }
+}
+
+extension AtomButton where Label == Text {
+  public init(
+    _ title: String,
+    tone: AtomButtonTone = .neutral,
+    emphasis: AtomButtonEmphasis = .solid,
+    size: AtomControlSize = .regular,
+    fullWidth: Bool = false,
+    isLoading: Bool = false,
+    loadingAccessibilityLabel: String = "Loading",
+    action: @escaping () -> Void
+  ) {
+    self.init(
+      tone: tone,
+      emphasis: emphasis,
+      size: size,
+      fullWidth: fullWidth,
+      isLoading: isLoading,
+      loadingAccessibilityLabel: loadingAccessibilityLabel,
+      action: action
+    ) {
+      Text(title)
+    }
+  }
+
+  @available(*, deprecated, message: "Use tone and emphasis.")
+  public init(
+    _ title: String,
+    variant: AtomButtonVariant,
+    size: AtomControlSize = .regular,
+    fullWidth: Bool = false,
+    isLoading: Bool = false,
+    loadingAccessibilityLabel: String = "Loading",
+    action: @escaping () -> Void
+  ) {
+    self.init(
+      title,
+      tone: variant.tone,
+      emphasis: variant.emphasis,
+      size: size,
+      fullWidth: fullWidth,
+      isLoading: isLoading,
+      loadingAccessibilityLabel: loadingAccessibilityLabel,
+      action: action
+    )
+  }
+}
+
+/// The Atom63 button look, for a native `Button`:
+/// `Button("Save", action: save).buttonStyle(AtomButtonStyle(tone: .primary))`.
+/// `AtomButton` uses it and adds the loading state and full-width layout.
+public struct AtomButtonStyle: ButtonStyle {
+  @Environment(\.isEnabled) private var isEnabled
+  @Environment(\.colorSchemeContrast) private var accessibilityContrast
+  @Environment(\.atomTheme) private var theme
+  @Environment(\.colorScheme) private var colorScheme
+  @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
+  @Environment(\.atomMotionPreference) private var motionPreference
+
+  private let tone: AtomButtonTone
+  private let emphasis: AtomButtonEmphasis
+  private let size: AtomControlSize
+
+  public init(
+    tone: AtomButtonTone = .neutral,
+    emphasis: AtomButtonEmphasis = .solid,
+    size: AtomControlSize = .regular
+  ) {
+    self.tone = tone
+    self.emphasis = emphasis
+    self.size = size
+  }
+
+  public func makeBody(configuration: Configuration) -> some View {
+    let reduceMotion = motionPreference.resolvesReduceMotion(systemValue: systemReduceMotion)
+    return configuration.label
+      .font(font)
+      .fontWeight(.semibold)
+      .foregroundStyle(palette.foreground)
+      .padding(.horizontal, horizontalPadding)
+      .padding(.vertical, AtomTokens.Space.x2)
+      .frame(minHeight: minimumHeight)
+      .background(palette.background(isPressed: configuration.isPressed))
+      .overlay {
+        RoundedRectangle(cornerRadius: cornerRadius)
+          .strokeBorder(palette.border, lineWidth: borderWidth)
+      }
+      .compositingGroup()
+      .clipShape(.rect(cornerRadius: cornerRadius))
+      .scaleEffect(configuration.isPressed ? AtomTokens.Control.pressScale : 1)
+      .opacity(isEnabled ? 1 : AtomTokens.Control.disabledOpacity)
+      .animation(
+        reduceMotion ? nil : .timingCurve(
+          AtomTokens.Motion.emphasizedControlPoints.0,
+          AtomTokens.Motion.emphasizedControlPoints.1,
+          AtomTokens.Motion.emphasizedControlPoints.2,
+          AtomTokens.Motion.emphasizedControlPoints.3,
+          duration: AtomTokens.Motion.controlFeedback
+        ),
+        value: configuration.isPressed
+      )
+      // Rendered geometry above, interaction floor here. Expanding the hit
+      // region instead of the box is what lets a 36pt control stay 36pt while
+      // still satisfying the 44pt HIG target.
+      .frame(minHeight: AtomTokens.Control.minTouchTarget)
+      .contentShape(.rect)
+  }
+
+  private var palette: AtomButtonPalette {
+    AtomButtonPalette(tone: tone, emphasis: emphasis, theme: theme, colorScheme: colorScheme)
   }
 
   private var font: Font {
@@ -130,127 +244,68 @@ public struct AtomButton<Label: View>: View {
     }
   }
 
-  private var foregroundColor: Color {
-    switch variant {
-    case .primary:
-      theme.colors.actionPrimaryForeground.resolve(for: colorScheme)
-    case .neutral:
-      theme.colors.actionNeutralForeground.resolve(for: colorScheme)
-    case .destructive:
-      theme.colors.actionDangerForeground.resolve(for: colorScheme)
-    case .secondary, .outline, .ghost:
-      theme.colors.textPrimary.resolve(for: colorScheme)
-    }
+  private var borderWidth: CGFloat {
+    guard emphasis == .outline else { return 0 }
+    return accessibilityContrast == .increased ? 2 : 1
   }
 }
 
-extension AtomButton where Label == Text {
-  public init(
-    _ title: String,
-    variant: AtomButtonVariant = .neutral,
-    size: AtomControlSize = .regular,
-    fullWidth: Bool = false,
-    isLoading: Bool = false,
-    loadingAccessibilityLabel: String = "Loading",
-    action: @escaping () -> Void
-  ) {
-    self.init(
-      variant: variant,
-      size: size,
-      fullWidth: fullWidth,
-      isLoading: isLoading,
-      loadingAccessibilityLabel: loadingAccessibilityLabel,
-      action: action
-    ) {
-      Text(title)
-    }
-  }
-}
-
-private struct AtomButtonStyle: ButtonStyle {
-  @Environment(\.isEnabled) private var isEnabled
-  @Environment(\.colorSchemeContrast) private var accessibilityContrast
-
-  let variant: AtomButtonVariant
-  let minimumHeight: CGFloat
-  let horizontalPadding: CGFloat
-  let cornerRadius: CGFloat
+/// Colors for one tone × emphasis. Solid fills with the tone; soft tints it (the
+/// neutral tone uses the muted surface); outline and ghost leave the fill clear,
+/// outline adding a border. Off the solid fill, a neutral label is the primary
+/// text color and a primary or destructive one takes the tone's color.
+struct AtomButtonPalette {
+  let tone: AtomButtonTone
+  let emphasis: AtomButtonEmphasis
   let theme: AtomTheme
   let colorScheme: ColorScheme
-  let reduceMotion: Bool
 
-  func makeBody(configuration: Configuration) -> some View {
-    configuration.label
-      .foregroundStyle(foregroundColor)
-      .padding(.horizontal, horizontalPadding)
-      .padding(.vertical, AtomTokens.Space.x2)
-      .frame(minHeight: minimumHeight)
-      .background(backgroundColor(configuration: configuration))
-      .overlay {
-        RoundedRectangle(cornerRadius: cornerRadius)
-          .strokeBorder(borderColor, lineWidth: borderWidth)
-      }
-      .compositingGroup()
-      .clipShape(.rect(cornerRadius: cornerRadius))
-      .scaleEffect(configuration.isPressed ? AtomTokens.Control.pressScale : 1)
-      .opacity(isEnabled ? 1 : AtomTokens.Control.disabledOpacity)
-      .animation(
-        reduceMotion ? nil : .timingCurve(
-          AtomTokens.Motion.emphasizedControlPoints.0,
-          AtomTokens.Motion.emphasizedControlPoints.1,
-          AtomTokens.Motion.emphasizedControlPoints.2,
-          AtomTokens.Motion.emphasizedControlPoints.3,
-          duration: AtomTokens.Motion.controlFeedback
-        ),
-        value: configuration.isPressed
-      )
-      // Rendered geometry above, interaction floor here. Expanding the hit
-      // region instead of the box is what lets a 36pt control stay 36pt while
-      // still satisfying the 44pt HIG target.
-      .frame(minHeight: AtomTokens.Control.minTouchTarget)
-      .contentShape(.rect)
-  }
-
-  private var foregroundColor: Color {
-    switch variant {
-    case .primary:
-      theme.colors.actionPrimaryForeground.resolve(for: colorScheme)
-    case .neutral:
+  var foreground: Color {
+    switch (emphasis, tone) {
+    case (.solid, .neutral):
       theme.colors.actionNeutralForeground.resolve(for: colorScheme)
-    case .destructive:
+    case (.solid, .primary):
+      theme.colors.actionPrimaryForeground.resolve(for: colorScheme)
+    case (.solid, .destructive):
       theme.colors.actionDangerForeground.resolve(for: colorScheme)
-    case .secondary, .outline, .ghost:
+    case (_, .neutral):
       theme.colors.textPrimary.resolve(for: colorScheme)
+    case (_, .primary):
+      theme.colors.actionPrimary.resolve(for: colorScheme)
+    case (_, .destructive):
+      theme.colors.actionDanger.resolve(for: colorScheme)
     }
   }
 
-  private func backgroundColor(configuration: Configuration) -> Color {
-    switch variant {
-    case .primary:
-      let token =
-        configuration.isPressed
-        ? theme.colors.actionPrimaryPressed
-        : theme.colors.actionPrimary
-      return token.resolve(for: colorScheme)
-    case .neutral:
+  func background(isPressed: Bool) -> Color {
+    switch (emphasis, tone) {
+    case (.solid, .neutral):
       return theme.colors.actionNeutral.resolve(for: colorScheme)
-    case .secondary:
-      return theme.colors.surfaceMuted.resolve(for: colorScheme)
-    case .destructive:
+    case (.solid, .primary):
+      let token = isPressed ? theme.colors.actionPrimaryPressed : theme.colors.actionPrimary
+      return token.resolve(for: colorScheme)
+    case (.solid, .destructive):
       return theme.colors.actionDanger.resolve(for: colorScheme)
-    case .outline, .ghost:
+    case (.soft, .neutral):
+      return theme.colors.surfaceMuted.resolve(for: colorScheme)
+    case (.soft, .primary):
+      return theme.colors.actionPrimary.resolve(for: colorScheme).opacity(0.1)
+    case (.soft, .destructive):
+      return theme.colors.actionDanger.resolve(for: colorScheme).opacity(0.1)
+    case (.outline, _), (.ghost, _):
       return .clear
     }
   }
 
-  private var borderColor: Color {
-    variant == .outline
-      ? theme.colors.borderControl.resolve(for: colorScheme)
-      : .clear
-  }
-
-  private var borderWidth: CGFloat {
-    guard variant == .outline else { return 0 }
-    return accessibilityContrast == .increased ? 2 : 1
+  var border: Color {
+    guard emphasis == .outline else { return .clear }
+    switch tone {
+    case .neutral:
+      return theme.colors.borderControl.resolve(for: colorScheme)
+    case .primary:
+      return theme.colors.actionPrimary.resolve(for: colorScheme)
+    case .destructive:
+      return theme.colors.actionDanger.resolve(for: colorScheme)
+    }
   }
 }

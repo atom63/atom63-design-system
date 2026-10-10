@@ -64,7 +64,7 @@
     }
   },
   "intent": {
-    "description": "What a text field is, independent of any platform: its size. Chrome options and the native character-width size are web extensions.",
+    "description": "What a text field is, independent of any platform: its size. Chrome options and the native character-width size are web extensions. The SwiftUI text field draws the md size only.",
     "sizes": {
       "sm": {
         "platforms": {
@@ -76,6 +76,9 @@
       "md": {
         "platforms": {
           "web": {
+            "visualHeight": "--a63-control-height-md"
+          },
+          "ios": {
             "visualHeight": "--a63-control-height-md"
           }
         }
@@ -117,6 +120,9 @@
           "nativeInput": "Renders a native input element instead of the Base UI one.",
           "size": "A number is forwarded to the native size attribute for character-width sizing."
         }
+      },
+      "ios": {
+        "minHitTarget": 44
       }
     },
     "stateAliases": {

@@ -379,6 +379,23 @@
                 }
               }
             }
+          },
+          "ios": {
+            "props": {
+              "tone": {
+                "swiftType": "AtomBadgeTone",
+                "map": {
+                  "neutral": { "tone": "neutral", "emphasis": "soft" },
+                  "accent": { "tone": "primary", "emphasis": "solid" },
+                  "info": { "tone": "info", "emphasis": "soft" },
+                  "success": { "tone": "success", "emphasis": "soft" },
+                  "warning": { "tone": "warning", "emphasis": "soft" },
+                  "error": { "tone": "error", "emphasis": "soft" }
+                },
+                "extensions": {},
+                "aliases": { "danger": "error" }
+              }
+            }
           }
         },
         "stateAliases": { "resting": "rest" }
@@ -582,7 +599,35 @@
               }
             }
           },
-          "ios": { "minHitTarget": 44 }
+          "ios": {
+            "minHitTarget": 44,
+            "enums": { "tone": "AtomButtonTone", "emphasis": "AtomButtonEmphasis" },
+            "props": {
+              "variant": {
+                "swiftType": "AtomButtonVariant",
+                "deprecated": "Use tone and emphasis.",
+                "map": {
+                  "primary": { "tone": "primary", "emphasis": "solid" },
+                  "neutral": { "tone": "neutral", "emphasis": "solid" },
+                  "secondary": { "tone": "neutral", "emphasis": "soft" },
+                  "destructive": { "tone": "destructive", "emphasis": "solid" },
+                  "outline": { "tone": "neutral", "emphasis": "outline" },
+                  "ghost": { "tone": "neutral", "emphasis": "ghost" }
+                },
+                "extensions": {}
+              },
+              "size": {
+                "swiftType": "AtomControlSize",
+                "map": {
+                  "compact": { "size": "sm", "content": "label" },
+                  "regular": { "size": "md", "content": "label" },
+                  "large": { "size": "lg", "content": "label" },
+                  "icon": { "size": "md", "content": "icon-only" }
+                },
+                "extensions": {}
+              }
+            }
+          }
         },
         "stateAliases": { "focusVisible": "focus-visible" }
       },
@@ -1326,10 +1371,15 @@
       ],
       "visualArchetypes": ["field"],
       "intent": {
-        "description": "What a text field is, independent of any platform: its size. Chrome options and the native character-width size are web extensions.",
+        "description": "What a text field is, independent of any platform: its size. Chrome options and the native character-width size are web extensions. The SwiftUI text field draws the md size only.",
         "sizes": {
           "sm": { "platforms": { "web": { "visualHeight": "--a63-control-height-sm" } } },
-          "md": { "platforms": { "web": { "visualHeight": "--a63-control-height-md" } } },
+          "md": {
+            "platforms": {
+              "web": { "visualHeight": "--a63-control-height-md" },
+              "ios": { "visualHeight": "--a63-control-height-md" }
+            }
+          },
           "lg": { "platforms": { "web": { "visualHeight": "--a63-control-height-lg" } } }
         },
         "platforms": {
@@ -1348,7 +1398,8 @@
               "nativeInput": "Renders a native input element instead of the Base UI one.",
               "size": "A number is forwarded to the native size attribute for character-width sizing."
             }
-          }
+          },
+          "ios": { "minHitTarget": 44 }
         },
         "stateAliases": { "focus": "focus-visible" }
       },

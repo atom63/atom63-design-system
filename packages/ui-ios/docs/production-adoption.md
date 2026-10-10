@@ -35,7 +35,7 @@ struct ProjectForm: View {
   var body: some View {
     Form {
       AtomTextField("Name", text: $name)
-      AtomButton("Save", variant: .primary, fullWidth: true) {
+      AtomButton("Save", tone: .primary, fullWidth: true) {
         save()
       }
     }

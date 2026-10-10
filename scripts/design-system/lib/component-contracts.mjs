@@ -242,8 +242,19 @@ export function intentProblems(sources, source) {
   }
   const [main] = sections(source)
   for (const [platform, spec] of Object.entries(intent.platforms ?? {})) {
-    for (const [prop, { list, map = {}, extensions = {} }] of Object.entries(spec.props ?? {})) {
-      const values = listValues(listInfo(main, list)) ?? []
+    for (const [prop, propSpec] of Object.entries(spec.props ?? {})) {
+      const { list, map = {}, extensions = {}, aliases = {} } = propSpec
+      // A prop with no list (a Swift enum) takes its values from the map and extensions.
+      const values = list
+        ? (listValues(listInfo(main, list)) ?? [])
+        : [...Object.keys(map), ...Object.keys(extensions)]
+      for (const [alias, target] of Object.entries(aliases)) {
+        if (!values.includes(target) || values.includes(alias)) {
+          problems.push(
+            `${where}: ${platform} ${prop} alias "${alias}" must name a value and not be one`
+          )
+        }
+      }
       for (const value of values) {
         const count = Number(value in map) + Number(value in extensions)
         if (count !== 1) {

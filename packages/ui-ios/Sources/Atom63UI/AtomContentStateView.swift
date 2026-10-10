@@ -40,7 +40,7 @@ public struct AtomContentStateView: View {
       Text(message)
     } actions: {
       if let actionTitle, let action {
-        AtomButton(actionTitle, variant: tone == .error ? .destructive : .primary) {
+        AtomButton(actionTitle, tone: tone == .error ? .destructive : .primary) {
           action()
         }
       }
