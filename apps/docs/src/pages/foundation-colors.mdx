@@ -93,6 +93,8 @@ Six neutral palettes (`n1`–`n6`) give the system different neutral personaliti
 
 The shadcn vocabulary (`background`, `primary`, `muted-foreground`, …) is an **opt-in adapter** (`@atom63/styles/compat/shadcn` + Tailwind theme keys). It re-references `--a63-*`; it does not own values (mirror rule).
 
+Both the Tailwind theme keys and the compat variables are generated from one role table, `packages/styles/src/tailwind/roles.json` (`pnpm --filter @atom63/styles generate:roles`). Beyond the shadcn defaults it adds `destructive-foreground`, `info`/`success`/`warning` with `-foreground`, `surface-sunken`, `selected` with `-foreground`, and `chart-1`–`chart-5`. `accent` is the neutral hover and highlight plate, not the brand color; use `primary` for the brand.
+
 | Surface | Prefer | Avoid |
 |---------|--------|-------|
 | App / page JSX | Tailwind utilities: `bg-background`, `text-foreground`, `bg-primary`, … | Hardcoded hex; reaching into `--a63-control-*` for sketching |

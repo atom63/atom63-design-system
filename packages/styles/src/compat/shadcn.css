@@ -1,14 +1,16 @@
 /*
  * shadcn/ui compatibility bridge (opt-in).
  *
- * Aliases the shadcn token vocabulary back onto the canonical --a63-* semantic
- * layer, so shadcn-based components keep working without making those names part
- * of the core foundation. Import via `@atom63/styles/compat/shadcn`; NOT part of
- * the default bundle. Light/dark is handled by the --a63-* layer, so these are
- * mode-agnostic alias-backs except where shadcn intentionally diverged (sidebar).
+ * Generated from src/tailwind/roles.json by scripts/generate-role-bridges.mjs;
+ * do not edit. Aliases the shadcn token vocabulary onto the canonical --a63-*
+ * semantic layer, so shadcn-based components keep working without making those
+ * names part of the core foundation. Import via `@atom63/styles/compat/shadcn`;
+ * NOT part of the default bundle. Light and dark are resolved by the --a63-*
+ * tokens, so every alias is mode-agnostic.
  */
 
 :root {
+  /* Surfaces and text */
   --background: var(--a63-surface-page);
   --foreground: var(--a63-text-primary);
   --card: var(--a63-surface-panel);
@@ -21,32 +23,49 @@
   --secondary-foreground: var(--a63-text-secondary);
   --accent: var(--a63-surface-control-hover);
   --accent-foreground: var(--a63-text-primary);
+  --surface-sunken: var(--a63-surface-control);
+
+  /* Borders and focus */
   --border: var(--a63-border-subtle);
   --input: var(--a63-border-control);
   --ring: var(--a63-focus-ring);
+
+  /* Actions */
   --primary: var(--a63-action-primary);
   --primary-foreground: var(--a63-action-primary-foreground);
   --destructive: var(--a63-action-danger);
-  --info: var(--a63-status-info);
-  --success: var(--a63-status-success);
-  --warning: var(--a63-status-warning);
+  --destructive-foreground: var(--a63-action-danger-foreground);
 
-  /* Fixed mode references (adapter-local) */
-  --light: var(--surface-light-1);
-  --dark: var(--surface-dark-1);
+  /* Status */
+  --info: var(--a63-status-info);
+  --info-foreground: var(--a63-status-info-foreground);
+  --success: var(--a63-status-success);
+  --success-foreground: var(--a63-status-success-foreground);
+  --warning: var(--a63-status-warning);
+  --warning-foreground: var(--a63-status-warning-foreground);
+
+  /* Selection */
+  --selected: var(--a63-selected-background);
+  --selected-foreground: var(--a63-selected-foreground);
+
+  /* Charts */
+  --chart-1: var(--a63-chart-1);
+  --chart-2: var(--a63-chart-2);
+  --chart-3: var(--a63-chart-3);
+  --chart-4: var(--a63-chart-4);
+  --chart-5: var(--a63-chart-5);
 
   /* Sidebar */
-  --sidebar: var(--a63-surface-muted);
+  --sidebar: var(--a63-surface-sidebar);
   --sidebar-foreground: var(--a63-text-primary);
+  --sidebar-primary: var(--a63-action-primary);
+  --sidebar-primary-foreground: var(--a63-action-primary-foreground);
   --sidebar-accent: var(--a63-surface-control-hover);
   --sidebar-accent-foreground: var(--a63-text-primary);
   --sidebar-border: var(--a63-border-subtle);
-  --sidebar-primary: var(--a63-action-primary);
-  --sidebar-primary-foreground: var(--a63-action-primary-foreground);
   --sidebar-ring: var(--a63-focus-ring);
-}
 
-.dark {
-  /* shadcn's dark sidebar collapses onto the page surface. */
-  --sidebar: var(--a63-surface-page);
+  /* Fixed mode references */
+  --light: var(--surface-light-1);
+  --dark: var(--surface-dark-1);
 }

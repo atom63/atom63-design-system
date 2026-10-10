@@ -93,6 +93,9 @@ jobs:
       - name: Check tokens
         run: pnpm --filter @atom63/styles check:tokens
 
+      - name: Check the shadcn role bridges
+        run: pnpm --filter @atom63/styles check:roles
+
       - name: Check theme authoring, token economy, craft, templates and the scaffold
         run: |
           pnpm test:scripts
