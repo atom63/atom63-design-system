@@ -423,6 +423,8 @@ DS 从 atom63-vite 拆出来之后，机械性的残留已经由两个清理 PR 
 
 F3 和 F4 互相独立，可以并行。
 
+F1 的实施方案（拆成哪些 PR、怎么验证、按什么顺序）见 [`f1-plan.md`](./f1-plan.md)。
+
 ## 五、最便宜的第一步：验证实验
 
 在一个自有的 React + Vite + Tailwind 产品仓库里做（没有合适的，就用 `pnpm create:app` 生成一个）：
