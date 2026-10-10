@@ -1,6 +1,6 @@
 {
   "version": "2025.10",
-  "description": "Badge palette contract: aliases of the semantic category and status tints (--a63-category-*, --a63-status-*-subtle-*), kept so recipes and themes that read --a63-badge-* keep working.",
+  "description": "Badge palette contract: aliases of the semantic category and status tints (--a63-category-*, --a63-status-*-subtle-*), kept so recipes and themes that read --a63-badge-* keep working. The dark block repeats the aliases so a nested dark scope resolves them against its own roles.",
   "modifiers": {
     "mode": {
       "default": "light",
@@ -217,7 +217,218 @@
             }
           }
         ],
-        "dark": []
+        "dark": [
+          {
+            "a63": {
+              "badge": {
+                "red": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.red}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.red.subtle.foreground}"
+                  }
+                },
+                "orange": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.orange}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.orange.subtle.foreground}"
+                  }
+                },
+                "amber": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.amber}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.amber.subtle.foreground}"
+                  }
+                },
+                "yellow": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.yellow}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.yellow.subtle.foreground}"
+                  }
+                },
+                "lime": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.lime}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.lime.subtle.foreground}"
+                  }
+                },
+                "green": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.green}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.green.subtle.foreground}"
+                  }
+                },
+                "emerald": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.emerald}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.emerald.subtle.foreground}"
+                  }
+                },
+                "teal": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.teal}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.teal.subtle.foreground}"
+                  }
+                },
+                "cyan": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.cyan}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.cyan.subtle.foreground}"
+                  }
+                },
+                "sky": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.sky}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.sky.subtle.foreground}"
+                  }
+                },
+                "blue": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.blue}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.blue.subtle.foreground}"
+                  }
+                },
+                "indigo": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.indigo}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.indigo.subtle.foreground}"
+                  }
+                },
+                "violet": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.violet}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.violet.subtle.foreground}"
+                  }
+                },
+                "purple": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.purple}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.purple.subtle.foreground}"
+                  }
+                },
+                "fuchsia": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.fuchsia}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.fuchsia.subtle.foreground}"
+                  }
+                },
+                "pink": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.pink}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.pink.subtle.foreground}"
+                  }
+                },
+                "rose": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.rose}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.rose.subtle.foreground}"
+                  }
+                },
+                "neutral": {
+                  "accent": {
+                    "$type": "color",
+                    "$value": "{a63.category.neutral}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.category.neutral.subtle.foreground}"
+                  }
+                },
+                "info": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.status.info.subtle.foreground}"
+                  }
+                },
+                "success": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.status.success.subtle.foreground}"
+                  }
+                },
+                "warning": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.status.warning.subtle.foreground}"
+                  }
+                },
+                "error": {
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.action.danger.subtle.foreground}"
+                  }
+                }
+              }
+            }
+          }
+        ]
       }
     }
   },

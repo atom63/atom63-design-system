@@ -8847,7 +8847,11 @@
    "type": "color",
    "values": [
     {
-     "scope": ":root",
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklab, var(--a63-action-danger) 14%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
      "value": "color-mix(in oklab, var(--a63-action-danger) 14%, transparent)"
     }
    ]
@@ -9059,6 +9063,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-amber)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-amber)"
     }
@@ -9074,6 +9082,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-amber-subtle-foreground)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-amber-subtle-foreground)"
@@ -9091,6 +9103,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-blue)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-blue)"
     }
@@ -9106,6 +9122,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-blue-subtle-foreground)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-blue-subtle-foreground)"
@@ -9123,6 +9143,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-cyan)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-cyan)"
     }
@@ -9138,6 +9162,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-cyan-subtle-foreground)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-cyan-subtle-foreground)"
@@ -9155,6 +9183,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-emerald)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-emerald)"
     }
@@ -9170,6 +9202,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-emerald-subtle-foreground)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-emerald-subtle-foreground)"
@@ -9187,6 +9223,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-action-danger-subtle-foreground)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-action-danger-subtle-foreground)"
     }
@@ -9202,6 +9242,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-fuchsia)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-fuchsia)"
@@ -9219,6 +9263,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-fuchsia-subtle-foreground)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-fuchsia-subtle-foreground)"
     }
@@ -9234,6 +9282,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-green)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-green)"
@@ -9251,6 +9303,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-green-subtle-foreground)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-green-subtle-foreground)"
     }
@@ -9266,6 +9322,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-indigo)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-indigo)"
@@ -9283,6 +9343,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-indigo-subtle-foreground)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-indigo-subtle-foreground)"
     }
@@ -9298,6 +9362,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-status-info-subtle-foreground)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-status-info-subtle-foreground)"
@@ -9315,6 +9383,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-lime)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-lime)"
     }
@@ -9330,6 +9402,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-lime-subtle-foreground)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-lime-subtle-foreground)"
@@ -9347,6 +9423,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-neutral)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-neutral)"
     }
@@ -9362,6 +9442,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-neutral-subtle-foreground)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-neutral-subtle-foreground)"
@@ -9379,6 +9463,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-orange)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-orange)"
     }
@@ -9394,6 +9482,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-orange-subtle-foreground)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-orange-subtle-foreground)"
@@ -9411,6 +9503,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-pink)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-pink)"
     }
@@ -9426,6 +9522,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-pink-subtle-foreground)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-pink-subtle-foreground)"
@@ -9443,6 +9543,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-purple)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-purple)"
     }
@@ -9458,6 +9562,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-purple-subtle-foreground)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-purple-subtle-foreground)"
@@ -9475,6 +9583,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-red)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-red)"
     }
@@ -9490,6 +9602,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-red-subtle-foreground)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-red-subtle-foreground)"
@@ -9507,6 +9623,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-rose)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-rose)"
     }
@@ -9522,6 +9642,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-rose-subtle-foreground)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-rose-subtle-foreground)"
@@ -9539,6 +9663,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-sky)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-sky)"
     }
@@ -9554,6 +9682,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-sky-subtle-foreground)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-sky-subtle-foreground)"
@@ -9571,6 +9703,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-status-success-subtle-foreground)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-status-success-subtle-foreground)"
     }
@@ -9586,6 +9722,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-teal)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-teal)"
@@ -9603,6 +9743,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-teal-subtle-foreground)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-teal-subtle-foreground)"
     }
@@ -9618,6 +9762,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-violet)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-violet)"
@@ -9635,6 +9783,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-violet-subtle-foreground)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-violet-subtle-foreground)"
     }
@@ -9650,6 +9802,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-status-warning-subtle-foreground)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-status-warning-subtle-foreground)"
@@ -9667,6 +9823,10 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-yellow)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-yellow)"
     }
@@ -9682,6 +9842,10 @@
    "swift": null,
    "type": "color",
    "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-yellow-subtle-foreground)"
+    },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-category-yellow-subtle-foreground)"
@@ -11363,7 +11527,11 @@
    "type": "color",
    "values": [
     {
-     "scope": ":root",
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-action-primary)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-action-primary)"
     }
    ]
@@ -14133,7 +14301,11 @@
    "type": "color",
    "values": [
     {
-     "scope": ":root",
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklch, var(--a63-action-primary) 12%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
      "value": "color-mix(in oklch, var(--a63-action-primary) 12%, transparent)"
     }
    ]
@@ -14149,7 +14321,11 @@
    "type": "color",
    "values": [
     {
-     "scope": ":root",
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-text-accent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-text-accent)"
     }
    ]
@@ -14453,7 +14629,11 @@
    "type": "color",
    "values": [
     {
-     "scope": ":root",
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklab, var(--a63-status-info) 14%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
      "value": "color-mix(in oklab, var(--a63-status-info) 14%, transparent)"
     }
    ]
@@ -14525,7 +14705,11 @@
    "type": "color",
    "values": [
     {
-     "scope": ":root",
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklab, var(--a63-status-success) 14%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
      "value": "color-mix(in oklab, var(--a63-status-success) 14%, transparent)"
     }
    ]
@@ -14597,7 +14781,11 @@
    "type": "color",
    "values": [
     {
-     "scope": ":root",
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklab, var(--a63-status-warning) 14%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
      "value": "color-mix(in oklab, var(--a63-status-warning) 14%, transparent)"
     }
    ]
