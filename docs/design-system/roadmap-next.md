@@ -1,6 +1,6 @@
 # Atom63 下一阶段路线图（草案）
 
-> 2026-10-09 草案，待拍板。上一份路线图 `roadmap.md` 的阶段 A–E 和模板库已于 2026-09-28 完成。
+> 2026-10-09 草案；2026-10-10 起逐条拍板，结论见文末决定记录。上一份路线图 `roadmap.md` 的阶段 A–E 和模板库已于 2026-09-28 完成。
 > 依据：本次全面审查（tokens、React、iOS + Figma、pattern 包、工具链与 CI 五个方向），以及调研报告
 > [`research/agent-design-system-harness.md`](research/agent-design-system-harness.md)（2026 年 agent 用设计系统格局、AI 视觉漂移度量、设计师认可的 token 架构），
 > 以及使用方漂移基线 [`audits/consumer-drift-2026-10-09.md`](audits/consumer-drift-2026-10-09.md)。
@@ -476,8 +476,8 @@ F3 和 F4 互相独立，可以并行。
 
 | 决定 | 推荐 | 结论 |
 |---|---|---|
-| N1 组件意图格式 | B：中立数据加 Schema | |
-| N2 组件轴 | B：语义轴，各适配层映射 | |
+| N1 组件意图格式 | B：中立数据加 Schema | B（2026-10-10 确认） |
+| N2 组件轴 | B：语义轴，各适配层映射 | B（2026-10-10 确认） |
 | N3 语义角色命名 | A：shadcn 原名加同语法扩展 | |
 | N4 公开的轴 | B：mode、brand、radius、density | |
 | N5 使用方门禁 | A：`@shadcn/lint` 加 Atom63 规则，先做实验 | |
@@ -488,7 +488,7 @@ F3 和 F4 互相独立，可以并行。
 | N10 Figma 同步 | B：单向，引擎只留一份 | |
 | N11 开源分发 | B：F1 和 F2 之后 | |
 | N12 pattern 包 | B：保持 beta | |
-| N13 字体角色 | B：HIG 字体角色做语义层 | |
+| N13 字体角色 | B：HIG 字体角色做语义层 | B（2026-10-10 确认） |
 | N14 图标命名 | B：语义图标注册表 | |
 | N15a 使用方证据 | A，F2 后补 B | |
 | N15b 两个脚手架 | A：统一用 `@atom63/create` | |
