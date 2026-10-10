@@ -1,5 +1,19 @@
 # @atom63/styles
 
+## 0.1.0-beta.7
+
+### Minor Changes
+
+- [#125](https://github.com/atom63/atom63-design-system/pull/125) [`5047bc7`](https://github.com/atom63/atom63-design-system/commit/5047bc7b069223eb1949cbe4ce323bd7275a85cc) Thanks [@atom63](https://github.com/atom63)! - The Figma sync model (`@atom63/styles/figma-sync.json`) and the token manifest name the Figma collections without the `Atom63` prefix: `Theme`, `Contract`, `Semantic`, `Foundation`, `Mode`, `Brand`, `Surface`, `Design Language`, `Input`, `Density`, `Radius`, `Type Scale`, `Font` and `Window Size`.
+
+- [#122](https://github.com/atom63/atom63-design-system/pull/122) [`6c2845b`](https://github.com/atom63/atom63-design-system/commit/6c2845b4d4faeee76c0a08c10e289d6c7518c337) Thanks [@atom63](https://github.com/atom63)! - The Figma sync model (`@atom63/styles/figma-sync.json`) writes a color at an opacity, `color-mix(… var(--x) N%, transparent)`, as a composed value `{ "composed": { "alias": "--x", "opacity": N } }`, so it keeps its alias in every mode. `--a63-focus-ring` moves back to the Semantic collection this way. Every variable also carries `codeSyntax` (`var(--token)`) and Figma `scopes` from the rules in `scripts/lib/figma-sync-rules.mjs`. The iOS token graph resolves composed values the same way.
+
+### Patch Changes
+
+- [#92](https://github.com/atom63/atom63-design-system/pull/92) [`b9170fd`](https://github.com/atom63/atom63-design-system/commit/b9170fd68cc540f22166cdd973f016778d86d5e6) Thanks [@atom63](https://github.com/atom63)! - Add `--a63-badge-error-foreground` (danger 700 in light mode, danger 400 in dark mode) and use it for the `error` Badge text. The badge used the danger action fill as its text color, which fell to about 2.5:1 contrast on its tint in every dark theme.
+
+- [#145](https://github.com/atom63/atom63-design-system/pull/145) [`8087c69`](https://github.com/atom63/atom63-design-system/commit/8087c69bcce189266b1c90221987e654bab72f21) Thanks [@atom63](https://github.com/atom63)! - `--a63-focus-ring` reaches WCAG 1.4.11's 3:1 against the control and the page in every brand, theme and mode: brand step 600 in light mode and 400 in dark mode. It was the brand's 500 at 30% opacity, about 1.3–1.7:1 on every surface. The token moves from the brand actions to the mode semantics (in Figma, from the Semantic collection to Mode), so it follows a nested light or dark scope.
+
 ## 0.1.0-beta.6
 
 ### Minor Changes

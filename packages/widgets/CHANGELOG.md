@@ -1,5 +1,12 @@
 # @atom63/widgets
 
+## 0.1.0-beta.2
+
+### Patch Changes
+
+- Updated dependencies [[`b9170fd`](https://github.com/atom63/atom63-design-system/commit/b9170fd68cc540f22166cdd973f016778d86d5e6), [`5eae380`](https://github.com/atom63/atom63-design-system/commit/5eae38029e462db7ae671a4b5227d20d3cae8eb4), [`aec1a7d`](https://github.com/atom63/atom63-design-system/commit/aec1a7d8f1c30ede29b16bbc57d89f9d342c3f19)]:
+  - @atom63/ui-react@0.2.0-beta.11
+
 ## 0.1.0-beta.1
 
 ### Patch Changes

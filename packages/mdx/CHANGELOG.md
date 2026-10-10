@@ -1,5 +1,13 @@
 # @atom63/mdx
 
+## 0.4.0-beta.2
+
+### Patch Changes
+
+- Updated dependencies [[`b9170fd`](https://github.com/atom63/atom63-design-system/commit/b9170fd68cc540f22166cdd973f016778d86d5e6), [`5eae380`](https://github.com/atom63/atom63-design-system/commit/5eae38029e462db7ae671a4b5227d20d3cae8eb4), [`5047bc7`](https://github.com/atom63/atom63-design-system/commit/5047bc7b069223eb1949cbe4ce323bd7275a85cc), [`6c2845b`](https://github.com/atom63/atom63-design-system/commit/6c2845b4d4faeee76c0a08c10e289d6c7518c337), [`8087c69`](https://github.com/atom63/atom63-design-system/commit/8087c69bcce189266b1c90221987e654bab72f21), [`aec1a7d`](https://github.com/atom63/atom63-design-system/commit/aec1a7d8f1c30ede29b16bbc57d89f9d342c3f19)]:
+  - @atom63/styles@0.1.0-beta.7
+  - @atom63/ui-react@0.2.0-beta.11
+
 ## 0.4.0-beta.1
 
 ### Patch Changes
