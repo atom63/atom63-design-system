@@ -133,6 +133,18 @@
   --category-stone-subtle: var(--a63-category-stone-subtle);
   --category-stone-subtle-foreground: var(--a63-category-stone-subtle-foreground);
 
+  /* Media */
+  --media-stage: var(--a63-media-stage);
+  --media-surface: var(--a63-media-surface);
+  --media-scrim: var(--a63-media-scrim);
+  --on-media-foreground: var(--a63-on-media-foreground);
+  --on-media-surface: var(--a63-on-media-surface);
+  --on-media-surface-strong: var(--a63-on-media-surface-strong);
+  --on-media-border: var(--a63-on-media-border);
+  --on-media-ring: var(--a63-on-media-ring);
+  --on-media-veil: var(--a63-on-media-veil);
+  --on-media-veil-strong: var(--a63-on-media-veil-strong);
+
   /* Sidebar */
   --sidebar: var(--a63-surface-sidebar);
   --sidebar-foreground: var(--a63-text-primary);
