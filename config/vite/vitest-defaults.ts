@@ -17,8 +17,8 @@ export const sharedTestOptions = {
   /**
    * Fifteen seconds rather than Vitest's five.
    *
-   * A full `turbo run lint typecheck test build` puts well over a hundred
-   * Node processes on this machine's eighteen cores — every package's Vitest
+   * Running every package's tests at once puts well over a hundred Node
+   * processes on a machine — every package's Vitest
    * spawns its own worker pool, and they all land at once. Tests do not get
    * slower under that; they get starved. A trivial jsdom render that takes
    * 50ms on an idle machine has been seen to blow past five seconds of *wall*

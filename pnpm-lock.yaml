@@ -443,22 +443,6 @@ importers:
   config/tsconfig: {}
 
   config/vite:
-    dependencies:
-      '@mdx-js/rollup':
-        specifier: ^3.1.1
-        version: 3.1.1(rollup@4.63.4)
-      rehype-pretty-code:
-        specifier: ^0.14.4
-        version: 0.14.5(shiki@4.4.3)
-      remark-frontmatter:
-        specifier: ^5.0.0
-        version: 5.0.0
-      remark-gfm:
-        specifier: ^4.0.1
-        version: 4.0.1
-      remark-mdx-frontmatter:
-        specifier: ^6.0.0
-        version: 6.0.0
     devDependencies:
       typescript:
         specifier: 'catalog:'
