@@ -42,7 +42,7 @@ jobs:
           echo "$changed"
           # iOS reads the contracts, the token sources and generated models, and
           # its own package; anything else cannot change what the iOS job checks.
-          if echo "$changed" | grep -qE '^(packages/ui-ios/|examples/ios-demo/|packages/ui-foundation/|packages/styles/(src|generated|scripts)/|scripts/generate-cross-renderer-contracts\.mjs|scripts/generate-a11y-ios-contracts\.mjs|Package\.swift|\.github/workflows/ci\.yml)'; then
+          if echo "$changed" | grep -qE '^(packages/ui-ios/|examples/ios-demo/|packages/ui-foundation/|packages/styles/(src|generated|scripts)/|scripts/generate-cross-renderer-contracts\.mjs|scripts/generate-component-contracts\.mjs|scripts/design-system/lib/component-contracts\.mjs|scripts/generate-a11y-ios-contracts\.mjs|Package\.swift|\.github/workflows/ci\.yml)'; then
             echo "ios=true" >> "$GITHUB_OUTPUT"
           else
             echo "ios=false" >> "$GITHUB_OUTPUT"
@@ -89,6 +89,9 @@ jobs:
         run: |
           pnpm check:package-surface
           git diff --exit-code -- docs/design-system/audits/package-surface.json
+
+      - name: Check the component contracts
+        run: pnpm --filter @atom63/ui-foundation check:contracts
 
       - name: Check tokens
         run: pnpm --filter @atom63/styles check:tokens

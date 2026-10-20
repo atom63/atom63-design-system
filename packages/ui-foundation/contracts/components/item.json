@@ -1,0 +1,47 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "item",
+  "description": "Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size (default/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off data-variant / data-size.",
+  "lists": {
+    "variants": ["default", "outline", "muted"],
+    "sizes": ["default", "sm", "xs"],
+    "mediaVariants": ["default", "icon", "image"],
+    "slots": [
+      "item-group",
+      "item",
+      "item-media",
+      "item-content",
+      "item-title",
+      "item-description",
+      "item-actions",
+      "item-header",
+      "item-footer",
+      "item-separator"
+    ],
+    "states": ["rest", "hover", "focus"],
+    "visualArchetypes": ["surface"]
+  },
+  "contract": {
+    "defaultVariant": "default",
+    "defaultSize": "default",
+    "defaultMediaVariant": "default",
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "mediaVariants": {
+      "$ref": "#/lists/mediaVariants"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

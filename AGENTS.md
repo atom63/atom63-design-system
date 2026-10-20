@@ -9,7 +9,7 @@ version for coding agents.
 | Path | Contents |
 | --- | --- |
 | `packages/styles` | `@atom63/styles`: DTCG token sources (`src/tokens/*.json`) and the CSS, manifest and Figma model generated from them |
-| `packages/ui-foundation` | `@atom63/ui-foundation`: component contracts (`src/components/<name>/<name>-contract.ts`) and the cross-renderer contracts |
+| `packages/ui-foundation` | `@atom63/ui-foundation`: component contracts (`contracts/components/<name>.json`, which generate `src/components/<name>/<name>-contract.ts`) and the cross-renderer contracts |
 | `packages/ui-react` | `@atom63/ui-react`: React components, recipes (`<name>.css`), stories and tests |
 | `packages/ui-ios` | `Atom63UI`: SwiftUI components, shipped through the root `Package.swift` |
 | `packages/mdx` | `@atom63/mdx`: MDX prose components and blocks |
@@ -29,6 +29,10 @@ version for coding agents.
   copying one. `pnpm ds:new <name> --dry-run …` shows what it would change.
 - **Change a token in its DTCG source**, then run `pnpm --filter @atom63/styles generate:tokens`.
   Never edit the generated CSS, manifest or Figma model by hand.
+- **Change a component contract in its JSON source**
+  (`packages/ui-foundation/contracts/components/<name>.json`), then run
+  `pnpm --filter @atom63/ui-foundation generate:contracts`. Never edit the generated
+  `*-contract.ts` or the component barrels by hand.
 - **Regenerate instead of hand-editing** anything a `check:*` script writes: API reports
   (`pnpm api:report`), audits (`pnpm check:<audit> --write`), the craft baseline
   (`pnpm check:craft --write`), `utilities.css`, the agent index

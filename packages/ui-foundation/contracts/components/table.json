@@ -1,0 +1,35 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "table",
+  "lists": {
+    "variants": ["plain", "framed"],
+    "states": ["rest", "row-hover", "row-selected"],
+    "slots": [
+      "table-container",
+      "table",
+      "table-header",
+      "table-body",
+      "table-footer",
+      "table-row",
+      "table-head",
+      "table-cell",
+      "table-caption"
+    ],
+    "visualArchetypes": ["surface"]
+  },
+  "contract": {
+    "defaultVariant": "plain",
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

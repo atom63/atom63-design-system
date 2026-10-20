@@ -1,0 +1,45 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "autocomplete",
+  "lists": {
+    "sizes": ["sm", "default", "lg"],
+    "slots": [
+      "autocomplete-input-group",
+      "autocomplete-start-addon",
+      "autocomplete-input",
+      "autocomplete-trigger",
+      "autocomplete-icon",
+      "autocomplete-clear",
+      "autocomplete-positioner",
+      "autocomplete-surface",
+      "autocomplete-popup",
+      "autocomplete-list",
+      "autocomplete-item",
+      "autocomplete-separator",
+      "autocomplete-group",
+      "autocomplete-group-label",
+      "autocomplete-empty",
+      "autocomplete-row",
+      "autocomplete-value",
+      "autocomplete-status",
+      "autocomplete-collection"
+    ],
+    "states": ["closed", "open", "highlighted", "disabled", "empty", "loading"],
+    "visualArchetypes": ["field", "trigger", "overlay", "menu"]
+  },
+  "contract": {
+    "defaultSize": "default",
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

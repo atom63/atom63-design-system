@@ -1,0 +1,59 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "load-more-trigger",
+  "lists": {
+    "variants": ["default", "minimal", "prominent"],
+    "states": ["idle", "loading", "failed", "exhausted", "hidden", "custom"],
+    "slots": [
+      "load-more-trigger",
+      "load-more-trigger-message",
+      "load-more-trigger-icon",
+      "load-more-trigger-spinner",
+      "load-more-trigger-action"
+    ],
+    "visualArchetypes": ["surface", "action"]
+  },
+  "contract": {
+    "defaultVariant": "default",
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "pagination",
+    "reactRenderer": "LoadMoreTrigger",
+    "swiftUIRenderer": "AtomLoadMoreView",
+    "intent": "Load the next collection segment and communicate recovery or completion.",
+    "parity": "strict",
+    "requiredStates": ["idle", "loading", "failed", "exhausted"],
+    "stateTones": {
+      "idle": "neutral",
+      "loading": "info",
+      "failed": "error",
+      "exhausted": "success"
+    },
+    "sharedOutcomes": [
+      "loading-is-announced",
+      "failure-provides-retry",
+      "exhaustion-is-announced",
+      "existing-items-remain-stable-while-appending"
+    ],
+    "accessibilityOutcomes": ["announces-loading", "exposes-retry-action", "announces-exhausted"],
+    "platformAdaptations": {
+      "react": [
+        "IntersectionObserver may trigger loading while the explicit state renderer remains visible."
+      ],
+      "swiftUI": ["A list sentinel, task, or explicit load-more action may trigger loading."]
+    }
+  }
+}
