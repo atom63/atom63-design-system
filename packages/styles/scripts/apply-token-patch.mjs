@@ -5,13 +5,13 @@
  *
  * Usage: pnpm --filter @atom63/styles tokens:apply <patch.json>
  */
-import { execFileSync } from 'node:child_process'
 import { readdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 import prettier from 'prettier'
 
+import { execCommandSync } from '../../../scripts/design-system/lib/command.mjs'
 import { applyPatch } from './lib/token-patch.mjs'
 
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
@@ -64,7 +64,7 @@ for (const [file, document] of result.documents) {
 process.stdout.write(
   `Applied ${result.changed.length} tokens: ${result.changed.join(', ')}\nRegenerating…\n`
 )
-execFileSync('pnpm', ['run', '--silent', 'generate:tokens'], {
+execCommandSync('pnpm', ['run', '--silent', 'generate:tokens'], {
   cwd: packageRoot,
   stdio: 'inherit',
 })
