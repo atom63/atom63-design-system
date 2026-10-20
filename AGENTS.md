@@ -41,6 +41,11 @@ version for coding agents.
   `@atom63/ui-react`, `@atom63/mdx`, `@atom63/inform`, `@atom63/agent`, `@atom63/widgets`;
   the list is `scripts/design-system/published-packages.mjs`) needs `pnpm changeset`; tooling-only
   changes need `pnpm changeset --empty`.
+- **Releases need YZ's approval.** Merging the "Version Packages" pull request publishes to npm
+  (beta tag). Do not merge it, run `pnpm release`, or dispatch the publish workflow without YZ's
+  explicit approval.
+- **Icons:** do not hard-wire ATOM63 brand icons into `ui-react`. Built-in icons come from
+  `lucide-react`; where a component shows an icon, let the caller replace it.
 - **Commits and pull requests:** Conventional Commit titles (`feat(scope): …`, `fix: …`), with
   English bodies that say what changed. `main` accepts pull requests only, and the `ci-status`
   check must pass.
