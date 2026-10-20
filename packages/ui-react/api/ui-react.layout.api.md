@@ -7,7 +7,9 @@
 import { ComponentPropsWithoutRef } from 'react';
 import { CSSProperties } from 'react';
 import * as React_2 from 'react';
+import { ReactElement } from 'react';
 import { ReactNode } from 'react';
+import { useRender } from '@base-ui/react/use-render';
 
 // @public (undocumented)
 export function Container(input: ContainerProps): React_2.JSX.Element;
@@ -128,8 +130,8 @@ export interface GridRuleProps extends Omit<ComponentPropsWithoutRef<'div'>, 'ch
     crosshairs?: boolean;
 }
 
-// @public (undocumented)
-export function Page(input: PageProps): React_2.JSX.Element;
+// @public
+export function Page(input: PageProps): ReactElement;
 
 // @public (undocumented)
 export const pageIndexHeroDescriptionClassName = "text-lg";
@@ -138,13 +140,7 @@ export const pageIndexHeroDescriptionClassName = "text-lg";
 export const pageIndexHeroTitleClassName = "text-balance font-secondary text-4xl tracking-tight md:text-6xl";
 
 // @public (undocumented)
-export interface PageProps {
-    // (undocumented)
-    children: ReactNode;
-    // (undocumented)
-    className?: string;
-    // (undocumented)
-    id?: string;
+export interface PageProps extends useRender.ComponentProps<'main'> {
     // (undocumented)
     noPadding?: boolean;
 }
