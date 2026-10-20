@@ -8,11 +8,11 @@
 
 ## Summary
 
-- Root export symbols: **612** across **75** source families.
-- Package export-map subpaths: **71**.
-- P0 root/source families: **31**.
+- Root export symbols: **610** across **74** source families.
+- Package export-map subpaths: **72**.
+- P0 root/source families: **30**.
 - P1 root/source families: **12**.
-- P0 package subpaths: **3**.
+- P0 package subpaths: **4**.
 - P1 package subpaths: **2**.
 - Required promotion decisions covered: **36/36** (**0 missing**).
 - Beta root policy: **keep unchanged until stable approval**.
@@ -29,7 +29,7 @@
 
 - `beta-supported-composition-conditional`: 182
 - `beta-supported-core`: 320
-- `monitor-high-risk`: 79
+- `monitor-high-risk`: 77
 - `preview-experimental-candidate`: 31
 
 ## P0: must resolve before stable/latest
@@ -38,7 +38,6 @@
 | --------------------------------- | -------- | ---------------------------- | ------------------------------------------------- | --------------------------------------- | ------: | ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
 | `components/animated-check`       | P0       | `assign-owner-and-evidence`  | `monitor-until-evidence`                          | `keep-beta-root-unchanged-and-monitor`  |       2 | `monitor-high-risk`: 2                                                                     | Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded. |
 | `components/autocomplete`         | P0       | `assign-owner-and-evidence`  | `monitor-until-evidence`                          | `keep-beta-root-unchanged-and-monitor`  |      19 | `monitor-high-risk`: 18<br>`preview-experimental-candidate`: 1                             | Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded. |
-| `components/calendar`             | P0       | `assign-owner-and-evidence`  | `monitor-until-evidence`                          | `keep-beta-root-unchanged-and-monitor`  |       2 | `monitor-high-risk`: 2                                                                     | Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded. |
 | `components/card`                 | P0       | `assign-owner-and-evidence`  | `monitor-until-evidence`                          | `keep-beta-root-unchanged-and-monitor`  |      30 | `beta-supported-core`: 25<br>`monitor-high-risk`: 4<br>`preview-experimental-candidate`: 1 | Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded. |
 | `components/carousel`             | P0       | `assign-owner-and-evidence`  | `monitor-until-evidence`                          | `keep-beta-root-unchanged-and-monitor`  |      11 | `monitor-high-risk`: 11                                                                    | Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded. |
 | `components/copy-button`          | P0       | `assign-owner-and-evidence`  | `monitor-until-evidence`                          | `keep-beta-root-unchanged-and-monitor`  |       4 | `monitor-high-risk`: 4                                                                     | Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded. |
@@ -70,11 +69,12 @@
 
 ### P0 public subpaths
 
-| Subpath            | Kind   | Priority | Action                                 | Register status                 | Decision                      | Stable decision                                                                                         |
-| ------------------ | ------ | -------- | -------------------------------------- | ------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `./media`          | module | P0       | `keep-preview-subpath-or-add-evidence` | `preview-only-pending-evidence` | `keep-public-preview-subpath` | Do not promise stable compatibility without browser/media lifecycle evidence or preview labeling.       |
-| `./media/lightbox` | module | P0       | `keep-preview-subpath-or-add-evidence` | `preview-only-pending-evidence` | `keep-public-preview-subpath` | Do not promise stable compatibility without browser/media lifecycle evidence or preview labeling.       |
-| `./preview`        | module | P0       | `keep-preview-labeled`                 | `preview-contract-documented`   | `keep-public-preview-subpath` | Keep public only as a preview boundary; do not treat its symbols as stable root compatibility promises. |
+| Subpath            | Kind   | Priority | Action                                 | Register status                 | Decision                          | Stable decision                                                                                                                                    |
+| ------------------ | ------ | -------- | -------------------------------------- | ------------------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `./calendar`       | module | P0       | `assign-owner-and-evidence`            | `monitor-until-evidence`        | `keep-public-subpath-and-monitor` | Keep the import path public, but do not promise stable compatibility until date interaction and react-day-picker dependency evidence are recorded. |
+| `./media`          | module | P0       | `keep-preview-subpath-or-add-evidence` | `preview-only-pending-evidence` | `keep-public-preview-subpath`     | Do not promise stable compatibility without browser/media lifecycle evidence or preview labeling.                                                  |
+| `./media/lightbox` | module | P0       | `keep-preview-subpath-or-add-evidence` | `preview-only-pending-evidence` | `keep-public-preview-subpath`     | Do not promise stable compatibility without browser/media lifecycle evidence or preview labeling.                                                  |
+| `./preview`        | module | P0       | `keep-preview-labeled`                 | `preview-contract-documented`   | `keep-public-preview-subpath`     | Keep public only as a preview boundary; do not treat its symbols as stable root compatibility promises.                                            |
 
 ## P1: document or prove before stable/latest
 

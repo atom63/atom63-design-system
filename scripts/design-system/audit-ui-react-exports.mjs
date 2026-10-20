@@ -1,10 +1,12 @@
 import { readFile, writeFile } from 'node:fs/promises'
-import { dirname, resolve } from 'node:path'
+import { dirname, posix, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const scriptDirectory = dirname(fileURLToPath(import.meta.url))
 const repositoryRoot = resolve(scriptDirectory, '../..')
 const rootSourcePath = 'packages/ui-react/src/index.ts'
+// Component families published on their own subpath instead of the root.
+const subpathSourcePaths = { './calendar': 'packages/ui-react/src/calendar/index.ts' }
 const packageManifestPath = 'packages/ui-react/package.json'
 const supportPolicyPath = 'docs/design-system/ui-react-support-policy.json'
 const outputPath = 'docs/design-system/audits/ui-react-export-inventory.json'
@@ -39,12 +41,14 @@ function parseSpecifier(specifier, statementIsType) {
   return { kind: isType ? 'type' : 'value', name: exportedName.trim() }
 }
 
-function parseRootExports(source, supportPolicy) {
+function parseRootExports(source, supportPolicy, sourceDirectory = '.') {
   const groups = new Map()
   const exportPattern = /export\s+(type\s+)?\{([\s\S]*?)\}\s+from\s+['"]([^'"]+)['"]/g
 
   for (const match of source.matchAll(exportPattern)) {
-    const [, typeKeyword, body, sourceModule] = match
+    const [, typeKeyword, body, specifier] = match
+    // Name every module relative to `src`, the way the root entry does.
+    const sourceModule = `./${posix.join(sourceDirectory, specifier)}`
     const group = groups.get(sourceModule) ?? {
       source: sourceModule,
       values: [],
@@ -81,8 +85,13 @@ function packageExportTarget(value) {
   )
 }
 
-function buildInventory(rootSource, packageManifest, supportPolicy) {
+function buildInventory(rootSource, subpathSources, packageManifest, supportPolicy) {
   const rootExports = parseRootExports(rootSource, supportPolicy)
+  const subpathExports = Object.entries(subpathSources).map(([subpath, source]) => ({
+    subpath,
+    source: subpathSourcePaths[subpath],
+    exports: parseRootExports(source, supportPolicy, subpath.replace(/^\.\//, '')),
+  }))
   const packageExports = Object.entries(packageManifest.exports)
     .sort(([left], [right]) => left.localeCompare(right))
     .map(([subpath, target]) => ({
@@ -95,7 +104,12 @@ function buildInventory(rootSource, packageManifest, supportPolicy) {
 
   return {
     schemaVersion: 1,
-    inputs: [rootSourcePath, packageManifestPath, supportPolicyPath],
+    inputs: [
+      rootSourcePath,
+      ...Object.values(subpathSourcePaths),
+      packageManifestPath,
+      supportPolicyPath,
+    ],
     rootExportSource: rootSourcePath,
     tierSource: supportPolicyPath,
     tierDefinitions: supportPolicy.tiers,
@@ -115,6 +129,7 @@ function buildInventory(rootSource, packageManifest, supportPolicy) {
     cssExportKeys: packageExports.filter(entry => entry.kind === 'css').map(entry => entry.subpath),
     packageExports,
     rootExports,
+    subpathExports,
   }
 }
 
@@ -123,7 +138,15 @@ const packageManifest = JSON.parse(
   await readFile(resolve(repositoryRoot, packageManifestPath), 'utf8')
 )
 const supportPolicy = JSON.parse(await readFile(resolve(repositoryRoot, supportPolicyPath), 'utf8'))
-const inventory = buildInventory(rootSource, packageManifest, supportPolicy)
+const subpathSources = Object.fromEntries(
+  await Promise.all(
+    Object.entries(subpathSourcePaths).map(async ([subpath, sourcePath]) => [
+      subpath,
+      await readFile(resolve(repositoryRoot, sourcePath), 'utf8'),
+    ])
+  )
+)
+const inventory = buildInventory(rootSource, subpathSources, packageManifest, supportPolicy)
 const resolvedOutputPath = resolve(repositoryRoot, outputPath)
 const rawInventory = `${JSON.stringify(inventory, null, 2)}\n`
 let expected = rawInventory

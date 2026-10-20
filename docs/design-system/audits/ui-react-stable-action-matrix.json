@@ -22,8 +22,8 @@
     "required": 36,
     "decided": 36,
     "missing": 0,
-    "rootSourceFamilies": 31,
-    "publicSubpaths": 5,
+    "rootSourceFamilies": 30,
+    "publicSubpaths": 6,
     "byStatus": {
       "monitor-until-evidence": 16,
       "preview-only-pending-root-removal-before-stable": 15,
@@ -76,34 +76,35 @@
     }
   },
   "summary": {
-    "sourceFamilies": 75,
-    "sourceExports": 612,
+    "sourceFamilies": 74,
+    "sourceExports": 610,
     "sourceTierCounts": {
-      "monitor-high-risk": 79,
+      "monitor-high-risk": 77,
       "preview-experimental-candidate": 31,
       "beta-supported-core": 320,
       "beta-supported-composition-conditional": 182
     },
     "sourceActionCounts": {
-      "assign-owner-and-evidence": 16,
+      "assign-owner-and-evidence": 15,
       "move-to-preview-or-approve": 15,
       "document-before-stable": 12,
       "keep-stable-candidate": 32
     },
     "sourcePriorityCounts": {
-      "P0": 31,
+      "P0": 30,
       "P1": 12,
       "P2": 32
     },
-    "packageSubpaths": 71,
+    "packageSubpaths": 72,
     "subpathActionCounts": {
+      "assign-owner-and-evidence": 1,
       "keep-preview-subpath-or-add-evidence": 2,
       "keep-preview-labeled": 1,
       "document-subpath-contract": 2,
       "keep-import-path-stable": 66
     },
     "subpathPriorityCounts": {
-      "P0": 3,
+      "P0": 4,
       "P1": 2,
       "P2": 66
     }
@@ -178,36 +179,6 @@
       "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
       "promotionDecision": {
         "id": "source:./components/autocomplete",
-        "ownerLane": "forms-quality",
-        "status": "monitor-until-evidence",
-        "decision": "keep-beta-root-unchanged-and-monitor"
-      }
-    },
-    {
-      "source": "./components/calendar",
-      "family": "components/calendar",
-      "kind": "component-family",
-      "totalExports": 2,
-      "valueExports": 1,
-      "typeExports": 1,
-      "tierCounts": {
-        "monitor-high-risk": 2
-      },
-      "dominantTier": "monitor-high-risk",
-      "blockingTier": "monitor-high-risk",
-      "recommendedAction": "assign-owner-and-evidence",
-      "priority": "P0",
-      "stableDecision": "Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded.",
-      "requiredEvidence": [
-        "named owner",
-        "adopter use case or internal retention rationale",
-        "browser/interaction evidence where relevant",
-        "migration policy if kept public"
-      ],
-      "notableSymbols": ["Calendar", "CalendarProps"],
-      "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
-      "promotionDecision": {
-        "id": "source:./components/calendar",
         "ownerLane": "forms-quality",
         "status": "monitor-until-evidence",
         "decision": "keep-beta-root-unchanged-and-monitor"
@@ -2368,7 +2339,7 @@
       "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
     },
     {
-      "source": "sonner",
+      "source": "./sonner",
       "family": "sonner",
       "kind": "module",
       "totalExports": 1,
@@ -2392,6 +2363,25 @@
     }
   ],
   "subpathActions": [
+    {
+      "subpath": "./calendar",
+      "kind": "module",
+      "target": {
+        "@atom63/source": "./src/calendar/index.ts",
+        "import": "./dist/calendar/index.js",
+        "types": "./dist/calendar/index.d.ts"
+      },
+      "recommendedAction": "assign-owner-and-evidence",
+      "priority": "P0",
+      "stableDecision": "Keep the import path public, but do not promise stable compatibility until date interaction and react-day-picker dependency evidence are recorded.",
+      "policyNote": "High risk. Calendar lives here so the root entry does not load react-day-picker. Needs date interaction evidence and a react-day-picker pin policy before stable compatibility.",
+      "promotionDecision": {
+        "id": "subpath:./calendar",
+        "ownerLane": "forms-quality",
+        "status": "monitor-until-evidence",
+        "decision": "keep-public-subpath-and-monitor"
+      }
+    },
     {
       "subpath": "./media",
       "kind": "module",
