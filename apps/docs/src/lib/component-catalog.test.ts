@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import { buttonSizes, buttonStates, buttonVariants } from '@atom63/ui-foundation'
-import * as uiReactApi from '@atom63/ui-react'
+import * as uiReactRootApi from '@atom63/ui-react'
+import * as uiReactCalendarApi from '@atom63/ui-react/calendar'
 import uiReactPackageSource from '../../../../packages/ui-react/package.json?raw'
-import uiReactIndexSource from '../../../../packages/ui-react/src/index.ts?raw'
+import uiReactCalendarSource from '../../../../packages/ui-react/src/calendar/index.ts?raw'
+import uiReactRootSource from '../../../../packages/ui-react/src/index.ts?raw'
 import {
   componentCatalogGroups,
   componentCatalogItems,
@@ -10,6 +12,10 @@ import {
 } from './component-catalog'
 import { getComponentContractDoc } from './component-contract'
 import { componentDocMarkdown, componentExportSurface, getComponentDoc } from './component-docs'
+
+// Calendar has its own entry; with the root entry it exports every component family.
+const uiReactApi = { ...uiReactRootApi, ...uiReactCalendarApi }
+const uiReactIndexSource = `${uiReactRootSource}\n${uiReactCalendarSource}`
 
 const componentIndexSources = import.meta.glob<string>(
   '../../../../packages/ui-react/src/components/*/index.ts',
@@ -44,7 +50,7 @@ const packageCssSources = import.meta.glob<string>('../../../../packages/ui-reac
 function publicComponentFamilies(): string[] {
   return [
     ...new Set(
-      [...uiReactIndexSource.matchAll(/['"]\.\/components\/([^'"]+)['"]/g)].map(
+      [...uiReactIndexSource.matchAll(/['"]\.\.?\/components\/([^'"]+)['"]/g)].map(
         match => match[1] ?? ''
       )
     ),
@@ -58,7 +64,7 @@ function sourceFor(sources: Record<string, string>, suffix: string): string | un
 }
 
 describe('component catalog inventory', () => {
-  it('covers every root @atom63/ui-react component family exactly once', () => {
+  it('covers every @atom63/ui-react component family exactly once', () => {
     const catalogSlugs = componentCatalogItems.map(item => item.slug).sort()
     const publicFamilies = publicComponentFamilies()
 
@@ -88,7 +94,9 @@ describe('component catalog inventory', () => {
     const slugs = new Set(componentCatalogItems.map(item => item.slug))
 
     for (const item of componentCatalogItems) {
-      expect(item.importPath).toBe('@atom63/ui-react')
+      expect(item.importPath).toBe(
+        item.slug === 'calendar' ? '@atom63/ui-react/calendar' : '@atom63/ui-react'
+      )
       expect(item.summary.length).toBeGreaterThan(20)
       expect(item.usage.length).toBeGreaterThan(20)
       expect(item.usageExports.length).toBeGreaterThan(0)
@@ -167,7 +175,7 @@ describe('component catalog inventory', () => {
 })
 
 describe('component public exports', () => {
-  it('uses the package root entry for component imports', () => {
+  it('uses the package root entry for component imports, and the calendar entry for Calendar', () => {
     const packageJson = JSON.parse(uiReactPackageSource) as {
       exports: Record<string, string | Record<string, string>>
     }
@@ -180,7 +188,17 @@ describe('component public exports', () => {
     expect(
       Object.keys(packageJson.exports).filter(path => path.startsWith('./components/'))
     ).toEqual([])
-    expect(componentCatalogItems.every(item => item.importPath === '@atom63/ui-react')).toBe(true)
+    expect(packageJson.exports['./calendar']).toMatchObject({
+      '@atom63/source': './src/calendar/index.ts',
+      import: './dist/calendar/index.js',
+      types: './dist/calendar/index.d.ts',
+    })
+    expect(uiReactRootSource).not.toContain('./components/calendar')
+    expect(
+      componentCatalogItems
+        .filter(item => item.importPath !== '@atom63/ui-react')
+        .map(item => [item.slug, item.importPath])
+    ).toEqual([['calendar', '@atom63/ui-react/calendar']])
   })
 
   it('maps every family to its actual root values and types', () => {

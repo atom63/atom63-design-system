@@ -1,5 +1,6 @@
 import { calendarContract, themes } from '@atom63/ui-foundation'
-import { Calendar, UIProvider } from '@atom63/ui-react'
+import { UIProvider } from '@atom63/ui-react'
+import { Calendar } from '@atom63/ui-react/calendar'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'

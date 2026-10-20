@@ -340,39 +340,51 @@
   --surface-light-9: var(--surface-light-9);
 }
 
-/* tokens/semantics.css — map Tailwind color utilities onto the canonical --a63-* layer */
+/* Semantic roles — generated from src/tailwind/roles.json by scripts/generate-role-bridges.mjs; do not edit. */
 @theme inline {
-  --color-accent: var(--a63-surface-control-hover);
-  --color-accent-foreground: var(--a63-text-primary);
   --color-background: var(--a63-surface-page);
-  --color-border: var(--a63-border-subtle);
+  --color-foreground: var(--a63-text-primary);
   --color-card: var(--a63-surface-panel);
   --color-card-foreground: var(--a63-text-primary);
-  --color-dark: var(--surface-dark-1);
-  --color-destructive: var(--a63-action-danger);
-  --color-foreground: var(--a63-text-primary);
-  --color-info: var(--a63-status-info);
-  --color-input: var(--a63-border-control);
-  --color-light: var(--surface-light-1);
-  --color-muted: var(--a63-surface-muted);
-  --color-muted-foreground: var(--a63-text-secondary);
   --color-popover: var(--a63-surface-overlay);
   --color-popover-foreground: var(--a63-text-primary);
-  --color-primary: var(--a63-action-primary);
-  --color-primary-foreground: var(--a63-action-primary-foreground);
-  --color-ring: var(--a63-focus-ring);
+  --color-muted: var(--a63-surface-muted);
+  --color-muted-foreground: var(--a63-text-secondary);
   --color-secondary: var(--a63-surface-muted);
   --color-secondary-foreground: var(--a63-text-secondary);
-  --color-sidebar: var(--a63-surface-muted);
-  --color-sidebar-accent: var(--a63-surface-control-hover);
-  --color-sidebar-accent-foreground: var(--a63-text-primary);
-  --color-sidebar-border: var(--a63-border-subtle);
+  --color-accent: var(--a63-surface-control-hover);
+  --color-accent-foreground: var(--a63-text-primary);
+  --color-surface-sunken: var(--a63-surface-control);
+  --color-border: var(--a63-border-subtle);
+  --color-input: var(--a63-border-control);
+  --color-ring: var(--a63-focus-ring);
+  --color-primary: var(--a63-action-primary);
+  --color-primary-foreground: var(--a63-action-primary-foreground);
+  --color-destructive: var(--a63-action-danger);
+  --color-destructive-foreground: var(--a63-action-danger-foreground);
+  --color-info: var(--a63-status-info);
+  --color-info-foreground: var(--a63-status-info-foreground);
+  --color-success: var(--a63-status-success);
+  --color-success-foreground: var(--a63-status-success-foreground);
+  --color-warning: var(--a63-status-warning);
+  --color-warning-foreground: var(--a63-status-warning-foreground);
+  --color-selected: var(--a63-selected-background);
+  --color-selected-foreground: var(--a63-selected-foreground);
+  --color-chart-1: var(--a63-chart-1);
+  --color-chart-2: var(--a63-chart-2);
+  --color-chart-3: var(--a63-chart-3);
+  --color-chart-4: var(--a63-chart-4);
+  --color-chart-5: var(--a63-chart-5);
+  --color-sidebar: var(--a63-surface-sidebar);
   --color-sidebar-foreground: var(--a63-text-primary);
   --color-sidebar-primary: var(--a63-action-primary);
   --color-sidebar-primary-foreground: var(--a63-action-primary-foreground);
+  --color-sidebar-accent: var(--a63-surface-control-hover);
+  --color-sidebar-accent-foreground: var(--a63-text-primary);
+  --color-sidebar-border: var(--a63-border-subtle);
   --color-sidebar-ring: var(--a63-focus-ring);
-  --color-success: var(--a63-status-success);
-  --color-warning: var(--a63-status-warning);
+  --color-light: var(--surface-light-1);
+  --color-dark: var(--surface-dark-1);
 }
 
 /* tokens/foundation/effects.css */
