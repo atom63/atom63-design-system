@@ -1,0 +1,79 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "calendar",
+  "lists": {
+    "selectionModes": ["single", "multiple", "range"],
+    "slots": [
+      "calendar",
+      "calendar-months",
+      "calendar-month",
+      "calendar-month-caption",
+      "calendar-caption-label",
+      "calendar-nav",
+      "calendar-nav-button",
+      "calendar-chevron",
+      "calendar-dropdowns",
+      "calendar-dropdown-root",
+      "calendar-dropdown",
+      "calendar-weekday",
+      "calendar-week-number",
+      "calendar-day",
+      "calendar-day-button"
+    ],
+    "states": [
+      "rest",
+      "hover",
+      "focus-visible",
+      "today",
+      "selected",
+      "range-start",
+      "range-middle",
+      "range-end",
+      "outside",
+      "disabled"
+    ],
+    "visualArchetypes": ["surface", "action", "choice"]
+  },
+  "contract": {
+    "defaultSelectionMode": "single",
+    "selectionModes": {
+      "$ref": "#/lists/selectionModes"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "datePicker",
+    "reactRenderer": "Calendar",
+    "swiftUIRenderer": "DatePicker",
+    "intent": "Select an allowed calendar date while understanding its day, month, and current selection.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["rest", "selected", "disabled"],
+    "sharedOutcomes": [
+      "selection-updates-to-an-allowed-date",
+      "disabled-date-prevents-selection",
+      "selected-date-remains-visible"
+    ],
+    "accessibilityOutcomes": [
+      "exposes-control-label",
+      "dates-expose-complete-date-names",
+      "selected-date-exposes-selected-state"
+    ],
+    "platformAdaptations": {
+      "react": [
+        "Uses a visible calendar grid and may support single, multiple, or range selection."
+      ],
+      "swiftUI": [
+        "Uses DatePicker with platform-owned compact, graphical, or field presentation and declared date bounds."
+      ]
+    }
+  }
+}

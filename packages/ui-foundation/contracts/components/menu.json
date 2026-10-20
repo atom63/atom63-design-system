@@ -1,0 +1,39 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "menu",
+  "lists": {
+    "tones": ["neutral", "primary"],
+    "itemVariants": ["default", "destructive"],
+    "states": ["rest", "highlighted", "disabled", "selected", "submenu-open"],
+    "slots": [
+      "menu-positioner",
+      "menu-popup",
+      "menu-item",
+      "menu-item-indicator",
+      "menu-sub-trigger",
+      "menu-label",
+      "menu-separator",
+      "menu-shortcut"
+    ],
+    "visualArchetypes": ["menu", "overlay"]
+  },
+  "contract": {
+    "defaultItemVariant": "default",
+    "defaultTone": "neutral",
+    "itemVariants": {
+      "$ref": "#/lists/itemVariants"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "tones": {
+      "$ref": "#/lists/tones"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

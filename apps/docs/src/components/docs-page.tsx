@@ -37,7 +37,7 @@ export function DocsPage({ area, slug }: DocsPageProps) {
   useHashScroll(activeTarget.slug)
 
   return (
-    <Page noPadding>
+    <Page noPadding render={<div />}>
       <Container maxWidth="widest" padding="none">
         <Section
           className="docs-document-section"

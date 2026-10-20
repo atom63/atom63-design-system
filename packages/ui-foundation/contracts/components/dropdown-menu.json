@@ -1,0 +1,87 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "dropdown-menu",
+  "lists": {
+    "itemVariants": ["default", "destructive"],
+    "states": [
+      "closed",
+      "open",
+      "highlighted",
+      "disabled",
+      "checked",
+      "unchecked",
+      "submenu-open",
+      "destructive"
+    ],
+    "slots": [
+      "dropdown-menu",
+      "dropdown-menu-trigger",
+      "dropdown-menu-group",
+      "dropdown-menu-portal",
+      "dropdown-menu-positioner",
+      "dropdown-menu-content",
+      "dropdown-menu-item",
+      "dropdown-menu-checkbox-item",
+      "dropdown-menu-radio-group",
+      "dropdown-menu-radio-item",
+      "dropdown-menu-item-indicator",
+      "dropdown-menu-label",
+      "dropdown-menu-separator",
+      "dropdown-menu-shortcut",
+      "dropdown-menu-sub",
+      "dropdown-menu-sub-trigger",
+      "dropdown-menu-sub-positioner",
+      "dropdown-menu-sub-content"
+    ],
+    "visualArchetypes": ["menu", "overlay", "trigger", "action", "choice"]
+  },
+  "contract": {
+    "accessibility": {
+      "pattern": "menu-button",
+      "options": {
+        "wrap": "wrap"
+      }
+    },
+    "defaultItemVariant": "default",
+    "itemVariants": {
+      "$ref": "#/lists/itemVariants"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "menu",
+    "reactRenderer": "DropdownMenu",
+    "swiftUIRenderer": "Menu",
+    "intent": "Present a compact set of contextual actions or choices without navigating away from the current task.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["closed", "open", "disabled", "checked", "destructive"],
+    "sharedOutcomes": [
+      "enabled-action-executes-once-and-dismisses-the-menu",
+      "disabled-action-does-not-execute",
+      "checked-choice-exposes-its-current-state",
+      "destructive-action-retains-destructive-intent"
+    ],
+    "accessibilityOutcomes": [
+      "trigger-exposes-menu-availability",
+      "items-expose-label-role-and-disabled-state",
+      "checked-items-expose-selected-or-checked-state"
+    ],
+    "platformAdaptations": {
+      "react": [
+        "Uses a focus-managed popup menu with keyboard navigation, checked items, submenus, and explicit destructive styling."
+      ],
+      "swiftUI": [
+        "Uses native Menu with Button roles, Toggle or Picker choices, and platform-owned presentation and keyboard behavior."
+      ]
+    }
+  }
+}

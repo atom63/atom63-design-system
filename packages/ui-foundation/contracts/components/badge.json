@@ -1,0 +1,88 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "badge",
+  "description": "Solid/surface + semantic sets are faithful to prod @atom63/ui badge.tsx. Palette hues back category/tag colors via the `--a63-badge-*` contract in @atom63/styles (which references foundation --color-* primitives).",
+  "lists": {
+    "solidVariants": {
+      "values": [
+        "default",
+        "primary",
+        "secondary",
+        "destructive",
+        "outline",
+        "glass",
+        "muted",
+        "accent"
+      ],
+      "typed": false
+    },
+    "semanticVariants": {
+      "values": ["error", "info", "success", "warning"],
+      "typed": false
+    },
+    "paletteVariants": {
+      "values": [
+        "red",
+        "orange",
+        "amber",
+        "yellow",
+        "lime",
+        "green",
+        "emerald",
+        "teal",
+        "cyan",
+        "sky",
+        "blue",
+        "indigo",
+        "violet",
+        "purple",
+        "fuchsia",
+        "pink",
+        "rose",
+        "neutral"
+      ],
+      "typed": false
+    },
+    "variants": {
+      "concat": ["solidVariants", "semanticVariants", "paletteVariants"]
+    },
+    "sizes": ["sm", "md", "lg"],
+    "slots": ["badge"],
+    "states": ["resting", "interactive", "disabled", "focus-visible"],
+    "visualArchetypes": ["marker"]
+  },
+  "contract": {
+    "defaultVariant": "default",
+    "defaultSize": "md",
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "variants",
+    "catalogItem": "badge",
+    "reactRenderer": "Badge",
+    "swiftUIRenderer": "AtomBadge",
+    "intent": "Communicate a compact label or semantic status alongside primary content.",
+    "parity": "strict",
+    "requiredStates": ["neutral", "accent", "success", "warning", "error"],
+    "sharedOutcomes": ["label-remains-readable-without-color", "semantic-tone-retains-meaning"],
+    "accessibilityOutcomes": ["text-does-not-rely-on-color"],
+    "platformAdaptations": {
+      "react": ["May expose palette-only decorative variants outside the shared semantic subset."],
+      "swiftUI": ["Uses a compact capsule that expands for Dynamic Type."]
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "radio",
+  "lists": {
+    "sizes": ["sm", "md"],
+    "states": ["unchecked", "checked", "focus-visible", "disabled", "invalid"],
+    "slots": ["radio-group", "radio", "radio-indicator"],
+    "visualArchetypes": ["choice"]
+  },
+  "contract": {
+    "accessibility": {
+      "pattern": "radio"
+    },
+    "defaultSize": "md",
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "radioGroup",
+    "reactRenderer": "RadioGroup / Radio",
+    "swiftUIRenderer": "Picker(.inline) in a Form / AtomSelectionRow group",
+    "intent": "Choose exactly one value from a visible set of mutually exclusive options.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["unchecked", "checked", "disabled"],
+    "sharedOutcomes": [
+      "exactly-one-option-may-be-selected",
+      "activation-moves-selection-to-the-chosen-option",
+      "disabled-option-prevents-selection"
+    ],
+    "accessibilityOutcomes": [
+      "exposes-group-label",
+      "exposes-option-labels-and-selected-state",
+      "preserves-single-selection-semantics"
+    ],
+    "platformAdaptations": {
+      "react": [
+        "Uses radiogroup and radio semantics with circular indicators and keyboard movement."
+      ],
+      "swiftUI": [
+        "Uses an inline Picker inside a Form or List, where each option is a row with the native selected trait (outside one, iOS draws a wheel), or grouped AtomSelectionRow controls."
+      ]
+    }
+  }
+}

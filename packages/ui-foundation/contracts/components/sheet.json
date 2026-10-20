@@ -1,0 +1,49 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "sheet",
+  "lists": {
+    "sides": ["right", "left", "top", "bottom"],
+    "variants": ["default", "inset"],
+    "footerVariants": ["default", "bare"],
+    "states": ["closed", "open", "starting", "ending"],
+    "slots": [
+      "sheet",
+      "sheet-portal",
+      "sheet-trigger",
+      "sheet-backdrop",
+      "sheet-viewport",
+      "sheet-popup",
+      "sheet-close",
+      "sheet-close-button",
+      "sheet-header",
+      "sheet-title",
+      "sheet-description",
+      "sheet-panel",
+      "sheet-footer"
+    ],
+    "visualArchetypes": ["overlay", "surface", "trigger", "action"]
+  },
+  "contract": {
+    "defaultFooterVariant": "default",
+    "defaultSide": "right",
+    "defaultVariant": "default",
+    "footerVariants": {
+      "$ref": "#/lists/footerVariants"
+    },
+    "sides": {
+      "$ref": "#/lists/sides"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "text-ticker",
+  "lists": {
+    "variants": ["truncate", "marquee"],
+    "states": ["fits", "overflowing", "hover", "focus-within", "autoplay", "reduced-motion"],
+    "slots": ["text-ticker", "text-ticker-content", "text-ticker-marquee"],
+    "visualArchetypes": []
+  },
+  "contract": {
+    "defaultVariant": "truncate",
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

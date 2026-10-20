@@ -1,0 +1,34 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "scrollable-list",
+  "lists": {
+    "layouts": ["scroll", "wrap"],
+    "options": ["mask", "chevrons", "draggable", "column-aligned"],
+    "states": ["idle", "can-scroll-start", "can-scroll-end", "dragging", "disabled"],
+    "slots": [
+      "scrollable-list",
+      "scrollable-list-frame",
+      "scrollable-list-content",
+      "scrollable-list-control"
+    ],
+    "visualArchetypes": ["action", "range"]
+  },
+  "contract": {
+    "defaultLayout": "scroll",
+    "layouts": {
+      "$ref": "#/lists/layouts"
+    },
+    "options": {
+      "$ref": "#/lists/options"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

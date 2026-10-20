@@ -1,0 +1,66 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "accordion",
+  "lists": {
+    "iconVariants": ["chevron", "plus-minus"],
+    "states": ["closed", "open", "focusVisible", "disabled"],
+    "slots": [
+      "accordion",
+      "accordion-item",
+      "accordion-trigger",
+      "accordion-indicator",
+      "accordion-content",
+      "accordion-content-inner"
+    ],
+    "visualArchetypes": ["surface", "trigger"]
+  },
+  "contract": {
+    "accessibility": {
+      "pattern": "accordion",
+      "options": {
+        "collapse": "collapsible",
+        "expand": "single"
+      }
+    },
+    "defaultIconVariant": "chevron",
+    "iconVariants": {
+      "$ref": "#/lists/iconVariants"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "disclosureGroup",
+    "reactRenderer": "Accordion",
+    "swiftUIRenderer": "DisclosureGroup",
+    "intent": "Reveal or hide supporting content in place while preserving the surrounding context.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["closed", "open", "disabled"],
+    "sharedOutcomes": [
+      "activation-toggles-associated-content-visibility",
+      "expanded-state-matches-content-visibility",
+      "disabled-trigger-prevents-disclosure-change"
+    ],
+    "accessibilityOutcomes": [
+      "trigger-exposes-expanded-state",
+      "trigger-is-associated-with-disclosed-content",
+      "disabled-trigger-exposes-disabled-state"
+    ],
+    "platformAdaptations": {
+      "react": [
+        "Uses button and region disclosure semantics with optional single or multiple open sections."
+      ],
+      "swiftUI": [
+        "Uses DisclosureGroup with native indicator geometry, animation, and list integration."
+      ]
+    }
+  }
+}

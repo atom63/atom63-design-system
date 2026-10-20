@@ -1,0 +1,38 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "command",
+  "lists": {
+    "slots": [
+      "command",
+      "command-dialog-trigger",
+      "command-dialog-backdrop",
+      "command-dialog-viewport",
+      "command-dialog-popup",
+      "command-input-wrapper",
+      "command-input",
+      "command-panel",
+      "command-list",
+      "command-empty",
+      "command-group",
+      "command-group-label",
+      "command-collection",
+      "command-item",
+      "command-separator",
+      "command-shortcut",
+      "command-footer"
+    ],
+    "states": ["closed", "open", "empty", "highlighted", "disabled", "focus-visible"],
+    "visualArchetypes": ["overlay", "surface", "field", "menu"]
+  },
+  "contract": {
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "navigation-menu",
+  "lists": {
+    "states": ["closed", "open", "active", "disabled", "starting", "ending"],
+    "slots": [
+      "navigation-menu",
+      "navigation-menu-list",
+      "navigation-menu-item",
+      "navigation-menu-trigger",
+      "navigation-menu-content",
+      "navigation-menu-portal",
+      "navigation-menu-positioner",
+      "navigation-menu-popup",
+      "navigation-menu-viewport",
+      "navigation-menu-link",
+      "navigation-menu-indicator"
+    ],
+    "visualArchetypes": ["trigger", "overlay", "surface"]
+  },
+  "contract": {
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

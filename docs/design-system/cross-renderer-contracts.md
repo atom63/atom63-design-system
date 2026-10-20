@@ -1,9 +1,11 @@
 # Cross-renderer component contracts
 
 Atom63 shares component intent across React and SwiftUI without requiring both
-renderers to use the same implementation primitive. The canonical registry is:
-
-`packages/ui-foundation/contracts/cross-renderer-contracts.json`
+renderers to use the same implementation primitive. Each component keeps its
+cross-renderer contract under `crossRenderer` in its contract source,
+`packages/ui-foundation/contracts/components/<name>.json`, and
+`packages/ui-foundation/contracts/cross-renderer.json` lists those components in
+catalog order.
 
 The registry currently covers the shared mobile-ready subset: actions, fields,
 search, selection, menus, disclosure, date input, modal tasks, navigation, content
@@ -103,10 +105,11 @@ and selected-value outcomes remain shared.
 ## Authoring a cross-renderer component
 
 1. Define or update the API vocabulary in the component's
-   `packages/ui-foundation/src/components/*-contract.ts`.
+   `packages/ui-foundation/contracts/components/<name>.json`.
 2. Add the shared intent, required states, semantic state tones where status color
    communicates intent, shared outcomes, accessibility outcomes, parity level, and
-   renderer-specific adaptations to the canonical JSON registry.
+   renderer-specific adaptations under `crossRenderer` in the same file, and list the
+   component in `contracts/cross-renderer.json`.
 3. Add semantic CSS contract tokens when appearance or motion must be shared.
 4. Regenerate TypeScript and Swift metadata.
 5. Implement each renderer with native primitives.

@@ -34,6 +34,7 @@
     "check:token-economy": "node scripts/design-system/check-token-economy.mjs",
     "check:ui-react-exports": "node scripts/design-system/audit-ui-react-exports.mjs",
     "check:ui-react-monitor-evidence": "node scripts/design-system/audit-ui-react-monitor-evidence.mjs",
+    "check:ui-react-root-deps": "node scripts/design-system/check-ui-react-root-deps.mjs",
     "check:ui-react-size": "node scripts/design-system/check-ui-react-bundle-size.mjs",
     "check:ui-react-stable-actions": "node scripts/design-system/audit-ui-react-stable-actions.mjs",
     "check:visual-qa-matrix": "node scripts/design-system/audit-visual-qa-matrix.mjs",

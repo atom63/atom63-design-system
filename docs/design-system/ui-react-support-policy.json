@@ -92,6 +92,7 @@
     "ATOM63_": "preview-experimental-candidate"
   },
   "subpathPolicy": {
+    "./calendar": "High risk. Calendar lives here so the root entry does not load react-day-picker. Needs date interaction evidence and a react-day-picker pin policy before stable compatibility.",
     "./layout": "Support high-level layout primitives after responsive/docs evidence; monitor style helpers, constants, chrome internals, and hooks.",
     "./media": "High risk. Needs browser/media lifecycle evidence before stable compatibility.",
     "./media/lightbox": "Preview unless the headless composition/state/context contract is intentionally supported.",

@@ -1,0 +1,357 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://atom63.dev/schema/component-intent.schema.json",
+  "title": "Atom63 component contract",
+  "description": "The source of a component contract in @atom63/ui-foundation. scripts/generate-component-contracts.mjs writes src/components/<name>/<name>-contract.ts and its barrel from it; scripts/generate-cross-renderer-contracts.mjs reads crossRenderer. TypeScript names follow from the component name: list `sizes` of `button` is exported as `buttonSizes` with the type `ButtonSize`, and the contract object as `buttonContract` with the interface `ButtonContract`.",
+  "type": "object",
+  "oneOf": [
+    {
+      "required": ["component", "contract"]
+    },
+    {
+      "required": ["shared"]
+    }
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "component": {
+      "description": "The component name, the same as the file name: contracts/components/<name>.json.",
+      "$ref": "#/$defs/name"
+    },
+    "shared": {
+      "description": "A list file several components use, the same as the file name: contracts/shared/<name>.json. It has lists and no contract.",
+      "$ref": "#/$defs/name"
+    },
+    "exportPrefix": {
+      "description": "The prefix of every TypeScript name when it is not the camel-cased component name (input-otp exports inputOTPStates).",
+      "type": "string",
+      "pattern": "^[a-z][A-Za-z0-9]*$"
+    },
+    "description": {
+      "$ref": "#/$defs/description"
+    },
+    "lists": {
+      "$ref": "#/$defs/lists"
+    },
+    "contract": {
+      "$ref": "#/$defs/contract"
+    },
+    "parts": {
+      "description": "Sub-components with their own lists and contract, exported with the part name after the prefix (Input's group: inputGroupSlots, inputGroupContract).",
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z][A-Za-z0-9]*$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "required": ["lists", "contract"],
+        "properties": {
+          "lists": {
+            "$ref": "#/$defs/lists"
+          },
+          "contract": {
+            "$ref": "#/$defs/contract"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "crossRenderer": {
+      "$ref": "#/$defs/crossRenderer"
+    }
+  },
+  "required": ["lists"],
+  "additionalProperties": false,
+  "$defs": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(-[a-z0-9]+)*$"
+    },
+    "key": {
+      "type": "string",
+      "pattern": "^[a-z][A-Za-z0-9]*$"
+    },
+    "description": {
+      "description": "Why the list or component is shaped this way. Written into the generated TypeScript as a comment.",
+      "type": "string",
+      "minLength": 1
+    },
+    "lists": {
+      "description": "The value lists of the contract, in the order they are generated: axes (variants, sizes), states, slots, token slots, visual archetypes, or a map such as Frame's presets.",
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/key"
+      },
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "$ref": "#/$defs/values"
+          },
+          {
+            "$ref": "#/$defs/valuesList"
+          },
+          {
+            "$ref": "#/$defs/concatList"
+          },
+          {
+            "$ref": "#/$defs/flattenList"
+          },
+          {
+            "$ref": "#/$defs/mapList"
+          }
+        ]
+      }
+    },
+    "values": {
+      "description": "The values, in order. Strings and numbers get a union type; objects do not.",
+      "type": "array",
+      "anyOf": [
+        {
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        {
+          "items": {
+            "type": "number"
+          },
+          "uniqueItems": true
+        },
+        {
+          "items": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "valuesList": {
+      "type": "object",
+      "required": ["values"],
+      "properties": {
+        "values": {
+          "$ref": "#/$defs/values"
+        },
+        "description": {
+          "$ref": "#/$defs/description"
+        },
+        "exportName": {
+          "description": "The exported constant when it is not <prefix><Key>.",
+          "type": "string"
+        },
+        "typeName": {
+          "description": "The union type when it is not <Prefix><Singular key>.",
+          "type": "string"
+        },
+        "typed": {
+          "description": "false exports the list without a union type.",
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "concatList": {
+      "description": "The values of other lists of the same section, in order.",
+      "type": "object",
+      "required": ["concat"],
+      "properties": {
+        "concat": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/key"
+          },
+          "minItems": 2
+        },
+        "description": {
+          "$ref": "#/$defs/description"
+        }
+      },
+      "additionalProperties": false
+    },
+    "flattenList": {
+      "description": "Every field value of every object in another list, in order (Copy Button's sizes from its size pairs).",
+      "type": "object",
+      "required": ["flatten"],
+      "properties": {
+        "flatten": {
+          "$ref": "#/$defs/key"
+        },
+        "description": {
+          "$ref": "#/$defs/description"
+        }
+      },
+      "additionalProperties": false
+    },
+    "mapList": {
+      "description": "A map from each value of the `keys` list to an object whose fields take values of the lists in `fields` (Frame's presets). Exported without a union type.",
+      "type": "object",
+      "required": ["keys", "fields", "entries"],
+      "properties": {
+        "keys": {
+          "$ref": "#/$defs/key"
+        },
+        "fields": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/key"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/key"
+          }
+        },
+        "entries": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "description": {
+          "$ref": "#/$defs/description"
+        }
+      },
+      "additionalProperties": false
+    },
+    "contract": {
+      "description": "The contract object, in field order. A field is a reference to a list, the accessibility binding, a default (`default<Axis>`, one of the values of the list it defaults), or a string or number.",
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/key"
+      },
+      "properties": {
+        "accessibility": {
+          "description": "The WAI-ARIA APG pattern the component implements; see A11yPatternBinding in src/a11y/types.ts.",
+          "type": "object",
+          "required": ["pattern"]
+        }
+      },
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": ["$ref"],
+            "properties": {
+              "$ref": {
+                "description": "#/lists/<key>, #/parts/<part>/lists/<key>, or another file: ./button.json#/lists/sizes, ../shared/selection.json#/lists/tokenSlots.",
+                "type": "string",
+                "pattern": "^(\\.\\.?/[\\w/-]+\\.json)?#/(parts/[\\w-]+/)?lists/[\\w-]+$"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          }
+        ]
+      }
+    },
+    "crossRenderer": {
+      "description": "The contract shared by the React and SwiftUI renderers. The component must also be listed in contracts/cross-renderer.json.",
+      "type": "object",
+      "required": [
+        "foundationAxis",
+        "catalogItem",
+        "reactRenderer",
+        "swiftUIRenderer",
+        "intent",
+        "parity",
+        "requiredStates",
+        "sharedOutcomes",
+        "accessibilityOutcomes",
+        "platformAdaptations"
+      ],
+      "properties": {
+        "foundationAxis": {
+          "description": "The list requiredStates are taken from.",
+          "$ref": "#/$defs/key"
+        },
+        "catalogItem": {
+          "type": "string"
+        },
+        "reactRenderer": {
+          "type": "string"
+        },
+        "swiftUIRenderer": {
+          "type": "string"
+        },
+        "intent": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parity": {
+          "enum": ["strict", "recipe", "platform-adaptive"]
+        },
+        "requiredStates": {
+          "$ref": "#/$defs/strings"
+        },
+        "stateTones": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": ["neutral", "info", "success", "warning", "error"]
+          }
+        },
+        "sharedOutcomes": {
+          "$ref": "#/$defs/strings"
+        },
+        "accessibilityOutcomes": {
+          "$ref": "#/$defs/strings"
+        },
+        "motion": {
+          "type": "object",
+          "required": ["kind", "durationToken", "easing", "direction", "reducedMotion"],
+          "properties": {
+            "kind": {
+              "type": "string"
+            },
+            "durationToken": {
+              "type": "string"
+            },
+            "easing": {
+              "type": "string"
+            },
+            "direction": {
+              "type": "string"
+            },
+            "reducedMotion": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "platformAdaptations": {
+          "type": "object",
+          "required": ["react", "swiftUI"],
+          "properties": {
+            "react": {
+              "$ref": "#/$defs/strings"
+            },
+            "swiftUI": {
+              "$ref": "#/$defs/strings"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "strings": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  }
+}

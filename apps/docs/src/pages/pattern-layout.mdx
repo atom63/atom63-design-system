@@ -6,7 +6,7 @@
 
 | Primitive | Actual contract | Use when |
 |-----------|-----------------|----------|
-| `Page` | Renders `<main>`, fills the available height, and adds `pt-8 pb-20` unless `noPadding` is set | The route does not already have a main landmark |
+| `Page` | Renders `<main>` (or the element passed to `render`), fills the available height, and adds `pt-8 pb-20` unless `noPadding` is set | The route does not already have a main landmark, or it does and `Page` renders a `div` |
 | `Container` | Centers a named max-width, adds a fixed `gap-8` between direct children, and applies `p-6`, `px-6`, or no padding | Content needs a shared measure or inline inset |
 | `Section` | Renders `<section>`, applies a spacing preset, and optionally spaces direct children | A real page region needs repeatable vertical rhythm |
 
@@ -40,12 +40,12 @@ The first section opts into top spacing. The second uses the default top removal
 
 Do not add wrappers only to match the diagram. Current consumers deliberately stop at different layers:
 
-- Design-system and Learn routes render `Page noPadding` because their app shells own the outer frame, then use `Container` and `Section` for reading layout.
+- Design-system and Learn routes render `Page noPadding render={<div />}` because their app shells own the outer frame and the `main` landmark, then use `Container` and `Section` for reading layout.
 - atom63.io route screens commonly let `SiteShellLayout` own the route surface and compose `Container > Section` inside it.
 - Full-bleed desktops, split panes, and other application shells should use their own layout rather than force a document-page pattern.
 
 ```tsx
-<Page noPadding>
+<Page noPadding render={<div />}>
   <Container maxWidth="widest" padding="none">
     <Section gap={false} spacing="tight">
       <ReaderLayout>{content}</ReaderLayout>
@@ -68,4 +68,4 @@ Nested containers are valid when a region intentionally changes measure. Otherwi
 
 ## Accessibility boundary
 
-`Page` always renders `<main>`, so use it at most once in a document. `Section` always renders `<section>`; give the region an accessible heading rather than using it as a generic spacing wrapper. The primitives provide structure, but they do not infer a heading outline.
+`Page` renders `<main>` by default, so use it at most once in a document. When `Page` sits inside `SidebarInset`, the inset already renders `<main>` and owns the landmark: give `Page` `render={<div />}` so the document keeps exactly one `main`. `Section` always renders `<section>`; give the region an accessible heading rather than using it as a generic spacing wrapper. The primitives provide structure, but they do not infer a heading outline.

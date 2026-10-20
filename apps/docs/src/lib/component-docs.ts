@@ -92,7 +92,7 @@ export function componentExportSurface(
   const values: string[] = []
 
   for (const match of uiReactIndexSource.matchAll(
-    /export\s+(type\s+)?\{([^}]*)\}\s+from\s+['"]\.\/components\/([^'"]+)['"]/g
+    /export\s+(type\s+)?\{([^}]*)\}\s+from\s+['"]\.\.?\/components\/([^'"]+)['"]/g
   )) {
     if (match[3] !== slug) {
       continue

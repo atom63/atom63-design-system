@@ -1,0 +1,48 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "toggle-group",
+  "lists": {
+    "orientations": ["horizontal", "vertical"],
+    "selectionModes": ["single", "multiple"],
+    "states": ["rest", "hover", "focus", "selected", "disabled"],
+    "slots": ["toggle-group", "toggle-group-item", "toggle-group-separator"],
+    "tokenSlots": [
+      "segment.gap",
+      "segment.radius",
+      "segment.background",
+      "segment.gloss",
+      "segment.trackBorder",
+      "segment.seam",
+      "segment.selectedBackground",
+      "segment.selectedForeground",
+      "segment.selectedGloss",
+      "segment.selectedShadow",
+      "segment.primaryBackground",
+      "segment.primaryForeground",
+      "segment.primaryShadow"
+    ],
+    "visualArchetypes": ["toggle", "segment"]
+  },
+  "contract": {
+    "defaultOrientation": "horizontal",
+    "defaultSelectionMode": "single",
+    "orientations": {
+      "$ref": "#/lists/orientations"
+    },
+    "selectionModes": {
+      "$ref": "#/lists/selectionModes"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "tokenSlots": {
+      "$ref": "#/lists/tokenSlots"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

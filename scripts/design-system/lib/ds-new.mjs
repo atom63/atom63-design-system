@@ -151,34 +151,27 @@ export function insertCatalogGroupSlug(source, category, slug) {
 
 /* ── Files ───────────────────────────────────────────────────────────────── */
 
-export function contractFile({ camel, pascal, slug }, archetype) {
-  return `import type { VisualArchetypeId } from '../../visual-archetypes'
-
-export const ${camel}Sizes = ['sm', 'md'] as const
-export const ${camel}Slots = ['${slug}'] as const
-export const ${camel}States = ['rest'] as const
-export const ${camel}VisualArchetypes = ['${archetype}'] as const satisfies readonly VisualArchetypeId[]
-
-export type ${pascal}Size = (typeof ${camel}Sizes)[number]
-export type ${pascal}Slot = (typeof ${camel}Slots)[number]
-export type ${pascal}State = (typeof ${camel}States)[number]
-export type ${pascal}VisualArchetype = (typeof ${camel}VisualArchetypes)[number]
-
-export interface ${pascal}Contract {
-  defaultSize: ${pascal}Size
-  sizes: readonly ${pascal}Size[]
-  slots: readonly ${pascal}Slot[]
-  states: readonly ${pascal}State[]
-  visualArchetypes: readonly ${pascal}VisualArchetype[]
-}
-
-export const ${camel}Contract = {
-  defaultSize: 'md',
-  sizes: ${camel}Sizes,
-  slots: ${camel}Slots,
-  states: ${camel}States,
-  visualArchetypes: ${camel}VisualArchetypes,
-} satisfies ${pascal}Contract
+/** The JSON source of the foundation contract; the generator writes the TypeScript from it. */
+export function contractSource({ slug }, archetype) {
+  const ref = key => ({ $ref: `#/lists/${key}` })
+  const source = {
+    $schema: '../schema/component-intent.schema.json',
+    component: slug,
+    lists: {
+      sizes: ['sm', 'md'],
+      slots: [slug],
+      states: ['rest'],
+      visualArchetypes: [archetype],
+    },
+    contract: {
+      defaultSize: 'md',
+      sizes: ref('sizes'),
+      slots: ref('slots'),
+      states: ref('states'),
+      visualArchetypes: ref('visualArchetypes'),
+    },
+  }
+  return `${JSON.stringify(source, null, 2)}
 `
 }
 
@@ -378,15 +371,11 @@ export const scaffoldOutcomes = {
   accessibility: ['exposes-content-as-text'],
 }
 
-/** Append a cross-renderer contract to the JSON source. */
+/** Add a cross-renderer contract to a component's JSON source. */
 export function addCrossRendererContract(jsonText, { camel, pascal, slug }, intent) {
   const source = JSON.parse(jsonText)
-  if (source.contracts.some(contract => contract.id === slug)) {
-    throw new Error(`cross-renderer contract "${slug}" already exists`)
-  }
-  source.contracts.push({
-    id: slug,
-    foundationContract: slug,
+  if (source.crossRenderer) throw new Error(`cross-renderer contract "${slug}" already exists`)
+  source.crossRenderer = {
     foundationAxis: 'states',
     catalogItem: camel,
     reactRenderer: pascal,
@@ -400,8 +389,20 @@ export function addCrossRendererContract(jsonText, { camel, pascal, slug }, inte
       react: ['TODO(ds:new): how the web renderer adapts the shared intent.'],
       swiftUI: ['TODO(ds:new): how the SwiftUI renderer adapts the shared intent.'],
     },
-  })
-  return `${JSON.stringify(source, null, 2)}\n`
+  }
+  return `${JSON.stringify(source, null, 2)}
+`
+}
+
+/** Append a component to the cross-renderer catalog order. */
+export function addCrossRendererIndex(jsonText, { slug }) {
+  const index = JSON.parse(jsonText)
+  if (index.components.includes(slug)) {
+    throw new Error(`cross-renderer.json already lists "${slug}"`)
+  }
+  index.components.push(slug)
+  return `${JSON.stringify(index, null, 2)}
+`
 }
 
 /** Add React conformance evidence before the end of `reactRendererConformance`. */

@@ -1,0 +1,23 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "portal-container",
+  "lists": {
+    "targets": ["element", "shadow-root", "null", "undefined"],
+    "states": ["unprovided", "pending", "resolved"],
+    "visualArchetypes": {
+      "values": [],
+      "typed": false
+    }
+  },
+  "contract": {
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "targets": {
+      "$ref": "#/lists/targets"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

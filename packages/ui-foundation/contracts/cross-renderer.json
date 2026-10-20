@@ -1,0 +1,33 @@
+{
+  "$comment": "The components with a SwiftUI renderer, in catalog order. Each component keeps its cross-renderer contract in contracts/components/<name>.json under crossRenderer.",
+  "version": 3,
+  "components": [
+    "button",
+    "dialog",
+    "alert-dialog",
+    "field",
+    "input",
+    "textarea",
+    "switch",
+    "select",
+    "toggle",
+    "card",
+    "destination-link",
+    "badge",
+    "segmented-control",
+    "radio",
+    "slider",
+    "dropdown-menu",
+    "accordion",
+    "calendar",
+    "search-field",
+    "tabs",
+    "avatar",
+    "empty",
+    "alert",
+    "progress",
+    "skeleton",
+    "load-more-trigger",
+    "toaster"
+  ]
+}

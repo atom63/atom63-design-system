@@ -1,0 +1,28 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "checkbox",
+  "lists": {
+    "sizes": ["sm", "md"],
+    "states": ["unchecked", "checked", "indeterminate", "disabled", "invalid"],
+    "slots": ["checkbox", "checkbox-indicator"],
+    "visualArchetypes": ["choice"]
+  },
+  "contract": {
+    "accessibility": {
+      "pattern": "checkbox"
+    },
+    "defaultSize": "md",
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

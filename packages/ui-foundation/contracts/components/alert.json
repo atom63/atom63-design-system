@@ -1,0 +1,43 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "alert",
+  "description": "Faithful to prod @atom63/ui alert.tsx: a status callout with a default (neutral) variant plus four semantic tones. Visually, Alert is a static content/status surface; interactive controls only appear inside its action slot.",
+  "lists": {
+    "variants": ["default", "error", "info", "success", "warning"],
+    "slots": ["alert", "alert-icon", "alert-title", "alert-description", "alert-action"],
+    "visualArchetypes": ["surface"]
+  },
+  "contract": {
+    "defaultVariant": "default",
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "variants",
+    "catalogItem": "notice",
+    "reactRenderer": "Alert",
+    "swiftUIRenderer": "AtomNotice",
+    "intent": "Communicate persistent semantic feedback and an optional recovery action.",
+    "parity": "strict",
+    "requiredStates": ["info", "success", "warning", "error"],
+    "sharedOutcomes": [
+      "tone-is-not-conveyed-by-color-alone",
+      "message-remains-readable",
+      "action-does-not-obscure-status"
+    ],
+    "accessibilityOutcomes": ["announces-semantic-tone", "text-does-not-rely-on-color"],
+    "platformAdaptations": {
+      "react": ["Uses a web status-callout surface with composable slots."],
+      "swiftUI": [
+        "Uses a compact native callout and avoids assertive announcements for persistent notices."
+      ]
+    }
+  }
+}

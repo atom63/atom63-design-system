@@ -1,0 +1,32 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "separator",
+  "description": "Faithful to prod @atom63/ui separator.tsx: a solid hairline (default) or a soft edge-to-edge gradient fade, in either orientation.",
+  "lists": {
+    "variants": ["default", "gradient"],
+    "orientations": ["horizontal", "vertical"],
+    "modes": ["decorative", "semantic"],
+    "slots": ["separator"],
+    "visualArchetypes": []
+  },
+  "contract": {
+    "defaultMode": "semantic",
+    "defaultVariant": "default",
+    "defaultOrientation": "horizontal",
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
+    "orientations": {
+      "$ref": "#/lists/orientations"
+    },
+    "modes": {
+      "$ref": "#/lists/modes"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}
