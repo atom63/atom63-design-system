@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "module": "Atom63UI",
-  "symbolCount": 411,
+  "symbolCount": 427,
   "symbols": [
     {
       "id": "s:8Atom63UI10AtomAvatarV",
@@ -39,17 +39,31 @@
       "source": "AtomButton.swift"
     },
     {
+      "id": "s:8Atom63UI10AtomButtonV4tone8emphasis4size9fullWidth9isLoading25loadingAccessibilityLabel6action5labelACyxGAA0cD4ToneO_AA0cD8EmphasisOAA0C11ControlSizeOS2bSSyycxyXEtcfc",
+      "kind": "swift.init",
+      "path": "AtomButton.init(tone:emphasis:size:fullWidth:isLoading:loadingAccessibilityLabel:action:label:)",
+      "declaration": "init(tone: AtomButtonTone = .neutral, emphasis: AtomButtonEmphasis = .solid, size: AtomControlSize = .regular, fullWidth: Bool = false, isLoading: Bool = false, loadingAccessibilityLabel: String = \"Loading\", action: @escaping () -> Void, @ViewBuilder label: () -> Label)",
+      "source": "AtomButton.swift"
+    },
+    {
       "id": "s:8Atom63UI10AtomButtonV7variant4size9fullWidth9isLoading25loadingAccessibilityLabel6action5labelACyxGAA0cD7VariantO_AA0C11ControlSizeOS2bSSyycxyXEtcfc",
       "kind": "swift.init",
       "path": "AtomButton.init(variant:size:fullWidth:isLoading:loadingAccessibilityLabel:action:label:)",
-      "declaration": "init(variant: AtomButtonVariant = .neutral, size: AtomControlSize = .regular, fullWidth: Bool = false, isLoading: Bool = false, loadingAccessibilityLabel: String = \"Loading\", action: @escaping () -> Void, @ViewBuilder label: () -> Label)",
+      "declaration": "init(variant: AtomButtonVariant, size: AtomControlSize = .regular, fullWidth: Bool = false, isLoading: Bool = false, loadingAccessibilityLabel: String = \"Loading\", action: @escaping () -> Void, @ViewBuilder label: () -> Label)",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomButtonVAA05SwiftB04TextVRszrlE_4tone8emphasis4size9fullWidth9isLoading25loadingAccessibilityLabel6actionACyAFGSS_AA0cD4ToneOAA0cD8EmphasisOAA0C11ControlSizeOS2bSSyyctcfc",
+      "kind": "swift.init",
+      "path": "AtomButton.init(_:tone:emphasis:size:fullWidth:isLoading:loadingAccessibilityLabel:action:)",
+      "declaration": "init(_ title: String, tone: AtomButtonTone = .neutral, emphasis: AtomButtonEmphasis = .solid, size: AtomControlSize = .regular, fullWidth: Bool = false, isLoading: Bool = false, loadingAccessibilityLabel: String = \"Loading\", action: @escaping () -> Void)",
       "source": "AtomButton.swift"
     },
     {
       "id": "s:8Atom63UI10AtomButtonVAA05SwiftB04TextVRszrlE_7variant4size9fullWidth9isLoading25loadingAccessibilityLabel6actionACyAFGSS_AA0cD7VariantOAA0C11ControlSizeOS2bSSyyctcfc",
       "kind": "swift.init",
       "path": "AtomButton.init(_:variant:size:fullWidth:isLoading:loadingAccessibilityLabel:action:)",
-      "declaration": "init(_ title: String, variant: AtomButtonVariant = .neutral, size: AtomControlSize = .regular, fullWidth: Bool = false, isLoading: Bool = false, loadingAccessibilityLabel: String = \"Loading\", action: @escaping () -> Void)",
+      "declaration": "init(_ title: String, variant: AtomButtonVariant, size: AtomControlSize = .regular, fullWidth: Bool = false, isLoading: Bool = false, loadingAccessibilityLabel: String = \"Loading\", action: @escaping () -> Void)",
       "source": "AtomButton.swift"
     },
     {
@@ -757,42 +771,56 @@
       "kind": "swift.enum",
       "path": "AtomBadgeTone",
       "declaration": "enum AtomBadgeTone",
-      "source": "AtomBadge.swift"
+      "source": "Generated/AtomComponentIntent.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI13AtomBadgeToneO4infoyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomBadgeTone.info",
+      "declaration": "case info",
+      "source": "Generated/AtomComponentIntent.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI13AtomBadgeToneO5erroryA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomBadgeTone.error",
+      "declaration": "case error",
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI13AtomBadgeToneO6accentyA2CmF",
       "kind": "swift.enum.case",
       "path": "AtomBadgeTone.accent",
       "declaration": "case accent",
-      "source": "AtomBadge.swift"
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
-      "id": "s:8Atom63UI13AtomBadgeToneO6dangeryA2CmF",
-      "kind": "swift.enum.case",
+      "id": "s:8Atom63UI13AtomBadgeToneO6dangerACvpZ",
+      "kind": "swift.type.property",
       "path": "AtomBadgeTone.danger",
-      "declaration": "case danger",
-      "source": "AtomBadge.swift"
+      "declaration": "static var danger: AtomBadgeTone { get }",
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI13AtomBadgeToneO7neutralyA2CmF",
       "kind": "swift.enum.case",
       "path": "AtomBadgeTone.neutral",
       "declaration": "case neutral",
-      "source": "AtomBadge.swift"
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI13AtomBadgeToneO7successyA2CmF",
       "kind": "swift.enum.case",
       "path": "AtomBadgeTone.success",
       "declaration": "case success",
-      "source": "AtomBadge.swift"
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI13AtomBadgeToneO7warningyA2CmF",
       "kind": "swift.enum.case",
       "path": "AtomBadgeTone.warning",
       "declaration": "case warning",
-      "source": "AtomBadge.swift"
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI13AtomFormFieldV",
@@ -856,6 +884,34 @@
       "path": "AtomAsyncImage.body",
       "declaration": "var body: some View { get }",
       "source": "AtomAsyncImage.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomButtonToneO",
+      "kind": "swift.enum",
+      "path": "AtomButtonTone",
+      "declaration": "enum AtomButtonTone",
+      "source": "Generated/AtomComponentIntent.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomButtonToneO11destructiveyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomButtonTone.destructive",
+      "declaration": "case destructive",
+      "source": "Generated/AtomComponentIntent.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomButtonToneO7neutralyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomButtonTone.neutral",
+      "declaration": "case neutral",
+      "source": "Generated/AtomComponentIntent.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomButtonToneO7primaryyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomButtonTone.primary",
+      "declaration": "case primary",
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI14AtomIconButtonV",
@@ -1096,39 +1152,60 @@
       "source": "AtomWidget.swift"
     },
     {
+      "id": "s:8Atom63UI15AtomButtonStyleV",
+      "kind": "swift.struct",
+      "path": "AtomButtonStyle",
+      "declaration": "struct AtomButtonStyle",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomButtonStyleV4tone8emphasis4sizeAcA0cD4ToneO_AA0cD8EmphasisOAA0C11ControlSizeOtcfc",
+      "kind": "swift.init",
+      "path": "AtomButtonStyle.init(tone:emphasis:size:)",
+      "declaration": "init(tone: AtomButtonTone = .neutral, emphasis: AtomButtonEmphasis = .solid, size: AtomControlSize = .regular)",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomButtonStyleV8makeBody13configurationQr05SwiftB00dE13ConfigurationV_tF",
+      "kind": "swift.method",
+      "path": "AtomButtonStyle.makeBody(configuration:)",
+      "declaration": "func makeBody(configuration: AtomButtonStyle.Configuration) -> some View",
+      "source": "AtomButton.swift"
+    },
+    {
       "id": "s:8Atom63UI15AtomControlSizeO",
       "kind": "swift.enum",
       "path": "AtomControlSize",
       "declaration": "enum AtomControlSize",
-      "source": "AtomButton.swift"
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI15AtomControlSizeO4iconyA2CmF",
       "kind": "swift.enum.case",
       "path": "AtomControlSize.icon",
       "declaration": "case icon",
-      "source": "AtomButton.swift"
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI15AtomControlSizeO5largeyA2CmF",
       "kind": "swift.enum.case",
       "path": "AtomControlSize.large",
       "declaration": "case large",
-      "source": "AtomButton.swift"
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI15AtomControlSizeO7compactyA2CmF",
       "kind": "swift.enum.case",
       "path": "AtomControlSize.compact",
       "declaration": "case compact",
-      "source": "AtomButton.swift"
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI15AtomControlSizeO7regularyA2CmF",
       "kind": "swift.enum.case",
       "path": "AtomControlSize.regular",
       "declaration": "case regular",
-      "source": "AtomButton.swift"
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI15AtomFormMessageV",
@@ -1625,49 +1702,49 @@
       "kind": "swift.enum",
       "path": "AtomButtonVariant",
       "declaration": "enum AtomButtonVariant",
-      "source": "AtomButton.swift"
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI17AtomButtonVariantO11destructiveyA2CmF",
       "kind": "swift.enum.case",
       "path": "AtomButtonVariant.destructive",
       "declaration": "case destructive",
-      "source": "AtomButton.swift"
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI17AtomButtonVariantO5ghostyA2CmF",
       "kind": "swift.enum.case",
       "path": "AtomButtonVariant.ghost",
       "declaration": "case ghost",
-      "source": "AtomButton.swift"
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI17AtomButtonVariantO7neutralyA2CmF",
       "kind": "swift.enum.case",
       "path": "AtomButtonVariant.neutral",
       "declaration": "case neutral",
-      "source": "AtomButton.swift"
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI17AtomButtonVariantO7outlineyA2CmF",
       "kind": "swift.enum.case",
       "path": "AtomButtonVariant.outline",
       "declaration": "case outline",
-      "source": "AtomButton.swift"
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI17AtomButtonVariantO7primaryyA2CmF",
       "kind": "swift.enum.case",
       "path": "AtomButtonVariant.primary",
       "declaration": "case primary",
-      "source": "AtomButton.swift"
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI17AtomButtonVariantO9secondaryyA2CmF",
       "kind": "swift.enum.case",
       "path": "AtomButtonVariant.secondary",
       "declaration": "case secondary",
-      "source": "AtomButton.swift"
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI17AtomInformArbiterO",
@@ -1934,6 +2011,41 @@
       "path": "AtomSectionHeader.body",
       "declaration": "var body: some View { get }",
       "source": "AtomSectionHeader.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomButtonEmphasisO",
+      "kind": "swift.enum",
+      "path": "AtomButtonEmphasis",
+      "declaration": "enum AtomButtonEmphasis",
+      "source": "Generated/AtomComponentIntent.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomButtonEmphasisO4softyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomButtonEmphasis.soft",
+      "declaration": "case soft",
+      "source": "Generated/AtomComponentIntent.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomButtonEmphasisO5ghostyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomButtonEmphasis.ghost",
+      "declaration": "case ghost",
+      "source": "Generated/AtomComponentIntent.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomButtonEmphasisO5solidyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomButtonEmphasis.solid",
+      "declaration": "case solid",
+      "source": "Generated/AtomComponentIntent.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomButtonEmphasisO7outlineyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomButtonEmphasis.outline",
+      "declaration": "case outline",
+      "source": "Generated/AtomComponentIntent.generated.swift"
     },
     {
       "id": "s:8Atom63UI18AtomContractParityO",
@@ -2918,7 +3030,17 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI10AtomButtonV4tone8emphasis4size9fullWidth9isLoading25loadingAccessibilityLabel6action5labelACyxGAA0cD4ToneO_AA0cD8EmphasisOAA0C11ControlSizeOS2bSSyycxyXEtcfc",
+      "target": "s:8Atom63UI10AtomButtonV",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI10AtomButtonV7variant4size9fullWidth9isLoading25loadingAccessibilityLabel6action5labelACyxGAA0cD7VariantO_AA0C11ControlSizeOS2bSSyycxyXEtcfc",
+      "target": "s:8Atom63UI10AtomButtonV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomButtonVAA05SwiftB04TextVRszrlE_4tone8emphasis4size9fullWidth9isLoading25loadingAccessibilityLabel6actionACyAFGSS_AA0cD4ToneOAA0cD8EmphasisOAA0C11ControlSizeOS2bSSyyctcfc",
       "target": "s:8Atom63UI10AtomButtonV",
       "kind": "memberOf"
     },
@@ -3483,12 +3605,22 @@
       "kind": "conformsTo"
     },
     {
+      "source": "s:8Atom63UI13AtomBadgeToneO4infoyA2CmF",
+      "target": "s:8Atom63UI13AtomBadgeToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI13AtomBadgeToneO5erroryA2CmF",
+      "target": "s:8Atom63UI13AtomBadgeToneO",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI13AtomBadgeToneO6accentyA2CmF",
       "target": "s:8Atom63UI13AtomBadgeToneO",
       "kind": "memberOf"
     },
     {
-      "source": "s:8Atom63UI13AtomBadgeToneO6dangeryA2CmF",
+      "source": "s:8Atom63UI13AtomBadgeToneO6dangerACvpZ",
       "target": "s:8Atom63UI13AtomBadgeToneO",
       "kind": "memberOf"
     },
@@ -3565,6 +3697,36 @@
     {
       "source": "s:8Atom63UI14AtomAsyncImageV4bodyQrvp",
       "target": "s:8Atom63UI14AtomAsyncImageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomButtonToneO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomButtonToneO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomButtonToneO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomButtonToneO11destructiveyA2CmF",
+      "target": "s:8Atom63UI14AtomButtonToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomButtonToneO7neutralyA2CmF",
+      "target": "s:8Atom63UI14AtomButtonToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomButtonToneO7primaryyA2CmF",
+      "target": "s:8Atom63UI14AtomButtonToneO",
       "kind": "memberOf"
     },
     {
@@ -3820,6 +3982,26 @@
     {
       "source": "s:8Atom63UI14AtomWidgetSizeO7columnsSivp",
       "target": "s:8Atom63UI14AtomWidgetSizeO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomButtonStyleV",
+      "target": "external:ButtonStyle",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomButtonStyleV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomButtonStyleV4tone8emphasis4sizeAcA0cD4ToneO_AA0cD8EmphasisOAA0C11ControlSizeOtcfc",
+      "target": "s:8Atom63UI15AtomButtonStyleV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomButtonStyleV8makeBody13configurationQr05SwiftB00dE13ConfigurationV_tF",
+      "target": "s:8Atom63UI15AtomButtonStyleV",
       "kind": "memberOf"
     },
     {
@@ -4570,6 +4752,41 @@
     {
       "source": "s:8Atom63UI17AtomSectionHeaderV4bodyQrvp",
       "target": "s:8Atom63UI17AtomSectionHeaderV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomButtonEmphasisO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomButtonEmphasisO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomButtonEmphasisO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomButtonEmphasisO4softyA2CmF",
+      "target": "s:8Atom63UI18AtomButtonEmphasisO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomButtonEmphasisO5ghostyA2CmF",
+      "target": "s:8Atom63UI18AtomButtonEmphasisO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomButtonEmphasisO5solidyA2CmF",
+      "target": "s:8Atom63UI18AtomButtonEmphasisO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomButtonEmphasisO7outlineyA2CmF",
+      "target": "s:8Atom63UI18AtomButtonEmphasisO",
       "kind": "memberOf"
     },
     {
