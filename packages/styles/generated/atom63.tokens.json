@@ -61,9 +61,9 @@
   ],
   "summary": {
     "sourceFiles": 56,
-    "declarations": 1821,
+    "declarations": 1823,
     "uniqueCssVariables": 1141,
-    "figmaMappedDeclarations": 1760
+    "figmaMappedDeclarations": 1762
   },
   "entries": [
     {
@@ -3355,6 +3355,38 @@
       "lifecycle": "preview",
       "aliases": ["--a63-brand-700"],
       "scope": "[data-a63-brand='b3']"
+    },
+    {
+      "name": "a63-brand-text",
+      "cssVar": "--a63-brand-text",
+      "type": "color",
+      "value": "var(--a63-brand-700)",
+      "sourceFile": "packages/styles/src/tokens/brand-action.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "brand/text",
+        "mode": "brand: b4"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-brand-700"],
+      "scope": "[data-a63-brand='b4']"
+    },
+    {
+      "name": "a63-brand-text",
+      "cssVar": "--a63-brand-text",
+      "type": "color",
+      "value": "var(--a63-brand-700)",
+      "sourceFile": "packages/styles/src/tokens/brand-action.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "brand/text",
+        "mode": "brand: b6"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-brand-700"],
+      "scope": "[data-a63-brand='b6']"
     },
     {
       "name": "a63-category-amber",
