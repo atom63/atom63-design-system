@@ -29,6 +29,9 @@ template carries `@atom63/figma` as a dev dependency and tells people and agents
 `@atom63/figma`" ("The site template takes `@atom63/figma` as a dev dependency only") and
 "Code to Figma". Plans 1–3 are merged.
 
+**Status (2026-10-19):** Tasks 1 and 2 are merged (atom63/atom63-design-system#135). Publishing
+is deferred until the user decides to release, so Tasks 3 and 4 wait.
+
 **Decisions this plan makes inside the spec:**
 
 - **Colors match each other, not Chrome.** Chrome converts OKLCH with lower precision. The CSS
@@ -40,9 +43,12 @@ template carries `@atom63/figma` as a dev dependency and tells people and agents
 - **Old plugin files update once.** A file that the plugin wrote before this change holds a
   browser-computed `--primary-foreground`. One sync updates it, and the next sync plans nothing.
   `--sidebar-primary-foreground` is an alias of it, so it does not change.
-- **Publishing is a human step.** `@atom63/figma` is not on npm yet. It is published by merging
-  the changesets release pull request ("chore: version packages"). That release also publishes
-  the other packages with pending changesets. The executor stops and asks before this step.
+- **Publishing is a human step.** `@atom63/figma` is not on npm yet, and the release workflow
+  publishes only the packages in `scripts/design-system/published-packages.mjs`. So a maintainer
+  first publishes it once by hand (`pnpm release:bootstrap packages/figma`), then a pull request
+  adds it to that list. After that, merging the changesets release pull request ("chore: version
+  packages") publishes it with the other packages that have pending changesets. The executor stops
+  and asks before each human step.
 - **The template copy stays in `@atom63/figma`.** `template:pull <template-dir>` refreshes it.
   The template's `AGENTS.md` says to run it after token changes in the template repository.
 
@@ -646,17 +652,50 @@ Push the branch and open the pull request against `main`. The user merges it aft
 
 ---
 
-### Task 3: Publish `@atom63/figma` as a beta (human step)
+### Task 3: Publish `@atom63/figma` as a beta (human steps)
 
-- [ ] **Step 1: Confirm what the release carries**
+The release workflow publishes only the packages listed in
+`scripts/design-system/published-packages.mjs` and in `PUBLISHED_PACKAGES` in
+`.github/workflows/release-beta.yml`. `@atom63/figma` is in neither, and npm has no
+`@atom63/figma` yet, so a trusted publisher cannot be added to it. Merging the release pull request
+alone bumps its version without publishing it. Do not add it to the lists before step 1: the
+workflow would fail on it, and the other packages would not publish either.
+
+- [ ] **Step 1: First publish, by the user**
+
+Ask the user to run, in their own terminal (it needs `npm login` and two-factor authentication):
+
+```bash
+pnpm release:bootstrap packages/figma --dry-run
+pnpm release:bootstrap packages/figma
+```
+
+The script builds the package, publishes its current version to the `beta` tag and adds this
+repository's GitHub Actions trusted publisher (see `docs/design-system/release-automation.md`).
+
+Run: `npm view @atom63/figma dist-tags`
+Expected: `beta` points at the version on `main`.
+
+- [ ] **Step 2: Add the package to the release lists**
+
+Add `'packages/figma'` to the end of `publishedPackageDirs` in
+`scripts/design-system/published-packages.mjs`, and `packages/figma` to the end of
+`PUBLISHED_PACKAGES` in `.github/workflows/release-beta.yml`. `@atom63/figma` depends on no other
+workspace package at run time, so the end of the list is in dependency order.
+
+Run: `node --test scripts/design-system/lib/published-packages.test.mjs`
+Expected: PASS.
+
+Commit with an empty changeset (`pnpm changeset --empty`), open the pull request, and merge it
+after CI is green.
+
+- [ ] **Step 3: Confirm what the release carries, then stop and ask**
 
 Run: `gh pr list --search "chore: version packages" --state open` and
 `gh pr view <number> --json body -q .body`.
 
-Expected: after Tasks 1 and 2 merge, the release pull request lists `@atom63/figma@0.1.0-beta.<n>`.
-It also lists the other packages that have pending changesets.
-
-- [ ] **Step 2: Stop and ask**
+Expected: the release pull request lists `@atom63/figma@0.1.0-beta.<n>` and the other packages
+that have pending changesets.
 
 Tell the user, in Chinese:
 
@@ -666,7 +705,7 @@ Tell the user, in Chinese:
 
 Wait for the user to merge it, or to say so. Do not merge it yourself without that go-ahead.
 
-- [ ] **Step 3: Confirm the publish**
+- [ ] **Step 4: Confirm the publish**
 
 Run: `npm view @atom63/figma dist-tags`
 Expected: `beta` points at the new version. Note the version for Task 4.
