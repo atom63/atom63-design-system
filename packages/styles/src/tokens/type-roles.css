@@ -1,0 +1,60 @@
+/*
+ * Generated from src/tokens/type-roles.resolver.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
+ *
+ * Text roles, named after the Apple HIG text styles so one intent maps to every platform. Each
+ * role takes a step of the web type scale (and so follows the window size and type scale) and
+ * records its iOS text style in $extensions["io.atom63.platforms"]; on iOS the role uses that
+ * Font.TextStyle and Dynamic Type. -strong is the emphasized weight: bold for the three largest
+ * titles, semibold for the rest. Web sizes follow web conventions (body is 15px here, 17pt on
+ * iOS); the role, not the number, is what stays the same.
+ * The roles are declared on :root and on every [data-window-size] scope, where the
+ * steps they read are redeclared, so a role inside an OS window takes that window's sizes.
+ */
+:root,
+[data-window-size] {
+  --a63-type-large-title-font-size: var(--typography-6xl-font-size);
+  --a63-type-large-title-line-height: var(--typography-6xl-line-height);
+  --a63-type-large-title-font-weight: 400;
+  --a63-type-large-title-font-weight-strong: 700;
+  --a63-type-title-1-font-size: var(--typography-5xl-font-size);
+  --a63-type-title-1-line-height: var(--typography-5xl-line-height);
+  --a63-type-title-1-font-weight: 400;
+  --a63-type-title-1-font-weight-strong: 700;
+  --a63-type-title-2-font-size: var(--typography-3xl-font-size);
+  --a63-type-title-2-line-height: var(--typography-3xl-line-height);
+  --a63-type-title-2-font-weight: 400;
+  --a63-type-title-2-font-weight-strong: 700;
+  --a63-type-title-3-font-size: var(--typography-2xl-font-size);
+  --a63-type-title-3-line-height: var(--typography-2xl-line-height);
+  --a63-type-title-3-font-weight: 400;
+  --a63-type-title-3-font-weight-strong: 600;
+  --a63-type-headline-font-size: var(--typography-base-font-size);
+  --a63-type-headline-line-height: var(--typography-base-line-height);
+  --a63-type-headline-font-weight: 600;
+  --a63-type-headline-font-weight-strong: 600;
+  --a63-type-body-font-size: var(--typography-base-font-size);
+  --a63-type-body-line-height: var(--typography-base-line-height);
+  --a63-type-body-font-weight: 400;
+  --a63-type-body-font-weight-strong: 600;
+  --a63-type-callout-font-size: var(--typography-base-font-size);
+  --a63-type-callout-line-height: var(--typography-base-line-height);
+  --a63-type-callout-font-weight: 400;
+  --a63-type-callout-font-weight-strong: 600;
+  --a63-type-subhead-font-size: var(--typography-sm-font-size);
+  --a63-type-subhead-line-height: var(--typography-sm-line-height);
+  --a63-type-subhead-font-weight: 400;
+  --a63-type-subhead-font-weight-strong: 600;
+  --a63-type-footnote-font-size: var(--typography-xs-font-size);
+  --a63-type-footnote-line-height: var(--typography-xs-line-height);
+  --a63-type-footnote-font-weight: 400;
+  --a63-type-footnote-font-weight-strong: 600;
+  --a63-type-caption-1-font-size: var(--typography-xs-font-size);
+  --a63-type-caption-1-line-height: var(--typography-xs-line-height);
+  --a63-type-caption-1-font-weight: 400;
+  --a63-type-caption-1-font-weight-strong: 600;
+  --a63-type-caption-2-font-size: var(--typography-2xs-font-size);
+  --a63-type-caption-2-line-height: var(--typography-2xs-line-height);
+  --a63-type-caption-2-font-weight: 400;
+  --a63-type-caption-2-font-weight-strong: 600;
+}

@@ -6,6 +6,30 @@
       "sources": [
         {
           "typography": {
+            "2xs": {
+              "font": {
+                "size": {
+                  "$value": {
+                    "value": 11,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$value": {
+                    "value": 13,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
             "xs": {
               "font": {
                 "size": {
