@@ -23,6 +23,13 @@ const sdkPath = execFileSync('xcrun', ['--sdk', 'macosx', '--show-sdk-path'], {
   encoding: 'utf8',
 }).trim()
 const symbolGraphDirectory = join(packageRoot, '.build', 'atom63-symbolgraph')
+// Older SwiftPM writes the module into `<bin>/Modules`; Swift 6.4 writes it into `<bin>`.
+const moduleDirectory = [join(buildDirectory, 'Modules'), buildDirectory].find(directory =>
+  existsSync(join(directory, 'Atom63UI.swiftmodule'))
+)
+if (!moduleDirectory) {
+  throw new Error(`Atom63UI.swiftmodule is not in ${buildDirectory} or its Modules folder`)
+}
 
 rmSync(symbolGraphDirectory, { recursive: true, force: true })
 mkdirSync(symbolGraphDirectory, { recursive: true })
@@ -33,7 +40,7 @@ execFileSync(
     '-module-name',
     'Atom63UI',
     '-I',
-    join(buildDirectory, 'Modules'),
+    moduleDirectory,
     '-target',
     targetInfo.target.triple,
     '-sdk',
