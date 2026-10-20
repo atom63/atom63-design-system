@@ -6,10 +6,15 @@
  * semantic layer, so shadcn-based components keep working without making those
  * names part of the core foundation. Import via `@atom63/styles/compat/shadcn`;
  * NOT part of the default bundle. Light and dark are resolved by the --a63-*
- * tokens, so every alias is mode-agnostic.
+ * tokens. A var() in a custom property resolves where it is declared, so the
+ * aliases are declared on every mode scope too: a nested .dark subtree gets its
+ * own values.
  */
 
-:root {
+:root,
+.light,
+.dark,
+[data-a63-mode] {
   /* Surfaces and text */
   --background: var(--a63-surface-page);
   --foreground: var(--a63-text-primary);
