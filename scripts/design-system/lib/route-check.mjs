@@ -6,11 +6,12 @@
  *
  * Needs Playwright's Chromium, and `vite` resolvable from `appDir`.
  */
-import { spawn } from 'node:child_process'
 import { createServer } from 'node:net'
 
 import axe from 'axe-core'
 import { chromium } from 'playwright'
+
+import { spawnCommand, stopCommand } from './command.mjs'
 
 const VIEWPORTS = {
   desktop: { width: 1280, height: 800 },
@@ -30,7 +31,7 @@ const freePort = () =>
 
 async function preview(appDir) {
   const port = await freePort()
-  const child = spawn(
+  const child = spawnCommand(
     'pnpm',
     ['exec', 'vite', 'preview', '--port', String(port), '--strictPort', '--host', '127.0.0.1'],
     { cwd: appDir, stdio: 'ignore' }
@@ -38,13 +39,13 @@ async function preview(appDir) {
   const url = `http://127.0.0.1:${port}`
   for (let attempt = 0; attempt < 60; attempt++) {
     try {
-      if ((await fetch(url)).ok) return { url, stop: () => child.kill('SIGTERM') }
+      if ((await fetch(url)).ok) return { url, stop: () => stopCommand(child) }
     } catch {
       // not up yet
     }
     await new Promise(resolve => setTimeout(resolve, 500))
   }
-  child.kill('SIGTERM')
+  stopCommand(child)
   throw new Error('vite preview did not start')
 }
 

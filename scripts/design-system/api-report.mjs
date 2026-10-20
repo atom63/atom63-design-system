@@ -63,6 +63,8 @@ try {
         configObject: {
           projectFolder,
           mainEntryPointFilePath: entryPath,
+          // API Extractor writes CRLF by default; the repo stores text as LF.
+          newlineKind: 'lf',
           compiler: { overrideTsconfig: { compilerOptions, files: [entryPath] } },
           apiReport: {
             enabled: true,

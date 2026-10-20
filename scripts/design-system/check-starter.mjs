@@ -12,7 +12,6 @@
  *
  * Usage: node scripts/design-system/check-starter.mjs [--kind <kind>] [--shadcn] [--keep]
  */
-import { execFileSync, spawn } from 'node:child_process'
 import { createReadStream, existsSync } from 'node:fs'
 import { createServer } from 'node:http'
 import { mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
@@ -22,6 +21,7 @@ import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
 import { kinds, planProject, writeProject } from '../../packages/create/src/generate.mjs'
+import { execCommandSync, spawnCommand } from './lib/command.mjs'
 import { scanCss, scanSource } from './lib/craft-rules.mjs'
 import { pnpmOverridesYaml } from './lib/pnpm-overrides.mjs'
 import { checkRoutes } from './lib/route-check.mjs'
@@ -47,7 +47,7 @@ const tarballs = path.join(work, 'tarballs')
 
 const run = (command, args, cwd) => {
   process.stdout.write(`\n$ ${command} ${args.join(' ')}\n`)
-  execFileSync(command, args, { cwd, stdio: 'inherit', env: { ...process.env, CI: 'true' } })
+  execCommandSync(command, args, { cwd, stdio: 'inherit', env: { ...process.env, CI: 'true' } })
 }
 
 /** Serve a directory over HTTP on a free local port. */
@@ -74,7 +74,7 @@ function serveRegistry(directory) {
 const runAsync = (command, args, cwd) =>
   new Promise((resolve, reject) => {
     process.stdout.write(`\n$ ${command} ${args.join(' ')}\n`)
-    const child = spawn(command, args, {
+    const child = spawnCommand(command, args, {
       cwd,
       stdio: 'inherit',
       env: { ...process.env, CI: 'true' },
