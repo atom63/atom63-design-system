@@ -71,6 +71,146 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What a badge says, independent of any platform: its tone (the kind of status or meaning) and its emphasis (how strongly it is drawn). The palette hues are a web extension for categories that carry no status.",
+    "axes": {
+      "tone": ["neutral", "primary", "info", "success", "warning", "error"],
+      "emphasis": ["solid", "soft", "outline"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "variant": {
+            "list": "variants",
+            "map": {
+              "default": {
+                "tone": "neutral",
+                "emphasis": "solid"
+              },
+              "primary": {
+                "tone": "primary",
+                "emphasis": "solid"
+              },
+              "secondary": {
+                "tone": "neutral",
+                "emphasis": "soft"
+              },
+              "outline": {
+                "tone": "neutral",
+                "emphasis": "outline"
+              },
+              "destructive": {
+                "tone": "error",
+                "emphasis": "solid"
+              },
+              "error": {
+                "tone": "error",
+                "emphasis": "soft"
+              },
+              "info": {
+                "tone": "info",
+                "emphasis": "soft"
+              },
+              "success": {
+                "tone": "success",
+                "emphasis": "soft"
+              },
+              "warning": {
+                "tone": "warning",
+                "emphasis": "soft"
+              }
+            },
+            "extensions": {
+              "glass": {
+                "description": "A translucent surface with a hairline, for badges over imagery."
+              },
+              "muted": {
+                "description": "A quieter neutral on the muted surface."
+              },
+              "accent": {
+                "description": "A neutral on the control hover surface."
+              },
+              "red": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              },
+              "orange": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              },
+              "amber": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              },
+              "yellow": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              },
+              "lime": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              },
+              "green": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              },
+              "emerald": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              },
+              "teal": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              },
+              "cyan": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              },
+              "sky": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              },
+              "blue": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              },
+              "indigo": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              },
+              "violet": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              },
+              "purple": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              },
+              "fuchsia": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              },
+              "pink": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              },
+              "rose": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              },
+              "neutral": {
+                "description": "A palette hue for a category with no status.",
+                "group": "hue"
+              }
+            }
+          }
+        }
+      }
+    },
+    "stateAliases": {
+      "resting": "rest"
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "variants",
     "catalogItem": "badge",

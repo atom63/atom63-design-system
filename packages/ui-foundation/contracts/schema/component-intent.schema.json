@@ -62,6 +62,9 @@
         "additionalProperties": false
       }
     },
+    "intent": {
+      "$ref": "#/$defs/intent"
+    },
     "crossRenderer": {
       "$ref": "#/$defs/crossRenderer"
     }
@@ -356,6 +359,161 @@
       },
       "minItems": 1,
       "uniqueItems": true
+    },
+    "intent": {
+      "description": "What the component is for, independent of any platform: semantic axes (tone, emphasis, content), sizes with their geometry per platform, and how each platform maps its own API onto them. Values only one platform draws are that platform's extensions.",
+      "type": "object",
+      "properties": {
+        "description": {
+          "$ref": "#/$defs/description"
+        },
+        "axes": {
+          "type": "object",
+          "propertyNames": {
+            "$ref": "#/$defs/key"
+          },
+          "additionalProperties": {
+            "$ref": "#/$defs/strings"
+          }
+        },
+        "sizes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["platforms"],
+            "properties": {
+              "labelTypographyRole": {
+                "description": "The text role of the label at this size.",
+                "enum": [
+                  "large-title",
+                  "title-1",
+                  "title-2",
+                  "title-3",
+                  "headline",
+                  "body",
+                  "callout",
+                  "subhead",
+                  "footnote",
+                  "caption-1",
+                  "caption-2"
+                ]
+              },
+              "platforms": {
+                "type": "object",
+                "propertyNames": {
+                  "enum": ["web", "ios"]
+                },
+                "additionalProperties": {
+                  "type": "object",
+                  "required": ["visualHeight"],
+                  "properties": {
+                    "visualHeight": {
+                      "description": "The token that sets the rendered height on this platform.",
+                      "type": "string",
+                      "pattern": "^--a63-[a-z0-9-]+$"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "platforms": {
+          "type": "object",
+          "propertyNames": {
+            "enum": ["web", "ios"]
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "minHitTarget": {
+                "description": "The interaction floor in px or pt: a number, or one per input (pointer, touch).",
+                "oneOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "object",
+                    "required": ["pointer", "touch"],
+                    "properties": {
+                      "pointer": {
+                        "type": "number"
+                      },
+                      "touch": {
+                        "type": "number"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "props": {
+                "description": "How each prop of this platform maps onto the intent.",
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "required": ["list", "map", "extensions"],
+                  "properties": {
+                    "list": {
+                      "description": "The list holding the prop values.",
+                      "$ref": "#/$defs/key"
+                    },
+                    "map": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "extensions": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "object",
+                        "required": ["description"],
+                        "properties": {
+                          "description": {
+                            "$ref": "#/$defs/description"
+                          },
+                          "deprecatedFor": {
+                            "description": "The value to use instead.",
+                            "type": "string"
+                          },
+                          "group": {
+                            "description": "A family of extensions, such as the palette hues.",
+                            "type": "string"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "extensionProps": {
+                "description": "Props only this platform has, with what they do.",
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "stateAliases": {
+          "description": "States whose names differ from the canonical ones, mapped to them. Renaming them waits for a breaking release.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
     }
   }
 }

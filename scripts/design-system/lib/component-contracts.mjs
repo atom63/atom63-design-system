@@ -220,6 +220,64 @@ export function resolvedComponent(sources, source) {
     tokenSlots: named('tokenSlots'),
     visualArchetypes: named('visualArchetypes'),
     ...(contract.accessibility ? { accessibility: contract.accessibility } : {}),
+    ...(source.doc.intent ? { intent: source.doc.intent } : {}),
     ...(source.doc.crossRenderer ? { crossRenderer: source.doc.crossRenderer } : {}),
   }
+}
+
+/**
+ * What is wrong with a component's intent layer: every value of a mapped web
+ * prop must be mapped or listed as an extension exactly once, mapped values
+ * must be values of the intent axes and sizes, and a deprecated extension must
+ * name another value of the same prop.
+ */
+export function intentProblems(sources, source) {
+  const intent = source.doc.intent
+  if (!intent) return []
+  const problems = []
+  const where = `${source.id} intent`
+  const axes = {
+    ...(intent.axes ?? {}),
+    ...(intent.sizes ? { size: Object.keys(intent.sizes) } : {}),
+  }
+  const [main] = sections(source)
+  for (const [platform, spec] of Object.entries(intent.platforms ?? {})) {
+    for (const [prop, { list, map = {}, extensions = {} }] of Object.entries(spec.props ?? {})) {
+      const values = listValues(listInfo(main, list)) ?? []
+      for (const value of values) {
+        const count = Number(value in map) + Number(value in extensions)
+        if (count !== 1) {
+          problems.push(
+            `${where}: ${platform} ${prop} "${value}" is ${count ? 'both mapped and an extension' : 'neither mapped nor an extension'}`
+          )
+        }
+      }
+      for (const value of [...Object.keys(map), ...Object.keys(extensions)]) {
+        if (!values.includes(value))
+          problems.push(`${where}: ${platform} ${prop} "${value}" is not one of ${list}`)
+      }
+      for (const [value, target] of Object.entries(map)) {
+        for (const [axis, axisValue] of Object.entries(target)) {
+          if (!axes[axis]?.includes(axisValue)) {
+            problems.push(
+              `${where}: ${platform} ${prop} "${value}" maps to unknown ${axis} "${axisValue}"`
+            )
+          }
+        }
+      }
+      for (const [value, extension] of Object.entries(extensions)) {
+        if (extension.deprecatedFor && !values.includes(extension.deprecatedFor)) {
+          problems.push(
+            `${where}: ${platform} ${prop} "${value}" is deprecated for unknown "${extension.deprecatedFor}"`
+          )
+        }
+      }
+    }
+  }
+  for (const [alias, canonical] of Object.entries(intent.stateAliases ?? {})) {
+    const states = main.lists.states ? listValues(listInfo(main, 'states')) : []
+    if (!states.includes(alias)) problems.push(`${where}: state alias "${alias}" is not a state`)
+    if (alias === canonical) problems.push(`${where}: state alias "${alias}" names itself`)
+  }
+  return problems
 }

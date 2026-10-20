@@ -19,6 +19,7 @@ import * as prettier from 'prettier'
 import {
   contractFields,
   contractsDir,
+  intentProblems,
   listInfo,
   loadContractSources,
   pascal,
@@ -213,6 +214,13 @@ outputs.set(
 )
 
 let stale = false
+for (const source of sources.values()) {
+  for (const problem of intentProblems(sources, source)) {
+    process.stderr.write(`${problem}
+`)
+    stale = true
+  }
+}
 for (const name of readdirSync(componentsDir)) {
   if (![...sources.values()].some(source => source.name === name)) {
     process.stderr.write(`src/components/${name} has no source in ${contractsDir}\n`)

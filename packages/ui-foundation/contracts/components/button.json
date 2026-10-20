@@ -65,6 +65,156 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What a button is for, independent of any platform: its tone (what kind of action), its emphasis (how strongly it is drawn), its size and whether it shows a label or only an icon. Each platform maps its own API onto these; values only one platform draws are that platform's extensions.",
+    "axes": {
+      "tone": ["neutral", "primary", "destructive"],
+      "emphasis": ["solid", "soft", "outline", "ghost"],
+      "content": ["label", "icon-only"]
+    },
+    "sizes": {
+      "sm": {
+        "labelTypographyRole": "subhead",
+        "platforms": {
+          "web": {
+            "visualHeight": "--a63-control-height-sm"
+          },
+          "ios": {
+            "visualHeight": "--a63-control-height-xs"
+          }
+        }
+      },
+      "md": {
+        "labelTypographyRole": "body",
+        "platforms": {
+          "web": {
+            "visualHeight": "--a63-control-height-md"
+          },
+          "ios": {
+            "visualHeight": "--a63-control-height-md"
+          }
+        }
+      },
+      "lg": {
+        "labelTypographyRole": "headline",
+        "platforms": {
+          "web": {
+            "visualHeight": "--a63-control-height-lg"
+          },
+          "ios": {
+            "visualHeight": "--a63-control-height-lg"
+          }
+        }
+      }
+    },
+    "platforms": {
+      "web": {
+        "minHitTarget": {
+          "pointer": 24,
+          "touch": 44
+        },
+        "props": {
+          "variant": {
+            "list": "variants",
+            "map": {
+              "default": {
+                "tone": "neutral",
+                "emphasis": "solid"
+              },
+              "primary": {
+                "tone": "primary",
+                "emphasis": "solid"
+              },
+              "secondary": {
+                "tone": "neutral",
+                "emphasis": "soft"
+              },
+              "outline": {
+                "tone": "neutral",
+                "emphasis": "outline"
+              },
+              "ghost": {
+                "tone": "neutral",
+                "emphasis": "ghost"
+              },
+              "destructive": {
+                "tone": "destructive",
+                "emphasis": "solid"
+              },
+              "destructive-outline": {
+                "tone": "destructive",
+                "emphasis": "soft"
+              }
+            },
+            "extensions": {
+              "link": {
+                "description": "Drawn as an inline text link. Kept out of emphasis: the intent stays minimal and iOS has no matching style."
+              },
+              "overlay": {
+                "description": "For controls drawn over photos or video, on the on-media tokens."
+              },
+              "glass": {
+                "description": "The earlier name of overlay.",
+                "deprecatedFor": "overlay"
+              }
+            }
+          },
+          "size": {
+            "list": "sizes",
+            "map": {
+              "sm": {
+                "size": "sm",
+                "content": "label"
+              },
+              "md": {
+                "size": "md",
+                "content": "label"
+              },
+              "lg": {
+                "size": "lg",
+                "content": "label"
+              },
+              "icon-sm": {
+                "size": "sm",
+                "content": "icon-only"
+              },
+              "icon": {
+                "size": "md",
+                "content": "icon-only"
+              },
+              "icon-lg": {
+                "size": "lg",
+                "content": "icon-only"
+              }
+            },
+            "extensions": {
+              "xs": {
+                "description": "A web-only step below sm."
+              },
+              "xl": {
+                "description": "A web-only step above lg."
+              },
+              "tile": {
+                "description": "A square tile with the icon above the label."
+              },
+              "icon-xs": {
+                "description": "An icon-only button at the xs step."
+              },
+              "icon-xl": {
+                "description": "An icon-only button at the xl step."
+              }
+            }
+          }
+        }
+      },
+      "ios": {
+        "minHitTarget": 44
+      }
+    },
+    "stateAliases": {
+      "focusVisible": "focus-visible"
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "button",
