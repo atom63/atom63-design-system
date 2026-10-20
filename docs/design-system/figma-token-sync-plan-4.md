@@ -32,6 +32,17 @@ template carries `@atom63/figma` as a dev dependency and tells people and agents
 **Status (2026-10-19):** Tasks 1 and 2 are merged (atom63/atom63-design-system#135). Publishing
 is deferred until the user decides to release, so Tasks 3 and 4 wait.
 
+The merged engine passed the real-Figma checks of Task 4 step 6, run from the repository's CLI
+instead of the template's dev dependency:
+
+- **New file `FYQvwjFhq7HdySCnob3y7s`:** `sync-1.js` created all 389 variables and `sync-2.js`
+  created all 20 styles, with no font fallbacks; both verifications and both check scripts
+  reported no creates and no updates.
+- **Plan-3 plugin file `viGpRvBkjOAngVvkbMHy4p`:** a read-only check planned one update and 388
+  unchanged; the sync updated `--primary-foreground` only, and its verification reported 389
+  unchanged. `--sidebar-primary-foreground` stayed an alias, and the 20 styles the plugin made
+  were unchanged.
+
 **Decisions this plan makes inside the spec:**
 
 - **Colors match each other, not Chrome.** Chrome converts OKLCH with lower precision. The CSS
