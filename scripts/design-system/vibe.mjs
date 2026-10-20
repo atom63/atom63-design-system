@@ -20,6 +20,7 @@
  * Usage: node scripts/design-system/vibe.mjs [--brief <id>] [--arms ds,plain]
  *   [--model <id>] [--dry-run] [--keep] [--yes]
  */
+import { spawn } from 'node:child_process'
 import {
   cpSync,
   existsSync,
@@ -158,15 +159,19 @@ function snapshot(directory, prefix = '') {
   return files
 }
 
-/** `claude -p` with JSON output; resolves with the parsed result. */
+/**
+ * `claude -p` with JSON output; resolves with the parsed result. Started
+ * directly, not through lib/command.mjs: `claude` is not a `.cmd` shim, and its
+ * multi-line prompts and JSON flags cannot pass through cmd.exe intact.
+ */
 function claude(args, cwd) {
   return new Promise((resolve, reject) => {
-    const child = spawnCommand('claude', args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] })
+    const child = spawn('claude', args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] })
     let stdout = ''
     let stderr = ''
     child.stdout.on('data', chunk => (stdout += chunk))
     child.stderr.on('data', chunk => (stderr += chunk))
-    const timer = setTimeout(() => stopCommand(child), agentTimeoutMs)
+    const timer = setTimeout(() => child.kill('SIGTERM'), agentTimeoutMs)
     child.on('close', code => {
       clearTimeout(timer)
       try {
