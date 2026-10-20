@@ -187,6 +187,11 @@ function buildSubpathRows(inventory, supportPolicy) {
         priority = 'P0'
         stableDecision =
           'Do not promise stable compatibility without browser/media lifecycle evidence or preview labeling.'
+      } else if (entry.subpath === './calendar') {
+        recommendedAction = 'assign-owner-and-evidence'
+        priority = 'P0'
+        stableDecision =
+          'Keep the import path public, but do not promise stable compatibility until date interaction and react-day-picker dependency evidence are recorded.'
       } else if (['./layout', './theme'].includes(entry.subpath)) {
         recommendedAction = 'document-subpath-contract'
         priority = 'P1'
@@ -322,9 +327,11 @@ function validateDecisionRegister(register, sourceRows, subpathRows) {
       ['monitor-high-risk', 'preview-experimental-candidate'].includes(matrixEntry.row.blockingTier)
     const riskySubpath =
       matrixEntry.type === 'public-subpath' &&
-      ['keep-preview-labeled', 'keep-preview-subpath-or-add-evidence'].includes(
-        matrixEntry.row.recommendedAction
-      )
+      [
+        'assign-owner-and-evidence',
+        'keep-preview-labeled',
+        'keep-preview-subpath-or-add-evidence',
+      ].includes(matrixEntry.row.recommendedAction)
     if (stableApproved && (riskySource || riskySubpath)) {
       validateStringArray(decision.evidence, `${path}.evidence`)
       assert(

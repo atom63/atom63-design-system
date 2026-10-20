@@ -32,7 +32,6 @@ import { ControllerProps } from 'react-hook-form';
 import { CopyButtonSize } from '@atom63/ui-foundation';
 import { CopyButtonVariant } from '@atom63/ui-foundation';
 import { CrossRendererContractId } from '@atom63/ui-foundation';
-import { DayPicker } from 'react-day-picker';
 import { Density } from '@atom63/ui-foundation';
 import { DesignLanguage } from '@atom63/ui-foundation';
 import { DestinationKind } from '@atom63/ui-foundation';
@@ -459,12 +458,6 @@ export interface ButtonProps extends useRender.ComponentProps<'button'> {
     // (undocumented)
     variant?: ButtonVariant;
 }
-
-// @public (undocumented)
-export function Calendar(input: CalendarProps): React$1.ReactElement;
-
-// @public (undocumented)
-export type CalendarProps = React$1.ComponentProps<typeof DayPicker>;
 
 // @public
 export function capColorForContrast(r: number, g: number, b: number): string;

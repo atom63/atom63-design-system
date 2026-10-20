@@ -24,6 +24,7 @@ const packages = {
   'packages/ui-foundation': { 'ui-foundation': 'dist/index.d.ts' },
   'packages/ui-react': {
     'ui-react': 'dist/index.d.ts',
+    'ui-react.calendar': 'dist/calendar/index.d.ts',
     'ui-react.layout': 'dist/layout/index.d.ts',
     'ui-react.media': 'dist/media/index.d.ts',
     'ui-react.media-lightbox': 'dist/media/media-lightbox/parts/index.d.ts',

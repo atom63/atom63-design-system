@@ -135,6 +135,9 @@ jobs:
       - name: Check React UI bundle size
         run: pnpm check:ui-react-size
 
+      - name: Check React UI root entry dependencies
+        run: pnpm check:ui-react-root-deps
+
       - name: Smoke-test packed packages
         run: pnpm check:ds-pack-smoke
 
