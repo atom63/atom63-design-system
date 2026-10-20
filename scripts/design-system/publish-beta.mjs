@@ -10,13 +10,13 @@
  *
  * Usage: node scripts/design-system/publish-beta.mjs [--dry-run]
  */
-import { execFileSync } from 'node:child_process'
 import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
+import { execCommandSync } from './lib/command.mjs'
 import { publishedPackageDirs } from './published-packages.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
@@ -26,7 +26,7 @@ const tag = 'beta'
 
 function isPublished(name, version) {
   try {
-    execFileSync('npm', ['view', `${name}@${version}`, 'version'], {
+    execCommandSync('npm', ['view', `${name}@${version}`, 'version'], {
       stdio: ['ignore', 'pipe', 'ignore'],
     })
     return true
@@ -60,7 +60,7 @@ try {
     }
 
     const before = new Set(readdirSync(outDir))
-    execFileSync('pnpm', ['pack', '--pack-destination', outDir], {
+    execCommandSync('pnpm', ['pack', '--pack-destination', outDir], {
       cwd: packageDir,
       stdio: ['ignore', 'ignore', 'inherit'],
     })
@@ -70,7 +70,7 @@ try {
     const args = ['publish', path.join(outDir, tarball), '--tag', tag, '--access', 'public']
     if (dryRun) args.push('--dry-run')
     process.stdout.write(`${dryRun ? 'dry-run ' : ''}publish ${name}@${version} --tag ${tag}\n`)
-    execFileSync('npm', args, { cwd: packageDir, stdio: 'inherit' })
+    execCommandSync('npm', args, { cwd: packageDir, stdio: 'inherit' })
     published += 1
   }
 } finally {

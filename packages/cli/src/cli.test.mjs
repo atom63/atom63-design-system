@@ -129,8 +129,8 @@ describe('atom63 copy', () => {
     const { exitCode, envelope } = json(['copy', 'list-page', dir])
     assert.equal(exitCode, 0)
     const written = envelope.data.written.map(file => path.resolve(file))
-    assert.ok(written.some(file => file.endsWith('pages/list-page/list-page.tsx')))
-    assert.ok(written.some(file => file.endsWith('blocks/empty-state/empty-state.tsx')))
+    assert.ok(written.some(file => file.endsWith(path.join('pages/list-page/list-page.tsx'))))
+    assert.ok(written.some(file => file.endsWith(path.join('blocks/empty-state/empty-state.tsx'))))
     for (const file of written) {
       const source = readFileSync(file, 'utf8')
       for (const [, specifier] of source.matchAll(/from '(\.[^']+)'/g)) {

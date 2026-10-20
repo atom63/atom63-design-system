@@ -17,12 +17,12 @@
  *
  * Usage: pnpm release:bootstrap packages/inform packages/agent [--dry-run]
  */
-import { execFileSync } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
+import { execCommandSync } from './lib/command.mjs'
 import { publishedPackageDirs } from './published-packages.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
@@ -36,12 +36,12 @@ const dirs = args.filter(arg => !arg.startsWith('--'))
 
 const run = (command, commandArgs, cwd = root) => {
   process.stdout.write(`\n$ ${command} ${commandArgs.join(' ')}\n`)
-  if (!dryRun) execFileSync(command, commandArgs, { cwd, stdio: 'inherit' })
+  if (!dryRun) execCommandSync(command, commandArgs, { cwd, stdio: 'inherit' })
 }
 
 const onNpm = (name, version) => {
   try {
-    execFileSync('npm', ['view', `${name}@${version}`, 'version'], { stdio: 'pipe' })
+    execCommandSync('npm', ['view', `${name}@${version}`, 'version'], { stdio: 'pipe' })
     return true
   } catch {
     return false
@@ -59,7 +59,7 @@ if (dirs.length === 0)
   fail('Name the package directories, e.g. pnpm release:bootstrap packages/inform')
 
 const packages = dirs.map(dir => {
-  const relative = path.relative(root, path.resolve(root, dir))
+  const relative = path.relative(root, path.resolve(root, dir)).split(path.sep).join('/')
   const manifest = JSON.parse(readFileSync(path.join(root, relative, 'package.json'), 'utf8'))
   if (manifest.private) fail(`${manifest.name} is private and is never published`)
   if (publishedPackageDirs.includes(relative)) {
@@ -70,7 +70,7 @@ const packages = dirs.map(dir => {
 
 if (!dryRun) {
   try {
-    const user = execFileSync('npm', ['whoami'], { stdio: 'pipe' }).toString().trim()
+    const user = execCommandSync('npm', ['whoami'], { stdio: 'pipe' }).toString().trim()
     process.stdout.write(`npm user: ${user}\n`)
   } catch {
     fail('Not logged in to npm. Run `npm login` first.')
