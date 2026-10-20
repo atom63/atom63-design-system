@@ -32,6 +32,9 @@
   --surface-dark-10: var(--color-n1-dark-10);
   --surface-dark-11: var(--color-n1-dark-11);
   --surface-dark-12: var(--color-n1-dark-12);
+  /* An opaque dark neutral for media areas (players, lightboxes, posters). It follows the
+     surface palette but not the mode: media reads on dark in both. */
+  --a63-media-surface: var(--surface-dark-2);
 }
 
 [data-a63-surface='n2'] {
@@ -59,6 +62,7 @@
   --surface-dark-10: var(--color-n2-dark-10);
   --surface-dark-11: var(--color-n2-dark-11);
   --surface-dark-12: var(--color-n2-dark-12);
+  --a63-media-surface: var(--surface-dark-2);
 }
 
 [data-a63-surface='n3'] {
@@ -86,6 +90,7 @@
   --surface-dark-10: var(--color-n3-dark-10);
   --surface-dark-11: var(--color-n3-dark-11);
   --surface-dark-12: var(--color-n3-dark-12);
+  --a63-media-surface: var(--surface-dark-2);
 }
 
 [data-a63-surface='n4'] {
@@ -113,6 +118,7 @@
   --surface-dark-10: var(--color-n4-dark-10);
   --surface-dark-11: var(--color-n4-dark-11);
   --surface-dark-12: var(--color-n4-dark-12);
+  --a63-media-surface: var(--surface-dark-2);
 }
 
 [data-a63-surface='n5'] {
@@ -140,6 +146,7 @@
   --surface-dark-10: var(--color-n5-dark-10);
   --surface-dark-11: var(--color-n5-dark-11);
   --surface-dark-12: var(--color-n5-dark-12);
+  --a63-media-surface: var(--surface-dark-2);
 }
 
 [data-a63-surface='n6'] {
@@ -167,4 +174,5 @@
   --surface-dark-10: var(--color-n6-dark-10);
   --surface-dark-11: var(--color-n6-dark-11);
   --surface-dark-12: var(--color-n6-dark-12);
+  --a63-media-surface: var(--surface-dark-2);
 }

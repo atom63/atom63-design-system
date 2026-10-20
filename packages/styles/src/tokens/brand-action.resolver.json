@@ -91,6 +91,32 @@
               }
             }
           }
+        ],
+        "b4": [
+          {
+            "a63": {
+              "brand": {
+                "text": {
+                  "$type": "color",
+                  "$value": "{a63.brand.700}",
+                  "$description": "Pink (b4) keeps 600 for fills, but its 600 as text on the selected wash over\nthe Aqua page sits at 4.5:1 exactly."
+                }
+              }
+            }
+          }
+        ],
+        "b6": [
+          {
+            "a63": {
+              "brand": {
+                "text": {
+                  "$type": "color",
+                  "$value": "{a63.brand.700}",
+                  "$description": "Red (b6) keeps 600 for fills, but its 600 as text on the selected wash is\nabout 4.1–4.5:1 in light mode."
+                }
+              }
+            }
+          }
         ]
       }
     }

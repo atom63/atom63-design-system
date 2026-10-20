@@ -96,95 +96,95 @@
   --badge-fg: var(--a63-action-danger-foreground);
 }
 .a63-Badge[data-variant='error'] {
-  --badge-bg: color-mix(in oklch, var(--a63-action-danger) 12%, transparent);
-  --badge-fg: var(--a63-badge-error-foreground);
+  --badge-bg: var(--a63-action-danger-subtle);
+  --badge-fg: var(--a63-action-danger-subtle-foreground);
 }
 .a63-Badge[data-variant='info'] {
-  --badge-bg: color-mix(in oklch, var(--a63-status-info) 14%, transparent);
-  --badge-fg: var(--a63-badge-info-foreground);
+  --badge-bg: var(--a63-status-info-subtle);
+  --badge-fg: var(--a63-status-info-subtle-foreground);
 }
 .a63-Badge[data-variant='success'] {
-  --badge-bg: color-mix(in oklch, var(--a63-status-success) 14%, transparent);
-  --badge-fg: var(--a63-badge-success-foreground);
+  --badge-bg: var(--a63-status-success-subtle);
+  --badge-fg: var(--a63-status-success-subtle-foreground);
 }
 .a63-Badge[data-variant='warning'] {
-  --badge-bg: color-mix(in oklch, var(--a63-status-warning) 14%, transparent);
-  --badge-fg: var(--a63-badge-warning-foreground);
+  --badge-bg: var(--a63-status-warning-subtle);
+  --badge-fg: var(--a63-status-warning-subtle-foreground);
 }
 
-/* ── Palette variants (category hues via --a63-badge-* contract) ───────── */
-/* Tonal chip: low-alpha accent + mode-aware foreground from styles contract. */
+/* ── Palette variants (category hues) ───────────────────────────────────── */
+/* Tonal chip: the semantic category tint (--a63-category-<hue>-subtle) and its text. */
 .a63-Badge[data-variant='red'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-red-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-red-foreground);
+  --badge-bg: var(--a63-category-red-subtle);
+  --badge-fg: var(--a63-category-red-subtle-foreground);
 }
 .a63-Badge[data-variant='orange'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-orange-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-orange-foreground);
+  --badge-bg: var(--a63-category-orange-subtle);
+  --badge-fg: var(--a63-category-orange-subtle-foreground);
 }
 .a63-Badge[data-variant='amber'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-amber-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-amber-foreground);
+  --badge-bg: var(--a63-category-amber-subtle);
+  --badge-fg: var(--a63-category-amber-subtle-foreground);
 }
 .a63-Badge[data-variant='yellow'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-yellow-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-yellow-foreground);
+  --badge-bg: var(--a63-category-yellow-subtle);
+  --badge-fg: var(--a63-category-yellow-subtle-foreground);
 }
 .a63-Badge[data-variant='lime'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-lime-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-lime-foreground);
+  --badge-bg: var(--a63-category-lime-subtle);
+  --badge-fg: var(--a63-category-lime-subtle-foreground);
 }
 .a63-Badge[data-variant='green'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-green-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-green-foreground);
+  --badge-bg: var(--a63-category-green-subtle);
+  --badge-fg: var(--a63-category-green-subtle-foreground);
 }
 .a63-Badge[data-variant='emerald'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-emerald-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-emerald-foreground);
+  --badge-bg: var(--a63-category-emerald-subtle);
+  --badge-fg: var(--a63-category-emerald-subtle-foreground);
 }
 .a63-Badge[data-variant='teal'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-teal-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-teal-foreground);
+  --badge-bg: var(--a63-category-teal-subtle);
+  --badge-fg: var(--a63-category-teal-subtle-foreground);
 }
 .a63-Badge[data-variant='cyan'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-cyan-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-cyan-foreground);
+  --badge-bg: var(--a63-category-cyan-subtle);
+  --badge-fg: var(--a63-category-cyan-subtle-foreground);
 }
 .a63-Badge[data-variant='sky'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-sky-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-sky-foreground);
+  --badge-bg: var(--a63-category-sky-subtle);
+  --badge-fg: var(--a63-category-sky-subtle-foreground);
 }
 .a63-Badge[data-variant='blue'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-blue-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-blue-foreground);
+  --badge-bg: var(--a63-category-blue-subtle);
+  --badge-fg: var(--a63-category-blue-subtle-foreground);
 }
 .a63-Badge[data-variant='indigo'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-indigo-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-indigo-foreground);
+  --badge-bg: var(--a63-category-indigo-subtle);
+  --badge-fg: var(--a63-category-indigo-subtle-foreground);
 }
 .a63-Badge[data-variant='violet'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-violet-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-violet-foreground);
+  --badge-bg: var(--a63-category-violet-subtle);
+  --badge-fg: var(--a63-category-violet-subtle-foreground);
 }
 .a63-Badge[data-variant='purple'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-purple-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-purple-foreground);
+  --badge-bg: var(--a63-category-purple-subtle);
+  --badge-fg: var(--a63-category-purple-subtle-foreground);
 }
 .a63-Badge[data-variant='fuchsia'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-fuchsia-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-fuchsia-foreground);
+  --badge-bg: var(--a63-category-fuchsia-subtle);
+  --badge-fg: var(--a63-category-fuchsia-subtle-foreground);
 }
 .a63-Badge[data-variant='pink'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-pink-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-pink-foreground);
+  --badge-bg: var(--a63-category-pink-subtle);
+  --badge-fg: var(--a63-category-pink-subtle-foreground);
 }
 .a63-Badge[data-variant='rose'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-rose-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-rose-foreground);
+  --badge-bg: var(--a63-category-rose-subtle);
+  --badge-fg: var(--a63-category-rose-subtle-foreground);
 }
 .a63-Badge[data-variant='neutral'] {
-  --badge-bg: color-mix(in oklch, var(--a63-badge-neutral-accent) 15%, transparent);
-  --badge-fg: var(--a63-badge-neutral-foreground);
+  --badge-bg: var(--a63-category-neutral-subtle);
+  --badge-fg: var(--a63-category-neutral-subtle-foreground);
 }
 
 /* Interactive badges (rendered as button/a) get a pointer + hover feedback. */

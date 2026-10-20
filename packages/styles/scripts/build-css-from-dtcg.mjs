@@ -176,6 +176,14 @@ function* walk(group, trail, inheritedType) {
     if (key.startsWith('$') && key !== '$root') continue
     const name = (key === '$root' ? trail : [...trail, key]).join('-')
     if (Object.hasOwn(node, '$value')) {
+      // A token cannot also be a group: anything nested under it would be
+      // dropped without a word. Nest under `$root` instead.
+      const children = Object.keys(node).filter(child => !child.startsWith('$'))
+      if (children.length > 0) {
+        throw new Error(
+          `${name}: a token cannot have children (${children.join(', ')}); move its value to $root`
+        )
+      }
       const tokenType = node.$type ?? type
       if (!tokenType) throw new Error(`${name}: no $type on the token or its groups`)
       yield [

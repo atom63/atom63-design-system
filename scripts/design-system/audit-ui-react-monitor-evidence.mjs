@@ -200,7 +200,7 @@ function readJson(relativePath) {
 }
 
 function collectMonitorGroups(inventory) {
-  return inventory.rootExports
+  return [...inventory.rootExports, ...inventory.subpathExports.flatMap(entry => entry.exports)]
     .map(group => {
       const symbols = [...group.values, ...group.types].filter(
         entry => entry.proposedTier === 'monitor-high-risk'

@@ -1,6 +1,6 @@
 {
   "name": "@atom63/styles",
-  "version": "0.1.0-beta.6",
+  "version": "0.1.0-beta.7",
   "description": "CSS tokens, themes, contracts, and utilities for the Atom63 design system",
   "license": "MIT",
   "repository": {
@@ -103,8 +103,10 @@
     "*.css"
   ],
   "scripts": {
-    "generate:tokens": "node scripts/build-css-from-dtcg.mjs && node scripts/generate-token-manifest.mjs && node scripts/generate-figma-sync.mjs && node scripts/generate-z-layers.mjs",
+    "generate:tokens": "node scripts/build-css-from-dtcg.mjs && node scripts/generate-token-manifest.mjs && node scripts/generate-role-bridges.mjs && node scripts/generate-figma-sync.mjs && node scripts/generate-z-layers.mjs",
     "check:tokens": "node scripts/check-token-manifest.mjs",
+    "generate:roles": "node scripts/generate-role-bridges.mjs",
+    "check:roles": "node scripts/generate-role-bridges.mjs --check",
     "lint": "eslint . --cache --max-warnings 0",
     "test": "vitest run",
     "generate:figma": "node scripts/generate-figma-sync.mjs",

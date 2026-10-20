@@ -40,19 +40,6 @@
       ]
     },
     {
-      "id": "source:./components/calendar",
-      "rowType": "root-source-family",
-      "source": "./components/calendar",
-      "ownerLane": "forms-quality",
-      "status": "monitor-until-evidence",
-      "decision": "keep-beta-root-unchanged-and-monitor",
-      "rationale": "Calendar remains public in beta while browser, mobile, keyboard, and assistive-technology evidence is incomplete.",
-      "requiredBeforeStable": [
-        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
-        "Approve an evidenced stable root contract or move or remove the family from the stable root with migration notes."
-      ]
-    },
-    {
       "id": "source:./components/card",
       "rowType": "root-source-family",
       "source": "./components/card",
@@ -418,6 +405,19 @@
       "requiredBeforeStable": [
         "Execute the documented beta-to-stable root removal or move to preview with migration notes.",
         "Alternatively record YZ or design-engineering approval plus stable-support evidence before changing this decision to stable-approved."
+      ]
+    },
+    {
+      "id": "subpath:./calendar",
+      "rowType": "public-subpath",
+      "subpath": "./calendar",
+      "ownerLane": "forms-quality",
+      "status": "monitor-until-evidence",
+      "decision": "keep-public-subpath-and-monitor",
+      "rationale": "Calendar moved off the root to its own subpath so the root entry does not load react-day-picker. It remains public in beta while browser, mobile, keyboard, and assistive-technology evidence is incomplete.",
+      "requiredBeforeStable": [
+        "Record a named accountable owner, adopter or retention rationale, and the matrix-required browser and interaction evidence.",
+        "Approve an evidenced stable subpath contract, or remove the subpath with migration notes."
       ]
     },
     {
