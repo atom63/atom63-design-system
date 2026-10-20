@@ -23,6 +23,10 @@ Figma variables for designers.
 | [`@atom63/ui-react`](./packages/ui-react)        | Web      | React components, layout primitives, media, and theme controls      |
 | [`@atom63/styles`](./packages/styles)            | Web      | CSS tokens, themes, contracts, and utilities                        |
 | [`@atom63/ui-foundation`](./packages/ui-foundation) | Any   | Platform-neutral TypeScript contracts and environment types         |
+| [`@atom63/mdx`](./packages/mdx)                  | Web      | MDX prose components and blocks                                     |
+| [`@atom63/inform`](./packages/inform)            | Web      | Messages, onboarding and announcements: registry, arbiter, surfaces |
+| [`@atom63/agent`](./packages/agent)              | Web      | Headless agent (chat) runtime and React hooks                       |
+| [`@atom63/widgets`](./packages/widgets)          | Web      | Widget foundation: units, card, surface, states, hosted shell       |
 | [`Atom63UI`](./packages/ui-ios)                  | iOS      | SwiftUI components generated from the same tokens, via SwiftPM      |
 | [Figma plugin](./apps/figma-plugin)              | Figma    | Syncs the tokens into Figma variables, one collection per theme axis |
 

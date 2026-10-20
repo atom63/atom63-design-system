@@ -8,20 +8,25 @@ agent about to change tokens, themes, contracts, or shared UI.
 
 Executable styles package: [`packages/styles/README.md`](../../packages/styles/README.md).
 Runnable adopter example: [`examples/vite-basic`](../../examples/vite-basic).
-Current direction and progress: [roadmap.md](./roadmap.md) (phases A–E) and
+Current direction and progress: [roadmap.md](./roadmap.md) (phases A–E, done),
+[roadmap-next.md](./roadmap-next.md) (next phase, draft) and
 [token-single-source.md](./token-single-source.md) (DTCG as the only token source).
 
 ## What this system is
 
-Three first-wave packages own the extracted public-beta surface:
+Seven packages are published on the npm `beta` tag:
 
 | Package | Role |
 | --- | --- |
 | `@atom63/styles` | CSS: shared scales, semantic roles, contracts, themes, OS chrome styles, adapters |
 | `@atom63/ui-foundation` | TypeScript contracts + personalization axis SSOT (`axes.ts`) |
 | `@atom63/ui-react` | React renderer, recipes, layout/media/theme subpaths, and appearance UI |
+| `@atom63/mdx` | MDX prose components and blocks |
+| `@atom63/inform` | The inform pattern: message registry, arbiter and surfaces |
+| `@atom63/agent` | The headless agent (chat) runtime and its React hooks |
+| `@atom63/widgets` | The widget foundation: units, card, surface, states and hosted shell |
 
-Product apps such as `atom63-vite` should eventually consume these packages from the published npm beta instead of redefining or importing their source workspace directly.
+Product apps, such as the ones in `atom63-vite`, install these from npm rather than from this workspace.
 
 ## Mental model (5 minutes)
 
@@ -50,7 +55,7 @@ Full policy: [authoring-surfaces.md](./authoring-surfaces.md) ← **canonical fo
 ### Humans (new teammate)
 
 1. This page
-2. [roadmap.md](./roadmap.md) — direction, phases and what is done
+2. [roadmap.md](./roadmap.md) — direction, phases and what is done; [roadmap-next.md](./roadmap-next.md) for the next phase
 3. [authoring-surfaces.md](./authoring-surfaces.md) — where to edit
 4. Design-system site: Architecture → Overview, then Foundation → Designing in code
 5. [cross-renderer-contracts.md](./cross-renderer-contracts.md) for React/SwiftUI parity
