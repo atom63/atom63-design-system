@@ -1,5 +1,35 @@
 # @atom63/styles
 
+## 0.1.0-beta.7
+
+### Minor Changes
+
+- [#125](https://github.com/atom63/atom63-design-system/pull/125) [`5047bc7`](https://github.com/atom63/atom63-design-system/commit/5047bc7b069223eb1949cbe4ce323bd7275a85cc) Thanks [@atom63](https://github.com/atom63)! - The Figma sync model (`@atom63/styles/figma-sync.json`) and the token manifest name the Figma collections without the `Atom63` prefix: `Theme`, `Contract`, `Semantic`, `Foundation`, `Mode`, `Brand`, `Surface`, `Design Language`, `Input`, `Density`, `Radius`, `Type Scale`, `Font` and `Window Size`.
+
+- [#122](https://github.com/atom63/atom63-design-system/pull/122) [`6c2845b`](https://github.com/atom63/atom63-design-system/commit/6c2845b4d4faeee76c0a08c10e289d6c7518c337) Thanks [@atom63](https://github.com/atom63)! - The Figma sync model (`@atom63/styles/figma-sync.json`) writes a color at an opacity, `color-mix(… var(--x) N%, transparent)`, as a composed value `{ "composed": { "alias": "--x", "opacity": N } }`, so it keeps its alias in every mode. `--a63-focus-ring` moves back to the Semantic collection this way. Every variable also carries `codeSyntax` (`var(--token)`) and Figma `scopes` from the rules in `scripts/lib/figma-sync-rules.mjs`. The iOS token graph resolves composed values the same way.
+
+- [#150](https://github.com/atom63/atom63-design-system/pull/150) [`7ab659e`](https://github.com/atom63/atom63-design-system/commit/7ab659e77f34a4fe6195ef91a4102a1784931d5c) Thanks [@atom63](https://github.com/atom63)! - Semantic roles now come from one table, and the role set covers what shadcn leaves out.
+  
+  - `src/tailwind/roles.json` maps every role to its `--a63-*` token. `generate:roles` writes the semantic block of `tailwind/theme.css` and all of `compat/shadcn.css` from it, and `check:roles` fails when they drift or a role points at an undeclared token.
+  - New roles: `destructive-foreground`, `info-foreground`, `success-foreground`, `warning-foreground`, `surface-sunken`, `selected` and `selected-foreground`, and `chart-1` to `chart-5`. New tokens behind them: `--a63-selected-background`, `--a63-selected-foreground`, `--a63-chart-1` to `--a63-chart-5` and `--a63-surface-sidebar`.
+  - `--a63-status-{info,success,warning}-foreground` use the same auto-contrast step as the primary foreground instead of white. Text on solid warning and success fills now passes AA (it was 2.15:1 to 3.95:1).
+  - `sidebar` resolves to `--a63-surface-sidebar` in both bridges: the muted surface in light mode and the page surface in dark mode. Before, the Tailwind `bg-sidebar` utility stayed on the muted surface in dark mode while `var(--sidebar)` switched to the page surface.
+  - The pink (b4) and red (b6) brands use ramp step 700 for `--a63-brand-text`, like orange (b2), so `--a63-text-accent` and `--a63-selected-foreground` stay at AA on the selected wash (b6 was 4.1:1 to 4.5:1 in light mode).
+  - `compat/shadcn.css` declares its aliases on `:root`, `.light`, `.dark` and `[data-a63-mode]`, so a nested `.dark` subtree gets its own values.
+
+- [#151](https://github.com/atom63/atom63-design-system/pull/151) [`a0c90bd`](https://github.com/atom63/atom63-design-system/commit/a0c90bddfc4901472bea054c45f29ae8a0626c51) Thanks [@atom63](https://github.com/atom63)! - Tints and category colors are semantic roles.
+  
+  - `@atom63/styles` adds `-subtle` and `-subtle-foreground` pairs for destructive, info, success and warning (`--a63-action-danger-subtle`, `--a63-status-*-subtle`), and `--a63-category-<hue>`, `-subtle` and `-subtle-foreground` for all 22 palette hues, including slate, gray, zinc and stone, which had no token before. Every tint is a 14% wash mixed in oklab. The roles table exposes them as `destructive-subtle`, `info-subtle`, `success-subtle`, `warning-subtle` and `category-<hue>(-subtle)(-foreground)`.
+  - The amber category uses the warning ramp, so amber chips and warning chips are one hue.
+  - The `--a63-badge-*` contract tokens stay as aliases of the new roles.
+  - `@atom63/ui-react`: Badge reads the semantic tints. Palette chips move from a 15% to a 14% tint, error chips from 12% to 14%, and amber chip text from amber-800 to warning-800 (amber-400 to warning-400 in dark mode).
+
+### Patch Changes
+
+- [#92](https://github.com/atom63/atom63-design-system/pull/92) [`b9170fd`](https://github.com/atom63/atom63-design-system/commit/b9170fd68cc540f22166cdd973f016778d86d5e6) Thanks [@atom63](https://github.com/atom63)! - Add `--a63-badge-error-foreground` (danger 700 in light mode, danger 400 in dark mode) and use it for the `error` Badge text. The badge used the danger action fill as its text color, which fell to about 2.5:1 contrast on its tint in every dark theme.
+
+- [#145](https://github.com/atom63/atom63-design-system/pull/145) [`8087c69`](https://github.com/atom63/atom63-design-system/commit/8087c69bcce189266b1c90221987e654bab72f21) Thanks [@atom63](https://github.com/atom63)! - `--a63-focus-ring` reaches WCAG 1.4.11's 3:1 against the control and the page in every brand, theme and mode: brand step 600 in light mode and 400 in dark mode. It was the brand's 500 at 30% opacity, about 1.3–1.7:1 on every surface. The token moves from the brand actions to the mode semantics (in Figma, from the Semantic collection to Mode), so it follows a nested light or dark scope.
+
 ## 0.1.0-beta.6
 
 ### Minor Changes

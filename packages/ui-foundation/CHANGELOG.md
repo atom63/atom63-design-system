@@ -1,5 +1,15 @@
 # @atom63/ui-foundation
 
+## 0.1.1-beta.4
+
+### Patch Changes
+
+- [#103](https://github.com/atom63/atom63-design-system/pull/103) [`51070ad`](https://github.com/atom63/atom63-design-system/commit/51070ad6fdff5cd0666ff960b652dbee3c04a411) Thanks [@atom63](https://github.com/atom63)! - Add `ios` sections to the accordion and modal dialog pattern contracts. The accordion checks its disabled header and that activation reveals and hides the content, since iOS does not report expanded state to XCUITest; the dialog checks that the sheet opens named by its title and closes back to the view that opened it.
+
+- [#101](https://github.com/atom63/atom63-design-system/pull/101) [`31fbb11`](https://github.com/atom63/atom63-design-system/commit/31fbb1165725b5b02abb2fefdd425882fdd6feaf) Thanks [@atom63](https://github.com/atom63)! - Add an optional `ios` section to the APG pattern contracts, with the `A11yIos*` types: the XCUITest element type of each part, facts that hold when the pattern's catalog showcase opens, and tap interactions with their results. The switch, select-only combobox, menu button and alert dialog contracts now carry one.
+
+- [#102](https://github.com/atom63/atom63-design-system/pull/102) [`3d8dde4`](https://github.com/atom63/atom63-design-system/commit/3d8dde4f4ff22f529e4df60869df05bef74b8287) Thanks [@atom63](https://github.com/atom63)! - Add `ios` sections to the radio and tabs pattern contracts. The tabs cross-renderer contract now names a segmented `Picker` with the selected content as its SwiftUI renderer for in-page sections, keeping `TabView` for app-level sections, and the radio contract says its inline `Picker` sits inside a `Form` or `List`.
+
 ## 0.1.1-beta.3
 
 ### Patch Changes
