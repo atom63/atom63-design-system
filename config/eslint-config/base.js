@@ -17,38 +17,16 @@ export const sharedIgnores = [
   // tsup writes and removes bundled config shims during builds. CI can run build
   // and lint concurrently across packages, so ESLint must not scan the transient file.
   '**/tsup.config.bundled_*.mjs',
-  // Same hazard, whole directory: `<app>/public` is Vite's verbatim static
-  // payload, and the portfolio asset sync rebuilds parts of it — `rm -rf` then
-  // re-copy — from each app's `prebuild`. The nightly guardrail runs
-  // `turbo run lint typecheck test build`, which puts that rebuild alongside
-  // the same package's `eslint .`; the walk then reaches a directory the sync
-  // has just deleted and the run dies on ENOENT, naming whichever asset lost
-  // the race.
-  //
-  // Nothing is given up by skipping it. Those trees are gitignored build
-  // mirrors, like `dist`, and `public` holds no lintable source at all: a
-  // `.js` file placed there cannot be linted anyway, because tsconfig includes
-  // only `src` and the project service rejects it outright. Today it is 1739
-  // files that produce zero findings.
+  // `<app>/public` is Vite's verbatim static payload (the docs site serves the
+  // generated shadcn registry from it). It holds no lintable source: tsconfig
+  // includes only `src`, so the project service would reject a `.js` file there.
   '**/public/**',
   '**/*.gen.ts',
-  // The GENERATED knowledge base, by exact path. A bare `**/knowledge-base.ts`
-  // also swallowed apps/atom63.io/src/services/knowledge-base.ts, which is a
-  // hand-written re-export barrel and should be linted.
-  '**/src/knowledge/knowledge-base.ts',
   // Ambient declarations carry no logic to lint, and packages disagree about
   // whether their tsconfig includes them — which makes `allowDefaultProject`
   // error with "included by allowDefaultProject but also found in the project
   // service" (hit on storybook's vite-env.d.ts).
   '**/*.d.ts',
-  // Scaffolding payload, not source. `packages/create-*/templates/` are
-  // uninstalled projects with their own package.json and tsconfig, copied
-  // verbatim into a NEW project — type-aware linting here sees only unresolved
-  // imports. All three create-* CLIs had declared this identically; it belongs
-  // in one place. (The only `templates/` directories in the workspace are those.)
-  '**/templates/**',
-  // Frozen, superseded code — see archive/README.md. Not linted.
-  '**/archive/**',
 ]
 
 /**
@@ -72,10 +50,8 @@ export const hardErrors = new Set([
 /**
  * RATCHET — downgrade every rule to `warn` except `hardErrors`.
  *
- * The workspace has 33 lint scripts and years of accumulated debt that Biome never
- * checked. Landing these presets as errors would wedge CI everywhere at once. So
- * everything becomes a warning, each package pins `--max-warnings <baseline>`, and
- * the count can only ever go DOWN. Burn the baselines down per package afterwards.
+ * Everything becomes a warning, each package pins `--max-warnings <baseline>`,
+ * and the count can only ever go DOWN. Burn the baselines down per package.
  */
 export function ratchet(configs) {
   return configs.map(config => {
@@ -102,9 +78,8 @@ export function ratchet(configs) {
 /**
  * Base preset — JS recommended + TYPE-AWARE TypeScript.
  *
- * Type-aware linting is the whole reason for ESLint here: Biome has no type
- * inference, so `no-floating-promises`, `no-misused-promises`, `no-base-to-string`
- * and friends are structurally invisible to it.
+ * Type-aware linting is the reason for ESLint here: `no-floating-promises`,
+ * `no-misused-promises`, `no-base-to-string` and friends need type information.
  *
  * @param {{ tsconfigRootDir: string, typeAware?: boolean }} options
  *   `typeAware: false` for packages without a tsconfig (e.g. @atom63/styles).
@@ -129,26 +104,6 @@ export function base({ tsconfigRootDir, typeAware = true }) {
               destructuredArrayIgnorePattern: '^_',
             },
           ],
-          // Architectural invariant carried over from the pre-ESLint toolchain: libraries may
-          // not depend on end-applications. Kept a HARD ERROR (see `hardErrors`) —
-          // a dependency cycle between a package and an app is a structural break,
-          // not style debt to baseline away.
-          'no-restricted-imports': [
-            'error',
-            {
-              paths: [
-                {
-                  name: '@atom63/website',
-                  message: 'Packages must not import from the end-application @atom63/website.',
-                },
-                {
-                  name: '@atom63/design-system',
-                  message:
-                    'Packages must not import from the end-application @atom63/design-system.',
-                },
-              ],
-            },
-          ],
         },
       },
       ...(typeAware
@@ -163,7 +118,7 @@ export function base({ tsconfigRootDir, typeAware = true }) {
                     // "src"), so the project service can't type them and errors with
                     // "was not found by the project service". Every package in this
                     // workspace has some, so allow them onto the default project
-                    // instead of widening 33 tsconfigs.
+                    // instead of widening every tsconfig.
                     allowDefaultProject: [
                       '*.js',
                       '*.mjs',
@@ -193,10 +148,10 @@ export function base({ tsconfigRootDir, typeAware = true }) {
                 // both cases.
                 'scripts/**',
                 'test/**',
-                // Vite build plugins + Node/dev servers. First-party code (Biome
-                // DID lint these), but they live outside the app tsconfig's
-                // `include: ["src"]`, so the project service can't type them.
-                // Lint them without type-aware rules rather than drop coverage.
+                // Vite build plugins + Node/dev servers: first-party code that
+                // lives outside the app tsconfig's `include: ["src"]`, so the
+                // project service can't type them. Lint them without type-aware
+                // rules rather than drop coverage.
                 'vite-plugins/**',
                 'server/**',
                 // Vercel serverless functions (plain .js, no tsconfig covers them).
@@ -206,10 +161,9 @@ export function base({ tsconfigRootDir, typeAware = true }) {
                 // the shared helpers beside them.
                 '.storybook/**',
                 'stories/**',
-                // Hand-written JS-with-JSDoc data modules (@atom63/ui's prop-table
-                // `*.doc.mjs`). tsconfig uses `include: ["src"]` without `allowJs`,
-                // so TypeScript never sees them and the project service fails to
-                // parse them. Lint them untyped rather than ignore them outright.
+                // Plain .mjs scripts and data modules. tsconfig uses `include: ["src"]`
+                // without `allowJs`, so TypeScript never sees them and the project
+                // service fails to parse them. Lint them untyped rather than ignore them.
                 '**/*.mjs',
               ],
               ...tseslint.configs.disableTypeChecked,
