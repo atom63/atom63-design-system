@@ -26,7 +26,7 @@ entry, which builds Atom63's tokens, styles and components together (D8).
 | --- | --- | --- |
 | D1 | Where do tokens come from? | Both entries: build a system from scratch in the plugin, or import a project's token CSS. |
 | D2 | Who is the source of truth once code exists? | Code. Figma edits go back to code through an agent; code changes are synced to Figma. No two-way merge. |
-| D3 | How do code changes reach Figma? | An agent runs the sync through the Figma MCP server. The plugin's CSS import is the fallback without MCP. |
+| D3 | How do code changes reach Figma? | Through one engine, `@atom63/figma`, with two entries by user. Repositories and agents run the sync through the Figma MCP server; people without an agent use the plugin's Create and Import. New capabilities go into the engine, so both entries get them (roadmap N10). |
 | D4 | How are variables named in Figma? | By meaning, with no `Atom63` or `--a63-` prefix. The CSS name lives in code syntax. |
 | D5 | How is a variable matched to its token? | By its web code syntax (`var(--token)`), not plugin data. |
 | D6 | What does the first version write? | Variables, text styles and effect styles. Components come in a later phase. Plan [figma-components-plan-1](./figma-components-plan-1.md) adds the Button component set, bound to these variables. |
