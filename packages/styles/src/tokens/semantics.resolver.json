@@ -71,6 +71,339 @@
                 "$value": "{color.black.20}",
                 "$description": "On media — the veil over a poster while a control on it is shown."
               }
+            },
+            "category": {
+              "red": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.red.500}",
+                  "$description": "Category hues for tags, labels and charts, one per palette hue. `subtle` is a\n14% tint of the hue for chip backgrounds, mixed in oklab so tinted neutrals render\nalike in every engine; `subtle.foreground` is the text on that tint (step 700 or 800\non light surfaces, 400 on dark). Amber uses the warning ramp."
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.red}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.red} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "orange": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.orange.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.orange}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.orange} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "amber": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.warning.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.amber}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.amber} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "yellow": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.yellow.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.yellow}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.yellow} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "lime": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.lime.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.lime}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.lime} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "green": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.green.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.green}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.green} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "emerald": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.emerald.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.emerald}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.emerald} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "teal": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.teal.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.teal}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.teal} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "cyan": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.cyan.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.cyan}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.cyan} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "sky": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.sky.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.sky}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.sky} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "blue": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.blue.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.blue}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.blue} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "indigo": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.indigo.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.indigo}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.indigo} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "violet": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.violet.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.violet}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.violet} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "purple": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.purple.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.purple}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.purple} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "fuchsia": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.fuchsia.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.fuchsia}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.fuchsia} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "pink": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.pink.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.pink}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.pink} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "rose": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.rose.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.rose}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.rose} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "slate": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.slate.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.slate}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.slate} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "gray": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.gray.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.gray}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.gray} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "zinc": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.zinc.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.zinc}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.zinc} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "neutral": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.neutral.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.neutral}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.neutral} 14%, transparent)"
+                    }
+                  }
+                }
+              },
+              "stone": {
+                "$root": {
+                  "$type": "color",
+                  "$value": "{color.stone.500}"
+                },
+                "subtle": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.category.stone}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.category.stone} 14%, transparent)"
+                    }
+                  }
+                }
+              }
             }
           }
         }
@@ -216,6 +549,19 @@
                     "$extensions": {
                       "io.atom63.derive": "white"
                     }
+                  },
+                  "subtle": {
+                    "$root": {
+                      "$type": "color",
+                      "$value": "{a63.action.danger}",
+                      "$extensions": {
+                        "io.atom63.derive": "color-mix(in oklab, {a63.action.danger} 14%, transparent)"
+                      }
+                    },
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.danger.700}"
+                    }
                   }
                 }
               },
@@ -233,6 +579,19 @@
                     "$extensions": {
                       "io.atom63.derive": "oklch(from {a63.status.info} clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h)"
                     }
+                  },
+                  "subtle": {
+                    "$root": {
+                      "$type": "color",
+                      "$value": "{a63.status.info}",
+                      "$extensions": {
+                        "io.atom63.derive": "color-mix(in oklab, {a63.status.info} 14%, transparent)"
+                      }
+                    },
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.info.700}"
+                    }
                   }
                 },
                 "success": {
@@ -247,6 +606,19 @@
                     "$extensions": {
                       "io.atom63.derive": "oklch(from {a63.status.success} clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h)"
                     }
+                  },
+                  "subtle": {
+                    "$root": {
+                      "$type": "color",
+                      "$value": "{a63.status.success}",
+                      "$extensions": {
+                        "io.atom63.derive": "color-mix(in oklab, {a63.status.success} 14%, transparent)"
+                      }
+                    },
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.success.700}"
+                    }
                   }
                 },
                 "warning": {
@@ -260,6 +632,19 @@
                     "$description": "Text and icons on a solid fill of this status. Same auto-contrast step as\nthe primary foreground: near-black on bright fills, near-white on dark ones.",
                     "$extensions": {
                       "io.atom63.derive": "oklch(from {a63.status.warning} clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h)"
+                    }
+                  },
+                  "subtle": {
+                    "$root": {
+                      "$type": "color",
+                      "$value": "{a63.status.warning}",
+                      "$extensions": {
+                        "io.atom63.derive": "color-mix(in oklab, {a63.status.warning} 14%, transparent)"
+                      }
+                    },
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.warning.800}"
                     }
                   }
                 }
@@ -285,6 +670,184 @@
                 "5": {
                   "$type": "color",
                   "$value": "{color.rose.500}"
+                }
+              },
+              "category": {
+                "red": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.red.700}"
+                    }
+                  }
+                },
+                "orange": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.orange.800}"
+                    }
+                  }
+                },
+                "amber": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.warning.800}"
+                    }
+                  }
+                },
+                "yellow": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.yellow.800}"
+                    }
+                  }
+                },
+                "lime": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.lime.800}"
+                    }
+                  }
+                },
+                "green": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.green.800}"
+                    }
+                  }
+                },
+                "emerald": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.emerald.800}"
+                    }
+                  }
+                },
+                "teal": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.teal.800}"
+                    }
+                  }
+                },
+                "cyan": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.cyan.800}"
+                    }
+                  }
+                },
+                "sky": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.sky.700}"
+                    }
+                  }
+                },
+                "blue": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.blue.700}"
+                    }
+                  }
+                },
+                "indigo": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.indigo.700}"
+                    }
+                  }
+                },
+                "violet": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.violet.700}"
+                    }
+                  }
+                },
+                "purple": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.purple.700}"
+                    }
+                  }
+                },
+                "fuchsia": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.fuchsia.700}"
+                    }
+                  }
+                },
+                "pink": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.pink.700}"
+                    }
+                  }
+                },
+                "rose": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.rose.700}"
+                    }
+                  }
+                },
+                "slate": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.slate.700}"
+                    }
+                  }
+                },
+                "gray": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.gray.700}"
+                    }
+                  }
+                },
+                "zinc": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.zinc.700}"
+                    }
+                  }
+                },
+                "neutral": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.neutral.700}"
+                    }
+                  }
+                },
+                "stone": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.stone.700}"
+                    }
+                  }
                 }
               },
               "selected": {
@@ -419,21 +982,79 @@
                     "$extensions": {
                       "io.atom63.derive": "color-mix(in oklch, {a63.action.danger} 82%, white 8%)"
                     }
+                  },
+                  "subtle": {
+                    "$root": {
+                      "$type": "color",
+                      "$value": "{a63.action.danger}",
+                      "$extensions": {
+                        "io.atom63.derive": "color-mix(in oklab, {a63.action.danger} 14%, transparent)"
+                      }
+                    },
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.danger.400}"
+                    }
                   }
                 }
               },
               "status": {
                 "info": {
-                  "$type": "color",
-                  "$value": "{color.info.500}"
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{color.info.500}"
+                  },
+                  "subtle": {
+                    "$root": {
+                      "$type": "color",
+                      "$value": "{a63.status.info}",
+                      "$extensions": {
+                        "io.atom63.derive": "color-mix(in oklab, {a63.status.info} 14%, transparent)"
+                      }
+                    },
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.info.400}"
+                    }
+                  }
                 },
                 "success": {
-                  "$type": "color",
-                  "$value": "{color.success.500}"
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{color.success.500}"
+                  },
+                  "subtle": {
+                    "$root": {
+                      "$type": "color",
+                      "$value": "{a63.status.success}",
+                      "$extensions": {
+                        "io.atom63.derive": "color-mix(in oklab, {a63.status.success} 14%, transparent)"
+                      }
+                    },
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.success.400}"
+                    }
+                  }
                 },
                 "warning": {
-                  "$type": "color",
-                  "$value": "{color.warning.500}"
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{color.warning.500}"
+                  },
+                  "subtle": {
+                    "$root": {
+                      "$type": "color",
+                      "$value": "{a63.status.warning}",
+                      "$extensions": {
+                        "io.atom63.derive": "color-mix(in oklab, {a63.status.warning} 14%, transparent)"
+                      }
+                    },
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.warning.400}"
+                    }
+                  }
                 }
               },
               "chart": {
@@ -456,6 +1077,184 @@
                 "5": {
                   "$type": "color",
                   "$value": "{color.rose.400}"
+                }
+              },
+              "category": {
+                "red": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.red.400}"
+                    }
+                  }
+                },
+                "orange": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.orange.400}"
+                    }
+                  }
+                },
+                "amber": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.warning.400}"
+                    }
+                  }
+                },
+                "yellow": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.yellow.400}"
+                    }
+                  }
+                },
+                "lime": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.lime.400}"
+                    }
+                  }
+                },
+                "green": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.green.400}"
+                    }
+                  }
+                },
+                "emerald": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.emerald.400}"
+                    }
+                  }
+                },
+                "teal": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.teal.400}"
+                    }
+                  }
+                },
+                "cyan": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.cyan.400}"
+                    }
+                  }
+                },
+                "sky": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.sky.400}"
+                    }
+                  }
+                },
+                "blue": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.blue.400}"
+                    }
+                  }
+                },
+                "indigo": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.indigo.400}"
+                    }
+                  }
+                },
+                "violet": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.violet.400}"
+                    }
+                  }
+                },
+                "purple": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.purple.400}"
+                    }
+                  }
+                },
+                "fuchsia": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.fuchsia.400}"
+                    }
+                  }
+                },
+                "pink": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.pink.400}"
+                    }
+                  }
+                },
+                "rose": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.rose.400}"
+                    }
+                  }
+                },
+                "slate": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.slate.400}"
+                    }
+                  }
+                },
+                "gray": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.gray.400}"
+                    }
+                  }
+                },
+                "zinc": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.zinc.400}"
+                    }
+                  }
+                },
+                "neutral": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.neutral.400}"
+                    }
+                  }
+                },
+                "stone": {
+                  "subtle": {
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.stone.400}"
+                    }
+                  }
                 }
               },
               "selected": {
