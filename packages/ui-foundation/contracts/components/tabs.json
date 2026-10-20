@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "tabs",
+  "maturity": "stable",
   "description": "Faithful to prod @atom63/ui tabs.tsx: the TabsList carries a `variant` (default = a filled pill track, underline = an underline indicator, attached = borderless folder tabs) and a `size` ramp. TabsTab also takes the size so items scale with the list.",
   "lists": {
     "variants": ["default", "underline", "attached"],

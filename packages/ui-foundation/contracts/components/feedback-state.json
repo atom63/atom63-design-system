@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "feedback-state",
+  "maturity": "stable",
   "description": "FeedbackState is a status pattern hosted by another surface. Its optional actions consume the action contract; the status media carries semantic tone.",
   "lists": {
     "kinds": ["empty", "error", "loading", "not-found", "no-results", "offline", "stale"],

@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "panel-setting-button",
+  "maturity": "stable",
   "lists": {
     "states": ["off", "on", "disabled", "focus-visible"],
     "slots": ["panel-setting-button", "panel-setting-button-label"],

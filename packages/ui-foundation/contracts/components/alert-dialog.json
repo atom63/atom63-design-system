@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "alert-dialog",
+  "maturity": "stable",
   "lists": {
     "variants": ["default", "destructive", "info", "success", "warning"],
     "footerVariants": ["default", "bare"],

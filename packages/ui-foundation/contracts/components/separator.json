@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "separator",
+  "maturity": "stable",
   "description": "Faithful to prod @atom63/ui separator.tsx: a solid hairline (default) or a soft edge-to-edge gradient fade, in either orientation.",
   "lists": {
     "variants": ["default", "gradient"],

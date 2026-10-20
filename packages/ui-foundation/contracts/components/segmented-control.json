@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "segmented-control",
+  "maturity": "stable",
   "lists": {
     "sizes": ["sm", "md", "lg"],
     "variants": ["icon", "label"],

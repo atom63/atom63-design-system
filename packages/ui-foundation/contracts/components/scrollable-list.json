@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "scrollable-list",
+  "maturity": "stable",
   "lists": {
     "layouts": ["scroll", "wrap"],
     "options": ["mask", "chevrons", "draggable", "column-aligned"],

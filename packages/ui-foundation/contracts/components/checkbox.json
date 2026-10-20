@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "checkbox",
+  "maturity": "stable",
   "lists": {
     "sizes": ["sm", "md"],
     "states": ["unchecked", "checked", "indeterminate", "disabled", "invalid"],

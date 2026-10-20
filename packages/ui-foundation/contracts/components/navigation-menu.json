@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "navigation-menu",
+  "maturity": "stable",
   "lists": {
     "states": ["closed", "open", "active", "disabled", "starting", "ending"],
     "slots": [

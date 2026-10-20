@@ -10,6 +10,7 @@ import {
   loadContractSources,
   loadCrossRendererOrder,
   resolveRef,
+  resolvedComponent,
   sections,
 } from './component-contracts.mjs'
 
@@ -91,5 +92,34 @@ describe('component contract sources', () => {
     for (const name of loadCrossRendererOrder(root)) {
       assert.ok(shipped.get(`components/${name}`)?.doc.crossRenderer, name)
     }
+  })
+})
+
+describe('resolved components', () => {
+  it('joins a default to its axis, or adds the axis with the list it defaults', () => {
+    const button = {
+      id: 'components/button',
+      folder: 'components',
+      name: 'button',
+      doc: {
+        component: 'button',
+        maturity: 'stable',
+        lists: { variants: ['a', 'b'], sizes: ['sm', 'md'], slots: ['root'] },
+        contract: {
+          defaultSize: 'md',
+          defaultVariant: 'b',
+          slots: { $ref: '#/lists/slots' },
+          variants: { $ref: '#/lists/variants' },
+        },
+      },
+    }
+    const resolved = resolvedComponent(new Map([[button.id, button]]), button)
+    assert.deepEqual(resolved.axes, [
+      { name: 'variants', values: ['a', 'b'], default: 'b' },
+      { name: 'sizes', values: ['sm', 'md'], default: 'md' },
+    ])
+    assert.deepEqual(resolved.slots, ['root'])
+    assert.equal(resolved.source, 'packages/ui-foundation/contracts/components/button.json')
+    assert.equal(resolved.maturity, 'stable')
   })
 })

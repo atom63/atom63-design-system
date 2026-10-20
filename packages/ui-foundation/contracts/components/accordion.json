@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "accordion",
+  "maturity": "stable",
   "lists": {
     "iconVariants": ["chevron", "plus-minus"],
     "states": ["closed", "open", "focusVisible", "disabled"],

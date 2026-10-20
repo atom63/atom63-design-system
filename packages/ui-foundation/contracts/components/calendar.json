@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "calendar",
+  "maturity": "stable",
   "lists": {
     "selectionModes": ["single", "multiple", "range"],
     "slots": [

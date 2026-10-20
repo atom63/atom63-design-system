@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "scroll-area",
+  "maturity": "stable",
   "lists": {
     "orientations": ["vertical", "horizontal", "both"],
     "options": ["scroll-fade", "scrollbar-gutter", "show-on-hover"],

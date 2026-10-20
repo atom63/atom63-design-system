@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "breadcrumb",
+  "maturity": "stable",
   "lists": {
     "compositions": ["full", "collapsed", "custom-separator"],
     "states": ["rest", "hover", "focus", "current"],

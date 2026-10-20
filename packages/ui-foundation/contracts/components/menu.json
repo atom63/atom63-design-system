@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "menu",
+  "maturity": "stable",
   "lists": {
     "tones": ["neutral", "primary"],
     "itemVariants": ["default", "destructive"],

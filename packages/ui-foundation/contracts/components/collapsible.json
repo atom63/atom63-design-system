@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "collapsible",
+  "maturity": "stable",
   "lists": {
     "states": ["closed", "open", "starting", "ending", "disabled"],
     "slots": ["collapsible", "collapsible-trigger", "collapsible-indicator", "collapsible-content"],

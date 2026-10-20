@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "form",
+  "maturity": "stable",
   "lists": {
     "slots": ["form-item", "form-label", "form-control", "form-description", "form-message"],
     "states": ["default", "invalid"],

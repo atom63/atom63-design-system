@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "label",
+  "maturity": "stable",
   "lists": {
     "states": ["rest", "disabled", "invalid"],
     "slots": ["label"],

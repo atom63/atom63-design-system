@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "button",
+  "maturity": "stable",
   "lists": {
     "variants": [
       "default",

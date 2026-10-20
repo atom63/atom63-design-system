@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "text-ticker",
+  "maturity": "stable",
   "lists": {
     "variants": ["truncate", "marquee"],
     "states": ["fits", "overflowing", "hover", "focus-within", "autoplay", "reduced-motion"],

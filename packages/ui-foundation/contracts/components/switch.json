@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "switch",
+  "maturity": "stable",
   "lists": {
     "sizes": ["sm", "md"],
     "states": ["off", "on", "hover", "pressed", "focus-visible", "disabled"],

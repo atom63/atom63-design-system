@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "radio",
+  "maturity": "stable",
   "lists": {
     "sizes": ["sm", "md"],
     "states": ["unchecked", "checked", "focus-visible", "disabled", "invalid"],

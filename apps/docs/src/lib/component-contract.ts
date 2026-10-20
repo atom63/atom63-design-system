@@ -1,21 +1,15 @@
-import * as foundation from '@atom63/ui-foundation'
-import {
-  type A11yPatternBinding,
-  getA11yPattern,
-  getCrossRendererContract,
-  crossRendererContracts,
-  visualArchetypes,
-} from '@atom63/ui-foundation'
+import { type A11yPatternBinding, getA11yPattern, visualArchetypes } from '@atom63/ui-foundation'
+
+import contractIndex from '../../../../packages/ui-foundation/generated/component-contracts.json'
+import type { ComponentStatus } from './component-catalog'
 
 /**
- * Reads a component's contract from @atom63/ui-foundation for its docs page,
- * so the page cannot drift from the source the components and the Swift
- * renderer are generated from.
- *
- * Contract objects follow one convention: every array is an axis, named in the
- * plural (`sizes`), whose default, when it has one, sits under
- * `default<Singular>` (`defaultSize`). `slots`, `states`, `tokenSlots` and
- * `visualArchetypes` are not props, so they get their own rows.
+ * Reads a component's contract for its docs page from
+ * packages/ui-foundation/generated/component-contracts.json, which
+ * scripts/generate-component-contracts.mjs writes from the JSON contract
+ * sources with every list resolved, so the page cannot drift from the source
+ * the components and the Swift renderer are generated from. The generator
+ * decides which fields are axes and which default belongs to which axis.
  */
 
 export type ContractAxis = {
@@ -53,14 +47,28 @@ export type CrossRendererDoc = {
   swiftUIRenderer: string
 }
 
-const NON_AXIS_KEYS = new Set(['slots', 'states', 'tokenSlots', 'visualArchetypes'])
+type ResolvedContract = {
+  accessibility?: A11yPatternBinding
+  axes: ContractAxis[]
+  crossRenderer?: CrossRendererDoc
+  exportName: string
+  maturity: ComponentStatus
+  slots: string[]
+  source: string
+  states: string[]
+  tokenSlots: string[]
+  visualArchetypes: string[]
+}
+
+const contracts = (contractIndex as { components: Record<string, ResolvedContract> }).components
 
 /** The APG pattern a contract binds to in its `accessibility` field, if any. */
-function accessibilityDoc(value: unknown): AccessibilityPatternDoc | undefined {
-  if (!value || typeof value !== 'object' || !('pattern' in value)) {
+function accessibilityDoc(
+  binding: A11yPatternBinding | undefined
+): AccessibilityPatternDoc | undefined {
+  if (!binding) {
     return undefined
   }
-  const binding = value as A11yPatternBinding
   const pattern = getA11yPattern(binding.pattern)
   return {
     knownGaps: binding.knownGaps ?? [],
@@ -70,103 +78,47 @@ function accessibilityDoc(value: unknown): AccessibilityPatternDoc | undefined {
   }
 }
 
-function camelCase(slug: string): string {
-  return slug.replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase())
+/** The maturity a component's contract declares, if it has one. */
+export function getComponentMaturity(slug: string): ComponentStatus | undefined {
+  return contracts[slug]?.maturity
 }
-
-function stringValue(value: unknown): string {
-  if (typeof value === 'string') {
-    return value
-  }
-  if (value && typeof value === 'object') {
-    return Object.values(value).map(String).join(' / ')
-  }
-  return String(value)
-}
-
-function strings(value: unknown): string[] {
-  return Array.isArray(value) ? value.map(stringValue) : []
-}
-
-function defaultKey(axis: string): string {
-  const singular = axis.endsWith('s') ? axis.slice(0, -1) : axis
-  return `default${singular[0]?.toUpperCase()}${singular.slice(1)}`
-}
-
-const exports = foundation as Record<string, unknown>
-
-const crossRendererIds = new Set<string>(crossRendererContracts.map(contract => contract.id))
 
 export function getComponentContractDoc(slug: string): ComponentContractDoc | null {
-  // Most exports are the camel-cased slug, but acronyms keep their case
-  // (input-otp → inputOTPContract), so match without regard to case.
-  const wanted = `${camelCase(slug)}Contract`.toLowerCase()
-  const exportName = Object.keys(exports).find(name => name.toLowerCase() === wanted)
-  const contract = exportName ? exports[exportName] : undefined
-  if (!exportName || !contract || typeof contract !== 'object') {
+  const contract = contracts[slug]
+  if (!contract) {
     return null
   }
-  const fields = contract as Record<string, unknown>
-  const prefix = exportName.slice(0, -'Contract'.length)
 
-  const axes: ContractAxis[] = Object.entries(fields)
-    .filter(([key, value]) => Array.isArray(value) && !NON_AXIS_KEYS.has(key))
-    .map(([name, values]) => {
-      const fallback = fields[defaultKey(name)]
-      return {
-        name,
-        values: strings(values),
-        ...(fallback !== undefined ? { default: stringValue(fallback) } : {}),
-      }
-    })
-
-  // A default whose values live outside the contract object: some contracts
-  // keep the list as a sibling export (buttonSizes), others only fix a default.
-  for (const [key, fallback] of Object.entries(fields)) {
-    if (!key.startsWith('default')) continue
-    const singular = key.slice('default'.length)
-    const name = `${singular[0]?.toLowerCase()}${singular.slice(1)}s`
-    if (axes.some(axis => axis.name === name)) continue
-    axes.push({
-      name,
-      values: strings(exports[`${prefix}${singular}s`]),
-      default: stringValue(fallback),
-    })
-  }
-
-  const archetypes = strings(fields.visualArchetypes).flatMap(id => {
+  const archetypes = contract.visualArchetypes.flatMap(id => {
     const archetype = (visualArchetypes as Record<string, { description: string; label: string }>)[
       id
     ]
     return archetype ? [{ description: archetype.description, id, label: archetype.label }] : []
   })
 
-  let crossRenderer: CrossRendererDoc | undefined
-  if (crossRendererIds.has(slug)) {
-    const shared = getCrossRendererContract(slug as Parameters<typeof getCrossRendererContract>[0])
-    crossRenderer = {
-      accessibilityOutcomes: shared.accessibilityOutcomes,
-      intent: shared.intent,
-      parity: shared.parity,
-      platformAdaptations: shared.platformAdaptations,
-      requiredStates: shared.requiredStates,
-      sharedOutcomes: shared.sharedOutcomes,
-      swiftUIRenderer: shared.swiftUIRenderer,
-    }
+  const shared = contract.crossRenderer
+  const crossRenderer: CrossRendererDoc | undefined = shared && {
+    accessibilityOutcomes: shared.accessibilityOutcomes,
+    intent: shared.intent,
+    parity: shared.parity,
+    platformAdaptations: shared.platformAdaptations,
+    requiredStates: shared.requiredStates,
+    sharedOutcomes: shared.sharedOutcomes,
+    swiftUIRenderer: shared.swiftUIRenderer,
   }
 
-  const accessibility = accessibilityDoc(fields.accessibility)
+  const accessibility = accessibilityDoc(contract.accessibility)
 
   return {
     ...(accessibility ? { accessibility } : {}),
     archetypes,
-    axes,
+    axes: contract.axes,
     ...(crossRenderer ? { crossRenderer } : {}),
-    exportName,
-    slots: strings(fields.slots),
-    source: `packages/ui-foundation/src/components/${slug}/${slug}-contract.ts`,
-    states: strings(fields.states),
-    tokenSlots: strings(fields.tokenSlots),
+    exportName: contract.exportName,
+    slots: contract.slots,
+    source: contract.source,
+    states: contract.states,
+    tokenSlots: contract.tokenSlots,
   }
 }
 

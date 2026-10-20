@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "toggle-group",
+  "maturity": "stable",
   "lists": {
     "orientations": ["horizontal", "vertical"],
     "selectionModes": ["single", "multiple"],

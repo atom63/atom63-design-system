@@ -201,6 +201,10 @@ describe('catalog', () => {
 describe('iOS tier', () => {
   const names = { slug: 'stat-meter', camel: 'statMeter', pascal: 'StatMeter' }
 
+  it('starts the contract as a preview component', () => {
+    assert.equal(JSON.parse(contractSource(names, 'marker')).maturity, 'preview')
+  })
+
   it('adds a strict cross-renderer contract with scaffold outcomes', () => {
     const json = contractSource(names, 'marker')
     const contract = JSON.parse(

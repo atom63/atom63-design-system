@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "preview-card",
+  "maturity": "stable",
   "lists": {
     "states": ["closed", "open", "starting", "ending"],
     "slots": [

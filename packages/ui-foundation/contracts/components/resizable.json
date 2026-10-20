@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "resizable",
+  "maturity": "stable",
   "lists": {
     "orientations": ["horizontal", "vertical"],
     "variants": ["line", "grip"],

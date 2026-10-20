@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "connected-panel",
+  "maturity": "stable",
   "description": "An in-flow disclosure whose trigger and expanded content share one continuous surface. It consumes trigger behavior for the header row and surface chrome for the panel itself; it is not an overlay because it remains in document flow.",
   "lists": {
     "aligns": ["start", "center", "end"],

@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "autocomplete",
+  "maturity": "stable",
   "lists": {
     "sizes": ["sm", "default", "lg"],
     "slots": [

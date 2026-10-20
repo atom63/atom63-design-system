@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "marquee",
+  "maturity": "stable",
   "lists": {
     "orientations": ["horizontal", "vertical"],
     "states": ["running", "paused", "hover-paused", "reduced-motion"],

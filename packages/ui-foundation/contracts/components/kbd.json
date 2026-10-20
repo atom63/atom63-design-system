@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "kbd",
+  "maturity": "stable",
   "lists": {
     "sizes": ["sm", "md"],
     "slots": ["kbd", "kbd-group"],

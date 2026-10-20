@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "menubar",
+  "maturity": "stable",
   "lists": {
     "states": ["closed", "open", "highlighted", "disabled", "selected"],
     "slots": [

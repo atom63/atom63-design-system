@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "spinner",
+  "maturity": "stable",
   "lists": {
     "states": ["loading", "reduced-motion"],
     "slots": ["spinner"],

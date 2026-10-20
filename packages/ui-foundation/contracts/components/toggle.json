@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "toggle",
+  "maturity": "stable",
   "lists": {
     "sizes": ["sm", "md", "lg"],
     "tones": ["neutral", "accent"],

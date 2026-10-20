@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "badge",
+  "maturity": "stable",
   "description": "Solid/surface + semantic sets are faithful to prod @atom63/ui badge.tsx. Palette hues back category/tag colors via the `--a63-badge-*` contract in @atom63/styles (which references foundation --color-* primitives).",
   "lists": {
     "solidVariants": {

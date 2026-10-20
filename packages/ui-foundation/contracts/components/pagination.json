@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "pagination",
+  "maturity": "stable",
   "lists": {
     "states": ["rest", "current"],
     "slots": [

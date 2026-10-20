@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "card",
+  "maturity": "stable",
   "lists": {
     "variants": ["default", "ghost", "interactive", "overlay"],
     "paddings": ["none", "sm", "md", "lg"],

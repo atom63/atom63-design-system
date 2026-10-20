@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "animated-check",
+  "maturity": "stable",
   "lists": {
     "variants": ["animated", "static"],
     "states": ["mounting", "drawn", "reduced-motion"],

@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "destination-link",
+  "maturity": "stable",
   "lists": {
     "kinds": {
       "values": ["internal", "external"],

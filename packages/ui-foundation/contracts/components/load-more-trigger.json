@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "load-more-trigger",
+  "maturity": "stable",
   "lists": {
     "variants": ["default", "minimal", "prominent"],
     "states": ["idle", "loading", "failed", "exhausted", "hidden", "custom"],

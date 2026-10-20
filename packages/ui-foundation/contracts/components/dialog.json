@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "dialog",
+  "maturity": "stable",
   "lists": {
     "sizes": ["sm", "default", "lg"],
     "mobilePlacements": ["bottom", "center"],

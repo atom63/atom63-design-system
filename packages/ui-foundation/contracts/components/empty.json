@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "empty",
+  "maturity": "stable",
   "description": "Empty is a composed low-emphasis state surface. EmptyMedia carries its only variant axis; EmptyErrorDetail adds a disclosure action inside that surface.",
   "lists": {
     "mediaVariants": ["default", "icon"],

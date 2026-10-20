@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "field",
+  "maturity": "stable",
   "lists": {
     "orientations": ["vertical", "horizontal", "responsive"],
     "legendVariants": ["legend", "label"],

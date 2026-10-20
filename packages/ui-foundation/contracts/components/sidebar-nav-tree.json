@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "sidebar-nav-tree",
+  "maturity": "stable",
   "lists": {
     "states": ["rest", "hover", "active", "expanded", "collapsed", "focus-visible"],
     "parts": ["group", "link-item", "collapsible-item", "toggle", "sub-list", "sub-link-item"],

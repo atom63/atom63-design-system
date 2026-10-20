@@ -170,3 +170,56 @@ export function contractFields(sources, section) {
     return { field, value, primitive: typeof value }
   })
 }
+
+const describeValue = value =>
+  value !== null && typeof value === 'object'
+    ? Object.values(value).map(String).join(' / ')
+    : String(value)
+
+const NON_AXIS_FIELDS = new Set(['slots', 'states', 'tokenSlots', 'visualArchetypes'])
+
+/**
+ * A component's contract with every reference resolved, for readers that do
+ * not resolve lists themselves (the docs site and the CLI). Axes are the list
+ * fields other than slots, states, token slots and archetypes, in contract
+ * order; a default joins the axis named after it (`defaultSize` → `sizes`),
+ * or adds that axis with the values of the list it defaults.
+ */
+export function resolvedComponent(sources, source) {
+  const [main] = sections(source)
+  const fields = contractFields(sources, main)
+  const values = info => (listValues(info) ?? []).map(describeValue)
+  const listOf = field => fields.find(item => item.field === field)?.list
+  const axes = fields
+    .filter(item => item.list && item.list.kind !== 'map' && !NON_AXIS_FIELDS.has(item.field))
+    .map(item => ({ name: item.field, values: values(item.list) }))
+  for (const item of fields) {
+    const axis = /^default([A-Z]\w*)$/.exec(item.field)?.[1]
+    if (!axis || item.accessibility) continue
+    const name = `${axis.replace(/^./, letter => letter.toLowerCase())}s`
+    const existing = axes.find(candidate => candidate.name === name)
+    if (existing) existing.default = describeValue(item.value)
+    else {
+      axes.push({
+        name,
+        values: item.defaultOf ? values(item.defaultOf) : [],
+        default: describeValue(item.value),
+      })
+    }
+  }
+  const named = field => (listOf(field) ? values(listOf(field)) : [])
+  const contract = source.doc.contract ?? {}
+  return {
+    source: `${contractsDir}/${source.folder}/${source.name}.json`,
+    exportName: `${main.prefix}Contract`,
+    maturity: source.doc.maturity,
+    ...(source.doc.description ? { description: source.doc.description } : {}),
+    axes,
+    slots: named('slots'),
+    states: named('states'),
+    tokenSlots: named('tokenSlots'),
+    visualArchetypes: named('visualArchetypes'),
+    ...(contract.accessibility ? { accessibility: contract.accessibility } : {}),
+    ...(source.doc.crossRenderer ? { crossRenderer: source.doc.crossRenderer } : {}),
+  }
+}

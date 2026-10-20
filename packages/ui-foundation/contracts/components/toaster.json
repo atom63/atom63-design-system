@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "toaster",
+  "maturity": "stable",
   "lists": {
     "states": ["visible", "dismissing", "reduced-motion"],
     "tones": ["default", "info", "success", "warning", "error", "loading"],

@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "tooltip",
+  "maturity": "stable",
   "lists": {
     "sides": ["top", "right", "bottom", "left"],
     "alignments": ["start", "center", "end"],

@@ -1,6 +1,7 @@
 {
   "$schema": "../schema/component-intent.schema.json",
   "component": "skeleton",
+  "maturity": "stable",
   "lists": {
     "states": ["loading", "reduced-motion"],
     "slots": ["skeleton"],
