@@ -2,6 +2,7 @@
   "schemaVersion": 1,
   "inputs": [
     "packages/ui-react/src/index.ts",
+    "packages/ui-react/src/calendar/index.ts",
     "packages/ui-react/package.json",
     "docs/design-system/ui-react-support-policy.json"
   ],
@@ -44,13 +45,14 @@
     ]
   },
   "counts": {
-    "rootValueExports": 426,
-    "rootTypeExports": 186,
-    "packageExportKeys": 71,
+    "rootValueExports": 425,
+    "rootTypeExports": 185,
+    "packageExportKeys": 72,
     "cssExportKeys": 65
   },
   "packageExportKeys": [
     ".",
+    "./calendar",
     "./layout",
     "./media",
     "./media/lightbox",
@@ -197,6 +199,15 @@
         "@atom63/source": "./src/index.ts",
         "import": "./dist/index.js",
         "types": "./dist/index.d.ts"
+      }
+    },
+    {
+      "subpath": "./calendar",
+      "kind": "module",
+      "target": {
+        "@atom63/source": "./src/calendar/index.ts",
+        "import": "./dist/calendar/index.js",
+        "types": "./dist/calendar/index.d.ts"
       }
     },
     {
@@ -972,21 +983,6 @@
         {
           "name": "ButtonGroupSeparatorProps",
           "proposedTier": "beta-supported-core"
-        }
-      ]
-    },
-    {
-      "source": "./components/calendar",
-      "values": [
-        {
-          "name": "Calendar",
-          "proposedTier": "monitor-high-risk"
-        }
-      ],
-      "types": [
-        {
-          "name": "CalendarProps",
-          "proposedTier": "monitor-high-risk"
         }
       ]
     },
@@ -3526,7 +3522,7 @@
       ]
     },
     {
-      "source": "sonner",
+      "source": "./sonner",
       "values": [
         {
           "name": "toast",
@@ -3534,6 +3530,29 @@
         }
       ],
       "types": []
+    }
+  ],
+  "subpathExports": [
+    {
+      "subpath": "./calendar",
+      "source": "packages/ui-react/src/calendar/index.ts",
+      "exports": [
+        {
+          "source": "./components/calendar",
+          "values": [
+            {
+              "name": "Calendar",
+              "proposedTier": "monitor-high-risk"
+            }
+          ],
+          "types": [
+            {
+              "name": "CalendarProps",
+              "proposedTier": "monitor-high-risk"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
