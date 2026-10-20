@@ -205,6 +205,43 @@
             }
           }
         }
+      },
+      "ios": {
+        "props": {
+          "tone": {
+            "swiftType": "AtomBadgeTone",
+            "map": {
+              "neutral": {
+                "tone": "neutral",
+                "emphasis": "soft"
+              },
+              "accent": {
+                "tone": "primary",
+                "emphasis": "solid"
+              },
+              "info": {
+                "tone": "info",
+                "emphasis": "soft"
+              },
+              "success": {
+                "tone": "success",
+                "emphasis": "soft"
+              },
+              "warning": {
+                "tone": "warning",
+                "emphasis": "soft"
+              },
+              "error": {
+                "tone": "error",
+                "emphasis": "soft"
+              }
+            },
+            "extensions": {},
+            "aliases": {
+              "danger": "error"
+            }
+          }
+        }
       }
     },
     "stateAliases": {

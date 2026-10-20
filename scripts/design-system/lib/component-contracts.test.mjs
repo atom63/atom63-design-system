@@ -179,6 +179,21 @@ describe('intent layer', () => {
     assert.equal(problems(source).length, 3)
   })
 
+  it('reports a Swift alias that names no value, or shadows one', () => {
+    const source = button()
+    source.doc.intent.platforms.ios = {
+      props: {
+        tone: {
+          swiftType: 'AtomButtonTone',
+          map: { neutral: { tone: 'neutral' } },
+          extensions: {},
+          aliases: { plain: 'neutral', missing: 'loud', neutral: 'neutral' },
+        },
+      },
+    }
+    assert.equal(problems(source).length, 2)
+  })
+
   it('has no problems in the shipped sources', () => {
     const shipped = loadContractSources(root)
     for (const item of shipped.values()) assert.deepEqual(intentProblems(shipped, item), [])

@@ -65,7 +65,7 @@ public struct AtomWidgetStateView: View {
       .accessibilityElement(children: .combine)
       .accessibilityAddTraits(state == .loading ? .updatesFrequently : [])
       if state == .error, let onRetry {
-        AtomButton(variant: .outline, size: .compact, action: onRetry) {
+        AtomButton(emphasis: .outline, size: .compact, action: onRetry) {
           Label("Try again", systemImage: "arrow.clockwise")
         }
       }

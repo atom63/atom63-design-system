@@ -54,7 +54,8 @@ public struct AtomActionBar: View {
   private var primaryButton: some View {
     AtomButton(
       primaryTitle,
-      variant: primaryVariant,
+      tone: primaryVariant.tone,
+      emphasis: primaryVariant.emphasis,
       fullWidth: true,
       isLoading: isPrimaryLoading,
       action: primaryAction
@@ -66,7 +67,7 @@ public struct AtomActionBar: View {
     if let secondaryTitle, let secondaryAction {
       AtomButton(
         secondaryTitle,
-        variant: .outline,
+        emphasis: .outline,
         fullWidth: true,
         action: secondaryAction
       )

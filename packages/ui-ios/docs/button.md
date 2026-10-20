@@ -2,42 +2,40 @@
 
 ## Foundation Contract
 
-The iOS Button contract mirrors `@atom63/ui-foundation`:
+The iOS Button contract comes from the intent in
+`packages/ui-foundation/contracts/components/button.json`, the same source as the
+web renderer's:
 
-- shared intent: action variants, loading/disabled states, semantic color slots
-- native variants: `primary`, `neutral`, `secondary`, `destructive`, `outline`,
-  `ghost`
-- native sizes: `compact`, `regular`, `large`, `icon`
+- tone: `neutral`, `primary`, `destructive`
+- emphasis: `solid`, `soft`, `outline`, `ghost`
+- native sizes: `compact`, `regular`, `large` (the intent's sm, md and lg) and
+  `icon` (an icon-only md)
 - states: `rest`, `pressed`, `focusVisible`, `disabled`, `loading`
 - anatomy: `root`, `label`, `icon`, `spinner`
 
-The native vocabulary is deliberately smaller than the web renderer. Web-only
-variants such as `link`, `overlay`, and `glass` should use native navigation or
-material patterns instead of forcing CSS anatomy onto iOS.
+`AtomButtonTone`, `AtomButtonEmphasis`, `AtomControlSize` and the older
+`AtomButtonVariant` are generated from that file. Web-only variants such as
+`link` and `overlay` should use native navigation or material patterns instead
+of forcing CSS anatomy onto iOS.
 
 ## SwiftUI API
 
 ```swift
-enum AtomButtonVariant {
-  case primary
-  case neutral
-  case secondary
-  case destructive
-  case outline
-  case ghost
-}
-
-enum AtomControlSize {
-  case compact
-  case regular
-  case large
-  case icon
-}
-
-AtomButton("Continue", variant: .primary, fullWidth: true) {
+AtomButton("Continue", tone: .primary, fullWidth: true) {
   continueFlow()
 }
+
+AtomButton("Delete", tone: .destructive, emphasis: .soft) {
+  delete()
+}
+
+// The same look on a native Button:
+Button("Save", action: save)
+  .buttonStyle(AtomButtonStyle(tone: .primary))
 ```
+
+`variant:` still works and is deprecated: each `AtomButtonVariant` stands for one
+tone × emphasis (`secondary` is neutral × soft, `outline` neutral × outline).
 
 ## Behavior Notes
 

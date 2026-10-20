@@ -23,7 +23,8 @@ public struct AtomIconButton: View {
 
   public var body: some View {
     AtomButton(
-      variant: variant,
+      tone: variant.tone,
+      emphasis: variant.emphasis,
       size: .icon,
       isLoading: isLoading,
       loadingAccessibilityLabel: "Loading",
