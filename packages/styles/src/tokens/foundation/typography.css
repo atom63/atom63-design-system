@@ -16,6 +16,8 @@
 @import './typography.native.css';
 
 :root {
+  --typography-2xs-font-size: calc(11px * var(--typography-scale, 1));
+  --typography-2xs-line-height: calc(13px * var(--typography-scale, 1));
   --typography-xs-font-size: calc(12px * var(--typography-scale, 1));
   --typography-xs-line-height: calc(18px * var(--typography-scale, 1));
   --typography-sm-font-size: calc(13px * var(--typography-scale, 1));
@@ -91,6 +93,8 @@
 }
 
 [data-window-size='xs'] {
+  --typography-2xs-font-size: calc(11px * var(--typography-scale, 1));
+  --typography-2xs-line-height: calc(13px * var(--typography-scale, 1));
   --typography-xs-font-size: calc(12px * var(--typography-scale, 1));
   --typography-xs-line-height: calc(18px * var(--typography-scale, 1));
   --typography-sm-font-size: calc(13px * var(--typography-scale, 1));
@@ -120,6 +124,8 @@
 }
 
 [data-window-size='sm'] {
+  --typography-2xs-font-size: calc(11px * var(--typography-scale, 1));
+  --typography-2xs-line-height: calc(13px * var(--typography-scale, 1));
   --typography-xs-font-size: calc(12px * var(--typography-scale, 1));
   --typography-xs-line-height: calc(18px * var(--typography-scale, 1));
   --typography-sm-font-size: calc(13px * var(--typography-scale, 1));
@@ -151,6 +157,8 @@
 [data-window-size='md'],
 [data-window-size='lg'],
 [data-window-size='xl'] {
+  --typography-2xs-font-size: calc(11px * var(--typography-scale, 1));
+  --typography-2xs-line-height: calc(13px * var(--typography-scale, 1));
   --typography-xs-font-size: calc(12px * var(--typography-scale, 1));
   --typography-xs-line-height: calc(18px * var(--typography-scale, 1));
   --typography-sm-font-size: calc(13px * var(--typography-scale, 1));

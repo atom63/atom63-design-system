@@ -17,7 +17,7 @@ export type ComponentCatalogItem = {
   additionalValueExports?: readonly string[]
   axisGuidance?: ComponentAxisGuidance
   category: string
-  importPath: '@atom63/ui-react'
+  importPath: '@atom63/ui-react' | '@atom63/ui-react/calendar'
   previewProfile: ComponentPreviewProfile
   relatedSlugs: readonly string[]
   slug: string
@@ -38,7 +38,8 @@ export type ComponentCatalogGroup = {
 type ComponentDefinition = Pick<
   ComponentCatalogItem,
   'additionalValueExports' | 'axisGuidance' | 'relatedSlugs' | 'summary' | 'usage' | 'usageExports'
->
+> &
+  Partial<Pick<ComponentCatalogItem, 'importPath'>>
 
 const componentDefinitions: Record<string, ComponentDefinition> = {
   accordion: {
@@ -147,6 +148,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     usageExports: ['ButtonGroup', 'ButtonGroupText', 'ButtonGroupSeparator'],
   },
   calendar: {
+    importPath: '@atom63/ui-react/calendar',
     relatedSlugs: ['input', 'select', 'popover'],
     summary:
       'Calendar provides themed single, range, and multi-date selection through React DayPicker.',
@@ -642,7 +644,7 @@ function component(slug: string, category: string): ComponentCatalogItem {
   return {
     ...definition,
     category,
-    importPath: '@atom63/ui-react',
+    importPath: definition.importPath ?? '@atom63/ui-react',
     previewProfile: canvasPreviewComponents.has(slug)
       ? 'canvas'
       : standardPreviewComponents.has(slug)

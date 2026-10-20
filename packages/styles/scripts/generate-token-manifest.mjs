@@ -121,7 +121,7 @@ function inferType(cssVar, value) {
   }
   if (
     (/border/.test(name) && !/border-(?:width|radius|style)/.test(name)) ||
-    /color|foreground|background|surface|text-|brand-|status-|focus-ring|accent|condition-(?:start|end)|skeleton-(?:base|highlight)|choice-thumb|action-(?:primary|neutral|danger)/.test(
+    /color|foreground|background|surface|text-|brand-|status-|chart-|focus-ring|accent|condition-(?:start|end)|skeleton-(?:base|highlight)|choice-thumb|action-(?:primary|neutral|danger)/.test(
       name
     ) ||
     /var\(\s*--(?:color|surface|a63-brand)-/.test(value) ||

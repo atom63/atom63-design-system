@@ -5,6 +5,7 @@ export default defineConfig({
   dts: true,
   entry: [
     'src/index.ts',
+    'src/calendar/index.ts',
     'src/layout/index.ts',
     'src/media/index.ts',
     'src/media/media-lightbox/parts/index.ts',

@@ -81,8 +81,6 @@ export {
   useButtonGroupContext,
 } from './components/button-group'
 export type { ButtonGroupProps, ButtonGroupSeparatorProps } from './components/button-group'
-export { Calendar } from './components/calendar'
-export type { CalendarProps } from './components/calendar'
 export {
   Card,
   CardAction,

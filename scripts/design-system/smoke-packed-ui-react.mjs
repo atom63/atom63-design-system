@@ -226,7 +226,6 @@ import {
   Autocomplete,
   Badge,
   Button,
-  Calendar,
   Card,
   CardContent,
   CardHeader,
@@ -261,6 +260,7 @@ import {
   type DialogSize,
 } from '@atom63/ui-react'
 import { buttonContract, type ButtonContract } from '@atom63/ui-foundation'
+import { Calendar } from '@atom63/ui-react/calendar'
 import { Container, type ContainerProps } from '@atom63/ui-react/layout'
 import { Image, type ImageProps } from '@atom63/ui-react/media'
 import { Lightbox, type LightboxState } from '@atom63/ui-react/media/lightbox'

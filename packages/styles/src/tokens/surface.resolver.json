@@ -107,6 +107,15 @@
                   "$value": "{color.n1.dark.12}"
                 }
               }
+            },
+            "a63": {
+              "media": {
+                "surface": {
+                  "$type": "color",
+                  "$value": "{surface.dark.2}",
+                  "$description": "An opaque dark neutral for media areas (players, lightboxes, posters). It follows the\nsurface palette but not the mode: media reads on dark in both."
+                }
+              }
             }
           }
         ],
@@ -211,6 +220,14 @@
                 "12": {
                   "$type": "color",
                   "$value": "{color.n2.dark.12}"
+                }
+              }
+            },
+            "a63": {
+              "media": {
+                "surface": {
+                  "$type": "color",
+                  "$value": "{surface.dark.2}"
                 }
               }
             }
@@ -319,6 +336,14 @@
                   "$value": "{color.n3.dark.12}"
                 }
               }
+            },
+            "a63": {
+              "media": {
+                "surface": {
+                  "$type": "color",
+                  "$value": "{surface.dark.2}"
+                }
+              }
             }
           }
         ],
@@ -423,6 +448,14 @@
                 "12": {
                   "$type": "color",
                   "$value": "{color.n4.dark.12}"
+                }
+              }
+            },
+            "a63": {
+              "media": {
+                "surface": {
+                  "$type": "color",
+                  "$value": "{surface.dark.2}"
                 }
               }
             }
@@ -531,6 +564,14 @@
                   "$value": "{color.n5.dark.12}"
                 }
               }
+            },
+            "a63": {
+              "media": {
+                "surface": {
+                  "$type": "color",
+                  "$value": "{surface.dark.2}"
+                }
+              }
             }
           }
         ],
@@ -635,6 +676,14 @@
                 "12": {
                   "$type": "color",
                   "$value": "{color.n6.dark.12}"
+                }
+              }
+            },
+            "a63": {
+              "media": {
+                "surface": {
+                  "$type": "color",
+                  "$value": "{surface.dark.2}"
                 }
               }
             }

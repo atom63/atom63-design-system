@@ -790,9 +790,9 @@
     "Pair controls with persistent labels and explain errors beside the affected field.",
     "Validate focus visibility, disabled state, invalid state, and touch input together."
    ],
-   "importPath": "@atom63/ui-react",
+   "importPath": "@atom63/ui-react/calendar",
    "label": "Calendar",
-   "markdown": "# Calendar\n\nCalendar provides themed single, range, and multi-date selection through React DayPicker.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Keep the selected value available outside the calendar when it is used in a form or popover.\n- Pair controls with persistent labels and explain errors beside the affected field.\n- Validate focus visibility, disabled state, invalid state, and touch input together.\n\n## Usage\n\n```tsx\nimport { Calendar } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Calendar`\n\n**Types:** `CalendarProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/calendar.json` (`calendarContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `selectionModes` | `single`, `multiple`, `range` | `single` |\n\n**Slots:** `calendar`, `calendar-months`, `calendar-month`, `calendar-month-caption`, `calendar-caption-label`, `calendar-nav`, `calendar-nav-button`, `calendar-chevron`, `calendar-dropdowns`, `calendar-dropdown-root`, `calendar-dropdown`, `calendar-weekday`, `calendar-week-number`, `calendar-day`, `calendar-day-button`\n\n**States:** `rest`, `hover`, `focus-visible`, `today`, `selected`, `range-start`, `range-middle`, `range-end`, `outside`, `disabled`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.; Action controls — Momentary controls that perform an action now.; Choice controls — Form controls that expose checked, selected, or indeterminate value state.\n\n### Web and iOS\n\nSelect an allowed calendar date while understanding its day, month, and current selection. Rendered by `DatePicker` in SwiftUI, with `platform-adaptive` parity.\n\n**Required states:** `rest`, `selected`, `disabled`\n\n**Shared outcomes:**\n\n- Selection updates to an allowed date\n- Disabled date prevents selection\n- Selected date remains visible\n\n**Accessibility outcomes:**\n\n- Exposes control label\n- Dates expose complete date names\n- Selected date exposes selected state\n\n**Platform adaptations:**\n\n- React: Uses a visible calendar grid and may support single, multiple, or range selection.\n- SwiftUI: Uses DatePicker with platform-owned compact, graphical, or field presentation and declared date bounds.\n\n## Related components\n\n- [Input](/components/component-input)\n- [Select](/components/component-select)\n- [Popover](/components/component-popover)\n",
+   "markdown": "# Calendar\n\nCalendar provides themed single, range, and multi-date selection through React DayPicker.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Keep the selected value available outside the calendar when it is used in a form or popover.\n- Pair controls with persistent labels and explain errors beside the affected field.\n- Validate focus visibility, disabled state, invalid state, and touch input together.\n\n## Usage\n\n```tsx\nimport { Calendar } from '@atom63/ui-react/calendar'\n```\n\n## API surface\n\n**Values:** `Calendar`\n\n**Types:** `CalendarProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/calendar.json` (`calendarContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `selectionModes` | `single`, `multiple`, `range` | `single` |\n\n**Slots:** `calendar`, `calendar-months`, `calendar-month`, `calendar-month-caption`, `calendar-caption-label`, `calendar-nav`, `calendar-nav-button`, `calendar-chevron`, `calendar-dropdowns`, `calendar-dropdown-root`, `calendar-dropdown`, `calendar-weekday`, `calendar-week-number`, `calendar-day`, `calendar-day-button`\n\n**States:** `rest`, `hover`, `focus-visible`, `today`, `selected`, `range-start`, `range-middle`, `range-end`, `outside`, `disabled`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.; Action controls — Momentary controls that perform an action now.; Choice controls — Form controls that expose checked, selected, or indeterminate value state.\n\n### Web and iOS\n\nSelect an allowed calendar date while understanding its day, month, and current selection. Rendered by `DatePicker` in SwiftUI, with `platform-adaptive` parity.\n\n**Required states:** `rest`, `selected`, `disabled`\n\n**Shared outcomes:**\n\n- Selection updates to an allowed date\n- Disabled date prevents selection\n- Selected date remains visible\n\n**Accessibility outcomes:**\n\n- Exposes control label\n- Dates expose complete date names\n- Selected date exposes selected state\n\n**Platform adaptations:**\n\n- React: Uses a visible calendar grid and may support single, multiple, or range selection.\n- SwiftUI: Uses DatePicker with platform-owned compact, graphical, or field presentation and declared date bounds.\n\n## Related components\n\n- [Input](/components/component-input)\n- [Select](/components/component-select)\n- [Popover](/components/component-popover)\n",
    "related": [
     "input",
     "select",
@@ -812,7 +812,7 @@
      "Endpoints",
      "ContractMetadata"
     ],
-    "source": "import { calendarContract, themes } from '@atom63/ui-foundation'\nimport { Calendar, UIProvider } from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\nimport { useState } from 'react'\nimport type { DateRange } from 'react-day-picker'\nimport { repeatedLandmarks } from '../story-probes'\n\nconst meta = {\n  title: 'UI React/Calendar',\n  component: Calendar,\n} satisfies Meta<typeof Calendar>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\n/* A fixed date keeps screenshots and a11y results the same on every day. */\nconst REFERENCE_DATE = new Date(2026, 0, 14)\nconst fixedDate = { defaultMonth: REFERENCE_DATE, today: REFERENCE_DATE }\n\n/* Single-date selection — the default mode; the selected day fills with the\n   brand primary and today shows a dot. */\nexport const Playground: Story = {\n  render: () => {\n    const [date, setDate] = useState<Date | undefined>(REFERENCE_DATE)\n    return <Calendar {...fixedDate} mode=\"single\" onSelect={setDate} selected={date} />\n  },\n}\n\n/* Range selection — connected ends with a tinted middle. */\nexport const Range: Story = {\n  render: () => {\n    const [range, setRange] = useState<DateRange | undefined>({\n      from: REFERENCE_DATE,\n      to: new Date(2026, 0, 19),\n    })\n    return <Calendar {...fixedDate} mode=\"range\" onSelect={setRange} selected={range} />\n  },\n}\n\n/* Dropdown caption — month/year pickers instead of the label. */\nexport const DropdownCaption: Story = {\n  render: () => {\n    const [date, setDate] = useState<Date | undefined>(REFERENCE_DATE)\n    return (\n      <Calendar\n        {...fixedDate}\n        captionLayout=\"dropdown\"\n        mode=\"single\"\n        onSelect={setDate}\n        selected={date}\n      />\n    )\n  },\n}\n\n/* Two months side by side. */\nexport const MultipleMonths: Story = {\n  render: () => {\n    const [date, setDate] = useState<Date | undefined>(REFERENCE_DATE)\n    return (\n      <Calendar\n        {...fixedDate}\n        mode=\"single\"\n        numberOfMonths={2}\n        onSelect={setDate}\n        selected={date}\n      />\n    )\n  },\n}\n\n/* The selected fill + today dot follow each theme's brand primary and mode. */\nexport const Themes: Story = {\n  parameters: repeatedLandmarks,\n  render: () => (\n    <div style={{ display: 'grid', gap: 16 }}>\n      {themes.map(theme =>\n        (['light', 'dark'] as const).map(mode => (\n          <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>\n            <div\n              style={{\n                background: 'var(--a63-surface-panel)',\n                borderRadius: '0.75rem',\n                color: 'var(--a63-text-primary)',\n                display: 'inline-flex',\n                gap: 12,\n                padding: '0.75rem',\n              }}\n            >\n              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>\n                {theme} / {mode}\n              </span>\n              <Calendar {...fixedDate} mode=\"single\" selected={REFERENCE_DATE} />\n            </div>\n          </UIProvider>\n        ))\n      )}\n    </div>\n  ),\n}\n\n/* The same calendar reviewed against target host contexts. */\nexport const Endpoints: Story = {\n  parameters: repeatedLandmarks,\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {[\n        {\n          label: 'Web',\n          props: { density: 'comfortable', designLanguage: 'web', input: 'pointer' } as const,\n        },\n        {\n          label: 'iOS touch',\n          props: { density: 'comfortable', designLanguage: 'ios', input: 'touch' } as const,\n        },\n        {\n          label: 'Compact extension',\n          props: {\n            density: 'compact',\n            designLanguage: 'web',\n            input: 'pointer',\n            surface: 'n2',\n          } as const,\n        },\n      ].map(endpoint => (\n        <UIProvider key={endpoint.label} {...endpoint.props}>\n          <div\n            style={{\n              alignItems: 'flex-start',\n              background: 'var(--a63-surface-panel)',\n              borderRadius: 'var(--radius-lg)',\n              color: 'var(--a63-text-primary)',\n              display: 'flex',\n              gap: 12,\n              padding: '0.75rem',\n            }}\n          >\n            <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>\n              {endpoint.label}\n            </span>\n            <Calendar {...fixedDate} mode=\"single\" selected={REFERENCE_DATE} />\n          </div>\n        </UIProvider>\n      ))}\n    </div>\n  ),\n}\n\nexport const ContractMetadata: Story = {\n  render: () => (\n    <pre style={{ fontSize: 12, margin: 0, whiteSpace: 'pre-wrap' }}>\n      {JSON.stringify(calendarContract, null, 2)}\n    </pre>\n  ),\n}\n"
+    "source": "import { calendarContract, themes } from '@atom63/ui-foundation'\nimport { UIProvider } from '@atom63/ui-react'\nimport { Calendar } from '@atom63/ui-react/calendar'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\nimport { useState } from 'react'\nimport type { DateRange } from 'react-day-picker'\nimport { repeatedLandmarks } from '../story-probes'\n\nconst meta = {\n  title: 'UI React/Calendar',\n  component: Calendar,\n} satisfies Meta<typeof Calendar>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\n/* A fixed date keeps screenshots and a11y results the same on every day. */\nconst REFERENCE_DATE = new Date(2026, 0, 14)\nconst fixedDate = { defaultMonth: REFERENCE_DATE, today: REFERENCE_DATE }\n\n/* Single-date selection — the default mode; the selected day fills with the\n   brand primary and today shows a dot. */\nexport const Playground: Story = {\n  render: () => {\n    const [date, setDate] = useState<Date | undefined>(REFERENCE_DATE)\n    return <Calendar {...fixedDate} mode=\"single\" onSelect={setDate} selected={date} />\n  },\n}\n\n/* Range selection — connected ends with a tinted middle. */\nexport const Range: Story = {\n  render: () => {\n    const [range, setRange] = useState<DateRange | undefined>({\n      from: REFERENCE_DATE,\n      to: new Date(2026, 0, 19),\n    })\n    return <Calendar {...fixedDate} mode=\"range\" onSelect={setRange} selected={range} />\n  },\n}\n\n/* Dropdown caption — month/year pickers instead of the label. */\nexport const DropdownCaption: Story = {\n  render: () => {\n    const [date, setDate] = useState<Date | undefined>(REFERENCE_DATE)\n    return (\n      <Calendar\n        {...fixedDate}\n        captionLayout=\"dropdown\"\n        mode=\"single\"\n        onSelect={setDate}\n        selected={date}\n      />\n    )\n  },\n}\n\n/* Two months side by side. */\nexport const MultipleMonths: Story = {\n  render: () => {\n    const [date, setDate] = useState<Date | undefined>(REFERENCE_DATE)\n    return (\n      <Calendar\n        {...fixedDate}\n        mode=\"single\"\n        numberOfMonths={2}\n        onSelect={setDate}\n        selected={date}\n      />\n    )\n  },\n}\n\n/* The selected fill + today dot follow each theme's brand primary and mode. */\nexport const Themes: Story = {\n  parameters: repeatedLandmarks,\n  render: () => (\n    <div style={{ display: 'grid', gap: 16 }}>\n      {themes.map(theme =>\n        (['light', 'dark'] as const).map(mode => (\n          <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>\n            <div\n              style={{\n                background: 'var(--a63-surface-panel)',\n                borderRadius: '0.75rem',\n                color: 'var(--a63-text-primary)',\n                display: 'inline-flex',\n                gap: 12,\n                padding: '0.75rem',\n              }}\n            >\n              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>\n                {theme} / {mode}\n              </span>\n              <Calendar {...fixedDate} mode=\"single\" selected={REFERENCE_DATE} />\n            </div>\n          </UIProvider>\n        ))\n      )}\n    </div>\n  ),\n}\n\n/* The same calendar reviewed against target host contexts. */\nexport const Endpoints: Story = {\n  parameters: repeatedLandmarks,\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {[\n        {\n          label: 'Web',\n          props: { density: 'comfortable', designLanguage: 'web', input: 'pointer' } as const,\n        },\n        {\n          label: 'iOS touch',\n          props: { density: 'comfortable', designLanguage: 'ios', input: 'touch' } as const,\n        },\n        {\n          label: 'Compact extension',\n          props: {\n            density: 'compact',\n            designLanguage: 'web',\n            input: 'pointer',\n            surface: 'n2',\n          } as const,\n        },\n      ].map(endpoint => (\n        <UIProvider key={endpoint.label} {...endpoint.props}>\n          <div\n            style={{\n              alignItems: 'flex-start',\n              background: 'var(--a63-surface-panel)',\n              borderRadius: 'var(--radius-lg)',\n              color: 'var(--a63-text-primary)',\n              display: 'flex',\n              gap: 12,\n              padding: '0.75rem',\n            }}\n          >\n            <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>\n              {endpoint.label}\n            </span>\n            <Calendar {...fixedDate} mode=\"single\" selected={REFERENCE_DATE} />\n          </div>\n        </UIProvider>\n      ))}\n    </div>\n  ),\n}\n\nexport const ContractMetadata: Story = {\n  render: () => (\n    <pre style={{ fontSize: 12, margin: 0, whiteSpace: 'pre-wrap' }}>\n      {JSON.stringify(calendarContract, null, 2)}\n    </pre>\n  ),\n}\n"
    },
    "summary": "Calendar provides themed single, range, and multi-date selection through React DayPicker.",
    "usage": "Keep the selected value available outside the calendar when it is used in a form or popover.",
@@ -7938,7 +7938,7 @@
   {
    "area": "foundations",
    "label": "Colors",
-   "markdown": "# Colors\n\nThe color system is built around executable indirection. **Foundation** owns the literal palette (`tokens/foundation/*`). **Semantics** (`--a63-*`) name UI jobs. **App JSX** may sketch with Tailwind/shadcn role utilities (`bg-background`, `text-muted-foreground`) because those adapters re-reference `--a63-*`. **Shared package recipes** consume `--a63-*` (and family contracts), not primitives and not raw shadcn CSS variables.\n\nAuthoring lanes: `docs/design-system/authoring-surfaces.md`.\n\nThe goal is simple: components describe the job a color performs, while `@atom63/styles` owns how that job resolves across mode, brand, neutral-surface, surface-tint, and theme axes.\n\n## Design intent\n\nThe Atom63-specific palette has six brand hues, six neutral families, and four status families. Foundation also carries the Tailwind named palette for fixed-hue cases. Both sit behind enough structure that changing an appearance axis does not require auditing every component:\n\n- **Foundation primitives** define stable palette material (the only place for new color dictionaries).\n- **Aliases** (brand / surface axes) select which primitive families a mood uses.\n- **Semantic roles** expose stable UI decisions through `--a63-*` variables.\n- **Themes** remap material/role resolution; they do not invent new palette ramps.\n- **Component recipes** consume those roles in React and CSS.\n\n## Layer stack\n\nImported in order from `@atom63/styles`:\n\n## Mental model\n\nColor moves from stable to contextual:\n\n```txt\nfoundation palette -> brand/surface alias -> a63 semantic role -> component recipe\n     (values)              (which family)         (UI job)              (wiring)\n```\n\nProduct theme skins (`modern` / `aqua` / …) sit beside this chain: they remap contract/semantic knobs, they are not a second palette dictionary.\n\nEach layer answers a different question:\n\n| Layer | Question | Example |\n|-------|----------|---------|\n| Foundation | What raw color exists? | `--color-b1-500`, `--color-n1-light-3` |\n| Alias | Which palette family does this mood use? | brand and surface aliases |\n| Semantic | What UI job does this color perform? | `--a63-surface-panel`, `--a63-action-primary`, `--a63-border-control` |\n| Component | How does the role appear in context? | button fill, input border, dialog surface |\n\nThis is the reason component code should feel boring. A component should say \"I need the primary action color\" or \"I need the subtle border color\", not \"I need this exact blue.\"\n\n## How the scale works\n\n### Semantic roles\n\nComponents use the `--a63-*` semantic layer. These variables are the design-system API for product UI.\n\n### Surface scale\n\n12-step neutral ramps (`surface-light-*` / `surface-dark-*`) form the backbone of the UI. Semantic tokens like `--a63-surface-page`, `--a63-surface-panel`, and `--a63-border-subtle` reference the appropriate steps. The default surface family is `n1`, a true neutral gray with no color cast.\n\n### Brand primitives\n\nSix brand hues (`b1`–`b6`), each with steps `50`–`950`, provide enough range for product accents, visualization, and expressive surfaces. The default primary action resolves through the brand alias layer rather than hardcoding a primitive in a component.\n\n### Neutral families\n\nSix neutral palettes (`n1`–`n6`) give the system different neutral personalities without creating one-off product palettes. The `data-a63-surface` axis remaps the aliases; components keep consuming the same semantic roles. Themes may separately re-skin semantic surfaces when material character requires it.\n\n### Status primitives\n\n`danger`, `success`, `warning`, and `info` carry fixed meaning. They can be tuned for contrast across modes, but they should not be repurposed as decorative brand colors.\n\n  {STATUS_PRIMITIVES.map(({ id, utility }) => (\n  ))}\n\n## Compatibility\n\nThe shadcn vocabulary (`background`, `primary`, `muted-foreground`, …) is an **opt-in adapter** (`@atom63/styles/compat/shadcn` + Tailwind theme keys). It re-references `--a63-*`; it does not own values (mirror rule).\n\n| Surface | Prefer | Avoid |\n|---------|--------|-------|\n| App / page JSX | Tailwind utilities: `bg-background`, `text-foreground`, `bg-primary`, … | Hardcoded hex; reaching into `--a63-control-*` for sketching |\n| Shared package recipes (`ui-react`, widgets, …) | `--a63-*` roles (+ family contracts) | Baking `var(--background)` / `var(--primary)` into package CSS |\n| Third-party / copy-pasted shadcn CSS | Compat aliases OK at the consumer boundary | Treating `--primary` as the system SSOT |\n\nCanonical design-system contract for shared UI is `--a63-*`. Tailwind/shadcn names are the **human design dialect** for product screens — not “legacy only.” See Designing in code and `docs/design-system/authoring-surfaces.md`.\n\n## Decisions worth knowing\n\n### Semantic-first, not palette-first\n\nShared components never use primitive color values directly. Not `--color-b1-500`, not `--color-n1-light-3`, and not one-off hex values. Shared UI consumes semantic roles such as `--a63-action-primary`, `--a63-text-primary`, `--a63-border-subtle`, and `--a63-surface-panel`. App JSX may use the equivalent Tailwind role utilities.\n\nThe exception is deliberate brand or visualization work that needs a fixed hue regardless of theme. Those cases should be explicit and rare. **Adding** a new hue step still happens in foundation.\n\n### Six neutrals, not one\n\nMost systems ship one neutral ramp. Atom63 has six because portfolio, docs, OS, and learning surfaces can need different neutral personalities. Having six families pre-built makes theme creation alias reassignment rather than palette generation.\n\n### Contrast as a contract\n\nEvery semantic foreground/background pair is designed together. `--a63-action-primary` and `--a63-action-primary-foreground` are a pair. Text roles and surface roles are reviewed together. If a component introduces a new semantic pair, the pair needs contrast review before it becomes part of the shared system.\n\n### Color should express role before personality\n\nThe palette can be expressive, but role comes first. A primary button is primary because it is the main action, not because blue looks good in that location. A muted panel is muted because it is secondary to the current task, not because the screen needs another shade.\n\n## Usage guidance\n\n| Need | In app JSX | In package recipes |\n|------|------------|--------------------|\n| App surfaces | `bg-background`, `bg-card`, `bg-muted` | `--a63-surface-page`, `--a63-surface-panel`, `--a63-surface-muted` |\n| Text | `text-foreground`, `text-muted-foreground` | `--a63-text-primary`, `--a63-text-secondary` |\n| Borders | `border-border` | `--a63-border-subtle`, `--a63-border-control` |\n| Primary actions | `bg-primary`, `text-primary-foreground` | `--a63-action-primary`, `--a63-action-primary-foreground` |\n| Feedback states | `text-destructive`, status utilities | `--a63-status-*`, `--a63-action-danger` |\n| Brand moments (fixed hue) | `bg-b1-500`, … | foundation `--color-b*` only when intentional |\n\n## Anti-patterns\n\n```tsx\n// Avoid: component owns a palette decision.\n```\n\nThe button now depends on one theme's brand hue and one foreground assumption.\n\n```tsx\n// Prefer: component owns a semantic role.\n```\n\nThe component can survive theme changes because the semantic pair owns contrast.\n\n## Review checklist\n\nWhen reviewing color usage, ask:\n\n1. Is this a semantic role (Tailwind/shadcn utility or `--a63-*`), or a foundation palette value?\n2. If adding a new literal color, does it live in `tokens/foundation/*`?\n3. Does the foreground/background pair have a contrast contract?\n4. Would this still work if the brand hue changed?\n5. Is a status color being used for real status meaning?\n6. Is color the only cue for the state?",
+   "markdown": "# Colors\n\nThe color system is built around executable indirection. **Foundation** owns the literal palette (`tokens/foundation/*`). **Semantics** (`--a63-*`) name UI jobs. **App JSX** may sketch with Tailwind/shadcn role utilities (`bg-background`, `text-muted-foreground`) because those adapters re-reference `--a63-*`. **Shared package recipes** consume `--a63-*` (and family contracts), not primitives and not raw shadcn CSS variables.\n\nAuthoring lanes: `docs/design-system/authoring-surfaces.md`.\n\nThe goal is simple: components describe the job a color performs, while `@atom63/styles` owns how that job resolves across mode, brand, neutral-surface, surface-tint, and theme axes.\n\n## Design intent\n\nThe Atom63-specific palette has six brand hues, six neutral families, and four status families. Foundation also carries the Tailwind named palette for fixed-hue cases. Both sit behind enough structure that changing an appearance axis does not require auditing every component:\n\n- **Foundation primitives** define stable palette material (the only place for new color dictionaries).\n- **Aliases** (brand / surface axes) select which primitive families a mood uses.\n- **Semantic roles** expose stable UI decisions through `--a63-*` variables.\n- **Themes** remap material/role resolution; they do not invent new palette ramps.\n- **Component recipes** consume those roles in React and CSS.\n\n## Layer stack\n\nImported in order from `@atom63/styles`:\n\n## Mental model\n\nColor moves from stable to contextual:\n\n```txt\nfoundation palette -> brand/surface alias -> a63 semantic role -> component recipe\n     (values)              (which family)         (UI job)              (wiring)\n```\n\nProduct theme skins (`modern` / `aqua` / …) sit beside this chain: they remap contract/semantic knobs, they are not a second palette dictionary.\n\nEach layer answers a different question:\n\n| Layer | Question | Example |\n|-------|----------|---------|\n| Foundation | What raw color exists? | `--color-b1-500`, `--color-n1-light-3` |\n| Alias | Which palette family does this mood use? | brand and surface aliases |\n| Semantic | What UI job does this color perform? | `--a63-surface-panel`, `--a63-action-primary`, `--a63-border-control` |\n| Component | How does the role appear in context? | button fill, input border, dialog surface |\n\nThis is the reason component code should feel boring. A component should say \"I need the primary action color\" or \"I need the subtle border color\", not \"I need this exact blue.\"\n\n## How the scale works\n\n### Semantic roles\n\nComponents use the `--a63-*` semantic layer. These variables are the design-system API for product UI.\n\n### Surface scale\n\n12-step neutral ramps (`surface-light-*` / `surface-dark-*`) form the backbone of the UI. Semantic tokens like `--a63-surface-page`, `--a63-surface-panel`, and `--a63-border-subtle` reference the appropriate steps. The default surface family is `n1`, a true neutral gray with no color cast.\n\n### Brand primitives\n\nSix brand hues (`b1`–`b6`), each with steps `50`–`950`, provide enough range for product accents, visualization, and expressive surfaces. The default primary action resolves through the brand alias layer rather than hardcoding a primitive in a component.\n\n### Neutral families\n\nSix neutral palettes (`n1`–`n6`) give the system different neutral personalities without creating one-off product palettes. The `data-a63-surface` axis remaps the aliases; components keep consuming the same semantic roles. Themes may separately re-skin semantic surfaces when material character requires it.\n\n### Status primitives\n\n`danger`, `success`, `warning`, and `info` carry fixed meaning. They can be tuned for contrast across modes, but they should not be repurposed as decorative brand colors.\n\n  {STATUS_PRIMITIVES.map(({ id, utility }) => (\n  ))}\n\n## Compatibility\n\nThe shadcn vocabulary (`background`, `primary`, `muted-foreground`, …) is an **opt-in adapter** (`@atom63/styles/compat/shadcn` + Tailwind theme keys). It re-references `--a63-*`; it does not own values (mirror rule).\n\nBoth the Tailwind theme keys and the compat variables are generated from one role table, `packages/styles/src/tailwind/roles.json` (`pnpm --filter @atom63/styles generate:roles`). Beyond the shadcn defaults it adds `destructive-foreground`, `info`/`success`/`warning` with `-foreground`, `surface-sunken`, `selected` with `-foreground`, and `chart-1`–`chart-5`. Tinted chips use the `-subtle` pairs: `destructive-subtle`, `info-subtle`, `success-subtle` and `warning-subtle`, each with `-subtle-foreground`, and `category-<hue>` with `-subtle` and `-subtle-foreground` for the 22 palette hues (amber shares the warning ramp). Every tint is the same 14% wash. Media chrome uses `media-stage`, `media-surface` (an opaque dark neutral that does not follow the mode), `media-scrim` and the `on-media-*` roles, so controls over images need no arbitrary `bg-(--…)` classes. `accent` is the neutral hover and highlight plate, not the brand color; use `primary` for the brand.\n\n| Surface | Prefer | Avoid |\n|---------|--------|-------|\n| App / page JSX | Tailwind utilities: `bg-background`, `text-foreground`, `bg-primary`, … | Hardcoded hex; reaching into `--a63-control-*` for sketching |\n| Shared package recipes (`ui-react`, widgets, …) | `--a63-*` roles (+ family contracts) | Baking `var(--background)` / `var(--primary)` into package CSS |\n| Third-party / copy-pasted shadcn CSS | Compat aliases OK at the consumer boundary | Treating `--primary` as the system SSOT |\n\nCanonical design-system contract for shared UI is `--a63-*`. Tailwind/shadcn names are the **human design dialect** for product screens — not “legacy only.” See Designing in code and `docs/design-system/authoring-surfaces.md`.\n\n## Decisions worth knowing\n\n### Semantic-first, not palette-first\n\nShared components never use primitive color values directly. Not `--color-b1-500`, not `--color-n1-light-3`, and not one-off hex values. Shared UI consumes semantic roles such as `--a63-action-primary`, `--a63-text-primary`, `--a63-border-subtle`, and `--a63-surface-panel`. App JSX may use the equivalent Tailwind role utilities.\n\nThe exception is deliberate brand or visualization work that needs a fixed hue regardless of theme. Those cases should be explicit and rare. **Adding** a new hue step still happens in foundation.\n\n### Six neutrals, not one\n\nMost systems ship one neutral ramp. Atom63 has six because portfolio, docs, OS, and learning surfaces can need different neutral personalities. Having six families pre-built makes theme creation alias reassignment rather than palette generation.\n\n### Contrast as a contract\n\nEvery semantic foreground/background pair is designed together. `--a63-action-primary` and `--a63-action-primary-foreground` are a pair. Text roles and surface roles are reviewed together. If a component introduces a new semantic pair, the pair needs contrast review before it becomes part of the shared system.\n\n### Color should express role before personality\n\nThe palette can be expressive, but role comes first. A primary button is primary because it is the main action, not because blue looks good in that location. A muted panel is muted because it is secondary to the current task, not because the screen needs another shade.\n\n## Usage guidance\n\n| Need | In app JSX | In package recipes |\n|------|------------|--------------------|\n| App surfaces | `bg-background`, `bg-card`, `bg-muted` | `--a63-surface-page`, `--a63-surface-panel`, `--a63-surface-muted` |\n| Text | `text-foreground`, `text-muted-foreground` | `--a63-text-primary`, `--a63-text-secondary` |\n| Borders | `border-border` | `--a63-border-subtle`, `--a63-border-control` |\n| Primary actions | `bg-primary`, `text-primary-foreground` | `--a63-action-primary`, `--a63-action-primary-foreground` |\n| Feedback states | `text-destructive`, status utilities | `--a63-status-*`, `--a63-action-danger` |\n| Brand moments (fixed hue) | `bg-b1-500`, … | foundation `--color-b*` only when intentional |\n\n## Anti-patterns\n\n```tsx\n// Avoid: component owns a palette decision.\n```\n\nThe button now depends on one theme's brand hue and one foreground assumption.\n\n```tsx\n// Prefer: component owns a semantic role.\n```\n\nThe component can survive theme changes because the semantic pair owns contrast.\n\n## Review checklist\n\nWhen reviewing color usage, ask:\n\n1. Is this a semantic role (Tailwind/shadcn utility or `--a63-*`), or a foundation palette value?\n2. If adding a new literal color, does it live in `tokens/foundation/*`?\n3. Does the foreground/background pair have a contrast contract?\n4. Would this still work if the brand hue changed?\n5. Is a status color being used for real status meaning?\n6. Is color the only cue for the state?",
    "route": "/foundations/foundation-colors",
    "slug": "foundation-colors"
   },
@@ -8001,7 +8001,7 @@
   {
    "area": "foundations",
    "label": "Typography",
-   "markdown": "# Typography\n\nThe type system targets dense information interfaces rather than marketing pages. Body text starts at 15px—between compact 14px UI conventions and the browser's 16px default—to balance information density with sustained reading.\n\n## Design intent\n\nI wanted a scale that serves three very different surfaces from the same tokens: portfolio pages with expressive display type, documentation with dense readable prose, and app panels with compact controls. The solution is one responsive scale plus an independent `--typography-scale` multiplier that any subtree can adjust.\n\nThe shipped scale is deliberately not fluid. It uses viewport breakpoints for pages and `data-window-size` overrides for OS windows, so a constrained window can use its own size band even on a wide viewport. The separate `data-a63-type-scale` axis adjusts the whole ramp for user preference.\n\n## Font families\n\n| CSS variable | Tailwind | Stack |\n|--------------|----------|-------|\n| `--font-family-sans` | `font-sans` | Geist, system UI |\n| `--font-family-serif` | `font-serif` | Brawler, Georgia |\n| `--font-family-mono` | `font-mono` | Geist Mono, monospace |\n\nI chose Geist because it's optimized for interfaces — generous x-height, clear at small sizes, and a mono companion that shares the same metrics. Brawler is reserved for rare editorial moments in the portfolio; the system defaults to sans everywhere.\n\n## How the scale works\n\nThirteen steps from `xs` (12px) to `9xl` (39px at mobile, 49px at `768px+`). The scale grows at `640px` and `768px`, and `[data-window-size='xs'|'sm'|'md'|'lg'|'xl']` applies the same bands inside OS windows.\n\n## Mental model\n\nTypography has three separate jobs:\n\n| Job | What it controls | Examples |\n|-----|------------------|----------|\n| Reading | Long-form comfort | Prose, docs, descriptions |\n| Hierarchy | Relative importance | Page titles, section headers, labels |\n| Density | How much interface fits | Sidebars, tables, controls, OS windows |\n\nDo not solve all three with one heading scale. A docs page, a compact sidebar, and a portfolio hero need different hierarchy even when they share the same tokens.\n\n### Line-height strategy\n\nBody text (`xs` through `lg`) uses a ~1.5× ratio for comfortable reading. Display sizes (`xl` and above) compress to ~1.25× — tighter line-height at large sizes prevents headings from floating away from their content.\n\n### The scale multiplier\n\n`--typography-scale` defaults to `1`. The shipped `data-a63-type-scale` values map to `0.9` (`compact`), `1` (`normal`), `1.1` (`comfortable`), and `1.2` (`large`). OS window width is handled separately by `data-window-size`; the multiplier is a personalization control, not the window breakpoint mechanism.\n\n## Decisions worth knowing\n\n### 15px base, not 16px\n\nMost systems use 16px because browsers default to it. I chose 15px after testing information-dense layouts — docs tables, prop references, sidebar navigation. At 16px, content felt loose and wasted space. At 14px, extended reading got fatiguing. 15px is the sweet spot for my use cases: dense enough for tool interfaces, comfortable enough for documentation prose.\n\n### Breakpoints over fluid\n\nFluid typography (`clamp()`) assumes the viewport is the right proxy for text size. In the OS metaphor, multiple windows have arbitrary widths on one screen. Breakpoint jumps plus `data-window-size` attributes let window content follow its container band instead of the outer viewport.\n\n### No heading-element-to-scale mapping in CSS\n\nI don't automatically map `h1` to `9xl` or `h2` to `8xl` in the base tokens. Different surfaces need different heading scales — a docs `h2` should be smaller than a portfolio `h2`. The MDX variants handle heading sizing per context, and the raw scale stays available for explicit use via `text-*` utilities.\n\n### Visual hierarchy and semantics are separate\n\nA semantic `h2` does not always need to look like the second-largest text on the page. The `SectionHeader` pattern follows this rule: `variant` controls visual scale, while `level` can control document outline. That keeps accessibility and visual rhythm from fighting each other.\n\n## Usage guidance\n\n| Surface | Typical range | Scale multiplier |\n|---------|---------------|------------------|\n| Portfolio hero | `4xl`–`9xl` | Usually `normal`; user preference still applies |\n| Documentation prose | `sm`–`xl` | `1` |\n| App panels / OS windows | `xs`–`lg` | Window-size band + active type-scale axis |\n| Code blocks | `sm` mono | `1` |\n\n## Anti-patterns\n\n```tsx\n// Avoid: viewport-sized type inside a constrained panel.\n```\n\nThe panel is narrow even if the viewport is wide. The text should respond to the container's role, not the browser width.\n\n```tsx\n// Prefer: choose a scale for the surface.\n```\n\n## Review checklist\n\nWhen reviewing typography, ask:\n\n1. Is this text sized for its container, not only the viewport?\n2. Does the hierarchy still work if the content wraps?\n3. Is the line-height comfortable for the amount of reading?\n4. Are semantic heading levels valid independent of visual size?\n5. Is display type reserved for display moments?",
+   "markdown": "# Typography\n\nThe type system targets dense information interfaces rather than marketing pages. Body text starts at 15px—between compact 14px UI conventions and the browser's 16px default—to balance information density with sustained reading.\n\n## Design intent\n\nI wanted a scale that serves three very different surfaces from the same tokens: portfolio pages with expressive display type, documentation with dense readable prose, and app panels with compact controls. The solution is one responsive scale plus an independent `--typography-scale` multiplier that any subtree can adjust.\n\nThe shipped scale is deliberately not fluid. It uses viewport breakpoints for pages and `data-window-size` overrides for OS windows, so a constrained window can use its own size band even on a wide viewport. The separate `data-a63-type-scale` axis adjusts the whole ramp for user preference.\n\n## Font families\n\n| CSS variable | Tailwind | Stack |\n|--------------|----------|-------|\n| `--font-family-sans` | `font-sans` | Geist, system UI |\n| `--font-family-serif` | `font-serif` | Brawler, Georgia |\n| `--font-family-mono` | `font-mono` | Geist Mono, monospace |\n\nI chose Geist because it's optimized for interfaces — generous x-height, clear at small sizes, and a mono companion that shares the same metrics. Brawler is reserved for rare editorial moments in the portfolio; the system defaults to sans everywhere.\n\n## How the scale works\n\nFourteen steps from `2xs` (11px) to `9xl` (39px at mobile, 49px at `768px+`). The scale grows at `640px` and `768px`, and `[data-window-size='xs'|'sm'|'md'|'lg'|'xl']` applies the same bands inside OS windows.\n\n## Mental model\n\nTypography has three separate jobs:\n\n| Job | What it controls | Examples |\n|-----|------------------|----------|\n| Reading | Long-form comfort | Prose, docs, descriptions |\n| Hierarchy | Relative importance | Page titles, section headers, labels |\n| Density | How much interface fits | Sidebars, tables, controls, OS windows |\n\nDo not solve all three with one heading scale. A docs page, a compact sidebar, and a portfolio hero need different hierarchy even when they share the same tokens.\n\n### Line-height strategy\n\nBody text (`xs` through `lg`) uses a ~1.5× ratio for comfortable reading. Display sizes (`xl` and above) compress to ~1.25× — tighter line-height at large sizes prevents headings from floating away from their content.\n\n### The scale multiplier\n\n`--typography-scale` defaults to `1`. The shipped `data-a63-type-scale` values map to `0.9` (`compact`), `1` (`normal`), `1.1` (`comfortable`), and `1.2` (`large`). OS window width is handled separately by `data-window-size`; the multiplier is a personalization control, not the window breakpoint mechanism.\n\n## Decisions worth knowing\n\n### 15px base, not 16px\n\nMost systems use 16px because browsers default to it. I chose 15px after testing information-dense layouts — docs tables, prop references, sidebar navigation. At 16px, content felt loose and wasted space. At 14px, extended reading got fatiguing. 15px is the sweet spot for my use cases: dense enough for tool interfaces, comfortable enough for documentation prose.\n\n### Breakpoints over fluid\n\nFluid typography (`clamp()`) assumes the viewport is the right proxy for text size. In the OS metaphor, multiple windows have arbitrary widths on one screen. Breakpoint jumps plus `data-window-size` attributes let window content follow its container band instead of the outer viewport.\n\n### No heading-element-to-scale mapping in CSS\n\nI don't automatically map `h1` to `9xl` or `h2` to `8xl` in the base tokens. Different surfaces need different heading scales — a docs `h2` should be smaller than a portfolio `h2`. The MDX variants handle heading sizing per context, and the raw scale stays available for explicit use via `text-*` utilities.\n\n### Visual hierarchy and semantics are separate\n\nA semantic `h2` does not always need to look like the second-largest text on the page. The `SectionHeader` pattern follows this rule: `variant` controls visual scale, while `level` can control document outline. That keeps accessibility and visual rhythm from fighting each other.\n\n## Text roles\n\nText roles name what text is for, after the Apple HIG text styles, so one intent works on every platform. Each role picks a step of the scale on the web and a `Font.TextStyle` (with Dynamic Type) on iOS. The source is `packages/styles/src/tokens/type-roles.resolver.json`; each role has `--a63-type-<role>-font-size`, `-line-height`, `-font-weight` and `-font-weight-strong`, and the Tailwind utilities `text-<role>` and `text-<role>-strong` set all three at once.\n\n| Role | Web step | iOS text style |\n|------|----------|----------------|\n| `large-title` | `6xl` | `largeTitle` |\n| `title-1` | `5xl` | `title` |\n| `title-2` | `3xl` | `title2` |\n| `title-3` | `2xl` | `title3` |\n| `headline` | `base`, weight 600 | `headline` |\n| `body` | `base` | `body` |\n| `callout` | `base` | `callout` |\n| `subhead` | `sm` | `subheadline` |\n| `footnote` | `xs` | `footnote` |\n| `caption-1` | `xs` | `caption` |\n| `caption-2` | `2xs` | `caption2` |\n\n`-strong` is the emphasized weight: bold for `large-title`, `title-1` and `title-2`, semibold for the rest. Web sizes follow web conventions (body is 15px; iOS body is 17pt); the role is what stays the same. Size steps are fine while exploring; settled UI should use roles.\n\n## Usage guidance\n\n| Surface | Typical range | Scale multiplier |\n|---------|---------------|------------------|\n| Portfolio hero | `4xl`–`9xl` | Usually `normal`; user preference still applies |\n| Documentation prose | `sm`–`xl` | `1` |\n| App panels / OS windows | `xs`–`lg` | Window-size band + active type-scale axis |\n| Code blocks | `sm` mono | `1` |\n\n## Anti-patterns\n\n```tsx\n// Avoid: viewport-sized type inside a constrained panel.\n```\n\nThe panel is narrow even if the viewport is wide. The text should respond to the container's role, not the browser width.\n\n```tsx\n// Prefer: choose a scale for the surface.\n```\n\n## Review checklist\n\nWhen reviewing typography, ask:\n\n1. Is this text sized for its container, not only the viewport?\n2. Does the hierarchy still work if the content wraps?\n3. Is the line-height comfortable for the amount of reading?\n4. Are semantic heading levels valid independent of visual size?\n5. Is display type reserved for display moments?",
    "route": "/foundations/foundation-typography",
    "slug": "foundation-typography"
   },
@@ -8036,7 +8036,7 @@
   {
    "area": "patterns",
    "label": "Page layout",
-   "markdown": "# Page layout\n\n`Page`, `Container`, and `Section` separate three decisions that otherwise drift together: the document landmark, the content frame, and the rhythm between page regions. They are composable defaults, not a required wrapper stack for every product shell.\n\n## Responsibilities\n\n| Primitive | Actual contract | Use when |\n|-----------|-----------------|----------|\n| `Page` | Renders `<main>`, fills the available height, and adds `pt-8 pb-20` unless `noPadding` is set | The route does not already have a main landmark |\n| `Container` | Centers a named max-width, adds a fixed `gap-8` between direct children, and applies `p-6`, `px-6`, or no padding | Content needs a shared measure or inline inset |\n| `Section` | Renders `<section>`, applies a spacing preset, and optionally spaces direct children | A real page region needs repeatable vertical rhythm |\n\n`Container` padding is not responsive: `padding=\"all\"` is `p-6`, while `padding=\"x\"` is `px-6`. `Section` owns breakpoint-dependent vertical padding. `tight` stays `py-8`; `default` stays `py-16`; `loose` changes from `py-16` to `py-20` at 768px. `generous` progresses from `py-20` to `py-28` at 640px and `py-32` at 768px; `spacious` progresses from `py-24` to `py-32` and `py-40`. Its default `removeTopSpacing` is `true`, so a section keeps its bottom padding but removes only the top padding at every breakpoint; set it to `false` for an opening region that needs the preset on both sides.\n\n## Default composition\n\n```tsx\n\n```\n\nThe first section opts into top spacing. The second uses the default top removal because the container gap and preceding section already establish separation.\n\n## Shell-owned layout\n\nDo not add wrappers only to match the diagram. Current consumers deliberately stop at different layers:\n\n- Design-system and Learn routes render `Page noPadding` because their app shells own the outer frame, then use `Container` and `Section` for reading layout.\n- atom63.io route screens commonly let `SiteShellLayout` own the route surface and compose `Container > Section` inside it.\n- Full-bleed desktops, split panes, and other application shells should use their own layout rather than force a document-page pattern.\n\n```tsx\n```\n\n## Choose the layout owner\n\n| Decision | Owner |\n|----------|-------|\n| Main landmark and route inset | `Page` or the app shell, never both |\n| Maximum width and outer padding | `Container` |\n| Space around a page region | `Section` |\n| Gap between cards or controls | The local grid, stack, or component |\n| Card padding and control internals | The component |\n\nNested containers are valid when a region intentionally changes measure. Otherwise they usually indicate that page and component spacing have been mixed together.\n\n## Accessibility boundary\n\n`Page` always renders `<main>`, so use it at most once in a document. `Section` always renders `<section>`; give the region an accessible heading rather than using it as a generic spacing wrapper. The primitives provide structure, but they do not infer a heading outline.",
+   "markdown": "# Page layout\n\n`Page`, `Container`, and `Section` separate three decisions that otherwise drift together: the document landmark, the content frame, and the rhythm between page regions. They are composable defaults, not a required wrapper stack for every product shell.\n\n## Responsibilities\n\n| Primitive | Actual contract | Use when |\n|-----------|-----------------|----------|\n| `Page` | Renders `<main>` (or the element passed to `render`), fills the available height, and adds `pt-8 pb-20` unless `noPadding` is set | The route does not already have a main landmark, or it does and `Page` renders a `div` |\n| `Container` | Centers a named max-width, adds a fixed `gap-8` between direct children, and applies `p-6`, `px-6`, or no padding | Content needs a shared measure or inline inset |\n| `Section` | Renders `<section>`, applies a spacing preset, and optionally spaces direct children | A real page region needs repeatable vertical rhythm |\n\n`Container` padding is not responsive: `padding=\"all\"` is `p-6`, while `padding=\"x\"` is `px-6`. `Section` owns breakpoint-dependent vertical padding. `tight` stays `py-8`; `default` stays `py-16`; `loose` changes from `py-16` to `py-20` at 768px. `generous` progresses from `py-20` to `py-28` at 640px and `py-32` at 768px; `spacious` progresses from `py-24` to `py-32` and `py-40`. Its default `removeTopSpacing` is `true`, so a section keeps its bottom padding but removes only the top padding at every breakpoint; set it to `false` for an opening region that needs the preset on both sides.\n\n## Default composition\n\n```tsx\n\n```\n\nThe first section opts into top spacing. The second uses the default top removal because the container gap and preceding section already establish separation.\n\n## Shell-owned layout\n\nDo not add wrappers only to match the diagram. Current consumers deliberately stop at different layers:\n\n- Design-system and Learn routes render `Page noPadding render={<div />}` because their app shells own the outer frame and the `main` landmark, then use `Container` and `Section` for reading layout.\n- atom63.io route screens commonly let `SiteShellLayout` own the route surface and compose `Container > Section` inside it.\n- Full-bleed desktops, split panes, and other application shells should use their own layout rather than force a document-page pattern.\n\n```tsx\n```\n\n## Choose the layout owner\n\n| Decision | Owner |\n|----------|-------|\n| Main landmark and route inset | `Page` or the app shell, never both |\n| Maximum width and outer padding | `Container` |\n| Space around a page region | `Section` |\n| Gap between cards or controls | The local grid, stack, or component |\n| Card padding and control internals | The component |\n\nNested containers are valid when a region intentionally changes measure. Otherwise they usually indicate that page and component spacing have been mixed together.\n\n## Accessibility boundary\n\n`Page` renders `<main>` by default, so use it at most once in a document. When `Page` sits inside `SidebarInset`, the inset already renders `<main>` and owns the landmark: give `Page` `render={<div />}` so the document keeps exactly one `main`. `Section` always renders `<section>`; give the region an accessible heading rather than using it as a generic spacing wrapper. The primitives provide structure, but they do not infer a heading outline.",
    "route": "/patterns",
    "slug": "pattern-layout"
   },
@@ -8859,6 +8859,46 @@
    ]
   },
   {
+   "cssVar": "--a63-action-danger-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "action/danger/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklab, var(--a63-action-danger) 14%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "color-mix(in oklab, var(--a63-action-danger) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-action-danger-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "action/danger/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-danger-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-danger-700)"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-action-disabled-opacity",
    "figma": {
     "collection": "Contract",
@@ -9045,8 +9085,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-amber)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-amber-500)"
+     "value": "var(--a63-category-amber)"
     }
    ]
   },
@@ -9062,11 +9106,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-amber-400)"
+     "value": "var(--a63-category-amber-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-amber-800)"
+     "value": "var(--a63-category-amber-subtle-foreground)"
     }
    ]
   },
@@ -9081,8 +9125,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-blue)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-blue-500)"
+     "value": "var(--a63-category-blue)"
     }
    ]
   },
@@ -9098,11 +9146,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-blue-400)"
+     "value": "var(--a63-category-blue-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-blue-700)"
+     "value": "var(--a63-category-blue-subtle-foreground)"
     }
    ]
   },
@@ -9117,8 +9165,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-cyan)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-cyan-500)"
+     "value": "var(--a63-category-cyan)"
     }
    ]
   },
@@ -9134,11 +9186,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-cyan-400)"
+     "value": "var(--a63-category-cyan-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-cyan-800)"
+     "value": "var(--a63-category-cyan-subtle-foreground)"
     }
    ]
   },
@@ -9153,8 +9205,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-emerald)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-emerald-500)"
+     "value": "var(--a63-category-emerald)"
     }
    ]
   },
@@ -9170,11 +9226,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-emerald-400)"
+     "value": "var(--a63-category-emerald-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-emerald-800)"
+     "value": "var(--a63-category-emerald-subtle-foreground)"
     }
    ]
   },
@@ -9190,11 +9246,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-danger-400)"
+     "value": "var(--a63-action-danger-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-danger-700)"
+     "value": "var(--a63-action-danger-subtle-foreground)"
     }
    ]
   },
@@ -9209,8 +9265,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-fuchsia)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-fuchsia-500)"
+     "value": "var(--a63-category-fuchsia)"
     }
    ]
   },
@@ -9226,11 +9286,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-fuchsia-400)"
+     "value": "var(--a63-category-fuchsia-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-fuchsia-700)"
+     "value": "var(--a63-category-fuchsia-subtle-foreground)"
     }
    ]
   },
@@ -9245,8 +9305,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-green)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-green-500)"
+     "value": "var(--a63-category-green)"
     }
    ]
   },
@@ -9262,11 +9326,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-green-400)"
+     "value": "var(--a63-category-green-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-green-800)"
+     "value": "var(--a63-category-green-subtle-foreground)"
     }
    ]
   },
@@ -9281,8 +9345,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-indigo)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-indigo-500)"
+     "value": "var(--a63-category-indigo)"
     }
    ]
   },
@@ -9298,11 +9366,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-indigo-400)"
+     "value": "var(--a63-category-indigo-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-indigo-700)"
+     "value": "var(--a63-category-indigo-subtle-foreground)"
     }
    ]
   },
@@ -9318,11 +9386,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-info-400)"
+     "value": "var(--a63-status-info-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-info-700)"
+     "value": "var(--a63-status-info-subtle-foreground)"
     }
    ]
   },
@@ -9337,8 +9405,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-lime)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-lime-500)"
+     "value": "var(--a63-category-lime)"
     }
    ]
   },
@@ -9354,11 +9426,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-lime-400)"
+     "value": "var(--a63-category-lime-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-lime-800)"
+     "value": "var(--a63-category-lime-subtle-foreground)"
     }
    ]
   },
@@ -9373,8 +9445,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-neutral)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-neutral-500)"
+     "value": "var(--a63-category-neutral)"
     }
    ]
   },
@@ -9390,11 +9466,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-neutral-400)"
+     "value": "var(--a63-category-neutral-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-neutral-700)"
+     "value": "var(--a63-category-neutral-subtle-foreground)"
     }
    ]
   },
@@ -9409,8 +9485,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-orange)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-orange-500)"
+     "value": "var(--a63-category-orange)"
     }
    ]
   },
@@ -9426,11 +9506,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-orange-400)"
+     "value": "var(--a63-category-orange-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-orange-800)"
+     "value": "var(--a63-category-orange-subtle-foreground)"
     }
    ]
   },
@@ -9445,8 +9525,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-pink)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-pink-500)"
+     "value": "var(--a63-category-pink)"
     }
    ]
   },
@@ -9462,11 +9546,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-pink-400)"
+     "value": "var(--a63-category-pink-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-pink-700)"
+     "value": "var(--a63-category-pink-subtle-foreground)"
     }
    ]
   },
@@ -9481,8 +9565,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-purple)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-purple-500)"
+     "value": "var(--a63-category-purple)"
     }
    ]
   },
@@ -9498,11 +9586,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-purple-400)"
+     "value": "var(--a63-category-purple-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-purple-700)"
+     "value": "var(--a63-category-purple-subtle-foreground)"
     }
    ]
   },
@@ -9517,8 +9605,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-red)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-red-500)"
+     "value": "var(--a63-category-red)"
     }
    ]
   },
@@ -9534,11 +9626,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-red-400)"
+     "value": "var(--a63-category-red-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-red-700)"
+     "value": "var(--a63-category-red-subtle-foreground)"
     }
    ]
   },
@@ -9553,8 +9645,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-rose)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-rose-500)"
+     "value": "var(--a63-category-rose)"
     }
    ]
   },
@@ -9570,11 +9666,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-rose-400)"
+     "value": "var(--a63-category-rose-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-rose-700)"
+     "value": "var(--a63-category-rose-subtle-foreground)"
     }
    ]
   },
@@ -9589,8 +9685,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-sky)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-sky-500)"
+     "value": "var(--a63-category-sky)"
     }
    ]
   },
@@ -9606,11 +9706,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-sky-400)"
+     "value": "var(--a63-category-sky-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-sky-700)"
+     "value": "var(--a63-category-sky-subtle-foreground)"
     }
    ]
   },
@@ -9626,11 +9726,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-success-400)"
+     "value": "var(--a63-status-success-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-success-700)"
+     "value": "var(--a63-status-success-subtle-foreground)"
     }
    ]
   },
@@ -9645,8 +9745,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-teal)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-teal-500)"
+     "value": "var(--a63-category-teal)"
     }
    ]
   },
@@ -9662,11 +9766,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-teal-400)"
+     "value": "var(--a63-category-teal-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-teal-800)"
+     "value": "var(--a63-category-teal-subtle-foreground)"
     }
    ]
   },
@@ -9681,8 +9785,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-violet)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-violet-500)"
+     "value": "var(--a63-category-violet)"
     }
    ]
   },
@@ -9698,11 +9806,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-violet-400)"
+     "value": "var(--a63-category-violet-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-violet-700)"
+     "value": "var(--a63-category-violet-subtle-foreground)"
     }
    ]
   },
@@ -9718,11 +9826,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-warning-400)"
+     "value": "var(--a63-status-warning-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-warning-800)"
+     "value": "var(--a63-status-warning-subtle-foreground)"
     }
    ]
   },
@@ -9737,8 +9845,12 @@
    "type": "color",
    "values": [
     {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-category-yellow)"
+    },
+    {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-yellow-500)"
+     "value": "var(--a63-category-yellow)"
     }
    ]
   },
@@ -9754,11 +9866,11 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-yellow-400)"
+     "value": "var(--a63-category-yellow-subtle-foreground)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-yellow-800)"
+     "value": "var(--a63-category-yellow-subtle-foreground)"
     }
    ]
   },
@@ -10279,6 +10391,1258 @@
     {
      "scope": "[data-a63-brand='b3']",
      "value": "var(--a63-brand-700)"
+    },
+    {
+     "scope": "[data-a63-brand='b4']",
+     "value": "var(--a63-brand-700)"
+    },
+    {
+     "scope": "[data-a63-brand='b6']",
+     "value": "var(--a63-brand-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-amber",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/amber"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-warning-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-amber-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/amber/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-amber) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-amber-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/amber/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-warning-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-warning-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-blue",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/blue"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-blue-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-blue-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/blue/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-blue) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-blue-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/blue/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-blue-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-blue-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-cyan",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/cyan"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-cyan-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-cyan-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/cyan/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-cyan) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-cyan-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/cyan/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-cyan-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-cyan-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-emerald",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/emerald"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-emerald-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-emerald-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/emerald/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-emerald) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-emerald-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/emerald/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-emerald-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-emerald-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-fuchsia",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/fuchsia"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-fuchsia-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-fuchsia-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/fuchsia/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-fuchsia) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-fuchsia-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/fuchsia/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-fuchsia-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-fuchsia-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-gray",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/gray"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-gray-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-gray-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/gray/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-gray) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-gray-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/gray/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-gray-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-gray-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-green",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/green"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-green-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-green-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/green/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-green) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-green-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/green/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-green-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-green-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-indigo",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/indigo"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-indigo-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-indigo-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/indigo/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-indigo) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-indigo-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/indigo/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-indigo-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-indigo-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-lime",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/lime"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-lime-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-lime-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/lime/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-lime) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-lime-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/lime/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-lime-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-lime-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-neutral",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/neutral"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-neutral-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-neutral-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/neutral/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-neutral) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-neutral-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/neutral/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-neutral-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-neutral-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-orange",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/orange"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-orange-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-orange-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/orange/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-orange) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-orange-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/orange/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-orange-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-orange-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-pink",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/pink"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-pink-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-pink-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/pink/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-pink) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-pink-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/pink/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-pink-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-pink-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-purple",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/purple"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-purple-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-purple-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/purple/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-purple) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-purple-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/purple/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-purple-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-purple-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-red",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/red"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-red-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-red-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/red/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-red) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-red-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/red/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-red-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-red-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-rose",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/rose"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-rose-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-rose-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/rose/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-rose) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-rose-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/rose/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-rose-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-rose-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-sky",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/sky"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-sky-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-sky-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/sky/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-sky) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-sky-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/sky/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-sky-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-sky-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-slate",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/slate"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-slate-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-slate-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/slate/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-slate) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-slate-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/slate/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-slate-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-slate-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-stone",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/stone"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-stone-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-stone-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/stone/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-stone) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-stone-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/stone/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-stone-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-stone-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-teal",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/teal"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-teal-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-teal-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/teal/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-teal) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-teal-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/teal/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-teal-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-teal-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-violet",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/violet"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-violet-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-violet-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/violet/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-violet) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-violet-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/violet/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-violet-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-violet-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-yellow",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/yellow"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-yellow-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-yellow-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/yellow/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-yellow) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-yellow-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/yellow/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-yellow-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-yellow-800)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-zinc",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/zinc"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-zinc-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-zinc-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/zinc/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "color-mix(in oklab, var(--a63-category-zinc) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-category-zinc-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "category/zinc/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-zinc-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-zinc-700)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-chart-1",
+   "figma": {
+    "collection": "Semantic",
+    "path": "chart/1"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-action-primary)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--a63-action-primary)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-chart-2",
+   "figma": {
+    "collection": "Semantic",
+    "path": "chart/2"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-teal-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-teal-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-chart-3",
+   "figma": {
+    "collection": "Semantic",
+    "path": "chart/3"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-amber-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-amber-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-chart-4",
+   "figma": {
+    "collection": "Semantic",
+    "path": "chart/4"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-violet-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-violet-500)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-chart-5",
+   "figma": {
+    "collection": "Semantic",
+    "path": "chart/5"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-rose-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-rose-500)"
     }
    ]
   },
@@ -11615,6 +12979,42 @@
     {
      "scope": ":root",
      "value": "var(--color-black-100)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-media-surface",
+   "figma": {
+    "collection": "Semantic",
+    "path": "media/surface"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root, [data-a63-surface='n1']",
+     "value": "var(--surface-dark-2)"
+    },
+    {
+     "scope": "[data-a63-surface='n2']",
+     "value": "var(--surface-dark-2)"
+    },
+    {
+     "scope": "[data-a63-surface='n3']",
+     "value": "var(--surface-dark-2)"
+    },
+    {
+     "scope": "[data-a63-surface='n4']",
+     "value": "var(--surface-dark-2)"
+    },
+    {
+     "scope": "[data-a63-surface='n5']",
+     "value": "var(--surface-dark-2)"
+    },
+    {
+     "scope": "[data-a63-surface='n6']",
+     "value": "var(--surface-dark-2)"
     }
    ]
   },
@@ -12957,6 +14357,46 @@
    ]
   },
   {
+   "cssVar": "--a63-selected-background",
+   "figma": {
+    "collection": "Semantic",
+    "path": "selected/background"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklch, var(--a63-action-primary) 12%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "color-mix(in oklch, var(--a63-action-primary) 12%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-selected-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "selected/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-text-accent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--a63-text-accent)"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-selection-thumb",
    "figma": {
     "collection": "Contract",
@@ -13240,7 +14680,47 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "white"
+     "value": "oklch( from var(--a63-status-info) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h )"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-status-info-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/info/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklab, var(--a63-status-info) 14%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "color-mix(in oklab, var(--a63-status-info) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-status-info-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/info/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-info-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-info-700)"
     }
    ]
   },
@@ -13276,7 +14756,47 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "white"
+     "value": "oklch( from var(--a63-status-success) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h )"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-status-success-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/success/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklab, var(--a63-status-success) 14%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "color-mix(in oklab, var(--a63-status-success) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-status-success-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/success/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-success-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-success-700)"
     }
    ]
   },
@@ -13312,7 +14832,47 @@
    "values": [
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "white"
+     "value": "oklch( from var(--a63-status-warning) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h )"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-status-warning-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/warning/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklab, var(--a63-status-warning) 14%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "color-mix(in oklab, var(--a63-status-warning) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-status-warning-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/warning/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-warning-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-warning-800)"
     }
    ]
   },
@@ -13629,6 +15189,26 @@
     {
      "scope": "[data-a63-theme='terminal']",
      "value": "inset 0 0 0 1px color-mix(in oklch, var(--a63-action-primary) 22%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-surface-sidebar",
+   "figma": {
+    "collection": "Semantic",
+    "path": "surface/sidebar"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-surface-page)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--a63-surface-muted)"
     }
    ]
   },
@@ -14101,6 +15681,710 @@
     {
      "scope": ":root",
      "value": "0 0 #0000"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-body-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/body/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-base-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-body-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/body/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-body-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/body/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-body-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/body/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-base-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-callout-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/callout/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-base-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-callout-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/callout/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-callout-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/callout/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-callout-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/callout/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-base-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-caption-1-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/caption/1/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-xs-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-caption-1-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/caption/1/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-caption-1-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/caption/1/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-caption-1-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/caption/1/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-xs-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-caption-2-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/caption/2/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-2xs-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-caption-2-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/caption/2/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-caption-2-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/caption/2/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-caption-2-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/caption/2/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-2xs-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-footnote-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/footnote/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-xs-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-footnote-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/footnote/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-footnote-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/footnote/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-footnote-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/footnote/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-xs-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-headline-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/headline/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-base-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-headline-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/headline/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-headline-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/headline/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-headline-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/headline/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-base-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-large-title-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/large/title/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-6xl-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-large-title-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/large/title/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-large-title-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/large/title/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "700"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-large-title-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/large/title/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-6xl-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-subhead-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/subhead/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-sm-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-subhead-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/subhead/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-subhead-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/subhead/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-subhead-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/subhead/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-sm-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-1-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/1/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-5xl-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-1-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/1/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-1-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/1/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "700"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-1-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/1/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-5xl-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-2-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/2/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-3xl-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-2-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/2/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-2-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/2/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "700"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-2-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/2/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-3xl-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-3-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/3/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-2xl-font-size)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-3-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/3/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "400"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-3-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/3/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-title-3-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/title/3/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size]",
+     "value": "var(--typography-2xl-line-height)"
     }
    ]
   },
@@ -26700,6 +28984,62 @@
     {
      "scope": "[data-window-size='xs']",
      "value": "calc(24px * var(--typography-scale, 1))"
+    }
+   ]
+  },
+  {
+   "cssVar": "--typography-2xs-font-size",
+   "figma": {
+    "collection": "Foundation",
+    "path": "typography/2xs/font/size"
+   },
+   "layer": "foundation",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "calc(11px * var(--typography-scale, 1))"
+    },
+    {
+     "scope": "[data-window-size='md'], [data-window-size='lg'], [data-window-size='xl']",
+     "value": "calc(11px * var(--typography-scale, 1))"
+    },
+    {
+     "scope": "[data-window-size='sm']",
+     "value": "calc(11px * var(--typography-scale, 1))"
+    },
+    {
+     "scope": "[data-window-size='xs']",
+     "value": "calc(11px * var(--typography-scale, 1))"
+    }
+   ]
+  },
+  {
+   "cssVar": "--typography-2xs-line-height",
+   "figma": {
+    "collection": "Foundation",
+    "path": "typography/2xs/line/height"
+   },
+   "layer": "foundation",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "calc(13px * var(--typography-scale, 1))"
+    },
+    {
+     "scope": "[data-window-size='md'], [data-window-size='lg'], [data-window-size='xl']",
+     "value": "calc(13px * var(--typography-scale, 1))"
+    },
+    {
+     "scope": "[data-window-size='sm']",
+     "value": "calc(13px * var(--typography-scale, 1))"
+    },
+    {
+     "scope": "[data-window-size='xs']",
+     "value": "calc(13px * var(--typography-scale, 1))"
     }
    ]
   },

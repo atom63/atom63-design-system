@@ -73,6 +73,13 @@ export function Example() {
 
 These imports match the packed-package smoke path and the package root exports.
 
+`Calendar` has its own entry point, so importing the root does not load
+`react-day-picker`:
+
+```tsx
+import { Calendar } from '@atom63/ui-react/calendar'
+```
+
 ## Theming
 
 `Atom63Theme` sets `data-a63-mode`, `data-a63-theme`, and the matching `light`

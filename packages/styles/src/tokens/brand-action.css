@@ -47,3 +47,15 @@
      text on the lightly tinted Aqua page is just under 4.5:1. */
   --a63-brand-text: var(--a63-brand-700);
 }
+
+[data-a63-brand='b4'] {
+  /* Pink (b4) keeps 600 for fills, but its 600 as text on the selected wash over
+     the Aqua page sits at 4.5:1 exactly. */
+  --a63-brand-text: var(--a63-brand-700);
+}
+
+[data-a63-brand='b6'] {
+  /* Red (b6) keeps 600 for fills, but its 600 as text on the selected wash is
+     about 4.1–4.5:1 in light mode. */
+  --a63-brand-text: var(--a63-brand-700);
+}
