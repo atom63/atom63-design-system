@@ -1,6 +1,6 @@
 ---
 '@atom63/styles': minor
-'@atom63/ui-react': patch
+'@atom63/ui-react': minor
 ---
 
 Tints and category colors are semantic roles.
