@@ -10369,6 +10369,14 @@
     {
      "scope": "[data-a63-brand='b3']",
      "value": "var(--a63-brand-700)"
+    },
+    {
+     "scope": "[data-a63-brand='b4']",
+     "value": "var(--a63-brand-700)"
+    },
+    {
+     "scope": "[data-a63-brand='b6']",
+     "value": "var(--a63-brand-700)"
     }
    ]
   },

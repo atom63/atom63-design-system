@@ -186,4 +186,34 @@ describe('brand contrast (WCAG AA)', () => {
     }
     expect(failures, failures.join('\n')).toEqual([])
   })
+
+  it('keeps a selected item readable on every brand ramp', () => {
+    const failures: string[] = []
+    for (const brand of brands) {
+      root().setAttribute('data-a63-brand', brand)
+      for (const theme of themes) {
+        for (const mode of modes) {
+          applyThemeMode(theme, mode)
+          // The selected wash is translucent: paint it over the page first.
+          const page = parseCssColor(resolvePaintedColor('--a63-surface-page', 'background'))
+          const washCss = resolvePaintedColor('--a63-selected-background', 'background')
+          const wash = parseCssColor(washCss)
+          const fill: Rgb = {
+            r: wash.r * wash.a + page.r * (1 - wash.a),
+            g: wash.g * wash.a + page.g * (1 - wash.a),
+            b: wash.b * wash.a + page.b * (1 - wash.a),
+            a: 1,
+          }
+          const fgCss = resolvePaintedColor('--a63-selected-foreground', 'color')
+          const ratio = contrastRatio(parseCssColor(fgCss), fill)
+          if (ratio < AA_TEXT) {
+            failures.push(
+              `${brand} ${theme}/${mode} selected: ${ratio.toFixed(2)}:1 < ${AA_TEXT}:1 (fg=${fgCss}, bg=${washCss})`
+            )
+          }
+        }
+      }
+    }
+    expect(failures, failures.join('\n')).toEqual([])
+  })
 })

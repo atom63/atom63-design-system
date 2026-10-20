@@ -17727,13 +17727,13 @@
               "alias": "--a63-brand-700"
             },
             "b4": {
-              "alias": "--a63-brand-600"
+              "alias": "--a63-brand-700"
             },
             "b5": {
               "alias": "--a63-brand-600"
             },
             "b6": {
-              "alias": "--a63-brand-600"
+              "alias": "--a63-brand-700"
             }
           },
           "codeSyntax": "var(--a63-brand-text)",

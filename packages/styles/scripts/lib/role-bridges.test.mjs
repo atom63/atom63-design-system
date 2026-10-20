@@ -60,6 +60,10 @@ test('renders the Tailwind block and the compat bridge from the same table', () 
   assert.match(compat, /\/\* Actions \*\/\n {2}--primary: var\(--a63-action-primary\);/)
 })
 
+test('declares the compat bridge on every mode scope, so a nested .dark resolves its own values', () => {
+  assert.match(renderCompat(table), /^:root,\n\.light,\n\.dark,\n\[data-a63-mode\] \{$/m)
+})
+
 test('replaces only the semantic block of theme.css, legacy or generated', () => {
   const legacy =
     '@theme inline {\n  --breakpoint-sm: 40rem;\n}\n\n' +
