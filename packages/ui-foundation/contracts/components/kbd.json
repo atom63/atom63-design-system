@@ -1,0 +1,25 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "kbd",
+  "lists": {
+    "sizes": ["sm", "md"],
+    "slots": ["kbd", "kbd-group"],
+    "states": ["rest"],
+    "visualArchetypes": ["marker"]
+  },
+  "contract": {
+    "defaultSize": "md",
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

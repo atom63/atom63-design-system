@@ -1,0 +1,57 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "copy-button",
+  "lists": {
+    "variants": ["ghost", "outline", "secondary"],
+    "sizePairs": [
+      {
+        "icon": "icon-xs",
+        "label": "xs"
+      },
+      {
+        "icon": "icon-sm",
+        "label": "sm"
+      },
+      {
+        "icon": "icon",
+        "label": "md"
+      },
+      {
+        "icon": "icon-lg",
+        "label": "lg"
+      },
+      {
+        "icon": "icon-xl",
+        "label": "xl"
+      }
+    ],
+    "sizes": {
+      "flatten": "sizePairs"
+    },
+    "slots": ["button", "button-label", "copy-button-swap", "copy-button-item", "animated-check"],
+    "states": ["rest", "hover", "pressed", "focus-visible", "copied"],
+    "visualArchetypes": ["action"]
+  },
+  "contract": {
+    "defaultIconSize": "icon-sm",
+    "defaultLabelSize": "sm",
+    "sizePairs": {
+      "$ref": "#/lists/sizePairs"
+    },
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

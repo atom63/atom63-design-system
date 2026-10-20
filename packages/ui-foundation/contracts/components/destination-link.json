@@ -1,0 +1,55 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "destination-link",
+  "lists": {
+    "kinds": {
+      "values": ["internal", "external"],
+      "exportName": "destinationKinds",
+      "typeName": "DestinationKind"
+    },
+    "states": ["rest", "focus-visible"],
+    "slots": ["destination-link", "destination-indicator"],
+    "visualArchetypes": ["action"]
+  },
+  "contract": {
+    "kinds": {
+      "$ref": "#/lists/kinds"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "destinationLink",
+    "reactRenderer": "DestinationLink",
+    "swiftUIRenderer": "NavigationLink / Link",
+    "intent": "Move to an internal destination or open an external destination while making that distinction explicit.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["rest", "focus-visible"],
+    "sharedOutcomes": [
+      "internal-destination-preserves-application-navigation",
+      "external-destination-uses-platform-external-navigation",
+      "destination-kind-remains-distinguishable"
+    ],
+    "accessibilityOutcomes": [
+      "exposes-link-label",
+      "announces-external-destination-behavior",
+      "preserves-native-link-semantics"
+    ],
+    "platformAdaptations": {
+      "react": [
+        "Uses a router-provided internal link and a protected new-tab anchor for external destinations."
+      ],
+      "swiftUI": [
+        "Uses NavigationLink for typed in-app navigation and Link or openURL for external destinations."
+      ]
+    }
+  }
+}

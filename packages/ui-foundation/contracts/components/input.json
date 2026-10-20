@@ -1,0 +1,87 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "input",
+  "lists": {
+    "sizes": ["sm", "md", "lg"],
+    "states": ["rest", "hover", "focus", "disabled", "invalid"],
+    "slots": {
+      "description": "Two-part anatomy (mirrors Base UI / production @atom63/ui input): a control wrapper owns the chrome, the inner input is the transparent text field.",
+      "values": ["input-control", "input"]
+    },
+    "tokenSlots": [
+      "field.background",
+      "field.border",
+      "field.radius",
+      "field.shadow",
+      "field.focusRing",
+      "field.focusBorder",
+      "field.height",
+      "field.paddingInline",
+      "field.fontSize"
+    ],
+    "visualArchetypes": ["field"]
+  },
+  "contract": {
+    "defaultSize": "md",
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "tokenSlots": {
+      "$ref": "#/lists/tokenSlots"
+    },
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "parts": {
+    "group": {
+      "lists": {
+        "slots": {
+          "description": "Composable group: the group owns the shared field chrome; addons align to either inline edge or stack above/below a multiline field.",
+          "values": ["input-group", "input-group-addon", "input-group-button", "input-group-text"]
+        },
+        "aligns": ["inline-start", "inline-end", "block-start", "block-end"],
+        "visualArchetypes": ["field"]
+      },
+      "contract": {
+        "aligns": {
+          "$ref": "#/parts/group/lists/aligns"
+        },
+        "slots": {
+          "$ref": "#/parts/group/lists/slots"
+        },
+        "visualArchetypes": {
+          "$ref": "#/parts/group/lists/visualArchetypes"
+        }
+      }
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "textField",
+    "reactRenderer": "Input",
+    "swiftUIRenderer": "AtomTextField",
+    "intent": "Capture a single-line text value with visible focus and validation state.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["rest", "focus", "disabled", "invalid"],
+    "sharedOutcomes": [
+      "value-remains-editable-when-enabled",
+      "focus-is-visible",
+      "invalid-state-is-announced"
+    ],
+    "accessibilityOutcomes": ["exposes-label", "exposes-value", "announces-invalid"],
+    "platformAdaptations": {
+      "react": ["Uses HTML input behavior, browser autofill, and web focus chrome."],
+      "swiftUI": [
+        "Uses TextField or SecureField with the native keyboard and autofill.",
+        "Adapts visual chrome when a grouped Form or sheet container owns the row surface without changing label, value, focus, disabled, or validation semantics."
+      ]
+    }
+  }
+}

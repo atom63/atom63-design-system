@@ -1,0 +1,43 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "tooltip",
+  "lists": {
+    "sides": ["top", "right", "bottom", "left"],
+    "alignments": ["start", "center", "end"],
+    "states": ["closed", "open", "starting", "ending", "instant"],
+    "slots": ["tooltip-trigger", "tooltip-positioner", "tooltip-popup", "tooltip-viewport"],
+    "tokenSlots": [
+      "overlay.background",
+      "overlay.border",
+      "overlay.radius",
+      "overlay.gloss",
+      "overlay.texture",
+      "overlay.backdrop",
+      "overlay.shadow",
+      "overlay.innerShadow"
+    ],
+    "visualArchetypes": ["overlay"]
+  },
+  "contract": {
+    "alignments": {
+      "$ref": "#/lists/alignments"
+    },
+    "defaultAlignment": "center",
+    "defaultSide": "top",
+    "sides": {
+      "$ref": "#/lists/sides"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "tokenSlots": {
+      "$ref": "#/lists/tokenSlots"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

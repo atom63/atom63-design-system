@@ -1,21 +1,24 @@
-import type { ReactNode } from 'react'
+import { mergeProps } from '@base-ui/react/merge-props'
+import { useRender } from '@base-ui/react/use-render'
+import type { ReactElement } from 'react'
 import { cn } from '../lib/cn'
 
-export interface PageProps {
-  children: ReactNode
-  className?: string
-  id?: string
+export interface PageProps extends useRender.ComponentProps<'main'> {
   noPadding?: boolean
 }
 
-export function Page({ children, className, id, noPadding = false }: PageProps) {
-  return (
-    <main
-      className={cn('min-h-full', !noPadding && 'pt-8 pb-20', className)}
-      data-slot="page"
-      id={id}
-    >
-      {children}
-    </main>
-  )
+/**
+ * Renders `<main>` by default. Inside a shell that already owns the `main`
+ * landmark, such as `SidebarInset`, pass `render={<div />}`.
+ */
+export function Page({ className, noPadding = false, render, ...props }: PageProps): ReactElement {
+  const defaultProps = {
+    className: cn('min-h-full', !noPadding && 'pt-8 pb-20', className),
+    'data-slot': 'page',
+  }
+  return useRender({
+    defaultTagName: 'main',
+    props: mergeProps<'main'>(defaultProps, props),
+    render,
+  })
 }

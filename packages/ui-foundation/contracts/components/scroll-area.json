@@ -1,0 +1,35 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "scroll-area",
+  "lists": {
+    "orientations": ["vertical", "horizontal", "both"],
+    "options": ["scroll-fade", "scrollbar-gutter", "show-on-hover"],
+    "states": ["idle", "hovering", "scrolling", "focus-visible"],
+    "slots": [
+      "scroll-area",
+      "scroll-area-viewport",
+      "scroll-area-scrollbar",
+      "scroll-area-thumb",
+      "scroll-area-corner"
+    ],
+    "visualArchetypes": ["range"]
+  },
+  "contract": {
+    "defaultOrientation": "both",
+    "orientations": {
+      "$ref": "#/lists/orientations"
+    },
+    "options": {
+      "$ref": "#/lists/options"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

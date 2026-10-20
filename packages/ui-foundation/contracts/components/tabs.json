@@ -1,0 +1,68 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "tabs",
+  "description": "Faithful to prod @atom63/ui tabs.tsx: the TabsList carries a `variant` (default = a filled pill track, underline = an underline indicator, attached = borderless folder tabs) and a `size` ramp. TabsTab also takes the size so items scale with the list.",
+  "lists": {
+    "variants": ["default", "underline", "attached"],
+    "sizes": ["xs", "sm", "default", "lg"],
+    "orientations": ["horizontal", "vertical"],
+    "states": ["rest", "hover", "selected", "focus-visible", "disabled"],
+    "slots": ["tabs", "tabs-list", "tabs-tab", "tab-indicator", "tabs-content"],
+    "visualArchetypes": ["segment", "surface"]
+  },
+  "contract": {
+    "accessibility": {
+      "pattern": "tabs",
+      "options": {
+        "activation": "manual"
+      }
+    },
+    "defaultVariant": "default",
+    "defaultSize": "default",
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "orientations": {
+      "$ref": "#/lists/orientations"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "tabs",
+    "reactRenderer": "Tabs",
+    "swiftUIRenderer": "Picker(.segmented) with the selected content",
+    "intent": "Switch between peer destinations or content views while keeping one selection active.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["rest", "selected"],
+    "sharedOutcomes": [
+      "one-tab-is-selected-at-a-time",
+      "selection-reveals-the-associated-content",
+      "selected-tab-remains-visually-distinguishable"
+    ],
+    "accessibilityOutcomes": [
+      "exposes-tab-labels",
+      "exposes-selected-state",
+      "associates-selection-with-visible-content"
+    ],
+    "platformAdaptations": {
+      "react": [
+        "Uses tablist, tab, and tabpanel semantics with keyboard navigation and a visual indicator."
+      ],
+      "swiftUI": [
+        "In-page sections use a segmented Picker above the content it selects, so each tab is a named, selectable button. TabView stays the renderer for app-level sections such as a tab bar or sidebar."
+      ]
+    }
+  }
+}

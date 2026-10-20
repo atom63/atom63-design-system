@@ -1,0 +1,26 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "hover-card",
+  "lists": {
+    "states": ["closed", "open", "starting", "ending"],
+    "slots": [
+      "hover-card",
+      "hover-card-trigger",
+      "hover-card-portal",
+      "hover-card-positioner",
+      "hover-card-content"
+    ],
+    "visualArchetypes": ["overlay", "surface", "trigger"]
+  },
+  "contract": {
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

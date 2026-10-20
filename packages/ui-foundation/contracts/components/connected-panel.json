@@ -1,0 +1,43 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "connected-panel",
+  "description": "An in-flow disclosure whose trigger and expanded content share one continuous surface. It consumes trigger behavior for the header row and surface chrome for the panel itself; it is not an overlay because it remains in document flow.",
+  "lists": {
+    "aligns": ["start", "center", "end"],
+    "slots": [
+      "connected-panel",
+      "connected-panel-anchor",
+      "connected-panel-trigger",
+      "connected-panel-trigger-icon",
+      "connected-panel-trigger-text",
+      "connected-panel-trigger-label",
+      "connected-panel-trigger-summary",
+      "connected-panel-trigger-chevron",
+      "connected-panel-content",
+      "connected-panel-content-clip",
+      "connected-panel-content-inner",
+      "connected-panel-header",
+      "connected-panel-title",
+      "connected-panel-description",
+      "connected-panel-body",
+      "connected-panel-footer"
+    ],
+    "states": ["closed", "open", "hover", "focus-visible", "disabled"],
+    "visualArchetypes": ["trigger", "surface"]
+  },
+  "contract": {
+    "defaultAlign": "start",
+    "aligns": {
+      "$ref": "#/lists/aligns"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

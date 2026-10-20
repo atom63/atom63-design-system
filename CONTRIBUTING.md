@@ -205,8 +205,10 @@ keyboard map (each key, the state and focus before it, and the state and focus a
    optional with `requirement: 'optional'`. Where the APG leaves a choice to the implementation
    (tab activation, menu wrapping), add it to `options` and tag the rows that depend on it with
    `when`. Register the pattern in `src/a11y/index.ts`.
-2. **Bind the component** with `accessibility: { pattern, options }` in its
-   `<name>-contract.ts`. The docs Contract section shows the binding.
+2. **Bind the component** with `accessibility: { pattern, options }` in the `contract` of its
+   `packages/ui-foundation/contracts/components/<name>.json`, then run
+   `pnpm --filter @atom63/ui-foundation generate:contracts`. The docs Contract section shows the
+   binding.
 3. **Name the stories** that exercise it in `bindings` in `apps/storybook/a11y/patterns.test.ts`,
    with the accessible names that pick a part when a story has several candidates (the trigger).
 4. **Run** `pnpm --filter @atom63/storybook test:a11y`. It generates one test per tree root,

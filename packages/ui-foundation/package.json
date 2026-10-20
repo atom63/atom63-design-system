@@ -41,8 +41,8 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "generate:contracts": "node ../../scripts/generate-cross-renderer-contracts.mjs",
-    "check:contracts": "node ../../scripts/generate-cross-renderer-contracts.mjs --check",
+    "generate:contracts": "node ../../scripts/generate-component-contracts.mjs && node ../../scripts/generate-cross-renderer-contracts.mjs",
+    "check:contracts": "node ../../scripts/generate-component-contracts.mjs --check && node ../../scripts/generate-cross-renderer-contracts.mjs --check",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --cache --max-warnings 0",
     "generate:a11y-ios": "node ../../scripts/generate-a11y-ios-contracts.mjs",
