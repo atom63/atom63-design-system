@@ -13,9 +13,9 @@ import {
   loadCrossRendererOrder,
   resolveRef,
   resolvedComponent,
-  schemaProblems,
   sections,
 } from './component-contracts.mjs'
+import { schemaProblems } from './component-contract-schema.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..')
 

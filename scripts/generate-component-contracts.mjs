@@ -26,9 +26,9 @@ import {
   loadContractSources,
   pascal,
   resolvedComponent,
-  schemaProblems,
   sections,
 } from './design-system/lib/component-contracts.mjs'
+import { schemaProblems } from './design-system/lib/component-contract-schema.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const componentsDir = path.join(root, 'packages/ui-foundation/src/components')
