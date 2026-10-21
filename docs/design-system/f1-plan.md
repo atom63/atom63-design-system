@@ -163,9 +163,10 @@ F1 要把“设计意图”冻结成一份中立的数据，各端只做适配�
 ### F1b-5 CI 加固
 
 - **做什么：**
-  - `check:contracts` 加进 Linux 的 verify 任务（现在只在 macOS 的 iOS 任务里跑，`ci.yml:361-363`）；
-  - 用 zod 校验 JSON schema（CLI 已经依赖 zod）；
-  - 加一个审阅用的 story：每个值在各平台的取值并排展示。
+  - `check:contracts` 加进 Linux 的 verify 任务。F1b-1 已经加上了，这一步不用再做。
+  - 生成器按 `component-intent.schema.json` 校验每个源文件，不通过就不生成。校验器用 ajv，而不是原先计划的 zod：schema 本身就是 JSON Schema，ajv 按原文执行；zod 的 `z.fromJSONSchema()` 官方标为 experimental，转换时可能悄悄漏掉关键字，门禁就形同虚设。
+  - 加反例测试：缺 `maturity`、`maturity` 取 schema 之外的值、出现未知字段，三种都必须被拦下。
+  - 加一个审阅用的 story（`Contracts/Intent`），把每个意图值在各平台的取值并排列出来。
 
 ---
 
