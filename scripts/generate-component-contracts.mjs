@@ -26,6 +26,7 @@ import {
   loadContractSources,
   pascal,
   resolvedComponent,
+  schemaProblems,
   sections,
 } from './design-system/lib/component-contracts.mjs'
 
@@ -34,6 +35,14 @@ const componentsDir = path.join(root, 'packages/ui-foundation/src/components')
 const check = process.argv.includes('--check')
 
 const sources = loadContractSources(root)
+
+// A source the schema rejects is not generated from.
+const invalid = schemaProblems(root, sources)
+if (invalid.length) {
+  process.stderr.write(`${invalid.join('\n')}\n`)
+  process.stderr.write(`Fix the sources in ${contractsDir} to match its schema.\n`)
+  process.exit(1)
+}
 
 const literal = value => JSON.stringify(value)
 

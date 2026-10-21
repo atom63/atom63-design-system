@@ -16,6 +16,8 @@
 import { readdirSync, readFileSync } from 'node:fs'
 import path from 'node:path'
 
+import Ajv2020 from 'ajv/dist/2020.js'
+
 export const contractsDir = 'packages/ui-foundation/contracts'
 
 export const camel = slug => slug.replace(/-([a-z0-9])/g, (_, letter) => letter.toUpperCase())
@@ -40,6 +42,23 @@ export function loadContractSources(root) {
     }
   }
   return sources
+}
+
+/** Validates every source against contracts/schema/component-intent.schema.json. */
+export function schemaProblems(root, sources) {
+  const schema = JSON.parse(
+    readFileSync(path.join(root, contractsDir, 'schema/component-intent.schema.json'), 'utf8')
+  )
+  const validate = new Ajv2020({ allErrors: true }).compile(schema)
+  const problems = []
+  for (const source of sources.values()) {
+    if (validate(source.doc)) continue
+    for (const { instancePath, message, params } of validate.errors) {
+      const detail = params.additionalProperty ?? params.allowedValues?.join(', ')
+      problems.push(`${source.id}${instancePath || '/'}: ${message}${detail ? ` (${detail})` : ''}`)
+    }
+  }
+  return problems
 }
 
 /** The components with a cross-renderer contract, in catalog order. */

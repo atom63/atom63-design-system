@@ -13,6 +13,7 @@ import {
   loadCrossRendererOrder,
   resolveRef,
   resolvedComponent,
+  schemaProblems,
   sections,
 } from './component-contracts.mjs'
 
@@ -268,5 +269,39 @@ describe('hit targets', () => {
       }
       if (platforms.ios?.minHitTarget) assert.equal(platforms.ios.minHitTarget, iosFloor, item.name)
     }
+  })
+})
+
+describe('schema', () => {
+  const valid = {
+    component: 'probe',
+    maturity: 'preview',
+    lists: { sizes: ['sm', 'md'] },
+    contract: { defaultSize: 'md', sizes: { $ref: '#/lists/sizes' } },
+  }
+  const problems = doc =>
+    schemaProblems(root, new Map([['components/probe', source('probe', doc)]]))
+
+  it('accepts a valid source and every shipped source', () => {
+    assert.deepEqual(problems(valid), [])
+    assert.deepEqual(schemaProblems(root, loadContractSources(root)), [])
+  })
+
+  it('rejects a source without a maturity', () => {
+    const { maturity, ...doc } = valid
+    // The oneOf between a component and a shared list file also reports its other branch.
+    assert.ok(problems(doc).includes("components/probe/: must have required property 'maturity'"))
+  })
+
+  it('rejects a maturity outside the schema', () => {
+    assert.deepEqual(problems({ ...valid, maturity: 'beta' }), [
+      'components/probe/maturity: must be equal to one of the allowed values (preview, stable)',
+    ])
+  })
+
+  it('rejects an unknown field', () => {
+    assert.deepEqual(problems({ ...valid, colour: 'red' }), [
+      'components/probe/: must NOT have additional properties (colour)',
+    ])
   })
 })
