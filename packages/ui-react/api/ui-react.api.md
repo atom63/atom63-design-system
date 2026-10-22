@@ -889,13 +889,9 @@ export interface CopyButtonFeedbackProps {
 }
 
 // @public (undocumented)
-export interface CopyButtonProps {
-    // (undocumented)
-    'aria-hidden'?: boolean;
+export interface CopyButtonProps extends Omit<ButtonProps, 'children' | 'size' | 'value' | 'variant'> {
     // (undocumented)
     children?: React$1.ReactNode;
-    // (undocumented)
-    className?: string;
     // (undocumented)
     copiedLabel?: string;
     // (undocumented)
@@ -904,8 +900,6 @@ export interface CopyButtonProps {
     size?: CopyButtonSize;
     // (undocumented)
     successMessage?: string;
-    // (undocumented)
-    tabIndex?: number;
     // (undocumented)
     value: string;
     // (undocumented)

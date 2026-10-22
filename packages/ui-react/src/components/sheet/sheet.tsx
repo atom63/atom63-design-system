@@ -166,7 +166,7 @@ export function SheetPopup({
               render={<Button size="icon" variant="ghost" />}
               {...closeProps}
             >
-              <X aria-hidden="true" />
+              {closeProps?.children ?? <X aria-hidden="true" />}
             </SheetPrimitive.Close>
           )}
         </SheetPrimitive.Popup>

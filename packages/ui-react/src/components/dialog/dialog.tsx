@@ -150,7 +150,7 @@ export function DialogPopup({
               data-slot="dialog-close-button"
               {...closeProps}
             >
-              <CloseIcon />
+              {closeProps?.children ?? <CloseIcon />}
             </DialogPrimitive.Close>
           )}
         </DialogPrimitive.Popup>
