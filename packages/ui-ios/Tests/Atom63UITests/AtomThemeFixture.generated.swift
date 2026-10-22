@@ -20,6 +20,8 @@ modern b1 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 modern b1 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 modern b1 n1 light borderControl 0.878432 0.878431 0.878431 1
 modern b1 n1 dark borderControl 0.282353 0.282353 0.282353 1
+modern b1 n1 light borderInput 0.513725 0.513726 0.513725 1
+modern b1 n1 dark borderInput 0.431373 0.431372 0.431372 1
 modern b1 n1 light actionPrimary 0.019608 0.364706 0.823529 1
 modern b1 n1 dark actionPrimary 0.019608 0.364706 0.823529 1
 modern b1 n1 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -70,6 +72,8 @@ modern b2 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 modern b2 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 modern b2 n1 light borderControl 0.878432 0.878431 0.878431 1
 modern b2 n1 dark borderControl 0.282353 0.282353 0.282353 1
+modern b2 n1 light borderInput 0.513725 0.513726 0.513725 1
+modern b2 n1 dark borderInput 0.431373 0.431372 0.431372 1
 modern b2 n1 light actionPrimary 0.780392 0.258824 0 1
 modern b2 n1 dark actionPrimary 0.780392 0.258824 0 1
 modern b2 n1 light actionPrimaryPressed 0.568627 0.109804 0 1
@@ -120,6 +124,8 @@ modern b3 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 modern b3 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 modern b3 n1 light borderControl 0.878432 0.878431 0.878431 1
 modern b3 n1 dark borderControl 0.282353 0.282353 0.282353 1
+modern b3 n1 light borderInput 0.513725 0.513726 0.513725 1
+modern b3 n1 dark borderInput 0.431373 0.431372 0.431372 1
 modern b3 n1 light actionPrimary 0 0.368627 0.2 1
 modern b3 n1 dark actionPrimary 0 0.368627 0.2 1
 modern b3 n1 light actionPrimaryPressed 0 0.235294 0.105882 1
@@ -170,6 +176,8 @@ modern b4 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 modern b4 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 modern b4 n1 light borderControl 0.878432 0.878431 0.878431 1
 modern b4 n1 dark borderControl 0.282353 0.282353 0.282353 1
+modern b4 n1 light borderInput 0.513725 0.513726 0.513725 1
+modern b4 n1 dark borderInput 0.431373 0.431372 0.431372 1
 modern b4 n1 light actionPrimary 0.72549 0.109804 0.419608 1
 modern b4 n1 dark actionPrimary 0.72549 0.109804 0.419608 1
 modern b4 n1 light actionPrimaryPressed 0.529412 0 0.282353 1
@@ -220,6 +228,8 @@ modern b5 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 modern b5 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 modern b5 n1 light borderControl 0.878432 0.878431 0.878431 1
 modern b5 n1 dark borderControl 0.282353 0.282353 0.282353 1
+modern b5 n1 light borderInput 0.513725 0.513726 0.513725 1
+modern b5 n1 dark borderInput 0.431373 0.431372 0.431372 1
 modern b5 n1 light actionPrimary 0.368627 0.039216 0.792157 1
 modern b5 n1 dark actionPrimary 0.368627 0.039216 0.792157 1
 modern b5 n1 light actionPrimaryPressed 0.254902 0 0.6 1
@@ -270,6 +280,8 @@ modern b6 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 modern b6 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 modern b6 n1 light borderControl 0.878432 0.878431 0.878431 1
 modern b6 n1 dark borderControl 0.282353 0.282353 0.282353 1
+modern b6 n1 light borderInput 0.513725 0.513726 0.513725 1
+modern b6 n1 dark borderInput 0.431373 0.431372 0.431372 1
 modern b6 n1 light actionPrimary 0.803922 0.047059 0.239216 1
 modern b6 n1 dark actionPrimary 0.803922 0.047059 0.239216 1
 modern b6 n1 light actionPrimaryPressed 0.588235 0 0.121569 1
@@ -320,6 +332,8 @@ aqua b1 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 aqua b1 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 aqua b1 n1 light borderControl 0.878432 0.878431 0.878431 1
 aqua b1 n1 dark borderControl 0.282353 0.282353 0.282353 1
+aqua b1 n1 light borderInput 0.513725 0.513726 0.513725 1
+aqua b1 n1 dark borderInput 0.431373 0.431372 0.431372 1
 aqua b1 n1 light actionPrimary 0.019608 0.364706 0.823529 1
 aqua b1 n1 dark actionPrimary 0.019608 0.364706 0.823529 1
 aqua b1 n1 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -370,6 +384,8 @@ aqua b2 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 aqua b2 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 aqua b2 n1 light borderControl 0.878432 0.878431 0.878431 1
 aqua b2 n1 dark borderControl 0.282353 0.282353 0.282353 1
+aqua b2 n1 light borderInput 0.513725 0.513726 0.513725 1
+aqua b2 n1 dark borderInput 0.431373 0.431372 0.431372 1
 aqua b2 n1 light actionPrimary 0.780392 0.258824 0 1
 aqua b2 n1 dark actionPrimary 0.780392 0.258824 0 1
 aqua b2 n1 light actionPrimaryPressed 0.568627 0.109804 0 1
@@ -420,6 +436,8 @@ aqua b3 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 aqua b3 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 aqua b3 n1 light borderControl 0.878432 0.878431 0.878431 1
 aqua b3 n1 dark borderControl 0.282353 0.282353 0.282353 1
+aqua b3 n1 light borderInput 0.513725 0.513726 0.513725 1
+aqua b3 n1 dark borderInput 0.431373 0.431372 0.431372 1
 aqua b3 n1 light actionPrimary 0 0.368627 0.2 1
 aqua b3 n1 dark actionPrimary 0 0.368627 0.2 1
 aqua b3 n1 light actionPrimaryPressed 0 0.235294 0.105882 1
@@ -470,6 +488,8 @@ aqua b4 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 aqua b4 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 aqua b4 n1 light borderControl 0.878432 0.878431 0.878431 1
 aqua b4 n1 dark borderControl 0.282353 0.282353 0.282353 1
+aqua b4 n1 light borderInput 0.513725 0.513726 0.513725 1
+aqua b4 n1 dark borderInput 0.431373 0.431372 0.431372 1
 aqua b4 n1 light actionPrimary 0.72549 0.109804 0.419608 1
 aqua b4 n1 dark actionPrimary 0.72549 0.109804 0.419608 1
 aqua b4 n1 light actionPrimaryPressed 0.529412 0 0.282353 1
@@ -520,6 +540,8 @@ aqua b5 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 aqua b5 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 aqua b5 n1 light borderControl 0.878432 0.878431 0.878431 1
 aqua b5 n1 dark borderControl 0.282353 0.282353 0.282353 1
+aqua b5 n1 light borderInput 0.513725 0.513726 0.513725 1
+aqua b5 n1 dark borderInput 0.431373 0.431372 0.431372 1
 aqua b5 n1 light actionPrimary 0.368627 0.039216 0.792157 1
 aqua b5 n1 dark actionPrimary 0.368627 0.039216 0.792157 1
 aqua b5 n1 light actionPrimaryPressed 0.254902 0 0.6 1
@@ -570,6 +592,8 @@ aqua b6 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 aqua b6 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 aqua b6 n1 light borderControl 0.878432 0.878431 0.878431 1
 aqua b6 n1 dark borderControl 0.282353 0.282353 0.282353 1
+aqua b6 n1 light borderInput 0.513725 0.513726 0.513725 1
+aqua b6 n1 dark borderInput 0.431373 0.431372 0.431372 1
 aqua b6 n1 light actionPrimary 0.803922 0.047059 0.239216 1
 aqua b6 n1 dark actionPrimary 0.803922 0.047059 0.239216 1
 aqua b6 n1 light actionPrimaryPressed 0.588235 0 0.121569 1
@@ -620,6 +644,8 @@ retro b1 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 retro b1 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 retro b1 n1 light borderControl 0.878432 0.878431 0.878431 1
 retro b1 n1 dark borderControl 0.282353 0.282353 0.282353 1
+retro b1 n1 light borderInput 0.513725 0.513726 0.513725 1
+retro b1 n1 dark borderInput 0.431373 0.431372 0.431372 1
 retro b1 n1 light actionPrimary 0.019608 0.364706 0.823529 1
 retro b1 n1 dark actionPrimary 0.019608 0.364706 0.823529 1
 retro b1 n1 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -670,6 +696,8 @@ retro b2 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 retro b2 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 retro b2 n1 light borderControl 0.878432 0.878431 0.878431 1
 retro b2 n1 dark borderControl 0.282353 0.282353 0.282353 1
+retro b2 n1 light borderInput 0.513725 0.513726 0.513725 1
+retro b2 n1 dark borderInput 0.431373 0.431372 0.431372 1
 retro b2 n1 light actionPrimary 0.780392 0.258824 0 1
 retro b2 n1 dark actionPrimary 0.780392 0.258824 0 1
 retro b2 n1 light actionPrimaryPressed 0.568627 0.109804 0 1
@@ -720,6 +748,8 @@ retro b3 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 retro b3 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 retro b3 n1 light borderControl 0.878432 0.878431 0.878431 1
 retro b3 n1 dark borderControl 0.282353 0.282353 0.282353 1
+retro b3 n1 light borderInput 0.513725 0.513726 0.513725 1
+retro b3 n1 dark borderInput 0.431373 0.431372 0.431372 1
 retro b3 n1 light actionPrimary 0 0.368627 0.2 1
 retro b3 n1 dark actionPrimary 0 0.368627 0.2 1
 retro b3 n1 light actionPrimaryPressed 0 0.235294 0.105882 1
@@ -770,6 +800,8 @@ retro b4 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 retro b4 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 retro b4 n1 light borderControl 0.878432 0.878431 0.878431 1
 retro b4 n1 dark borderControl 0.282353 0.282353 0.282353 1
+retro b4 n1 light borderInput 0.513725 0.513726 0.513725 1
+retro b4 n1 dark borderInput 0.431373 0.431372 0.431372 1
 retro b4 n1 light actionPrimary 0.72549 0.109804 0.419608 1
 retro b4 n1 dark actionPrimary 0.72549 0.109804 0.419608 1
 retro b4 n1 light actionPrimaryPressed 0.529412 0 0.282353 1
@@ -820,6 +852,8 @@ retro b5 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 retro b5 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 retro b5 n1 light borderControl 0.878432 0.878431 0.878431 1
 retro b5 n1 dark borderControl 0.282353 0.282353 0.282353 1
+retro b5 n1 light borderInput 0.513725 0.513726 0.513725 1
+retro b5 n1 dark borderInput 0.431373 0.431372 0.431372 1
 retro b5 n1 light actionPrimary 0.368627 0.039216 0.792157 1
 retro b5 n1 dark actionPrimary 0.368627 0.039216 0.792157 1
 retro b5 n1 light actionPrimaryPressed 0.254902 0 0.6 1
@@ -870,6 +904,8 @@ retro b6 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 retro b6 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 retro b6 n1 light borderControl 0.878432 0.878431 0.878431 1
 retro b6 n1 dark borderControl 0.282353 0.282353 0.282353 1
+retro b6 n1 light borderInput 0.513725 0.513726 0.513725 1
+retro b6 n1 dark borderInput 0.431373 0.431372 0.431372 1
 retro b6 n1 light actionPrimary 0.803922 0.047059 0.239216 1
 retro b6 n1 dark actionPrimary 0.803922 0.047059 0.239216 1
 retro b6 n1 light actionPrimaryPressed 0.588235 0 0.121569 1
@@ -920,6 +956,8 @@ terminal b1 n1 light borderSubtle 0.789245 0.840042 0.919004 1
 terminal b1 n1 dark borderSubtle 0.019611 0.364706 0.82353 0.22
 terminal b1 n1 light borderControl 0.70671 0.787969 0.914401 1
 terminal b1 n1 dark borderControl 0.019611 0.364706 0.82353 0.42
+terminal b1 n1 light borderInput 0.227263 0.42568 0.738339 1
+terminal b1 n1 dark borderInput 0.462745 0.74902 1 0.6
 terminal b1 n1 light actionPrimary 0.019608 0.364706 0.823529 1
 terminal b1 n1 dark actionPrimary 0.019608 0.364706 0.823529 1
 terminal b1 n1 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -970,6 +1008,8 @@ terminal b2 n1 light borderSubtle 0.917243 0.82443 0.793549 1
 terminal b2 n1 dark borderSubtle 0.780392 0.258823 0 0.22
 terminal b2 n1 light borderControl 0.910475 0.76284 0.713549 1
 terminal b2 n1 dark borderControl 0.780392 0.258823 0 0.42
+terminal b2 n1 light borderInput 0.714467 0.36035 0.239377 1
+terminal b2 n1 dark borderInput 1 0.639215 0.403922 0.6
 terminal b2 n1 light actionPrimary 0.780392 0.258824 0 1
 terminal b2 n1 dark actionPrimary 0.780392 0.258824 0 1
 terminal b2 n1 light actionPrimaryPressed 0.568627 0.109804 0 1
@@ -1020,6 +1060,8 @@ terminal b3 n1 light borderSubtle 0.787183 0.83236 0.800017 1
 terminal b3 n1 dark borderSubtle 0 0.368627 0.2 0.22
 terminal b3 n1 light borderControl 0.703613 0.776456 0.724813 1
 terminal b3 n1 dark borderControl 0 0.368627 0.2 0.42
+terminal b3 n1 light borderInput 0.222459 0.414414 0.293554 1
+terminal b3 n1 dark borderInput 0.482353 0.886274 0.67451 0.6
 terminal b3 n1 light actionPrimary 0 0.368627 0.2 1
 terminal b3 n1 dark actionPrimary 0 0.368627 0.2 1
 terminal b3 n1 light actionPrimaryPressed 0 0.235294 0.105882 1
@@ -1070,6 +1112,8 @@ terminal b4 n1 light borderSubtle 0.911348 0.807262 0.839552 1
 terminal b4 n1 dark borderSubtle 0.72549 0.109803 0.419608 0.22
 terminal b4 n1 light borderControl 0.900277 0.735222 0.788265 1
 terminal b4 n1 dark borderControl 0.72549 0.109803 0.419608 0.42
+terminal b4 n1 light borderInput 0.680059 0.286619 0.447635 1
+terminal b4 n1 dark borderInput 1 0.54902 0.772549 0.6
 terminal b4 n1 light actionPrimary 0.72549 0.109804 0.419608 1
 terminal b4 n1 dark actionPrimary 0.72549 0.109804 0.419608 1
 terminal b4 n1 light actionPrimaryPressed 0.529412 0 0.282353 1
@@ -1120,6 +1164,8 @@ terminal b5 n1 light borderSubtle 0.820816 0.807302 0.91779 1
 terminal b5 n1 dark borderSubtle 0.368628 0.039215 0.792157 0.22
 terminal b5 n1 light borderControl 0.759122 0.735062 0.911555 1
 terminal b5 n1 dark borderControl 0.368628 0.039215 0.792157 0.42
+terminal b5 n1 light borderInput 0.396625 0.278403 0.720591 1
+terminal b5 n1 dark borderInput 0.721569 0.572549 1 0.6
 terminal b5 n1 light actionPrimary 0.368627 0.039216 0.792157 1
 terminal b5 n1 dark actionPrimary 0.368627 0.039216 0.792157 1
 terminal b5 n1 light actionPrimaryPressed 0.254902 0 0.6 1
@@ -1170,6 +1216,8 @@ terminal b6 n1 light borderSubtle 0.928375 0.809975 0.80984 1
 terminal b6 n1 dark borderSubtle 0.803921 0.047058 0.239216 0.22
 terminal b6 n1 light borderControl 0.92675 0.739173 0.740339 1
 terminal b6 n1 dark borderControl 0.803921 0.047058 0.239216 0.42
+terminal b6 n1 light borderInput 0.737079 0.284994 0.325944 1
+terminal b6 n1 dark borderInput 1 0.541176 0.588235 0.6
 terminal b6 n1 light actionPrimary 0.803922 0.047059 0.239216 1
 terminal b6 n1 dark actionPrimary 0.803922 0.047059 0.239216 1
 terminal b6 n1 light actionPrimaryPressed 0.588235 0 0.121569 1
@@ -1220,6 +1268,8 @@ modern b1 n2 light borderSubtle 0.917647 0.905882 0.92549 1
 modern b1 n2 dark borderSubtle 0.235294 0.223529 0.247059 1
 modern b1 n2 light borderControl 0.890196 0.87451 0.901961 1
 modern b1 n2 dark borderControl 0.286274 0.278431 0.305882 1
+modern b1 n2 light borderInput 0.517647 0.509804 0.556863 1
+modern b1 n2 dark borderInput 0.435294 0.427451 0.470588 1
 modern b1 n2 light actionPrimary 0.019608 0.364706 0.823529 1
 modern b1 n2 dark actionPrimary 0.019608 0.364706 0.823529 1
 modern b1 n2 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -1270,6 +1320,8 @@ modern b1 n3 light borderSubtle 0.909804 0.909804 0.92549 1
 modern b1 n3 dark borderSubtle 0.211765 0.227451 0.247059 1
 modern b1 n3 light borderControl 0.878432 0.882352 0.901961 1
 modern b1 n3 dark borderControl 0.262745 0.282353 0.305882 1
+modern b1 n3 light borderInput 0.501961 0.513725 0.552941 1
+modern b1 n3 dark borderInput 0.411765 0.431372 0.466667 1
 modern b1 n3 light actionPrimary 0.019608 0.364706 0.823529 1
 modern b1 n3 dark actionPrimary 0.019608 0.364706 0.823529 1
 modern b1 n3 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -1320,6 +1372,8 @@ modern b1 n4 light borderSubtle 0.901961 0.913725 0.909804 1
 modern b1 n4 dark borderSubtle 0.215686 0.231372 0.223529 1
 modern b1 n4 light borderControl 0.874509 0.886275 0.878431 1
 modern b1 n4 dark borderControl 0.266666 0.286274 0.278431 1
+modern b1 n4 light borderInput 0.486275 0.517647 0.505883 1
+modern b1 n4 dark borderInput 0.388235 0.439216 0.419608 1
 modern b1 n4 light actionPrimary 0.019608 0.364706 0.823529 1
 modern b1 n4 dark actionPrimary 0.019608 0.364706 0.823529 1
 modern b1 n4 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -1370,6 +1424,8 @@ modern b1 n5 light borderSubtle 0.905882 0.913726 0.905882 1
 modern b1 n5 dark borderSubtle 0.219608 0.227451 0.211765 1
 modern b1 n5 light borderControl 0.87451 0.886274 0.87451 1
 modern b1 n5 dark borderControl 0.270588 0.282353 0.262745 1
+modern b1 n5 light borderInput 0.498039 0.517647 0.490196 1
+modern b1 n5 dark borderInput 0.407843 0.439215 0.4 1
 modern b1 n5 light actionPrimary 0.019608 0.364706 0.823529 1
 modern b1 n5 dark actionPrimary 0.019608 0.364706 0.823529 1
 modern b1 n5 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -1420,6 +1476,8 @@ modern b1 n6 light borderSubtle 0.913725 0.909804 0.901961 1
 modern b1 n6 dark borderSubtle 0.231373 0.227451 0.215686 1
 modern b1 n6 light borderControl 0.886275 0.882353 0.870588 1
 modern b1 n6 dark borderControl 0.286274 0.282353 0.266667 1
+modern b1 n6 light borderInput 0.509804 0.509804 0.486274 1
+modern b1 n6 dark borderInput 0.435294 0.427451 0.4 1
 modern b1 n6 light actionPrimary 0.019608 0.364706 0.823529 1
 modern b1 n6 dark actionPrimary 0.019608 0.364706 0.823529 1
 modern b1 n6 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -1470,6 +1528,8 @@ aqua b1 n2 light borderSubtle 0.917647 0.905882 0.92549 1
 aqua b1 n2 dark borderSubtle 0.235294 0.223529 0.247059 1
 aqua b1 n2 light borderControl 0.890196 0.87451 0.901961 1
 aqua b1 n2 dark borderControl 0.286274 0.278431 0.305882 1
+aqua b1 n2 light borderInput 0.517647 0.509804 0.556863 1
+aqua b1 n2 dark borderInput 0.435294 0.427451 0.470588 1
 aqua b1 n2 light actionPrimary 0.019608 0.364706 0.823529 1
 aqua b1 n2 dark actionPrimary 0.019608 0.364706 0.823529 1
 aqua b1 n2 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -1520,6 +1580,8 @@ aqua b1 n3 light borderSubtle 0.909804 0.909804 0.92549 1
 aqua b1 n3 dark borderSubtle 0.211765 0.227451 0.247059 1
 aqua b1 n3 light borderControl 0.878432 0.882352 0.901961 1
 aqua b1 n3 dark borderControl 0.262745 0.282353 0.305882 1
+aqua b1 n3 light borderInput 0.501961 0.513725 0.552941 1
+aqua b1 n3 dark borderInput 0.411765 0.431372 0.466667 1
 aqua b1 n3 light actionPrimary 0.019608 0.364706 0.823529 1
 aqua b1 n3 dark actionPrimary 0.019608 0.364706 0.823529 1
 aqua b1 n3 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -1570,6 +1632,8 @@ aqua b1 n4 light borderSubtle 0.901961 0.913725 0.909804 1
 aqua b1 n4 dark borderSubtle 0.215686 0.231372 0.223529 1
 aqua b1 n4 light borderControl 0.874509 0.886275 0.878431 1
 aqua b1 n4 dark borderControl 0.266666 0.286274 0.278431 1
+aqua b1 n4 light borderInput 0.486275 0.517647 0.505883 1
+aqua b1 n4 dark borderInput 0.388235 0.439216 0.419608 1
 aqua b1 n4 light actionPrimary 0.019608 0.364706 0.823529 1
 aqua b1 n4 dark actionPrimary 0.019608 0.364706 0.823529 1
 aqua b1 n4 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -1620,6 +1684,8 @@ aqua b1 n5 light borderSubtle 0.905882 0.913726 0.905882 1
 aqua b1 n5 dark borderSubtle 0.219608 0.227451 0.211765 1
 aqua b1 n5 light borderControl 0.87451 0.886274 0.87451 1
 aqua b1 n5 dark borderControl 0.270588 0.282353 0.262745 1
+aqua b1 n5 light borderInput 0.498039 0.517647 0.490196 1
+aqua b1 n5 dark borderInput 0.407843 0.439215 0.4 1
 aqua b1 n5 light actionPrimary 0.019608 0.364706 0.823529 1
 aqua b1 n5 dark actionPrimary 0.019608 0.364706 0.823529 1
 aqua b1 n5 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -1670,6 +1736,8 @@ aqua b1 n6 light borderSubtle 0.913725 0.909804 0.901961 1
 aqua b1 n6 dark borderSubtle 0.231373 0.227451 0.215686 1
 aqua b1 n6 light borderControl 0.886275 0.882353 0.870588 1
 aqua b1 n6 dark borderControl 0.286274 0.282353 0.266667 1
+aqua b1 n6 light borderInput 0.509804 0.509804 0.486274 1
+aqua b1 n6 dark borderInput 0.435294 0.427451 0.4 1
 aqua b1 n6 light actionPrimary 0.019608 0.364706 0.823529 1
 aqua b1 n6 dark actionPrimary 0.019608 0.364706 0.823529 1
 aqua b1 n6 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -1720,6 +1788,8 @@ retro b1 n2 light borderSubtle 0.917647 0.905882 0.92549 1
 retro b1 n2 dark borderSubtle 0.235294 0.223529 0.247059 1
 retro b1 n2 light borderControl 0.890196 0.87451 0.901961 1
 retro b1 n2 dark borderControl 0.286274 0.278431 0.305882 1
+retro b1 n2 light borderInput 0.517647 0.509804 0.556863 1
+retro b1 n2 dark borderInput 0.435294 0.427451 0.470588 1
 retro b1 n2 light actionPrimary 0.019608 0.364706 0.823529 1
 retro b1 n2 dark actionPrimary 0.019608 0.364706 0.823529 1
 retro b1 n2 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -1770,6 +1840,8 @@ retro b1 n3 light borderSubtle 0.909804 0.909804 0.92549 1
 retro b1 n3 dark borderSubtle 0.211765 0.227451 0.247059 1
 retro b1 n3 light borderControl 0.878432 0.882352 0.901961 1
 retro b1 n3 dark borderControl 0.262745 0.282353 0.305882 1
+retro b1 n3 light borderInput 0.501961 0.513725 0.552941 1
+retro b1 n3 dark borderInput 0.411765 0.431372 0.466667 1
 retro b1 n3 light actionPrimary 0.019608 0.364706 0.823529 1
 retro b1 n3 dark actionPrimary 0.019608 0.364706 0.823529 1
 retro b1 n3 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -1820,6 +1892,8 @@ retro b1 n4 light borderSubtle 0.901961 0.913725 0.909804 1
 retro b1 n4 dark borderSubtle 0.215686 0.231372 0.223529 1
 retro b1 n4 light borderControl 0.874509 0.886275 0.878431 1
 retro b1 n4 dark borderControl 0.266666 0.286274 0.278431 1
+retro b1 n4 light borderInput 0.486275 0.517647 0.505883 1
+retro b1 n4 dark borderInput 0.388235 0.439216 0.419608 1
 retro b1 n4 light actionPrimary 0.019608 0.364706 0.823529 1
 retro b1 n4 dark actionPrimary 0.019608 0.364706 0.823529 1
 retro b1 n4 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -1870,6 +1944,8 @@ retro b1 n5 light borderSubtle 0.905882 0.913726 0.905882 1
 retro b1 n5 dark borderSubtle 0.219608 0.227451 0.211765 1
 retro b1 n5 light borderControl 0.87451 0.886274 0.87451 1
 retro b1 n5 dark borderControl 0.270588 0.282353 0.262745 1
+retro b1 n5 light borderInput 0.498039 0.517647 0.490196 1
+retro b1 n5 dark borderInput 0.407843 0.439215 0.4 1
 retro b1 n5 light actionPrimary 0.019608 0.364706 0.823529 1
 retro b1 n5 dark actionPrimary 0.019608 0.364706 0.823529 1
 retro b1 n5 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -1920,6 +1996,8 @@ retro b1 n6 light borderSubtle 0.913725 0.909804 0.901961 1
 retro b1 n6 dark borderSubtle 0.231373 0.227451 0.215686 1
 retro b1 n6 light borderControl 0.886275 0.882353 0.870588 1
 retro b1 n6 dark borderControl 0.286274 0.282353 0.266667 1
+retro b1 n6 light borderInput 0.509804 0.509804 0.486274 1
+retro b1 n6 dark borderInput 0.435294 0.427451 0.4 1
 retro b1 n6 light actionPrimary 0.019608 0.364706 0.823529 1
 retro b1 n6 dark actionPrimary 0.019608 0.364706 0.823529 1
 retro b1 n6 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -1970,6 +2048,8 @@ terminal b1 n2 light borderSubtle 0.792826 0.838249 0.930178 1
 terminal b1 n2 dark borderSubtle 0.019611 0.364706 0.82353 0.22
 terminal b1 n2 light borderControl 0.712494 0.786048 0.924196 1
 terminal b1 n2 dark borderControl 0.019611 0.364706 0.82353 0.42
+terminal b1 n2 light borderInput 0.231605 0.422705 0.749841 1
+terminal b1 n2 dark borderInput 0.462745 0.74902 1 0.6
 terminal b1 n2 light actionPrimary 0.019608 0.364706 0.823529 1
 terminal b1 n2 dark actionPrimary 0.019608 0.364706 0.823529 1
 terminal b1 n2 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -2020,6 +2100,8 @@ terminal b1 n3 light borderSubtle 0.789324 0.839862 0.930196 1
 terminal b1 n3 dark borderSubtle 0.019611 0.364706 0.82353 0.22
 terminal b1 n3 light borderControl 0.706686 0.789402 0.924293 1
 terminal b1 n3 dark borderControl 0.019611 0.364706 0.82353 0.42
+terminal b1 n3 light borderInput 0.223325 0.423802 0.74873 1
+terminal b1 n3 dark borderInput 0.462745 0.74902 1 0.6
 terminal b1 n3 light actionPrimary 0.019608 0.364706 0.823529 1
 terminal b1 n3 dark actionPrimary 0.019608 0.364706 0.823529 1
 terminal b1 n3 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -2070,6 +2152,8 @@ terminal b1 n4 light borderSubtle 0.785755 0.841663 0.919027 1
 terminal b1 n4 dark borderSubtle 0.019611 0.364706 0.82353 0.22
 terminal b1 n4 light borderControl 0.704554 0.791398 0.914575 1
 terminal b1 n4 dark borderControl 0.019611 0.364706 0.82353 0.42
+terminal b1 n4 light borderInput 0.213006 0.426727 0.73603 1
+terminal b1 n4 dark borderInput 0.462745 0.74902 1 0.6
 terminal b1 n4 light actionPrimary 0.019608 0.364706 0.823529 1
 terminal b1 n4 dark actionPrimary 0.019608 0.364706 0.823529 1
 terminal b1 n4 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -2120,6 +2204,8 @@ terminal b1 n5 light borderSubtle 0.785726 0.841721 0.915845 1
 terminal b1 n5 dark borderSubtle 0.019611 0.364706 0.82353 0.22
 terminal b1 n5 light borderControl 0.704527 0.791449 0.912951 1
 terminal b1 n5 dark borderControl 0.019611 0.364706 0.82353 0.42
+terminal b1 n5 light borderInput 0.217943 0.427622 0.732079 1
+terminal b1 n5 dark borderInput 0.462745 0.74902 1 0.6
 terminal b1 n5 light actionPrimary 0.019608 0.364706 0.823529 1
 terminal b1 n5 dark actionPrimary 0.019608 0.364706 0.823529 1
 terminal b1 n5 light actionPrimaryPressed 0 0.223529 0.619608 1
@@ -2170,6 +2256,8 @@ terminal b1 n6 light borderSubtle 0.790909 0.840148 0.914252 1
 terminal b1 n6 dark borderSubtle 0.019611 0.364706 0.82353 0.22
 terminal b1 n6 light borderControl 0.710131 0.789865 0.911322 1
 terminal b1 n6 dark borderControl 0.019611 0.364706 0.82353 0.42
+terminal b1 n6 light borderInput 0.22513 0.425483 0.730818 1
+terminal b1 n6 dark borderInput 0.462745 0.74902 1 0.6
 terminal b1 n6 light actionPrimary 0.019608 0.364706 0.823529 1
 terminal b1 n6 dark actionPrimary 0.019608 0.364706 0.823529 1
 terminal b1 n6 light actionPrimaryPressed 0 0.223529 0.619608 1

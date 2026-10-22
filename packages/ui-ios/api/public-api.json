@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "module": "Atom63UI",
-  "symbolCount": 427,
+  "symbolCount": 429,
   "symbols": [
     {
       "id": "s:8Atom63UI10AtomAvatarV",
@@ -148,6 +148,13 @@
       "kind": "swift.type.property",
       "path": "AtomTokens.Color.textAccent",
       "declaration": "static let textAccent: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO11borderInputAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.borderInput",
+      "declaration": "static let borderInput: AtomDynamicColor",
       "source": "Generated/Atom63Tokens.generated.swift"
     },
     {
@@ -1261,6 +1268,13 @@
       "kind": "swift.property",
       "path": "AtomThemeColors.statusInfo",
       "declaration": "var statusInfo: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV11borderInputAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.borderInput",
+      "declaration": "var borderInput: AtomDynamicColor",
       "source": "AtomTheme.swift"
     },
     {
@@ -3115,6 +3129,11 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO11borderInputAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI10AtomTokensO5ColorO11onMediaRingAA0c7DynamicE0VvpZ",
       "target": "s:8Atom63UI10AtomTokensO5ColorO",
       "kind": "memberOf"
@@ -4091,6 +4110,11 @@
     },
     {
       "source": "s:8Atom63UI15AtomThemeColorsV10statusInfoAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV11borderInputAA0C12DynamicColorVvp",
       "target": "s:8Atom63UI15AtomThemeColorsV",
       "kind": "memberOf"
     },
