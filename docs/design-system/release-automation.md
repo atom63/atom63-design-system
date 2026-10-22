@@ -21,7 +21,7 @@ It runs on every push to `main` and on `workflow_dispatch`:
 2. `version-pr` runs on a push with pending changesets. It runs `pnpm release:version` (`changeset version` plus the audit regenerations the version bump requires), force-pushes the result to `changeset-release/main`, and opens or updates the **chore: version packages** pull request.
 3. `preflight` runs when there are unpublished versions (or on `workflow_dispatch`): the full DS verification gates, pack and registry smoke, and the prerelease-mode check.
 4. `publish` runs after a green preflight when there are unpublished versions on a push, or when `workflow_dispatch` sets `publish=true`. It uses `permissions.id-token: write`, runs in the `npm-publish` environment, and publishes with `NPM_CONFIG_PROVENANCE=true`.
-5. `record-evidence` runs after a publish. It waits until the npm `beta` tag resolves to the published versions, regenerates `docs/design-system/audits/registry-consumer-smoke.json`, and commits it to `main`, so CI does not fail on evidence that still names the previous versions. Moving `latest` and updating `beta-release-notes.md` stay manual.
+5. `record-evidence` runs after a publish. It waits until the npm `beta` tag resolves to the published versions, regenerates `docs/design-system/audits/registry-consumer-smoke.json`, and commits it to `main`, so CI does not fail on evidence that still names the previous versions. The publish step also moves each package's `latest` to its current beta; updating `beta-release-notes.md` stays manual.
 
 `workflow_dispatch` with `publish=false` remains a dry run of the preflight.
 
@@ -38,6 +38,8 @@ Before `publish=true` can work without an npm token, configure npm trusted publi
 | `@atom63/inform` | `atom63/atom63-design-system` | `.github/workflows/release-beta.yml` |
 | `@atom63/agent` | `atom63/atom63-design-system` | `.github/workflows/release-beta.yml` |
 | `@atom63/widgets` | `atom63/atom63-design-system` | `.github/workflows/release-beta.yml` |
+
+On each trusted publisher, also select **Allow npm dist-tag**. It is off by default, and without it the publish step cannot move `latest` (it fails after the packages are published).
 
 A trusted publisher can only be added to a package that exists, so a new package needs one first publish with a maintainer's own npm login. Everything after that is automatic.
 
@@ -85,7 +87,7 @@ The workflow also references a GitHub environment named `npm-publish`. Create it
    npm view @atom63/widgets@beta name version dist-tags dependencies --json
    ```
 
-5. Keep `latest` synchronized with `beta` (see caveats) and run external/adopter smoke.
+5. Check that `latest` matches `beta` (the publish step moves it) and run external/adopter smoke.
 
 ## Stable/latest promotion policy
 
@@ -101,8 +103,9 @@ pnpm check:stable-release-preflight
 
 The check is intentionally conservative:
 
-- `latest` is the stable default install channel and is not allowed before all
-  stable-readiness blockers are resolved.
+- until the first stable release, `latest` follows the newest beta
+  (`followsBetaBeforeStable`); a stable version may take `latest` only after all
+  stable-readiness blockers are resolved (`allowedBeforeStableReady`).
 - the preflight must remain `publishAllowed: false` until a separate human
   approval records the stable/latest decision.
 - first-wave package versions are read from package manifests and recorded in a
@@ -125,9 +128,9 @@ approve it.
 
 ## Current caveats
 
-- `latest` exists on the beta packages because the first manual npm publishes created it. The current mitigation is keeping `latest` synchronized with `beta`; stable/latest promotion remains not approved by policy.
+- npm always keeps a `latest` tag, so before the first stable release it points at the beta; stable/latest promotion remains not approved by policy.
 - The workflow currently uses `changeset publish` through `pnpm release`. It should publish only package versions that are not already present in npm.
 - The version pull request is created with `GITHUB_TOKEN`, so GitHub does not run CI on it. The version job regenerates every audit the checks compare, and the preflight runs again on the merge commit before anything publishes.
-- The workflow does not move `latest`; synchronize it with `npm dist-tag add` after each publish while the beta policy keeps `latest` equal to `beta`.
+- Moving `latest` over OIDC needs **Allow npm dist-tag** on each trusted publisher and npm 11.21.0 or later (the workflow pins 11.21.1).
 - The repository setting **Allow GitHub Actions to create and approve pull requests** must be on for `version-pr` to open the pull request.
 - No npm token is stored in this repo. If trusted publisher is not configured in npm, `publish=true` should fail rather than falling back to a local token.

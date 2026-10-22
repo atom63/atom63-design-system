@@ -6,6 +6,7 @@
   "stablePromotionApproved": false,
   "publishAllowed": false,
   "latestAllowedBeforeStableReady": false,
+  "latestFollowsBetaBeforeStable": true,
   "packages": [
     {
       "name": "@atom63/styles",

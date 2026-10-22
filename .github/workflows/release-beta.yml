@@ -284,10 +284,11 @@ jobs:
           pnpm --filter @atom63/agent build
           pnpm --filter @atom63/widgets build
 
-      # Trusted publishing needs npm 11.5.1 or later. Pinned so a new npm major
-      # cannot change the publish step unreviewed; Dependabot does not track it.
+      # Trusted publishing needs npm 11.5.1 or later, and moving `latest` over
+      # OIDC needs 11.21.0. Pinned so a new npm major cannot change the publish
+      # step unreviewed; Dependabot does not track it.
       - name: Upgrade npm for OIDC publishing
-        run: npm install -g npm@11.20.0
+        run: npm install -g npm@11.21.1
 
       - name: Publish with npm provenance
         run: pnpm release
