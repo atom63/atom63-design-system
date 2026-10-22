@@ -23,6 +23,9 @@
  *   box-shadow on the element would replace a ring drawn that way, and
  *   forced-colors mode drops shadows. Elevation, border and separator shadows
  *   (such as the Avatar group ring) read no focus-ring token, so they pass.
+ * - `mode-branch`: component code never branches on light or dark mode; tokens
+ *   and UIProvider resolve it. Flags CSS selectors that test `.dark`,
+ *   `.light` or `[data-a63-mode]`, and Tailwind `dark:` variants in TS/TSX.
  *
  * Some physical directions are the point: a sheet docked to the left edge, or
  * an optical nudge on a glyph that never mirrors. CSS rules scoped to
@@ -66,6 +69,9 @@ const CSS_MASK_PROPERTY = /^(?:-webkit-)?mask(?:-image)?$/
 const CSS_VAR_NAME = /var\(\s*(--[\w-]+)/g
 const RING_TOKEN = /focus-ring|^--(?:sidebar-)?ring$/
 const isRingToken = name => RING_TOKEN.test(name)
+
+const CSS_MODE_SELECTOR = /(?<![\w-])\.(?:dark|light)(?![\w-])|\[data-a63-mode\b/
+const MODE_VARIANT = /(?:^|:)dark:/
 
 const DATA_SIDE = /\[data-side=['"]?(?:left|right)\b/
 const ALLOW = /craft-allow:\s*([a-z-]+)/g
@@ -135,6 +141,9 @@ export function scanCss(css) {
       if (CSS_FOCUS.test(text) && !onlyResetsFocus(src, statement.lastIndex)) {
         found.push({ rule: 'focus-visible', match: text, line })
       }
+      if (CSS_MODE_SELECTOR.test(text)) {
+        found.push({ rule: 'mode-branch', match: text.replace(/\s+/g, ' '), line })
+      }
       continue
     }
     // A declaration that ends its block (no trailing `;`) closes the block too.
@@ -193,6 +202,10 @@ export function scanSource(source) {
       found.push({ rule: 'focus-visible', match: raw, line: line() })
     }
     const variants = raw.slice(0, raw.lastIndexOf(':') + 1)
+    // `dark:` with nothing after it is an object key (`{ dark: … }`), not a variant.
+    if (MODE_VARIANT.test(variants) && utility) {
+      found.push({ rule: 'mode-branch', match: raw, line: line() })
+    }
     if (
       FOCUS_RING_VARIANT.test(variants) &&
       RING_UTILITY.test(utility) &&

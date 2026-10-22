@@ -53,6 +53,7 @@ export const rules = [
     id: 'theme-agnostic',
     rule: 'Never branch on light or dark mode in component code; let tokens and `UIProvider` resolve the mode.',
     why: 'Themes and brands change the palette too; a mode check covers one axis of four.',
+    check: 'mode-branch',
   },
   {
     id: 'accessible-by-default',
