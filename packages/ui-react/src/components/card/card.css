@@ -65,7 +65,7 @@
   border-color: var(--a63-border-control);
   box-shadow:
     var(--a63-surface-shadow),
-    0 12px 24px -8px color-mix(in oklch, black 22%, transparent);
+    0 12px 24px -8px color-mix(in oklch, var(--a63-shadow-color) 22%, transparent);
 }
 
 /* ghost: no shell — a scaled pseudo hover wash instead */
@@ -171,8 +171,8 @@
   pointer-events: none;
   background: linear-gradient(
     to top,
-    color-mix(in oklch, black 75%, transparent),
-    color-mix(in oklch, black 25%, transparent) 50%,
+    color-mix(in oklch, var(--a63-media-stage) 75%, transparent),
+    color-mix(in oklch, var(--a63-media-stage) 25%, transparent) 50%,
     transparent
   );
 }
@@ -180,7 +180,7 @@
 .a63-Card-media-overlay-top-right {
   position: absolute;
   top: 0.75rem;
-  right: 0.75rem;
+  inset-inline-end: 0.75rem;
   z-index: 10;
 }
 
@@ -203,8 +203,8 @@
   width: 2rem;
   height: 2rem;
   border-radius: var(--radius-full);
-  background-color: color-mix(in oklch, white 10%, transparent);
-  color: white;
+  background-color: color-mix(in oklch, var(--a63-on-media-foreground) 10%, transparent);
+  color: var(--a63-on-media-foreground);
   backdrop-filter: blur(4px);
 }
 .a63-Card-media-overlay-icon-button svg {

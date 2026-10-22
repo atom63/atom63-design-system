@@ -28,7 +28,7 @@
 }
 
 .a63-ToggleGroup .a63-Toggle-content {
-  filter: drop-shadow(0 1px 0 color-mix(in oklch, black 5%, transparent));
+  filter: drop-shadow(0 1px 0 color-mix(in oklch, var(--a63-shadow-color) 5%, transparent));
 }
 
 .a63-ToggleGroup .a63-Toggle:hover:not([data-pressed]):not([data-disabled]) {

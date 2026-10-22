@@ -4,8 +4,8 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1139,
-    "aliasValues": 755,
+    "variables": 1140,
+    "aliasValues": 756,
     "skipped": 183,
     "computed": 58
   },
@@ -3905,6 +3905,20 @@
           "scopes": [
             "FRAME_FILL",
             "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "shadow/color",
+          "token": "--a63-shadow-color",
+          "type": "COLOR",
+          "values": {
+            "Value": {
+              "alias": "--color-black-100"
+            }
+          },
+          "codeSyntax": "var(--a63-shadow-color)",
+          "scopes": [
+            "EFFECT_COLOR"
           ]
         },
         {

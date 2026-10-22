@@ -14449,6 +14449,22 @@
    ]
   },
   {
+   "cssVar": "--a63-shadow-color",
+   "figma": {
+    "collection": "Semantic",
+    "path": "shadow/color"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "shadow",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--color-black-100)"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-skeleton-base",
    "figma": {
     "collection": "Contract",
