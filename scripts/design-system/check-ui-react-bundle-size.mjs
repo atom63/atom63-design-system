@@ -62,7 +62,13 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // direction. The +1.1 kB in `./media` is the preset's touch tap: a single tap,
 // held back for the double-tap window, shows or hides the controls instead of
 // closing the viewer, and the chrome hook gained the toggle that tap drives.
-const gzipBudgetBytes = 91 * 1024
+//
+// 91 kB held 91.0 kB, with no headroom left. Two accessibility fixes take it to
+// 91.25, so it moves to 92. About 0.15 kB is SidebarProvider leaving Cmd/Ctrl+B
+// to text fields and rich-text editors, its `keyboardShortcut` opt-out and the
+// controlled-state cookie rule. About 0.09 kB is ScrollableList reading its
+// scroll offset from the start edge, so its chevrons work right-to-left.
+const gzipBudgetBytes = 92 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()
