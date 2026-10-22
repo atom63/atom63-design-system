@@ -32,7 +32,7 @@
     var(--autocomplete-content-floor)
   );
   padding-inline: var(--a63-control-padding-inline-md);
-  border: var(--a63-control-border-width) solid var(--a63-border-control);
+  border: var(--a63-control-border-width) solid var(--a63-border-input);
   border-radius: var(--a63-control-radius);
   background: var(--a63-surface-control);
   box-shadow: var(--a63-field-shadow);

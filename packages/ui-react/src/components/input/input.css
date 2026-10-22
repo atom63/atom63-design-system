@@ -19,13 +19,13 @@
      arg; otherwise the live semantic resolves. --field-shadow is mode-independent
      (contract default / theme override), so it reads --a63-field-shadow directly. */
   --field-background: var(--a63-field-background, var(--a63-surface-control));
-  --field-border: var(--a63-field-border, var(--a63-border-control));
+  --field-border: var(--a63-field-border, var(--a63-border-input));
   --field-radius: var(--a63-field-radius, var(--a63-control-radius));
   --field-shadow: var(--a63-field-shadow);
   --field-focus-ring: var(--a63-field-focus-ring, var(--a63-focus-ring));
   --field-focus-border: var(
     --a63-field-focus-border,
-    color-mix(in oklch, var(--a63-action-primary) 62%, var(--a63-border-control))
+    color-mix(in oklch, var(--a63-action-primary) 62%, var(--a63-border-input))
   );
   /* Content floor — see button.css for the full rationale. Height comes from
      the density-owned control ramp, font size from the type-scale axis; the two

@@ -9,7 +9,7 @@
 .a63-Checkbox {
   --checkbox-size: 1.125rem;
   --checkbox-accent: var(--a63-selection-accent, var(--a63-action-primary));
-  --checkbox-border: var(--a63-selection-border, var(--a63-border-control));
+  --checkbox-border: var(--a63-selection-border, var(--a63-border-input));
   --checkbox-focus-ring: var(--a63-selection-focus-ring, var(--a63-focus-ring));
   --checkbox-shadow: var(--a63-choice-box-shadow, none);
   --checkbox-shadow-checked: var(--a63-choice-box-shadow-checked, var(--checkbox-shadow));

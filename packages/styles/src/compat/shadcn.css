@@ -32,7 +32,7 @@
 
   /* Borders and focus */
   --border: var(--a63-border-subtle);
-  --input: var(--a63-border-control);
+  --input: var(--a63-border-input);
   --ring: var(--a63-focus-ring);
 
   /* Actions */

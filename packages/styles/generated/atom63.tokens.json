@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 1881,
-    "uniqueCssVariables": 1188,
-    "figmaMappedDeclarations": 1820
+    "declarations": 1885,
+    "uniqueCssVariables": 1189,
+    "figmaMappedDeclarations": 1824
   },
   "entries": [
     {
@@ -2012,6 +2012,70 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-brand-400", "--a63-surface-tint", "--surface-light-5"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-border-input",
+      "cssVar": "--a63-border-input",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-action-primary) 70%, var(--surface-light-10))",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Theme",
+        "path": "border/input",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--surface-light-10"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-border-input",
+      "cssVar": "--a63-border-input",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-text-accent) 60%, transparent)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Theme",
+        "path": "border/input",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-accent"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-border-input",
+      "cssVar": "--a63-border-input",
+      "type": "color",
+      "value": "color-mix( in oklab, var(--surface-dark-9) calc(100% - var(--a63-surface-tint)), var(--a63-brand-500) var(--a63-surface-tint) )",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "border/input",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-brand-500", "--a63-surface-tint", "--surface-dark-9"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-border-input",
+      "cssVar": "--a63-border-input",
+      "type": "color",
+      "value": "color-mix( in oklab, var(--surface-light-10) calc(100% - var(--a63-surface-tint)), var(--a63-brand-500) var(--a63-surface-tint) )",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "border/input",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-brand-500", "--a63-surface-tint", "--surface-light-10"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {

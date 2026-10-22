@@ -356,7 +356,7 @@
   --color-accent-foreground: var(--a63-text-primary);
   --color-surface-sunken: var(--a63-surface-control);
   --color-border: var(--a63-border-subtle);
-  --color-input: var(--a63-border-control);
+  --color-input: var(--a63-border-input);
   --color-ring: var(--a63-focus-ring);
   --color-primary: var(--a63-action-primary);
   --color-primary-foreground: var(--a63-action-primary-foreground);

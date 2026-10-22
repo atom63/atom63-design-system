@@ -11,13 +11,13 @@
      var()s pick up the field's own mode/theme/brand (the resolve-at-declaration
      trap). Mirrors .a63-Input. */
   --field-background: var(--a63-field-background, var(--a63-surface-control));
-  --field-border: var(--a63-field-border, var(--a63-border-control));
+  --field-border: var(--a63-field-border, var(--a63-border-input));
   --field-radius: var(--a63-field-radius, var(--a63-control-radius));
   --field-shadow: var(--a63-field-shadow);
   --field-focus-ring: var(--a63-field-focus-ring, var(--a63-focus-ring));
   --field-focus-border: var(
     --a63-field-focus-border,
-    color-mix(in oklch, var(--a63-action-primary) 62%, var(--a63-border-control))
+    color-mix(in oklch, var(--a63-action-primary) 62%, var(--a63-border-input))
   );
   --field-padding-inline: var(--a63-control-padding-inline-md);
   --field-padding-block: var(--a63-space-2, 0.5rem);

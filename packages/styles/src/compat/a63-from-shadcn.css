@@ -24,6 +24,7 @@
   --a63-text-secondary: var(--muted-foreground);
   --a63-border-subtle: var(--border);
   --a63-border-control: var(--input);
+  --a63-border-input: var(--input);
 
   /* ── Action / status ─────────────────────────────────────────────────── */
   --a63-action-primary: var(--primary);

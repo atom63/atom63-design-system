@@ -8,13 +8,13 @@
 
 .a63-Select-trigger {
   --select-background: var(--a63-field-background, var(--a63-surface-control));
-  --select-border: var(--a63-field-border, var(--a63-border-control));
+  --select-border: var(--a63-field-border, var(--a63-border-input));
   --select-radius: var(--a63-field-radius, var(--a63-control-radius));
   --select-shadow: var(--a63-field-shadow);
   --select-focus-ring: var(--a63-field-focus-ring, var(--a63-focus-ring));
   --select-focus-border: var(
     --a63-field-focus-border,
-    color-mix(in oklch, var(--a63-action-primary) 62%, var(--a63-border-control))
+    color-mix(in oklch, var(--a63-action-primary) 62%, var(--a63-border-input))
   );
   /* Content floor — see button.css for the full rationale. */
   --select-content-lh: var(--typography-sm-line-height);
