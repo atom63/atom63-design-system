@@ -5,9 +5,10 @@
  * without letting new debt in.
  *
  * - `raw-color`: component styles take color from tokens. Flags literal colors
- *   in CSS declarations and Tailwind palette or arbitrary color utilities in
- *   TS/TSX. `#0000` (the transparent "no shadow" idiom) and `transparent` pass,
- *   and so do masks, where a color only carries alpha.
+ *   in CSS declarations, including CSS named colors such as `white` (also
+ *   inside `color-mix()`), and Tailwind palette or arbitrary color utilities in
+ *   TS/TSX. `#0000` (the transparent "no shadow" idiom), `transparent` and
+ *   `currentColor` pass, and so do masks, where a color only carries alpha.
  * - `physical-properties`: spacing, text alignment, side borders and corner
  *   radii use logical directions so layouts mirror in right-to-left scripts.
  *   `left`/`right` positioning is out of scope for now. Padding that follows a
@@ -48,8 +49,15 @@ const SAFE_AREA = /env\(safe-area-inset-(?:left|right)\)/
 const FOCUS_RING_VARIANT = /focus/
 const RING_UTILITY = /^ring(?:-|$)/
 
-const CSS_LITERAL_COLOR =
-  /#[0-9a-fA-F]{3,8}\b|\brgba?\(|\bhsla?\(|\boklch\((?=\s*[\d.])|\boklab\((?=\s*[\d.])/g
+// The CSS named colors (CSS Color 4), matched as whole words so custom
+// property names such as `--a63-text-white` and keywords such as `aqua` in
+// `[data-a63-theme='aqua']` selectors are not colors here.
+const CSS_NAMED_COLORS =
+  'lightgoldenrodyellow|mediumspringgreen|mediumaquamarine|mediumslateblue|mediumturquoise|mediumvioletred|blanchedalmond|cornflowerblue|darkolivegreen|lightslategray|lightslategrey|lightsteelblue|mediumseagreen|darkgoldenrod|darkslateblue|darkslategray|darkslategrey|darkturquoise|lavenderblush|lightseagreen|palegoldenrod|paleturquoise|palevioletred|rebeccapurple|antiquewhite|darkseagreen|lemonchiffon|lightskyblue|mediumorchid|mediumpurple|midnightblue|darkmagenta|deepskyblue|floralwhite|forestgreen|greenyellow|lightsalmon|lightyellow|navajowhite|saddlebrown|springgreen|yellowgreen|aquamarine|blueviolet|chartreuse|darkorange|darkorchid|darksalmon|darkviolet|dodgerblue|ghostwhite|lightcoral|lightgreen|mediumblue|papayawhip|powderblue|sandybrown|whitesmoke|aliceblue|burlywood|cadetblue|chocolate|darkgreen|darkkhaki|firebrick|gainsboro|goldenrod|indianred|lawngreen|lightblue|lightcyan|lightgray|lightgrey|lightpink|limegreen|mintcream|mistyrose|olivedrab|orangered|palegreen|peachpuff|rosybrown|royalblue|slateblue|slategray|slategrey|steelblue|turquoise|cornsilk|darkblue|darkcyan|darkgray|darkgrey|deeppink|honeydew|lavender|moccasin|seagreen|seashell|crimson|darkred|dimgray|dimgrey|fuchsia|hotpink|magenta|oldlace|skyblue|thistle|bisque|indigo|maroon|orange|orchid|purple|salmon|sienna|silver|tomato|violet|yellow|azure|beige|black|brown|coral|green|ivory|khaki|linen|olive|wheat|white|aqua|blue|cyan|gold|gray|grey|lime|navy|peru|pink|plum|snow|teal|red|tan'
+const CSS_LITERAL_COLOR = new RegExp(
+  `#[0-9a-fA-F]{3,8}\\b|\\brgba?\\(|\\bhsla?\\(|\\boklch\\((?=\\s*[\\d.])|\\boklab\\((?=\\s*[\\d.])|(?<![\\w-])(?:${CSS_NAMED_COLORS})(?![\\w-])`,
+  'gi'
+)
 const CSS_PHYSICAL_PROPERTY =
   /^(?:margin|padding|scroll-margin|scroll-padding)-(?:left|right)$|^border-(?:left|right)(?:-(?:width|style|color))?$|^border-(?:top|bottom)-(?:left|right)-radius$/
 const CSS_FOCUS = /:focus(?![-\w])/

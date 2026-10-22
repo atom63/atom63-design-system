@@ -20,6 +20,18 @@ describe('scanCss', () => {
     ])
   })
 
+  it('flags CSS named colors as whole words, also inside color-mix()', () => {
+    const css = `
+      .a { color: white; background: color-mix(in oklch, Black 10%, transparent); }
+      .b { color: var(--a63-text-white); fill: currentColor; }
+      [data-a63-theme='aqua'] .c { color: var(--a63-text-primary); }
+    `
+    assert.deepEqual(rules(scanCss(css)), [
+      '2 raw-color color: white',
+      '2 raw-color background: Black',
+    ])
+  })
+
   it('flags physical spacing, side borders, corner radii and text alignment', () => {
     const css = `.a {
   margin-left: 1px;
