@@ -94,22 +94,22 @@ Full policy: [authoring-surfaces.md](./authoring-surfaces.md) ← **canonical fo
 | `@atom63/styles/compat/shadcn` | `--a63-*` → shadcn names | Atom63 apps |
 | `@atom63/styles/compat/a63-from-shadcn` | shadcn → `--a63-*` | External shadcn hosts only |
 
-Never both in one Atom63 app (`pnpm check:app-consumption` enforces this).
+Never both in one Atom63 app. No check enforces this; review it when an app adds a compat import.
 
 ## Checks that guard the system
 
 ```bash
-pnpm check:control-alignment    # same size rung => same rendered height, and real touch targets, in a browser
-pnpm check:app-consumption      # app CSS imports + no reverse compat in apps
-pnpm check:component-contracts  # shared registry → React/Swift generated metadata
-pnpm check:ios-tokens           # shared CSS foundation → generated Swift tokens
-pnpm check:harness-architecture # theme authoring + package gates (umbrella)
+pnpm check:control-alignment                        # same size rung => same rendered height, and real touch targets, in a browser
+pnpm --filter @atom63/ui-foundation check:contracts # contract JSON → generated TS and cross-renderer metadata
+pnpm --filter @atom63/ui-ios check:swift-tokens     # token sources → generated Swift tokens
+pnpm check:theme-authoring                          # theme overrides stay within the authoring rules
+pnpm check:craft                                    # tokens, logical directions, focus rings, no mode branches
 pnpm --filter @atom63/styles test
 ```
 
 Deferred shared-scale debt in contracts: [foundation-value-drift.md](./foundation-value-drift.md). Do **not** mass-migrate; harden when you already touch that pocket.
 
-Web ↔ iOS component-token gap (including two commands above that are documented but not defined): [web-ios-token-parity.md](./web-ios-token-parity.md).
+Web ↔ iOS component-token gap: [web-ios-token-parity.md](./web-ios-token-parity.md).
 
 ## Team norms
 
