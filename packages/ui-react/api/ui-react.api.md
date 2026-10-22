@@ -2518,6 +2518,7 @@ export type SidebarProviderProps = React$1.ComponentProps<'div'> & {
     defaultOpen?: boolean;
     open?: boolean;
     onOpenChange?: (open: boolean) => void;
+    keyboardShortcut?: string | false;
 };
 
 // @public (undocumented)
