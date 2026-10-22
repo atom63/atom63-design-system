@@ -61,7 +61,7 @@ Run:
 
 ```bash
 pnpm --filter @atom63/ui-foundation generate:contracts
-pnpm check:component-contracts
+pnpm --filter @atom63/ui-foundation check:contracts
 ```
 
 Generation writes:
