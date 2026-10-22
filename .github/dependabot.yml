@@ -8,6 +8,12 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    # Pinned on purpose: scripts/design-system/audit-dependency-version-policy.mjs
+    # asserts these exact ranges. Upgrade them in their own pull request, together
+    # with that script.
+    ignore:
+      - dependency-name: '@base-ui/react'
+      - dependency-name: input-otp
     groups:
       # Majors stay in their own pull requests: they need a changelog read.
       minor-and-patch:
