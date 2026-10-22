@@ -311,30 +311,13 @@
   --button-gloss: none;
   --button-highlight: none;
   --button-shadow: var(--a63-control-shadow-flat);
-  --button-background: var(--a63-surface-panel);
+  --button-background: var(--a63-control-outline-background);
   --button-border-color: var(--a63-border-control);
   --button-foreground: var(--a63-text-primary);
-  --button-state-hover-background: color-mix(
-    in oklch,
-    var(--a63-surface-control-hover) 50%,
-    transparent
-  );
-  --button-state-hover-border-color: var(--a63-border-subtle);
-  --button-state-active-background: color-mix(
-    in oklch,
-    var(--a63-surface-control-hover) 50%,
-    transparent
-  );
-  --button-state-active-border-color: var(--a63-border-subtle);
-}
-
-:is(.dark, [data-a63-mode='dark']) .a63-Button[data-variant='outline'] {
-  --button-background: color-mix(in oklch, var(--a63-border-control) 32%, transparent);
-  --button-border-color: var(--a63-border-control);
-  --button-state-hover-background: color-mix(in oklch, var(--a63-border-control) 64%, transparent);
-  --button-state-hover-border-color: var(--a63-border-control);
-  --button-state-active-background: color-mix(in oklch, var(--a63-border-control) 64%, transparent);
-  --button-state-active-border-color: var(--a63-border-control);
+  --button-state-hover-background: var(--a63-control-outline-hover-background);
+  --button-state-hover-border-color: var(--a63-control-outline-hover-border);
+  --button-state-active-background: var(--a63-control-outline-hover-background);
+  --button-state-active-border-color: var(--a63-control-outline-hover-border);
 }
 
 .a63-Button[data-variant='ghost'] {

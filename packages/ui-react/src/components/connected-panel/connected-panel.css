@@ -99,15 +99,11 @@
 .a63-ConnectedPanel[data-variant='button-group']:not([data-open])
   > .a63-ButtonGroup
   > [data-button] {
-  --button-background: var(--a63-surface-panel);
+  --button-background: var(--a63-control-outline-background);
   --button-border-color: var(--a63-border-control);
   --button-foreground: var(--a63-text-primary);
-  --button-state-hover-background: color-mix(
-    in oklch,
-    var(--a63-surface-control-hover) 50%,
-    transparent
-  );
-  --button-state-hover-border-color: var(--a63-border-subtle);
+  --button-state-hover-background: var(--a63-control-outline-hover-background);
+  --button-state-hover-border-color: var(--a63-control-outline-hover-border);
   --button-state-active-background: var(--button-state-hover-background);
   --button-state-active-border-color: var(--button-state-hover-border-color);
 
@@ -120,17 +116,6 @@
   > .a63-ButtonGroup
   > .a63-ConnectedPanel-trigger {
   border-inline-end-color: color-mix(in oklch, var(--a63-border-control) 65%, transparent);
-}
-
-:is(.dark, [data-a63-mode='dark'])
-  .a63-ConnectedPanel[data-variant='button-group']:not([data-open])
-  > .a63-ButtonGroup
-  > [data-button] {
-  --button-background: color-mix(in oklch, var(--a63-border-control) 32%, transparent);
-  --button-state-hover-background: color-mix(in oklch, var(--a63-border-control) 64%, transparent);
-  --button-state-hover-border-color: var(--a63-border-control);
-  --button-state-active-background: var(--button-state-hover-background);
-  --button-state-active-border-color: var(--button-state-hover-border-color);
 }
 
 .a63-ConnectedPanel[data-variant='button-group']:not([data-open])

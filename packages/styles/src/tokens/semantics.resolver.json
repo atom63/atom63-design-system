@@ -474,6 +474,11 @@
                   "$type": "color",
                   "$value": "{a63.surface.muted}",
                   "$description": "The sidebar surface (shadcn `sidebar`): the muted surface in light mode and\nthe page surface in dark mode."
+                },
+                "recessed": {
+                  "$type": "color",
+                  "$value": "{a63.surface.muted}",
+                  "$description": "A panel set back from the page, such as the command palette's list: the muted surface in light mode and the page surface in dark mode."
                 }
               },
               "text": {
@@ -520,6 +525,56 @@
                     "io.atom63.derive": "color-mix( in oklab, {surface.light.10} calc(100% - {a63.surface.tint}), {a63.brand.500} {a63.surface.tint} )"
                   },
                   "$description": "The border of a form control a person has to find: text fields, selects,\ncheckboxes, radios, switches and slider thumbs. WCAG 1.4.11 needs 3:1 against\nthe page, the panel and the field fill; step 10 reaches that on every theme,\nbrand and surface (step 9 falls to about 2.97:1). Decorative edges keep\n--a63-border-control."
+                }
+              },
+              "control": {
+                "outline": {
+                  "background": {
+                    "$type": "color",
+                    "$value": "{a63.surface.panel}",
+                    "$description": "Outline controls (the outline Button and the button-group ConnectedPanel): the fill at rest. Dark mode tints it from the control border instead of the panel."
+                  },
+                  "hover-background": {
+                    "$type": "color",
+                    "$value": "{a63.surface.control.hover}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.surface.control.hover} 50%, transparent)"
+                    },
+                    "$description": "Outline controls: the fill on hover and press."
+                  },
+                  "hover-border": {
+                    "$type": "color",
+                    "$value": "{a63.border.subtle}",
+                    "$description": "Outline controls: the border on hover and press."
+                  }
+                }
+              },
+              "alert": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{color.black.0}",
+                  "$extensions": {
+                    "io.atom63.derive": "transparent"
+                  },
+                  "$description": "The default Alert's fill: none in light mode, a faint control-surface tint in dark mode."
+                }
+              },
+              "choice-card": {
+                "checked-border": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 30%, transparent)"
+                  },
+                  "$description": "A choice card (a FieldLabel wrapping a checkbox, radio or switch) when checked: its border."
+                },
+                "checked-background": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 5%, transparent)"
+                  },
+                  "$description": "A checked choice card's fill."
                 }
               },
               "focus-ring": {
@@ -929,6 +984,10 @@
                 "sidebar": {
                   "$type": "color",
                   "$value": "{a63.surface.page}"
+                },
+                "recessed": {
+                  "$type": "color",
+                  "$value": "{a63.surface.page}"
                 }
               },
               "text": {
@@ -973,6 +1032,53 @@
                     "io.atom63.derive": "color-mix( in oklab, {surface.dark.9} calc(100% - {a63.surface.tint}), {a63.brand.500} {a63.surface.tint} )"
                   },
                   "$description": "Step 9 on dark surfaces reaches 3:1 against the page, the panel and the field fill."
+                }
+              },
+              "control": {
+                "outline": {
+                  "background": {
+                    "$type": "color",
+                    "$value": "{a63.border.control}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.border.control} 32%, transparent)"
+                    }
+                  },
+                  "hover-background": {
+                    "$type": "color",
+                    "$value": "{a63.border.control}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklab, {a63.border.control} 64%, transparent)"
+                    }
+                  },
+                  "hover-border": {
+                    "$type": "color",
+                    "$value": "{a63.border.control}"
+                  }
+                }
+              },
+              "alert": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.surface.control}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklab, {a63.surface.control} 32%, transparent)"
+                  }
+                }
+              },
+              "choice-card": {
+                "checked-border": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 20%, transparent)"
+                  }
+                },
+                "checked-background": {
+                  "$type": "color",
+                  "$value": "{a63.action.primary}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 10%, transparent)"
+                  }
                 }
               },
               "focus-ring": {

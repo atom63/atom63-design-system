@@ -123,9 +123,9 @@
 }
 
 /* ── Variants (default is the neutral base above) ──────────────────────── */
-/* Default tone gets a faint fill in dark mode (prod dark:bg-input/32). */
-:is(.dark, [data-a63-mode='dark']) .a63-Alert[data-variant='default'] {
-  background-color: color-mix(in oklch, var(--a63-surface-control) 32%, transparent);
+/* Default tone: no fill in light mode, a faint one in dark mode (prod dark:bg-input/32). */
+.a63-Alert[data-variant='default'] {
+  background-color: var(--a63-alert-background);
 }
 
 .a63-Alert[data-variant='error'] {

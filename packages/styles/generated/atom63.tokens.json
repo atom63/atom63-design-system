@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 1885,
-    "uniqueCssVariables": 1189,
-    "figmaMappedDeclarations": 1824
+    "declarations": 1899,
+    "uniqueCssVariables": 1196,
+    "figmaMappedDeclarations": 1838
   },
   "entries": [
     {
@@ -594,6 +594,37 @@
       },
       "lifecycle": "preview",
       "scope": ":root, [data-a63-brand]"
+    },
+    {
+      "name": "a63-alert-background",
+      "cssVar": "--a63-alert-background",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-surface-control) 32%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "alert/background",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-control"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-alert-background",
+      "cssVar": "--a63-alert-background",
+      "type": "color",
+      "value": "transparent",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "alert/background",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-avatar-radius",
@@ -5113,6 +5144,70 @@
       "scope": "[data-a63-theme='terminal']"
     },
     {
+      "name": "a63-choice-card-checked-background",
+      "cssVar": "--a63-choice-card-checked-background",
+      "type": "color",
+      "value": "color-mix( in oklch, var(--a63-action-primary) 10%, transparent )",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "choice/card/checked/background",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-choice-card-checked-background",
+      "cssVar": "--a63-choice-card-checked-background",
+      "type": "color",
+      "value": "color-mix( in oklch, var(--a63-action-primary) 5%, transparent )",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "choice/card/checked/background",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-choice-card-checked-border",
+      "cssVar": "--a63-choice-card-checked-border",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 20%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "choice/card/checked/border",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-choice-card-checked-border",
+      "cssVar": "--a63-choice-card-checked-border",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 30%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "choice/card/checked/border",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
       "name": "a63-choice-feedback-duration",
       "cssVar": "--a63-choice-feedback-duration",
       "type": "motion",
@@ -6339,6 +6434,102 @@
       "lifecycle": "preview",
       "scope": ":root",
       "conditions": ["@media (pointer: coarse)"]
+    },
+    {
+      "name": "a63-control-outline-background",
+      "cssVar": "--a63-control-outline-background",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-border-control) 32%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "control/outline/background",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-border-control"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-control-outline-background",
+      "cssVar": "--a63-control-outline-background",
+      "type": "color",
+      "value": "var(--a63-surface-panel)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "control/outline/background",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-panel"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-control-outline-hover-background",
+      "cssVar": "--a63-control-outline-hover-background",
+      "type": "color",
+      "value": "color-mix( in oklab, var(--a63-border-control) 64%, transparent )",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "control/outline/hover/background",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-border-control"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-control-outline-hover-background",
+      "cssVar": "--a63-control-outline-hover-background",
+      "type": "color",
+      "value": "color-mix( in oklab, var(--a63-surface-control-hover) 50%, transparent )",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "control/outline/hover/background",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-control-hover"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-control-outline-hover-border",
+      "cssVar": "--a63-control-outline-hover-border",
+      "type": "color",
+      "value": "var(--a63-border-control)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "control/outline/hover/border",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-border-control"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-control-outline-hover-border",
+      "cssVar": "--a63-control-outline-hover-border",
+      "type": "color",
+      "value": "var(--a63-border-subtle)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "control/outline/hover/border",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-border-subtle"],
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-control-padding-inline-lg",
@@ -10427,6 +10618,38 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-brand-50", "--a63-surface-tint", "--surface-light-1"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-surface-recessed",
+      "cssVar": "--a63-surface-recessed",
+      "type": "color",
+      "value": "var(--a63-surface-page)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "surface/recessed",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-page"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-surface-recessed",
+      "cssVar": "--a63-surface-recessed",
+      "type": "color",
+      "value": "var(--a63-surface-muted)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "surface/recessed",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-muted"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {

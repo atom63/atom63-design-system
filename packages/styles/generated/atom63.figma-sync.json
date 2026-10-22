@@ -4,10 +4,10 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1139,
-    "aliasValues": 755,
+    "variables": 1146,
+    "aliasValues": 768,
     "skipped": 183,
-    "computed": 58
+    "computed": 59
   },
   "collections": [
     {
@@ -15367,6 +15367,32 @@
           ]
         },
         {
+          "name": "alert/background",
+          "token": "--a63-alert-background",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "dark": {
+              "composed": {
+                "alias": "--a63-surface-control",
+                "opacity": 32
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-alert-background)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
           "name": "badge/amber/accent",
           "token": "--a63-badge-amber-accent",
           "type": "COLOR",
@@ -16648,6 +16674,113 @@
           ]
         },
         {
+          "name": "choice/card/checked/background",
+          "token": "--a63-choice-card-checked-background",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "composed": {
+                "alias": "--a63-action-primary",
+                "opacity": 5
+              }
+            },
+            "dark": {
+              "composed": {
+                "alias": "--a63-action-primary",
+                "opacity": 10
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-choice-card-checked-background)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "choice/card/checked/border",
+          "token": "--a63-choice-card-checked-border",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "composed": {
+                "alias": "--a63-action-primary",
+                "opacity": 30
+              }
+            },
+            "dark": {
+              "composed": {
+                "alias": "--a63-action-primary",
+                "opacity": 20
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-choice-card-checked-border)",
+          "scopes": [
+            "STROKE_COLOR"
+          ]
+        },
+        {
+          "name": "control/outline/background",
+          "token": "--a63-control-outline-background",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-surface-panel"
+            },
+            "dark": {
+              "composed": {
+                "alias": "--a63-border-control",
+                "opacity": 32
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-control-outline-background)",
+          "scopes": [
+            "STROKE_COLOR"
+          ]
+        },
+        {
+          "name": "control/outline/hover/background",
+          "token": "--a63-control-outline-hover-background",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "composed": {
+                "alias": "--a63-surface-control-hover",
+                "opacity": 50
+              }
+            },
+            "dark": {
+              "composed": {
+                "alias": "--a63-border-control",
+                "opacity": 64
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-control-outline-hover-background)",
+          "scopes": [
+            "STROKE_COLOR"
+          ]
+        },
+        {
+          "name": "control/outline/hover/border",
+          "token": "--a63-control-outline-hover-border",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-border-subtle"
+            },
+            "dark": {
+              "alias": "--a63-border-control"
+            }
+          },
+          "codeSyntax": "var(--a63-control-outline-hover-border)",
+          "scopes": [
+            "STROKE_COLOR"
+          ]
+        },
+        {
           "name": "effect/shadow/2xl",
           "token": "--effect-shadow-2xl",
           "type": "STRING",
@@ -17163,6 +17296,24 @@
             }
           },
           "codeSyntax": "var(--a63-surface-overlay)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "surface/recessed",
+          "token": "--a63-surface-recessed",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-surface-muted"
+            },
+            "dark": {
+              "alias": "--a63-surface-page"
+            }
+          },
+          "codeSyntax": "var(--a63-surface-recessed)",
           "scopes": [
             "FRAME_FILL",
             "SHAPE_FILL"
@@ -21066,6 +21217,15 @@
         "theme"
       ],
       "expression": "var(--surface-dark-1)"
+    },
+    {
+      "token": "--a63-alert-background",
+      "collection": "Mode",
+      "variesOn": [
+        "mode",
+        "surface"
+      ],
+      "expression": "color-mix(in oklab, var(--a63-surface-control) 32%, transparent)"
     },
     {
       "token": "--a63-border-control",

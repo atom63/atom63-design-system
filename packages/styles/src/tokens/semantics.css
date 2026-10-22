@@ -130,6 +130,8 @@
   /* The sidebar surface (shadcn `sidebar`): the muted surface in light mode and
      the page surface in dark mode. */
   --a63-surface-sidebar: var(--a63-surface-muted);
+  /* A panel set back from the page, such as the command palette's list: the muted surface in light mode and the page surface in dark mode. */
+  --a63-surface-recessed: var(--a63-surface-muted);
   /* Text */
   --a63-text-primary: var(--surface-light-12);
   --a63-text-secondary: var(--surface-light-11);
@@ -159,6 +161,26 @@
     in oklab,
     var(--surface-light-10) calc(100% - var(--a63-surface-tint)),
     var(--a63-brand-500) var(--a63-surface-tint)
+  );
+  /* Outline controls (the outline Button and the button-group ConnectedPanel): the fill at rest. Dark mode tints it from the control border instead of the panel. */
+  --a63-control-outline-background: var(--a63-surface-panel);
+  /* Outline controls: the fill on hover and press. */
+  --a63-control-outline-hover-background: color-mix(
+    in oklab,
+    var(--a63-surface-control-hover) 50%,
+    transparent
+  );
+  /* Outline controls: the border on hover and press. */
+  --a63-control-outline-hover-border: var(--a63-border-subtle);
+  /* The default Alert's fill: none in light mode, a faint control-surface tint in dark mode. */
+  --a63-alert-background: transparent;
+  /* A choice card (a FieldLabel wrapping a checkbox, radio or switch) when checked: its border. */
+  --a63-choice-card-checked-border: color-mix(in oklch, var(--a63-action-primary) 30%, transparent);
+  /* A checked choice card's fill. */
+  --a63-choice-card-checked-background: color-mix(
+    in oklch,
+    var(--a63-action-primary) 5%,
+    transparent
   );
   /* The keyboard focus ring. WCAG 1.4.11 needs 3:1 against the control and the
      page around it; step 600 reaches that on every brand's light surfaces (the
@@ -278,6 +300,7 @@
     transparent 20%
   );
   --a63-surface-sidebar: var(--a63-surface-page);
+  --a63-surface-recessed: var(--a63-surface-page);
   --a63-text-primary: var(--surface-dark-12);
   --a63-text-secondary: var(--surface-dark-11);
   /* The primary fill is too dark to read as text on dark surfaces. */
@@ -300,6 +323,20 @@
     in oklab,
     var(--surface-dark-9) calc(100% - var(--a63-surface-tint)),
     var(--a63-brand-500) var(--a63-surface-tint)
+  );
+  --a63-control-outline-background: color-mix(in oklab, var(--a63-border-control) 32%, transparent);
+  --a63-control-outline-hover-background: color-mix(
+    in oklab,
+    var(--a63-border-control) 64%,
+    transparent
+  );
+  --a63-control-outline-hover-border: var(--a63-border-control);
+  --a63-alert-background: color-mix(in oklab, var(--a63-surface-control) 32%, transparent);
+  --a63-choice-card-checked-border: color-mix(in oklch, var(--a63-action-primary) 20%, transparent);
+  --a63-choice-card-checked-background: color-mix(
+    in oklch,
+    var(--a63-action-primary) 10%,
+    transparent
   );
   /* Step 400 on dark surfaces: 600 and some brands' 500 fall below 3:1 there. */
   --a63-focus-ring: var(--a63-brand-400);

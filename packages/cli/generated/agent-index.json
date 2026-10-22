@@ -9035,6 +9035,26 @@
    ]
   },
   {
+   "cssVar": "--a63-alert-background",
+   "figma": {
+    "collection": "Semantic",
+    "path": "alert/background"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklab, var(--a63-surface-control) 32%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "transparent"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-avatar-radius",
    "figma": {
     "collection": "Semantic",
@@ -11739,6 +11759,46 @@
    ]
   },
   {
+   "cssVar": "--a63-choice-card-checked-background",
+   "figma": {
+    "collection": "Semantic",
+    "path": "choice/card/checked/background"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix( in oklch, var(--a63-action-primary) 10%, transparent )"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "color-mix( in oklch, var(--a63-action-primary) 5%, transparent )"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-choice-card-checked-border",
+   "figma": {
+    "collection": "Semantic",
+    "path": "choice/card/checked/border"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklch, var(--a63-action-primary) 20%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "color-mix(in oklch, var(--a63-action-primary) 30%, transparent)"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-choice-feedback-duration",
    "figma": {
     "collection": "Contract",
@@ -12518,6 +12578,66 @@
     {
      "scope": ":root",
      "value": "3.25rem"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-control-outline-background",
+   "figma": {
+    "collection": "Semantic",
+    "path": "control/outline/background"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklab, var(--a63-border-control) 32%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--a63-surface-panel)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-control-outline-hover-background",
+   "figma": {
+    "collection": "Semantic",
+    "path": "control/outline/hover/background"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix( in oklab, var(--a63-border-control) 64%, transparent )"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "color-mix( in oklab, var(--a63-surface-control-hover) 50%, transparent )"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-control-outline-hover-border",
+   "figma": {
+    "collection": "Semantic",
+    "path": "control/outline/hover/border"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-border-control)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--a63-border-subtle)"
     }
    ]
   },
@@ -15181,6 +15301,26 @@
     {
      "scope": ":root, .light, [data-a63-mode='light']",
      "value": "color-mix( in oklab, var(--surface-light-1) calc(100% - var(--a63-surface-tint)), var(--a63-brand-50) var(--a63-surface-tint) )"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-surface-recessed",
+   "figma": {
+    "collection": "Semantic",
+    "path": "surface/recessed"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-surface-page)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--a63-surface-muted)"
     }
    ]
   },
