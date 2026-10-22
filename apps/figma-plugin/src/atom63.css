@@ -18,6 +18,7 @@
   --primary-muted: color-mix(in oklch, var(--a63-action-primary) 15%, transparent);
 }
 
+/* craft-allow: mode-branch — one value for every mode, set on the mode classes to beat shadcn's */
 :root,
 .light,
 .dark {

@@ -20,6 +20,30 @@ describe('scanCss', () => {
     ])
   })
 
+  it('flags selectors that branch on light or dark mode', () => {
+    const css = `
+      :is(.dark, [data-a63-mode='dark']) .a { color: var(--x); }
+      .light .b { color: var(--x); }
+      .darkened, .a-dark, [data-a63-theme='aqua'] .c { color: var(--x); }
+    `
+    assert.deepEqual(rules(scanCss(css)), [
+      "2 mode-branch :is(.dark, [data-a63-mode='dark']) .a",
+      '3 mode-branch .light .b',
+    ])
+  })
+
+  it('flags CSS named colors as whole words, also inside color-mix()', () => {
+    const css = `
+      .a { color: white; background: color-mix(in oklch, Black 10%, transparent); }
+      .b { color: var(--a63-text-white); fill: currentColor; }
+      [data-a63-theme='aqua'] .c { color: var(--a63-text-primary); }
+    `
+    assert.deepEqual(rules(scanCss(css)), [
+      '2 raw-color color: white',
+      '2 raw-color background: Black',
+    ])
+  })
+
   it('flags physical spacing, side borders, corner radii and text alignment', () => {
     const css = `.a {
   margin-left: 1px;
@@ -95,6 +119,15 @@ describe('scanCss', () => {
 })
 
 describe('scanSource', () => {
+  it('flags Tailwind dark: variants', () => {
+    const source = `const a = cn('bg-background dark:bg-muted', 'md:dark:hover:text-foreground')
+const themes = { dark: 'github-dark', light: 'github-light' }`
+    assert.deepEqual(
+      rules(scanSource(source)).filter(line => line.includes('mode-branch')),
+      ['1 mode-branch dark:bg-muted', '1 mode-branch md:dark:hover:text-foreground']
+    )
+  })
+
   it('flags palette and arbitrary color utilities, with or without variants', () => {
     const source = `const a = cn('bg-black/70 text-foreground', "hover:text-red-500", \`border-[#ccc]\`)
 // bg-white in a comment

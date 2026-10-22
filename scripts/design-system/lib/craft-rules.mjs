@@ -5,9 +5,10 @@
  * without letting new debt in.
  *
  * - `raw-color`: component styles take color from tokens. Flags literal colors
- *   in CSS declarations and Tailwind palette or arbitrary color utilities in
- *   TS/TSX. `#0000` (the transparent "no shadow" idiom) and `transparent` pass,
- *   and so do masks, where a color only carries alpha.
+ *   in CSS declarations, including CSS named colors such as `white` (also
+ *   inside `color-mix()`), and Tailwind palette or arbitrary color utilities in
+ *   TS/TSX. `#0000` (the transparent "no shadow" idiom), `transparent` and
+ *   `currentColor` pass, and so do masks, where a color only carries alpha.
  * - `physical-properties`: spacing, text alignment, side borders and corner
  *   radii use logical directions so layouts mirror in right-to-left scripts.
  *   `left`/`right` positioning is out of scope for now. Padding that follows a
@@ -22,6 +23,9 @@
  *   box-shadow on the element would replace a ring drawn that way, and
  *   forced-colors mode drops shadows. Elevation, border and separator shadows
  *   (such as the Avatar group ring) read no focus-ring token, so they pass.
+ * - `mode-branch`: component code never branches on light or dark mode; tokens
+ *   and UIProvider resolve it. Flags CSS selectors that test `.dark`,
+ *   `.light` or `[data-a63-mode]`, and Tailwind `dark:` variants in TS/TSX.
  *
  * Some physical directions are the point: a sheet docked to the left edge, or
  * an optical nudge on a glyph that never mirrors. CSS rules scoped to
@@ -48,8 +52,15 @@ const SAFE_AREA = /env\(safe-area-inset-(?:left|right)\)/
 const FOCUS_RING_VARIANT = /focus/
 const RING_UTILITY = /^ring(?:-|$)/
 
-const CSS_LITERAL_COLOR =
-  /#[0-9a-fA-F]{3,8}\b|\brgba?\(|\bhsla?\(|\boklch\((?=\s*[\d.])|\boklab\((?=\s*[\d.])/g
+// The CSS named colors (CSS Color 4), matched as whole words so custom
+// property names such as `--a63-text-white` and keywords such as `aqua` in
+// `[data-a63-theme='aqua']` selectors are not colors here.
+const CSS_NAMED_COLORS =
+  'lightgoldenrodyellow|mediumspringgreen|mediumaquamarine|mediumslateblue|mediumturquoise|mediumvioletred|blanchedalmond|cornflowerblue|darkolivegreen|lightslategray|lightslategrey|lightsteelblue|mediumseagreen|darkgoldenrod|darkslateblue|darkslategray|darkslategrey|darkturquoise|lavenderblush|lightseagreen|palegoldenrod|paleturquoise|palevioletred|rebeccapurple|antiquewhite|darkseagreen|lemonchiffon|lightskyblue|mediumorchid|mediumpurple|midnightblue|darkmagenta|deepskyblue|floralwhite|forestgreen|greenyellow|lightsalmon|lightyellow|navajowhite|saddlebrown|springgreen|yellowgreen|aquamarine|blueviolet|chartreuse|darkorange|darkorchid|darksalmon|darkviolet|dodgerblue|ghostwhite|lightcoral|lightgreen|mediumblue|papayawhip|powderblue|sandybrown|whitesmoke|aliceblue|burlywood|cadetblue|chocolate|darkgreen|darkkhaki|firebrick|gainsboro|goldenrod|indianred|lawngreen|lightblue|lightcyan|lightgray|lightgrey|lightpink|limegreen|mintcream|mistyrose|olivedrab|orangered|palegreen|peachpuff|rosybrown|royalblue|slateblue|slategray|slategrey|steelblue|turquoise|cornsilk|darkblue|darkcyan|darkgray|darkgrey|deeppink|honeydew|lavender|moccasin|seagreen|seashell|crimson|darkred|dimgray|dimgrey|fuchsia|hotpink|magenta|oldlace|skyblue|thistle|bisque|indigo|maroon|orange|orchid|purple|salmon|sienna|silver|tomato|violet|yellow|azure|beige|black|brown|coral|green|ivory|khaki|linen|olive|wheat|white|aqua|blue|cyan|gold|gray|grey|lime|navy|peru|pink|plum|snow|teal|red|tan'
+const CSS_LITERAL_COLOR = new RegExp(
+  `#[0-9a-fA-F]{3,8}\\b|\\brgba?\\(|\\bhsla?\\(|\\boklch\\((?=\\s*[\\d.])|\\boklab\\((?=\\s*[\\d.])|(?<![\\w-])(?:${CSS_NAMED_COLORS})(?![\\w-])`,
+  'gi'
+)
 const CSS_PHYSICAL_PROPERTY =
   /^(?:margin|padding|scroll-margin|scroll-padding)-(?:left|right)$|^border-(?:left|right)(?:-(?:width|style|color))?$|^border-(?:top|bottom)-(?:left|right)-radius$/
 const CSS_FOCUS = /:focus(?![-\w])/
@@ -58,6 +69,9 @@ const CSS_MASK_PROPERTY = /^(?:-webkit-)?mask(?:-image)?$/
 const CSS_VAR_NAME = /var\(\s*(--[\w-]+)/g
 const RING_TOKEN = /focus-ring|^--(?:sidebar-)?ring$/
 const isRingToken = name => RING_TOKEN.test(name)
+
+const CSS_MODE_SELECTOR = /(?<![\w-])\.(?:dark|light)(?![\w-])|\[data-a63-mode\b/
+const MODE_VARIANT = /(?:^|:)dark:/
 
 const DATA_SIDE = /\[data-side=['"]?(?:left|right)\b/
 const ALLOW = /craft-allow:\s*([a-z-]+)/g
@@ -127,6 +141,9 @@ export function scanCss(css) {
       if (CSS_FOCUS.test(text) && !onlyResetsFocus(src, statement.lastIndex)) {
         found.push({ rule: 'focus-visible', match: text, line })
       }
+      if (CSS_MODE_SELECTOR.test(text)) {
+        found.push({ rule: 'mode-branch', match: text.replace(/\s+/g, ' '), line })
+      }
       continue
     }
     // A declaration that ends its block (no trailing `;`) closes the block too.
@@ -185,6 +202,10 @@ export function scanSource(source) {
       found.push({ rule: 'focus-visible', match: raw, line: line() })
     }
     const variants = raw.slice(0, raw.lastIndexOf(':') + 1)
+    // `dark:` with nothing after it is an object key (`{ dark: … }`), not a variant.
+    if (MODE_VARIANT.test(variants) && utility) {
+      found.push({ rule: 'mode-branch', match: raw, line: line() })
+    }
     if (
       FOCUS_RING_VARIANT.test(variants) &&
       RING_UTILITY.test(utility) &&
