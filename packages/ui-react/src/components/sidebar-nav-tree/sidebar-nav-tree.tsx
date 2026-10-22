@@ -35,7 +35,7 @@ function withTickerLabel(element: React.ReactElement): React.ReactElement {
     return React.cloneElement(
       element,
       undefined,
-      <TextTicker animationType="marquee" className="a63-SidebarNavTree-ticker">
+      <TextTicker variant="marquee" className="a63-SidebarNavTree-ticker">
         {label}
       </TextTicker>
     )
@@ -60,7 +60,7 @@ function withTickerLabel(element: React.ReactElement): React.ReactElement {
       React.cloneElement(firstChild, {
         className: cn(firstChildProps.className, 'a63-SidebarNavTree-ticker'),
         children: (
-          <TextTicker animationType="marquee" className="a63-SidebarNavTree-ticker-inner">
+          <TextTicker variant="marquee" className="a63-SidebarNavTree-ticker-inner">
             {firstChildProps.children}
           </TextTicker>
         ),
@@ -173,7 +173,7 @@ function SidebarNavCollapsibleItem({
             }
             type="button"
           >
-            <TextTicker animationType="marquee" className="a63-SidebarNavTree-ticker">
+            <TextTicker variant="marquee" className="a63-SidebarNavTree-ticker">
               {label}
             </TextTicker>
             {chevron}

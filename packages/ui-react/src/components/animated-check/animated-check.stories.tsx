@@ -8,26 +8,26 @@ const meta = {
   title: 'UI React/AnimatedCheck',
   component: AnimatedCheck,
   args: {
-    animate: true,
+    variant: 'animated',
   },
   argTypes: {
-    animate: { control: 'boolean' },
+    variant: { control: 'inline-radio', options: ['animated', 'static'] },
   },
 } satisfies Meta<typeof AnimatedCheck>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-function AnimatedCheckDemo({ animate }: { animate: boolean }) {
+function AnimatedCheckDemo({ variant }: { variant: 'animated' | 'static' }) {
   const [animationCycle, setAnimationCycle] = useState(0)
 
   return (
     <div className="grid justify-items-center gap-4">
       <div className="flex items-center gap-3">
         <AnimatedCheck
-          animate={animate}
           key={animationCycle}
           style={{ color: 'var(--a63-status-success)', fontSize: 32 }}
+          variant={variant}
         />
         <span>Changes saved</span>
       </div>
@@ -44,15 +44,15 @@ function AnimatedCheckDemo({ animate }: { animate: boolean }) {
 }
 
 export const Playground: Story = {
-  render: args => <AnimatedCheckDemo animate={args.animate ?? true} />,
+  render: args => <AnimatedCheckDemo variant={args.variant ?? 'animated'} />,
 }
 
 export const StaticSizes: Story = {
   render: () => (
     <div className="flex items-center gap-4">
-      <AnimatedCheck animate={false} style={{ fontSize: 16 }} />
-      <AnimatedCheck animate={false} style={{ fontSize: 24 }} />
-      <AnimatedCheck animate={false} style={{ fontSize: 40 }} />
+      <AnimatedCheck variant="static" style={{ fontSize: 16 }} />
+      <AnimatedCheck variant="static" style={{ fontSize: 24 }} />
+      <AnimatedCheck variant="static" style={{ fontSize: 40 }} />
     </div>
   ),
 }

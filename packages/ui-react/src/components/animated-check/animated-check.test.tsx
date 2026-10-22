@@ -22,9 +22,27 @@ describe('AnimatedCheck', () => {
     expect(path).toHaveAttribute('data-slot', 'animated-check-path')
   })
 
-  it('renders a static check when animate is false', () => {
+  it('takes the contract variant: animated by default, static with variant="static"', () => {
+    const { container } = render(
+      <>
+        <AnimatedCheck />
+        <AnimatedCheck variant="static" />
+      </>
+    )
+    const [animated, still] = container.querySelectorAll('[data-slot="animated-check"]')
+    expect(animated).toHaveAttribute('data-variant', 'animated')
+    expect(animated).toHaveAttribute('data-animate', 'true')
+    expect(still).toHaveAttribute('data-variant', 'static')
+    expect(still).not.toHaveAttribute('data-animate')
+  })
+
+  it('still renders a static check for the deprecated animate={false}', () => {
     const { container } = render(<AnimatedCheck animate={false} />)
     expect(container.querySelector('.a63-AnimatedCheck path')).not.toBeNull()
+    expect(container.querySelector('[data-slot="animated-check"]')).toHaveAttribute(
+      'data-variant',
+      'static'
+    )
   })
 
   it('forwards native SVG props while remaining decorative', () => {

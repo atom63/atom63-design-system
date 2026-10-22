@@ -137,7 +137,7 @@ export function CopyButtonFeedback({
               : feedbackExitTransition
         }
       >
-        <AnimatedCheck animate={copied} className="a63-CopyButton-check" />
+        <AnimatedCheck className="a63-CopyButton-check" variant={copied ? 'animated' : 'static'} />
         {children && <span>Copied!</span>}
       </motion.span>
     </span>

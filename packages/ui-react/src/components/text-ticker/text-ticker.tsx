@@ -1,3 +1,4 @@
+import { type TextTickerVariant, textTickerContract } from '@atom63/ui-foundation'
 import {
   type CSSProperties,
   type ComponentProps,
@@ -11,6 +12,9 @@ import {
 import { cn } from '../../lib/cn'
 
 export interface TextTickerProps extends Omit<ComponentProps<'span'>, 'children'> {
+  /** `truncate` ends overflowing text with an ellipsis; `marquee` scrolls it. Defaults to `truncate`. */
+  variant?: TextTickerVariant
+  /** @deprecated Use `variant="marquee"`. */
   animationType?: 'marquee'
   /**
    * When true and the text overflows, the marquee runs continuously
@@ -22,7 +26,7 @@ export interface TextTickerProps extends Omit<ComponentProps<'span'>, 'children'
   marqueeSpeed?: number
 }
 
-/* An overflow-aware text ticker. Without `animationType="marquee"` it simply
+/* An overflow-aware text ticker. Without `variant="marquee"` it simply
    truncates. In marquee mode it measures its content against the container and,
    when the text overflows, reveals a continuously-scrolling copy on hover/focus
    (or always when `autoPlay`). Measurement + animation logic is a faithful port
@@ -30,6 +34,7 @@ export interface TextTickerProps extends Omit<ComponentProps<'span'>, 'children'
 export function TextTicker({
   children,
   className,
+  variant,
   animationType,
   autoPlay = false,
   marqueeDelay = 0,
@@ -37,6 +42,7 @@ export function TextTicker({
   style,
   ...props
 }: TextTickerProps) {
+  const marquee = (variant ?? animationType ?? textTickerContract.defaultVariant) === 'marquee'
   const containerRef = useRef<HTMLSpanElement>(null)
   const measureRef = useRef<HTMLSpanElement>(null)
   const [isOverflowing, setIsOverflowing] = useState(false)
@@ -53,7 +59,7 @@ export function TextTicker({
   }, [])
 
   useEffect(() => {
-    if (animationType !== 'marquee') {
+    if (!marquee) {
       return
     }
 
@@ -81,13 +87,14 @@ export function TextTicker({
     return () => {
       resizeObserver.disconnect()
     }
-  }, [animationType, measureOverflow])
+  }, [marquee, measureOverflow])
 
-  if (animationType !== 'marquee') {
+  if (!marquee) {
     return (
       <span
         className={cn('a63-TextTicker', className)}
         data-slot="text-ticker"
+        data-variant="truncate"
         data-static=""
         style={style}
         {...props}
@@ -106,6 +113,7 @@ export function TextTicker({
       data-autoplay={isAutoPlaying ? '' : undefined}
       data-overflowing={isOverflowing ? '' : undefined}
       data-slot="text-ticker"
+      data-variant="marquee"
       {...props}
       style={
         {

@@ -927,20 +927,8 @@ export {
   switchStates,
   switchVisualArchetypes,
 } from './components/switch/switch-contract'
-export {
-  tableContract,
-  tableSlots,
-  tableStates,
-  tableVariants,
-  tableVisualArchetypes,
-} from './components/table'
-export type {
-  TableContract,
-  TableSlot,
-  TableState,
-  TableVariant,
-  TableVisualArchetype,
-} from './components/table'
+export { tableContract, tableSlots, tableStates, tableVisualArchetypes } from './components/table'
+export type { TableContract, TableSlot, TableState, TableVisualArchetype } from './components/table'
 export type {
   SwitchContract,
   SwitchSize,

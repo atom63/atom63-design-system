@@ -4269,21 +4269,15 @@ export const switchVisualArchetypes: readonly ["choice"];
 // @public (undocumented)
 export interface TableContract {
     // (undocumented)
-    defaultVariant: TableVariant;
-    // (undocumented)
     slots: readonly TableSlot[];
     // (undocumented)
     states: readonly TableState[];
-    // (undocumented)
-    variants: readonly TableVariant[];
     // (undocumented)
     visualArchetypes: readonly TableVisualArchetype[];
 }
 
 // @public (undocumented)
 export const tableContract: {
-    defaultVariant: "plain";
-    variants: readonly ["plain", "framed"];
     states: readonly ["rest", "row-hover", "row-selected"];
     slots: readonly ["table-container", "table", "table-header", "table-body", "table-footer", "table-row", "table-head", "table-cell", "table-caption"];
     visualArchetypes: readonly ["surface"];
@@ -4300,12 +4294,6 @@ export type TableState = (typeof tableStates)[number];
 
 // @public (undocumented)
 export const tableStates: readonly ["rest", "row-hover", "row-selected"];
-
-// @public (undocumented)
-export type TableVariant = (typeof tableVariants)[number];
-
-// @public (undocumented)
-export const tableVariants: readonly ["plain", "framed"];
 
 // @public (undocumented)
 export type TableVisualArchetype = (typeof tableVisualArchetypes)[number];
