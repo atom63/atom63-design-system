@@ -80,10 +80,10 @@ function ScrollableList({
       const viewport = getViewport()
       if (!viewport) return
 
-      const rtl = getComputedStyle(viewport).direction === 'rtl'
-      const scrollAmount = viewport.clientWidth * 0.8
-      const towardsEnd = direction === 'end' ? scrollAmount : -scrollAmount
-      const targetScroll = viewport.scrollLeft + (rtl ? -towardsEnd : towardsEnd)
+      // Towards the end is +scrollLeft in LTR and -scrollLeft in RTL.
+      const scrollAmount = viewport.clientWidth * (isRtl ? -0.8 : 0.8)
+      const targetScroll =
+        viewport.scrollLeft + (direction === 'end' ? scrollAmount : -scrollAmount)
 
       viewport.scrollTo({
         left: targetScroll,
@@ -92,7 +92,7 @@ function ScrollableList({
           : 'smooth',
       })
     },
-    [getViewport]
+    [getViewport, isRtl]
   )
 
   // Track container width to determine layout mode (if breakpoint provided)
@@ -267,7 +267,7 @@ function ScrollableList({
           </div>
         </ScrollArea>
 
-        {/* Start chevron (left in LTR, right in RTL) */}
+        {/* Start chevron (left in LTR, right in RTL; the recipe mirrors the icon) */}
         {showChevrons && canScrollStart && !disabled && (
           <div
             className="a63-ScrollableList-control"
@@ -283,11 +283,7 @@ function ScrollableList({
               type="button"
               variant="secondary"
             >
-              {isRtl ? (
-                <ChevronRight className={scrollableListControlClassNames.icon} />
-              ) : (
-                <ChevronLeft className={scrollableListControlClassNames.icon} />
-              )}
+              <ChevronLeft className={scrollableListControlClassNames.icon} />
             </Button>
           </div>
         )}
@@ -308,11 +304,7 @@ function ScrollableList({
               type="button"
               variant="secondary"
             >
-              {isRtl ? (
-                <ChevronLeft className={scrollableListControlClassNames.icon} />
-              ) : (
-                <ChevronRight className={scrollableListControlClassNames.icon} />
-              )}
+              <ChevronRight className={scrollableListControlClassNames.icon} />
             </Button>
           </div>
         )}
