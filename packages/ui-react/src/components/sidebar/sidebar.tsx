@@ -62,6 +62,15 @@ function useIsMobile(): boolean {
   return !!isMobile
 }
 
+function isEditableTarget(target: EventTarget | null): boolean {
+  if (!(target instanceof HTMLElement)) return false
+  return (
+    target.isContentEditable ||
+    target.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"])') !==
+      null
+  )
+}
+
 function resolveRender(
   asChild: boolean | undefined,
   render: useRender.ComponentProps<'button'>['render'],
@@ -101,12 +110,15 @@ export type SidebarProviderProps = React.ComponentProps<'div'> & {
   defaultOpen?: boolean
   open?: boolean
   onOpenChange?: (open: boolean) => void
+  /** Key that toggles the sidebar with Cmd/Ctrl. `false` turns the shortcut off. */
+  keyboardShortcut?: string | false
 }
 
 function SidebarProvider({
   defaultOpen = true,
   open: openProp,
   onOpenChange: setOpenProp,
+  keyboardShortcut = SIDEBAR_KEYBOARD_SHORTCUT,
   className,
   style,
   children,
@@ -122,14 +134,15 @@ function SidebarProvider({
       const openState = typeof value === 'function' ? value(open) : value
       if (setOpenProp) {
         setOpenProp(openState)
-      } else {
-        _setOpen(openState)
       }
-
-      // eslint-disable-next-line react-compiler/react-compiler -- Sidebar preference persists at the user-action boundary.
-      document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
+      if (openProp === undefined) {
+        _setOpen(openState)
+        // A controlled sidebar persists its own state; only the uncontrolled one writes the cookie.
+        // eslint-disable-next-line react-compiler/react-compiler -- Sidebar preference persists at the user-action boundary.
+        document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
+      }
     },
-    [setOpenProp, open]
+    [setOpenProp, openProp, open]
   )
 
   const toggleSidebar = React.useCallback(() => {
@@ -137,16 +150,19 @@ function SidebarProvider({
   }, [isMobile, setOpen])
 
   React.useEffect(() => {
+    if (keyboardShortcut === false) return
+
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === SIDEBAR_KEYBOARD_SHORTCUT && (event.metaKey || event.ctrlKey)) {
-        event.preventDefault()
-        toggleSidebar()
-      }
+      if (event.key !== keyboardShortcut || !(event.metaKey || event.ctrlKey)) return
+      // Leave the shortcut to text fields and rich-text editors (Cmd/Ctrl+B is bold there).
+      if (isEditableTarget(event.target)) return
+      event.preventDefault()
+      toggleSidebar()
     }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [toggleSidebar])
+  }, [keyboardShortcut, toggleSidebar])
 
   const state: SidebarState = open ? 'expanded' : 'collapsed'
 
