@@ -18,6 +18,7 @@
   --a63-surface-panel: var(--card);
   --a63-surface-overlay: var(--popover);
   --a63-surface-muted: var(--muted);
+  --a63-surface-sidebar: var(--sidebar, var(--muted));
   --a63-surface-control: var(--background);
   --a63-surface-control-hover: var(--accent);
   --a63-text-primary: var(--foreground);
