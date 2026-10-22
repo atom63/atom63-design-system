@@ -74,16 +74,21 @@
   transition: opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
 }
 
-.a63-ScrollableList-control[data-side='left'] {
-  left: var(--scrollable-list-control-inset);
+.a63-ScrollableList-control[data-side='start'] {
+  inset-inline-start: var(--scrollable-list-control-inset);
   justify-content: flex-start;
   padding-inline-start: var(--scrollable-list-inset);
 }
 
-.a63-ScrollableList-control[data-side='right'] {
-  right: var(--scrollable-list-control-inset);
+.a63-ScrollableList-control[data-side='end'] {
+  inset-inline-end: var(--scrollable-list-control-inset);
   justify-content: flex-end;
   padding-inline-end: var(--scrollable-list-inset);
+}
+
+/* The icons point left (start) and right (end); mirror them in right-to-left layouts. */
+.a63-ScrollableList-control:dir(rtl) svg {
+  scale: -1 1;
 }
 
 .a63-ScrollableList-control[data-visible] {

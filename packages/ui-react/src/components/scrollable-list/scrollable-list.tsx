@@ -51,8 +51,9 @@ function ScrollableList({
   mask = true,
   wrapLayoutBreakpoint,
 }: ScrollableListProps) {
-  const [canScrollLeft, setCanScrollLeft] = useState(false)
-  const [canScrollRight, setCanScrollRight] = useState(false)
+  const [canScrollStart, setCanScrollStart] = useState(false)
+  const [canScrollEnd, setCanScrollEnd] = useState(false)
+  const [isRtl, setIsRtl] = useState(false)
   const [useWrapLayout, setUseWrapLayout] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
@@ -65,19 +66,24 @@ function ScrollableList({
     const viewport = getViewport()
     if (!viewport) return
 
+    // In RTL, scrollLeft runs from 0 at the start towards negative values at the end.
+    const rtl = getComputedStyle(viewport).direction === 'rtl'
     const { scrollLeft, scrollWidth, clientWidth } = viewport
-    setCanScrollLeft(scrollLeft > 1)
-    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1)
+    const offset = rtl ? -scrollLeft : scrollLeft
+    setIsRtl(rtl)
+    setCanScrollStart(offset > 1)
+    setCanScrollEnd(offset < scrollWidth - clientWidth - 1)
   }, [getViewport])
 
   const scrollContent = useCallback(
-    (direction: 'left' | 'right') => {
+    (direction: 'start' | 'end') => {
       const viewport = getViewport()
       if (!viewport) return
 
-      const scrollAmount = viewport.clientWidth * 0.8
+      // Towards the end is +scrollLeft in LTR and -scrollLeft in RTL.
+      const scrollAmount = viewport.clientWidth * (isRtl ? -0.8 : 0.8)
       const targetScroll =
-        viewport.scrollLeft + (direction === 'right' ? scrollAmount : -scrollAmount)
+        viewport.scrollLeft + (direction === 'end' ? scrollAmount : -scrollAmount)
 
       viewport.scrollTo({
         left: targetScroll,
@@ -86,7 +92,7 @@ function ScrollableList({
           : 'smooth',
       })
     },
-    [getViewport]
+    [getViewport, isRtl]
   )
 
   // Track container width to determine layout mode (if breakpoint provided)
@@ -261,18 +267,18 @@ function ScrollableList({
           </div>
         </ScrollArea>
 
-        {/* Left chevron */}
-        {showChevrons && canScrollLeft && !disabled && (
+        {/* Start chevron (left in LTR, right in RTL; the recipe mirrors the icon) */}
+        {showChevrons && canScrollStart && !disabled && (
           <div
             className="a63-ScrollableList-control"
-            data-side="left"
+            data-side="start"
             data-slot="scrollable-list-control"
             data-visible
           >
             <Button
-              aria-label="Scroll left"
+              aria-label={isRtl ? 'Scroll right' : 'Scroll left'}
               className={scrollableListControlClassNames.button}
-              onClick={() => scrollContent('left')}
+              onClick={() => scrollContent('start')}
               size="icon-lg"
               type="button"
               variant="secondary"
@@ -282,18 +288,18 @@ function ScrollableList({
           </div>
         )}
 
-        {/* Right chevron */}
-        {showChevrons && canScrollRight && !disabled && (
+        {/* End chevron (right in LTR, left in RTL) */}
+        {showChevrons && canScrollEnd && !disabled && (
           <div
             className="a63-ScrollableList-control"
-            data-side="right"
+            data-side="end"
             data-slot="scrollable-list-control"
             data-visible
           >
             <Button
-              aria-label="Scroll right"
+              aria-label={isRtl ? 'Scroll left' : 'Scroll right'}
               className={scrollableListControlClassNames.button}
-              onClick={() => scrollContent('right')}
+              onClick={() => scrollContent('end')}
               size="icon-lg"
               type="button"
               variant="secondary"
