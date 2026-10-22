@@ -8,8 +8,9 @@
       "approval": "Manual approval is required before each publish=true beta run."
     },
     "latest": {
-      "purpose": "Stable default install channel.",
-      "approval": "Not approved. Requires explicit human approval after all stable-readiness blockers are resolved.",
+      "purpose": "Default install channel. Until the first stable release it follows the newest beta, so a plain install is never older than the beta tag; a stable version takes it only after stable readiness.",
+      "approval": "Following the beta is approved. Moving a stable version to latest is not approved and requires explicit human approval after all stable-readiness blockers are resolved.",
+      "followsBetaBeforeStable": true,
       "allowedBeforeStableReady": false
     }
   },

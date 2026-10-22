@@ -54,6 +54,10 @@ async function main() {
     'latest must not be allowed before stable readiness'
   )
   assert(
+    typeof policy.distTags.latest.followsBetaBeforeStable === 'boolean',
+    'latest.followsBetaBeforeStable must say whether latest follows the beta'
+  )
+  assert(
     policy.stablePromotionPreflight?.publishAllowed === false,
     'stable preflight must be no-publish'
   )
@@ -105,6 +109,7 @@ async function main() {
     stablePromotionApproved: false,
     publishAllowed: policy.stablePromotionPreflight.publishAllowed,
     latestAllowedBeforeStableReady: policy.distTags.latest.allowedBeforeStableReady,
+    latestFollowsBetaBeforeStable: policy.distTags.latest.followsBetaBeforeStable,
     packages,
     registryReadback: policy.registryReadback,
     rollbackOwner: policy.rollback.owner,

@@ -8,6 +8,12 @@
  * tarball is published with the npm CLI, which performs trusted-publisher OIDC
  * and provenance in CI. Order follows the dependency graph.
  *
+ * Until the first stable release `latest` follows the beta
+ * (docs/design-system/stable-release-policy.json), so once every package is
+ * published, each one's `latest` is moved to its current version, including
+ * packages skipped in this run. Over OIDC this needs the "Allow npm dist-tag"
+ * option on each package's trusted publisher and npm 11.21.0 or later.
+ *
  * Usage: node scripts/design-system/publish-beta.mjs [--dry-run]
  */
 import { existsSync, mkdtempSync, readFileSync, readdirSync, rmSync } from 'node:fs'
@@ -35,7 +41,20 @@ function isPublished(name, version) {
   }
 }
 
+function latestVersion(name) {
+  try {
+    return execCommandSync('npm', ['view', name, 'dist-tags.latest'], {
+      stdio: ['ignore', 'pipe', 'ignore'],
+    })
+      .toString()
+      .trim()
+  } catch {
+    return ''
+  }
+}
+
 const outDir = mkdtempSync(path.join(tmpdir(), 'atom63-publish-'))
+const releases = []
 let published = 0
 try {
   for (const directory of packageDirectories) {
@@ -47,6 +66,7 @@ try {
       files = [],
     } = JSON.parse(readFileSync(path.join(packageDir, 'package.json'), 'utf8'))
     if (isPrivate) throw new Error(`${name} is private and cannot be published`)
+    releases.push({ name, version })
     if (files.includes('dist') && !existsSync(path.join(packageDir, 'dist/index.js'))) {
       throw new Error(`${name} has no dist/index.js; build it before publishing`)
     }
@@ -80,3 +100,13 @@ try {
 process.stdout.write(
   `${dryRun ? 'Dry run: would publish' : 'Published'} ${published} package(s) to "${tag}".\n`
 )
+
+for (const { name, version } of releases) {
+  if (latestVersion(name) === version) continue
+  process.stdout.write(`${dryRun ? 'dry-run ' : ''}dist-tag add ${name}@${version} latest\n`)
+  if (!dryRun) {
+    execCommandSync('npm', ['dist-tag', 'add', `${name}@${version}`, 'latest'], {
+      stdio: 'inherit',
+    })
+  }
+}
