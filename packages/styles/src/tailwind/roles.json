@@ -23,7 +23,7 @@
       "label": "Borders and focus",
       "roles": {
         "border": "--a63-border-subtle",
-        "input": "--a63-border-control",
+        "input": "--a63-border-input",
         "ring": "--a63-focus-ring"
       }
     },

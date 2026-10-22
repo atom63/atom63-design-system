@@ -246,6 +246,14 @@
                   "io.atom63.derive": "color-mix( in oklab, {a63.action.primary} 26%, color-mix(in oklab, {surface.light.5} 60%, white) )"
                 }
               },
+              "input": {
+                "$type": "color",
+                "$value": "{a63.action.primary}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix( in oklab, {a63.action.primary} 70%, {surface.light.10} )"
+                },
+                "$description": "Phosphor form-control border: 3:1 against the tinted page, panel and field fill."
+              },
               "subtle": {
                 "$type": "color",
                 "$value": "{a63.action.primary}",
@@ -386,6 +394,13 @@
                 "$value": "{a63.action.primary}",
                 "$extensions": {
                   "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 42%, transparent)"
+                }
+              },
+              "input": {
+                "$type": "color",
+                "$value": "{a63.text.accent}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {a63.text.accent} 60%, transparent)"
                 }
               },
               "subtle": {

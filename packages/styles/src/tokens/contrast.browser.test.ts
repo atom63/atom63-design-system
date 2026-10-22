@@ -159,6 +159,11 @@ const brandPairs = [
   { fg: '--a63-focus-ring', bg: '--a63-surface-page', min: AA_UI },
   { fg: '--a63-focus-ring', bg: '--a63-surface-panel', min: AA_UI },
   { fg: '--a63-focus-ring', bg: '--a63-surface-control', min: AA_UI },
+  // WCAG 1.4.11: a form control's border is how a person finds the control, so it
+  // reaches 3:1 against the page, the panel and the field fill.
+  { fg: '--a63-border-input', bg: '--a63-surface-page', min: AA_UI },
+  { fg: '--a63-border-input', bg: '--a63-surface-panel', min: AA_UI },
+  { fg: '--a63-border-input', bg: '--a63-surface-control', min: AA_UI },
 ] as const
 
 describe('brand contrast (WCAG AA)', () => {

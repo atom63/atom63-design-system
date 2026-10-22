@@ -21,7 +21,7 @@
 .a63-Switch {
   --switch-thumb: var(--a63-switch-thumb-size);
   --switch-track: var(--a63-selection-track-off, var(--a63-surface-muted));
-  --switch-border: var(--a63-selection-border, var(--a63-border-control));
+  --switch-border: var(--a63-selection-border, var(--a63-border-input));
   --switch-accent: var(--a63-selection-accent, var(--a63-action-primary));
   --switch-focus-ring: var(--a63-selection-focus-ring, var(--a63-focus-ring));
   --switch-thumb-bg: var(--a63-selection-thumb);

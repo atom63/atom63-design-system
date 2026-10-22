@@ -10,7 +10,7 @@
  *
  * Axis-dependent colour hooks are resolved at the recipe use-site:
  *   --a63-choice-accent       -> var(--a63-action-primary)
- *   --a63-choice-border       -> var(--a63-border-control)
+ *   --a63-choice-border       -> var(--a63-border-input)
  *   --a63-choice-track-off    -> var(--a63-surface-control)
  *   --a63-choice-focus-ring   -> var(--a63-focus-ring)
  *

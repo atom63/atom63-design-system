@@ -99,6 +99,8 @@
     var(--a63-action-primary) 26%,
     color-mix(in oklab, var(--surface-light-5) 60%, white)
   );
+  /* Phosphor form-control border: 3:1 against the tinted page, panel and field fill. */
+  --a63-border-input: color-mix(in oklab, var(--a63-action-primary) 70%, var(--surface-light-10));
   --a63-border-subtle: color-mix(
     in oklab,
     var(--a63-action-primary) 16%,
@@ -147,6 +149,7 @@
   /* Text mixes read the brand-as-text token; the primary fill is too dark here. */
   --a63-text-secondary: color-mix(in oklab, var(--a63-text-accent) 48%, var(--surface-dark-11));
   --a63-border-control: color-mix(in oklch, var(--a63-action-primary) 42%, transparent);
+  --a63-border-input: color-mix(in oklch, var(--a63-text-accent) 60%, transparent);
   --a63-border-subtle: color-mix(in oklch, var(--a63-action-primary) 22%, transparent);
   --a63-surface-page: color-mix(in oklab, var(--surface-dark-1) 92%, var(--a63-action-primary));
   --a63-surface-panel: color-mix(in oklab, var(--surface-dark-2) 92%, var(--a63-action-primary));

@@ -15,7 +15,7 @@
 .a63-Radio {
   --radio-size: 1.125rem;
   --radio-accent: var(--a63-selection-accent, var(--a63-action-primary));
-  --radio-border: var(--a63-selection-border, var(--a63-border-control));
+  --radio-border: var(--a63-selection-border, var(--a63-border-input));
   --radio-focus-ring: var(--a63-selection-focus-ring, var(--a63-focus-ring));
   --radio-shadow: var(--a63-choice-box-shadow, none);
   --radio-shadow-checked: var(--a63-choice-box-shadow-checked, var(--radio-shadow));

@@ -9903,6 +9903,34 @@
    ]
   },
   {
+   "cssVar": "--a63-border-input",
+   "figma": {
+    "collection": "Theme",
+    "path": "border/input"
+   },
+   "layer": "theme",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])",
+     "value": "color-mix(in oklab, var(--a63-action-primary) 70%, var(--surface-light-10))"
+    },
+    {
+     "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklch, var(--a63-text-accent) 60%, transparent)"
+    },
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix( in oklab, var(--surface-dark-9) calc(100% - var(--a63-surface-tint)), var(--a63-brand-500) var(--a63-surface-tint) )"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "color-mix( in oklab, var(--surface-light-10) calc(100% - var(--a63-surface-tint)), var(--a63-brand-500) var(--a63-surface-tint) )"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-border-subtle",
    "figma": {
     "collection": "Theme",

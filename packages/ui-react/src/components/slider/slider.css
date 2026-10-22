@@ -50,7 +50,7 @@
   box-sizing: border-box;
   width: var(--slider-thumb);
   height: var(--slider-thumb);
-  border: 1px solid var(--a63-border-control);
+  border: 1px solid var(--a63-border-input);
   border-radius: var(--radius-full);
   background-color: var(--a63-surface-overlay);
   box-shadow:

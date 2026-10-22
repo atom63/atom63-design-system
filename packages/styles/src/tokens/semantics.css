@@ -150,6 +150,16 @@
     var(--surface-light-5) calc(100% - var(--a63-surface-tint)),
     var(--a63-brand-400) var(--a63-surface-tint)
   );
+  /* The border of a form control a person has to find: text fields, selects,
+     checkboxes, radios, switches and slider thumbs. WCAG 1.4.11 needs 3:1 against
+     the page, the panel and the field fill; step 10 reaches that on every theme,
+     brand and surface (step 9 falls to about 2.97:1). Decorative edges keep
+     --a63-border-control. */
+  --a63-border-input: color-mix(
+    in oklab,
+    var(--surface-light-10) calc(100% - var(--a63-surface-tint)),
+    var(--a63-brand-500) var(--a63-surface-tint)
+  );
   /* The keyboard focus ring. WCAG 1.4.11 needs 3:1 against the control and the
      page around it; step 600 reaches that on every brand's light surfaces (the
      translucent 500 it replaced was about 1.4:1). */
@@ -283,6 +293,12 @@
   --a63-border-control: color-mix(
     in oklab,
     var(--surface-dark-7) calc(100% - var(--a63-surface-tint)),
+    var(--a63-brand-500) var(--a63-surface-tint)
+  );
+  /* Step 9 on dark surfaces reaches 3:1 against the page, the panel and the field fill. */
+  --a63-border-input: color-mix(
+    in oklab,
+    var(--surface-dark-9) calc(100% - var(--a63-surface-tint)),
     var(--a63-brand-500) var(--a63-surface-tint)
   );
   /* Step 400 on dark surfaces: 600 and some brands' 500 fall below 3:1 there. */

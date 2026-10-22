@@ -4,10 +4,10 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1138,
-    "aliasValues": 748,
+    "variables": 1139,
+    "aliasValues": 755,
     "skipped": 183,
-    "computed": 57
+    "computed": 58
   },
   "collections": [
     {
@@ -148,6 +148,49 @@
             }
           },
           "codeSyntax": "var(--a63-border-control)",
+          "scopes": [
+            "STROKE_COLOR"
+          ]
+        },
+        {
+          "name": "border/input",
+          "token": "--a63-border-input",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--surface-light-10"
+            },
+            "modern-dark": {
+              "alias": "--surface-dark-9"
+            },
+            "aqua-light": {
+              "alias": "--surface-light-10"
+            },
+            "aqua-dark": {
+              "alias": "--surface-dark-9"
+            },
+            "retro-light": {
+              "alias": "--surface-light-10"
+            },
+            "retro-dark": {
+              "alias": "--surface-dark-9"
+            },
+            "terminal-light": {
+              "value": {
+                "r": 0.227263,
+                "g": 0.42568,
+                "b": 0.738339,
+                "a": 1
+              }
+            },
+            "terminal-dark": {
+              "composed": {
+                "alias": "--a63-text-accent",
+                "opacity": 60
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-border-input)",
           "scopes": [
             "STROKE_COLOR"
           ]
@@ -21034,6 +21077,17 @@
         "theme"
       ],
       "expression": "color-mix( in oklab, var(--surface-dark-7) calc(100% - var(--a63-surface-tint)), var(--a63-brand-500) var(--a63-surface-tint) )"
+    },
+    {
+      "token": "--a63-border-input",
+      "collection": "Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "surface",
+        "theme"
+      ],
+      "expression": "color-mix( in oklab, var(--surface-dark-9) calc(100% - var(--a63-surface-tint)), var(--a63-brand-500) var(--a63-surface-tint) )"
     },
     {
       "token": "--a63-border-subtle",

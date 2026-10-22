@@ -512,6 +512,14 @@
                   "$extensions": {
                     "io.atom63.derive": "color-mix( in oklab, {surface.light.5} calc(100% - {a63.surface.tint}), {a63.brand.400} {a63.surface.tint} )"
                   }
+                },
+                "input": {
+                  "$type": "color",
+                  "$value": "{surface.light.10}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklab, {surface.light.10} calc(100% - {a63.surface.tint}), {a63.brand.500} {a63.surface.tint} )"
+                  },
+                  "$description": "The border of a form control a person has to find: text fields, selects,\ncheckboxes, radios, switches and slider thumbs. WCAG 1.4.11 needs 3:1 against\nthe page, the panel and the field fill; step 10 reaches that on every theme,\nbrand and surface (step 9 falls to about 2.97:1). Decorative edges keep\n--a63-border-control."
                 }
               },
               "focus-ring": {
@@ -957,6 +965,14 @@
                   "$extensions": {
                     "io.atom63.derive": "color-mix( in oklab, {surface.dark.7} calc(100% - {a63.surface.tint}), {a63.brand.500} {a63.surface.tint} )"
                   }
+                },
+                "input": {
+                  "$type": "color",
+                  "$value": "{surface.dark.9}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklab, {surface.dark.9} calc(100% - {a63.surface.tint}), {a63.brand.500} {a63.surface.tint} )"
+                  },
+                  "$description": "Step 9 on dark surfaces reaches 3:1 against the page, the panel and the field fill."
                 }
               },
               "focus-ring": {

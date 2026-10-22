@@ -3,7 +3,7 @@
  * production. `.a63-InputOTP` is the flex container the `input-otp` primitive
  * lays its hidden input into; `.a63-InputOTP-group` clusters the visible slots
  * and `.a63-InputOTP-slot` is one box. Slots share the recessed-field vocabulary
- * (--a63-field-* → --a63-surface-control / --a63-border-control / --a63-control-radius),
+ * (--a63-field-* → --a63-surface-control / --a63-border-input / --a63-control-radius),
  * fuse into a single pill by collapsing inner borders, and the active slot lifts
  * with the brand accent + focus ring. Caret blink is a local keyframe. No new tokens.
  */
@@ -30,7 +30,7 @@
 }
 
 .a63-InputOTP-slot {
-  --otp-border: var(--a63-field-border, var(--a63-border-control));
+  --otp-border: var(--a63-field-border, var(--a63-border-input));
   --otp-accent: var(--a63-selection-accent, var(--a63-action-primary));
 
   position: relative;

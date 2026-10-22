@@ -14,7 +14,7 @@
  * mode-independent (static inset), so it's safe to declare at :root and let
  * themes override it on their shell. The OTHER hooks resolve at the recipe
  * use-site against mode/theme/brand-dependent semantics (--a63-surface-control,
- * --a63-border-control, --a63-control-radius, --a63-focus-ring,
+ * --a63-border-input, --a63-control-radius, --a63-focus-ring,
  * --a63-action-primary); declaring THOSE at :root would freeze their var()s to
  * the root's mode/theme and inherit the wrong value down — the
  * resolve-at-declaration trap. So they stay UNSET here and the recipe reads
