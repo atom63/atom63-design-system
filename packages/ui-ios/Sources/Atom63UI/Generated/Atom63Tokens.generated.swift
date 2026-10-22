@@ -57,6 +57,8 @@ public enum AtomTokens {
         public static let borderSubtle = AtomDynamicColor(light: AtomColorComponents(red: 0.909804, green: 0.909804, blue: 0.909804, opacity: 1), dark: AtomColorComponents(red: 0.227451, green: 0.227451, blue: 0.227451, opacity: 1))
         /// --a63-border-control
         public static let borderControl = AtomDynamicColor(light: AtomColorComponents(red: 0.878432, green: 0.878431, blue: 0.878431, opacity: 1), dark: AtomColorComponents(red: 0.282353, green: 0.282353, blue: 0.282353, opacity: 1))
+        /// --a63-border-input
+        public static let borderInput = AtomDynamicColor(light: AtomColorComponents(red: 0.513725, green: 0.513726, blue: 0.513725, opacity: 1), dark: AtomColorComponents(red: 0.431373, green: 0.431372, blue: 0.431372, opacity: 1))
         /// --a63-action-primary
         public static let actionPrimary = AtomDynamicColor(light: AtomColorComponents(red: 0.019608, green: 0.364706, blue: 0.823529, opacity: 1), dark: AtomColorComponents(red: 0.019608, green: 0.364706, blue: 0.823529, opacity: 1))
         /// --a63-action-primary-hover

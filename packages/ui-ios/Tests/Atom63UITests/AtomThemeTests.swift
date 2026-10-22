@@ -62,6 +62,7 @@ struct AtomThemeTests {
       "textSecondary": colors.textSecondary,
       "borderSubtle": colors.borderSubtle,
       "borderControl": colors.borderControl,
+      "borderInput": colors.borderInput,
       "actionPrimary": colors.actionPrimary,
       "actionPrimaryPressed": colors.actionPrimaryPressed,
       "actionPrimaryForeground": colors.actionPrimaryForeground,
