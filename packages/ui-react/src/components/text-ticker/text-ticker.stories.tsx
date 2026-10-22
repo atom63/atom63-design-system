@@ -8,13 +8,13 @@ const meta = {
   component: TextTicker,
   args: {
     children: 'Now playing — A very long track title that will overflow its container',
-    animationType: 'marquee',
+    variant: 'marquee',
     autoPlay: false,
     marqueeSpeed: 24,
     marqueeDelay: 0,
   },
   argTypes: {
-    animationType: { control: 'inline-radio', options: [undefined, 'marquee'] },
+    variant: { control: 'inline-radio', options: ['truncate', 'marquee'] },
     autoPlay: { control: 'boolean' },
     marqueeSpeed: { control: { type: 'number', min: 4, max: 60 } },
     marqueeDelay: { control: { type: 'number', min: 0, max: 2000, step: 100 } },
@@ -65,9 +65,9 @@ export const AutoPlay: Story = {
   render: args => frame(<TextTicker {...args} />),
 }
 
-/* Without animationType the component is a plain truncating line. */
+/* The default truncate variant is a plain truncating line. */
 export const StaticTruncate: Story = {
-  args: { animationType: undefined },
+  args: { variant: 'truncate' },
   render: args => frame(<TextTicker {...args} />),
 }
 
@@ -94,7 +94,7 @@ export const Themes: Story = {
                 {theme} / {mode}
               </span>
               {frame(
-                <TextTicker animationType="marquee" autoPlay marqueeSpeed={24}>
+                <TextTicker variant="marquee" autoPlay marqueeSpeed={24}>
                   Now playing — A very long track title that will overflow its container
                 </TextTicker>
               )}
@@ -112,21 +112,21 @@ export const Endpoints: Story = {
     <div style={{ display: 'grid', gap: 12 }}>
       <UIProvider designLanguage="web" input="pointer">
         {frame(
-          <TextTicker animationType="marquee" autoPlay>
+          <TextTicker variant="marquee" autoPlay>
             Web — a long overflowing title for review
           </TextTicker>
         )}
       </UIProvider>
       <UIProvider designLanguage="ios" input="touch">
         {frame(
-          <TextTicker animationType="marquee" autoPlay>
+          <TextTicker variant="marquee" autoPlay>
             iOS touch — a long overflowing title for review
           </TextTicker>
         )}
       </UIProvider>
       <UIProvider density="compact">
         {frame(
-          <TextTicker animationType="marquee" autoPlay>
+          <TextTicker variant="marquee" autoPlay>
             Compact extension — a long overflowing title
           </TextTicker>
         )}

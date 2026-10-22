@@ -2264,7 +2264,7 @@
       "source": "packages/ui-foundation/contracts/components/table.json",
       "exportName": "tableContract",
       "maturity": "stable",
-      "axes": [{ "name": "variants", "values": ["plain", "framed"], "default": "plain" }],
+      "axes": [],
       "slots": [
         "table-container",
         "table",

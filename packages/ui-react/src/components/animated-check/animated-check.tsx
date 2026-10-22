@@ -1,3 +1,4 @@
+import { type AnimatedCheckVariant, animatedCheckContract } from '@atom63/ui-foundation'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
@@ -34,22 +35,31 @@ export interface AnimatedCheckProps extends Omit<
   React.ComponentProps<'svg'>,
   'animate' | 'children'
 > {
-  /** Draw the checkmark in on mount. Suppressed when the user prefers reduced motion. */
+  /**
+   * `animated` draws the checkmark in on mount (suppressed when the user prefers
+   * reduced motion); `static` shows it at once. Defaults to `animated`.
+   */
+  variant?: AnimatedCheckVariant
+  /** @deprecated Use `variant="static"` instead of `animate={false}`. */
   animate?: boolean
 }
 
 export function AnimatedCheck({
-  animate = true,
+  variant,
+  animate,
   className,
   ...props
 }: AnimatedCheckProps): React.ReactElement {
+  const resolvedVariant =
+    variant ?? (animate === false ? 'static' : animatedCheckContract.defaultVariant)
   return (
     <svg
       {...props}
       aria-hidden
       className={cn('a63-AnimatedCheck', className)}
-      data-animate={animate ? 'true' : undefined}
+      data-animate={resolvedVariant === 'animated' ? 'true' : undefined}
       data-slot="animated-check"
+      data-variant={resolvedVariant}
       fill="none"
       stroke="currentColor"
       strokeLinecap="round"

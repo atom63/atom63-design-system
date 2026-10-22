@@ -46,7 +46,7 @@ export const Horizontal: Story = {
   ),
 }
 
-/* The `withHandle` grip makes the drag affordance explicit. */
+/* The `grip` variant makes the drag affordance explicit. */
 export const WithHandle: Story = {
   render: () => (
     <div
@@ -62,7 +62,7 @@ export const WithHandle: Story = {
         <ResizablePanel defaultSize={40}>
           <div style={panelStyle}>Sidebar</div>
         </ResizablePanel>
-        <ResizableHandle withHandle />
+        <ResizableHandle variant="grip" />
         <ResizablePanel defaultSize={60}>
           <div style={panelStyle}>Content</div>
         </ResizablePanel>
@@ -87,7 +87,7 @@ export const Vertical: Story = {
         <ResizablePanel defaultSize={50}>
           <div style={panelStyle}>Top</div>
         </ResizablePanel>
-        <ResizableHandle withHandle />
+        <ResizableHandle variant="grip" />
         <ResizablePanel defaultSize={50}>
           <div style={panelStyle}>Bottom</div>
         </ResizablePanel>
@@ -122,7 +122,7 @@ export const Themes: Story = {
                   <ResizablePanel defaultSize={40}>
                     <div style={panelStyle}>Left</div>
                   </ResizablePanel>
-                  <ResizableHandle withHandle />
+                  <ResizableHandle variant="grip" />
                   <ResizablePanel defaultSize={60}>
                     <div style={panelStyle}>Right</div>
                   </ResizablePanel>
@@ -152,13 +152,13 @@ export const Nested: Story = {
         <ResizablePanel defaultSize={40}>
           <div style={panelStyle}>Nav</div>
         </ResizablePanel>
-        <ResizableHandle withHandle />
+        <ResizableHandle variant="grip" />
         <ResizablePanel defaultSize={60}>
           <ResizablePanelGroup direction="vertical">
             <ResizablePanel defaultSize={60}>
               <div style={panelStyle}>Main</div>
             </ResizablePanel>
-            <ResizableHandle withHandle />
+            <ResizableHandle variant="grip" />
             <ResizablePanel defaultSize={40}>
               <div style={panelStyle}>Console</div>
             </ResizablePanel>
@@ -211,7 +211,7 @@ function EndpointResizable({ label }: { label: string }) {
           <ResizablePanel defaultSize={40}>
             <div style={panelStyle}>Left</div>
           </ResizablePanel>
-          <ResizableHandle withHandle />
+          <ResizableHandle variant="grip" />
           <ResizablePanel defaultSize={60}>
             <div style={panelStyle}>Right</div>
           </ResizablePanel>

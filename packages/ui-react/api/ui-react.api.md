@@ -7,6 +7,7 @@
 import { Accordion as Accordion_2 } from '@base-ui/react/accordion';
 import { AlertDialog as AlertDialogPrimitive } from '@base-ui/react/alert-dialog';
 import { AlertVariant } from '@atom63/ui-foundation';
+import { AnimatedCheckVariant } from '@atom63/ui-foundation';
 import { Autocomplete as AutocompletePrimitive } from '@base-ui/react/autocomplete';
 import { Avatar as AvatarPrimitive } from '@base-ui/react/avatar';
 import { AvatarSize } from '@atom63/ui-foundation';
@@ -83,6 +84,7 @@ import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { RefObject } from 'react';
 import * as ResizablePrimitive from 'react-resizable-panels';
+import { ResizableVariant } from '@atom63/ui-foundation';
 import { ScrollArea as ScrollArea_2 } from '@base-ui/react/scroll-area';
 import { SegmentedControlSize } from '@atom63/ui-foundation';
 import { SegmentedControlTone } from '@atom63/ui-foundation';
@@ -108,6 +110,7 @@ import { Tabs as Tabs_2 } from '@base-ui/react/tabs';
 import { TabsSize } from '@atom63/ui-foundation';
 import { TabsVariant } from '@atom63/ui-foundation';
 import { TextareaSize } from '@atom63/ui-foundation';
+import { TextTickerVariant } from '@atom63/ui-foundation';
 import { Theme } from '@atom63/ui-foundation';
 import { toast } from 'sonner';
 import { ToasterProps } from 'sonner';
@@ -231,7 +234,9 @@ export function AnimatedCheck(input: AnimatedCheckProps): React$1.ReactElement;
 
 // @public (undocumented)
 export interface AnimatedCheckProps extends Omit<React$1.ComponentProps<'svg'>, 'animate' | 'children'> {
+    // @deprecated (undocumented)
     animate?: boolean;
+    variant?: AnimatedCheckVariant;
 }
 
 // @public (undocumented)
@@ -2087,6 +2092,7 @@ export function ResizableHandle(input: ResizableHandleProps): React$1.ReactEleme
 
 // @public (undocumented)
 export type ResizableHandleProps = React$1.ComponentProps<typeof ResizablePrimitive.Separator> & {
+    variant?: ResizableVariant;
     withHandle?: boolean;
 };
 
@@ -2670,7 +2676,7 @@ export function TextTicker(input: TextTickerProps): React$1.JSX.Element;
 
 // @public (undocumented)
 export interface TextTickerProps extends Omit<ComponentProps<'span'>, 'children'> {
-    // (undocumented)
+    // @deprecated (undocumented)
     animationType?: 'marquee';
     autoPlay?: boolean;
     // (undocumented)
@@ -2679,6 +2685,7 @@ export interface TextTickerProps extends Omit<ComponentProps<'span'>, 'children'
     marqueeDelay?: number;
     // (undocumented)
     marqueeSpeed?: number;
+    variant?: TextTickerVariant;
 }
 
 export { Theme }

@@ -13,6 +13,19 @@ describe('TextTicker', () => {
     expect(el).toHaveAttribute('data-static')
   })
 
+  it('takes the contract variant: truncate by default, marquee with variant="marquee"', () => {
+    const { container } = render(
+      <>
+        <TextTicker>Short</TextTicker>
+        <TextTicker variant="marquee">A very long track title</TextTicker>
+      </>
+    )
+    const [truncate, marquee] = container.querySelectorAll('[data-slot="text-ticker"]')
+    expect(truncate).toHaveAttribute('data-variant', 'truncate')
+    expect(marquee).toHaveAttribute('data-variant', 'marquee')
+    expect(marquee).toHaveClass('a63-TextTicker--marquee')
+  })
+
   it('renders the marquee variant when animationType="marquee"', () => {
     const { container } = render(
       <TextTicker animationType="marquee" autoPlay>
