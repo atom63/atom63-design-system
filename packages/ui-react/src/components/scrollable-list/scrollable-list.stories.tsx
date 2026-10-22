@@ -69,6 +69,18 @@ export const Draggable: Story = {
   ),
 }
 
+/* Right-to-left: the list starts at the right edge, so only the end chevron
+   (pointing left) shows until you scroll. */
+export const RightToLeft: Story = {
+  render: () => (
+    <div dir="rtl" style={{ width: 'min(420px, 100%)' }}>
+      <ScrollableList>
+        <Row />
+      </ScrollableList>
+    </div>
+  ),
+}
+
 /* `contentPad` + `controlInset`: full-bleed track with items/chevrons aligned
    to a narrower column (e.g. max-w-xl + px-6). Mount the list at scrollport
    width; pass CSS lengths that resolve against that width. */
