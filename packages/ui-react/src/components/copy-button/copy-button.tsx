@@ -4,22 +4,22 @@ import type { CopyButtonSize, CopyButtonVariant } from '@atom63/ui-foundation'
 import { Copy } from 'lucide-react'
 import { motion, useReducedMotion } from 'motion/react'
 import type * as React from 'react'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
 import { cn } from '../../lib/cn'
 import { AnimatedCheck } from '../animated-check'
-import { Button } from '../button'
+import { Button, type ButtonProps } from '../button'
 
-export interface CopyButtonProps {
-  'aria-hidden'?: boolean
+export interface CopyButtonProps extends Omit<
+  ButtonProps,
+  'children' | 'size' | 'value' | 'variant'
+> {
   children?: React.ReactNode
-  className?: string
   copiedLabel?: string
   label?: string
   size?: CopyButtonSize
   successMessage?: string
-  tabIndex?: number
   value: string
   variant?: CopyButtonVariant
 }
@@ -49,26 +49,30 @@ const reducedMotionTransition = {
  * hover/press icon-scale + one-cell stack live in CSS, not Tailwind).
  */
 export function CopyButton({
-  'aria-hidden': ariaHidden,
   children,
   className,
   copiedLabel = 'Copied to clipboard',
   label = 'Copy',
+  onClick,
   size,
   successMessage,
-  tabIndex,
   value,
   variant = 'ghost',
+  ...props
 }: CopyButtonProps): React.ReactElement {
   const [copied, setCopied] = useState(false)
+  const resetTimer = useRef<ReturnType<typeof setTimeout>>(undefined)
   const resolvedSize = size ?? (children ? 'sm' : 'icon-sm')
+
+  useEffect(() => () => clearTimeout(resetTimer.current), [])
 
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(value)
       setCopied(true)
       toast.success(successMessage ?? `${label} copied to clipboard`)
-      setTimeout(() => setCopied(false), 2000)
+      clearTimeout(resetTimer.current)
+      resetTimer.current = setTimeout(() => setCopied(false), 2000)
     } catch {
       toast.error('Failed to copy to clipboard')
     }
@@ -76,18 +80,19 @@ export function CopyButton({
 
   return (
     <Button
-      aria-hidden={ariaHidden}
+      {...props}
       aria-label={children ? undefined : copied ? copiedLabel : label}
       className={cn('a63-CopyButton', !children && 'a63-CopyButton--icon-only', className)}
       data-copied={copied ? '' : undefined}
       // `handleCopy` is async and swallows its own failures; `void` marks the
       // floating promise as deliberate so onClick still gets a void-returning handler.
-      onClick={() => {
+      onClick={event => {
+        onClick?.(event)
         void handleCopy()
       }}
       size={resolvedSize}
-      tabIndex={tabIndex}
-      title={`${label} ${value}`}
+      // The label only: the copied value may be a secret, and a title shows it on hover.
+      title={label}
       variant={variant}
     >
       <CopyButtonFeedback copied={copied}>{children}</CopyButtonFeedback>

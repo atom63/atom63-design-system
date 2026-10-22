@@ -59,6 +59,20 @@ describe('Dialog', () => {
     expect(document.querySelector('[data-slot="dialog-close-button"]')).not.toBeNull()
   })
 
+  it('lets closeProps replace the close icon', () => {
+    render(
+      <Dialog defaultOpen>
+        <DialogPopup closeProps={{ children: <span data-testid="custom-close">×</span> }}>
+          <DialogTitle>Title</DialogTitle>
+        </DialogPopup>
+      </Dialog>
+    )
+    const close = document.querySelector('[data-slot="dialog-close-button"]')
+    expect(close).not.toBeNull()
+    expect(close?.querySelector('[data-testid="custom-close"]')).not.toBeNull()
+    expect(close?.querySelector('svg')).toBeNull()
+  })
+
   it('reflects the footer variant', () => {
     render(<Example />)
     const footer = document.querySelector('[data-slot="dialog-footer"]')
