@@ -92,7 +92,7 @@ public struct AtomFormField<Content: View>: View {
     if isFocused {
       return theme.colors.actionPrimary.resolve(for: colorScheme)
     }
-    return theme.colors.borderControl.resolve(for: colorScheme)
+    return theme.colors.borderInput.resolve(for: colorScheme)
   }
 
   private var standaloneBorderWidth: CGFloat {

@@ -9,6 +9,9 @@ public struct AtomThemeColors: Equatable, Sendable {
   public var textSecondary: AtomDynamicColor
   public var borderSubtle: AtomDynamicColor
   public var borderControl: AtomDynamicColor
+  /// The border of a form field: 3:1 against the page, the panel and the field
+  /// fill (WCAG 1.4.11). Decorative edges keep `borderControl`.
+  public var borderInput: AtomDynamicColor
   public var actionPrimary: AtomDynamicColor
   public var actionPrimaryPressed: AtomDynamicColor
   public var actionPrimaryForeground: AtomDynamicColor
@@ -55,6 +58,7 @@ public struct AtomTheme: Equatable, Sendable {
       textSecondary: AtomTokens.Color.textSecondary,
       borderSubtle: AtomTokens.Color.borderSubtle,
       borderControl: AtomTokens.Color.borderControl,
+      borderInput: AtomTokens.Color.borderInput,
       actionPrimary: AtomTokens.Color.actionPrimary,
       actionPrimaryPressed: AtomTokens.Color.actionPrimaryPressed,
       actionPrimaryForeground: AtomTokens.Color.actionPrimaryForeground,
