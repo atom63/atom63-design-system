@@ -9910,7 +9910,7 @@
     "path": "border/input"
    },
    "layer": "theme",
-   "swift": null,
+   "swift": "AtomTokens.Color.borderInput",
    "type": "color",
    "values": [
     {
