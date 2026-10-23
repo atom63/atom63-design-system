@@ -7,7 +7,7 @@
  * surface: it sits on the muted surface in light mode and collapses onto the
  * page surface in dark mode. The other sidebar vars alias-back onto canonical
  * semantics. Local aliases keep the recipe reading one vocabulary:
- *   sidebar bg              → --a63-surface-muted (light) / --a63-surface-page (dark)
+ *   sidebar bg              → --a63-surface-sidebar (muted in light, page in dark)
  *   sidebar foreground      → --a63-text-primary
  *   sidebar accent          → --a63-surface-control-hover
  *   sidebar accent fg       → --a63-text-primary
@@ -17,7 +17,7 @@
  */
 
 .a63-Sidebar-wrapper {
-  --sidebar-bg: var(--a63-surface-muted);
+  --sidebar-bg: var(--a63-surface-sidebar);
   --sidebar-fg: var(--a63-text-primary);
   --sidebar-accent: var(--a63-surface-control-hover);
   --sidebar-accent-fg: var(--a63-text-primary);
@@ -27,11 +27,6 @@
   display: flex;
   min-height: 100svh;
   width: 100%;
-}
-/* shadcn's dark sidebar collapses onto the page surface (mirrors shadcn.css). */
-.a63-Sidebar-wrapper:is(.dark, [data-a63-mode='dark']),
-:is(.dark, [data-a63-mode='dark']) .a63-Sidebar-wrapper {
-  --sidebar-bg: var(--a63-surface-page);
 }
 .a63-Sidebar-wrapper:has([data-variant='inset']) {
   background-color: var(--sidebar-bg);
@@ -68,7 +63,7 @@
  * items lose their hover/active material, borders, and focus rings.
  */
 .a63-Sidebar-mobile {
-  --sidebar-bg: var(--a63-surface-muted);
+  --sidebar-bg: var(--a63-surface-sidebar);
   --sidebar-fg: var(--a63-text-primary);
   --sidebar-accent: var(--a63-surface-control-hover);
   --sidebar-accent-fg: var(--a63-text-primary);
@@ -79,11 +74,6 @@
   padding: 0;
   background-color: var(--sidebar-bg);
   color: var(--sidebar-fg);
-}
-/* Mirrors the wrapper's dark override; the portal sits outside it. */
-.a63-Sidebar-mobile:is(.dark, [data-a63-mode='dark']),
-:is(.dark, [data-a63-mode='dark']) .a63-Sidebar-mobile {
-  --sidebar-bg: var(--a63-surface-page);
 }
 /* Must out-specify .a63-Sheet-popup[data-side='…'], which sets its own width. */
 .a63-Sidebar-mobile[data-mobile='true'] {
