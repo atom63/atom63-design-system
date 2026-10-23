@@ -54,4 +54,18 @@ describe('Sheet', () => {
     view.unmount()
     expect(document.body).not.toHaveAttribute('data-sheet-open')
   })
+
+  it('lets closeProps replace the close icon', () => {
+    render(
+      <Sheet open>
+        <SheetContent closeProps={{ children: <span data-testid="custom-close">×</span> }}>
+          <SheetTitle>Navigation</SheetTitle>
+        </SheetContent>
+      </Sheet>
+    )
+    const close = document.querySelector('.a63-Sheet-close-button')
+    expect(close).not.toBeNull()
+    expect(close?.querySelector('[data-testid="custom-close"]')).not.toBeNull()
+    expect(close?.querySelector('svg')).toBeNull()
+  })
 })

@@ -52,6 +52,23 @@ describe('Resizable', () => {
     expect(container.querySelector('[data-slot="resizable-handle-grip"]')).not.toBeNull()
   })
 
+  it('draws the contract variants: line by default, grip with variant="grip"', () => {
+    const { container } = render(
+      <ResizablePanelGroup direction="horizontal">
+        <ResizablePanel>a</ResizablePanel>
+        <ResizableHandle aria-label="Line" />
+        <ResizablePanel>b</ResizablePanel>
+        <ResizableHandle aria-label="Grip" variant="grip" />
+        <ResizablePanel>c</ResizablePanel>
+      </ResizablePanelGroup>
+    )
+    const [line, grip] = container.querySelectorAll('[data-slot="resizable-handle"]')
+    expect(line).toHaveAttribute('data-variant', 'line')
+    expect(line?.querySelector('[data-slot="resizable-handle-grip"]')).toBeNull()
+    expect(grip).toHaveAttribute('data-variant', 'grip')
+    expect(grip?.querySelector('[data-slot="resizable-handle-grip"]')).not.toBeNull()
+  })
+
   it('carries orientation onto the handle for vertical groups', () => {
     const { container } = render(
       <ResizablePanelGroup direction="vertical">

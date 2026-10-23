@@ -84,13 +84,17 @@
 /* Placement — leading/trailing edge per orientation (prod insets). */
 .a63-Carousel-nav[data-orientation='horizontal'][data-direction='prev'] {
   top: 50%;
-  left: 0.75rem;
+  inset-inline-start: 0.75rem;
   transform: translateY(-50%);
 }
 .a63-Carousel-nav[data-orientation='horizontal'][data-direction='next'] {
   top: 50%;
-  right: 0.75rem;
+  inset-inline-end: 0.75rem;
   transform: translateY(-50%);
+}
+/* The previous and next icons point left and right; mirror them in right-to-left layouts. */
+.a63-Carousel-nav[data-orientation='horizontal']:dir(rtl) svg {
+  scale: -1 1;
 }
 .a63-Carousel-nav[data-orientation='vertical'][data-direction='prev'] {
   top: 0.75rem;

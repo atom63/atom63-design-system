@@ -161,6 +161,9 @@ Finding 2.
 
 ## Finding 5 — documented commands that do not exist
 
+**Resolved (2026-10-22).** The README, cross-renderer-contracts.md and package-governance.md now
+name the package-scoped commands below.
+
 The following appear in docs but are not defined in the root `package.json`:
 
 | Documented as | Where | Reality |

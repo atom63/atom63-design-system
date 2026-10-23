@@ -1,5 +1,6 @@
 'use client'
 
+import type { ResizableVariant } from '@atom63/ui-foundation'
 import type * as React from 'react'
 import { createContext, useContext } from 'react'
 import * as ResizablePrimitive from 'react-resizable-panels'
@@ -21,7 +22,7 @@ export type ResizablePanelGroupProps = Omit<
 /*
  * Resizable — a faithful DS port of the react-resizable-panels wrapper. The
  * group flexes (row/column by orientation), panels are pass-through, and the
- * handle is a token-styled separator with an optional grip (withHandle). The
+ * handle is a token-styled separator, a plain line or with a grip (variant). The
  * grip chevron is an inline SVG (matching Select / DropdownMenu). Orientation is
  * carried on context so the handle can flip its layout + grip rotation.
  */
@@ -56,16 +57,21 @@ export function ResizablePanel({ ...props }: ResizablePanelProps): React.ReactEl
 }
 
 export type ResizableHandleProps = React.ComponentProps<typeof ResizablePrimitive.Separator> & {
+  /** `line` draws the separator alone; `grip` adds a grip chip. Defaults to `line`. */
+  variant?: ResizableVariant
+  /** @deprecated Use `variant="grip"`. */
   withHandle?: boolean
 }
 
 export function ResizableHandle({
   'aria-label': ariaLabel = 'Resize panels',
+  variant,
   withHandle,
   className,
   ...props
 }: ResizableHandleProps): React.ReactElement {
   const orientation = useContext(ResizableOrientationContext)
+  const resolvedVariant = variant ?? (withHandle ? 'grip' : 'line')
 
   return (
     <ResizablePrimitive.Separator
@@ -73,9 +79,10 @@ export function ResizableHandle({
       className={cn('a63-Resizable-handle', className)}
       data-panel-group-direction={orientation}
       data-slot="resizable-handle"
+      data-variant={resolvedVariant}
       {...props}
     >
-      {withHandle && (
+      {resolvedVariant === 'grip' && (
         <div className="a63-Resizable-handle-grip" data-slot="resizable-handle-grip">
           <svg
             aria-hidden="true"

@@ -6,8 +6,11 @@ the token CSS.
 
 ## Install
 
-```bash
-pnpm add -D @atom63/figma
+The package is private: it is not published to npm, and the Figma plugin bundles it. Inside this
+repository, depend on it from the workspace:
+
+```json
+{ "devDependencies": { "@atom63/figma": "workspace:*" } }
 ```
 
 ## Sync code to Figma

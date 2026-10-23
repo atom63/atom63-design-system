@@ -94,7 +94,7 @@ pnpm --filter @atom63/ui-ios check:swift-tokens
 The generators read `packages/styles/src/tokens/foundation/primitives.css` and
 the `crossRenderer` contracts in `packages/ui-foundation/contracts/components/*.json`; do not hand-edit
 files under `Sources/Atom63UI/Generated`.
-`pnpm check:harness-architecture` also rejects stale generated tokens.
+`check:swift-tokens` fails when the generated tokens are stale; CI runs it.
 
 ## Run the demo
 
