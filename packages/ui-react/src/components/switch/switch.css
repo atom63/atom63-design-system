@@ -25,6 +25,7 @@
   --switch-accent: var(--a63-selection-accent, var(--a63-action-primary));
   --switch-focus-ring: var(--a63-selection-focus-ring, var(--a63-focus-ring));
   --switch-thumb-bg: var(--a63-selection-thumb);
+  /* craft-allow: raw-color — the selection contract's own default, for hosts that skip the contracts */
   --switch-thumb-fg: var(--a63-selection-thumb-fg, color-mix(in oklch, black 78%, transparent));
   --switch-shadow: var(--a63-choice-box-shadow, none);
   --switch-shadow-checked: var(--a63-choice-box-shadow-checked, var(--switch-shadow));
@@ -76,11 +77,11 @@
   place-items: center;
   height: 100%;
   aspect-ratio: 1;
-  border: 1px solid color-mix(in oklch, black 8%, transparent);
+  border: 1px solid color-mix(in oklch, var(--a63-shadow-color) 8%, transparent);
   border-radius: var(--radius-full);
   background: var(--switch-thumb-bg);
   color: var(--switch-thumb-fg);
-  box-shadow: 0 1px 2px color-mix(in oklch, black 20%, transparent);
+  box-shadow: 0 1px 2px color-mix(in oklch, var(--a63-shadow-color) 20%, transparent);
   transform: translateX(var(--thumb-x)) scaleX(var(--thumb-sx));
   transform-origin: left center;
   transition:

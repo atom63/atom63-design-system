@@ -6,14 +6,5 @@
   "mode-branch | packages/ui-react/src/components/command/command.css | :is(.dark, [data-a63-mode='dark']) .a63-Command-popup": 1,
   "mode-branch | packages/ui-react/src/components/connected-panel/connected-panel.css | :is(.dark, [data-a63-mode='dark']) .a63-ConnectedPanel[data-variant='button-group']:not([data-open]) > .a63-ButtonGroup > [data-button]": 1,
   "mode-branch | packages/ui-react/src/components/field/field.css | :is(.dark, [data-a63-mode='dark']) .a63-FieldLabel:has([data-checked])": 1,
-  "mode-branch | packages/ui-react/src/components/kbd/kbd.css | :is(.dark, [data-a63-mode='dark']) [data-slot='tooltip-popup'] .a63-Kbd": 1,
-  "raw-color | packages/ui-react/src/components/card/card.css | background-color: white": 1,
-  "raw-color | packages/ui-react/src/components/card/card.css | background: black": 2,
-  "raw-color | packages/ui-react/src/components/card/card.css | box-shadow: black": 1,
-  "raw-color | packages/ui-react/src/components/card/card.css | color: white": 1,
-  "raw-color | packages/ui-react/src/components/slider/slider.css | box-shadow: black": 1,
-  "raw-color | packages/ui-react/src/components/switch/switch.css | --switch-thumb-fg: black": 1,
-  "raw-color | packages/ui-react/src/components/switch/switch.css | border: black": 1,
-  "raw-color | packages/ui-react/src/components/switch/switch.css | box-shadow: black": 1,
-  "raw-color | packages/ui-react/src/components/toggle-group/toggle-group.css | filter: black": 1
+  "mode-branch | packages/ui-react/src/components/kbd/kbd.css | :is(.dark, [data-a63-mode='dark']) [data-slot='tooltip-popup'] .a63-Kbd": 1
 }

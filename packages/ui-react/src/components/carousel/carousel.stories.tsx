@@ -64,6 +64,26 @@ export const Playground: Story = {
   ),
 }
 
+/* Right-to-left: the first slide starts at the right, the previous button sits on the right and
+ * the arrow keys follow the reading direction. */
+export const RightToLeft: Story = {
+  render: args => (
+    <div dir="rtl" style={{ maxWidth: 520 }}>
+      <Carousel {...args}>
+        <CarouselContent>
+          {slides.map(label => (
+            <CarouselItem key={label}>
+              <Slide label={label} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </div>
+  ),
+}
+
 /* Pointer-following cursor indicator — a round prev/next affordance tracks the
  * pointer inside the viewport and scrolls on click (no visible nav arrows). */
 export const CursorIndicator: Story = {

@@ -126,7 +126,7 @@ describe('Carousel', () => {
       'data-orientation',
       'vertical'
     )
-    expect(embla.useEmblaCarousel).toHaveBeenCalledWith({ axis: 'y' }, undefined)
+    expect(embla.useEmblaCarousel).toHaveBeenCalledWith({ axis: 'y', direction: 'ltr' }, undefined)
   })
 
   it('exposes the Embla API and handles ArrowLeft/ArrowRight keyboard navigation', async () => {
@@ -217,5 +217,64 @@ describe('Carousel', () => {
     fireEvent.pointerDown(root, { clientX: 300, clientY: 50 })
     fireEvent.click(root, { clientX: 300, clientY: 50 })
     expect(embla.api.scrollNext).toHaveBeenCalledOnce()
+  })
+
+  describe('right-to-left', () => {
+    function RtlFixture(props: React.ComponentProps<typeof Carousel>) {
+      return (
+        <div dir="rtl" style={{ direction: 'rtl' }}>
+          <Carousel {...props}>
+            <CarouselContent>
+              <CarouselItem>Slide 1</CarouselItem>
+              <CarouselItem>Slide 2</CarouselItem>
+            </CarouselContent>
+          </Carousel>
+        </div>
+      )
+    }
+
+    it('tells Embla the content runs right to left', async () => {
+      render(<RtlFixture />)
+      await waitFor(() =>
+        expect(embla.useEmblaCarousel).toHaveBeenLastCalledWith(
+          expect.objectContaining({ direction: 'rtl' }),
+          undefined
+        )
+      )
+    })
+
+    it('keeps an explicit opts.direction', async () => {
+      render(<RtlFixture opts={{ direction: 'ltr' }} />)
+      await waitFor(() => expect(embla.useEmblaCarousel).toHaveBeenCalled())
+      expect(embla.useEmblaCarousel).toHaveBeenLastCalledWith(
+        expect.objectContaining({ direction: 'ltr' }),
+        undefined
+      )
+    })
+
+    it('swaps the arrow keys and the cursor halves', async () => {
+      const { container } = render(<RtlFixture cursorIndicator />)
+      const root = container.querySelector('.a63-Carousel') as HTMLElement
+      await waitFor(() =>
+        expect(embla.useEmblaCarousel).toHaveBeenLastCalledWith(
+          expect.objectContaining({ direction: 'rtl' }),
+          undefined
+        )
+      )
+
+      fireEvent.keyDown(root, { key: 'ArrowLeft' })
+      expect(embla.api.scrollNext).toHaveBeenCalledOnce()
+      fireEvent.keyDown(root, { key: 'ArrowRight' })
+      expect(embla.api.scrollPrev).toHaveBeenCalledOnce()
+
+      Object.defineProperty(root, 'getBoundingClientRect', {
+        value: () => ({ left: 0, top: 0, width: 400, height: 100, right: 400, bottom: 100 }),
+      })
+      fireEvent.pointerMove(root, { clientX: 300, clientY: 50 })
+      expect(container.querySelector('[data-slot="carousel-cursor"]')).toHaveAttribute(
+        'data-side',
+        'prev'
+      )
+    })
   })
 })
