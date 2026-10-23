@@ -1029,7 +1029,7 @@ export interface CommandContract {
 
 // @public (undocumented)
 export const commandContract: {
-    slots: readonly ["command", "command-dialog-trigger", "command-dialog-backdrop", "command-dialog-viewport", "command-dialog-popup", "command-input-wrapper", "command-input", "command-panel", "command-list", "command-empty", "command-group", "command-group-label", "command-collection", "command-item", "command-separator", "command-shortcut", "command-footer"];
+    slots: readonly ["command", "command-dialog-trigger", "command-dialog-backdrop", "command-dialog-viewport", "command-dialog-popup", "command-input-wrapper", "command-input", "command-input-end", "command-panel", "command-list", "command-empty", "command-group", "command-group-label", "command-collection", "command-item", "command-separator", "command-shortcut", "command-footer"];
     states: readonly ["closed", "open", "empty", "highlighted", "disabled", "focus-visible"];
     visualArchetypes: readonly ["overlay", "surface", "field", "menu"];
 };
@@ -1038,7 +1038,7 @@ export const commandContract: {
 export type CommandSlot = (typeof commandSlots)[number];
 
 // @public (undocumented)
-export const commandSlots: readonly ["command", "command-dialog-trigger", "command-dialog-backdrop", "command-dialog-viewport", "command-dialog-popup", "command-input-wrapper", "command-input", "command-panel", "command-list", "command-empty", "command-group", "command-group-label", "command-collection", "command-item", "command-separator", "command-shortcut", "command-footer"];
+export const commandSlots: readonly ["command", "command-dialog-trigger", "command-dialog-backdrop", "command-dialog-viewport", "command-dialog-popup", "command-input-wrapper", "command-input", "command-input-end", "command-panel", "command-list", "command-empty", "command-group", "command-group-label", "command-collection", "command-item", "command-separator", "command-shortcut", "command-footer"];
 
 // @public (undocumented)
 export type CommandState = (typeof commandStates)[number];
@@ -4024,7 +4024,7 @@ export interface SidebarNavTreeContract {
 
 // @public (undocumented)
 export const sidebarNavTreeContract: {
-    parts: readonly ["group", "link-item", "collapsible-item", "toggle", "sub-list", "sub-link-item"];
+    parts: readonly ["group", "group-trigger", "link-item", "collapsible-item", "toggle", "sub-list", "sub-link-item"];
     states: readonly ["rest", "hover", "active", "expanded", "collapsed", "focus-visible"];
     visualArchetypes: readonly ["action", "trigger"];
 };
@@ -4033,7 +4033,7 @@ export const sidebarNavTreeContract: {
 export type SidebarNavTreePart = (typeof sidebarNavTreeParts)[number];
 
 // @public (undocumented)
-export const sidebarNavTreeParts: readonly ["group", "link-item", "collapsible-item", "toggle", "sub-list", "sub-link-item"];
+export const sidebarNavTreeParts: readonly ["group", "group-trigger", "link-item", "collapsible-item", "toggle", "sub-list", "sub-link-item"];
 
 // @public (undocumented)
 export type SidebarNavTreeState = (typeof sidebarNavTreeStates)[number];

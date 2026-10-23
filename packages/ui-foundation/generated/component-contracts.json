@@ -838,6 +838,7 @@
         "command-dialog-popup",
         "command-input-wrapper",
         "command-input",
+        "command-input-end",
         "command-panel",
         "command-list",
         "command-empty",
@@ -2065,6 +2066,7 @@
           "name": "parts",
           "values": [
             "group",
+            "group-trigger",
             "link-item",
             "collapsible-item",
             "toggle",

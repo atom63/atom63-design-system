@@ -11,6 +11,7 @@ export const commandSlots = [
   'command-dialog-popup',
   'command-input-wrapper',
   'command-input',
+  'command-input-end',
   'command-panel',
   'command-list',
   'command-empty',

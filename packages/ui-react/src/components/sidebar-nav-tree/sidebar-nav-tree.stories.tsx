@@ -12,6 +12,7 @@ import {
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { CreditCard, FileText, Inbox, LineChart } from 'lucide-react'
 import { useState } from 'react'
 
 const meta = {
@@ -90,6 +91,72 @@ function SectionOnlyTree() {
 /** Sections without a page of their own: the whole row is the toggle. */
 export const SectionWithoutLink: Story = {
   render: () => <SectionOnlyTree />,
+}
+
+function FoldingTree() {
+  const [payments, setPayments] = useState(false)
+  const [reporting, setReporting] = useState(true)
+  return (
+    <SidebarProvider>
+      <Sidebar collapsible="none">
+        <SidebarContent>
+          <SidebarNavGroup collapsible label="Workspace">
+            <SidebarNavLinkItem isActive>
+              <a href="#inbox">
+                <Inbox aria-hidden />
+                <span>Inbox</span>
+              </a>
+            </SidebarNavLinkItem>
+            <SidebarNavLinkItem>
+              <a href="#docs">
+                <FileText aria-hidden />
+                <span>Documents</span>
+              </a>
+            </SidebarNavLinkItem>
+          </SidebarNavGroup>
+          <SidebarNavGroup collapsible label="Products">
+            <SidebarNavCollapsibleItem
+              icon={<CreditCard aria-hidden />}
+              label="Payments"
+              onOpenChange={setPayments}
+              open={payments}
+            >
+              <SidebarNavSubList>
+                <SidebarNavSubLinkItem>
+                  <a href="#transactions">Transactions</a>
+                </SidebarNavSubLinkItem>
+              </SidebarNavSubList>
+            </SidebarNavCollapsibleItem>
+            <SidebarNavCollapsibleItem
+              icon={<LineChart aria-hidden />}
+              label="Reporting"
+              onOpenChange={setReporting}
+              open={reporting}
+            >
+              <SidebarNavSubList>
+                <SidebarNavSubLinkItem isActive>
+                  <a href="#overview">Overview</a>
+                </SidebarNavSubLinkItem>
+                <SidebarNavSubLinkItem>
+                  <a href="#reports">Reports</a>
+                </SidebarNavSubLinkItem>
+              </SidebarNavSubList>
+            </SidebarNavCollapsibleItem>
+          </SidebarNavGroup>
+          <SidebarNavGroup collapsible defaultOpen={false} label="Try">
+            <SidebarNavLinkItem>
+              <a href="#import">Import</a>
+            </SidebarNavLinkItem>
+          </SidebarNavGroup>
+        </SidebarContent>
+      </Sidebar>
+    </SidebarProvider>
+  )
+}
+
+/** Group labels that fold their group, and section rows with icons. */
+export const CollapsibleGroups: Story = {
+  render: () => <FoldingTree />,
 }
 
 function CompactTree() {

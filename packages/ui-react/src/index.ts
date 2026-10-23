@@ -164,6 +164,7 @@ export {
   CommandSeparator,
   CommandShortcut,
 } from './components/command'
+export type { CommandInputProps } from './components/command'
 export {
   ConnectedPanel,
   ConnectedPanelBody,
