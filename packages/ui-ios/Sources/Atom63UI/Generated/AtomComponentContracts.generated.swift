@@ -183,7 +183,7 @@ public enum AtomComponentContracts {
       sharedOutcomes: ["selected-state-is-visible", "activation-toggles-selection", "disabled-prevents-change"],
       accessibilityOutcomes: ["exposes-label", "announces-selected-state", "preserves-button-role"],
       motion: nil,
-      platformAdaptations: AtomPlatformAdaptations(react: ["Uses a pressed-state web toggle with hover and focus-visible feedback."], swiftUI: ["Uses a touch-sized button-backed chip for compact filter selection."])
+      platformAdaptations: AtomPlatformAdaptations(react: ["Uses a pressed-state web toggle with hover and focus-visible feedback.", "The subtle tone (accent color, no fill) is web-only."], swiftUI: ["Uses a touch-sized button-backed chip for compact filter selection."])
     ),
     AtomComponentContract(
       id: "card",

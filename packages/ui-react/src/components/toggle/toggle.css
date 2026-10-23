@@ -146,6 +146,12 @@
   color: var(--toggle-primary-foreground);
 }
 
+/* Subtle: a pressed icon toggle in a toolbar or player bar shows its state in
+   the accent color alone, with no fill. */
+.a63-Toggle[data-pressed][data-tone='subtle'] {
+  color: var(--a63-text-accent);
+}
+
 .a63-Toggle[data-disabled] {
   cursor: not-allowed;
   opacity: var(--a63-toggle-disabled-opacity, var(--a63-segment-disabled-opacity, 0.56));

@@ -308,7 +308,8 @@ export const crossRendererContracts = [
     ],
     "platformAdaptations": {
       "react": [
-        "Uses a pressed-state web toggle with hover and focus-visible feedback."
+        "Uses a pressed-state web toggle with hover and focus-visible feedback.",
+        "The subtle tone (accent color, no fill) is web-only."
       ],
       "swiftUI": [
         "Uses a touch-sized button-backed chip for compact filter selection."
