@@ -1,7 +1,5 @@
 {
   "mode-branch | packages/mdx/src/blocks/code-block/code-block.tsx | dark:[&_.shiki_span]:text-[var(--shiki-dark)]": 2,
   "mode-branch | packages/mdx/src/blocks/code-block/code-block.tsx | dark:[&_.shiki]:text-[var(--shiki-dark)]": 2,
-  "mode-branch | packages/ui-react/src/components/kbd/kbd.css | :is(.dark, [data-a63-mode='dark']) [data-slot='tooltip-popup'] .a63-Kbd": 1,
-  "mode-branch | packages/ui-react/src/components/sidebar/sidebar.css | .a63-Sidebar-mobile:is(.dark, [data-a63-mode='dark']), :is(.dark, [data-a63-mode='dark']) .a63-Sidebar-mobile": 1,
-  "mode-branch | packages/ui-react/src/components/sidebar/sidebar.css | .a63-Sidebar-wrapper:is(.dark, [data-a63-mode='dark']), :is(.dark, [data-a63-mode='dark']) .a63-Sidebar-wrapper": 1
+  "mode-branch | packages/ui-react/src/components/kbd/kbd.css | :is(.dark, [data-a63-mode='dark']) [data-slot='tooltip-popup'] .a63-Kbd": 1
 }
