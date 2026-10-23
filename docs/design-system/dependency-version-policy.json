@@ -39,7 +39,7 @@
       },
       {
         "name": "react-day-picker",
-        "currentRange": "^10.0.1",
+        "currentRange": "^10.0.2",
         "policy": "monitor-minor-compatible-range",
         "reason": "Calendar/date-picker types and behavior can affect public component contracts."
       },
