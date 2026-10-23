@@ -19,11 +19,11 @@ It runs on every push to `main` and on `workflow_dispatch`:
 
 1. `detect` counts pending changesets (`.changeset/*.md`) and first-wave package versions that are not on npm yet.
 2. `version-pr` runs on a push with pending changesets. It runs `pnpm release:version` (`changeset version` plus the audit regenerations the version bump requires), force-pushes the result to `changeset-release/main`, and opens or updates the **chore: version packages** pull request.
-3. `preflight` runs when there are unpublished versions (or on `workflow_dispatch`): the full DS verification gates, pack and registry smoke, and the prerelease-mode check.
+3. `preflight` runs when there are unpublished versions (or on `workflow_dispatch`): it checks prerelease mode, then waits for the `ci-status` check of the CI run on the same commit and fails unless it passed. CI runs on every push to `main`, so the release gates are exactly the CI gates.
 4. `publish` runs after a green preflight when there are unpublished versions on a push, or when `workflow_dispatch` sets `publish=true`. It uses `permissions.id-token: write`, runs in the `npm-publish` environment, and publishes with `NPM_CONFIG_PROVENANCE=true`.
 5. `record-evidence` runs after a publish. It waits until the npm `beta` tag resolves to the published versions, regenerates `docs/design-system/audits/registry-consumer-smoke.json`, and commits it to `main`, so CI does not fail on evidence that still names the previous versions. The publish step also moves each package's `latest` to its current beta; updating `beta-release-notes.md` stays manual.
 
-`workflow_dispatch` with `publish=false` remains a dry run of the preflight.
+`workflow_dispatch` with `publish=false` remains a dry run of the preflight: it reports whether CI passed on the dispatched commit.
 
 ## Required npm trusted-publisher setup
 
@@ -74,7 +74,7 @@ The workflow also references a GitHub environment named `npm-publish`. Create it
 
 1. Land changes on `main` with a changeset.
 2. The workflow opens or updates the **chore: version packages** pull request. Review the versions and changelog entries.
-3. Merge it. The workflow runs the preflight and publishes the new versions to `beta`. If the `npm-publish` environment has required reviewers, approve the deployment.
+3. Merge it. The workflow waits for CI on the merge commit and publishes the new versions to `beta`. If the `npm-publish` environment has required reviewers, approve the deployment.
 4. Read back npm registry state:
 
    ```bash
