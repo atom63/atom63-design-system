@@ -1260,7 +1260,7 @@ describe('the real Button model', () => {
     })
     expect(first.applied.created).toBe(300)
     expect(first.applied.variables).toBe(model.derived.variables.length)
-    expect(model.derived.variables).toHaveLength(13)
+    expect(model.derived.variables).toHaveLength(12)
     // The family token holds a CSS stack: Geist is the literal, the variable stays unbound.
     expect(first.applied.fontFallbacks).toEqual([
       'Label: --a63-control-font-family not bound in every mode; used Geist',

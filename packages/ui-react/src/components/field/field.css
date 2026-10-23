@@ -161,14 +161,9 @@
   border-radius: var(--radius-lg);
 }
 .a63-FieldLabel:has([data-checked]) {
-  border-color: color-mix(in oklch, var(--a63-action-primary) 30%, transparent);
-  background-color: color-mix(in oklch, var(--a63-action-primary) 5%, transparent);
-}
-/* prod darkens the tint + lightens the border in dark mode
- * (dark:has-data-checked:border-primary/20 dark:…:bg-primary/10) */
-:is(.dark, [data-a63-mode='dark']) .a63-FieldLabel:has([data-checked]) {
-  border-color: color-mix(in oklch, var(--a63-action-primary) 20%, transparent);
-  background-color: color-mix(in oklch, var(--a63-action-primary) 10%, transparent);
+  /* The tokens lighten the border and deepen the tint in dark mode (prod dark:…/20, /10). */
+  border-color: var(--a63-choice-card-checked-border);
+  background-color: var(--a63-choice-card-checked-background);
 }
 .a63-FieldLabel [data-slot='field'] {
   padding: 0.625rem;

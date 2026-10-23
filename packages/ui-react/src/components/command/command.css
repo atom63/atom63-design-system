@@ -40,7 +40,7 @@
 /* ── Popup shell ───────────────────────────────────────────────────────── */
 .a63-Command-popup {
   --command-text-font-size: var(--a63-command-text-font-size, var(--a63-control-font-size-lg));
-  --command-panel-background: var(--a63-command-panel-background, var(--a63-surface-muted));
+  --command-panel-background: var(--a63-command-panel-background, var(--a63-surface-recessed));
 
   position: relative;
   display: flex;
@@ -62,9 +62,6 @@
   transition:
     opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
     transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
-}
-:is(.dark, [data-a63-mode='dark']) .a63-Command-popup {
-  --command-panel-background: var(--a63-command-panel-background, var(--a63-surface-page));
 }
 .a63-Command-popup[data-starting-style],
 .a63-Command-popup[data-ending-style] {

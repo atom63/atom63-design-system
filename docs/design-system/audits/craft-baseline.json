@@ -1,10 +1,5 @@
 {
   "mode-branch | packages/mdx/src/blocks/code-block/code-block.tsx | dark:[&_.shiki_span]:text-[var(--shiki-dark)]": 2,
   "mode-branch | packages/mdx/src/blocks/code-block/code-block.tsx | dark:[&_.shiki]:text-[var(--shiki-dark)]": 2,
-  "mode-branch | packages/ui-react/src/components/alert/alert.css | :is(.dark, [data-a63-mode='dark']) .a63-Alert[data-variant='default']": 1,
-  "mode-branch | packages/ui-react/src/components/button/button.css | :is(.dark, [data-a63-mode='dark']) .a63-Button[data-variant='outline']": 1,
-  "mode-branch | packages/ui-react/src/components/command/command.css | :is(.dark, [data-a63-mode='dark']) .a63-Command-popup": 1,
-  "mode-branch | packages/ui-react/src/components/connected-panel/connected-panel.css | :is(.dark, [data-a63-mode='dark']) .a63-ConnectedPanel[data-variant='button-group']:not([data-open]) > .a63-ButtonGroup > [data-button]": 1,
-  "mode-branch | packages/ui-react/src/components/field/field.css | :is(.dark, [data-a63-mode='dark']) .a63-FieldLabel:has([data-checked])": 1,
   "mode-branch | packages/ui-react/src/components/kbd/kbd.css | :is(.dark, [data-a63-mode='dark']) [data-slot='tooltip-popup'] .a63-Kbd": 1
 }
