@@ -251,10 +251,6 @@ describe('the real Button recipe', () => {
         reason: 'context selector',
       },
       { what: ".a63-Button[data-size^='icon']::after", reason: 'pseudo-element' },
-      {
-        what: ":is(.dark, [data-a63-mode='dark']) .a63-Button[data-variant='outline']",
-        reason: 'context selector',
-      },
       { what: ".a63-Button[data-size='tile'].h-full", reason: 'unsupported selector' },
       { what: ".a63-Button[data-size='tile'].size-full", reason: 'unsupported selector' },
       { what: '.a63-Button :where(svg)', reason: 'descendant' },

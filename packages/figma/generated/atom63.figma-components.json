@@ -14676,7 +14676,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -14770,10 +14770,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
+              "alias": "--a63-control-outline-hover-background"
             },
             "stroke": {
-              "alias": "--a63-border-subtle"
+              "alias": "--a63-control-outline-hover-border"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -14864,10 +14864,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
+              "alias": "--a63-control-outline-hover-background"
             },
             "stroke": {
-              "alias": "--a63-border-subtle"
+              "alias": "--a63-control-outline-hover-border"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -14958,7 +14958,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -15061,7 +15061,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -15158,7 +15158,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -15255,7 +15255,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -15349,10 +15349,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
+              "alias": "--a63-control-outline-hover-background"
             },
             "stroke": {
-              "alias": "--a63-border-subtle"
+              "alias": "--a63-control-outline-hover-border"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -15443,10 +15443,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
+              "alias": "--a63-control-outline-hover-background"
             },
             "stroke": {
-              "alias": "--a63-border-subtle"
+              "alias": "--a63-control-outline-hover-border"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -15537,7 +15537,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -15640,7 +15640,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -15737,7 +15737,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -15834,7 +15834,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -15928,10 +15928,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
+              "alias": "--a63-control-outline-hover-background"
             },
             "stroke": {
-              "alias": "--a63-border-subtle"
+              "alias": "--a63-control-outline-hover-border"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -16022,10 +16022,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
+              "alias": "--a63-control-outline-hover-background"
             },
             "stroke": {
-              "alias": "--a63-border-subtle"
+              "alias": "--a63-control-outline-hover-border"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -16116,7 +16116,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -16219,7 +16219,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -16316,7 +16316,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -16413,7 +16413,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -16507,10 +16507,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
+              "alias": "--a63-control-outline-hover-background"
             },
             "stroke": {
-              "alias": "--a63-border-subtle"
+              "alias": "--a63-control-outline-hover-border"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -16601,10 +16601,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
+              "alias": "--a63-control-outline-hover-background"
             },
             "stroke": {
-              "alias": "--a63-border-subtle"
+              "alias": "--a63-control-outline-hover-border"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -16695,7 +16695,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -16798,7 +16798,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -16895,7 +16895,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -16992,7 +16992,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -17086,10 +17086,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
+              "alias": "--a63-control-outline-hover-background"
             },
             "stroke": {
-              "alias": "--a63-border-subtle"
+              "alias": "--a63-control-outline-hover-border"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -17180,10 +17180,10 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)"
+              "alias": "--a63-control-outline-hover-background"
             },
             "stroke": {
-              "alias": "--a63-border-subtle"
+              "alias": "--a63-control-outline-hover-border"
             },
             "strokeWeight": {
               "alias": "--a63-control-border-width"
@@ -17274,7 +17274,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -17377,7 +17377,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -17474,7 +17474,7 @@
           "kind": "frame",
           "properties": {
             "fill": {
-              "alias": "--a63-surface-panel"
+              "alias": "--a63-control-outline-background"
             },
             "stroke": {
               "alias": "--a63-border-control"
@@ -29699,7 +29699,6 @@
     "--a63-action-primary-foreground",
     "--a63-action-primary-hover",
     "--a63-border-control",
-    "--a63-border-subtle",
     "--a63-control-border-width",
     "--a63-control-focus-ring-color",
     "--a63-control-focus-ring-width",
@@ -29716,6 +29715,9 @@
     "--a63-control-icon-size-sm",
     "--a63-control-icon-size-xl",
     "--a63-control-icon-size-xs",
+    "--a63-control-outline-background",
+    "--a63-control-outline-hover-background",
+    "--a63-control-outline-hover-border",
     "--a63-control-padding-inline-lg",
     "--a63-control-padding-inline-md",
     "--a63-control-padding-inline-sm",
@@ -29725,7 +29727,6 @@
     "--a63-space-1_5",
     "--a63-surface-control-hover",
     "--a63-surface-muted",
-    "--a63-surface-panel",
     "--a63-text-primary",
     "--a63-text-secondary",
     "--surface-dark-1",
@@ -29828,24 +29829,6 @@
           "FRAME_FILL",
           "SHAPE_FILL",
           "STROKE_COLOR"
-        ]
-      },
-      {
-        "name": "surface/control/hover/alpha-50",
-        "token": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)",
-        "type": "COLOR",
-        "values": {
-          "Value": {
-            "composed": {
-              "alias": "--a63-surface-control-hover",
-              "opacity": 50
-            }
-          }
-        },
-        "codeSyntax": "color-mix(in oklch, var(--a63-surface-control-hover) 50%, transparent)",
-        "scopes": [
-          "FRAME_FILL",
-          "SHAPE_FILL"
         ]
       },
       {
@@ -31819,10 +31802,6 @@
     {
       "what": ".a63-Button[data-size^='icon']::after",
       "reason": "pseudo-element"
-    },
-    {
-      "what": ":is(.dark, [data-a63-mode='dark']) .a63-Button[data-variant='outline']",
-      "reason": "context selector"
     },
     {
       "what": ".a63-Button[data-size='tile'].h-full",
