@@ -4,7 +4,8 @@ name: Release beta
 # 1. A push to main with pending changesets opens or updates the
 #    "Version Packages" pull request (versions, changelogs, regenerated audits).
 # 2. Merging that pull request pushes unpublished versions to main; this
-#    workflow runs the full preflight and publishes them to the npm beta tag.
+#    workflow waits for CI to pass on that commit and publishes them to the
+#    npm beta tag.
 #    The npm-publish environment's protection rules, if any, still apply.
 # workflow_dispatch keeps the manual dry run (publish=false) and manual publish.
 
@@ -146,105 +147,46 @@ jobs:
             gh pr create --base main --head "$BRANCH" --title "chore: version packages" --body "$body"
           fi
 
+  # CI already runs on every push to main, so the preflight waits for that run
+  # on the same commit instead of repeating a copy of its steps that drifts.
   preflight:
     name: Release preflight
     needs: detect
     if: ${{ github.event_name == 'workflow_dispatch' || needs.detect.outputs.unpublished_count != '0' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 75
+    permissions:
+      contents: read
+      checks: read
 
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Set up Node.js
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version-file: .nvmrc
-          registry-url: https://registry.npmjs.org
-          package-manager-cache: false
-
-      - name: Enable pnpm with Corepack
-        run: corepack enable
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Check React exports
-        run: pnpm check:ui-react-exports
-
-      - name: Check React stable action matrix
-        run: pnpm check:ui-react-stable-actions
-
-      - name: Check React monitor evidence matrix
-        run: pnpm check:ui-react-monitor-evidence
-
-      - name: Check benchmark parity board
-        run: pnpm check:benchmark-parity
-
-      - name: Check package surface audit
-        run: |
-          pnpm check:package-surface
-          git diff --exit-code -- docs/design-system/audits/package-surface.json
-
-      - name: Check tokens
-        run: pnpm --filter @atom63/styles check:tokens
-
-      - name: Build UI foundation
-        run: pnpm --filter @atom63/ui-foundation build
-
-      - name: Build React UI
-        run: pnpm --filter @atom63/ui-react build
-
-      - name: Build MDX
-        run: pnpm --filter @atom63/mdx build
-
-      - name: Build inform, agent and widgets
-        run: |
-          pnpm --filter @atom63/inform build
-          pnpm --filter @atom63/agent build
-          pnpm --filter @atom63/widgets build
-
-      - name: Smoke-test packed packages
-        run: pnpm check:ds-pack-smoke
-
-      - name: Smoke-test registry packages
-        run: pnpm check:ds-registry-smoke
-
-      - name: Build the Vite example
-        run: pnpm build:example:vite-basic
-
-      - name: Install Playwright browser
-        run: pnpm exec playwright install --with-deps chromium
-
-      - name: Test styles
-        run: pnpm --filter @atom63/styles test
-
-      - name: Typecheck UI foundation
-        run: pnpm --filter @atom63/ui-foundation typecheck
-
-      - name: Typecheck React UI
-        run: pnpm --filter @atom63/ui-react typecheck
-
-      - name: Test React UI
-        run: pnpm --filter @atom63/ui-react test
-
-      - name: Typecheck and test MDX
-        run: |
-          pnpm --filter @atom63/mdx typecheck
-          pnpm --filter @atom63/mdx test
-
-      - name: Typecheck and test inform, agent and widgets
-        run: |
-          for pkg in inform agent widgets; do
-            pnpm --filter "@atom63/${pkg}" typecheck
-            pnpm --filter "@atom63/${pkg}" test
-          done
-
       - name: Check Changesets prerelease mode
         run: |
           test -f .changeset/pre.json
           node -e "const pre=require('./.changeset/pre.json'); if (pre.mode !== 'pre' || pre.tag !== 'beta') { throw new Error('Expected Changesets prerelease mode with tag beta') }"
+
+      # ci-status is the job branch protection requires; it passes only when every
+      # CI job passed or was skipped on purpose. It appears once the other CI jobs end.
+      - name: Wait for CI on this commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          for attempt in $(seq 1 140); do
+            run=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${GITHUB_SHA}/check-runs?check_name=ci-status" \
+              --jq '.check_runs | sort_by(.started_at) | last | if . == null then "not started" else "\(.status) \(.conclusion)" end')
+            echo "ci-status: ${run} (attempt ${attempt})"
+            case "${run}" in
+              "completed success") exit 0 ;;
+              completed*) echo "CI did not pass on ${GITHUB_SHA}" >&2; exit 1 ;;
+            esac
+            sleep 30
+          done
+          echo "CI did not finish on ${GITHUB_SHA} in time" >&2
+          exit 1
 
   publish:
     name: Publish beta
