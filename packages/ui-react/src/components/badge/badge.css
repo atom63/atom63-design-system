@@ -50,6 +50,71 @@
   pointer-events: none;
 }
 
+/* ── Dot ───────────────────────────────────────────────────────────────
+   A leading dot carries a category color on any variant (an outline label
+   with a green dot). Without a color it follows the text. */
+.a63-Badge-dot {
+  flex-shrink: 0;
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: var(--radius-full);
+  background-color: currentColor;
+}
+.a63-Badge-dot[data-color='red'] {
+  background-color: var(--a63-category-red);
+}
+.a63-Badge-dot[data-color='orange'] {
+  background-color: var(--a63-category-orange);
+}
+.a63-Badge-dot[data-color='amber'] {
+  background-color: var(--a63-category-amber);
+}
+.a63-Badge-dot[data-color='yellow'] {
+  background-color: var(--a63-category-yellow);
+}
+.a63-Badge-dot[data-color='lime'] {
+  background-color: var(--a63-category-lime);
+}
+.a63-Badge-dot[data-color='green'] {
+  background-color: var(--a63-category-green);
+}
+.a63-Badge-dot[data-color='emerald'] {
+  background-color: var(--a63-category-emerald);
+}
+.a63-Badge-dot[data-color='teal'] {
+  background-color: var(--a63-category-teal);
+}
+.a63-Badge-dot[data-color='cyan'] {
+  background-color: var(--a63-category-cyan);
+}
+.a63-Badge-dot[data-color='sky'] {
+  background-color: var(--a63-category-sky);
+}
+.a63-Badge-dot[data-color='blue'] {
+  background-color: var(--a63-category-blue);
+}
+.a63-Badge-dot[data-color='indigo'] {
+  background-color: var(--a63-category-indigo);
+}
+.a63-Badge-dot[data-color='violet'] {
+  background-color: var(--a63-category-violet);
+}
+.a63-Badge-dot[data-color='purple'] {
+  background-color: var(--a63-category-purple);
+}
+.a63-Badge-dot[data-color='fuchsia'] {
+  background-color: var(--a63-category-fuchsia);
+}
+.a63-Badge-dot[data-color='pink'] {
+  background-color: var(--a63-category-pink);
+}
+.a63-Badge-dot[data-color='rose'] {
+  background-color: var(--a63-category-rose);
+}
+.a63-Badge-dot[data-color='neutral'] {
+  background-color: var(--a63-category-neutral);
+}
+
 /* ── Sizes ─────────────────────────────────────────────────────────────── */
 .a63-Badge[data-size='sm'] {
   --badge-height: 1rem;

@@ -10,6 +10,7 @@ export const buttonVariants = [
   'destructive',
   'destructive-outline',
   'outline',
+  'dashed',
   'ghost',
   'link',
   'overlay',

@@ -232,7 +232,7 @@
       "source": "packages/ui-foundation/contracts/components/badge.json",
       "exportName": "badgeContract",
       "maturity": "stable",
-      "description": "Solid/surface + semantic sets are faithful to prod @atom63/ui badge.tsx. Palette hues back category/tag colors via the `--a63-badge-*` contract in @atom63/styles (which references foundation --color-* primitives).",
+      "description": "Solid/surface + semantic sets are faithful to prod @atom63/ui badge.tsx. Palette hues back category/tag colors via the `--a63-badge-*` contract in @atom63/styles (which references foundation --color-* primitives). `dot` adds a leading dot, in the text color or one of the palette hues (dotColors), so a label can carry a category color on any variant.",
       "axes": [
         {
           "name": "variants",
@@ -270,9 +270,32 @@
           ],
           "default": "default"
         },
-        { "name": "sizes", "values": ["sm", "md", "lg"], "default": "md" }
+        { "name": "sizes", "values": ["sm", "md", "lg"], "default": "md" },
+        {
+          "name": "dotColors",
+          "values": [
+            "red",
+            "orange",
+            "amber",
+            "yellow",
+            "lime",
+            "green",
+            "emerald",
+            "teal",
+            "cyan",
+            "sky",
+            "blue",
+            "indigo",
+            "violet",
+            "purple",
+            "fuchsia",
+            "pink",
+            "rose",
+            "neutral"
+          ]
+        }
       ],
-      "slots": ["badge"],
+      "slots": ["badge", "badge-dot"],
       "states": ["resting", "interactive", "disabled", "focus-visible"],
       "tokenSlots": [],
       "visualArchetypes": ["marker"],
@@ -412,7 +435,8 @@
         "accessibilityOutcomes": ["text-does-not-rely-on-color"],
         "platformAdaptations": {
           "react": [
-            "May expose palette-only decorative variants outside the shared semantic subset."
+            "May expose palette-only decorative variants outside the shared semantic subset.",
+            "May show a leading category dot (dot prop)."
           ],
           "swiftUI": ["Uses a compact capsule that expands for Dynamic Type."]
         }
@@ -479,6 +503,7 @@
             "destructive",
             "destructive-outline",
             "outline",
+            "dashed",
             "ghost",
             "link",
             "overlay",
@@ -572,6 +597,9 @@
                   },
                   "overlay": {
                     "description": "For controls drawn over photos or video, on the on-media tokens."
+                  },
+                  "dashed": {
+                    "description": "A pill-shaped outline with a dashed border, for add and filter affordances such as \"+ Status\". Web-only."
                   },
                   "glass": {
                     "description": "The earlier name of overlay.",
@@ -2422,7 +2450,9 @@
       "source": "packages/ui-foundation/contracts/components/toggle-group.json",
       "exportName": "toggleGroupContract",
       "maturity": "stable",
+      "description": "`segmented` (default) welds the items into one bar; `pills` draws each item as a separate capsule with a gap, for filter rows such as Playlists / Artists / Albums.",
       "axes": [
+        { "name": "variants", "values": ["segmented", "pills"], "default": "segmented" },
         { "name": "orientations", "values": ["horizontal", "vertical"], "default": "horizontal" },
         { "name": "selectionModes", "values": ["single", "multiple"], "default": "single" }
       ],

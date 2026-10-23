@@ -1,5 +1,6 @@
 import {
   badgeContract,
+  badgeDotColors,
   badgePaletteVariants,
   badgeSizes,
   badgeVariants,
@@ -71,6 +72,33 @@ export const Palette: Story = {
           {variant}
         </Badge>
       ))}
+    </div>
+  ),
+}
+
+/* A leading dot carries a category color on any variant: outline labels with
+   colored dots, as in an issue list. `dot` alone follows the text color. */
+export const Dot: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 12 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
+        {badgeDotColors.map(color => (
+          <Badge dot={color} key={color} variant="outline">
+            {color}
+          </Badge>
+        ))}
+      </div>
+      <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+        <Badge dot variant="success">
+          Live
+        </Badge>
+        <Badge dot="violet" size="sm" variant="muted">
+          Feature
+        </Badge>
+        <Badge dot="amber" size="lg" variant="outline">
+          Research
+        </Badge>
+      </div>
     </div>
   ),
 }

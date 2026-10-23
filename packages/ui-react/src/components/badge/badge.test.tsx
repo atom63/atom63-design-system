@@ -30,4 +30,16 @@ describe('Badge', () => {
     const link = screen.getByRole('link', { name: 'Design' })
     expect(link).toHaveClass('a63-Badge')
   })
+
+  it('draws a decorative leading dot, colored when a hue is given', () => {
+    const { container, rerender } = render(<Badge dot>Live</Badge>)
+    const dot = () => container.querySelector('[data-slot="badge-dot"]')
+    expect(dot()).toHaveAttribute('aria-hidden')
+    expect(dot()).not.toHaveAttribute('data-color')
+    expect(container.querySelector('.a63-Badge')).toHaveTextContent('Live')
+    rerender(<Badge dot="green">Research</Badge>)
+    expect(dot()).toHaveAttribute('data-color', 'green')
+    rerender(<Badge>Plain</Badge>)
+    expect(dot()).toBeNull()
+  })
 })

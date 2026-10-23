@@ -522,6 +522,8 @@ export interface BadgeContract {
     // (undocumented)
     defaultVariant: BadgeVariant;
     // (undocumented)
+    dotColors: readonly BadgeDotColor[];
+    // (undocumented)
     sizes: readonly BadgeSize[];
     // (undocumented)
     slots: readonly BadgeSlot[];
@@ -539,10 +541,17 @@ export const badgeContract: {
     defaultSize: "md";
     variants: readonly ["default", "primary", "secondary", "destructive", "outline", "glass", "muted", "accent", "error", "info", "success", "warning", "red", "orange", "amber", "yellow", "lime", "green", "emerald", "teal", "cyan", "sky", "blue", "indigo", "violet", "purple", "fuchsia", "pink", "rose", "neutral"];
     sizes: readonly ["sm", "md", "lg"];
-    slots: readonly ["badge"];
+    dotColors: readonly ["red", "orange", "amber", "yellow", "lime", "green", "emerald", "teal", "cyan", "sky", "blue", "indigo", "violet", "purple", "fuchsia", "pink", "rose", "neutral"];
+    slots: readonly ["badge", "badge-dot"];
     states: readonly ["resting", "interactive", "disabled", "focus-visible"];
     visualArchetypes: readonly ["marker"];
 };
+
+// @public (undocumented)
+export type BadgeDotColor = (typeof badgeDotColors)[number];
+
+// @public (undocumented)
+export const badgeDotColors: readonly ["red", "orange", "amber", "yellow", "lime", "green", "emerald", "teal", "cyan", "sky", "blue", "indigo", "violet", "purple", "fuchsia", "pink", "rose", "neutral"];
 
 // @public (undocumented)
 export const badgePaletteVariants: readonly ["red", "orange", "amber", "yellow", "lime", "green", "emerald", "teal", "cyan", "sky", "blue", "indigo", "violet", "purple", "fuchsia", "pink", "rose", "neutral"];
@@ -560,7 +569,7 @@ export const badgeSizes: readonly ["sm", "md", "lg"];
 export type BadgeSlot = (typeof badgeSlots)[number];
 
 // @public (undocumented)
-export const badgeSlots: readonly ["badge"];
+export const badgeSlots: readonly ["badge", "badge-dot"];
 
 // @public (undocumented)
 export const badgeSolidVariants: readonly ["default", "primary", "secondary", "destructive", "outline", "glass", "muted", "accent"];
@@ -658,7 +667,7 @@ export const buttonContract: {
     slots: readonly ["root", "label", "icon", "spinner"];
     states: readonly ["rest", "hover", "pressed", "focusVisible", "disabled", "loading"];
     tokenSlots: readonly ["button.background", "button.foreground", "button.border.color", "button.border.width", "button.radius", "button.shadow", "button.focusRing", "button.height", "button.paddingInline", "button.gap", "button.iconSize", "button.motion.press"];
-    variants: readonly ["default", "primary", "secondary", "destructive", "destructive-outline", "outline", "ghost", "link", "overlay", "glass"];
+    variants: readonly ["default", "primary", "secondary", "destructive", "destructive-outline", "outline", "dashed", "ghost", "link", "overlay", "glass"];
     visualArchetypes: readonly ["action"];
 };
 
@@ -749,7 +758,7 @@ export const buttonTokenSlots: readonly ["button.background", "button.foreground
 export type ButtonVariant = (typeof buttonVariants)[number];
 
 // @public (undocumented)
-export const buttonVariants: readonly ["default", "primary", "secondary", "destructive", "destructive-outline", "outline", "ghost", "link", "overlay", "glass"];
+export const buttonVariants: readonly ["default", "primary", "secondary", "destructive", "destructive-outline", "outline", "dashed", "ghost", "link", "overlay", "glass"];
 
 // @public (undocumented)
 export type ButtonVisualArchetype = (typeof buttonVisualArchetypes)[number];
@@ -1469,7 +1478,7 @@ export const crossRendererContracts: readonly [{
     readonly sharedOutcomes: readonly ["label-remains-readable-without-color", "semantic-tone-retains-meaning"];
     readonly accessibilityOutcomes: readonly ["text-does-not-rely-on-color"];
     readonly platformAdaptations: {
-        readonly react: readonly ["May expose palette-only decorative variants outside the shared semantic subset."];
+        readonly react: readonly ["May expose palette-only decorative variants outside the shared semantic subset.", "May show a leading category dot (dot prop)."];
         readonly swiftUI: readonly ["Uses a compact capsule that expands for Dynamic Type."];
     };
 }, {
@@ -4571,6 +4580,8 @@ export interface ToggleGroupContract {
     // (undocumented)
     defaultSelectionMode: ToggleGroupSelectionMode;
     // (undocumented)
+    defaultVariant: ToggleGroupVariant;
+    // (undocumented)
     orientations: readonly ToggleGroupOrientation[];
     // (undocumented)
     selectionModes: readonly ToggleGroupSelectionMode[];
@@ -4581,13 +4592,17 @@ export interface ToggleGroupContract {
     // (undocumented)
     tokenSlots: readonly ToggleGroupTokenSlot[];
     // (undocumented)
+    variants: readonly ToggleGroupVariant[];
+    // (undocumented)
     visualArchetypes: readonly ToggleGroupVisualArchetype[];
 }
 
 // @public (undocumented)
 export const toggleGroupContract: {
+    defaultVariant: "segmented";
     defaultOrientation: "horizontal";
     defaultSelectionMode: "single";
+    variants: readonly ["segmented", "pills"];
     orientations: readonly ["horizontal", "vertical"];
     selectionModes: readonly ["single", "multiple"];
     slots: readonly ["toggle-group", "toggle-group-item", "toggle-group-separator"];
@@ -4625,6 +4640,12 @@ export type ToggleGroupTokenSlot = (typeof toggleGroupTokenSlots)[number];
 
 // @public (undocumented)
 export const toggleGroupTokenSlots: readonly ["segment.gap", "segment.radius", "segment.background", "segment.gloss", "segment.trackBorder", "segment.seam", "segment.selectedBackground", "segment.selectedForeground", "segment.selectedGloss", "segment.selectedShadow", "segment.primaryBackground", "segment.primaryForeground", "segment.primaryShadow"];
+
+// @public (undocumented)
+export type ToggleGroupVariant = (typeof toggleGroupVariants)[number];
+
+// @public (undocumented)
+export const toggleGroupVariants: readonly ["segmented", "pills"];
 
 // @public (undocumented)
 export type ToggleGroupVisualArchetype = (typeof toggleGroupVisualArchetypes)[number];

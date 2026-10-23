@@ -85,6 +85,37 @@
   border-block-start-width: 0;
 }
 
+/* ── Pills variant ─────────────────────────────────────────────────────
+   Separate capsules with a gap, for filter rows. Undoes the welded chrome
+   above (seams, shared radii, segment gel) at the same or higher
+   specificity, so it must stay after those rules. */
+.a63-ToggleGroup[data-variant='pills'] {
+  flex-wrap: wrap;
+  gap: var(--a63-space-2);
+  border-radius: 0;
+}
+.a63-ToggleGroup[data-variant='pills'] .a63-Toggle.a63-Toggle {
+  border-width: var(--a63-control-border-width);
+  border-radius: var(--radius-full);
+  border-color: var(--a63-border-control);
+  background-color: var(--a63-surface-muted);
+  background-image: none;
+  color: var(--a63-text-primary);
+}
+.a63-ToggleGroup[data-variant='pills'] .a63-Toggle:hover:not([data-pressed]):not([data-disabled]) {
+  background-color: var(--a63-surface-control-hover);
+}
+.a63-ToggleGroup[data-variant='pills'] .a63-Toggle[data-pressed][data-tone='neutral'] {
+  border-color: transparent;
+  background-color: var(--a63-action-neutral);
+  color: var(--a63-action-neutral-foreground);
+}
+.a63-ToggleGroup[data-variant='pills'] .a63-Toggle[data-pressed][data-tone='accent'] {
+  border-color: transparent;
+  background-color: var(--a63-action-primary);
+  color: var(--a63-action-primary-foreground);
+}
+
 /* ── Separator ─────────────────────────────────────────────────────────── */
 
 .a63-ToggleGroup-separator {
