@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 1899,
-    "uniqueCssVariables": 1196,
-    "figmaMappedDeclarations": 1838
+    "declarations": 1900,
+    "uniqueCssVariables": 1197,
+    "figmaMappedDeclarations": 1839
   },
   "entries": [
     {
@@ -9530,6 +9530,21 @@
         "path": "selection/thumb/fg"
       },
       "lifecycle": "preview",
+      "scope": ":root"
+    },
+    {
+      "name": "a63-shadow-color",
+      "cssVar": "--a63-shadow-color",
+      "type": "shadow",
+      "value": "var(--color-black-100)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "shadow/color"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-black-100"],
       "scope": ":root"
     },
     {

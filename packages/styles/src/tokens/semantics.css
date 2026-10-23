@@ -14,6 +14,8 @@
   --a63-surface-tint: 0%;
   /* Scrim — the modal/drawer/sheet backdrop veil behind overlays. */
   --a63-scrim: color-mix(in oklch, black 40%, transparent);
+  /* Shadow color — the ink of drop shadows and the faint edge of a raised knob. Black in every theme and mode; recipes mix it to the strength they need, so they never write a literal color. */
+  --a63-shadow-color: var(--color-black-100);
   /* Media stage — behind full-screen photos and video: black in every theme, so letterboxing matches the picture. */
   --a63-media-stage: var(--color-black-100);
   /* Media scrim — the dim behind a video dialog; heavier than --a63-scrim because the video is the only thing on screen. */

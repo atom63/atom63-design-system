@@ -23,6 +23,13 @@
               },
               "$description": "Scrim — the modal/drawer/sheet backdrop veil behind overlays."
             },
+            "shadow": {
+              "color": {
+                "$type": "color",
+                "$value": "{color.black.100}",
+                "$description": "Shadow color — the ink of drop shadows and the faint edge of a raised knob. Black in every theme and mode; recipes mix it to the strength they need, so they never write a literal color."
+              }
+            },
             "media": {
               "stage": {
                 "$type": "color",

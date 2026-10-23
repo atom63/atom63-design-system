@@ -69,10 +69,22 @@ export function Carousel({
   cursorIndicator = false,
   ...props
 }: React.ComponentProps<'div'> & CarouselProps): React.ReactElement {
+  // Embla needs the content direction to scroll right-to-left lists the right way. Unless the
+  // caller sets it, read it from the rendered carousel once it mounts.
+  const containerRef = React.useRef<HTMLDivElement>(null)
+  const [readDirection, setReadDirection] = React.useState<'ltr' | 'rtl'>('ltr')
+  const direction = opts?.direction ?? readDirection
+  React.useEffect(() => {
+    if (opts?.direction || !containerRef.current) return
+    setReadDirection(getComputedStyle(containerRef.current).direction === 'rtl' ? 'rtl' : 'ltr')
+  }, [opts?.direction])
+  const mirrored = direction === 'rtl' && orientation === 'horizontal'
+
   const [carouselRef, api] = useEmblaCarousel(
     {
       ...opts,
       axis: orientation === 'horizontal' ? 'x' : 'y',
+      direction,
     },
     plugins
   )
@@ -80,7 +92,6 @@ export function Carousel({
   const [canScrollNext, setCanScrollNext] = React.useState(false)
 
   // Cursor indicator state
-  const containerRef = React.useRef<HTMLDivElement>(null)
   const pointerOriginRef = React.useRef<{ x: number; y: number } | null>(null)
   const pointerMovedRef = React.useRef(false)
   const [cursorActive, setCursorActive] = React.useState(false)
@@ -104,15 +115,18 @@ export function Carousel({
 
   const handleKeyDown = React.useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
+      // In a right-to-left carousel the previous slide is to the right.
       if (event.key === 'ArrowLeft') {
         event.preventDefault()
-        scrollPrev()
+        if (mirrored) scrollNext()
+        else scrollPrev()
       } else if (event.key === 'ArrowRight') {
         event.preventDefault()
-        scrollNext()
+        if (mirrored) scrollPrev()
+        else scrollNext()
       }
     },
-    [scrollPrev, scrollNext]
+    [mirrored, scrollPrev, scrollNext]
   )
 
   React.useEffect(() => {
@@ -141,7 +155,7 @@ export function Carousel({
       const y = e.clientY - rect.top
       const centerX = rect.width / 2
       setCursorPos({ x, y })
-      setCursorSide(x < centerX ? 'prev' : 'next')
+      setCursorSide(x < centerX !== mirrored ? 'prev' : 'next')
       setCursorActive(true)
 
       const origin = pointerOriginRef.current
@@ -153,7 +167,7 @@ export function Carousel({
         }
       }
     },
-    [cursorIndicator]
+    [cursorIndicator, mirrored]
   )
 
   const handlePointerDown = React.useCallback(
@@ -243,7 +257,7 @@ export function Carousel({
                 reducedMotion ? { duration: 0 } : { type: 'spring', stiffness: 400, damping: 25 }
               }
             >
-              {cursorSide === 'prev' ? (
+              {(cursorSide === 'prev') !== mirrored ? (
                 <ArrowLeft aria-hidden className="a63-Carousel-cursor-icon" />
               ) : (
                 <ArrowRight aria-hidden className="a63-Carousel-cursor-icon" />
