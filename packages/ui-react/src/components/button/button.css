@@ -320,6 +320,12 @@
   --button-state-active-border-color: var(--a63-control-outline-hover-border);
 }
 
+/* Round: a full radius, so icon sizes become circles and labelled sizes pills.
+   Variants that set their own radius (dashed) already are round. */
+.a63-Button[data-shape='round'] {
+  --button-radius: var(--radius-full);
+}
+
 /* Dashed: an outline pill with a dashed border, for add and filter affordances
    ("+ Status"). It shares the outline colors. */
 .a63-Button[data-variant='dashed'] {

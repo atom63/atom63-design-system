@@ -1,6 +1,7 @@
 import {
   brands,
   buttonContract,
+  buttonShapes,
   buttonSizes,
   buttonVariants,
   densities,
@@ -101,6 +102,31 @@ export const OverMedia: Story = {
         <Button variant="glass">Glass</Button>
         <Button aria-label="Add" size="icon" variant="glass">
           <PlusIcon />
+        </Button>
+      </div>
+    </EnvironmentShell>
+  ),
+}
+
+/* shape="round": circles for icon sizes, pills for labelled sizes, as for a
+   player's play button or a pill-shaped call to action. */
+export const Shapes: Story = {
+  render: () => (
+    <EnvironmentShell>
+      <div style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+        {buttonShapes.map(shape => (
+          <Button key={shape} shape={shape} variant="outline">
+            {shape}
+          </Button>
+        ))}
+        <Button aria-label="Play" shape="round" size="icon" variant="primary">
+          <PlusIcon />
+        </Button>
+        <Button aria-label="Add" shape="round" size="icon-sm">
+          <PlusIcon />
+        </Button>
+        <Button shape="round" size="lg" variant="primary">
+          Get started
         </Button>
       </div>
     </EnvironmentShell>

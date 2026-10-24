@@ -645,9 +645,13 @@ export const breadcrumbVisualArchetypes: readonly [];
 // @public (undocumented)
 export interface ButtonContract {
     // (undocumented)
+    defaultShape: ButtonShape;
+    // (undocumented)
     defaultSize: ButtonSize;
     // (undocumented)
     defaultVariant: ButtonVariant;
+    // (undocumented)
+    shapes: readonly ButtonShape[];
     // (undocumented)
     slots: readonly ButtonSlot[];
     // (undocumented)
@@ -662,8 +666,10 @@ export interface ButtonContract {
 
 // @public (undocumented)
 export const buttonContract: {
+    defaultShape: "default";
     defaultSize: "md";
     defaultVariant: "default";
+    shapes: readonly ["default", "round"];
     slots: readonly ["root", "label", "icon", "spinner"];
     states: readonly ["rest", "hover", "pressed", "focusVisible", "disabled", "loading"];
     tokenSlots: readonly ["button.background", "button.foreground", "button.border.color", "button.border.width", "button.radius", "button.shadow", "button.focusRing", "button.height", "button.paddingInline", "button.gap", "button.iconSize", "button.motion.press"];
@@ -729,6 +735,12 @@ export type ButtonGroupVisualArchetype = (typeof buttonGroupVisualArchetypes)[nu
 
 // @public (undocumented)
 export const buttonGroupVisualArchetypes: readonly ["action", "segment"];
+
+// @public (undocumented)
+export type ButtonShape = (typeof buttonShapes)[number];
+
+// @public (undocumented)
+export const buttonShapes: readonly ["default", "round"];
 
 // @public (undocumented)
 export type ButtonSize = (typeof buttonSizes)[number];
@@ -1302,7 +1314,7 @@ export const crossRendererContracts: readonly [{
         readonly reducedMotion: "none";
     };
     readonly platformAdaptations: {
-        readonly react: readonly ["Uses HTML button semantics with pointer and focus-visible feedback."];
+        readonly react: readonly ["Uses HTML button semantics with pointer and focus-visible feedback.", "The round shape (a circle for icon sizes, a pill for labelled sizes) is web-only."];
         readonly swiftUI: readonly ["Uses SwiftUI Button with native touch and keyboard activation."];
     };
 }, {

@@ -17,6 +17,7 @@ import { BadgeVariant } from '@atom63/ui-foundation';
 import * as _base_ui_react from '@base-ui/react';
 import { ButtonGroupOrientation } from '@atom63/ui-foundation';
 import { ButtonGroupSize } from '@atom63/ui-foundation';
+import { ButtonShape } from '@atom63/ui-foundation';
 import { ButtonSize } from '@atom63/ui-foundation';
 import { ButtonVariant } from '@atom63/ui-foundation';
 import { CardContentPadding } from '@atom63/ui-foundation';
@@ -464,6 +465,7 @@ export interface ButtonProps extends useRender.ComponentProps<'button'> {
     'data-slot'?: string;
     // (undocumented)
     loading?: boolean;
+    shape?: ButtonShape;
     // (undocumented)
     size?: ButtonSize;
     // (undocumented)

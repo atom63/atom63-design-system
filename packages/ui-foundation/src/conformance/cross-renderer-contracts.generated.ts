@@ -38,7 +38,8 @@ export const crossRendererContracts = [
     },
     "platformAdaptations": {
       "react": [
-        "Uses HTML button semantics with pointer and focus-visible feedback."
+        "Uses HTML button semantics with pointer and focus-visible feedback.",
+        "The round shape (a circle for icon sizes, a pill for labelled sizes) is web-only."
       ],
       "swiftUI": [
         "Uses SwiftUI Button with native touch and keyboard activation."

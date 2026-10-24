@@ -207,6 +207,7 @@ export type {
 } from './components/button-group/button-group-contract'
 export {
   buttonContract,
+  buttonShapes,
   buttonSizes,
   buttonSlots,
   buttonStates,
@@ -216,6 +217,7 @@ export {
 } from './components/button/button-contract'
 export type {
   ButtonContract,
+  ButtonShape,
   ButtonSize,
   ButtonSlot,
   ButtonState,

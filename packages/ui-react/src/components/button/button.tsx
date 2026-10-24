@@ -1,6 +1,11 @@
 'use client'
 
-import { type ButtonSize, type ButtonVariant, buttonContract } from '@atom63/ui-foundation'
+import {
+  type ButtonShape,
+  type ButtonSize,
+  type ButtonVariant,
+  buttonContract,
+} from '@atom63/ui-foundation'
 import { mergeProps } from '@base-ui/react/merge-props'
 import { useRender } from '@base-ui/react/use-render'
 import { Children, type ReactNode } from 'react'
@@ -9,6 +14,8 @@ import { cn } from '../../lib/cn'
 
 export interface ButtonProps extends useRender.ComponentProps<'button'> {
   loading?: boolean
+  /** `round` gives a full radius: a circle for icon sizes, a pill for labelled ones. */
+  shape?: ButtonShape
   size?: ButtonSize
   variant?: ButtonVariant
   /** Mirrored to `data-trigger-slot`; root `data-slot` stays `"button"`. */
@@ -29,6 +36,7 @@ export function Button({
   disabled,
   loading = false,
   render,
+  shape = buttonContract.defaultShape,
   size = buttonContract.defaultSize,
   type,
   variant = buttonContract.defaultVariant,
@@ -52,6 +60,7 @@ export function Button({
     'data-button': '',
     'data-disabled': isDisabled ? '' : undefined,
     'data-loading': loading ? '' : undefined,
+    'data-shape': shape,
     'data-size': size,
     'data-slot': 'button',
     'data-trigger-slot': triggerSlot,

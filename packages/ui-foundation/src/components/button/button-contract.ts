@@ -29,6 +29,7 @@ export const buttonSizes = [
   'icon-lg',
   'icon-xl',
 ] as const
+export const buttonShapes = ['default', 'round'] as const
 export const buttonStates = [
   'rest',
   'hover',
@@ -56,14 +57,17 @@ export const buttonVisualArchetypes = ['action'] as const satisfies readonly Vis
 
 export type ButtonVariant = (typeof buttonVariants)[number]
 export type ButtonSize = (typeof buttonSizes)[number]
+export type ButtonShape = (typeof buttonShapes)[number]
 export type ButtonState = (typeof buttonStates)[number]
 export type ButtonSlot = (typeof buttonSlots)[number]
 export type ButtonTokenSlot = (typeof buttonTokenSlots)[number]
 export type ButtonVisualArchetype = (typeof buttonVisualArchetypes)[number]
 
 export interface ButtonContract {
+  defaultShape: ButtonShape
   defaultSize: ButtonSize
   defaultVariant: ButtonVariant
+  shapes: readonly ButtonShape[]
   slots: readonly ButtonSlot[]
   states: readonly ButtonState[]
   tokenSlots: readonly ButtonTokenSlot[]
@@ -72,8 +76,10 @@ export interface ButtonContract {
 }
 
 export const buttonContract = {
+  defaultShape: 'default',
   defaultSize: 'md',
   defaultVariant: 'default',
+  shapes: buttonShapes,
   slots: buttonSlots,
   states: buttonStates,
   tokenSlots: buttonTokenSlots,

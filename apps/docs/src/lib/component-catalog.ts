@@ -137,7 +137,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['button-group', 'toggle', 'copy-button'],
     summary: 'Button is the shared action primitive and defaults to safe non-submit behavior.',
     usage:
-      'Use it for an in-place action such as submitting, saving, confirming or changing state; use a link when the outcome is navigation. Choose emphasis from the action hierarchy rather than making every action primary, and give icon-only buttons an accessible name.',
+      'Use it for an in-place action such as submitting, saving, confirming or changing state; use a link when the outcome is navigation. Choose emphasis from the action hierarchy rather than making every action primary, and give icon-only buttons an accessible name. shape="round" makes icon buttons circles (a play button) and labelled buttons pills.',
     usageExports: ['Button'],
   },
   'button-group': {
