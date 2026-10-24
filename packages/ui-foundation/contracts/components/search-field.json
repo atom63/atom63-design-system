@@ -4,7 +4,13 @@
   "maturity": "stable",
   "lists": {
     "states": ["empty", "query", "focus", "disabled"],
-    "slots": ["search-field", "search-field-icon", "search-field-input", "search-field-clear"],
+    "slots": [
+      "search-field",
+      "search-field-icon",
+      "search-field-input",
+      "search-field-clear",
+      "search-field-end"
+    ],
     "visualArchetypes": ["field", "action"]
   },
   "contract": {

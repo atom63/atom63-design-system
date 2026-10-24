@@ -1,6 +1,7 @@
-import { SearchField } from '@atom63/ui-react'
+import { Button, SearchField } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { LayoutGrid } from 'lucide-react'
 import { useState } from 'react'
 
 function SearchFieldDemo() {
@@ -32,6 +33,23 @@ type Story = StoryObj<typeof meta>
 
 export const Playground: Story = {
   render: () => <SearchFieldDemo />,
+}
+
+/* endAddon: a control after the field, such as a browse button. */
+export const EndAddon: Story = {
+  render: () => (
+    <div style={{ maxWidth: 360 }}>
+      <SearchField
+        aria-label="Search the library"
+        endAddon={
+          <Button aria-label="Browse" size="icon-xs" variant="ghost">
+            <LayoutGrid aria-hidden />
+          </Button>
+        }
+        placeholder="What do you want to play?"
+      />
+    </div>
+  ),
 }
 
 export const Disabled: Story = {

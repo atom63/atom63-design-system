@@ -77,6 +77,30 @@ export const ChoiceCards: Story = {
   ),
 }
 
+/* The same tiles with indicator="hidden": the card alone shows the choice, as
+   in a dashboard's status filter. The radios stay focusable and announced. */
+export const SummaryTiles: Story = {
+  render: () => (
+    <RadioGroup
+      aria-label="Show transactions"
+      defaultValue="all"
+      style={{ display: 'grid', gap: 8, gridTemplateColumns: 'repeat(4, minmax(0, 8rem))' }}
+    >
+      {SUMMARY.map(option => (
+        <FieldLabel htmlFor={`tile-${option.value}`} key={option.value}>
+          <Field orientation="horizontal">
+            <FieldContent>
+              <FieldTitle>{option.label}</FieldTitle>
+              <FieldDescription>{option.count}</FieldDescription>
+            </FieldContent>
+            <Radio id={`tile-${option.value}`} indicator="hidden" value={option.value} />
+          </Field>
+        </FieldLabel>
+      ))}
+    </RadioGroup>
+  ),
+}
+
 export const States: Story = {
   render: () => (
     <div style={{ alignItems: 'center', display: 'flex', gap: 16 }}>

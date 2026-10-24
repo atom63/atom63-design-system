@@ -34,4 +34,10 @@ describe('Checkbox', () => {
     const { container } = render(<Checkbox disabled />)
     expect(container.querySelector('.a63-Checkbox')).toHaveAttribute('data-disabled')
   })
+
+  it('can hide its indicator while staying a labelled checkbox', () => {
+    const { getByRole } = render(<Checkbox aria-label="Email" indicator="hidden" />)
+    const box = getByRole('checkbox', { name: 'Email' })
+    expect(box).toHaveAttribute('data-indicator', 'hidden')
+  })
 })

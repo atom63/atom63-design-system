@@ -19,6 +19,8 @@ export interface SearchFieldProps extends Omit<
   clearLabel?: string
   className?: string
   defaultValue?: string
+  /** Content after the field, such as a browse or filter button. */
+  endAddon?: React.ReactNode
   inputClassName?: string
   onClear?: () => void
   onValueChange?: (value: string) => void
@@ -48,6 +50,7 @@ export function SearchField({
   clearLabel = 'Clear search',
   defaultValue = '',
   disabled,
+  endAddon,
   inputClassName,
   onClear,
   onValueChange,
@@ -106,6 +109,11 @@ export function SearchField({
           >
             <ClearIcon />
           </InputGroupButton>
+        </InputGroupAddon>
+      ) : null}
+      {endAddon ? (
+        <InputGroupAddon align="inline-end" data-slot="search-field-end">
+          {endAddon}
         </InputGroupAddon>
       ) : null}
     </InputGroup>

@@ -273,6 +273,7 @@ export type {
 } from './components/calendar'
 export {
   checkboxContract,
+  checkboxIndicators,
   checkboxSizes,
   checkboxSlots,
   checkboxStates,
@@ -280,6 +281,7 @@ export {
 } from './components/checkbox/checkbox-contract'
 export type {
   CheckboxContract,
+  CheckboxIndicator,
   CheckboxSize,
   CheckboxSlot,
   CheckboxState,
@@ -704,6 +706,7 @@ export type {
 } from './components/progress/progress-contract'
 export {
   radioContract,
+  radioIndicators,
   radioSizes,
   radioSlots,
   radioStates,
@@ -711,6 +714,7 @@ export {
 } from './components/radio/radio-contract'
 export type {
   RadioContract,
+  RadioIndicator,
   RadioSize,
   RadioSlot,
   RadioState,

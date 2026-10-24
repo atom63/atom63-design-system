@@ -9,6 +9,7 @@ export const searchFieldSlots = [
   'search-field-icon',
   'search-field-input',
   'search-field-clear',
+  'search-field-end',
 ] as const
 export const searchFieldVisualArchetypes = [
   'field',

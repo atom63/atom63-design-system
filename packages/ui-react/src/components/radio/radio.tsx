@@ -1,6 +1,6 @@
 'use client'
 
-import { type RadioSize, radioContract } from '@atom63/ui-foundation'
+import { type RadioIndicator, type RadioSize, radioContract } from '@atom63/ui-foundation'
 import { Radio as RadioPrimitive } from '@base-ui/react/radio'
 import { RadioGroup as RadioGroupPrimitive } from '@base-ui/react/radio-group'
 import type * as React from 'react'
@@ -23,6 +23,8 @@ export function RadioGroup({ className, ...props }: RadioGroupProps): React.Reac
 
 export type RadioProps = Omit<RadioPrimitive.Root.Props, 'className'> & {
   className?: string
+  /** `hidden` keeps the radio focusable and announced but draws no dot, for choice cards. */
+  indicator?: RadioIndicator
   size?: RadioSize
 }
 
@@ -34,12 +36,14 @@ export type RadioProps = Omit<RadioPrimitive.Root.Props, 'className'> & {
  */
 export function Radio({
   className,
+  indicator = radioContract.defaultIndicator,
   size = radioContract.defaultSize,
   ...props
 }: RadioProps): React.ReactElement {
   return (
     <RadioPrimitive.Root
       className={cn('a63-Radio', className)}
+      data-indicator={indicator}
       data-size={size}
       data-slot="radio"
       {...props}
