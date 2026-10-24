@@ -4,7 +4,7 @@
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 export const toggleSizes = ['sm', 'md', 'lg'] as const
-export const toggleTones = ['neutral', 'accent'] as const
+export const toggleTones = ['neutral', 'accent', 'subtle'] as const
 export const toggleStates = ['off', 'on', 'rest', 'hover', 'pressed', 'disabled', 'focus'] as const
 export const toggleSlots = ['toggle', 'toggle-content'] as const
 export const toggleTokenSlots = [

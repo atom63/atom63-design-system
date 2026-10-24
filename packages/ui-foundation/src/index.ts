@@ -170,6 +170,7 @@ export type {
 } from './components/alert-dialog'
 export {
   badgeContract,
+  badgeDotColors,
   badgePaletteVariants,
   badgeSemanticVariants,
   badgeSizes,
@@ -181,6 +182,7 @@ export {
 } from './components/badge/badge-contract'
 export type {
   BadgeContract,
+  BadgeDotColor,
   BadgeSize,
   BadgeSlot,
   BadgeState,
@@ -927,8 +929,24 @@ export {
   switchStates,
   switchVisualArchetypes,
 } from './components/switch/switch-contract'
-export { tableContract, tableSlots, tableStates, tableVisualArchetypes } from './components/table'
-export type { TableContract, TableSlot, TableState, TableVisualArchetype } from './components/table'
+export {
+  tableContract,
+  tableSizes,
+  tableSlots,
+  tableStates,
+  tableStickyEdges,
+  tableVariants,
+  tableVisualArchetypes,
+} from './components/table'
+export type {
+  TableContract,
+  TableSize,
+  TableSlot,
+  TableState,
+  TableStickyEdge,
+  TableVariant,
+  TableVisualArchetype,
+} from './components/table'
 export type {
   SwitchContract,
   SwitchSize,
@@ -991,6 +1009,7 @@ export {
   toggleGroupSlots,
   toggleGroupStates,
   toggleGroupTokenSlots,
+  toggleGroupVariants,
   toggleGroupVisualArchetypes,
 } from './components/toggle-group/toggle-group-contract'
 export type {
@@ -1000,6 +1019,7 @@ export type {
   ToggleGroupSlot,
   ToggleGroupState,
   ToggleGroupTokenSlot,
+  ToggleGroupVariant,
   ToggleGroupVisualArchetype,
 } from './components/toggle-group/toggle-group-contract'
 export {

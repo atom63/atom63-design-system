@@ -6,6 +6,7 @@ export {
   toggleGroupSlots,
   toggleGroupStates,
   toggleGroupTokenSlots,
+  toggleGroupVariants,
   toggleGroupVisualArchetypes,
 } from './toggle-group-contract'
 export type {
@@ -15,5 +16,6 @@ export type {
   ToggleGroupSlot,
   ToggleGroupState,
   ToggleGroupTokenSlot,
+  ToggleGroupVariant,
   ToggleGroupVisualArchetype,
 } from './toggle-group-contract'

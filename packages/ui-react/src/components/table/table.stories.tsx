@@ -1,5 +1,6 @@
 import { tableContract, themes } from '@atom63/ui-foundation'
 import {
+  Button,
   Table,
   TableBody,
   TableCaption,
@@ -105,6 +106,117 @@ export const Framed: Story = {
               <TableCell>{r.invoice}</TableCell>
               <TableCell>{r.status}</TableCell>
               <TableCell>{r.amount}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  ),
+}
+
+/* `sm` takes its row padding from the density contract: compare it with the
+   default rows, then under compact density. */
+export const Sizes: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 24, width: 480 }}>
+      {tableContract.sizes.map(size => (
+        <div key={size}>
+          <span style={{ color: 'var(--a63-text-secondary)', fontSize: 12 }}>size={size}</span>
+          <Table size={size}>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Invoice</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Amount</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {rows.map(r => (
+                <TableRow key={r.invoice}>
+                  <TableCell>{r.invoice}</TableCell>
+                  <TableCell>{r.status}</TableCell>
+                  <TableCell>{r.amount}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ))}
+      <UIProvider density="compact">
+        <span style={{ color: 'var(--a63-text-secondary)', fontSize: 12 }}>
+          size=sm, compact density
+        </span>
+        <Table size="sm">
+          <TableBody>
+            {rows.map(r => (
+              <TableRow key={r.invoice}>
+                <TableCell>{r.invoice}</TableCell>
+                <TableCell>{r.status}</TableCell>
+                <TableCell>{r.amount}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </UIProvider>
+    </div>
+  ),
+}
+
+/* `plain` drops the dividers between body rows, for lists such as a track list. */
+export const Plain: Story = {
+  render: () => (
+    <div style={{ width: 480 }}>
+      <Table variant="plain">
+        <TableHeader>
+          <TableRow>
+            <TableHead>Invoice</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Amount</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map(r => (
+            <TableRow key={r.invoice}>
+              <TableCell>{r.invoice}</TableCell>
+              <TableCell>{r.status}</TableCell>
+              <TableCell>{r.amount}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  ),
+}
+
+const wideColumns = ['Customer', 'Method', 'Created', 'Refunded', 'Dispute', 'Reason']
+
+/* A table wider than its container: the invoice stays pinned at the start and
+   the row menu at the end while the middle scrolls. */
+export const StickyColumns: Story = {
+  render: () => (
+    <div style={{ width: 420 }}>
+      <Table size="sm">
+        <TableHeader>
+          <TableRow>
+            <TableHead sticky="start">Invoice</TableHead>
+            {wideColumns.map(column => (
+              <TableHead key={column}>{column}</TableHead>
+            ))}
+            <TableHead sticky="end">Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map(r => (
+            <TableRow key={r.invoice} data-state={r.invoice === 'INV002' ? 'selected' : undefined}>
+              <TableCell sticky="start">{r.invoice}</TableCell>
+              {wideColumns.map(column => (
+                <TableCell key={column}>{column === 'Method' ? r.method : '—'}</TableCell>
+              ))}
+              <TableCell sticky="end">
+                <Button aria-label={`Actions for ${r.invoice}`} size="icon-xs" variant="ghost">
+                  …
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

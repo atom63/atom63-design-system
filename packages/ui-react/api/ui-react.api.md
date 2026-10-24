@@ -11,6 +11,7 @@ import { AnimatedCheckVariant } from '@atom63/ui-foundation';
 import { Autocomplete as AutocompletePrimitive } from '@base-ui/react/autocomplete';
 import { Avatar as AvatarPrimitive } from '@base-ui/react/avatar';
 import { AvatarSize } from '@atom63/ui-foundation';
+import { BadgeDotColor } from '@atom63/ui-foundation';
 import { BadgeSize } from '@atom63/ui-foundation';
 import { BadgeVariant } from '@atom63/ui-foundation';
 import * as _base_ui_react from '@base-ui/react';
@@ -106,6 +107,9 @@ import { SidebarVariant } from '@atom63/ui-foundation';
 import { Slider as Slider_2 } from '@base-ui/react/slider';
 import { Switch as Switch_2 } from '@base-ui/react/switch';
 import { SwitchSize } from '@atom63/ui-foundation';
+import { TableSize } from '@atom63/ui-foundation';
+import { TableStickyEdge } from '@atom63/ui-foundation';
+import { TableVariant } from '@atom63/ui-foundation';
 import { Tabs as Tabs_2 } from '@base-ui/react/tabs';
 import { TabsSize } from '@atom63/ui-foundation';
 import { TabsVariant } from '@atom63/ui-foundation';
@@ -116,6 +120,7 @@ import { toast } from 'sonner';
 import { ToasterProps } from 'sonner';
 import { Toggle as Toggle_2 } from '@base-ui/react/toggle';
 import { ToggleGroup as ToggleGroup_2 } from '@base-ui/react/toggle-group';
+import { ToggleGroupVariant } from '@atom63/ui-foundation';
 import { ToggleSize } from '@atom63/ui-foundation';
 import { ToggleTone } from '@atom63/ui-foundation';
 import { Tooltip as TooltipPrimitive } from '@base-ui/react/tooltip';
@@ -399,6 +404,7 @@ export function Badge(input: BadgeProps): React$1.ReactElement;
 export type BadgeProps = useRender.ComponentProps<'span'> & {
     variant?: BadgeVariant;
     size?: BadgeSize;
+    dot?: boolean | BadgeDotColor;
 };
 
 // @public (undocumented)
@@ -2599,7 +2605,9 @@ export type TableCaptionProps = React$1.ComponentProps<'caption'>;
 export function TableCell(input: TableCellProps): React$1.ReactElement;
 
 // @public (undocumented)
-export type TableCellProps = React$1.ComponentProps<'td'>;
+export type TableCellProps = React$1.ComponentProps<'td'> & {
+    sticky?: TableStickyEdge;
+};
 
 // @public (undocumented)
 export function TableFooter(input: TableFooterProps): React$1.ReactElement;
@@ -2617,10 +2625,15 @@ export function TableHeader(input: TableHeaderProps): React$1.ReactElement;
 export type TableHeaderProps = React$1.ComponentProps<'thead'>;
 
 // @public (undocumented)
-export type TableHeadProps = React$1.ComponentProps<'th'>;
+export type TableHeadProps = React$1.ComponentProps<'th'> & {
+    sticky?: TableStickyEdge;
+};
 
 // @public (undocumented)
-export type TableProps = React$1.ComponentProps<'table'>;
+export type TableProps = React$1.ComponentProps<'table'> & {
+    size?: TableSize;
+    variant?: TableVariant;
+};
 
 // @public (undocumented)
 export function TableRow(input: TableRowProps): React$1.ReactElement;
@@ -2729,6 +2742,8 @@ export interface ToggleGroupProps extends Omit<ToggleGroup_2.Props, 'className'>
     size?: ToggleSize;
     // (undocumented)
     tone?: ToggleTone;
+    // (undocumented)
+    variant?: ToggleGroupVariant;
 }
 
 // @public (undocumented)

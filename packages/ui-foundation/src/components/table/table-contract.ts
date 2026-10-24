@@ -3,6 +3,13 @@
 
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
+// The tabular-data set: a horizontally scrollable container around a semantic <table>. The container
+// takes size (default/sm) and variant (default/plain); TableHead and TableCell can pin to the start
+// or end edge. The DS recipe reads these off data-size / data-variant / data-sticky.
+
+export const tableVariants = ['default', 'plain'] as const
+export const tableSizes = ['default', 'sm'] as const
+export const tableStickyEdges = ['start', 'end'] as const
 export const tableStates = ['rest', 'row-hover', 'row-selected'] as const
 export const tableSlots = [
   'table-container',
@@ -17,17 +24,30 @@ export const tableSlots = [
 ] as const
 export const tableVisualArchetypes = ['surface'] as const satisfies readonly VisualArchetypeId[]
 
+export type TableVariant = (typeof tableVariants)[number]
+export type TableSize = (typeof tableSizes)[number]
+export type TableStickyEdge = (typeof tableStickyEdges)[number]
 export type TableState = (typeof tableStates)[number]
 export type TableSlot = (typeof tableSlots)[number]
 export type TableVisualArchetype = (typeof tableVisualArchetypes)[number]
 
 export interface TableContract {
+  defaultVariant: TableVariant
+  defaultSize: TableSize
+  variants: readonly TableVariant[]
+  sizes: readonly TableSize[]
+  stickyEdges: readonly TableStickyEdge[]
   states: readonly TableState[]
   slots: readonly TableSlot[]
   visualArchetypes: readonly TableVisualArchetype[]
 }
 
 export const tableContract = {
+  defaultVariant: 'default',
+  defaultSize: 'default',
+  variants: tableVariants,
+  sizes: tableSizes,
+  stickyEdges: tableStickyEdges,
   states: tableStates,
   slots: tableSlots,
   visualArchetypes: tableVisualArchetypes,

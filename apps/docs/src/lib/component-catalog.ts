@@ -110,6 +110,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
         default: 'Neutral action; the usual alternative next to primary (Cancel).',
         secondary: 'Muted neutral action for supporting tasks.',
         outline: 'Lower-emphasis alternative (Duplicate).',
+        dashed: 'Add or filter affordance drawn as a dashed pill (+ Status).',
         ghost: 'Lowest emphasis; toolbars and dismissals.',
         link: 'Inline action styled as text; navigation should use a real link.',
         destructive: 'Only when the outcome destroys data.',

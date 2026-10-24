@@ -1,3 +1,9 @@
+import {
+  type TableSize,
+  type TableStickyEdge,
+  type TableVariant,
+  tableContract,
+} from '@atom63/ui-foundation'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
@@ -6,13 +12,28 @@ import { cn } from '../../lib/cn'
    horizontally scrollable container wrapping a semantic <table> with header /
    body / footer / row / head / cell / caption parts. Each part carries its
    data-slot; the base look is DS-tokenized, and a `frame` ancestor
-   (data-slot="frame") switches on the bordered-card treatment. */
+   (data-slot="frame") switches on the bordered-card treatment. `size` and
+   `variant` sit on the container; `sticky` pins a head or body cell to an
+   inline edge while the container scrolls. */
 
-export type TableProps = React.ComponentProps<'table'>
+export type TableProps = React.ComponentProps<'table'> & {
+  size?: TableSize
+  variant?: TableVariant
+}
 
-export function Table({ className, ...props }: TableProps): React.ReactElement {
+export function Table({
+  className,
+  size = tableContract.defaultSize,
+  variant = tableContract.defaultVariant,
+  ...props
+}: TableProps): React.ReactElement {
   return (
-    <div className="a63-Table-container" data-slot="table-container">
+    <div
+      className="a63-Table-container"
+      data-size={size}
+      data-slot="table-container"
+      data-variant={variant}
+    >
       <table className={cn('a63-Table', className)} data-slot="table" {...props} />
     </div>
   )
@@ -42,16 +63,34 @@ export function TableRow({ className, ...props }: TableRowProps): React.ReactEle
   return <tr className={cn('a63-Table-row', className)} data-slot="table-row" {...props} />
 }
 
-export type TableHeadProps = React.ComponentProps<'th'>
-
-export function TableHead({ className, ...props }: TableHeadProps): React.ReactElement {
-  return <th className={cn('a63-Table-head', className)} data-slot="table-head" {...props} />
+export type TableHeadProps = React.ComponentProps<'th'> & {
+  sticky?: TableStickyEdge
 }
 
-export type TableCellProps = React.ComponentProps<'td'>
+export function TableHead({ className, sticky, ...props }: TableHeadProps): React.ReactElement {
+  return (
+    <th
+      className={cn('a63-Table-head', className)}
+      data-slot="table-head"
+      data-sticky={sticky}
+      {...props}
+    />
+  )
+}
 
-export function TableCell({ className, ...props }: TableCellProps): React.ReactElement {
-  return <td className={cn('a63-Table-cell', className)} data-slot="table-cell" {...props} />
+export type TableCellProps = React.ComponentProps<'td'> & {
+  sticky?: TableStickyEdge
+}
+
+export function TableCell({ className, sticky, ...props }: TableCellProps): React.ReactElement {
+  return (
+    <td
+      className={cn('a63-Table-cell', className)}
+      data-slot="table-cell"
+      data-sticky={sticky}
+      {...props}
+    />
+  )
 }
 
 export type TableCaptionProps = React.ComponentProps<'caption'>

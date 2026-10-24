@@ -84,6 +84,15 @@
   background-color: color-mix(in oklch, var(--a63-surface-muted) 50%, transparent);
 }
 
+/* Selected and current: the row the user picked, or the one for the page they
+   are on. aria-current carries the meaning on links; data-selected covers rows
+   that are not. Placed after the variants so it wins over their fills. */
+.a63-Item[aria-current]:not([aria-current='false']),
+.a63-Item[data-selected]:not([data-selected='false']) {
+  background-color: var(--a63-selected-background);
+  color: var(--a63-selected-foreground);
+}
+
 /* Sizes (gap + padding). Block padding comes from the row contract so the
    design-language axis can retune row density; inline padding stays local. */
 .a63-Item[data-size='default'] {

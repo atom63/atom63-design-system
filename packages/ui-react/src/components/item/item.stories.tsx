@@ -99,6 +99,34 @@ export const AsLink: Story = {
   ),
 }
 
+/* aria-current marks the row for the page the user is on; data-selected marks
+   a picked row that is not a link. Both take the selected surface. */
+export const SelectedAndCurrent: Story = {
+  render: () => (
+    <ItemGroup style={{ width: 360 }}>
+      {['Inbox', 'My issues', 'Projects'].map(label => (
+        <Item
+          key={label}
+          render={
+            <a aria-current={label === 'My issues' ? 'page' : undefined} href={`#${label}`}>
+              <ItemContent>
+                <ItemTitle>{label}</ItemTitle>
+              </ItemContent>
+            </a>
+          }
+          size="xs"
+        />
+      ))}
+      <Item data-selected="" size="xs" variant="muted">
+        <ItemContent>
+          <ItemTitle>Selected row</ItemTitle>
+          <ItemDescription>Not a link: data-selected.</ItemDescription>
+        </ItemContent>
+      </Item>
+    </ItemGroup>
+  ),
+}
+
 /* Every size tightens the row density (default · sm · xs). */
 export const Sizes: Story = {
   render: () => (

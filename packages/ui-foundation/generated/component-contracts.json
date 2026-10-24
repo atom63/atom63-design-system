@@ -232,7 +232,7 @@
       "source": "packages/ui-foundation/contracts/components/badge.json",
       "exportName": "badgeContract",
       "maturity": "stable",
-      "description": "Solid/surface + semantic sets are faithful to prod @atom63/ui badge.tsx. Palette hues back category/tag colors via the `--a63-badge-*` contract in @atom63/styles (which references foundation --color-* primitives).",
+      "description": "Solid/surface + semantic sets are faithful to prod @atom63/ui badge.tsx. Palette hues back category/tag colors via the `--a63-badge-*` contract in @atom63/styles (which references foundation --color-* primitives). `dot` adds a leading dot, in the text color or one of the palette hues (dotColors), so a label can carry a category color on any variant.",
       "axes": [
         {
           "name": "variants",
@@ -270,9 +270,32 @@
           ],
           "default": "default"
         },
-        { "name": "sizes", "values": ["sm", "md", "lg"], "default": "md" }
+        { "name": "sizes", "values": ["sm", "md", "lg"], "default": "md" },
+        {
+          "name": "dotColors",
+          "values": [
+            "red",
+            "orange",
+            "amber",
+            "yellow",
+            "lime",
+            "green",
+            "emerald",
+            "teal",
+            "cyan",
+            "sky",
+            "blue",
+            "indigo",
+            "violet",
+            "purple",
+            "fuchsia",
+            "pink",
+            "rose",
+            "neutral"
+          ]
+        }
       ],
-      "slots": ["badge"],
+      "slots": ["badge", "badge-dot"],
       "states": ["resting", "interactive", "disabled", "focus-visible"],
       "tokenSlots": [],
       "visualArchetypes": ["marker"],
@@ -412,7 +435,8 @@
         "accessibilityOutcomes": ["text-does-not-rely-on-color"],
         "platformAdaptations": {
           "react": [
-            "May expose palette-only decorative variants outside the shared semantic subset."
+            "May expose palette-only decorative variants outside the shared semantic subset.",
+            "May show a leading category dot (dot prop)."
           ],
           "swiftUI": ["Uses a compact capsule that expands for Dynamic Type."]
         }
@@ -479,6 +503,7 @@
             "destructive",
             "destructive-outline",
             "outline",
+            "dashed",
             "ghost",
             "link",
             "overlay",
@@ -572,6 +597,9 @@
                   },
                   "overlay": {
                     "description": "For controls drawn over photos or video, on the on-media tokens."
+                  },
+                  "dashed": {
+                    "description": "A pill-shaped outline with a dashed border, for add and filter affordances such as \"+ Status\". Web-only."
                   },
                   "glass": {
                     "description": "The earlier name of overlay.",
@@ -1431,7 +1459,7 @@
       "source": "packages/ui-foundation/contracts/components/item.json",
       "exportName": "itemContract",
       "maturity": "stable",
-      "description": "Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size (default/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off data-variant / data-size.",
+      "description": "Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size (default/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off data-variant / data-size, and styles a row with aria-current or data-selected as current or selected.",
       "axes": [
         { "name": "variants", "values": ["default", "outline", "muted"], "default": "default" },
         { "name": "sizes", "values": ["default", "sm", "xs"], "default": "default" },
@@ -1449,7 +1477,7 @@
         "item-footer",
         "item-separator"
       ],
-      "states": ["rest", "hover", "focus"],
+      "states": ["rest", "hover", "focus", "selected", "current"],
       "tokenSlots": [],
       "visualArchetypes": ["surface"]
     },
@@ -2266,7 +2294,12 @@
       "source": "packages/ui-foundation/contracts/components/table.json",
       "exportName": "tableContract",
       "maturity": "stable",
-      "axes": [],
+      "description": "The tabular-data set: a horizontally scrollable container around a semantic <table>. The container takes size (default/sm) and variant (default/plain); TableHead and TableCell can pin to the start or end edge. The DS recipe reads these off data-size / data-variant / data-sticky.",
+      "axes": [
+        { "name": "variants", "values": ["default", "plain"], "default": "default" },
+        { "name": "sizes", "values": ["default", "sm"], "default": "default" },
+        { "name": "stickyEdges", "values": ["start", "end"] }
+      ],
       "slots": [
         "table-container",
         "table",
@@ -2424,7 +2457,9 @@
       "source": "packages/ui-foundation/contracts/components/toggle-group.json",
       "exportName": "toggleGroupContract",
       "maturity": "stable",
+      "description": "`segmented` (default) welds the items into one bar; `pills` draws each item as a separate capsule with a gap, for filter rows such as Playlists / Artists / Albums.",
       "axes": [
+        { "name": "variants", "values": ["segmented", "pills"], "default": "segmented" },
         { "name": "orientations", "values": ["horizontal", "vertical"], "default": "horizontal" },
         { "name": "selectionModes", "values": ["single", "multiple"], "default": "single" }
       ],
@@ -2453,7 +2488,7 @@
       "maturity": "stable",
       "axes": [
         { "name": "sizes", "values": ["sm", "md", "lg"], "default": "md" },
-        { "name": "tones", "values": ["neutral", "accent"], "default": "neutral" }
+        { "name": "tones", "values": ["neutral", "accent", "subtle"], "default": "neutral" }
       ],
       "slots": ["toggle", "toggle-content"],
       "states": ["off", "on", "rest", "hover", "pressed", "disabled", "focus"],
@@ -2492,7 +2527,10 @@
           "preserves-button-role"
         ],
         "platformAdaptations": {
-          "react": ["Uses a pressed-state web toggle with hover and focus-visible feedback."],
+          "react": [
+            "Uses a pressed-state web toggle with hover and focus-visible feedback.",
+            "The subtle tone (accent color, no fill) is web-only."
+          ],
           "swiftUI": ["Uses a touch-sized button-backed chip for compact filter selection."]
         }
       }

@@ -3,6 +3,10 @@
 
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
+// `segmented` (default) welds the items into one bar; `pills` draws each item as a separate capsule
+// with a gap, for filter rows such as Playlists / Artists / Albums.
+
+export const toggleGroupVariants = ['segmented', 'pills'] as const
 export const toggleGroupOrientations = ['horizontal', 'vertical'] as const
 export const toggleGroupSelectionModes = ['single', 'multiple'] as const
 export const toggleGroupStates = ['rest', 'hover', 'focus', 'selected', 'disabled'] as const
@@ -31,6 +35,7 @@ export const toggleGroupVisualArchetypes = [
   'segment',
 ] as const satisfies readonly VisualArchetypeId[]
 
+export type ToggleGroupVariant = (typeof toggleGroupVariants)[number]
 export type ToggleGroupOrientation = (typeof toggleGroupOrientations)[number]
 export type ToggleGroupSelectionMode = (typeof toggleGroupSelectionModes)[number]
 export type ToggleGroupState = (typeof toggleGroupStates)[number]
@@ -39,8 +44,10 @@ export type ToggleGroupTokenSlot = (typeof toggleGroupTokenSlots)[number]
 export type ToggleGroupVisualArchetype = (typeof toggleGroupVisualArchetypes)[number]
 
 export interface ToggleGroupContract {
+  defaultVariant: ToggleGroupVariant
   defaultOrientation: ToggleGroupOrientation
   defaultSelectionMode: ToggleGroupSelectionMode
+  variants: readonly ToggleGroupVariant[]
   orientations: readonly ToggleGroupOrientation[]
   selectionModes: readonly ToggleGroupSelectionMode[]
   slots: readonly ToggleGroupSlot[]
@@ -50,8 +57,10 @@ export interface ToggleGroupContract {
 }
 
 export const toggleGroupContract = {
+  defaultVariant: 'segmented',
   defaultOrientation: 'horizontal',
   defaultSelectionMode: 'single',
+  variants: toggleGroupVariants,
   orientations: toggleGroupOrientations,
   selectionModes: toggleGroupSelectionModes,
   slots: toggleGroupSlots,

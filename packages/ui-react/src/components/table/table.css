@@ -91,6 +91,67 @@
   color: var(--a63-action-primary-foreground);
 }
 
+/* ── Sizes ─────────────────────────────────────────────────────────────
+   `sm` takes its block padding from the row contract, so the density axis
+   tightens it further. `default` keeps the cells above. */
+.a63-Table-container[data-size='sm'] .a63-Table-head {
+  height: 2rem;
+}
+.a63-Table-container[data-size='sm'] .a63-Table-cell {
+  padding-block: var(--a63-row-padding-block-xs);
+}
+
+/* ── Plain variant: no dividers between body rows ─────────────────────── */
+.a63-Table-container[data-variant='plain'] .a63-Table-body .a63-Table-row {
+  border-bottom: 0;
+}
+
+/* ── Sticky cells ──────────────────────────────────────────────────────────
+   A pinned cell paints the row's surface itself, so content scrolling under
+   it stays hidden. Set --table-sticky-background on the container when the
+   table sits on a surface other than the page. The hairline is a pseudo-element
+   because collapsed borders do not travel with a sticky cell. */
+.a63-Table-head[data-sticky],
+.a63-Table-cell[data-sticky] {
+  position: sticky;
+  z-index: 1;
+  background-color: var(--table-sticky-background, var(--a63-surface-page));
+}
+.a63-Table-head[data-sticky='start'],
+.a63-Table-cell[data-sticky='start'] {
+  inset-inline-start: 0;
+}
+.a63-Table-head[data-sticky='end'],
+.a63-Table-cell[data-sticky='end'] {
+  inset-inline-end: 0;
+}
+.a63-Table-head[data-sticky]::after,
+.a63-Table-cell[data-sticky]::after {
+  position: absolute;
+  inset-block: 0;
+  width: 1px;
+  background: var(--a63-border-subtle);
+  content: '';
+}
+.a63-Table-head[data-sticky='start']::after,
+.a63-Table-cell[data-sticky='start']::after {
+  inset-inline-end: 0;
+}
+.a63-Table-head[data-sticky='end']::after,
+.a63-Table-cell[data-sticky='end']::after {
+  inset-inline-start: 0;
+}
+.a63-Table-row:hover > [data-sticky] {
+  background-image: linear-gradient(
+    var(--a63-surface-control-hover),
+    var(--a63-surface-control-hover)
+  );
+}
+.a63-Table-row[data-state='selected'] > [data-sticky] {
+  background-color: var(--a63-action-primary);
+  background-image: none;
+}
+
 /* ── Footer ────────────────────────────────────────────────────────────── */
 .a63-Table-footer {
   border-top: 1px solid var(--a63-border-subtle);

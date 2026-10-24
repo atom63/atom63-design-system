@@ -1255,10 +1255,10 @@ describe('the real Button model', () => {
       variables: [],
       create: [],
       update: [],
-      unchanged: 300,
+      unchanged: 330,
       card: { create: [], update: [], unchanged: expect.any(Number) as number },
     })
-    expect(first.applied.created).toBe(300)
+    expect(first.applied.created).toBe(330)
     expect(first.applied.variables).toBe(model.derived.variables.length)
     expect(model.derived.variables).toHaveLength(12)
     // The family token holds a CSS stack: Geist is the literal, the variable stays unbound.
@@ -1322,7 +1322,7 @@ describe('the real Button model', () => {
 
     const writes = fake.writes
     const second = await syncComponent(fake.figma, model)
-    expect(second.planned.unchanged).toBe(300)
+    expect(second.planned.unchanged).toBe(330)
     expect(fake.writes).toBe(writes)
   }, 60_000)
 })

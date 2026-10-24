@@ -320,6 +320,23 @@
   --button-state-active-border-color: var(--a63-control-outline-hover-border);
 }
 
+/* Dashed: an outline pill with a dashed border, for add and filter affordances
+   ("+ Status"). It shares the outline colors. */
+.a63-Button[data-variant='dashed'] {
+  --button-gloss: none;
+  --button-highlight: none;
+  --button-shadow: none;
+  --button-radius: var(--radius-full);
+  --button-background: transparent;
+  --button-border-color: var(--a63-border-control);
+  --button-foreground: var(--a63-text-primary);
+  --button-state-hover-background: var(--a63-control-outline-hover-background);
+  --button-state-hover-border-color: var(--a63-control-outline-hover-border);
+  --button-state-active-background: var(--a63-control-outline-hover-background);
+  --button-state-active-border-color: var(--a63-control-outline-hover-border);
+  border-style: dashed;
+}
+
 .a63-Button[data-variant='ghost'] {
   --button-gloss: none;
   --button-highlight: none;
