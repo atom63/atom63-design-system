@@ -1,5 +1,23 @@
 # @atom63/ui-foundation
 
+## 0.2.0-beta.5
+
+### Minor Changes
+
+- [#208](https://github.com/atom63/atom63-design-system/pull/208) [`e5d395b`](https://github.com/atom63/atom63-design-system/commit/e5d395b48c402ad8421912f273274635cb33bfd1) Thanks [@atom63](https://github.com/atom63)! - Button takes `shape` (`default` or `round`). `round` gives a full radius: a circle for icon sizes and a pill for labelled sizes. Web-only for now.
+
+- [#203](https://github.com/atom63/atom63-design-system/pull/203) [`57a4a41`](https://github.com/atom63/atom63-design-system/commit/57a4a4191f29ffef0eaf823d17f84f9da0e97e89) Thanks [@atom63](https://github.com/atom63)! - Badge takes `dot` (`true` or a palette hue) for a leading category dot. ToggleGroup takes `variant` (`segmented`, the default, or `pills`) to draw its items as separate capsules for filter rows. Button gains a `dashed` variant, a pill-shaped outline with a dashed border, for add and filter affordances.
+
+- [#187](https://github.com/atom63/atom63-design-system/pull/187) [`32e030a`](https://github.com/atom63/atom63-design-system/commit/32e030a63a913ae631a4083d55b881ecf246080e) Thanks [@atom63](https://github.com/atom63)! - Components now accept the `variant` values their contracts list. `ResizableHandle` takes `variant="line" | "grip"` (`withHandle` is deprecated), `TextTicker` takes `variant="truncate" | "marquee"` (`animationType` is deprecated) and `AnimatedCheck` takes `variant="animated" | "static"` (`animate` is deprecated); each sets `data-variant`. The Table contract drops its `plain`/`framed` variants, because the framed look comes from sitting inside a `Frame`, so `tableVariants` and `TableVariant` are no longer exported from `@atom63/ui-foundation`. A test now fails when a contract lists `variants` that its React component does not accept.
+
+- [#207](https://github.com/atom63/atom63-design-system/pull/207) [`7b1bb6e`](https://github.com/atom63/atom63-design-system/commit/7b1bb6e88af05c22c58415ac39392a500e7686c5) Thanks [@atom63](https://github.com/atom63)! - Radio and Checkbox take `indicator` (`visible`, the default, or `hidden`): a hidden control stays focusable and announced but draws nothing, and its choice card shows a border and the focus ring. In a `size="sm"` Table, checkboxes and radios no longer add the layout margin that set the row height; their hit area is unchanged. SearchField takes `endAddon` for a control after the field. Avatar gains an `xs` size (20px).
+
+- [#202](https://github.com/atom63/atom63-design-system/pull/202) [`1d7bc85`](https://github.com/atom63/atom63-design-system/commit/1d7bc858d02f0a3f3fde54abc96632577b351308) Thanks [@atom63](https://github.com/atom63)! - Table takes `size` (`default`, `sm`) and `variant` (`default`, `plain`), and `TableHead` and `TableCell` take `sticky` (`start`, `end`). `sm` reads its row padding from the density contract. Item styles a row with `aria-current` or `data-selected` as current or selected. Toggle gains a `subtle` tone that shows a pressed state in the accent color with no fill.
+
+### Patch Changes
+
+- [#204](https://github.com/atom63/atom63-design-system/pull/204) [`b72b8a8`](https://github.com/atom63/atom63-design-system/commit/b72b8a8cd81f6bf9724ea05ff31b2ab91a22f160) Thanks [@atom63](https://github.com/atom63)! - SidebarNavGroup takes `collapsible` (with `defaultOpen`, or `open` and `onOpenChange`) so its label folds the group, and SidebarNavCollapsibleItem takes an `icon` for trigger-only sections. CommandInput takes `endAddon` for a shortcut hint or clear button, and `icon` to replace the built-in search icon.
+
 ## 0.1.1-beta.4
 
 ### Patch Changes

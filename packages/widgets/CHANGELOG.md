@@ -1,5 +1,12 @@
 # @atom63/widgets
 
+## 0.1.0-beta.3
+
+### Patch Changes
+
+- Updated dependencies [[`e5d395b`](https://github.com/atom63/atom63-design-system/commit/e5d395b48c402ad8421912f273274635cb33bfd1), [`292bd89`](https://github.com/atom63/atom63-design-system/commit/292bd899e32b8c62b9811567f4dc3047d41befe7), [`57a4a41`](https://github.com/atom63/atom63-design-system/commit/57a4a4191f29ffef0eaf823d17f84f9da0e97e89), [`0819d54`](https://github.com/atom63/atom63-design-system/commit/0819d54264e2219b6cb049e854e2e5e9c5c7f791), [`32e030a`](https://github.com/atom63/atom63-design-system/commit/32e030a63a913ae631a4083d55b881ecf246080e), [`7b1bb6e`](https://github.com/atom63/atom63-design-system/commit/7b1bb6e88af05c22c58415ac39392a500e7686c5), [`39c39c2`](https://github.com/atom63/atom63-design-system/commit/39c39c2280cf3fdfae86572b09f8d64a1923e791), [`f207dc7`](https://github.com/atom63/atom63-design-system/commit/f207dc774c67667e1e527d2f05580aa8ce4b6f4a), [`f0f16e1`](https://github.com/atom63/atom63-design-system/commit/f0f16e15ded421195835d722362566b1e1fa4ca3), [`76f2a23`](https://github.com/atom63/atom63-design-system/commit/76f2a23688dca40b03d3778e21ab6358d52c46e9), [`452732e`](https://github.com/atom63/atom63-design-system/commit/452732e3a0b090a5040f60f1e7fbddbecf580236), [`b72b8a8`](https://github.com/atom63/atom63-design-system/commit/b72b8a8cd81f6bf9724ea05ff31b2ab91a22f160), [`c0c30ea`](https://github.com/atom63/atom63-design-system/commit/c0c30eafb87fa8e94c1470973af888a76e7c9923), [`9e6182b`](https://github.com/atom63/atom63-design-system/commit/9e6182b6a00413aee4c57f46b54169b4d7bda951), [`4456f3e`](https://github.com/atom63/atom63-design-system/commit/4456f3ec076b52fc40dad7116e20711847f570d2), [`1d7bc85`](https://github.com/atom63/atom63-design-system/commit/1d7bc858d02f0a3f3fde54abc96632577b351308)]:
+  - @atom63/ui-react@0.2.0-beta.12
+
 ## 0.1.0-beta.2
 
 ### Patch Changes
