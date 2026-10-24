@@ -85,6 +85,27 @@ function resolveRender(
   return undefined
 }
 
+/* The children a part passes to useRender. Base UI hands a component's children
+   to its render element, so a childless render element (or a render function)
+   gets them. A render element that brings its own children keeps them, and with
+   asChild the children already are the element. */
+function renderChildren(
+  asChild: boolean | undefined,
+  render: useRender.ComponentProps<'button'>['render'],
+  children: React.ReactNode
+): React.ReactNode {
+  if (render) {
+    if (React.isValidElement<{ children?: React.ReactNode }>(render)) {
+      return render.props.children == null ? children : undefined
+    }
+    return children
+  }
+  if (asChild && React.isValidElement(children)) {
+    return undefined
+  }
+  return children
+}
+
 export type SidebarContextProps = {
   state: SidebarState
   open: boolean
@@ -425,7 +446,7 @@ function SidebarGroupLabel({
         className: cn('a63-Sidebar-group-label', className),
         'data-sidebar': 'group-label',
         'data-slot': 'sidebar-group-label',
-        children: render ? undefined : children,
+        children: renderChildren(asChild, renderProp, children),
       } as React.ComponentProps<'div'>,
       props
     ),
@@ -456,7 +477,7 @@ function SidebarGroupAction({
         className: cn('a63-Sidebar-group-action', className),
         'data-sidebar': 'group-action',
         'data-slot': 'sidebar-group-action',
-        children: render ? undefined : children,
+        children: renderChildren(asChild, renderProp, children),
         type: 'button',
       } as React.ComponentProps<'button'>,
       props
@@ -538,7 +559,7 @@ function SidebarMenuButton({
         'data-size': size,
         'data-slot': 'sidebar-menu-button',
         'data-variant': variant,
-        children: resolvedRender ? undefined : children,
+        children: renderChildren(asChild, renderProp, children),
         type: 'button',
       } as React.ComponentProps<'button'>,
       props
@@ -603,7 +624,7 @@ function SidebarMenuAction({
         ),
         'data-sidebar': 'menu-action',
         'data-slot': 'sidebar-menu-action',
-        children: render ? undefined : children,
+        children: renderChildren(asChild, renderProp, children),
         type: 'button',
       } as React.ComponentProps<'button'>,
       props
@@ -718,7 +739,7 @@ function SidebarMenuSubButton({
         'data-sidebar': 'menu-sub-button',
         'data-size': size,
         'data-slot': 'sidebar-menu-sub-button',
-        children: render ? undefined : children,
+        children: renderChildren(asChild, renderProp, children),
       } as React.ComponentProps<'a'>,
       props
     ),
