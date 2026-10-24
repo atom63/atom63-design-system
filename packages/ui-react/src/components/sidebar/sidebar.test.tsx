@@ -4,8 +4,10 @@ import { describe, expect, it, vi } from 'vitest'
 import {
   Sidebar,
   SidebarContent,
+  SidebarGroupAction,
   SidebarGroupLabel,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSubButton,
@@ -161,6 +163,24 @@ describe('Sidebar', () => {
       expect(getByRole('link', { name: 'Inbox' })).toHaveAttribute('href', '/inbox')
       expect(getByRole('link', { name: 'Sub page' })).toHaveAttribute('href', '/sub')
       expect(getByText('Workspace').tagName.toLowerCase()).toBe('h2')
+    })
+
+    it('hands the children to a childless render element in the action parts', () => {
+      /* eslint-disable jsx-a11y/anchor-has-content -- the parts fill the empty anchors. */
+      const { getByRole } = render(
+        <SidebarProvider>
+          <SidebarGroupAction render={<a href="/projects/new" />}>Add project</SidebarGroupAction>
+          <SidebarMenuAction render={<a href="/inbox/settings" />}>
+            Inbox settings
+          </SidebarMenuAction>
+        </SidebarProvider>
+      )
+      /* eslint-enable jsx-a11y/anchor-has-content */
+      expect(getByRole('link', { name: 'Add project' })).toHaveAttribute('href', '/projects/new')
+      expect(getByRole('link', { name: 'Inbox settings' })).toHaveAttribute(
+        'href',
+        '/inbox/settings'
+      )
     })
 
     it('keeps the content of a render element that brings its own', () => {
