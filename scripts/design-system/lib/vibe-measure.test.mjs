@@ -114,6 +114,19 @@ describe('findLiterals', () => {
     assert.deepEqual(found.literalColors, ['#333', 'rgb(0'])
   })
 
+  it('counts a hex value only where a color can stand, not in prose', () => {
+    const colors = text => findLiterals('src/App.tsx', text).literalColors
+    assert.deepEqual(colors(`description: 'Order #1042', label: 'Issue #123'`), [])
+    assert.deepEqual(colors(`title: '#2024 roadmap'`), [])
+    assert.deepEqual(colors('<path fill="#333" />'), ['#333'])
+    assert.deepEqual(colors(`background: 'linear-gradient(#fff, #000)'`), ['#fff', '#000'])
+    assert.deepEqual(colors('const s = `color: #333`'), ['#333'])
+    assert.deepEqual(colors(`border: '1px solid #ddd', boxShadow: '0 1px 2px #00000033'`), [
+      '#ddd',
+      '#00000033',
+    ])
+  })
+
   it('finds literal colors in CSS declarations, not selectors', () => {
     const found = findLiterals(
       'src/styles.css',

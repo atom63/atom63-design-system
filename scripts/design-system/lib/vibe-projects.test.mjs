@@ -92,6 +92,14 @@ describe('builderArgs', () => {
     assert.ok(!args.includes('--model'))
   })
 
+  it('anchors file writes at the project, not the shell directory', () => {
+    // `./**` follows a Bash `cd`; `/**` stays on the session's working directory.
+    const args = builderArgs({ ...options, arm: 'plain' })
+    assert.ok(args.includes('Edit(/**)'))
+    assert.ok(args.includes('Write(/**)'))
+    assert.ok(!args.some(arg => /^(Edit|Write)\(\.\//.test(arg)))
+  })
+
   it('gives only the ds arm the atom63 MCP server', () => {
     const ds = builderArgs({ ...options, arm: 'ds', model: 'sonnet' })
     assert.deepEqual(JSON.parse(value(ds, '--mcp-config')), {
