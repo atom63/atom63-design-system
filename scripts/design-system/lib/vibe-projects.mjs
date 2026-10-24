@@ -175,12 +175,15 @@ createRoot(root).render(
 
 /** Tools a builder may use. Bash is limited to the project's own scripts. */
 export const builderTools = ['Read', 'Edit', 'Write', 'Glob', 'Grep', 'Bash']
+/* `/**` anchors at the session's working directory, the project. `./**` follows
+   the shell's current directory, so a builder that ran `cd node_modules` lost
+   every write for the rest of its run. */
 export const builderAllowed = [
   'Read',
   'Glob',
   'Grep',
-  'Edit(./**)',
-  'Write(./**)',
+  'Edit(/**)',
+  'Write(/**)',
   'Bash(pnpm typecheck)',
   'Bash(pnpm build)',
   'Bash(pnpm run typecheck)',

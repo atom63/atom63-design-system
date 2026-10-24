@@ -44,8 +44,13 @@ export function craftViolations(relative, text) {
   return []
 }
 
+/* A hex value counts only where a color can stand: a whole string ('#333'),
+   after `:` or `=` (color: #333, fill="#333"), as a function argument
+   (linear-gradient(#fff, #000)), or after a CSS length or line style
+   (1px solid #ddd). It must end the value, so prose such as "Order #1042" or
+   "#2024 roadmap" does not count. */
 const LITERAL_COLOR =
-  /(?<![\w&[-])#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b|\b(?:rgba?|hsla?|oklch|oklab)\(\s*[\d.]/g
+  /(?<=['"`(]|[:=,]\s*|\(\s*|(?:solid|dashed|dotted|double|groove|ridge|inset|outset|px|em|rem|%|\d)\s+)#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})(?=['"`),;}]|\s*$|\s+(?![A-Za-z]))|\b(?:rgba?|hsla?|oklch|oklab)\(\s*[\d.]/gm
 
 /**
  * Literal values that should be tokens.
