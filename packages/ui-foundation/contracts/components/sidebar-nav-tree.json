@@ -4,7 +4,15 @@
   "maturity": "stable",
   "lists": {
     "states": ["rest", "hover", "active", "expanded", "collapsed", "focus-visible"],
-    "parts": ["group", "link-item", "collapsible-item", "toggle", "sub-list", "sub-link-item"],
+    "parts": [
+      "group",
+      "group-trigger",
+      "link-item",
+      "collapsible-item",
+      "toggle",
+      "sub-list",
+      "sub-link-item"
+    ],
     "visualArchetypes": ["action", "trigger"]
   },
   "contract": {

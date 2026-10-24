@@ -64,4 +64,21 @@ describe('Command', () => {
     expect(getByText('Blog')).toBeInTheDocument()
     expect(getByText('Navigate')).toBeInTheDocument()
   })
+
+  it('replaces the input icon and renders an end addon', () => {
+    const { container, rerender } = render(
+      <Command items={[]}>
+        <CommandInput endAddon={<kbd>F</kbd>} icon={<svg data-testid="custom-icon" />} />
+      </Command>
+    )
+    expect(container.querySelector('[data-testid="custom-icon"]')).not.toBeNull()
+    expect(container.querySelector('[data-slot="command-input-end"]')).toHaveTextContent('F')
+    rerender(
+      <Command items={[]}>
+        <CommandInput icon={null} />
+      </Command>
+    )
+    expect(container.querySelector('.a63-Command-input-icon')).toBeNull()
+    expect(container.querySelector('[data-slot="command-input-end"]')).toBeNull()
+  })
 })

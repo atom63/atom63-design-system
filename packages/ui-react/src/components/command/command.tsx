@@ -116,16 +116,27 @@ function SearchIcon() {
   )
 }
 
+export type CommandInputProps = React.ComponentProps<typeof AutocompletePrimitive.Input> & {
+  /** Content after the field, such as a `Kbd` shortcut hint or a clear button. */
+  endAddon?: React.ReactNode
+  /** Replaces the built-in search icon. Pass `null` to show none. */
+  icon?: React.ReactNode
+}
+
 export function CommandInput({
   className,
+  endAddon,
+  icon = <SearchIcon />,
   placeholder,
   ...props
-}: React.ComponentProps<typeof AutocompletePrimitive.Input>): React.ReactElement {
+}: CommandInputProps): React.ReactElement {
   return (
     <div className="a63-Command-input-wrapper" data-slot="command-input-wrapper">
-      <span aria-hidden className="a63-Command-input-icon">
-        <SearchIcon />
-      </span>
+      {icon ? (
+        <span aria-hidden className="a63-Command-input-icon">
+          {icon}
+        </span>
+      ) : null}
       <AutocompletePrimitive.Input
         // The list is inline and always open (see Command), so the combobox is
         // always expanded; ARIA requires the attribute on role="combobox".
@@ -136,6 +147,11 @@ export function CommandInput({
         placeholder={placeholder}
         {...props}
       />
+      {endAddon ? (
+        <span className="a63-Command-input-end" data-slot="command-input-end">
+          {endAddon}
+        </span>
+      ) : null}
     </div>
   )
 }

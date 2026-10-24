@@ -708,7 +708,13 @@ export function CommandGroup(input: React$1.ComponentProps<typeof AutocompletePr
 export function CommandGroupLabel(input: React$1.ComponentProps<typeof AutocompletePrimitive.GroupLabel>): React$1.ReactElement;
 
 // @public (undocumented)
-export function CommandInput(input: React$1.ComponentProps<typeof AutocompletePrimitive.Input>): React$1.ReactElement;
+export function CommandInput(input: CommandInputProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type CommandInputProps = React$1.ComponentProps<typeof AutocompletePrimitive.Input> & {
+    endAddon?: React$1.ReactNode;
+    icon?: React$1.ReactNode;
+};
 
 // @public (undocumented)
 export function CommandItem(input: React$1.ComponentProps<typeof AutocompletePrimitive.Item>): React$1.ReactElement;
@@ -2447,6 +2453,7 @@ export interface SidebarNavCollapsibleItemProps {
     children: React$1.ReactNode;
     // (undocumented)
     className?: string;
+    icon?: React$1.ReactNode;
     // (undocumented)
     isActive?: boolean;
     // (undocumented)
@@ -2467,8 +2474,13 @@ export interface SidebarNavGroupProps {
     children: React$1.ReactNode;
     // (undocumented)
     className?: string;
+    collapsible?: boolean;
+    defaultOpen?: boolean;
     // (undocumented)
     label: React$1.ReactNode;
+    // (undocumented)
+    onOpenChange?: (open: boolean) => void;
+    open?: boolean;
 }
 
 // @public (undocumented)

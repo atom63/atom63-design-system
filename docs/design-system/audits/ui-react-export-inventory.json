@@ -46,7 +46,7 @@
   },
   "counts": {
     "rootValueExports": 425,
-    "rootTypeExports": 185,
+    "rootTypeExports": 186,
     "packageExportKeys": 72,
     "cssExportKeys": 65
   },
@@ -1294,7 +1294,12 @@
           "proposedTier": "beta-supported-composition-conditional"
         }
       ],
-      "types": []
+      "types": [
+        {
+          "name": "CommandInputProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        }
+      ]
     },
     {
       "source": "./components/connected-panel",

@@ -21,6 +21,7 @@ import {
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { Filter } from 'lucide-react'
 import { Fragment, useMemo, useState } from 'react'
 
 const meta = {
@@ -101,6 +102,36 @@ export const Inline: Story = {
       }}
     >
       <Palette />
+    </div>
+  ),
+}
+
+/* The input's slots: a caller's icon in place of the search glyph, and a
+   shortcut hint after the field, as in a filter menu. */
+export const InputSlots: Story = {
+  render: () => (
+    <div
+      style={{
+        border: '1px solid var(--a63-border-subtle)',
+        borderRadius: 'var(--radius-2xl)',
+        background: 'var(--a63-surface-overlay)',
+        maxWidth: 360,
+        overflow: 'hidden',
+      }}
+    >
+      <Command itemToStringValue={item => (item as Item).value} items={groups[0].items}>
+        <CommandInput endAddon={<Kbd>F</Kbd>} icon={<Filter />} placeholder="Add filter…" />
+        <CommandPanel>
+          <CommandEmpty>No filters found.</CommandEmpty>
+          <CommandList>
+            {(item: Item) => (
+              <CommandItem key={item.id} value={item}>
+                {item.label}
+              </CommandItem>
+            )}
+          </CommandList>
+        </CommandPanel>
+      </Command>
     </div>
   ),
 }

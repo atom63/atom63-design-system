@@ -81,4 +81,66 @@ describe('SidebarNavTree', () => {
     await user.click(row)
     expect(onOpenChange).toHaveBeenCalledWith(true, expect.anything())
   })
+
+  it('folds a collapsible group from its label button', async () => {
+    const user = userEvent.setup()
+    const { getByRole, queryByRole } = render(
+      <SidebarProvider>
+        <SidebarNavGroup collapsible label="Workspace">
+          <SidebarNavLinkItem>
+            <a href="/inbox">Inbox</a>
+          </SidebarNavLinkItem>
+        </SidebarNavGroup>
+      </SidebarProvider>
+    )
+
+    const label = getByRole('button', { name: 'Workspace' })
+    expect(label).toHaveAttribute('aria-expanded', 'true')
+    expect(getByRole('link', { name: 'Inbox' })).toBeInTheDocument()
+
+    await user.click(label)
+    expect(label).toHaveAttribute('aria-expanded', 'false')
+    expect(queryByRole('link', { name: 'Inbox' })).toBeNull()
+  })
+
+  it('reports a controlled group toggle and starts closed when asked', async () => {
+    const user = userEvent.setup()
+    const onOpenChange = vi.fn()
+    const { getByRole } = render(
+      <SidebarProvider>
+        <SidebarNavGroup collapsible label="Try" onOpenChange={onOpenChange} open={false}>
+          <SidebarNavLinkItem>
+            <a href="/import">Import</a>
+          </SidebarNavLinkItem>
+        </SidebarNavGroup>
+      </SidebarProvider>
+    )
+    const label = getByRole('button', { name: 'Try' })
+    expect(label).toHaveAttribute('aria-expanded', 'false')
+    await user.click(label)
+    expect(onOpenChange).toHaveBeenCalledWith(true)
+  })
+
+  it('draws an icon before the label of a trigger-only section', () => {
+    const { getByRole } = render(
+      <SidebarProvider>
+        <SidebarNavGroup label="Nav">
+          <SidebarNavCollapsibleItem
+            icon={<svg data-testid="section-icon" />}
+            label="Payments"
+            onOpenChange={() => {}}
+            open={false}
+          >
+            <SidebarNavSubList>
+              <SidebarNavSubLinkItem>
+                <a href="/t">Transactions</a>
+              </SidebarNavSubLinkItem>
+            </SidebarNavSubList>
+          </SidebarNavCollapsibleItem>
+        </SidebarNavGroup>
+      </SidebarProvider>
+    )
+    const row = getByRole('button', { name: 'Payments' })
+    expect(row.querySelector('[data-testid="section-icon"]')).not.toBeNull()
+  })
 })

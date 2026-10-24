@@ -13,6 +13,7 @@ export const sidebarNavTreeStates = [
 ] as const
 export const sidebarNavTreeParts = [
   'group',
+  'group-trigger',
   'link-item',
   'collapsible-item',
   'toggle',
