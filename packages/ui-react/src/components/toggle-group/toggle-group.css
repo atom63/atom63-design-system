@@ -115,6 +115,9 @@
   background-color: var(--a63-action-primary);
   color: var(--a63-action-primary-foreground);
 }
+.a63-ToggleGroup[data-variant='pills'] .a63-Toggle[data-pressed][data-tone='subtle'] {
+  color: var(--a63-text-accent);
+}
 
 /* ── Separator ─────────────────────────────────────────────────────────── */
 
