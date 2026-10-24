@@ -55,4 +55,17 @@ describe('RadioGroup', () => {
   it('RadioGroupItem is the Radio alias', () => {
     expect(RadioGroupItem).toBe(Radio)
   })
+
+  it('shows its indicator by default and can hide it while staying a radio', () => {
+    const { getAllByRole } = render(
+      <RadioGroup aria-label="Pick">
+        <Radio aria-label="Shown" value="a" />
+        <Radio aria-label="Hidden" indicator="hidden" value="b" />
+      </RadioGroup>
+    )
+    const [shown, hidden] = getAllByRole('radio')
+    expect(shown).toHaveAttribute('data-indicator', 'visible')
+    expect(hidden).toHaveAttribute('data-indicator', 'hidden')
+    expect(hidden).toHaveAccessibleName('Hidden')
+  })
 })

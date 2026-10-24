@@ -469,7 +469,7 @@ export interface AvatarContract {
 export const avatarContract: {
     compositions: readonly ["standalone", "badge", "group"];
     defaultSize: "default";
-    sizes: readonly ["sm", "default", "lg"];
+    sizes: readonly ["xs", "sm", "default", "lg"];
     slots: readonly ["avatar", "avatar-image", "avatar-fallback", "avatar-badge", "avatar-group", "avatar-group-count"];
     states: readonly ["loading", "loaded", "fallback"];
     visualArchetypes: readonly ["marker"];
@@ -479,7 +479,7 @@ export const avatarContract: {
 export type AvatarSize = (typeof avatarSizes)[number];
 
 // @public (undocumented)
-export const avatarSizes: readonly ["sm", "default", "lg"];
+export const avatarSizes: readonly ["xs", "sm", "default", "lg"];
 
 // @public (undocumented)
 export type AvatarSlot = (typeof avatarSlots)[number];
@@ -950,7 +950,11 @@ export const carouselVisualArchetypes: readonly ["surface", "overlay", "action"]
 export interface CheckboxContract {
     accessibility: A11yPatternBinding;
     // (undocumented)
+    defaultIndicator: CheckboxIndicator;
+    // (undocumented)
     defaultSize: CheckboxSize;
+    // (undocumented)
+    indicators: readonly CheckboxIndicator[];
     // (undocumented)
     sizes: readonly CheckboxSize[];
     // (undocumented)
@@ -967,11 +971,19 @@ export const checkboxContract: {
         pattern: "checkbox";
     };
     defaultSize: "md";
+    defaultIndicator: "visible";
     sizes: readonly ["sm", "md"];
     states: readonly ["unchecked", "checked", "indeterminate", "disabled", "invalid"];
     slots: readonly ["checkbox", "checkbox-indicator"];
     visualArchetypes: readonly ["choice"];
+    indicators: readonly ["visible", "hidden"];
 };
+
+// @public (undocumented)
+export type CheckboxIndicator = (typeof checkboxIndicators)[number];
+
+// @public (undocumented)
+export const checkboxIndicators: readonly ["visible", "hidden"];
 
 // @public
 export const checkboxPattern: A11yPatternContract;
@@ -1198,7 +1210,7 @@ export const copyButtonContract: {
         readonly icon: "icon-xl";
         readonly label: "xl";
     }];
-    sizes: ("sm" | "lg" | "md" | "xs" | "xl" | "icon-xs" | "icon-sm" | "icon" | "icon-lg" | "icon-xl")[];
+    sizes: ("xs" | "sm" | "lg" | "md" | "xl" | "icon-xs" | "icon-sm" | "icon" | "icon-lg" | "icon-xl")[];
     slots: readonly ["button", "button-label", "copy-button-swap", "copy-button-item", "animated-check"];
     states: readonly ["rest", "hover", "pressed", "focus-visible", "copied"];
     variants: readonly ["ghost", "outline", "secondary"];
@@ -1227,7 +1239,7 @@ export const copyButtonSizePairs: readonly [{
 }];
 
 // @public (undocumented)
-export const copyButtonSizes: ("sm" | "lg" | "md" | "xs" | "xl" | "icon-xs" | "icon-sm" | "icon" | "icon-lg" | "icon-xl")[];
+export const copyButtonSizes: ("xs" | "sm" | "lg" | "md" | "xl" | "icon-xs" | "icon-sm" | "icon" | "icon-lg" | "icon-xl")[];
 
 // @public (undocumented)
 export type CopyButtonSlot = (typeof copyButtonSlots)[number];
@@ -3414,7 +3426,11 @@ export const radii: readonly ["none", "subtle", "default", "round"];
 export interface RadioContract {
     accessibility: A11yPatternBinding;
     // (undocumented)
+    defaultIndicator: RadioIndicator;
+    // (undocumented)
     defaultSize: RadioSize;
+    // (undocumented)
+    indicators: readonly RadioIndicator[];
     // (undocumented)
     sizes: readonly RadioSize[];
     // (undocumented)
@@ -3431,11 +3447,19 @@ export const radioContract: {
         pattern: "radio";
     };
     defaultSize: "md";
+    defaultIndicator: "visible";
     sizes: readonly ["sm", "md"];
     states: readonly ["unchecked", "checked", "focus-visible", "disabled", "invalid"];
     slots: readonly ["radio-group", "radio", "radio-indicator"];
     visualArchetypes: readonly ["choice"];
+    indicators: readonly ["visible", "hidden"];
 };
+
+// @public (undocumented)
+export type RadioIndicator = (typeof radioIndicators)[number];
+
+// @public (undocumented)
+export const radioIndicators: readonly ["visible", "hidden"];
 
 // @public
 export const radioPattern: A11yPatternContract;
@@ -3659,7 +3683,7 @@ export interface SearchFieldContract {
 
 // @public (undocumented)
 export const searchFieldContract: {
-    slots: readonly ["search-field", "search-field-icon", "search-field-input", "search-field-clear"];
+    slots: readonly ["search-field", "search-field-icon", "search-field-input", "search-field-clear", "search-field-end"];
     states: readonly ["empty", "query", "focus", "disabled"];
     visualArchetypes: readonly ["field", "action"];
 };
@@ -3668,7 +3692,7 @@ export const searchFieldContract: {
 export type SearchFieldSlot = (typeof searchFieldSlots)[number];
 
 // @public (undocumented)
-export const searchFieldSlots: readonly ["search-field", "search-field-icon", "search-field-input", "search-field-clear"];
+export const searchFieldSlots: readonly ["search-field", "search-field-icon", "search-field-input", "search-field-clear", "search-field-end"];
 
 // @public (undocumented)
 export type SearchFieldState = (typeof searchFieldStates)[number];

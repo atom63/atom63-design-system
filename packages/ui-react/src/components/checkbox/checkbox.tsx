@@ -1,6 +1,6 @@
 'use client'
 
-import { type CheckboxSize, checkboxContract } from '@atom63/ui-foundation'
+import { type CheckboxIndicator, type CheckboxSize, checkboxContract } from '@atom63/ui-foundation'
 import { Checkbox as CheckboxPrimitive } from '@base-ui/react/checkbox'
 import type * as React from 'react'
 
@@ -8,6 +8,8 @@ import { cn } from '../../lib/cn'
 
 export type CheckboxProps = Omit<CheckboxPrimitive.Root.Props, 'className'> & {
   className?: string
+  /** `hidden` keeps the checkbox focusable and announced but draws no box, for choice cards. */
+  indicator?: CheckboxIndicator
   size?: CheckboxSize
 }
 
@@ -36,12 +38,14 @@ const MinusIcon = (
  */
 export function Checkbox({
   className,
+  indicator = checkboxContract.defaultIndicator,
   size = checkboxContract.defaultSize,
   ...props
 }: CheckboxProps): React.ReactElement {
   return (
     <CheckboxPrimitive.Root
       className={cn('a63-Checkbox', className)}
+      data-indicator={indicator}
       data-size={size}
       data-slot="checkbox"
       {...props}

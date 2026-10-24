@@ -35,6 +35,10 @@ export const Playground: Story = {
 export const Sizes: Story = {
   render: () => (
     <div style={{ alignItems: 'center', display: 'flex', gap: 16 }}>
+      <Avatar size="xs">
+        <AvatarImage src={SRC} alt="Ada" />
+        <AvatarFallback>AL</AvatarFallback>
+      </Avatar>
       <Avatar size="sm">
         <AvatarImage src={SRC} alt="Ada" />
         <AvatarFallback>AL</AvatarFallback>

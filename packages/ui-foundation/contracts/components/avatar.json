@@ -3,7 +3,7 @@
   "component": "avatar",
   "maturity": "stable",
   "lists": {
-    "sizes": ["sm", "default", "lg"],
+    "sizes": ["xs", "sm", "default", "lg"],
     "states": ["loading", "loaded", "fallback"],
     "compositions": ["standalone", "badge", "group"],
     "slots": [

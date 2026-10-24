@@ -195,7 +195,7 @@
       "maturity": "stable",
       "axes": [
         { "name": "compositions", "values": ["standalone", "badge", "group"] },
-        { "name": "sizes", "values": ["sm", "default", "lg"], "default": "default" }
+        { "name": "sizes", "values": ["xs", "sm", "default", "lg"], "default": "default" }
       ],
       "slots": [
         "avatar",
@@ -835,7 +835,10 @@
       "source": "packages/ui-foundation/contracts/components/checkbox.json",
       "exportName": "checkboxContract",
       "maturity": "stable",
-      "axes": [{ "name": "sizes", "values": ["sm", "md"], "default": "md" }],
+      "axes": [
+        { "name": "sizes", "values": ["sm", "md"], "default": "md" },
+        { "name": "indicators", "values": ["visible", "hidden"], "default": "visible" }
+      ],
       "slots": ["checkbox", "checkbox-indicator"],
       "states": ["unchecked", "checked", "indeterminate", "disabled", "invalid"],
       "tokenSlots": [],
@@ -1771,7 +1774,10 @@
       "source": "packages/ui-foundation/contracts/components/radio.json",
       "exportName": "radioContract",
       "maturity": "stable",
-      "axes": [{ "name": "sizes", "values": ["sm", "md"], "default": "md" }],
+      "axes": [
+        { "name": "sizes", "values": ["sm", "md"], "default": "md" },
+        { "name": "indicators", "values": ["visible", "hidden"], "default": "visible" }
+      ],
       "slots": ["radio-group", "radio", "radio-indicator"],
       "states": ["unchecked", "checked", "focus-visible", "disabled", "invalid"],
       "tokenSlots": [],
@@ -1865,7 +1871,13 @@
       "exportName": "searchFieldContract",
       "maturity": "stable",
       "axes": [],
-      "slots": ["search-field", "search-field-icon", "search-field-input", "search-field-clear"],
+      "slots": [
+        "search-field",
+        "search-field-icon",
+        "search-field-input",
+        "search-field-clear",
+        "search-field-end"
+      ],
       "states": ["empty", "query", "focus", "disabled"],
       "tokenSlots": [],
       "visualArchetypes": ["field", "action"],

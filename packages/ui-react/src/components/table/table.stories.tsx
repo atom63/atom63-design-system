@@ -1,6 +1,7 @@
 import { tableContract, themes } from '@atom63/ui-foundation'
 import {
   Button,
+  Checkbox,
   Table,
   TableBody,
   TableCaption,
@@ -177,6 +178,39 @@ export const Plain: Story = {
         <TableBody>
           {rows.map(r => (
             <TableRow key={r.invoice}>
+              <TableCell>{r.invoice}</TableCell>
+              <TableCell>{r.status}</TableCell>
+              <TableCell>{r.amount}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  ),
+}
+
+/* size="sm" with row checkboxes: the checkbox keeps its hit area but no longer
+   sets the row height. */
+export const SelectableRows: Story = {
+  render: () => (
+    <div style={{ width: 480 }}>
+      <Table size="sm">
+        <TableHeader>
+          <TableRow>
+            <TableHead>
+              <Checkbox aria-label="Select all invoices" />
+            </TableHead>
+            <TableHead>Invoice</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Amount</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map(r => (
+            <TableRow key={r.invoice}>
+              <TableCell>
+                <Checkbox aria-label={`Select ${r.invoice}`} />
+              </TableCell>
               <TableCell>{r.invoice}</TableCell>
               <TableCell>{r.status}</TableCell>
               <TableCell>{r.amount}</TableCell>

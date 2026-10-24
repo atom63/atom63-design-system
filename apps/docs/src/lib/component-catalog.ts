@@ -489,7 +489,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Sidebar provides responsive application-shell structure, state, rail, menus, and inset content.',
     usage:
-      'Mount it through Sidebar Provider and keep responsive visibility aligned to the md breakpoint.',
+      'Mount it through Sidebar Provider and keep responsive visibility aligned to the md breakpoint. For navigation with folding groups and expandable sections, compose Sidebar Nav Tree (SidebarNavGroup collapsible) inside it.',
     usageExports: [
       'SidebarProvider',
       'Sidebar',
@@ -501,7 +501,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
   'sidebar-nav-tree': {
     relatedSlugs: ['sidebar', 'breadcrumb', 'collapsible'],
     summary:
-      'Sidebar Nav Tree composes labelled navigation groups, links, sublists, and collapsible branches.',
+      'Sidebar Nav Tree composes labelled navigation groups that can fold, links, sublists, and collapsible sections with icons.',
     usage:
       'Preserve link semantics and expose the current route independently from expanded branch state.',
     usageExports: ['SidebarNavGroup', 'SidebarNavLinkItem', 'SidebarNavCollapsibleItem'],

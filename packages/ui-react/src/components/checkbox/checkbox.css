@@ -36,6 +36,19 @@
     box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
 }
 
+/* indicator="hidden": a choice card shows the state, so the control stays in
+   the accessibility tree and the tab order but draws nothing. The card draws
+   the focus ring (field.css). */
+.a63-Checkbox[data-indicator='hidden'] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  opacity: 0;
+}
+
 .a63-Checkbox::after {
   content: '';
   position: absolute;
