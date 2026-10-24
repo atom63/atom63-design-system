@@ -4,7 +4,7 @@
   "maturity": "stable",
   "lists": {
     "sizes": ["sm", "md", "lg"],
-    "tones": ["neutral", "accent"],
+    "tones": ["neutral", "accent", "subtle"],
     "states": ["off", "on", "rest", "hover", "pressed", "disabled", "focus"],
     "slots": ["toggle", "toggle-content"],
     "tokenSlots": [
@@ -61,7 +61,10 @@
     ],
     "accessibilityOutcomes": ["exposes-label", "announces-selected-state", "preserves-button-role"],
     "platformAdaptations": {
-      "react": ["Uses a pressed-state web toggle with hover and focus-visible feedback."],
+      "react": [
+        "Uses a pressed-state web toggle with hover and focus-visible feedback.",
+        "The subtle tone (accent color, no fill) is web-only."
+      ],
       "swiftUI": ["Uses a touch-sized button-backed chip for compact filter selection."]
     }
   }

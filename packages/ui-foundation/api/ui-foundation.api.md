@@ -1430,7 +1430,7 @@ export const crossRendererContracts: readonly [{
     readonly sharedOutcomes: readonly ["selected-state-is-visible", "activation-toggles-selection", "disabled-prevents-change"];
     readonly accessibilityOutcomes: readonly ["exposes-label", "announces-selected-state", "preserves-button-role"];
     readonly platformAdaptations: {
-        readonly react: readonly ["Uses a pressed-state web toggle with hover and focus-visible feedback."];
+        readonly react: readonly ["Uses a pressed-state web toggle with hover and focus-visible feedback.", "The subtle tone (accent color, no fill) is web-only."];
         readonly swiftUI: readonly ["Uses a touch-sized button-backed chip for compact filter selection."];
     };
 }, {
@@ -2540,7 +2540,7 @@ export const itemContract: {
     sizes: readonly ["default", "sm", "xs"];
     mediaVariants: readonly ["default", "icon", "image"];
     slots: readonly ["item-group", "item", "item-media", "item-content", "item-title", "item-description", "item-actions", "item-header", "item-footer", "item-separator"];
-    states: readonly ["rest", "hover", "focus"];
+    states: readonly ["rest", "hover", "focus", "selected", "current"];
     visualArchetypes: readonly ["surface"];
 };
 
@@ -2566,7 +2566,7 @@ export const itemSlots: readonly ["item-group", "item", "item-media", "item-cont
 export type ItemState = (typeof itemStates)[number];
 
 // @public (undocumented)
-export const itemStates: readonly ["rest", "hover", "focus"];
+export const itemStates: readonly ["rest", "hover", "focus", "selected", "current"];
 
 // @public (undocumented)
 export type ItemVariant = (typeof itemVariants)[number];
@@ -4278,19 +4278,40 @@ export const switchVisualArchetypes: readonly ["choice"];
 // @public (undocumented)
 export interface TableContract {
     // (undocumented)
+    defaultSize: TableSize;
+    // (undocumented)
+    defaultVariant: TableVariant;
+    // (undocumented)
+    sizes: readonly TableSize[];
+    // (undocumented)
     slots: readonly TableSlot[];
     // (undocumented)
     states: readonly TableState[];
+    // (undocumented)
+    stickyEdges: readonly TableStickyEdge[];
+    // (undocumented)
+    variants: readonly TableVariant[];
     // (undocumented)
     visualArchetypes: readonly TableVisualArchetype[];
 }
 
 // @public (undocumented)
 export const tableContract: {
+    defaultVariant: "default";
+    defaultSize: "default";
+    variants: readonly ["default", "plain"];
+    sizes: readonly ["default", "sm"];
+    stickyEdges: readonly ["start", "end"];
     states: readonly ["rest", "row-hover", "row-selected"];
     slots: readonly ["table-container", "table", "table-header", "table-body", "table-footer", "table-row", "table-head", "table-cell", "table-caption"];
     visualArchetypes: readonly ["surface"];
 };
+
+// @public (undocumented)
+export type TableSize = (typeof tableSizes)[number];
+
+// @public (undocumented)
+export const tableSizes: readonly ["default", "sm"];
 
 // @public (undocumented)
 export type TableSlot = (typeof tableSlots)[number];
@@ -4303,6 +4324,18 @@ export type TableState = (typeof tableStates)[number];
 
 // @public (undocumented)
 export const tableStates: readonly ["rest", "row-hover", "row-selected"];
+
+// @public (undocumented)
+export type TableStickyEdge = (typeof tableStickyEdges)[number];
+
+// @public (undocumented)
+export const tableStickyEdges: readonly ["start", "end"];
+
+// @public (undocumented)
+export type TableVariant = (typeof tableVariants)[number];
+
+// @public (undocumented)
+export const tableVariants: readonly ["default", "plain"];
 
 // @public (undocumented)
 export type TableVisualArchetype = (typeof tableVisualArchetypes)[number];
@@ -4569,7 +4602,7 @@ export const toggleContract: {
     slots: readonly ["toggle", "toggle-content"];
     states: readonly ["off", "on", "rest", "hover", "pressed", "disabled", "focus"];
     tokenSlots: readonly ["toggle.background", "toggle.foreground", "toggle.hoverBackground", "toggle.onBackground", "toggle.onForeground", "toggle.primaryBackground", "toggle.primaryForeground", "toggle.borderWidth", "toggle.radius", "toggle.gloss", "toggle.shadow", "toggle.shadowActive", "toggle.textShadow"];
-    tones: readonly ["neutral", "accent"];
+    tones: readonly ["neutral", "accent", "subtle"];
     visualArchetypes: readonly ["toggle"];
 };
 
@@ -4681,7 +4714,7 @@ export const toggleTokenSlots: readonly ["toggle.background", "toggle.foreground
 export type ToggleTone = (typeof toggleTones)[number];
 
 // @public (undocumented)
-export const toggleTones: readonly ["neutral", "accent"];
+export const toggleTones: readonly ["neutral", "accent", "subtle"];
 
 // @public (undocumented)
 export type ToggleVisualArchetype = (typeof toggleVisualArchetypes)[number];

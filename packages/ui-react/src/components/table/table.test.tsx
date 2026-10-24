@@ -67,4 +67,39 @@ describe('Table', () => {
     expect(container.querySelector('[data-slot="table-row"]')).toHaveClass('custom-row')
     expect(container.querySelector('[data-slot="table-cell"]')).toHaveClass('custom-cell')
   })
+
+  it('puts size and variant on the container, defaulting from the contract', () => {
+    const { container, rerender } = render(<Table />)
+    const wrapper = () => container.querySelector('[data-slot="table-container"]')
+    expect(wrapper()).toHaveAttribute('data-size', 'default')
+    expect(wrapper()).toHaveAttribute('data-variant', 'default')
+    rerender(<Table size="sm" variant="plain" />)
+    expect(wrapper()).toHaveAttribute('data-size', 'sm')
+    expect(wrapper()).toHaveAttribute('data-variant', 'plain')
+  })
+
+  it('marks sticky head and body cells, and leaves others unmarked', () => {
+    const { container } = render(
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead sticky="start">H</TableHead>
+            <TableHead>M</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>M</TableCell>
+            <TableCell sticky="end">E</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    )
+    const heads = container.querySelectorAll('[data-slot="table-head"]')
+    const cells = container.querySelectorAll('[data-slot="table-cell"]')
+    expect(heads[0]).toHaveAttribute('data-sticky', 'start')
+    expect(heads[1]).not.toHaveAttribute('data-sticky')
+    expect(cells[0]).not.toHaveAttribute('data-sticky')
+    expect(cells[1]).toHaveAttribute('data-sticky', 'end')
+  })
 })
