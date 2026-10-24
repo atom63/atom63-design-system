@@ -5,7 +5,8 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 
 // Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size
 // (default/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off
-// data-variant / data-size.
+// data-variant / data-size, and styles a row with aria-current or data-selected as current or
+// selected.
 
 export const itemVariants = ['default', 'outline', 'muted'] as const
 export const itemSizes = ['default', 'sm', 'xs'] as const
@@ -22,7 +23,7 @@ export const itemSlots = [
   'item-footer',
   'item-separator',
 ] as const
-export const itemStates = ['rest', 'hover', 'focus'] as const
+export const itemStates = ['rest', 'hover', 'focus', 'selected', 'current'] as const
 export const itemVisualArchetypes = ['surface'] as const satisfies readonly VisualArchetypeId[]
 
 export type ItemVariant = (typeof itemVariants)[number]

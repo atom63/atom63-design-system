@@ -106,6 +106,9 @@ import { SidebarVariant } from '@atom63/ui-foundation';
 import { Slider as Slider_2 } from '@base-ui/react/slider';
 import { Switch as Switch_2 } from '@base-ui/react/switch';
 import { SwitchSize } from '@atom63/ui-foundation';
+import { TableSize } from '@atom63/ui-foundation';
+import { TableStickyEdge } from '@atom63/ui-foundation';
+import { TableVariant } from '@atom63/ui-foundation';
 import { Tabs as Tabs_2 } from '@base-ui/react/tabs';
 import { TabsSize } from '@atom63/ui-foundation';
 import { TabsVariant } from '@atom63/ui-foundation';
@@ -2587,7 +2590,9 @@ export type TableCaptionProps = React$1.ComponentProps<'caption'>;
 export function TableCell(input: TableCellProps): React$1.ReactElement;
 
 // @public (undocumented)
-export type TableCellProps = React$1.ComponentProps<'td'>;
+export type TableCellProps = React$1.ComponentProps<'td'> & {
+    sticky?: TableStickyEdge;
+};
 
 // @public (undocumented)
 export function TableFooter(input: TableFooterProps): React$1.ReactElement;
@@ -2605,10 +2610,15 @@ export function TableHeader(input: TableHeaderProps): React$1.ReactElement;
 export type TableHeaderProps = React$1.ComponentProps<'thead'>;
 
 // @public (undocumented)
-export type TableHeadProps = React$1.ComponentProps<'th'>;
+export type TableHeadProps = React$1.ComponentProps<'th'> & {
+    sticky?: TableStickyEdge;
+};
 
 // @public (undocumented)
-export type TableProps = React$1.ComponentProps<'table'>;
+export type TableProps = React$1.ComponentProps<'table'> & {
+    size?: TableSize;
+    variant?: TableVariant;
+};
 
 // @public (undocumented)
 export function TableRow(input: TableRowProps): React$1.ReactElement;

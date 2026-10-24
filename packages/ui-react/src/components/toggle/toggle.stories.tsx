@@ -56,6 +56,16 @@ export const Tones: Story = {
       <Toggle defaultPressed tone="accent">
         Accent
       </Toggle>
+      <Toggle defaultPressed tone="subtle">
+        Subtle
+      </Toggle>
+      {/* Subtle suits icon toggles in a toolbar: the pressed one only changes color. */}
+      <Toggle aria-label="Favorite" defaultPressed tone="subtle">
+        <Star aria-hidden />
+      </Toggle>
+      <Toggle aria-label="Favorite (off)" tone="subtle">
+        <Star aria-hidden />
+      </Toggle>
     </div>
   ),
 }
