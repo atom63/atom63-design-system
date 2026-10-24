@@ -1,5 +1,13 @@
 import { checkboxContract, checkboxSizes, themes } from '@atom63/ui-foundation'
-import { Checkbox, UIProvider } from '@atom63/ui-react'
+import {
+  Checkbox,
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldLabel,
+  FieldTitle,
+  UIProvider,
+} from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
@@ -56,6 +64,34 @@ export const WithLabel: Story = {
 
 /* Selection theming: the checked fill is --a63-selection-accent (= brand primary),
    so it follows each theme + mode for free (same contract as Switch). */
+/* Multi-select cards with indicator="hidden": the checked cards carry the
+   state, and each checkbox stays focusable and announced. */
+export const HiddenIndicator: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 8, gridTemplateColumns: 'repeat(3, minmax(0, 9rem))' }}>
+      {[
+        { checked: true, id: 'email', label: 'Email', detail: 'Daily digest' },
+        { checked: false, id: 'push', label: 'Push', detail: 'Mentions only' },
+        { checked: true, id: 'sms', label: 'SMS', detail: 'Security alerts' },
+      ].map(option => (
+        <FieldLabel htmlFor={`channel-${option.id}`} key={option.id}>
+          <Field orientation="horizontal">
+            <FieldContent>
+              <FieldTitle>{option.label}</FieldTitle>
+              <FieldDescription>{option.detail}</FieldDescription>
+            </FieldContent>
+            <Checkbox
+              defaultChecked={option.checked}
+              id={`channel-${option.id}`}
+              indicator="hidden"
+            />
+          </Field>
+        </FieldLabel>
+      ))}
+    </div>
+  ),
+}
+
 export const Themes: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>

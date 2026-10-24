@@ -3,7 +3,7 @@
 
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
-export const avatarSizes = ['sm', 'default', 'lg'] as const
+export const avatarSizes = ['xs', 'sm', 'default', 'lg'] as const
 export const avatarStates = ['loading', 'loaded', 'fallback'] as const
 export const avatarCompositions = ['standalone', 'badge', 'group'] as const
 export const avatarSlots = [

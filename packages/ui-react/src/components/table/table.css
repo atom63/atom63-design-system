@@ -100,6 +100,13 @@
 .a63-Table-container[data-size='sm'] .a63-Table-cell {
   padding-block: var(--a63-row-padding-block-xs);
 }
+/* A checkbox or radio keeps its hit area through its ::after overlay, so in a
+   dense table it drops the layout margin that would set the row height. */
+.a63-Table-container[data-size='sm']
+  :is(.a63-Table-head, .a63-Table-cell)
+  :is(.a63-Checkbox, .a63-Radio) {
+  margin: 0;
+}
 
 /* ── Plain variant: no dividers between body rows ─────────────────────── */
 .a63-Table-container[data-variant='plain'] .a63-Table-body .a63-Table-row {

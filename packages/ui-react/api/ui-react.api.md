@@ -24,6 +24,7 @@ import { CardLineClamp } from '@atom63/ui-foundation';
 import { CardPadding } from '@atom63/ui-foundation';
 import { CardVariant } from '@atom63/ui-foundation';
 import { Checkbox as Checkbox_2 } from '@base-ui/react/checkbox';
+import { CheckboxIndicator } from '@atom63/ui-foundation';
 import { CheckboxSize } from '@atom63/ui-foundation';
 import { Collapsible as Collapsible_2 } from '@base-ui/react/collapsible';
 import { ComponentProps } from 'react';
@@ -77,6 +78,7 @@ import { PreviewCard as PreviewCard_2 } from '@base-ui/react/preview-card';
 import { Progress as ProgressPrimitive } from '@base-ui/react/progress';
 import { Radio as Radio_2 } from '@base-ui/react/radio';
 import { RadioGroup as RadioGroup_2 } from '@base-ui/react/radio-group';
+import { RadioIndicator } from '@atom63/ui-foundation';
 import { RadioSize } from '@atom63/ui-foundation';
 import * as React$1 from 'react';
 import React__default from 'react';
@@ -638,6 +640,7 @@ export function Checkbox(input: CheckboxProps): React$1.ReactElement;
 // @public (undocumented)
 export type CheckboxProps = Omit<Checkbox_2.Root.Props, 'className'> & {
     className?: string;
+    indicator?: CheckboxIndicator;
     size?: CheckboxSize;
 };
 
@@ -1908,6 +1911,7 @@ export type RadioGroupProps = Omit<RadioGroup_2.Props, 'className'> & {
 // @public (undocumented)
 export type RadioProps = Omit<Radio_2.Root.Props, 'className'> & {
     className?: string;
+    indicator?: RadioIndicator;
     size?: RadioSize;
 };
 
@@ -2176,6 +2180,7 @@ export interface SearchFieldProps extends Omit<InputGroupInputProps, 'className'
     clearLabel?: string;
     // (undocumented)
     defaultValue?: string;
+    endAddon?: React$1.ReactNode;
     // (undocumented)
     inputClassName?: string;
     // (undocumented)

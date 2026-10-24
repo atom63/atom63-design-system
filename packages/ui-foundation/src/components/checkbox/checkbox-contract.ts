@@ -5,6 +5,7 @@ import type { A11yPatternBinding } from '../../a11y/types'
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 export const checkboxSizes = ['sm', 'md'] as const
+export const checkboxIndicators = ['visible', 'hidden'] as const
 export const checkboxStates = [
   'unchecked',
   'checked',
@@ -16,6 +17,7 @@ export const checkboxSlots = ['checkbox', 'checkbox-indicator'] as const
 export const checkboxVisualArchetypes = ['choice'] as const satisfies readonly VisualArchetypeId[]
 
 export type CheckboxSize = (typeof checkboxSizes)[number]
+export type CheckboxIndicator = (typeof checkboxIndicators)[number]
 export type CheckboxState = (typeof checkboxStates)[number]
 export type CheckboxSlot = (typeof checkboxSlots)[number]
 export type CheckboxVisualArchetype = (typeof checkboxVisualArchetypes)[number]
@@ -24,17 +26,21 @@ export interface CheckboxContract {
   /** The WAI-ARIA APG pattern the component implements. */
   accessibility: A11yPatternBinding
   defaultSize: CheckboxSize
+  defaultIndicator: CheckboxIndicator
   sizes: readonly CheckboxSize[]
   states: readonly CheckboxState[]
   slots: readonly CheckboxSlot[]
   visualArchetypes: readonly CheckboxVisualArchetype[]
+  indicators: readonly CheckboxIndicator[]
 }
 
 export const checkboxContract = {
   accessibility: { pattern: 'checkbox' },
   defaultSize: 'md',
+  defaultIndicator: 'visible',
   sizes: checkboxSizes,
   states: checkboxStates,
   slots: checkboxSlots,
   visualArchetypes: checkboxVisualArchetypes,
+  indicators: checkboxIndicators,
 } satisfies CheckboxContract

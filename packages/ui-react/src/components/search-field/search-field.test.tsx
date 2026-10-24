@@ -62,4 +62,10 @@ describe('SearchField', () => {
     expect(screen.getByRole('searchbox', { name: 'Search projects' })).toBeDisabled()
     expect(screen.queryByRole('button', { name: 'Clear search' })).not.toBeInTheDocument()
   })
+
+  it('renders an end addon after the field', () => {
+    render(<SearchField aria-label="Search" endAddon={<button type="button">Browse</button>} />)
+    const browse = screen.getByRole('button', { name: 'Browse' })
+    expect(browse.closest('[data-slot="search-field-end"]')).not.toBeNull()
+  })
 })
