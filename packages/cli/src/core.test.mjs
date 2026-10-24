@@ -48,6 +48,9 @@ const golden = [
   ['dense table', 'table', 1],
   ['selectable tile', 'radio', 2],
   ['choice card', 'radio', 3],
+  ['collapsible sidebar group', 'sidebar-nav-tree', 3],
+  ['folding nav groups', 'sidebar-nav-tree', 1],
+  ['nav tree', 'sidebar-nav-tree', 1],
 ]
 
 /**
