@@ -10,6 +10,7 @@
       "destructive",
       "destructive-outline",
       "outline",
+      "dashed",
       "ghost",
       "link",
       "overlay",
@@ -152,6 +153,9 @@
               },
               "overlay": {
                 "description": "For controls drawn over photos or video, on the on-media tokens."
+              },
+              "dashed": {
+                "description": "A pill-shaped outline with a dashed border, for add and filter affordances such as \"+ Status\". Web-only."
               },
               "glass": {
                 "description": "The earlier name of overlay.",

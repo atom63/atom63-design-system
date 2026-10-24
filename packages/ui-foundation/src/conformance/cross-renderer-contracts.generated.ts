@@ -405,7 +405,8 @@ export const crossRendererContracts = [
     ],
     "platformAdaptations": {
       "react": [
-        "May expose palette-only decorative variants outside the shared semantic subset."
+        "May expose palette-only decorative variants outside the shared semantic subset.",
+        "May show a leading category dot (dot prop)."
       ],
       "swiftUI": [
         "Uses a compact capsule that expands for Dynamic Type."

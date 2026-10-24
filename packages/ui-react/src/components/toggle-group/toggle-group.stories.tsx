@@ -147,6 +147,35 @@ export const Tones: Story = {
   ),
 }
 
+/* Pills: separate capsules with a gap, for a filter row. */
+function PillsDemo({ tone }: { tone?: (typeof toggleTones)[number] }) {
+  const [value, setValue] = useState<string[]>(['playlists'])
+  return (
+    <ToggleGroup
+      aria-label="Filter the library"
+      onValueChange={setValue}
+      size="sm"
+      tone={tone}
+      value={value}
+      variant="pills"
+    >
+      <ToggleGroupItem value="playlists">Playlists</ToggleGroupItem>
+      <ToggleGroupItem value="artists">Artists</ToggleGroupItem>
+      <ToggleGroupItem value="albums">Albums</ToggleGroupItem>
+      <ToggleGroupItem value="podcasts">Podcasts</ToggleGroupItem>
+    </ToggleGroup>
+  )
+}
+
+export const Pills: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 16 }}>
+      <PillsDemo tone="neutral" />
+      <PillsDemo tone="accent" />
+    </div>
+  ),
+}
+
 export const Vertical: Story = { render: () => <Demo orientation="vertical" /> }
 
 export const Disabled: Story = {

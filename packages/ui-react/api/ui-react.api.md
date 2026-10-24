@@ -11,6 +11,7 @@ import { AnimatedCheckVariant } from '@atom63/ui-foundation';
 import { Autocomplete as AutocompletePrimitive } from '@base-ui/react/autocomplete';
 import { Avatar as AvatarPrimitive } from '@base-ui/react/avatar';
 import { AvatarSize } from '@atom63/ui-foundation';
+import { BadgeDotColor } from '@atom63/ui-foundation';
 import { BadgeSize } from '@atom63/ui-foundation';
 import { BadgeVariant } from '@atom63/ui-foundation';
 import * as _base_ui_react from '@base-ui/react';
@@ -119,6 +120,7 @@ import { toast } from 'sonner';
 import { ToasterProps } from 'sonner';
 import { Toggle as Toggle_2 } from '@base-ui/react/toggle';
 import { ToggleGroup as ToggleGroup_2 } from '@base-ui/react/toggle-group';
+import { ToggleGroupVariant } from '@atom63/ui-foundation';
 import { ToggleSize } from '@atom63/ui-foundation';
 import { ToggleTone } from '@atom63/ui-foundation';
 import { Tooltip as TooltipPrimitive } from '@base-ui/react/tooltip';
@@ -402,6 +404,7 @@ export function Badge(input: BadgeProps): React$1.ReactElement;
 export type BadgeProps = useRender.ComponentProps<'span'> & {
     variant?: BadgeVariant;
     size?: BadgeSize;
+    dot?: boolean | BadgeDotColor;
 };
 
 // @public (undocumented)
@@ -2727,6 +2730,8 @@ export interface ToggleGroupProps extends Omit<ToggleGroup_2.Props, 'className'>
     size?: ToggleSize;
     // (undocumented)
     tone?: ToggleTone;
+    // (undocumented)
+    variant?: ToggleGroupVariant;
 }
 
 // @public (undocumented)

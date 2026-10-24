@@ -231,7 +231,7 @@ public enum AtomComponentContracts {
       sharedOutcomes: ["label-remains-readable-without-color", "semantic-tone-retains-meaning"],
       accessibilityOutcomes: ["text-does-not-rely-on-color"],
       motion: nil,
-      platformAdaptations: AtomPlatformAdaptations(react: ["May expose palette-only decorative variants outside the shared semantic subset."], swiftUI: ["Uses a compact capsule that expands for Dynamic Type."])
+      platformAdaptations: AtomPlatformAdaptations(react: ["May expose palette-only decorative variants outside the shared semantic subset.", "May show a leading category dot (dot prop)."], swiftUI: ["Uses a compact capsule that expands for Dynamic Type."])
     ),
     AtomComponentContract(
       id: "segmented-control",

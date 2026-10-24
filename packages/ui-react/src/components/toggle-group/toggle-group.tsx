@@ -1,6 +1,7 @@
 'use client'
 
 import {
+  type ToggleGroupVariant,
   type ToggleSize,
   type ToggleTone,
   toggleContract,
@@ -28,12 +29,14 @@ export interface ToggleGroupProps extends Omit<ToggleGroupPrimitive.Props, 'clas
   className?: string
   size?: ToggleSize
   tone?: ToggleTone
+  variant?: ToggleGroupVariant
 }
 
 /*
- * ToggleGroup — always a joined/welded segmented bar (Figma 432:1335). Owns the
- * special per-cell gel chrome via CSS; items are ToggleGroupItem. For a gapped
- * row of independent toggles, compose standalone `Toggle`s instead.
+ * ToggleGroup — by default a joined/welded segmented bar (Figma 432:1335). Owns
+ * the special per-cell gel chrome via CSS; items are ToggleGroupItem. The
+ * `pills` variant draws each item as a separate capsule instead, for filter
+ * rows. For a gapped row of independent toggles, compose standalone `Toggle`s.
  */
 export function ToggleGroup({
   children,
@@ -41,6 +44,7 @@ export function ToggleGroup({
   orientation = toggleGroupContract.defaultOrientation,
   size = toggleContract.defaultSize,
   tone = toggleContract.defaultTone,
+  variant = toggleGroupContract.defaultVariant,
   ...props
 }: ToggleGroupProps): React.ReactElement {
   return (
@@ -50,6 +54,7 @@ export function ToggleGroup({
       data-size={size}
       data-slot="toggle-group"
       data-tone={tone}
+      data-variant={variant}
       orientation={orientation}
       {...props}
     >

@@ -2,7 +2,7 @@
   "$schema": "../schema/component-intent.schema.json",
   "component": "badge",
   "maturity": "stable",
-  "description": "Solid/surface + semantic sets are faithful to prod @atom63/ui badge.tsx. Palette hues back category/tag colors via the `--a63-badge-*` contract in @atom63/styles (which references foundation --color-* primitives).",
+  "description": "Solid/surface + semantic sets are faithful to prod @atom63/ui badge.tsx. Palette hues back category/tag colors via the `--a63-badge-*` contract in @atom63/styles (which references foundation --color-* primitives). `dot` adds a leading dot, in the text color or one of the palette hues (dotColors), so a label can carry a category color on any variant.",
   "lists": {
     "solidVariants": {
       "values": [
@@ -48,7 +48,27 @@
       "concat": ["solidVariants", "semanticVariants", "paletteVariants"]
     },
     "sizes": ["sm", "md", "lg"],
-    "slots": ["badge"],
+    "dotColors": [
+      "red",
+      "orange",
+      "amber",
+      "yellow",
+      "lime",
+      "green",
+      "emerald",
+      "teal",
+      "cyan",
+      "sky",
+      "blue",
+      "indigo",
+      "violet",
+      "purple",
+      "fuchsia",
+      "pink",
+      "rose",
+      "neutral"
+    ],
+    "slots": ["badge", "badge-dot"],
     "states": ["resting", "interactive", "disabled", "focus-visible"],
     "visualArchetypes": ["marker"]
   },
@@ -60,6 +80,9 @@
     },
     "sizes": {
       "$ref": "#/lists/sizes"
+    },
+    "dotColors": {
+      "$ref": "#/lists/dotColors"
     },
     "slots": {
       "$ref": "#/lists/slots"
@@ -259,7 +282,10 @@
     "sharedOutcomes": ["label-remains-readable-without-color", "semantic-tone-retains-meaning"],
     "accessibilityOutcomes": ["text-does-not-rely-on-color"],
     "platformAdaptations": {
-      "react": ["May expose palette-only decorative variants outside the shared semantic subset."],
+      "react": [
+        "May expose palette-only decorative variants outside the shared semantic subset.",
+        "May show a leading category dot (dot prop)."
+      ],
       "swiftUI": ["Uses a compact capsule that expands for Dynamic Type."]
     }
   }

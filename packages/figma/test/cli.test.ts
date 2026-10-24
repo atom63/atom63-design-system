@@ -97,7 +97,7 @@ describe('atom63-figma', () => {
     )
     expect(summary.scripts[0]).toBe('components-1.js')
     expect(summary.checks[0]).toBe('components-check-1.js')
-    expect(summary.variants).toBe(300)
+    expect(summary.variants).toBe(330)
     expect(summary.tokens).toBeGreaterThan(0)
     expect(summary.literals).toBeGreaterThan(0)
     expect(summary.skipped.length).toBeGreaterThan(0)

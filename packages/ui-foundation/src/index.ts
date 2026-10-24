@@ -170,6 +170,7 @@ export type {
 } from './components/alert-dialog'
 export {
   badgeContract,
+  badgeDotColors,
   badgePaletteVariants,
   badgeSemanticVariants,
   badgeSizes,
@@ -181,6 +182,7 @@ export {
 } from './components/badge/badge-contract'
 export type {
   BadgeContract,
+  BadgeDotColor,
   BadgeSize,
   BadgeSlot,
   BadgeState,
@@ -1007,6 +1009,7 @@ export {
   toggleGroupSlots,
   toggleGroupStates,
   toggleGroupTokenSlots,
+  toggleGroupVariants,
   toggleGroupVisualArchetypes,
 } from './components/toggle-group/toggle-group-contract'
 export type {
@@ -1016,6 +1019,7 @@ export type {
   ToggleGroupSlot,
   ToggleGroupState,
   ToggleGroupTokenSlot,
+  ToggleGroupVariant,
   ToggleGroupVisualArchetype,
 } from './components/toggle-group/toggle-group-contract'
 export {
