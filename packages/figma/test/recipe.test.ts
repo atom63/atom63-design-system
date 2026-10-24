@@ -251,6 +251,8 @@ describe('the real Button recipe', () => {
         reason: 'context selector',
       },
       { what: ".a63-Button[data-size^='icon']::after", reason: 'pseudo-element' },
+      // The web-only shape axis is not a Figma variant property yet.
+      { what: ".a63-Button[data-shape='round']", reason: 'unsupported selector' },
       { what: ".a63-Button[data-size='tile'].h-full", reason: 'unsupported selector' },
       { what: ".a63-Button[data-size='tile'].size-full", reason: 'unsupported selector' },
       { what: '.a63-Button :where(svg)', reason: 'descendant' },

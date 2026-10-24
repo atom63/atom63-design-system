@@ -59,4 +59,11 @@ describe('Button', () => {
     expect(el.querySelector('[data-slot="button-label"]')).toBeTruthy()
     expect(el.querySelector('[data-slot="button-spinner"]')).toBeTruthy()
   })
+
+  it('defaults to the default shape and takes round', () => {
+    const { rerender } = render(<Button>Go</Button>)
+    expect(screen.getByRole('button', { name: 'Go' })).toHaveAttribute('data-shape', 'default')
+    rerender(<Button shape="round">Go</Button>)
+    expect(screen.getByRole('button', { name: 'Go' })).toHaveAttribute('data-shape', 'round')
+  })
 })

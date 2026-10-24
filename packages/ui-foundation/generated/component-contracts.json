@@ -494,6 +494,7 @@
       "exportName": "buttonContract",
       "maturity": "stable",
       "axes": [
+        { "name": "shapes", "values": ["default", "round"], "default": "default" },
         {
           "name": "variants",
           "values": [
@@ -681,7 +682,10 @@
           "reducedMotion": "none"
         },
         "platformAdaptations": {
-          "react": ["Uses HTML button semantics with pointer and focus-visible feedback."],
+          "react": [
+            "Uses HTML button semantics with pointer and focus-visible feedback.",
+            "The round shape (a circle for icon sizes, a pill for labelled sizes) is web-only."
+          ],
           "swiftUI": ["Uses SwiftUI Button with native touch and keyboard activation."]
         }
       }
