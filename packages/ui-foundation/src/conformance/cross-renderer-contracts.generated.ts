@@ -308,7 +308,8 @@ export const crossRendererContracts = [
     ],
     "platformAdaptations": {
       "react": [
-        "Uses a pressed-state web toggle with hover and focus-visible feedback."
+        "Uses a pressed-state web toggle with hover and focus-visible feedback.",
+        "The subtle tone (accent color, no fill) is web-only."
       ],
       "swiftUI": [
         "Uses a touch-sized button-backed chip for compact filter selection."
@@ -404,7 +405,8 @@ export const crossRendererContracts = [
     ],
     "platformAdaptations": {
       "react": [
-        "May expose palette-only decorative variants outside the shared semantic subset."
+        "May expose palette-only decorative variants outside the shared semantic subset.",
+        "May show a leading category dot (dot prop)."
       ],
       "swiftUI": [
         "Uses a compact capsule that expands for Dynamic Type."

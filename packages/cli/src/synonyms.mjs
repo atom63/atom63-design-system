@@ -7,7 +7,7 @@
 export const synonyms = {
   bar: ['progress'],
   checkmark: ['animated-check', 'checkbox'],
-  chip: ['badge', 'toggle'],
+  chip: ['toggle-group', 'toggle', 'button', 'badge'],
   choice: ['radio', 'field'],
   combobox: ['autocomplete', 'select'],
   compact: ['table', 'item'],
@@ -31,7 +31,7 @@ export const synonyms = {
   palette: ['command'],
   panel: ['sheet', 'drawer', 'card'],
   picker: ['select', 'calendar', 'segmented-control'],
-  pill: ['badge'],
+  pill: ['toggle-group', 'badge'],
   popup: ['popover', 'hover-card', 'tooltip'],
   profile: ['avatar'],
   range: ['slider'],

@@ -13,7 +13,7 @@ describe('ToggleGroup', () => {
     )
     const root = container.querySelector('[data-slot="toggle-group"]')
     expect(root).toHaveAttribute('data-orientation', 'horizontal')
-    expect(root).not.toHaveAttribute('data-variant')
+    expect(root).toHaveAttribute('data-variant', 'segmented')
   })
 
   it('renders a separator', () => {
@@ -83,5 +83,21 @@ describe('ToggleGroup', () => {
     expect(a).toHaveAttribute('data-size', 'lg')
     expect(a).toHaveAttribute('data-tone', 'accent')
     expect(screen.getByRole('button', { name: 'B' })).toHaveAttribute('data-size', 'sm')
+  })
+
+  it('defaults to the segmented variant and accepts pills', () => {
+    const { container, rerender } = render(
+      <ToggleGroup>
+        <ToggleGroupItem value="a">A</ToggleGroupItem>
+      </ToggleGroup>
+    )
+    const group = () => container.querySelector('[data-slot="toggle-group"]')
+    expect(group()).toHaveAttribute('data-variant', 'segmented')
+    rerender(
+      <ToggleGroup variant="pills">
+        <ToggleGroupItem value="a">A</ToggleGroupItem>
+      </ToggleGroup>
+    )
+    expect(group()).toHaveAttribute('data-variant', 'pills')
   })
 })

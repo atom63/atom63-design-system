@@ -2,7 +2,9 @@
   "$schema": "../schema/component-intent.schema.json",
   "component": "toggle-group",
   "maturity": "stable",
+  "description": "`segmented` (default) welds the items into one bar; `pills` draws each item as a separate capsule with a gap, for filter rows such as Playlists / Artists / Albums.",
   "lists": {
+    "variants": ["segmented", "pills"],
     "orientations": ["horizontal", "vertical"],
     "selectionModes": ["single", "multiple"],
     "states": ["rest", "hover", "focus", "selected", "disabled"],
@@ -25,8 +27,12 @@
     "visualArchetypes": ["toggle", "segment"]
   },
   "contract": {
+    "defaultVariant": "segmented",
     "defaultOrientation": "horizontal",
     "defaultSelectionMode": "single",
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
     "orientations": {
       "$ref": "#/lists/orientations"
     },

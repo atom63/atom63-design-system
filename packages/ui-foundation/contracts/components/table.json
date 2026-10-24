@@ -2,7 +2,11 @@
   "$schema": "../schema/component-intent.schema.json",
   "component": "table",
   "maturity": "stable",
+  "description": "The tabular-data set: a horizontally scrollable container around a semantic <table>. The container takes size (default/sm) and variant (default/plain); TableHead and TableCell can pin to the start or end edge. The DS recipe reads these off data-size / data-variant / data-sticky.",
   "lists": {
+    "variants": ["default", "plain"],
+    "sizes": ["default", "sm"],
+    "stickyEdges": ["start", "end"],
     "states": ["rest", "row-hover", "row-selected"],
     "slots": [
       "table-container",
@@ -18,6 +22,17 @@
     "visualArchetypes": ["surface"]
   },
   "contract": {
+    "defaultVariant": "default",
+    "defaultSize": "default",
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "stickyEdges": {
+      "$ref": "#/lists/stickyEdges"
+    },
     "states": {
       "$ref": "#/lists/states"
     },
