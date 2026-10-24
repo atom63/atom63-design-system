@@ -3,6 +3,7 @@
  * agent index read this list; check:templates fails when a template is
  * missing from it.
  */
+import { template as appView } from './pages/app-view/app-view'
 import { template as dashboardPage } from './pages/dashboard-page/dashboard-page'
 import { template as listPage } from './pages/list-page/list-page'
 import { template as onboardingPage } from './pages/onboarding-page/onboarding-page'
@@ -36,6 +37,7 @@ const storyId = (kind: 'block' | 'page', title: string) =>
   `templates-${kind === 'page' ? 'pages' : 'blocks'}-${title.toLowerCase().replace(/[^a-z0-9]+/g, '-')}--desktop`
 
 export const templateCatalog: readonly TemplateEntry[] = [
+  appView,
   dashboardPage,
   listPage,
   onboardingPage,

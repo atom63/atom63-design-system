@@ -45,6 +45,9 @@ const golden = [
   // The empty-state template ranks first; the component follows it.
   ['empty state', 'empty', 3],
   ['toggle', 'switch', 3],
+  ['dense table', 'table', 1],
+  ['selectable tile', 'radio', 2],
+  ['choice card', 'radio', 3],
 ]
 
 /**
@@ -65,6 +68,8 @@ const templateGolden = [
   ['activity feed', 'activity-list', 1],
   ['getting started checklist', 'getting-started-checklist', 1],
   ['setup steps', 'getting-started-checklist', 2],
+  ['music player', 'app-view', 1],
+  ['full window app', 'app-view', 1],
 ]
 
 describe('templates', () => {

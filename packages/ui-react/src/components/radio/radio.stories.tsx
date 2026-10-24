@@ -1,5 +1,15 @@
 import { radioContract, radioSizes, themes } from '@atom63/ui-foundation'
-import { Label, Radio, RadioGroup, UIProvider } from '@atom63/ui-react'
+import {
+  Field,
+  FieldContent,
+  FieldDescription,
+  FieldLabel,
+  FieldTitle,
+  Label,
+  Radio,
+  RadioGroup,
+  UIProvider,
+} from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
@@ -30,6 +40,38 @@ export const Playground: Story = {
             {o.label}
           </Label>
         </div>
+      ))}
+    </RadioGroup>
+  ),
+}
+
+const SUMMARY = [
+  { count: 6, label: 'All', value: 'all' },
+  { count: 1, label: 'Succeeded', value: 'succeeded' },
+  { count: 0, label: 'Refunded', value: 'refunded' },
+  { count: 3, label: 'Failed', value: 'failed' },
+]
+
+/* Choice cards: a FieldLabel wrapping a Field turns each option into a card,
+   and the checked one takes the --a63-choice-card-checked-* tokens. Here they
+   are selectable summary tiles (a label over a count) that filter a table. */
+export const ChoiceCards: Story = {
+  render: () => (
+    <RadioGroup
+      aria-label="Show transactions"
+      defaultValue="all"
+      style={{ display: 'grid', gap: 8, gridTemplateColumns: 'repeat(4, minmax(0, 8rem))' }}
+    >
+      {SUMMARY.map(option => (
+        <FieldLabel htmlFor={`summary-${option.value}`} key={option.value}>
+          <Field orientation="horizontal">
+            <FieldContent>
+              <FieldTitle>{option.label}</FieldTitle>
+              <FieldDescription>{option.count}</FieldDescription>
+            </FieldContent>
+            <Radio id={`summary-${option.value}`} value={option.value} />
+          </Field>
+        </FieldLabel>
       ))}
     </RadioGroup>
   ),

@@ -5,6 +5,44 @@
   "items": [
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "app-view",
+      "type": "registry:page",
+      "title": "App view",
+      "description": "A full-window product view with no site header or footer: a top bar across the window, a side panel and the main region below it, and an optional bar docked at the bottom, such as a media player or a status bar.",
+      "dependencies": [
+        "@atom63/ui-react",
+        "lucide-react"
+      ],
+      "registryDependencies": [],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "app",
+          "full window",
+          "workspace",
+          "library",
+          "player",
+          "media",
+          "docked bar",
+          "side panel",
+          "top bar",
+          "layout"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/pages/app-view/app-view.tsx",
+          "type": "registry:page",
+          "target": "@components/atom63/pages/app-view/app-view.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "dashboard-page",
       "type": "registry:page",
       "title": "Dashboard page",
