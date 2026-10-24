@@ -1,5 +1,29 @@
 # @atom63/styles
 
+## 0.1.0-beta.8
+
+### Minor Changes
+
+- [#182](https://github.com/atom63/atom63-design-system/pull/182) [`f207dc7`](https://github.com/atom63/atom63-design-system/commit/f207dc774c67667e1e527d2f05580aa8ce4b6f4a) Thanks [@atom63](https://github.com/atom63)! - Add `--a63-border-input`, the border for form controls a person has to find. It reaches WCAG 1.4.11's 3:1 against the page, the panel and the field fill on every theme, brand, mode and surface (surface step 10 in light mode, step 9 in dark mode, and phosphor values in the terminal theme). Input, Textarea, Select, InputOTP, Autocomplete, Checkbox, Radio, Switch and the Slider thumb now draw their borders with it; decorative edges keep `--a63-border-control`. The shadcn `input` role and the reverse shadcn bridge map to the new token.
+
+- [#194](https://github.com/atom63/atom63-design-system/pull/194) [`f0f16e1`](https://github.com/atom63/atom63-design-system/commit/f0f16e15ded421195835d722362566b1e1fa4ca3) Thanks [@atom63](https://github.com/atom63)! - Add seven semantic tokens with light and dark values: `--a63-control-outline-background`, `--a63-control-outline-hover-background` and `--a63-control-outline-hover-border` (outline Button and the button-group ConnectedPanel), `--a63-alert-background` (default Alert), `--a63-choice-card-checked-border` and `--a63-choice-card-checked-background` (a checked FieldLabel) and `--a63-surface-recessed` (the Command panel). Those recipes read the tokens instead of branching on dark mode, and look the same.
+
+- [#200](https://github.com/atom63/atom63-design-system/pull/200) [`6701b2b`](https://github.com/atom63/atom63-design-system/commit/6701b2b67daf3c920c84aa87a72a498d27bf31d6) Thanks [@atom63](https://github.com/atom63)! - Removes the `--size-0` … `--size-96` primitives and their Figma variables. They duplicated `--spacing-0` … `--spacing-96` value for value; use `--spacing-*` instead.
+
+- [#192](https://github.com/atom63/atom63-design-system/pull/192) [`452732e`](https://github.com/atom63/atom63-design-system/commit/452732e3a0b090a5040f60f1e7fbddbecf580236) Thanks [@atom63](https://github.com/atom63)! - Add `--a63-shadow-color`, the ink of drop shadows (black in every theme). The Card, Slider, Switch and ToggleGroup recipes take their shadow and edge colors from it, and the Card media overlay takes its scrim and icon button colors from `--a63-media-stage` and `--a63-on-media-foreground`, with no visual change. The overlay's top-end corner is now logical, so it mirrors in right-to-left layouts. The reverse shadcn bridge defines the shadow, media and on-media tokens for hosts that skip the foundation.
+
+- [#152](https://github.com/atom63/atom63-design-system/pull/152) [`ada3ca5`](https://github.com/atom63/atom63-design-system/commit/ada3ca5b4a97a0195f7398b55146ce5929fa5566) Thanks [@atom63](https://github.com/atom63)! - Text roles, an 11px step and media roles.
+  
+  - Text roles named after the Apple HIG text styles: `large-title`, `title-1`, `title-2`, `title-3`, `headline`, `body`, `callout`, `subhead`, `footnote`, `caption-1` and `caption-2`. Each has `--a63-type-<role>-font-size`, `-line-height`, `-font-weight` and `-font-weight-strong`, on a step of the web scale, with its iOS `Font.TextStyle` recorded in the token source. Tailwind gets `text-<role>` and `text-<role>-strong`, which set size, line height and weight together.
+  - A `2xs` step (11px on 13px) at the bottom of the type scale, with `text-2xs`.
+  - `--a63-media-surface`: an opaque dark neutral for media areas that does not follow the mode. The roles table exposes `media-stage`, `media-surface`, `media-scrim` and the `on-media-*` tokens to Tailwind and the shadcn bridge.
+
+### Patch Changes
+
+- [#197](https://github.com/atom63/atom63-design-system/pull/197) [`c537c27`](https://github.com/atom63/atom63-design-system/commit/c537c278e6b56f6b5dea557ad8b22b1ef75a4ea2) Thanks [@atom63](https://github.com/atom63)! - The reverse shadcn bridge declares the media and on-media tokens once; a duplicate block with the same values is removed.
+
+- [#193](https://github.com/atom63/atom63-design-system/pull/193) [`4456f3e`](https://github.com/atom63/atom63-design-system/commit/4456f3ec076b52fc40dad7116e20711847f570d2) Thanks [@atom63](https://github.com/atom63)! - `Sidebar` takes its background from `--a63-surface-sidebar` (muted in light mode, page in dark mode) instead of branching on dark mode in its recipe; it looks the same. The reverse shadcn bridge maps `--a63-surface-sidebar` to the host's `--sidebar`, falling back to `--muted`.
+
 ## 0.1.0-beta.7
 
 ### Minor Changes
