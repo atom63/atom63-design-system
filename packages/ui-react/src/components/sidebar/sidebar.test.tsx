@@ -4,9 +4,11 @@ import { describe, expect, it, vi } from 'vitest'
 import {
   Sidebar,
   SidebarContent,
+  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSubButton,
   SidebarProvider,
   useSidebar,
 } from './sidebar'
@@ -142,5 +144,49 @@ describe('Sidebar', () => {
     fireEvent.keyDown(window, { key: 'b', ctrlKey: true })
     expect(onOpenChange).toHaveBeenCalledWith(false)
     expect(document.cookie).not.toContain('sidebar_state')
+  })
+
+  describe('render', () => {
+    it('hands the children to a childless render element, as Base UI does', () => {
+      /* eslint-disable jsx-a11y/anchor-has-content, jsx-a11y/heading-has-content --
+         the empty render elements are the point: the parts fill them with their children. */
+      const { getByRole, getByText } = render(
+        <SidebarProvider>
+          <SidebarMenuButton render={<a href="/inbox" />}>Inbox</SidebarMenuButton>
+          <SidebarMenuSubButton render={<a href="/sub" />}>Sub page</SidebarMenuSubButton>
+          <SidebarGroupLabel render={<h2 />}>Workspace</SidebarGroupLabel>
+        </SidebarProvider>
+      )
+      /* eslint-enable jsx-a11y/anchor-has-content, jsx-a11y/heading-has-content */
+      expect(getByRole('link', { name: 'Inbox' })).toHaveAttribute('href', '/inbox')
+      expect(getByRole('link', { name: 'Sub page' })).toHaveAttribute('href', '/sub')
+      expect(getByText('Workspace').tagName.toLowerCase()).toBe('h2')
+    })
+
+    it('keeps the content of a render element that brings its own', () => {
+      const { getByRole } = render(
+        <SidebarProvider>
+          <SidebarMenuButton render={<a href="/home">Home</a>} />
+        </SidebarProvider>
+      )
+      expect(getByRole('link', { name: 'Home' })).toHaveAttribute(
+        'data-slot',
+        'sidebar-menu-button'
+      )
+    })
+
+    it('still renders the child element with asChild', () => {
+      const { getByRole } = render(
+        <SidebarProvider>
+          <SidebarMenuButton asChild>
+            <a href="/docs">Docs</a>
+          </SidebarMenuButton>
+        </SidebarProvider>
+      )
+      expect(getByRole('link', { name: 'Docs' })).toHaveAttribute(
+        'data-slot',
+        'sidebar-menu-button'
+      )
+    })
   })
 })

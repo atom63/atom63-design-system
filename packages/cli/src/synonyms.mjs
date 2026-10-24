@@ -18,6 +18,8 @@ export const synonyms = {
   divider: ['separator'],
   dropdown: ['dropdown-menu', 'select'],
   expand: ['collapsible', 'accordion'],
+  fold: ['sidebar-nav-tree', 'collapsible', 'accordion'],
+  folding: ['sidebar-nav-tree', 'collapsible', 'accordion'],
   grid: ['table'],
   hint: ['tooltip', 'kbd'],
   keyboard: ['kbd'],
@@ -25,6 +27,7 @@ export const synonyms = {
   loader: ['spinner', 'skeleton', 'progress'],
   loading: ['spinner', 'skeleton', 'progress'],
   modal: ['dialog', 'alert-dialog', 'drawer', 'sheet'],
+  nav: ['sidebar-nav-tree', 'navigation-menu', 'sidebar'],
   notification: ['toaster', 'alert'],
   otp: ['input-otp'],
   pager: ['pagination'],
@@ -47,4 +50,5 @@ export const synonyms = {
   tile: ['radio', 'field'],
   toast: ['toaster'],
   toggle: ['switch', 'toggle', 'toggle-group'],
+  tree: ['sidebar-nav-tree'],
 }
