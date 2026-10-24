@@ -77,12 +77,12 @@
   },
   "summary": {
     "sourceFamilies": 74,
-    "sourceExports": 610,
+    "sourceExports": 611,
     "sourceTierCounts": {
       "monitor-high-risk": 77,
       "preview-experimental-candidate": 31,
       "beta-supported-core": 320,
-      "beta-supported-composition-conditional": 182
+      "beta-supported-composition-conditional": 183
     },
     "sourceActionCounts": {
       "assign-owner-and-evidence": 15,
@@ -718,11 +718,11 @@
       "source": "./components/command",
       "family": "components/command",
       "kind": "component-family",
-      "totalExports": 19,
+      "totalExports": 20,
       "valueExports": 19,
-      "typeExports": 0,
+      "typeExports": 1,
       "tierCounts": {
-        "beta-supported-composition-conditional": 18,
+        "beta-supported-composition-conditional": 19,
         "preview-experimental-candidate": 1
       },
       "dominantTier": "beta-supported-composition-conditional",

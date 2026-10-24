@@ -21,6 +21,22 @@
   color: var(--a63-text-secondary);
 }
 
+/* Collapsible group: the label is a full-width disclosure button. */
+.a63-SidebarNavTree-group-trigger {
+  width: 100%;
+  gap: var(--a63-space-1);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  text-align: start;
+}
+.a63-SidebarNavTree-group-trigger:hover {
+  color: var(--sidebar-fg);
+}
+.a63-SidebarNavTree-group-trigger[data-panel-open] .a63-SidebarNavTree-chevron {
+  rotate: 180deg;
+}
+
 .a63-SidebarNavTree-group-content {
   margin-block-start: var(--a63-space-0_5);
 }

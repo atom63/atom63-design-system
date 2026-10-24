@@ -89,6 +89,19 @@
   flex: none;
   color: var(--a63-text-secondary);
 }
+/* A caller's icon takes the built-in icon's size. */
+.a63-Command-input-icon > :where(svg) {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+/* After the field: a shortcut hint or a clear button. */
+.a63-Command-input-end {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--a63-space-1);
+  color: var(--a63-text-secondary);
+}
 .a63-Command-input {
   flex: 1;
   min-width: 0;

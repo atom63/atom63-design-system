@@ -76,15 +76,59 @@ export interface SidebarNavGroupProps {
   children: React.ReactNode
   className?: string
   label: React.ReactNode
+  /** Lets the label fold the group: it becomes a disclosure button with a chevron. */
+  collapsible?: boolean
+  /** Whether a collapsible group starts open when uncontrolled. */
+  defaultOpen?: boolean
+  /** Open state of a controlled collapsible group. */
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
-function SidebarNavGroup({ children, className, label }: SidebarNavGroupProps): React.ReactElement {
+function SidebarNavGroup({
+  children,
+  className,
+  label,
+  collapsible = false,
+  defaultOpen = true,
+  open,
+  onOpenChange,
+}: SidebarNavGroupProps): React.ReactElement {
+  const content = (
+    <SidebarGroupContent className="a63-SidebarNavTree-group-content">
+      <SidebarMenu className="a63-SidebarNavTree-list">{children}</SidebarMenu>
+    </SidebarGroupContent>
+  )
+
+  if (!collapsible) {
+    return (
+      <SidebarGroup className={className}>
+        <SidebarGroupLabel className="a63-SidebarNavTree-group-label">{label}</SidebarGroupLabel>
+        {content}
+      </SidebarGroup>
+    )
+  }
+
   return (
     <SidebarGroup className={className}>
-      <SidebarGroupLabel className="a63-SidebarNavTree-group-label">{label}</SidebarGroupLabel>
-      <SidebarGroupContent className="a63-SidebarNavTree-group-content">
-        <SidebarMenu className="a63-SidebarNavTree-list">{children}</SidebarMenu>
-      </SidebarGroupContent>
+      <Collapsible
+        defaultOpen={open === undefined ? defaultOpen : undefined}
+        onOpenChange={onOpenChange ? next => onOpenChange(next) : undefined}
+        open={open}
+      >
+        {/* A native button styled as the group label, so the fold is keyboard
+            reachable and announces its expanded state. */}
+        <CollapsibleTrigger
+          className="a63-Sidebar-group-label a63-SidebarNavTree-group-label a63-SidebarNavTree-group-trigger"
+          data-sidebar="group-label"
+          data-slot="sidebar-group-label"
+          type="button"
+        >
+          {label}
+          <ChevronDown aria-hidden="true" className="a63-SidebarNavTree-chevron" />
+        </CollapsibleTrigger>
+        <CollapsibleContent>{content}</CollapsibleContent>
+      </Collapsible>
     </SidebarGroup>
   )
 }
@@ -117,6 +161,8 @@ function SidebarNavLinkItem({
 export interface SidebarNavCollapsibleItemProps {
   children: React.ReactNode
   className?: string
+  /** An icon before the label on a trigger-only row. With `link`, put the icon inside the link. */
+  icon?: React.ReactNode
   isActive?: boolean
   label: string
   /** Destination for the section itself. Omit it when the section has no page: the whole row becomes the toggle. */
@@ -128,6 +174,7 @@ export interface SidebarNavCollapsibleItemProps {
 function SidebarNavCollapsibleItem({
   children,
   className,
+  icon,
   isActive = false,
   label,
   link,
@@ -173,6 +220,7 @@ function SidebarNavCollapsibleItem({
             }
             type="button"
           >
+            {icon}
             <TextTicker variant="marquee" className="a63-SidebarNavTree-ticker">
               {label}
             </TextTicker>
