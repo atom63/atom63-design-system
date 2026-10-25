@@ -251,6 +251,13 @@ describe('the real Button recipe', () => {
         reason: 'context selector',
       },
       { what: ".a63-Button[data-size^='icon']::after", reason: 'pseudo-element' },
+      { what: '.a63-Button > span.a63-Button-indicator', reason: 'descendant' },
+      { what: '.a63-Button > span.a63-Button-indicator[data-count]', reason: 'descendant' },
+      {
+        what: "[data-a63-theme='aqua'] .a63-Button[data-size^='icon'] .a63-Button-indicator",
+        reason: 'context selector',
+      },
+      { what: '.a63-Button > span.a63-Button-indicator-label', reason: 'descendant' },
       // The web-only shape axis is not a Figma variant property yet.
       { what: ".a63-Button[data-shape='round']", reason: 'unsupported selector' },
       { what: ".a63-Button[data-size='tile'].h-full", reason: 'unsupported selector' },

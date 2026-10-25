@@ -66,4 +66,25 @@ describe('Button', () => {
     rerender(<Button shape="round">Go</Button>)
     expect(screen.getByRole('button', { name: 'Go' })).toHaveAttribute('data-shape', 'round')
   })
+
+  it('adds a dot indicator to an aria-label and a count to visible text', () => {
+    const { rerender } = render(<Button aria-label="Notifications" indicator />)
+    expect(screen.getByRole('button', { name: 'Notifications, New' })).toBeInTheDocument()
+    rerender(<Button indicator={4}>Inbox</Button>)
+    expect(screen.getByRole('button', { name: 'Inbox, 4 new' })).toBeInTheDocument()
+    rerender(
+      <Button aria-label="Mail" indicator={120} indicatorLabel="120 unread">
+        x
+      </Button>
+    )
+    const button = screen.getByRole('button', { name: 'Mail, 120 unread' })
+    expect(button.querySelector('[data-slot="button-indicator"]')).toHaveTextContent('99+')
+  })
+
+  it('draws no indicator for false or a zero count', () => {
+    const { container, rerender } = render(<Button indicator={0}>Inbox</Button>)
+    expect(container.querySelector('[data-slot="button-indicator"]')).toBeNull()
+    rerender(<Button indicator={false}>Inbox</Button>)
+    expect(screen.getByRole('button', { name: 'Inbox' })).toBeInTheDocument()
+  })
 })

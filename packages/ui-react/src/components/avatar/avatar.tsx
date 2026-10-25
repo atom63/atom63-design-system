@@ -1,12 +1,16 @@
 'use client'
 
-import { type AvatarSize, avatarContract } from '@atom63/ui-foundation'
+import { type AvatarShape, type AvatarSize, avatarContract } from '@atom63/ui-foundation'
 import { Avatar as AvatarPrimitive } from '@base-ui/react/avatar'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
 
 export type AvatarProps = AvatarPrimitive.Root.Props & {
+  /** Draws a ring in the accent color, set off from the face by the page surface (new activity). */
+  ring?: boolean
+  /** `square` suits organisations and apps; people stay `circle`. */
+  shape?: AvatarShape
   size?: AvatarSize
 }
 
@@ -15,12 +19,16 @@ export type AvatarProps = AvatarPrimitive.Root.Props & {
    sizes via data-size, and an optional status Badge / group stack. */
 export function Avatar({
   className,
+  ring = false,
+  shape = avatarContract.defaultShape,
   size = avatarContract.defaultSize,
   ...props
 }: AvatarProps): React.ReactElement {
   return (
     <AvatarPrimitive.Root
       className={cn('a63-Avatar', className)}
+      data-ring={ring ? '' : undefined}
+      data-shape={shape}
       data-size={size}
       data-slot="avatar"
       {...props}
