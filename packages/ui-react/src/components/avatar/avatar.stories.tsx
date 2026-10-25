@@ -55,6 +55,29 @@ export const Sizes: Story = {
   ),
 }
 
+/* shape="square" for organisations and apps; ring marks new activity. */
+export const ShapesAndRing: Story = {
+  render: () => (
+    <div style={{ alignItems: 'center', display: 'flex', gap: 16 }}>
+      <Avatar>
+        <AvatarFallback>AL</AvatarFallback>
+      </Avatar>
+      <Avatar shape="square">
+        <AvatarFallback>NW</AvatarFallback>
+      </Avatar>
+      <Avatar ring>
+        <AvatarFallback>JL</AvatarFallback>
+      </Avatar>
+      <Avatar ring shape="square" size="lg">
+        <AvatarFallback>PS</AvatarFallback>
+      </Avatar>
+      <Avatar shape="square" size="xs">
+        <AvatarFallback>A</AvatarFallback>
+      </Avatar>
+    </div>
+  ),
+}
+
 /* Fallback shows when no image resolves — the muted initials chip. */
 export const Fallback: Story = {
   render: () => (

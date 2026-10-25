@@ -13,6 +13,10 @@ import { Children, type ReactNode } from 'react'
 import { cn } from '../../lib/cn'
 
 export interface ButtonProps extends useRender.ComponentProps<'button'> {
+  /** An unread dot (`true`) or a count at the top-end corner, such as unread notifications. */
+  indicator?: boolean | number
+  /** What the indicator means, added to the accessible name. Defaults to "New" for a dot and "{n} new" for a count. */
+  indicatorLabel?: string
   loading?: boolean
   /** `round` gives a full radius: a circle for icon sizes, a pill for labelled ones. */
   shape?: ButtonShape
@@ -34,6 +38,8 @@ export function Button({
   children,
   className,
   disabled,
+  indicator,
+  indicatorLabel,
   loading = false,
   render,
   shape = buttonContract.defaultShape,
@@ -44,6 +50,13 @@ export function Button({
   ...props
 }: ButtonProps): React.ReactElement {
   const isDisabled = Boolean(disabled || loading)
+  const hasIndicator = indicator === true || (typeof indicator === 'number' && indicator > 0)
+  const indicatorText = !hasIndicator
+    ? undefined
+    : (indicatorLabel ?? (indicator === true ? 'New' : `${indicator} new`))
+  /* An aria-label replaces the content as the accessible name, so the indicator
+     text joins it there; otherwise it is visually hidden text after the label. */
+  const ariaLabel = props['aria-label']
   const defaultProps = {
     'aria-busy': loading ? true : undefined,
     children: (
@@ -53,6 +66,19 @@ export function Button({
         </span>
         {loading ? (
           <span aria-hidden className="a63-Button-spinner" data-slot="button-spinner" />
+        ) : null}
+        {hasIndicator ? (
+          <span
+            aria-hidden
+            className="a63-Button-indicator"
+            data-count={typeof indicator === 'number' ? '' : undefined}
+            data-slot="button-indicator"
+          >
+            {typeof indicator === 'number' ? (indicator > 99 ? '99+' : indicator) : null}
+          </span>
+        ) : null}
+        {hasIndicator && !ariaLabel ? (
+          <span className="a63-Button-indicator-label">{`, ${indicatorText}`}</span>
         ) : null}
       </>
     ),
@@ -68,10 +94,12 @@ export function Button({
     disabled: isDisabled,
     type: type ?? 'button',
   }
+  const ownProps =
+    hasIndicator && ariaLabel ? { ...props, 'aria-label': `${ariaLabel}, ${indicatorText}` } : props
 
   return useRender({
     defaultTagName: 'button',
-    props: mergeProps<'button'>(defaultProps, props),
+    props: mergeProps<'button'>(defaultProps, ownProps),
     render,
   })
 }

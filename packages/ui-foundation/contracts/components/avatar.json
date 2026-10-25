@@ -4,6 +4,7 @@
   "maturity": "stable",
   "lists": {
     "sizes": ["xs", "sm", "default", "lg"],
+    "shapes": ["circle", "square"],
     "states": ["loading", "loaded", "fallback"],
     "compositions": ["standalone", "badge", "group"],
     "slots": [
@@ -17,10 +18,14 @@
     "visualArchetypes": ["marker"]
   },
   "contract": {
+    "defaultShape": "circle",
+    "defaultSize": "default",
     "compositions": {
       "$ref": "#/lists/compositions"
     },
-    "defaultSize": "default",
+    "shapes": {
+      "$ref": "#/lists/shapes"
+    },
     "sizes": {
       "$ref": "#/lists/sizes"
     },
@@ -49,7 +54,10 @@
     ],
     "accessibilityOutcomes": ["exposes-accessible-name", "fallback-preserves-identity"],
     "platformAdaptations": {
-      "react": ["Uses browser image loading and DOM fallback composition."],
+      "react": [
+        "Uses browser image loading and DOM fallback composition.",
+        "The square shape and the ring are web-only for now."
+      ],
       "swiftUI": ["Uses native image decoding and SwiftUI loading phases."]
     }
   }

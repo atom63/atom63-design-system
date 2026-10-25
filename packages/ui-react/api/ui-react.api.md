@@ -10,6 +10,7 @@ import { AlertVariant } from '@atom63/ui-foundation';
 import { AnimatedCheckVariant } from '@atom63/ui-foundation';
 import { Autocomplete as AutocompletePrimitive } from '@base-ui/react/autocomplete';
 import { Avatar as AvatarPrimitive } from '@base-ui/react/avatar';
+import { AvatarShape } from '@atom63/ui-foundation';
 import { AvatarSize } from '@atom63/ui-foundation';
 import { BadgeDotColor } from '@atom63/ui-foundation';
 import { BadgeSize } from '@atom63/ui-foundation';
@@ -395,6 +396,8 @@ export { AvatarPrimitive }
 
 // @public (undocumented)
 export type AvatarProps = AvatarPrimitive.Root.Props & {
+    ring?: boolean;
+    shape?: AvatarShape;
     size?: AvatarSize;
 };
 
@@ -465,6 +468,8 @@ export function ButtonGroupText(input: useRender.ComponentProps<'div'>): React$1
 // @public (undocumented)
 export interface ButtonProps extends useRender.ComponentProps<'button'> {
     'data-slot'?: string;
+    indicator?: boolean | number;
+    indicatorLabel?: string;
     // (undocumented)
     loading?: boolean;
     shape?: ButtonShape;

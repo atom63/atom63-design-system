@@ -18,6 +18,16 @@
   user-select: none;
 }
 
+.a63-Avatar[data-shape='square'] {
+  --a63-avatar-radius: var(--radius-md);
+}
+/* Ring: the accent color, set off from the face by a gap of the page surface. */
+.a63-Avatar[data-ring] {
+  box-shadow:
+    0 0 0 2px var(--a63-surface-page),
+    0 0 0 4px var(--a63-action-primary);
+}
+
 .a63-Avatar::after {
   content: '';
   position: absolute;

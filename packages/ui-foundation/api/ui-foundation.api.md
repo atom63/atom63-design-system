@@ -454,7 +454,11 @@ export interface AvatarContract {
     // (undocumented)
     compositions: readonly AvatarComposition[];
     // (undocumented)
+    defaultShape: AvatarShape;
+    // (undocumented)
     defaultSize: AvatarSize;
+    // (undocumented)
+    shapes: readonly AvatarShape[];
     // (undocumented)
     sizes: readonly AvatarSize[];
     // (undocumented)
@@ -467,13 +471,21 @@ export interface AvatarContract {
 
 // @public (undocumented)
 export const avatarContract: {
-    compositions: readonly ["standalone", "badge", "group"];
+    defaultShape: "circle";
     defaultSize: "default";
+    compositions: readonly ["standalone", "badge", "group"];
+    shapes: readonly ["circle", "square"];
     sizes: readonly ["xs", "sm", "default", "lg"];
     slots: readonly ["avatar", "avatar-image", "avatar-fallback", "avatar-badge", "avatar-group", "avatar-group-count"];
     states: readonly ["loading", "loaded", "fallback"];
     visualArchetypes: readonly ["marker"];
 };
+
+// @public (undocumented)
+export type AvatarShape = (typeof avatarShapes)[number];
+
+// @public (undocumented)
+export const avatarShapes: readonly ["circle", "square"];
 
 // @public (undocumented)
 export type AvatarSize = (typeof avatarSizes)[number];
@@ -670,7 +682,7 @@ export const buttonContract: {
     defaultSize: "md";
     defaultVariant: "default";
     shapes: readonly ["default", "round"];
-    slots: readonly ["root", "label", "icon", "spinner"];
+    slots: readonly ["root", "label", "icon", "spinner", "indicator"];
     states: readonly ["rest", "hover", "pressed", "focusVisible", "disabled", "loading"];
     tokenSlots: readonly ["button.background", "button.foreground", "button.border.color", "button.border.width", "button.radius", "button.shadow", "button.focusRing", "button.height", "button.paddingInline", "button.gap", "button.iconSize", "button.motion.press"];
     variants: readonly ["default", "primary", "secondary", "destructive", "destructive-outline", "outline", "dashed", "ghost", "link", "overlay", "glass"];
@@ -752,7 +764,7 @@ export const buttonSizes: readonly ["xs", "sm", "md", "lg", "xl", "tile", "icon-
 export type ButtonSlot = (typeof buttonSlots)[number];
 
 // @public (undocumented)
-export const buttonSlots: readonly ["root", "label", "icon", "spinner"];
+export const buttonSlots: readonly ["root", "label", "icon", "spinner", "indicator"];
 
 // @public (undocumented)
 export type ButtonState = (typeof buttonStates)[number];
@@ -1646,7 +1658,7 @@ export const crossRendererContracts: readonly [{
     readonly sharedOutcomes: readonly ["accessible-name-is-preserved", "fallback-preserves-identity", "loading-does-not-expose-empty-image"];
     readonly accessibilityOutcomes: readonly ["exposes-accessible-name", "fallback-preserves-identity"];
     readonly platformAdaptations: {
-        readonly react: readonly ["Uses browser image loading and DOM fallback composition."];
+        readonly react: readonly ["Uses browser image loading and DOM fallback composition.", "The square shape and the ring are web-only for now."];
         readonly swiftUI: readonly ["Uses native image decoding and SwiftUI loading phases."];
     };
 }, {

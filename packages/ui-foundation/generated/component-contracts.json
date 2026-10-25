@@ -195,6 +195,7 @@
       "maturity": "stable",
       "axes": [
         { "name": "compositions", "values": ["standalone", "badge", "group"] },
+        { "name": "shapes", "values": ["circle", "square"], "default": "circle" },
         { "name": "sizes", "values": ["xs", "sm", "default", "lg"], "default": "default" }
       ],
       "slots": [
@@ -223,7 +224,10 @@
         ],
         "accessibilityOutcomes": ["exposes-accessible-name", "fallback-preserves-identity"],
         "platformAdaptations": {
-          "react": ["Uses browser image loading and DOM fallback composition."],
+          "react": [
+            "Uses browser image loading and DOM fallback composition.",
+            "The square shape and the ring are web-only for now."
+          ],
           "swiftUI": ["Uses native image decoding and SwiftUI loading phases."]
         }
       }
@@ -530,7 +534,7 @@
           "default": "md"
         }
       ],
-      "slots": ["root", "label", "icon", "spinner"],
+      "slots": ["root", "label", "icon", "spinner", "indicator"],
       "states": ["rest", "hover", "pressed", "focusVisible", "disabled", "loading"],
       "tokenSlots": [
         "button.background",
