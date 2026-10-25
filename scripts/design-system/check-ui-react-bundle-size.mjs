@@ -68,7 +68,13 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // to text fields and rich-text editors, its `keyboardShortcut` opt-out and the
 // controlled-state cookie rule. About 0.09 kB is ScrollableList reading its
 // scroll offset from the start edge, so its chevrons work right-to-left.
-const gzipBudgetBytes = 92 * 1024
+//
+// 92 kB held 92.0 kB, with no headroom left. Button's indicator and Avatar's
+// shape and ring take it to 92.2, so it moves to 93. The +0.2 kB is the
+// indicator's dot or capped count, its accessible text joined to the label or
+// aria-label, and the two Avatar data attributes; the case studies found the
+// unread badge in 9 runs and the avatar variants in 14.
+const gzipBudgetBytes = 93 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()
