@@ -1666,6 +1666,195 @@
    "contract": {
     "archetypes": [
      {
+      "description": "Form controls that expose checked, selected, or indeterminate value state.",
+      "id": "choice",
+      "label": "Choice controls"
+     }
+    ],
+    "axes": [
+     {
+      "name": "sizes",
+      "values": [
+       "sm",
+       "md"
+      ],
+      "default": "md"
+     }
+    ],
+    "exportName": "ratingContract",
+    "slots": [
+     "rating",
+     "rating-item",
+     "rating-icon"
+    ],
+    "source": "packages/ui-foundation/contracts/components/rating.json",
+    "states": [
+     "rest",
+     "hover",
+     "focus-visible",
+     "checked",
+     "disabled",
+     "read-only"
+    ],
+    "tokenSlots": []
+   },
+   "exports": {
+    "types": [
+     "RatingProps"
+    ],
+    "values": [
+     "Rating"
+    ]
+   },
+   "group": {
+    "id": "forms-and-selection",
+    "title": "Forms and selection"
+   },
+   "guidance": [
+    "Give a read-only rating its value in words; use the input form inside a form with a visible label.",
+    "Pair controls with persistent labels and explain errors beside the affected field.",
+    "Validate focus visibility, disabled state, invalid state, and touch input together."
+   ],
+   "importPath": "@atom63/ui-react",
+   "label": "Rating",
+   "markdown": "# Rating\n\nRating shows a score out of five stars, or collects one as a radio group.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Give a read-only rating its value in words; use the input form inside a form with a visible label.\n- Pair controls with persistent labels and explain errors beside the affected field.\n- Validate focus visibility, disabled state, invalid state, and touch input together.\n\n## Usage\n\n```tsx\nimport { Rating } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Rating`\n\n**Types:** `RatingProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/rating.json` (`ratingContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `sizes` | `sm`, `md` | `md` |\n\n**Slots:** `rating`, `rating-item`, `rating-icon`\n\n**States:** `rest`, `hover`, `focus-visible`, `checked`, `disabled`, `read-only`\n\n**Visual archetype:** Choice controls — Form controls that expose checked, selected, or indeterminate value state.\n\n## Related components\n\n- [Radio](/components/component-radio)\n- [Badge](/components/component-badge)\n",
+   "related": [
+    "radio",
+    "badge"
+   ],
+   "route": "/components/component-rating",
+   "slug": "rating",
+   "status": "stable",
+   "stories": {
+    "file": "packages/ui-react/src/components/rating/rating.stories.tsx",
+    "names": [
+     "Playground",
+     "Input",
+     "Sizes",
+     "Variations",
+     "Themes",
+     "ContractMetadata"
+    ],
+    "source": "import { ratingContract, ratingSizes, themes } from '@atom63/ui-foundation'\nimport { Rating, UIProvider } from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\nimport { Heart } from 'lucide-react'\nimport { useState } from 'react'\n\nconst meta = {\n  title: 'UI React/Rating',\n  component: Rating,\n  argTypes: {\n    size: { control: 'inline-radio', options: ratingSizes },\n  },\n  args: { size: 'md', value: 4.5 },\n} satisfies Meta<typeof Rating>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\n/* Read-only: one image named \"4.5 out of 5\", with a half star. */\nexport const Playground: Story = {}\n\nfunction InputDemo() {\n  const [value, setValue] = useState(3)\n  return (\n    <div style={{ alignItems: 'center', display: 'flex', gap: 12 }}>\n      <Rating label=\"Rate this recipe\" onValueChange={setValue} value={value} />\n      <span style={{ color: 'var(--a63-text-secondary)', fontSize: 13 }}>{value} of 5</span>\n    </div>\n  )\n}\n\n/* With onValueChange: a radio group, one radio per star; arrow keys change it. */\nexport const Input: Story = {\n  render: () => <InputDemo />,\n}\n\nexport const Sizes: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {ratingSizes.map(size => (\n        <Rating key={size} size={size} value={3.5} />\n      ))}\n    </div>\n  ),\n}\n\n/* Other scales and glyphs: ten points, a heart in place of the star, disabled input. */\nexport const Variations: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      <Rating max={10} size=\"sm\" value={7} />\n      <Rating icon={<Heart aria-hidden />} label=\"Loved by 4 of 5\" value={4} />\n      <Rating disabled label=\"Rating, locked\" onValueChange={() => {}} value={2} />\n    </div>\n  ),\n}\n\nexport const Themes: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {themes.map(theme =>\n        (['light', 'dark'] as const).map(mode => (\n          <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>\n            <div style={{ background: 'var(--a63-surface-page)', padding: '0.75rem' }}>\n              <Rating label={`${theme} / ${mode}: 4.5 out of 5`} value={4.5} />\n            </div>\n          </UIProvider>\n        ))\n      )}\n    </div>\n  ),\n}\n\nexport const ContractMetadata: Story = {\n  render: () => (\n    <pre style={{ fontSize: 12, margin: 0, whiteSpace: 'pre-wrap' }}>\n      {JSON.stringify(ratingContract, null, 2)}\n    </pre>\n  ),\n}\n"
+   },
+   "summary": "Rating shows a score out of five stars, or collects one as a radio group.",
+   "usage": "Give a read-only rating its value in words; use the input form inside a form with a visible label.",
+   "usageExports": [
+    "Rating"
+   ]
+  },
+  {
+   "axisGuidance": null,
+   "contract": {
+    "archetypes": [
+     {
+      "description": "Editable or field-like data-entry surfaces.",
+      "id": "field",
+      "label": "Field controls"
+     },
+     {
+      "description": "Momentary controls that perform an action now.",
+      "id": "action",
+      "label": "Action controls"
+     }
+    ],
+    "axes": [],
+    "crossRenderer": {
+     "accessibilityOutcomes": [
+      "exposes-search-input-role-and-label",
+      "clear-action-has-an-accessible-label",
+      "disabled-state-is-exposed"
+     ],
+     "intent": "Find or filter relevant content by editing a query without leaving the current collection.",
+     "parity": "platform-adaptive",
+     "platformAdaptations": {
+      "react": [
+       "Uses a labeled native search input with an explicit clear button and native form submission."
+      ],
+      "swiftUI": [
+       "Uses searchable so placement, cancel, clear, suggestions, keyboard, and focus presentation follow the active Apple platform."
+      ]
+     },
+     "requiredStates": [
+      "empty",
+      "query",
+      "focus",
+      "disabled"
+     ],
+     "sharedOutcomes": [
+      "editing-updates-the-query",
+      "clear-empties-the-query-and-preserves-input-context",
+      "submit-commits-the-current-query-once",
+      "disabled-search-prevents-editing-and-clear"
+     ],
+     "swiftUIRenderer": "searchable(text:prompt:)"
+    },
+    "exportName": "searchFieldContract",
+    "slots": [
+     "search-field",
+     "search-field-icon",
+     "search-field-input",
+     "search-field-clear",
+     "search-field-end"
+    ],
+    "source": "packages/ui-foundation/contracts/components/search-field.json",
+    "states": [
+     "empty",
+     "query",
+     "focus",
+     "disabled"
+    ],
+    "tokenSlots": []
+   },
+   "exports": {
+    "types": [
+     "SearchFieldProps"
+    ],
+    "values": [
+     "SearchField"
+    ]
+   },
+   "group": {
+    "id": "forms-and-selection",
+    "title": "Forms and selection"
+   },
+   "guidance": [
+    "Use it for text filtering and search queries; use Autocomplete when results also select a value.",
+    "Pair controls with persistent labels and explain errors beside the affected field.",
+    "Validate focus visibility, disabled state, invalid state, and touch input together."
+   ],
+   "importPath": "@atom63/ui-react",
+   "label": "Search Field",
+   "markdown": "# Search Field\n\nSearch Field provides a clearable search input with shared keyboard and form behavior.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Use it for text filtering and search queries; use Autocomplete when results also select a value.\n- Pair controls with persistent labels and explain errors beside the affected field.\n- Validate focus visibility, disabled state, invalid state, and touch input together.\n\n## Usage\n\n```tsx\nimport { SearchField } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `SearchField`\n\n**Types:** `SearchFieldProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/search-field.json` (`searchFieldContract` in `@atom63/ui-foundation`).\n\n**Slots:** `search-field`, `search-field-icon`, `search-field-input`, `search-field-clear`, `search-field-end`\n\n**States:** `empty`, `query`, `focus`, `disabled`\n\n**Visual archetype:** Field controls — Editable or field-like data-entry surfaces.; Action controls — Momentary controls that perform an action now.\n\n### Web and iOS\n\nFind or filter relevant content by editing a query without leaving the current collection. Rendered by `searchable(text:prompt:)` in SwiftUI, with `platform-adaptive` parity.\n\n**Required states:** `empty`, `query`, `focus`, `disabled`\n\n**Shared outcomes:**\n\n- Editing updates the query\n- Clear empties the query and preserves input context\n- Submit commits the current query once\n- Disabled search prevents editing and clear\n\n**Accessibility outcomes:**\n\n- Exposes search input role and label\n- Clear action has an accessible label\n- Disabled state is exposed\n\n**Platform adaptations:**\n\n- React: Uses a labeled native search input with an explicit clear button and native form submission.\n- SwiftUI: Uses searchable so placement, cancel, clear, suggestions, keyboard, and focus presentation follow the active Apple platform.\n\n## Related components\n\n- [Input](/components/component-input)\n- [Autocomplete](/components/component-autocomplete)\n- [Command](/components/component-command)\n",
+   "related": [
+    "input",
+    "autocomplete",
+    "command"
+   ],
+   "route": "/components/component-search-field",
+   "slug": "search-field",
+   "status": "stable",
+   "stories": {
+    "file": "packages/ui-react/src/components/search-field/search-field.stories.tsx",
+    "names": [
+     "Playground",
+     "EndAddon",
+     "Disabled",
+     "Dark"
+    ],
+    "source": "import { Button, SearchField } from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\nimport { LayoutGrid } from 'lucide-react'\nimport { useState } from 'react'\n\nfunction SearchFieldDemo() {\n  const [query, setQuery] = useState('')\n  return (\n    <form\n      onSubmit={event => {\n        event.preventDefault()\n      }}\n      style={{ maxWidth: 360 }}\n    >\n      <SearchField\n        aria-label=\"Search projects\"\n        onValueChange={setQuery}\n        placeholder=\"Search projects\"\n        value={query}\n      />\n    </form>\n  )\n}\n\nconst meta = {\n  title: 'UI React/SearchField',\n  component: SearchField,\n} satisfies Meta<typeof SearchField>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nexport const Playground: Story = {\n  render: () => <SearchFieldDemo />,\n}\n\n/* endAddon: a control after the field, such as a browse button. */\nexport const EndAddon: Story = {\n  render: () => (\n    <div style={{ maxWidth: 360 }}>\n      <SearchField\n        aria-label=\"Search the library\"\n        endAddon={\n          <Button aria-label=\"Browse\" size=\"icon-xs\" variant=\"ghost\">\n            <LayoutGrid aria-hidden />\n          </Button>\n        }\n        placeholder=\"What do you want to play?\"\n      />\n    </div>\n  ),\n}\n\nexport const Disabled: Story = {\n  args: {\n    'aria-label': 'Search projects',\n    disabled: true,\n    value: 'Mobile design system',\n  },\n}\n\n/* Playground in dark mode, so visual regression covers dark for this component,\n   which has no Themes matrix. The global applies to <html>, so portals are dark too. */\nexport const Dark: Story = { ...Playground, globals: { mode: 'dark' } }\n"
+   },
+   "summary": "Search Field provides a clearable search input with shared keyboard and form behavior.",
+   "usage": "Use it for text filtering and search queries; use Autocomplete when results also select a value.",
+   "usageExports": [
+    "SearchField"
+   ]
+  },
+  {
+   "axisGuidance": null,
+   "contract": {
+    "archetypes": [
+     {
       "description": "One-of-many peer selections presented as a shared track or grouped row.",
       "id": "segment",
       "label": "Segmented selection"
@@ -1793,113 +1982,6 @@
    "usage": "Use it for a small set of peer choices and keep labels short enough to survive narrow widths.",
    "usageExports": [
     "SegmentedControl"
-   ]
-  },
-  {
-   "axisGuidance": null,
-   "contract": {
-    "archetypes": [
-     {
-      "description": "Editable or field-like data-entry surfaces.",
-      "id": "field",
-      "label": "Field controls"
-     },
-     {
-      "description": "Momentary controls that perform an action now.",
-      "id": "action",
-      "label": "Action controls"
-     }
-    ],
-    "axes": [],
-    "crossRenderer": {
-     "accessibilityOutcomes": [
-      "exposes-search-input-role-and-label",
-      "clear-action-has-an-accessible-label",
-      "disabled-state-is-exposed"
-     ],
-     "intent": "Find or filter relevant content by editing a query without leaving the current collection.",
-     "parity": "platform-adaptive",
-     "platformAdaptations": {
-      "react": [
-       "Uses a labeled native search input with an explicit clear button and native form submission."
-      ],
-      "swiftUI": [
-       "Uses searchable so placement, cancel, clear, suggestions, keyboard, and focus presentation follow the active Apple platform."
-      ]
-     },
-     "requiredStates": [
-      "empty",
-      "query",
-      "focus",
-      "disabled"
-     ],
-     "sharedOutcomes": [
-      "editing-updates-the-query",
-      "clear-empties-the-query-and-preserves-input-context",
-      "submit-commits-the-current-query-once",
-      "disabled-search-prevents-editing-and-clear"
-     ],
-     "swiftUIRenderer": "searchable(text:prompt:)"
-    },
-    "exportName": "searchFieldContract",
-    "slots": [
-     "search-field",
-     "search-field-icon",
-     "search-field-input",
-     "search-field-clear",
-     "search-field-end"
-    ],
-    "source": "packages/ui-foundation/contracts/components/search-field.json",
-    "states": [
-     "empty",
-     "query",
-     "focus",
-     "disabled"
-    ],
-    "tokenSlots": []
-   },
-   "exports": {
-    "types": [
-     "SearchFieldProps"
-    ],
-    "values": [
-     "SearchField"
-    ]
-   },
-   "group": {
-    "id": "forms-and-selection",
-    "title": "Forms and selection"
-   },
-   "guidance": [
-    "Use it for text filtering and search queries; use Autocomplete when results also select a value.",
-    "Pair controls with persistent labels and explain errors beside the affected field.",
-    "Validate focus visibility, disabled state, invalid state, and touch input together."
-   ],
-   "importPath": "@atom63/ui-react",
-   "label": "Search Field",
-   "markdown": "# Search Field\n\nSearch Field provides a clearable search input with shared keyboard and form behavior.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Use it for text filtering and search queries; use Autocomplete when results also select a value.\n- Pair controls with persistent labels and explain errors beside the affected field.\n- Validate focus visibility, disabled state, invalid state, and touch input together.\n\n## Usage\n\n```tsx\nimport { SearchField } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `SearchField`\n\n**Types:** `SearchFieldProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/search-field.json` (`searchFieldContract` in `@atom63/ui-foundation`).\n\n**Slots:** `search-field`, `search-field-icon`, `search-field-input`, `search-field-clear`, `search-field-end`\n\n**States:** `empty`, `query`, `focus`, `disabled`\n\n**Visual archetype:** Field controls — Editable or field-like data-entry surfaces.; Action controls — Momentary controls that perform an action now.\n\n### Web and iOS\n\nFind or filter relevant content by editing a query without leaving the current collection. Rendered by `searchable(text:prompt:)` in SwiftUI, with `platform-adaptive` parity.\n\n**Required states:** `empty`, `query`, `focus`, `disabled`\n\n**Shared outcomes:**\n\n- Editing updates the query\n- Clear empties the query and preserves input context\n- Submit commits the current query once\n- Disabled search prevents editing and clear\n\n**Accessibility outcomes:**\n\n- Exposes search input role and label\n- Clear action has an accessible label\n- Disabled state is exposed\n\n**Platform adaptations:**\n\n- React: Uses a labeled native search input with an explicit clear button and native form submission.\n- SwiftUI: Uses searchable so placement, cancel, clear, suggestions, keyboard, and focus presentation follow the active Apple platform.\n\n## Related components\n\n- [Input](/components/component-input)\n- [Autocomplete](/components/component-autocomplete)\n- [Command](/components/component-command)\n",
-   "related": [
-    "input",
-    "autocomplete",
-    "command"
-   ],
-   "route": "/components/component-search-field",
-   "slug": "search-field",
-   "status": "stable",
-   "stories": {
-    "file": "packages/ui-react/src/components/search-field/search-field.stories.tsx",
-    "names": [
-     "Playground",
-     "EndAddon",
-     "Disabled",
-     "Dark"
-    ],
-    "source": "import { Button, SearchField } from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\nimport { LayoutGrid } from 'lucide-react'\nimport { useState } from 'react'\n\nfunction SearchFieldDemo() {\n  const [query, setQuery] = useState('')\n  return (\n    <form\n      onSubmit={event => {\n        event.preventDefault()\n      }}\n      style={{ maxWidth: 360 }}\n    >\n      <SearchField\n        aria-label=\"Search projects\"\n        onValueChange={setQuery}\n        placeholder=\"Search projects\"\n        value={query}\n      />\n    </form>\n  )\n}\n\nconst meta = {\n  title: 'UI React/SearchField',\n  component: SearchField,\n} satisfies Meta<typeof SearchField>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nexport const Playground: Story = {\n  render: () => <SearchFieldDemo />,\n}\n\n/* endAddon: a control after the field, such as a browse button. */\nexport const EndAddon: Story = {\n  render: () => (\n    <div style={{ maxWidth: 360 }}>\n      <SearchField\n        aria-label=\"Search the library\"\n        endAddon={\n          <Button aria-label=\"Browse\" size=\"icon-xs\" variant=\"ghost\">\n            <LayoutGrid aria-hidden />\n          </Button>\n        }\n        placeholder=\"What do you want to play?\"\n      />\n    </div>\n  ),\n}\n\nexport const Disabled: Story = {\n  args: {\n    'aria-label': 'Search projects',\n    disabled: true,\n    value: 'Mobile design system',\n  },\n}\n\n/* Playground in dark mode, so visual regression covers dark for this component,\n   which has no Themes matrix. The global applies to <html>, so portals are dark too. */\nexport const Dark: Story = { ...Playground, globals: { mode: 'dark' } }\n"
-   },
-   "summary": "Search Field provides a clearable search input with shared keyboard and form behavior.",
-   "usage": "Use it for text filtering and search queries; use Autocomplete when results also select a value.",
-   "usageExports": [
-    "SearchField"
    ]
   },
   {
@@ -5901,7 +5983,9 @@
      "carousel-item",
      "carousel-previous",
      "carousel-next",
-     "carousel-cursor"
+     "carousel-cursor",
+     "carousel-dots",
+     "carousel-dot"
     ],
     "source": "packages/ui-foundation/contracts/components/carousel.json",
     "states": [
@@ -5918,6 +6002,7 @@
     "types": [
      "CarouselApi",
      "CarouselContextProps",
+     "CarouselDotsProps",
      "CarouselOptions",
      "CarouselPlugin",
      "CarouselProps"
@@ -5925,6 +6010,7 @@
     "values": [
      "Carousel",
      "CarouselContent",
+     "CarouselDots",
      "CarouselItem",
      "CarouselNext",
      "CarouselPrevious",
@@ -5942,7 +6028,7 @@
    ],
    "importPath": "@atom63/ui-react",
    "label": "Carousel",
-   "markdown": "# Carousel\n\nCarousel coordinates an Embla viewport, slides, controls, and shared carousel state.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Use stable slide labels and keep essential content reachable without relying on drag alone.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Carousel`, `CarouselContent`, `CarouselItem`, `CarouselNext`, `CarouselPrevious`, `useCarousel`\n\n**Types:** `CarouselApi`, `CarouselContextProps`, `CarouselOptions`, `CarouselPlugin`, `CarouselProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/carousel.json` (`carouselContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `orientations` | `horizontal`, `vertical` | `horizontal` |\n\n**Slots:** `carousel`, `carousel-content`, `carousel-item`, `carousel-previous`, `carousel-next`, `carousel-cursor`\n\n**States:** `rest`, `hover`, `focus-visible`, `disabled`, `cursor-active`, `can-scroll`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.; Overlay surfaces — Floating material above the page or current surface.; Action controls — Momentary controls that perform an action now.\n\n## Related components\n\n- [Scrollable List](/components/component-scrollable-list)\n- [Scroll Area](/components/component-scroll-area)\n- [Button](/components/component-button)\n",
+   "markdown": "# Carousel\n\nCarousel coordinates an Embla viewport, slides, controls, and shared carousel state.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Use stable slide labels and keep essential content reachable without relying on drag alone.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Carousel`, `CarouselContent`, `CarouselDots`, `CarouselItem`, `CarouselNext`, `CarouselPrevious`, `useCarousel`\n\n**Types:** `CarouselApi`, `CarouselContextProps`, `CarouselDotsProps`, `CarouselOptions`, `CarouselPlugin`, `CarouselProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/carousel.json` (`carouselContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `orientations` | `horizontal`, `vertical` | `horizontal` |\n\n**Slots:** `carousel`, `carousel-content`, `carousel-item`, `carousel-previous`, `carousel-next`, `carousel-cursor`, `carousel-dots`, `carousel-dot`\n\n**States:** `rest`, `hover`, `focus-visible`, `disabled`, `cursor-active`, `can-scroll`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.; Overlay surfaces — Floating material above the page or current surface.; Action controls — Momentary controls that perform an action now.\n\n## Related components\n\n- [Scrollable List](/components/component-scrollable-list)\n- [Scroll Area](/components/component-scroll-area)\n- [Button](/components/component-button)\n",
    "related": [
     "scrollable-list",
     "scroll-area",
@@ -5955,6 +6041,7 @@
     "file": "packages/ui-react/src/components/carousel/carousel.stories.tsx",
     "names": [
      "Playground",
+     "WithDots",
      "RightToLeft",
      "CursorIndicator",
      "MultiPerView",
@@ -5962,7 +6049,7 @@
      "Endpoints",
      "ContractMetadata"
     ],
-    "source": "import { carouselContract, themes } from '@atom63/ui-foundation'\nimport {\n  Carousel,\n  CarouselContent,\n  CarouselItem,\n  CarouselNext,\n  CarouselPrevious,\n  UIProvider,\n} from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\nimport { repeatedLandmarks } from '../story-probes'\n\nconst meta = {\n  title: 'UI React/Carousel',\n  component: Carousel,\n  argTypes: {\n    orientation: { control: 'inline-radio', options: ['horizontal', 'vertical'] },\n    cursorIndicator: { control: 'boolean' },\n  },\n  args: { orientation: 'horizontal' },\n} satisfies Meta<typeof Carousel>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nconst slides = ['One', 'Two', 'Three', 'Four', 'Five']\n\nfunction Slide({ label }: { label: string }) {\n  return (\n    <div\n      style={{\n        alignItems: 'center',\n        background: 'var(--a63-surface-control)',\n        borderRadius: '0.75rem',\n        color: 'var(--a63-text-primary)',\n        display: 'flex',\n        fontSize: 32,\n        fontWeight: 600,\n        height: 220,\n        justifyContent: 'center',\n      }}\n    >\n      {label}\n    </div>\n  )\n}\n\nexport const Playground: Story = {\n  render: args => (\n    <div style={{ maxWidth: 520 }}>\n      <Carousel {...args} opts={{ loop: true }}>\n        <CarouselContent>\n          {slides.map(label => (\n            <CarouselItem key={label}>\n              <Slide label={label} />\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n        <CarouselPrevious />\n        <CarouselNext />\n      </Carousel>\n    </div>\n  ),\n}\n\n/* Right-to-left: the first slide starts at the right, the previous button sits on the right and\n * the arrow keys follow the reading direction. */\nexport const RightToLeft: Story = {\n  render: args => (\n    <div dir=\"rtl\" style={{ maxWidth: 520 }}>\n      <Carousel {...args}>\n        <CarouselContent>\n          {slides.map(label => (\n            <CarouselItem key={label}>\n              <Slide label={label} />\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n        <CarouselPrevious />\n        <CarouselNext />\n      </Carousel>\n    </div>\n  ),\n}\n\n/* Pointer-following cursor indicator — a round prev/next affordance tracks the\n * pointer inside the viewport and scrolls on click (no visible nav arrows). */\nexport const CursorIndicator: Story = {\n  args: { cursorIndicator: true },\n  render: args => (\n    <div style={{ maxWidth: 520 }}>\n      <Carousel {...args} opts={{ loop: true }}>\n        <CarouselContent>\n          {slides.map(label => (\n            <CarouselItem key={label}>\n              <Slide label={label} />\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n      </Carousel>\n    </div>\n  ),\n}\n\n/* Two slides per view — items narrow to half-basis (prod basis-1/2). */\nexport const MultiPerView: Story = {\n  render: () => (\n    <div style={{ maxWidth: 640 }}>\n      <Carousel opts={{ align: 'start' }}>\n        <CarouselContent>\n          {slides.map(label => (\n            <CarouselItem key={label} style={{ flexBasis: '50%' }}>\n              <Slide label={label} />\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n        <CarouselPrevious />\n        <CarouselNext />\n      </Carousel>\n    </div>\n  ),\n}\n\nexport const Themes: Story = {\n  parameters: repeatedLandmarks,\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {themes.map(theme =>\n        (['light', 'dark'] as const).map(mode => (\n          <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>\n            <div\n              style={{\n                alignItems: 'center',\n                background: 'var(--a63-surface-panel)',\n                borderRadius: '0.75rem',\n                color: 'var(--a63-text-primary)',\n                display: 'flex',\n                gap: 12,\n                padding: '0.75rem',\n              }}\n            >\n              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>\n                {theme} / {mode}\n              </span>\n              <div style={{ maxWidth: 320 }}>\n                <Carousel opts={{ loop: true }}>\n                  <CarouselContent>\n                    {slides.map(label => (\n                      <CarouselItem key={label}>\n                        <Slide label={label} />\n                      </CarouselItem>\n                    ))}\n                  </CarouselContent>\n                  <CarouselPrevious />\n                  <CarouselNext />\n                </Carousel>\n              </div>\n            </div>\n          </UIProvider>\n        ))\n      )}\n    </div>\n  ),\n}\n\n/* The same carousel reviewed against target host contexts. */\nexport const Endpoints: Story = {\n  parameters: repeatedLandmarks,\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {[\n        {\n          label: 'Web',\n          props: { density: 'comfortable', designLanguage: 'web', input: 'pointer' } as const,\n        },\n        {\n          label: 'iOS touch',\n          props: { density: 'comfortable', designLanguage: 'ios', input: 'touch' } as const,\n        },\n        {\n          label: 'Compact extension',\n          props: {\n            density: 'compact',\n            designLanguage: 'web',\n            input: 'pointer',\n            surface: 'n2',\n          } as const,\n        },\n      ].map(endpoint => (\n        <UIProvider key={endpoint.label} {...endpoint.props}>\n          <div\n            style={{\n              alignItems: 'center',\n              background: 'var(--a63-surface-panel)',\n              borderRadius: 'var(--radius-lg)',\n              color: 'var(--a63-text-primary)',\n              display: 'flex',\n              gap: 12,\n              padding: '0.75rem',\n            }}\n          >\n            <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>\n              {endpoint.label}\n            </span>\n            <div style={{ maxWidth: 320 }}>\n              <Carousel opts={{ loop: true }}>\n                <CarouselContent>\n                  {slides.map(label => (\n                    <CarouselItem key={label}>\n                      <Slide label={label} />\n                    </CarouselItem>\n                  ))}\n                </CarouselContent>\n                <CarouselPrevious />\n                <CarouselNext />\n              </Carousel>\n            </div>\n          </div>\n        </UIProvider>\n      ))}\n    </div>\n  ),\n}\n\nexport const ContractMetadata: Story = {\n  render: () => (\n    <pre style={{ fontSize: 12, margin: 0, whiteSpace: 'pre-wrap' }}>\n      {JSON.stringify(carouselContract, null, 2)}\n    </pre>\n  ),\n}\n"
+    "source": "import { carouselContract, themes } from '@atom63/ui-foundation'\nimport {\n  Carousel,\n  CarouselContent,\n  CarouselDots,\n  CarouselItem,\n  CarouselNext,\n  CarouselPrevious,\n  UIProvider,\n} from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\nimport { repeatedLandmarks } from '../story-probes'\n\nconst meta = {\n  title: 'UI React/Carousel',\n  component: Carousel,\n  argTypes: {\n    orientation: { control: 'inline-radio', options: ['horizontal', 'vertical'] },\n    cursorIndicator: { control: 'boolean' },\n  },\n  args: { orientation: 'horizontal' },\n} satisfies Meta<typeof Carousel>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nconst slides = ['One', 'Two', 'Three', 'Four', 'Five']\n\nfunction Slide({ label }: { label: string }) {\n  return (\n    <div\n      style={{\n        alignItems: 'center',\n        background: 'var(--a63-surface-control)',\n        borderRadius: '0.75rem',\n        color: 'var(--a63-text-primary)',\n        display: 'flex',\n        fontSize: 32,\n        fontWeight: 600,\n        height: 220,\n        justifyContent: 'center',\n      }}\n    >\n      {label}\n    </div>\n  )\n}\n\nexport const Playground: Story = {\n  render: args => (\n    <div style={{ maxWidth: 520 }}>\n      <Carousel {...args} opts={{ loop: true }}>\n        <CarouselContent>\n          {slides.map(label => (\n            <CarouselItem key={label}>\n              <Slide label={label} />\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n        <CarouselPrevious />\n        <CarouselNext />\n      </Carousel>\n    </div>\n  ),\n}\n\n/* Dots under the slides: one per snap point, the current one a pill. */\nexport const WithDots: Story = {\n  render: () => (\n    <div style={{ maxWidth: 520 }}>\n      <Carousel>\n        <CarouselContent>\n          {slides.map(label => (\n            <CarouselItem key={label}>\n              <Slide label={label} />\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n        <CarouselDots />\n      </Carousel>\n    </div>\n  ),\n}\n\n/* Right-to-left: the first slide starts at the right, the previous button sits on the right and\n * the arrow keys follow the reading direction. */\nexport const RightToLeft: Story = {\n  render: args => (\n    <div dir=\"rtl\" style={{ maxWidth: 520 }}>\n      <Carousel {...args}>\n        <CarouselContent>\n          {slides.map(label => (\n            <CarouselItem key={label}>\n              <Slide label={label} />\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n        <CarouselPrevious />\n        <CarouselNext />\n      </Carousel>\n    </div>\n  ),\n}\n\n/* Pointer-following cursor indicator — a round prev/next affordance tracks the\n * pointer inside the viewport and scrolls on click (no visible nav arrows). */\nexport const CursorIndicator: Story = {\n  args: { cursorIndicator: true },\n  render: args => (\n    <div style={{ maxWidth: 520 }}>\n      <Carousel {...args} opts={{ loop: true }}>\n        <CarouselContent>\n          {slides.map(label => (\n            <CarouselItem key={label}>\n              <Slide label={label} />\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n      </Carousel>\n    </div>\n  ),\n}\n\n/* Two slides per view — items narrow to half-basis (prod basis-1/2). */\nexport const MultiPerView: Story = {\n  render: () => (\n    <div style={{ maxWidth: 640 }}>\n      <Carousel opts={{ align: 'start' }}>\n        <CarouselContent>\n          {slides.map(label => (\n            <CarouselItem key={label} style={{ flexBasis: '50%' }}>\n              <Slide label={label} />\n            </CarouselItem>\n          ))}\n        </CarouselContent>\n        <CarouselPrevious />\n        <CarouselNext />\n      </Carousel>\n    </div>\n  ),\n}\n\nexport const Themes: Story = {\n  parameters: repeatedLandmarks,\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {themes.map(theme =>\n        (['light', 'dark'] as const).map(mode => (\n          <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>\n            <div\n              style={{\n                alignItems: 'center',\n                background: 'var(--a63-surface-panel)',\n                borderRadius: '0.75rem',\n                color: 'var(--a63-text-primary)',\n                display: 'flex',\n                gap: 12,\n                padding: '0.75rem',\n              }}\n            >\n              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>\n                {theme} / {mode}\n              </span>\n              <div style={{ maxWidth: 320 }}>\n                <Carousel opts={{ loop: true }}>\n                  <CarouselContent>\n                    {slides.map(label => (\n                      <CarouselItem key={label}>\n                        <Slide label={label} />\n                      </CarouselItem>\n                    ))}\n                  </CarouselContent>\n                  <CarouselPrevious />\n                  <CarouselNext />\n                </Carousel>\n              </div>\n            </div>\n          </UIProvider>\n        ))\n      )}\n    </div>\n  ),\n}\n\n/* The same carousel reviewed against target host contexts. */\nexport const Endpoints: Story = {\n  parameters: repeatedLandmarks,\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {[\n        {\n          label: 'Web',\n          props: { density: 'comfortable', designLanguage: 'web', input: 'pointer' } as const,\n        },\n        {\n          label: 'iOS touch',\n          props: { density: 'comfortable', designLanguage: 'ios', input: 'touch' } as const,\n        },\n        {\n          label: 'Compact extension',\n          props: {\n            density: 'compact',\n            designLanguage: 'web',\n            input: 'pointer',\n            surface: 'n2',\n          } as const,\n        },\n      ].map(endpoint => (\n        <UIProvider key={endpoint.label} {...endpoint.props}>\n          <div\n            style={{\n              alignItems: 'center',\n              background: 'var(--a63-surface-panel)',\n              borderRadius: 'var(--radius-lg)',\n              color: 'var(--a63-text-primary)',\n              display: 'flex',\n              gap: 12,\n              padding: '0.75rem',\n            }}\n          >\n            <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>\n              {endpoint.label}\n            </span>\n            <div style={{ maxWidth: 320 }}>\n              <Carousel opts={{ loop: true }}>\n                <CarouselContent>\n                  {slides.map(label => (\n                    <CarouselItem key={label}>\n                      <Slide label={label} />\n                    </CarouselItem>\n                  ))}\n                </CarouselContent>\n                <CarouselPrevious />\n                <CarouselNext />\n              </Carousel>\n            </div>\n          </div>\n        </UIProvider>\n      ))}\n    </div>\n  ),\n}\n\nexport const ContractMetadata: Story = {\n  render: () => (\n    <pre style={{ fontSize: 12, margin: 0, whiteSpace: 'pre-wrap' }}>\n      {JSON.stringify(carouselContract, null, 2)}\n    </pre>\n  ),\n}\n"
    },
    "summary": "Carousel coordinates an Embla viewport, slides, controls, and shared carousel state.",
    "usage": "Use stable slide labels and keep essential content reachable without relying on drag alone.",
@@ -6555,6 +6642,14 @@
        "image"
       ],
       "default": "default"
+     },
+     {
+      "name": "groupVariants",
+      "values": [
+       "default",
+       "inset"
+      ],
+      "default": "default"
      }
     ],
     "exportName": "itemContract",
@@ -6582,6 +6677,7 @@
    },
    "exports": {
     "types": [
+     "ItemGroupProps",
      "ItemMediaProps",
      "ItemProps",
      "ItemSeparatorProps"
@@ -6610,7 +6706,7 @@
    ],
    "importPath": "@atom63/ui-react",
    "label": "Item",
-   "markdown": "# Item\n\nItem provides structured row regions for media, content, actions, and supporting detail.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Keep the row hierarchy predictable and avoid nesting unrelated actions inside a row-level link.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Item, ItemContent, ItemTitle, ItemActions } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Item`, `ItemActions`, `ItemContent`, `ItemDescription`, `ItemFooter`, `ItemGroup`, `ItemHeader`, `ItemMedia`, `ItemSeparator`, `ItemTitle`\n\n**Types:** `ItemMediaProps`, `ItemProps`, `ItemSeparatorProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/item.json` (`itemContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `variants` | `default`, `outline`, `muted` | `default` |\n| `sizes` | `default`, `sm`, `xs` | `default` |\n| `mediaVariants` | `default`, `icon`, `image` | `default` |\n\n**Slots:** `item-group`, `item`, `item-media`, `item-content`, `item-title`, `item-description`, `item-actions`, `item-header`, `item-footer`, `item-separator`\n\n**States:** `rest`, `hover`, `focus`, `selected`, `current`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.\n\n## Related components\n\n- [Card](/components/component-card)\n- [Separator](/components/component-separator)\n- [Avatar](/components/component-avatar)\n",
+   "markdown": "# Item\n\nItem provides structured row regions for media, content, actions, and supporting detail.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Keep the row hierarchy predictable and avoid nesting unrelated actions inside a row-level link.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Item, ItemContent, ItemTitle, ItemActions } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Item`, `ItemActions`, `ItemContent`, `ItemDescription`, `ItemFooter`, `ItemGroup`, `ItemHeader`, `ItemMedia`, `ItemSeparator`, `ItemTitle`\n\n**Types:** `ItemGroupProps`, `ItemMediaProps`, `ItemProps`, `ItemSeparatorProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/item.json` (`itemContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `variants` | `default`, `outline`, `muted` | `default` |\n| `sizes` | `default`, `sm`, `xs` | `default` |\n| `mediaVariants` | `default`, `icon`, `image` | `default` |\n| `groupVariants` | `default`, `inset` | `default` |\n\n**Slots:** `item-group`, `item`, `item-media`, `item-content`, `item-title`, `item-description`, `item-actions`, `item-header`, `item-footer`, `item-separator`\n\n**States:** `rest`, `hover`, `focus`, `selected`, `current`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.\n\n## Related components\n\n- [Card](/components/component-card)\n- [Separator](/components/component-separator)\n- [Avatar](/components/component-avatar)\n",
    "related": [
     "card",
     "separator",
@@ -6627,12 +6723,13 @@
      "Group",
      "AsLink",
      "SelectedAndCurrent",
+     "InsetGroup",
      "Sizes",
      "Themes",
      "Endpoints",
      "ContractMetadata"
     ],
-    "source": "import { itemContract, themes } from '@atom63/ui-foundation'\nimport { Bookmark } from 'lucide-react'\nimport {\n  Button,\n  Item,\n  ItemActions,\n  ItemContent,\n  ItemDescription,\n  ItemGroup,\n  ItemMedia,\n  ItemSeparator,\n  ItemTitle,\n  UIProvider,\n} from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\n\nconst meta = {\n  title: 'UI React/Item',\n  component: Item,\n} satisfies Meta<typeof Item>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nexport const Playground: Story = {\n  render: () => (\n    <div style={{ width: 'min(360px, 100%)' }}>\n      <Item variant=\"outline\">\n        <ItemMedia variant=\"icon\">\n          <Bookmark aria-hidden />\n        </ItemMedia>\n        <ItemContent>\n          <ItemTitle>Starred project</ItemTitle>\n          <ItemDescription>Last edited 2 hours ago by you.</ItemDescription>\n        </ItemContent>\n        <ItemActions>\n          <Button size=\"sm\" type=\"button\" variant=\"secondary\">\n            Open\n          </Button>\n        </ItemActions>\n      </Item>\n    </div>\n  ),\n}\n\nexport const Variants: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12, width: 360 }}>\n      {(['default', 'outline', 'muted'] as const).map(variant => (\n        <Item key={variant} variant={variant}>\n          <ItemContent>\n            <ItemTitle>{variant}</ItemTitle>\n            <ItemDescription>The {variant} chrome.</ItemDescription>\n          </ItemContent>\n        </Item>\n      ))}\n    </div>\n  ),\n}\n\n/* A grouped list with separators; sizes tighten the row density. */\nexport const Group: Story = {\n  render: () => (\n    <div style={{ width: 360 }}>\n      <ItemGroup>\n        <Item size=\"sm\" variant=\"outline\">\n          <ItemContent>\n            <ItemTitle>First</ItemTitle>\n          </ItemContent>\n        </Item>\n        <ItemSeparator />\n        <Item size=\"sm\" variant=\"outline\">\n          <ItemContent>\n            <ItemTitle>Second</ItemTitle>\n          </ItemContent>\n        </Item>\n      </ItemGroup>\n    </div>\n  ),\n}\n\n/* A clickable row via the render prop (renders an <a>, gets a muted hover). */\nexport const AsLink: Story = {\n  render: () => (\n    <div style={{ width: 360 }}>\n      <Item\n        render={\n          <a href=\"#item-link\">\n            <ItemContent>\n              <ItemTitle>Clickable row</ItemTitle>\n              <ItemDescription>Renders as an anchor.</ItemDescription>\n            </ItemContent>\n          </a>\n        }\n        variant=\"outline\"\n      />\n    </div>\n  ),\n}\n\n/* aria-current marks the row for the page the user is on; data-selected marks\n   a picked row that is not a link. Both take the selected surface. */\nexport const SelectedAndCurrent: Story = {\n  render: () => (\n    <ItemGroup style={{ width: 360 }}>\n      {['Inbox', 'My issues', 'Projects'].map(label => (\n        <Item\n          key={label}\n          render={\n            <a aria-current={label === 'My issues' ? 'page' : undefined} href={`#${label}`}>\n              <ItemContent>\n                <ItemTitle>{label}</ItemTitle>\n              </ItemContent>\n            </a>\n          }\n          size=\"xs\"\n        />\n      ))}\n      <Item data-selected=\"\" size=\"xs\" variant=\"muted\">\n        <ItemContent>\n          <ItemTitle>Selected row</ItemTitle>\n          <ItemDescription>Not a link: data-selected.</ItemDescription>\n        </ItemContent>\n      </Item>\n    </ItemGroup>\n  ),\n}\n\n/* Every size tightens the row density (default · sm · xs). */\nexport const Sizes: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12, width: 360 }}>\n      {(['default', 'sm', 'xs'] as const).map(size => (\n        <Item key={size} size={size} variant=\"outline\">\n          <ItemMedia variant=\"icon\">\n            <Bookmark aria-hidden />\n          </ItemMedia>\n          <ItemContent>\n            <ItemTitle>{size}</ItemTitle>\n            <ItemDescription>The {size} row density.</ItemDescription>\n          </ItemContent>\n        </Item>\n      ))}\n    </div>\n  ),\n}\n\n/* Renders a representative Item across all 4 DS themes × light/dark. */\nexport const Themes: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {themes.map(theme =>\n        (['light', 'dark'] as const).map(mode => (\n          <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>\n            <div\n              style={{\n                display: 'flex',\n                alignItems: 'center',\n                gap: 12,\n                padding: '0.75rem',\n                background: 'var(--a63-surface-panel)',\n                color: 'var(--a63-text-primary)',\n                borderRadius: 'var(--a63-surface-radius, var(--radius-lg))',\n              }}\n            >\n              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>\n                {theme} / {mode}\n              </span>\n              <div style={{ width: 320 }}>\n                <Item variant=\"outline\">\n                  <ItemMedia variant=\"icon\">\n                    <Bookmark aria-hidden />\n                  </ItemMedia>\n                  <ItemContent>\n                    <ItemTitle>Starred project</ItemTitle>\n                    <ItemDescription>Last edited 2 hours ago.</ItemDescription>\n                  </ItemContent>\n                  <ItemActions>\n                    <Button size=\"sm\" type=\"button\" variant=\"secondary\">\n                      Open\n                    </Button>\n                  </ItemActions>\n                </Item>\n              </div>\n            </div>\n          </UIProvider>\n        ))\n      )}\n    </div>\n  ),\n}\n\nexport const Endpoints: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      <UIProvider designLanguage=\"web\" input=\"pointer\">\n        <EndpointItem label=\"Web\" />\n      </UIProvider>\n      <UIProvider designLanguage=\"ios\" input=\"touch\">\n        <EndpointItem label=\"iOS touch\" />\n      </UIProvider>\n      <UIProvider density=\"compact\" designLanguage=\"web\" input=\"pointer\">\n        <EndpointItem label=\"Compact extension\" />\n      </UIProvider>\n    </div>\n  ),\n}\n\nexport const ContractMetadata: Story = {\n  render: () => (\n    <pre style={{ fontSize: 12, margin: 0, whiteSpace: 'pre-wrap' }}>\n      {JSON.stringify(itemContract, null, 2)}\n    </pre>\n  ),\n}\n\nfunction EndpointItem({ label }: { label: string }) {\n  return (\n    <div\n      style={{\n        alignItems: 'center',\n        background: 'var(--a63-surface-panel)',\n        color: 'var(--a63-text-primary)',\n        display: 'flex',\n        gap: 12,\n        padding: 12,\n      }}\n    >\n      <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>{label}</span>\n      <div style={{ width: 320 }}>\n        <Item variant=\"outline\">\n          <ItemMedia variant=\"icon\">\n            <Bookmark aria-hidden />\n          </ItemMedia>\n          <ItemContent>\n            <ItemTitle>Starred project</ItemTitle>\n            <ItemDescription>Last edited 2 hours ago.</ItemDescription>\n          </ItemContent>\n          <ItemActions>\n            <Button size=\"sm\" type=\"button\" variant=\"secondary\">\n              Open\n            </Button>\n          </ItemActions>\n        </Item>\n      </div>\n    </div>\n  )\n}\n"
+    "source": "import { itemContract, themes } from '@atom63/ui-foundation'\nimport { Bookmark, ChevronRight } from 'lucide-react'\nimport {\n  Button,\n  Item,\n  ItemActions,\n  ItemContent,\n  ItemDescription,\n  ItemGroup,\n  ItemMedia,\n  ItemSeparator,\n  ItemTitle,\n  UIProvider,\n} from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\n\nconst meta = {\n  title: 'UI React/Item',\n  component: Item,\n} satisfies Meta<typeof Item>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nexport const Playground: Story = {\n  render: () => (\n    <div style={{ width: 'min(360px, 100%)' }}>\n      <Item variant=\"outline\">\n        <ItemMedia variant=\"icon\">\n          <Bookmark aria-hidden />\n        </ItemMedia>\n        <ItemContent>\n          <ItemTitle>Starred project</ItemTitle>\n          <ItemDescription>Last edited 2 hours ago by you.</ItemDescription>\n        </ItemContent>\n        <ItemActions>\n          <Button size=\"sm\" type=\"button\" variant=\"secondary\">\n            Open\n          </Button>\n        </ItemActions>\n      </Item>\n    </div>\n  ),\n}\n\nexport const Variants: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12, width: 360 }}>\n      {(['default', 'outline', 'muted'] as const).map(variant => (\n        <Item key={variant} variant={variant}>\n          <ItemContent>\n            <ItemTitle>{variant}</ItemTitle>\n            <ItemDescription>The {variant} chrome.</ItemDescription>\n          </ItemContent>\n        </Item>\n      ))}\n    </div>\n  ),\n}\n\n/* A grouped list with separators; sizes tighten the row density. */\nexport const Group: Story = {\n  render: () => (\n    <div style={{ width: 360 }}>\n      <ItemGroup>\n        <Item size=\"sm\" variant=\"outline\">\n          <ItemContent>\n            <ItemTitle>First</ItemTitle>\n          </ItemContent>\n        </Item>\n        <ItemSeparator />\n        <Item size=\"sm\" variant=\"outline\">\n          <ItemContent>\n            <ItemTitle>Second</ItemTitle>\n          </ItemContent>\n        </Item>\n      </ItemGroup>\n    </div>\n  ),\n}\n\n/* A clickable row via the render prop (renders an <a>, gets a muted hover). */\nexport const AsLink: Story = {\n  render: () => (\n    <div style={{ width: 360 }}>\n      <Item\n        render={\n          <a href=\"#item-link\">\n            <ItemContent>\n              <ItemTitle>Clickable row</ItemTitle>\n              <ItemDescription>Renders as an anchor.</ItemDescription>\n            </ItemContent>\n          </a>\n        }\n        variant=\"outline\"\n      />\n    </div>\n  ),\n}\n\n/* aria-current marks the row for the page the user is on; data-selected marks\n   a picked row that is not a link. Both take the selected surface. */\nexport const SelectedAndCurrent: Story = {\n  render: () => (\n    <ItemGroup style={{ width: 360 }}>\n      {['Inbox', 'My issues', 'Projects'].map(label => (\n        <Item\n          key={label}\n          render={\n            <a aria-current={label === 'My issues' ? 'page' : undefined} href={`#${label}`}>\n              <ItemContent>\n                <ItemTitle>{label}</ItemTitle>\n              </ItemContent>\n            </a>\n          }\n          size=\"xs\"\n        />\n      ))}\n      <Item data-selected=\"\" size=\"xs\" variant=\"muted\">\n        <ItemContent>\n          <ItemTitle>Selected row</ItemTitle>\n          <ItemDescription>Not a link: data-selected.</ItemDescription>\n        </ItemContent>\n      </Item>\n    </ItemGroup>\n  ),\n}\n\n/* variant=\"inset\": the grouped settings list, each row a label with its value\n   in bold and a chevron (the web side of iOS AtomValueRow). */\nexport const InsetGroup: Story = {\n  render: () => (\n    <div style={{ background: 'var(--a63-surface-page)', padding: 16, width: 360 }}>\n      <ItemGroup variant=\"inset\">\n        {[\n          ['Units of measure', 'Imperial'],\n          ['Active energy', 'kcal'],\n          ['Start week on', 'Sunday'],\n        ].map(([label, value]) => (\n          <Item\n            key={label}\n            render={\n              <a href={`#${label}`}>\n                <ItemContent>\n                  <ItemTitle>{label}</ItemTitle>\n                </ItemContent>\n                <ItemActions>\n                  <strong>{value}</strong>\n                  <ChevronRight aria-hidden />\n                </ItemActions>\n              </a>\n            }\n            size=\"sm\"\n          />\n        ))}\n      </ItemGroup>\n    </div>\n  ),\n}\n\n/* Every size tightens the row density (default · sm · xs). */\nexport const Sizes: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12, width: 360 }}>\n      {(['default', 'sm', 'xs'] as const).map(size => (\n        <Item key={size} size={size} variant=\"outline\">\n          <ItemMedia variant=\"icon\">\n            <Bookmark aria-hidden />\n          </ItemMedia>\n          <ItemContent>\n            <ItemTitle>{size}</ItemTitle>\n            <ItemDescription>The {size} row density.</ItemDescription>\n          </ItemContent>\n        </Item>\n      ))}\n    </div>\n  ),\n}\n\n/* Renders a representative Item across all 4 DS themes × light/dark. */\nexport const Themes: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {themes.map(theme =>\n        (['light', 'dark'] as const).map(mode => (\n          <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>\n            <div\n              style={{\n                display: 'flex',\n                alignItems: 'center',\n                gap: 12,\n                padding: '0.75rem',\n                background: 'var(--a63-surface-panel)',\n                color: 'var(--a63-text-primary)',\n                borderRadius: 'var(--a63-surface-radius, var(--radius-lg))',\n              }}\n            >\n              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>\n                {theme} / {mode}\n              </span>\n              <div style={{ width: 320 }}>\n                <Item variant=\"outline\">\n                  <ItemMedia variant=\"icon\">\n                    <Bookmark aria-hidden />\n                  </ItemMedia>\n                  <ItemContent>\n                    <ItemTitle>Starred project</ItemTitle>\n                    <ItemDescription>Last edited 2 hours ago.</ItemDescription>\n                  </ItemContent>\n                  <ItemActions>\n                    <Button size=\"sm\" type=\"button\" variant=\"secondary\">\n                      Open\n                    </Button>\n                  </ItemActions>\n                </Item>\n              </div>\n            </div>\n          </UIProvider>\n        ))\n      )}\n    </div>\n  ),\n}\n\nexport const Endpoints: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      <UIProvider designLanguage=\"web\" input=\"pointer\">\n        <EndpointItem label=\"Web\" />\n      </UIProvider>\n      <UIProvider designLanguage=\"ios\" input=\"touch\">\n        <EndpointItem label=\"iOS touch\" />\n      </UIProvider>\n      <UIProvider density=\"compact\" designLanguage=\"web\" input=\"pointer\">\n        <EndpointItem label=\"Compact extension\" />\n      </UIProvider>\n    </div>\n  ),\n}\n\nexport const ContractMetadata: Story = {\n  render: () => (\n    <pre style={{ fontSize: 12, margin: 0, whiteSpace: 'pre-wrap' }}>\n      {JSON.stringify(itemContract, null, 2)}\n    </pre>\n  ),\n}\n\nfunction EndpointItem({ label }: { label: string }) {\n  return (\n    <div\n      style={{\n        alignItems: 'center',\n        background: 'var(--a63-surface-panel)',\n        color: 'var(--a63-text-primary)',\n        display: 'flex',\n        gap: 12,\n        padding: 12,\n      }}\n    >\n      <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>{label}</span>\n      <div style={{ width: 320 }}>\n        <Item variant=\"outline\">\n          <ItemMedia variant=\"icon\">\n            <Bookmark aria-hidden />\n          </ItemMedia>\n          <ItemContent>\n            <ItemTitle>Starred project</ItemTitle>\n            <ItemDescription>Last edited 2 hours ago.</ItemDescription>\n          </ItemContent>\n          <ItemActions>\n            <Button size=\"sm\" type=\"button\" variant=\"secondary\">\n              Open\n            </Button>\n          </ItemActions>\n        </Item>\n      </div>\n    </div>\n  )\n}\n"
    },
    "summary": "Item provides structured row regions for media, content, actions, and supporting detail.",
    "usage": "Keep the row hierarchy predictable and avoid nesting unrelated actions inside a row-level link.",

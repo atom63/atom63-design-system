@@ -829,7 +829,9 @@
         "carousel-item",
         "carousel-previous",
         "carousel-next",
-        "carousel-cursor"
+        "carousel-cursor",
+        "carousel-dots",
+        "carousel-dot"
       ],
       "states": ["rest", "hover", "focus-visible", "disabled", "cursor-active", "can-scroll"],
       "tokenSlots": [],
@@ -1470,11 +1472,12 @@
       "source": "packages/ui-foundation/contracts/components/item.json",
       "exportName": "itemContract",
       "maturity": "stable",
-      "description": "Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size (default/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off data-variant / data-size, and styles a row with aria-current or data-selected as current or selected.",
+      "description": "Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size (default/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off data-variant / data-size, and styles a row with aria-current or data-selected as current or selected. ItemGroup takes variant (default/inset): inset is a rounded card with hairline dividers, the grouped settings list.",
       "axes": [
         { "name": "variants", "values": ["default", "outline", "muted"], "default": "default" },
         { "name": "sizes", "values": ["default", "sm", "xs"], "default": "default" },
-        { "name": "mediaVariants", "values": ["default", "icon", "image"], "default": "default" }
+        { "name": "mediaVariants", "values": ["default", "icon", "image"], "default": "default" },
+        { "name": "groupVariants", "values": ["default", "inset"], "default": "default" }
       ],
       "slots": [
         "item-group",
@@ -1814,6 +1817,17 @@
           ]
         }
       }
+    },
+    "rating": {
+      "source": "packages/ui-foundation/contracts/components/rating.json",
+      "exportName": "ratingContract",
+      "maturity": "stable",
+      "description": "A score out of `max` stars (5 by default). Without `onValueChange` it is read-only: one image named \"4.5 out of 5\", with half stars. With `onValueChange` it is a radio group with one radio per star, so arrow keys change the value.",
+      "axes": [{ "name": "sizes", "values": ["sm", "md"], "default": "md" }],
+      "slots": ["rating", "rating-item", "rating-icon"],
+      "states": ["rest", "hover", "focus-visible", "checked", "disabled", "read-only"],
+      "tokenSlots": [],
+      "visualArchetypes": ["choice"]
     },
     "resizable": {
       "source": "packages/ui-foundation/contracts/components/resizable.json",

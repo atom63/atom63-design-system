@@ -929,7 +929,7 @@ export interface CarouselContract {
 export const carouselContract: {
     defaultOrientation: "horizontal";
     orientations: readonly ["horizontal", "vertical"];
-    slots: readonly ["carousel", "carousel-content", "carousel-item", "carousel-previous", "carousel-next", "carousel-cursor"];
+    slots: readonly ["carousel", "carousel-content", "carousel-item", "carousel-previous", "carousel-next", "carousel-cursor", "carousel-dots", "carousel-dot"];
     states: readonly ["rest", "hover", "focus-visible", "disabled", "cursor-active", "can-scroll"];
     visualArchetypes: readonly ["surface", "overlay", "action"];
 };
@@ -944,7 +944,7 @@ export const carouselOrientations: readonly ["horizontal", "vertical"];
 export type CarouselSlot = (typeof carouselSlots)[number];
 
 // @public (undocumented)
-export const carouselSlots: readonly ["carousel", "carousel-content", "carousel-item", "carousel-previous", "carousel-next", "carousel-cursor"];
+export const carouselSlots: readonly ["carousel", "carousel-content", "carousel-item", "carousel-previous", "carousel-next", "carousel-cursor", "carousel-dots", "carousel-dot"];
 
 // @public (undocumented)
 export type CarouselState = (typeof carouselStates)[number];
@@ -2548,11 +2548,15 @@ export const inputVisualArchetypes: readonly ["field"];
 // @public (undocumented)
 export interface ItemContract {
     // (undocumented)
+    defaultGroupVariant: ItemGroupVariant;
+    // (undocumented)
     defaultMediaVariant: ItemMediaVariant;
     // (undocumented)
     defaultSize: ItemSize;
     // (undocumented)
     defaultVariant: ItemVariant;
+    // (undocumented)
+    groupVariants: readonly ItemGroupVariant[];
     // (undocumented)
     mediaVariants: readonly ItemMediaVariant[];
     // (undocumented)
@@ -2572,13 +2576,21 @@ export const itemContract: {
     defaultVariant: "default";
     defaultSize: "default";
     defaultMediaVariant: "default";
+    defaultGroupVariant: "default";
     variants: readonly ["default", "outline", "muted"];
     sizes: readonly ["default", "sm", "xs"];
     mediaVariants: readonly ["default", "icon", "image"];
     slots: readonly ["item-group", "item", "item-media", "item-content", "item-title", "item-description", "item-actions", "item-header", "item-footer", "item-separator"];
     states: readonly ["rest", "hover", "focus", "selected", "current"];
     visualArchetypes: readonly ["surface"];
+    groupVariants: readonly ["default", "inset"];
 };
+
+// @public (undocumented)
+export type ItemGroupVariant = (typeof itemGroupVariants)[number];
+
+// @public (undocumented)
+export const itemGroupVariants: readonly ["default", "inset"];
 
 // @public (undocumented)
 export type ItemMediaVariant = (typeof itemMediaVariants)[number];
@@ -3502,6 +3514,53 @@ export const radioVisualArchetypes: readonly ["choice"];
 
 // @public (undocumented)
 export type RadiusScale = (typeof radii)[number];
+
+// @public (undocumented)
+export interface RatingContract {
+    // (undocumented)
+    defaultSize: RatingSize;
+    // (undocumented)
+    sizes: readonly RatingSize[];
+    // (undocumented)
+    slots: readonly RatingSlot[];
+    // (undocumented)
+    states: readonly RatingState[];
+    // (undocumented)
+    visualArchetypes: readonly RatingVisualArchetype[];
+}
+
+// @public (undocumented)
+export const ratingContract: {
+    defaultSize: "md";
+    sizes: readonly ["sm", "md"];
+    slots: readonly ["rating", "rating-item", "rating-icon"];
+    states: readonly ["rest", "hover", "focus-visible", "checked", "disabled", "read-only"];
+    visualArchetypes: readonly ["choice"];
+};
+
+// @public (undocumented)
+export type RatingSize = (typeof ratingSizes)[number];
+
+// @public (undocumented)
+export const ratingSizes: readonly ["sm", "md"];
+
+// @public (undocumented)
+export type RatingSlot = (typeof ratingSlots)[number];
+
+// @public (undocumented)
+export const ratingSlots: readonly ["rating", "rating-item", "rating-icon"];
+
+// @public (undocumented)
+export type RatingState = (typeof ratingStates)[number];
+
+// @public (undocumented)
+export const ratingStates: readonly ["rest", "hover", "focus-visible", "checked", "disabled", "read-only"];
+
+// @public (undocumented)
+export type RatingVisualArchetype = (typeof ratingVisualArchetypes)[number];
+
+// @public (undocumented)
+export const ratingVisualArchetypes: readonly ["choice"];
 
 // @public (undocumented)
 export interface ResizableContract {
@@ -4905,7 +4964,7 @@ export const visualArchetypes: {
         readonly id: "choice";
         readonly label: "Choice controls";
         readonly description: "Form controls that expose checked, selected, or indeterminate value state.";
-        readonly components: readonly ["Checkbox", "Radio", "Switch"];
+        readonly components: readonly ["Checkbox", "Radio", "Switch", "Rating"];
         readonly contracts: readonly ["control", "choice", "selection"];
     };
     readonly field: {

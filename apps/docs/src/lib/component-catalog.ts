@@ -425,6 +425,13 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     usage: 'Use a group label and reserve radio choices for options that can be compared at once.',
     usageExports: ['Radio', 'RadioGroup', 'RadioGroupItem'],
   },
+  rating: {
+    relatedSlugs: ['radio', 'badge'],
+    summary: 'Rating shows a score out of five stars, or collects one as a radio group.',
+    usage:
+      'Give a read-only rating its value in words; use the input form inside a form with a visible label.',
+    usageExports: ['Rating'],
+  },
   resizable: {
     relatedSlugs: ['separator', 'sidebar'],
     summary: 'Resizable composes keyboard-operable panel groups, panels, and drag handles.',
@@ -683,8 +690,9 @@ export const componentCatalogGroups = [
       'label',
       'panel-setting-button',
       'radio',
-      'segmented-control',
+      'rating',
       'search-field',
+      'segmented-control',
       'select',
       'slider',
       'switch',

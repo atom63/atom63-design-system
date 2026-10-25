@@ -74,7 +74,13 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // indicator's dot or capped count, its accessible text joined to the label or
 // aria-label, and the two Avatar data attributes; the case studies found the
 // unread badge in 9 runs and the avatar variants in 14.
-const gzipBudgetBytes = 93 * 1024
+//
+// 93 kB held 92.2 kB. Rating and CarouselDots add 0.8 kB, taking it to 93.0
+// with no room for the next change, so it moves to 94. Rating is a
+// read-only image or a radio group of stars with half fills; CarouselDots
+// subscribes to Embla's snap list. The case studies found star ratings in 4
+// runs and page dots in 6.
+const gzipBudgetBytes = 94 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()

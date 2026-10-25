@@ -62,6 +62,7 @@ import { HTMLMotionProps } from 'motion/react';
 import { InputGroupAlign } from '@atom63/ui-foundation';
 import { Input as InputPrimitive } from '@base-ui/react/input';
 import { InputSize } from '@atom63/ui-foundation';
+import { ItemGroupVariant } from '@atom63/ui-foundation';
 import { ItemMediaVariant } from '@atom63/ui-foundation';
 import { ItemSize } from '@atom63/ui-foundation';
 import { ItemVariant } from '@atom63/ui-foundation';
@@ -82,6 +83,7 @@ import { Radio as Radio_2 } from '@base-ui/react/radio';
 import { RadioGroup as RadioGroup_2 } from '@base-ui/react/radio-group';
 import { RadioIndicator } from '@atom63/ui-foundation';
 import { RadioSize } from '@atom63/ui-foundation';
+import { RatingSize } from '@atom63/ui-foundation';
 import * as React$1 from 'react';
 import React__default from 'react';
 import * as react_hook_form from 'react-hook-form';
@@ -614,6 +616,14 @@ export type CarouselContextProps = {
     canScrollPrev: boolean;
     canScrollNext: boolean;
 } & CarouselProps;
+
+// @public (undocumented)
+export function CarouselDots(input: CarouselDotsProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type CarouselDotsProps = React$1.ComponentProps<'div'> & {
+    getLabel?: (index: number, count: number) => string;
+};
 
 // @public (undocumented)
 export function CarouselItem(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
@@ -1536,7 +1546,12 @@ export function ItemDescription(input: React$1.ComponentProps<'p'>): React$1.Rea
 export function ItemFooter(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
-export function ItemGroup(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
+export function ItemGroup(input: ItemGroupProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type ItemGroupProps = React$1.ComponentProps<'div'> & {
+    variant?: ItemGroupVariant;
+};
 
 // @public (undocumented)
 export function ItemHeader(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
@@ -1920,6 +1935,20 @@ export type RadioProps = Omit<Radio_2.Root.Props, 'className'> & {
     className?: string;
     indicator?: RadioIndicator;
     size?: RadioSize;
+};
+
+// @public (undocumented)
+export function Rating(input: RatingProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type RatingProps = Omit<React$1.ComponentProps<'div'>, 'defaultValue' | 'onChange'> & {
+    value: number;
+    max?: number;
+    onValueChange?: (value: number) => void;
+    label?: string;
+    disabled?: boolean;
+    icon?: React$1.ReactNode;
+    size?: RatingSize;
 };
 
 // @public (undocumented)

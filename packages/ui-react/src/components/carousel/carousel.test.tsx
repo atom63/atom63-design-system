@@ -2,13 +2,16 @@ import { act, fireEvent, render, waitFor } from '@testing-library/react'
 import { beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 const embla = vi.hoisted(() => {
-  const state = { canScrollPrev: false, canScrollNext: false }
+  const state = { canScrollPrev: false, canScrollNext: false, selected: 0 }
   const listeners = new Map<string, Set<(api: unknown) => void>>()
   const api = {
     canScrollPrev: vi.fn(() => state.canScrollPrev),
     canScrollNext: vi.fn(() => state.canScrollNext),
     scrollPrev: vi.fn(),
     scrollNext: vi.fn(),
+    scrollSnapList: vi.fn(() => [0, 0.5, 1]),
+    selectedScrollSnap: vi.fn(() => state.selected),
+    scrollTo: vi.fn(),
     on: vi.fn((event: string, callback: (api: unknown) => void) => {
       const callbacks = listeners.get(event) ?? new Set()
       callbacks.add(callback)
@@ -34,6 +37,7 @@ const embla = vi.hoisted(() => {
     reset() {
       state.canScrollPrev = false
       state.canScrollNext = false
+      state.selected = 0
       listeners.clear()
       for (const value of Object.values(api)) {
         if (typeof value === 'function' && 'mockClear' in value) value.mockClear()
@@ -46,7 +50,14 @@ const embla = vi.hoisted(() => {
 
 vi.mock('embla-carousel-react', () => ({ default: embla.useEmblaCarousel }))
 
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './carousel'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselDots,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from './carousel'
 
 // embla-carousel reads window.matchMedia on mount for its breakpoint options,
 // which jsdom doesn't implement — stub a static (no-op listener) media query.
@@ -276,5 +287,26 @@ describe('Carousel', () => {
         'prev'
       )
     })
+  })
+
+  it('renders the dots as a named group of slide buttons', () => {
+    const { getByRole } = render(
+      <Carousel>
+        <CarouselContent>
+          <CarouselItem>One</CarouselItem>
+          <CarouselItem>Two</CarouselItem>
+        </CarouselContent>
+        <CarouselDots />
+      </Carousel>
+    )
+    const group = getByRole('group', { name: 'Slides' })
+    expect(group).toHaveAttribute('data-slot', 'carousel-dots')
+    expect(getByRole('button', { name: 'Slide 1 of 3' })).toHaveAttribute('aria-current', 'true')
+    fireEvent.click(getByRole('button', { name: 'Slide 3 of 3' }))
+    expect(embla.api.scrollTo).toHaveBeenCalledWith(2)
+    embla.state.selected = 2
+    act(() => embla.emit('select'))
+    expect(getByRole('button', { name: 'Slide 3 of 3' })).toHaveAttribute('aria-current', 'true')
+    expect(getByRole('button', { name: 'Slide 1 of 3' })).not.toHaveAttribute('aria-current')
   })
 })
