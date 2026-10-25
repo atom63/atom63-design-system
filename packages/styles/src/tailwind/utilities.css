@@ -39,3 +39,12 @@
   --scroll-mask-fade-from-r: --value(percentage);
   --scroll-mask-fade-from-r: --value([length], [percentage]);
 }
+
+/* The fraction of a display amount ("$13.25" with ".25" small and raised), as
+   banking and pricing screens draw balances. Wrap the fraction in it and keep the
+   whole amount in one text-display span with tabular-nums. */
+@utility amount-fraction {
+  font-size: 0.5em;
+  line-height: 0;
+  vertical-align: 0.8em;
+}

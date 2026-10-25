@@ -341,6 +341,54 @@
                   }
                 }
               }
+            },
+            "10xl": {
+              "font": {
+                "size": {
+                  "$value": {
+                    "value": 40,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$value": {
+                    "value": 44,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "11xl": {
+              "font": {
+                "size": {
+                  "$value": {
+                    "value": 56,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$value": {
+                    "value": 60,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
             }
           },
           "$type": "dimension"

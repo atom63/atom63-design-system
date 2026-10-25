@@ -23,6 +23,16 @@
               },
               "$description": "Scrim — the modal/drawer/sheet backdrop veil behind overlays."
             },
+            "gradient": {
+              "scrim": {
+                "$type": "color",
+                "$value": "{color.black.100}",
+                "$extensions": {
+                  "io.atom63.derive": "linear-gradient(to bottom, transparent, color-mix(in oklch, black 60%, transparent))"
+                },
+                "$description": "A vertical fade to dark under text laid over a photo, such as a title at the foot of a hero image."
+              }
+            },
             "shadow": {
               "color": {
                 "$type": "color",
