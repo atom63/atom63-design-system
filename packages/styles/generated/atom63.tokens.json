@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 1870,
-    "uniqueCssVariables": 1167,
-    "figmaMappedDeclarations": 1809
+    "declarations": 1897,
+    "uniqueCssVariables": 1182,
+    "figmaMappedDeclarations": 1835
   },
   "entries": [
     {
@@ -7333,6 +7333,46 @@
       "scope": "[data-a63-font='serif']"
     },
     {
+      "name": "a63-gradient-brand",
+      "cssVar": "--a63-gradient-brand",
+      "type": "color",
+      "value": "linear-gradient(135deg, var(--a63-brand-500), var(--a63-brand-700))",
+      "sourceFile": "packages/styles/src/tokens/brand-action.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "gradient/brand"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-brand-500", "--a63-brand-700"],
+      "scope": ":root, [data-a63-brand]"
+    },
+    {
+      "name": "a63-gradient-brand-subtle",
+      "cssVar": "--a63-gradient-brand-subtle",
+      "type": "color",
+      "value": "linear-gradient(135deg, var(--a63-brand-50), var(--a63-brand-100))",
+      "sourceFile": "packages/styles/src/tokens/brand-action.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "gradient/brand/subtle"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-brand-100", "--a63-brand-50"],
+      "scope": ":root, [data-a63-brand]"
+    },
+    {
+      "name": "a63-gradient-scrim",
+      "cssVar": "--a63-gradient-scrim",
+      "type": "string",
+      "value": "linear-gradient( to bottom, transparent, color-mix(in oklch, black 60%, transparent) )",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "lifecycle": "preview",
+      "scope": ":root"
+    },
+    {
       "name": "a63-marker-shadow",
       "cssVar": "--a63-marker-shadow",
       "type": "shadow",
@@ -11593,6 +11633,122 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-2xs-line-height"],
+      "scope": ":root, [data-window-size]"
+    },
+    {
+      "name": "a63-type-display-font-size",
+      "cssVar": "--a63-type-display-font-size",
+      "type": "typography",
+      "value": "var(--typography-10xl-font-size)",
+      "sourceFile": "packages/styles/src/tokens/type-roles.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "type/display/font/size"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-10xl-font-size"],
+      "scope": ":root, [data-window-size]"
+    },
+    {
+      "name": "a63-type-display-font-weight",
+      "cssVar": "--a63-type-display-font-weight",
+      "type": "typography",
+      "value": "600",
+      "sourceFile": "packages/styles/src/tokens/type-roles.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "type/display/font/weight"
+      },
+      "lifecycle": "preview",
+      "scope": ":root, [data-window-size]"
+    },
+    {
+      "name": "a63-type-display-font-weight-strong",
+      "cssVar": "--a63-type-display-font-weight-strong",
+      "type": "typography",
+      "value": "700",
+      "sourceFile": "packages/styles/src/tokens/type-roles.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "type/display/font/weight/strong"
+      },
+      "lifecycle": "preview",
+      "scope": ":root, [data-window-size]"
+    },
+    {
+      "name": "a63-type-display-large-font-size",
+      "cssVar": "--a63-type-display-large-font-size",
+      "type": "typography",
+      "value": "var(--typography-11xl-font-size)",
+      "sourceFile": "packages/styles/src/tokens/type-roles.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "type/display/large/font/size"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-11xl-font-size"],
+      "scope": ":root, [data-window-size]"
+    },
+    {
+      "name": "a63-type-display-large-font-weight",
+      "cssVar": "--a63-type-display-large-font-weight",
+      "type": "typography",
+      "value": "600",
+      "sourceFile": "packages/styles/src/tokens/type-roles.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "type/display/large/font/weight"
+      },
+      "lifecycle": "preview",
+      "scope": ":root, [data-window-size]"
+    },
+    {
+      "name": "a63-type-display-large-font-weight-strong",
+      "cssVar": "--a63-type-display-large-font-weight-strong",
+      "type": "typography",
+      "value": "700",
+      "sourceFile": "packages/styles/src/tokens/type-roles.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "type/display/large/font/weight/strong"
+      },
+      "lifecycle": "preview",
+      "scope": ":root, [data-window-size]"
+    },
+    {
+      "name": "a63-type-display-large-line-height",
+      "cssVar": "--a63-type-display-large-line-height",
+      "type": "typography",
+      "value": "var(--typography-11xl-line-height)",
+      "sourceFile": "packages/styles/src/tokens/type-roles.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "type/display/large/line/height"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-11xl-line-height"],
+      "scope": ":root, [data-window-size]"
+    },
+    {
+      "name": "a63-type-display-line-height",
+      "cssVar": "--a63-type-display-line-height",
+      "type": "typography",
+      "value": "var(--typography-10xl-line-height)",
+      "sourceFile": "packages/styles/src/tokens/type-roles.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "type/display/line/height"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-10xl-line-height"],
       "scope": ":root, [data-window-size]"
     },
     {
@@ -25008,6 +25164,258 @@
       "lifecycle": "preview",
       "aliases": ["--a63-action-primary"],
       "scope": "[data-a63-theme='terminal']"
+    },
+    {
+      "name": "typography-10xl-font-size",
+      "cssVar": "--typography-10xl-font-size",
+      "type": "typography",
+      "value": "calc(40px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "typography/10xl/font/size"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": ":root"
+    },
+    {
+      "name": "typography-10xl-font-size",
+      "cssVar": "--typography-10xl-font-size",
+      "type": "typography",
+      "value": "calc(40px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "typography/10xl/font/size",
+        "mode": "window-size: md"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-window-size='md'], [data-window-size='lg'], [data-window-size='xl']"
+    },
+    {
+      "name": "typography-10xl-font-size",
+      "cssVar": "--typography-10xl-font-size",
+      "type": "typography",
+      "value": "calc(40px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "typography/10xl/font/size",
+        "mode": "window-size: sm"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-window-size='sm']"
+    },
+    {
+      "name": "typography-10xl-font-size",
+      "cssVar": "--typography-10xl-font-size",
+      "type": "typography",
+      "value": "calc(40px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "typography/10xl/font/size",
+        "mode": "window-size: xs"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-window-size='xs']"
+    },
+    {
+      "name": "typography-10xl-line-height",
+      "cssVar": "--typography-10xl-line-height",
+      "type": "typography",
+      "value": "calc(44px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "typography/10xl/line/height"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": ":root"
+    },
+    {
+      "name": "typography-10xl-line-height",
+      "cssVar": "--typography-10xl-line-height",
+      "type": "typography",
+      "value": "calc(44px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "typography/10xl/line/height",
+        "mode": "window-size: md"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-window-size='md'], [data-window-size='lg'], [data-window-size='xl']"
+    },
+    {
+      "name": "typography-10xl-line-height",
+      "cssVar": "--typography-10xl-line-height",
+      "type": "typography",
+      "value": "calc(44px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "typography/10xl/line/height",
+        "mode": "window-size: sm"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-window-size='sm']"
+    },
+    {
+      "name": "typography-10xl-line-height",
+      "cssVar": "--typography-10xl-line-height",
+      "type": "typography",
+      "value": "calc(44px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "typography/10xl/line/height",
+        "mode": "window-size: xs"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-window-size='xs']"
+    },
+    {
+      "name": "typography-11xl-font-size",
+      "cssVar": "--typography-11xl-font-size",
+      "type": "typography",
+      "value": "calc(56px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "typography/11xl/font/size"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": ":root"
+    },
+    {
+      "name": "typography-11xl-font-size",
+      "cssVar": "--typography-11xl-font-size",
+      "type": "typography",
+      "value": "calc(56px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "typography/11xl/font/size",
+        "mode": "window-size: md"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-window-size='md'], [data-window-size='lg'], [data-window-size='xl']"
+    },
+    {
+      "name": "typography-11xl-font-size",
+      "cssVar": "--typography-11xl-font-size",
+      "type": "typography",
+      "value": "calc(56px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "typography/11xl/font/size",
+        "mode": "window-size: sm"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-window-size='sm']"
+    },
+    {
+      "name": "typography-11xl-font-size",
+      "cssVar": "--typography-11xl-font-size",
+      "type": "typography",
+      "value": "calc(56px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "typography/11xl/font/size",
+        "mode": "window-size: xs"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-window-size='xs']"
+    },
+    {
+      "name": "typography-11xl-line-height",
+      "cssVar": "--typography-11xl-line-height",
+      "type": "typography",
+      "value": "calc(60px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "typography/11xl/line/height"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": ":root"
+    },
+    {
+      "name": "typography-11xl-line-height",
+      "cssVar": "--typography-11xl-line-height",
+      "type": "typography",
+      "value": "calc(60px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "typography/11xl/line/height",
+        "mode": "window-size: md"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-window-size='md'], [data-window-size='lg'], [data-window-size='xl']"
+    },
+    {
+      "name": "typography-11xl-line-height",
+      "cssVar": "--typography-11xl-line-height",
+      "type": "typography",
+      "value": "calc(60px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "typography/11xl/line/height",
+        "mode": "window-size: sm"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-window-size='sm']"
+    },
+    {
+      "name": "typography-11xl-line-height",
+      "cssVar": "--typography-11xl-line-height",
+      "type": "typography",
+      "value": "calc(60px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "typography/11xl/line/height",
+        "mode": "window-size: xs"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-window-size='xs']"
     },
     {
       "name": "typography-2xl-font-size",

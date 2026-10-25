@@ -32,6 +32,10 @@
   --a63-action-primary-text-shadow: none;
   /* The brand as text on light surfaces (semantics.css --a63-text-accent). */
   --a63-brand-text: var(--a63-brand-600);
+  /* The brand as a gradient for heroes and banners: ramp 500 to 700 at 135deg. Declared with the ramp so a nested brand gets its own. */
+  --a63-gradient-brand: linear-gradient(135deg, var(--a63-brand-500), var(--a63-brand-700));
+  /* A quiet brand gradient for illustration backgrounds and cards: ramp 50 to 100 at 135deg. */
+  --a63-gradient-brand-subtle: linear-gradient(135deg, var(--a63-brand-50), var(--a63-brand-100));
 }
 
 [data-a63-brand='b3'] {
