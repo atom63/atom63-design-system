@@ -20,16 +20,20 @@ import {
 import {
   Bell,
   House,
+  Library,
   ListMusic,
   Pause,
   Play,
   Repeat,
+  Search,
   Shuffle,
   SkipBack,
   SkipForward,
   Volume2,
 } from 'lucide-react'
 import { type ReactNode, useState } from 'react'
+
+import { TabBar } from '../../blocks/tab-bar/tab-bar'
 
 export const template = {
   id: 'app-view',
@@ -64,6 +68,8 @@ export interface AppViewProps {
   panel?: ReactNode
   /** The accessible name of the side panel. */
   panelLabel?: string
+  /** Bottom navigation shown on phones only, under the docked bar, such as the tab-bar block. */
+  tabBar?: ReactNode
   /** The bar across the top of the window. */
   topBar: ReactNode
 }
@@ -79,10 +85,11 @@ export function AppView({
   children,
   panel,
   panelLabel = 'Library',
+  tabBar,
   topBar,
 }: AppViewProps) {
   return (
-    <div className="bg-background text-foreground grid h-dvh grid-rows-[auto_minmax(0,1fr)_auto] gap-2 p-2">
+    <div className="bg-background text-foreground grid h-dvh grid-rows-[auto_minmax(0,1fr)_auto_auto] gap-2 p-2">
       <header className="flex items-center gap-2">{topBar}</header>
       <div className="flex min-h-0 gap-2">
         {panel ? (
@@ -100,6 +107,7 @@ export function AppView({
           {bottomBar}
         </section>
       ) : null}
+      {tabBar ? <div className="-mx-2 -mb-2 md:hidden">{tabBar}</div> : null}
     </div>
   )
 }
@@ -203,6 +211,15 @@ export function AppViewPage() {
             ))}
           </ItemGroup>
         </>
+      }
+      tabBar={
+        <TabBar
+          items={[
+            { href: '#home', icon: <House aria-hidden />, label: 'Home' },
+            { href: '#search', icon: <Search aria-hidden />, label: 'Search' },
+            { current: true, href: '#library', icon: <Library aria-hidden />, label: 'Library' },
+          ]}
+        />
       }
       topBar={
         <>

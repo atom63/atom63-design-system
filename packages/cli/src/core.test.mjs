@@ -51,6 +51,9 @@ const golden = [
   ['collapsible sidebar group', 'sidebar-nav-tree', 3],
   ['folding nav groups', 'sidebar-nav-tree', 1],
   ['nav tree', 'sidebar-nav-tree', 1],
+  ['bottom sheet', 'drawer', 2],
+  ['unread badge', 'button', 3],
+  ['carousel dots', 'carousel', 1],
 ]
 
 /**
@@ -73,6 +76,8 @@ const templateGolden = [
   ['setup steps', 'getting-started-checklist', 2],
   ['music player', 'app-view', 1],
   ['full window app', 'app-view', 1],
+  ['tab bar', 'tab-bar', 1],
+  ['bottom navigation', 'tab-bar', 1],
 ]
 
 describe('templates', () => {

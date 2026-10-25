@@ -110,6 +110,35 @@ export const OverMedia: Story = {
 
 /* shape="round": circles for icon sizes, pills for labelled sizes, as for a
    player's play button or a pill-shaped call to action. */
+/* Controls over a photo: the overlay variant reads on any image, and
+   shape="round" makes the circular play and close buttons media UIs use. */
+export const RoundOverMedia: Story = {
+  render: () => (
+    <div
+      style={{
+        alignItems: 'center',
+        backgroundImage:
+          'linear-gradient(135deg, oklch(72% 0.16 250), oklch(64% 0.2 320) 55%, oklch(58% 0.18 30))',
+        borderRadius: '0.875rem',
+        display: 'flex',
+        gap: '0.75rem',
+        minHeight: '7rem',
+        padding: '1.5rem',
+      }}
+    >
+      <Button aria-label="Close" shape="round" size="icon-sm" variant="overlay">
+        <PlusIcon />
+      </Button>
+      <Button aria-label="Play" shape="round" size="icon-lg" variant="overlay">
+        <PlusIcon />
+      </Button>
+      <Button shape="round" variant="overlay">
+        Follow
+      </Button>
+    </div>
+  ),
+}
+
 export const Shapes: Story = {
   render: () => (
     <EnvironmentShell>

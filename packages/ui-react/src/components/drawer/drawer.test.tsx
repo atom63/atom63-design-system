@@ -56,4 +56,31 @@ describe('Drawer', () => {
     )
     expect(screen.queryByText('Hidden')).not.toBeInTheDocument()
   })
+
+  it('draws no backdrop and passes the page through when modal={false}', () => {
+    const { unmount } = render(
+      <Drawer modal={false} open>
+        <DrawerContent>
+          <DrawerTitle>Ride</DrawerTitle>
+        </DrawerContent>
+      </Drawer>
+    )
+    expect(document.querySelector('[data-slot="drawer-overlay"]')).toBeNull()
+    expect(document.querySelector('[data-slot="drawer-viewport"]')).toHaveAttribute(
+      'data-modal',
+      'false'
+    )
+    unmount()
+    render(
+      <Drawer open>
+        <DrawerContent>
+          <DrawerTitle>Detail</DrawerTitle>
+        </DrawerContent>
+      </Drawer>
+    )
+    expect(document.querySelector('[data-slot="drawer-overlay"]')).not.toBeNull()
+    expect(document.querySelector('[data-slot="drawer-viewport"]')).not.toHaveAttribute(
+      'data-modal'
+    )
+  })
 })

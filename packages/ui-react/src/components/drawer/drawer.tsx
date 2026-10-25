@@ -29,6 +29,8 @@ export type DrawerRootProps = Omit<DrawerPrimitive.Root.Props, 'swipeDirection'>
 
 type DrawerContextValue = {
   direction: DrawerDirection
+  /** False for a persistent sheet: no backdrop, and the page behind stays usable. */
+  modal: boolean
 }
 
 export type DrawerContentProps = Omit<DrawerPrimitive.Popup.Props, 'children'> & {
@@ -40,6 +42,7 @@ export type DrawerContentProps = Omit<DrawerPrimitive.Popup.Props, 'children'> &
 
 const DrawerContext = React.createContext<DrawerContextValue>({
   direction: 'bottom',
+  modal: true,
 })
 
 /** Compose a `render` element with children. */
@@ -90,7 +93,7 @@ export function Drawer({
   ...props
 }: DrawerRootProps): React.ReactElement {
   return (
-    <DrawerContext.Provider value={{ direction }}>
+    <DrawerContext.Provider value={{ direction, modal: props.modal !== false }}>
       <DrawerPrimitive.Root
         data-slot="drawer"
         swipeDirection={swipeDirection ?? swipeDirectionForDirection(direction)}
@@ -159,14 +162,15 @@ export function DrawerContent({
   viewportProps,
   ...props
 }: DrawerContentProps): React.ReactElement {
-  const { direction } = React.useContext(DrawerContext)
+  const { direction, modal } = React.useContext(DrawerContext)
 
   return (
     <DrawerPortal {...portalProps}>
-      <DrawerOverlay />
+      {modal ? <DrawerOverlay /> : null}
       <DrawerPrimitive.Viewport
         {...viewportProps}
         className={cn('a63-Drawer-viewport', viewportProps?.className)}
+        data-modal={modal ? undefined : 'false'}
         data-side={direction}
         data-slot="drawer-viewport"
       >
