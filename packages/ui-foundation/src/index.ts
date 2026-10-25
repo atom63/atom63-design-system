@@ -71,6 +71,7 @@ export type {
 export {
   avatarCompositions,
   avatarContract,
+  avatarShapes,
   avatarSizes,
   avatarSlots,
   avatarStates,
@@ -79,6 +80,7 @@ export {
 export type {
   AvatarComposition,
   AvatarContract,
+  AvatarShape,
   AvatarSize,
   AvatarSlot,
   AvatarState,
@@ -526,6 +528,7 @@ export type {
 } from './components/input-otp/input-otp-contract'
 export {
   itemContract,
+  itemGroupVariants,
   itemMediaVariants,
   itemSizes,
   itemSlots,
@@ -535,6 +538,7 @@ export {
 } from './components/item/item-contract'
 export type {
   ItemContract,
+  ItemGroupVariant,
   ItemMediaVariant,
   ItemSize,
   ItemSlot,
@@ -782,6 +786,20 @@ export type {
   SearchFieldState,
   SearchFieldVisualArchetype,
 } from './components/search-field'
+export {
+  ratingContract,
+  ratingSizes,
+  ratingSlots,
+  ratingStates,
+  ratingVisualArchetypes,
+} from './components/rating/rating-contract'
+export type {
+  RatingContract,
+  RatingSize,
+  RatingSlot,
+  RatingState,
+  RatingVisualArchetype,
+} from './components/rating/rating-contract'
 export {
   segmentedControlContract,
   segmentedControlSizes,

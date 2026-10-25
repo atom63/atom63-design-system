@@ -10,7 +10,9 @@
       "carousel-item",
       "carousel-previous",
       "carousel-next",
-      "carousel-cursor"
+      "carousel-cursor",
+      "carousel-dots",
+      "carousel-dot"
     ],
     "states": ["rest", "hover", "focus-visible", "disabled", "cursor-active", "can-scroll"],
     "visualArchetypes": ["surface", "overlay", "action"]

@@ -11,6 +11,8 @@ export const carouselSlots = [
   'carousel-previous',
   'carousel-next',
   'carousel-cursor',
+  'carousel-dots',
+  'carousel-dot',
 ] as const
 export const carouselStates = [
   'rest',

@@ -76,37 +76,37 @@
     }
   },
   "summary": {
-    "sourceFamilies": 74,
-    "sourceExports": 611,
+    "sourceFamilies": 75,
+    "sourceExports": 616,
     "sourceTierCounts": {
-      "monitor-high-risk": 77,
+      "monitor-high-risk": 79,
       "preview-experimental-candidate": 31,
-      "beta-supported-core": 320,
-      "beta-supported-composition-conditional": 183
+      "beta-supported-core": 322,
+      "beta-supported-composition-conditional": 184
     },
     "sourceActionCounts": {
       "assign-owner-and-evidence": 15,
       "move-to-preview-or-approve": 15,
       "document-before-stable": 12,
-      "keep-stable-candidate": 32
+      "keep-stable-candidate": 33
     },
     "sourcePriorityCounts": {
       "P0": 30,
       "P1": 12,
-      "P2": 32
+      "P2": 33
     },
-    "packageSubpaths": 72,
+    "packageSubpaths": 73,
     "subpathActionCounts": {
       "assign-owner-and-evidence": 1,
       "keep-preview-subpath-or-add-evidence": 2,
       "keep-preview-labeled": 1,
       "document-subpath-contract": 2,
-      "keep-import-path-stable": 66
+      "keep-import-path-stable": 67
     },
     "subpathPriorityCounts": {
       "P0": 4,
       "P1": 2,
-      "P2": 66
+      "P2": 67
     }
   },
   "sourceActions": [
@@ -225,11 +225,11 @@
       "source": "./components/carousel",
       "family": "components/carousel",
       "kind": "component-family",
-      "totalExports": 11,
-      "valueExports": 6,
-      "typeExports": 5,
+      "totalExports": 13,
+      "valueExports": 7,
+      "typeExports": 6,
       "tierCounts": {
-        "monitor-high-risk": 11
+        "monitor-high-risk": 13
       },
       "dominantTier": "monitor-high-risk",
       "blockingTier": "monitor-high-risk",
@@ -245,15 +245,16 @@
       "notableSymbols": [
         "Carousel",
         "CarouselContent",
+        "CarouselDots",
         "CarouselItem",
         "CarouselNext",
         "CarouselPrevious",
         "useCarousel",
         "CarouselApi",
         "CarouselContextProps",
+        "CarouselDotsProps",
         "CarouselOptions",
-        "CarouselPlugin",
-        "CarouselProps"
+        "CarouselPlugin"
       ],
       "policyNote": "Needs owner, adopter use case, browser or interaction evidence where relevant, and migration policy.",
       "promotionDecision": {
@@ -1321,11 +1322,11 @@
       "source": "./components/item",
       "family": "components/item",
       "kind": "component-family",
-      "totalExports": 13,
+      "totalExports": 14,
       "valueExports": 10,
-      "typeExports": 3,
+      "typeExports": 4,
       "tierCounts": {
-        "beta-supported-composition-conditional": 13
+        "beta-supported-composition-conditional": 14
       },
       "dominantTier": "beta-supported-composition-conditional",
       "blockingTier": "beta-supported-composition-conditional",
@@ -1348,8 +1349,8 @@
         "ItemMedia",
         "ItemSeparator",
         "ItemTitle",
-        "ItemMediaProps",
-        "ItemProps"
+        "ItemGroupProps",
+        "ItemMediaProps"
       ],
       "policyNote": "Needs authored composition guidance or equivalent usage docs before stable."
     },
@@ -1943,6 +1944,29 @@
         "dependency and public type compatibility review"
       ],
       "notableSymbols": ["Radio", "RadioGroup", "RadioGroupItem", "RadioGroupProps", "RadioProps"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/rating",
+      "family": "components/rating",
+      "kind": "component-family",
+      "totalExports": 2,
+      "valueExports": 1,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 2
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["Rating", "RatingProps"],
       "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
     },
     {
@@ -2868,6 +2892,15 @@
       "subpath": "./recipes/radio.css",
       "kind": "css",
       "target": "./src/components/radio/radio.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/rating.css",
+      "kind": "css",
+      "target": "./src/components/rating/rating.css",
       "recommendedAction": "keep-import-path-stable",
       "priority": "P2",
       "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",

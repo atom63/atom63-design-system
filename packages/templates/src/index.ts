@@ -45,6 +45,12 @@ export {
   type SettingsSwitchRowProps,
 } from './blocks/settings-section/settings-section'
 export { StatRow, type Stat, type StatRowProps } from './blocks/stat-row/stat-row'
+export {
+  TabBar,
+  type TabBarItem,
+  type TabBarLinkProps,
+  type TabBarProps,
+} from './blocks/tab-bar/tab-bar'
 export { AppView, type AppViewProps, AppViewPage } from './pages/app-view/app-view'
 export { DashboardContent, DashboardPage } from './pages/dashboard-page/dashboard-page'
 export { ListContent, ListPage, type ListPageProps } from './pages/list-page/list-page'

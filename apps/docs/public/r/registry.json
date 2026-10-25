@@ -13,7 +13,9 @@
         "@atom63/ui-react",
         "lucide-react"
       ],
-      "registryDependencies": [],
+      "registryDependencies": [
+        "https://system.atom63.io/r/tab-bar.json"
+      ],
       "categories": [
         "layout"
       ],
@@ -608,6 +610,38 @@
           "path": "templates/blocks/stat-row/stat-row.tsx",
           "type": "registry:component",
           "target": "@components/atom63/blocks/stat-row/stat-row.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "tab-bar",
+      "type": "registry:block",
+      "title": "Tab bar",
+      "description": "The bottom navigation of a phone app: four or five destinations as an icon over a label, with the safe-area inset, the current one marked with aria-current. The app-view page places it last on phones.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "tab bar",
+          "bottom navigation",
+          "mobile",
+          "phone",
+          "app",
+          "navigation",
+          "bottom bar"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/blocks/tab-bar/tab-bar.tsx",
+          "type": "registry:component",
+          "target": "@components/atom63/blocks/tab-bar/tab-bar.tsx"
         }
       ]
     }

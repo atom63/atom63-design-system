@@ -375,7 +375,7 @@ public enum AtomComponentContracts {
       sharedOutcomes: ["accessible-name-is-preserved", "fallback-preserves-identity", "loading-does-not-expose-empty-image"],
       accessibilityOutcomes: ["exposes-accessible-name", "fallback-preserves-identity"],
       motion: nil,
-      platformAdaptations: AtomPlatformAdaptations(react: ["Uses browser image loading and DOM fallback composition."], swiftUI: ["Uses native image decoding and SwiftUI loading phases."])
+      platformAdaptations: AtomPlatformAdaptations(react: ["Uses browser image loading and DOM fallback composition.", "The square shape and the ring are web-only for now."], swiftUI: ["Uses native image decoding and SwiftUI loading phases."])
     ),
     AtomComponentContract(
       id: "empty",

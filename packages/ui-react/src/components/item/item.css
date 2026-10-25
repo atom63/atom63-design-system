@@ -22,6 +22,27 @@
   gap: var(--a63-space-2);
 }
 
+/* Inset group: one rounded card on the panel surface, rows joined by hairlines
+   that stop short of the inline edges, as in a grouped settings list. */
+.a63-ItemGroup[data-variant='inset'] {
+  gap: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background-color: var(--a63-surface-panel);
+}
+.a63-ItemGroup[data-variant='inset'] > .a63-Item {
+  position: relative;
+  border-radius: 0;
+}
+.a63-ItemGroup[data-variant='inset'] > .a63-Item + .a63-Item::before {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: var(--a63-space-4) 0;
+  height: var(--a63-control-border-width);
+  background-color: var(--a63-border-subtle);
+}
+
 .a63-ItemSeparator {
   margin-block: var(--a63-space-2);
 }
