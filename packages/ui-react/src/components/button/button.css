@@ -320,6 +320,52 @@
   --button-state-active-border-color: var(--a63-control-outline-hover-border);
 }
 
+/* Indicator: an unread dot or a count pinned to the top-end corner. Aqua clips
+   icon buttons (see above), so there it sits inside the corner. The selectors
+   match `.a63-Button > span:not(…)` in specificity and come after it, so the
+   indicator stays absolutely positioned. */
+.a63-Button > span.a63-Button-indicator {
+  position: absolute;
+  top: -0.125rem;
+  inset-inline-end: -0.125rem;
+  z-index: 1;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-full);
+  background-color: var(--a63-action-danger);
+  box-shadow: 0 0 0 2px var(--a63-surface-page);
+  pointer-events: none;
+}
+.a63-Button > span.a63-Button-indicator[data-count] {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  top: -0.375rem;
+  inset-inline-end: -0.375rem;
+  width: auto;
+  min-width: 1rem;
+  height: 1rem;
+  padding-inline: 0.25rem;
+  color: var(--a63-action-danger-foreground);
+  font-size: 0.625rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  line-height: 1;
+}
+[data-a63-theme='aqua'] .a63-Button[data-size^='icon'] .a63-Button-indicator {
+  top: 0;
+  inset-inline-end: 0;
+}
+/* The indicator's meaning, read after the label and hidden from sight. */
+.a63-Button > span.a63-Button-indicator-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 /* Round: a full radius, so icon sizes become circles and labelled sizes pills.
    Variants that set their own radius (dashed) already are round. */
 .a63-Button[data-shape='round'] {

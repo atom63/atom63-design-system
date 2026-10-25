@@ -83,4 +83,12 @@ describe('Item', () => {
       'item-separator'
     )
   })
+
+  it('marks the group variant, default unless inset', () => {
+    const { container, rerender } = render(<ItemGroup />)
+    const group = () => container.querySelector('[data-slot="item-group"]')
+    expect(group()).toHaveAttribute('data-variant', 'default')
+    rerender(<ItemGroup variant="inset" />)
+    expect(group()).toHaveAttribute('data-variant', 'inset')
+  })
 })

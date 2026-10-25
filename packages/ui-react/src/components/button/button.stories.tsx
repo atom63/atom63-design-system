@@ -11,6 +11,7 @@ import {
 import { Button, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { Bell, Inbox } from 'lucide-react'
 import { EnvironmentShell, PreviewCard, ThemeMatrix } from '../story-probes'
 
 const meta = {
@@ -136,6 +137,35 @@ export const RoundOverMedia: Story = {
         Follow
       </Button>
     </div>
+  ),
+}
+
+/* indicator: an unread dot (true) or a count, added to the accessible name. */
+export const Indicator: Story = {
+  render: () => (
+    <EnvironmentShell>
+      <div style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+        <Button aria-label="Notifications" indicator size="icon" variant="ghost">
+          <Bell aria-hidden />
+        </Button>
+        <Button
+          aria-label="Notifications"
+          indicator={3}
+          shape="round"
+          size="icon"
+          variant="outline"
+        >
+          <Bell aria-hidden />
+        </Button>
+        <Button aria-label="Notifications" indicator={120} size="icon">
+          <Bell aria-hidden />
+        </Button>
+        <Button indicator={4} variant="outline">
+          <Inbox aria-hidden />
+          Inbox
+        </Button>
+      </div>
+    </EnvironmentShell>
   ),
 }
 

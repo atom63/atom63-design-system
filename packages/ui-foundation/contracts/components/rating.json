@@ -1,0 +1,27 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "rating",
+  "maturity": "stable",
+  "description": "A score out of `max` stars (5 by default). Without `onValueChange` it is read-only: one image named \"4.5 out of 5\", with half stars. With `onValueChange` it is a radio group with one radio per star, so arrow keys change the value.",
+  "lists": {
+    "sizes": ["sm", "md"],
+    "slots": ["rating", "rating-item", "rating-icon"],
+    "states": ["rest", "hover", "focus-visible", "checked", "disabled", "read-only"],
+    "visualArchetypes": ["choice"]
+  },
+  "contract": {
+    "defaultSize": "md",
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

@@ -12,7 +12,7 @@
   },
   "summary": {
     "monitorFamilies": 16,
-    "monitorSymbols": 79,
+    "monitorSymbols": 81,
     "byRisk": { "medium": 9, "high": 7 },
     "byOwner": {
       "design-system-interactions": 1,
@@ -162,6 +162,8 @@
         "CarouselApi",
         "CarouselContent",
         "CarouselContextProps",
+        "CarouselDots",
+        "CarouselDotsProps",
         "CarouselItem",
         "CarouselNext",
         "CarouselOptions",
@@ -170,9 +172,9 @@
         "CarouselProps",
         "useCarousel"
       ],
-      "valueCount": 6,
-      "typeCount": 5,
-      "symbolCount": 11,
+      "valueCount": 7,
+      "typeCount": 6,
+      "symbolCount": 13,
       "owner": "design-system-media",
       "riskLevel": "high",
       "userValue": "Carousel composition and controls for galleries/content rails.",

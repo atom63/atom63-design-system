@@ -38,7 +38,7 @@ export const buttonStates = [
   'disabled',
   'loading',
 ] as const
-export const buttonSlots = ['root', 'label', 'icon', 'spinner'] as const
+export const buttonSlots = ['root', 'label', 'icon', 'spinner', 'indicator'] as const
 export const buttonTokenSlots = [
   'button.background',
   'button.foreground',

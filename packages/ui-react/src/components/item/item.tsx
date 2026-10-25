@@ -1,6 +1,7 @@
 'use client'
 
 import {
+  type ItemGroupVariant,
   type ItemMediaVariant,
   type ItemSize,
   type ItemVariant,
@@ -19,11 +20,24 @@ import { Separator } from '../separator'
    ItemGroup/ItemSeparator for lists. `render` swaps the container element (e.g.
    an <a> for a clickable row). Chrome from --a63-* tokens. */
 
+export type ItemGroupProps = React.ComponentProps<'div'> & {
+  /** `inset` draws the group as a rounded card with hairline dividers (a grouped settings list). */
+  variant?: ItemGroupVariant
+}
+
 export function ItemGroup({
   className,
+  variant = itemContract.defaultGroupVariant,
   ...props
-}: React.ComponentProps<'div'>): React.ReactElement {
-  return <div className={cn('a63-ItemGroup', className)} data-slot="item-group" {...props} />
+}: ItemGroupProps): React.ReactElement {
+  return (
+    <div
+      className={cn('a63-ItemGroup', className)}
+      data-slot="item-group"
+      data-variant={variant}
+      {...props}
+    />
+  )
 }
 
 export type ItemSeparatorProps = React.ComponentProps<typeof Separator>
