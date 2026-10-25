@@ -1,0 +1,97 @@
+/*
+ * Rating recipe — the CHOICE archetype. Stars are the caller's or lucide's
+ * glyph in two colors: the amber category color when on, a faint text color
+ * when off. A read-only star stacks a filled copy over an empty one and clips
+ * it to --rating-fill from the inline start, so halves mirror in right-to-left
+ * languages. Input stars are radios; the ring is on :focus-visible.
+ */
+
+.a63-Rating {
+  --rating-size: 1.25rem;
+  --rating-on: var(--a63-category-amber);
+  --rating-off: color-mix(in oklch, var(--a63-text-secondary) 35%, transparent);
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--a63-space-0_5);
+  color: var(--rating-off);
+}
+
+/* The input form is a RadioGroup, which stacks its items; keep the stars in a row. */
+.a63-RadioGroup.a63-Rating {
+  flex-direction: row;
+  gap: var(--a63-space-0_5);
+}
+
+.a63-Rating[data-size='sm'] {
+  --rating-size: 1rem;
+}
+
+.a63-Rating-item {
+  position: relative;
+  display: inline-flex;
+  width: var(--rating-size);
+  height: var(--rating-size);
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: inherit;
+}
+
+.a63-Rating-icon {
+  display: inline-flex;
+  width: 100%;
+  height: 100%;
+}
+.a63-Rating-icon > :where(svg) {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+  stroke: currentColor;
+}
+
+/* Read-only: the filled copy, clipped to the star's share of the score. */
+.a63-Rating-icon--filled {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: var(--rating-fill);
+  overflow: hidden;
+  color: var(--rating-on);
+}
+.a63-Rating-icon--filled > :where(svg) {
+  width: var(--rating-size);
+  min-width: var(--rating-size);
+}
+
+/* Input: a star is on up to the value, and up to the hovered star. */
+.a63-Rating:not([data-read-only]) .a63-Rating-item {
+  cursor: pointer;
+  transition: color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-Rating-item[data-on] {
+  color: var(--rating-on);
+}
+.a63-Rating:not([data-read-only], [data-disabled]):has(.a63-Rating-item:hover) .a63-Rating-item {
+  color: var(--rating-on);
+}
+.a63-Rating:not([data-read-only], [data-disabled]) .a63-Rating-item:hover ~ .a63-Rating-item {
+  color: var(--rating-off);
+}
+.a63-Rating-item:focus-visible {
+  outline: var(--a63-control-focus-ring-width) solid
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline-offset: 2px;
+}
+.a63-Rating[data-disabled] .a63-Rating-item {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .a63-Rating-item {
+    transition: none;
+  }
+}

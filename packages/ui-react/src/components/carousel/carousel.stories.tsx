@@ -2,6 +2,7 @@ import { carouselContract, themes } from '@atom63/ui-foundation'
 import {
   Carousel,
   CarouselContent,
+  CarouselDots,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
@@ -59,6 +60,24 @@ export const Playground: Story = {
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
+      </Carousel>
+    </div>
+  ),
+}
+
+/* Dots under the slides: one per snap point, the current one a pill. */
+export const WithDots: Story = {
+  render: () => (
+    <div style={{ maxWidth: 520 }}>
+      <Carousel>
+        <CarouselContent>
+          {slides.map(label => (
+            <CarouselItem key={label}>
+              <Slide label={label} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselDots />
       </Carousel>
     </div>
   ),

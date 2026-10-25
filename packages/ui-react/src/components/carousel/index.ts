@@ -1,6 +1,7 @@
 export {
   Carousel,
   CarouselContent,
+  CarouselDots,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
@@ -9,6 +10,7 @@ export {
 export type {
   CarouselApi,
   CarouselContextProps,
+  CarouselDotsProps,
   CarouselOptions,
   CarouselPlugin,
   CarouselProps,
