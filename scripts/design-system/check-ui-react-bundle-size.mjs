@@ -69,11 +69,17 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // controlled-state cookie rule. About 0.09 kB is ScrollableList reading its
 // scroll offset from the start edge, so its chevrons work right-to-left.
 //
-// Rating and CarouselDots add 0.7 kB on their own (92.0 to 92.7), and with
-// Button's indicator and Avatar's shape the case-study gaps reach about
-// 92.9 kB, so the budget moves to 94. Rating is a read-only image or a radio
-// group of stars with half fills; CarouselDots subscribes to Embla's snap list.
-// The case studies found star ratings in 4 runs and page dots in 6.
+// 92 kB held 92.0 kB, with no headroom left. Button's indicator and Avatar's
+// shape and ring take it to 92.2, so it moves to 93. The +0.2 kB is the
+// indicator's dot or capped count, its accessible text joined to the label or
+// aria-label, and the two Avatar data attributes; the case studies found the
+// unread badge in 9 runs and the avatar variants in 14.
+//
+// 93 kB held 92.2 kB. Rating and CarouselDots add 0.8 kB, taking it to 93.0
+// with no room for the next change, so it moves to 94. Rating is a
+// read-only image or a radio group of stars with half fills; CarouselDots
+// subscribes to Embla's snap list. The case studies found star ratings in 4
+// runs and page dots in 6.
 const gzipBudgetBytes = 94 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))

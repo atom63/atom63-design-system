@@ -64,4 +64,14 @@ describe('Avatar', () => {
     expect(count).toHaveAttribute('data-slot', 'avatar-group-count')
     expect(count).toHaveTextContent('+3')
   })
+
+  it('defaults to a circle with no ring, and takes square and ring', () => {
+    const { container, rerender } = render(<Avatar />)
+    const el = () => container.querySelector('[data-slot="avatar"]')
+    expect(el()).toHaveAttribute('data-shape', 'circle')
+    expect(el()).not.toHaveAttribute('data-ring')
+    rerender(<Avatar ring shape="square" />)
+    expect(el()).toHaveAttribute('data-shape', 'square')
+    expect(el()).toHaveAttribute('data-ring')
+  })
 })

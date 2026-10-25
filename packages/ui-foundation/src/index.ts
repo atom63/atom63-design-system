@@ -71,6 +71,7 @@ export type {
 export {
   avatarCompositions,
   avatarContract,
+  avatarShapes,
   avatarSizes,
   avatarSlots,
   avatarStates,
@@ -79,6 +80,7 @@ export {
 export type {
   AvatarComposition,
   AvatarContract,
+  AvatarShape,
   AvatarSize,
   AvatarSlot,
   AvatarState,
