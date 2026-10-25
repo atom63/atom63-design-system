@@ -48,6 +48,15 @@
   pointer-events: none;
 }
 
+/* A persistent sheet (modal={false}) has no backdrop, and its full-screen
+   viewport lets pointer events through to the page; only the sheet takes them. */
+.a63-Drawer-viewport[data-modal='false'] {
+  pointer-events: none;
+}
+.a63-Drawer-viewport[data-modal='false'] .a63-Drawer-content {
+  pointer-events: auto;
+}
+
 .a63-Drawer-viewport[data-side='top'] {
   grid-template-rows: auto 1fr;
   padding-bottom: var(--a63-drawer-viewport-gutter);
