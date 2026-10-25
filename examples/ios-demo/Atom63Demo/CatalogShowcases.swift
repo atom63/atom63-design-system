@@ -387,6 +387,17 @@ private struct ButtonShowcase: View {
         }
       }
 
+      ShowcaseSection("Shapes") {
+        HStack(spacing: AtomTokens.Space.x3) {
+          AtomButton("Follow", tone: .primary, shape: .round) {}
+          AtomButton(tone: .primary, size: .icon, shape: .round, action: {}) {
+            Image(systemName: "play.fill")
+              .accessibilityLabel("Play")
+          }
+          AtomButton("Default", emphasis: .outline) {}
+        }
+      }
+
       Text(lastAction)
         .font(.footnote)
         .foregroundStyle(.secondary)

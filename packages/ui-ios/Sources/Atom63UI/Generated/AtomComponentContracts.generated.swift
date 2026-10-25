@@ -55,7 +55,7 @@ public enum AtomComponentContracts {
       sharedOutcomes: ["action-fires-once", "loading-blocks-repeat-activation", "disabled-prevents-activation"],
       accessibilityOutcomes: ["exposes-label", "announces-loading", "disabled-while-loading"],
       motion: AtomMotionContract(kind: "press-feedback", durationToken: "motion-control-feedback", easing: "ease-out", direction: "none", reducedMotion: "none"),
-      platformAdaptations: AtomPlatformAdaptations(react: ["Uses HTML button semantics with pointer and focus-visible feedback.", "The round shape (a circle for icon sizes, a pill for labelled sizes) is web-only."], swiftUI: ["Uses SwiftUI Button with native touch and keyboard activation."])
+      platformAdaptations: AtomPlatformAdaptations(react: ["Uses HTML button semantics with pointer and focus-visible feedback."], swiftUI: ["Uses SwiftUI Button with native touch and keyboard activation.", "The round shape is a capsule: a circle at the icon size, a pill with a label."])
     ),
     AtomComponentContract(
       id: "dialog",

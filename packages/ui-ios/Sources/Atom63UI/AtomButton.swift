@@ -3,6 +3,13 @@ import SwiftUI
 // AtomButtonTone, AtomButtonEmphasis, AtomButtonVariant and AtomControlSize are
 // generated from the button contract in AtomComponentIntent.generated.swift.
 
+/// The button's outline. `round` is a capsule: a circle at the icon size and a
+/// pill when the button has a label. Mirrors the web Button's `shape` axis.
+public enum AtomButtonShape: String, CaseIterable, Sendable {
+  case `default`
+  case round
+}
+
 public struct AtomButton<Label: View>: View {
   @Environment(\.atomTheme) private var theme
   @Environment(\.colorScheme) private var colorScheme
@@ -10,6 +17,7 @@ public struct AtomButton<Label: View>: View {
   private let tone: AtomButtonTone
   private let emphasis: AtomButtonEmphasis
   private let size: AtomControlSize
+  private let shape: AtomButtonShape
   private let fullWidth: Bool
   private let isLoading: Bool
   private let loadingAccessibilityLabel: String
@@ -20,6 +28,7 @@ public struct AtomButton<Label: View>: View {
     tone: AtomButtonTone = .neutral,
     emphasis: AtomButtonEmphasis = .solid,
     size: AtomControlSize = .regular,
+    shape: AtomButtonShape = .default,
     fullWidth: Bool = false,
     isLoading: Bool = false,
     loadingAccessibilityLabel: String = "Loading",
@@ -29,6 +38,7 @@ public struct AtomButton<Label: View>: View {
     self.tone = tone
     self.emphasis = emphasis
     self.size = size
+    self.shape = shape
     self.fullWidth = fullWidth
     self.isLoading = isLoading
     self.loadingAccessibilityLabel = loadingAccessibilityLabel
@@ -71,7 +81,7 @@ public struct AtomButton<Label: View>: View {
         }
         .frame(maxWidth: fullWidth && size != .icon ? .infinity : nil)
     }
-    .buttonStyle(AtomButtonStyle(tone: tone, emphasis: emphasis, size: size))
+    .buttonStyle(AtomButtonStyle(tone: tone, emphasis: emphasis, size: size, shape: shape))
     .disabled(isLoading)
     .accessibilityValue(isLoading ? loadingAccessibilityLabel : "")
     .accessibilityAddTraits(isLoading ? .updatesFrequently : [])
@@ -88,6 +98,7 @@ extension AtomButton where Label == Text {
     tone: AtomButtonTone = .neutral,
     emphasis: AtomButtonEmphasis = .solid,
     size: AtomControlSize = .regular,
+    shape: AtomButtonShape = .default,
     fullWidth: Bool = false,
     isLoading: Bool = false,
     loadingAccessibilityLabel: String = "Loading",
@@ -97,6 +108,7 @@ extension AtomButton where Label == Text {
       tone: tone,
       emphasis: emphasis,
       size: size,
+      shape: shape,
       fullWidth: fullWidth,
       isLoading: isLoading,
       loadingAccessibilityLabel: loadingAccessibilityLabel,
@@ -143,15 +155,18 @@ public struct AtomButtonStyle: ButtonStyle {
   private let tone: AtomButtonTone
   private let emphasis: AtomButtonEmphasis
   private let size: AtomControlSize
+  private let shape: AtomButtonShape
 
   public init(
     tone: AtomButtonTone = .neutral,
     emphasis: AtomButtonEmphasis = .solid,
-    size: AtomControlSize = .regular
+    size: AtomControlSize = .regular,
+    shape: AtomButtonShape = .default
   ) {
     self.tone = tone
     self.emphasis = emphasis
     self.size = size
+    self.shape = shape
   }
 
   public func makeBody(configuration: Configuration) -> some View {
@@ -165,11 +180,11 @@ public struct AtomButtonStyle: ButtonStyle {
       .frame(minHeight: minimumHeight)
       .background(palette.background(isPressed: configuration.isPressed))
       .overlay {
-        RoundedRectangle(cornerRadius: cornerRadius)
+        outline
           .strokeBorder(palette.border, lineWidth: borderWidth)
       }
       .compositingGroup()
-      .clipShape(.rect(cornerRadius: cornerRadius))
+      .clipShape(outline)
       .scaleEffect(configuration.isPressed ? AtomTokens.Control.pressScale : 1)
       .opacity(isEnabled ? 1 : AtomTokens.Control.disabledOpacity)
       .animation(
@@ -231,6 +246,12 @@ public struct AtomButtonStyle: ButtonStyle {
     case .icon:
       AtomTokens.Control.PaddingInline.xs
     }
+  }
+
+  /// A capsule when round (SwiftUI caps the radius at half the shorter side);
+  /// otherwise the size's corner radius, as before.
+  private var outline: some InsettableShape {
+    RoundedRectangle(cornerRadius: shape == .round ? 9999 : cornerRadius)
   }
 
   private var cornerRadius: CGFloat {

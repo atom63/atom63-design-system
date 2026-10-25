@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "module": "Atom63UI",
-  "symbolCount": 429,
+  "symbolCount": 432,
   "symbols": [
     {
       "id": "s:8Atom63UI10AtomAvatarV",
@@ -39,10 +39,10 @@
       "source": "AtomButton.swift"
     },
     {
-      "id": "s:8Atom63UI10AtomButtonV4tone8emphasis4size9fullWidth9isLoading25loadingAccessibilityLabel6action5labelACyxGAA0cD4ToneO_AA0cD8EmphasisOAA0C11ControlSizeOS2bSSyycxyXEtcfc",
+      "id": "s:8Atom63UI10AtomButtonV4tone8emphasis4size5shape9fullWidth9isLoading25loadingAccessibilityLabel6action5labelACyxGAA0cD4ToneO_AA0cD8EmphasisOAA0C11ControlSizeOAA0cD5ShapeOS2bSSyycxyXEtcfc",
       "kind": "swift.init",
-      "path": "AtomButton.init(tone:emphasis:size:fullWidth:isLoading:loadingAccessibilityLabel:action:label:)",
-      "declaration": "init(tone: AtomButtonTone = .neutral, emphasis: AtomButtonEmphasis = .solid, size: AtomControlSize = .regular, fullWidth: Bool = false, isLoading: Bool = false, loadingAccessibilityLabel: String = \"Loading\", action: @escaping () -> Void, @ViewBuilder label: () -> Label)",
+      "path": "AtomButton.init(tone:emphasis:size:shape:fullWidth:isLoading:loadingAccessibilityLabel:action:label:)",
+      "declaration": "init(tone: AtomButtonTone = .neutral, emphasis: AtomButtonEmphasis = .solid, size: AtomControlSize = .regular, shape: AtomButtonShape = .default, fullWidth: Bool = false, isLoading: Bool = false, loadingAccessibilityLabel: String = \"Loading\", action: @escaping () -> Void, @ViewBuilder label: () -> Label)",
       "source": "AtomButton.swift"
     },
     {
@@ -53,10 +53,10 @@
       "source": "AtomButton.swift"
     },
     {
-      "id": "s:8Atom63UI10AtomButtonVAA05SwiftB04TextVRszrlE_4tone8emphasis4size9fullWidth9isLoading25loadingAccessibilityLabel6actionACyAFGSS_AA0cD4ToneOAA0cD8EmphasisOAA0C11ControlSizeOS2bSSyyctcfc",
+      "id": "s:8Atom63UI10AtomButtonVAA05SwiftB04TextVRszrlE_4tone8emphasis4size5shape9fullWidth9isLoading25loadingAccessibilityLabel6actionACyAFGSS_AA0cD4ToneOAA0cD8EmphasisOAA0C11ControlSizeOAA0cD5ShapeOS2bSSyyctcfc",
       "kind": "swift.init",
-      "path": "AtomButton.init(_:tone:emphasis:size:fullWidth:isLoading:loadingAccessibilityLabel:action:)",
-      "declaration": "init(_ title: String, tone: AtomButtonTone = .neutral, emphasis: AtomButtonEmphasis = .solid, size: AtomControlSize = .regular, fullWidth: Bool = false, isLoading: Bool = false, loadingAccessibilityLabel: String = \"Loading\", action: @escaping () -> Void)",
+      "path": "AtomButton.init(_:tone:emphasis:size:shape:fullWidth:isLoading:loadingAccessibilityLabel:action:)",
+      "declaration": "init(_ title: String, tone: AtomButtonTone = .neutral, emphasis: AtomButtonEmphasis = .solid, size: AtomControlSize = .regular, shape: AtomButtonShape = .default, fullWidth: Bool = false, isLoading: Bool = false, loadingAccessibilityLabel: String = \"Loading\", action: @escaping () -> Void)",
       "source": "AtomButton.swift"
     },
     {
@@ -1159,6 +1159,27 @@
       "source": "AtomWidget.swift"
     },
     {
+      "id": "s:8Atom63UI15AtomButtonShapeO",
+      "kind": "swift.enum",
+      "path": "AtomButtonShape",
+      "declaration": "enum AtomButtonShape",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomButtonShapeO5roundyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomButtonShape.round",
+      "declaration": "case round",
+      "source": "AtomButton.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomButtonShapeO7defaultyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomButtonShape.default",
+      "declaration": "case `default`",
+      "source": "AtomButton.swift"
+    },
+    {
       "id": "s:8Atom63UI15AtomButtonStyleV",
       "kind": "swift.struct",
       "path": "AtomButtonStyle",
@@ -1166,10 +1187,10 @@
       "source": "AtomButton.swift"
     },
     {
-      "id": "s:8Atom63UI15AtomButtonStyleV4tone8emphasis4sizeAcA0cD4ToneO_AA0cD8EmphasisOAA0C11ControlSizeOtcfc",
+      "id": "s:8Atom63UI15AtomButtonStyleV4tone8emphasis4size5shapeAcA0cD4ToneO_AA0cD8EmphasisOAA0C11ControlSizeOAA0cD5ShapeOtcfc",
       "kind": "swift.init",
-      "path": "AtomButtonStyle.init(tone:emphasis:size:)",
-      "declaration": "init(tone: AtomButtonTone = .neutral, emphasis: AtomButtonEmphasis = .solid, size: AtomControlSize = .regular)",
+      "path": "AtomButtonStyle.init(tone:emphasis:size:shape:)",
+      "declaration": "init(tone: AtomButtonTone = .neutral, emphasis: AtomButtonEmphasis = .solid, size: AtomControlSize = .regular, shape: AtomButtonShape = .default)",
       "source": "AtomButton.swift"
     },
     {
@@ -3044,7 +3065,7 @@
       "kind": "memberOf"
     },
     {
-      "source": "s:8Atom63UI10AtomButtonV4tone8emphasis4size9fullWidth9isLoading25loadingAccessibilityLabel6action5labelACyxGAA0cD4ToneO_AA0cD8EmphasisOAA0C11ControlSizeOS2bSSyycxyXEtcfc",
+      "source": "s:8Atom63UI10AtomButtonV4tone8emphasis4size5shape9fullWidth9isLoading25loadingAccessibilityLabel6action5labelACyxGAA0cD4ToneO_AA0cD8EmphasisOAA0C11ControlSizeOAA0cD5ShapeOS2bSSyycxyXEtcfc",
       "target": "s:8Atom63UI10AtomButtonV",
       "kind": "memberOf"
     },
@@ -3054,7 +3075,7 @@
       "kind": "memberOf"
     },
     {
-      "source": "s:8Atom63UI10AtomButtonVAA05SwiftB04TextVRszrlE_4tone8emphasis4size9fullWidth9isLoading25loadingAccessibilityLabel6actionACyAFGSS_AA0cD4ToneOAA0cD8EmphasisOAA0C11ControlSizeOS2bSSyyctcfc",
+      "source": "s:8Atom63UI10AtomButtonVAA05SwiftB04TextVRszrlE_4tone8emphasis4size5shape9fullWidth9isLoading25loadingAccessibilityLabel6actionACyAFGSS_AA0cD4ToneOAA0cD8EmphasisOAA0C11ControlSizeOAA0cD5ShapeOS2bSSyyctcfc",
       "target": "s:8Atom63UI10AtomButtonV",
       "kind": "memberOf"
     },
@@ -4004,6 +4025,41 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI15AtomButtonShapeO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomButtonShapeO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomButtonShapeO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomButtonShapeO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomButtonShapeO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomButtonShapeO5roundyA2CmF",
+      "target": "s:8Atom63UI15AtomButtonShapeO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomButtonShapeO7defaultyA2CmF",
+      "target": "s:8Atom63UI15AtomButtonShapeO",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI15AtomButtonStyleV",
       "target": "external:ButtonStyle",
       "kind": "conformsTo"
@@ -4014,7 +4070,7 @@
       "kind": "conformsTo"
     },
     {
-      "source": "s:8Atom63UI15AtomButtonStyleV4tone8emphasis4sizeAcA0cD4ToneO_AA0cD8EmphasisOAA0C11ControlSizeOtcfc",
+      "source": "s:8Atom63UI15AtomButtonStyleV4tone8emphasis4size5shapeAcA0cD4ToneO_AA0cD8EmphasisOAA0C11ControlSizeOAA0cD5ShapeOtcfc",
       "target": "s:8Atom63UI15AtomButtonStyleV",
       "kind": "memberOf"
     },

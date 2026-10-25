@@ -1326,8 +1326,8 @@ export const crossRendererContracts: readonly [{
         readonly reducedMotion: "none";
     };
     readonly platformAdaptations: {
-        readonly react: readonly ["Uses HTML button semantics with pointer and focus-visible feedback.", "The round shape (a circle for icon sizes, a pill for labelled sizes) is web-only."];
-        readonly swiftUI: readonly ["Uses SwiftUI Button with native touch and keyboard activation."];
+        readonly react: readonly ["Uses HTML button semantics with pointer and focus-visible feedback."];
+        readonly swiftUI: readonly ["Uses SwiftUI Button with native touch and keyboard activation.", "The round shape is a capsule: a circle at the icon size, a pill with a label."];
     };
 }, {
     readonly id: "dialog";
