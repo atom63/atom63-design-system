@@ -20,7 +20,7 @@
 /* The input form is a RadioGroup, which stacks its items; keep the stars in a row. */
 .a63-RadioGroup.a63-Rating {
   flex-direction: row;
-  gap: var(--a63-space-0_5);
+  gap: 0;
 }
 
 .a63-Rating[data-size='sm'] {
@@ -42,8 +42,8 @@
 
 .a63-Rating-icon {
   display: inline-flex;
-  width: 100%;
-  height: 100%;
+  width: var(--rating-size);
+  height: var(--rating-size);
 }
 .a63-Rating-icon > :where(svg) {
   width: 100%;
@@ -66,8 +66,14 @@
   min-width: var(--rating-size);
 }
 
-/* Input: a star is on up to the value, and up to the hovered star. */
+/* Input: each star is a radio at least the minimum target in size (WCAG
+   2.5.8), with the glyph centered. A star is on up to the value, and up to the
+   hovered star. */
 .a63-Rating:not([data-read-only]) .a63-Rating-item {
+  align-items: center;
+  justify-content: center;
+  width: max(var(--rating-size), var(--a63-control-min-target));
+  height: max(var(--rating-size), var(--a63-control-min-target));
   cursor: pointer;
   transition: color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
 }

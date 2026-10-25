@@ -1715,14 +1715,14 @@
    ],
    "importPath": "@atom63/ui-react",
    "label": "Rating",
-   "markdown": "# Rating\n\nRating shows a score out of five stars, or collects one as a radio group.\n\n**Status:** Preview\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Give a read-only rating its value in words; use the input form inside a form with a visible label.\n- Pair controls with persistent labels and explain errors beside the affected field.\n- Validate focus visibility, disabled state, invalid state, and touch input together.\n\n## Usage\n\n```tsx\nimport { Rating } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Rating`\n\n**Types:** `RatingProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/rating.json` (`ratingContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `sizes` | `sm`, `md` | `md` |\n\n**Slots:** `rating`, `rating-item`, `rating-icon`\n\n**States:** `rest`, `hover`, `focus-visible`, `checked`, `disabled`, `read-only`\n\n**Visual archetype:** Choice controls — Form controls that expose checked, selected, or indeterminate value state.\n\n## Related components\n\n- [Radio](/components/component-radio)\n- [Badge](/components/component-badge)\n",
+   "markdown": "# Rating\n\nRating shows a score out of five stars, or collects one as a radio group.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Give a read-only rating its value in words; use the input form inside a form with a visible label.\n- Pair controls with persistent labels and explain errors beside the affected field.\n- Validate focus visibility, disabled state, invalid state, and touch input together.\n\n## Usage\n\n```tsx\nimport { Rating } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Rating`\n\n**Types:** `RatingProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/rating.json` (`ratingContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `sizes` | `sm`, `md` | `md` |\n\n**Slots:** `rating`, `rating-item`, `rating-icon`\n\n**States:** `rest`, `hover`, `focus-visible`, `checked`, `disabled`, `read-only`\n\n**Visual archetype:** Choice controls — Form controls that expose checked, selected, or indeterminate value state.\n\n## Related components\n\n- [Radio](/components/component-radio)\n- [Badge](/components/component-badge)\n",
    "related": [
     "radio",
     "badge"
    ],
    "route": "/components/component-rating",
    "slug": "rating",
-   "status": "preview",
+   "status": "stable",
    "stories": {
     "file": "packages/ui-react/src/components/rating/rating.stories.tsx",
     "names": [

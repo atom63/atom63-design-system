@@ -68,7 +68,13 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // to text fields and rich-text editors, its `keyboardShortcut` opt-out and the
 // controlled-state cookie rule. About 0.09 kB is ScrollableList reading its
 // scroll offset from the start edge, so its chevrons work right-to-left.
-const gzipBudgetBytes = 92 * 1024
+//
+// Rating and CarouselDots add 0.7 kB on their own (92.0 to 92.7), and with
+// Button's indicator and Avatar's shape the case-study gaps reach about
+// 92.9 kB, so the budget moves to 94. Rating is a read-only image or a radio
+// group of stars with half fills; CarouselDots subscribes to Embla's snap list.
+// The case studies found star ratings in 4 runs and page dots in 6.
+const gzipBudgetBytes = 94 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()
