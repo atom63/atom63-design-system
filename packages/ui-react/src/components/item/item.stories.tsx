@@ -1,5 +1,5 @@
 import { itemContract, themes } from '@atom63/ui-foundation'
-import { Bookmark } from 'lucide-react'
+import { Bookmark, ChevronRight } from 'lucide-react'
 import {
   Button,
   Item,
@@ -124,6 +124,38 @@ export const SelectedAndCurrent: Story = {
         </ItemContent>
       </Item>
     </ItemGroup>
+  ),
+}
+
+/* variant="inset": the grouped settings list, each row a label with its value
+   in bold and a chevron (the web side of iOS AtomValueRow). */
+export const InsetGroup: Story = {
+  render: () => (
+    <div style={{ background: 'var(--a63-surface-page)', padding: 16, width: 360 }}>
+      <ItemGroup variant="inset">
+        {[
+          ['Units of measure', 'Imperial'],
+          ['Active energy', 'kcal'],
+          ['Start week on', 'Sunday'],
+        ].map(([label, value]) => (
+          <Item
+            key={label}
+            render={
+              <a href={`#${label}`}>
+                <ItemContent>
+                  <ItemTitle>{label}</ItemTitle>
+                </ItemContent>
+                <ItemActions>
+                  <strong>{value}</strong>
+                  <ChevronRight aria-hidden />
+                </ItemActions>
+              </a>
+            }
+            size="sm"
+          />
+        ))}
+      </ItemGroup>
+    </div>
   ),
 }
 

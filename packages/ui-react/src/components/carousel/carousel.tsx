@@ -378,3 +378,59 @@ export function CarouselNext({
     </button>
   )
 }
+
+export type CarouselDotsProps = React.ComponentProps<'div'> & {
+  /** The name of each dot; "Slide 2 of 5" by default. */
+  getLabel?: (index: number, count: number) => string
+}
+
+/* One button per snap point. The current one carries aria-current, and a
+   click scrolls there; the group itself is named "Slides". */
+export function CarouselDots({
+  className,
+  getLabel = (index, count) => `Slide ${index + 1} of ${count}`,
+  ...props
+}: CarouselDotsProps): React.ReactElement {
+  const { api, orientation } = useCarousel()
+  const [snaps, setSnaps] = React.useState<number[]>([])
+  const [selected, setSelected] = React.useState(0)
+
+  React.useEffect(() => {
+    if (!api) return
+    const update = () => {
+      setSnaps(api.scrollSnapList())
+      setSelected(api.selectedScrollSnap())
+    }
+    update()
+    api.on('select', update)
+    api.on('reInit', update)
+    return () => {
+      api.off('select', update)
+      api.off('reInit', update)
+    }
+  }, [api])
+
+  return (
+    <div
+      aria-label="Slides"
+      className={cn('a63-Carousel-dots', className)}
+      data-orientation={orientation}
+      data-slot="carousel-dots"
+      role="group"
+      {...props}
+    >
+      {snaps.map((_, index) => (
+        <button
+          aria-current={index === selected ? 'true' : undefined}
+          aria-label={getLabel(index, snaps.length)}
+          className="a63-Carousel-dot"
+          data-slot="carousel-dot"
+          // Snap points are positions, so their index is the stable key.
+          key={index}
+          onClick={() => api?.scrollTo(index)}
+          type="button"
+        />
+      ))}
+    </div>
+  )
+}

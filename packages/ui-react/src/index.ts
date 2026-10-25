@@ -118,6 +118,7 @@ export type {
 export {
   Carousel,
   CarouselContent,
+  CarouselDots,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
@@ -126,6 +127,7 @@ export {
 export type {
   CarouselApi,
   CarouselContextProps,
+  CarouselDotsProps,
   CarouselOptions,
   CarouselPlugin,
   CarouselProps,
@@ -372,7 +374,12 @@ export {
   ItemSeparator,
   ItemTitle,
 } from './components/item'
-export type { ItemMediaProps, ItemProps, ItemSeparatorProps } from './components/item'
+export type {
+  ItemGroupProps,
+  ItemMediaProps,
+  ItemProps,
+  ItemSeparatorProps,
+} from './components/item'
 export { Kbd, KbdGroup } from './components/kbd'
 export type { KbdProps } from './components/kbd'
 export { Label } from './components/label'
@@ -470,6 +477,8 @@ export { ProgressiveBlur } from './components/progressive-blur'
 export type { ProgressiveBlurPosition, ProgressiveBlurProps } from './components/progressive-blur'
 export { Radio, RadioGroup, RadioGroupItem } from './components/radio'
 export type { RadioGroupProps, RadioProps } from './components/radio'
+export { Rating } from './components/rating'
+export type { RatingProps } from './components/rating'
 export { ResizableHandle, ResizablePanel, ResizablePanelGroup } from './components/resizable'
 export type {
   ResizableHandleProps,

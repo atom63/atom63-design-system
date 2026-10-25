@@ -11,6 +11,7 @@ import {
 import { Button, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { Bell, Inbox } from 'lucide-react'
 import { EnvironmentShell, PreviewCard, ThemeMatrix } from '../story-probes'
 
 const meta = {
@@ -110,6 +111,64 @@ export const OverMedia: Story = {
 
 /* shape="round": circles for icon sizes, pills for labelled sizes, as for a
    player's play button or a pill-shaped call to action. */
+/* Controls over a photo: the overlay variant reads on any image, and
+   shape="round" makes the circular play and close buttons media UIs use. */
+export const RoundOverMedia: Story = {
+  render: () => (
+    <div
+      style={{
+        alignItems: 'center',
+        backgroundImage:
+          'linear-gradient(135deg, oklch(72% 0.16 250), oklch(64% 0.2 320) 55%, oklch(58% 0.18 30))',
+        borderRadius: '0.875rem',
+        display: 'flex',
+        gap: '0.75rem',
+        minHeight: '7rem',
+        padding: '1.5rem',
+      }}
+    >
+      <Button aria-label="Close" shape="round" size="icon-sm" variant="overlay">
+        <PlusIcon />
+      </Button>
+      <Button aria-label="Play" shape="round" size="icon-lg" variant="overlay">
+        <PlusIcon />
+      </Button>
+      <Button shape="round" variant="overlay">
+        Follow
+      </Button>
+    </div>
+  ),
+}
+
+/* indicator: an unread dot (true) or a count, added to the accessible name. */
+export const Indicator: Story = {
+  render: () => (
+    <EnvironmentShell>
+      <div style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+        <Button aria-label="Notifications" indicator size="icon" variant="ghost">
+          <Bell aria-hidden />
+        </Button>
+        <Button
+          aria-label="Notifications"
+          indicator={3}
+          shape="round"
+          size="icon"
+          variant="outline"
+        >
+          <Bell aria-hidden />
+        </Button>
+        <Button aria-label="Notifications" indicator={120} size="icon">
+          <Bell aria-hidden />
+        </Button>
+        <Button indicator={4} variant="outline">
+          <Inbox aria-hidden />
+          Inbox
+        </Button>
+      </div>
+    </EnvironmentShell>
+  ),
+}
+
 export const Shapes: Story = {
   render: () => (
     <EnvironmentShell>

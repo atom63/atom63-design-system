@@ -613,6 +613,18 @@
 
 /* Text roles — generated from src/tokens/type-roles.resolver.json by scripts/generate-role-bridges.mjs; do not edit. */
 @theme inline {
+  --text-display-large: var(--a63-type-display-large-font-size);
+  --text-display-large--line-height: var(--a63-type-display-large-line-height);
+  --text-display-large--font-weight: var(--a63-type-display-large-font-weight);
+  --text-display-large-strong: var(--a63-type-display-large-font-size);
+  --text-display-large-strong--line-height: var(--a63-type-display-large-line-height);
+  --text-display-large-strong--font-weight: var(--a63-type-display-large-font-weight-strong);
+  --text-display: var(--a63-type-display-font-size);
+  --text-display--line-height: var(--a63-type-display-line-height);
+  --text-display--font-weight: var(--a63-type-display-font-weight);
+  --text-display-strong: var(--a63-type-display-font-size);
+  --text-display-strong--line-height: var(--a63-type-display-line-height);
+  --text-display-strong--font-weight: var(--a63-type-display-font-weight-strong);
   --text-large-title: var(--a63-type-large-title-font-size);
   --text-large-title--line-height: var(--a63-type-large-title-line-height);
   --text-large-title--font-weight: var(--a63-type-large-title-font-weight);

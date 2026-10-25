@@ -117,5 +117,5 @@ test('every shipped text role has its four tokens in the manifest', () => {
       .filter(token => !declared.has(token))
   )
   assert.deepEqual(missing, [])
-  assert.equal(typeRoleNames(doc).length, 11)
+  assert.equal(typeRoleNames(doc).length, 13)
 })

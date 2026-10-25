@@ -707,7 +707,8 @@ export const crossRendererContracts = [
     ],
     "platformAdaptations": {
       "react": [
-        "Uses browser image loading and DOM fallback composition."
+        "Uses browser image loading and DOM fallback composition.",
+        "The square shape and the ring are web-only for now."
       ],
       "swiftUI": [
         "Uses native image decoding and SwiftUI loading phases."

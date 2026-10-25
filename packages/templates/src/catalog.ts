@@ -20,6 +20,7 @@ import { template as gettingStartedChecklist } from './blocks/getting-started-ch
 import { template as pageHeader } from './blocks/page-header/page-header'
 import { template as settingsSection } from './blocks/settings-section/settings-section'
 import { template as statRow } from './blocks/stat-row/stat-row'
+import { template as tabBar } from './blocks/tab-bar/tab-bar'
 
 export interface TemplateEntry {
   category: string
@@ -54,4 +55,5 @@ export const templateCatalog: readonly TemplateEntry[] = [
   pageHeader,
   settingsSection,
   statRow,
+  tabBar,
 ].map(entry => ({ ...entry, storyId: storyId(entry.kind, entry.title) }))

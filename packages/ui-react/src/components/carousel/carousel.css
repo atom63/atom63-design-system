@@ -144,6 +144,60 @@
   height: 1.25rem;
 }
 
+/* ── Dots ──────────────────────────────────────────────────────────────────
+   One per snap point; the current one stretches into a pill. Each button is a
+   transparent box the size of the minimum target, so neighbours never crowd a
+   tap (WCAG 2.5.8), and the visible dot is its ::before. */
+.a63-Carousel-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--a63-space-2);
+}
+.a63-Carousel-dots[data-orientation='vertical'] {
+  flex-direction: column;
+  padding-block: 0;
+  padding-inline: var(--a63-space-2);
+}
+.a63-Carousel-dot {
+  position: relative;
+  width: var(--a63-control-min-target);
+  height: var(--a63-control-min-target);
+  flex: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+}
+.a63-Carousel-dot::before {
+  content: '';
+  position: absolute;
+  inset: 50%;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-full);
+  background-color: color-mix(in oklch, var(--a63-text-secondary) 35%, transparent);
+  translate: -50% -50%;
+  transition:
+    width var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    height var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
+    background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-Carousel-dot[aria-current='true']::before {
+  width: 1.25rem;
+  background-color: var(--a63-text-primary);
+}
+.a63-Carousel-dots[data-orientation='vertical'] .a63-Carousel-dot[aria-current='true']::before {
+  width: 0.5rem;
+  height: 1.25rem;
+}
+.a63-Carousel-dot:focus-visible::before {
+  outline: var(--a63-control-focus-ring-width) solid
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline-offset: 2px;
+}
+
 .a63-Carousel-sr-only {
   position: absolute;
   width: 1px;
@@ -157,7 +211,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .a63-Carousel-nav {
+  .a63-Carousel-nav,
+  .a63-Carousel-dot::before {
     transition: none;
   }
 }

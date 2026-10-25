@@ -103,6 +103,7 @@
     "./recipes/preview-card.css": "./src/components/preview-card/preview-card.css",
     "./recipes/progress.css": "./src/components/progress/progress.css",
     "./recipes/radio.css": "./src/components/radio/radio.css",
+    "./recipes/rating.css": "./src/components/rating/rating.css",
     "./recipes/resizable.css": "./src/components/resizable/resizable.css",
     "./recipes/scroll-area.css": "./src/components/scroll-area/scroll-area.css",
     "./recipes/scrollable-list.css": "./src/components/scrollable-list/scrollable-list.css",

@@ -50,7 +50,7 @@ export const visualArchetypes = {
     id: 'choice',
     label: 'Choice controls',
     description: 'Form controls that expose checked, selected, or indeterminate value state.',
-    components: ['Checkbox', 'Radio', 'Switch'],
+    components: ['Checkbox', 'Radio', 'Switch', 'Rating'],
     contracts: ['control', 'choice', 'selection'],
   },
   field: {

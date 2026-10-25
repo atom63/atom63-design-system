@@ -96,6 +96,36 @@ export const Playground: Story = {
   ),
 }
 
+/* A persistent bottom sheet over a map or photo: modal={false} keeps the page
+   usable behind it, and snapPoints let it rest at a peek height or open fully. */
+export const PersistentSheet: Story = {
+  render: () => (
+    <div
+      style={{
+        background: 'var(--a63-surface-muted)',
+        borderRadius: 'var(--radius-xl)',
+        color: 'var(--a63-text-secondary)',
+        height: 420,
+        padding: 16,
+        width: 360,
+      }}
+    >
+      The map stays usable behind the sheet.
+      <Drawer defaultOpen modal={false} snapPoints={['148px', 1]}>
+        <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>Choose a ride</DrawerTitle>
+            <DrawerDescription>Drag up for all options.</DrawerDescription>
+          </DrawerHeader>
+          <DrawerBody style={{ color: 'var(--a63-text-secondary)' }}>
+            Standard · 4 min away
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </div>
+  ),
+}
+
 /* The four drawer directions. */
 export const Directions: Story = {
   render: () => (

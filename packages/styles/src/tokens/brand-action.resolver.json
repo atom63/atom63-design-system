@@ -38,6 +38,24 @@
                 "$value": "{a63.brand.600}",
                 "$description": "The brand as text on light surfaces (semantics.css --a63-text-accent)."
               }
+            },
+            "gradient": {
+              "brand": {
+                "$type": "color",
+                "$value": "{a63.brand.500}",
+                "$description": "The brand as a gradient for heroes and banners: ramp 500 to 700 at 135deg. Declared with the ramp so a nested brand gets its own.",
+                "$extensions": {
+                  "io.atom63.derive": "linear-gradient(135deg, {a63.brand.500}, {a63.brand.700})"
+                }
+              },
+              "brand-subtle": {
+                "$type": "color",
+                "$value": "{a63.brand.50}",
+                "$description": "A quiet brand gradient for illustration backgrounds and cards: ramp 50 to 100 at 135deg.",
+                "$extensions": {
+                  "io.atom63.derive": "linear-gradient(135deg, {a63.brand.50}, {a63.brand.100})"
+                }
+              }
             }
           }
         }

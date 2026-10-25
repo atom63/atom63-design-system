@@ -4,9 +4,9 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1117,
-    "aliasValues": 769,
-    "skipped": 183,
+    "variables": 1129,
+    "aliasValues": 773,
+    "skipped": 186,
     "computed": 59
   },
   "collections": [
@@ -4167,6 +4167,118 @@
             }
           },
           "codeSyntax": "var(--a63-type-caption-2-line-height)",
+          "scopes": [
+            "LINE_HEIGHT"
+          ]
+        },
+        {
+          "name": "type/display/font/size",
+          "token": "--a63-type-display-font-size",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "alias": "--typography-10xl-font-size"
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-font-size)",
+          "scopes": [
+            "FONT_SIZE"
+          ]
+        },
+        {
+          "name": "type/display/font/weight",
+          "token": "--a63-type-display-font-weight",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 600
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-font-weight)",
+          "scopes": [
+            "FONT_WEIGHT"
+          ]
+        },
+        {
+          "name": "type/display/font/weight/strong",
+          "token": "--a63-type-display-font-weight-strong",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 700
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-font-weight-strong)",
+          "scopes": [
+            "FONT_WEIGHT"
+          ]
+        },
+        {
+          "name": "type/display/large/font/size",
+          "token": "--a63-type-display-large-font-size",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "alias": "--typography-11xl-font-size"
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-large-font-size)",
+          "scopes": [
+            "FONT_SIZE"
+          ]
+        },
+        {
+          "name": "type/display/large/font/weight",
+          "token": "--a63-type-display-large-font-weight",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 600
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-large-font-weight)",
+          "scopes": [
+            "FONT_WEIGHT"
+          ]
+        },
+        {
+          "name": "type/display/large/font/weight/strong",
+          "token": "--a63-type-display-large-font-weight-strong",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 700
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-large-font-weight-strong)",
+          "scopes": [
+            "FONT_WEIGHT"
+          ]
+        },
+        {
+          "name": "type/display/large/line/height",
+          "token": "--a63-type-display-large-line-height",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "alias": "--typography-11xl-line-height"
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-large-line-height)",
+          "scopes": [
+            "LINE_HEIGHT"
+          ]
+        },
+        {
+          "name": "type/display/line/height",
+          "token": "--a63-type-display-line-height",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "alias": "--typography-10xl-line-height"
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-line-height)",
           "scopes": [
             "LINE_HEIGHT"
           ]
@@ -19464,6 +19576,98 @@
       ],
       "variables": [
         {
+          "name": "typography/10xl/font/size",
+          "token": "--typography-10xl-font-size",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 40
+            },
+            "compact": {
+              "value": 36
+            },
+            "comfortable": {
+              "value": 44
+            },
+            "large": {
+              "value": 48
+            }
+          },
+          "codeSyntax": "var(--typography-10xl-font-size)",
+          "scopes": [
+            "FONT_SIZE"
+          ]
+        },
+        {
+          "name": "typography/10xl/line/height",
+          "token": "--typography-10xl-line-height",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 44
+            },
+            "compact": {
+              "value": 39.5938
+            },
+            "comfortable": {
+              "value": 48.3906
+            },
+            "large": {
+              "value": 52.7969
+            }
+          },
+          "codeSyntax": "var(--typography-10xl-line-height)",
+          "scopes": [
+            "LINE_HEIGHT"
+          ]
+        },
+        {
+          "name": "typography/11xl/font/size",
+          "token": "--typography-11xl-font-size",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 56
+            },
+            "compact": {
+              "value": 50.3906
+            },
+            "comfortable": {
+              "value": 61.5938
+            },
+            "large": {
+              "value": 67.1875
+            }
+          },
+          "codeSyntax": "var(--typography-11xl-font-size)",
+          "scopes": [
+            "FONT_SIZE"
+          ]
+        },
+        {
+          "name": "typography/11xl/line/height",
+          "token": "--typography-11xl-line-height",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 60
+            },
+            "compact": {
+              "value": 54
+            },
+            "comfortable": {
+              "value": 66
+            },
+            "large": {
+              "value": 72
+            }
+          },
+          "codeSyntax": "var(--typography-11xl-line-height)",
+          "scopes": [
+            "LINE_HEIGHT"
+          ]
+        },
+        {
           "name": "typography/2xs/font/size",
           "token": "--typography-2xs-font-size",
           "type": "FLOAT",
@@ -20255,6 +20459,18 @@
     {
       "token": "--a63-field-background",
       "reason": "unresolvable value: (empty)"
+    },
+    {
+      "token": "--a63-gradient-brand",
+      "reason": "unresolvable value: linear-gradient(135deg, rgba(44, 127, 255, 1), rgba(0, 57, 158, 1))"
+    },
+    {
+      "token": "--a63-gradient-brand-subtle",
+      "reason": "unresolvable value: linear-gradient(135deg, rgba(239, 252, 255, 1), rgba(221, 247, 255, 1))"
+    },
+    {
+      "token": "--a63-gradient-scrim",
+      "reason": "unsupported type: string"
     },
     {
       "token": "--a63-menu-highlight-background",

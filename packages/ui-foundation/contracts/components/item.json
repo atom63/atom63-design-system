@@ -2,11 +2,12 @@
   "$schema": "../schema/component-intent.schema.json",
   "component": "item",
   "maturity": "stable",
-  "description": "Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size (default/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off data-variant / data-size, and styles a row with aria-current or data-selected as current or selected.",
+  "description": "Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size (default/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off data-variant / data-size, and styles a row with aria-current or data-selected as current or selected. ItemGroup takes variant (default/inset): inset is a rounded card with hairline dividers, the grouped settings list.",
   "lists": {
     "variants": ["default", "outline", "muted"],
     "sizes": ["default", "sm", "xs"],
     "mediaVariants": ["default", "icon", "image"],
+    "groupVariants": ["default", "inset"],
     "slots": [
       "item-group",
       "item",
@@ -26,6 +27,7 @@
     "defaultVariant": "default",
     "defaultSize": "default",
     "defaultMediaVariant": "default",
+    "defaultGroupVariant": "default",
     "variants": {
       "$ref": "#/lists/variants"
     },
@@ -43,6 +45,9 @@
     },
     "visualArchetypes": {
       "$ref": "#/lists/visualArchetypes"
+    },
+    "groupVariants": {
+      "$ref": "#/lists/groupVariants"
     }
   }
 }

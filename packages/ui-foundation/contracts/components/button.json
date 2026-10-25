@@ -31,7 +31,7 @@
     ],
     "shapes": ["default", "round"],
     "states": ["rest", "hover", "pressed", "focusVisible", "disabled", "loading"],
-    "slots": ["root", "label", "icon", "spinner"],
+    "slots": ["root", "label", "icon", "spinner", "indicator"],
     "tokenSlots": [
       "button.background",
       "button.foreground",

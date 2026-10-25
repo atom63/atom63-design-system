@@ -45,10 +45,10 @@
     ]
   },
   "counts": {
-    "rootValueExports": 425,
-    "rootTypeExports": 186,
-    "packageExportKeys": 72,
-    "cssExportKeys": 65
+    "rootValueExports": 427,
+    "rootTypeExports": 189,
+    "packageExportKeys": 73,
+    "cssExportKeys": 66
   },
   "packageExportKeys": [
     ".",
@@ -101,6 +101,7 @@
     "./recipes/preview-card.css",
     "./recipes/progress.css",
     "./recipes/radio.css",
+    "./recipes/rating.css",
     "./recipes/resizable.css",
     "./recipes/scroll-area.css",
     "./recipes/scrollable-list.css",
@@ -169,6 +170,7 @@
     "./recipes/preview-card.css",
     "./recipes/progress.css",
     "./recipes/radio.css",
+    "./recipes/rating.css",
     "./recipes/resizable.css",
     "./recipes/scroll-area.css",
     "./recipes/scrollable-list.css",
@@ -465,6 +467,11 @@
       "subpath": "./recipes/radio.css",
       "kind": "css",
       "target": "./src/components/radio/radio.css"
+    },
+    {
+      "subpath": "./recipes/rating.css",
+      "kind": "css",
+      "target": "./src/components/rating/rating.css"
     },
     {
       "subpath": "./recipes/resizable.css",
@@ -1125,6 +1132,10 @@
           "proposedTier": "monitor-high-risk"
         },
         {
+          "name": "CarouselDots",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
           "name": "CarouselItem",
           "proposedTier": "monitor-high-risk"
         },
@@ -1148,6 +1159,10 @@
         },
         {
           "name": "CarouselContextProps",
+          "proposedTier": "monitor-high-risk"
+        },
+        {
+          "name": "CarouselDotsProps",
           "proposedTier": "monitor-high-risk"
         },
         {
@@ -2142,6 +2157,10 @@
       ],
       "types": [
         {
+          "name": "ItemGroupProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
           "name": "ItemMediaProps",
           "proposedTier": "beta-supported-composition-conditional"
         },
@@ -2604,6 +2623,21 @@
         },
         {
           "name": "RadioProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/rating",
+      "values": [
+        {
+          "name": "Rating",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "RatingProps",
           "proposedTier": "beta-supported-core"
         }
       ]
