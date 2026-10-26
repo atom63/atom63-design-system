@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 1897,
-    "uniqueCssVariables": 1182,
-    "figmaMappedDeclarations": 1835
+    "declarations": 1903,
+    "uniqueCssVariables": 1185,
+    "figmaMappedDeclarations": 1841
   },
   "entries": [
     {
@@ -360,6 +360,102 @@
       },
       "lifecycle": "preview",
       "aliases": ["--color-danger-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-action-disabled-background",
+      "cssVar": "--a63-action-disabled-background",
+      "type": "color",
+      "value": "var(--a63-surface-muted)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "action/disabled/background",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-muted"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-action-disabled-background",
+      "cssVar": "--a63-action-disabled-background",
+      "type": "color",
+      "value": "var(--a63-surface-muted)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "action/disabled/background",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-muted"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-action-disabled-border",
+      "cssVar": "--a63-action-disabled-border",
+      "type": "color",
+      "value": "var(--a63-border-subtle)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "action/disabled/border",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-border-subtle"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-action-disabled-border",
+      "cssVar": "--a63-action-disabled-border",
+      "type": "color",
+      "value": "var(--a63-border-subtle)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "action/disabled/border",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-border-subtle"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-action-disabled-foreground",
+      "cssVar": "--a63-action-disabled-foreground",
+      "type": "color",
+      "value": "var(--surface-dark-9)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "action/disabled/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--surface-dark-9"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-action-disabled-foreground",
+      "cssVar": "--a63-action-disabled-foreground",
+      "type": "color",
+      "value": "var(--surface-light-9)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "action/disabled/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--surface-light-9"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {

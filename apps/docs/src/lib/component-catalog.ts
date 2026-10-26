@@ -130,7 +130,8 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
         hover: 'Pointer over an enabled button.',
         pressed: 'While pressed, or held with data-pressed.',
         focusVisible: 'Keyboard focus only; drawn as an outline.',
-        disabled: 'Fill stays at full strength; only the label fades.',
+        disabled:
+          'A neutral grey fill and muted label; ghost, link, overlay and glass fade only the label.',
         loading: 'Label keeps its width; the spinner overlays it.',
       },
     },

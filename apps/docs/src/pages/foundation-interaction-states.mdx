@@ -77,7 +77,7 @@ For grouped controls, put the invalid cue on the group boundary when the group o
 
 Disabled components should look unavailable without becoming illegible.
 
-There is no global disabled-opacity token. Each recipe preserves enough contrast for its anatomy; for example, Button keeps its fill and border and dims only the label to `0.56`. Native `disabled` semantics are preferred where the element supports them.
+There is no global disabled-opacity token. Each recipe preserves enough contrast for its anatomy. A disabled Button with a fill or a border switches to the neutral `--a63-action-disabled-background`, `-border` and `-foreground` tokens, on web and iOS; ghost, link and over-media buttons dim only the label to `--a63-action-disabled-opacity`. Native `disabled` semantics are preferred where the element supports them.
 
 Do not use disabled as a loading substitute. Loading is temporary work. Disabled is unavailable intent.
 

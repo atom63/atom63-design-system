@@ -34981,6 +34981,14 @@
       "reason": "pseudo-element"
     },
     {
+      "what": ".a63-Button:is(:disabled, [data-disabled]):not( [data-loading], [data-variant='ghost'], [data-variant='link'], [data-variant='overlay'], [data-variant='glass'] )",
+      "reason": "descendant"
+    },
+    {
+      "what": ".a63-Button:is(:disabled, [data-disabled]):is( [data-variant='ghost'], [data-variant='link'], [data-variant='overlay'], [data-variant='glass'] ):not([data-loading]) .a63-Button-label",
+      "reason": "descendant"
+    },
+    {
       "what": ".a63-Button > span.a63-Button-indicator",
       "reason": "descendant"
     },
@@ -35062,7 +35070,7 @@
         "hover": "Pointer over an enabled button.",
         "pressed": "While pressed, or held with data-pressed.",
         "focusVisible": "Keyboard focus only; drawn as an outline.",
-        "disabled": "Fill stays at full strength; only the label fades.",
+        "disabled": "A neutral grey fill and muted label; ghost, link, overlay and glass fade only the label.",
         "loading": "Label keeps its width; the spinner overlays it."
       }
     },

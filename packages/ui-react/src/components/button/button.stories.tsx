@@ -11,6 +11,7 @@ import {
 import { Button, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect } from 'storybook/test'
 import { Bell, Inbox } from 'lucide-react'
 import { EnvironmentShell, PreviewCard, ThemeMatrix } from '../story-probes'
 
@@ -236,6 +237,9 @@ export const States: Story = {
         <Button>Default</Button>
         <Button loading>Loading</Button>
         <Button disabled>Disabled</Button>
+        <Button disabled variant="primary">
+          Disabled primary
+        </Button>
         <Button data-pressed="">Pressed</Button>
         <Button variant="outline">
           <PlusIcon />
@@ -244,6 +248,29 @@ export const States: Story = {
       </div>
     </EnvironmentShell>
   ),
+  play: async ({ canvas, canvasElement }) => {
+    // A disabled primary is a neutral fill with muted text, not a paler accent,
+    // in every environment the shell renders.
+    for (const button of canvas.getAllByRole('button', { name: 'Disabled primary' })) {
+      // Paint a value next to the button, so it resolves in the button's environment.
+      const paint = (property: 'backgroundColor' | 'color', value: string) => {
+        const probe = canvasElement.ownerDocument.createElement('span')
+        probe.style[property] = value
+        button.after(probe)
+        const painted = getComputedStyle(probe)[property]
+        probe.remove()
+        return painted
+      }
+      const style = getComputedStyle(button)
+      await expect(style.backgroundColor).toBe(
+        paint('backgroundColor', 'var(--a63-action-disabled-background)')
+      )
+      await expect(style.color).toBe(paint('color', 'var(--a63-action-disabled-foreground)'))
+      await expect(style.backgroundColor).not.toBe(
+        paint('backgroundColor', 'var(--a63-action-primary)')
+      )
+    }
+  },
 }
 
 /* Loading treatment across every variant. */
