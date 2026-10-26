@@ -13,7 +13,7 @@ application structure on native SwiftUI APIs.
 | Presentation | `sheet`, `fullScreenCover`, `popover`, `alert`, `confirmationDialog` |
 | Atom63 controls | `AtomButton`, `AtomIconButton`, `AtomChip`, `AtomTextField`, `AtomTextEditor`, `AtomToggle` |
 | Atom63 form patterns | `AtomFormField`, `AtomFormMessage` |
-| Atom63 content patterns | `AtomCard`, `AtomListRow`, `AtomValueRow`, `AtomSelectionRow`, `AtomSectionHeader`, `AtomActionBar`, `AtomBadge`, `AtomAvatar`, `AtomAsyncImage` |
+| Atom63 content patterns | `AtomCard`, `AtomListSection`, `AtomListRow`, `AtomValueRow`, `AtomSelectionRow`, `AtomSectionHeader`, `AtomActionBar`, `AtomBadge`, `AtomAvatar`, `AtomAsyncImage`, `AtomPageDots` |
 | Atom63 feedback | `AtomResourceIntent`, `AtomPaginationIntent`, `AtomLoadMoreView`, `AtomSyncStatusView`, `AtomContentStateView`, `AtomNotice`, `AtomProgressView`, `AtomSkeletonRow`, `AtomToast` |
 | Networking and persistence | App-owned `URLSession`, SwiftData, and repositories mapped into Atom63 intents |
 
@@ -29,8 +29,8 @@ cross-product pattern.
 - four-tab application shell with an executable component catalog
 - adaptive iPad `NavigationSplitView` shell
 - searchable coverage for every current Atom63UI foundation, component, and intent
-- 38 native Catalog entries backed by 27 generated cross-renderer contracts
-- executable React and SwiftUI renderer evidence for all 27 contracts
+- 42 native Catalog entries backed by 29 generated cross-renderer contracts
+- executable React and SwiftUI renderer evidence for all 29 contracts
 - root SwiftPM distribution manifest, frozen public API, and isolated consumer build
 - per-component light/dark and Dynamic Type preview overrides
 - interactive state matrices and selectable Swift usage snippets

@@ -1,5 +1,5 @@
 import { crossRendererContracts, getCrossRendererContract } from '@atom63/ui-foundation'
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { type FormEvent, useState } from 'react'
 import { toast } from 'sonner'
@@ -25,6 +25,7 @@ import {
 } from '../components/alert-dialog'
 import { Button } from '../components/button'
 import { Calendar } from '../components/calendar'
+import { Carousel, CarouselContent, CarouselDots, CarouselItem } from '../components/carousel'
 import { Card } from '../components/card'
 import { DestinationLink } from '../components/destination-link'
 import {
@@ -38,6 +39,7 @@ import {
 import { Field, FieldDescription, FieldError, FieldLabel } from '../components/field'
 import { Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyTitle } from '../components/empty'
 import { Input } from '../components/input'
+import { Item, ItemContent, ItemGroup, ItemTitle } from '../components/item'
 import { LoadMoreTrigger } from '../components/load-more-trigger'
 import {
   DropdownMenu,
@@ -59,6 +61,37 @@ import { Textarea } from '../components/textarea'
 import { Toaster } from '../components/toaster'
 import { Toggle } from '../components/toggle'
 import { reactRendererConformance } from './renderer-conformance'
+
+// embla-carousel measures layout jsdom does not have, so the carousel's API is a stub with three
+// snap points; `selected` and `emit` stand in for a scroll.
+const embla = vi.hoisted(() => {
+  const state = { selected: 0 }
+  const listeners = new Map<string, Set<() => void>>()
+  const api = {
+    canScrollPrev: () => false,
+    canScrollNext: () => false,
+    scrollPrev: () => {},
+    scrollNext: () => {},
+    scrollSnapList: () => [0, 0.5, 1],
+    selectedScrollSnap: () => state.selected,
+    scrollTo: vi.fn(),
+    on: (event: string, callback: () => void) => {
+      listeners.set(event, (listeners.get(event) ?? new Set()).add(callback))
+      return api
+    },
+    off: (event: string, callback: () => void) => {
+      listeners.get(event)?.delete(callback)
+      return api
+    },
+  }
+  return {
+    api,
+    state,
+    emit: (event: string) => listeners.get(event)?.forEach(callback => callback()),
+  }
+})
+
+vi.mock('embla-carousel-react', () => ({ default: () => [() => {}, embla.api] }))
 
 function SegmentedControlConformanceExample({
   onValueChange,
@@ -689,6 +722,58 @@ describe('React renderer conformance', () => {
     }
 
     expect(onRetry).toHaveBeenCalledOnce()
+  })
+
+  it('verifies inset item groups keep row order and decorative dividers', () => {
+    const { container } = render(
+      <ItemGroup variant="inset">
+        {['Currency', 'Appearance', 'Start week on'].map(label => (
+          <Item key={label}>
+            <ItemContent>
+              <ItemTitle>{label}</ItemTitle>
+            </ItemContent>
+          </Item>
+        ))}
+      </ItemGroup>
+    )
+
+    const group = container.querySelector('[data-slot="item-group"]')
+    expect(group).toHaveAttribute('data-variant', 'inset')
+    expect(group?.textContent).toBe('CurrencyAppearanceStart week on')
+    // The dividers are drawn by the recipe, not by elements in the group.
+    expect(screen.queryByRole('separator')).not.toBeInTheDocument()
+    expect(group?.querySelectorAll('[data-slot="item"]')).toHaveLength(3)
+  })
+
+  it('verifies carousel dots mark the current slide and go to a chosen one', () => {
+    embla.state.selected = 0
+    render(
+      <Carousel>
+        <CarouselContent>
+          {['One', 'Two', 'Three'].map(label => (
+            <CarouselItem key={label}>{label}</CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselDots />
+      </Carousel>
+    )
+
+    const group = screen.getByRole('group', { name: 'Slides' })
+    expect(group.querySelectorAll('[data-slot="carousel-dot"]')).toHaveLength(3)
+    expect(screen.getByRole('button', { name: 'Slide 1 of 3' })).toHaveAttribute(
+      'aria-current',
+      'true'
+    )
+
+    fireEvent.click(screen.getByRole('button', { name: 'Slide 3 of 3' }))
+    expect(embla.api.scrollTo).toHaveBeenCalledWith(2)
+    embla.state.selected = 2
+    act(() => embla.emit('select'))
+    expect(screen.getByRole('button', { name: 'Slide 3 of 3' })).toHaveAttribute(
+      'aria-current',
+      'true'
+    )
+    expect(screen.getByRole('button', { name: 'Slide 1 of 3' })).not.toHaveAttribute('aria-current')
   })
 
   it('verifies skeleton placeholders stay outside the accessibility tree', () => {

@@ -45,6 +45,7 @@ public struct AtomSelectionRow: View {
           .accessibilityHidden(true)
       }
       .frame(minHeight: 44)
+      .atomListRowInsets()
       .contentShape(.rect)
     }
     .buttonStyle(.plain)
