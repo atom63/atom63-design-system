@@ -14,7 +14,7 @@ export const markers = {
 const cliQueries = [
   'Ask the design system before writing UI, and start each screen with `atom63 build <idea>`, the idea in your own words. The `atom63` CLI and its MCP server (`atom63 mcp`) answer from the same generated index as the packages:',
   '',
-  '- `atom63 build <idea>`: a kit for what you are building: the closest page templates and blocks, the components they use, the foundation and the rules.',
+  '- `atom63 build <idea>`: a kit for what you are building: the closest page templates and blocks, the components they use, the foundation and the rules. For a phone screen it leads with `AppView layout="phone"` and a snippet to start from.',
   '- `atom63 template <id>` and `atom63 copy <id> <dir>`: read a page or block template, then copy it and the blocks it uses into your project to adapt.',
   '- `atom63 search <words>`: find a component, template, docs page, story example or token.',
   '- `atom63 component <slug>`: the import line, contract (axes, defaults, slots, states, web and iOS), related components and examples.',

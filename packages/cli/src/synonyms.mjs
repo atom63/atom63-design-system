@@ -206,7 +206,11 @@ export const topics = {
   'map controls': floatingButton,
   'locate button': floatingButton,
   'edge to edge': phoneApp,
+  iphone: phoneApp,
   'mobile app': phoneApp,
+  'mobile screen': phoneApp,
+  'mobile web': phoneApp,
+  'on a phone': phoneApp,
   'phone app': phoneApp,
   'phone screen': phoneApp,
 }
