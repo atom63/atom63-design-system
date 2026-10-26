@@ -120,12 +120,18 @@ const persistentSheet = [
   { id: 'component:drawer' },
 ]
 
+const iosTabBar = {
+  id: 'component:tabs',
+  note: "iOS: the native TabView, each tab's root its ScrollView or List. The floating iOS 26 bar insets that scroll view, so the last row ends above it; no bottom padding, overlay or bottom ignoresSafeArea.",
+}
+
 const tabBar = [
   { id: 'template:tab-bar' },
   {
     id: 'template:app-view',
     note: 'App view with layout="phone": edge to edge, safe-area aware, the tab bar docked at the bottom.',
   },
+  iosTabBar,
 ]
 
 const phoneApp = [
@@ -161,6 +167,9 @@ export const topics = {
   'bottom tabs': tabBar,
   'tab bar': tabBar,
   tabbar: tabBar,
+  tabview: [iosTabBar],
+  'ios tab bar': [iosTabBar],
+  'swiftui tab bar': [iosTabBar],
   'edge to edge': phoneApp,
   'mobile app': phoneApp,
   'phone app': phoneApp,

@@ -59,6 +59,39 @@ scroll-content margin adds breathing room after the final row. Persistent page
 or sheet actions should use `safeAreaInset(edge: .bottom)` at the container root,
 not internal padding inside `AtomActionBar`.
 
+### App tab bar
+
+App-level sections use the native `TabView`, and each tab's root is its
+`ScrollView` or `List`:
+
+```swift
+TabView(selection: $tab) {
+  ScrollView {
+    LazyVStack(spacing: AtomTokens.Space.x3) {
+      // Rows
+    }
+  }
+  .tabItem { Label("Home", systemImage: "house") }
+  .tag(AppTab.home)
+}
+```
+
+From iOS 26 the tab bar is a floating glass capsule drawn over the tab's
+content. At rest, content scrolls under it and shows through the glass; that is
+the platform design, not a clipped layout. `TabView` insets the scroll content,
+so at the end of the scroll the last row sits fully above the bar. Keep that
+inset:
+
+- Do not add bottom padding sized for the bar.
+- Do not draw the content in a `ZStack` or `overlay` above the `TabView`, or
+  build a custom bar on top of it.
+- Do not apply `ignoresSafeArea()` to the bottom edge of the tab's root; limit
+  it to the top (`.ignoresSafeArea(edges: .top)`) for a hero behind the status
+  bar.
+- Put extra bottom chrome, such as a checkout bar, in
+  `safeAreaInset(edge: .bottom)` on the tab's root so the scroll content keeps
+  its inset.
+
 ## Accessibility interaction outcomes
 
 - Buttons, chips, selection rows, retry actions, and pagination controls expose a
