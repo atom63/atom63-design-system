@@ -1,6 +1,6 @@
 import { DocExample } from '@atom63/mdx/blocks'
 import { Button } from '@atom63/ui-react'
-import { ArrowRight, Trash2 } from 'lucide-react'
+import { ArrowRight, ChevronLeft, LocateFixed, Trash2 } from 'lucide-react'
 import { ComponentGuidanceSection, ComponentUsage } from '../components/component-guidance'
 
 # Button
@@ -84,6 +84,37 @@ Hide decorative icons from assistive technology when the visible label already n
         <Trash2 />
       </Button>
     </div>
+  </div>
+</DocExample>
+
+## Emphasis without the accent
+
+`default` is the neutral solid: high emphasis without the brand colour, such as a white play button on dark or a black Pay button. `primary` is the main action when the product's main action is in its brand colour. Use the accent for one or two cues per view; the main action may be neutral.
+
+## Floating buttons
+
+`raised` is a light button lifted off its ground: the panel fill, primary text and a soft shadow, with no border. With `shape="round"` at an icon size it is the floating button maps and light heroes use for back, locate and layers. Over a dark photo or video use `overlay` instead.
+
+<DocExample
+  title="Floating over a map"
+  code={`<Button aria-label="Back" shape="round" size="icon-lg" variant="raised">
+  <ChevronLeft />
+</Button>
+<Button aria-label="Show my location" shape="round" size="icon-lg" variant="raised">
+  <LocateFixed />
+</Button>
+<Button shape="round" variant="raised">Search this area</Button>`}
+>
+  <div className="flex flex-wrap items-center justify-center gap-3 rounded-xl bg-muted p-6">
+    <Button aria-label="Back" shape="round" size="icon-lg" variant="raised">
+      <ChevronLeft />
+    </Button>
+    <Button aria-label="Show my location" shape="round" size="icon-lg" variant="raised">
+      <LocateFixed />
+    </Button>
+    <Button shape="round" variant="raised">
+      Search this area
+    </Button>
   </div>
 </DocExample>
 

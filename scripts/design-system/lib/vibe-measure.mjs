@@ -9,8 +9,10 @@
  * - the system-component share: JSX elements imported from `@atom63/*`,
  *   divided by every JSX element that is a third-party component or an
  *   interactive HTML element;
- * - warnings: advisory findings that do not fail anything, such as a file
- *   with more than one `variant="primary"` Button (`multiple-primary`).
+ * - warnings: patterns that are not wrong but usually unintended, such as a
+ *   `<Button>` without `variant`, which draws the heaviest neutral solid, or
+ *   more than one `variant="primary"` Button in one file. They are reported,
+ *   never counted as craft violations.
  */
 import ts from 'typescript'
 
@@ -168,11 +170,17 @@ export function countJsxElements(source, fileName = 'file.tsx') {
 }
 
 /**
- * The `<Button variant="primary">` elements in one TSX file, where `Button` is
- * imported from `@atom63/*`. The variant must be a literal (`"primary"` or
- * `{'primary'}`); a computed variant is not counted.
+ * Warnings in one TSX file, for `<Button>` imported from `@atom63/*`:
+ * - `button-without-variant`: each one that passes no `variant` (and spreads no
+ *   props that could carry one). It draws the `default` neutral solid, the
+ *   heaviest neutral, which is rarely meant for a back, keypad or secondary
+ *   action.
+ * - `multiple-primary`: one warning, at the second one, when more than one
+ *   passes a literal `variant="primary"` (or `{'primary'}`). One main action
+ *   per view is the rule; a computed variant is not counted.
+ * @returns {{ rule: 'button-without-variant' | 'multiple-primary', line: number, match: string }[]}
  */
-export function countPrimaryButtons(source, fileName = 'file.tsx') {
+export function findWarnings(source, fileName = 'file.tsx') {
   const file = ts.createSourceFile(
     fileName,
     source,
@@ -180,17 +188,19 @@ export function countPrimaryButtons(source, fileName = 'file.tsx') {
     true,
     ts.ScriptKind.TSX
   )
-  const buttons = new Set()
+  const systemButtons = new Set()
   for (const statement of file.statements) {
     if (!ts.isImportDeclaration(statement) || !statement.importClause) continue
     const from = /** @type {import('typescript').StringLiteral} */ (statement.moduleSpecifier).text
     const bindings = statement.importClause.namedBindings
     if (!from.startsWith('@atom63/') || !bindings || !ts.isNamedImports(bindings)) continue
     for (const element of bindings.elements) {
-      if ((element.propertyName ?? element.name).text === 'Button') buttons.add(element.name.text)
+      if ((element.propertyName ?? element.name).text === 'Button')
+        systemButtons.add(element.name.text)
     }
   }
-  if (buttons.size === 0) return 0
+  const warnings = []
+  const primaries = []
   const literal = initializer => {
     if (!initializer) return undefined
     if (ts.isStringLiteral(initializer)) return initializer.text
@@ -201,32 +211,42 @@ export function countPrimaryButtons(source, fileName = 'file.tsx') {
     }
     return undefined
   }
-  let count = 0
   const visit = node => {
     if (
       (ts.isJsxOpeningElement(node) || ts.isJsxSelfClosingElement(node)) &&
-      buttons.has(node.tagName.getText(file))
+      systemButtons.has(node.tagName.getText(file))
     ) {
-      const variant = node.attributes.properties.find(
-        property => ts.isJsxAttribute(property) && property.name.getText(file) === 'variant'
+      const attributes = node.attributes.properties
+      const open = attributes.some(
+        attribute =>
+          ts.isJsxSpreadAttribute(attribute) ||
+          (ts.isJsxAttribute(attribute) && attribute.name.getText(file) === 'variant')
       )
-      if (variant && literal(variant.initializer) === 'primary') count++
+      const { line } = file.getLineAndCharacterOfPosition(node.getStart(file))
+      if (!open) {
+        warnings.push({
+          rule: /** @type {const} */ ('button-without-variant'),
+          line: line + 1,
+          match: node.getText(file).split('\n')[0],
+        })
+      }
+      const variant = attributes.find(
+        attribute => ts.isJsxAttribute(attribute) && attribute.name.getText(file) === 'variant'
+      )
+      if (variant && ts.isJsxAttribute(variant) && literal(variant.initializer) === 'primary')
+        primaries.push({ line: line + 1, match: node.getText(file).split('\n')[0] })
     }
     ts.forEachChild(node, visit)
   }
   visit(file)
-  return count
-}
-
-/**
- * Advisory findings in one file. `multiple-primary`: more than one
- * `variant="primary"` Button, where one main action per view is the rule.
- * @returns {{ rule: string, count: number }[]}
- */
-export function findWarnings(relative, text) {
-  if (!relative.endsWith('.tsx')) return []
-  const primary = countPrimaryButtons(text, relative)
-  return primary > 1 ? [{ rule: 'multiple-primary', count: primary }] : []
+  if (primaries.length > 1) {
+    warnings.push({
+      rule: /** @type {const} */ ('multiple-primary'),
+      line: primaries[1].line,
+      match: primaries[1].match,
+    })
+  }
+  return warnings
 }
 
 /**
@@ -269,12 +289,12 @@ export function measureSources(files, { knownTokens } = {}) {
     lines += text.split('\n').length
     for (const violation of craftViolations(relative, text, { knownTokens: known }))
       craft.push({ file: relative, ...violation })
-    for (const warning of findWarnings(relative, text))
-      warnings.push({ file: relative, ...warning })
     const found = findLiterals(relative, text)
     literals.paletteUtilities.push(...found.paletteUtilities)
     literals.literalColors.push(...found.literalColors)
     if (relative.endsWith('.tsx')) {
+      for (const warning of findWarnings(text, relative))
+        warnings.push({ file: relative, ...warning })
       const counts = countJsxElements(text, relative)
       for (const key of ['system', 'thirdParty', 'icons', 'local', 'interactiveHtml', 'otherHtml'])
         jsx[key] += counts[key]

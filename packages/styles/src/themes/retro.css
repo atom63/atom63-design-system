@@ -59,6 +59,7 @@
         square corners via the radius personalization axis (not hardcoded here). */
   --a63-surface-border-style: outset;
   --a63-surface-border-width: 2px;
+  --a63-surface-raised-shadow: var(--a63-surface-shadow);
   --a63-track-shadow:
     inset 1px 1px 0 color-mix(in oklch, black 22%, transparent),
     inset -1px -1px 0 color-mix(in oklch, white 40%, transparent);

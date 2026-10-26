@@ -4,9 +4,9 @@ import { describe, it } from 'node:test'
 import {
   changedFiles,
   countJsxElements,
-  countPrimaryButtons,
   countTypeErrors,
   findLiterals,
+  findWarnings,
   isMeasuredFile,
   measureSources,
   systemShare,
@@ -146,6 +146,26 @@ describe('findLiterals', () => {
   })
 })
 
+describe('findWarnings', () => {
+  it('warns at a system Button without a variant', () => {
+    const source = [
+      "import { Button as Action } from '@atom63/ui-react'",
+      "import { Button } from './local'",
+      'export const A = (props: object) => (',
+      '  <>',
+      '    <Action>Back</Action>',
+      '    <Action variant="raised">Locate</Action>',
+      '    <Action {...props}>Spread</Action>',
+      '    <Button>Local</Button>',
+      '  </>',
+      ')',
+    ].join('\n')
+    assert.deepEqual(findWarnings(source), [
+      { rule: 'button-without-variant', line: 5, match: '<Action>' },
+    ])
+  })
+})
+
 describe('countTypeErrors', () => {
   it('counts tsc diagnostics', () => {
     const output =
@@ -155,8 +175,8 @@ describe('countTypeErrors', () => {
   })
 })
 
-describe('countPrimaryButtons', () => {
-  it('counts literal primary variants of the system Button only', () => {
+describe('findWarnings: multiple-primary', () => {
+  it('warns once, at the second literal primary variant of the system Button', () => {
     const source = [
       "import { Button as Action } from '@atom63/ui-react'",
       "import { Button } from './local-button'",
@@ -164,14 +184,20 @@ describe('countPrimaryButtons', () => {
       '  <div>',
       '    <Action variant="primary">Save</Action>',
       "    <Action variant={'primary'} />",
-      '    <Action variant="default">Cancel</Action>',
+      '    <Action variant="primary">Again</Action>',
       '    <Action variant={v} />',
       '    <Button variant="primary" />',
       '  </div>',
       ')',
     ].join('\n')
-    assert.equal(countPrimaryButtons(source), 2)
-    assert.equal(countPrimaryButtons('export const A = () => <div />'), 0)
+    assert.deepEqual(findWarnings(source), [
+      { rule: 'multiple-primary', line: 6, match: "<Action variant={'primary'} />" },
+    ])
+    const single = [
+      "import { Button } from '@atom63/ui-react'",
+      'export const B = () => <Button variant="primary" />',
+    ].join('\n')
+    assert.deepEqual(findWarnings(single), [])
   })
 })
 
@@ -195,6 +221,14 @@ describe('measureSources', () => {
       'physical-properties',
       'raw-color',
       'raw-color',
+    ])
+    assert.deepEqual(measures.warnings, [
+      {
+        file: 'src/pages/a.tsx',
+        rule: 'button-without-variant',
+        line: 2,
+        match: '<Button />',
+      },
     ])
   })
 
@@ -225,9 +259,10 @@ describe('measureSources', () => {
         ['src/pages/b.tsx', single],
       ])
     )
-    assert.deepEqual(measures.warnings, [
-      { file: 'src/pages/a.tsx', rule: 'multiple-primary', count: 2 },
-    ])
+    assert.deepEqual(
+      measures.warnings.map(({ file, rule }) => [file, rule]),
+      [['src/pages/a.tsx', 'multiple-primary']]
+    )
     assert.deepEqual(measures.craft, [])
   })
 })

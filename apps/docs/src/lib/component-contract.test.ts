@@ -47,6 +47,18 @@ describe('component contract docs', () => {
     expect(getComponentContractDoc('kbd')?.crossRenderer).toBeUndefined()
   })
 
+  it('lists the SwiftUI renderer of each variant when variants differ on iOS', () => {
+    expect(getComponentContractDoc('tabs')?.crossRenderer?.swiftUIRendererByVariant).toEqual({
+      default: 'Picker(.segmented)',
+      underline: 'AtomTabRow',
+      attached: 'AtomTabRow',
+    })
+    const markdown = componentContractMarkdown('tabs')
+    expect(markdown).toContain('**SwiftUI renderer per variant:**')
+    expect(markdown).toContain('- `underline`: `AtomTabRow`')
+    expect(componentContractMarkdown('button')).not.toContain('renderer per variant')
+  })
+
   it('renders the contract as Markdown for agents and copy-out', () => {
     const markdown = componentContractMarkdown('button')
 

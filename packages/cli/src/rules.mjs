@@ -27,9 +27,14 @@ export const rules = [
     check: ['raw-color', 'unknown-token'],
   },
   {
-    id: 'one-primary-per-view',
-    rule: 'Give a view at most one `variant="primary"` Button. Selection is neutral by default; set `tone="accent"` on a selection, Slider or Progress only when it is the one accent cue in the view.',
-    why: 'The accent marks the main action; several accent cues compete and none stands out. The vibe measures warn at more than one primary Button per file.',
+    id: 'accent-sparingly',
+    rule: 'Use the accent for one or two cues per view; the main action may be neutral. Give a view at most one `variant="primary"` Button. Selection is neutral by default; set `tone="accent"` on a selection, Slider or Progress only when it is one of those cues.',
+    why: 'An accent on every control points at nothing. Button `default` is a high-emphasis neutral solid; `primary` is for a main action in the brand colour. The vibe measures warn at more than one primary Button per file.',
+  },
+  {
+    id: 'one-boundary',
+    rule: "One boundary per element: border, fill or shadow, not two. Don't nest outlined containers.",
+    why: 'Each extra edge is another line to read past. Card `filled` and `elevated` and Button `raised` give a fill or a shadow without the border.',
   },
   {
     id: 'on-media-colors',

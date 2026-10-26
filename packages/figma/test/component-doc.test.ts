@@ -58,7 +58,8 @@ describe('the component doc block', () => {
       ],
       axisGuidance: {
         variant: {
-          primary: 'The one primary action per view.',
+          primary:
+            "The one primary action per view, when the product's main action is in its brand colour.",
           ghost: 'Lowest emphasis; toolbars and dismissals.',
         },
         size: { sm: 'Compact rows and toolbars.' },

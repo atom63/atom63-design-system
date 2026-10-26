@@ -235,8 +235,8 @@ describe('the real Button recipe', () => {
     sizes: ['xs', 'sm', 'md', 'lg', 'xl'],
   })
 
-  it('builds 330 variants', () => {
-    expect(realModel.variants).toHaveLength(330)
+  it('builds 360 variants', () => {
+    expect(realModel.variants).toHaveLength(360)
   })
 
   it('skips exactly the known rules, so a rewritten selector cannot slip into `skipped`', () => {

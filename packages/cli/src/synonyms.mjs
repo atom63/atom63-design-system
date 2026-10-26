@@ -125,6 +125,11 @@ const iosTabBar = {
   note: "iOS: the native TabView, each tab's root its ScrollView or List. The floating iOS 26 bar insets that scroll view, so the last row ends above it; no bottom padding, overlay or bottom ignoresSafeArea.",
 }
 
+const iosTabs = {
+  id: 'component:tabs',
+  note: 'iOS per variant: underline and attached render as AtomTabRow (text tabs over the content, an accent bar under the selected one, an optional SF Symbol over each label; scrolls sideways when they do not fit). default renders as Picker(.segmented), for a short second-level filter. App-level sections use TabView.',
+}
+
 const tabBar = [
   { id: 'template:tab-bar' },
   {
@@ -140,6 +145,28 @@ const phoneApp = [
     note: 'App view with layout="phone": edge to edge, safe-area aware, the tab bar docked at the bottom.',
   },
   { id: 'template:tab-bar' },
+]
+
+const mediaList = [
+  {
+    id: 'component:table',
+    note: 'Media and track lists: <Table variant="plain"> drops the dividers between rows.',
+  },
+  {
+    id: 'example:table/Plain',
+    note: 'A track list on <Table variant="plain">: rows without dividers.',
+  },
+]
+
+const floatingButton = [
+  {
+    id: 'example:button/FloatingOverMap',
+    note: 'Round floating buttons over a map or a light photo: <Button variant="raised" shape="round" size="icon-lg">.',
+  },
+  {
+    id: 'component:button',
+    note: 'Floating button: variant="raised" with shape="round" on a light map or photo; variant="overlay" over dark media.',
+  },
 ]
 
 const groupedList = [
@@ -195,7 +222,7 @@ export const topics = {
   scrim: [gradients[2], gradients[3]],
   'bottom sheet': persistentSheet,
   'non modal': persistentSheet,
-  'over map': persistentSheet,
+  'over map': [...persistentSheet, ...floatingButton],
   persistent: persistentSheet,
   'snap points': persistentSheet,
   'bottom nav': tabBar,
@@ -206,6 +233,24 @@ export const topics = {
   tabview: [iosTabBar],
   'ios tab bar': [iosTabBar],
   'swiftui tab bar': [iosTabBar],
+  'track list': mediaList,
+  tracklist: mediaList,
+  tracks: mediaList,
+  playlist: mediaList,
+  'media list': mediaList,
+  episodes: mediaList,
+  songs: mediaList,
+  'floating button': floatingButton,
+  'floating buttons': floatingButton,
+  'map button': floatingButton,
+  'map buttons': floatingButton,
+  'map controls': floatingButton,
+  'locate button': floatingButton,
+  'ios tabs': [iosTabs],
+  'swiftui tabs': [iosTabs],
+  'underline tabs': [iosTabs],
+  'tabs underline': [iosTabs],
+  atomtabrow: [iosTabs],
   'edge to edge': phoneApp,
   iphone: phoneApp,
   'mobile app': phoneApp,

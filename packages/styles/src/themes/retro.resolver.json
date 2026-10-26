@@ -372,6 +372,12 @@
                     "unit": "px"
                   }
                 }
+              },
+              "raised": {
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": "{a63.surface.shadow}"
+                }
               }
             },
             "track": {
