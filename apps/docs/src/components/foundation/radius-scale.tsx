@@ -12,7 +12,7 @@ export function RadiusScale() {
               style={{ borderRadius: `var(${cssVar})` }}
               title={`${cssVar} → ${px} (default)`}
             />
-            <div className="text-center font-mono text-xs">
+            <div className="text-center font-mono text-xs break-all">
               <div className="text-foreground">{utility}</div>
               <div className="text-muted-foreground">{px}</div>
             </div>

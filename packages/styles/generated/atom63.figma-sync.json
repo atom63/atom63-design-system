@@ -4,7 +4,7 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1129,
+    "variables": 1130,
     "aliasValues": 773,
     "skipped": 186,
     "computed": 59
@@ -14085,6 +14085,18 @@
             }
           },
           "codeSyntax": "var(--font-family-serif)",
+          "scopes": []
+        },
+        {
+          "name": "radius/pill",
+          "token": "--radius-pill",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 9999
+            }
+          },
+          "codeSyntax": "var(--radius-pill)",
           "scopes": []
         },
         {

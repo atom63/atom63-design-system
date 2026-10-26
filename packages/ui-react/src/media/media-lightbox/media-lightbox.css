@@ -171,7 +171,7 @@
   align-items: center;
   justify-content: center;
   border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
-  border-radius: var(--a63-overlay-radius, var(--radius-full, 9999px));
+  border-radius: var(--a63-overlay-radius, var(--radius-pill, 9999px));
   background-color: var(--a63-surface-overlay);
   background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
   background-blend-mode: normal, var(--a63-overlay-texture-blend);

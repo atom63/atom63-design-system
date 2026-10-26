@@ -33,7 +33,7 @@
   position: relative;
   width: 100%;
   height: var(--slider-rail);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background-color: var(--a63-surface-muted);
   box-shadow: var(--a63-track-shadow);
 }
@@ -41,7 +41,7 @@
 .a63-Slider-indicator {
   position: absolute;
   height: 100%;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background-color: var(--a63-action-primary);
 }
 
@@ -51,7 +51,7 @@
   width: var(--slider-thumb);
   height: var(--slider-thumb);
   border: 1px solid var(--a63-border-input);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background-color: var(--a63-surface-overlay);
   box-shadow:
     var(--a63-control-shadow),

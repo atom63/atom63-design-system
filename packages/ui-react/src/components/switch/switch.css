@@ -41,7 +41,7 @@
   height: calc(var(--switch-thumb) + 6px);
   padding: 2px;
   border: 1px solid var(--switch-border);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background-color: var(--switch-track);
   background-image: none;
   box-shadow: var(--switch-current-shadow);
@@ -78,7 +78,7 @@
   height: 100%;
   aspect-ratio: 1;
   border: 1px solid color-mix(in oklch, var(--a63-shadow-color) 8%, transparent);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background: var(--switch-thumb-bg);
   color: var(--switch-thumb-fg);
   box-shadow: 0 1px 2px color-mix(in oklch, var(--a63-shadow-color) 20%, transparent);
