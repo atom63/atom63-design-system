@@ -845,6 +845,9 @@ importers:
         specifier: 1.34.0
         version: 1.34.0(react@19.2.7)
     devDependencies:
+      '@atom63/agent':
+        specifier: workspace:*
+        version: link:../agent
       '@atom63/eslint-config':
         specifier: workspace:*
         version: link:../../config/eslint-config

@@ -193,6 +193,7 @@
       "source": "packages/ui-foundation/contracts/components/avatar.json",
       "exportName": "avatarContract",
       "maturity": "stable",
+      "description": "The fallback holds initials or one icon (an assistant's sparkle, an app glyph) in a filled circle; an icon is drawn at the control icon size for the size step.",
       "axes": [
         { "name": "compositions", "values": ["standalone", "badge", "group"] },
         { "name": "shapes", "values": ["circle", "square"], "default": "circle" },
@@ -868,6 +869,74 @@
           ]
         }
       }
+    },
+    "chat-composer": {
+      "source": "packages/ui-foundation/contracts/components/chat-composer.json",
+      "exportName": "chatComposerContract",
+      "maturity": "preview",
+      "description": "The message field of an assistant chat: a rounded field with a growing textarea, an attach slot and a trailing send button. While a reply is submitted or streaming the send button becomes a stop button.",
+      "axes": [{ "name": "statuses", "values": ["idle", "submitted", "streaming"] }],
+      "slots": [
+        "chat-composer",
+        "chat-composer-field",
+        "chat-composer-attach",
+        "chat-composer-actions",
+        "chat-composer-submit",
+        "chat-composer-footnote"
+      ],
+      "states": ["rest", "focus-visible", "disabled", "streaming"],
+      "tokenSlots": [],
+      "visualArchetypes": ["field"]
+    },
+    "chat-message": {
+      "source": "packages/ui-foundation/contracts/components/chat-message.json",
+      "exportName": "chatMessageContract",
+      "maturity": "preview",
+      "description": "One turn of an assistant conversation. The user's turn is a tinted bubble on the trailing side; the assistant's is plain text by default or a bubble. ChatMessageList is the transcript: a log region that holds the turns.",
+      "axes": [
+        { "name": "roles", "values": ["user", "assistant"] },
+        { "name": "appearances", "values": ["plain", "bubble"], "default": "plain" }
+      ],
+      "slots": [
+        "chat-message-list",
+        "chat-message",
+        "chat-message-avatar",
+        "chat-message-body",
+        "chat-message-content",
+        "chat-message-actions"
+      ],
+      "states": ["rest", "streaming"],
+      "tokenSlots": [],
+      "visualArchetypes": ["surface"]
+    },
+    "chat-steps": {
+      "source": "packages/ui-foundation/contracts/components/chat-steps.json",
+      "exportName": "chatStepsContract",
+      "maturity": "preview",
+      "description": "The tool calls and thinking steps behind an assistant reply, in a collapsible group. Each ChatStep shows a status icon with a text status for screen readers.",
+      "axes": [{ "name": "statuses", "values": ["pending", "running", "complete", "error"] }],
+      "slots": [
+        "chat-steps",
+        "chat-steps-trigger",
+        "chat-steps-content",
+        "chat-step",
+        "chat-step-icon",
+        "chat-step-description"
+      ],
+      "states": ["closed", "open"],
+      "tokenSlots": [],
+      "visualArchetypes": ["surface"]
+    },
+    "chat-typing-indicator": {
+      "source": "packages/ui-foundation/contracts/components/chat-typing-indicator.json",
+      "exportName": "chatTypingIndicatorContract",
+      "maturity": "preview",
+      "description": "Three dots that pulse while the assistant prepares its reply. It is a polite status region with a text label; with reduced motion the dots hold still.",
+      "axes": [],
+      "slots": ["chat-typing-indicator", "chat-typing-indicator-dot"],
+      "states": ["rest"],
+      "tokenSlots": [],
+      "visualArchetypes": ["marker"]
     },
     "checkbox": {
       "source": "packages/ui-foundation/contracts/components/checkbox.json",

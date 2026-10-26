@@ -182,6 +182,38 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
       'CarouselNext',
     ],
   },
+  'chat-composer': {
+    relatedSlugs: ['textarea', 'input', 'button'],
+    summary:
+      'ChatComposer is the message field of an assistant chat: a growing textarea with an attach slot and a send button that turns into stop while a reply streams.',
+    usage:
+      'Place it at the bottom of a chat surface; Enter sends, Shift+Enter adds a line, and the footnote holds the AI disclaimer.',
+    usageExports: ['ChatComposer'],
+  },
+  'chat-message': {
+    relatedSlugs: ['avatar', 'copy-button', 'card'],
+    summary:
+      "ChatMessage shows one turn of a conversation: the user's message in a tinted bubble on the trailing side, the assistant's as plain text or a bubble.",
+    usage:
+      'Render each turn of an assistant conversation inside a list; put copy and feedback buttons in its actions slot.',
+    usageExports: ['ChatMessageList', 'ChatMessage'],
+  },
+  'chat-steps': {
+    relatedSlugs: ['collapsible', 'accordion', 'spinner'],
+    summary:
+      'ChatSteps lists the tool calls and thinking steps behind an assistant reply in a collapsible group, each with a status icon.',
+    usage:
+      "Put it above the assistant's answer; keep it collapsed once the reply is done and open while steps are running.",
+    usageExports: ['ChatSteps', 'ChatStep'],
+  },
+  'chat-typing-indicator': {
+    relatedSlugs: ['spinner', 'skeleton'],
+    summary:
+      'ChatTypingIndicator shows three pulsing dots while an assistant is preparing its reply, and announces it politely.',
+    usage:
+      "Show it in place of the assistant's message until the first text arrives, then replace it with the ChatMessage.",
+    usageExports: ['ChatTypingIndicator'],
+  },
   checkbox: {
     relatedSlugs: ['switch', 'radio', 'field'],
     summary: 'Checkbox captures an independent checked, unchecked, or indeterminate choice.',
@@ -687,6 +719,7 @@ export const componentCatalogGroups = [
     items: components('forms-and-selection', [
       'autocomplete',
       'calendar',
+      'chat-composer',
       'checkbox',
       'field',
       'form',
@@ -750,6 +783,8 @@ export const componentCatalogGroups = [
       'badge',
       'card',
       'carousel',
+      'chat-message',
+      'chat-steps',
       'collapsible',
       'connected-panel',
       'empty',
@@ -768,6 +803,7 @@ export const componentCatalogGroups = [
     id: 'feedback-and-utilities',
     items: components('feedback-and-utilities', [
       'animated-check',
+      'chat-typing-indicator',
       'kbd',
       'load-more-trigger',
       'marquee',

@@ -1,0 +1,53 @@
+/*
+ * ChatComposer recipe — the FIELD archetype. It reuses the InputGroup chrome
+ * (border, recessed field shadow, focus-within ring) and only reshapes it: a
+ * rounder --radius-2xl corner, a textarea that starts at one line and grows to
+ * a cap before it scrolls, and a toolbar row under it with the attach slot on
+ * the leading side and the actions and send button on the trailing side.
+ */
+
+.a63-ChatComposer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-2);
+  inline-size: 100%;
+  min-width: 0;
+  margin: 0;
+}
+
+.a63-ChatComposer .a63-ChatComposer-group {
+  --field-radius: var(--radius-2xl);
+
+  gap: var(--a63-space-1);
+  padding-block: var(--a63-space-2);
+  padding-inline: var(--a63-space-2);
+}
+
+.a63-ChatComposer .a63-ChatComposer-group .a63-ChatComposer-field {
+  min-height: calc(1lh + 2 * var(--a63-space-1_5));
+  max-height: 40vh;
+  padding-inline: var(--a63-space-2);
+  overflow-y: auto;
+}
+
+.a63-ChatComposer-toolbar.a63-InputGroup-addon {
+  justify-content: space-between;
+}
+
+.a63-ChatComposer-attach,
+.a63-ChatComposer-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--a63-space-1);
+}
+
+.a63-ChatComposer-actions {
+  margin-inline-start: auto;
+}
+
+.a63-ChatComposer-footnote {
+  margin: 0;
+  color: var(--a63-text-secondary);
+  font-size: var(--a63-control-font-size-xs);
+  text-align: center;
+}

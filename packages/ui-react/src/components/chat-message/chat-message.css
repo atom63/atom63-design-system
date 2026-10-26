@@ -1,0 +1,93 @@
+/*
+ * ChatMessage recipe — the SURFACE archetype. The user's bubble is
+ * --a63-surface-muted (it carries the brand tint through --a63-surface-tint);
+ * the assistant's bubble is the panel surface with a subtle border. Text reads
+ * the base type step. Layout is logical: the user's turn sits on the trailing
+ * side and mirrors in right-to-left scripts.
+ */
+
+.a63-ChatMessageList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-6);
+  min-width: 0;
+}
+
+.a63-ChatMessage {
+  --chat-message-bubble-radius: var(--radius-2xl);
+  --chat-message-bubble-padding-block: var(--a63-space-2);
+  --chat-message-bubble-padding-inline: var(--a63-space-4);
+
+  display: flex;
+  align-items: flex-start;
+  gap: var(--a63-space-3);
+  min-width: 0;
+  color: var(--a63-text-primary);
+  font-size: var(--typography-base-font-size);
+  line-height: var(--typography-base-line-height);
+}
+
+.a63-ChatMessage[data-role='user'] {
+  flex-direction: row-reverse;
+}
+
+.a63-ChatMessage-avatar {
+  display: flex;
+  flex: none;
+}
+
+.a63-ChatMessage-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--a63-space-1);
+  min-width: 0;
+}
+
+.a63-ChatMessage[data-role='user'] .a63-ChatMessage-body {
+  align-items: flex-end;
+}
+
+.a63-ChatMessage-content {
+  min-width: 0;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
+
+.a63-ChatMessage[data-appearance='bubble'] .a63-ChatMessage-content {
+  max-inline-size: min(100%, 36rem);
+  padding-block: var(--chat-message-bubble-padding-block);
+  padding-inline: var(--chat-message-bubble-padding-inline);
+  border-radius: var(--chat-message-bubble-radius);
+}
+
+.a63-ChatMessage[data-role='user'] .a63-ChatMessage-content {
+  max-inline-size: min(85%, 36rem);
+  background-color: var(--a63-surface-muted);
+  white-space: pre-wrap;
+}
+
+.a63-ChatMessage[data-role='assistant'][data-appearance='bubble'] .a63-ChatMessage-content {
+  border: var(--a63-control-border-width) solid var(--a63-border-subtle);
+  background-color: var(--a63-surface-panel);
+}
+
+.a63-ChatMessage-content > :first-child {
+  margin-block-start: 0;
+}
+
+.a63-ChatMessage-content > :last-child {
+  margin-block-end: 0;
+}
+
+.a63-ChatMessage-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--a63-space-1);
+  color: var(--a63-text-secondary);
+}
+
+.a63-ChatMessage[data-appearance='bubble'][data-role='assistant'] .a63-ChatMessage-actions {
+  padding-inline: var(--a63-space-1);
+}

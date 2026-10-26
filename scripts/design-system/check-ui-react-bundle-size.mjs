@@ -80,7 +80,14 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // read-only image or a radio group of stars with half fills; CarouselDots
 // subscribes to Embla's snap list. The case studies found star ratings in 4
 // runs and page dots in 6.
-const gzipBudgetBytes = 94 * 1024
+//
+// 94 kB held 93.0 kB. The chat set (ChatMessage and ChatMessageList,
+// ChatComposer, ChatTypingIndicator, ChatSteps and ChatStep) adds 1.6 kB,
+// taking it to 94.6, so it moves to 95. Most of it is the composer: its own
+// or the host's value, Enter to send outside an input method's composition,
+// and the send button that turns into stop. Six case runs hand-built chat.
+// With the filled and elevated cards and the raised button it holds 94.8.
+const gzipBudgetBytes = 95 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()
