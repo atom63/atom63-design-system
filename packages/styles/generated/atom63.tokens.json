@@ -11250,7 +11250,7 @@
       "name": "a63-text-tertiary",
       "cssVar": "--a63-text-tertiary",
       "type": "color",
-      "value": "color-mix(in oklab, var(--a63-text-primary) 80%, var(--a63-surface-page))",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 80%, black)",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -11259,14 +11259,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--a63-surface-page", "--a63-text-primary"],
+      "aliases": ["--a63-action-primary"],
       "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
     },
     {
       "name": "a63-text-tertiary",
       "cssVar": "--a63-text-tertiary",
       "type": "color",
-      "value": "color-mix(in oklab, var(--a63-text-secondary) 82%, var(--a63-surface-page))",
+      "value": "color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10))",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -11275,7 +11275,7 @@
         "mode": "Dark"
       },
       "lifecycle": "preview",
-      "aliases": ["--a63-surface-page", "--a63-text-secondary"],
+      "aliases": ["--a63-text-accent", "--surface-dark-10"],
       "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
     },
     {

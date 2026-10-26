@@ -239,11 +239,11 @@
               },
               "tertiary": {
                 "$type": "color",
-                "$value": "{a63.text.primary}",
+                "$value": "{a63.action.primary}",
                 "$extensions": {
-                  "io.atom63.derive": "color-mix(in oklab, {a63.text.primary} 80%, {a63.surface.page})"
+                  "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 80%, black)"
                 },
-                "$description": "Placeholders and meta: the phosphor ink faded toward the paper, still AA 4.5:1."
+                "$description": "Placeholders and meta: a lighter phosphor ink on paper, still AA 4.5:1."
               }
             },
             "border": {
@@ -397,11 +397,11 @@
               },
               "tertiary": {
                 "$type": "color",
-                "$value": "{a63.text.secondary}",
+                "$value": "{a63.text.accent}",
                 "$extensions": {
-                  "io.atom63.derive": "color-mix(in oklab, {a63.text.secondary} 82%, {a63.surface.page})"
+                  "io.atom63.derive": "color-mix(in oklab, {a63.text.accent} 40%, {surface.dark.10})"
                 },
-                "$description": "Placeholders and meta: the secondary phosphor faded toward the page, still AA 4.5:1."
+                "$description": "Placeholders and meta: a dimmer phosphor than secondary, still AA 4.5:1."
               }
             },
             "border": {

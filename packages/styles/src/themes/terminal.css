@@ -94,8 +94,8 @@
   /* Darker phosphor ink on paper — pure brand-500 fails AA on near-white page. */
   --a63-text-primary: color-mix(in oklch, var(--a63-action-primary) 70%, black);
   --a63-text-secondary: color-mix(in oklch, var(--a63-action-primary) 52%, black);
-  /* Placeholders and meta: the phosphor ink faded toward the paper, still AA 4.5:1. */
-  --a63-text-tertiary: color-mix(in oklab, var(--a63-text-primary) 80%, var(--a63-surface-page));
+  /* Placeholders and meta: a lighter phosphor ink on paper, still AA 4.5:1. */
+  --a63-text-tertiary: color-mix(in oklch, var(--a63-action-primary) 80%, black);
   --a63-border-control: color-mix(
     in oklab,
     var(--a63-action-primary) 26%,
@@ -150,8 +150,8 @@
   --a63-text-primary: color-mix(in oklch, var(--a63-action-primary) 62%, white);
   /* Text mixes read the brand-as-text token; the primary fill is too dark here. */
   --a63-text-secondary: color-mix(in oklab, var(--a63-text-accent) 48%, var(--surface-dark-11));
-  /* Placeholders and meta: the secondary phosphor faded toward the page, still AA 4.5:1. */
-  --a63-text-tertiary: color-mix(in oklab, var(--a63-text-secondary) 82%, var(--a63-surface-page));
+  /* Placeholders and meta: a dimmer phosphor than secondary, still AA 4.5:1. */
+  --a63-text-tertiary: color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10));
   --a63-border-control: color-mix(in oklch, var(--a63-action-primary) 42%, transparent);
   --a63-border-input: color-mix(in oklch, var(--a63-text-accent) 60%, transparent);
   --a63-border-subtle: color-mix(in oklch, var(--a63-action-primary) 22%, transparent);
