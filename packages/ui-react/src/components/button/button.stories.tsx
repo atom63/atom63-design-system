@@ -12,6 +12,7 @@ import { Button, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Bell, Inbox } from 'lucide-react'
+import type { CSSProperties } from 'react'
 import { EnvironmentShell, PreviewCard, ThemeMatrix } from '../story-probes'
 
 const meta = {
@@ -190,6 +191,32 @@ export const Shapes: Story = {
       </div>
     </EnvironmentShell>
   ),
+}
+
+/* shape="round" stays a circle at any size: an 88px play button, larger than
+   the 56px where the soft --radius-full corner stops looking round. */
+export const RoundLarge: Story = {
+  render: () => (
+    <EnvironmentShell>
+      <Button
+        aria-label="Play"
+        shape="round"
+        size="icon-xl"
+        style={{ '--button-height': '88px' } as CSSProperties}
+        variant="primary"
+      >
+        <PlusIcon />
+      </Button>
+    </EnvironmentShell>
+  ),
+  play: ({ canvasElement }) => {
+    const button = canvasElement.querySelector<HTMLElement>('[data-shape="round"]')
+    const width = button?.getBoundingClientRect().width
+    const radius = button && getComputedStyle(button).borderTopLeftRadius
+    if (width !== 88 || radius !== '9999px') {
+      throw new Error(`Expected an 88px button with a 9999px radius, got ${width}px / ${radius}`)
+    }
+  },
 }
 
 export const Sizes: Story = {

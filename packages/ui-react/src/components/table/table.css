@@ -8,8 +8,8 @@
  *
  * Token notes: prod's app-level --theme-row-hover/selected-background /
  * -foreground vars map to canonical DS semantics — row hover to
- * --a63-surface-control-hover, selected row to the brand accent
- * (--a63-action-primary + -foreground). text-muted-foreground ->
+ * --a63-surface-control-hover, selected row to the shared selection tint
+ * (--a63-selected-background + -foreground, as Item uses). text-muted-foreground ->
  * --a63-text-secondary, bg-background -> --a63-surface-page, borders ->
  * --a63-border-subtle.
  */
@@ -87,8 +87,8 @@
   background: var(--a63-surface-control-hover);
 }
 .a63-Table-row[data-state='selected'] {
-  background: var(--a63-action-primary);
-  color: var(--a63-action-primary-foreground);
+  background: var(--a63-selected-background);
+  color: var(--a63-selected-foreground);
 }
 
 /* ── Sizes ─────────────────────────────────────────────────────────────
@@ -155,8 +155,7 @@
   );
 }
 .a63-Table-row[data-state='selected'] > [data-sticky] {
-  background-color: var(--a63-action-primary);
-  background-image: none;
+  background-image: linear-gradient(var(--a63-selected-background), var(--a63-selected-background));
 }
 
 /* ── Footer ────────────────────────────────────────────────────────────── */
@@ -205,11 +204,10 @@
 [data-slot='frame'] .a63-Table-body .a63-Table-row[data-state='selected'] {
   background: transparent;
 }
-/* Cells paint the frame's page surface, so a selected row fills its cells with
-   the selection color that its foreground (--a63-action-primary-foreground) is
-   meant for. */
+/* Cells paint the frame's page surface, so a selected row lays the translucent
+   selection tint over that surface in each cell. */
 [data-slot='frame'] .a63-Table-body .a63-Table-row[data-state='selected'] .a63-Table-cell {
-  background: var(--a63-action-primary);
+  background-image: linear-gradient(var(--a63-selected-background), var(--a63-selected-background));
 }
 [data-slot='frame'] .a63-Table-body .a63-Table-cell {
   border-bottom: 1px solid var(--a63-border-subtle);

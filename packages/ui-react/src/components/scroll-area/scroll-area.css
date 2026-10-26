@@ -109,7 +109,7 @@
 .a63-ScrollArea-thumb {
   position: relative;
   flex: 1;
-  border-radius: var(--radius-full, 9999px);
+  border-radius: var(--radius-pill, 9999px);
   background: var(--a63-border-control);
 }
 

@@ -272,7 +272,7 @@
     transparent
   );
 
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
 }
 
 .a63-InputGroup-addon [data-trigger-slot='input-group-button']:hover {

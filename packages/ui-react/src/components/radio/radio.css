@@ -1,7 +1,7 @@
 /*
  * Radio recipe — the SELECTION archetype's 3rd consumer (after Switch + Checkbox).
  * `.a63-Radio` is the circular box; `.a63-Radio-indicator` fills with the shared
- * --a63-selection-accent and shows a centered dot. Circular (`--radius-full`) with a
+ * --a63-selection-accent and shows a centered dot. Circular (`--radius-pill`) with a
  * dot is the only difference from Checkbox. `.a63-RadioGroup` stacks items.
  * Axis-dependent selection tokens resolve here via var(--a63-selection-X, <semantic>).
  */
@@ -31,7 +31,7 @@
   height: var(--radio-size);
   margin: max(0px, calc((var(--a63-control-min-target) - var(--radio-size)) / 2));
   border: var(--a63-control-border-width) solid var(--radio-border);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background-color: var(--a63-surface-control);
   box-shadow: var(--radio-shadow);
   cursor: pointer;
@@ -70,7 +70,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
 }
 .a63-Radio-indicator[data-unchecked] {
   display: none;
@@ -79,7 +79,7 @@
   content: '';
   width: 0.5rem;
   height: 0.5rem;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background-color: var(--a63-action-primary-foreground);
 }
 

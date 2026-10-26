@@ -17561,7 +17561,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 24
@@ -17627,7 +17627,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -17655,7 +17655,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 24
@@ -17721,7 +17721,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -17749,7 +17749,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 24
@@ -17815,7 +17815,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -17848,7 +17848,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 24
@@ -17920,7 +17920,7 @@
               "alias": "--a63-control-focus-ring-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "outlineOffset": {
               "value": 0
@@ -17951,7 +17951,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 24
@@ -18020,7 +18020,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -18053,7 +18053,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 24
@@ -18122,7 +18122,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -18155,7 +18155,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 28
@@ -18221,7 +18221,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -18249,7 +18249,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 28
@@ -18315,7 +18315,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -18343,7 +18343,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 28
@@ -18409,7 +18409,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -18442,7 +18442,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 28
@@ -18514,7 +18514,7 @@
               "alias": "--a63-control-focus-ring-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "outlineOffset": {
               "value": 0
@@ -18545,7 +18545,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 28
@@ -18614,7 +18614,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -18647,7 +18647,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 28
@@ -18716,7 +18716,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -18749,7 +18749,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 32
@@ -18815,7 +18815,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -18843,7 +18843,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 32
@@ -18909,7 +18909,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -18937,7 +18937,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 32
@@ -19003,7 +19003,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -19036,7 +19036,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 32
@@ -19108,7 +19108,7 @@
               "alias": "--a63-control-focus-ring-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "outlineOffset": {
               "value": 0
@@ -19139,7 +19139,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 32
@@ -19208,7 +19208,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -19241,7 +19241,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 32
@@ -19310,7 +19310,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -19343,7 +19343,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 36
@@ -19409,7 +19409,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -19437,7 +19437,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 36
@@ -19503,7 +19503,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -19531,7 +19531,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 36
@@ -19597,7 +19597,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -19630,7 +19630,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 36
@@ -19702,7 +19702,7 @@
               "alias": "--a63-control-focus-ring-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "outlineOffset": {
               "value": 0
@@ -19733,7 +19733,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 36
@@ -19802,7 +19802,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -19835,7 +19835,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 36
@@ -19904,7 +19904,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -19937,7 +19937,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 40
@@ -20003,7 +20003,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -20031,7 +20031,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 40
@@ -20097,7 +20097,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -20125,7 +20125,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 40
@@ -20191,7 +20191,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -20224,7 +20224,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 40
@@ -20296,7 +20296,7 @@
               "alias": "--a63-control-focus-ring-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "outlineOffset": {
               "value": 0
@@ -20327,7 +20327,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 40
@@ -20396,7 +20396,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -20429,7 +20429,7 @@
               "alias": "--a63-control-border-width"
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             },
             "height": {
               "value": 40
@@ -20498,7 +20498,7 @@
               "value": false
             },
             "cornerRadius": {
-              "alias": "--radius-full"
+              "alias": "--radius-pill"
             }
           }
         }
@@ -32678,7 +32678,7 @@
     "--a63-surface-muted",
     "--a63-text-primary",
     "--a63-text-secondary",
-    "--radius-full",
+    "--radius-pill",
     "--surface-dark-1",
     "--surface-light-1",
     "--typography-base-line-height",

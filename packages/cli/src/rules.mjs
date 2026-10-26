@@ -56,6 +56,11 @@ export const rules = [
     check: 'mode-branch',
   },
   {
+    id: 'as-child-spreads-props',
+    rule: 'A component you pass with `asChild` (or as `render`) must spread the props it receives onto the element it renders and forward its ref.',
+    why: 'The part merges its class, data attributes and ref into that element; a wrapper that drops them renders unstyled.',
+  },
+  {
     id: 'accessible-by-default',
     rule: 'Keep the native semantics components render (buttons, links, labels, dialogs) and give every icon-only control an accessible name.',
     why: 'Every story runs axe in CI; code that removes semantics fails it.',

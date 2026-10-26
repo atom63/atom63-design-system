@@ -51,7 +51,7 @@
   width: var(--carousel-nav-size);
   height: var(--carousel-nav-size);
   border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
-  border-radius: var(--a63-overlay-radius, var(--radius-full, 9999px));
+  border-radius: var(--a63-overlay-radius, var(--radius-pill, 9999px));
   background-color: var(--a63-surface-overlay);
   background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
   background-blend-mode: normal, var(--a63-overlay-texture-blend);
@@ -130,7 +130,7 @@
   width: var(--carousel-nav-size);
   height: var(--carousel-nav-size);
   border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
-  border-radius: var(--a63-overlay-radius, var(--radius-full, 9999px));
+  border-radius: var(--a63-overlay-radius, var(--radius-pill, 9999px));
   background-color: var(--a63-surface-overlay);
   background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
   background-blend-mode: normal, var(--a63-overlay-texture-blend);
@@ -176,7 +176,7 @@
   inset: 50%;
   width: 0.5rem;
   height: 0.5rem;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background-color: color-mix(in oklch, var(--a63-text-secondary) 35%, transparent);
   translate: -50% -50%;
   transition:

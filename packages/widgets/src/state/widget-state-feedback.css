@@ -34,7 +34,7 @@
   inline-size: calc(var(--a63-space-1) * 8);
   block-size: calc(var(--a63-space-1) * 8);
   border: var(--a63-control-border-width) solid var(--a63-border-subtle);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background-color: color-mix(in oklab, var(--a63-surface-page) 70%, transparent);
   box-shadow: var(--shadow-sm);
   color: var(--a63-text-secondary);

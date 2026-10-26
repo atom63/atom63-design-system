@@ -224,7 +224,7 @@ h1 {
   width: 1.625rem;
   aspect-ratio: 1;
   place-items: center;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background: color-mix(in oklch, var(--a63-status-success) 16%, transparent);
   color: var(--a63-status-success);
   font-size: 0.75rem;

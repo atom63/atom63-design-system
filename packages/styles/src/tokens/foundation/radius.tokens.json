@@ -95,6 +95,14 @@
         "io.atom63.derive": "calc({radius.xl} * 2)"
       },
       "$description": "Soft “full” = 2× md (already includes the multiplier). Stays on the same\npersonalization curve as the rest of the scale instead of a fixed 9999px\npill that ignores subtle/none/round wrap."
+    },
+    "pill": {
+      "$type": "dimension",
+      "$value": {
+        "value": 9999,
+        "unit": "px"
+      },
+      "$description": "True pill: a fixed 9999px that makes any box a circle or capsule at any size\nand on every radius axis value. Use it where a component promises a circle\nor pill (round buttons, avatars, switches, radios, dots); use --radius-full\nfor a large corner that follows the radius axis."
     }
   }
 }

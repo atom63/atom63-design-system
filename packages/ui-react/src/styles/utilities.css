@@ -376,7 +376,7 @@
     --surface-light-8: var(--surface-light-8);
     --surface-light-9: var(--surface-light-9);
     --radius-2xs: var(--radius-2xs);
-    --radius-full: var(--radius-full);
+    --radius-pill: var(--radius-pill);
   }
 }
 @layer utilities {
@@ -977,7 +977,7 @@
     border-radius: calc(var(--radius-lg) + 2px);
   }
   .rounded-full {
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-pill);
   }
   .rounded-md {
     border-radius: var(--radius-md);

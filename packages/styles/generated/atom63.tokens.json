@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 1903,
-    "uniqueCssVariables": 1185,
-    "figmaMappedDeclarations": 1841
+    "declarations": 1904,
+    "uniqueCssVariables": 1186,
+    "figmaMappedDeclarations": 1842
   },
   "entries": [
     {
@@ -22160,6 +22160,20 @@
       },
       "lifecycle": "preview",
       "scope": "[data-a63-radius='subtle']"
+    },
+    {
+      "name": "radius-pill",
+      "cssVar": "--radius-pill",
+      "type": "radius",
+      "value": "9999px",
+      "sourceFile": "packages/styles/src/tokens/foundation/radius.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "radius/pill"
+      },
+      "lifecycle": "preview",
+      "scope": ":root"
     },
     {
       "name": "radius-sm",
