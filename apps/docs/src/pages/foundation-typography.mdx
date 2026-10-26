@@ -70,8 +70,8 @@ Text roles name what text is for, after the Apple HIG text styles, so one intent
 
 | Role | Web step | iOS text style |
 |------|----------|----------------|
-| `display-large` | `11xl`, weight 600 | `largeTitle` |
-| `display` | `10xl`, weight 600 | `largeTitle` |
+| `display-large` | `11xl`, weight 600 | 56pt, scaled like `largeTitle` |
+| `display` | `10xl`, weight 600 | 40pt, scaled like `largeTitle` |
 | `large-title` | `6xl` | `largeTitle` |
 | `title-1` | `5xl` | `title` |
 | `title-2` | `3xl` | `title2` |
@@ -84,7 +84,7 @@ Text roles name what text is for, after the Apple HIG text styles, so one intent
 | `caption-1` | `xs` | `caption` |
 | `caption-2` | `2xs` | `caption2` |
 
-`-strong` is the emphasized weight: bold for the display roles, `large-title`, `title-1` and `title-2`, semibold for the rest. The display roles are for balances, prices and hero headlines; iOS has no larger text style, so it draws them as `largeTitle`. For an amount such as `$13.25`, put the whole number in one `text-display tabular-nums` span and wrap the fraction in `amount-fraction`, which sets it at half size and raises it. Web sizes follow web conventions (body is 15px; iOS body is 17pt); the role is what stays the same. Size steps are fine while exploring; settled UI should use roles.
+`-strong` is the emphasized weight: bold for the display roles, `large-title`, `title-1` and `title-2`, semibold for the rest. The display roles are for balances, prices and hero headlines; iOS has no larger text style, so `AtomDisplayRole` draws them at the web size and scales it with Dynamic Type like `largeTitle`. For an amount such as `$13.25`, put the whole number in one `text-display tabular-nums` span and wrap the fraction in `amount-fraction`, which sets it at half size and raises it. On iOS, `AtomAmountText(13.25, currencyCode: "USD", role: .display)` formats the amount for the locale, draws the fraction the same way with monospaced digits and reads as one VoiceOver label; `.atomDisplayFont()` sets a display role on any other text. Web sizes follow web conventions (body is 15px; iOS body is 17pt); the role is what stays the same. Size steps are fine while exploring; settled UI should use roles.
 
 ## Usage guidance
 
