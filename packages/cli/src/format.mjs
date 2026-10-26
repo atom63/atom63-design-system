@@ -91,8 +91,16 @@ function templateDetail(data) {
     `Components: ${list(data.componentsUsed)}`,
     `Blocks: ${list(data.blocksUsed)}`,
     '',
-    ...data.files.flatMap(file => [`// ${file.path}`, file.source.trimEnd(), '']),
-    `Copy it with: ${data.next}`,
+    ...[...data.files, ...data.blockFiles].flatMap(file => [
+      `// ${file.path}`,
+      file.source.trimEnd(),
+      '',
+    ]),
+    'Templates are copy-only: no package ships them. Paste the files above, keeping their',
+    'pages/ and blocks/ folders so the relative imports resolve, or install them with either of:',
+    `  ${data.next}`,
+    `  ${data.registry}`,
+    `They import: ${list(data.packages)}.`,
   ].join('\n')
 }
 

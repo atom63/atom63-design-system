@@ -19,7 +19,9 @@ Private while the interface settles. Status by step:
    `AGENTS.md` embeds it, and `pnpm check:agents-md` fails when it is stale.
 5. **Templates.** The index holds every page and block in `@atom63/templates`, with its source
    files and the components and blocks it uses (derived from its imports). `atom63 template`
-   lists or shows them, `atom63 copy` writes one and the blocks it uses into a project, and
+   lists or shows them (a shown template carries its blocks' files too, since templates are
+   copy-only and ship in no package), `atom63 copy` writes one and the blocks it uses into a
+   project, and
    `atom63 build <idea>` returns a kit: the closest pages and blocks, the components they use,
    the foundation and the rules. `search` finds templates too.
 
@@ -74,4 +76,7 @@ pnpm check:agent-index
 ```
 
 Search quality is pinned by the golden queries in `src/core.test.mjs`. When a query should find a
-component by another word, add it to `src/synonyms.mjs` and to the golden list.
+component by another word, add it to `synonyms` in `src/synonyms.mjs` and to the golden list.
+When it should find a token, docs page, story example or template that no component name leads to
+(`gradient`, `price cents`, `bottom sheet`), add a `topics` entry there instead; its entries
+rank first, in order, with a note that says what to use, and the topic golden list pins them.

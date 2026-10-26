@@ -104,6 +104,11 @@ Four gradient tokens follow the theme, brand and mode, so a hero or banner never
 
 Overlay and on-media controls belong over dark or busy media (photos, video, `--a63-gradient-brand`, the dark zone of the fade), never over a light or faded background.
 
+The gradient tokens hold whole `linear-gradient()` values, so they go in `background-image`
+(`bg-(image:--a63-gradient-brand)` in Tailwind), never in `background-color`. Text over a photo with
+the scrim takes `--a63-on-media-foreground`. For a large amount on a hero, pair a gradient with the
+display text roles on the Typography page.
+
 ## Compatibility
 
 The shadcn vocabulary (`background`, `primary`, `muted-foreground`, …) is an **opt-in adapter** (`@atom63/styles/compat/shadcn` + Tailwind theme keys). It re-references `--a63-*`; it does not own values (mirror rule).

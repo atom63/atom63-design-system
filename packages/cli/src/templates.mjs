@@ -53,6 +53,7 @@ export function template(index, id, { kind } = {}) {
     return { type: 'template.list', data: { templates: templates.map(summaryOf) } }
   }
   const found = findTemplate(index, id)
+  const entries = withBlocks(index, found)
   return {
     type: 'template.detail',
     data: {
@@ -61,6 +62,10 @@ export function template(index, id, { kind } = {}) {
       componentsUsed: found.componentsUsed,
       blocksUsed: found.blocksUsed,
       files: found.files,
+      // Templates ship in no package, so the detail carries every file a paste needs.
+      blockFiles: entries.slice(1).flatMap(entry => entry.files),
+      packages: [...new Set(entries.flatMap(entry => entry.packages))].sort(),
+      registry: `npx shadcn@latest add https://system.atom63.io/r/${found.id}.json`,
       next: `atom63 copy ${found.id} <dir>`,
     },
   }

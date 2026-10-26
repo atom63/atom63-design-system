@@ -13,7 +13,7 @@ import {
   token,
 } from './core.mjs'
 import { formatEnvelope } from './format.mjs'
-import { synonyms } from './synonyms.mjs'
+import { synonyms, topics } from './synonyms.mjs'
 import { build, template } from './templates.mjs'
 
 const index = loadIndex()
@@ -54,6 +54,7 @@ const golden = [
   ['folding nav groups', 'sidebar-nav-tree', 1],
   ['nav tree', 'sidebar-nav-tree', 1],
   ['bottom sheet', 'drawer', 2],
+  ['persistent sheet', 'drawer', 2],
   ['unread badge', 'button', 3],
   ['carousel dots', 'carousel', 1],
   // Synonyms can name tokens, which then join a plain search.
@@ -84,7 +85,79 @@ const templateGolden = [
   ['full window app', 'app-view', 1],
   ['tab bar', 'tab-bar', 1],
   ['bottom navigation', 'tab-bar', 1],
+  ['phone app with tab bar', 'app-view', 2],
+  ['mobile app screen', 'app-view', 1],
 ]
+
+/**
+ * Queries for tokens, docs pages, examples and templates that no component
+ * name carries, through `topics`. Each must rank its expected entry within
+ * the given position of the unfiltered search.
+ */
+const topicGolden = [
+  ['gradient', '--a63-gradient-brand-fade', 1],
+  ['gradient', '--a63-gradient-brand', 2],
+  ['gradient', '--a63-gradient-scrim', 4],
+  ['gradient', 'foundation-colors', 5],
+  ['hero gradient', '--a63-gradient-brand', 2],
+  ['hero', '--a63-type-display-large-font-size', 3],
+  ['fade', '--a63-gradient-brand-fade', 1],
+  ['fade', '--a63-gradient-scrim', 2],
+  ['scrim over photo', '--a63-gradient-scrim', 1],
+  ['display', 'foundation-typography', 1],
+  ['display', '--a63-type-display-font-size', 2],
+  ['large number', 'foundation-typography', 1],
+  ['balance', 'foundation-typography', 1],
+  ['amount fraction', 'foundation-typography', 1],
+  ['price cents', 'foundation-typography', 1],
+  ['currency', 'foundation-typography', 1],
+  ['persistent sheet', 'drawer/PersistentSheet', 1],
+  ['bottom sheet', 'drawer/PersistentSheet', 1],
+  ['non-modal sheet', 'drawer/PersistentSheet', 1],
+  ['drawer over map', 'drawer/PersistentSheet', 1],
+  ['tab bar', 'tab-bar', 1],
+  ['bottom navigation', 'tab-bar', 1],
+  ['bottom nav', 'tab-bar', 1],
+  ['phone app', 'app-view', 1],
+  ['mobile app with tab bar', 'app-view', 2],
+  ['edge to edge phone screen', 'app-view', 1],
+]
+
+describe('topics', () => {
+  for (const [query, expected, within] of topicGolden) {
+    it(`ranks ${expected} within the top ${within} for "${query}"`, () => {
+      const ids = top(query).slice(0, within)
+      assert.ok(ids.includes(expected), `"${query}" → ${top(query).slice(0, 5).join(', ')}`)
+    })
+  }
+
+  it('says what to use from a topic entry', () => {
+    const [first] = search(index, 'price').data.results
+    assert.match(first.summary, /amount-fraction/)
+    assert.equal(first.next, 'atom63 docs foundation-typography')
+  })
+
+  it('respects a kind filter', () => {
+    assert.ok(search(index, 'gradient', { kind: 'doc' }).data.results.every(r => r.kind === 'doc'))
+    assert.equal(top('gradient', { kind: 'token' })[0], '--a63-gradient-brand-fade')
+  })
+
+  it('only points topics at entries that exist', () => {
+    const ids = new Set([
+      ...index.components.map(entry => `component:${entry.slug}`),
+      ...index.templates.map(entry => `template:${entry.id}`),
+      ...index.docs.map(entry => `doc:${entry.slug}`),
+      ...index.tokens.map(entry => `token:${entry.cssVar}`),
+      ...index.components.flatMap(entry =>
+        (entry.stories?.names ?? []).map(story => `example:${entry.slug}/${story}`)
+      ),
+    ])
+    for (const [key, entries] of Object.entries(topics)) {
+      assert.match(key, /^[a-z0-9]+( [a-z0-9]+)*$/, `"${key}" is not normalized`)
+      for (const { id } of entries) assert.ok(ids.has(id), `${key} → ${id}`)
+    }
+  })
+})
 
 describe('templates', () => {
   for (const [query, expected, within] of templateGolden) {
@@ -104,6 +177,17 @@ describe('templates', () => {
     assert.ok(listPage.componentsUsed.includes('dropdown-menu'))
     assert.ok(listPage.blocksUsed.includes('data-table-section'))
     assert.ok(listPage.files.every(file => !file.path.includes('.stories.')))
+  })
+
+  it('carries the files of the blocks a template uses, so it can be pasted without copy', () => {
+    const appView = template(index, 'app-view').data
+    assert.ok(appView.blockFiles.some(file => file.path === 'blocks/tab-bar/tab-bar.tsx'))
+    assert.ok(appView.packages.includes('@atom63/ui-react'))
+    assert.match(appView.files[0].source, /layout\?: 'phone' \| 'window'/)
+    const text = formatEnvelope(template(index, 'app-view'))
+    assert.match(text, /^\/\/ blocks\/tab-bar\/tab-bar\.tsx$/m)
+    assert.match(text, /copy-only/)
+    assert.match(text, /shadcn@latest add https:\/\/system\.atom63\.io\/r\/app-view\.json/)
   })
 
   it('returns the playbook for build with no idea', () => {
