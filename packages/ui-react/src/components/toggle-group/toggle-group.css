@@ -96,7 +96,7 @@
 }
 .a63-ToggleGroup[data-variant='pills'] .a63-Toggle.a63-Toggle {
   border-width: var(--a63-control-border-width);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   border-color: var(--a63-border-control);
   background-color: var(--a63-surface-muted);
   background-image: none;

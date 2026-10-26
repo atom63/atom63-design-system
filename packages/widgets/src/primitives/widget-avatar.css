@@ -55,7 +55,7 @@
 .a63-WidgetAvatar-busyRing {
   position: absolute;
   inset: 0;
-  border-radius: var(--a63-avatar-radius, var(--radius-full));
+  border-radius: var(--a63-avatar-radius, var(--radius-pill));
   box-shadow:
     0 0 0 2px var(--a63-surface-page),
     0 0 0 4px color-mix(in oklab, var(--a63-action-primary) 60%, transparent);
@@ -77,7 +77,7 @@
   margin: 0;
   padding: 0;
   border: 0;
-  border-radius: var(--a63-avatar-radius, var(--radius-full));
+  border-radius: var(--a63-avatar-radius, var(--radius-pill));
   background-color: transparent;
   background-image: linear-gradient(
     to top,
@@ -130,7 +130,7 @@
   inline-size: var(--widget-avatar-dot);
   block-size: var(--widget-avatar-dot);
   border: 2px solid var(--a63-surface-panel);
-  border-radius: var(--a63-avatar-radius, var(--radius-full));
+  border-radius: var(--a63-avatar-radius, var(--radius-pill));
   background-color: var(--a63-status-success);
   box-shadow: var(--shadow-sm);
 }

@@ -111,7 +111,7 @@
   pointer-events: auto;
   /* Round the control into a circle (its icon-lg size already picks up the
      shape-fitting Aqua gloss from button.css). */
-  border-radius: var(--a63-overlay-radius, var(--radius-full, 9999px));
+  border-radius: var(--a63-overlay-radius, var(--radius-pill, 9999px));
   /* Frosted-glass SURFACE (macOS/Aqua vibrancy). The plain `secondary` chip
      blended because it was translucent WITHOUT enough blur/edge to define it;
      this earns its figure/ground: blur+saturate frosts busy content behind it
