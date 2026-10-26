@@ -171,7 +171,11 @@ export const topics = {
   'ios tab bar': [iosTabBar],
   'swiftui tab bar': [iosTabBar],
   'edge to edge': phoneApp,
+  iphone: phoneApp,
   'mobile app': phoneApp,
+  'mobile screen': phoneApp,
+  'mobile web': phoneApp,
+  'on a phone': phoneApp,
   'phone app': phoneApp,
   'phone screen': phoneApp,
 }
