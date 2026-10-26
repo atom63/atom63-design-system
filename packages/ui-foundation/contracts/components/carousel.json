@@ -31,5 +31,29 @@
     "visualArchetypes": {
       "$ref": "#/lists/visualArchetypes"
     }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "pageDots",
+    "reactRenderer": "CarouselDots",
+    "swiftUIRenderer": "TabView(.page) / AtomPageDots",
+    "intent": "Show which slide of a paged carousel is current, and go to a slide by choosing its dot.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["rest"],
+    "sharedOutcomes": [
+      "one-dot-per-slide",
+      "current-slide-is-marked",
+      "choosing-a-dot-shows-its-slide"
+    ],
+    "accessibilityOutcomes": ["names-the-indicator", "exposes-the-current-position"],
+    "platformAdaptations": {
+      "react": [
+        "One button per snap point, named \"Slide 2 of 5\"; the current one carries aria-current."
+      ],
+      "swiftUI": [
+        "TabView with .page(indexDisplayMode: .never) pages the slides; AtomPageDots binds to its selection.",
+        "VoiceOver reads the dots as one adjustable element; swiping up or down changes the slide."
+      ]
+    }
   }
 }

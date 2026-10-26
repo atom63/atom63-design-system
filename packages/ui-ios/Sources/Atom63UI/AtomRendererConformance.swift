@@ -410,6 +410,33 @@ public enum AtomRendererConformance {
       ],
       verifiesMotionRecipe: true
     ),
+    AtomRendererConformanceEvidence(
+      contractId: "item",
+      implementedStates: ["rest"],
+      verifiedSharedOutcomes: [
+        "rows-keep-reading-order",
+        "dividers-are-decorative",
+      ],
+      verifiedAccessibilityOutcomes: [
+        "preserves-row-order",
+        "hides-dividers-from-assistive-technology",
+      ],
+      verifiesMotionRecipe: false
+    ),
+    AtomRendererConformanceEvidence(
+      contractId: "carousel",
+      implementedStates: ["rest"],
+      verifiedSharedOutcomes: [
+        "one-dot-per-slide",
+        "current-slide-is-marked",
+        "choosing-a-dot-shows-its-slide",
+      ],
+      verifiedAccessibilityOutcomes: [
+        "names-the-indicator",
+        "exposes-the-current-position",
+      ],
+      verifiesMotionRecipe: false
+    ),
   ]
 
   public static func evidence(contractId: String) -> AtomRendererConformanceEvidence? {

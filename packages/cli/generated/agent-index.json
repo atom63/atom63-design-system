@@ -5515,7 +5515,8 @@
        "The square shape and the ring are web-only for now."
       ],
       "swiftUI": [
-       "Uses native image decoding and SwiftUI loading phases."
+       "Uses native image decoding and SwiftUI loading phases.",
+       "AtomAvatar(badge:) pins a status dot (.dot) or a count (.count) to the corner, read after the name."
       ]
      },
      "requiredStates": [
@@ -5573,7 +5574,7 @@
    ],
    "importPath": "@atom63/ui-react",
    "label": "Avatar",
-   "markdown": "# Avatar\n\nAvatar composes an image, fallback, badge, and grouped identity presentation.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Provide meaningful image alternative text and a stable fallback for failed or missing media.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Avatar, AvatarImage, AvatarFallback } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Avatar`, `AvatarBadge`, `AvatarFallback`, `AvatarGroup`, `AvatarGroupCount`, `AvatarImage`, `AvatarPrimitive`\n\n**Types:** `AvatarProps`, `AvatarSize`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/avatar.json` (`avatarContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `compositions` | `standalone`, `badge`, `group` | — |\n| `shapes` | `circle`, `square` | `circle` |\n| `sizes` | `xs`, `sm`, `default`, `lg` | `default` |\n\n**Slots:** `avatar`, `avatar-image`, `avatar-fallback`, `avatar-badge`, `avatar-group`, `avatar-group-count`\n\n**States:** `loading`, `loaded`, `fallback`\n\n**Visual archetype:** Markers and keycaps — Compact presentational labels, statuses, and keyboard hints.\n\n### Web and iOS\n\nRepresent a person or entity with an image and identity-preserving fallback. Rendered by `AtomAvatar` in SwiftUI, with `strict` parity.\n\n**Required states:** `loading`, `loaded`, `fallback`\n\n**Shared outcomes:**\n\n- Accessible name is preserved\n- Fallback preserves identity\n- Loading does not expose empty image\n\n**Accessibility outcomes:**\n\n- Exposes accessible name\n- Fallback preserves identity\n\n**Platform adaptations:**\n\n- React: Uses browser image loading and DOM fallback composition.\n- React: The square shape and the ring are web-only for now.\n- SwiftUI: Uses native image decoding and SwiftUI loading phases.\n\n## Related components\n\n- [Badge](/components/component-badge)\n- [Item](/components/component-item)\n",
+   "markdown": "# Avatar\n\nAvatar composes an image, fallback, badge, and grouped identity presentation.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Provide meaningful image alternative text and a stable fallback for failed or missing media.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Avatar, AvatarImage, AvatarFallback } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Avatar`, `AvatarBadge`, `AvatarFallback`, `AvatarGroup`, `AvatarGroupCount`, `AvatarImage`, `AvatarPrimitive`\n\n**Types:** `AvatarProps`, `AvatarSize`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/avatar.json` (`avatarContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `compositions` | `standalone`, `badge`, `group` | — |\n| `shapes` | `circle`, `square` | `circle` |\n| `sizes` | `xs`, `sm`, `default`, `lg` | `default` |\n\n**Slots:** `avatar`, `avatar-image`, `avatar-fallback`, `avatar-badge`, `avatar-group`, `avatar-group-count`\n\n**States:** `loading`, `loaded`, `fallback`\n\n**Visual archetype:** Markers and keycaps — Compact presentational labels, statuses, and keyboard hints.\n\n### Web and iOS\n\nRepresent a person or entity with an image and identity-preserving fallback. Rendered by `AtomAvatar` in SwiftUI, with `strict` parity.\n\n**Required states:** `loading`, `loaded`, `fallback`\n\n**Shared outcomes:**\n\n- Accessible name is preserved\n- Fallback preserves identity\n- Loading does not expose empty image\n\n**Accessibility outcomes:**\n\n- Exposes accessible name\n- Fallback preserves identity\n\n**Platform adaptations:**\n\n- React: Uses browser image loading and DOM fallback composition.\n- React: The square shape and the ring are web-only for now.\n- SwiftUI: Uses native image decoding and SwiftUI loading phases.\n- SwiftUI: AtomAvatar(badge:) pins a status dot (.dot) or a count (.count) to the corner, read after the name.\n\n## Related components\n\n- [Badge](/components/component-badge)\n- [Item](/components/component-item)\n",
    "related": [
     "badge",
     "item"
@@ -5991,6 +5992,32 @@
       "default": "horizontal"
      }
     ],
+    "crossRenderer": {
+     "accessibilityOutcomes": [
+      "names-the-indicator",
+      "exposes-the-current-position"
+     ],
+     "intent": "Show which slide of a paged carousel is current, and go to a slide by choosing its dot.",
+     "parity": "platform-adaptive",
+     "platformAdaptations": {
+      "react": [
+       "One button per snap point, named \"Slide 2 of 5\"; the current one carries aria-current."
+      ],
+      "swiftUI": [
+       "TabView with .page(indexDisplayMode: .never) pages the slides; AtomPageDots binds to its selection.",
+       "VoiceOver reads the dots as one adjustable element; swiping up or down changes the slide."
+      ]
+     },
+     "requiredStates": [
+      "rest"
+     ],
+     "sharedOutcomes": [
+      "one-dot-per-slide",
+      "current-slide-is-marked",
+      "choosing-a-dot-shows-its-slide"
+     ],
+     "swiftUIRenderer": "TabView(.page) / AtomPageDots"
+    },
     "exportName": "carouselContract",
     "slots": [
      "carousel",
@@ -6043,7 +6070,7 @@
    ],
    "importPath": "@atom63/ui-react",
    "label": "Carousel",
-   "markdown": "# Carousel\n\nCarousel coordinates an Embla viewport, slides, controls, and shared carousel state.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Use stable slide labels and keep essential content reachable without relying on drag alone.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Carousel`, `CarouselContent`, `CarouselDots`, `CarouselItem`, `CarouselNext`, `CarouselPrevious`, `useCarousel`\n\n**Types:** `CarouselApi`, `CarouselContextProps`, `CarouselDotsProps`, `CarouselOptions`, `CarouselPlugin`, `CarouselProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/carousel.json` (`carouselContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `orientations` | `horizontal`, `vertical` | `horizontal` |\n\n**Slots:** `carousel`, `carousel-content`, `carousel-item`, `carousel-previous`, `carousel-next`, `carousel-cursor`, `carousel-dots`, `carousel-dot`\n\n**States:** `rest`, `hover`, `focus-visible`, `disabled`, `cursor-active`, `can-scroll`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.; Overlay surfaces — Floating material above the page or current surface.; Action controls — Momentary controls that perform an action now.\n\n## Related components\n\n- [Scrollable List](/components/component-scrollable-list)\n- [Scroll Area](/components/component-scroll-area)\n- [Button](/components/component-button)\n",
+   "markdown": "# Carousel\n\nCarousel coordinates an Embla viewport, slides, controls, and shared carousel state.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Use stable slide labels and keep essential content reachable without relying on drag alone.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Carousel`, `CarouselContent`, `CarouselDots`, `CarouselItem`, `CarouselNext`, `CarouselPrevious`, `useCarousel`\n\n**Types:** `CarouselApi`, `CarouselContextProps`, `CarouselDotsProps`, `CarouselOptions`, `CarouselPlugin`, `CarouselProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/carousel.json` (`carouselContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `orientations` | `horizontal`, `vertical` | `horizontal` |\n\n**Slots:** `carousel`, `carousel-content`, `carousel-item`, `carousel-previous`, `carousel-next`, `carousel-cursor`, `carousel-dots`, `carousel-dot`\n\n**States:** `rest`, `hover`, `focus-visible`, `disabled`, `cursor-active`, `can-scroll`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.; Overlay surfaces — Floating material above the page or current surface.; Action controls — Momentary controls that perform an action now.\n\n### Web and iOS\n\nShow which slide of a paged carousel is current, and go to a slide by choosing its dot. Rendered by `TabView(.page) / AtomPageDots` in SwiftUI, with `platform-adaptive` parity.\n\n**Required states:** `rest`\n\n**Shared outcomes:**\n\n- One dot per slide\n- Current slide is marked\n- Choosing a dot shows its slide\n\n**Accessibility outcomes:**\n\n- Names the indicator\n- Exposes the current position\n\n**Platform adaptations:**\n\n- React: One button per snap point, named \"Slide 2 of 5\"; the current one carries aria-current.\n- SwiftUI: TabView with .page(indexDisplayMode: .never) pages the slides; AtomPageDots binds to its selection.\n- SwiftUI: VoiceOver reads the dots as one adjustable element; swiping up or down changes the slide.\n\n## Related components\n\n- [Scrollable List](/components/component-scrollable-list)\n- [Scroll Area](/components/component-scroll-area)\n- [Button](/components/component-button)\n",
    "related": [
     "scrollable-list",
     "scroll-area",
@@ -6667,6 +6694,33 @@
       "default": "default"
      }
     ],
+    "crossRenderer": {
+     "accessibilityOutcomes": [
+      "preserves-row-order",
+      "hides-dividers-from-assistive-technology"
+     ],
+     "intent": "Group related rows on one inset surface with a divider between rows, as in a grouped settings list.",
+     "parity": "platform-adaptive",
+     "platformAdaptations": {
+      "react": [
+       "ItemGroup variant=\"inset\" draws the group; a heading above it and a note below it belong to the page.",
+       "A row that navigates is an Item rendered as a link, with its value in bold and a chevron in ItemActions."
+      ],
+      "swiftUI": [
+       "AtomListSection draws the group inside a ScrollView and takes an optional header and footer; inside a List or Form, the native Section draws it.",
+       "AtomValueRow(_:value:emphasizesValue:showsDisclosure:) is the label, value and chevron row.",
+       "Rows pad themselves with atomListRowInsets() inside their tap area, so a NavigationLink or Button row is tappable edge to edge; Atom63 rows do it already, and a custom row takes the modifier inside its label."
+      ]
+     },
+     "requiredStates": [
+      "rest"
+     ],
+     "sharedOutcomes": [
+      "rows-keep-reading-order",
+      "dividers-are-decorative"
+     ],
+     "swiftUIRenderer": "AtomListSection"
+    },
     "exportName": "itemContract",
     "slots": [
      "item-group",
@@ -6721,7 +6775,7 @@
    ],
    "importPath": "@atom63/ui-react",
    "label": "Item",
-   "markdown": "# Item\n\nItem provides structured row regions for media, content, actions, and supporting detail.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Keep the row hierarchy predictable and avoid nesting unrelated actions inside a row-level link.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Item, ItemContent, ItemTitle, ItemActions } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Item`, `ItemActions`, `ItemContent`, `ItemDescription`, `ItemFooter`, `ItemGroup`, `ItemHeader`, `ItemMedia`, `ItemSeparator`, `ItemTitle`\n\n**Types:** `ItemGroupProps`, `ItemMediaProps`, `ItemProps`, `ItemSeparatorProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/item.json` (`itemContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `variants` | `default`, `outline`, `muted` | `default` |\n| `sizes` | `default`, `sm`, `xs` | `default` |\n| `mediaVariants` | `default`, `icon`, `image` | `default` |\n| `groupVariants` | `default`, `inset` | `default` |\n\n**Slots:** `item-group`, `item`, `item-media`, `item-content`, `item-title`, `item-description`, `item-actions`, `item-header`, `item-footer`, `item-separator`\n\n**States:** `rest`, `hover`, `focus`, `selected`, `current`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.\n\n## Related components\n\n- [Card](/components/component-card)\n- [Separator](/components/component-separator)\n- [Avatar](/components/component-avatar)\n",
+   "markdown": "# Item\n\nItem provides structured row regions for media, content, actions, and supporting detail.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Keep the row hierarchy predictable and avoid nesting unrelated actions inside a row-level link.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Item, ItemContent, ItemTitle, ItemActions } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Item`, `ItemActions`, `ItemContent`, `ItemDescription`, `ItemFooter`, `ItemGroup`, `ItemHeader`, `ItemMedia`, `ItemSeparator`, `ItemTitle`\n\n**Types:** `ItemGroupProps`, `ItemMediaProps`, `ItemProps`, `ItemSeparatorProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/item.json` (`itemContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `variants` | `default`, `outline`, `muted` | `default` |\n| `sizes` | `default`, `sm`, `xs` | `default` |\n| `mediaVariants` | `default`, `icon`, `image` | `default` |\n| `groupVariants` | `default`, `inset` | `default` |\n\n**Slots:** `item-group`, `item`, `item-media`, `item-content`, `item-title`, `item-description`, `item-actions`, `item-header`, `item-footer`, `item-separator`\n\n**States:** `rest`, `hover`, `focus`, `selected`, `current`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.\n\n### Web and iOS\n\nGroup related rows on one inset surface with a divider between rows, as in a grouped settings list. Rendered by `AtomListSection` in SwiftUI, with `platform-adaptive` parity.\n\n**Required states:** `rest`\n\n**Shared outcomes:**\n\n- Rows keep reading order\n- Dividers are decorative\n\n**Accessibility outcomes:**\n\n- Preserves row order\n- Hides dividers from assistive technology\n\n**Platform adaptations:**\n\n- React: ItemGroup variant=\"inset\" draws the group; a heading above it and a note below it belong to the page.\n- React: A row that navigates is an Item rendered as a link, with its value in bold and a chevron in ItemActions.\n- SwiftUI: AtomListSection draws the group inside a ScrollView and takes an optional header and footer; inside a List or Form, the native Section draws it.\n- SwiftUI: AtomValueRow(_:value:emphasizesValue:showsDisclosure:) is the label, value and chevron row.\n- SwiftUI: Rows pad themselves with atomListRowInsets() inside their tap area, so a NavigationLink or Button row is tappable edge to edge; Atom63 rows do it already, and a custom row takes the modifier inside its label.\n\n## Related components\n\n- [Card](/components/component-card)\n- [Separator](/components/component-separator)\n- [Avatar](/components/component-avatar)\n",
    "related": [
     "card",
     "separator",

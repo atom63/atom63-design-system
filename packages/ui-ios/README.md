@@ -31,6 +31,8 @@ The package targets iOS 17+ and macOS 14+.
 - `AtomCard`
 - `AtomListRow`
 - `AtomValueRow`
+- `AtomListSection`
+- `AtomPageDots`
 - `AtomSelectionRow`
 - `AtomSectionHeader`
 - `AtomChip`

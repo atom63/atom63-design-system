@@ -61,6 +61,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
   case widgetCard
   case listRow
   case valueRow
+  case listSection
+  case pageDots
   case selectionRow
   case disclosureGroup
   case sectionHeader
@@ -90,9 +92,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .formField, .textField, .textEditor, .toggle, .picker, .search, .segmentedControl,
       .radioGroup, .slider, .datePicker, .formMessage:
       .forms
-    case .card, .widgetCard, .listRow, .valueRow, .selectionRow, .disclosureGroup, .sectionHeader,
-      .chip, .badge,
-      .avatar, .asyncImage:
+    case .card, .widgetCard, .listRow, .valueRow, .listSection, .pageDots, .selectionRow,
+      .disclosureGroup, .sectionHeader, .chip, .badge, .avatar, .asyncImage:
       .content
     case .contentState, .notice, .progress, .skeleton, .syncStatus, .pagination, .toast, .inform:
       .feedback
@@ -126,6 +127,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .widgetCard: "Widget card"
     case .listRow: "List row"
     case .valueRow: "Value row"
+    case .listSection: "List section"
+    case .pageDots: "Page dots"
     case .selectionRow: "Selection row"
     case .disclosureGroup: "Disclosure group"
     case .sectionHeader: "Section header"
@@ -171,6 +174,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .widgetCard: "square.grid.2x2"
     case .listRow: "list.bullet.rectangle"
     case .valueRow: "equal"
+    case .listSection: "list.bullet.rectangle.portrait"
+    case .pageDots: "ellipsis"
     case .selectionRow: "checkmark.circle"
     case .disclosureGroup: "chevron.down.circle"
     case .sectionHeader: "textformat.size"
@@ -240,7 +245,11 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .listRow:
       "Reusable row anatomy with icon, supporting text, badge, and disclosure."
     case .valueRow:
-      "Read-only label and value presentation that reflows for Dynamic Type."
+      "A label and its value, optionally emphasized and with a chevron, that reflows for Dynamic Type."
+    case .listSection:
+      "A grouped inset list: rows on one rounded panel with dividers, a header, and a footer."
+    case .pageDots:
+      "A carousel page indicator: one dot per page, the current one a pill, adjustable with VoiceOver."
     case .selectionRow:
       "A native button row expressing single-choice selected intent."
     case .disclosureGroup:
@@ -301,6 +310,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .widgetCard: "AtomWidgetCard"
     case .listRow: "AtomListRow"
     case .valueRow: "AtomValueRow"
+    case .listSection: "AtomListSection"
+    case .pageDots: "AtomPageDots"
     case .selectionRow: "AtomSelectionRow"
     case .disclosureGroup: "DisclosureGroup"
     case .sectionHeader: "AtomSectionHeader"
@@ -370,7 +381,11 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .listRow:
       "AtomListRow(\n  title: \"Mobile design system\",\n  subtitle: \"Native SwiftUI renderer\",\n  systemImage: \"iphone\",\n  badge: \"Active\",\n  badgeTone: .success\n)"
     case .valueRow:
-      "AtomValueRow(\"Runtime\", value: \"Native\", systemImage: \"swift\")"
+      "AtomValueRow(\"Currency\", value: \"USD\", showsDisclosure: true)"
+    case .listSection:
+      "AtomListSection(\"General\", footer: \"Applies to every device.\") {\n  AtomValueRow(\"Currency\", value: \"USD\", showsDisclosure: true)\n  AtomToggle(\"Notifications\", isOn: $notifications)\n}"
+    case .pageDots:
+      "TabView(selection: $page) {\n  ForEach(slides.indices, id: \\.self) { SlideView(slides[$0]).tag($0) }\n}\n.tabViewStyle(.page(indexDisplayMode: .never))\nAtomPageDots(count: slides.count, selection: $page)"
     case .selectionRow:
       "AtomSelectionRow(\"Native SwiftUI\", isSelected: selected) {\n  selected = true\n}"
     case .disclosureGroup:
@@ -382,7 +397,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .badge:
       "AtomBadge(\"Synchronized\", tone: .success)"
     case .avatar:
-      "AtomAvatar(name: \"You Zhang\", imageURL: profileURL)"
+      "AtomAvatar(\n  name: \"You Zhang\",\n  imageURL: profileURL,\n  badge: .dot(accessibilityLabel: \"Online\")\n)"
     case .asyncImage:
       "AtomAsyncImage(\n  url: imageURL,\n  accessibilityLabel: \"Design workspace\"\n)"
     case .contentState:

@@ -404,7 +404,7 @@ public enum AtomComponentContracts {
       sharedOutcomes: ["accessible-name-is-preserved", "fallback-preserves-identity", "loading-does-not-expose-empty-image"],
       accessibilityOutcomes: ["exposes-accessible-name", "fallback-preserves-identity"],
       motion: nil,
-      platformAdaptations: AtomPlatformAdaptations(react: ["Uses browser image loading and DOM fallback composition.", "The square shape and the ring are web-only for now."], swiftUI: ["Uses native image decoding and SwiftUI loading phases."])
+      platformAdaptations: AtomPlatformAdaptations(react: ["Uses browser image loading and DOM fallback composition.", "The square shape and the ring are web-only for now."], swiftUI: ["Uses native image decoding and SwiftUI loading phases.", "AtomAvatar(badge:) pins a status dot (.dot) or a count (.count) to the corner, read after the name."])
     ),
     AtomComponentContract(
       id: "empty",
@@ -507,6 +507,38 @@ public enum AtomComponentContracts {
       accessibilityOutcomes: ["announces-message", "does-not-trap-focus"],
       motion: AtomMotionContract(kind: "toast-enter-exit", durationToken: "motion-standard", easing: "ease-out", direction: "block-start", reducedMotion: "none"),
       platformAdaptations: AtomPlatformAdaptations(react: ["Portal placement follows the viewport and DOM stacking context."], swiftUI: ["Overlay placement follows safe areas and native transition composition."])
+    ),
+    AtomComponentContract(
+      id: "item",
+      foundationContract: "item",
+      foundationAxis: "states",
+      catalogItem: "listSection",
+      reactRenderer: "ItemGroup",
+      swiftUIRenderer: "AtomListSection",
+      intent: "Group related rows on one inset surface with a divider between rows, as in a grouped settings list.",
+      parity: .platformAdaptive,
+      requiredStates: ["rest"],
+      stateTones: [:],
+      sharedOutcomes: ["rows-keep-reading-order", "dividers-are-decorative"],
+      accessibilityOutcomes: ["preserves-row-order", "hides-dividers-from-assistive-technology"],
+      motion: nil,
+      platformAdaptations: AtomPlatformAdaptations(react: ["ItemGroup variant=\"inset\" draws the group; a heading above it and a note below it belong to the page.", "A row that navigates is an Item rendered as a link, with its value in bold and a chevron in ItemActions."], swiftUI: ["AtomListSection draws the group inside a ScrollView and takes an optional header and footer; inside a List or Form, the native Section draws it.", "AtomValueRow(_:value:emphasizesValue:showsDisclosure:) is the label, value and chevron row.", "Rows pad themselves with atomListRowInsets() inside their tap area, so a NavigationLink or Button row is tappable edge to edge; Atom63 rows do it already, and a custom row takes the modifier inside its label."])
+    ),
+    AtomComponentContract(
+      id: "carousel",
+      foundationContract: "carousel",
+      foundationAxis: "states",
+      catalogItem: "pageDots",
+      reactRenderer: "CarouselDots",
+      swiftUIRenderer: "TabView(.page) / AtomPageDots",
+      intent: "Show which slide of a paged carousel is current, and go to a slide by choosing its dot.",
+      parity: .platformAdaptive,
+      requiredStates: ["rest"],
+      stateTones: [:],
+      sharedOutcomes: ["one-dot-per-slide", "current-slide-is-marked", "choosing-a-dot-shows-its-slide"],
+      accessibilityOutcomes: ["names-the-indicator", "exposes-the-current-position"],
+      motion: nil,
+      platformAdaptations: AtomPlatformAdaptations(react: ["One button per snap point, named \"Slide 2 of 5\"; the current one carries aria-current."], swiftUI: ["TabView with .page(indexDisplayMode: .never) pages the slides; AtomPageDots binds to its selection.", "VoiceOver reads the dots as one adjustable element; swiping up or down changes the slide."])
     )
   ]
 

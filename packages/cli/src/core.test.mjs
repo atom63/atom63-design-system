@@ -128,6 +128,19 @@ const topicGolden = [
   ['phone app', 'app-view', 1],
   ['mobile app with tab bar', 'app-view', 2],
   ['edge to edge phone screen', 'app-view', 1],
+  ['grouped list ios', 'item', 1],
+  ['grouped list ios', 'item/InsetGroup', 2],
+  ['inset list section', 'item', 1],
+  ['value row with chevron', 'item', 1],
+  ['page dots', 'carousel', 1],
+  ['page indicator', 'carousel/WithDots', 2],
+  ['avatar badge', 'avatar', 1],
+  ['avatar badge', 'avatar/WithBadge', 2],
+  ['online status dot', 'avatar', 1],
+  ['instagram feed mobile web', 'app-view', 1],
+  ['iphone home screen', 'app-view', 1],
+  ['bank home on a phone', 'app-view', 1],
+  ['headspace mobile screen', 'app-view', 1],
 ]
 
 describe('topics', () => {
@@ -142,6 +155,12 @@ describe('topics', () => {
     const [first] = search(index, 'price').data.results
     assert.match(first.summary, /amount-fraction/)
     assert.equal(first.next, 'atom63 docs foundation-typography')
+  })
+
+  it('names the iOS renderer for the list, dots and avatar badge topics', () => {
+    assert.match(search(index, 'grouped list ios').data.results[0].summary, /AtomListSection/)
+    assert.match(search(index, 'page dots').data.results[0].summary, /AtomPageDots/)
+    assert.match(search(index, 'avatar badge').data.results[0].summary, /AtomAvatar\(name:badge:/)
   })
 
   it('names the Swift display amount API', () => {
@@ -204,6 +223,51 @@ describe('templates', () => {
     assert.match(text, /^\/\/ blocks\/tab-bar\/tab-bar\.tsx$/m)
     assert.match(text, /copy-only/)
     assert.match(text, /shadcn@latest add https:\/\/system\.atom63\.io\/r\/app-view\.json/)
+  })
+
+  /* How builders describe a phone screen; the kit must lead with AppView layout="phone". */
+  const phoneIdeas = [
+    'Revolut home screen on a phone: balance, accounts, recent transactions, bottom tab bar',
+    'Instagram feed mobile web',
+    'Headspace mobile home',
+    'home screen of a consumer banking phone app',
+    'mobile web page for a 390 px wide viewport: photo feed with stories',
+    'iPhone chat thread screen',
+    'food delivery store menu on a phone',
+    'Duolingo lesson path, 390px',
+    'ride hailing choose a ride screen, mobile',
+    'Spotify mobile home with tab bar',
+  ]
+  for (const idea of phoneIdeas) {
+    it(`leads the kit for "${idea}" with AppView layout="phone"`, () => {
+      const kit = build(index, idea).data
+      assert.equal(kit.pages[0].id, 'app-view')
+      assert.equal(kit.blocks[0].id, 'tab-bar')
+      assert.match(kit.phone.use, /AppView layout="phone"/)
+      assert.match(kit.phone.snippet, /layout="phone"/)
+      assert.match(formatEnvelope(build(index, idea)), /^## Phone screen$/m)
+    })
+  }
+
+  it('keeps the phone section out of desktop and SwiftUI ideas', () => {
+    for (const idea of ['billing settings page', 'music player', 'SwiftUI iPhone settings']) {
+      assert.equal(build(index, idea).data.phone, undefined, idea)
+    }
+  })
+
+  it('points the phone section at props and a sample the app-view template has', () => {
+    const { phone } = build(index, 'phone app').data
+    const source = template(index, 'app-view').data.files[0].source
+    assert.match(source, /export function AppViewPhonePage/)
+    assert.match(source, /<AppView[\s\S]*?layout="phone"/)
+    for (const prop of ['layout', 'tabBar', 'bottomBar', 'topBar']) {
+      assert.match(source, new RegExp(`${prop}\\?:`), prop)
+    }
+    const { files, blockFiles } = template(index, 'app-view').data
+    const paths = [...files, ...blockFiles].map(entry => entry.path)
+    for (const [, file] of phone.imports.join('\n').matchAll(/'\.\/(.+)'/g)) {
+      assert.ok(paths.includes(`${file}.tsx`), file)
+    }
   })
 
   it('returns the playbook for build with no idea', () => {
