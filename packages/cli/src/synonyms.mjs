@@ -142,6 +142,42 @@ const phoneApp = [
   { id: 'template:tab-bar' },
 ]
 
+const groupedList = [
+  {
+    id: 'component:item',
+    note: 'Grouped inset list (settings): web <ItemGroup variant="inset">; iOS AtomListSection(header, footer:) { AtomValueRow(…, showsDisclosure: true) }.',
+  },
+  {
+    id: 'example:item/InsetGroup',
+    note: 'An inset group of label, bold value and chevron rows (iOS: AtomValueRow(emphasizesValue:showsDisclosure:)).',
+  },
+  { id: 'template:settings-page' },
+]
+
+const valueRow = [
+  {
+    id: 'component:item',
+    note: 'A label with a trailing value and a chevron: web Item with ItemActions; iOS AtomValueRow(_:value:emphasizesValue:showsDisclosure:).',
+  },
+  { id: 'example:item/InsetGroup' },
+]
+
+const pageDots = [
+  {
+    id: 'component:carousel',
+    note: 'Page dots: web <CarouselDots /> inside Carousel; iOS AtomPageDots(count:selection:) under a TabView with .page(indexDisplayMode: .never).',
+  },
+  { id: 'example:carousel/WithDots' },
+]
+
+const avatarBadge = [
+  {
+    id: 'component:avatar',
+    note: 'A status dot or count on an avatar: web <AvatarBadge /> inside Avatar; iOS AtomAvatar(name:badge: .dot(accessibilityLabel:) or .count(_:accessibilityLabel:)).',
+  },
+  { id: 'example:avatar/WithBadge' },
+]
+
 export const topics = {
   amount: displayType,
   balance: displayType,
@@ -171,7 +207,27 @@ export const topics = {
   'ios tab bar': [iosTabBar],
   'swiftui tab bar': [iosTabBar],
   'edge to edge': phoneApp,
+  iphone: phoneApp,
   'mobile app': phoneApp,
+  'mobile screen': phoneApp,
+  'mobile web': phoneApp,
+  'on a phone': phoneApp,
   'phone app': phoneApp,
   'phone screen': phoneApp,
+  'grouped list': groupedList,
+  'grouped section': groupedList,
+  'inset group': groupedList,
+  'inset list': groupedList,
+  'list section': groupedList,
+  'settings list': groupedList,
+  'chevron row': valueRow,
+  'disclosure row': valueRow,
+  'value row': valueRow,
+  'page control': pageDots,
+  'page dots': pageDots,
+  'page indicator': pageDots,
+  'avatar badge': avatarBadge,
+  'online indicator': avatarBadge,
+  'presence dot': avatarBadge,
+  'status dot': avatarBadge,
 }

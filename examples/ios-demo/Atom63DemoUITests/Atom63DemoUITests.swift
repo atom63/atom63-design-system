@@ -350,6 +350,26 @@ final class Atom63DemoUITests: XCTestCase {
     XCTAssertTrue(flyout.waitForExistence(timeout: 3))
   }
 
+  /// The padding an AtomListSection gives a row is inside the row's tap area, so a
+  /// NavigationLink row opens from its edge, not only from its text.
+  func testListSectionRowIsTappableAcrossItsPadding() {
+    let app = XCUIApplication()
+    app.launchEnvironment["ATOM63_UI_TESTING"] = "1"
+    app.launchEnvironment["ATOM63_CATALOG_ITEM"] = "listSection"
+    app.launch()
+
+    let row = app.buttons["catalog-list-section-currency"]
+    XCTAssertTrue(row.waitForExistence(timeout: 5))
+    XCTAssertGreaterThanOrEqual(row.frame.height, 44)
+
+    // 3 points below the row's top edge and 6 from its leading edge: the section's padding,
+    // well clear of the label text.
+    row.coordinate(withNormalizedOffset: .zero)
+      .withOffset(CGVector(dx: 6, dy: 3))
+      .tap()
+    XCTAssertTrue(app.navigationBars["Currency"].waitForExistence(timeout: 2))
+  }
+
   private func launchApp() -> XCUIApplication {
     let app = XCUIApplication()
     app.launchEnvironment["ATOM63_UI_TESTING"] = "1"

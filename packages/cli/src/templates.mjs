@@ -152,6 +152,46 @@ const playbook = [
   'Check the result at a phone and a desktop width, in light and dark mode.',
 ]
 
+/* Words that mark an idea as a phone screen built for the web. */
+const phoneWords = new Set(['android', 'iphone', 'mobile', 'phone', 'smartphone'])
+
+/** Whether an idea is a phone screen: a phone word or a phone width (320–439 px), not SwiftUI. */
+export function isPhoneIdea(idea) {
+  const terms = queryTerms(idea).map(({ term }) => term)
+  if (terms.includes('swiftui')) return false
+  return terms.some(term => phoneWords.has(term)) || /\b(3[2-9]\d|4[0-3]\d) ?px\b/i.test(idea)
+}
+
+/* What a phone idea is told to build on: the app-view template's phone layout. */
+const phoneScreen = {
+  template: 'app-view',
+  use: 'Use AppView layout="phone" for the screen: edge to edge with no card or inset, safe-area aware, the top bar optional, and the tab bar docked at the bottom. Only the main region scrolls, so its last row stays visible above the tab bar. On a screen with no tab bar (a chat, a detail or a checkout step), leave tabBar out and dock the composer or action bar as bottomBar. The default layout ("window") is a padded desktop window with a rounded main card; do not use it on a phone.',
+  files:
+    'AppView ships in no package: it is the app-view page template. Paste pages/app-view/app-view.tsx and blocks/tab-bar/tab-bar.tsx, which `atom63 template app-view` prints in full (or run `atom63 copy app-view src`). Its AppViewPhonePage is the phone sample to start from.',
+  imports: [
+    "import { House, Search } from 'lucide-react'",
+    "import { AppView } from './pages/app-view/app-view'",
+    "import { TabBar } from './blocks/tab-bar/tab-bar'",
+  ],
+  snippet: [
+    '<AppView',
+    '  layout="phone"',
+    '  tabBar={',
+    '    <TabBar',
+    '      items={[',
+    "        { current: true, href: '#home', icon: <House aria-hidden />, label: 'Home' },",
+    "        { href: '#search', icon: <Search aria-hidden />, label: 'Search' },",
+    '      ]}',
+    '    />',
+    '  }',
+    '>',
+    '  {/* No topBar: the first block pads itself for the status bar. */}',
+    '  <div className="flex flex-col gap-4 pt-[env(safe-area-inset-top)]">…</div>',
+    '</AppView>',
+  ].join('\n'),
+  next: 'atom63 template app-view',
+}
+
 /**
  * A composition kit for an idea: the closest pages and blocks, the components
  * the idea names, the always-on foundation and the rules. With no idea, the
@@ -172,8 +212,15 @@ export function build(index, idea) {
       .filter(({ entry }) => entry.kind === kind)
       .slice(0, limit)
       .map(({ entry }) => ({ ...summaryOf(entry), next: `atom63 copy ${entry.id} <dir>` }))
-  const pages = pick('page', 3)
-  const blocks = pick('block', 5)
+  const phone = isPhoneIdea(idea)
+  // A phone idea always gets the app-view page and the tab-bar block first.
+  const lead = (kind, limit, id) =>
+    [
+      { ...summaryOf(findTemplate(index, id)), next: `atom63 copy ${id} <dir>` },
+      ...pick(kind, limit).filter(entry => entry.id !== id),
+    ].slice(0, limit)
+  const pages = phone ? lead('page', 3, 'app-view') : pick('page', 3)
+  const blocks = phone ? lead('block', 5, 'tab-bar') : pick('block', 5)
   // What the closest templates are built from comes first, then what the idea names.
   const bySlug = new Map(index.components.map(entry => [entry.slug, entry]))
   const used = [pages[0], ...blocks]
@@ -192,6 +239,7 @@ export function build(index, idea) {
     type: 'build.kit',
     data: {
       idea,
+      ...(phone ? { phone: phoneScreen } : {}),
       pages,
       blocks,
       components,

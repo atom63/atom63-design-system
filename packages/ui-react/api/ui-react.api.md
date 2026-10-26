@@ -2126,6 +2126,18 @@ export const reactRendererConformance: readonly [{
     readonly verifiedSharedOutcomes: readonly ["message-is-announced", "focus-is-not-trapped", "dismissal-respects-motion-preference"];
     readonly verifiedAccessibilityOutcomes: readonly ["announces-message", "does-not-trap-focus"];
     readonly verifiesMotionRecipe: true;
+}, {
+    readonly contractId: "item";
+    readonly implementedStates: readonly ["rest"];
+    readonly verifiedSharedOutcomes: readonly ["rows-keep-reading-order", "dividers-are-decorative"];
+    readonly verifiedAccessibilityOutcomes: readonly ["preserves-row-order", "hides-dividers-from-assistive-technology"];
+    readonly verifiesMotionRecipe: false;
+}, {
+    readonly contractId: "carousel";
+    readonly implementedStates: readonly ["rest"];
+    readonly verifiedSharedOutcomes: readonly ["one-dot-per-slide", "current-slide-is-marked", "choosing-a-dot-shows-its-slide"];
+    readonly verifiedAccessibilityOutcomes: readonly ["names-the-indicator", "exposes-the-current-position"];
+    readonly verifiesMotionRecipe: false;
 }];
 
 // @public (undocumented)
