@@ -186,6 +186,14 @@ private struct TokenShowcase: View {
         }
       }
 
+      ShowcaseSection("Display amounts", subtitle: "AtomAmountText, cents small and raised") {
+        VStack(alignment: .leading, spacing: AtomTokens.Space.x3) {
+          AtomAmountText(13.25, currencyCode: "USD", role: .displayLarge, strong: true)
+          AtomAmountText(1234.5, currencyCode: "EUR", locale: Locale(identifier: "de_DE"))
+          Text("Total balance").atomDisplayFont()
+        }
+      }
+
       ShowcaseSection("Typography") {
         VStack(alignment: .leading, spacing: AtomTokens.Space.x3) {
           Text("Large title").font(.largeTitle)

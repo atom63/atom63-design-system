@@ -1,8 +1,71 @@
 {
   "schemaVersion": 1,
   "module": "Atom63UI",
-  "symbolCount": 464,
+  "symbolCount": 486,
   "symbols": [
+    {
+      "id": "s:8Atom63UI10AtomAmountV",
+      "kind": "swift.struct",
+      "path": "AtomAmount",
+      "declaration": "struct AtomAmount",
+      "source": "AtomAmountText.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomAmountV_12currencyCode6localeACSo9NSDecimala_SS10Foundation6LocaleVtcfc",
+      "kind": "swift.init",
+      "path": "AtomAmount.init(_:currencyCode:locale:)",
+      "declaration": "init(_ value: Decimal, currencyCode: String, locale: Locale)",
+      "source": "AtomAmountText.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomAmountV16attributedString4size6weight10Foundation010AttributedF0VSd_05SwiftB04FontV6WeightVtF",
+      "kind": "swift.method",
+      "path": "AtomAmount.attributedString(size:weight:)",
+      "declaration": "func attributedString(size: Double, weight: Font.Weight) -> AttributedString",
+      "source": "AtomAmountText.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomAmountV4PartV",
+      "kind": "swift.struct",
+      "path": "AtomAmount.Part",
+      "declaration": "struct Part",
+      "source": "AtomAmountText.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomAmountV4PartV_10isFractionAESS_Sbtcfc",
+      "kind": "swift.init",
+      "path": "AtomAmount.Part.init(_:isFraction:)",
+      "declaration": "init(_ text: String, isFraction: Bool)",
+      "source": "AtomAmountText.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomAmountV4PartV10isFractionSbvp",
+      "kind": "swift.property",
+      "path": "AtomAmount.Part.isFraction",
+      "declaration": "let isFraction: Bool",
+      "source": "AtomAmountText.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomAmountV4PartV4textSSvp",
+      "kind": "swift.property",
+      "path": "AtomAmount.Part.text",
+      "declaration": "let text: String",
+      "source": "AtomAmountText.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomAmountV5partsSayAC4PartVGvp",
+      "kind": "swift.property",
+      "path": "AtomAmount.parts",
+      "declaration": "let parts: [AtomAmount.Part]",
+      "source": "AtomAmountText.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomAmountV9formattedSSvp",
+      "kind": "swift.property",
+      "path": "AtomAmount.formatted",
+      "declaration": "let formatted: String",
+      "source": "AtomAmountText.swift"
+    },
     {
       "id": "s:8Atom63UI10AtomAvatarV",
       "kind": "swift.struct",
@@ -113,6 +176,27 @@
       "kind": "swift.enum",
       "path": "AtomTokens",
       "declaration": "enum AtomTokens",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO14AmountFractionO",
+      "kind": "swift.enum",
+      "path": "AtomTokens.AmountFraction",
+      "declaration": "enum AmountFraction",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO14AmountFractionO5raiseSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.AmountFraction.raise",
+      "declaration": "static let raise: Double",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO14AmountFractionO5scaleSdvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.AmountFraction.scale",
+      "declaration": "static let scale: Double",
       "source": "Generated/Atom63Tokens.generated.swift"
     },
     {
@@ -977,6 +1061,27 @@
       "source": "AtomTextField.swift"
     },
     {
+      "id": "s:8Atom63UI14AtomAmountTextV",
+      "kind": "swift.struct",
+      "path": "AtomAmountText",
+      "declaration": "struct AtomAmountText",
+      "source": "AtomAmountText.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomAmountTextV_12currencyCode4role6strong6localeACSo9NSDecimala_SSAA0C11DisplayRoleOSb10Foundation6LocaleVSgtcfc",
+      "kind": "swift.init",
+      "path": "AtomAmountText.init(_:currencyCode:role:strong:locale:)",
+      "declaration": "init(_ value: Decimal, currencyCode: String, role: AtomDisplayRole = .display, strong: Bool = false, locale: Locale? = nil)",
+      "source": "AtomAmountText.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomAmountTextV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomAmountText.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomAmountText.swift"
+    },
+    {
       "id": "s:8Atom63UI14AtomAsyncImageV",
       "kind": "swift.struct",
       "path": "AtomAsyncImage",
@@ -1360,6 +1465,55 @@
       "path": "AtomControlSize.regular",
       "declaration": "case regular",
       "source": "Generated/AtomComponentIntent.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomDisplayRoleO",
+      "kind": "swift.enum",
+      "path": "AtomDisplayRole",
+      "declaration": "enum AtomDisplayRole",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomDisplayRoleO12displayLargeyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomDisplayRole.displayLarge",
+      "declaration": "case displayLarge",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomDisplayRoleO12strongWeight05SwiftB04FontV0G0Vvp",
+      "kind": "swift.property",
+      "path": "AtomDisplayRole.strongWeight",
+      "declaration": "var strongWeight: Font.Weight { get }",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomDisplayRoleO4sizeSdvp",
+      "kind": "swift.property",
+      "path": "AtomDisplayRole.size",
+      "declaration": "var size: Double { get }",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomDisplayRoleO6weight05SwiftB04FontV6WeightVvp",
+      "kind": "swift.property",
+      "path": "AtomDisplayRole.weight",
+      "declaration": "var weight: Font.Weight { get }",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomDisplayRoleO7displayyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomDisplayRole.display",
+      "declaration": "case display",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomDisplayRoleO9textStyle05SwiftB04FontV04TextG0Ovp",
+      "kind": "swift.property",
+      "path": "AtomDisplayRole.textStyle",
+      "declaration": "var textStyle: Font.TextStyle { get }",
+      "source": "Generated/Atom63Tokens.generated.swift"
     },
     {
       "id": "s:8Atom63UI15AtomFormMessageV",
@@ -3254,6 +3408,66 @@
   ],
   "relationships": [
     {
+      "source": "s:8Atom63UI10AtomAmountV",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAmountV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAmountV_12currencyCode6localeACSo9NSDecimala_SS10Foundation6LocaleVtcfc",
+      "target": "s:8Atom63UI10AtomAmountV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAmountV16attributedString4size6weight10Foundation010AttributedF0VSd_05SwiftB04FontV6WeightVtF",
+      "target": "s:8Atom63UI10AtomAmountV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAmountV4PartV",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAmountV4PartV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAmountV4PartV",
+      "target": "s:8Atom63UI10AtomAmountV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAmountV4PartV_10isFractionAESS_Sbtcfc",
+      "target": "s:8Atom63UI10AtomAmountV4PartV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAmountV4PartV10isFractionSbvp",
+      "target": "s:8Atom63UI10AtomAmountV4PartV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAmountV4PartV4textSSvp",
+      "target": "s:8Atom63UI10AtomAmountV4PartV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAmountV5partsSayAC4PartVGvp",
+      "target": "s:8Atom63UI10AtomAmountV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAmountV9formattedSSvp",
+      "target": "s:8Atom63UI10AtomAmountV",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI10AtomAvatarV",
       "target": "external:Sendable",
       "kind": "conformsTo"
@@ -3346,6 +3560,21 @@
     {
       "source": "s:8Atom63UI10AtomToggleV4bodyQrvp",
       "target": "s:8Atom63UI10AtomToggleV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO14AmountFractionO",
+      "target": "s:8Atom63UI10AtomTokensO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO14AmountFractionO5raiseSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO14AmountFractionO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO14AmountFractionO5scaleSdvpZ",
+      "target": "s:8Atom63UI10AtomTokensO14AmountFractionO",
       "kind": "memberOf"
     },
     {
@@ -4024,6 +4253,26 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI14AtomAmountTextV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomAmountTextV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomAmountTextV_12currencyCode4role6strong6localeACSo9NSDecimala_SSAA0C11DisplayRoleOSb10Foundation6LocaleVSgtcfc",
+      "target": "s:8Atom63UI14AtomAmountTextV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomAmountTextV4bodyQrvp",
+      "target": "s:8Atom63UI14AtomAmountTextV",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI14AtomAsyncImageV",
       "target": "external:Sendable",
       "kind": "conformsTo"
@@ -4436,6 +4685,61 @@
     {
       "source": "s:8Atom63UI15AtomControlSizeO7regularyA2CmF",
       "target": "s:8Atom63UI15AtomControlSizeO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomDisplayRoleO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomDisplayRoleO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomDisplayRoleO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomDisplayRoleO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomDisplayRoleO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomDisplayRoleO12displayLargeyA2CmF",
+      "target": "s:8Atom63UI15AtomDisplayRoleO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomDisplayRoleO12strongWeight05SwiftB04FontV0G0Vvp",
+      "target": "s:8Atom63UI15AtomDisplayRoleO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomDisplayRoleO4sizeSdvp",
+      "target": "s:8Atom63UI15AtomDisplayRoleO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomDisplayRoleO6weight05SwiftB04FontV6WeightVvp",
+      "target": "s:8Atom63UI15AtomDisplayRoleO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomDisplayRoleO7displayyA2CmF",
+      "target": "s:8Atom63UI15AtomDisplayRoleO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomDisplayRoleO9textStyle05SwiftB04FontV04TextG0Ovp",
+      "target": "s:8Atom63UI15AtomDisplayRoleO",
       "kind": "memberOf"
     },
     {

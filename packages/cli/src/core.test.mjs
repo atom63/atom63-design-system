@@ -156,6 +156,15 @@ describe('topics', () => {
     assert.match(search(index, 'avatar badge').data.results[0].summary, /AtomAvatar\(name:badge:/)
   })
 
+  it('names the Swift display amount API', () => {
+    for (const query of ['display amount ios', 'balance']) {
+      const [first] = search(index, query).data.results
+      assert.match(first.summary, /AtomAmountText/, query)
+    }
+    const token = index.tokens.find(entry => entry.cssVar === '--a63-type-display-font-size')
+    assert.equal(token.swift, 'AtomDisplayRole.display')
+  })
+
   it('respects a kind filter', () => {
     assert.ok(search(index, 'gradient', { kind: 'doc' }).data.results.every(r => r.kind === 'doc'))
     assert.equal(top('gradient', { kind: 'token' })[0], '--a63-gradient-brand-fade')
