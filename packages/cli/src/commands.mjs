@@ -46,7 +46,7 @@ export const commands = [
   {
     name: 'build',
     summary:
-      'A composition kit for an idea: the closest page templates and blocks, the components it needs, the foundation and the rules. With no idea, the build playbook.',
+      'A composition kit for an idea: the closest page templates and blocks, the components it needs, the foundation and the rules. For a phone screen, it leads with AppView layout="phone". With no idea, the build playbook.',
     args: [
       {
         name: 'idea',
