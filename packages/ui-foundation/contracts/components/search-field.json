@@ -14,11 +14,15 @@
     "visualArchetypes": ["field", "action"]
   },
   "contract": {
+    "defaultVariant": "default",
     "slots": {
       "$ref": "#/lists/slots"
     },
     "states": {
       "$ref": "#/lists/states"
+    },
+    "variants": {
+      "$ref": "./input.json#/lists/variants"
     },
     "visualArchetypes": {
       "$ref": "#/lists/visualArchetypes"

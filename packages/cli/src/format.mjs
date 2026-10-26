@@ -136,6 +136,11 @@ function buildKit(data) {
       entry => `- ${entry.slug}: ${entry.summary}\n  → ${entry.next}`
     ),
     ...section(
+      'Ground',
+      data.ground ? [data.ground] : [],
+      entry => `- Neutral ${entry.surface}, page ${entry.page}: ${entry.note}`
+    ),
+    ...section(
       'Foundation',
       data.foundation,
       entry => `- ${entry.name} (${entry.from}): ${entry.use}`

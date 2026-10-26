@@ -4,6 +4,10 @@
   "maturity": "stable",
   "lists": {
     "sizes": ["sm", "md", "lg"],
+    "variants": {
+      "description": "Field chrome. default: the outlined form field. filled: a muted fill with no resting border, for search and filter fields with an icon and placeholder. plain: no border or fill and a separator below, for a field inside a menu, popover or command palette.",
+      "values": ["default", "filled", "plain"]
+    },
     "states": ["rest", "hover", "focus", "disabled", "invalid"],
     "slots": {
       "description": "Two-part anatomy (mirrors Base UI / production @atom63/ui input): a control wrapper owns the chrome, the inner input is the transparent text field.",
@@ -24,11 +28,15 @@
   },
   "contract": {
     "defaultSize": "md",
+    "defaultVariant": "default",
     "slots": {
       "$ref": "#/lists/slots"
     },
     "states": {
       "$ref": "#/lists/states"
+    },
+    "variants": {
+      "$ref": "#/lists/variants"
     },
     "tokenSlots": {
       "$ref": "#/lists/tokenSlots"
@@ -56,6 +64,9 @@
         },
         "slots": {
           "$ref": "#/parts/group/lists/slots"
+        },
+        "variants": {
+          "$ref": "./input.json#/lists/variants"
         },
         "visualArchetypes": {
           "$ref": "#/parts/group/lists/visualArchetypes"
@@ -112,6 +123,20 @@
               }
             },
             "extensions": {}
+          },
+          "variant": {
+            "list": "variants",
+            "map": {
+              "default": {}
+            },
+            "extensions": {
+              "filled": {
+                "description": "A muted fill with no resting border; the border shows on hover and focus."
+              },
+              "plain": {
+                "description": "No border or fill and a separator below, for a field inside a menu, popover or command palette."
+              }
+            }
           }
         },
         "extensionProps": {

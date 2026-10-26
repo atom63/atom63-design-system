@@ -152,6 +152,10 @@
   /* Text */
   --a63-text-primary: var(--surface-light-12);
   --a63-text-secondary: var(--surface-light-11);
+  /* The third text grey, lighter than secondary: placeholders, meta and timestamps.
+     Seven parts step 11 to three parts step 10, so it keeps WCAG AA 4.5:1 on the page,
+     the panel, the field fill and the muted fill of a filled field. */
+  --a63-text-tertiary: color-mix(in oklab, var(--surface-light-11) 70%, var(--surface-light-10));
   /* The brand as text (links, accents) on light surfaces; brand.css picks the
      ramp step per brand. Use --a63-action-primary for fills. */
   --a63-text-accent: var(--a63-brand-text);
@@ -333,6 +337,9 @@
   );
   --a63-text-primary: var(--surface-dark-12);
   --a63-text-secondary: var(--surface-dark-11);
+  /* Three parts step 11 to seven parts step 10: WCAG AA 4.5:1 on the page, the panel,
+     the field fill and the muted fill. */
+  --a63-text-tertiary: color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10));
   /* The primary fill is too dark to read as text on dark surfaces. */
   --a63-text-accent: var(--a63-brand-400);
   /* Danger text on dark surfaces: step 400 reaches WCAG AA 4.5:1 on every theme's

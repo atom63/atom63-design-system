@@ -142,7 +142,46 @@ const phoneApp = [
   { id: 'template:tab-bar' },
 ]
 
+/*
+ * The ground (neutral family and page color) an idea suggests, for products
+ * whose reference look is not the default cool grey on a grey page. `build`
+ * adds the first ground whose key the idea contains (as whole words) to its
+ * kit, and search lists the colors page for the same words through `topics`.
+ * The golden queries in core.test.mjs cover them.
+ */
+const warmPaper = {
+  surface: 'n6',
+  page: '--a63-surface-panel',
+  note: 'A warm paper product: set the warm n6 neutral (<UIProvider surface="n6">, data-a63-surface="n6") and draw the page on --a63-surface-panel (bg-card), the near-white surface, instead of the grey --a63-surface-page. Use --a63-text-tertiary for meta and timestamps.',
+}
+
+const warmPaperKeys = [
+  'doc',
+  'docs',
+  'document',
+  'documents',
+  'editor',
+  'journal',
+  'knowledge base',
+  'notebook',
+  'notes',
+  'note taking',
+  'notion',
+  'wiki',
+  'writing',
+]
+
+export const grounds = warmPaperKeys.map(key => ({ key, ...warmPaper }))
+
+const warmPaperTopic = [
+  {
+    id: 'doc:foundation-colors',
+    note: 'Colors page: for a warm paper product use the n6 neutral and a near-white page (--a63-surface-panel); three text greys.',
+  },
+]
+
 export const topics = {
+  ...Object.fromEntries(warmPaperKeys.map(key => [key, warmPaperTopic])),
   amount: displayType,
   balance: displayType,
   'big number': displayType,

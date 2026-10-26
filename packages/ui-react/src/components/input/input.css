@@ -87,7 +87,7 @@
 }
 
 .a63-Input-field::placeholder {
-  color: var(--a63-text-secondary);
+  color: var(--a63-text-tertiary);
   opacity: 1;
 }
 
@@ -154,6 +154,74 @@
 .a63-Input[data-disabled] .a63-Input-field,
 .a63-InputGroup[data-disabled] .a63-Input-field {
   cursor: not-allowed;
+}
+
+/* ── Variants (default is the outlined base rule above) ────────────────── */
+
+/* filled: a muted well with no resting border, for search and filter fields
+   with an icon and placeholder. The border keeps its width (transparent) so the
+   field does not move; it shows on hover and focus. Form fields stay default:
+   their border is how a person finds them (WCAG 1.4.11). */
+.a63-Input[data-variant='filled']:not([data-unstyled]),
+.a63-InputGroup[data-variant='filled'] {
+  --field-background: var(--a63-surface-muted);
+  --field-shadow: 0 0 #0000;
+
+  border-color: transparent;
+}
+
+.a63-Input[data-variant='filled']:not([data-unstyled]):hover,
+.a63-InputGroup[data-variant='filled']:hover {
+  border-color: var(--a63-border-control);
+}
+
+/* plain: no border or fill and a separator below, for a field inside a menu,
+   popover or command palette (the look Command draws for its own input). */
+.a63-Input[data-variant='plain']:not([data-unstyled]),
+.a63-InputGroup[data-variant='plain'],
+.a63-Input[data-variant='plain']:not([data-unstyled]):is(:hover, :focus-within),
+.a63-InputGroup[data-variant='plain']:is(:hover, :focus-within) {
+  --field-background: transparent;
+  --field-radius: 0;
+  --field-shadow: 0 0 #0000;
+
+  border-color: transparent;
+  border-block-end-color: var(--a63-border-subtle);
+}
+
+/* An invalid filled or plain field keeps its danger edge at rest. */
+.a63-Input[data-variant='filled'][data-invalid]:not([data-unstyled]),
+.a63-InputGroup[data-variant='filled'][data-invalid] {
+  border-color: var(--field-border);
+}
+
+.a63-Input[data-variant='plain'][data-invalid]:not([data-unstyled]),
+.a63-InputGroup[data-variant='plain'][data-invalid] {
+  border-block-end-color: var(--field-border);
+}
+
+.a63-Input[data-variant='filled']:not([data-unstyled]):focus-within,
+.a63-InputGroup[data-variant='filled']:focus-within {
+  border-color: var(--field-focus-border);
+}
+
+/* Both draw the focus ring as an outline on :focus-visible of the text field.
+   The plain ring is inset, as Command's is, so a menu or popover does not clip
+   it. */
+.a63-Input:is([data-variant='filled'], [data-variant='plain']):not([data-unstyled]):focus-within,
+.a63-InputGroup:is([data-variant='filled'], [data-variant='plain']):focus-within {
+  outline: none;
+}
+
+.a63-Input[data-variant='filled']:not([data-unstyled]):has(.a63-Input-field:focus-visible),
+.a63-InputGroup[data-variant='filled']:has(.a63-Input-field:focus-visible) {
+  outline: var(--a63-control-focus-ring-width) solid var(--field-focus-ring);
+}
+
+.a63-Input[data-variant='plain']:not([data-unstyled]):has(.a63-Input-field:focus-visible),
+.a63-InputGroup[data-variant='plain']:has(.a63-Input-field:focus-visible) {
+  outline: var(--a63-control-focus-ring-width) solid var(--field-focus-ring);
+  outline-offset: calc(-1 * var(--a63-control-focus-ring-width));
 }
 
 /* ── Sizes (md is the base rule above) ─────────────────────────────────── */

@@ -2421,6 +2421,8 @@ export interface InputContract {
     // (undocumented)
     defaultSize: InputSize;
     // (undocumented)
+    defaultVariant: InputVariant;
+    // (undocumented)
     sizes: readonly InputSize[];
     // (undocumented)
     slots: readonly InputSlot[];
@@ -2429,14 +2431,18 @@ export interface InputContract {
     // (undocumented)
     tokenSlots: readonly InputTokenSlot[];
     // (undocumented)
+    variants: readonly InputVariant[];
+    // (undocumented)
     visualArchetypes: readonly InputVisualArchetype[];
 }
 
 // @public (undocumented)
 export const inputContract: {
     defaultSize: "md";
+    defaultVariant: "default";
     slots: readonly ["input-control", "input"];
     states: readonly ["rest", "hover", "focus", "disabled", "invalid"];
+    variants: readonly ["default", "filled", "plain"];
     tokenSlots: readonly ["field.background", "field.border", "field.radius", "field.shadow", "field.focusRing", "field.focusBorder", "field.height", "field.paddingInline", "field.fontSize"];
     sizes: readonly ["sm", "md", "lg"];
     visualArchetypes: readonly ["field"];
@@ -2455,6 +2461,8 @@ export interface InputGroupContract {
     // (undocumented)
     slots: readonly InputGroupSlot[];
     // (undocumented)
+    variants: readonly InputVariant[];
+    // (undocumented)
     visualArchetypes: readonly InputGroupVisualArchetype[];
 }
 
@@ -2462,6 +2470,7 @@ export interface InputGroupContract {
 export const inputGroupContract: {
     aligns: readonly ["inline-start", "inline-end", "block-start", "block-end"];
     slots: readonly ["input-group", "input-group-addon", "input-group-button", "input-group-text"];
+    variants: readonly ["default", "filled", "plain"];
     visualArchetypes: readonly ["field"];
 };
 
@@ -2538,6 +2547,12 @@ export type InputTokenSlot = (typeof inputTokenSlots)[number];
 
 // @public (undocumented)
 export const inputTokenSlots: readonly ["field.background", "field.border", "field.radius", "field.shadow", "field.focusRing", "field.focusBorder", "field.height", "field.paddingInline", "field.fontSize"];
+
+// @public (undocumented)
+export type InputVariant = (typeof inputVariants)[number];
+
+// @public (undocumented)
+export const inputVariants: readonly ["default", "filled", "plain"];
 
 // @public (undocumented)
 export type InputVisualArchetype = (typeof inputVisualArchetypes)[number];
@@ -3745,17 +3760,23 @@ export const scrollAreaVisualArchetypes: readonly ["range"];
 // @public (undocumented)
 export interface SearchFieldContract {
     // (undocumented)
+    defaultVariant: InputVariant;
+    // (undocumented)
     slots: readonly SearchFieldSlot[];
     // (undocumented)
     states: readonly SearchFieldState[];
+    // (undocumented)
+    variants: readonly InputVariant[];
     // (undocumented)
     visualArchetypes: readonly SearchFieldVisualArchetype[];
 }
 
 // @public (undocumented)
 export const searchFieldContract: {
+    defaultVariant: "default";
     slots: readonly ["search-field", "search-field-icon", "search-field-input", "search-field-clear", "search-field-end"];
     states: readonly ["empty", "query", "focus", "disabled"];
+    variants: readonly ["default", "filled", "plain"];
     visualArchetypes: readonly ["field", "action"];
 };
 

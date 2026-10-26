@@ -115,7 +115,7 @@
   appearance: none;
 }
 .a63-Command-input::placeholder {
-  color: var(--a63-text-secondary);
+  color: var(--a63-text-tertiary);
 }
 
 /* ── Panel (scroll region) ─────────────────────────────────────────────── */

@@ -108,7 +108,7 @@
 }
 
 .a63-Select-value[data-placeholder] {
-  color: var(--a63-text-secondary);
+  color: var(--a63-text-tertiary);
 }
 
 .a63-Select-icon {

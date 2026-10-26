@@ -5,7 +5,7 @@
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 
-import { AtomError, closest, queryTerms, score, search } from './core.mjs'
+import { AtomError, closest, groundFor, queryTerms, score, search } from './core.mjs'
 import { rules } from './rules.mjs'
 
 export const templateKinds = ['page', 'block']
@@ -188,6 +188,7 @@ export function build(index, idea) {
     summary: bySlug.get(slug).summary,
     next: `atom63 component ${slug}`,
   }))
+  const ground = groundFor(idea)
   return {
     type: 'build.kit',
     data: {
@@ -195,6 +196,7 @@ export function build(index, idea) {
       pages,
       blocks,
       components,
+      ...(ground ? { ground } : {}),
       foundation,
       rules: rules.map(rule => rule.rule),
     },

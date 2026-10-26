@@ -1,6 +1,6 @@
 'use client'
 
-import { type InputSize, inputContract } from '@atom63/ui-foundation'
+import { type InputSize, type InputVariant, inputContract } from '@atom63/ui-foundation'
 import { Input as InputPrimitive } from '@base-ui/react/input'
 import type * as React from 'react'
 
@@ -29,6 +29,11 @@ export type InputProps = Omit<
   /** Drop the recessed field shadow (`--field-shadow`) — for inputs on
    *  translucent/flat chrome (search bars, toolbars). Defaults to true. */
   shadow?: boolean
+  /** Field chrome: `default` (outlined, for form fields), `filled` (a muted fill
+   *  with no resting border, for search and filter fields with an icon and
+   *  placeholder) or `plain` (no border or fill and a separator below, for a
+   *  field inside a menu, popover or command palette). */
+  variant?: InputVariant
 }
 
 function isAriaInvalid(value: React.AriaAttributes['aria-invalid'] | undefined): boolean {
@@ -51,6 +56,7 @@ export function Input({
   shadow = true,
   size = inputContract.defaultSize,
   unstyled = false,
+  variant = inputContract.defaultVariant,
   ...props
 }: InputProps): React.ReactElement {
   const isInvalid = invalid || isAriaInvalid(ariaInvalid)
@@ -75,6 +81,7 @@ export function Input({
       data-size={dataSize}
       data-slot="input-control"
       data-unstyled={unstyled ? '' : undefined}
+      data-variant={variant}
     >
       {nativeInput ? (
         <input {...fieldProps} {...(props as React.ComponentProps<'input'>)} />

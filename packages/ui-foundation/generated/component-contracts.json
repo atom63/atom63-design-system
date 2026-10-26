@@ -1397,7 +1397,10 @@
       "source": "packages/ui-foundation/contracts/components/input.json",
       "exportName": "inputContract",
       "maturity": "stable",
-      "axes": [{ "name": "sizes", "values": ["sm", "md", "lg"], "default": "md" }],
+      "axes": [
+        { "name": "variants", "values": ["default", "filled", "plain"], "default": "default" },
+        { "name": "sizes", "values": ["sm", "md", "lg"], "default": "md" }
+      ],
       "slots": ["input-control", "input"],
       "states": ["rest", "hover", "focus", "disabled", "invalid"],
       "tokenSlots": [
@@ -1432,6 +1435,18 @@
                 "list": "sizes",
                 "map": { "sm": { "size": "sm" }, "md": { "size": "md" }, "lg": { "size": "lg" } },
                 "extensions": {}
+              },
+              "variant": {
+                "list": "variants",
+                "map": { "default": {} },
+                "extensions": {
+                  "filled": {
+                    "description": "A muted fill with no resting border; the border shows on hover and focus."
+                  },
+                  "plain": {
+                    "description": "No border or fill and a separator below, for a field inside a menu, popover or command palette."
+                  }
+                }
               }
             },
             "extensionProps": {
@@ -1888,7 +1903,9 @@
       "source": "packages/ui-foundation/contracts/components/search-field.json",
       "exportName": "searchFieldContract",
       "maturity": "stable",
-      "axes": [],
+      "axes": [
+        { "name": "variants", "values": ["default", "filled", "plain"], "default": "default" }
+      ],
       "slots": [
         "search-field",
         "search-field-icon",

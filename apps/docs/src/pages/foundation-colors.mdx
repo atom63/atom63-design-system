@@ -148,12 +148,16 @@ The palette can be expressive, but role comes first. A primary button is primary
 | Need | In app JSX | In package recipes |
 |------|------------|--------------------|
 | App surfaces | `bg-background`, `bg-card`, `bg-muted` | `--a63-surface-page`, `--a63-surface-panel`, `--a63-surface-muted` |
-| Text | `text-foreground`, `text-muted-foreground` | `--a63-text-primary`, `--a63-text-secondary` |
+| Text | `text-foreground`, `text-muted-foreground`, `text-(--a63-text-tertiary)` | `--a63-text-primary`, `--a63-text-secondary`, `--a63-text-tertiary` |
 | Borders | `border-border` | `--a63-border-subtle`, `--a63-border-control` |
 | Primary actions | `bg-primary`, `text-primary-foreground` | `--a63-action-primary`, `--a63-action-primary-foreground` |
 | Feedback states | `text-destructive`, status utilities | `--a63-status-*`, `--a63-action-danger` |
 | Brand moments (fixed hue) | `bg-b1-500`, … | foundation `--color-b*` only when intentional |
 | Hero fading into the page | `bg-(image:--a63-gradient-brand-fade)` | `--a63-gradient-brand-fade`, controls in its dark zone |
+
+There are three text greys. `--a63-text-primary` is for content, `--a63-text-secondary` for supporting text that is still content (descriptions, labels), and `--a63-text-tertiary` for placeholders, meta and timestamps. Tertiary keeps WCAG AA 4.5:1 on the page, the panel, the field fill and the muted fill in every theme and mode; every field placeholder uses it.
+
+For a warm paper or document product (docs, notes, an editor), pick the warm `n6` neutral (`data-a63-surface="n6"`) and put the content on a white page (`--a63-surface-panel` as the page ground) instead of the default grey `--a63-surface-page`.
 
 ## Anti-patterns
 

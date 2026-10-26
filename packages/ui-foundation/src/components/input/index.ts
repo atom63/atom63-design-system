@@ -9,6 +9,7 @@ export {
   inputSlots,
   inputStates,
   inputTokenSlots,
+  inputVariants,
   inputVisualArchetypes,
 } from './input-contract'
 export type {
@@ -21,5 +22,6 @@ export type {
   InputSlot,
   InputState,
   InputTokenSlot,
+  InputVariant,
   InputVisualArchetype,
 } from './input-contract'

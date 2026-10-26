@@ -16,6 +16,11 @@ The recessed **entry** archetype, and its composable **InputGroup**. Two-part an
 ## Contract
 
 - **Sizes:** `sm` `md` `lg` (default `md`). **States:** rest / hover / focus / disabled / invalid.
+- **Variants:** `default` `filled` `plain` (default `default`), on `Input`, `InputGroup` and `SearchField`.
+  - `default`: the outlined field. Keep it for form fields; the border is how a person finds the control (WCAG 1.4.11).
+  - `filled`: a muted fill with no resting border; the border shows on hover and focus. Use it for search and filter fields that carry an icon and a placeholder.
+  - `plain`: no border or fill, with a separator below. Use it for a field inside a menu, popover or command palette. `Command` draws this look for its own input.
+- Placeholders use `--a63-text-tertiary`, which keeps 4.5:1 on the page, the panel, the field fill and the muted fill.
 - Source of truth: `@atom63/ui-foundation` → `contracts/components/input.json`.
 
 ## Tokens it reads
