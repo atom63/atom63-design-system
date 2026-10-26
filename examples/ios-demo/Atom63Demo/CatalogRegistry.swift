@@ -285,7 +285,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .sheet: "sheet(isPresented:) / presentationDetents(_:)"
     case .confirmationDialog: "alert(_:isPresented:actions:message:)"
     case .destinationLink: "NavigationLink / Link"
-    case .tabs: "TabView"
+    case .tabs: "AtomTabRow"
     case .formField: "AtomFormField"
     case .textField: "AtomTextField"
     case .textEditor: "AtomTextEditor"
@@ -340,7 +340,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .destinationLink:
       "NavigationLink(\"Project\", value: project)\nLink(\"Documentation\", destination: docsURL)"
     case .tabs:
-      "TabView(selection: $selection) {\n  OverviewView().tag(Tab.overview)\n  ActivityView().tag(Tab.activity)\n}"
+      "AtomTabRow(\"Project sections\", selection: $section, tabs: [\n  AtomTab(\"Overview\", value: .overview),\n  AtomTab(\"Activity\", systemImage: \"clock\", value: .activity),\n])"
     case .formField:
       "AtomFormField(\"Code\", supportingText: \"Six digits\") {\n  TextField(\"Code\", text: $code)\n}\n.atomFormPresentation(.grouped)"
     case .textField:

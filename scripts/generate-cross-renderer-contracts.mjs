@@ -95,6 +95,15 @@ for (const contract of source.contracts) {
       )
     }
   }
+  if (contract.swiftUIRendererByVariant) {
+    const variants = listValues(listInfo(main, 'variants'))
+    const mapped = Object.keys(contract.swiftUIRendererByVariant)
+    if (mapped.join() !== variants.join()) {
+      throw new Error(
+        `${contract.id} swiftUIRendererByVariant must list its variants in order (${variants.join(', ')}); it lists ${mapped.join(', ')}`
+      )
+    }
+  }
   for (const [state, tone] of Object.entries(contract.stateTones ?? {})) {
     if (!contract.requiredStates.includes(state)) {
       throw new Error(`${contract.id} defines a tone for unknown state: ${state}`)
@@ -144,6 +153,16 @@ function swiftDictionary(values) {
     .join(', ')}]`
 }
 
+function swiftVariantRenderers(renderers) {
+  if (!renderers) return '[]'
+  return `[${Object.entries(renderers)
+    .map(
+      ([variant, renderer]) =>
+        `AtomVariantRenderer(variant: ${swiftString(variant)}, renderer: ${swiftString(renderer)})`
+    )
+    .join(', ')}]`
+}
+
 function swiftMotion(motion) {
   if (!motion) return 'nil'
   return `AtomMotionContract(kind: ${swiftString(motion.kind)}, durationToken: ${swiftString(motion.durationToken)}, easing: ${swiftString(motion.easing)}, direction: ${swiftString(motion.direction)}, reducedMotion: ${swiftString(motion.reducedMotion)})`
@@ -167,6 +186,7 @@ const swiftContracts = source.contracts
       catalogItem: ${swiftString(contract.catalogItem)},
       reactRenderer: ${swiftString(contract.reactRenderer)},
       swiftUIRenderer: ${swiftString(contract.swiftUIRenderer)},
+      swiftUIRendererByVariant: ${swiftVariantRenderers(contract.swiftUIRendererByVariant)},
       intent: ${swiftString(contract.intent)},
       parity: ${swiftParity(contract.parity)},
       requiredStates: ${swiftArray(contract.requiredStates)},
@@ -198,6 +218,12 @@ public struct AtomMotionContract: Equatable, Sendable {
   public let reducedMotion: String
 }
 
+/// The SwiftUI renderer of one value of a component's variants list.
+public struct AtomVariantRenderer: Equatable, Sendable {
+  public let variant: String
+  public let renderer: String
+}
+
 public struct AtomPlatformAdaptations: Equatable, Sendable {
   public let react: [String]
   public let swiftUI: [String]
@@ -210,6 +236,8 @@ public struct AtomComponentContract: Equatable, Identifiable, Sendable {
   public let catalogItem: String
   public let reactRenderer: String
   public let swiftUIRenderer: String
+  /// Empty unless the component's variants render differently on iOS.
+  public let swiftUIRendererByVariant: [AtomVariantRenderer]
   public let intent: String
   public let parity: AtomContractParity
   public let requiredStates: [String]

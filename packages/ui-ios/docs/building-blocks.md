@@ -18,6 +18,7 @@ own navigation, collections, presentation, and platform controls.
 | Read-only metadata and selectable options | `AtomValueRow`, `AtomSelectionRow` |
 | Cards, rows, status, identity, and media | `AtomCard`, `AtomListRow`, `AtomBadge`, `AtomAvatar`, `AtomAsyncImage` |
 | Compact filtering | `AtomChip` |
+| In-page section tabs | `AtomTabRow` |
 | Safe-area-aware page actions | `AtomActionBar` |
 | Paginated collection feedback and retry | `AtomPaginationIntent`, `AtomLoadMoreView` |
 | Empty/error recovery, synchronization, and transient success | `AtomContentStateView`, `AtomSyncStatusView`, `AtomToast` |
@@ -58,6 +59,31 @@ The system safe area keeps content reachable above current chrome; the tokenized
 scroll-content margin adds breathing room after the final row. Persistent page
 or sheet actions should use `safeAreaInset(edge: .bottom)` at the container root,
 not internal padding inside `AtomActionBar`.
+
+### In-page tabs
+
+The Tabs contract renders per variant. `underline` and `attached` use
+`AtomTabRow`; `default` uses a segmented `Picker`:
+
+```swift
+AtomTabRow("Project sections", selection: $section, tabs: [
+  AtomTab("Overview", value: .overview),
+  AtomTab("Activity", systemImage: "clock", value: .activity),
+])
+```
+
+- Use `AtomTabRow` for the main sections of a screen, above the content they
+  select. The selected tab reads text-primary over an accent bar, the others
+  text-secondary. Each tab can show an SF Symbol over its label.
+- The row scrolls sideways when the tabs do not fit, at any Dynamic Type size,
+  and scrolls the selected tab into view.
+- The bar slides to the new tab on the emphasized curve and jumps under Reduce
+  Motion or `.atomMotionPreference(.reduced)`.
+- VoiceOver reads the row as a tab bar named by its label, and each tab as a
+  button with the selected trait. The row mirrors in right-to-left languages.
+- Use a segmented `Picker` for a short second-level filter of two to four
+  options, and `TabView` for app-level sections.
+- `attached` has no iOS folder-tab idiom, so it renders as `AtomTabRow` too.
 
 ### App tab bar
 

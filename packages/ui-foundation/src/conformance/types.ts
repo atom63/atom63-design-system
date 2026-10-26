@@ -21,6 +21,8 @@ export interface CrossRendererComponentContract {
   catalogItem: string
   reactRenderer: string
   swiftUIRenderer: string
+  /** The SwiftUI renderer for each variant, when variants render differently on iOS. */
+  swiftUIRendererByVariant?: Readonly<Record<string, string>>
   intent: string
   parity: ContractParity
   requiredStates: readonly string[]

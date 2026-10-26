@@ -17,6 +17,12 @@ public struct AtomMotionContract: Equatable, Sendable {
   public let reducedMotion: String
 }
 
+/// The SwiftUI renderer of one value of a component's variants list.
+public struct AtomVariantRenderer: Equatable, Sendable {
+  public let variant: String
+  public let renderer: String
+}
+
 public struct AtomPlatformAdaptations: Equatable, Sendable {
   public let react: [String]
   public let swiftUI: [String]
@@ -29,6 +35,8 @@ public struct AtomComponentContract: Equatable, Identifiable, Sendable {
   public let catalogItem: String
   public let reactRenderer: String
   public let swiftUIRenderer: String
+  /// Empty unless the component's variants render differently on iOS.
+  public let swiftUIRendererByVariant: [AtomVariantRenderer]
   public let intent: String
   public let parity: AtomContractParity
   public let requiredStates: [String]
@@ -48,6 +56,7 @@ public enum AtomComponentContracts {
       catalogItem: "button",
       reactRenderer: "Button",
       swiftUIRenderer: "AtomButton",
+      swiftUIRendererByVariant: [],
       intent: "Trigger a user-initiated action with explicit hierarchy and feedback.",
       parity: .recipe,
       requiredStates: ["rest", "pressed", "disabled", "loading"],
@@ -64,6 +73,7 @@ public enum AtomComponentContracts {
       catalogItem: "sheet",
       reactRenderer: "Dialog",
       swiftUIRenderer: "sheet(isPresented:) / presentationDetents(_:)",
+      swiftUIRendererByVariant: [],
       intent: "Temporarily move the user into a focused modal task without losing the originating context.",
       parity: .platformAdaptive,
       requiredStates: ["closed", "open", "focus-visible"],
@@ -80,6 +90,7 @@ public enum AtomComponentContracts {
       catalogItem: "confirmationDialog",
       reactRenderer: "AlertDialog",
       swiftUIRenderer: "alert(_:isPresented:actions:message:)",
+      swiftUIRendererByVariant: [],
       intent: "Require an explicit decision before committing or abandoning a consequential action.",
       parity: .platformAdaptive,
       requiredStates: ["closed", "open"],
@@ -96,6 +107,7 @@ public enum AtomComponentContracts {
       catalogItem: "formField",
       reactRenderer: "Field",
       swiftUIRenderer: "AtomFormField",
+      swiftUIRendererByVariant: [],
       intent: "Associate a control with its label, supporting description, and validation feedback.",
       parity: .strict,
       requiredStates: ["default", "invalid", "disabled"],
@@ -112,6 +124,7 @@ public enum AtomComponentContracts {
       catalogItem: "textField",
       reactRenderer: "Input",
       swiftUIRenderer: "AtomTextField",
+      swiftUIRendererByVariant: [],
       intent: "Capture a single-line text value with visible focus and validation state.",
       parity: .platformAdaptive,
       requiredStates: ["rest", "focus", "disabled", "invalid"],
@@ -128,6 +141,7 @@ public enum AtomComponentContracts {
       catalogItem: "textEditor",
       reactRenderer: "Textarea",
       swiftUIRenderer: "AtomTextEditor",
+      swiftUIRendererByVariant: [],
       intent: "Capture a multi-line text value while preserving editing and validation semantics.",
       parity: .platformAdaptive,
       requiredStates: ["rest", "focus", "disabled", "invalid"],
@@ -144,6 +158,7 @@ public enum AtomComponentContracts {
       catalogItem: "toggle",
       reactRenderer: "Switch",
       swiftUIRenderer: "AtomToggle",
+      swiftUIRendererByVariant: [],
       intent: "Change a persistent boolean setting.",
       parity: .platformAdaptive,
       requiredStates: ["off", "on", "disabled"],
@@ -160,6 +175,7 @@ public enum AtomComponentContracts {
       catalogItem: "picker",
       reactRenderer: "Select",
       swiftUIRenderer: "Picker",
+      swiftUIRendererByVariant: [],
       intent: "Choose one value from a finite set while keeping the current selection visible.",
       parity: .platformAdaptive,
       requiredStates: ["closed", "open", "disabled", "selected-item", "disabled-item"],
@@ -176,6 +192,7 @@ public enum AtomComponentContracts {
       catalogItem: "chip",
       reactRenderer: "Toggle",
       swiftUIRenderer: "AtomChip",
+      swiftUIRendererByVariant: [],
       intent: "Select or deselect a compact option without leaving the current context.",
       parity: .platformAdaptive,
       requiredStates: ["off", "on", "disabled"],
@@ -192,6 +209,7 @@ public enum AtomComponentContracts {
       catalogItem: "card",
       reactRenderer: "Card",
       swiftUIRenderer: "AtomCard",
+      swiftUIRendererByVariant: [],
       intent: "Group related content and optionally expose one primary action.",
       parity: .platformAdaptive,
       requiredStates: ["rest", "interactive", "focus-visible"],
@@ -208,6 +226,7 @@ public enum AtomComponentContracts {
       catalogItem: "destinationLink",
       reactRenderer: "DestinationLink",
       swiftUIRenderer: "NavigationLink / Link",
+      swiftUIRendererByVariant: [],
       intent: "Move to an internal destination or open an external destination while making that distinction explicit.",
       parity: .platformAdaptive,
       requiredStates: ["rest", "focus-visible"],
@@ -224,6 +243,7 @@ public enum AtomComponentContracts {
       catalogItem: "badge",
       reactRenderer: "Badge",
       swiftUIRenderer: "AtomBadge",
+      swiftUIRendererByVariant: [],
       intent: "Communicate a compact label or semantic status alongside primary content.",
       parity: .strict,
       requiredStates: ["neutral", "accent", "success", "warning", "error"],
@@ -240,6 +260,7 @@ public enum AtomComponentContracts {
       catalogItem: "segmentedControl",
       reactRenderer: "SegmentedControl",
       swiftUIRenderer: "Picker(.segmented)",
+      swiftUIRendererByVariant: [],
       intent: "Switch a compact local mode or view between a small set of mutually exclusive options.",
       parity: .platformAdaptive,
       requiredStates: ["rest", "selected", "disabled"],
@@ -256,6 +277,7 @@ public enum AtomComponentContracts {
       catalogItem: "radioGroup",
       reactRenderer: "RadioGroup / Radio",
       swiftUIRenderer: "Picker(.inline) in a Form / AtomSelectionRow group",
+      swiftUIRendererByVariant: [],
       intent: "Choose exactly one value from a visible set of mutually exclusive options.",
       parity: .platformAdaptive,
       requiredStates: ["unchecked", "checked", "disabled"],
@@ -272,6 +294,7 @@ public enum AtomComponentContracts {
       catalogItem: "slider",
       reactRenderer: "Slider",
       swiftUIRenderer: "Slider",
+      swiftUIRendererByVariant: [],
       intent: "Adjust a bounded numeric value through direct manipulation or assistive increment and decrement actions.",
       parity: .platformAdaptive,
       requiredStates: ["rest", "dragging", "disabled"],
@@ -288,6 +311,7 @@ public enum AtomComponentContracts {
       catalogItem: "menu",
       reactRenderer: "DropdownMenu",
       swiftUIRenderer: "Menu",
+      swiftUIRendererByVariant: [],
       intent: "Present a compact set of contextual actions or choices without navigating away from the current task.",
       parity: .platformAdaptive,
       requiredStates: ["closed", "open", "disabled", "checked", "destructive"],
@@ -304,6 +328,7 @@ public enum AtomComponentContracts {
       catalogItem: "disclosureGroup",
       reactRenderer: "Accordion",
       swiftUIRenderer: "DisclosureGroup",
+      swiftUIRendererByVariant: [],
       intent: "Reveal or hide supporting content in place while preserving the surrounding context.",
       parity: .platformAdaptive,
       requiredStates: ["closed", "open", "disabled"],
@@ -320,6 +345,7 @@ public enum AtomComponentContracts {
       catalogItem: "datePicker",
       reactRenderer: "Calendar",
       swiftUIRenderer: "DatePicker",
+      swiftUIRendererByVariant: [],
       intent: "Select an allowed calendar date while understanding its day, month, and current selection.",
       parity: .platformAdaptive,
       requiredStates: ["rest", "selected", "disabled"],
@@ -336,6 +362,7 @@ public enum AtomComponentContracts {
       catalogItem: "search",
       reactRenderer: "SearchField",
       swiftUIRenderer: "searchable(text:prompt:)",
+      swiftUIRendererByVariant: [],
       intent: "Find or filter relevant content by editing a query without leaving the current collection.",
       parity: .platformAdaptive,
       requiredStates: ["empty", "query", "focus", "disabled"],
@@ -351,7 +378,8 @@ public enum AtomComponentContracts {
       foundationAxis: "states",
       catalogItem: "tabs",
       reactRenderer: "Tabs",
-      swiftUIRenderer: "Picker(.segmented) with the selected content",
+      swiftUIRenderer: "Picker(.segmented) / AtomTabRow",
+      swiftUIRendererByVariant: [AtomVariantRenderer(variant: "default", renderer: "Picker(.segmented)"), AtomVariantRenderer(variant: "underline", renderer: "AtomTabRow"), AtomVariantRenderer(variant: "attached", renderer: "AtomTabRow")],
       intent: "Switch between peer destinations or content views while keeping one selection active.",
       parity: .platformAdaptive,
       requiredStates: ["rest", "selected"],
@@ -359,7 +387,7 @@ public enum AtomComponentContracts {
       sharedOutcomes: ["one-tab-is-selected-at-a-time", "selection-reveals-the-associated-content", "selected-tab-remains-visually-distinguishable"],
       accessibilityOutcomes: ["exposes-tab-labels", "exposes-selected-state", "associates-selection-with-visible-content"],
       motion: nil,
-      platformAdaptations: AtomPlatformAdaptations(react: ["Uses tablist, tab, and tabpanel semantics with keyboard navigation and a visual indicator."], swiftUI: ["In-page sections use a segmented Picker above the content it selects, so each tab is a named, selectable button. TabView stays the renderer for app-level sections such as a tab bar or sidebar.", "In a TabView, each tab's root is its ScrollView or List. From iOS 26 the glass tab bar floats over it: content scrolls under the bar at rest, and TabView insets the scroll content so the last row ends above the bar. Do not pad for the bar, draw content in a ZStack or overlay over the TabView, or apply ignoresSafeArea to the bottom edge; extra bottom chrome goes in safeAreaInset(edge: .bottom) on the tab's root."])
+      platformAdaptations: AtomPlatformAdaptations(react: ["Uses tablist, tab, and tabpanel semantics with keyboard navigation and a visual indicator."], swiftUI: ["The default variant is a segmented Picker above the content it selects, for a short second-level filter of two to four options.", "The underline variant is AtomTabRow, a row of text tabs over the content it selects: the selected tab reads text-primary over an accent bar, the others text-secondary. The row scrolls sideways when the tabs do not fit and keeps the selected tab in view. Each tab can show an SF Symbol over its label. The bar slides to the new tab, and jumps under Reduce Motion. Each tab is a named button with the selected trait inside a tab-bar container, and the row mirrors in right-to-left languages.", "The attached variant also renders as AtomTabRow: folder tabs are a pointer idiom with no iOS counterpart, and the underline row already sits flush on the content it selects.", "TabView stays the renderer for app-level sections such as a tab bar or sidebar.", "In a TabView, each tab's root is its ScrollView or List. From iOS 26 the glass tab bar floats over it: content scrolls under the bar at rest, and TabView insets the scroll content so the last row ends above the bar. Do not pad for the bar, draw content in a ZStack or overlay over the TabView, or apply ignoresSafeArea to the bottom edge; extra bottom chrome goes in safeAreaInset(edge: .bottom) on the tab's root."])
     ),
     AtomComponentContract(
       id: "avatar",
@@ -368,6 +396,7 @@ public enum AtomComponentContracts {
       catalogItem: "avatar",
       reactRenderer: "Avatar",
       swiftUIRenderer: "AtomAvatar",
+      swiftUIRendererByVariant: [],
       intent: "Represent a person or entity with an image and identity-preserving fallback.",
       parity: .strict,
       requiredStates: ["loading", "loaded", "fallback"],
@@ -384,6 +413,7 @@ public enum AtomComponentContracts {
       catalogItem: "contentState",
       reactRenderer: "Empty",
       swiftUIRenderer: "AtomContentStateView",
+      swiftUIRendererByVariant: [],
       intent: "Explain absent or unavailable content and provide an appropriate recovery path.",
       parity: .platformAdaptive,
       requiredStates: ["empty", "error"],
@@ -400,6 +430,7 @@ public enum AtomComponentContracts {
       catalogItem: "notice",
       reactRenderer: "Alert",
       swiftUIRenderer: "AtomNotice",
+      swiftUIRendererByVariant: [],
       intent: "Communicate persistent semantic feedback and an optional recovery action.",
       parity: .strict,
       requiredStates: ["info", "success", "warning", "error"],
@@ -416,6 +447,7 @@ public enum AtomComponentContracts {
       catalogItem: "progress",
       reactRenderer: "Progress",
       swiftUIRenderer: "AtomProgressView",
+      swiftUIRendererByVariant: [],
       intent: "Communicate an ongoing operation or measured completion.",
       parity: .platformAdaptive,
       requiredStates: ["indeterminate", "progressing", "complete"],
@@ -432,6 +464,7 @@ public enum AtomComponentContracts {
       catalogItem: "skeleton",
       reactRenderer: "Skeleton",
       swiftUIRenderer: "AtomSkeletonRow / atomSkeleton(_:)",
+      swiftUIRendererByVariant: [],
       intent: "Preserve layout while content loads without exposing placeholder content as real content.",
       parity: .recipe,
       requiredStates: ["loading", "reduced-motion"],
@@ -448,6 +481,7 @@ public enum AtomComponentContracts {
       catalogItem: "pagination",
       reactRenderer: "LoadMoreTrigger",
       swiftUIRenderer: "AtomLoadMoreView",
+      swiftUIRendererByVariant: [],
       intent: "Load the next collection segment and communicate recovery or completion.",
       parity: .strict,
       requiredStates: ["idle", "loading", "failed", "exhausted"],
@@ -464,6 +498,7 @@ public enum AtomComponentContracts {
       catalogItem: "toast",
       reactRenderer: "Toaster",
       swiftUIRenderer: "AtomToast / atomToast(_:)",
+      swiftUIRendererByVariant: [],
       intent: "Announce transient feedback without interrupting the current task.",
       parity: .recipe,
       requiredStates: ["visible", "dismissing", "reduced-motion"],
