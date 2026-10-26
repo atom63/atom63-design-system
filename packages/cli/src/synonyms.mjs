@@ -1,7 +1,8 @@
 /**
  * Words people use for a component that differ from its name. Search expands
  * a query term with these before scoring, so "modal" finds `dialog`. Values
- * are catalog slugs, most fitting first: the first gets the largest boost.
+ * are catalog slugs, or token CSS variables (`--a63-…`) that then join the
+ * results of any search, most fitting first: the first gets the largest boost.
  * The golden queries in core.test.mjs cover them.
  */
 export const synonyms = {
@@ -22,7 +23,14 @@ export const synonyms = {
   expand: ['collapsible', 'accordion'],
   fold: ['sidebar-nav-tree', 'collapsible', 'accordion'],
   folding: ['sidebar-nav-tree', 'collapsible', 'accordion'],
+  gradient: [
+    '--a63-gradient-brand-fade',
+    '--a63-gradient-brand',
+    '--a63-gradient-scrim',
+    '--a63-gradient-brand-subtle',
+  ],
   grid: ['table'],
+  hero: ['--a63-gradient-brand-fade', '--a63-gradient-brand'],
   hint: ['tooltip', 'kbd'],
   keyboard: ['kbd'],
   label: ['label', 'badge'],

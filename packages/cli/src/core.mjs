@@ -111,6 +111,7 @@ export function queryTerms(query) {
   const terms = new Map(words(query).map(term => [term, 1]))
   for (const term of [...terms.keys()]) {
     for (const slug of synonyms[term] ?? []) {
+      if (slug.startsWith('--')) continue
       for (const word of words(slug)) if (!terms.has(word)) terms.set(word, 0.5)
     }
   }
@@ -127,6 +128,17 @@ function synonymBoost(query, slug) {
   return best
 }
 
+/** Tokens a query term names through a synonym, with the same boost as components. */
+function synonymTokens(query) {
+  const named = new Map()
+  for (const term of words(query)) {
+    for (const [rank, id] of (synonyms[term] ?? []).entries()) {
+      if (id.startsWith('--')) named.set(id, Math.max(named.get(id) ?? 0, 30 - rank * 8))
+    }
+  }
+  return named
+}
+
 /* ── Commands ────────────────────────────────────────────────────────────── */
 
 export const searchKinds = ['component', 'template', 'token', 'doc', 'example']
@@ -134,8 +146,9 @@ export const searchKinds = ['component', 'template', 'token', 'doc', 'example']
 /**
  * One ranked list across components, templates, tokens, docs pages and story
  * examples.
- * Tokens only join when the query looks like one (`--…`) or kind is `token`,
- * so a thousand variables cannot bury the components.
+ * Tokens only join when the query looks like one (`--…`), kind is `token`, or
+ * a query term names them through a synonym ("gradient"), so a thousand
+ * variables cannot bury the components.
  */
 export function search(index, query, { kind, limit = 10 } = {}) {
   if (!query?.trim()) throw new AtomError('search.empty_query', 'Pass something to search for.')
@@ -242,6 +255,24 @@ export function search(index, query, { kind, limit = 10 } = {}) {
           label: token.cssVar,
           summary: `${token.type}, ${token.layer} layer`,
           score: total,
+          next: `atom63 token ${token.cssVar}`,
+        })
+      }
+    }
+  }
+
+  if (wants('token')) {
+    for (const [cssVar, boost] of synonymTokens(query)) {
+      const listed = results.find(result => result.kind === 'token' && result.id === cssVar)
+      const token = index.tokens.find(candidate => candidate.cssVar === cssVar)
+      if (listed) listed.score += boost
+      else if (token) {
+        results.push({
+          kind: 'token',
+          id: token.cssVar,
+          label: token.cssVar,
+          summary: `${token.type}, ${token.layer} layer`,
+          score: boost,
           next: `atom63 token ${token.cssVar}`,
         })
       }

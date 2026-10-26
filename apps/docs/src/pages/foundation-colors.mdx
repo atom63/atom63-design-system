@@ -89,6 +89,21 @@ Six neutral palettes (`n1`–`n6`) give the system different neutral personaliti
   ))}
 </TokenSwatchGrid>
 
+### Gradients
+
+Four gradient tokens follow the theme, brand and mode, so a hero or banner never needs a hand-written gradient:
+
+| Token | Draws | Use |
+|-------|-------|-----|
+| `--a63-gradient-brand` | Brand 500 to 700 at 135° | A saturated brand banner or card |
+| `--a63-gradient-brand-subtle` | Brand 50 to 100 at 135° | A quiet illustration or card background |
+| `--a63-gradient-brand-fade` | Brand 800 at the top, brand 700 at the end of the dark zone, then `--a63-surface-page` at the bottom | A hero that runs into the page, such as a banking home or a shop header |
+| `--a63-gradient-scrim` | Transparent to 60% black, top to bottom | Text laid over the foot of a photo |
+
+`--a63-gradient-brand-fade` has a **dark zone**: the top `--a63-gradient-brand-fade-dark-zone` (50%) of the hero, which stays at brand 700 or darker. White on-media text and overlay controls reach WCAG AA there on every brand, so the balance, its label and the row of round `overlay` buttons with their labels go in that zone. Below it the hero fades into the page: content there uses the page tokens (`--a63-text-primary`, `--a63-surface-panel`) and the default button variants, on its own `--a63-surface-panel` card while the fade is still running, since text straight on the mid-fade has neither the page's contrast nor the dark zone's. An `overlay` button or `--a63-on-media-foreground` label on the faded part becomes white on near white and disappears. Size the hero with a definite height so the zone lines up with its content, for example a grid with `grid-template-rows: var(--a63-gradient-brand-fade-dark-zone) 1fr`. The Button story `RoundOnBrandFade` shows the pattern. On iOS, `AtomThemeColors.brandFadeGradient(for:)` draws the same gradient and `AtomTokens.Gradient.brandFadeDarkZone` holds the zone.
+
+Overlay and on-media controls belong over dark or busy media (photos, video, `--a63-gradient-brand`, the dark zone of the fade), never over a light or faded background.
+
 ## Compatibility
 
 The shadcn vocabulary (`background`, `primary`, `muted-foreground`, …) is an **opt-in adapter** (`@atom63/styles/compat/shadcn` + Tailwind theme keys). It re-references `--a63-*`; it does not own values (mirror rule).
@@ -133,6 +148,7 @@ The palette can be expressive, but role comes first. A primary button is primary
 | Primary actions | `bg-primary`, `text-primary-foreground` | `--a63-action-primary`, `--a63-action-primary-foreground` |
 | Feedback states | `text-destructive`, status utilities | `--a63-status-*`, `--a63-action-danger` |
 | Brand moments (fixed hue) | `bg-b1-500`, … | foundation `--color-b*` only when intentional |
+| Hero fading into the page | `bg-(image:--a63-gradient-brand-fade)` | `--a63-gradient-brand-fade`, controls in its dark zone |
 
 ## Anti-patterns
 

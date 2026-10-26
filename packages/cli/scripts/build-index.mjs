@@ -190,17 +190,22 @@ function templates(components) {
   return entries
 }
 
-/** Swift color names keyed by the CSS variable they are generated from. */
+/** Swift color and gradient names keyed by the CSS variable they are generated from. */
 function swiftColorNames() {
   const source = read('packages/ui-ios/Scripts/generate-swift-tokens.mjs')
   const block = /const colors = \{([\s\S]*?)\n\}/.exec(source)
   if (!block) throw new Error('generate-swift-tokens.mjs has no colors map')
-  return new Map(
-    [...block[1].matchAll(/^\s*(\w+): '(--[\w-]+)',/gm)].map(([, swift, cssVar]) => [
+  const gradients = /const gradients = \{([\s\S]*?)\n\}/.exec(source)
+  if (!gradients) throw new Error('generate-swift-tokens.mjs has no gradients map')
+  return new Map([
+    ...[...block[1].matchAll(/^\s*(\w+): '(--[\w-]+)',/gm)].map(([, swift, cssVar]) => [
       cssVar,
       `AtomTokens.Color.${swift}`,
-    ])
-  )
+    ]),
+    ...[...gradients[1].matchAll(/'(a63-[\w-]+)': \{\s*swift: '([^']+)'/g)].map(
+      ([, name, swift]) => [`--${name}`, swift]
+    ),
+  ])
 }
 
 /**

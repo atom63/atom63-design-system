@@ -11,7 +11,7 @@ import {
 import { Button, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Bell, Inbox } from 'lucide-react'
+import { ArrowRightLeft, Bell, Ellipsis, Inbox, Plus, Send } from 'lucide-react'
 import type { CSSProperties } from 'react'
 import { EnvironmentShell, PreviewCard, ThemeMatrix } from '../story-probes'
 
@@ -137,6 +137,94 @@ export const RoundOverMedia: Story = {
       <Button shape="round" variant="overlay">
         Follow
       </Button>
+    </div>
+  ),
+}
+
+const heroActions = [
+  { icon: Plus, label: 'Add money' },
+  { icon: ArrowRightLeft, label: 'Move' },
+  { icon: Send, label: 'Send' },
+  { icon: Ellipsis, label: 'More' },
+]
+
+/* A hero on --a63-gradient-brand-fade, which runs from the brand into the page.
+   Overlay buttons and their on-media labels sit in the dark zone, the top
+   --a63-gradient-brand-fade-dark-zone of the hero, where white keeps WCAG AA
+   on every brand. Below it the hero fades into the page, so the content
+   there uses the page tokens and the default button variants, on its own
+   panel while the fade is still running. */
+export const RoundOnBrandFade: Story = {
+  render: () => (
+    <div
+      style={{
+        backgroundImage: 'var(--a63-gradient-brand-fade)',
+        borderRadius: '0.875rem',
+        display: 'grid',
+        gridTemplateRows: 'var(--a63-gradient-brand-fade-dark-zone) 1fr',
+        height: '26rem',
+        maxWidth: '24rem',
+      }}
+    >
+      <div
+        style={{
+          alignContent: 'space-between',
+          color: 'var(--a63-on-media-foreground)',
+          display: 'grid',
+          gap: 'var(--a63-space-4)',
+          padding: 'var(--a63-space-5)',
+        }}
+      >
+        <div>
+          <div style={{ fontSize: 'var(--a63-type-footnote-font-size)' }}>Main account</div>
+          <div
+            style={{
+              fontSize: 'var(--a63-type-large-title-font-size)',
+              fontWeight: 'var(--a63-type-large-title-font-weight)',
+            }}
+          >
+            £2,480.15
+          </div>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          {heroActions.map(({ icon: Icon, label }) => (
+            <div
+              key={label}
+              style={{
+                alignItems: 'center',
+                display: 'grid',
+                fontSize: 'var(--a63-type-footnote-font-size)',
+                gap: 'var(--a63-space-1_5)',
+                justifyItems: 'center',
+              }}
+            >
+              <Button aria-label={label} shape="round" size="icon-lg" variant="overlay">
+                <Icon aria-hidden />
+              </Button>
+              <span aria-hidden>{label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{ alignContent: 'end', display: 'grid', padding: 'var(--a63-space-3)' }}>
+        <div
+          style={{
+            background: 'var(--a63-surface-panel)',
+            border: '1px solid var(--a63-border-subtle)',
+            borderRadius: 'var(--radius-lg)',
+            color: 'var(--a63-text-primary)',
+            display: 'grid',
+            gap: 'var(--a63-space-3)',
+            padding: 'var(--a63-space-4)',
+          }}
+        >
+          <p style={{ color: 'var(--a63-text-secondary)', margin: 0 }}>
+            Below the dark zone the hero fades into the page. Content here uses the page tokens on
+            its own panel, never overlay buttons or on-media text, which vanish as the hero fades.
+          </p>
+          <Button variant="outline">See all transactions</Button>
+        </div>
+      </div>
     </div>
   ),
 }

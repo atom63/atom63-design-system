@@ -155,6 +155,10 @@ describe('core semantic contrast (WCAG AA)', () => {
 const brands = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6'] as const
 const brandPairs = [
   { fg: '--a63-action-primary-foreground', bg: '--a63-action-primary', min: AA_TEXT },
+  // On-media labels in the dark zone of --a63-gradient-brand-fade: its lightest
+  // color there is brand 700, the stop at the end of the zone.
+  { fg: '--a63-on-media-foreground', bg: '--a63-brand-800', min: AA_TEXT },
+  { fg: '--a63-on-media-foreground', bg: '--a63-brand-700', min: AA_TEXT },
   { fg: '--a63-text-accent', bg: '--a63-surface-page', min: AA_TEXT },
   // WCAG 1.4.11: a focus ring is the graphic that shows focus, so it reaches 3:1
   // against the field it surrounds and the page around it.

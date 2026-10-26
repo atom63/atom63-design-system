@@ -113,6 +113,16 @@ public enum AtomTokens {
         public static let selectionThumb = AtomDynamicColor(light: AtomColorComponents(red: 1, green: 1, blue: 1, opacity: 1), dark: AtomColorComponents(red: 1, green: 1, blue: 1, opacity: 1))
         /// --a63-skeleton-highlight
         public static let skeletonHighlight = AtomDynamicColor(light: AtomColorComponents(red: 1, green: 1, blue: 1, opacity: 0.6), dark: AtomColorComponents(red: 1, green: 1, blue: 1, opacity: 0.101961))
+        /// --a63-brand-50
+        public static let brand50 = AtomDynamicColor(light: AtomColorComponents(red: 0.937255, green: 0.988235, blue: 1, opacity: 1), dark: AtomColorComponents(red: 0.937255, green: 0.988235, blue: 1, opacity: 1))
+        /// --a63-brand-100
+        public static let brand100 = AtomDynamicColor(light: AtomColorComponents(red: 0.866667, green: 0.968627, blue: 1, opacity: 1), dark: AtomColorComponents(red: 0.866667, green: 0.968627, blue: 1, opacity: 1))
+        /// --a63-brand-500
+        public static let brand500 = AtomDynamicColor(light: AtomColorComponents(red: 0.172549, green: 0.498039, blue: 1, opacity: 1), dark: AtomColorComponents(red: 0.172549, green: 0.498039, blue: 1, opacity: 1))
+        /// --a63-brand-700
+        public static let brand700 = AtomDynamicColor(light: AtomColorComponents(red: 0, green: 0.223529, blue: 0.619608, opacity: 1), dark: AtomColorComponents(red: 0, green: 0.223529, blue: 0.619608, opacity: 1))
+        /// --a63-brand-800
+        public static let brand800 = AtomDynamicColor(light: AtomColorComponents(red: 0, green: 0.113725, blue: 0.435294, opacity: 1), dark: AtomColorComponents(red: 0, green: 0.113725, blue: 0.435294, opacity: 1))
         /// --a63-widget-background-color
         public static let widgetBackground = AtomDynamicColor(light: AtomColorComponents(red: 0.988235, green: 0.988235, blue: 0.988235, opacity: 0.82), dark: AtomColorComponents(red: 0.098039, green: 0.098039, blue: 0.098039, opacity: 0.9))
         /// --a63-widget-foreground
@@ -146,6 +156,15 @@ public enum AtomTokens {
         public static let skeletonShimmer: Double = 1.5
         /// --ease-emphasized, the iOS design-language control feedback curve.
         public static let emphasizedControlPoints: (Double, Double, Double, Double) = (0.3, 0, 0, 1)
+    }
+
+    /// Gradient stops that are not colors of AtomThemeColors (AtomGradients.swift).
+    public enum Gradient {
+        /// --a63-gradient-brand-fade-dark-zone: the top share of a brand-fade hero
+        /// that stays dark enough for on-media text and overlay controls.
+        public static let brandFadeDarkZone: Double = 0.5
+        /// The dark end of --a63-gradient-scrim.
+        public static let scrimEnd = AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 0.6)
     }
 
     /// The widget contract (`--a63-widget-*`): the card's corner radius and the
