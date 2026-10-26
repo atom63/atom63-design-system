@@ -1,4 +1,4 @@
-import { progressContract, themes } from '@atom63/ui-foundation'
+import { progressContract, progressTones, themes } from '@atom63/ui-foundation'
 import {
   Progress,
   ProgressIndicator,
@@ -59,6 +59,18 @@ export const Indeterminate: Story = {
   render: () => (
     <div style={{ width: 280 }}>
       <Progress aria-label="Example progress" value={null} />
+    </div>
+  ),
+}
+
+/* tone sets the indicator: accent (the default) is the brand primary, neutral
+   is the primary text colour on a muted track. */
+export const Tones: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 16, width: 280 }}>
+      {progressTones.map(tone => (
+        <Progress aria-label={`${tone} tone`} key={tone} tone={tone} value={60} />
+      ))}
     </div>
   ),
 }

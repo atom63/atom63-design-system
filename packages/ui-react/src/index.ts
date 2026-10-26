@@ -481,6 +481,7 @@ export {
   ProgressTrack,
   ProgressValue,
 } from './components/progress'
+export type { ProgressProps } from './components/progress'
 export { ProgressiveBlur } from './components/progressive-blur'
 export type { ProgressiveBlurPosition, ProgressiveBlurProps } from './components/progressive-blur'
 export { Radio, RadioGroup, RadioGroupItem } from './components/radio'

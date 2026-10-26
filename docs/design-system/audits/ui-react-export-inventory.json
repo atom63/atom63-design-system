@@ -46,7 +46,7 @@
   },
   "counts": {
     "rootValueExports": 433,
-    "rootTypeExports": 195,
+    "rootTypeExports": 196,
     "packageExportKeys": 77,
     "cssExportKeys": 70
   },
@@ -2683,7 +2683,12 @@
           "proposedTier": "beta-supported-core"
         }
       ],
-      "types": []
+      "types": [
+        {
+          "name": "ProgressProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
     },
     {
       "source": "./components/progressive-blur",

@@ -1,5 +1,6 @@
 'use client'
 
+import { type SliderTone, sliderContract } from '@atom63/ui-foundation'
 import { Slider as SliderPrimitive } from '@base-ui/react/slider'
 import * as React from 'react'
 
@@ -33,12 +34,19 @@ export interface SliderProps extends Omit<
   onValueChange?: (value: number) => void
   /** Accessible label for each thumb, especially useful for ranged sliders. */
   getThumbAriaLabel?: (index: number) => string
+  /**
+   * The filled part's colour. `accent` (the default) is the brand primary;
+   * `neutral` is the primary text colour, for players and tool bars where the
+   * accent is spent elsewhere.
+   */
+  tone?: SliderTone
   'aria-label'?: string
 }
 
 /*
  * Slider — a value control (Base UI Slider). The rail is a recessed track (reads the
- * `track` archetype --a63-track-shadow); the filled indicator is the brand accent;
+ * `track` archetype --a63-track-shadow); the filled indicator is the brand accent
+ * (tone="accent", the default) or the primary text colour (tone="neutral");
  * the thumb is a raised CONTROL. Faithful port of the prod `@atom63/ui` Slider:
  * exports `Slider` + `SliderValue`, renders `children` plus one Thumb per value
  * (multi-thumb), and keeps a single-value number convenience over Base UI's
@@ -53,6 +61,7 @@ export function Slider({
   onValueChange,
   min = 0,
   max = 100,
+  tone = sliderContract.defaultTone,
   'aria-label': ariaLabel,
   ...props
 }: SliderProps): React.ReactElement {
@@ -65,6 +74,7 @@ export function Slider({
     <SliderPrimitive.Root
       className={cn('a63-Slider', className)}
       data-slot="slider"
+      data-tone={tone}
       defaultValue={defaultValue}
       max={max}
       min={min}

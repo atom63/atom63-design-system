@@ -4,6 +4,7 @@
   "maturity": "stable",
   "lists": {
     "states": ["indeterminate", "progressing", "complete"],
+    "tones": ["accent", "neutral"],
     "slots": [
       "progress",
       "progress-label",
@@ -17,11 +18,15 @@
     "slots": {
       "$ref": "#/lists/slots"
     },
+    "defaultTone": "accent",
     "states": {
       "$ref": "#/lists/states"
     },
     "visualArchetypes": {
       "$ref": "#/lists/visualArchetypes"
+    },
+    "tones": {
+      "$ref": "#/lists/tones"
     }
   },
   "crossRenderer": {

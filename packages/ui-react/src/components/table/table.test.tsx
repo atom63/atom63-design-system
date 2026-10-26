@@ -13,6 +13,30 @@ import {
 } from './table'
 
 describe('Table', () => {
+  it('puts the selection tone on the container: neutral by default, accent on request', () => {
+    const { container } = render(
+      <>
+        <Table>
+          <TableBody>
+            <TableRow data-state="selected">
+              <TableCell>neutral</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+        <Table tone="accent">
+          <TableBody>
+            <TableRow data-state="selected">
+              <TableCell>accent</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </>
+    )
+    const [neutral, accent] = container.querySelectorAll('[data-slot="table-container"]')
+    expect(neutral).toHaveAttribute('data-tone', 'neutral')
+    expect(accent).toHaveAttribute('data-tone', 'accent')
+  })
+
   it('renders every part with its data-slot inside a scroll container', () => {
     const { container } = render(
       <Table>

@@ -1,7 +1,8 @@
 /*
  * Slider recipe — a single-thumb value control. The rail is a recessed track
  * (track archetype: --a63-track-shadow inset well over --a63-surface-muted); the
- * filled portion is the brand accent; the thumb is a raised control that reads the
+ * filled portion is the brand accent (or the primary text colour with
+ * tone="neutral"); the thumb is a raised control that reads the
  * CONTROL archetype shadow. Geometry via local --slider-* constants.
  */
 
@@ -43,6 +44,10 @@
   height: 100%;
   border-radius: var(--radius-pill);
   background-color: var(--a63-action-primary);
+}
+/* tone="neutral": the primary text colour on the muted track. */
+.a63-Slider[data-tone='neutral'] .a63-Slider-indicator {
+  background-color: var(--a63-text-primary);
 }
 
 .a63-Slider-thumb {

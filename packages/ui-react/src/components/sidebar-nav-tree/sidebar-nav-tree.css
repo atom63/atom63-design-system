@@ -45,7 +45,9 @@
   gap: var(--a63-space-0_5);
 }
 
-/* Nav rows: transparent by default, tinted accent on hover, primary when active. */
+/* Nav rows: transparent by default, a half hover plate on hover. The active row
+   is a full neutral plate with primary text (tone="neutral", the default), or
+   accent text on a clear row (tone="accent"). */
 .a63-SidebarNavTree-item {
   /* Content floor — see button.css. */
   --nav-row-content-floor: calc(var(--typography-xs-line-height) + 2 * var(--a63-space-0_5));
@@ -67,12 +69,17 @@
   background-color: color-mix(in oklch, var(--sidebar-accent) 50%, transparent);
   color: var(--sidebar-fg);
 }
-.a63-SidebarNavTree-item[data-active='true'] {
-  background-color: transparent;
+.a63-SidebarNavTree-item[data-active='true'],
+.a63-SidebarNavTree-item[data-active='true']:hover {
+  background-color: var(--sidebar-accent);
   font-weight: 500;
+  color: var(--sidebar-fg);
+}
+.a63-SidebarNavTree-item[data-active='true'][data-tone='accent'] {
+  background-color: transparent;
   color: var(--a63-text-accent);
 }
-.a63-SidebarNavTree-item[data-active='true']:hover {
+.a63-SidebarNavTree-item[data-active='true'][data-tone='accent']:hover {
   background-color: color-mix(in oklch, var(--sidebar-accent) 50%, transparent);
   color: var(--a63-text-accent);
 }
@@ -122,10 +129,20 @@
 .a63-SidebarNavTree-row:hover .a63-SidebarNavTree-row-item {
   color: var(--sidebar-fg);
 }
-.a63-SidebarNavTree-row-item[data-active='true'] {
+.a63-SidebarNavTree-row-item[data-active='true'],
+.a63-SidebarNavTree-row-item[data-active='true']:hover {
   background-color: transparent;
 }
+/* A neutral active section paints the plate on the whole row (link + toggle). */
+.a63-SidebarNavTree-row:has(
+  > .a63-SidebarNavTree-row-item[data-active='true']:not([data-tone='accent'])
+) {
+  background-color: var(--sidebar-accent);
+}
 .a63-SidebarNavTree-row:hover .a63-SidebarNavTree-row-item[data-active='true'] {
+  color: var(--sidebar-fg);
+}
+.a63-SidebarNavTree-row:hover .a63-SidebarNavTree-row-item[data-active='true'][data-tone='accent'] {
   color: var(--a63-text-accent);
 }
 

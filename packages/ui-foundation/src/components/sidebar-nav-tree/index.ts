@@ -3,11 +3,13 @@ export {
   sidebarNavTreeContract,
   sidebarNavTreeParts,
   sidebarNavTreeStates,
+  sidebarNavTreeTones,
   sidebarNavTreeVisualArchetypes,
 } from './sidebar-nav-tree-contract'
 export type {
   SidebarNavTreeContract,
   SidebarNavTreePart,
   SidebarNavTreeState,
+  SidebarNavTreeTone,
   SidebarNavTreeVisualArchetype,
 } from './sidebar-nav-tree-contract'

@@ -145,7 +145,7 @@ function measureCells(arm) {
 const measureRows = [
   { key: 'files', label: 'Files' },
   { key: 'craft', label: 'Craft violations (`check:craft` rules)' },
-  { key: 'warnings', label: 'Warnings (`<Button>` without `variant`)' },
+  { key: 'warnings', label: 'Warnings (`<Button>` without `variant`, more than one primary)' },
   { key: 'typecheck', label: 'Type errors (`tsc --noEmit`)' },
   { key: 'build', label: '`vite build`' },
   { key: 'axe', label: 'axe violations' },

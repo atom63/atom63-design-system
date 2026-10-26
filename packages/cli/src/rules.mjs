@@ -28,8 +28,8 @@ export const rules = [
   },
   {
     id: 'accent-sparingly',
-    rule: 'Use the accent for one or two cues per view; the main action may be neutral.',
-    why: 'An accent on every control points at nothing. Button `default` is a high-emphasis neutral solid; `primary` is for a main action in the brand colour.',
+    rule: 'Use the accent for one or two cues per view; the main action may be neutral. Give a view at most one `variant="primary"` Button. Selection is neutral by default; set `tone="accent"` on a selection, Slider or Progress only when it is one of those cues.',
+    why: 'An accent on every control points at nothing. Button `default` is a high-emphasis neutral solid; `primary` is for a main action in the brand colour. The vibe measures warn at more than one primary Button per file.',
   },
   {
     id: 'one-boundary',

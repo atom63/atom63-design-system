@@ -277,10 +277,14 @@
   --a63-category-zinc-subtle-foreground: var(--color-zinc-700);
   --a63-category-neutral-subtle-foreground: var(--color-neutral-700);
   --a63-category-stone-subtle-foreground: var(--color-stone-700);
-  /* A selected item in a list, menu or grid: a light wash of the primary. */
-  --a63-selected-background: color-mix(in oklch, var(--a63-action-primary) 12%, transparent);
+  /* A selected or current item in a list, menu, table or grid: a neutral muted fill. */
+  --a63-selected-background: var(--a63-surface-muted);
   /* Text and icons of a selected item. */
-  --a63-selected-foreground: var(--a63-text-accent);
+  --a63-selected-foreground: var(--a63-text-primary);
+  /* The opt-in accent selection (tone="accent"): a light wash of the primary. */
+  --a63-selected-accent-background: color-mix(in oklch, var(--a63-action-primary) 12%, transparent);
+  /* Text and icons of an accent-selected item. */
+  --a63-selected-accent-foreground: var(--a63-text-accent);
 }
 
 :is(.dark, [data-a63-mode='dark']) {
@@ -414,6 +418,8 @@
   --a63-category-zinc-subtle-foreground: var(--color-zinc-400);
   --a63-category-neutral-subtle-foreground: var(--color-neutral-400);
   --a63-category-stone-subtle-foreground: var(--color-stone-400);
-  --a63-selected-background: color-mix(in oklch, var(--a63-action-primary) 12%, transparent);
-  --a63-selected-foreground: var(--a63-text-accent);
+  --a63-selected-background: var(--a63-surface-muted);
+  --a63-selected-foreground: var(--a63-text-primary);
+  --a63-selected-accent-background: color-mix(in oklch, var(--a63-action-primary) 12%, transparent);
+  --a63-selected-accent-foreground: var(--a63-text-accent);
 }
