@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react'
+import * as React from 'react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -30,6 +31,76 @@ describe('SidebarNavTree', () => {
     expect(button).toHaveAttribute('data-active', 'true')
     // Ticker-wrapped link label is present (TextTicker duplicates it for the marquee).
     expect(getAllByText('Introduction').length).toBeGreaterThan(0)
+  })
+
+  it('renders the anchor itself from href, icon and label props', () => {
+    const { getByRole } = render(
+      <SidebarProvider>
+        <SidebarNavGroup label="Workspace">
+          <SidebarNavLinkItem href="#inbox" icon={<svg data-testid="inbox-icon" />} isActive>
+            Inbox
+          </SidebarNavLinkItem>
+        </SidebarNavGroup>
+      </SidebarProvider>
+    )
+
+    const link = getByRole('link', { name: /Inbox/ })
+    expect(link.tagName).toBe('A')
+    expect(link).toHaveAttribute('href', '#inbox')
+    expect(link).toHaveAttribute('data-slot', 'sidebar-menu-button')
+    expect(link).toHaveAttribute('data-active', 'true')
+    expect(link).toHaveClass('a63-SidebarNavTree-item')
+    expect(link.firstElementChild).toHaveAttribute('data-testid', 'inbox-icon')
+    expect(link).toHaveTextContent('Inbox')
+  })
+
+  it('renders a router link passed as render, with the merged props and ref', () => {
+    const RouterLink = React.forwardRef<
+      HTMLAnchorElement,
+      React.ComponentProps<'a'> & { to: string }
+    >(function RouterLink({ children, to, ...props }, ref) {
+      return (
+        <a ref={ref} href={to} {...props}>
+          {children}
+        </a>
+      )
+    })
+    const ref = React.createRef<HTMLAnchorElement>()
+    const { getByRole } = render(
+      <SidebarProvider>
+        <SidebarNavGroup label="Workspace">
+          <SidebarNavLinkItem icon={<svg />} render={<RouterLink ref={ref} to="/docs" />}>
+            Documents
+          </SidebarNavLinkItem>
+        </SidebarNavGroup>
+      </SidebarProvider>
+    )
+
+    const link = getByRole('link', { name: /Documents/ })
+    expect(link).toHaveAttribute('href', '/docs')
+    expect(link).toHaveAttribute('data-slot', 'sidebar-menu-button')
+    expect(link).toHaveClass('a63-SidebarNavTree-item')
+    expect(ref.current).toBe(link)
+  })
+
+  it('keeps the child-element form: the child anchor becomes the item', () => {
+    const { getByRole } = render(
+      <SidebarProvider>
+        <SidebarNavGroup label="Workspace">
+          <SidebarNavLinkItem>
+            <a href="#docs">
+              <svg />
+              <span>Documents</span>
+            </a>
+          </SidebarNavLinkItem>
+        </SidebarNavGroup>
+      </SidebarProvider>
+    )
+
+    const link = getByRole('link', { name: 'Documents' })
+    expect(link).toHaveAttribute('href', '#docs')
+    expect(link).toHaveAttribute('data-slot', 'sidebar-menu-button')
+    expect(link).toHaveClass('a63-SidebarNavTree-item')
   })
 
   it('renders a collapsible item with an expand toggle and a sub list', () => {

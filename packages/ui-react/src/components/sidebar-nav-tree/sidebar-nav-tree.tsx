@@ -134,16 +134,63 @@ function SidebarNavGroup({
 }
 
 export interface SidebarNavLinkItemProps {
-  children: React.ReactElement
+  /**
+   * The label when `href` or `render` is set. Otherwise the link element itself
+   * (`<a href>…</a>`): the item merges its class, data attributes and ref into it,
+   * so a custom link component must spread the props it receives onto the element
+   * it renders and forward its ref.
+   */
+  children: React.ReactNode
   className?: string
+  /** Destination of the link. The item renders the anchor, with `icon` and the label inside. */
+  href?: string
+  /** An icon before the label, used with `href` or `render`. */
+  icon?: React.ReactNode
   isActive?: boolean
+  /**
+   * A link element to render instead of `<a>`, such as a router link
+   * (`<Link to="/inbox" />`). The item passes it the icon and label as children.
+   * It must spread the props it receives and forward its ref.
+   */
+  render?: React.ReactElement
 }
 
 function SidebarNavLinkItem({
   children,
   className,
+  href,
+  icon,
   isActive = false,
+  render,
 }: SidebarNavLinkItemProps): React.ReactElement {
+  const label =
+    typeof children === 'string' ? (
+      <TextTicker variant="marquee" className="a63-SidebarNavTree-ticker">
+        {children}
+      </TextTicker>
+    ) : (
+      <span>{children}</span>
+    )
+
+  let link: React.ReactElement
+  if (render) {
+    link = React.cloneElement(
+      render as React.ReactElement<{ href?: string }>,
+      href === undefined ? undefined : { href },
+      icon,
+      label
+    )
+  } else if (href !== undefined) {
+    link = (
+      <a href={href}>
+        {icon}
+        {label}
+      </a>
+    )
+  } else {
+    link = withTickerLabel(children as React.ReactElement)
+  }
+
   return (
     <SidebarMenuItem>
       <SidebarMenuButton
@@ -152,7 +199,7 @@ function SidebarNavLinkItem({
         isActive={isActive}
         size="sm"
       >
-        {withTickerLabel(children)}
+        {link}
       </SidebarMenuButton>
     </SidebarMenuItem>
   )

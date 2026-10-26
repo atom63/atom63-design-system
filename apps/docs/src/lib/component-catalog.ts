@@ -496,7 +496,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Sidebar provides responsive application-shell structure, state, rail, menus, and inset content.',
     usage:
-      'Mount it through Sidebar Provider and keep responsive visibility aligned to the md breakpoint. For navigation with folding groups and expandable sections, compose Sidebar Nav Tree (SidebarNavGroup collapsible) inside it.',
+      'Mount it through Sidebar Provider and keep responsive visibility aligned to the md breakpoint. For navigation with folding groups and expandable sections, compose Sidebar Nav Tree (SidebarNavGroup collapsible) inside it. A component you pass with asChild must spread the props it receives onto the element it renders and forward its ref.',
     usageExports: [
       'SidebarProvider',
       'Sidebar',
@@ -510,7 +510,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Sidebar Nav Tree composes labelled navigation groups that can fold, links, sublists, and collapsible sections with icons.',
     usage:
-      'Preserve link semantics and expose the current route independently from expanded branch state.',
+      'Preserve link semantics and expose the current route independently from expanded branch state. Give SidebarNavLinkItem href and icon (or a router link as render) instead of a child element; a link component you pass as the child or as render must spread the props it receives onto the element it renders and forward its ref.',
     usageExports: ['SidebarNavGroup', 'SidebarNavLinkItem', 'SidebarNavCollapsibleItem'],
   },
   skeleton: {

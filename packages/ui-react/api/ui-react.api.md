@@ -2529,12 +2529,14 @@ export function SidebarNavLinkItem(input: SidebarNavLinkItemProps): React$1.Reac
 
 // @public (undocumented)
 export interface SidebarNavLinkItemProps {
-    // (undocumented)
-    children: React$1.ReactElement;
+    children: React$1.ReactNode;
     // (undocumented)
     className?: string;
+    href?: string;
+    icon?: React$1.ReactNode;
     // (undocumented)
     isActive?: boolean;
+    render?: React$1.ReactElement;
 }
 
 // @public (undocumented)
