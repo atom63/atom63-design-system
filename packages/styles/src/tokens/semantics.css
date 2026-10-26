@@ -213,6 +213,12 @@
   --a63-action-danger-foreground: white;
   --a63-action-danger-subtle: color-mix(in oklab, var(--a63-action-danger) 14%, transparent);
   --a63-action-danger-subtle-foreground: var(--color-danger-700);
+  /* A disabled solid or outline action (Button): a neutral fill, so it reads as unavailable rather than as a paler accent. */
+  --a63-action-disabled-background: var(--a63-surface-muted);
+  /* A disabled action's label and icon: muted text. It stays legible (about 3:1 on the disabled fill) but is exempt from WCAG's 4.5:1. */
+  --a63-action-disabled-foreground: var(--surface-light-9);
+  /* A disabled action's border. */
+  --a63-action-disabled-border: var(--a63-border-subtle);
   /* Status (danger's status role is served by --a63-action-danger). The base is
      the accent used for tinted callouts (bg = mix toward transparent, text/border
      = the accent); -foreground is the text/icon color ON a SOLID status fill.
@@ -369,6 +375,9 @@
   --a63-action-danger-hover: color-mix(in oklch, var(--a63-action-danger) 82%, white 8%);
   --a63-action-danger-subtle: color-mix(in oklab, var(--a63-action-danger) 14%, transparent);
   --a63-action-danger-subtle-foreground: var(--color-danger-400);
+  --a63-action-disabled-background: var(--a63-surface-muted);
+  --a63-action-disabled-foreground: var(--surface-dark-9);
+  --a63-action-disabled-border: var(--a63-border-subtle);
   --a63-status-info: var(--color-info-500);
   --a63-status-info-subtle: color-mix(in oklab, var(--a63-status-info) 14%, transparent);
   --a63-status-info-subtle-foreground: var(--color-info-400);

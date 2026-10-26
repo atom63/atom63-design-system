@@ -665,6 +665,23 @@
                       "$value": "{color.danger.700}"
                     }
                   }
+                },
+                "disabled": {
+                  "background": {
+                    "$type": "color",
+                    "$value": "{a63.surface.muted}",
+                    "$description": "A disabled solid or outline action (Button): a neutral fill, so it reads as unavailable rather than as a paler accent."
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{surface.light.9}",
+                    "$description": "A disabled action's label and icon: muted text. It stays legible (about 3:1 on the disabled fill) but is exempt from WCAG's 4.5:1."
+                  },
+                  "border": {
+                    "$type": "color",
+                    "$value": "{a63.border.subtle}",
+                    "$description": "A disabled action's border."
+                  }
                 }
               },
               "status": {
@@ -1168,6 +1185,20 @@
                       "$type": "color",
                       "$value": "{color.danger.400}"
                     }
+                  }
+                },
+                "disabled": {
+                  "background": {
+                    "$type": "color",
+                    "$value": "{a63.surface.muted}"
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{surface.dark.9}"
+                  },
+                  "border": {
+                    "$type": "color",
+                    "$value": "{a63.border.subtle}"
                   }
                 }
               },

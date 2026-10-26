@@ -447,7 +447,11 @@ export function readRecipe(input: RecipeInput): ComponentModel {
             properties[property] = value
             if ('alias' in value) tokens.add(value.alias)
           }
-          for (const [property, fixed] of Object.entries(layer.byState?.[state] ?? {}) as [
+          const fixedValues = {
+            ...layer.byState?.[state],
+            ...layer.byVariantState?.[variant]?.[state],
+          }
+          for (const [property, fixed] of Object.entries(fixedValues) as [
             FigmaProperty,
             number | boolean,
           ][]) {

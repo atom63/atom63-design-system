@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "module": "Atom63UI",
-  "symbolCount": 449,
+  "symbolCount": 455,
   "symbols": [
     {
       "id": "s:8Atom63UI10AtomAvatarV",
@@ -340,6 +340,13 @@
       "source": "Generated/Atom63Tokens.generated.swift"
     },
     {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO20actionDisabledBorderAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.actionDisabledBorder",
+      "declaration": "static let actionDisabledBorder: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
       "id": "s:8Atom63UI10AtomTokensO5ColorO20actionPrimaryPressedAA0c7DynamicE0VvpZ",
       "kind": "swift.type.property",
       "path": "AtomTokens.Color.actionPrimaryPressed",
@@ -372,6 +379,20 @@
       "kind": "swift.type.property",
       "path": "AtomTokens.Color.actionPrimaryForeground",
       "declaration": "static let actionPrimaryForeground: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO24actionDisabledBackgroundAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.actionDisabledBackground",
+      "declaration": "static let actionDisabledBackground: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO24actionDisabledForegroundAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.actionDisabledForeground",
+      "declaration": "static let actionDisabledForeground: AtomDynamicColor",
       "source": "Generated/Atom63Tokens.generated.swift"
     },
     {
@@ -1516,6 +1537,13 @@
       "source": "AtomGradients.swift"
     },
     {
+      "id": "s:8Atom63UI15AtomThemeColorsV20actionDisabledBorderAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.actionDisabledBorder",
+      "declaration": "var actionDisabledBorder: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
       "id": "s:8Atom63UI15AtomThemeColorsV20actionPrimaryPressedAA0C12DynamicColorVvp",
       "kind": "swift.property",
       "path": "AtomThemeColors.actionPrimaryPressed",
@@ -1541,6 +1569,20 @@
       "kind": "swift.property",
       "path": "AtomThemeColors.actionPrimaryForeground",
       "declaration": "var actionPrimaryForeground: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV24actionDisabledBackgroundAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.actionDisabledBackground",
+      "declaration": "var actionDisabledBackground: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV24actionDisabledForegroundAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.actionDisabledForeground",
+      "declaration": "var actionDisabledForeground: AtomDynamicColor",
       "source": "AtomTheme.swift"
     },
     {
@@ -3404,6 +3446,11 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO20actionDisabledBorderAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI10AtomTokensO5ColorO20actionPrimaryPressedAA0c7DynamicE0VvpZ",
       "target": "s:8Atom63UI10AtomTokensO5ColorO",
       "kind": "memberOf"
@@ -3425,6 +3472,16 @@
     },
     {
       "source": "s:8Atom63UI10AtomTokensO5ColorO23actionPrimaryForegroundAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO24actionDisabledBackgroundAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO24actionDisabledForegroundAA0c7DynamicE0VvpZ",
       "target": "s:8Atom63UI10AtomTokensO5ColorO",
       "kind": "memberOf"
     },
@@ -4449,6 +4506,11 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI15AtomThemeColorsV20actionDisabledBorderAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI15AtomThemeColorsV20actionPrimaryPressedAA0C12DynamicColorVvp",
       "target": "s:8Atom63UI15AtomThemeColorsV",
       "kind": "memberOf"
@@ -4465,6 +4527,16 @@
     },
     {
       "source": "s:8Atom63UI15AtomThemeColorsV23actionPrimaryForegroundAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV24actionDisabledBackgroundAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV24actionDisabledForegroundAA0C12DynamicColorVvp",
       "target": "s:8Atom63UI15AtomThemeColorsV",
       "kind": "memberOf"
     },

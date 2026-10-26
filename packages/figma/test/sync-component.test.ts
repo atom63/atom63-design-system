@@ -792,7 +792,7 @@ describe('syncComponent', () => {
     )
   })
 
-  it('fades the disabled label and hides the spinner and icon by default', async () => {
+  it("keeps a disabled fill variant's label opaque and hides the spinner and icon by default", async () => {
     const fake = createFakeNodes()
     await syncModel(fake.figma, syncFixture)
     await syncComponent(fake.figma, buttonModelFixture)
@@ -800,7 +800,7 @@ describe('syncComponent', () => {
       fake
         .findVariant('Button', `Variant=default, Size=md, State=${state}`)
         .children!.find(c => c.name === name)!
-    expect(layer('disabled', 'Label').opacity).toBe(0.56)
+    expect(layer('disabled', 'Label').opacity).toBe(1)
     expect(layer('rest', 'Label').opacity).toBe(1)
     expect(layer('rest', 'Spinner').visible).toBe(false)
     expect(layer('rest', 'Icon').visible).toBe(false)

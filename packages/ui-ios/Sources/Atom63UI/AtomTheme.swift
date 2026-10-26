@@ -19,6 +19,11 @@ public struct AtomThemeColors: Equatable, Sendable {
   public var actionNeutralForeground: AtomDynamicColor
   public var actionDanger: AtomDynamicColor
   public var actionDangerForeground: AtomDynamicColor
+  /// A disabled button's neutral fill, label and border, so it reads as
+  /// unavailable rather than as a paler accent.
+  public var actionDisabledBackground: AtomDynamicColor
+  public var actionDisabledForeground: AtomDynamicColor
+  public var actionDisabledBorder: AtomDynamicColor
   public var statusInfo: AtomDynamicColor
   public var statusSuccess: AtomDynamicColor
   public var statusWarning: AtomDynamicColor
@@ -73,6 +78,9 @@ public struct AtomTheme: Equatable, Sendable {
       actionNeutralForeground: AtomTokens.Color.actionNeutralForeground,
       actionDanger: AtomTokens.Color.actionDanger,
       actionDangerForeground: AtomTokens.Color.actionDangerForeground,
+      actionDisabledBackground: AtomTokens.Color.actionDisabledBackground,
+      actionDisabledForeground: AtomTokens.Color.actionDisabledForeground,
+      actionDisabledBorder: AtomTokens.Color.actionDisabledBorder,
       statusInfo: AtomTokens.Color.statusInfo,
       statusSuccess: AtomTokens.Color.statusSuccess,
       statusWarning: AtomTokens.Color.statusWarning,
