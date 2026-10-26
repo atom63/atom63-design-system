@@ -685,7 +685,7 @@ export const buttonContract: {
     slots: readonly ["root", "label", "icon", "spinner", "indicator"];
     states: readonly ["rest", "hover", "pressed", "focusVisible", "disabled", "loading"];
     tokenSlots: readonly ["button.background", "button.foreground", "button.border.color", "button.border.width", "button.radius", "button.shadow", "button.focusRing", "button.height", "button.paddingInline", "button.gap", "button.iconSize", "button.motion.press"];
-    variants: readonly ["default", "primary", "secondary", "destructive", "destructive-outline", "outline", "dashed", "ghost", "link", "overlay", "glass"];
+    variants: readonly ["default", "primary", "secondary", "raised", "destructive", "destructive-outline", "outline", "dashed", "ghost", "link", "overlay", "glass"];
     visualArchetypes: readonly ["action"];
 };
 
@@ -782,7 +782,7 @@ export const buttonTokenSlots: readonly ["button.background", "button.foreground
 export type ButtonVariant = (typeof buttonVariants)[number];
 
 // @public (undocumented)
-export const buttonVariants: readonly ["default", "primary", "secondary", "destructive", "destructive-outline", "outline", "dashed", "ghost", "link", "overlay", "glass"];
+export const buttonVariants: readonly ["default", "primary", "secondary", "raised", "destructive", "destructive-outline", "outline", "dashed", "ghost", "link", "overlay", "glass"];
 
 // @public (undocumented)
 export type ButtonVisualArchetype = (typeof buttonVisualArchetypes)[number];
@@ -866,7 +866,7 @@ export interface CardContract {
 // @public (undocumented)
 export const cardContract: {
     defaultVariant: "default";
-    variants: readonly ["default", "ghost", "interactive", "overlay"];
+    variants: readonly ["default", "filled", "elevated", "ghost", "interactive", "overlay"];
     paddings: readonly ["none", "sm", "md", "lg"];
     contentPaddings: readonly ["none", "xs", "sm", "md", "lg"];
     lineClamps: readonly [1, 2, 3];
@@ -903,7 +903,7 @@ export const cardStates: readonly ["rest", "hover", "focus-visible", "interactiv
 export type CardVariant = (typeof cardVariants)[number];
 
 // @public (undocumented)
-export const cardVariants: readonly ["default", "ghost", "interactive", "overlay"];
+export const cardVariants: readonly ["default", "filled", "elevated", "ghost", "interactive", "overlay"];
 
 // @public (undocumented)
 export type CardVisualArchetype = (typeof cardVisualArchetypes)[number];

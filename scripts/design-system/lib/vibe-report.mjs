@@ -128,6 +128,8 @@ function measureCells(arm) {
   return {
     files: `${files.added.length} added, ${files.changed.length} changed (${measures.lines} lines)`,
     craft: String(measures.craft.length),
+    // Runs recorded before warnings existed have none.
+    warnings: String(measures.warnings?.length ?? 0),
     typecheck: String(typecheck.errors),
     build: build.ok ? 'pass' : 'fail',
     axe: axe.error
@@ -143,6 +145,7 @@ function measureCells(arm) {
 const measureRows = [
   { key: 'files', label: 'Files' },
   { key: 'craft', label: 'Craft violations (`check:craft` rules)' },
+  { key: 'warnings', label: 'Warnings (`<Button>` without `variant`)' },
   { key: 'typecheck', label: 'Type errors (`tsc --noEmit`)' },
   { key: 'build', label: '`vite build`' },
   { key: 'axe', label: 'axe violations' },

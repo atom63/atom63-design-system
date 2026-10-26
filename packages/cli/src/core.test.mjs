@@ -138,6 +138,13 @@ const topicGolden = [
   ['phone app', 'app-view', 1],
   ['mobile app with tab bar', 'app-view', 2],
   ['edge to edge phone screen', 'app-view', 1],
+  ['track list', 'table', 1],
+  ['album track list', 'table/Plain', 2],
+  ['playlist', 'table', 1],
+  ['podcast episodes', 'table', 1],
+  ['floating button', 'button/FloatingOverMap', 1],
+  ['map buttons', 'button', 2],
+  ['buttons over map', 'button/FloatingOverMap', 4],
   ['grouped list ios', 'item', 1],
   ['grouped list ios', 'item/InsetGroup', 2],
   ['inset list section', 'item', 1],
@@ -169,6 +176,13 @@ describe('topics', () => {
       assert.ok(ids.includes(expected), `"${query}" → ${top(query).slice(0, 5).join(', ')}`)
     })
   }
+
+  it('points a media list at Table variant="plain" in the build kit', () => {
+    const kit = build(index, 'album page with a track list').data
+    const table = kit.components.find(entry => entry.slug === 'table')
+    assert.ok(table, kit.components.map(entry => entry.slug).join(', '))
+    assert.match(table.summary, /variant="plain"/)
+  })
 
   it('says what to use from a topic entry', () => {
     const [first] = search(index, 'price').data.results
@@ -350,7 +364,7 @@ describe('component', () => {
 
   it('carries one guidance line per variant, size and state where the catalog has them', () => {
     const { data } = component(index, 'button')
-    assert.equal(data.axisGuidance.variant.primary, 'The one primary action per view.')
+    assert.match(data.axisGuidance.variant.primary, /^The one primary action per view/)
     assert.deepEqual(Object.keys(data.axisGuidance), ['variant', 'size', 'state'])
     assert.match(data.docsMarkdown, /## Variants, sizes and states/)
     assert.match(

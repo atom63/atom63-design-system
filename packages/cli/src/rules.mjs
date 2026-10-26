@@ -27,6 +27,16 @@ export const rules = [
     check: ['raw-color', 'unknown-token'],
   },
   {
+    id: 'accent-sparingly',
+    rule: 'Use the accent for one or two cues per view; the main action may be neutral.',
+    why: 'An accent on every control points at nothing. Button `default` is a high-emphasis neutral solid; `primary` is for a main action in the brand colour.',
+  },
+  {
+    id: 'one-boundary',
+    rule: "One boundary per element: border, fill or shadow, not two. Don't nest outlined containers.",
+    why: 'Each extra edge is another line to read past. Card `filled` and `elevated` and Button `raised` give a fill or a shadow without the border.',
+  },
+  {
     id: 'on-media-colors',
     rule: 'Controls drawn over photos or video use the `--a63-on-media-*` and `--a63-media-*` tokens.',
     why: 'Theme colors are meaningless on an unknown picture; these hold contrast on any image.',

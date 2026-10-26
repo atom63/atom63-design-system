@@ -61,6 +61,7 @@
     transparent 1px,
     transparent 3px
   );
+  --a63-surface-raised-shadow: var(--a63-surface-shadow);
   --a63-track-shadow: inset 0 0 4px -1px
     color-mix(in oklch, var(--a63-action-primary) 22%, transparent);
   --a63-choice-box-shadow: inset 0 0 5px -2px

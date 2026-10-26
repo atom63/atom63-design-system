@@ -126,7 +126,11 @@ describe('component guidance from the catalog', () => {
     )
     expect(expected.length).toBeGreaterThan(0)
     expect(rows).toEqual(expected)
-    expect(rows[0]).toEqual(['Variant', 'primary', 'The one primary action per view.'])
+    expect(rows[0]).toEqual([
+      'Variant',
+      'primary',
+      "The one primary action per view, when the product's main action is in its brand colour.",
+    ])
     const heading = container.querySelector('h2')
     expect(heading?.id).toBe('variants-sizes-and-states')
     expect(heading?.textContent).toBe(componentAxisGuidanceHeading)
