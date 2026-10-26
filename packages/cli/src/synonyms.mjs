@@ -125,6 +125,11 @@ const iosTabBar = {
   note: "iOS: the native TabView, each tab's root its ScrollView or List. The floating iOS 26 bar insets that scroll view, so the last row ends above it; no bottom padding, overlay or bottom ignoresSafeArea.",
 }
 
+const iosTabs = {
+  id: 'component:tabs',
+  note: 'iOS per variant: underline and attached render as AtomTabRow (text tabs over the content, an accent bar under the selected one, an optional SF Symbol over each label; scrolls sideways when they do not fit). default renders as Picker(.segmented), for a short second-level filter. App-level sections use TabView.',
+}
+
 const tabBar = [
   { id: 'template:tab-bar' },
   {
@@ -206,6 +211,11 @@ export const topics = {
   tabview: [iosTabBar],
   'ios tab bar': [iosTabBar],
   'swiftui tab bar': [iosTabBar],
+  'ios tabs': [iosTabs],
+  'swiftui tabs': [iosTabs],
+  'underline tabs': [iosTabs],
+  'tabs underline': [iosTabs],
+  atomtabrow: [iosTabs],
   'edge to edge': phoneApp,
   iphone: phoneApp,
   'mobile app': phoneApp,

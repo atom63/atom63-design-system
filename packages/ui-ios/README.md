@@ -36,6 +36,7 @@ The package targets iOS 17+ and macOS 14+.
 - `AtomSelectionRow`
 - `AtomSectionHeader`
 - `AtomChip`
+- `AtomTabRow` and `AtomTab`
 - `AtomBadge`
 - `AtomAvatar`
 - `AtomAsyncImage`

@@ -45,6 +45,8 @@ export type CrossRendererDoc = {
   requiredStates: readonly string[]
   sharedOutcomes: readonly string[]
   swiftUIRenderer: string
+  /** The SwiftUI renderer per variant, when variants render differently on iOS. */
+  swiftUIRendererByVariant?: Readonly<Record<string, string>>
 }
 
 type ResolvedContract = {
@@ -105,6 +107,9 @@ export function getComponentContractDoc(slug: string): ComponentContractDoc | nu
     requiredStates: shared.requiredStates,
     sharedOutcomes: shared.sharedOutcomes,
     swiftUIRenderer: shared.swiftUIRenderer,
+    ...(shared.swiftUIRendererByVariant
+      ? { swiftUIRendererByVariant: shared.swiftUIRendererByVariant }
+      : {}),
   }
 
   const accessibility = accessibilityDoc(contract.accessibility)
@@ -186,6 +191,16 @@ export function componentContractMarkdown(slug: string): string {
       '',
       `${shared.intent} Rendered by \`${shared.swiftUIRenderer}\` in SwiftUI, with \`${shared.parity}\` parity.`,
       '',
+      ...(shared.swiftUIRendererByVariant
+        ? [
+            '**SwiftUI renderer per variant:**',
+            '',
+            ...Object.entries(shared.swiftUIRendererByVariant).map(
+              ([variant, renderer]) => `- \`${variant}\`: \`${renderer}\``
+            ),
+            '',
+          ]
+        : []),
       `**Required states:** ${codeList(shared.requiredStates)}`,
       '',
       '**Shared outcomes:**',

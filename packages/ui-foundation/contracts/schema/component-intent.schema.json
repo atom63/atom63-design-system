@@ -291,6 +291,15 @@
         "swiftUIRenderer": {
           "type": "string"
         },
+        "swiftUIRendererByVariant": {
+          "description": "The SwiftUI renderer for each value of the component's variants list, when variants render differently on iOS. Lists every variant.",
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
         "intent": {
           "type": "string",
           "minLength": 1
