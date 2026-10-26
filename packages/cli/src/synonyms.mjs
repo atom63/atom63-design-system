@@ -100,15 +100,15 @@ const gradients = [
 const displayType = [
   {
     id: 'doc:foundation-typography',
-    note: 'Display roles text-display (40px) and text-display-large (56px) for balances, prices and hero numbers; wrap cents in amount-fraction.',
+    note: 'Display roles text-display (40px) and text-display-large (56px) for balances, prices and hero numbers; wrap cents in amount-fraction. iOS: AtomAmountText(13.25, currencyCode: "USD") and .atomDisplayFont().',
   },
   {
     id: 'token:--a63-type-display-font-size',
-    note: 'The display text role (10xl, 40px): Tailwind text-display or text-display-strong.',
+    note: 'The display text role (10xl, 40px): Tailwind text-display or text-display-strong; iOS AtomDisplayRole.display.',
   },
   {
     id: 'token:--a63-type-display-large-font-size',
-    note: 'The display-large text role (11xl, 56px): Tailwind text-display-large.',
+    note: 'The display-large text role (11xl, 56px): Tailwind text-display-large; iOS AtomDisplayRole.displayLarge.',
   },
 ]
 
@@ -120,12 +120,18 @@ const persistentSheet = [
   { id: 'component:drawer' },
 ]
 
+const iosTabBar = {
+  id: 'component:tabs',
+  note: "iOS: the native TabView, each tab's root its ScrollView or List. The floating iOS 26 bar insets that scroll view, so the last row ends above it; no bottom padding, overlay or bottom ignoresSafeArea.",
+}
+
 const tabBar = [
   { id: 'template:tab-bar' },
   {
     id: 'template:app-view',
     note: 'App view with layout="phone": edge to edge, safe-area aware, the tab bar docked at the bottom.',
   },
+  iosTabBar,
 ]
 
 const phoneApp = [
@@ -161,6 +167,9 @@ export const topics = {
   'bottom tabs': tabBar,
   'tab bar': tabBar,
   tabbar: tabBar,
+  tabview: [iosTabBar],
+  'ios tab bar': [iosTabBar],
+  'swiftui tab bar': [iosTabBar],
   'edge to edge': phoneApp,
   iphone: phoneApp,
   'mobile app': phoneApp,

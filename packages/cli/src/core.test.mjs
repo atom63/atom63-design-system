@@ -118,6 +118,10 @@ const topicGolden = [
   ['tab bar', 'tab-bar', 1],
   ['bottom navigation', 'tab-bar', 1],
   ['bottom nav', 'tab-bar', 1],
+  ['tab bar', 'tabs', 3],
+  ['tabview', 'tabs', 1],
+  ['ios tab bar', 'tabs', 2],
+  ['swiftui tab bar', 'tabs', 2],
   ['phone app', 'app-view', 1],
   ['mobile app with tab bar', 'app-view', 2],
   ['edge to edge phone screen', 'app-view', 1],
@@ -139,6 +143,15 @@ describe('topics', () => {
     const [first] = search(index, 'price').data.results
     assert.match(first.summary, /amount-fraction/)
     assert.equal(first.next, 'atom63 docs foundation-typography')
+  })
+
+  it('names the Swift display amount API', () => {
+    for (const query of ['display amount ios', 'balance']) {
+      const [first] = search(index, query).data.results
+      assert.match(first.summary, /AtomAmountText/, query)
+    }
+    const token = index.tokens.find(entry => entry.cssVar === '--a63-type-display-font-size')
+    assert.equal(token.swift, 'AtomDisplayRole.display')
   })
 
   it('respects a kind filter', () => {

@@ -167,6 +167,14 @@ public enum AtomTokens {
         public static let scrimEnd = AtomColorComponents(red: 0, green: 0, blue: 0, opacity: 0.6)
     }
 
+    /// The amount-fraction utility: the fraction of a display amount (".25" of
+    /// "$13.25") at `scale` of the role size, its baseline raised by `raise` of
+    /// its own size (`font-size: 0.5em; vertical-align: 0.8em`).
+    public enum AmountFraction {
+        public static let scale: Double = 0.5
+        public static let raise: Double = 0.8
+    }
+
     /// The widget contract (`--a63-widget-*`): the card's corner radius and the
     /// rim between the tile edge and the card face.
     public enum Widget {
@@ -212,5 +220,47 @@ public enum AtomTokens {
         public static let minTouchTarget: Double = 44
         public static let pressScale: Double = 0.97
         public static let disabledOpacity: Double = 0.56
+    }
+}
+
+/// A display text role (`--a63-type-display*`): balances, prices and hero numbers,
+/// above Apple's text styles. The size is the web role's, in points at the default
+/// Dynamic Type size; it scales with `textStyle`.
+public enum AtomDisplayRole: String, CaseIterable, Sendable {
+    /// --a63-type-display-*
+    case display
+    /// --a63-type-display-large-*
+    case displayLarge
+
+    /// --a63-type-<role>-font-size at the default Dynamic Type size.
+    public var size: Double {
+        switch self {
+        case .display: 40
+        case .displayLarge: 56
+        }
+    }
+
+    /// --a63-type-<role>-font-weight.
+    public var weight: Font.Weight {
+        switch self {
+        case .display: .semibold
+        case .displayLarge: .semibold
+        }
+    }
+
+    /// --a63-type-<role>-font-weight-strong, the emphasized weight.
+    public var strongWeight: Font.Weight {
+        switch self {
+        case .display: .bold
+        case .displayLarge: .bold
+        }
+    }
+
+    /// The text style whose Dynamic Type scaling the role follows.
+    public var textStyle: Font.TextStyle {
+        switch self {
+        case .display: .largeTitle
+        case .displayLarge: .largeTitle
+        }
     }
 }
