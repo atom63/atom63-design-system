@@ -89,6 +89,20 @@ Six neutral palettes (`n1`–`n6`) give the system different neutral personaliti
   ))}
 </TokenSwatchGrid>
 
+### Gradients
+
+Three gradient tokens hold whole `linear-gradient()` values, so they go in `background-image`
+(`bg-(image:--a63-gradient-brand)` in Tailwind), never in `background-color`:
+
+| Token | Use |
+|-------|-----|
+| `--a63-gradient-brand` | Heroes and banners: the brand ramp from 500 to 700 at 135deg. Follows a nested brand. |
+| `--a63-gradient-brand-subtle` | Quiet illustration backgrounds and cards: the brand ramp from 50 to 100. |
+| `--a63-gradient-scrim` | A vertical fade to dark under text laid over a photo, such as a title at the foot of a hero image. |
+
+Text over a photo with the scrim takes `--a63-on-media-foreground`. For a large amount on a hero,
+pair a gradient with the display text roles on the Typography page.
+
 ## Compatibility
 
 The shadcn vocabulary (`background`, `primary`, `muted-foreground`, …) is an **opt-in adapter** (`@atom63/styles/compat/shadcn` + Tailwind theme keys). It re-references `--a63-*`; it does not own values (mirror rule).

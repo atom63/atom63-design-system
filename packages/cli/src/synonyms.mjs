@@ -60,3 +60,97 @@ export const synonyms = {
   tree: ['sidebar-nav-tree'],
   unread: ['button', 'badge'],
 }
+
+/*
+ * Entries other than components that a word or phrase should surface:
+ * tokens, docs pages, story examples and templates, as `kind:id`. Search adds
+ * each one for a query that contains the key (as whole words), even a token
+ * or an example it would not list otherwise, and ranks the first highest.
+ * `note` replaces the entry's summary, to say what to use from it. The golden
+ * queries in core.test.mjs cover them.
+ */
+const gradients = [
+  {
+    id: 'token:--a63-gradient-brand',
+    note: 'Brand gradient for heroes and banners: background-image, bg-(image:--a63-gradient-brand).',
+  },
+  {
+    id: 'token:--a63-gradient-brand-subtle',
+    note: 'Quiet brand gradient for illustration backgrounds and cards.',
+  },
+  {
+    id: 'token:--a63-gradient-scrim',
+    note: 'Fade to dark under text over a photo, such as a hero title.',
+  },
+  { id: 'doc:foundation-colors', note: 'Colors page, "Gradients": the three gradient tokens.' },
+]
+
+const displayType = [
+  {
+    id: 'doc:foundation-typography',
+    note: 'Display roles text-display (40px) and text-display-large (56px) for balances, prices and hero numbers; wrap cents in amount-fraction.',
+  },
+  {
+    id: 'token:--a63-type-display-font-size',
+    note: 'The display text role (10xl, 40px): Tailwind text-display or text-display-strong.',
+  },
+  {
+    id: 'token:--a63-type-display-large-font-size',
+    note: 'The display-large text role (11xl, 56px): Tailwind text-display-large.',
+  },
+]
+
+const persistentSheet = [
+  {
+    id: 'example:drawer/PersistentSheet',
+    note: 'A non-modal bottom sheet over a map: <Drawer modal={false} snapPoints={…}>.',
+  },
+  { id: 'component:drawer' },
+]
+
+const tabBar = [
+  { id: 'template:tab-bar' },
+  {
+    id: 'template:app-view',
+    note: 'App view with layout="phone": edge to edge, safe-area aware, the tab bar docked at the bottom.',
+  },
+]
+
+const phoneApp = [
+  {
+    id: 'template:app-view',
+    note: 'App view with layout="phone": edge to edge, safe-area aware, the tab bar docked at the bottom.',
+  },
+  { id: 'template:tab-bar' },
+]
+
+export const topics = {
+  amount: displayType,
+  balance: displayType,
+  'big number': displayType,
+  cents: displayType,
+  currency: displayType,
+  display: displayType,
+  fraction: displayType,
+  'large number': displayType,
+  price: displayType,
+  fade: [gradients[2], gradients[0], gradients[1], gradients[3]],
+  gradient: gradients,
+  gradients,
+  hero: [gradients[0], displayType[2], gradients[2], gradients[3]],
+  scrim: [gradients[2], gradients[3]],
+  'bottom sheet': persistentSheet,
+  'non modal': persistentSheet,
+  'over map': persistentSheet,
+  persistent: persistentSheet,
+  'snap points': persistentSheet,
+  'bottom nav': tabBar,
+  'bottom navigation': tabBar,
+  'bottom tabs': tabBar,
+  'tab bar': tabBar,
+  tabbar: tabBar,
+  'edge to edge': phoneApp,
+  'mobile app': phoneApp,
+  'phone app': phoneApp,
+  'phone screen': phoneApp,
+}

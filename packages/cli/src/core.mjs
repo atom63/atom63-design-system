@@ -7,7 +7,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
 import { rules as ruleTable } from './rules.mjs'
-import { synonyms } from './synonyms.mjs'
+import { synonyms, topics } from './synonyms.mjs'
 
 const defaultIndexPath = fileURLToPath(new URL('../generated/agent-index.json', import.meta.url))
 
@@ -127,6 +127,25 @@ function synonymBoost(query, slug) {
   return best
 }
 
+/**
+ * The entries a query's topics point at (see `topics`), by `kind:id`, each
+ * with its score and the note that replaces its summary. They rank above
+ * every scored match, in the order the topic lists them: 200 for the first,
+ * then 10 less each.
+ */
+export function topicHits(query) {
+  const text = ` ${normalize(query)} `
+  const hits = new Map()
+  for (const [key, entries] of Object.entries(topics)) {
+    if (!text.includes(` ${key} `)) continue
+    entries.forEach(({ id, note }, rank) => {
+      const score = 200 - rank * 10
+      if ((hits.get(id)?.score ?? 0) < score) hits.set(id, { score, note })
+    })
+  }
+  return hits
+}
+
 /* ── Commands ────────────────────────────────────────────────────────────── */
 
 export const searchKinds = ['component', 'template', 'token', 'doc', 'example']
@@ -134,8 +153,8 @@ export const searchKinds = ['component', 'template', 'token', 'doc', 'example']
 /**
  * One ranked list across components, templates, tokens, docs pages and story
  * examples.
- * Tokens only join when the query looks like one (`--…`) or kind is `token`,
- * so a thousand variables cannot bury the components.
+ * Tokens only join when the query looks like one (`--…`), kind is `token` or
+ * a topic names them, so a thousand variables cannot bury the components.
  */
 export function search(index, query, { kind, limit = 10 } = {}) {
   if (!query?.trim()) throw new AtomError('search.empty_query', 'Pass something to search for.')
@@ -144,6 +163,8 @@ export function search(index, query, { kind, limit = 10 } = {}) {
   }
   const terms = queryTerms(query)
   const wants = candidateKind => !kind || kind === candidateKind
+  const hits = topicHits(query)
+  const topic = (candidateKind, id) => hits.get(`${candidateKind}:${id}`)
   const results = []
 
   if (wants('component')) {
@@ -159,13 +180,14 @@ export function search(index, query, { kind, limit = 10 } = {}) {
         ],
         prose: `${component.usage} ${component.guidance.join(' ')}`,
       })
-      const total = value + synonymBoost(query, component.slug)
+      const hit = topic('component', component.slug)
+      const total = hit?.score ?? value + synonymBoost(query, component.slug)
       if (total > 0) {
         results.push({
           kind: 'component',
           id: component.slug,
           label: component.label,
-          summary: component.summary,
+          summary: hit?.note ?? component.summary,
           score: total,
           next: `atom63 component ${component.slug}`,
         })
@@ -175,17 +197,20 @@ export function search(index, query, { kind, limit = 10 } = {}) {
 
   if (wants('template')) {
     for (const template of index.templates) {
-      const total = score(query, terms, {
-        names: [template.id, template.title],
-        keywords: [...template.tags, template.category, ...template.componentsUsed],
-        prose: template.description,
-      })
+      const hit = topic('template', template.id)
+      const total =
+        hit?.score ??
+        score(query, terms, {
+          names: [template.id, template.title],
+          keywords: [...template.tags, template.category, ...template.componentsUsed],
+          prose: template.description,
+        })
       if (total > 0) {
         results.push({
           kind: 'template',
           id: template.id,
           label: template.title,
-          summary: template.description,
+          summary: hit?.note ?? template.description,
           score: total,
           next: `atom63 template ${template.id}`,
         })
@@ -195,14 +220,15 @@ export function search(index, query, { kind, limit = 10 } = {}) {
 
   if (wants('doc')) {
     for (const doc of index.docs) {
+      const hit = topic('doc', doc.slug)
       const total = score(query, terms, { names: [doc.slug, doc.label], prose: doc.markdown })
-      if (total > 0) {
+      if (total > 0 || hit) {
         results.push({
           kind: 'doc',
           id: doc.slug,
           label: doc.label,
-          summary: doc.route,
-          score: total * 0.8,
+          summary: hit?.note ?? doc.route,
+          score: hit?.score ?? total * 0.8,
           next: `atom63 docs ${doc.slug}`,
         })
       }
@@ -212,15 +238,16 @@ export function search(index, query, { kind, limit = 10 } = {}) {
   if (wants('example')) {
     for (const component of index.components) {
       for (const story of component.stories?.names ?? []) {
+        const hit = topic('example', `${component.slug}/${story}`)
         const total = score(query, terms, { names: [`${component.slug} ${story}`, story] })
-        if (total >= 50) {
+        if (total >= 50 || hit) {
           results.push({
             kind: 'example',
             id: `${component.slug}/${story}`,
             label: `${component.label} — ${story}`,
-            summary: component.stories.file,
+            summary: hit?.note ?? component.stories.file,
             // Below components unless examples are what was asked for.
-            score: total * (kind === 'example' ? 1 : 0.4),
+            score: hit?.score ?? total * (kind === 'example' ? 1 : 0.4),
             next: `atom63 example ${component.slug} ${story}`,
           })
         }
@@ -228,19 +255,25 @@ export function search(index, query, { kind, limit = 10 } = {}) {
     }
   }
 
-  if (kind === 'token' || (!kind && query.trim().startsWith('--'))) {
+  const allTokens = kind === 'token' || (!kind && query.trim().startsWith('--'))
+  if (wants('token')) {
     for (const token of index.tokens) {
+      const hit = topic('token', token.cssVar)
+      // Other tokens join only when every token is in play.
+      if (!allTokens && !hit) continue
       const bare = token.cssVar.replace(/^--(a63-)?/, '')
-      const total = score(query.replace(/^--(a63-)?/, ''), terms, {
-        names: [token.cssVar, bare, token.figma?.path ?? ''],
-        keywords: [token.layer, token.type],
-      })
+      const total =
+        hit?.score ??
+        score(query.replace(/^--(a63-)?/, ''), terms, {
+          names: [token.cssVar, bare, token.figma?.path ?? ''],
+          keywords: [token.layer, token.type],
+        })
       if (total > 0) {
         results.push({
           kind: 'token',
           id: token.cssVar,
           label: token.cssVar,
-          summary: `${token.type}, ${token.layer} layer`,
+          summary: hit?.note ?? `${token.type}, ${token.layer} layer`,
           score: total,
           next: `atom63 token ${token.cssVar}`,
         })

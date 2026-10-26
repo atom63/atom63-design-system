@@ -61,7 +61,7 @@ export const commands = [
   {
     name: 'template',
     summary:
-      'Page and block templates: with no id, the list; with an id, its source files, the components and blocks it uses, and how to copy it.',
+      'Page and block templates: with no id, the list; with an id, its source files and those of the blocks it uses (enough to paste: templates ship in no package), the components and packages it uses, and how to copy it.',
     args: [{ name: 'id', optional: true, description: 'Template id, e.g. settings-page.' }],
     flags: [
       { name: 'kind', type: 'string', choices: templateKinds, description: 'Only this kind.' },
