@@ -57,6 +57,10 @@ const golden = [
   ['persistent sheet', 'drawer', 2],
   ['unread badge', 'button', 3],
   ['carousel dots', 'carousel', 1],
+  // Synonyms can name tokens, which then join a plain search.
+  ['gradient', '--a63-gradient-brand-fade', 3],
+  ['hero', '--a63-gradient-brand-fade', 1],
+  ['hero gradient', '--a63-gradient-brand-fade', 1],
 ]
 
 /**
@@ -91,12 +95,14 @@ const templateGolden = [
  * the given position of the unfiltered search.
  */
 const topicGolden = [
-  ['gradient', '--a63-gradient-brand', 1],
-  ['gradient', '--a63-gradient-scrim', 3],
-  ['gradient', 'foundation-colors', 4],
-  ['hero gradient', '--a63-gradient-brand', 1],
-  ['hero', '--a63-type-display-large-font-size', 2],
-  ['fade', '--a63-gradient-scrim', 1],
+  ['gradient', '--a63-gradient-brand-fade', 1],
+  ['gradient', '--a63-gradient-brand', 2],
+  ['gradient', '--a63-gradient-scrim', 4],
+  ['gradient', 'foundation-colors', 5],
+  ['hero gradient', '--a63-gradient-brand', 2],
+  ['hero', '--a63-type-display-large-font-size', 3],
+  ['fade', '--a63-gradient-brand-fade', 1],
+  ['fade', '--a63-gradient-scrim', 2],
   ['scrim over photo', '--a63-gradient-scrim', 1],
   ['display', 'foundation-typography', 1],
   ['display', '--a63-type-display-font-size', 2],
@@ -133,7 +139,7 @@ describe('topics', () => {
 
   it('respects a kind filter', () => {
     assert.ok(search(index, 'gradient', { kind: 'doc' }).data.results.every(r => r.kind === 'doc'))
-    assert.equal(top('gradient', { kind: 'token' })[0], '--a63-gradient-brand')
+    assert.equal(top('gradient', { kind: 'token' })[0], '--a63-gradient-brand-fade')
   })
 
   it('only points topics at entries that exist', () => {
@@ -217,8 +223,11 @@ describe('search', () => {
     assert.throws(() => search(index, '  '), { code: 'search.empty_query' })
   })
 
-  it('only maps synonyms to components that exist', () => {
-    const slugs = new Set(index.components.map(item => item.slug))
+  it('only maps synonyms to components and tokens that exist', () => {
+    const slugs = new Set([
+      ...index.components.map(item => item.slug),
+      ...index.tokens.map(item => item.cssVar),
+    ])
     for (const [word, targets] of Object.entries(synonyms)) {
       for (const target of targets) assert.ok(slugs.has(target), `${word} → ${target}`)
     }
@@ -315,6 +324,24 @@ describe('token', () => {
       assert.equal(data.swift, 'AtomTokens.Color.actionPrimary')
       assert.equal(data.figma.path, 'action/primary')
     }
+  })
+
+  it('finds the gradient tokens, with the Swift that draws them', () => {
+    const ids = token(index, 'gradient').data.results.map(result => result.id)
+    for (const cssVar of [
+      '--a63-gradient-brand',
+      '--a63-gradient-brand-subtle',
+      '--a63-gradient-brand-fade',
+      '--a63-gradient-brand-fade-dark-zone',
+      '--a63-gradient-scrim',
+    ]) {
+      assert.ok(ids.includes(cssVar), `token gradient → ${ids.join(', ')}`)
+    }
+    assert.equal(token(index, 'hero').data.results[0].id, '--a63-gradient-brand-fade')
+    assert.equal(
+      token(index, '--a63-gradient-brand-fade').data.swift,
+      'AtomThemeColors.brandFadeGradient(for:)'
+    )
   })
 
   it('ranks tokens for words that are not a variable name', () => {

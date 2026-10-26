@@ -1,7 +1,8 @@
 /**
  * Words people use for a component that differ from its name. Search expands
  * a query term with these before scoring, so "modal" finds `dialog`. Values
- * are catalog slugs, most fitting first: the first gets the largest boost.
+ * are catalog slugs, or token CSS variables (`--a63-…`) that then join the
+ * results of any search, most fitting first: the first gets the largest boost.
  * The golden queries in core.test.mjs cover them.
  */
 export const synonyms = {
@@ -22,7 +23,14 @@ export const synonyms = {
   expand: ['collapsible', 'accordion'],
   fold: ['sidebar-nav-tree', 'collapsible', 'accordion'],
   folding: ['sidebar-nav-tree', 'collapsible', 'accordion'],
+  gradient: [
+    '--a63-gradient-brand-fade',
+    '--a63-gradient-brand',
+    '--a63-gradient-scrim',
+    '--a63-gradient-brand-subtle',
+  ],
   grid: ['table'],
+  hero: ['--a63-gradient-brand-fade', '--a63-gradient-brand'],
   hint: ['tooltip', 'kbd'],
   keyboard: ['kbd'],
   label: ['label', 'badge'],
@@ -82,7 +90,11 @@ const gradients = [
     id: 'token:--a63-gradient-scrim',
     note: 'Fade to dark under text over a photo, such as a hero title.',
   },
-  { id: 'doc:foundation-colors', note: 'Colors page, "Gradients": the three gradient tokens.' },
+  { id: 'doc:foundation-colors', note: 'Colors page, "Gradients": the four gradient tokens.' },
+  {
+    id: 'token:--a63-gradient-brand-fade',
+    note: 'Hero that fades from the brand into the page; keep overlay controls in its dark zone.',
+  },
 ]
 
 const displayType = [
@@ -134,10 +146,10 @@ export const topics = {
   fraction: displayType,
   'large number': displayType,
   price: displayType,
-  fade: [gradients[2], gradients[0], gradients[1], gradients[3]],
-  gradient: gradients,
-  gradients,
-  hero: [gradients[0], displayType[2], gradients[2], gradients[3]],
+  fade: [gradients[4], gradients[2], gradients[0], gradients[1], gradients[3]],
+  gradient: [gradients[4], ...gradients.slice(0, 4)],
+  gradients: [gradients[4], ...gradients.slice(0, 4)],
+  hero: [gradients[4], gradients[0], displayType[2], gradients[2], gradients[3]],
   scrim: [gradients[2], gradients[3]],
   'bottom sheet': persistentSheet,
   'non modal': persistentSheet,

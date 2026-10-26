@@ -197,11 +197,51 @@
   transform: none;
 }
 
-/* Disabled fades ONLY the foreground (label + icon), not the whole control — the
-   fill/border stay at full strength so the button still reads as present, just
-   inactive. */
-.a63-Button:disabled .a63-Button-label,
-.a63-Button[data-disabled] .a63-Button-label {
+/* A disabled button with a fill or a border swaps to the neutral disabled tokens:
+   a grey fill, a subtle border and muted text, so a disabled primary reads as
+   unavailable rather than as a paler accent. Gloss, highlight and tinted depth go
+   with the fill. Ghost and link have no fill to replace, and overlay and glass sit
+   over media, where theme greys mean nothing, so those fade only the label, by
+   --a63-action-disabled-opacity's 0.56 (a literal, so the Figma model reads it).
+   Loading also disables the button but keeps its own look. Each selector names
+   its variant and state, so it outranks the variant rules below and the Figma
+   recipe reader maps it to one Variant × State; :where() keeps loading out
+   without adding specificity. */
+.a63-Button[data-variant='default']:disabled:where(:not([data-loading])),
+.a63-Button[data-variant='default'][data-disabled]:where(:not([data-loading])),
+.a63-Button[data-variant='primary']:disabled:where(:not([data-loading])),
+.a63-Button[data-variant='primary'][data-disabled]:where(:not([data-loading])),
+.a63-Button[data-variant='secondary']:disabled:where(:not([data-loading])),
+.a63-Button[data-variant='secondary'][data-disabled]:where(:not([data-loading])),
+.a63-Button[data-variant='destructive']:disabled:where(:not([data-loading])),
+.a63-Button[data-variant='destructive'][data-disabled]:where(:not([data-loading])),
+.a63-Button[data-variant='destructive-outline']:disabled:where(:not([data-loading])),
+.a63-Button[data-variant='destructive-outline'][data-disabled]:where(:not([data-loading])),
+.a63-Button[data-variant='outline']:disabled:where(:not([data-loading])),
+.a63-Button[data-variant='outline'][data-disabled]:where(:not([data-loading])),
+.a63-Button[data-variant='dashed']:disabled:where(:not([data-loading])),
+.a63-Button[data-variant='dashed'][data-disabled]:where(:not([data-loading])) {
+  --button-background: var(--a63-action-disabled-background);
+  --button-border-color: var(--a63-action-disabled-border);
+  --button-foreground: var(--a63-action-disabled-foreground);
+  --button-state-active-background: var(--button-background);
+  --button-state-active-border-color: var(--button-border-color);
+  --button-gloss: none;
+  --button-highlight: none;
+  --button-shadow: var(--a63-control-shadow-flat);
+  --button-shadow-active: var(--button-shadow);
+  --button-tint-drop: 0 0 #0000;
+  --button-text-shadow: none;
+}
+
+.a63-Button[data-variant='ghost']:disabled:where(:not([data-loading])) .a63-Button-label,
+.a63-Button[data-variant='ghost'][data-disabled]:where(:not([data-loading])) .a63-Button-label,
+.a63-Button[data-variant='link']:disabled:where(:not([data-loading])) .a63-Button-label,
+.a63-Button[data-variant='link'][data-disabled]:where(:not([data-loading])) .a63-Button-label,
+.a63-Button[data-variant='overlay']:disabled:where(:not([data-loading])) .a63-Button-label,
+.a63-Button[data-variant='overlay'][data-disabled]:where(:not([data-loading])) .a63-Button-label,
+.a63-Button[data-variant='glass']:disabled:where(:not([data-loading])) .a63-Button-label,
+.a63-Button[data-variant='glass'][data-disabled]:where(:not([data-loading])) .a63-Button-label {
   opacity: 0.56;
 }
 
@@ -255,7 +295,7 @@
   height: var(--button-icon-size);
   border: 2px solid currentColor;
   border-top-color: transparent;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   animation: a63-button-spin 700ms linear infinite;
 }
 
@@ -331,7 +371,7 @@
   z-index: 1;
   width: 0.5rem;
   height: 0.5rem;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background-color: var(--a63-action-danger);
   box-shadow: 0 0 0 2px var(--a63-surface-page);
   pointer-events: none;
@@ -366,10 +406,10 @@
   white-space: nowrap;
 }
 
-/* Round: a full radius, so icon sizes become circles and labelled sizes pills.
+/* Round: a pill radius (--radius-pill), so icon sizes become circles and labelled sizes pills.
    Variants that set their own radius (dashed) already are round. */
 .a63-Button[data-shape='round'] {
-  --button-radius: var(--radius-full);
+  --button-radius: var(--radius-pill);
 }
 
 /* Dashed: an outline pill with a dashed border, for add and filter affordances
@@ -378,7 +418,7 @@
   --button-gloss: none;
   --button-highlight: none;
   --button-shadow: none;
-  --button-radius: var(--radius-full);
+  --button-radius: var(--radius-pill);
   --button-background: transparent;
   --button-border-color: var(--a63-border-control);
   --button-foreground: var(--a63-text-primary);

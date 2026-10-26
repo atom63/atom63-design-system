@@ -4,9 +4,9 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1129,
-    "aliasValues": 773,
-    "skipped": 186,
+    "variables": 1134,
+    "aliasValues": 779,
+    "skipped": 187,
     "computed": 59
   },
   "collections": [
@@ -3632,6 +3632,18 @@
           "scopes": [
             "FONT_WEIGHT"
           ]
+        },
+        {
+          "name": "gradient/brand/fade/dark/zone",
+          "token": "--a63-gradient-brand-fade-dark-zone",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 50
+            }
+          },
+          "codeSyntax": "var(--a63-gradient-brand-fade-dark-zone)",
+          "scopes": []
         },
         {
           "name": "media/scrim",
@@ -14088,6 +14100,18 @@
           "scopes": []
         },
         {
+          "name": "radius/pill",
+          "token": "--radius-pill",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 9999
+            }
+          },
+          "codeSyntax": "var(--radius-pill)",
+          "scopes": []
+        },
+        {
           "name": "rounded/2xl",
           "token": "--rounded-2xl",
           "type": "FLOAT",
@@ -15128,6 +15152,58 @@
             }
           },
           "codeSyntax": "var(--a63-action-danger-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "action/disabled/background",
+          "token": "--a63-action-disabled-background",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-surface-muted"
+            },
+            "dark": {
+              "alias": "--a63-surface-muted"
+            }
+          },
+          "codeSyntax": "var(--a63-action-disabled-background)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "action/disabled/border",
+          "token": "--a63-action-disabled-border",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-border-subtle"
+            },
+            "dark": {
+              "alias": "--a63-border-subtle"
+            }
+          },
+          "codeSyntax": "var(--a63-action-disabled-border)",
+          "scopes": [
+            "STROKE_COLOR"
+          ]
+        },
+        {
+          "name": "action/disabled/foreground",
+          "token": "--a63-action-disabled-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--surface-light-9"
+            },
+            "dark": {
+              "alias": "--surface-dark-9"
+            }
+          },
+          "codeSyntax": "var(--a63-action-disabled-foreground)",
           "scopes": [
             "TEXT_FILL"
           ]
@@ -20463,6 +20539,10 @@
     {
       "token": "--a63-gradient-brand",
       "reason": "unresolvable value: linear-gradient(135deg, rgba(44, 127, 255, 1), rgba(0, 57, 158, 1))"
+    },
+    {
+      "token": "--a63-gradient-brand-fade",
+      "reason": "unresolvable value in dark: linear-gradient(\n    to bottom,\n    rgba(0, 29, 111, 1),\n    rgba(0, 57, 158, 1) 50%,\n    color-mix(\n    in oklab,\n    rgba(17, 17, 17, 1) calc(100% - 0%),\n    rgba(0, 0, 30, 1) 0%\n  )\n  )"
     },
     {
       "token": "--a63-gradient-brand-subtle",

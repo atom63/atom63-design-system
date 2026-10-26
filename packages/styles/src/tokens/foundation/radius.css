@@ -30,4 +30,9 @@
      personalization curve as the rest of the scale instead of a fixed 9999px
      pill that ignores subtle/none/round wrap. */
   --radius-full: calc(var(--radius-xl) * 2);
+  /* True pill: a fixed 9999px that makes any box a circle or capsule at any size
+     and on every radius axis value. Use it where a component promises a circle
+     or pill (round buttons, avatars, switches, radios, dots); use --radius-full
+     for a large corner that follows the radius axis. */
+  --radius-pill: 9999px;
 }

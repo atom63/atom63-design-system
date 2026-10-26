@@ -26,6 +26,12 @@ struct AtomThemeTests {
     #expect(AtomTheme(skin: .terminal).colors.textPrimary != AtomTheme.standard.colors.textPrimary)
   }
 
+  @Test func brandGradientsFollowTheBrand() {
+    #expect(AtomTokens.Gradient.brandFadeDarkZone == 0.5)
+    #expect(AtomTheme(brand: .b3).colors.brand800 != AtomTheme.standard.colors.brand800)
+    #expect(AtomTheme(brand: .b3).colors.brand500 != AtomTheme.standard.colors.brand500)
+  }
+
   /// The Swift resolver agrees with Scripts/lib/theme-graph.mjs, which
   /// packages/styles checks against Chromium for every selection.
   @Test func matchesTheResolverFixture() throws {
@@ -70,6 +76,9 @@ struct AtomThemeTests {
       "actionNeutralForeground": colors.actionNeutralForeground,
       "actionDanger": colors.actionDanger,
       "actionDangerForeground": colors.actionDangerForeground,
+      "actionDisabledBackground": colors.actionDisabledBackground,
+      "actionDisabledForeground": colors.actionDisabledForeground,
+      "actionDisabledBorder": colors.actionDisabledBorder,
       "statusInfo": colors.statusInfo,
       "statusSuccess": colors.statusSuccess,
       "statusWarning": colors.statusWarning,
@@ -80,6 +89,11 @@ struct AtomThemeTests {
       "widgetForeground": colors.widgetForeground,
       "widgetBorder": colors.widgetBorder,
       "widgetRim": colors.widgetRim,
+      "brand50": colors.brand50,
+      "brand100": colors.brand100,
+      "brand500": colors.brand500,
+      "brand700": colors.brand700,
+      "brand800": colors.brand800,
     ]
     return fields[name]
   }

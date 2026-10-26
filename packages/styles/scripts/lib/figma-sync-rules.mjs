@@ -77,8 +77,8 @@ const numberRules = [
     scopes: ['WIDTH_HEIGHT'],
   },
   {
-    group: 'no Figma field (motion, scales, stacking)',
-    test: /(^|-)(duration|delay|scale|multiplier|tint|strength|z|layer|density|breakpoint|container)(-|$)/,
+    group: 'no Figma field (motion, scales, stacking, gradient stops)',
+    test: /(^|-)(duration|delay|scale|multiplier|tint|strength|z|layer|density|breakpoint|container|zone)(-|$)/,
     scopes: [],
   },
 ]

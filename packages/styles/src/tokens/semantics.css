@@ -20,6 +20,8 @@
     transparent,
     color-mix(in oklch, black 60%, transparent)
   );
+  /* The dark zone of --a63-gradient-brand-fade: the top share of the hero that stays at brand 700 or darker, where white on-media text and overlay controls reach WCAG AA on every brand. Below it the hero fades into the page, so content there uses the page tokens, on its own panel while the fade is still running. */
+  --a63-gradient-brand-fade-dark-zone: 50%;
   /* Shadow color — the ink of drop shadows and the faint edge of a raised knob. Black in every theme and mode; recipes mix it to the strength they need, so they never write a literal color. */
   --a63-shadow-color: var(--color-black-100);
   /* Media stage — behind full-screen photos and video: black in every theme, so letterboxing matches the picture. */
@@ -140,6 +142,13 @@
   --a63-surface-sidebar: var(--a63-surface-muted);
   /* A panel set back from the page, such as the command palette's list: the muted surface in light mode and the page surface in dark mode. */
   --a63-surface-recessed: var(--a63-surface-muted);
+  /* A hero that fades from the brand into the page: brand 800 at the top, brand 700 at the end of the dark zone (--a63-gradient-brand-fade-dark-zone), then the page color at the bottom. Overlay buttons and on-media labels go in the dark zone only; content over the faded part uses the page tokens. */
+  --a63-gradient-brand-fade: linear-gradient(
+    to bottom,
+    var(--a63-brand-800),
+    var(--a63-brand-700) var(--a63-gradient-brand-fade-dark-zone),
+    var(--a63-surface-page)
+  );
   /* Text */
   --a63-text-primary: var(--surface-light-12);
   --a63-text-secondary: var(--surface-light-11);
@@ -204,6 +213,12 @@
   --a63-action-danger-foreground: white;
   --a63-action-danger-subtle: color-mix(in oklab, var(--a63-action-danger) 14%, transparent);
   --a63-action-danger-subtle-foreground: var(--color-danger-700);
+  /* A disabled solid or outline action (Button): a neutral fill, so it reads as unavailable rather than as a paler accent. */
+  --a63-action-disabled-background: var(--a63-surface-muted);
+  /* A disabled action's label and icon: muted text. It stays legible (about 3:1 on the disabled fill) but is exempt from WCAG's 4.5:1. */
+  --a63-action-disabled-foreground: var(--surface-light-9);
+  /* A disabled action's border. */
+  --a63-action-disabled-border: var(--a63-border-subtle);
   /* Status (danger's status role is served by --a63-action-danger). The base is
      the accent used for tinted callouts (bg = mix toward transparent, text/border
      = the accent); -foreground is the text/icon color ON a SOLID status fill.
@@ -309,6 +324,13 @@
   );
   --a63-surface-sidebar: var(--a63-surface-page);
   --a63-surface-recessed: var(--a63-surface-page);
+  /* A hero that fades from the brand into the page: brand 800 at the top, brand 700 at the end of the dark zone (--a63-gradient-brand-fade-dark-zone), then the page color at the bottom. Overlay buttons and on-media labels go in the dark zone only; content over the faded part uses the page tokens. */
+  --a63-gradient-brand-fade: linear-gradient(
+    to bottom,
+    var(--a63-brand-800),
+    var(--a63-brand-700) var(--a63-gradient-brand-fade-dark-zone),
+    var(--a63-surface-page)
+  );
   --a63-text-primary: var(--surface-dark-12);
   --a63-text-secondary: var(--surface-dark-11);
   /* The primary fill is too dark to read as text on dark surfaces. */
@@ -353,6 +375,9 @@
   --a63-action-danger-hover: color-mix(in oklch, var(--a63-action-danger) 82%, white 8%);
   --a63-action-danger-subtle: color-mix(in oklab, var(--a63-action-danger) 14%, transparent);
   --a63-action-danger-subtle-foreground: var(--color-danger-400);
+  --a63-action-disabled-background: var(--a63-surface-muted);
+  --a63-action-disabled-foreground: var(--surface-dark-9);
+  --a63-action-disabled-border: var(--a63-border-subtle);
   --a63-status-info: var(--color-info-500);
   --a63-status-info-subtle: color-mix(in oklab, var(--a63-status-info) 14%, transparent);
   --a63-status-info-subtle-foreground: var(--color-info-400);

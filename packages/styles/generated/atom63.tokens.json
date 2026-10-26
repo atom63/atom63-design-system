@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 1897,
-    "uniqueCssVariables": 1182,
-    "figmaMappedDeclarations": 1835
+    "declarations": 1907,
+    "uniqueCssVariables": 1188,
+    "figmaMappedDeclarations": 1845
   },
   "entries": [
     {
@@ -360,6 +360,102 @@
       },
       "lifecycle": "preview",
       "aliases": ["--color-danger-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-action-disabled-background",
+      "cssVar": "--a63-action-disabled-background",
+      "type": "color",
+      "value": "var(--a63-surface-muted)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "action/disabled/background",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-muted"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-action-disabled-background",
+      "cssVar": "--a63-action-disabled-background",
+      "type": "color",
+      "value": "var(--a63-surface-muted)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "action/disabled/background",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-muted"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-action-disabled-border",
+      "cssVar": "--a63-action-disabled-border",
+      "type": "color",
+      "value": "var(--a63-border-subtle)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "action/disabled/border",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-border-subtle"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-action-disabled-border",
+      "cssVar": "--a63-action-disabled-border",
+      "type": "color",
+      "value": "var(--a63-border-subtle)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "action/disabled/border",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-border-subtle"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-action-disabled-foreground",
+      "cssVar": "--a63-action-disabled-foreground",
+      "type": "color",
+      "value": "var(--surface-dark-9)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "action/disabled/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--surface-dark-9"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-action-disabled-foreground",
+      "cssVar": "--a63-action-disabled-foreground",
+      "type": "color",
+      "value": "var(--surface-light-9)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "action/disabled/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--surface-light-9"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
@@ -7346,6 +7442,62 @@
       "lifecycle": "preview",
       "aliases": ["--a63-brand-500", "--a63-brand-700"],
       "scope": ":root, [data-a63-brand]"
+    },
+    {
+      "name": "a63-gradient-brand-fade",
+      "cssVar": "--a63-gradient-brand-fade",
+      "type": "color",
+      "value": "linear-gradient( to bottom, var(--a63-brand-800), var(--a63-brand-700) var(--a63-gradient-brand-fade-dark-zone), var(--a63-surface-page) )",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "gradient/brand/fade",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": [
+        "--a63-brand-700",
+        "--a63-brand-800",
+        "--a63-gradient-brand-fade-dark-zone",
+        "--a63-surface-page"
+      ],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-gradient-brand-fade",
+      "cssVar": "--a63-gradient-brand-fade",
+      "type": "color",
+      "value": "linear-gradient( to bottom, var(--a63-brand-800), var(--a63-brand-700) var(--a63-gradient-brand-fade-dark-zone), var(--a63-surface-page) )",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "gradient/brand/fade",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": [
+        "--a63-brand-700",
+        "--a63-brand-800",
+        "--a63-gradient-brand-fade-dark-zone",
+        "--a63-surface-page"
+      ],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-gradient-brand-fade-dark-zone",
+      "cssVar": "--a63-gradient-brand-fade-dark-zone",
+      "type": "dimension",
+      "value": "50%",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "gradient/brand/fade/dark/zone"
+      },
+      "lifecycle": "preview",
+      "scope": ":root"
     },
     {
       "name": "a63-gradient-brand-subtle",
@@ -22064,6 +22216,20 @@
       },
       "lifecycle": "preview",
       "scope": "[data-a63-radius='subtle']"
+    },
+    {
+      "name": "radius-pill",
+      "cssVar": "--radius-pill",
+      "type": "radius",
+      "value": "9999px",
+      "sourceFile": "packages/styles/src/tokens/foundation/radius.css",
+      "layer": "foundation",
+      "figma": {
+        "collection": "Foundation",
+        "path": "radius/pill"
+      },
+      "lifecycle": "preview",
+      "scope": ":root"
     },
     {
       "name": "radius-sm",
