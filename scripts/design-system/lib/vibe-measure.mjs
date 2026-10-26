@@ -10,8 +10,9 @@
  *   divided by every JSX element that is a third-party component or an
  *   interactive HTML element;
  * - warnings: patterns that are not wrong but usually unintended, such as a
- *   `<Button>` without `variant`, which draws the heaviest neutral solid.
- *   They are reported, never counted as craft violations.
+ *   `<Button>` without `variant`, which draws the heaviest neutral solid, or
+ *   more than one `variant="primary"` Button in one file. They are reported,
+ *   never counted as craft violations.
  */
 import ts from 'typescript'
 
@@ -169,11 +170,15 @@ export function countJsxElements(source, fileName = 'file.tsx') {
 }
 
 /**
- * Warnings in one TSX file: each `<Button>` imported from `@atom63/*` that
- * passes no `variant` (and spreads no props that could carry one). It draws
- * the `default` neutral solid, the heaviest neutral, which is rarely meant for
- * a back, keypad or secondary action.
- * @returns {{ rule: 'button-without-variant', line: number, match: string }[]}
+ * Warnings in one TSX file, for `<Button>` imported from `@atom63/*`:
+ * - `button-without-variant`: each one that passes no `variant` (and spreads no
+ *   props that could carry one). It draws the `default` neutral solid, the
+ *   heaviest neutral, which is rarely meant for a back, keypad or secondary
+ *   action.
+ * - `multiple-primary`: one warning, at the second one, when more than one
+ *   passes a literal `variant="primary"` (or `{'primary'}`). One main action
+ *   per view is the rule; a computed variant is not counted.
+ * @returns {{ rule: 'button-without-variant' | 'multiple-primary', line: number, match: string }[]}
  */
 export function findWarnings(source, fileName = 'file.tsx') {
   const file = ts.createSourceFile(
@@ -195,6 +200,17 @@ export function findWarnings(source, fileName = 'file.tsx') {
     }
   }
   const warnings = []
+  const primaries = []
+  const literal = initializer => {
+    if (!initializer) return undefined
+    if (ts.isStringLiteral(initializer)) return initializer.text
+    if (ts.isJsxExpression(initializer) && initializer.expression) {
+      const expression = initializer.expression
+      if (ts.isStringLiteral(expression) || ts.isNoSubstitutionTemplateLiteral(expression))
+        return expression.text
+    }
+    return undefined
+  }
   const visit = node => {
     if (
       (ts.isJsxOpeningElement(node) || ts.isJsxSelfClosingElement(node)) &&
@@ -206,18 +222,30 @@ export function findWarnings(source, fileName = 'file.tsx') {
           ts.isJsxSpreadAttribute(attribute) ||
           (ts.isJsxAttribute(attribute) && attribute.name.getText(file) === 'variant')
       )
+      const { line } = file.getLineAndCharacterOfPosition(node.getStart(file))
       if (!open) {
-        const { line } = file.getLineAndCharacterOfPosition(node.getStart(file))
         warnings.push({
           rule: /** @type {const} */ ('button-without-variant'),
           line: line + 1,
           match: node.getText(file).split('\n')[0],
         })
       }
+      const variant = attributes.find(
+        attribute => ts.isJsxAttribute(attribute) && attribute.name.getText(file) === 'variant'
+      )
+      if (variant && ts.isJsxAttribute(variant) && literal(variant.initializer) === 'primary')
+        primaries.push({ line: line + 1, match: node.getText(file).split('\n')[0] })
     }
     ts.forEachChild(node, visit)
   }
   visit(file)
+  if (primaries.length > 1) {
+    warnings.push({
+      rule: /** @type {const} */ ('multiple-primary'),
+      line: primaries[1].line,
+      match: primaries[1].match,
+    })
+  }
   return warnings
 }
 

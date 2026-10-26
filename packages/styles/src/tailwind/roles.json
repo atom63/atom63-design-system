@@ -64,7 +64,9 @@
       "label": "Selection",
       "roles": {
         "selected": "--a63-selected-background",
-        "selected-foreground": "--a63-selected-foreground"
+        "selected-foreground": "--a63-selected-foreground",
+        "selected-accent": "--a63-selected-accent-background",
+        "selected-accent-foreground": "--a63-selected-accent-foreground"
       }
     },
     {

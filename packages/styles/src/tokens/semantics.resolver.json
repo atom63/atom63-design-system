@@ -980,16 +980,28 @@
               "selected": {
                 "background": {
                   "$type": "color",
-                  "$value": "{a63.action.primary}",
-                  "$description": "A selected item in a list, menu or grid: a light wash of the primary.",
-                  "$extensions": {
-                    "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 12%, transparent)"
-                  }
+                  "$value": "{a63.surface.muted}",
+                  "$description": "A selected or current item in a list, menu, table or grid: a neutral muted fill."
                 },
                 "foreground": {
                   "$type": "color",
-                  "$value": "{a63.text.accent}",
+                  "$value": "{a63.text.primary}",
                   "$description": "Text and icons of a selected item."
+                },
+                "accent": {
+                  "background": {
+                    "$type": "color",
+                    "$value": "{a63.action.primary}",
+                    "$description": "The opt-in accent selection (tone=\"accent\"): a light wash of the primary.",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 12%, transparent)"
+                    }
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.text.accent}",
+                    "$description": "Text and icons of an accent-selected item."
+                  }
                 }
               }
             }
@@ -1480,14 +1492,24 @@
               "selected": {
                 "background": {
                   "$type": "color",
-                  "$value": "{a63.action.primary}",
-                  "$extensions": {
-                    "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 12%, transparent)"
-                  }
+                  "$value": "{a63.surface.muted}"
                 },
                 "foreground": {
                   "$type": "color",
-                  "$value": "{a63.text.accent}"
+                  "$value": "{a63.text.primary}"
+                },
+                "accent": {
+                  "background": {
+                    "$type": "color",
+                    "$value": "{a63.action.primary}",
+                    "$extensions": {
+                      "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 12%, transparent)"
+                    }
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.text.accent}"
+                  }
                 }
               }
             }

@@ -1,4 +1,4 @@
-import { itemContract, themes } from '@atom63/ui-foundation'
+import { itemContract, itemTones, themes } from '@atom63/ui-foundation'
 import { Bookmark, ChevronRight } from 'lucide-react'
 import {
   Button,
@@ -124,6 +124,39 @@ export const SelectedAndCurrent: Story = {
         </ItemContent>
       </Item>
     </ItemGroup>
+  ),
+}
+
+/* tone sets how a selected or current row is coloured: neutral (the default)
+   is a muted fill with primary text, accent is the opt-in primary wash. */
+export const Tones: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>
+      {itemTones.map(tone => (
+        <ItemGroup key={tone} style={{ width: 240 }}>
+          {['Inbox', 'My issues', 'Projects'].map(label => (
+            <Item
+              key={label}
+              render={
+                <a aria-current={label === 'My issues' ? 'page' : undefined} href={`#${label}`}>
+                  <ItemContent>
+                    <ItemTitle>{label}</ItemTitle>
+                  </ItemContent>
+                </a>
+              }
+              size="xs"
+              tone={tone}
+            />
+          ))}
+          <Item data-selected="" size="xs" tone={tone}>
+            <ItemContent>
+              <ItemTitle>Selected row</ItemTitle>
+              <ItemDescription>tone=&quot;{tone}&quot;</ItemDescription>
+            </ItemContent>
+          </Item>
+        </ItemGroup>
+      ))}
+    </div>
   ),
 }
 

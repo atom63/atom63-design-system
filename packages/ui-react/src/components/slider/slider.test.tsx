@@ -11,6 +11,18 @@ describe('Slider', () => {
     expect(thumb).toHaveAttribute('aria-valuenow', '40')
   })
 
+  it('defaults to the accent tone and forwards tone="neutral"', () => {
+    const { container } = render(
+      <>
+        <Slider aria-label="Accent" defaultValue={40} />
+        <Slider aria-label="Neutral" defaultValue={40} tone="neutral" />
+      </>
+    )
+    const [accent, neutral] = container.querySelectorAll('.a63-Slider')
+    expect(accent).toHaveAttribute('data-tone', 'accent')
+    expect(neutral).toHaveAttribute('data-tone', 'neutral')
+  })
+
   it('exposes the a63-Slider recipe root + track slots', () => {
     const { container } = render(<Slider aria-label="Tint" onValueChange={() => {}} value={10} />)
     expect(container.querySelector('.a63-Slider')).not.toBeNull()

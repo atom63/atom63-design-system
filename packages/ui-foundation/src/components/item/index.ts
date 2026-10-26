@@ -6,6 +6,7 @@ export {
   itemSizes,
   itemSlots,
   itemStates,
+  itemTones,
   itemVariants,
   itemVisualArchetypes,
 } from './item-contract'
@@ -16,6 +17,7 @@ export type {
   ItemSize,
   ItemSlot,
   ItemState,
+  ItemTone,
   ItemVariant,
   ItemVisualArchetype,
 } from './item-contract'

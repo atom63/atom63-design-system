@@ -25,6 +25,20 @@ describe('Item', () => {
     expect(el).toHaveAttribute('data-size', 'default')
   })
 
+  it('defaults the selection tone to neutral and forwards tone="accent"', () => {
+    const { container } = render(
+      <>
+        <Item data-selected="">neutral</Item>
+        <Item data-selected="" tone="accent">
+          accent
+        </Item>
+      </>
+    )
+    const [neutral, accent] = container.querySelectorAll('.a63-Item')
+    expect(neutral).toHaveAttribute('data-tone', 'neutral')
+    expect(accent).toHaveAttribute('data-tone', 'accent')
+  })
+
   it('forwards variant + size', () => {
     const { container } = render(
       <Item variant="outline" size="sm">

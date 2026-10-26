@@ -1,5 +1,6 @@
 'use client'
 
+import { type SidebarNavTreeTone, sidebarNavTreeContract } from '@atom63/ui-foundation'
 import { ChevronDown } from 'lucide-react'
 import * as React from 'react'
 
@@ -153,6 +154,11 @@ export interface SidebarNavLinkItemProps {
    * It must spread the props it receives and forward its ref.
    */
   render?: React.ReactElement
+  /**
+   * How the active row is coloured: `neutral` (the default) is a full neutral
+   * plate with primary text, `accent` is accent text on a clear row.
+   */
+  tone?: SidebarNavTreeTone
 }
 
 function SidebarNavLinkItem({
@@ -162,6 +168,7 @@ function SidebarNavLinkItem({
   icon,
   isActive = false,
   render,
+  tone = sidebarNavTreeContract.defaultTone,
 }: SidebarNavLinkItemProps): React.ReactElement {
   const label =
     typeof children === 'string' ? (
@@ -198,6 +205,7 @@ function SidebarNavLinkItem({
         className={cn('a63-SidebarNavTree-item', className)}
         isActive={isActive}
         size="sm"
+        tone={tone}
       >
         {link}
       </SidebarMenuButton>
@@ -216,6 +224,11 @@ export interface SidebarNavCollapsibleItemProps {
   link?: React.ReactElement
   onOpenChange: (open: boolean) => void
   open: boolean
+  /**
+   * How the active row is coloured: `neutral` (the default) is a full neutral
+   * plate with primary text, `accent` is accent text on a clear row.
+   */
+  tone?: SidebarNavTreeTone
 }
 
 function SidebarNavCollapsibleItem({
@@ -227,6 +240,7 @@ function SidebarNavCollapsibleItem({
   link,
   onOpenChange,
   open,
+  tone = sidebarNavTreeContract.defaultTone,
 }: SidebarNavCollapsibleItemProps): React.ReactElement {
   const chevron = (
     <ChevronDown
@@ -245,6 +259,7 @@ function SidebarNavCollapsibleItem({
               className={cn('a63-SidebarNavTree-item', 'a63-SidebarNavTree-row-item')}
               isActive={isActive}
               size="sm"
+              tone={tone}
             >
               {withTickerLabel(link)}
             </SidebarMenuButton>
@@ -263,6 +278,7 @@ function SidebarNavCollapsibleItem({
                 className={cn('a63-SidebarNavTree-item', 'a63-SidebarNavTree-row-trigger')}
                 isActive={isActive}
                 size="sm"
+                tone={tone}
               />
             }
             type="button"
@@ -284,12 +300,18 @@ export interface SidebarNavSubLinkItemProps {
   children: React.ReactElement
   className?: string
   isActive?: boolean
+  /**
+   * How the active row is coloured: `neutral` (the default) is a full neutral
+   * plate with primary text, `accent` is accent text on a clear row.
+   */
+  tone?: SidebarNavTreeTone
 }
 
 function SidebarNavSubLinkItem({
   children,
   className,
   isActive = false,
+  tone = sidebarNavTreeContract.defaultTone,
 }: SidebarNavSubLinkItemProps): React.ReactElement {
   return (
     <SidebarMenuSubItem>
@@ -298,6 +320,7 @@ function SidebarNavSubLinkItem({
         className={cn('a63-SidebarNavTree-item', className)}
         isActive={isActive}
         size="sm"
+        tone={tone}
       >
         {withTickerLabel(children)}
       </SidebarMenuSubButton>

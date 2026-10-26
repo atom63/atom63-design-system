@@ -175,6 +175,32 @@ describe('countTypeErrors', () => {
   })
 })
 
+describe('findWarnings: multiple-primary', () => {
+  it('warns once, at the second literal primary variant of the system Button', () => {
+    const source = [
+      "import { Button as Action } from '@atom63/ui-react'",
+      "import { Button } from './local-button'",
+      'export const A = (v: string) => (',
+      '  <div>',
+      '    <Action variant="primary">Save</Action>',
+      "    <Action variant={'primary'} />",
+      '    <Action variant="primary">Again</Action>',
+      '    <Action variant={v} />',
+      '    <Button variant="primary" />',
+      '  </div>',
+      ')',
+    ].join('\n')
+    assert.deepEqual(findWarnings(source), [
+      { rule: 'multiple-primary', line: 6, match: "<Action variant={'primary'} />" },
+    ])
+    const single = [
+      "import { Button } from '@atom63/ui-react'",
+      'export const B = () => <Button variant="primary" />',
+    ].join('\n')
+    assert.deepEqual(findWarnings(single), [])
+  })
+})
+
 describe('measureSources', () => {
   it('adds the measures of every file', () => {
     const measures = measureSources(
@@ -220,5 +246,23 @@ describe('measureSources', () => {
       '--a63-foreground',
     ])
     assert.deepEqual(unknown(measureSources(files)), [])
+  })
+
+  it('warns, without a craft violation, on a file with more than one primary Button', () => {
+    const page =
+      'import { Button } from \'@atom63/ui-react\'\nexport const A = () => <div><Button variant="primary" /><Button variant="primary" /></div>\n'
+    const single =
+      'import { Button } from \'@atom63/ui-react\'\nexport const B = () => <Button variant="primary" />\n'
+    const measures = measureSources(
+      new Map([
+        ['src/pages/a.tsx', page],
+        ['src/pages/b.tsx', single],
+      ])
+    )
+    assert.deepEqual(
+      measures.warnings.map(({ file, rule }) => [file, rule]),
+      [['src/pages/a.tsx', 'multiple-primary']]
+    )
+    assert.deepEqual(measures.craft, [])
   })
 })

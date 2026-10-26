@@ -6,3 +6,4 @@ export {
   ProgressTrack,
   ProgressValue,
 } from './progress'
+export type { ProgressProps } from './progress'

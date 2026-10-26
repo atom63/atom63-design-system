@@ -4,8 +4,8 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1136,
-    "aliasValues": 785,
+    "variables": 1138,
+    "aliasValues": 789,
     "skipped": 187,
     "computed": 61
   },
@@ -16853,8 +16853,8 @@
           ]
         },
         {
-          "name": "selected/background",
-          "token": "--a63-selected-background",
+          "name": "selected/accent/background",
+          "token": "--a63-selected-accent-background",
           "type": "COLOR",
           "values": {
             "light": {
@@ -16870,6 +16870,41 @@
               }
             }
           },
+          "codeSyntax": "var(--a63-selected-accent-background)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "selected/accent/foreground",
+          "token": "--a63-selected-accent-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-text-accent"
+            },
+            "dark": {
+              "alias": "--a63-text-accent"
+            }
+          },
+          "codeSyntax": "var(--a63-selected-accent-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "selected/background",
+          "token": "--a63-selected-background",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-surface-muted"
+            },
+            "dark": {
+              "alias": "--a63-surface-muted"
+            }
+          },
           "codeSyntax": "var(--a63-selected-background)",
           "scopes": [
             "FRAME_FILL",
@@ -16882,10 +16917,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--a63-text-accent"
+              "alias": "--a63-text-primary"
             },
             "dark": {
-              "alias": "--a63-text-accent"
+              "alias": "--a63-text-primary"
             }
           },
           "codeSyntax": "var(--a63-selected-foreground)",

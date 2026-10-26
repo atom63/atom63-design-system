@@ -2607,6 +2607,8 @@ export interface ItemContract {
     // (undocumented)
     defaultSize: ItemSize;
     // (undocumented)
+    defaultTone: ItemTone;
+    // (undocumented)
     defaultVariant: ItemVariant;
     // (undocumented)
     groupVariants: readonly ItemGroupVariant[];
@@ -2619,6 +2621,8 @@ export interface ItemContract {
     // (undocumented)
     states: readonly ItemState[];
     // (undocumented)
+    tones: readonly ItemTone[];
+    // (undocumented)
     variants: readonly ItemVariant[];
     // (undocumented)
     visualArchetypes: readonly ItemVisualArchetype[];
@@ -2630,6 +2634,7 @@ export const itemContract: {
     defaultSize: "default";
     defaultMediaVariant: "default";
     defaultGroupVariant: "default";
+    defaultTone: "neutral";
     variants: readonly ["default", "outline", "muted"];
     sizes: readonly ["default", "sm", "xs"];
     mediaVariants: readonly ["default", "icon", "image"];
@@ -2637,6 +2642,7 @@ export const itemContract: {
     states: readonly ["rest", "hover", "focus", "selected", "current"];
     visualArchetypes: readonly ["surface"];
     groupVariants: readonly ["default", "inset"];
+    tones: readonly ["neutral", "accent"];
 };
 
 // @public (undocumented)
@@ -2668,6 +2674,12 @@ export type ItemState = (typeof itemStates)[number];
 
 // @public (undocumented)
 export const itemStates: readonly ["rest", "hover", "focus", "selected", "current"];
+
+// @public (undocumented)
+export type ItemTone = (typeof itemTones)[number];
+
+// @public (undocumented)
+export const itemTones: readonly ["neutral", "accent"];
 
 // @public (undocumented)
 export type ItemVariant = (typeof itemVariants)[number];
@@ -3464,9 +3476,13 @@ export const previewCardVisualArchetypes: readonly ["trigger", "overlay", "surfa
 // @public (undocumented)
 export interface ProgressContract {
     // (undocumented)
+    defaultTone: ProgressTone;
+    // (undocumented)
     slots: readonly ProgressSlot[];
     // (undocumented)
     states: readonly ProgressState[];
+    // (undocumented)
+    tones: readonly ProgressTone[];
     // (undocumented)
     visualArchetypes: readonly ProgressVisualArchetype[];
 }
@@ -3474,8 +3490,10 @@ export interface ProgressContract {
 // @public (undocumented)
 export const progressContract: {
     slots: readonly ["progress", "progress-label", "progress-track", "progress-indicator", "progress-value"];
+    defaultTone: "accent";
     states: readonly ["indeterminate", "progressing", "complete"];
     visualArchetypes: readonly ["range"];
+    tones: readonly ["accent", "neutral"];
 };
 
 // @public (undocumented)
@@ -3489,6 +3507,12 @@ export type ProgressState = (typeof progressStates)[number];
 
 // @public (undocumented)
 export const progressStates: readonly ["indeterminate", "progressing", "complete"];
+
+// @public (undocumented)
+export type ProgressTone = (typeof progressTones)[number];
+
+// @public (undocumented)
+export const progressTones: readonly ["accent", "neutral"];
 
 // @public (undocumented)
 export type ProgressVisualArchetype = (typeof progressVisualArchetypes)[number];
@@ -4125,6 +4149,8 @@ export interface SidebarContract {
     // (undocumented)
     defaultMenuButtonSize: SidebarMenuButtonSize;
     // (undocumented)
+    defaultMenuButtonTone: SidebarMenuButtonTone;
+    // (undocumented)
     defaultMenuButtonVariant: SidebarMenuButtonVariant;
     // (undocumented)
     defaultMenuSubButtonSize: SidebarMenuSubButtonSize;
@@ -4134,6 +4160,8 @@ export interface SidebarContract {
     defaultVariant: SidebarVariant;
     // (undocumented)
     menuButtonSizes: readonly SidebarMenuButtonSize[];
+    // (undocumented)
+    menuButtonTones: readonly SidebarMenuButtonTone[];
     // (undocumented)
     menuButtonVariants: readonly SidebarMenuButtonVariant[];
     // (undocumented)
@@ -4157,6 +4185,7 @@ export const sidebarContract: {
     defaultCollapsible: "offcanvas";
     defaultMenuButtonVariant: "default";
     defaultMenuButtonSize: "default";
+    defaultMenuButtonTone: "neutral";
     defaultMenuSubButtonSize: "md";
     sides: readonly ["left", "right"];
     variants: readonly ["sidebar", "floating", "inset"];
@@ -4167,6 +4196,7 @@ export const sidebarContract: {
     states: readonly ["expanded", "collapsed"];
     slots: readonly ["sidebar-wrapper", "sidebar", "sidebar-gap", "sidebar-container", "sidebar-inner", "sidebar-trigger", "sidebar-rail", "sidebar-inset", "sidebar-input", "sidebar-header", "sidebar-footer", "sidebar-separator", "sidebar-content", "sidebar-group", "sidebar-group-label", "sidebar-group-action", "sidebar-group-content", "sidebar-menu", "sidebar-menu-item", "sidebar-menu-button", "sidebar-menu-action", "sidebar-menu-badge", "sidebar-menu-skeleton", "sidebar-menu-sub", "sidebar-menu-sub-item", "sidebar-menu-sub-button"];
     visualArchetypes: readonly ["surface", "action", "field", "trigger"];
+    menuButtonTones: readonly ["neutral", "accent"];
 };
 
 // @public (undocumented)
@@ -4174,6 +4204,12 @@ export type SidebarMenuButtonSize = (typeof sidebarMenuButtonSizes)[number];
 
 // @public (undocumented)
 export const sidebarMenuButtonSizes: readonly ["default", "sm", "lg"];
+
+// @public (undocumented)
+export type SidebarMenuButtonTone = (typeof sidebarMenuButtonTones)[number];
+
+// @public (undocumented)
+export const sidebarMenuButtonTones: readonly ["neutral", "accent"];
 
 // @public (undocumented)
 export type SidebarMenuButtonVariant = (typeof sidebarMenuButtonVariants)[number];
@@ -4190,9 +4226,13 @@ export const sidebarMenuSubButtonSizes: readonly ["sm", "md"];
 // @public (undocumented)
 export interface SidebarNavTreeContract {
     // (undocumented)
+    defaultTone: SidebarNavTreeTone;
+    // (undocumented)
     parts: readonly SidebarNavTreePart[];
     // (undocumented)
     states: readonly SidebarNavTreeState[];
+    // (undocumented)
+    tones: readonly SidebarNavTreeTone[];
     // (undocumented)
     visualArchetypes: readonly SidebarNavTreeVisualArchetype[];
 }
@@ -4200,8 +4240,10 @@ export interface SidebarNavTreeContract {
 // @public (undocumented)
 export const sidebarNavTreeContract: {
     parts: readonly ["group", "group-trigger", "link-item", "collapsible-item", "toggle", "sub-list", "sub-link-item"];
+    defaultTone: "neutral";
     states: readonly ["rest", "hover", "active", "expanded", "collapsed", "focus-visible"];
     visualArchetypes: readonly ["action", "trigger"];
+    tones: readonly ["neutral", "accent"];
 };
 
 // @public (undocumented)
@@ -4215,6 +4257,12 @@ export type SidebarNavTreeState = (typeof sidebarNavTreeStates)[number];
 
 // @public (undocumented)
 export const sidebarNavTreeStates: readonly ["rest", "hover", "active", "expanded", "collapsed", "focus-visible"];
+
+// @public (undocumented)
+export type SidebarNavTreeTone = (typeof sidebarNavTreeTones)[number];
+
+// @public (undocumented)
+export const sidebarNavTreeTones: readonly ["neutral", "accent"];
 
 // @public (undocumented)
 export type SidebarNavTreeVisualArchetype = (typeof sidebarNavTreeVisualArchetypes)[number];
@@ -4292,6 +4340,8 @@ export interface SliderContract {
     // (undocumented)
     defaultOrientation: SliderOrientation;
     // (undocumented)
+    defaultTone: SliderTone;
+    // (undocumented)
     modes: readonly SliderMode[];
     // (undocumented)
     orientations: readonly SliderOrientation[];
@@ -4300,17 +4350,21 @@ export interface SliderContract {
     // (undocumented)
     states: readonly SliderState[];
     // (undocumented)
+    tones: readonly SliderTone[];
+    // (undocumented)
     visualArchetypes: readonly SliderVisualArchetype[];
 }
 
 // @public (undocumented)
 export const sliderContract: {
     defaultOrientation: "horizontal";
+    defaultTone: "accent";
     orientations: readonly ["horizontal", "vertical"];
     modes: readonly ["single", "range"];
     states: readonly ["rest", "focus-visible", "dragging", "disabled"];
     slots: readonly ["slider", "slider-value", "slider-control", "slider-track", "slider-indicator", "slider-thumb"];
     visualArchetypes: readonly ["range"];
+    tones: readonly ["accent", "neutral"];
 };
 
 // @public (undocumented)
@@ -4336,6 +4390,12 @@ export type SliderState = (typeof sliderStates)[number];
 
 // @public (undocumented)
 export const sliderStates: readonly ["rest", "focus-visible", "dragging", "disabled"];
+
+// @public (undocumented)
+export type SliderTone = (typeof sliderTones)[number];
+
+// @public (undocumented)
+export const sliderTones: readonly ["accent", "neutral"];
 
 // @public (undocumented)
 export type SliderVisualArchetype = (typeof sliderVisualArchetypes)[number];
@@ -4446,6 +4506,8 @@ export interface TableContract {
     // (undocumented)
     defaultSize: TableSize;
     // (undocumented)
+    defaultTone: TableTone;
+    // (undocumented)
     defaultVariant: TableVariant;
     // (undocumented)
     sizes: readonly TableSize[];
@@ -4456,6 +4518,8 @@ export interface TableContract {
     // (undocumented)
     stickyEdges: readonly TableStickyEdge[];
     // (undocumented)
+    tones: readonly TableTone[];
+    // (undocumented)
     variants: readonly TableVariant[];
     // (undocumented)
     visualArchetypes: readonly TableVisualArchetype[];
@@ -4465,12 +4529,14 @@ export interface TableContract {
 export const tableContract: {
     defaultVariant: "default";
     defaultSize: "default";
+    defaultTone: "neutral";
     variants: readonly ["default", "plain"];
     sizes: readonly ["default", "sm"];
     stickyEdges: readonly ["start", "end"];
     states: readonly ["rest", "row-hover", "row-selected"];
     slots: readonly ["table-container", "table", "table-header", "table-body", "table-footer", "table-row", "table-head", "table-cell", "table-caption"];
     visualArchetypes: readonly ["surface"];
+    tones: readonly ["neutral", "accent"];
 };
 
 // @public (undocumented)
@@ -4496,6 +4562,12 @@ export type TableStickyEdge = (typeof tableStickyEdges)[number];
 
 // @public (undocumented)
 export const tableStickyEdges: readonly ["start", "end"];
+
+// @public (undocumented)
+export type TableTone = (typeof tableTones)[number];
+
+// @public (undocumented)
+export const tableTones: readonly ["neutral", "accent"];
 
 // @public (undocumented)
 export type TableVariant = (typeof tableVariants)[number];

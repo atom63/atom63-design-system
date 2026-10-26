@@ -17,6 +17,18 @@ describe('Progress', () => {
     expect(el).toHaveAttribute('data-slot', 'progress')
   })
 
+  it('defaults to the accent tone and forwards tone="neutral"', () => {
+    const { container } = render(
+      <>
+        <Progress value={40} />
+        <Progress tone="neutral" value={40} />
+      </>
+    )
+    const [accent, neutral] = container.querySelectorAll('.a63-Progress')
+    expect(accent).toHaveAttribute('data-tone', 'accent')
+    expect(neutral).toHaveAttribute('data-tone', 'neutral')
+  })
+
   it('renders a default track + indicator when given no children', () => {
     const { container } = render(<Progress value={50} />)
     expect(container.querySelector('.a63-Progress-track')).not.toBeNull()
