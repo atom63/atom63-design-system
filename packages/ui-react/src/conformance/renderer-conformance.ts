@@ -380,6 +380,27 @@ export const reactRendererConformance = [
     verifiedAccessibilityOutcomes: ['announces-message', 'does-not-trap-focus'],
     verifiesMotionRecipe: true,
   },
+  {
+    contractId: 'item',
+    implementedStates: ['rest'],
+    verifiedSharedOutcomes: ['rows-keep-reading-order', 'dividers-are-decorative'],
+    verifiedAccessibilityOutcomes: [
+      'preserves-row-order',
+      'hides-dividers-from-assistive-technology',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'carousel',
+    implementedStates: ['rest'],
+    verifiedSharedOutcomes: [
+      'one-dot-per-slide',
+      'current-slide-is-marked',
+      'choosing-a-dot-shows-its-slide',
+    ],
+    verifiedAccessibilityOutcomes: ['names-the-indicator', 'exposes-the-current-position'],
+    verifiesMotionRecipe: false,
+  },
 ] as const satisfies readonly ReactRendererConformanceEvidence[]
 
 export type ReactVerifiedContractId = (typeof reactRendererConformance)[number]['contractId']

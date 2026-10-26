@@ -126,10 +126,11 @@
           },
           "variant": {
             "list": "variants",
-            "map": {
-              "default": {}
-            },
+            "map": {},
             "extensions": {
+              "default": {
+                "description": "The outlined field, for form fields; iOS draws only this chrome today."
+              },
               "filled": {
                 "description": "A muted fill with no resting border; the border shows on hover and focus."
               },

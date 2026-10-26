@@ -120,6 +120,21 @@ function buildKit(data) {
   return [
     `# Kit for "${data.idea}"`,
     '',
+    ...(data.phone
+      ? [
+          '## Phone screen',
+          data.phone.use,
+          data.phone.files,
+          '',
+          '```tsx',
+          ...data.phone.imports,
+          '',
+          data.phone.snippet,
+          '```',
+          `→ ${data.phone.next}`,
+          '',
+        ]
+      : []),
     ...section(
       'Pages',
       data.pages,
