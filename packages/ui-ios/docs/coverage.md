@@ -11,7 +11,7 @@ application structure on native SwiftUI APIs.
 | App tabs | `TabView` |
 | Collections and settings | `List`, `Form`, `Section` |
 | Presentation | `sheet`, `fullScreenCover`, `popover`, `alert`, `confirmationDialog` |
-| Atom63 controls | `AtomButton`, `AtomIconButton`, `AtomChip`, `AtomTextField`, `AtomTextEditor`, `AtomToggle` |
+| Atom63 controls | `AtomButton`, `AtomIconButton`, `AtomChip`, `AtomTabRow`, `AtomTextField`, `AtomTextEditor`, `AtomToggle` |
 | Atom63 form patterns | `AtomFormField`, `AtomFormMessage` |
 | Atom63 content patterns | `AtomCard`, `AtomListSection`, `AtomListRow`, `AtomValueRow`, `AtomSelectionRow`, `AtomSectionHeader`, `AtomActionBar`, `AtomBadge`, `AtomAvatar`, `AtomAsyncImage`, `AtomPageDots` |
 | Atom63 feedback | `AtomResourceIntent`, `AtomPaginationIntent`, `AtomLoadMoreView`, `AtomSyncStatusView`, `AtomContentStateView`, `AtomNotice`, `AtomProgressView`, `AtomSkeletonRow`, `AtomToast` |

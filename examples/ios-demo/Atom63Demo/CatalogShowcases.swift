@@ -737,39 +737,106 @@ private struct DestinationLinkShowcase: View {
 private enum TabsShowcaseSelection: String {
   case overview
   case activity
+  case files
+  case members
+  case settings
+}
+
+private enum TabsShowcaseTravel: String {
+  case stays
+  case flights
+  case cars
+  case taxis
+}
+
+private enum TabsShowcaseFilter: String {
+  case all
+  case open
+  case closed
 }
 
 private struct TabsShowcase: View {
   @State private var selection: TabsShowcaseSelection = .overview
+  @State private var travel: TabsShowcaseTravel = .stays
+  @State private var filter: TabsShowcaseFilter = .all
 
-  // In-page tabs on iOS: a segmented picker names each section and marks the
-  // selected one, and the content below follows it. TabView is for app-level
-  // sections, like the demo's own tab bar.
+  // In-page tabs on iOS. The underline variant is AtomTabRow: section tabs over
+  // the content they select, scrolling when they do not fit. The default
+  // variant is a segmented picker, for a short second-level filter. TabView is
+  // for app-level sections, like the demo's own tab bar.
   var body: some View {
-    VStack(spacing: AtomTokens.Space.x4) {
-      Picker("Project sections", selection: $selection) {
-        Text("Overview").tag(TabsShowcaseSelection.overview)
-        Text("Activity").tag(TabsShowcaseSelection.activity)
-      }
-      .pickerStyle(.segmented)
+    VStack(alignment: .leading, spacing: AtomTokens.Space.x4) {
+      AtomTabRow(
+        "Project sections",
+        selection: $selection,
+        tabs: [
+          AtomTab("Overview", value: .overview),
+          AtomTab("Activity", value: .activity),
+          AtomTab("Files", value: .files),
+          AtomTab("Members", value: .members),
+          AtomTab("Settings", value: .settings),
+        ]
+      )
       .accessibilityIdentifier("catalog-tabs")
 
-      switch selection {
-      case .overview:
-        ContentUnavailableView(
-          "Overview",
-          systemImage: "rectangle.grid.1x2",
-          description: Text("Project summary and current status.")
-        )
-      case .activity:
-        ContentUnavailableView(
-          "Activity",
-          systemImage: "clock.arrow.circlepath",
-          description: Text("Recent project changes.")
-        )
+      Picker("Status filter", selection: $filter) {
+        Text("All").tag(TabsShowcaseFilter.all)
+        Text("Open").tag(TabsShowcaseFilter.open)
+        Text("Closed").tag(TabsShowcaseFilter.closed)
       }
+      .pickerStyle(.segmented)
+
+      sectionContent
+        .frame(maxWidth: .infinity)
+
+      AtomTabRow(
+        "Travel",
+        selection: $travel,
+        tabs: [
+          AtomTab("Stays", systemImage: "bed.double", value: .stays),
+          AtomTab("Flights", systemImage: "airplane", value: .flights),
+          AtomTab("Cars", systemImage: "car", value: .cars),
+          AtomTab("Taxis", systemImage: "car.side", value: .taxis),
+        ]
+      )
     }
     .frame(minHeight: 220, alignment: .top)
+  }
+
+  @ViewBuilder
+  private var sectionContent: some View {
+    switch selection {
+    case .overview:
+      ContentUnavailableView(
+        "Overview",
+        systemImage: "rectangle.grid.1x2",
+        description: Text("Project summary and current status.")
+      )
+    case .activity:
+      ContentUnavailableView(
+        "Activity",
+        systemImage: "clock.arrow.circlepath",
+        description: Text("Recent project changes.")
+      )
+    case .files:
+      ContentUnavailableView(
+        "Files",
+        systemImage: "doc.on.doc",
+        description: Text("Documents shared in the project.")
+      )
+    case .members:
+      ContentUnavailableView(
+        "Members",
+        systemImage: "person.2",
+        description: Text("People working on the project.")
+      )
+    case .settings:
+      ContentUnavailableView(
+        "Settings",
+        systemImage: "gearshape",
+        description: Text("Project name, access and notifications.")
+      )
+    }
   }
 }
 
