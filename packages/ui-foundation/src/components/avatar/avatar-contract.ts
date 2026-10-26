@@ -3,6 +3,9 @@
 
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
+// The fallback holds initials or one icon (an assistant's sparkle, an app glyph) in a filled circle;
+// an icon is drawn at the control icon size for the size step.
+
 export const avatarSizes = ['xs', 'sm', 'default', 'lg'] as const
 export const avatarShapes = ['circle', 'square'] as const
 export const avatarStates = ['loading', 'loaded', 'fallback'] as const

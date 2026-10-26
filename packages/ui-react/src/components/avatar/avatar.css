@@ -73,6 +73,27 @@
   font-size: var(--a63-control-font-size-xs);
 }
 
+/* An icon fallback (an assistant's sparkle, an app glyph) sits inside the
+   filled circle at the control icon size for the avatar's size step, instead
+   of its own 24px default covering the frame. */
+.a63-Avatar-fallback > svg {
+  flex: none;
+  inline-size: var(--a63-control-icon-size-md);
+  block-size: var(--a63-control-icon-size-md);
+}
+.a63-Avatar[data-size='xs'] .a63-Avatar-fallback > svg {
+  inline-size: var(--a63-control-icon-size-xs);
+  block-size: var(--a63-control-icon-size-xs);
+}
+.a63-Avatar[data-size='sm'] .a63-Avatar-fallback > svg {
+  inline-size: var(--a63-control-icon-size-sm);
+  block-size: var(--a63-control-icon-size-sm);
+}
+.a63-Avatar[data-size='lg'] .a63-Avatar-fallback > svg {
+  inline-size: var(--a63-control-icon-size-lg);
+  block-size: var(--a63-control-icon-size-lg);
+}
+
 /* ── Status badge (pinned to the bottom-right, ringed against the page) ──── */
 .a63-Avatar-badge {
   position: absolute;

@@ -193,6 +193,7 @@
       "source": "packages/ui-foundation/contracts/components/avatar.json",
       "exportName": "avatarContract",
       "maturity": "stable",
+      "description": "The fallback holds initials or one icon (an assistant's sparkle, an app glyph) in a filled circle; an icon is drawn at the control icon size for the size step.",
       "axes": [
         { "name": "compositions", "values": ["standalone", "badge", "group"] },
         { "name": "shapes", "values": ["circle", "square"], "default": "circle" },
