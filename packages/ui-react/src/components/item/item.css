@@ -89,8 +89,10 @@
     var(--a63-control-min-size)
   );
 }
+/* Hover is half the neutral selected fill, so a selected row stays visibly
+   stronger than a hovered one. */
 :where(a, button, [role='button'], [role='link']).a63-Item:hover {
-  background-color: var(--a63-surface-muted);
+  background-color: color-mix(in oklch, var(--a63-selected-background) 50%, transparent);
 }
 
 /* Variants (border/fill only) */

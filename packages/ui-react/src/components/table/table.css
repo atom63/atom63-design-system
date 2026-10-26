@@ -7,8 +7,8 @@
  * corners, and a hairline body outline.
  *
  * Token notes: prod's app-level --theme-row-hover/selected-background /
- * -foreground vars map to canonical DS semantics — row hover to
- * --a63-surface-control-hover, selected row to the shared selection tint
+ * -foreground vars map to canonical DS semantics — row hover to half of
+ * --a63-selected-background, selected row to the shared selection tint
  * (--a63-selected-background + -foreground, as Item uses; tone="accent" swaps in
  * --a63-selected-accent-*). text-muted-foreground ->
  * --a63-text-secondary, bg-background -> --a63-surface-page, borders ->
@@ -18,6 +18,9 @@
 .a63-Table-container {
   --table-selected-background: var(--a63-selected-background);
   --table-selected-foreground: var(--a63-selected-foreground);
+  /* Row hover is half the neutral selected fill, so a selected row stays
+     visibly stronger than a hovered one in either tone. */
+  --table-row-hover: color-mix(in oklch, var(--a63-selected-background) 50%, transparent);
 
   position: relative;
   width: 100%;
@@ -88,7 +91,7 @@
   transition: background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
 }
 .a63-Table-row:hover {
-  background: var(--a63-surface-control-hover);
+  background: var(--table-row-hover);
 }
 .a63-Table-row[data-state='selected'] {
   background: var(--table-selected-background);
@@ -160,10 +163,7 @@
   inset-inline-start: 0;
 }
 .a63-Table-row:hover > [data-sticky] {
-  background-image: linear-gradient(
-    var(--a63-surface-control-hover),
-    var(--a63-surface-control-hover)
-  );
+  background-image: linear-gradient(var(--table-row-hover), var(--table-row-hover));
 }
 .a63-Table-row[data-state='selected'] > [data-sticky] {
   background-image: linear-gradient(
