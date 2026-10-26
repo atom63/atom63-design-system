@@ -1,0 +1,36 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "chat-composer",
+  "maturity": "preview",
+  "description": "The message field of an assistant chat: a rounded field with a growing textarea, an attach slot and a trailing send button. While a reply is submitted or streaming the send button becomes a stop button.",
+  "lists": {
+    "statuses": {
+      "values": ["idle", "submitted", "streaming"],
+      "typeName": "ChatComposerStatus"
+    },
+    "slots": [
+      "chat-composer",
+      "chat-composer-field",
+      "chat-composer-attach",
+      "chat-composer-actions",
+      "chat-composer-submit",
+      "chat-composer-footnote"
+    ],
+    "states": ["rest", "focus-visible", "disabled", "streaming"],
+    "visualArchetypes": ["field"]
+  },
+  "contract": {
+    "statuses": {
+      "$ref": "#/lists/statuses"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

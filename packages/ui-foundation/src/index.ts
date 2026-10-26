@@ -276,6 +276,62 @@ export type {
   CalendarVisualArchetype,
 } from './components/calendar'
 export {
+  chatComposerContract,
+  chatComposerSlots,
+  chatComposerStates,
+  chatComposerStatuses,
+  chatComposerVisualArchetypes,
+} from './components/chat-composer/chat-composer-contract'
+export type {
+  ChatComposerContract,
+  ChatComposerSlot,
+  ChatComposerState,
+  ChatComposerStatus,
+  ChatComposerVisualArchetype,
+} from './components/chat-composer/chat-composer-contract'
+export {
+  chatMessageAppearances,
+  chatMessageContract,
+  chatMessageRoles,
+  chatMessageSlots,
+  chatMessageStates,
+  chatMessageVisualArchetypes,
+} from './components/chat-message/chat-message-contract'
+export type {
+  ChatMessageAppearance,
+  ChatMessageContract,
+  ChatMessageRole,
+  ChatMessageSlot,
+  ChatMessageState,
+  ChatMessageVisualArchetype,
+} from './components/chat-message/chat-message-contract'
+export {
+  chatStepsContract,
+  chatStepsSlots,
+  chatStepsStates,
+  chatStepsStatuses,
+  chatStepsVisualArchetypes,
+} from './components/chat-steps/chat-steps-contract'
+export type {
+  ChatStepsContract,
+  ChatStepsSlot,
+  ChatStepsState,
+  ChatStepStatus,
+  ChatStepsVisualArchetype,
+} from './components/chat-steps/chat-steps-contract'
+export {
+  chatTypingIndicatorContract,
+  chatTypingIndicatorSlots,
+  chatTypingIndicatorStates,
+  chatTypingIndicatorVisualArchetypes,
+} from './components/chat-typing-indicator/chat-typing-indicator-contract'
+export type {
+  ChatTypingIndicatorContract,
+  ChatTypingIndicatorSlot,
+  ChatTypingIndicatorState,
+  ChatTypingIndicatorVisualArchetype,
+} from './components/chat-typing-indicator/chat-typing-indicator-contract'
+export {
   checkboxContract,
   checkboxIndicators,
   checkboxSizes,

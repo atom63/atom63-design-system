@@ -959,6 +959,185 @@ export type CarouselVisualArchetype = (typeof carouselVisualArchetypes)[number];
 export const carouselVisualArchetypes: readonly ["surface", "overlay", "action"];
 
 // @public (undocumented)
+export interface ChatComposerContract {
+    // (undocumented)
+    slots: readonly ChatComposerSlot[];
+    // (undocumented)
+    states: readonly ChatComposerState[];
+    // (undocumented)
+    statuses: readonly ChatComposerStatus[];
+    // (undocumented)
+    visualArchetypes: readonly ChatComposerVisualArchetype[];
+}
+
+// @public (undocumented)
+export const chatComposerContract: {
+    statuses: readonly ["idle", "submitted", "streaming"];
+    slots: readonly ["chat-composer", "chat-composer-field", "chat-composer-attach", "chat-composer-actions", "chat-composer-submit", "chat-composer-footnote"];
+    states: readonly ["rest", "focus-visible", "disabled", "streaming"];
+    visualArchetypes: readonly ["field"];
+};
+
+// @public (undocumented)
+export type ChatComposerSlot = (typeof chatComposerSlots)[number];
+
+// @public (undocumented)
+export const chatComposerSlots: readonly ["chat-composer", "chat-composer-field", "chat-composer-attach", "chat-composer-actions", "chat-composer-submit", "chat-composer-footnote"];
+
+// @public (undocumented)
+export type ChatComposerState = (typeof chatComposerStates)[number];
+
+// @public (undocumented)
+export const chatComposerStates: readonly ["rest", "focus-visible", "disabled", "streaming"];
+
+// @public (undocumented)
+export type ChatComposerStatus = (typeof chatComposerStatuses)[number];
+
+// @public (undocumented)
+export const chatComposerStatuses: readonly ["idle", "submitted", "streaming"];
+
+// @public (undocumented)
+export type ChatComposerVisualArchetype = (typeof chatComposerVisualArchetypes)[number];
+
+// @public (undocumented)
+export const chatComposerVisualArchetypes: readonly ["field"];
+
+// @public (undocumented)
+export type ChatMessageAppearance = (typeof chatMessageAppearances)[number];
+
+// @public (undocumented)
+export const chatMessageAppearances: readonly ["plain", "bubble"];
+
+// @public (undocumented)
+export interface ChatMessageContract {
+    // (undocumented)
+    appearances: readonly ChatMessageAppearance[];
+    // (undocumented)
+    defaultAppearance: ChatMessageAppearance;
+    // (undocumented)
+    roles: readonly ChatMessageRole[];
+    // (undocumented)
+    slots: readonly ChatMessageSlot[];
+    // (undocumented)
+    states: readonly ChatMessageState[];
+    // (undocumented)
+    visualArchetypes: readonly ChatMessageVisualArchetype[];
+}
+
+// @public (undocumented)
+export const chatMessageContract: {
+    roles: readonly ["user", "assistant"];
+    defaultAppearance: "plain";
+    appearances: readonly ["plain", "bubble"];
+    slots: readonly ["chat-message-list", "chat-message", "chat-message-avatar", "chat-message-body", "chat-message-content", "chat-message-actions"];
+    states: readonly ["rest", "streaming"];
+    visualArchetypes: readonly ["surface"];
+};
+
+// @public (undocumented)
+export type ChatMessageRole = (typeof chatMessageRoles)[number];
+
+// @public (undocumented)
+export const chatMessageRoles: readonly ["user", "assistant"];
+
+// @public (undocumented)
+export type ChatMessageSlot = (typeof chatMessageSlots)[number];
+
+// @public (undocumented)
+export const chatMessageSlots: readonly ["chat-message-list", "chat-message", "chat-message-avatar", "chat-message-body", "chat-message-content", "chat-message-actions"];
+
+// @public (undocumented)
+export type ChatMessageState = (typeof chatMessageStates)[number];
+
+// @public (undocumented)
+export const chatMessageStates: readonly ["rest", "streaming"];
+
+// @public (undocumented)
+export type ChatMessageVisualArchetype = (typeof chatMessageVisualArchetypes)[number];
+
+// @public (undocumented)
+export const chatMessageVisualArchetypes: readonly ["surface"];
+
+// @public (undocumented)
+export interface ChatStepsContract {
+    // (undocumented)
+    slots: readonly ChatStepsSlot[];
+    // (undocumented)
+    states: readonly ChatStepsState[];
+    // (undocumented)
+    statuses: readonly ChatStepStatus[];
+    // (undocumented)
+    visualArchetypes: readonly ChatStepsVisualArchetype[];
+}
+
+// @public (undocumented)
+export const chatStepsContract: {
+    statuses: readonly ["pending", "running", "complete", "error"];
+    slots: readonly ["chat-steps", "chat-steps-trigger", "chat-steps-content", "chat-step", "chat-step-icon", "chat-step-description"];
+    states: readonly ["closed", "open"];
+    visualArchetypes: readonly ["surface"];
+};
+
+// @public (undocumented)
+export type ChatStepsSlot = (typeof chatStepsSlots)[number];
+
+// @public (undocumented)
+export const chatStepsSlots: readonly ["chat-steps", "chat-steps-trigger", "chat-steps-content", "chat-step", "chat-step-icon", "chat-step-description"];
+
+// @public (undocumented)
+export type ChatStepsState = (typeof chatStepsStates)[number];
+
+// @public (undocumented)
+export const chatStepsStates: readonly ["closed", "open"];
+
+// @public (undocumented)
+export const chatStepsStatuses: readonly ["pending", "running", "complete", "error"];
+
+// @public (undocumented)
+export type ChatStepStatus = (typeof chatStepsStatuses)[number];
+
+// @public (undocumented)
+export type ChatStepsVisualArchetype = (typeof chatStepsVisualArchetypes)[number];
+
+// @public (undocumented)
+export const chatStepsVisualArchetypes: readonly ["surface"];
+
+// @public (undocumented)
+export interface ChatTypingIndicatorContract {
+    // (undocumented)
+    slots: readonly ChatTypingIndicatorSlot[];
+    // (undocumented)
+    states: readonly ChatTypingIndicatorState[];
+    // (undocumented)
+    visualArchetypes: readonly ChatTypingIndicatorVisualArchetype[];
+}
+
+// @public (undocumented)
+export const chatTypingIndicatorContract: {
+    slots: readonly ["chat-typing-indicator", "chat-typing-indicator-dot"];
+    states: readonly ["rest"];
+    visualArchetypes: readonly ["marker"];
+};
+
+// @public (undocumented)
+export type ChatTypingIndicatorSlot = (typeof chatTypingIndicatorSlots)[number];
+
+// @public (undocumented)
+export const chatTypingIndicatorSlots: readonly ["chat-typing-indicator", "chat-typing-indicator-dot"];
+
+// @public (undocumented)
+export type ChatTypingIndicatorState = (typeof chatTypingIndicatorStates)[number];
+
+// @public (undocumented)
+export const chatTypingIndicatorStates: readonly ["rest"];
+
+// @public (undocumented)
+export type ChatTypingIndicatorVisualArchetype = (typeof chatTypingIndicatorVisualArchetypes)[number];
+
+// @public (undocumented)
+export const chatTypingIndicatorVisualArchetypes: readonly ["marker"];
+
+// @public (undocumented)
 export interface CheckboxContract {
     accessibility: A11yPatternBinding;
     // (undocumented)
@@ -5102,7 +5281,7 @@ export const visualArchetypes: {
         readonly id: "field";
         readonly label: "Field controls";
         readonly description: "Editable or field-like data-entry surfaces.";
-        readonly components: readonly ["Input", "Textarea", "InputOTP", "SelectTrigger", "AutocompleteInput", "Form"];
+        readonly components: readonly ["Input", "Textarea", "InputOTP", "SelectTrigger", "AutocompleteInput", "Form", "ChatComposer"];
         readonly contracts: readonly ["control", "field", "trigger"];
     };
     readonly range: {
@@ -5123,7 +5302,7 @@ export const visualArchetypes: {
         readonly id: "marker";
         readonly label: "Markers and keycaps";
         readonly description: "Compact presentational labels, statuses, and keyboard hints.";
-        readonly components: readonly ["Avatar", "Badge", "Kbd"];
+        readonly components: readonly ["Avatar", "Badge", "Kbd", "ChatTypingIndicator"];
         readonly contracts: readonly ["marker"];
     };
     readonly trigger: {
@@ -5151,7 +5330,7 @@ export const visualArchetypes: {
         readonly id: "surface";
         readonly label: "Static content surfaces";
         readonly description: "In-flow containers and content surfaces that do not inherently manipulate state.";
-        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster"];
+        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps"];
         readonly contracts: readonly ["surface"];
     };
 };

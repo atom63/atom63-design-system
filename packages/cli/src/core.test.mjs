@@ -61,6 +61,12 @@ const golden = [
   ['gradient', '--a63-gradient-brand-fade', 3],
   ['hero', '--a63-gradient-brand-fade', 1],
   ['hero gradient', '--a63-gradient-brand-fade', 1],
+  ['chat message', 'chat-message', 2],
+  ['message bubble', 'chat-message', 1],
+  ['chat composer', 'chat-composer', 2],
+  ['typing indicator', 'chat-typing-indicator', 1],
+  ['typing dots', 'chat-typing-indicator', 1],
+  ['thinking steps', 'chat-steps', 1],
 ]
 
 /**
@@ -87,6 +93,10 @@ const templateGolden = [
   ['bottom navigation', 'tab-bar', 1],
   ['phone app with tab bar', 'app-view', 2],
   ['mobile app screen', 'app-view', 1],
+  ['AI assistant chat panel', 'chat-panel', 1],
+  ['chat', 'chat-panel', 1],
+  ['ai assistant', 'chat-page', 2],
+  ['chat history sidebar', 'chat-page', 1],
 ]
 
 /**
@@ -151,6 +161,15 @@ const topicGolden = [
   ['iphone home screen', 'app-view', 1],
   ['bank home on a phone', 'app-view', 1],
   ['headspace mobile screen', 'app-view', 1],
+  ['chat', 'chat-panel', 1],
+  ['copilot', 'chat-panel', 1],
+  ['chatbot', 'chat-composer', 4],
+  ['agent', 'pattern-agent', 1],
+  ['agent chat ui', 'chat-panel', 2],
+  ['prompt input', 'chat-composer', 1],
+  ['send and stop button', 'chat-composer', 1],
+  ['tool calls', 'chat-steps', 1],
+  ['ai disclaimer', 'chat-composer/Playground', 1],
 ]
 
 /**

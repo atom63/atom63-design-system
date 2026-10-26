@@ -1,0 +1,38 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "chat-message",
+  "maturity": "preview",
+  "description": "One turn of an assistant conversation. The user's turn is a tinted bubble on the trailing side; the assistant's is plain text by default or a bubble. ChatMessageList is the transcript: a log region that holds the turns.",
+  "lists": {
+    "roles": ["user", "assistant"],
+    "appearances": ["plain", "bubble"],
+    "slots": [
+      "chat-message-list",
+      "chat-message",
+      "chat-message-avatar",
+      "chat-message-body",
+      "chat-message-content",
+      "chat-message-actions"
+    ],
+    "states": ["rest", "streaming"],
+    "visualArchetypes": ["surface"]
+  },
+  "contract": {
+    "roles": {
+      "$ref": "#/lists/roles"
+    },
+    "defaultAppearance": "plain",
+    "appearances": {
+      "$ref": "#/lists/appearances"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

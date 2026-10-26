@@ -4,6 +4,7 @@
  * missing from it.
  */
 import { template as appView } from './pages/app-view/app-view'
+import { template as chatPage } from './pages/chat-page/chat-page'
 import { template as dashboardPage } from './pages/dashboard-page/dashboard-page'
 import { template as listPage } from './pages/list-page/list-page'
 import { template as onboardingPage } from './pages/onboarding-page/onboarding-page'
@@ -12,6 +13,7 @@ import { template as signInPage } from './pages/sign-in-page/sign-in-page'
 import { template as activityList } from './blocks/activity-list/activity-list'
 import { template as appShell } from './blocks/app-shell/app-shell'
 import { template as authCard } from './blocks/auth-card/auth-card'
+import { template as chatPanel } from './blocks/chat-panel/chat-panel'
 import { template as dataTableSection } from './blocks/data-table-section/data-table-section'
 import { template as detailPanel } from './blocks/detail-panel/detail-panel'
 import { template as emptyState } from './blocks/empty-state/empty-state'
@@ -39,6 +41,7 @@ const storyId = (kind: 'block' | 'page', title: string) =>
 
 export const templateCatalog: readonly TemplateEntry[] = [
   appView,
+  chatPage,
   dashboardPage,
   listPage,
   onboardingPage,
@@ -47,6 +50,7 @@ export const templateCatalog: readonly TemplateEntry[] = [
   activityList,
   appShell,
   authCard,
+  chatPanel,
   dataTableSection,
   detailPanel,
   emptyState,

@@ -45,10 +45,10 @@
     ]
   },
   "counts": {
-    "rootValueExports": 427,
-    "rootTypeExports": 190,
-    "packageExportKeys": 73,
-    "cssExportKeys": 66
+    "rootValueExports": 433,
+    "rootTypeExports": 196,
+    "packageExportKeys": 77,
+    "cssExportKeys": 70
   },
   "packageExportKeys": [
     ".",
@@ -70,6 +70,10 @@
     "./recipes/calendar.css",
     "./recipes/card.css",
     "./recipes/carousel.css",
+    "./recipes/chat-composer.css",
+    "./recipes/chat-message.css",
+    "./recipes/chat-steps.css",
+    "./recipes/chat-typing-indicator.css",
     "./recipes/checkbox.css",
     "./recipes/collapsible.css",
     "./recipes/command.css",
@@ -139,6 +143,10 @@
     "./recipes/calendar.css",
     "./recipes/card.css",
     "./recipes/carousel.css",
+    "./recipes/chat-composer.css",
+    "./recipes/chat-message.css",
+    "./recipes/chat-steps.css",
+    "./recipes/chat-typing-indicator.css",
     "./recipes/checkbox.css",
     "./recipes/collapsible.css",
     "./recipes/command.css",
@@ -312,6 +320,26 @@
       "subpath": "./recipes/carousel.css",
       "kind": "css",
       "target": "./src/components/carousel/carousel.css"
+    },
+    {
+      "subpath": "./recipes/chat-composer.css",
+      "kind": "css",
+      "target": "./src/components/chat-composer/chat-composer.css"
+    },
+    {
+      "subpath": "./recipes/chat-message.css",
+      "kind": "css",
+      "target": "./src/components/chat-message/chat-message.css"
+    },
+    {
+      "subpath": "./recipes/chat-steps.css",
+      "kind": "css",
+      "target": "./src/components/chat-steps/chat-steps.css"
+    },
+    {
+      "subpath": "./recipes/chat-typing-indicator.css",
+      "kind": "css",
+      "target": "./src/components/chat-typing-indicator/chat-typing-indicator.css"
     },
     {
       "subpath": "./recipes/checkbox.css",
@@ -1176,6 +1204,82 @@
         {
           "name": "CarouselProps",
           "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./components/chat-composer",
+      "values": [
+        {
+          "name": "ChatComposer",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "ChatComposerProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/chat-message",
+      "values": [
+        {
+          "name": "ChatMessage",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ChatMessageList",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "ChatMessageListProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ChatMessageProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/chat-steps",
+      "values": [
+        {
+          "name": "ChatStep",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ChatSteps",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "ChatStepProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ChatStepsProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/chat-typing-indicator",
+      "values": [
+        {
+          "name": "ChatTypingIndicator",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "ChatTypingIndicatorProps",
+          "proposedTier": "beta-supported-core"
         }
       ]
     },

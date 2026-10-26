@@ -16,6 +16,14 @@ export {
 } from './blocks/app-shell/app-shell'
 export { AuthCard, type AuthCardProps } from './blocks/auth-card/auth-card'
 export {
+  ChatPanel,
+  type ChatPanelMessage,
+  type ChatPanelProps,
+  type ChatPanelStep,
+  ChatThread,
+  type ChatThreadProps,
+} from './blocks/chat-panel/chat-panel'
+export {
   DataTableSection,
   type DataTableColumn,
   type DataTableEmpty,
@@ -52,6 +60,12 @@ export {
   type TabBarProps,
 } from './blocks/tab-bar/tab-bar'
 export { AppView, type AppViewProps, AppViewPage } from './pages/app-view/app-view'
+export {
+  type ChatConversation,
+  ChatPage,
+  type ChatPageLinkProps,
+  type ChatPageProps,
+} from './pages/chat-page/chat-page'
 export { DashboardContent, DashboardPage } from './pages/dashboard-page/dashboard-page'
 export { ListContent, ListPage, type ListPageProps } from './pages/list-page/list-page'
 export { OnboardingContent, OnboardingPage } from './pages/onboarding-page/onboarding-page'

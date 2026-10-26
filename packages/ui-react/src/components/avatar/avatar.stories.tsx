@@ -10,6 +10,7 @@ import {
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { Sparkles } from 'lucide-react'
 import type { CSSProperties } from 'react'
 
 const meta = {
@@ -52,6 +53,22 @@ export const Sizes: Story = {
         <AvatarImage src={SRC} alt="Ada" />
         <AvatarFallback>AL</AvatarFallback>
       </Avatar>
+    </div>
+  ),
+}
+
+/* An icon fallback, such as an assistant's sparkle, sits in the filled circle at
+   the control icon size for each size step. */
+export const IconFallback: Story = {
+  render: () => (
+    <div style={{ alignItems: 'center', display: 'flex', gap: 16 }}>
+      {avatarSizes.map(size => (
+        <Avatar key={size} size={size}>
+          <AvatarFallback>
+            <Sparkles aria-hidden />
+          </AvatarFallback>
+        </Avatar>
+      ))}
     </div>
   ),
 }

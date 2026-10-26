@@ -1,0 +1,43 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "chat-page",
+  "type": "registry:page",
+  "title": "Chat page",
+  "description": "A full-page AI assistant: past conversations in the sidebar with a new chat button, the open conversation in a reading-width column, and the composer at the bottom. With no messages it is the start screen: a large greeting, the composer and suggestion chips. Uses the chat-panel block for the conversation; wire it to @atom63/agent or any runtime through props.",
+  "dependencies": [
+    "@atom63/ui-foundation",
+    "@atom63/ui-react",
+    "lucide-react"
+  ],
+  "registryDependencies": [
+    "https://system.atom63.io/r/chat-panel.json"
+  ],
+  "files": [
+    {
+      "path": "templates/pages/chat-page/chat-page.tsx",
+      "type": "registry:page",
+      "target": "@components/atom63/pages/chat-page/chat-page.tsx",
+      "content": "import type { ChatComposerStatus } from '@atom63/ui-foundation'\nimport {\n  Button,\n  Sidebar,\n  SidebarContent,\n  SidebarGroup,\n  SidebarGroupContent,\n  SidebarGroupLabel,\n  SidebarHeader,\n  SidebarInset,\n  SidebarMenu,\n  SidebarMenuButton,\n  SidebarMenuItem,\n  SidebarProvider,\n  SidebarTrigger,\n} from '@atom63/ui-react'\nimport { SquarePen } from 'lucide-react'\nimport type { AnchorHTMLAttributes, ReactElement } from 'react'\n\nimport { type ChatPanelMessage, ChatThread } from '../../blocks/chat-panel/chat-panel'\n\nexport const template = {\n  id: 'chat-page',\n  kind: 'page',\n  title: 'Chat page',\n  description:\n    'A full-page AI assistant: past conversations in the sidebar with a new chat button, the open conversation in a reading-width column, and the composer at the bottom. With no messages it is the start screen: a large greeting, the composer and suggestion chips. Uses the chat-panel block for the conversation; wire it to @atom63/agent or any runtime through props.',\n  category: 'ai',\n  tags: [\n    'chat',\n    'assistant',\n    'ai',\n    'ai assistant',\n    'agent',\n    'copilot',\n    'conversation',\n    'history',\n    'start screen',\n    'suggestions',\n    'prompt',\n  ],\n  readiness: 'draft',\n} as const\n\nexport interface ChatConversation {\n  current?: boolean\n  href: string\n  title: string\n}\n\nexport type ChatPageLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }\n\nexport interface ChatPageProps {\n  /** Past conversations, newest first. */\n  conversations: readonly ChatConversation[]\n  messages: readonly ChatPanelMessage[]\n  onNewChat?: () => void\n  onSend: (text: string) => void\n  onStop?: () => void\n  /** The product name at the top of the sidebar. */\n  productName?: string\n  /** Renders a conversation link, for a router's own link component; a plain anchor by default. */\n  renderLink?: (props: ChatPageLinkProps) => ReactElement\n  status?: ChatComposerStatus\n  suggestions?: readonly string[]\n}\n\nconst anchor = ({ children, ...props }: ChatPageLinkProps) => <a {...props}>{children}</a>\n\n/*\n * The assistant as the whole page. On a phone the history becomes a sheet the\n * top-bar toggle opens. The open conversation is marked with aria-current.\n * The page holds no conversation state; see ChatThread for how to feed it.\n */\nexport function ChatPage({\n  conversations,\n  messages,\n  onNewChat,\n  onSend,\n  onStop,\n  productName = 'Assistant',\n  renderLink = anchor,\n  status,\n  suggestions,\n}: ChatPageProps) {\n  const current = conversations.find(conversation => conversation.current)\n  return (\n    <SidebarProvider>\n      <Sidebar>\n        <nav aria-label=\"Conversations\" className=\"contents\">\n          <SidebarHeader>\n            <div className=\"flex items-center gap-2 px-2\">\n              <span className=\"font-heading text-foreground truncate font-semibold\">\n                {productName}\n              </span>\n              <Button\n                aria-label=\"New chat\"\n                className=\"ms-auto\"\n                onClick={onNewChat}\n                size=\"icon-sm\"\n                variant=\"ghost\"\n              >\n                <SquarePen aria-hidden />\n              </Button>\n            </div>\n          </SidebarHeader>\n          <SidebarContent>\n            <SidebarGroup>\n              <SidebarGroupLabel>Recent</SidebarGroupLabel>\n              <SidebarGroupContent>\n                <SidebarMenu>\n                  {conversations.map(conversation => (\n                    <SidebarMenuItem key={conversation.href}>\n                      <SidebarMenuButton\n                        isActive={conversation.current}\n                        render={renderLink({\n                          'aria-current': conversation.current ? 'page' : undefined,\n                          children: <span className=\"truncate\">{conversation.title}</span>,\n                          href: conversation.href,\n                        })}\n                      />\n                    </SidebarMenuItem>\n                  ))}\n                </SidebarMenu>\n              </SidebarGroupContent>\n            </SidebarGroup>\n          </SidebarContent>\n        </nav>\n      </Sidebar>\n      <SidebarInset className=\"flex h-svh min-h-0 flex-col\">\n        <header className=\"border-border flex h-14 shrink-0 items-center gap-2 border-b px-4\">\n          <SidebarTrigger />\n          <h1 className=\"text-foreground truncate text-sm font-semibold\">\n            {messages.length ? (current?.title ?? 'Chat') : 'New chat'}\n          </h1>\n        </header>\n        <ChatThread\n          greeting=\"What can I help with?\"\n          layout=\"page\"\n          messages={messages}\n          onSend={onSend}\n          onStop={onStop}\n          status={status}\n          suggestions={suggestions}\n        />\n      </SidebarInset>\n    </SidebarProvider>\n  )\n}\n"
+    }
+  ],
+  "categories": [
+    "ai"
+  ],
+  "meta": {
+    "readiness": "draft",
+    "tags": [
+      "chat",
+      "assistant",
+      "ai",
+      "ai assistant",
+      "agent",
+      "copilot",
+      "conversation",
+      "history",
+      "start screen",
+      "suggestions",
+      "prompt"
+    ]
+  },
+  "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates"
+}

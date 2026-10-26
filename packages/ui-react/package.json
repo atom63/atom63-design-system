@@ -60,6 +60,10 @@
       "import": "./dist/preview/index.js"
     },
     "./recipes.css": "./src/styles/recipes.css",
+    "./recipes/chat-composer.css": "./src/components/chat-composer/chat-composer.css",
+    "./recipes/chat-message.css": "./src/components/chat-message/chat-message.css",
+    "./recipes/chat-steps.css": "./src/components/chat-steps/chat-steps.css",
+    "./recipes/chat-typing-indicator.css": "./src/components/chat-typing-indicator/chat-typing-indicator.css",
     "./recipes/media-lightbox.css": "./src/media/media-lightbox/media-lightbox.css",
     "./recipes/accordion.css": "./src/components/accordion/accordion.css",
     "./recipes/alert-dialog.css": "./src/components/alert-dialog/alert-dialog.css",

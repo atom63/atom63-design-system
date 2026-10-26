@@ -7,11 +7,14 @@
  */
 export const synonyms = {
   bar: ['progress'],
+  bubble: ['chat-message'],
+  chatbot: ['chat-message', 'chat-composer'],
   checkmark: ['animated-check', 'checkbox'],
   chip: ['toggle-group', 'toggle', 'button', 'badge'],
   choice: ['radio', 'field'],
   combobox: ['autocomplete', 'select'],
   compact: ['table', 'item'],
+  composer: ['chat-composer'],
   counter: ['button', 'badge'],
   date: ['calendar'],
   dense: ['table', 'item'],
@@ -65,6 +68,7 @@ export const synonyms = {
   tile: ['radio', 'field'],
   toast: ['toaster'],
   toggle: ['switch', 'toggle', 'toggle-group'],
+  typing: ['chat-typing-indicator'],
   tree: ['sidebar-nav-tree'],
   unread: ['button', 'badge'],
 }
@@ -185,6 +189,53 @@ const warmPaperTopic = [
   },
 ]
 
+const chatSurfaces = [
+  {
+    id: 'template:chat-panel',
+    note: 'Assistant side panel beside the product: transcript, tool steps, start screen with suggestions, composer with send and stop.',
+  },
+  {
+    id: 'template:chat-page',
+    note: 'Full-page assistant with conversation history in the sidebar and a start screen with a large composer.',
+  },
+  { id: 'component:chat-message' },
+  { id: 'component:chat-composer' },
+  {
+    id: 'doc:pattern-agent',
+    note: '@atom63/agent, the headless runtime: map its messages and status onto the chat components.',
+  },
+]
+
+const chatComposer = [
+  {
+    id: 'component:chat-composer',
+    note: 'ChatComposer: growing textarea, attach slot, send that turns into stop while streaming, Enter to send.',
+  },
+  { id: 'template:chat-panel' },
+]
+
+const chatSteps = [
+  {
+    id: 'component:chat-steps',
+    note: 'ChatSteps and ChatStep: a collapsible list of tool and thinking steps with status icons.',
+  },
+]
+
+const typingIndicator = [
+  {
+    id: 'component:chat-typing-indicator',
+    note: 'ChatTypingIndicator: three dots in place of the reply until its first text, a polite status.',
+  },
+]
+
+const aiDisclaimer = [
+  {
+    id: 'example:chat-composer/Playground',
+    note: 'ChatComposer footnote="AI can make mistakes. Check important info." under the field.',
+  },
+  { id: 'component:chat-composer' },
+]
+
 const mediaList = [
   {
     id: 'component:table',
@@ -298,6 +349,34 @@ export const topics = {
   'on a phone': phoneApp,
   'phone app': phoneApp,
   'phone screen': phoneApp,
+  agent: [chatSurfaces[4], chatSurfaces[0], chatSurfaces[1]],
+  'chat history': [chatSurfaces[1], chatSurfaces[0]],
+  'chat page': [chatSurfaces[1], chatSurfaces[0]],
+  'full page chat': [chatSurfaces[1], chatSurfaces[0]],
+  'ai assistant': chatSurfaces,
+  'ai chat': chatSurfaces,
+  assistant: chatSurfaces,
+  chat: chatSurfaces,
+  chatbot: chatSurfaces,
+  copilot: chatSurfaces,
+  'chat bubble': [{ id: 'component:chat-message' }],
+  'chat message': [{ id: 'component:chat-message' }, chatSurfaces[0]],
+  'chat composer': chatComposer,
+  'message bubble': [{ id: 'component:chat-message' }],
+  'chat input': chatComposer,
+  'message composer': chatComposer,
+  'prompt box': chatComposer,
+  'prompt input': chatComposer,
+  'send button': chatComposer,
+  'stop button': chatComposer,
+  reasoning: chatSteps,
+  thinking: chatSteps,
+  'tool calls': chatSteps,
+  'tool steps': chatSteps,
+  'typing dots': typingIndicator,
+  'typing indicator': typingIndicator,
+  'ai disclaimer': aiDisclaimer,
+  'ai can make mistakes': aiDisclaimer,
   'grouped list': groupedList,
   'grouped section': groupedList,
   'inset group': groupedList,

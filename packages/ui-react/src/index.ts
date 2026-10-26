@@ -132,6 +132,14 @@ export type {
   CarouselPlugin,
   CarouselProps,
 } from './components/carousel'
+export { ChatComposer } from './components/chat-composer'
+export type { ChatComposerProps } from './components/chat-composer'
+export { ChatMessage, ChatMessageList } from './components/chat-message'
+export type { ChatMessageListProps, ChatMessageProps } from './components/chat-message'
+export { ChatStep, ChatSteps } from './components/chat-steps'
+export type { ChatStepProps, ChatStepsProps } from './components/chat-steps'
+export { ChatTypingIndicator } from './components/chat-typing-indicator'
+export type { ChatTypingIndicatorProps } from './components/chat-typing-indicator'
 export { Checkbox } from './components/checkbox'
 export type { CheckboxProps } from './components/checkbox'
 export {

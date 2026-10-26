@@ -66,6 +66,10 @@
 @import '../components/sidebar/sidebar.css' layer(components);
 @import '../components/sidebar-nav-tree/sidebar-nav-tree.css' layer(components);
 @import '../components/rating/rating.css' layer(components);
+@import '../components/chat-message/chat-message.css' layer(components);
+@import '../components/chat-typing-indicator/chat-typing-indicator.css' layer(components);
+@import '../components/chat-steps/chat-steps.css' layer(components);
+@import '../components/chat-composer/chat-composer.css' layer(components);
 /* Document-level ::view-transition pseudos — deliberately unlayered so they are
    not outranked by an app's own transition rules. */
 @import '../media/media-lightbox/media-lightbox.css';
