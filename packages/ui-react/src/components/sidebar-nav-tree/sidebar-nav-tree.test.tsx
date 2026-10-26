@@ -33,6 +33,24 @@ describe('SidebarNavTree', () => {
     expect(getAllByText('Introduction').length).toBeGreaterThan(0)
   })
 
+  it('passes the active tone to the menu button: neutral by default, accent on request', () => {
+    const { container } = render(
+      <SidebarProvider>
+        <SidebarNavGroup label="Docs">
+          <SidebarNavLinkItem isActive>
+            <a href="/intro">Introduction</a>
+          </SidebarNavLinkItem>
+          <SidebarNavLinkItem isActive tone="accent">
+            <a href="/install">Installation</a>
+          </SidebarNavLinkItem>
+        </SidebarNavGroup>
+      </SidebarProvider>
+    )
+    const [neutral, accent] = container.querySelectorAll('[data-slot="sidebar-menu-button"]')
+    expect(neutral).toHaveAttribute('data-tone', 'neutral')
+    expect(accent).toHaveAttribute('data-tone', 'accent')
+  })
+
   it('renders the anchor itself from href, icon and label props', () => {
     const { getByRole } = render(
       <SidebarProvider>

@@ -1,4 +1,4 @@
-import { tableContract, themes } from '@atom63/ui-foundation'
+import { tableContract, tableTones, themes } from '@atom63/ui-foundation'
 import {
   Button,
   Checkbox,
@@ -218,6 +218,36 @@ export const SelectableRows: Story = {
           ))}
         </TableBody>
       </Table>
+    </div>
+  ),
+}
+
+/* tone colours selected rows (data-state="selected"): neutral (the default) is a
+   muted fill with primary text, accent is the opt-in primary wash. */
+export const Tones: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 24, width: 480 }}>
+      {tableTones.map(tone => (
+        <Table key={tone} size="sm" tone={tone}>
+          <TableCaption>tone=&quot;{tone}&quot;</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Invoice</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Amount</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {rows.slice(0, 3).map((r, index) => (
+              <TableRow data-state={index === 1 ? 'selected' : undefined} key={r.invoice}>
+                <TableCell>{r.invoice}</TableCell>
+                <TableCell>{r.status}</TableCell>
+                <TableCell>{r.amount}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      ))}
     </div>
   ),
 }

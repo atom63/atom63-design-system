@@ -67,6 +67,35 @@ describe('Sidebar', () => {
     expect(button).toHaveAttribute('data-variant', 'outline')
   })
 
+  it('defaults menu buttons to the neutral tone and forwards tone="accent"', () => {
+    const { container } = render(
+      <SidebarProvider>
+        <Sidebar>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton isActive>Neutral</SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton isActive tone="accent">
+                Accent
+              </SidebarMenuButton>
+              <SidebarMenuSubButton href="#sub" isActive tone="accent">
+                Sub
+              </SidebarMenuSubButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </Sidebar>
+      </SidebarProvider>
+    )
+    const [neutral, accent] = container.querySelectorAll('[data-slot="sidebar-menu-button"]')
+    expect(neutral).toHaveAttribute('data-tone', 'neutral')
+    expect(accent).toHaveAttribute('data-tone', 'accent')
+    expect(container.querySelector('[data-slot="sidebar-menu-sub-button"]')).toHaveAttribute(
+      'data-tone',
+      'accent'
+    )
+  })
+
   it('renders a non-collapsible sidebar when collapsible="none"', () => {
     const { container } = render(
       <SidebarProvider>

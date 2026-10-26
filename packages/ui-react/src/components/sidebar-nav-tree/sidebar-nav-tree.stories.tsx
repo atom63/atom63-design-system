@@ -1,4 +1,9 @@
-import { sidebarNavTreeContract, themes } from '@atom63/ui-foundation'
+import {
+  type SidebarNavTreeTone,
+  sidebarNavTreeContract,
+  sidebarNavTreeTones,
+  themes,
+} from '@atom63/ui-foundation'
 import {
   Sidebar,
   SidebarContent,
@@ -26,17 +31,17 @@ export default meta
 // Render-only stories: they build their own props, so no required args apply.
 type Story = StoryObj
 
-function Tree() {
+function Tree({ tone }: { tone?: SidebarNavTreeTone }) {
   const [open, setOpen] = useState(true)
   return (
     <SidebarProvider>
       <Sidebar collapsible="none">
         <SidebarContent>
           <SidebarNavGroup label="Getting started">
-            <SidebarNavLinkItem isActive>
+            <SidebarNavLinkItem isActive tone={tone}>
               <a href="#intro">Introduction</a>
             </SidebarNavLinkItem>
-            <SidebarNavLinkItem>
+            <SidebarNavLinkItem tone={tone}>
               <a href="#install">Installation</a>
             </SidebarNavLinkItem>
             <SidebarNavCollapsibleItem
@@ -44,12 +49,13 @@ function Tree() {
               link={<a href="#components">Components</a>}
               onOpenChange={setOpen}
               open={open}
+              tone={tone}
             >
               <SidebarNavSubList>
-                <SidebarNavSubLinkItem>
+                <SidebarNavSubLinkItem tone={tone}>
                   <a href="#button">Button</a>
                 </SidebarNavSubLinkItem>
-                <SidebarNavSubLinkItem isActive>
+                <SidebarNavSubLinkItem isActive tone={tone}>
                   <a href="#sidebar">Sidebar</a>
                 </SidebarNavSubLinkItem>
               </SidebarNavSubList>
@@ -242,6 +248,20 @@ function CompactTree() {
       </Sidebar>
     </SidebarProvider>
   )
+}
+
+/* tone sets the active row: neutral (the default) is a full neutral plate with
+   primary text, accent is accent text on a clear row. */
+export const Tones: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>
+      {sidebarNavTreeTones.map(tone => (
+        <div key={tone} style={{ width: 260 }}>
+          <Tree tone={tone} />
+        </div>
+      ))}
+    </div>
+  ),
 }
 
 export const Themes: Story = {

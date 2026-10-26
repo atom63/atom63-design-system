@@ -4,6 +4,7 @@ import { describe, it } from 'node:test'
 import {
   changedFiles,
   countJsxElements,
+  countPrimaryButtons,
   countTypeErrors,
   findLiterals,
   isMeasuredFile,
@@ -154,6 +155,26 @@ describe('countTypeErrors', () => {
   })
 })
 
+describe('countPrimaryButtons', () => {
+  it('counts literal primary variants of the system Button only', () => {
+    const source = [
+      "import { Button as Action } from '@atom63/ui-react'",
+      "import { Button } from './local-button'",
+      'export const A = (v: string) => (',
+      '  <div>',
+      '    <Action variant="primary">Save</Action>',
+      "    <Action variant={'primary'} />",
+      '    <Action variant="default">Cancel</Action>',
+      '    <Action variant={v} />',
+      '    <Button variant="primary" />',
+      '  </div>',
+      ')',
+    ].join('\n')
+    assert.equal(countPrimaryButtons(source), 2)
+    assert.equal(countPrimaryButtons('export const A = () => <div />'), 0)
+  })
+})
+
 describe('measureSources', () => {
   it('adds the measures of every file', () => {
     const measures = measureSources(
@@ -191,5 +212,22 @@ describe('measureSources', () => {
       '--a63-foreground',
     ])
     assert.deepEqual(unknown(measureSources(files)), [])
+  })
+
+  it('warns, without a craft violation, on a file with more than one primary Button', () => {
+    const page =
+      'import { Button } from \'@atom63/ui-react\'\nexport const A = () => <div><Button variant="primary" /><Button variant="primary" /></div>\n'
+    const single =
+      'import { Button } from \'@atom63/ui-react\'\nexport const B = () => <Button variant="primary" />\n'
+    const measures = measureSources(
+      new Map([
+        ['src/pages/a.tsx', page],
+        ['src/pages/b.tsx', single],
+      ])
+    )
+    assert.deepEqual(measures.warnings, [
+      { file: 'src/pages/a.tsx', rule: 'multiple-primary', count: 2 },
+    ])
+    assert.deepEqual(measures.craft, [])
   })
 })

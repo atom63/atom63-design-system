@@ -27,6 +27,11 @@ export const rules = [
     check: ['raw-color', 'unknown-token'],
   },
   {
+    id: 'one-primary-per-view',
+    rule: 'Give a view at most one `variant="primary"` Button. Selection is neutral by default; set `tone="accent"` on a selection, Slider or Progress only when it is the one accent cue in the view.',
+    why: 'The accent marks the main action; several accent cues compete and none stands out. The vibe measures warn at more than one primary Button per file.',
+  },
+  {
     id: 'on-media-colors',
     rule: 'Controls drawn over photos or video use the `--a63-on-media-*` and `--a63-media-*` tokens.',
     why: 'Theme colors are meaningless on an unknown picture; these hold contrast on any image.',

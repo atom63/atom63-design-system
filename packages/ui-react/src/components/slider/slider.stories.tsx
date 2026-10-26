@@ -1,4 +1,4 @@
-import { sliderContract, themes } from '@atom63/ui-foundation'
+import { sliderContract, sliderTones, themes } from '@atom63/ui-foundation'
 import { Slider, SliderValue, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
@@ -44,6 +44,18 @@ export const Vertical: Story = {
   render: () => (
     <div style={{ height: 240 }}>
       <Slider aria-label="Volume" defaultValue={40} orientation="vertical" />
+    </div>
+  ),
+}
+
+/* tone sets the filled part: accent (the default) is the brand primary,
+   neutral is the primary text colour, for players and tool bars. */
+export const Tones: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 16, width: 280 }}>
+      {sliderTones.map(tone => (
+        <Slider aria-label={`${tone} tone`} defaultValue={60} key={tone} tone={tone} />
+      ))}
     </div>
   ),
 }

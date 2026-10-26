@@ -200,27 +200,34 @@ describe('brand contrast (WCAG AA)', () => {
 
   it('keeps a selected item readable on every brand ramp', () => {
     const failures: string[] = []
+    // The neutral selection (the default) and the opt-in accent selection.
+    const pairs = [
+      ['selected', '--a63-selected-background', '--a63-selected-foreground'],
+      ['selected-accent', '--a63-selected-accent-background', '--a63-selected-accent-foreground'],
+    ] as const
     for (const brand of brands) {
       root().setAttribute('data-a63-brand', brand)
       for (const theme of themes) {
         for (const mode of modes) {
           applyThemeMode(theme, mode)
-          // The selected wash is translucent: paint it over the page first.
-          const page = parseCssColor(resolvePaintedColor('--a63-surface-page', 'background'))
-          const washCss = resolvePaintedColor('--a63-selected-background', 'background')
-          const wash = parseCssColor(washCss)
-          const fill: Rgb = {
-            r: wash.r * wash.a + page.r * (1 - wash.a),
-            g: wash.g * wash.a + page.g * (1 - wash.a),
-            b: wash.b * wash.a + page.b * (1 - wash.a),
-            a: 1,
-          }
-          const fgCss = resolvePaintedColor('--a63-selected-foreground', 'color')
-          const ratio = contrastRatio(parseCssColor(fgCss), fill)
-          if (ratio < AA_TEXT) {
-            failures.push(
-              `${brand} ${theme}/${mode} selected: ${ratio.toFixed(2)}:1 < ${AA_TEXT}:1 (fg=${fgCss}, bg=${washCss})`
-            )
+          for (const [label, bgVar, fgVar] of pairs) {
+            // A selection wash may be translucent: paint it over the page first.
+            const page = parseCssColor(resolvePaintedColor('--a63-surface-page', 'background'))
+            const washCss = resolvePaintedColor(bgVar, 'background')
+            const wash = parseCssColor(washCss)
+            const fill: Rgb = {
+              r: wash.r * wash.a + page.r * (1 - wash.a),
+              g: wash.g * wash.a + page.g * (1 - wash.a),
+              b: wash.b * wash.a + page.b * (1 - wash.a),
+              a: 1,
+            }
+            const fgCss = resolvePaintedColor(fgVar, 'color')
+            const ratio = contrastRatio(parseCssColor(fgCss), fill)
+            if (ratio < AA_TEXT) {
+              failures.push(
+                `${brand} ${theme}/${mode} ${label}: ${ratio.toFixed(2)}:1 < ${AA_TEXT}:1 (fg=${fgCss}, bg=${washCss})`
+              )
+            }
           }
         }
       }

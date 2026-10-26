@@ -18,6 +18,12 @@ The goal is not maximum animation. The goal is legibility: users should know wha
 
 State cues should be predictable across components. A pressed button, selected toggle, and active tab can differ visually, but they should feel like they belong to the same interaction grammar.
 
+## Selected and current
+
+A selected or current row is neutral by default: `--a63-selected-background` is the muted surface and `--a63-selected-foreground` is the primary text color. Item, Table (on the container, for its selected rows), the Sidebar menu buttons and SidebarNavTree items take `tone="accent"` for the primary wash with accent text (`--a63-selected-accent-background` and `--a63-selected-accent-foreground`). Slider and Progress take `tone` too, the other way round: `accent` is the default fill and `tone="neutral"` draws the primary text color on the muted track, for players and tool bars.
+
+Spend the accent on one or two cues per view. Most products show the current nav item and the selected row in grey and keep their brand color for the main action.
+
 ## Focus is not hover
 
 Focus-visible is a keyboard navigation affordance. It should not disappear just because hover exists.

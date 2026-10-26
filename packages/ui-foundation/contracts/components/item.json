@@ -2,10 +2,11 @@
   "$schema": "../schema/component-intent.schema.json",
   "component": "item",
   "maturity": "stable",
-  "description": "Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size (default/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off data-variant / data-size, and styles a row with aria-current or data-selected as current or selected. ItemGroup takes variant (default/inset): inset is a rounded card with hairline dividers, the grouped settings list.",
+  "description": "Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size (default/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off data-variant / data-size, and styles a row with aria-current or data-selected as current or selected. ItemGroup takes variant (default/inset): inset is a rounded card with hairline dividers, the grouped settings list. A selected or current row follows tone (neutral/accent, data-tone): neutral is the muted fill with primary text, accent is the opt-in primary wash with accent text.",
   "lists": {
     "variants": ["default", "outline", "muted"],
     "sizes": ["default", "sm", "xs"],
+    "tones": ["neutral", "accent"],
     "mediaVariants": ["default", "icon", "image"],
     "groupVariants": ["default", "inset"],
     "slots": [
@@ -28,6 +29,7 @@
     "defaultSize": "default",
     "defaultMediaVariant": "default",
     "defaultGroupVariant": "default",
+    "defaultTone": "neutral",
     "variants": {
       "$ref": "#/lists/variants"
     },
@@ -48,6 +50,9 @@
     },
     "groupVariants": {
       "$ref": "#/lists/groupVariants"
+    },
+    "tones": {
+      "$ref": "#/lists/tones"
     }
   }
 }

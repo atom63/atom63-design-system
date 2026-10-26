@@ -9,12 +9,16 @@
  * Token notes: prod's app-level --theme-row-hover/selected-background /
  * -foreground vars map to canonical DS semantics — row hover to
  * --a63-surface-control-hover, selected row to the shared selection tint
- * (--a63-selected-background + -foreground, as Item uses). text-muted-foreground ->
+ * (--a63-selected-background + -foreground, as Item uses; tone="accent" swaps in
+ * --a63-selected-accent-*). text-muted-foreground ->
  * --a63-text-secondary, bg-background -> --a63-surface-page, borders ->
  * --a63-border-subtle.
  */
 
 .a63-Table-container {
+  --table-selected-background: var(--a63-selected-background);
+  --table-selected-foreground: var(--a63-selected-foreground);
+
   position: relative;
   width: 100%;
   overflow-x: auto;
@@ -87,8 +91,15 @@
   background: var(--a63-surface-control-hover);
 }
 .a63-Table-row[data-state='selected'] {
-  background: var(--a63-selected-background);
-  color: var(--a63-selected-foreground);
+  background: var(--table-selected-background);
+  color: var(--table-selected-foreground);
+}
+/* tone="accent" opts selected rows into the primary wash; the default neutral
+   tone keeps the muted fill above. Sticky cells and framed cells read the same
+   local wash. */
+.a63-Table-container[data-tone='accent'] {
+  --table-selected-background: var(--a63-selected-accent-background);
+  --table-selected-foreground: var(--a63-selected-accent-foreground);
 }
 
 /* ── Sizes ─────────────────────────────────────────────────────────────
@@ -155,7 +166,10 @@
   );
 }
 .a63-Table-row[data-state='selected'] > [data-sticky] {
-  background-image: linear-gradient(var(--a63-selected-background), var(--a63-selected-background));
+  background-image: linear-gradient(
+    var(--table-selected-background),
+    var(--table-selected-background)
+  );
 }
 
 /* ── Footer ────────────────────────────────────────────────────────────── */
@@ -207,7 +221,10 @@
 /* Cells paint the frame's page surface, so a selected row lays the translucent
    selection tint over that surface in each cell. */
 [data-slot='frame'] .a63-Table-body .a63-Table-row[data-state='selected'] .a63-Table-cell {
-  background-image: linear-gradient(var(--a63-selected-background), var(--a63-selected-background));
+  background-image: linear-gradient(
+    var(--table-selected-background),
+    var(--table-selected-background)
+  );
 }
 [data-slot='frame'] .a63-Table-body .a63-Table-cell {
   border-bottom: 1px solid var(--a63-border-subtle);

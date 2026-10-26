@@ -5,6 +5,7 @@
   "lists": {
     "orientations": ["horizontal", "vertical"],
     "modes": ["single", "range"],
+    "tones": ["accent", "neutral"],
     "states": ["rest", "focus-visible", "dragging", "disabled"],
     "slots": [
       "slider",
@@ -18,6 +19,7 @@
   },
   "contract": {
     "defaultOrientation": "horizontal",
+    "defaultTone": "accent",
     "orientations": {
       "$ref": "#/lists/orientations"
     },
@@ -32,6 +34,9 @@
     },
     "visualArchetypes": {
       "$ref": "#/lists/visualArchetypes"
+    },
+    "tones": {
+      "$ref": "#/lists/tones"
     }
   },
   "crossRenderer": {

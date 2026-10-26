@@ -8,7 +8,9 @@
  *   palette or arbitrary color utilities;
  * - the system-component share: JSX elements imported from `@atom63/*`,
  *   divided by every JSX element that is a third-party component or an
- *   interactive HTML element.
+ *   interactive HTML element;
+ * - warnings: advisory findings that do not fail anything, such as a file
+ *   with more than one `variant="primary"` Button (`multiple-primary`).
  */
 import ts from 'typescript'
 
@@ -166,6 +168,68 @@ export function countJsxElements(source, fileName = 'file.tsx') {
 }
 
 /**
+ * The `<Button variant="primary">` elements in one TSX file, where `Button` is
+ * imported from `@atom63/*`. The variant must be a literal (`"primary"` or
+ * `{'primary'}`); a computed variant is not counted.
+ */
+export function countPrimaryButtons(source, fileName = 'file.tsx') {
+  const file = ts.createSourceFile(
+    fileName,
+    source,
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.TSX
+  )
+  const buttons = new Set()
+  for (const statement of file.statements) {
+    if (!ts.isImportDeclaration(statement) || !statement.importClause) continue
+    const from = /** @type {import('typescript').StringLiteral} */ (statement.moduleSpecifier).text
+    const bindings = statement.importClause.namedBindings
+    if (!from.startsWith('@atom63/') || !bindings || !ts.isNamedImports(bindings)) continue
+    for (const element of bindings.elements) {
+      if ((element.propertyName ?? element.name).text === 'Button') buttons.add(element.name.text)
+    }
+  }
+  if (buttons.size === 0) return 0
+  const literal = initializer => {
+    if (!initializer) return undefined
+    if (ts.isStringLiteral(initializer)) return initializer.text
+    if (ts.isJsxExpression(initializer) && initializer.expression) {
+      const expression = initializer.expression
+      if (ts.isStringLiteral(expression) || ts.isNoSubstitutionTemplateLiteral(expression))
+        return expression.text
+    }
+    return undefined
+  }
+  let count = 0
+  const visit = node => {
+    if (
+      (ts.isJsxOpeningElement(node) || ts.isJsxSelfClosingElement(node)) &&
+      buttons.has(node.tagName.getText(file))
+    ) {
+      const variant = node.attributes.properties.find(
+        property => ts.isJsxAttribute(property) && property.name.getText(file) === 'variant'
+      )
+      if (variant && literal(variant.initializer) === 'primary') count++
+    }
+    ts.forEachChild(node, visit)
+  }
+  visit(file)
+  return count
+}
+
+/**
+ * Advisory findings in one file. `multiple-primary`: more than one
+ * `variant="primary"` Button, where one main action per view is the rule.
+ * @returns {{ rule: string, count: number }[]}
+ */
+export function findWarnings(relative, text) {
+  if (!relative.endsWith('.tsx')) return []
+  const primary = countPrimaryButtons(text, relative)
+  return primary > 1 ? [{ rule: 'multiple-primary', count: primary }] : []
+}
+
+/**
  * The system-component share: system elements over system, third-party and
  * interactive HTML elements. `null` when there is nothing to divide.
  */
@@ -189,6 +253,7 @@ export function measureSources(files, { knownTokens } = {}) {
   if (known)
     for (const text of files.values()) for (const name of declaredTokens(text)) known.add(name)
   const craft = []
+  const warnings = []
   const literals = { paletteUtilities: [], literalColors: [] }
   const jsx = {
     system: 0,
@@ -204,6 +269,8 @@ export function measureSources(files, { knownTokens } = {}) {
     lines += text.split('\n').length
     for (const violation of craftViolations(relative, text, { knownTokens: known }))
       craft.push({ file: relative, ...violation })
+    for (const warning of findWarnings(relative, text))
+      warnings.push({ file: relative, ...warning })
     const found = findLiterals(relative, text)
     literals.paletteUtilities.push(...found.paletteUtilities)
     literals.literalColors.push(...found.literalColors)
@@ -215,5 +282,5 @@ export function measureSources(files, { knownTokens } = {}) {
         jsx.systemNames[name] = (jsx.systemNames[name] ?? 0) + count
     }
   }
-  return { craft, jsx, lines, literals, share: systemShare(jsx) }
+  return { craft, jsx, lines, literals, share: systemShare(jsx), warnings }
 }

@@ -1,6 +1,7 @@
 import {
   type TableSize,
   type TableStickyEdge,
+  type TableTone,
   type TableVariant,
   tableContract,
 } from '@atom63/ui-foundation'
@@ -12,18 +13,25 @@ import { cn } from '../../lib/cn'
    horizontally scrollable container wrapping a semantic <table> with header /
    body / footer / row / head / cell / caption parts. Each part carries its
    data-slot; the base look is DS-tokenized, and a `frame` ancestor
-   (data-slot="frame") switches on the bordered-card treatment. `size` and
-   `variant` sit on the container; `sticky` pins a head or body cell to an
+   (data-slot="frame") switches on the bordered-card treatment. `size`, `tone`
+   and `variant` sit on the container; `sticky` pins a head or body cell to an
    inline edge while the container scrolls. */
 
 export type TableProps = React.ComponentProps<'table'> & {
   size?: TableSize
+  /**
+   * How selected rows (`data-state="selected"`) are coloured. `neutral` (the
+   * default) is a muted fill with primary text; `accent` is a light primary wash
+   * with accent text.
+   */
+  tone?: TableTone
   variant?: TableVariant
 }
 
 export function Table({
   className,
   size = tableContract.defaultSize,
+  tone = tableContract.defaultTone,
   variant = tableContract.defaultVariant,
   ...props
 }: TableProps): React.ReactElement {
@@ -32,6 +40,7 @@ export function Table({
       className="a63-Table-container"
       data-size={size}
       data-slot="table-container"
+      data-tone={tone}
       data-variant={variant}
     >
       <table className={cn('a63-Table', className)} data-slot="table" {...props} />

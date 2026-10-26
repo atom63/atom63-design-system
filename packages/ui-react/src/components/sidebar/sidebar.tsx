@@ -3,6 +3,7 @@
 import {
   type SidebarCollapsible,
   type SidebarMenuButtonSize,
+  type SidebarMenuButtonTone,
   type SidebarMenuButtonVariant,
   type SidebarMenuSubButtonSize,
   type SidebarSide,
@@ -532,6 +533,11 @@ export type SidebarMenuButtonProps = useRender.ComponentProps<'button'> &
     isActive?: boolean
     variant?: SidebarMenuButtonVariant
     size?: SidebarMenuButtonSize
+    /**
+     * How the active state (`isActive`) is coloured. `neutral` (the default) is the
+     * hover plate with primary text; `accent` is a light primary wash with accent text.
+     */
+    tone?: SidebarMenuButtonTone
     tooltip?: string | React.ComponentProps<typeof TooltipContent>
   }
 
@@ -542,6 +548,7 @@ function SidebarMenuButton({
   isActive = false,
   variant = sidebarContract.defaultMenuButtonVariant,
   size = sidebarContract.defaultMenuButtonSize,
+  tone = sidebarContract.defaultMenuButtonTone,
   tooltip,
   className,
   ...props
@@ -558,6 +565,7 @@ function SidebarMenuButton({
         'data-sidebar': 'menu-button',
         'data-size': size,
         'data-slot': 'sidebar-menu-button',
+        'data-tone': tone,
         'data-variant': variant,
         children: renderChildren(asChild, renderProp, children),
         type: 'button',
@@ -717,6 +725,11 @@ export type SidebarMenuSubButtonProps = useRender.ComponentProps<'a'> &
     asChild?: boolean
     size?: SidebarMenuSubButtonSize
     isActive?: boolean
+    /**
+     * How the active state (`isActive`) is coloured. `neutral` (the default) is the
+     * hover plate with primary text; `accent` is a light primary wash with accent text.
+     */
+    tone?: SidebarMenuButtonTone
   }
 
 function SidebarMenuSubButton({
@@ -725,6 +738,7 @@ function SidebarMenuSubButton({
   children,
   size = sidebarContract.defaultMenuSubButtonSize,
   isActive = false,
+  tone = sidebarContract.defaultMenuButtonTone,
   className,
   ...props
 }: SidebarMenuSubButtonProps): React.ReactElement {
@@ -739,6 +753,7 @@ function SidebarMenuSubButton({
         'data-sidebar': 'menu-sub-button',
         'data-size': size,
         'data-slot': 'sidebar-menu-sub-button',
+        'data-tone': tone,
         children: renderChildren(asChild, renderProp, children),
       } as React.ComponentProps<'a'>,
       props

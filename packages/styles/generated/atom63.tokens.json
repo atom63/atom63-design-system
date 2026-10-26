@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 1907,
-    "uniqueCssVariables": 1188,
-    "figmaMappedDeclarations": 1845
+    "declarations": 1911,
+    "uniqueCssVariables": 1190,
+    "figmaMappedDeclarations": 1849
   },
   "entries": [
     {
@@ -9633,15 +9633,15 @@
       "scope": "[data-a63-theme='aqua']"
     },
     {
-      "name": "a63-selected-background",
-      "cssVar": "--a63-selected-background",
+      "name": "a63-selected-accent-background",
+      "cssVar": "--a63-selected-accent-background",
       "type": "color",
       "value": "color-mix(in oklch, var(--a63-action-primary) 12%, transparent)",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
         "collection": "Semantic",
-        "path": "selected/background",
+        "path": "selected/accent/background",
         "mode": "Dark"
       },
       "lifecycle": "preview",
@@ -9649,15 +9649,15 @@
       "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
-      "name": "a63-selected-background",
-      "cssVar": "--a63-selected-background",
+      "name": "a63-selected-accent-background",
+      "cssVar": "--a63-selected-accent-background",
       "type": "color",
       "value": "color-mix(in oklch, var(--a63-action-primary) 12%, transparent)",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
         "collection": "Semantic",
-        "path": "selected/background",
+        "path": "selected/accent/background",
         "mode": "Light"
       },
       "lifecycle": "preview",
@@ -9665,10 +9665,74 @@
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
+      "name": "a63-selected-accent-foreground",
+      "cssVar": "--a63-selected-accent-foreground",
+      "type": "color",
+      "value": "var(--a63-text-accent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "selected/accent/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-accent"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-selected-accent-foreground",
+      "cssVar": "--a63-selected-accent-foreground",
+      "type": "color",
+      "value": "var(--a63-text-accent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "selected/accent/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-accent"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-selected-background",
+      "cssVar": "--a63-selected-background",
+      "type": "color",
+      "value": "var(--a63-surface-muted)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "selected/background",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-muted"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-selected-background",
+      "cssVar": "--a63-selected-background",
+      "type": "color",
+      "value": "var(--a63-surface-muted)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "selected/background",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-muted"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
       "name": "a63-selected-foreground",
       "cssVar": "--a63-selected-foreground",
       "type": "color",
-      "value": "var(--a63-text-accent)",
+      "value": "var(--a63-text-primary)",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -9677,14 +9741,14 @@
         "mode": "Dark"
       },
       "lifecycle": "preview",
-      "aliases": ["--a63-text-accent"],
+      "aliases": ["--a63-text-primary"],
       "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-selected-foreground",
       "cssVar": "--a63-selected-foreground",
       "type": "color",
-      "value": "var(--a63-text-accent)",
+      "value": "var(--a63-text-primary)",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -9693,7 +9757,7 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--a63-text-accent"],
+      "aliases": ["--a63-text-primary"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {

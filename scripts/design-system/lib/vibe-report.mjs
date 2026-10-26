@@ -128,6 +128,7 @@ function measureCells(arm) {
   return {
     files: `${files.added.length} added, ${files.changed.length} changed (${measures.lines} lines)`,
     craft: String(measures.craft.length),
+    warnings: String((measures.warnings ?? []).length),
     typecheck: String(typecheck.errors),
     build: build.ok ? 'pass' : 'fail',
     axe: axe.error
@@ -143,6 +144,7 @@ function measureCells(arm) {
 const measureRows = [
   { key: 'files', label: 'Files' },
   { key: 'craft', label: 'Craft violations (`check:craft` rules)' },
+  { key: 'warnings', label: 'Warnings (files with more than one primary Button)' },
   { key: 'typecheck', label: 'Type errors (`tsc --noEmit`)' },
   { key: 'build', label: '`vite build`' },
   { key: 'axe', label: 'axe violations' },
@@ -172,6 +174,7 @@ export function totals(run, arm) {
   return {
     runs: results.length,
     craft: sum(result => result.measures.craft.length),
+    warnings: sum(result => (result.measures.warnings ?? []).length),
     typeErrors: sum(result => result.typecheck.errors),
     builds: sum(result => (result.build.ok ? 1 : 0)),
     axe: sum(result => (result.axe.error ? 0 : result.axe.violations.length)),
@@ -213,6 +216,7 @@ export function renderReport(run) {
       [
         ['Briefs built', ...arms.map(arm => String(totals(run, arm).runs))],
         ['Craft violations', ...arms.map(arm => String(totals(run, arm).craft))],
+        ['Warnings', ...arms.map(arm => String(totals(run, arm).warnings))],
         ['Type errors', ...arms.map(arm => String(totals(run, arm).typeErrors))],
         [
           'Builds passing',

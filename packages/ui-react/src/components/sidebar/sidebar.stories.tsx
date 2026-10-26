@@ -1,4 +1,4 @@
-import { sidebarContract, themes } from '@atom63/ui-foundation'
+import { sidebarContract, sidebarMenuButtonTones, themes } from '@atom63/ui-foundation'
 import {
   Sidebar,
   SidebarContent,
@@ -91,6 +91,50 @@ export const Playground: Story = {
         </div>
       </SidebarInset>
     </SidebarProvider>
+  ),
+}
+
+/* tone sets the active menu button: neutral (the default) is the hover plate
+   with primary text, accent is the opt-in primary wash with accent text. */
+export const MenuButtonTones: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24 }}>
+      {sidebarMenuButtonTones.map(tone => (
+        <SidebarProvider key={tone} style={{ minHeight: 0, width: 'auto' }}>
+          <Sidebar collapsible="none">
+            <SidebarContent>
+              <SidebarGroup>
+                <SidebarGroupLabel>tone=&quot;{tone}&quot;</SidebarGroupLabel>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton isActive tone={tone}>
+                        Dashboard
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton tone={tone}>Projects</SidebarMenuButton>
+                      <SidebarMenuSub>
+                        <SidebarMenuSubItem>
+                          <SidebarMenuSubButton href="#active" isActive tone={tone}>
+                            Active
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                        <SidebarMenuSubItem>
+                          <SidebarMenuSubButton href="#archived" tone={tone}>
+                            Archived
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      </SidebarMenuSub>
+                    </SidebarMenuItem>
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </SidebarGroup>
+            </SidebarContent>
+          </Sidebar>
+        </SidebarProvider>
+      ))}
+    </div>
   ),
 }
 
