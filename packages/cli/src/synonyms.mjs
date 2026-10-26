@@ -104,15 +104,15 @@ const gradients = [
 const displayType = [
   {
     id: 'doc:foundation-typography',
-    note: 'Display roles text-display (40px) and text-display-large (56px) for balances, prices and hero numbers; wrap cents in amount-fraction.',
+    note: 'Display roles text-display (40px) and text-display-large (56px) for balances, prices and hero numbers; wrap cents in amount-fraction. iOS: AtomAmountText(13.25, currencyCode: "USD") and .atomDisplayFont().',
   },
   {
     id: 'token:--a63-type-display-font-size',
-    note: 'The display text role (10xl, 40px): Tailwind text-display or text-display-strong.',
+    note: 'The display text role (10xl, 40px): Tailwind text-display or text-display-strong; iOS AtomDisplayRole.display.',
   },
   {
     id: 'token:--a63-type-display-large-font-size',
-    note: 'The display-large text role (11xl, 56px): Tailwind text-display-large.',
+    note: 'The display-large text role (11xl, 56px): Tailwind text-display-large; iOS AtomDisplayRole.displayLarge.',
   },
 ]
 
