@@ -56,6 +56,7 @@
   --a63-surface-backdrop: saturate(1.4) blur(var(--blur-lg));
   --a63-surface-highlight: color-mix(in oklch, white 55%, transparent);
   --a63-surface-highlight-opacity: 0.75;
+  --a63-surface-raised-shadow: var(--a63-surface-shadow);
   /* Menus need a quieter, more even backplate than larger Aqua overlays so
         dense rows remain legible from top to bottom. */
   --a63-menu-popup-background: color-mix(in oklab, var(--a63-surface-overlay) 92%, white);

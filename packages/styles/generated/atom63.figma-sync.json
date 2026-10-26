@@ -4,10 +4,10 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1134,
-    "aliasValues": 779,
+    "variables": 1135,
+    "aliasValues": 785,
     "skipped": 187,
-    "computed": 59
+    "computed": 60
   },
   "collections": [
     {
@@ -1347,6 +1347,39 @@
             "FRAME_FILL",
             "SHAPE_FILL"
           ]
+        },
+        {
+          "name": "surface/raised/shadow",
+          "token": "--a63-surface-raised-shadow",
+          "type": "STRING",
+          "values": {
+            "modern-light": {
+              "value": "0 1px 3px color-mix(in oklch, black 8%, transparent),\n    0 4px 12px -2px color-mix(in oklch, black 10%, transparent)"
+            },
+            "modern-dark": {
+              "value": "0 1px 3px color-mix(in oklch, black 8%, transparent),\n    0 4px 12px -2px color-mix(in oklch, black 10%, transparent)"
+            },
+            "aqua-light": {
+              "alias": "--a63-surface-shadow"
+            },
+            "aqua-dark": {
+              "alias": "--a63-surface-shadow"
+            },
+            "retro-light": {
+              "alias": "--a63-surface-shadow"
+            },
+            "retro-dark": {
+              "alias": "--a63-surface-shadow"
+            },
+            "terminal-light": {
+              "alias": "--a63-surface-shadow"
+            },
+            "terminal-dark": {
+              "alias": "--a63-surface-shadow"
+            }
+          },
+          "codeSyntax": "var(--a63-surface-raised-shadow)",
+          "scopes": []
         },
         {
           "name": "surface/shadow",
@@ -21404,6 +21437,15 @@
         "theme"
       ],
       "expression": "color-mix( in oklab, var(--surface-dark-2) calc(100% - var(--a63-surface-tint)), var(--a63-brand-900) var(--a63-surface-tint) )"
+    },
+    {
+      "token": "--a63-surface-raised-shadow",
+      "collection": "Theme",
+      "variesOn": [
+        "brand",
+        "theme"
+      ],
+      "expression": "0 1px 3px color-mix(in oklch, black 8%, transparent), 0 4px 12px -2px color-mix(in oklch, black 10%, transparent)"
     },
     {
       "token": "--a63-surface-shadow",

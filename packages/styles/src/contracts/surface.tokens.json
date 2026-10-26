@@ -67,6 +67,63 @@
           "$description": "Recessed/inset treatment (sunken well). `0 0 #0000` = flat.\n   NOT `none`: this token is composed into comma-separated box-shadow lists\n   (`var(--a63-surface-inner-shadow), var(--a63-surface-shadow)`), and `none`\n   is only legal as the sole value — it invalidates the whole declaration and\n   silently drops the surface's elevation."
         }
       },
+      "raised": {
+        "shadow": {
+          "$type": "shadow",
+          "$value": [
+            {
+              "color": {
+                "colorSpace": "srgb",
+                "components": [0, 0, 0],
+                "alpha": 0.08
+              },
+              "offsetX": {
+                "value": 0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 1,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 3,
+                "unit": "px"
+              },
+              "spread": {
+                "value": 0,
+                "unit": "px"
+              }
+            },
+            {
+              "color": {
+                "colorSpace": "srgb",
+                "components": [0, 0, 0],
+                "alpha": 0.1
+              },
+              "offsetX": {
+                "value": 0,
+                "unit": "px"
+              },
+              "offsetY": {
+                "value": 4,
+                "unit": "px"
+              },
+              "blur": {
+                "value": 12,
+                "unit": "px"
+              },
+              "spread": {
+                "value": -2,
+                "unit": "px"
+              }
+            }
+          ],
+          "$extensions": {
+            "io.atom63.derive": "0 1px 3px color-mix(in oklch, black 8%, transparent), 0 4px 12px -2px color-mix(in oklch, black 10%, transparent)"
+          },
+          "$description": "Soft lift for a borderless surface that sits above its ground: the elevated Card and the raised Button. Themes point it at their own surface treatment."
+        }
+      },
       "highlight": {
         "opacity": {
           "$type": "number",

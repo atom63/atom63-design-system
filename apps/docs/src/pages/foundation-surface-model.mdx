@@ -34,6 +34,9 @@ The tokens matter because they let components share intent. A dialog and a dropd
 |---------|--------|--------|--------|
 | Page canvas | No | No | It is the base layer |
 | Static card | Usually yes | Low lift in the shipped surface contract | It groups content without competing with overlays |
+| Filled card (`variant="filled"`) | No | No | The muted fill is its one boundary, on a white page |
+| Elevated card (`variant="elevated"`) | No | `--a63-surface-raised-shadow` | The soft lift is its one boundary, on a tinted or grey ground |
+| Floating button (`variant="raised"`) | No | `--a63-surface-raised-shadow` | It floats over a map or a light photo |
 | Input or trigger | Yes | No | The control is interactive, not elevated |
 | Popover / menu | Yes | Yes, subtle | It floats above the page |
 | Dialog / sheet | Yes | Yes | It interrupts the current layer |
@@ -120,10 +123,11 @@ Use these cues in dark mode:
 ## Decision rules
 
 1. Start flat.
-2. Add a border when content needs grouping.
-3. Add background contrast when a nested surface needs its own identity.
-4. Add shadow only when the object floats above the current layer.
-5. Use motion and color for state feedback, not elevation.
+2. One boundary per element: border, fill or shadow, not two. Don't nest outlined containers.
+3. Add a border when content needs grouping.
+4. Add background contrast when a nested surface needs its own identity.
+5. Add shadow only when the object floats above the current layer.
+6. Use motion and color for state feedback, not elevation.
 
 ## Anti-patterns
 

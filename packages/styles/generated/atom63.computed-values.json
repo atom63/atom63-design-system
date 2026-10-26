@@ -2525,6 +2525,35 @@
         "brand=b6,mode=dark,surface=n6,theme=terminal": {"r":0.151895,"g":0.109808,"b":0.106353,"a":1}
       }
     },
+    "--a63-surface-raised-shadow": {
+      "variesOn": ["brand","theme"],
+      "values": {
+        "brand=b1,theme=modern": "0 1px 3px color-mix(in oklch, black 8%, transparent),\n    0 4px 12px -2px color-mix(in oklch, black 10%, transparent)",
+        "brand=b1,theme=aqua": "inset 0 1px 0 color-mix(in oklch, white 55%, transparent),\n    0 6px 16px -6px color-mix(in oklch, black 22%, transparent),\n    0 1px 3px -1px color-mix(in oklch, black 12%, transparent)",
+        "brand=b1,theme=retro": "inset 1px 1px 0 color-mix(in oklch, white 55%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), 2px 2px 0 color-mix(in oklch, black 16%, transparent)",
+        "brand=b1,theme=terminal": "inset 0 0 0 1px\n    color-mix(in oklch, rgba(5, 93, 210, 1) 22%, transparent)",
+        "brand=b2,theme=modern": "0 1px 3px color-mix(in oklch, black 8%, transparent),\n    0 4px 12px -2px color-mix(in oklch, black 10%, transparent)",
+        "brand=b2,theme=aqua": "inset 0 1px 0 color-mix(in oklch, white 55%, transparent),\n    0 6px 16px -6px color-mix(in oklch, black 22%, transparent),\n    0 1px 3px -1px color-mix(in oklch, black 12%, transparent)",
+        "brand=b2,theme=retro": "inset 1px 1px 0 color-mix(in oklch, white 55%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), 2px 2px 0 color-mix(in oklch, black 16%, transparent)",
+        "brand=b2,theme=terminal": "inset 0 0 0 1px\n    color-mix(in oklch, rgba(199, 66, 0, 1) 22%, transparent)",
+        "brand=b3,theme=modern": "0 1px 3px color-mix(in oklch, black 8%, transparent),\n    0 4px 12px -2px color-mix(in oklch, black 10%, transparent)",
+        "brand=b3,theme=aqua": "inset 0 1px 0 color-mix(in oklch, white 55%, transparent),\n    0 6px 16px -6px color-mix(in oklch, black 22%, transparent),\n    0 1px 3px -1px color-mix(in oklch, black 12%, transparent)",
+        "brand=b3,theme=retro": "inset 1px 1px 0 color-mix(in oklch, white 55%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), 2px 2px 0 color-mix(in oklch, black 16%, transparent)",
+        "brand=b3,theme=terminal": "inset 0 0 0 1px\n    color-mix(in oklch, rgba(0, 94, 51, 1) 22%, transparent)",
+        "brand=b4,theme=modern": "0 1px 3px color-mix(in oklch, black 8%, transparent),\n    0 4px 12px -2px color-mix(in oklch, black 10%, transparent)",
+        "brand=b4,theme=aqua": "inset 0 1px 0 color-mix(in oklch, white 55%, transparent),\n    0 6px 16px -6px color-mix(in oklch, black 22%, transparent),\n    0 1px 3px -1px color-mix(in oklch, black 12%, transparent)",
+        "brand=b4,theme=retro": "inset 1px 1px 0 color-mix(in oklch, white 55%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), 2px 2px 0 color-mix(in oklch, black 16%, transparent)",
+        "brand=b4,theme=terminal": "inset 0 0 0 1px\n    color-mix(in oklch, rgba(185, 28, 107, 1) 22%, transparent)",
+        "brand=b5,theme=modern": "0 1px 3px color-mix(in oklch, black 8%, transparent),\n    0 4px 12px -2px color-mix(in oklch, black 10%, transparent)",
+        "brand=b5,theme=aqua": "inset 0 1px 0 color-mix(in oklch, white 55%, transparent),\n    0 6px 16px -6px color-mix(in oklch, black 22%, transparent),\n    0 1px 3px -1px color-mix(in oklch, black 12%, transparent)",
+        "brand=b5,theme=retro": "inset 1px 1px 0 color-mix(in oklch, white 55%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), 2px 2px 0 color-mix(in oklch, black 16%, transparent)",
+        "brand=b5,theme=terminal": "inset 0 0 0 1px\n    color-mix(in oklch, rgba(94, 10, 202, 1) 22%, transparent)",
+        "brand=b6,theme=modern": "0 1px 3px color-mix(in oklch, black 8%, transparent),\n    0 4px 12px -2px color-mix(in oklch, black 10%, transparent)",
+        "brand=b6,theme=aqua": "inset 0 1px 0 color-mix(in oklch, white 55%, transparent),\n    0 6px 16px -6px color-mix(in oklch, black 22%, transparent),\n    0 1px 3px -1px color-mix(in oklch, black 12%, transparent)",
+        "brand=b6,theme=retro": "inset 1px 1px 0 color-mix(in oklch, white 55%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), 2px 2px 0 color-mix(in oklch, black 16%, transparent)",
+        "brand=b6,theme=terminal": "inset 0 0 0 1px\n    color-mix(in oklch, rgba(205, 12, 61, 1) 22%, transparent)"
+      }
+    },
     "--a63-surface-shadow": {
       "variesOn": ["brand","theme"],
       "values": {

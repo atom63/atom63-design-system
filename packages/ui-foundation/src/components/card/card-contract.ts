@@ -3,7 +3,14 @@
 
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
-export const cardVariants = ['default', 'ghost', 'interactive', 'overlay'] as const
+export const cardVariants = [
+  'default',
+  'filled',
+  'elevated',
+  'ghost',
+  'interactive',
+  'overlay',
+] as const
 export const cardPaddings = ['none', 'sm', 'md', 'lg'] as const
 export const cardContentPaddings = ['none', 'xs', 'sm', 'md', 'lg'] as const
 export const cardLineClamps = [1, 2, 3] as const

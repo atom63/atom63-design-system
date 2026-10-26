@@ -8,7 +8,10 @@
  *   palette or arbitrary color utilities;
  * - the system-component share: JSX elements imported from `@atom63/*`,
  *   divided by every JSX element that is a third-party component or an
- *   interactive HTML element.
+ *   interactive HTML element;
+ * - warnings: patterns that are not wrong but usually unintended, such as a
+ *   `<Button>` without `variant`, which draws the heaviest neutral solid.
+ *   They are reported, never counted as craft violations.
  */
 import ts from 'typescript'
 
@@ -166,6 +169,59 @@ export function countJsxElements(source, fileName = 'file.tsx') {
 }
 
 /**
+ * Warnings in one TSX file: each `<Button>` imported from `@atom63/*` that
+ * passes no `variant` (and spreads no props that could carry one). It draws
+ * the `default` neutral solid, the heaviest neutral, which is rarely meant for
+ * a back, keypad or secondary action.
+ * @returns {{ rule: 'button-without-variant', line: number, match: string }[]}
+ */
+export function findWarnings(source, fileName = 'file.tsx') {
+  const file = ts.createSourceFile(
+    fileName,
+    source,
+    ts.ScriptTarget.Latest,
+    true,
+    ts.ScriptKind.TSX
+  )
+  const systemButtons = new Set()
+  for (const statement of file.statements) {
+    if (!ts.isImportDeclaration(statement) || !statement.importClause) continue
+    const from = /** @type {import('typescript').StringLiteral} */ (statement.moduleSpecifier).text
+    const bindings = statement.importClause.namedBindings
+    if (!from.startsWith('@atom63/') || !bindings || !ts.isNamedImports(bindings)) continue
+    for (const element of bindings.elements) {
+      if ((element.propertyName ?? element.name).text === 'Button')
+        systemButtons.add(element.name.text)
+    }
+  }
+  const warnings = []
+  const visit = node => {
+    if (
+      (ts.isJsxOpeningElement(node) || ts.isJsxSelfClosingElement(node)) &&
+      systemButtons.has(node.tagName.getText(file))
+    ) {
+      const attributes = node.attributes.properties
+      const open = attributes.some(
+        attribute =>
+          ts.isJsxSpreadAttribute(attribute) ||
+          (ts.isJsxAttribute(attribute) && attribute.name.getText(file) === 'variant')
+      )
+      if (!open) {
+        const { line } = file.getLineAndCharacterOfPosition(node.getStart(file))
+        warnings.push({
+          rule: /** @type {const} */ ('button-without-variant'),
+          line: line + 1,
+          match: node.getText(file).split('\n')[0],
+        })
+      }
+    }
+    ts.forEachChild(node, visit)
+  }
+  visit(file)
+  return warnings
+}
+
+/**
  * The system-component share: system elements over system, third-party and
  * interactive HTML elements. `null` when there is nothing to divide.
  */
@@ -189,6 +245,7 @@ export function measureSources(files, { knownTokens } = {}) {
   if (known)
     for (const text of files.values()) for (const name of declaredTokens(text)) known.add(name)
   const craft = []
+  const warnings = []
   const literals = { paletteUtilities: [], literalColors: [] }
   const jsx = {
     system: 0,
@@ -208,6 +265,8 @@ export function measureSources(files, { knownTokens } = {}) {
     literals.paletteUtilities.push(...found.paletteUtilities)
     literals.literalColors.push(...found.literalColors)
     if (relative.endsWith('.tsx')) {
+      for (const warning of findWarnings(text, relative))
+        warnings.push({ file: relative, ...warning })
       const counts = countJsxElements(text, relative)
       for (const key of ['system', 'thirdParty', 'icons', 'local', 'interactiveHtml', 'otherHtml'])
         jsx[key] += counts[key]
@@ -215,5 +274,5 @@ export function measureSources(files, { knownTokens } = {}) {
         jsx.systemNames[name] = (jsx.systemNames[name] ?? 0) + count
     }
   }
-  return { craft, jsx, lines, literals, share: systemShare(jsx) }
+  return { craft, jsx, lines, literals, share: systemShare(jsx), warnings }
 }

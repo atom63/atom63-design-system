@@ -174,6 +174,15 @@ export const Pills: Story = {
       <PillsDemo tone="accent" />
     </div>
   ),
+  /* A pill is drawn by its fill alone: no visible border at rest. */
+  play: ({ canvasElement }) => {
+    const pill = canvasElement.querySelector<HTMLElement>('.a63-Toggle:not([data-pressed])')
+    if (!pill) throw new Error('Expected an unpressed pill')
+    const style = getComputedStyle(pill)
+    if (style.borderTopColor !== 'rgba(0, 0, 0, 0)') {
+      throw new Error(`Expected no visible pill border, got ${style.borderTopColor}`)
+    }
+  },
 }
 
 export const Vertical: Story = { render: () => <Demo orientation="vertical" /> }

@@ -38,6 +38,10 @@
         is only legal as the sole value — it invalidates the whole declaration and
         silently drops the surface's elevation. */
   --a63-surface-inner-shadow: 0 0 #0000;
+  /* Soft lift for a borderless surface that sits above its ground: the elevated Card and the raised Button. Themes point it at their own surface treatment. */
+  --a63-surface-raised-shadow:
+    0 1px 3px color-mix(in oklch, black 8%, transparent),
+    0 4px 12px -2px color-mix(in oklch, black 10%, transparent);
   --a63-surface-highlight-opacity: 1;
   /* Bevel controls. */
   --a63-surface-border-style: solid;

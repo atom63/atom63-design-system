@@ -7,6 +7,7 @@
       "default",
       "primary",
       "secondary",
+      "raised",
       "destructive",
       "destructive-outline",
       "outline",
@@ -8829,6 +8830,3026 @@
             },
             "stroke": {
               "alias": "--a63-text-secondary"
+            },
+            "visible": {
+              "value": true
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=xs, State=rest",
+      "coord": {
+        "variant": "raised",
+        "size": "xs",
+        "state": "rest"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-panel"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 24
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-xs"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xs"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-xs"
+            },
+            "lineHeight": {
+              "alias": "--typography-xs-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xs"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=xs, State=hover",
+      "coord": {
+        "variant": "raised",
+        "size": "xs",
+        "state": "hover"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-muted"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 24
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-xs"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xs"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-xs"
+            },
+            "lineHeight": {
+              "alias": "--typography-xs-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xs"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=xs, State=pressed",
+      "coord": {
+        "variant": "raised",
+        "size": "xs",
+        "state": "pressed"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-muted"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 24
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-xs"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xs"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-xs"
+            },
+            "lineHeight": {
+              "alias": "--typography-xs-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xs"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=xs, State=focusVisible",
+      "coord": {
+        "variant": "raised",
+        "size": "xs",
+        "state": "focusVisible"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-panel"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 24
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-xs"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xs"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-xs"
+            },
+            "lineHeight": {
+              "alias": "--typography-xs-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xs"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": true
+            },
+            "stroke": {
+              "alias": "--a63-control-focus-ring-color"
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-focus-ring-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "outlineOffset": {
+              "value": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=xs, State=disabled",
+      "coord": {
+        "variant": "raised",
+        "size": "xs",
+        "state": "disabled"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-action-disabled-background"
+            },
+            "stroke": {
+              "alias": "--a63-action-disabled-border"
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 24
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-xs"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xs"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-action-disabled-foreground"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-xs"
+            },
+            "lineHeight": {
+              "alias": "--typography-xs-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            },
+            "opacity": {
+              "value": 1
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xs"
+            },
+            "stroke": {
+              "alias": "--a63-action-disabled-foreground"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=xs, State=loading",
+      "coord": {
+        "variant": "raised",
+        "size": "xs",
+        "state": "loading"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-panel"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 24
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-xs"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xs"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-xs"
+            },
+            "lineHeight": {
+              "alias": "--typography-xs-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            },
+            "opacity": {
+              "value": 0
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xs"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": true
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=sm, State=rest",
+      "coord": {
+        "variant": "raised",
+        "size": "sm",
+        "state": "rest"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-panel"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 28
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-sm"
+            },
+            "itemSpacing": {
+              "alias": "--a63-space-1_5"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-sm"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-sm"
+            },
+            "lineHeight": {
+              "alias": "--typography-xs-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-sm"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=sm, State=hover",
+      "coord": {
+        "variant": "raised",
+        "size": "sm",
+        "state": "hover"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-muted"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 28
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-sm"
+            },
+            "itemSpacing": {
+              "alias": "--a63-space-1_5"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-sm"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-sm"
+            },
+            "lineHeight": {
+              "alias": "--typography-xs-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-sm"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=sm, State=pressed",
+      "coord": {
+        "variant": "raised",
+        "size": "sm",
+        "state": "pressed"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-muted"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 28
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-sm"
+            },
+            "itemSpacing": {
+              "alias": "--a63-space-1_5"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-sm"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-sm"
+            },
+            "lineHeight": {
+              "alias": "--typography-xs-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-sm"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=sm, State=focusVisible",
+      "coord": {
+        "variant": "raised",
+        "size": "sm",
+        "state": "focusVisible"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-panel"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 28
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-sm"
+            },
+            "itemSpacing": {
+              "alias": "--a63-space-1_5"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-sm"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-sm"
+            },
+            "lineHeight": {
+              "alias": "--typography-xs-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-sm"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": true
+            },
+            "stroke": {
+              "alias": "--a63-control-focus-ring-color"
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-focus-ring-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "outlineOffset": {
+              "value": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=sm, State=disabled",
+      "coord": {
+        "variant": "raised",
+        "size": "sm",
+        "state": "disabled"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-action-disabled-background"
+            },
+            "stroke": {
+              "alias": "--a63-action-disabled-border"
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 28
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-sm"
+            },
+            "itemSpacing": {
+              "alias": "--a63-space-1_5"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-sm"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-action-disabled-foreground"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-sm"
+            },
+            "lineHeight": {
+              "alias": "--typography-xs-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            },
+            "opacity": {
+              "value": 1
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-sm"
+            },
+            "stroke": {
+              "alias": "--a63-action-disabled-foreground"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=sm, State=loading",
+      "coord": {
+        "variant": "raised",
+        "size": "sm",
+        "state": "loading"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-panel"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 28
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-sm"
+            },
+            "itemSpacing": {
+              "alias": "--a63-space-1_5"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-sm"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-sm"
+            },
+            "lineHeight": {
+              "alias": "--typography-xs-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            },
+            "opacity": {
+              "value": 0
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-sm"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": true
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=md, State=rest",
+      "coord": {
+        "variant": "raised",
+        "size": "md",
+        "state": "rest"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-panel"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 32
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-md"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-md"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-md"
+            },
+            "lineHeight": {
+              "alias": "--typography-sm-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-md"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=md, State=hover",
+      "coord": {
+        "variant": "raised",
+        "size": "md",
+        "state": "hover"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-muted"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 32
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-md"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-md"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-md"
+            },
+            "lineHeight": {
+              "alias": "--typography-sm-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-md"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=md, State=pressed",
+      "coord": {
+        "variant": "raised",
+        "size": "md",
+        "state": "pressed"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-muted"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 32
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-md"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-md"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-md"
+            },
+            "lineHeight": {
+              "alias": "--typography-sm-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-md"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=md, State=focusVisible",
+      "coord": {
+        "variant": "raised",
+        "size": "md",
+        "state": "focusVisible"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-panel"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 32
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-md"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-md"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-md"
+            },
+            "lineHeight": {
+              "alias": "--typography-sm-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-md"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": true
+            },
+            "stroke": {
+              "alias": "--a63-control-focus-ring-color"
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-focus-ring-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "outlineOffset": {
+              "value": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=md, State=disabled",
+      "coord": {
+        "variant": "raised",
+        "size": "md",
+        "state": "disabled"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-action-disabled-background"
+            },
+            "stroke": {
+              "alias": "--a63-action-disabled-border"
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 32
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-md"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-md"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-action-disabled-foreground"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-md"
+            },
+            "lineHeight": {
+              "alias": "--typography-sm-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            },
+            "opacity": {
+              "value": 1
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-md"
+            },
+            "stroke": {
+              "alias": "--a63-action-disabled-foreground"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=md, State=loading",
+      "coord": {
+        "variant": "raised",
+        "size": "md",
+        "state": "loading"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-panel"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 32
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-md"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-md"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-md"
+            },
+            "lineHeight": {
+              "alias": "--typography-sm-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            },
+            "opacity": {
+              "value": 0
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-md"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": true
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=lg, State=rest",
+      "coord": {
+        "variant": "raised",
+        "size": "lg",
+        "state": "rest"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-panel"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 36
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-lg"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-lg"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-lg"
+            },
+            "lineHeight": {
+              "alias": "--typography-base-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-lg"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=lg, State=hover",
+      "coord": {
+        "variant": "raised",
+        "size": "lg",
+        "state": "hover"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-muted"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 36
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-lg"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-lg"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-lg"
+            },
+            "lineHeight": {
+              "alias": "--typography-base-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-lg"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=lg, State=pressed",
+      "coord": {
+        "variant": "raised",
+        "size": "lg",
+        "state": "pressed"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-muted"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 36
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-lg"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-lg"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-lg"
+            },
+            "lineHeight": {
+              "alias": "--typography-base-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-lg"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=lg, State=focusVisible",
+      "coord": {
+        "variant": "raised",
+        "size": "lg",
+        "state": "focusVisible"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-panel"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 36
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-lg"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-lg"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-lg"
+            },
+            "lineHeight": {
+              "alias": "--typography-base-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-lg"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": true
+            },
+            "stroke": {
+              "alias": "--a63-control-focus-ring-color"
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-focus-ring-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "outlineOffset": {
+              "value": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=lg, State=disabled",
+      "coord": {
+        "variant": "raised",
+        "size": "lg",
+        "state": "disabled"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-action-disabled-background"
+            },
+            "stroke": {
+              "alias": "--a63-action-disabled-border"
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 36
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-lg"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-lg"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-action-disabled-foreground"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-lg"
+            },
+            "lineHeight": {
+              "alias": "--typography-base-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            },
+            "opacity": {
+              "value": 1
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-lg"
+            },
+            "stroke": {
+              "alias": "--a63-action-disabled-foreground"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=lg, State=loading",
+      "coord": {
+        "variant": "raised",
+        "size": "lg",
+        "state": "loading"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-panel"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 36
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-lg"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-lg"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-lg"
+            },
+            "lineHeight": {
+              "alias": "--typography-base-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            },
+            "opacity": {
+              "value": 0
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-lg"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": true
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=xl, State=rest",
+      "coord": {
+        "variant": "raised",
+        "size": "xl",
+        "state": "rest"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-panel"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 40
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-xl"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xl"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-xl"
+            },
+            "lineHeight": {
+              "alias": "--typography-lg-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xl"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=xl, State=hover",
+      "coord": {
+        "variant": "raised",
+        "size": "xl",
+        "state": "hover"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-muted"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 40
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-xl"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xl"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-xl"
+            },
+            "lineHeight": {
+              "alias": "--typography-lg-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xl"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=xl, State=pressed",
+      "coord": {
+        "variant": "raised",
+        "size": "xl",
+        "state": "pressed"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-muted"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 40
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-xl"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xl"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-xl"
+            },
+            "lineHeight": {
+              "alias": "--typography-lg-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xl"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=xl, State=focusVisible",
+      "coord": {
+        "variant": "raised",
+        "size": "xl",
+        "state": "focusVisible"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-panel"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 40
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-xl"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xl"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-xl"
+            },
+            "lineHeight": {
+              "alias": "--typography-lg-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xl"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": true
+            },
+            "stroke": {
+              "alias": "--a63-control-focus-ring-color"
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-focus-ring-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "outlineOffset": {
+              "value": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=xl, State=disabled",
+      "coord": {
+        "variant": "raised",
+        "size": "xl",
+        "state": "disabled"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-action-disabled-background"
+            },
+            "stroke": {
+              "alias": "--a63-action-disabled-border"
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 40
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-xl"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xl"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-action-disabled-foreground"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-xl"
+            },
+            "lineHeight": {
+              "alias": "--typography-lg-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            },
+            "opacity": {
+              "value": 1
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xl"
+            },
+            "stroke": {
+              "alias": "--a63-action-disabled-foreground"
+            },
+            "visible": {
+              "value": false
+            }
+          }
+        },
+        {
+          "name": "Focus ring",
+          "kind": "outline",
+          "properties": {
+            "visible": {
+              "value": false
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Variant=raised, Size=xl, State=loading",
+      "coord": {
+        "variant": "raised",
+        "size": "xl",
+        "state": "loading"
+      },
+      "layers": [
+        {
+          "name": "Button",
+          "kind": "frame",
+          "properties": {
+            "fill": {
+              "alias": "--a63-surface-panel"
+            },
+            "stroke": {
+              "value": {
+                "r": 0,
+                "g": 0,
+                "b": 0,
+                "a": 0
+              }
+            },
+            "strokeWeight": {
+              "alias": "--a63-control-border-width"
+            },
+            "cornerRadius": {
+              "alias": "--a63-control-radius"
+            },
+            "height": {
+              "value": 40
+            },
+            "paddingInline": {
+              "alias": "--a63-control-padding-inline-xl"
+            },
+            "itemSpacing": {
+              "alias": "--a63-control-gap"
+            }
+          }
+        },
+        {
+          "name": "Icon",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xl"
+            }
+          }
+        },
+        {
+          "name": "Label",
+          "kind": "text",
+          "properties": {
+            "fill": {
+              "alias": "--a63-text-primary"
+            },
+            "fontSize": {
+              "alias": "--a63-control-font-size-xl"
+            },
+            "lineHeight": {
+              "alias": "--typography-lg-line-height"
+            },
+            "fontFamily": {
+              "alias": "--a63-control-font-family"
+            },
+            "fontWeight": {
+              "alias": "--a63-control-font-weight"
+            },
+            "opacity": {
+              "value": 0
+            }
+          }
+        },
+        {
+          "name": "Spinner",
+          "kind": "frame",
+          "properties": {
+            "size": {
+              "alias": "--a63-control-icon-size-xl"
+            },
+            "stroke": {
+              "alias": "--a63-text-primary"
             },
             "visible": {
               "value": true
@@ -32676,6 +35697,7 @@
     "--a63-space-1_5",
     "--a63-surface-control-hover",
     "--a63-surface-muted",
+    "--a63-surface-panel",
     "--a63-text-primary",
     "--a63-text-secondary",
     "--radius-pill",
@@ -33443,6 +36465,186 @@
     },
     {
       "variant": "Variant=secondary, Size=xl, State=loading",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=xs, State=rest",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=xs, State=hover",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=xs, State=pressed",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=xs, State=focusVisible",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=xs, State=disabled",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=xs, State=loading",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=sm, State=rest",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=sm, State=hover",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=sm, State=pressed",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=sm, State=focusVisible",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=sm, State=disabled",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=sm, State=loading",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=md, State=rest",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=md, State=hover",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=md, State=pressed",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=md, State=focusVisible",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=md, State=disabled",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=md, State=loading",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=lg, State=rest",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=lg, State=hover",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=lg, State=pressed",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=lg, State=focusVisible",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=lg, State=disabled",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=lg, State=loading",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=xl, State=rest",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=xl, State=hover",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=xl, State=pressed",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=xl, State=focusVisible",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=xl, State=disabled",
+      "layer": "Button",
+      "property": "height",
+      "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
+    },
+    {
+      "variant": "Variant=raised, Size=xl, State=loading",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -34991,16 +38193,17 @@
     ],
     "axisGuidance": {
       "variant": {
-        "default": "Neutral action; the usual alternative next to primary (Cancel).",
-        "primary": "The one primary action per view.",
+        "default": "Neutral solid: high emphasis without the brand colour (a white play button on dark, a black Pay button).",
+        "primary": "The one primary action per view, when the product's main action is in its brand colour.",
         "secondary": "Muted neutral action for supporting tasks.",
+        "raised": "Light fill, soft shadow, no border; with shape=\"round\", the floating button over a map or a light photo.",
         "destructive": "Only when the outcome destroys data.",
         "destructive-outline": "Quieter destructive action, beside a safe default.",
         "outline": "Lower-emphasis alternative (Duplicate).",
         "dashed": "Add or filter affordance drawn as a dashed pill (+ Status).",
         "ghost": "Lowest emphasis; toolbars and dismissals.",
         "link": "Inline action styled as text; navigation should use a real link.",
-        "overlay": "Forced contrast over media and imagery.",
+        "overlay": "Forced contrast over media and imagery; the floating button over dark media.",
         "glass": "Compatibility alias of overlay; new work uses overlay."
       },
       "size": {

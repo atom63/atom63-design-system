@@ -180,12 +180,13 @@ export function build(index, idea) {
     .filter(Boolean)
     .flatMap(entry => findTemplate(index, entry.id).componentsUsed)
     .filter(slug => bySlug.has(slug))
-  const named = search(index, idea, { kind: 'component', limit: 6 }).data.results.map(
-    result => result.id
-  )
+  const found = search(index, idea, { kind: 'component', limit: 6 }).data.results
+  const named = found.map(result => result.id)
+  // A topic note ("track list" → Table variant="plain") replaces the summary.
+  const summaries = new Map(found.map(result => [result.id, result.summary]))
   const components = [...new Set([...used, ...named])].slice(0, 8).map(slug => ({
     slug,
-    summary: bySlug.get(slug).summary,
+    summary: summaries.get(slug) ?? bySlug.get(slug).summary,
     next: `atom63 component ${slug}`,
   }))
   return {
