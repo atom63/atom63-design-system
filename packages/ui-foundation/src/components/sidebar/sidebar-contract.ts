@@ -6,13 +6,16 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 // Faithful to prod @atom63/ui sidebar.tsx: the Sidebar has three variant unions (side / variant /
 // collapsible) plus the two menu-button ramps (variant + size) and the sub-button size ramp. The
 // many structural parts each get a data-slot; these are enumerated as the contract's slots so
-// consumers can target them.
+// consumers can target them. Menu buttons and sub-buttons take tone (neutral/accent) for their
+// active state: neutral is the hover plate with primary text, accent the opt-in primary wash with
+// accent text.
 
 export const sidebarSides = ['left', 'right'] as const
 export const sidebarVariants = ['sidebar', 'floating', 'inset'] as const
 export const sidebarCollapsibles = ['offcanvas', 'icon', 'none'] as const
 export const sidebarMenuButtonVariants = ['default', 'outline'] as const
 export const sidebarMenuButtonSizes = ['default', 'sm', 'lg'] as const
+export const sidebarMenuButtonTones = ['neutral', 'accent'] as const
 export const sidebarMenuSubButtonSizes = ['sm', 'md'] as const
 export const sidebarStates = ['expanded', 'collapsed'] as const
 export const sidebarSlots = [
@@ -55,6 +58,7 @@ export type SidebarVariant = (typeof sidebarVariants)[number]
 export type SidebarCollapsible = (typeof sidebarCollapsibles)[number]
 export type SidebarMenuButtonVariant = (typeof sidebarMenuButtonVariants)[number]
 export type SidebarMenuButtonSize = (typeof sidebarMenuButtonSizes)[number]
+export type SidebarMenuButtonTone = (typeof sidebarMenuButtonTones)[number]
 export type SidebarMenuSubButtonSize = (typeof sidebarMenuSubButtonSizes)[number]
 export type SidebarState = (typeof sidebarStates)[number]
 export type SidebarSlot = (typeof sidebarSlots)[number]
@@ -66,6 +70,7 @@ export interface SidebarContract {
   defaultCollapsible: SidebarCollapsible
   defaultMenuButtonVariant: SidebarMenuButtonVariant
   defaultMenuButtonSize: SidebarMenuButtonSize
+  defaultMenuButtonTone: SidebarMenuButtonTone
   defaultMenuSubButtonSize: SidebarMenuSubButtonSize
   sides: readonly SidebarSide[]
   variants: readonly SidebarVariant[]
@@ -76,6 +81,7 @@ export interface SidebarContract {
   states: readonly SidebarState[]
   slots: readonly SidebarSlot[]
   visualArchetypes: readonly SidebarVisualArchetype[]
+  menuButtonTones: readonly SidebarMenuButtonTone[]
 }
 
 export const sidebarContract = {
@@ -84,6 +90,7 @@ export const sidebarContract = {
   defaultCollapsible: 'offcanvas',
   defaultMenuButtonVariant: 'default',
   defaultMenuButtonSize: 'default',
+  defaultMenuButtonTone: 'neutral',
   defaultMenuSubButtonSize: 'md',
   sides: sidebarSides,
   variants: sidebarVariants,
@@ -94,4 +101,5 @@ export const sidebarContract = {
   states: sidebarStates,
   slots: sidebarSlots,
   visualArchetypes: sidebarVisualArchetypes,
+  menuButtonTones: sidebarMenuButtonTones,
 } satisfies SidebarContract

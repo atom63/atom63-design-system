@@ -41,6 +41,14 @@
     width var(--duration-slow) var(--a63-motion-ease-standard);
 }
 
+/* tone="neutral": the primary text colour on a muted track. */
+.a63-Progress[data-tone='neutral'] .a63-Progress-track {
+  background-color: var(--a63-surface-muted);
+}
+.a63-Progress[data-tone='neutral'] .a63-Progress-indicator {
+  background-color: var(--a63-text-primary);
+}
+
 .a63-Progress-indicator[data-indeterminate] {
   width: 40%;
   animation: a63-progress-indeterminate var(--duration-slower) linear infinite;

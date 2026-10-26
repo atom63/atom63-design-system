@@ -2,10 +2,11 @@
   "$schema": "../schema/component-intent.schema.json",
   "component": "table",
   "maturity": "stable",
-  "description": "The tabular-data set: a horizontally scrollable container around a semantic <table>. The container takes size (default/sm) and variant (default/plain); TableHead and TableCell can pin to the start or end edge. The DS recipe reads these off data-size / data-variant / data-sticky.",
+  "description": "The tabular-data set: a horizontally scrollable container around a semantic <table>. The container takes size (default/sm) and variant (default/plain); TableHead and TableCell can pin to the start or end edge. The DS recipe reads these off data-size / data-variant / data-sticky. The container also takes tone (neutral/accent, data-tone), which colours selected rows: neutral is the muted fill with primary text, accent the opt-in primary wash with accent text.",
   "lists": {
     "variants": ["default", "plain"],
     "sizes": ["default", "sm"],
+    "tones": ["neutral", "accent"],
     "stickyEdges": ["start", "end"],
     "states": ["rest", "row-hover", "row-selected"],
     "slots": [
@@ -24,6 +25,7 @@
   "contract": {
     "defaultVariant": "default",
     "defaultSize": "default",
+    "defaultTone": "neutral",
     "variants": {
       "$ref": "#/lists/variants"
     },
@@ -41,6 +43,9 @@
     },
     "visualArchetypes": {
       "$ref": "#/lists/visualArchetypes"
+    },
+    "tones": {
+      "$ref": "#/lists/tones"
     }
   }
 }

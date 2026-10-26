@@ -3,11 +3,13 @@ export {
   progressContract,
   progressSlots,
   progressStates,
+  progressTones,
   progressVisualArchetypes,
 } from './progress-contract'
 export type {
   ProgressContract,
   ProgressSlot,
   ProgressState,
+  ProgressTone,
   ProgressVisualArchetype,
 } from './progress-contract'

@@ -65,6 +65,7 @@ import { InputSize } from '@atom63/ui-foundation';
 import { ItemGroupVariant } from '@atom63/ui-foundation';
 import { ItemMediaVariant } from '@atom63/ui-foundation';
 import { ItemSize } from '@atom63/ui-foundation';
+import { ItemTone } from '@atom63/ui-foundation';
 import { ItemVariant } from '@atom63/ui-foundation';
 import { KbdSize } from '@atom63/ui-foundation';
 import { LoadMoreTriggerState } from '@atom63/ui-foundation';
@@ -79,6 +80,7 @@ import { PointerInput } from '@atom63/ui-foundation';
 import { Popover as Popover_2 } from '@base-ui/react/popover';
 import { PreviewCard as PreviewCard_2 } from '@base-ui/react/preview-card';
 import { Progress as ProgressPrimitive } from '@base-ui/react/progress';
+import { ProgressTone } from '@atom63/ui-foundation';
 import { Radio as Radio_2 } from '@base-ui/react/radio';
 import { RadioGroup as RadioGroup_2 } from '@base-ui/react/radio-group';
 import { RadioIndicator } from '@atom63/ui-foundation';
@@ -105,16 +107,20 @@ import { SheetSide as SheetSide_2 } from '@atom63/ui-foundation';
 import { SheetVariant as SheetVariant_2 } from '@atom63/ui-foundation';
 import { SidebarCollapsible } from '@atom63/ui-foundation';
 import { SidebarMenuButtonSize } from '@atom63/ui-foundation';
+import { SidebarMenuButtonTone } from '@atom63/ui-foundation';
 import { SidebarMenuButtonVariant } from '@atom63/ui-foundation';
 import { SidebarMenuSubButtonSize } from '@atom63/ui-foundation';
+import { SidebarNavTreeTone } from '@atom63/ui-foundation';
 import { SidebarSide } from '@atom63/ui-foundation';
 import { SidebarState } from '@atom63/ui-foundation';
 import { SidebarVariant } from '@atom63/ui-foundation';
 import { Slider as Slider_2 } from '@base-ui/react/slider';
+import { SliderTone } from '@atom63/ui-foundation';
 import { Switch as Switch_2 } from '@base-ui/react/switch';
 import { SwitchSize } from '@atom63/ui-foundation';
 import { TableSize } from '@atom63/ui-foundation';
 import { TableStickyEdge } from '@atom63/ui-foundation';
+import { TableTone } from '@atom63/ui-foundation';
 import { TableVariant } from '@atom63/ui-foundation';
 import { Tabs as Tabs_2 } from '@base-ui/react/tabs';
 import { TabsSize } from '@atom63/ui-foundation';
@@ -1568,6 +1574,7 @@ export type ItemMediaProps = React$1.ComponentProps<'div'> & {
 export type ItemProps = useRender.ComponentProps<'div'> & {
     variant?: ItemVariant;
     size?: ItemSize;
+    tone?: ItemTone;
 };
 
 // @public (undocumented)
@@ -1885,7 +1892,7 @@ export interface PreviewCardPopupProps extends PreviewCard_2.Popup.Props {
 export function PreviewCardTrigger(input: PreviewCard_2.Trigger.Props): React$1.ReactElement;
 
 // @public (undocumented)
-export function Progress(input: ProgressPrimitive.Root.Props): React$1.ReactElement;
+export function Progress(input: ProgressProps): React$1.ReactElement;
 
 // @public (undocumented)
 export function ProgressIndicator(input: ProgressPrimitive.Indicator.Props): React$1.ReactElement;
@@ -1910,6 +1917,11 @@ export interface ProgressiveBlurProps {
 export function ProgressLabel(input: ProgressPrimitive.Label.Props): React$1.ReactElement;
 
 export { ProgressPrimitive }
+
+// @public (undocumented)
+export type ProgressProps = ProgressPrimitive.Root.Props & {
+    tone?: ProgressTone;
+};
 
 // @public (undocumented)
 export function ProgressTrack(input: ProgressPrimitive.Track.Props): React$1.ReactElement;
@@ -2470,6 +2482,7 @@ export type SidebarMenuButtonProps = useRender.ComponentProps<'button'> & React$
     isActive?: boolean;
     variant?: SidebarMenuButtonVariant;
     size?: SidebarMenuButtonSize;
+    tone?: SidebarMenuButtonTone;
     tooltip?: string | React$1.ComponentProps<typeof TooltipPopup>;
 };
 
@@ -2492,6 +2505,7 @@ export type SidebarMenuSubButtonProps = useRender.ComponentProps<'a'> & React$1.
     asChild?: boolean;
     size?: SidebarMenuSubButtonSize;
     isActive?: boolean;
+    tone?: SidebarMenuButtonTone;
 };
 
 // @public (undocumented)
@@ -2516,6 +2530,7 @@ export interface SidebarNavCollapsibleItemProps {
     onOpenChange: (open: boolean) => void;
     // (undocumented)
     open: boolean;
+    tone?: SidebarNavTreeTone;
 }
 
 // @public (undocumented)
@@ -2549,6 +2564,7 @@ export interface SidebarNavLinkItemProps {
     // (undocumented)
     isActive?: boolean;
     render?: React$1.ReactElement;
+    tone?: SidebarNavTreeTone;
 }
 
 // @public (undocumented)
@@ -2562,6 +2578,7 @@ export interface SidebarNavSubLinkItemProps {
     className?: string;
     // (undocumented)
     isActive?: boolean;
+    tone?: SidebarNavTreeTone;
 }
 
 // @public (undocumented)
@@ -2619,6 +2636,7 @@ export interface SliderProps extends Omit<SliderRootProps, 'value' | 'defaultVal
     defaultValue?: number | readonly number[];
     getThumbAriaLabel?: (index: number) => string;
     onValueChange?: (value: number) => void;
+    tone?: SliderTone;
     value?: number | readonly number[];
 }
 
@@ -2687,6 +2705,7 @@ export type TableHeadProps = React$1.ComponentProps<'th'> & {
 // @public (undocumented)
 export type TableProps = React$1.ComponentProps<'table'> & {
     size?: TableSize;
+    tone?: TableTone;
     variant?: TableVariant;
 };
 

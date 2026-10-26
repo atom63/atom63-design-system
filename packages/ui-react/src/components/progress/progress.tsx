@@ -1,5 +1,6 @@
 'use client'
 
+import { type ProgressTone, progressContract } from '@atom63/ui-foundation'
 import { Progress as ProgressPrimitive } from '@base-ui/react/progress'
 import type * as React from 'react'
 
@@ -10,15 +11,25 @@ import { cn } from '../../lib/cn'
    width, plus optional Label/Value rows. Chrome (track inset, indicator sheen)
    reads --a63-* tokens. Renders its default Track+Indicator when given no
    children. */
+export type ProgressProps = ProgressPrimitive.Root.Props & {
+  /**
+   * The indicator's colour. `accent` (the default) is the brand primary;
+   * `neutral` is the primary text colour on a muted track.
+   */
+  tone?: ProgressTone
+}
+
 export function Progress({
   className,
   children,
+  tone = progressContract.defaultTone,
   ...props
-}: ProgressPrimitive.Root.Props): React.ReactElement {
+}: ProgressProps): React.ReactElement {
   return (
     <ProgressPrimitive.Root
       className={cn('a63-Progress', className)}
       data-slot="progress"
+      data-tone={tone}
       {...props}
     >
       {children ?? (

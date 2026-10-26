@@ -62,6 +62,8 @@
   /* Selection */
   --selected: var(--a63-selected-background);
   --selected-foreground: var(--a63-selected-foreground);
+  --selected-accent: var(--a63-selected-accent-background);
+  --selected-accent-foreground: var(--a63-selected-accent-foreground);
 
   /* Charts */
   --chart-1: var(--a63-chart-1);

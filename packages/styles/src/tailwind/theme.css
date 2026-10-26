@@ -378,6 +378,8 @@
   --color-warning-subtle-foreground: var(--a63-status-warning-subtle-foreground);
   --color-selected: var(--a63-selected-background);
   --color-selected-foreground: var(--a63-selected-foreground);
+  --color-selected-accent: var(--a63-selected-accent-background);
+  --color-selected-accent-foreground: var(--a63-selected-accent-foreground);
   --color-chart-1: var(--a63-chart-1);
   --color-chart-2: var(--a63-chart-2);
   --color-chart-3: var(--a63-chart-3);

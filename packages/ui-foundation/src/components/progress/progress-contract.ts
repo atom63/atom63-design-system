@@ -4,6 +4,7 @@
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 export const progressStates = ['indeterminate', 'progressing', 'complete'] as const
+export const progressTones = ['accent', 'neutral'] as const
 export const progressSlots = [
   'progress',
   'progress-label',
@@ -14,17 +15,22 @@ export const progressSlots = [
 export const progressVisualArchetypes = ['range'] as const satisfies readonly VisualArchetypeId[]
 
 export type ProgressState = (typeof progressStates)[number]
+export type ProgressTone = (typeof progressTones)[number]
 export type ProgressSlot = (typeof progressSlots)[number]
 export type ProgressVisualArchetype = (typeof progressVisualArchetypes)[number]
 
 export interface ProgressContract {
   slots: readonly ProgressSlot[]
+  defaultTone: ProgressTone
   states: readonly ProgressState[]
   visualArchetypes: readonly ProgressVisualArchetype[]
+  tones: readonly ProgressTone[]
 }
 
 export const progressContract = {
   slots: progressSlots,
+  defaultTone: 'accent',
   states: progressStates,
   visualArchetypes: progressVisualArchetypes,
+  tones: progressTones,
 } satisfies ProgressContract

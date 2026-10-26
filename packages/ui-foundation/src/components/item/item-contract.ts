@@ -7,10 +7,12 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 // (default/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off
 // data-variant / data-size, and styles a row with aria-current or data-selected as current or
 // selected. ItemGroup takes variant (default/inset): inset is a rounded card with hairline dividers,
-// the grouped settings list.
+// the grouped settings list. A selected or current row follows tone (neutral/accent, data-tone):
+// neutral is the muted fill with primary text, accent is the opt-in primary wash with accent text.
 
 export const itemVariants = ['default', 'outline', 'muted'] as const
 export const itemSizes = ['default', 'sm', 'xs'] as const
+export const itemTones = ['neutral', 'accent'] as const
 export const itemMediaVariants = ['default', 'icon', 'image'] as const
 export const itemGroupVariants = ['default', 'inset'] as const
 export const itemSlots = [
@@ -30,6 +32,7 @@ export const itemVisualArchetypes = ['surface'] as const satisfies readonly Visu
 
 export type ItemVariant = (typeof itemVariants)[number]
 export type ItemSize = (typeof itemSizes)[number]
+export type ItemTone = (typeof itemTones)[number]
 export type ItemMediaVariant = (typeof itemMediaVariants)[number]
 export type ItemGroupVariant = (typeof itemGroupVariants)[number]
 export type ItemSlot = (typeof itemSlots)[number]
@@ -41,6 +44,7 @@ export interface ItemContract {
   defaultSize: ItemSize
   defaultMediaVariant: ItemMediaVariant
   defaultGroupVariant: ItemGroupVariant
+  defaultTone: ItemTone
   variants: readonly ItemVariant[]
   sizes: readonly ItemSize[]
   mediaVariants: readonly ItemMediaVariant[]
@@ -48,6 +52,7 @@ export interface ItemContract {
   states: readonly ItemState[]
   visualArchetypes: readonly ItemVisualArchetype[]
   groupVariants: readonly ItemGroupVariant[]
+  tones: readonly ItemTone[]
 }
 
 export const itemContract = {
@@ -55,6 +60,7 @@ export const itemContract = {
   defaultSize: 'default',
   defaultMediaVariant: 'default',
   defaultGroupVariant: 'default',
+  defaultTone: 'neutral',
   variants: itemVariants,
   sizes: itemSizes,
   mediaVariants: itemMediaVariants,
@@ -62,4 +68,5 @@ export const itemContract = {
   states: itemStates,
   visualArchetypes: itemVisualArchetypes,
   groupVariants: itemGroupVariants,
+  tones: itemTones,
 } satisfies ItemContract

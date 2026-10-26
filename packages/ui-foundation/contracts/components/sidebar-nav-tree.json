@@ -4,6 +4,7 @@
   "maturity": "stable",
   "lists": {
     "states": ["rest", "hover", "active", "expanded", "collapsed", "focus-visible"],
+    "tones": ["neutral", "accent"],
     "parts": [
       "group",
       "group-trigger",
@@ -19,11 +20,15 @@
     "parts": {
       "$ref": "#/lists/parts"
     },
+    "defaultTone": "neutral",
     "states": {
       "$ref": "#/lists/states"
     },
     "visualArchetypes": {
       "$ref": "#/lists/visualArchetypes"
+    },
+    "tones": {
+      "$ref": "#/lists/tones"
     }
   }
 }

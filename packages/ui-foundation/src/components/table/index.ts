@@ -5,6 +5,7 @@ export {
   tableSlots,
   tableStates,
   tableStickyEdges,
+  tableTones,
   tableVariants,
   tableVisualArchetypes,
 } from './table-contract'
@@ -14,6 +15,7 @@ export type {
   TableSlot,
   TableState,
   TableStickyEdge,
+  TableTone,
   TableVariant,
   TableVisualArchetype,
 } from './table-contract'

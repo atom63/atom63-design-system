@@ -11,6 +11,7 @@ export const sidebarNavTreeStates = [
   'collapsed',
   'focus-visible',
 ] as const
+export const sidebarNavTreeTones = ['neutral', 'accent'] as const
 export const sidebarNavTreeParts = [
   'group',
   'group-trigger',
@@ -26,17 +27,22 @@ export const sidebarNavTreeVisualArchetypes = [
 ] as const satisfies readonly VisualArchetypeId[]
 
 export type SidebarNavTreeState = (typeof sidebarNavTreeStates)[number]
+export type SidebarNavTreeTone = (typeof sidebarNavTreeTones)[number]
 export type SidebarNavTreePart = (typeof sidebarNavTreeParts)[number]
 export type SidebarNavTreeVisualArchetype = (typeof sidebarNavTreeVisualArchetypes)[number]
 
 export interface SidebarNavTreeContract {
   parts: readonly SidebarNavTreePart[]
+  defaultTone: SidebarNavTreeTone
   states: readonly SidebarNavTreeState[]
   visualArchetypes: readonly SidebarNavTreeVisualArchetype[]
+  tones: readonly SidebarNavTreeTone[]
 }
 
 export const sidebarNavTreeContract = {
   parts: sidebarNavTreeParts,
+  defaultTone: 'neutral',
   states: sidebarNavTreeStates,
   visualArchetypes: sidebarNavTreeVisualArchetypes,
+  tones: sidebarNavTreeTones,
 } satisfies SidebarNavTreeContract

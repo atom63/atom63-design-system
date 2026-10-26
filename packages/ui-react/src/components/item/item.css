@@ -89,8 +89,10 @@
     var(--a63-control-min-size)
   );
 }
+/* Hover is half the neutral selected fill, so a selected row stays visibly
+   stronger than a hovered one. */
 :where(a, button, [role='button'], [role='link']).a63-Item:hover {
-  background-color: var(--a63-surface-muted);
+  background-color: color-mix(in oklch, var(--a63-selected-background) 50%, transparent);
 }
 
 /* Variants (border/fill only) */
@@ -107,11 +109,17 @@
 
 /* Selected and current: the row the user picked, or the one for the page they
    are on. aria-current carries the meaning on links; data-selected covers rows
-   that are not. Placed after the variants so it wins over their fills. */
+   that are not. Placed after the variants so it wins over their fills. The
+   neutral tone (default) is a muted fill; tone="accent" opts into the primary wash. */
 .a63-Item[aria-current]:not([aria-current='false']),
 .a63-Item[data-selected]:not([data-selected='false']) {
   background-color: var(--a63-selected-background);
   color: var(--a63-selected-foreground);
+}
+.a63-Item[data-tone='accent'][aria-current]:not([aria-current='false']),
+.a63-Item[data-tone='accent'][data-selected]:not([data-selected='false']) {
+  background-color: var(--a63-selected-accent-background);
+  color: var(--a63-selected-accent-foreground);
 }
 
 /* Sizes (gap + padding). Block padding comes from the row contract so the

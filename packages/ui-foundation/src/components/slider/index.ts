@@ -5,6 +5,7 @@ export {
   sliderOrientations,
   sliderSlots,
   sliderStates,
+  sliderTones,
   sliderVisualArchetypes,
 } from './slider-contract'
 export type {
@@ -13,5 +14,6 @@ export type {
   SliderOrientation,
   SliderSlot,
   SliderState,
+  SliderTone,
   SliderVisualArchetype,
 } from './slider-contract'

@@ -457,6 +457,17 @@
   color: var(--sidebar-accent-fg);
   font-weight: 500;
 }
+/* tone="accent" opts the active item into the primary wash with accent text.
+   The wash is laid over the page surface, where its contrast is tested, since
+   the muted sidebar surface under it would leave accent text below 4.5:1. */
+.a63-Sidebar-menu-button[data-active='true'][data-tone='accent'] {
+  background-color: var(--a63-surface-page);
+  background-image: linear-gradient(
+    var(--a63-selected-accent-background),
+    var(--a63-selected-accent-background)
+  );
+  color: var(--a63-selected-accent-foreground);
+}
 .a63-Sidebar-menu-button > span:last-child {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -598,6 +609,9 @@
 .a63-Sidebar-menu-button:hover ~ .a63-Sidebar-menu-badge {
   color: var(--sidebar-accent-fg);
 }
+.a63-Sidebar-menu-button[data-active='true'][data-tone='accent'] ~ .a63-Sidebar-menu-badge {
+  color: var(--a63-selected-accent-foreground);
+}
 .a63-Sidebar-menu-button[data-size='sm'] ~ .a63-Sidebar-menu-badge {
   top: 0.25rem;
 }
@@ -684,6 +698,14 @@
 .a63-Sidebar-menu-sub-button[data-active='true'] {
   background-color: var(--sidebar-accent);
   color: var(--sidebar-accent-fg);
+}
+.a63-Sidebar-menu-sub-button[data-active='true'][data-tone='accent'] {
+  background-color: var(--a63-surface-page);
+  background-image: linear-gradient(
+    var(--a63-selected-accent-background),
+    var(--a63-selected-accent-background)
+  );
+  color: var(--a63-selected-accent-foreground);
 }
 .a63-Sidebar-menu-sub-button > span:last-child {
   overflow: hidden;

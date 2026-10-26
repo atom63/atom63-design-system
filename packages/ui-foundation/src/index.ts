@@ -533,6 +533,7 @@ export {
   itemSizes,
   itemSlots,
   itemStates,
+  itemTones,
   itemVariants,
   itemVisualArchetypes,
 } from './components/item/item-contract'
@@ -543,6 +544,7 @@ export type {
   ItemSize,
   ItemSlot,
   ItemState,
+  ItemTone,
   ItemVariant,
   ItemVisualArchetype,
 } from './components/item/item-contract'
@@ -702,12 +704,14 @@ export {
   progressContract,
   progressSlots,
   progressStates,
+  progressTones,
   progressVisualArchetypes,
 } from './components/progress/progress-contract'
 export type {
   ProgressContract,
   ProgressSlot,
   ProgressState,
+  ProgressTone,
   ProgressVisualArchetype,
 } from './components/progress/progress-contract'
 export {
@@ -872,6 +876,7 @@ export {
   sidebarCollapsibles,
   sidebarContract,
   sidebarMenuButtonSizes,
+  sidebarMenuButtonTones,
   sidebarMenuButtonVariants,
   sidebarMenuSubButtonSizes,
   sidebarSides,
@@ -884,6 +889,7 @@ export {
   sidebarNavTreeContract,
   sidebarNavTreeParts,
   sidebarNavTreeStates,
+  sidebarNavTreeTones,
   sidebarNavTreeVisualArchetypes,
 } from './components/sidebar-nav-tree'
 export {
@@ -898,6 +904,7 @@ export {
   sliderOrientations,
   sliderSlots,
   sliderStates,
+  sliderTones,
   sliderVisualArchetypes,
 } from './components/slider'
 export {
@@ -918,6 +925,7 @@ export type {
   SliderOrientation,
   SliderSlot,
   SliderState,
+  SliderTone,
   SliderVisualArchetype,
 } from './components/slider'
 export type {
@@ -930,12 +938,14 @@ export type {
   SidebarNavTreeContract,
   SidebarNavTreePart,
   SidebarNavTreeState,
+  SidebarNavTreeTone,
   SidebarNavTreeVisualArchetype,
 } from './components/sidebar-nav-tree'
 export type {
   SidebarCollapsible,
   SidebarContract,
   SidebarMenuButtonSize,
+  SidebarMenuButtonTone,
   SidebarMenuButtonVariant,
   SidebarMenuSubButtonSize,
   SidebarSide,
@@ -959,6 +969,7 @@ export {
   tableSlots,
   tableStates,
   tableStickyEdges,
+  tableTones,
   tableVariants,
   tableVisualArchetypes,
 } from './components/table'
@@ -968,6 +979,7 @@ export type {
   TableSlot,
   TableState,
   TableStickyEdge,
+  TableTone,
   TableVariant,
   TableVisualArchetype,
 } from './components/table'
