@@ -487,7 +487,7 @@ public enum AtomComponentContracts {
       sharedOutcomes: ["rows-keep-reading-order", "dividers-are-decorative"],
       accessibilityOutcomes: ["preserves-row-order", "hides-dividers-from-assistive-technology"],
       motion: nil,
-      platformAdaptations: AtomPlatformAdaptations(react: ["ItemGroup variant=\"inset\" draws the group; a heading above it and a note below it belong to the page.", "A row that navigates is an Item rendered as a link, with its value in bold and a chevron in ItemActions."], swiftUI: ["AtomListSection draws the group inside a ScrollView and takes an optional header and footer; inside a List or Form, the native Section draws it.", "AtomValueRow(_:value:emphasizesValue:showsDisclosure:) is the label, value and chevron row."])
+      platformAdaptations: AtomPlatformAdaptations(react: ["ItemGroup variant=\"inset\" draws the group; a heading above it and a note below it belong to the page.", "A row that navigates is an Item rendered as a link, with its value in bold and a chevron in ItemActions."], swiftUI: ["AtomListSection draws the group inside a ScrollView and takes an optional header and footer; inside a List or Form, the native Section draws it.", "AtomValueRow(_:value:emphasizesValue:showsDisclosure:) is the label, value and chevron row.", "Rows pad themselves with atomListRowInsets() inside their tap area, so a NavigationLink or Button row is tappable edge to edge; Atom63 rows do it already, and a custom row takes the modifier inside its label."])
     ),
     AtomComponentContract(
       id: "carousel",

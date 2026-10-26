@@ -51,6 +51,7 @@ public struct AtomToggle: View {
     .toggleStyle(.switch)
     .tint(theme.colors.actionPrimary.resolve(for: colorScheme))
     .frame(minHeight: 44)
+    .atomListRowInsets()
   }
 
   private var label: some View {

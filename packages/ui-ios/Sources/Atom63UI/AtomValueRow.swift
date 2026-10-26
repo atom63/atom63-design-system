@@ -51,6 +51,7 @@ public struct AtomValueRow: View {
       }
     }
     .padding(.vertical, AtomTokens.Space.x1)
+    .atomListRowInsets()
     .contentShape(.rect)
     .accessibilityElement(children: .combine)
   }

@@ -959,7 +959,8 @@ export const crossRendererContracts = [
       ],
       "swiftUI": [
         "AtomListSection draws the group inside a ScrollView and takes an optional header and footer; inside a List or Form, the native Section draws it.",
-        "AtomValueRow(_:value:emphasizesValue:showsDisclosure:) is the label, value and chevron row."
+        "AtomValueRow(_:value:emphasizesValue:showsDisclosure:) is the label, value and chevron row.",
+        "Rows pad themselves with atomListRowInsets() inside their tap area, so a NavigationLink or Button row is tappable edge to edge; Atom63 rows do it already, and a custom row takes the modifier inside its label."
       ]
     }
   },

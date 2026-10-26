@@ -1083,11 +1083,18 @@ private struct ListSectionShowcase: View {
             Text("Account, iCloud and more").font(.footnote).foregroundStyle(.secondary)
           }
         }
+        .atomListRowInsets()
         .accessibilityElement(children: .combine)
       }
 
       AtomListSection("General", footer: "Currency and units apply to every device.") {
-        AtomValueRow("Currency", value: "USD", showsDisclosure: true)
+        NavigationLink {
+          Text("USD")
+            .navigationTitle("Currency")
+        } label: {
+          AtomValueRow("Currency", value: "USD", showsDisclosure: true)
+        }
+        .accessibilityIdentifier("catalog-list-section-currency")
         AtomValueRow("Appearance", value: "Automatic", showsDisclosure: true)
         AtomValueRow("Start week on", value: "Sunday", emphasizesValue: true, showsDisclosure: true)
       }

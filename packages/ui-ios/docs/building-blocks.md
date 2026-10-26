@@ -32,6 +32,19 @@ above an optional footer. A row that navigates is a `NavigationLink` whose label
 `AtomValueRow("Currency", value: "USD", showsDisclosure: true)`; add
 `emphasizesValue: true` for a bold value.
 
+The section does not pad its rows. Each row pads itself with
+`atomListRowInsets()`, inside its own tap area, so a `NavigationLink` or `Button`
+row is tappable edge to edge, padding included. `AtomValueRow`, `AtomListRow`,
+`AtomSelectionRow` and `AtomToggle` do this already. Give a custom row the
+modifier inside the link's label, not on the link:
+
+```swift
+NavigationLink(value: Route.profile) {
+  ProfileSummary()
+    .atomListRowInsets()
+}
+```
+
 ```swift
 ScrollView {
   VStack(spacing: AtomTokens.Space.x6) {
