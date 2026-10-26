@@ -377,6 +377,7 @@
     --surface-light-9: var(--surface-light-9);
     --radius-2xs: var(--radius-2xs);
     --radius-full: var(--radius-full);
+    --radius-pill: var(--radius-pill);
   }
 }
 @layer utilities {

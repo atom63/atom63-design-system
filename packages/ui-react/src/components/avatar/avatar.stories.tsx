@@ -10,6 +10,7 @@ import {
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import type { CSSProperties } from 'react'
 
 const meta = {
   title: 'UI React/Avatar',
@@ -53,6 +54,34 @@ export const Sizes: Story = {
       </Avatar>
     </div>
   ),
+}
+
+/* A 76px avatar stays a circle: the default reads --a63-avatar-radius (50%), and
+   without that contract the fallback is --radius-pill, not the soft --radius-full. */
+export const LargeCircle: Story = {
+  render: () => (
+    <div style={{ alignItems: 'center', display: 'flex', gap: 16 }}>
+      <Avatar data-testid="contract" style={{ '--avatar-size': '76px' } as CSSProperties}>
+        <AvatarFallback>AL</AvatarFallback>
+      </Avatar>
+      <Avatar
+        data-testid="fallback"
+        style={{ '--avatar-size': '76px', '--a63-avatar-radius': 'initial' } as CSSProperties}
+      >
+        <AvatarFallback>YZ</AvatarFallback>
+      </Avatar>
+    </div>
+  ),
+  play: ({ canvasElement }) => {
+    const radius = (testId: string) => {
+      const avatar = canvasElement.querySelector<HTMLElement>(`[data-testid="${testId}"]`)
+      return avatar ? getComputedStyle(avatar).borderTopLeftRadius : null
+    }
+    const actual = [radius('contract'), radius('fallback')]
+    if (actual[0] !== '50%' || actual[1] !== '9999px') {
+      throw new Error(`Expected radii 50% and 9999px, got ${actual.join(' and ')}`)
+    }
+  },
 }
 
 /* shape="square" for organisations and apps; ring marks new activity. */

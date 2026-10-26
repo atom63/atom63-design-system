@@ -255,7 +255,7 @@
   height: var(--button-icon-size);
   border: 2px solid currentColor;
   border-top-color: transparent;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   animation: a63-button-spin 700ms linear infinite;
 }
 
@@ -331,7 +331,7 @@
   z-index: 1;
   width: 0.5rem;
   height: 0.5rem;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background-color: var(--a63-action-danger);
   box-shadow: 0 0 0 2px var(--a63-surface-page);
   pointer-events: none;
@@ -366,10 +366,10 @@
   white-space: nowrap;
 }
 
-/* Round: a full radius, so icon sizes become circles and labelled sizes pills.
+/* Round: a pill radius (--radius-pill), so icon sizes become circles and labelled sizes pills.
    Variants that set their own radius (dashed) already are round. */
 .a63-Button[data-shape='round'] {
-  --button-radius: var(--radius-full);
+  --button-radius: var(--radius-pill);
 }
 
 /* Dashed: an outline pill with a dashed border, for add and filter affordances
@@ -378,7 +378,7 @@
   --button-gloss: none;
   --button-highlight: none;
   --button-shadow: none;
-  --button-radius: var(--radius-full);
+  --button-radius: var(--radius-pill);
   --button-background: transparent;
   --button-border-color: var(--a63-border-control);
   --button-foreground: var(--a63-text-primary);

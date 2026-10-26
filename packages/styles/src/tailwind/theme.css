@@ -509,6 +509,7 @@
   --radius-3xl: var(--radius-3xl);
   --radius-4xl: var(--radius-4xl);
   --radius-full: var(--radius-full);
+  --radius-pill: var(--radius-pill);
 }
 
 /* tokens/foundation/fonts.css */

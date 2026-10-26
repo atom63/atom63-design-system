@@ -202,7 +202,7 @@
   justify-content: center;
   width: 2rem;
   height: 2rem;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background-color: color-mix(in oklch, var(--a63-on-media-foreground) 10%, transparent);
   color: var(--a63-on-media-foreground);
   backdrop-filter: blur(4px);
@@ -397,7 +397,7 @@
   align-items: center;
   gap: var(--a63-space-1);
   padding: var(--a63-space-1) var(--a63-space-2);
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background-color: var(--a63-text-primary);
   color: var(--a63-surface-page);
   font-size: 0.75rem;

@@ -57,7 +57,7 @@
   flex-shrink: 0;
   width: 0.5em;
   height: 0.5em;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-pill);
   background-color: currentColor;
 }
 .a63-Badge-dot[data-color='red'] {

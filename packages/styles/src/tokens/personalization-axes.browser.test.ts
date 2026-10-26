@@ -53,6 +53,19 @@ describe('radius scale axis', () => {
     probe.remove()
   })
 
+  it('keeps --radius-pill a fixed 9999px pill on every radius axis value', () => {
+    const probe = document.createElement('div')
+    probe.style.borderRadius = 'var(--radius-pill)'
+    document.body.appendChild(probe)
+
+    expect(getComputedStyle(probe).borderRadius).toBe('9999px')
+    for (const value of ['none', 'subtle', 'default', 'round']) {
+      root().setAttribute('data-a63-radius', value)
+      expect(getComputedStyle(probe).borderRadius).toBe('9999px')
+    }
+    probe.remove()
+  })
+
   it('keeps avatar radius circular by default while still following the radius axis', () => {
     const probe = document.createElement('div')
     probe.style.borderRadius = 'var(--a63-avatar-radius)'

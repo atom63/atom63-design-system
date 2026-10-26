@@ -36,9 +36,10 @@ Radius communicates scale and object type.
 | Small | Compact, precise, inline | Badges, code, small controls |
 | Medium | Default interface object | Buttons, inputs, cards |
 | Large | Independent surface | Dialogs, sheets, large panels |
-| Soft full | Largest personalized corner | Large pills and rounded controls |
+| Soft full | Largest personalized corner | Large rounded surfaces and controls |
+| Pill | A circle or capsule at any size | Round buttons, avatars, switches, radios, dots |
 
-`--radius-full` is not a fixed `9999px`: it is `2 × --radius-xl` (28px at defaults), so it follows the radius axis. Avatars use the separate `--a63-avatar-radius` contract (`50%` by default). The larger the object, the more radius it can carry without looking inflated.
+`--radius-full` is not a fixed `9999px`: it is `2 × --radius-xl` (28px at defaults), so it follows the radius axis, and anything larger than 56px stops looking round. `--radius-pill` is the fixed `9999px`: components that promise a circle or pill (Button `shape="round"`, the dashed Button, Switch, Radio, Slider, dots and Avatar's fallback) use it, so they stay round at any size and on every radius axis value. Avatars use the separate `--a63-avatar-radius` contract (`50%` by default). The larger the object, the more radius it can carry without looking inflated.
 
 ## Decisions worth knowing
 
