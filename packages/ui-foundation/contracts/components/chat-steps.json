@@ -1,0 +1,36 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "chat-steps",
+  "maturity": "preview",
+  "description": "The tool calls and thinking steps behind an assistant reply, in a collapsible group. Each ChatStep shows a status icon with a text status for screen readers.",
+  "lists": {
+    "statuses": {
+      "values": ["pending", "running", "complete", "error"],
+      "typeName": "ChatStepStatus"
+    },
+    "slots": [
+      "chat-steps",
+      "chat-steps-trigger",
+      "chat-steps-content",
+      "chat-step",
+      "chat-step-icon",
+      "chat-step-description"
+    ],
+    "states": ["closed", "open"],
+    "visualArchetypes": ["surface"]
+  },
+  "contract": {
+    "statuses": {
+      "$ref": "#/lists/statuses"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

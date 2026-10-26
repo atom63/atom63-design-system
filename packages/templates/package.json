@@ -28,6 +28,7 @@
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
+    "@atom63/agent": "workspace:*",
     "@atom63/eslint-config": "workspace:*",
     "@atom63/tsconfig": "workspace:*",
     "@storybook/react-vite": "^10.6.0",

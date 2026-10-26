@@ -1,0 +1,132 @@
+/*
+ * ChatSteps recipe — the SURFACE archetype, on Collapsible. The trigger is a
+ * quiet text button in the secondary color; the list hangs under it with a
+ * hairline (--a63-border-subtle) joining the status icons. Status colors come
+ * from --a63-status-success and --a63-text-danger; pending and running stay
+ * secondary. Focus is an outline on :focus-visible.
+ */
+
+.a63-ChatSteps {
+  --chat-steps-icon-size: var(--a63-control-icon-size-sm);
+
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  color: var(--a63-text-secondary);
+  font-size: var(--typography-sm-font-size);
+  line-height: var(--typography-sm-line-height);
+}
+
+.a63-ChatSteps-trigger {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: var(--a63-space-1_5);
+  min-block-size: var(--a63-control-min-size);
+  padding-block: var(--a63-space-1);
+  padding-inline: 0;
+  border: 0;
+  border-radius: var(--a63-control-radius);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 500;
+  text-align: start;
+}
+
+.a63-ChatSteps-trigger:hover {
+  color: var(--a63-text-primary);
+}
+
+.a63-ChatSteps-trigger:focus-visible {
+  outline: var(--a63-control-focus-ring-width) solid
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline-offset: var(--a63-control-focus-ring-width);
+}
+
+.a63-ChatSteps-icon,
+.a63-ChatSteps-trigger .a63-Collapsible-indicator {
+  display: inline-flex;
+  inline-size: var(--chat-steps-icon-size);
+  block-size: var(--chat-steps-icon-size);
+}
+
+.a63-ChatSteps-icon > svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.a63-ChatSteps-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--a63-space-2);
+  margin: 0;
+  padding-block: var(--a63-space-2) var(--a63-space-1);
+  padding-inline: 0;
+  list-style: none;
+}
+
+.a63-ChatStep {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--a63-space-2);
+  min-width: 0;
+}
+
+/* The hairline from one status icon to the next. */
+.a63-ChatStep:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  inset-block: calc(var(--chat-steps-icon-size) + var(--a63-space-1)) calc(-1 * var(--a63-space-1));
+  inset-inline-start: calc(var(--chat-steps-icon-size) / 2);
+  border-inline-start: var(--a63-control-border-width) solid var(--a63-border-subtle);
+}
+
+.a63-ChatStep-icon {
+  display: inline-flex;
+  flex: none;
+  inline-size: var(--chat-steps-icon-size);
+  block-size: var(--chat-steps-icon-size);
+  margin-block-start: calc((1lh - var(--chat-steps-icon-size)) / 2);
+}
+
+.a63-ChatStep-icon > svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.a63-ChatStep[data-status='complete'] .a63-ChatStep-icon {
+  color: var(--a63-status-success);
+}
+
+.a63-ChatStep[data-status='error'] .a63-ChatStep-icon {
+  color: var(--a63-text-danger);
+}
+
+.a63-ChatStep-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.a63-ChatStep[data-status='running'] .a63-ChatStep-title {
+  color: var(--a63-text-primary);
+}
+
+.a63-ChatStep-description {
+  overflow-wrap: anywhere;
+  font-size: var(--a63-control-font-size-xs);
+}
+
+.a63-ChatStep-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

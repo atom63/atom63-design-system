@@ -25,6 +25,10 @@ import { CardContentPadding } from '@atom63/ui-foundation';
 import { CardLineClamp } from '@atom63/ui-foundation';
 import { CardPadding } from '@atom63/ui-foundation';
 import { CardVariant } from '@atom63/ui-foundation';
+import { ChatComposerStatus } from '@atom63/ui-foundation';
+import { ChatMessageAppearance } from '@atom63/ui-foundation';
+import { ChatMessageRole } from '@atom63/ui-foundation';
+import { ChatStepStatus } from '@atom63/ui-foundation';
 import { Checkbox as Checkbox_2 } from '@base-ui/react/checkbox';
 import { CheckboxIndicator } from '@atom63/ui-foundation';
 import { CheckboxSize } from '@atom63/ui-foundation';
@@ -649,6 +653,79 @@ export type CarouselProps = {
     orientation?: 'horizontal' | 'vertical';
     setApi?: (api: CarouselApi) => void;
     cursorIndicator?: boolean;
+};
+
+// @public (undocumented)
+export function ChatComposer(input: ChatComposerProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type ChatComposerProps = Omit<React$1.ComponentProps<'form'>, 'children' | 'defaultValue' | 'onChange' | 'onSubmit'> & {
+    actions?: React$1.ReactNode;
+    attach?: React$1.ReactNode;
+    defaultValue?: string;
+    disabled?: boolean;
+    footnote?: React$1.ReactNode;
+    label?: string;
+    onValueChange?: (value: string) => void;
+    onStop?: () => void;
+    onSubmit?: (value: string) => void;
+    placeholder?: string;
+    sendIcon?: React$1.ReactNode;
+    sendLabel?: string;
+    status?: ChatComposerStatus;
+    stopIcon?: React$1.ReactNode;
+    stopLabel?: string;
+    textareaProps?: Omit<InputGroupTextareaProps, 'defaultValue' | 'disabled' | 'onChange' | 'placeholder' | 'value'>;
+    value?: string;
+};
+
+// @public (undocumented)
+export function ChatMessage(input: ChatMessageProps): React$1.ReactElement;
+
+// @public (undocumented)
+export function ChatMessageList(input: ChatMessageListProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type ChatMessageListProps = React$1.ComponentProps<'div'>;
+
+// @public (undocumented)
+export type ChatMessageProps = React$1.ComponentProps<'article'> & {
+    from: ChatMessageRole;
+    actions?: React$1.ReactNode;
+    appearance?: ChatMessageAppearance;
+    avatar?: React$1.ReactNode;
+    label?: string;
+    streaming?: boolean;
+};
+
+// @public (undocumented)
+export function ChatStep(input: ChatStepProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type ChatStepProps = Omit<React$1.ComponentProps<'li'>, 'title'> & {
+    description?: React$1.ReactNode;
+    icon?: React$1.ReactNode;
+    status?: ChatStepStatus;
+    statusLabel?: string;
+};
+
+// @public (undocumented)
+export function ChatSteps(input: ChatStepsProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type ChatStepsProps = Omit<CollapsibleProps, 'children' | 'className'> & {
+    children?: React$1.ReactNode;
+    className?: string;
+    icon?: React$1.ReactNode;
+    label: React$1.ReactNode;
+};
+
+// @public (undocumented)
+export function ChatTypingIndicator(input: ChatTypingIndicatorProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type ChatTypingIndicatorProps = Omit<React$1.ComponentProps<'span'>, 'children'> & {
+    label?: string;
 };
 
 // @public (undocumented)
