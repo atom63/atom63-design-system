@@ -46,7 +46,8 @@ MCP servers out.
 Then, on the source files each agent added or changed:
 
 - **Craft violations:** the `check:craft` rules (`raw-color`, `physical-properties`,
-  `focus-visible`).
+  `focus-visible`, `focus-ring-outline`, `mode-branch`, and `unknown-token` against the token
+  manifest's names and the names the project declares).
 - **Type errors:** `tsc --noEmit`; and whether `vite build` succeeds.
 - **axe violations:** the build is served with `vite preview`, the page opened in Chromium at
   1280 px, and axe-core run on it.

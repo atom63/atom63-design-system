@@ -50,7 +50,7 @@ function rulesText({ rules }) {
   return rules
     .map(
       (rule, position) =>
-        `${position + 1}. ${rule.rule}\n   Why: ${rule.why}${rule.check ? `\n   Checked by: check:craft (${rule.check})` : ''}`
+        `${position + 1}. ${rule.rule}\n   Why: ${rule.why}${rule.check ? `\n   Checked by: check:craft (${[rule.check].flat().join(', ')})` : ''}`
     )
     .join('\n\n')
 }

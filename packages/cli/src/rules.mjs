@@ -22,9 +22,9 @@ export const rules = [
   },
   {
     id: 'tokens-only',
-    rule: 'Take every color, space, radius, shadow and duration from `--a63-*` tokens. No literal colors and no Tailwind palette utilities.',
-    why: 'Tokens follow the theme, brand, mode and density; literals break all four.',
-    check: 'raw-color',
+    rule: 'Take every color, space, radius, shadow and duration from `--a63-*` tokens, and look a name up with `atom63 token` before using it. No literal colors and no Tailwind palette utilities.',
+    why: 'Tokens follow the theme, brand, mode and density; literals break all four, and a token name that does not exist resolves to nothing.',
+    check: ['raw-color', 'unknown-token'],
   },
   {
     id: 'on-media-colors',

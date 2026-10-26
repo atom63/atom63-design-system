@@ -41,7 +41,14 @@ const docsQueries = [
 export function agentsSection({ variant = 'cli' } = {}) {
   const ruleLines = rules.map(
     (rule, position) =>
-      `${position + 1}. ${rule.rule} ${rule.why}${rule.check ? ` In the design system repo, \`check:craft\` enforces it as \`${rule.check}\`.` : ''}`
+      `${position + 1}. ${rule.rule} ${rule.why}${
+        rule.check
+          ? ` In the design system repo, \`check:craft\` enforces it as ${[rule.check]
+              .flat()
+              .map(check => `\`${check}\``)
+              .join(' and ')}.`
+          : ''
+      }`
   )
   return [
     '## Building UI with Atom63',

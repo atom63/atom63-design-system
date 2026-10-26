@@ -1,7 +1,13 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 
-import { compareToBaseline, countViolations, scanCss, scanSource } from './craft-rules.mjs'
+import {
+  compareToBaseline,
+  countViolations,
+  declaredTokens,
+  scanCss,
+  scanSource,
+} from './craft-rules.mjs'
 
 const rules = found => found.map(({ rule, match, line }) => `${line} ${rule} ${match}`)
 
@@ -171,6 +177,44 @@ const b = 'ring-1 ring-[var(--a63-border-subtle)] focus-visible:ring-0 focus-vis
       '1 focus-ring-outline focus-visible:ring-[var(--a63-focus-ring)]',
       '1 focus-ring-outline group-focus-within:ring-inset',
     ])
+  })
+})
+
+describe('unknown-token', () => {
+  const knownTokens = ['--a63-surface-page', '--a63-text-primary', '--a63-focus-ring']
+  const unknown = found => rules(found).filter(line => line.includes('unknown-token'))
+
+  it('flags CSS reads of names that are neither known nor declared', () => {
+    const css = `
+      .a { color: var(--a63-text-primary); background: var(--a63-foreground); }
+      .b { --a63-local-gap: 4px; gap: var(--a63-local-gap); }
+      .c { border-color: var(--a63-hook-color, var(--a63-surface-page)); }
+      /* var(--a63-in-a-comment) */
+    `
+    assert.deepEqual(unknown(scanCss(css, { knownTokens })), ['2 unknown-token --a63-foreground'])
+  })
+
+  it('flags style strings and Tailwind shorthand in TS/TSX', () => {
+    const source = `const a = 'bg-(--a63-surface-page) text-(--a63-backgroud)'
+const b = { background: 'var(--a63-foreground)', '--a63-hero-glass': 'x', color: 'var(--a63-hero-glass)' }
+const c = 'border-[color:var(--a63-line,var(--a63-focus-ring))]'`
+    assert.deepEqual(unknown(scanSource(source, { knownTokens })), [
+      '1 unknown-token --a63-backgroud',
+      '2 unknown-token --a63-foreground',
+    ])
+  })
+
+  it('treats a whole-string name as one a script sets at runtime', () => {
+    const source = `const VARS = { lineColor: '--a63-grid-line-color' }
+const d = 'border-[color:var(--a63-grid-line-color)]'`
+    assert.deepEqual(unknown(scanSource(source, { knownTokens })), [])
+    assert.deepEqual(declaredTokens(source), ['--a63-grid-line-color'])
+  })
+
+  it('stays off without known names, and honours craft-allow', () => {
+    assert.deepEqual(unknown(scanCss('.a { color: var(--a63-foreground); }')), [])
+    const css = '.a { color: var(--a63-foreground); } /* craft-allow: unknown-token */'
+    assert.deepEqual(unknown(scanCss(css, { knownTokens })), [])
   })
 })
 

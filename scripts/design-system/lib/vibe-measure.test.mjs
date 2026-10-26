@@ -176,4 +176,20 @@ describe('measureSources', () => {
       'raw-color',
     ])
   })
+
+  it('counts reads of token names that do not exist, given the known names', () => {
+    const files = new Map([
+      ['src/theme.css', ':root { --a63-hero-glass: white; }\n'],
+      [
+        'src/pages/a.tsx',
+        "export const A = () => <div style={{ background: 'var(--a63-foreground)', color: 'var(--a63-hero-glass)', borderColor: 'var(--a63-surface-page)' }} />\n",
+      ],
+    ])
+    const unknown = measures =>
+      measures.craft.filter(({ rule }) => rule === 'unknown-token').map(({ match }) => match)
+    assert.deepEqual(unknown(measureSources(files, { knownTokens: ['--a63-surface-page'] })), [
+      '--a63-foreground',
+    ])
+    assert.deepEqual(unknown(measureSources(files)), [])
+  })
 })

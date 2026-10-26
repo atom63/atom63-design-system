@@ -26,6 +26,13 @@
  * - `mode-branch`: component code never branches on light or dark mode; tokens
  *   and UIProvider resolve it. Flags CSS selectors that test `.dark`,
  *   `.light` or `[data-a63-mode]`, and Tailwind `dark:` variants in TS/TSX.
+ * - `unknown-token`: every `--a63-*` variable read without a fallback exists.
+ *   Flags `var(--a63-…)` in CSS and TS/TSX, and Tailwind's `(--a63-…)`
+ *   shorthand, when the name is neither a token in the manifest nor declared
+ *   in the scanned source. A misspelled or invented name resolves to nothing,
+ *   so the property silently drops. `var(--a63-…, fallback)` passes: a read
+ *   with a fallback is a hook the caller may set. Runs only when the scanner
+ *   is given the known names (`knownTokens`).
  *
  * Some physical directions are the point: a sheet docked to the left edge, or
  * an optical nudge on a glyph that never mirrors. CSS rules scoped to
@@ -73,6 +80,12 @@ const isRingToken = name => RING_TOKEN.test(name)
 const CSS_MODE_SELECTOR = /(?<![\w-])\.(?:dark|light)(?![\w-])|\[data-a63-mode\b/
 const MODE_VARIANT = /(?:^|:)dark:/
 
+// `var(--a63-name)` with nothing after the name, and Tailwind's `(--a63-name)`.
+const TOKEN_READ = /var\(\s*(--a63-[\w-]+)\s*\)|(?<=[\w-])\((--a63-[\w-]+)\)/g
+// `--a63-name:` in CSS, `'--a63-name':` in a style object, `[--a63-name:` in a
+// utility, and a whole string `'--a63-name'`, the name a script sets at runtime.
+const TOKEN_DECLARATION = /(?<![\w-])(--a63-[\w-]+)['"]?\s*:|(?<=['"`])(--a63-[\w-]+)(?=['"`])/g
+
 const DATA_SIDE = /\[data-side=['"]?(?:left|right)\b/
 const ALLOW = /craft-allow:\s*([a-z-]+)/g
 
@@ -105,6 +118,29 @@ function blank(text, pattern) {
   return text.replace(pattern, match => match.replace(/[^\n]/g, ' '))
 }
 
+/**
+ * The `--a63-*` names a source declares, so its own reads are not unknown.
+ * @param {string} text
+ * @returns {string[]}
+ */
+export function declaredTokens(text) {
+  return [...text.matchAll(TOKEN_DECLARATION)].map(([, declared, named]) => declared ?? named)
+}
+
+/** `unknown-token` violations in comment-blanked source. */
+function unknownTokens(src, knownTokens) {
+  if (!knownTokens) return []
+  const known = new Set([...knownTokens, ...declaredTokens(src)])
+  const found = []
+  for (const match of src.matchAll(TOKEN_READ)) {
+    const name = match[1] ?? match[2]
+    if (!known.has(name)) {
+      found.push({ rule: 'unknown-token', match: name, line: lineAt(src, match.index) })
+    }
+  }
+  return found
+}
+
 /** True when the flat rule body starting at `start` only removes the outline. */
 function onlyResetsFocus(src, start) {
   const end = src.indexOf('}', start)
@@ -118,11 +154,12 @@ function onlyResetsFocus(src, start) {
 
 /**
  * @param {string} css
+ * @param {{ knownTokens?: Iterable<string> }} [options]
  * @returns {{ rule: string, match: string, line: number }[]}
  */
-export function scanCss(css) {
+export function scanCss(css, { knownTokens } = {}) {
   const src = blank(css, CSS_COMMENT)
-  const found = []
+  const found = unknownTokens(src, knownTokens)
   const selectors = []
   // A declaration is `name: value` ending at `;` or `}`; a selector ends at `{`.
   const statement = /([^{};]*)([{};])/g
@@ -180,11 +217,12 @@ export function scanCss(css) {
  * `cva()` and template strings are all covered, and arbitrary values keep
  * their parentheses.
  * @param {string} source
+ * @param {{ knownTokens?: Iterable<string> }} [options]
  * @returns {{ rule: string, match: string, line: number }[]}
  */
-export function scanSource(source) {
+export function scanSource(source, { knownTokens } = {}) {
   const src = blank(source, JS_COMMENT)
-  const found = []
+  const found = unknownTokens(src, knownTokens)
   const token = /[^\s"'`{}]+/g
   let m
   while ((m = token.exec(src))) {

@@ -12,7 +12,7 @@
  */
 import ts from 'typescript'
 
-import { scanCss, scanSource } from './craft-rules.mjs'
+import { declaredTokens, scanCss, scanSource } from './craft-rules.mjs'
 
 /** Files the measures read: source under `src/`, not declaration files. */
 export function isMeasuredFile(relative) {
@@ -37,10 +37,14 @@ export function changedFiles(before, after) {
   return { added: added.sort(), changed: changed.sort(), removed: removed.sort() }
 }
 
-/** `check:craft` violations in one file. */
-export function craftViolations(relative, text) {
-  if (relative.endsWith('.css')) return scanCss(text)
-  if (/\.tsx?$/.test(relative)) return scanSource(text)
+/**
+ * `check:craft` violations in one file. With `knownTokens` (the token
+ * manifest's names), reads of `--a63-*` variables that do not exist count too.
+ * @param {{ knownTokens?: Iterable<string> }} [options]
+ */
+export function craftViolations(relative, text, options) {
+  if (relative.endsWith('.css')) return scanCss(text, options)
+  if (/\.tsx?$/.test(relative)) return scanSource(text, options)
   return []
 }
 
@@ -179,7 +183,11 @@ export function countTypeErrors(output) {
  * Every source measure over the files an agent added or changed.
  * @param {Map<string, string>} files relative path → content, already filtered
  */
-export function measureSources(files) {
+export function measureSources(files, { knownTokens } = {}) {
+  // Names the project declares itself are known too, wherever it declares them.
+  const known = knownTokens && new Set(knownTokens)
+  if (known)
+    for (const text of files.values()) for (const name of declaredTokens(text)) known.add(name)
   const craft = []
   const literals = { paletteUtilities: [], literalColors: [] }
   const jsx = {
@@ -194,7 +202,7 @@ export function measureSources(files) {
   let lines = 0
   for (const [relative, text] of files) {
     lines += text.split('\n').length
-    for (const violation of craftViolations(relative, text))
+    for (const violation of craftViolations(relative, text, { knownTokens: known }))
       craft.push({ file: relative, ...violation })
     const found = findLiterals(relative, text)
     literals.paletteUtilities.push(...found.paletteUtilities)
