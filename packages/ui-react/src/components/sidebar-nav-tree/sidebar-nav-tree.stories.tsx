@@ -13,7 +13,8 @@ import {
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { CreditCard, FileText, Inbox, LineChart } from 'lucide-react'
-import { useState } from 'react'
+import { forwardRef, useState } from 'react'
+import type { ComponentProps } from 'react'
 
 const meta = {
   title: 'UI React/SidebarNavTree',
@@ -157,6 +158,61 @@ function FoldingTree() {
 /** Group labels that fold their group, and section rows with icons. */
 export const CollapsibleGroups: Story = {
   render: () => <FoldingTree />,
+}
+
+/* A router-style link, as a routing library ships one. It spreads the props it
+   receives onto the anchor and forwards its ref, so an item can pass it its
+   class, data attributes and ref. A wrapper that drops them loses the styling. */
+const RouterLink = forwardRef<HTMLAnchorElement, ComponentProps<'a'> & { to: string }>(
+  function RouterLink({ children, to, ...props }, ref) {
+    return (
+      <a ref={ref} href={to} {...props}>
+        {children}
+      </a>
+    )
+  }
+)
+
+function LinkPropsTree() {
+  return (
+    <SidebarProvider>
+      <Sidebar collapsible="none">
+        <SidebarContent>
+          <SidebarNavGroup label="Props">
+            <SidebarNavLinkItem href="#inbox" icon={<Inbox aria-hidden />} isActive>
+              Inbox
+            </SidebarNavLinkItem>
+            <SidebarNavLinkItem href="#docs" icon={<FileText aria-hidden />}>
+              Documents
+            </SidebarNavLinkItem>
+          </SidebarNavGroup>
+          <SidebarNavGroup label="Router link">
+            <SidebarNavLinkItem
+              icon={<CreditCard aria-hidden />}
+              render={<RouterLink to="#payments" />}
+            >
+              Payments
+            </SidebarNavLinkItem>
+            <SidebarNavLinkItem>
+              <RouterLink to="#reporting">
+                <LineChart aria-hidden />
+                <span>Reporting</span>
+              </RouterLink>
+            </SidebarNavLinkItem>
+          </SidebarNavGroup>
+        </SidebarContent>
+      </Sidebar>
+    </SidebarProvider>
+  )
+}
+
+/**
+ * Pass `href` and `icon` and the item renders the anchor. For a router link, pass
+ * it as `render`, or as the child: either way the component must spread the props
+ * it receives onto the element it renders and forward its ref.
+ */
+export const LinkProps: Story = {
+  render: () => <LinkPropsTree />,
 }
 
 function CompactTree() {
