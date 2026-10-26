@@ -132,6 +132,15 @@ const topicGolden = [
   ['floating button', 'button/FloatingOverMap', 1],
   ['map buttons', 'button', 2],
   ['buttons over map', 'button/FloatingOverMap', 4],
+  ['grouped list ios', 'item', 1],
+  ['grouped list ios', 'item/InsetGroup', 2],
+  ['inset list section', 'item', 1],
+  ['value row with chevron', 'item', 1],
+  ['page dots', 'carousel', 1],
+  ['page indicator', 'carousel/WithDots', 2],
+  ['avatar badge', 'avatar', 1],
+  ['avatar badge', 'avatar/WithBadge', 2],
+  ['online status dot', 'avatar', 1],
   ['instagram feed mobile web', 'app-view', 1],
   ['iphone home screen', 'app-view', 1],
   ['bank home on a phone', 'app-view', 1],
@@ -157,6 +166,12 @@ describe('topics', () => {
     const [first] = search(index, 'price').data.results
     assert.match(first.summary, /amount-fraction/)
     assert.equal(first.next, 'atom63 docs foundation-typography')
+  })
+
+  it('names the iOS renderer for the list, dots and avatar badge topics', () => {
+    assert.match(search(index, 'grouped list ios').data.results[0].summary, /AtomListSection/)
+    assert.match(search(index, 'page dots').data.results[0].summary, /AtomPageDots/)
+    assert.match(search(index, 'avatar badge').data.results[0].summary, /AtomAvatar\(name:badge:/)
   })
 
   it('names the Swift display amount API', () => {

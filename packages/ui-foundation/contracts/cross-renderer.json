@@ -28,6 +28,8 @@
     "progress",
     "skeleton",
     "load-more-trigger",
-    "toaster"
+    "toaster",
+    "item",
+    "carousel"
   ]
 }

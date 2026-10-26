@@ -58,7 +58,10 @@
         "Uses browser image loading and DOM fallback composition.",
         "The square shape and the ring are web-only for now."
       ],
-      "swiftUI": ["Uses native image decoding and SwiftUI loading phases."]
+      "swiftUI": [
+        "Uses native image decoding and SwiftUI loading phases.",
+        "AtomAvatar(badge:) pins a status dot (.dot) or a count (.count) to the corner, read after the name."
+      ]
     }
   }
 }
