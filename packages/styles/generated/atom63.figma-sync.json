@@ -4,8 +4,8 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1130,
-    "aliasValues": 773,
+    "variables": 1133,
+    "aliasValues": 779,
     "skipped": 186,
     "computed": 59
   },
@@ -15140,6 +15140,58 @@
             }
           },
           "codeSyntax": "var(--a63-action-danger-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "action/disabled/background",
+          "token": "--a63-action-disabled-background",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-surface-muted"
+            },
+            "dark": {
+              "alias": "--a63-surface-muted"
+            }
+          },
+          "codeSyntax": "var(--a63-action-disabled-background)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "action/disabled/border",
+          "token": "--a63-action-disabled-border",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-border-subtle"
+            },
+            "dark": {
+              "alias": "--a63-border-subtle"
+            }
+          },
+          "codeSyntax": "var(--a63-action-disabled-border)",
+          "scopes": [
+            "STROKE_COLOR"
+          ]
+        },
+        {
+          "name": "action/disabled/foreground",
+          "token": "--a63-action-disabled-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--surface-light-9"
+            },
+            "dark": {
+              "alias": "--surface-dark-9"
+            }
+          },
+          "codeSyntax": "var(--a63-action-disabled-foreground)",
           "scopes": [
             "TEXT_FILL"
           ]

@@ -83,6 +83,7 @@ public struct AtomButton<Label: View>: View {
     }
     .buttonStyle(AtomButtonStyle(tone: tone, emphasis: emphasis, size: size, shape: shape))
     .disabled(isLoading)
+    .environment(\.atomButtonIsLoading, isLoading)
     .accessibilityValue(isLoading ? loadingAccessibilityLabel : "")
     .accessibilityAddTraits(isLoading ? .updatesFrequently : [])
   }
@@ -146,6 +147,7 @@ extension AtomButton where Label == Text {
 /// `AtomButton` uses it and adds the loading state and full-width layout.
 public struct AtomButtonStyle: ButtonStyle {
   @Environment(\.isEnabled) private var isEnabled
+  @Environment(\.atomButtonIsLoading) private var isLoading
   @Environment(\.colorSchemeContrast) private var accessibilityContrast
   @Environment(\.atomTheme) private var theme
   @Environment(\.colorScheme) private var colorScheme
@@ -186,7 +188,9 @@ public struct AtomButtonStyle: ButtonStyle {
       .compositingGroup()
       .clipShape(outline)
       .scaleEffect(configuration.isPressed ? AtomTokens.Control.pressScale : 1)
-      .opacity(isEnabled ? 1 : AtomTokens.Control.disabledOpacity)
+      // Loading disables the button too, but keeps its fill and fades the whole
+      // control as before; a plain disabled button takes the disabled colors.
+      .opacity(!isEnabled && isLoading ? AtomTokens.Control.disabledOpacity : 1)
       .animation(
         reduceMotion ? nil : .timingCurve(
           AtomTokens.Motion.emphasizedControlPoints.0,
@@ -205,7 +209,13 @@ public struct AtomButtonStyle: ButtonStyle {
   }
 
   private var palette: AtomButtonPalette {
-    AtomButtonPalette(tone: tone, emphasis: emphasis, theme: theme, colorScheme: colorScheme)
+    AtomButtonPalette(
+      tone: tone,
+      emphasis: emphasis,
+      theme: theme,
+      colorScheme: colorScheme,
+      isEnabled: isEnabled || isLoading
+    )
   }
 
   private var font: Font {
@@ -271,17 +281,39 @@ public struct AtomButtonStyle: ButtonStyle {
   }
 }
 
+extension EnvironmentValues {
+  /// Set by `AtomButton` while loading, so its style keeps the loading look
+  /// instead of the disabled colors.
+  @Entry var atomButtonIsLoading = false
+}
+
 /// Colors for one tone × emphasis. Solid fills with the tone; soft tints it (the
 /// neutral tone uses the muted surface); outline and ghost leave the fill clear,
 /// outline adding a border. Off the solid fill, a neutral label is the primary
 /// text color and a primary or destructive one takes the tone's color.
+///
+/// Disabled, as on the web: solid, soft and outline buttons take the neutral
+/// `actionDisabled*` colors; a ghost button keeps its clear fill and fades its label.
 struct AtomButtonPalette {
   let tone: AtomButtonTone
   let emphasis: AtomButtonEmphasis
   let theme: AtomTheme
   let colorScheme: ColorScheme
+  var isEnabled = true
+
+  private var usesDisabledColors: Bool { !isEnabled && emphasis != .ghost }
 
   var foreground: Color {
+    if usesDisabledColors {
+      return theme.colors.actionDisabledForeground.resolve(for: colorScheme)
+    }
+    if !isEnabled {
+      return enabledForeground.opacity(AtomTokens.Control.disabledOpacity)
+    }
+    return enabledForeground
+  }
+
+  private var enabledForeground: Color {
     switch (emphasis, tone) {
     case (.solid, .neutral):
       theme.colors.actionNeutralForeground.resolve(for: colorScheme)
@@ -299,6 +331,9 @@ struct AtomButtonPalette {
   }
 
   func background(isPressed: Bool) -> Color {
+    if usesDisabledColors {
+      return theme.colors.actionDisabledBackground.resolve(for: colorScheme)
+    }
     switch (emphasis, tone) {
     case (.solid, .neutral):
       return theme.colors.actionNeutral.resolve(for: colorScheme)
@@ -320,6 +355,9 @@ struct AtomButtonPalette {
 
   var border: Color {
     guard emphasis == .outline else { return .clear }
+    if usesDisabledColors {
+      return theme.colors.actionDisabledBorder.resolve(for: colorScheme)
+    }
     switch tone {
     case .neutral:
       return theme.colors.borderControl.resolve(for: colorScheme)

@@ -263,6 +263,9 @@ export const States: Story = {
         <Button>Default</Button>
         <Button loading>Loading</Button>
         <Button disabled>Disabled</Button>
+        <Button disabled variant="primary">
+          Disabled primary
+        </Button>
         <Button data-pressed="">Pressed</Button>
         <Button variant="outline">
           <PlusIcon />
@@ -271,6 +274,34 @@ export const States: Story = {
       </div>
     </EnvironmentShell>
   ),
+  play: async ({ canvas, canvasElement }) => {
+    // A disabled primary is a neutral fill with muted text, not a paler accent,
+    // in every environment the shell renders.
+    for (const button of canvas.getAllByRole('button', { name: 'Disabled primary' })) {
+      // Paint a value next to the button, so it resolves in the button's environment.
+      const paint = (property: 'backgroundColor' | 'color', value: string) => {
+        const probe = canvasElement.ownerDocument.createElement('span')
+        probe.style[property] = value
+        button.after(probe)
+        const painted = getComputedStyle(probe)[property]
+        probe.remove()
+        return painted
+      }
+      const style = getComputedStyle(button)
+      // ui-react does not depend on storybook, so the checks throw plain errors.
+      const background = paint('backgroundColor', 'var(--a63-action-disabled-background)')
+      if (style.backgroundColor !== background) {
+        throw new Error(`Disabled background ${style.backgroundColor}, expected ${background}`)
+      }
+      const color = paint('color', 'var(--a63-action-disabled-foreground)')
+      if (style.color !== color) {
+        throw new Error(`Disabled foreground ${style.color}, expected ${color}`)
+      }
+      if (style.backgroundColor === paint('backgroundColor', 'var(--a63-action-primary)')) {
+        throw new Error('Disabled primary still uses the action-primary fill')
+      }
+    }
+  },
 }
 
 /* Loading treatment across every variant. */
