@@ -83,6 +83,20 @@ ContentView()
   .atomTheme(AtomTheme(skin: .aqua, brand: .b3, surface: .n2))
 ```
 
+The web gradient tokens are drawn from the theme's colors, so they follow the
+selection and the color scheme: `brandGradient(for:)`, `brandSubtleGradient(for:)`
+and `brandFadeGradient(for:)` on `AtomThemeColors`, and `AtomTokens.Gradient.scrim`.
+`brandFadeGradient` is the hero that fades from the brand into the page; put overlay
+controls and on-media labels only in its top `AtomTokens.Gradient.brandFadeDarkZone`
+share, and use the page colors below it:
+
+```swift
+@Environment(\.atomTheme) private var theme
+@Environment(\.colorScheme) private var colorScheme
+
+Rectangle().fill(theme.colors.brandFadeGradient(for: colorScheme))
+```
+
 Regenerate the checked-in Swift tokens and contract metadata after changing
 either source:
 

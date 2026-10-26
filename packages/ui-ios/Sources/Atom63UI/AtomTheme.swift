@@ -29,6 +29,13 @@ public struct AtomThemeColors: Equatable, Sendable {
   public var widgetForeground: AtomDynamicColor
   public var widgetBorder: AtomDynamicColor
   public var widgetRim: AtomDynamicColor
+  /// Brand ramp steps (`--a63-brand-*`) that the brand gradients draw; see
+  /// `brandGradient`, `brandSubtleGradient` and `brandFadeGradient(for:)`.
+  public var brand50: AtomDynamicColor
+  public var brand100: AtomDynamicColor
+  public var brand500: AtomDynamicColor
+  public var brand700: AtomDynamicColor
+  public var brand800: AtomDynamicColor
 }
 
 public struct AtomTheme: Equatable, Sendable {
@@ -75,7 +82,12 @@ public struct AtomTheme: Equatable, Sendable {
       widgetBackground: AtomTokens.Color.widgetBackground,
       widgetForeground: AtomTokens.Color.widgetForeground,
       widgetBorder: AtomTokens.Color.widgetBorder,
-      widgetRim: AtomTokens.Color.widgetRim
+      widgetRim: AtomTokens.Color.widgetRim,
+      brand50: AtomTokens.Color.brand50,
+      brand100: AtomTokens.Color.brand100,
+      brand500: AtomTokens.Color.brand500,
+      brand700: AtomTokens.Color.brand700,
+      brand800: AtomTokens.Color.brand800
     )
   )
 }

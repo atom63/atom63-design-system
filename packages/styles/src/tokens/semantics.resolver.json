@@ -31,6 +31,16 @@
                   "io.atom63.derive": "linear-gradient(to bottom, transparent, color-mix(in oklch, black 60%, transparent))"
                 },
                 "$description": "A vertical fade to dark under text laid over a photo, such as a title at the foot of a hero image."
+              },
+              "brand-fade": {
+                "dark-zone": {
+                  "$type": "number",
+                  "$value": 50,
+                  "$extensions": {
+                    "io.atom63.derive": "50%"
+                  },
+                  "$description": "The dark zone of --a63-gradient-brand-fade: the top share of the hero that stays at brand 700 or darker, where white on-media text and overlay controls reach WCAG AA on every brand. Below it the hero fades into the page, so content there uses the page tokens, on its own panel while the fade is still running."
+                }
               }
             },
             "shadow": {
@@ -496,6 +506,18 @@
                   "$type": "color",
                   "$value": "{a63.surface.muted}",
                   "$description": "A panel set back from the page, such as the command palette's list: the muted surface in light mode and the page surface in dark mode."
+                }
+              },
+              "gradient": {
+                "brand-fade": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.brand.800}",
+                    "$extensions": {
+                      "io.atom63.derive": "linear-gradient(to bottom, {a63.brand.800}, {a63.brand.700} {a63.gradient.brand-fade.dark-zone}, {a63.surface.page})"
+                    },
+                    "$description": "A hero that fades from the brand into the page: brand 800 at the top, brand 700 at the end of the dark zone (--a63-gradient-brand-fade-dark-zone), then the page color at the bottom. Overlay buttons and on-media labels go in the dark zone only; content over the faded part uses the page tokens."
+                  }
                 }
               },
               "text": {
@@ -1005,6 +1027,18 @@
                 "recessed": {
                   "$type": "color",
                   "$value": "{a63.surface.page}"
+                }
+              },
+              "gradient": {
+                "brand-fade": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{a63.brand.800}",
+                    "$extensions": {
+                      "io.atom63.derive": "linear-gradient(to bottom, {a63.brand.800}, {a63.brand.700} {a63.gradient.brand-fade.dark-zone}, {a63.surface.page})"
+                    },
+                    "$description": "A hero that fades from the brand into the page: brand 800 at the top, brand 700 at the end of the dark zone (--a63-gradient-brand-fade-dark-zone), then the page color at the bottom. Overlay buttons and on-media labels go in the dark zone only; content over the faded part uses the page tokens."
+                  }
                 }
               },
               "text": {

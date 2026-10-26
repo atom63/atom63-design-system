@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 1897,
-    "uniqueCssVariables": 1182,
-    "figmaMappedDeclarations": 1835
+    "declarations": 1900,
+    "uniqueCssVariables": 1184,
+    "figmaMappedDeclarations": 1838
   },
   "entries": [
     {
@@ -7346,6 +7346,62 @@
       "lifecycle": "preview",
       "aliases": ["--a63-brand-500", "--a63-brand-700"],
       "scope": ":root, [data-a63-brand]"
+    },
+    {
+      "name": "a63-gradient-brand-fade",
+      "cssVar": "--a63-gradient-brand-fade",
+      "type": "color",
+      "value": "linear-gradient( to bottom, var(--a63-brand-800), var(--a63-brand-700) var(--a63-gradient-brand-fade-dark-zone), var(--a63-surface-page) )",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "gradient/brand/fade",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": [
+        "--a63-brand-700",
+        "--a63-brand-800",
+        "--a63-gradient-brand-fade-dark-zone",
+        "--a63-surface-page"
+      ],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-gradient-brand-fade",
+      "cssVar": "--a63-gradient-brand-fade",
+      "type": "color",
+      "value": "linear-gradient( to bottom, var(--a63-brand-800), var(--a63-brand-700) var(--a63-gradient-brand-fade-dark-zone), var(--a63-surface-page) )",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "gradient/brand/fade",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": [
+        "--a63-brand-700",
+        "--a63-brand-800",
+        "--a63-gradient-brand-fade-dark-zone",
+        "--a63-surface-page"
+      ],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-gradient-brand-fade-dark-zone",
+      "cssVar": "--a63-gradient-brand-fade-dark-zone",
+      "type": "dimension",
+      "value": "50%",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "gradient/brand/fade/dark/zone"
+      },
+      "lifecycle": "preview",
+      "scope": ":root"
     },
     {
       "name": "a63-gradient-brand-subtle",
