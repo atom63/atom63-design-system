@@ -3,7 +3,7 @@
   "component": "card",
   "maturity": "stable",
   "lists": {
-    "variants": ["default", "ghost", "interactive", "overlay"],
+    "variants": ["default", "filled", "elevated", "ghost", "interactive", "overlay"],
     "paddings": ["none", "sm", "md", "lg"],
     "contentPaddings": ["none", "xs", "sm", "md", "lg"],
     "lineClamps": [1, 2, 3],

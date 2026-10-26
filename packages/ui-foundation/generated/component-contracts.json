@@ -500,6 +500,7 @@
       "source": "packages/ui-foundation/contracts/components/button.json",
       "exportName": "buttonContract",
       "maturity": "stable",
+      "description": "`default` is the neutral solid: high emphasis without the brand colour (a white play button on dark, a black Pay button). `primary` is the main action when the product's main action is in its brand colour; use the accent for one or two cues per view. `raised` is a light button with a soft shadow and no border, the floating button over a map or a light photo with shape=\"round\".",
       "axes": [
         { "name": "shapes", "values": ["default", "round"], "default": "default" },
         {
@@ -508,6 +509,7 @@
             "default",
             "primary",
             "secondary",
+            "raised",
             "destructive",
             "destructive-outline",
             "outline",
@@ -605,6 +607,9 @@
                   },
                   "overlay": {
                     "description": "For controls drawn over photos or video, on the on-media tokens."
+                  },
+                  "raised": {
+                    "description": "A light button lifted off its ground: the panel fill, primary text and a soft shadow, no border. With shape=\"round\" at an icon size it is the floating button over a map or a light photo; over dark media use overlay. Web-only for now."
                   },
                   "dashed": {
                     "description": "A pill-shaped outline with a dashed border, for add and filter affordances such as \"+ Status\". Web-only."
@@ -770,7 +775,7 @@
       "axes": [
         {
           "name": "variants",
-          "values": ["default", "ghost", "interactive", "overlay"],
+          "values": ["default", "filled", "elevated", "ghost", "interactive", "overlay"],
           "default": "default"
         },
         { "name": "paddings", "values": ["none", "sm", "md", "lg"] },

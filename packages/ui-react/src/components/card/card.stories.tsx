@@ -98,6 +98,48 @@ export const Variants: Story = {
   ),
 }
 
+/* One boundary per card. `filled` is a muted card on the page with no border;
+   `elevated` is a white card on a muted ground, lifted by a soft shadow with no
+   border. Neither is nested inside an outlined container. */
+export const FilledAndElevated: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
+      <div style={{ background: 'var(--a63-surface-page)', padding: 20 }}>
+        <Card style={{ width: 240 }} variant="filled">
+          <CardContent>
+            <CardTitle>Balance</CardTitle>
+            <CardDescription>A filled card on the page.</CardDescription>
+          </CardContent>
+        </Card>
+      </div>
+      <div style={{ background: 'var(--a63-surface-muted)', padding: 20 }}>
+        <Card style={{ width: 240 }} variant="elevated">
+          <CardContent>
+            <CardTitle>Recent activity</CardTitle>
+            <CardDescription>An elevated card on a muted ground.</CardDescription>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  ),
+  play: ({ canvasElement }) => {
+    for (const variant of ['filled', 'elevated']) {
+      const card = canvasElement.querySelector<HTMLElement>(`[data-variant="${variant}"]`)
+      if (!card) throw new Error(`Expected a ${variant} card`)
+      const style = getComputedStyle(card)
+      if (style.borderTopColor !== 'rgba(0, 0, 0, 0)') {
+        throw new Error(
+          `Expected the ${variant} card to have no border, got ${style.borderTopColor}`
+        )
+      }
+      const shadowed = /\dpx/.test(style.boxShadow) && style.boxShadow !== 'none'
+      if (variant === 'elevated' && !shadowed) {
+        throw new Error(`Expected the elevated card to cast a shadow, got ${style.boxShadow}`)
+      }
+    }
+  },
+}
+
 export const MediaOverlay: Story = {
   render: () => (
     <Card style={{ height: 260, width: 320 }} variant="overlay">

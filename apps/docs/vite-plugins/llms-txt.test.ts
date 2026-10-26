@@ -62,7 +62,9 @@ describe('LLM documentation inventory', () => {
 
     expect(markdown).toContain('## When to use')
     expect(markdown).toContain('## Variants, sizes and states')
-    expect(markdown).toContain('| Variant | `primary` | The one primary action per view. |')
+    expect(markdown).toContain(
+      "| Variant | `primary` | The one primary action per view, when the product's main action is in its brand colour. |"
+    )
     expect(markdown).toContain(
       '| State | `loading` | Label keeps its width; the spinner overlays it. |'
     )

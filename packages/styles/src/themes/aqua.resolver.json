@@ -530,6 +530,12 @@
                   "$type": "number",
                   "$value": 0.75
                 }
+              },
+              "raised": {
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": "{a63.surface.shadow}"
+                }
               }
             },
             "menu": {

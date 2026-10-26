@@ -1,8 +1,8 @@
 /*
  * Card recipe — the SURFACE archetype's rich consumer, ported from the site's
  * base-card. Resting elevation reads the --a63-surface-shadow lever; bg/border/
- * radius/text resolve from semantics at the use-site. Variants (default/ghost/
- * interactive/overlay) + a padding scale + media/text/footer slots mirror
+ * radius/text resolve from semantics at the use-site. Variants (default/filled/
+ * elevated/ghost/interactive/overlay) + a padding scale + media/text/footer slots mirror
  * base-card. Media radius stays concentric via calc(card-radius - card-pad) — the
  * root publishes both custom props and children inherit them (no JS chrome ctx).
  */
@@ -44,6 +44,22 @@
 }
 
 /* ── Variants ──────────────────────────────────────────────────────────── */
+
+/* filled: one boundary, the fill. The muted surface with no border or shadow,
+   for a card on a white page. */
+.a63-Card[data-variant='filled'] {
+  border-color: transparent;
+  background-color: var(--a63-surface-muted);
+  box-shadow: var(--a63-surface-inner-shadow, none);
+}
+
+/* elevated: one boundary, the shadow. The panel fill with a soft lift and no
+   border, for a white card on a tinted or grey ground. */
+.a63-Card[data-variant='elevated'] {
+  border-color: transparent;
+  box-shadow: var(--a63-surface-inner-shadow, none), var(--a63-surface-raised-shadow);
+}
+
 .a63-Card[data-variant='overlay'] {
   --a63-card-radius: var(--radius-2xl);
 }

@@ -106,16 +106,20 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
   button: {
     axisGuidance: {
       variant: {
-        primary: 'The one primary action per view.',
-        default: 'Neutral action; the usual alternative next to primary (Cancel).',
+        primary:
+          "The one primary action per view, when the product's main action is in its brand colour.",
+        default:
+          'Neutral solid: high emphasis without the brand colour (a white play button on dark, a black Pay button).',
         secondary: 'Muted neutral action for supporting tasks.',
+        raised:
+          'Light fill, soft shadow, no border; with shape="round", the floating button over a map or a light photo.',
         outline: 'Lower-emphasis alternative (Duplicate).',
         dashed: 'Add or filter affordance drawn as a dashed pill (+ Status).',
         ghost: 'Lowest emphasis; toolbars and dismissals.',
         link: 'Inline action styled as text; navigation should use a real link.',
         destructive: 'Only when the outcome destroys data.',
         'destructive-outline': 'Quieter destructive action, beside a safe default.',
-        overlay: 'Forced contrast over media and imagery.',
+        overlay: 'Forced contrast over media and imagery; the floating button over dark media.',
         glass: 'Compatibility alias of overlay; new work uses overlay.',
       },
       size: {

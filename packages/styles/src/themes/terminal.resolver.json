@@ -111,6 +111,12 @@
                   },
                   "$description": "Terminal surfaces/overlays get a faint CRT scanline texture. Square look\n   comes from the radius personalization axis, not hardcoded radii here."
                 }
+              },
+              "raised": {
+                "shadow": {
+                  "$type": "shadow",
+                  "$value": "{a63.surface.shadow}"
+                }
               }
             },
             "track": {
