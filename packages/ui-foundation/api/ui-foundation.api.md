@@ -685,7 +685,7 @@ export const buttonContract: {
     slots: readonly ["root", "label", "icon", "spinner", "indicator"];
     states: readonly ["rest", "hover", "pressed", "focusVisible", "disabled", "loading"];
     tokenSlots: readonly ["button.background", "button.foreground", "button.border.color", "button.border.width", "button.radius", "button.shadow", "button.focusRing", "button.height", "button.paddingInline", "button.gap", "button.iconSize", "button.motion.press"];
-    variants: readonly ["default", "primary", "secondary", "destructive", "destructive-outline", "outline", "dashed", "ghost", "link", "overlay", "glass"];
+    variants: readonly ["default", "primary", "secondary", "raised", "destructive", "destructive-outline", "outline", "dashed", "ghost", "link", "overlay", "glass"];
     visualArchetypes: readonly ["action"];
 };
 
@@ -782,7 +782,7 @@ export const buttonTokenSlots: readonly ["button.background", "button.foreground
 export type ButtonVariant = (typeof buttonVariants)[number];
 
 // @public (undocumented)
-export const buttonVariants: readonly ["default", "primary", "secondary", "destructive", "destructive-outline", "outline", "dashed", "ghost", "link", "overlay", "glass"];
+export const buttonVariants: readonly ["default", "primary", "secondary", "raised", "destructive", "destructive-outline", "outline", "dashed", "ghost", "link", "overlay", "glass"];
 
 // @public (undocumented)
 export type ButtonVisualArchetype = (typeof buttonVisualArchetypes)[number];
@@ -866,7 +866,7 @@ export interface CardContract {
 // @public (undocumented)
 export const cardContract: {
     defaultVariant: "default";
-    variants: readonly ["default", "ghost", "interactive", "overlay"];
+    variants: readonly ["default", "filled", "elevated", "ghost", "interactive", "overlay"];
     paddings: readonly ["none", "sm", "md", "lg"];
     contentPaddings: readonly ["none", "xs", "sm", "md", "lg"];
     lineClamps: readonly [1, 2, 3];
@@ -903,7 +903,7 @@ export const cardStates: readonly ["rest", "hover", "focus-visible", "interactiv
 export type CardVariant = (typeof cardVariants)[number];
 
 // @public (undocumented)
-export const cardVariants: readonly ["default", "ghost", "interactive", "overlay"];
+export const cardVariants: readonly ["default", "filled", "elevated", "ghost", "interactive", "overlay"];
 
 // @public (undocumented)
 export type CardVisualArchetype = (typeof cardVisualArchetypes)[number];
@@ -1307,6 +1307,7 @@ export interface CrossRendererComponentContract {
     stateTones?: Readonly<Record<string, CrossRendererSemanticTone>>;
     // (undocumented)
     swiftUIRenderer: string;
+    swiftUIRendererByVariant?: Readonly<Record<string, string>>;
 }
 
 // @public (undocumented)
@@ -1635,7 +1636,12 @@ export const crossRendererContracts: readonly [{
     readonly foundationAxis: "states";
     readonly catalogItem: "tabs";
     readonly reactRenderer: "Tabs";
-    readonly swiftUIRenderer: "Picker(.segmented) with the selected content";
+    readonly swiftUIRenderer: "Picker(.segmented) / AtomTabRow";
+    readonly swiftUIRendererByVariant: {
+        readonly default: "Picker(.segmented)";
+        readonly underline: "AtomTabRow";
+        readonly attached: "AtomTabRow";
+    };
     readonly intent: "Switch between peer destinations or content views while keeping one selection active.";
     readonly parity: "platform-adaptive";
     readonly requiredStates: readonly ["rest", "selected"];
@@ -1643,7 +1649,7 @@ export const crossRendererContracts: readonly [{
     readonly accessibilityOutcomes: readonly ["exposes-tab-labels", "exposes-selected-state", "associates-selection-with-visible-content"];
     readonly platformAdaptations: {
         readonly react: readonly ["Uses tablist, tab, and tabpanel semantics with keyboard navigation and a visual indicator."];
-        readonly swiftUI: readonly ["In-page sections use a segmented Picker above the content it selects, so each tab is a named, selectable button. TabView stays the renderer for app-level sections such as a tab bar or sidebar.", "In a TabView, each tab's root is its ScrollView or List. From iOS 26 the glass tab bar floats over it: content scrolls under the bar at rest, and TabView insets the scroll content so the last row ends above the bar. Do not pad for the bar, draw content in a ZStack or overlay over the TabView, or apply ignoresSafeArea to the bottom edge; extra bottom chrome goes in safeAreaInset(edge: .bottom) on the tab's root."];
+        readonly swiftUI: readonly ["The default variant is a segmented Picker above the content it selects, for a short second-level filter of two to four options.", "The underline variant is AtomTabRow, a row of text tabs over the content it selects: the selected tab reads text-primary over an accent bar, the others text-secondary. The row scrolls sideways when the tabs do not fit and keeps the selected tab in view. Each tab can show an SF Symbol over its label. The bar slides to the new tab, and jumps under Reduce Motion. Each tab is a named button with the selected trait inside a tab-bar container, and the row mirrors in right-to-left languages.", "The attached variant also renders as AtomTabRow: folder tabs are a pointer idiom with no iOS counterpart, and the underline row already sits flush on the content it selects.", "TabView stays the renderer for app-level sections such as a tab bar or sidebar.", "In a TabView, each tab's root is its ScrollView or List. From iOS 26 the glass tab bar floats over it: content scrolls under the bar at rest, and TabView insets the scroll content so the last row ends above the bar. Do not pad for the bar, draw content in a ZStack or overlay over the TabView, or apply ignoresSafeArea to the bottom edge; extra bottom chrome goes in safeAreaInset(edge: .bottom) on the tab's root."];
     };
 }, {
     readonly id: "avatar";

@@ -6,6 +6,7 @@ import {
   countJsxElements,
   countTypeErrors,
   findLiterals,
+  findWarnings,
   isMeasuredFile,
   measureSources,
   systemShare,
@@ -145,6 +146,26 @@ describe('findLiterals', () => {
   })
 })
 
+describe('findWarnings', () => {
+  it('warns at a system Button without a variant', () => {
+    const source = [
+      "import { Button as Action } from '@atom63/ui-react'",
+      "import { Button } from './local'",
+      'export const A = (props: object) => (',
+      '  <>',
+      '    <Action>Back</Action>',
+      '    <Action variant="raised">Locate</Action>',
+      '    <Action {...props}>Spread</Action>',
+      '    <Button>Local</Button>',
+      '  </>',
+      ')',
+    ].join('\n')
+    assert.deepEqual(findWarnings(source), [
+      { rule: 'button-without-variant', line: 5, match: '<Action>' },
+    ])
+  })
+})
+
 describe('countTypeErrors', () => {
   it('counts tsc diagnostics', () => {
     const output =
@@ -174,6 +195,14 @@ describe('measureSources', () => {
       'physical-properties',
       'raw-color',
       'raw-color',
+    ])
+    assert.deepEqual(measures.warnings, [
+      {
+        file: 'src/pages/a.tsx',
+        rule: 'button-without-variant',
+        line: 2,
+        match: '<Button />',
+      },
     ])
   })
 

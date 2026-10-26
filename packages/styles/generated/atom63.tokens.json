@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 1911,
-    "uniqueCssVariables": 1189,
-    "figmaMappedDeclarations": 1849
+    "declarations": 1915,
+    "uniqueCssVariables": 1190,
+    "figmaMappedDeclarations": 1853
   },
   "entries": [
     {
@@ -10826,6 +10826,68 @@
       "lifecycle": "preview",
       "aliases": ["--a63-brand-50", "--a63-surface-tint", "--surface-light-1"],
       "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-surface-raised-shadow",
+      "cssVar": "--a63-surface-raised-shadow",
+      "type": "shadow",
+      "value": "0 1px 3px color-mix(in oklch, black 8%, transparent), 0 4px 12px -2px color-mix(in oklch, black 10%, transparent)",
+      "sourceFile": "packages/styles/src/contracts/surface.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "surface/raised/shadow"
+      },
+      "lifecycle": "preview",
+      "scope": ":root"
+    },
+    {
+      "name": "a63-surface-raised-shadow",
+      "cssVar": "--a63-surface-raised-shadow",
+      "type": "shadow",
+      "value": "var(--a63-surface-shadow)",
+      "sourceFile": "packages/styles/src/themes/aqua.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Theme",
+        "path": "surface/raised/shadow",
+        "mode": "theme: aqua"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-shadow"],
+      "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-surface-raised-shadow",
+      "cssVar": "--a63-surface-raised-shadow",
+      "type": "shadow",
+      "value": "var(--a63-surface-shadow)",
+      "sourceFile": "packages/styles/src/themes/retro.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Theme",
+        "path": "surface/raised/shadow",
+        "mode": "theme: retro"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-shadow"],
+      "scope": "[data-a63-theme='retro']"
+    },
+    {
+      "name": "a63-surface-raised-shadow",
+      "cssVar": "--a63-surface-raised-shadow",
+      "type": "shadow",
+      "value": "var(--a63-surface-shadow)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Theme",
+        "path": "surface/raised/shadow",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-shadow"],
+      "scope": "[data-a63-theme='terminal']"
     },
     {
       "name": "a63-surface-recessed",

@@ -88,7 +88,9 @@
 /* ── Pills variant ─────────────────────────────────────────────────────
    Separate capsules with a gap, for filter rows. Undoes the welded chrome
    above (seams, shared radii, segment gel) at the same or higher
-   specificity, so it must stay after those rules. */
+   specificity, so it must stay after those rules. A pill is drawn by its fill
+   alone: the muted surface, with a transparent border that keeps every pill
+   the same size; the pressed pill is the neutral solid. */
 .a63-ToggleGroup[data-variant='pills'] {
   flex-wrap: wrap;
   gap: var(--a63-space-2);
@@ -97,7 +99,7 @@
 .a63-ToggleGroup[data-variant='pills'] .a63-Toggle.a63-Toggle {
   border-width: var(--a63-control-border-width);
   border-radius: var(--radius-pill);
-  border-color: var(--a63-border-control);
+  border-color: transparent;
   background-color: var(--a63-surface-muted);
   background-image: none;
   color: var(--a63-text-primary);

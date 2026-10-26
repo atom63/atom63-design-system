@@ -213,6 +213,8 @@
 .a63-Button[data-variant='primary'][data-disabled]:where(:not([data-loading])),
 .a63-Button[data-variant='secondary']:disabled:where(:not([data-loading])),
 .a63-Button[data-variant='secondary'][data-disabled]:where(:not([data-loading])),
+.a63-Button[data-variant='raised']:disabled:where(:not([data-loading])),
+.a63-Button[data-variant='raised'][data-disabled]:where(:not([data-loading])),
 .a63-Button[data-variant='destructive']:disabled:where(:not([data-loading])),
 .a63-Button[data-variant='destructive'][data-disabled]:where(:not([data-loading])),
 .a63-Button[data-variant='destructive-outline']:disabled:where(:not([data-loading])),
@@ -319,6 +321,23 @@
   --button-border-color: transparent;
   --button-foreground: var(--a63-text-secondary);
   --button-state-hover-background: color-mix(in oklch, var(--a63-surface-muted) 90%, transparent);
+  --button-state-hover-border-color: transparent;
+}
+
+/* Raised: a light button lifted off its ground. The panel fill, primary text
+   and a soft shadow, no border. With shape="round" at an icon size it is the
+   floating button over a map or a light photo; over dark media use overlay.
+   The fill stays opaque on hover so the map does not show through. */
+.a63-Button[data-variant='raised'] {
+  --button-gloss: none;
+  --button-highlight: none;
+  --button-tint-drop: 0 0 #0000;
+  --button-background: var(--a63-surface-panel);
+  --button-border-color: transparent;
+  --button-foreground: var(--a63-text-primary);
+  --button-shadow: var(--a63-surface-raised-shadow);
+  --button-shadow-active: var(--a63-surface-raised-shadow);
+  --button-state-hover-background: var(--a63-surface-muted);
   --button-state-hover-border-color: transparent;
 }
 

@@ -11,7 +11,17 @@ import {
 import { Button, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { ArrowRightLeft, Bell, Ellipsis, Inbox, Plus, Send } from 'lucide-react'
+import {
+  ArrowRightLeft,
+  Bell,
+  ChevronLeft,
+  Ellipsis,
+  Inbox,
+  Layers,
+  LocateFixed,
+  Plus,
+  Send,
+} from 'lucide-react'
 import type { CSSProperties } from 'react'
 import { EnvironmentShell, PreviewCard, ThemeMatrix } from '../story-probes'
 
@@ -139,6 +149,85 @@ export const RoundOverMedia: Story = {
       </Button>
     </div>
   ),
+}
+
+/* Floating over a map: variant="raised" with shape="round" is the light
+   floating button maps and light heroes use (back, locate, layers). The panel
+   fill and a soft shadow lift it off a light picture; over dark media use
+   overlay. The map is a placeholder with fixed light-map colors, as a real
+   map tile would be. */
+export const FloatingOverMap: Story = {
+  render: () => (
+    <div
+      style={{
+        backgroundColor: 'oklch(95% 0.02 95)',
+        backgroundImage: [
+          'radial-gradient(circle at 72% 68%, oklch(88% 0.07 150) 0 18%, transparent 18.5%)',
+          'radial-gradient(ellipse at 12% 90%, oklch(86% 0.06 230) 0 22%, transparent 22.5%)',
+          'linear-gradient(28deg, transparent 47%, oklch(99% 0 0) 47% 51%, transparent 51%)',
+          'linear-gradient(118deg, transparent 58%, oklch(99% 0 0) 58% 60.5%, transparent 60.5%)',
+          'linear-gradient(90deg, transparent 30%, oklch(92% 0.06 85) 30% 32.5%, transparent 32.5%)',
+        ].join(', '),
+        borderRadius: '0.875rem',
+        height: '22rem',
+        maxWidth: '24rem',
+        position: 'relative',
+      }}
+    >
+      <div style={{ insetInlineStart: '1rem', position: 'absolute', top: '1rem' }}>
+        <Button aria-label="Back" shape="round" size="icon-lg" variant="raised">
+          <ChevronLeft />
+        </Button>
+      </div>
+      <div
+        style={{
+          display: 'grid',
+          gap: '0.75rem',
+          insetInlineEnd: '1rem',
+          position: 'absolute',
+          top: '1rem',
+        }}
+      >
+        <Button aria-label="Map layers" shape="round" size="icon-lg" variant="raised">
+          <Layers />
+        </Button>
+        <Button aria-label="Show my location" shape="round" size="icon-lg" variant="raised">
+          <LocateFixed />
+        </Button>
+      </div>
+      <div
+        style={{
+          bottom: '1rem',
+          display: 'flex',
+          gap: '0.5rem',
+          insetInlineStart: '1rem',
+          position: 'absolute',
+        }}
+      >
+        <Button shape="round" variant="raised">
+          Search this area
+        </Button>
+        <Button disabled shape="round" variant="raised">
+          Directions
+        </Button>
+      </div>
+    </div>
+  ),
+  play: ({ canvasElement }) => {
+    const button = canvasElement.querySelector<HTMLElement>('[aria-label="Back"]')
+    if (!button) throw new Error('Expected the Back button')
+    const style = getComputedStyle(button)
+    const { width, height } = button.getBoundingClientRect()
+    if (Math.abs(width - height) > 0.5 || style.borderTopLeftRadius !== '9999px') {
+      throw new Error(`Expected a circle, got ${width}x${height} / ${style.borderTopLeftRadius}`)
+    }
+    if (style.boxShadow === 'none' || !/\dpx/.test(style.boxShadow)) {
+      throw new Error(`Expected a soft shadow, got ${style.boxShadow}`)
+    }
+    if (style.borderTopColor !== 'rgba(0, 0, 0, 0)') {
+      throw new Error(`Expected no visible border, got ${style.borderTopColor}`)
+    }
+  },
 }
 
 const heroActions = [
