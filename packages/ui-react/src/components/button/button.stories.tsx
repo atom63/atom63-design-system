@@ -11,7 +11,6 @@ import {
 import { Button, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { expect } from 'storybook/test'
 import { Bell, Inbox } from 'lucide-react'
 import { EnvironmentShell, PreviewCard, ThemeMatrix } from '../story-probes'
 
@@ -262,13 +261,18 @@ export const States: Story = {
         return painted
       }
       const style = getComputedStyle(button)
-      await expect(style.backgroundColor).toBe(
-        paint('backgroundColor', 'var(--a63-action-disabled-background)')
-      )
-      await expect(style.color).toBe(paint('color', 'var(--a63-action-disabled-foreground)'))
-      await expect(style.backgroundColor).not.toBe(
-        paint('backgroundColor', 'var(--a63-action-primary)')
-      )
+      // ui-react does not depend on storybook, so the checks throw plain errors.
+      const background = paint('backgroundColor', 'var(--a63-action-disabled-background)')
+      if (style.backgroundColor !== background) {
+        throw new Error(`Disabled background ${style.backgroundColor}, expected ${background}`)
+      }
+      const color = paint('color', 'var(--a63-action-disabled-foreground)')
+      if (style.color !== color) {
+        throw new Error(`Disabled foreground ${style.color}, expected ${color}`)
+      }
+      if (style.backgroundColor === paint('backgroundColor', 'var(--a63-action-primary)')) {
+        throw new Error('Disabled primary still uses the action-primary fill')
+      }
     }
   },
 }
