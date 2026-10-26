@@ -96,7 +96,7 @@ const templateGolden = [
   ['AI assistant chat panel', 'chat-panel', 1],
   ['chat', 'chat-panel', 1],
   ['ai assistant', 'chat-page', 2],
-  ['chat with history sidebar', 'chat-page', 1],
+  ['chat history sidebar', 'chat-page', 1],
 ]
 
 /**

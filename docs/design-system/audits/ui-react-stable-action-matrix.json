@@ -76,37 +76,37 @@
     }
   },
   "summary": {
-    "sourceFamilies": 78,
-    "sourceExports": 622,
+    "sourceFamilies": 79,
+    "sourceExports": 628,
     "sourceTierCounts": {
       "monitor-high-risk": 79,
       "preview-experimental-candidate": 31,
-      "beta-supported-core": 328,
+      "beta-supported-core": 334,
       "beta-supported-composition-conditional": 184
     },
     "sourceActionCounts": {
       "assign-owner-and-evidence": 15,
       "move-to-preview-or-approve": 15,
       "document-before-stable": 12,
-      "keep-stable-candidate": 36
+      "keep-stable-candidate": 37
     },
     "sourcePriorityCounts": {
       "P0": 30,
       "P1": 12,
-      "P2": 36
+      "P2": 37
     },
-    "packageSubpaths": 76,
+    "packageSubpaths": 77,
     "subpathActionCounts": {
       "assign-owner-and-evidence": 1,
       "keep-preview-subpath-or-add-evidence": 2,
       "keep-preview-labeled": 1,
       "document-subpath-contract": 2,
-      "keep-import-path-stable": 70
+      "keep-import-path-stable": 71
     },
     "subpathPriorityCounts": {
       "P0": 4,
       "P1": 2,
-      "P2": 70
+      "P2": 71
     }
   },
   "sourceActions": [
@@ -1650,8 +1650,8 @@
       "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
     },
     {
-      "source": "./components/chat-message",
-      "family": "components/chat-message",
+      "source": "./components/chat-composer",
+      "family": "components/chat-composer",
       "kind": "component-family",
       "totalExports": 2,
       "valueExports": 1,
@@ -1669,18 +1669,46 @@
         "external packed-consumer smoke",
         "dependency and public type compatibility review"
       ],
-      "notableSymbols": ["ChatMessage", "ChatMessageProps"],
+      "notableSymbols": ["ChatComposer", "ChatComposerProps"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
+      "source": "./components/chat-message",
+      "family": "components/chat-message",
+      "kind": "component-family",
+      "totalExports": 4,
+      "valueExports": 2,
+      "typeExports": 2,
+      "tierCounts": {
+        "beta-supported-core": 4
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "ChatMessage",
+        "ChatMessageList",
+        "ChatMessageListProps",
+        "ChatMessageProps"
+      ],
       "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
     },
     {
       "source": "./components/chat-steps",
       "family": "components/chat-steps",
       "kind": "component-family",
-      "totalExports": 2,
-      "valueExports": 1,
-      "typeExports": 1,
+      "totalExports": 4,
+      "valueExports": 2,
+      "typeExports": 2,
       "tierCounts": {
-        "beta-supported-core": 2
+        "beta-supported-core": 4
       },
       "dominantTier": "beta-supported-core",
       "blockingTier": "beta-supported-core",
@@ -1692,7 +1720,7 @@
         "external packed-consumer smoke",
         "dependency and public type compatibility review"
       ],
-      "notableSymbols": ["ChatSteps", "ChatStepsProps"],
+      "notableSymbols": ["ChatStep", "ChatSteps", "ChatStepProps", "ChatStepsProps"],
       "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
     },
     {
@@ -2682,6 +2710,15 @@
       "subpath": "./recipes/carousel.css",
       "kind": "css",
       "target": "./src/components/carousel/carousel.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/chat-composer.css",
+      "kind": "css",
+      "target": "./src/components/chat-composer/chat-composer.css",
       "recommendedAction": "keep-import-path-stable",
       "priority": "P2",
       "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",

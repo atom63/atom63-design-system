@@ -236,6 +236,8 @@ export const topics = {
   chatbot: chatSurfaces,
   copilot: chatSurfaces,
   'chat bubble': [{ id: 'component:chat-message' }],
+  'chat message': [{ id: 'component:chat-message' }, chatSurfaces[0]],
+  'chat composer': chatComposer,
   'message bubble': [{ id: 'component:chat-message' }],
   'chat input': chatComposer,
   'message composer': chatComposer,

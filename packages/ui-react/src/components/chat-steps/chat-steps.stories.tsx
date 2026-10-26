@@ -42,7 +42,7 @@ export const Statuses: Story = {
     <ChatSteps {...args} label="Every status">
       {chatStepsStatuses.map(status => (
         <ChatStep key={status} status={status}>
-          {`A ${status} step`}
+          {`Step with status ${status}`}
         </ChatStep>
       ))}
     </ChatSteps>

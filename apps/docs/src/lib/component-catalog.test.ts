@@ -10,7 +10,7 @@ import {
   componentCatalogItems,
   componentSlugFromDocSlug,
 } from './component-catalog'
-import { getComponentContractDoc } from './component-contract'
+import { getComponentContractDoc, getComponentMaturity } from './component-contract'
 import { componentDocMarkdown, componentExportSurface, getComponentDoc } from './component-docs'
 
 // Calendar has its own entry; with the root entry it exports every component family.
@@ -294,7 +294,7 @@ describe('component reference coverage', () => {
     }
   })
 
-  it('derives status from co-located story and focused test coverage', () => {
+  it('derives status from coverage and the contract maturity', () => {
     for (const item of componentCatalogItems) {
       const hasStory = Boolean(
         sourceFor(componentStorySources, `/components/${item.slug}/${item.slug}.stories.tsx`)
@@ -302,12 +302,19 @@ describe('component reference coverage', () => {
       const hasTest = Boolean(
         sourceFor(componentTestSources, `/components/${item.slug}/${item.slug}.test.tsx`)
       )
-      expect(item.status, item.slug).toBe(hasStory && hasTest ? 'stable' : 'preview')
+      // A covered component is stable unless its contract still marks it preview.
+      const expected =
+        hasStory && hasTest ? (getComponentMaturity(item.slug) ?? 'stable') : 'preview'
+      expect(item.status, item.slug).toBe(expected)
     }
 
-    // Every public family ships a story and a test, so all of them are stable.
+    // Every public family ships a story and a test, so all of them are stable
+    // except those whose contract is still preview.
+    const preview = componentCatalogItems.filter(
+      item => getComponentMaturity(item.slug) === 'preview'
+    )
     expect(componentCatalogItems.filter(item => item.status === 'stable')).toHaveLength(
-      publicComponentFamilies().length
+      publicComponentFamilies().length - preview.length
     )
   })
 

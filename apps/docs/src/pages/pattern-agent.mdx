@@ -9,7 +9,10 @@ import {
   AlertDialogPopup,
   AlertDialogTitle,
   Button,
-  Input,
+  ChatComposer,
+  ChatMessage,
+  ChatMessageList,
+  ChatTypingIndicator,
 } from '@atom63/ui-react'
 import { AgentTransportError, createAgentRuntime, getMessageText } from '@atom63/agent'
 import { useAgentChromeController, useOwnedAgentRuntime } from '@atom63/agent/react'
@@ -43,8 +46,8 @@ export function AgentDemo() {
   )
   const state = useSyncExternalStore(runtime.subscribe, runtime.getState)
   const chrome = useAgentChromeController({ runtime })
-  const busy = state.status === 'submitted' || state.status === 'streaming'
-  const canSend = !busy && state.draft.trim() !== ''
+  const composerStatus =
+    state.status === 'submitted' || state.status === 'streaming' ? state.status : 'idle'
 
   return (
     <div className="grid w-full gap-3">
@@ -58,54 +61,39 @@ export function AgentDemo() {
           </Button>
         )}
       </div>
-      <ol aria-label="Transcript" className="grid gap-2" role="log">
-        {state.messages.map(message => (
-          <li
-            className={
-              message.role === 'user'
-                ? 'bg-muted ms-auto max-w-[80%] rounded-lg px-3 py-2 text-sm'
-                : 'max-w-[80%] text-sm'
-            }
-            key={message.id}
-          >
-            {message.status === 'error' ? (
-              <span className="flex flex-wrap items-center gap-2">
-                <span className="text-destructive">{message.error?.message}</span>
-                {message.error?.retryable && (
-                  <Button onClick={() => void runtime.retry(message.id)} size="xs" variant="outline">
-                    Retry
-                  </Button>
-                )}
-              </span>
-            ) : (
-              getMessageText(message) || '…'
-            )}
-          </li>
-        ))}
-      </ol>
-      <form
-        className="flex gap-2"
-        onSubmit={event => {
-          event.preventDefault()
-          if (canSend) void runtime.send({ text: state.draft })
-        }}
-      >
-        <Input
-          aria-label="Message"
-          onChange={event => runtime.setDraft(event.target.value)}
-          placeholder="Ask anything, or type “fail”"
-          value={state.draft}
-        />
-        {busy ? (
-          <Button onClick={() => runtime.stop()} type="button" variant="outline">
-            Stop
-          </Button>
-        ) : (
-          <Button disabled={!canSend} type="submit" variant="primary">
-            Send
-          </Button>
+      <ChatMessageList aria-label="Transcript">
+        {state.messages.map(message =>
+          message.role === 'system' ? null : (
+            <ChatMessage
+              from={message.role}
+              key={message.id}
+              streaming={message.status === 'streaming'}
+            >
+              {message.status === 'error' ? (
+                <span className="flex flex-wrap items-center gap-2">
+                  <span className="text-destructive">{message.error?.message}</span>
+                  {message.error?.retryable && (
+                    <Button onClick={() => void runtime.retry(message.id)} size="xs" variant="outline">
+                      Retry
+                    </Button>
+                  )}
+                </span>
+              ) : (
+                getMessageText(message) || <ChatTypingIndicator />
+              )}
+            </ChatMessage>
+          )
         )}
-      </form>
+      </ChatMessageList>
+      <ChatComposer
+        footnote="Replies come from a fake transport."
+        onStop={() => runtime.stop()}
+        onSubmit={text => void runtime.send({ text })}
+        onValueChange={value => runtime.setDraft(value)}
+        placeholder="Ask anything, or type “fail”"
+        status={composerStatus}
+        value={state.draft}
+      />
       <AlertDialog
         onOpenChange={open => {
           if (!open) chrome.cancelClear()
@@ -148,7 +136,7 @@ pnpm add @atom63/agent
   </div>
 </ExampleContainer>
 
-The demo runs on a fake transport that streams a canned reply. Type a message containing "fail" to see a failed run and its retry.
+The demo runs on a fake transport that streams a canned reply. Type a message containing "fail" to see a failed run and its retry. The transcript and the field are the chat components from `@atom63/ui-react` (ChatMessageList, ChatMessage, ChatTypingIndicator and ChatComposer); they take plain props, so `@atom63/ui-react` does not depend on the runtime. The chat-panel block and the chat-page template (`atom63 template chat-panel`) build a whole assistant surface from them.
 
 ## The runtime
 
