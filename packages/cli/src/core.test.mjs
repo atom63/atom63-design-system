@@ -121,6 +121,15 @@ const topicGolden = [
   ['phone app', 'app-view', 1],
   ['mobile app with tab bar', 'app-view', 2],
   ['edge to edge phone screen', 'app-view', 1],
+  ['grouped list ios', 'item', 1],
+  ['grouped list ios', 'item/InsetGroup', 2],
+  ['inset list section', 'item', 1],
+  ['value row with chevron', 'item', 1],
+  ['page dots', 'carousel', 1],
+  ['page indicator', 'carousel/WithDots', 2],
+  ['avatar badge', 'avatar', 1],
+  ['avatar badge', 'avatar/WithBadge', 2],
+  ['online status dot', 'avatar', 1],
 ]
 
 describe('topics', () => {
@@ -135,6 +144,12 @@ describe('topics', () => {
     const [first] = search(index, 'price').data.results
     assert.match(first.summary, /amount-fraction/)
     assert.equal(first.next, 'atom63 docs foundation-typography')
+  })
+
+  it('names the iOS renderer for the list, dots and avatar badge topics', () => {
+    assert.match(search(index, 'grouped list ios').data.results[0].summary, /AtomListSection/)
+    assert.match(search(index, 'page dots').data.results[0].summary, /AtomPageDots/)
+    assert.match(search(index, 'avatar badge').data.results[0].summary, /AtomAvatar\(name:badge:/)
   })
 
   it('respects a kind filter', () => {

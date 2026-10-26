@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "module": "Atom63UI",
-  "symbolCount": 455,
+  "symbolCount": 464,
   "symbols": [
     {
       "id": "s:8Atom63UI10AtomAvatarV",
@@ -18,10 +18,10 @@
       "source": "AtomAvatar.swift"
     },
     {
-      "id": "s:8Atom63UI10AtomAvatarV4name8imageURL4sizeACSS_10Foundation0G0VSg04CoreI07CGFloatVtcfc",
+      "id": "s:8Atom63UI10AtomAvatarV4name8imageURL4size5badgeACSS_10Foundation0G0VSg04CoreJ07CGFloatVAA0cD5BadgeOSgtcfc",
       "kind": "swift.init",
-      "path": "AtomAvatar.init(name:imageURL:size:)",
-      "declaration": "init(name: String, imageURL: URL? = nil, size: CGFloat = 44)",
+      "path": "AtomAvatar.init(name:imageURL:size:badge:)",
+      "declaration": "init(name: String, imageURL: URL? = nil, size: CGFloat = 44, badge: AtomAvatarBadge? = nil)",
       "source": "AtomAvatar.swift"
     },
     {
@@ -816,6 +816,27 @@
       "source": "Generated/AtomTokenGraph.generated.swift"
     },
     {
+      "id": "s:8Atom63UI12AtomPageDotsV",
+      "kind": "swift.struct",
+      "path": "AtomPageDots",
+      "declaration": "struct AtomPageDots",
+      "source": "AtomPageDots.swift"
+    },
+    {
+      "id": "s:8Atom63UI12AtomPageDotsV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomPageDots.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomPageDots.swift"
+    },
+    {
+      "id": "s:8Atom63UI12AtomPageDotsV5count9selection18accessibilityLabel04pageI0ACSi_05SwiftB07BindingVySiGS2SSi_Sitctcfc",
+      "kind": "swift.init",
+      "path": "AtomPageDots.init(count:selection:accessibilityLabel:pageLabel:)",
+      "declaration": "init(count: Int, selection: Binding<Int>, accessibilityLabel: String = \"Slides\", pageLabel: @escaping (Int, Int) -> String = { index, count in \"Slide \\(index + 1) of \\(count)\" })",
+      "source": "AtomPageDots.swift"
+    },
+    {
       "id": "s:8Atom63UI12AtomValueRowV",
       "kind": "swift.struct",
       "path": "AtomValueRow",
@@ -823,10 +844,10 @@
       "source": "AtomValueRow.swift"
     },
     {
-      "id": "s:8Atom63UI12AtomValueRowV_5value11systemImageACSS_S2SSgtcfc",
+      "id": "s:8Atom63UI12AtomValueRowV_5value11systemImage010emphasizesD015showsDisclosureACSS_S2SSgS2btcfc",
       "kind": "swift.init",
-      "path": "AtomValueRow.init(_:value:systemImage:)",
-      "declaration": "init(_ title: String, value: String, systemImage: String? = nil)",
+      "path": "AtomValueRow.init(_:value:systemImage:emphasizesValue:showsDisclosure:)",
+      "declaration": "init(_ title: String, value: String, systemImage: String? = nil, emphasizesValue: Bool = false, showsDisclosure: Bool = false)",
       "source": "AtomValueRow.swift"
     },
     {
@@ -1243,6 +1264,27 @@
       "source": "AtomWidget.swift"
     },
     {
+      "id": "s:8Atom63UI15AtomAvatarBadgeO",
+      "kind": "swift.enum",
+      "path": "AtomAvatarBadge",
+      "declaration": "enum AtomAvatarBadge",
+      "source": "AtomAvatar.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomAvatarBadgeO3dotyACSS_tcACmF",
+      "kind": "swift.enum.case",
+      "path": "AtomAvatarBadge.dot(accessibilityLabel:)",
+      "declaration": "case dot(accessibilityLabel: String)",
+      "source": "AtomAvatar.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomAvatarBadgeO5countyACSi_SStcACmF",
+      "kind": "swift.enum.case",
+      "path": "AtomAvatarBadge.count(_:accessibilityLabel:)",
+      "declaration": "case count(Int, accessibilityLabel: String)",
+      "source": "AtomAvatar.swift"
+    },
+    {
       "id": "s:8Atom63UI15AtomButtonShapeO",
       "kind": "swift.enum",
       "path": "AtomButtonShape",
@@ -1339,6 +1381,27 @@
       "path": "AtomFormMessage.body",
       "declaration": "var body: some View { get }",
       "source": "AtomFormMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomListSectionV",
+      "kind": "swift.struct",
+      "path": "AtomListSection",
+      "declaration": "struct AtomListSection<Content> where Content : View",
+      "source": "AtomListSection.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomListSectionV_6footer7contentACyxGSSSg_AGxyXEtcfc",
+      "kind": "swift.init",
+      "path": "AtomListSection.init(_:footer:content:)",
+      "declaration": "init(_ header: String? = nil, footer: String? = nil, @ViewBuilder content: () -> Content)",
+      "source": "AtomListSection.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomListSectionV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomListSection.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomListSection.swift"
     },
     {
       "id": "s:8Atom63UI15AtomSkeletonRowV",
@@ -3206,7 +3269,7 @@
       "kind": "memberOf"
     },
     {
-      "source": "s:8Atom63UI10AtomAvatarV4name8imageURL4sizeACSS_10Foundation0G0VSg04CoreI07CGFloatVtcfc",
+      "source": "s:8Atom63UI10AtomAvatarV4name8imageURL4size5badgeACSS_10Foundation0G0VSg04CoreJ07CGFloatVAA0cD5BadgeOSgtcfc",
       "target": "s:8Atom63UI10AtomAvatarV",
       "kind": "memberOf"
     },
@@ -3811,6 +3874,26 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI12AtomPageDotsV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI12AtomPageDotsV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI12AtomPageDotsV4bodyQrvp",
+      "target": "s:8Atom63UI12AtomPageDotsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI12AtomPageDotsV5count9selection18accessibilityLabel04pageI0ACSi_05SwiftB07BindingVySiGS2SSi_Sitctcfc",
+      "target": "s:8Atom63UI12AtomPageDotsV",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI12AtomValueRowV",
       "target": "external:Sendable",
       "kind": "conformsTo"
@@ -3821,7 +3904,7 @@
       "kind": "conformsTo"
     },
     {
-      "source": "s:8Atom63UI12AtomValueRowV_5value11systemImageACSS_S2SSgtcfc",
+      "source": "s:8Atom63UI12AtomValueRowV_5value11systemImage010emphasizesD015showsDisclosureACSS_S2SSgS2btcfc",
       "target": "s:8Atom63UI12AtomValueRowV",
       "kind": "memberOf"
     },
@@ -4246,6 +4329,26 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI15AtomAvatarBadgeO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomAvatarBadgeO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomAvatarBadgeO3dotyACSS_tcACmF",
+      "target": "s:8Atom63UI15AtomAvatarBadgeO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomAvatarBadgeO5countyACSi_SStcACmF",
+      "target": "s:8Atom63UI15AtomAvatarBadgeO",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI15AtomButtonShapeO",
       "target": "external:CaseIterable",
       "kind": "conformsTo"
@@ -4353,6 +4456,26 @@
     {
       "source": "s:8Atom63UI15AtomFormMessageV4bodyQrvp",
       "target": "s:8Atom63UI15AtomFormMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomListSectionV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomListSectionV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomListSectionV_6footer7contentACyxGSSSg_AGxyXEtcfc",
+      "target": "s:8Atom63UI15AtomListSectionV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomListSectionV4bodyQrvp",
+      "target": "s:8Atom63UI15AtomListSectionV",
       "kind": "memberOf"
     },
     {

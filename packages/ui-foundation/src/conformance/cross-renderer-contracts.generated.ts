@@ -711,7 +711,8 @@ export const crossRendererContracts = [
         "The square shape and the ring are web-only for now."
       ],
       "swiftUI": [
-        "Uses native image decoding and SwiftUI loading phases."
+        "Uses native image decoding and SwiftUI loading phases.",
+        "AtomAvatar(badge:) pins a status dot (.dot) or a count (.count) to the corner, read after the name."
       ]
     }
   },
@@ -927,6 +928,68 @@ export const crossRendererContracts = [
       ],
       "swiftUI": [
         "Overlay placement follows safe areas and native transition composition."
+      ]
+    }
+  },
+  {
+    "id": "item",
+    "foundationContract": "item",
+    "foundationAxis": "states",
+    "catalogItem": "listSection",
+    "reactRenderer": "ItemGroup",
+    "swiftUIRenderer": "AtomListSection",
+    "intent": "Group related rows on one inset surface with a divider between rows, as in a grouped settings list.",
+    "parity": "platform-adaptive",
+    "requiredStates": [
+      "rest"
+    ],
+    "sharedOutcomes": [
+      "rows-keep-reading-order",
+      "dividers-are-decorative"
+    ],
+    "accessibilityOutcomes": [
+      "preserves-row-order",
+      "hides-dividers-from-assistive-technology"
+    ],
+    "platformAdaptations": {
+      "react": [
+        "ItemGroup variant=\"inset\" draws the group; a heading above it and a note below it belong to the page.",
+        "A row that navigates is an Item rendered as a link, with its value in bold and a chevron in ItemActions."
+      ],
+      "swiftUI": [
+        "AtomListSection draws the group inside a ScrollView and takes an optional header and footer; inside a List or Form, the native Section draws it.",
+        "AtomValueRow(_:value:emphasizesValue:showsDisclosure:) is the label, value and chevron row."
+      ]
+    }
+  },
+  {
+    "id": "carousel",
+    "foundationContract": "carousel",
+    "foundationAxis": "states",
+    "catalogItem": "pageDots",
+    "reactRenderer": "CarouselDots",
+    "swiftUIRenderer": "TabView(.page) / AtomPageDots",
+    "intent": "Show which slide of a paged carousel is current, and go to a slide by choosing its dot.",
+    "parity": "platform-adaptive",
+    "requiredStates": [
+      "rest"
+    ],
+    "sharedOutcomes": [
+      "one-dot-per-slide",
+      "current-slide-is-marked",
+      "choosing-a-dot-shows-its-slide"
+    ],
+    "accessibilityOutcomes": [
+      "names-the-indicator",
+      "exposes-the-current-position"
+    ],
+    "platformAdaptations": {
+      "react": [
+        "One button per snap point, named \"Slide 2 of 5\"; the current one carries aria-current."
+      ],
+      "swiftUI": [
+        "TabView with .page(indexDisplayMode: .never) pages the slides; AtomPageDots binds to its selection.",
+        "VoiceOver reads the dots as one adjustable element; swiping up or down changes the slide."
       ]
     }
   }

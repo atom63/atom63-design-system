@@ -16,11 +16,45 @@ own navigation, collections, presentation, and platform controls.
 | Loading placeholders | `atomSkeleton(_:)`, `AtomSkeletonRow` |
 | Page and card section anatomy | `AtomSectionHeader` |
 | Read-only metadata and selectable options | `AtomValueRow`, `AtomSelectionRow` |
+| Grouped inset lists (settings) and navigational value rows | `AtomListSection`, `AtomValueRow(showsDisclosure:)` |
+| Carousel page indicator | `AtomPageDots` with `TabView(.page)` |
 | Cards, rows, status, identity, and media | `AtomCard`, `AtomListRow`, `AtomBadge`, `AtomAvatar`, `AtomAsyncImage` |
 | Compact filtering | `AtomChip` |
 | Safe-area-aware page actions | `AtomActionBar` |
 | Paginated collection feedback and retry | `AtomPaginationIntent`, `AtomLoadMoreView` |
 | Empty/error recovery, synchronization, and transient success | `AtomContentStateView`, `AtomSyncStatusView`, `AtomToast` |
+
+## Grouped inset lists
+
+Settings-style screens built in a `ScrollView` use `AtomListSection`: its rows sit
+on one rounded panel with a divider between them, under an optional header and
+above an optional footer. A row that navigates is a `NavigationLink` whose label is
+`AtomValueRow("Currency", value: "USD", showsDisclosure: true)`; add
+`emphasizesValue: true` for a bold value.
+
+```swift
+ScrollView {
+  VStack(spacing: AtomTokens.Space.x6) {
+    AtomListSection("General", footer: "Applies to every device.") {
+      NavigationLink(value: Route.currency) {
+        AtomValueRow("Currency", value: "USD", showsDisclosure: true)
+      }
+      AtomToggle("Notifications", isOn: $notifications)
+    }
+  }
+  .padding(AtomTokens.Space.x4)
+}
+.background(theme.colors.surfacePage.resolve(for: colorScheme))
+```
+
+Inside a `List` or `Form`, use the native `Section`: the list draws the inset
+group, and `NavigationLink` adds its own chevron, so leave `showsDisclosure` off.
+
+## Carousel page dots
+
+Page with `TabView` and `.tabViewStyle(.page(indexDisplayMode: .never))`, then
+bind `AtomPageDots(count:selection:)` to the same selection. VoiceOver reads the
+dots as one adjustable element.
 
 ## Form presentation ownership
 
@@ -75,8 +109,8 @@ not internal padding inside `AtomActionBar`.
 
 The reference app exercises these APIs in the dashboard, project filters, loading
 state, paginated project list, project detail actions, validated forms, and a
-38-entry executable Catalog. The cross-renderer registry declares 27 contracts;
-all 27 have executable React and SwiftUI evidence.
+42-entry executable Catalog. The cross-renderer registry declares 29 contracts;
+all 29 have executable React and SwiftUI evidence.
 
 ## Next review slices
 

@@ -56,6 +56,10 @@ struct CatalogShowcase: View {
       ListRowShowcase()
     case .valueRow:
       ValueRowShowcase()
+    case .listSection:
+      ListSectionShowcase()
+    case .pageDots:
+      PageDotsShowcase()
     case .selectionRow:
       SelectionRowShowcase()
     case .disclosureGroup:
@@ -1061,6 +1065,69 @@ private struct ValueRowShowcase: View {
       AtomValueRow("Runtime", value: "Native SwiftUI", systemImage: "swift")
       AtomValueRow("Minimum OS", value: "iOS 17", systemImage: "iphone")
       AtomValueRow("Dynamic Type", value: "Accessibility 5", systemImage: "textformat.size")
+      AtomValueRow("Units of measure", value: "Imperial", emphasizesValue: true, showsDisclosure: true)
+    }
+  }
+}
+
+private struct ListSectionShowcase: View {
+  @State private var notifications = true
+
+  var body: some View {
+    VStack(spacing: AtomTokens.Space.x6) {
+      AtomListSection {
+        HStack(spacing: AtomTokens.Space.x3) {
+          AtomAvatar(name: "You Zhang", badge: .dot(accessibilityLabel: "Online"))
+          VStack(alignment: .leading, spacing: AtomTokens.Space.x1) {
+            Text("You Zhang").font(.headline)
+            Text("Account, iCloud and more").font(.footnote).foregroundStyle(.secondary)
+          }
+        }
+        .accessibilityElement(children: .combine)
+      }
+
+      AtomListSection("General", footer: "Currency and units apply to every device.") {
+        AtomValueRow("Currency", value: "USD", showsDisclosure: true)
+        AtomValueRow("Appearance", value: "Automatic", showsDisclosure: true)
+        AtomValueRow("Start week on", value: "Sunday", emphasizesValue: true, showsDisclosure: true)
+      }
+
+      AtomListSection {
+        AtomToggle("Notifications", isOn: $notifications)
+        AtomListRow(
+          title: "Face ID",
+          systemImage: "faceid",
+          badge: "Set Up",
+          badgeTone: .accent,
+          showsDisclosure: true
+        )
+      }
+    }
+  }
+}
+
+private struct PageDotsShowcase: View {
+  @Environment(\.atomTheme) private var theme
+  @Environment(\.colorScheme) private var colorScheme
+  @State private var page = 0
+  private let slides = ["Plan", "Build", "Ship"]
+
+  var body: some View {
+    VStack(spacing: AtomTokens.Space.x2) {
+      TabView(selection: $page) {
+        ForEach(slides.indices, id: \.self) { index in
+          Text(slides[index])
+            .font(.title2.weight(.semibold))
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(theme.colors.surfaceMuted.resolve(for: colorScheme))
+            .clipShape(.rect(cornerRadius: AtomTokens.Radius.large))
+            .tag(index)
+        }
+      }
+      .tabViewStyle(.page(indexDisplayMode: .never))
+      .frame(height: 160)
+
+      AtomPageDots(count: slides.count, selection: $page)
     }
   }
 }
@@ -1223,10 +1290,23 @@ private struct FlowLayout: Layout {
 
 private struct AvatarShowcase: View {
   var body: some View {
-    HStack(alignment: .bottom, spacing: AtomTokens.Space.x4) {
-      AvatarSample(name: "You Zhang", size: 36)
-      AvatarSample(name: "Atom Sixty Three", size: 44)
-      AvatarSample(name: "Design Systems", size: 64)
+    VStack(alignment: .leading, spacing: AtomTokens.Space.x6) {
+      HStack(alignment: .bottom, spacing: AtomTokens.Space.x4) {
+        AvatarSample(name: "You Zhang", size: 36)
+        AvatarSample(name: "Atom Sixty Three", size: 44)
+        AvatarSample(name: "Design Systems", size: 64)
+      }
+
+      ShowcaseStateLabel("badge")
+      HStack(alignment: .bottom, spacing: AtomTokens.Space.x4) {
+        AtomAvatar(name: "You Zhang", size: 36, badge: .dot(accessibilityLabel: "Online"))
+        AtomAvatar(name: "Atom Sixty Three", badge: .dot(accessibilityLabel: "Online"))
+        AtomAvatar(
+          name: "Design Systems",
+          size: 64,
+          badge: .count(3, accessibilityLabel: "3 unread messages")
+        )
+      }
     }
   }
 }

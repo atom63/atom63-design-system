@@ -49,5 +49,26 @@
     "groupVariants": {
       "$ref": "#/lists/groupVariants"
     }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "listSection",
+    "reactRenderer": "ItemGroup",
+    "swiftUIRenderer": "AtomListSection",
+    "intent": "Group related rows on one inset surface with a divider between rows, as in a grouped settings list.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["rest"],
+    "sharedOutcomes": ["rows-keep-reading-order", "dividers-are-decorative"],
+    "accessibilityOutcomes": ["preserves-row-order", "hides-dividers-from-assistive-technology"],
+    "platformAdaptations": {
+      "react": [
+        "ItemGroup variant=\"inset\" draws the group; a heading above it and a note below it belong to the page.",
+        "A row that navigates is an Item rendered as a link, with its value in bold and a chevron in ItemActions."
+      ],
+      "swiftUI": [
+        "AtomListSection draws the group inside a ScrollView and takes an optional header and footer; inside a List or Form, the native Section draws it.",
+        "AtomValueRow(_:value:emphasizesValue:showsDisclosure:) is the label, value and chevron row."
+      ]
+    }
   }
 }
