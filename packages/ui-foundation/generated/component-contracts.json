@@ -2391,7 +2391,8 @@
             "Uses tablist, tab, and tabpanel semantics with keyboard navigation and a visual indicator."
           ],
           "swiftUI": [
-            "In-page sections use a segmented Picker above the content it selects, so each tab is a named, selectable button. TabView stays the renderer for app-level sections such as a tab bar or sidebar."
+            "In-page sections use a segmented Picker above the content it selects, so each tab is a named, selectable button. TabView stays the renderer for app-level sections such as a tab bar or sidebar.",
+            "In a TabView, each tab's root is its ScrollView or List. From iOS 26 the glass tab bar floats over it: content scrolls under the bar at rest, and TabView insets the scroll content so the last row ends above the bar. Do not pad for the bar, draw content in a ZStack or overlay over the TabView, or apply ignoresSafeArea to the bottom edge; extra bottom chrome goes in safeAreaInset(edge: .bottom) on the tab's root."
           ]
         }
       }
