@@ -367,6 +367,9 @@ private struct CatalogContractCard: View {
       LabeledContent("Contract axis", value: contract.foundationAxis)
       LabeledContent("React", value: contract.reactRenderer)
       LabeledContent("SwiftUI", value: contract.swiftUIRenderer)
+      ForEach(contract.swiftUIRendererByVariant, id: \.variant) { renderer in
+        LabeledContent("SwiftUI \(renderer.variant)", value: renderer.renderer)
+      }
 
       Divider()
 

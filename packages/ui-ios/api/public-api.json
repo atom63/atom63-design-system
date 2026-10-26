@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "module": "Atom63UI",
-  "symbolCount": 486,
+  "symbolCount": 499,
   "symbols": [
     {
       "id": "s:8Atom63UI10AtomAmountV",
@@ -149,6 +149,27 @@
       "path": "AtomNotice.body",
       "declaration": "var body: some View { get }",
       "source": "AtomNotice.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTabRowV",
+      "kind": "swift.struct",
+      "path": "AtomTabRow",
+      "declaration": "struct AtomTabRow<Value> where Value : Hashable",
+      "source": "AtomTabRow.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTabRowV_9selection4tabsACyxGSS_05SwiftB07BindingVyxGSayAA0cD0VyxGGtcfc",
+      "kind": "swift.init",
+      "path": "AtomTabRow.init(_:selection:tabs:)",
+      "declaration": "init(_ label: String, selection: Binding<Value>, tabs: [AtomTab<Value>])",
+      "source": "AtomTabRow.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTabRowV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomTabRow.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomTabRow.swift"
     },
     {
       "id": "s:8Atom63UI10AtomToggleV",
@@ -2699,6 +2720,27 @@
       "source": "AtomFormMessage.swift"
     },
     {
+      "id": "s:8Atom63UI19AtomVariantRendererV",
+      "kind": "swift.struct",
+      "path": "AtomVariantRenderer",
+      "declaration": "struct AtomVariantRenderer",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomVariantRendererV7variantSSvp",
+      "kind": "swift.property",
+      "path": "AtomVariantRenderer.variant",
+      "declaration": "let variant: String",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomVariantRendererV8rendererSSvp",
+      "kind": "swift.property",
+      "path": "AtomVariantRenderer.renderer",
+      "declaration": "let renderer: String",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
       "id": "s:8Atom63UI19AtomWidgetStateViewV",
       "kind": "swift.struct",
       "path": "AtomWidgetStateView",
@@ -2972,6 +3014,13 @@
       "source": "Generated/AtomComponentContracts.generated.swift"
     },
     {
+      "id": "s:8Atom63UI21AtomComponentContractV24swiftUIRendererByVariantSayAA0cI8RendererVGvp",
+      "kind": "swift.property",
+      "path": "AtomComponentContract.swiftUIRendererByVariant",
+      "declaration": "let swiftUIRendererByVariant: [AtomVariantRenderer]",
+      "source": "Generated/AtomComponentContracts.generated.swift"
+    },
+    {
       "id": "s:8Atom63UI21AtomComponentContractV2idSSvp",
       "kind": "swift.property",
       "path": "AtomComponentContract.id",
@@ -3180,6 +3229,48 @@
       "path": "AtomRendererConformanceEvidence.id",
       "declaration": "var id: String { get }",
       "source": "AtomRendererConformance.swift"
+    },
+    {
+      "id": "s:8Atom63UI7AtomTabV",
+      "kind": "swift.struct",
+      "path": "AtomTab",
+      "declaration": "struct AtomTab<Value> where Value : Hashable",
+      "source": "AtomTabRow.swift"
+    },
+    {
+      "id": "s:8Atom63UI7AtomTabV_11systemImage5valueACyxGSS_SSSgxtcfc",
+      "kind": "swift.init",
+      "path": "AtomTab.init(_:systemImage:value:)",
+      "declaration": "init(_ title: String, systemImage: String? = nil, value: Value)",
+      "source": "AtomTabRow.swift"
+    },
+    {
+      "id": "s:8Atom63UI7AtomTabV11systemImageSSSgvp",
+      "kind": "swift.property",
+      "path": "AtomTab.systemImage",
+      "declaration": "let systemImage: String?",
+      "source": "AtomTabRow.swift"
+    },
+    {
+      "id": "s:8Atom63UI7AtomTabV2idxvp",
+      "kind": "swift.property",
+      "path": "AtomTab.id",
+      "declaration": "var id: Value { get }",
+      "source": "AtomTabRow.swift"
+    },
+    {
+      "id": "s:8Atom63UI7AtomTabV5titleSSvp",
+      "kind": "swift.property",
+      "path": "AtomTab.title",
+      "declaration": "let title: String",
+      "source": "AtomTabRow.swift"
+    },
+    {
+      "id": "s:8Atom63UI7AtomTabV5valuexvp",
+      "kind": "swift.property",
+      "path": "AtomTab.value",
+      "declaration": "let value: Value",
+      "source": "AtomTabRow.swift"
     },
     {
       "id": "s:8Atom63UI8AtomCardV",
@@ -3540,6 +3631,26 @@
     {
       "source": "s:8Atom63UI10AtomNoticeV4bodyQrvp",
       "target": "s:8Atom63UI10AtomNoticeV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTabRowV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTabRowV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTabRowV_9selection4tabsACyxGSS_05SwiftB07BindingVyxGSayAA0cD0VyxGGtcfc",
+      "target": "s:8Atom63UI10AtomTabRowV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTabRowV4bodyQrvp",
+      "target": "s:8Atom63UI10AtomTabRowV",
       "kind": "memberOf"
     },
     {
@@ -5823,6 +5934,26 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI19AtomVariantRendererV",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI19AtomVariantRendererV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI19AtomVariantRendererV7variantSSvp",
+      "target": "s:8Atom63UI19AtomVariantRendererV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI19AtomVariantRendererV8rendererSSvp",
+      "target": "s:8Atom63UI19AtomVariantRendererV",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI19AtomWidgetStateViewV",
       "target": "external:Sendable",
       "kind": "conformsTo"
@@ -6093,6 +6224,11 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI21AtomComponentContractV24swiftUIRendererByVariantSayAA0cI8RendererVGvp",
+      "target": "s:8Atom63UI21AtomComponentContractV",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI21AtomComponentContractV2idSSvp",
       "target": "s:8Atom63UI21AtomComponentContractV",
       "kind": "memberOf"
@@ -6270,6 +6406,36 @@
     {
       "source": "s:8Atom63UI31AtomRendererConformanceEvidenceV2idSSvp",
       "target": "s:8Atom63UI31AtomRendererConformanceEvidenceV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI7AtomTabV",
+      "target": "external:Identifiable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI7AtomTabV_11systemImage5valueACyxGSS_SSSgxtcfc",
+      "target": "s:8Atom63UI7AtomTabV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI7AtomTabV11systemImageSSSgvp",
+      "target": "s:8Atom63UI7AtomTabV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI7AtomTabV2idxvp",
+      "target": "s:8Atom63UI7AtomTabV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI7AtomTabV5titleSSvp",
+      "target": "s:8Atom63UI7AtomTabV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI7AtomTabV5valuexvp",
+      "target": "s:8Atom63UI7AtomTabV",
       "kind": "memberOf"
     },
     {

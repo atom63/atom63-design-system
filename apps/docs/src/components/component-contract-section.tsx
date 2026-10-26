@@ -130,6 +130,20 @@ export function ComponentContractSection({ componentSlug }: { componentSlug: str
             {shared.intent} Rendered by <Code>{shared.swiftUIRenderer}</Code> in SwiftUI, with{' '}
             <Code>{shared.parity}</Code> parity.
           </P>
+          {shared.swiftUIRendererByVariant ? (
+            <>
+              <P>
+                <Strong>SwiftUI renderer per variant:</Strong>
+              </P>
+              <Ul>
+                {Object.entries(shared.swiftUIRendererByVariant).map(([variant, renderer]) => (
+                  <Li key={variant}>
+                    <Code>{variant}</Code>: <Code>{renderer}</Code>
+                  </Li>
+                ))}
+              </Ul>
+            </>
+          ) : null}
           <Row label="Required states">
             <CodeList values={shared.requiredStates} />
           </Row>
