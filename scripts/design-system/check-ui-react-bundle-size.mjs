@@ -86,6 +86,7 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // taking it to 94.6, so it moves to 95. Most of it is the composer: its own
 // or the host's value, Enter to send outside an input method's composition,
 // and the send button that turns into stop. Six case runs hand-built chat.
+// With the filled and elevated cards and the raised button it holds 94.8.
 const gzipBudgetBytes = 95 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
