@@ -2,7 +2,7 @@ import { buttonAnatomy } from '../../src/components/button-anatomy'
 import { readRecipe } from '../../src/components/recipe'
 import type { SyncModel } from '../../src/plan'
 
-/** A trimmed Button recipe: two variants, two sizes, a composed fill and a disabled fade. */
+/** A trimmed Button recipe: two variants, two sizes, a composed fill and a neutral disabled fill. */
 export const buttonCss = `
 .a63-Button {
   --button-background: var(--a63-action-neutral);
@@ -21,7 +21,10 @@ export const buttonCss = `
 }
 .a63-Button[data-size='sm'] { --button-padding-inline: var(--a63-control-padding-inline-sm); }
 .a63-Button::after { content: ''; }
-.a63-Button:disabled .a63-Button-label { opacity: 0.56; }
+.a63-Button[data-variant='default']:disabled:where(:not([data-loading])),
+.a63-Button[data-variant='secondary']:disabled:where(:not([data-loading])) {
+  --button-background: var(--a63-action-disabled-background);
+}
 `
 
 const variable = (token: string, type: 'COLOR' | 'FLOAT', value: unknown) =>
@@ -30,13 +33,14 @@ const variable = (token: string, type: 'COLOR' | 'FLOAT', value: unknown) =>
 /** The tokens the trimmed recipe binds, in one single-mode collection. */
 export const syncFixture: SyncModel = {
   schemaVersion: 1,
-  summary: { collections: 1, variables: 4, aliasValues: 0, skipped: 0 },
+  summary: { collections: 1, variables: 5, aliasValues: 0, skipped: 0 },
   skipped: [],
   collections: [
     {
       name: 'Base',
       modes: ['default'],
       variables: [
+        variable('--a63-action-disabled-background', 'COLOR', { r: 0.9, g: 0.9, b: 0.9, a: 1 }),
         variable('--a63-action-neutral', 'COLOR', { r: 0, g: 0, b: 0, a: 1 }),
         variable('--a63-action-neutral-hover', 'COLOR', { r: 0.1, g: 0.1, b: 0.1, a: 1 }),
         variable('--a63-control-padding-inline-md', 'FLOAT', 12),

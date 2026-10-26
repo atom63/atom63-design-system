@@ -10,6 +10,10 @@ export interface AnatomyLayer {
   reads: Partial<Record<FigmaProperty, string>>
   /** Values fixed by state, applied after the cascade (C6). */
   byState?: Partial<Record<string, Partial<Record<FigmaProperty, number | boolean>>>>
+  /** Per-variant exceptions to `byState`, as variant → state → values. */
+  byVariantState?: Partial<
+    Record<string, Partial<Record<string, Partial<Record<FigmaProperty, number | boolean>>>>>
+  >
 }
 
 export const buttonAnatomy: {
@@ -44,7 +48,15 @@ export const buttonAnatomy: {
         fontFamily: 'font-family',
         fontWeight: 'font-weight',
       },
-      byState: { disabled: { opacity: 0.56 }, loading: { opacity: 0 } },
+      // Disabled fill and outline variants change colors and keep the label opaque;
+      // the variants with no fill to replace fade the label instead.
+      byState: { disabled: { opacity: 1 }, loading: { opacity: 0 } },
+      byVariantState: {
+        ghost: { disabled: { opacity: 0.56 } },
+        link: { disabled: { opacity: 0.56 } },
+        overlay: { disabled: { opacity: 0.56 } },
+        glass: { disabled: { opacity: 0.56 } },
+      },
     },
     {
       name: 'Spinner',

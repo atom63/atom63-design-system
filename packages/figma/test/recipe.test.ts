@@ -62,9 +62,12 @@ it('reads color-mix with transparent as a derived variable, and transparent as a
   expect(buttonModelFixture.tokens).toContain('--a63-action-neutral')
 })
 
-it('fades the label when disabled and keeps the anatomy in step with the recipe', () => {
+it('gives a disabled fill variant the neutral fill and keeps its label opaque', () => {
+  expect(layer('Variant=default, Size=md, State=disabled').properties.fill).toEqual({
+    alias: '--a63-action-disabled-background',
+  })
   expect(layer('Variant=default, Size=md, State=disabled', 'Label').properties.opacity).toEqual({
-    value: 0.56,
+    value: 1,
   })
 })
 
@@ -72,6 +75,7 @@ it('reports what it does not read', () => {
   expect(model.skipped).toContainEqual({ what: '.a63-Button::after', reason: 'pseudo-element' })
   expect(model.skipped).toContainEqual({ what: 'Size=icon', reason: 'not in this plan (C2)' })
   expect(model.tokens).toEqual([
+    '--a63-action-disabled-background',
     '--a63-action-neutral',
     '--a63-action-neutral-hover',
     '--a63-control-padding-inline-md',
@@ -195,7 +199,7 @@ describe('values beyond the trimmed recipe', () => {
     const recipeModel = read(`.a63-Button:disabled .a63-Button-label { opacity: 0.5; }`)
     expect(recipeModel.skipped).toContainEqual({
       what: 'Label opacity in State=disabled',
-      reason: 'the anatomy says 0.56, the recipe says 0.5',
+      reason: 'the anatomy says 1, the recipe says 0.5',
     })
   })
 
@@ -351,12 +355,25 @@ describe('the real Button recipe', () => {
     expect(unbound).toEqual([])
   })
 
-  it('fades the disabled label by the recipe’s 0.56 with no drift', () => {
-    for (const v of realModel.variants.filter(item => item.coord.state === 'disabled'))
-      expect(v.layers.find(l => l.name === 'Label')!.properties.opacity).toEqual({ value: 0.56 })
+  it('draws disabled fill variants in the neutral disabled colors and fades only the rest', () => {
+    const fades = new Set(['ghost', 'link', 'overlay', 'glass'])
+    for (const v of realModel.variants.filter(item => item.coord.state === 'disabled')) {
+      const [root] = v.layers
+      const label = v.layers.find(l => l.name === 'Label')!
+      if (fades.has(v.coord.variant)) {
+        expect(label.properties.opacity, v.name).toEqual({ value: 0.56 })
+        continue
+      }
+      expect(label.properties.opacity, v.name).toEqual({ value: 1 })
+      expect(root.properties.fill, v.name).toEqual({ alias: '--a63-action-disabled-background' })
+      expect(root.properties.stroke, v.name).toEqual({ alias: '--a63-action-disabled-border' })
+      expect(label.properties.fill, v.name).toEqual({ alias: '--a63-action-disabled-foreground' })
+    }
     expect(realModel.skipped.filter(item => item.reason.startsWith('the anatomy says'))).toEqual([])
     const fade = readRules(realCss).find(rule =>
-      rule.selectors.includes('.a63-Button:disabled .a63-Button-label')
+      rule.selectors.includes(
+        ".a63-Button[data-variant='ghost']:disabled:where(:not([data-loading])) .a63-Button-label"
+      )
     )
     expect(fade?.declarations.opacity).toBe('0.56')
   })
