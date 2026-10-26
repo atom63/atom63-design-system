@@ -63,6 +63,10 @@ import { blindArms, judgePrompt, parseJudgeOutput, renderReport } from './lib/vi
 import { pnpmOverridesYaml } from './lib/pnpm-overrides.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
+// The design system's token names, so the craft measure flags `--a63-*` reads that do not exist.
+const knownTokens = JSON.parse(
+  readFileSync(path.join(root, 'packages/styles/generated/atom63.tokens.json'), 'utf8')
+).entries.map(entry => entry.cssVar)
 const briefsDir = path.join(root, 'scripts/design-system/vibe/briefs')
 const auditsDir = path.join(root, 'docs/design-system/audits')
 const cliBin = path.join(root, 'packages/cli/src/bin.mjs')
@@ -410,7 +414,7 @@ try {
           agent,
           agentResult: excerptText(outcome.value.result),
           files,
-          measures: measureSources(measured),
+          measures: measureSources(measured, { knownTokens }),
           typecheck: { ok: typecheck.ok, errors: countTypeErrors(typecheck.output) },
           build: { ok: build.ok, output: build.ok ? '' : build.output.slice(-2000) },
           axe: { violations: [], nodes: 0, error: 'not built' },
