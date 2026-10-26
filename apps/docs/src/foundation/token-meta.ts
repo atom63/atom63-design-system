@@ -171,8 +171,8 @@ export const RADIUS_SCALE = [
   { token: '2xl', utility: 'rounded-2xl', px: '18px', cssVar: '--radius-2xl' },
   { token: '3xl', utility: 'rounded-3xl', px: '22px', cssVar: '--radius-3xl' },
   { token: '4xl', utility: 'rounded-4xl', px: '26px', cssVar: '--radius-4xl' },
-  { token: 'full', utility: 'rounded-full', px: '28px', cssVar: '--radius-full' },
-  { token: 'pill', utility: 'rounded-pill', px: '9999px', cssVar: '--radius-pill' },
+  { token: 'full', utility: 'rounded-[var(--radius-full)]', px: '28px', cssVar: '--radius-full' },
+  { token: 'pill', utility: 'rounded-full', px: '9999px', cssVar: '--radius-pill' },
 ] as const
 
 /**

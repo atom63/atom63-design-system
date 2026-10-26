@@ -508,8 +508,13 @@
   --radius-2xl: var(--radius-2xl);
   --radius-3xl: var(--radius-3xl);
   --radius-4xl: var(--radius-4xl);
-  --radius-full: var(--radius-full);
   --radius-pill: var(--radius-pill);
+}
+
+@theme inline reference {
+  /* `rounded-full` is a true circle: it draws --radius-pill. Reference-only, so
+     Tailwind does not redeclare --radius-full, which stays the soft 2× xl step. */
+  --radius-full: var(--radius-pill);
 }
 
 /* tokens/foundation/fonts.css */
