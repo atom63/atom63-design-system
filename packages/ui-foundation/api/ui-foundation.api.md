@@ -1838,7 +1838,7 @@ export const crossRendererContracts: readonly [{
     readonly accessibilityOutcomes: readonly ["exposes-accessible-name", "fallback-preserves-identity"];
     readonly platformAdaptations: {
         readonly react: readonly ["Uses browser image loading and DOM fallback composition.", "The square shape and the ring are web-only for now."];
-        readonly swiftUI: readonly ["Uses native image decoding and SwiftUI loading phases."];
+        readonly swiftUI: readonly ["Uses native image decoding and SwiftUI loading phases.", "AtomAvatar(badge:) pins a status dot (.dot) or a count (.count) to the corner, read after the name."];
     };
 }, {
     readonly id: "empty";
@@ -1955,6 +1955,38 @@ export const crossRendererContracts: readonly [{
     readonly platformAdaptations: {
         readonly react: readonly ["Portal placement follows the viewport and DOM stacking context."];
         readonly swiftUI: readonly ["Overlay placement follows safe areas and native transition composition."];
+    };
+}, {
+    readonly id: "item";
+    readonly foundationContract: "item";
+    readonly foundationAxis: "states";
+    readonly catalogItem: "listSection";
+    readonly reactRenderer: "ItemGroup";
+    readonly swiftUIRenderer: "AtomListSection";
+    readonly intent: "Group related rows on one inset surface with a divider between rows, as in a grouped settings list.";
+    readonly parity: "platform-adaptive";
+    readonly requiredStates: readonly ["rest"];
+    readonly sharedOutcomes: readonly ["rows-keep-reading-order", "dividers-are-decorative"];
+    readonly accessibilityOutcomes: readonly ["preserves-row-order", "hides-dividers-from-assistive-technology"];
+    readonly platformAdaptations: {
+        readonly react: readonly ["ItemGroup variant=\"inset\" draws the group; a heading above it and a note below it belong to the page.", "A row that navigates is an Item rendered as a link, with its value in bold and a chevron in ItemActions."];
+        readonly swiftUI: readonly ["AtomListSection draws the group inside a ScrollView and takes an optional header and footer; inside a List or Form, the native Section draws it.", "AtomValueRow(_:value:emphasizesValue:showsDisclosure:) is the label, value and chevron row.", "Rows pad themselves with atomListRowInsets() inside their tap area, so a NavigationLink or Button row is tappable edge to edge; Atom63 rows do it already, and a custom row takes the modifier inside its label."];
+    };
+}, {
+    readonly id: "carousel";
+    readonly foundationContract: "carousel";
+    readonly foundationAxis: "states";
+    readonly catalogItem: "pageDots";
+    readonly reactRenderer: "CarouselDots";
+    readonly swiftUIRenderer: "TabView(.page) / AtomPageDots";
+    readonly intent: "Show which slide of a paged carousel is current, and go to a slide by choosing its dot.";
+    readonly parity: "platform-adaptive";
+    readonly requiredStates: readonly ["rest"];
+    readonly sharedOutcomes: readonly ["one-dot-per-slide", "current-slide-is-marked", "choosing-a-dot-shows-its-slide"];
+    readonly accessibilityOutcomes: readonly ["names-the-indicator", "exposes-the-current-position"];
+    readonly platformAdaptations: {
+        readonly react: readonly ["One button per snap point, named \"Slide 2 of 5\"; the current one carries aria-current."];
+        readonly swiftUI: readonly ["TabView with .page(indexDisplayMode: .never) pages the slides; AtomPageDots binds to its selection.", "VoiceOver reads the dots as one adjustable element; swiping up or down changes the slide."];
     };
 }];
 

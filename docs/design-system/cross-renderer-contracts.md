@@ -84,12 +84,13 @@ A contract is `declared` when it exists in the canonical registry. It becomes
 `verified` only after a renderer registers executable evidence for every required
 state, shared outcome, accessibility outcome, and motion recipe.
 
-All 27 canonical contracts now have renderer evidence. They cover Button, Alert,
+All 29 canonical contracts now have renderer evidence. They cover Button, Alert,
 Dialog/Sheet, AlertDialog/Alert, Field, DestinationLink, Input, Textarea, Switch,
 Select/Picker, SegmentedControl/segmented Picker, RadioGroup/inline Picker,
 Slider, DropdownMenu/Menu, Accordion/DisclosureGroup, Calendar/DatePicker,
 SearchField/searchable, Tabs/TabView, Load More, Skeleton, Toggle/Chip, Card,
-Badge, Avatar, Empty/ContentUnavailableView, Progress, and Toaster/AtomToast:
+Badge, Avatar, Empty/ContentUnavailableView, Progress, Toaster/AtomToast,
+Item/AtomListSection, and Carousel/AtomPageDots:
 
 - React evidence:
   `packages/ui-react/src/conformance/renderer-conformance.ts`

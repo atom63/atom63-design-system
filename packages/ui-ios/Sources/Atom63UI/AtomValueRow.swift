@@ -1,5 +1,9 @@
 import SwiftUI
 
+/// A label with its value at the trailing edge. `emphasizesValue` draws the value in the primary
+/// text color and a semibold weight; `showsDisclosure` adds a chevron for a row that navigates,
+/// such as a `NavigationLink` label inside a `ScrollView` or an `AtomListSection`. Inside a
+/// `List`, a `NavigationLink` draws its own chevron, so leave `showsDisclosure` off there.
 public struct AtomValueRow: View {
   @Environment(\.atomTheme) private var theme
   @Environment(\.colorScheme) private var colorScheme
@@ -8,33 +12,47 @@ public struct AtomValueRow: View {
   private let title: String
   private let value: String
   private let systemImage: String?
+  private let emphasizesValue: Bool
+  private let showsDisclosure: Bool
 
   public init(
     _ title: String,
     value: String,
-    systemImage: String? = nil
+    systemImage: String? = nil,
+    emphasizesValue: Bool = false,
+    showsDisclosure: Bool = false
   ) {
     self.title = title
     self.value = value
     self.systemImage = systemImage
+    self.emphasizesValue = emphasizesValue
+    self.showsDisclosure = showsDisclosure
   }
 
   public var body: some View {
-    Group {
+    HStack(spacing: AtomTokens.Space.x3) {
       if dynamicTypeSize.isAccessibilitySize {
         VStack(alignment: .leading, spacing: AtomTokens.Space.x2) {
           label
           valueText
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
       } else {
-        HStack(spacing: AtomTokens.Space.x3) {
-          label
-          Spacer(minLength: AtomTokens.Space.x3)
-          valueText
-        }
+        label
+        Spacer(minLength: AtomTokens.Space.x3)
+        valueText
+      }
+
+      if showsDisclosure {
+        Image(systemName: "chevron.forward")
+          .font(.footnote.weight(.semibold))
+          .foregroundStyle(theme.colors.textSecondary.resolve(for: colorScheme))
+          .accessibilityHidden(true)
       }
     }
     .padding(.vertical, AtomTokens.Space.x1)
+    .atomListRowInsets()
+    .contentShape(.rect)
     .accessibilityElement(children: .combine)
   }
 
@@ -53,7 +71,11 @@ public struct AtomValueRow: View {
   private var valueText: some View {
     Text(value)
       .font(.subheadline)
-      .foregroundStyle(theme.colors.textSecondary.resolve(for: colorScheme))
+      .fontWeight(emphasizesValue ? .semibold : nil)
+      .foregroundStyle(
+        (emphasizesValue ? theme.colors.textPrimary : theme.colors.textSecondary)
+          .resolve(for: colorScheme)
+      )
       .multilineTextAlignment(dynamicTypeSize.isAccessibilitySize ? .leading : .trailing)
   }
 }
