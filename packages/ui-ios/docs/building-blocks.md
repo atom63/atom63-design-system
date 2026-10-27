@@ -61,6 +61,10 @@ ScrollView {
 .background(theme.colors.surfacePage.resolve(for: colorScheme))
 ```
 
+The section is the panel fill on a `surfacePage` background, as in iOS Settings.
+For grey cards on a white page, pass `surface: .muted` and put the sections on
+`surfacePanel`. The web side is `ItemGroup surface="muted"`.
+
 Inside a `List` or `Form`, use the native `Section`: the list draws the inset
 group, and `NavigationLink` adds its own chevron, so leave `showsDisclosure` off.
 

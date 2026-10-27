@@ -7,14 +7,17 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 // (default/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off
 // data-variant / data-size, and styles a row with aria-current or data-selected as current or
 // selected. ItemGroup takes variant (default/inset): inset is a rounded card with hairline dividers,
-// the grouped settings list. A selected or current row follows tone (neutral/accent, data-tone):
-// neutral is the muted fill with primary text, accent is the opt-in primary wash with accent text.
+// the grouped settings list. ItemGroup surface (card/muted, data-surface) fills an inset group: card
+// (the default) is the panel fill for a grey page, muted is the grey fill for a white page. A
+// selected or current row follows tone (neutral/accent, data-tone): neutral is the muted fill with
+// primary text, accent is the opt-in primary wash with accent text.
 
 export const itemVariants = ['default', 'outline', 'muted'] as const
 export const itemSizes = ['default', 'sm', 'xs'] as const
 export const itemTones = ['neutral', 'accent'] as const
 export const itemMediaVariants = ['default', 'icon', 'image'] as const
 export const itemGroupVariants = ['default', 'inset'] as const
+export const itemGroupSurfaces = ['card', 'muted'] as const
 export const itemSlots = [
   'item-group',
   'item',
@@ -35,6 +38,7 @@ export type ItemSize = (typeof itemSizes)[number]
 export type ItemTone = (typeof itemTones)[number]
 export type ItemMediaVariant = (typeof itemMediaVariants)[number]
 export type ItemGroupVariant = (typeof itemGroupVariants)[number]
+export type ItemGroupSurface = (typeof itemGroupSurfaces)[number]
 export type ItemSlot = (typeof itemSlots)[number]
 export type ItemState = (typeof itemStates)[number]
 export type ItemVisualArchetype = (typeof itemVisualArchetypes)[number]
@@ -44,6 +48,7 @@ export interface ItemContract {
   defaultSize: ItemSize
   defaultMediaVariant: ItemMediaVariant
   defaultGroupVariant: ItemGroupVariant
+  defaultGroupSurface: ItemGroupSurface
   defaultTone: ItemTone
   variants: readonly ItemVariant[]
   sizes: readonly ItemSize[]
@@ -52,6 +57,7 @@ export interface ItemContract {
   states: readonly ItemState[]
   visualArchetypes: readonly ItemVisualArchetype[]
   groupVariants: readonly ItemGroupVariant[]
+  groupSurfaces: readonly ItemGroupSurface[]
   tones: readonly ItemTone[]
 }
 
@@ -60,6 +66,7 @@ export const itemContract = {
   defaultSize: 'default',
   defaultMediaVariant: 'default',
   defaultGroupVariant: 'default',
+  defaultGroupSurface: 'card',
   defaultTone: 'neutral',
   variants: itemVariants,
   sizes: itemSizes,
@@ -68,5 +75,6 @@ export const itemContract = {
   states: itemStates,
   visualArchetypes: itemVisualArchetypes,
   groupVariants: itemGroupVariants,
+  groupSurfaces: itemGroupSurfaces,
   tones: itemTones,
 } satisfies ItemContract

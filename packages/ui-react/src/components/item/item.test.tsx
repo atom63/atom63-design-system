@@ -105,4 +105,12 @@ describe('Item', () => {
     rerender(<ItemGroup variant="inset" />)
     expect(group()).toHaveAttribute('data-variant', 'inset')
   })
+
+  it('marks the group surface, card unless muted', () => {
+    const { container, rerender } = render(<ItemGroup variant="inset" />)
+    const group = () => container.querySelector('[data-slot="item-group"]')
+    expect(group()).toHaveAttribute('data-surface', 'card')
+    rerender(<ItemGroup surface="muted" variant="inset" />)
+    expect(group()).toHaveAttribute('data-surface', 'muted')
+  })
 })

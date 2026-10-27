@@ -30,6 +30,11 @@
             "unit": "rem"
           },
           "$description": "Drives the switch track geometry; iOS enlarges it in environment.css."
+        },
+        "aspect": {
+          "$type": "number",
+          "$value": 1,
+          "$description": "The thumb's width over its height: 1 is a round knob. The track is the thumb plus one thumb height of travel, so a wider thumb lengthens the track. The phone form factor widens it (environment.css)."
         }
       }
     }

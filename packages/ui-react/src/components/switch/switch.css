@@ -4,9 +4,11 @@
  * --a63-selection-* tokens) + the thumb slides right; a press squishes the thumb.
  *
  * Geometry is driven by --a63-switch-thumb-size, so design language reshapes it for
- * free (iOS enlarges the token → a bigger pill). With border-box + 1px border + 2px
- * padding, the content box is exactly thumb·2 wide and thumb tall, so the checked
- * travel is a clean translateX(thumb).
+ * free (iOS enlarges the token → a bigger pill), and --a63-switch-thumb-aspect, the
+ * knob's width over its height (1 = round; the phone form factor widens it to an
+ * iOS 26 pill). With border-box + 1px border + 2px padding, the content box is the
+ * knob plus one thumb height of travel wide and thumb tall, so the checked travel is
+ * a clean translateX(thumb).
  *
  * Axis-dependent selection tokens resolve HERE (the use-site) via
  * var(--a63-selection-X, <live semantic>), so mode/theme/brand read from the
@@ -20,6 +22,7 @@
 
 .a63-Switch {
   --switch-thumb: var(--a63-switch-thumb-size);
+  --switch-thumb-aspect: var(--a63-switch-thumb-aspect, 1);
   --switch-track: var(--a63-selection-track-off, var(--a63-surface-muted));
   --switch-border: var(--a63-selection-border, var(--a63-border-input));
   --switch-accent: var(--a63-selection-accent, var(--a63-action-primary));
@@ -37,7 +40,7 @@
   display: inline-flex;
   flex: none;
   align-items: center;
-  width: calc(var(--switch-thumb) * 2 + 6px);
+  width: calc(var(--switch-thumb) * (1 + var(--switch-thumb-aspect)) + 6px);
   height: calc(var(--switch-thumb) + 6px);
   padding: 2px;
   border: 1px solid var(--switch-border);
@@ -76,7 +79,7 @@
   display: grid;
   place-items: center;
   height: 100%;
-  aspect-ratio: 1;
+  aspect-ratio: var(--switch-thumb-aspect);
   border: 1px solid color-mix(in oklch, var(--a63-shadow-color) 8%, transparent);
   border-radius: var(--radius-pill);
   background: var(--switch-thumb-bg);

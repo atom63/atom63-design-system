@@ -606,6 +606,7 @@ export type {
 } from './components/input-otp/input-otp-contract'
 export {
   itemContract,
+  itemGroupSurfaces,
   itemGroupVariants,
   itemMediaVariants,
   itemSizes,
@@ -617,6 +618,7 @@ export {
 } from './components/item/item-contract'
 export type {
   ItemContract,
+  ItemGroupSurface,
   ItemGroupVariant,
   ItemMediaVariant,
   ItemSize,
