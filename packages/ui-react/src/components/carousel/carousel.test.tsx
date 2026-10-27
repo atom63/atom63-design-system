@@ -309,4 +309,28 @@ describe('Carousel', () => {
     expect(getByRole('button', { name: 'Slide 3 of 3' })).toHaveAttribute('aria-current', 'true')
     expect(getByRole('button', { name: 'Slide 1 of 3' })).not.toHaveAttribute('aria-current')
   })
+
+  it('draws round neutral dots by default and takes a shape and a tone', () => {
+    const { getByRole, rerender } = render(
+      <Carousel>
+        <CarouselContent>
+          <CarouselItem>One</CarouselItem>
+        </CarouselContent>
+        <CarouselDots />
+      </Carousel>
+    )
+    const group = getByRole('group', { name: 'Slides' })
+    expect(group).toHaveAttribute('data-shape', 'dot')
+    expect(group).toHaveAttribute('data-tone', 'neutral')
+    rerender(
+      <Carousel>
+        <CarouselContent>
+          <CarouselItem>One</CarouselItem>
+        </CarouselContent>
+        <CarouselDots shape="pill" tone="on-media" />
+      </Carousel>
+    )
+    expect(group).toHaveAttribute('data-shape', 'pill')
+    expect(group).toHaveAttribute('data-tone', 'on-media')
+  })
 })

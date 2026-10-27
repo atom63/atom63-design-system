@@ -4,6 +4,14 @@
   "maturity": "stable",
   "lists": {
     "orientations": ["horizontal", "vertical"],
+    "dotShapes": {
+      "description": "The look of the page dots. `dot` draws every page as a small round dot and marks the current one by colour alone, as UIPageControl does; `pill` stretches the current dot into a pill.",
+      "values": ["dot", "pill"]
+    },
+    "dotTones": {
+      "description": "The colours of the page dots. `neutral` marks the current dot in the primary text colour, `accent` in the primary action colour, and `on-media` draws white dots for a carousel of photos or video.",
+      "values": ["neutral", "accent", "on-media"]
+    },
     "slots": [
       "carousel",
       "carousel-content",
@@ -21,6 +29,14 @@
     "defaultOrientation": "horizontal",
     "orientations": {
       "$ref": "#/lists/orientations"
+    },
+    "defaultDotShape": "dot",
+    "dotShapes": {
+      "$ref": "#/lists/dotShapes"
+    },
+    "defaultDotTone": "neutral",
+    "dotTones": {
+      "$ref": "#/lists/dotTones"
     },
     "slots": {
       "$ref": "#/lists/slots"
@@ -48,11 +64,13 @@
     "accessibilityOutcomes": ["names-the-indicator", "exposes-the-current-position"],
     "platformAdaptations": {
       "react": [
-        "One button per snap point, named \"Slide 2 of 5\"; the current one carries aria-current."
+        "One button per snap point, named \"Slide 2 of 5\"; the current one carries aria-current.",
+        "`shape` and `tone` on CarouselDots pick round dots or a pill, and neutral, accent or on-media colours."
       ],
       "swiftUI": [
         "TabView with .page(indexDisplayMode: .never) pages the slides; AtomPageDots binds to its selection.",
-        "VoiceOver reads the dots as one adjustable element; swiping up or down changes the slide."
+        "VoiceOver reads the dots as one adjustable element; swiping up or down changes the slide.",
+        "`shape:` and `tone:` on AtomPageDots take the same values; the round dots sit closer together, as UIPageControl does, because VoiceOver adjusts the indicator as one element."
       ]
     }
   }

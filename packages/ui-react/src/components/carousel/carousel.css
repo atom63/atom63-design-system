@@ -145,10 +145,18 @@
 }
 
 /* ── Dots ──────────────────────────────────────────────────────────────────
-   One per snap point; the current one stretches into a pill. Each button is a
-   transparent box the size of the minimum target, so neighbours never crowd a
-   tap (WCAG 2.5.8), and the visible dot is its ::before. */
+   One per snap point. shape="dot" (default) keeps every dot round and marks
+   the current one by colour, as UIPageControl does; shape="pill" stretches
+   the current one into a pill. Each button is a transparent box (the visible
+   dot is its ::before): a minimum-target square for pills, and a 24px-wide
+   column for round dots, which sit closer together and still meet the
+   WCAG 2.5.8 target spacing. tone picks the colours. */
 .a63-Carousel-dots {
+  --carousel-dot-pitch: var(--a63-control-min-target);
+  --carousel-dot-rest: color-mix(in oklch, var(--a63-text-secondary) 35%, transparent);
+  --carousel-dot-current: var(--a63-text-primary);
+  --carousel-dot-focus: var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -159,9 +167,20 @@
   padding-block: 0;
   padding-inline: var(--a63-space-2);
 }
+.a63-Carousel-dots[data-shape='dot'] {
+  --carousel-dot-pitch: 1.5rem;
+}
+.a63-Carousel-dots[data-tone='accent'] {
+  --carousel-dot-current: var(--a63-action-primary);
+}
+.a63-Carousel-dots[data-tone='on-media'] {
+  --carousel-dot-rest: color-mix(in oklch, var(--a63-on-media-foreground) 50%, transparent);
+  --carousel-dot-current: var(--a63-on-media-foreground);
+  --carousel-dot-focus: var(--a63-on-media-ring);
+}
 .a63-Carousel-dot {
   position: relative;
-  width: var(--a63-control-min-target);
+  width: var(--carousel-dot-pitch);
   height: var(--a63-control-min-target);
   flex: none;
   padding: 0;
@@ -177,7 +196,7 @@
   width: 0.5rem;
   height: 0.5rem;
   border-radius: var(--radius-pill);
-  background-color: color-mix(in oklch, var(--a63-text-secondary) 35%, transparent);
+  background-color: var(--carousel-dot-rest);
   translate: -50% -50%;
   transition:
     width var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
@@ -185,16 +204,23 @@
     background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
 }
 .a63-Carousel-dot[aria-current='true']::before {
-  width: 1.25rem;
-  background-color: var(--a63-text-primary);
+  background-color: var(--carousel-dot-current);
 }
-.a63-Carousel-dots[data-orientation='vertical'] .a63-Carousel-dot[aria-current='true']::before {
+.a63-Carousel-dots[data-shape='pill'] .a63-Carousel-dot[aria-current='true']::before {
+  width: 1.25rem;
+}
+.a63-Carousel-dots[data-shape='pill'][data-orientation='vertical']
+  .a63-Carousel-dot[aria-current='true']::before {
   width: 0.5rem;
   height: 1.25rem;
 }
+/* Vertical round dots: the pitch runs down the column, the minimum target across it. */
+.a63-Carousel-dots[data-shape='dot'][data-orientation='vertical'] .a63-Carousel-dot {
+  width: var(--a63-control-min-target);
+  height: var(--carousel-dot-pitch);
+}
 .a63-Carousel-dot:focus-visible::before {
-  outline: var(--a63-control-focus-ring-width) solid
-    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline: var(--a63-control-focus-ring-width) solid var(--carousel-dot-focus);
   outline-offset: 2px;
 }
 
