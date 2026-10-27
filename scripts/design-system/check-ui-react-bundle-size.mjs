@@ -94,7 +94,13 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // the voice button with its icon that an empty composer shows when the host
 // passes `onVoice`. The ai-chat case study's reference composer is one row with
 // a solid voice button; ours was two rows with a disabled send.
-const gzipBudgetBytes = 96 * 1024
+//
+// 96 kB held 95.3 kB. Amount adds 0.4 kB, taking it to 95.6 with no room
+// for the next change, so it moves to 97. It is the formatted amount split into
+// runs with Intl formatToParts (the fraction drawn small and raised) and its
+// single accessible label. No web run in case study round 5 drew a hero balance
+// or amount in a display role.
+const gzipBudgetBytes = 97 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()

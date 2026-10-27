@@ -103,6 +103,10 @@ const gradients = [
 
 const displayType = [
   {
+    id: 'component:amount',
+    note: 'Hero amounts (a balance, a price, the amount to send): <Amount value={13.25} currency="USD" /> draws text-display (size="lg" for text-display-large) with the cents in amount-fraction, tabular figures and one label. iOS: AtomAmountText(13.25, currencyCode: "USD").',
+  },
+  {
     id: 'doc:foundation-typography',
     note: 'Display roles text-display (40px) and text-display-large (56px) for balances, prices and hero numbers; wrap cents in amount-fraction. iOS: AtomAmountText(13.25, currencyCode: "USD") and .atomDisplayFont().',
   },
@@ -307,10 +311,12 @@ export const topics = {
   fraction: displayType,
   'large number': displayType,
   price: displayType,
+  'send money': displayType,
+  total: displayType,
   fade: [gradients[4], gradients[2], gradients[0], gradients[1], gradients[3]],
   gradient: [gradients[4], ...gradients.slice(0, 4)],
   gradients: [gradients[4], ...gradients.slice(0, 4)],
-  hero: [gradients[4], gradients[0], displayType[2], gradients[2], gradients[3]],
+  hero: [gradients[4], gradients[0], displayType[3], gradients[2], gradients[3]],
   scrim: [gradients[2], gradients[3]],
   'bottom sheet': persistentSheet,
   'non modal': persistentSheet,

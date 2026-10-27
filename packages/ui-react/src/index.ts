@@ -27,6 +27,8 @@ export {
   AlertDialogTrigger,
   AlertDialogViewport,
 } from './components/alert-dialog'
+export { Amount } from './components/amount'
+export type { AmountProps } from './components/amount'
 export { AnimatedCheck } from './components/animated-check'
 export type { AnimatedCheckProps } from './components/animated-check'
 export {

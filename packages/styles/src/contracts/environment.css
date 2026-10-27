@@ -31,6 +31,11 @@
  * Design language — component sizing/proportions + interaction feedback only.
  * The base :root (control.css) is the web default; iOS overrides sizing + feel.
  * No radius, color, or touch-target here.
+ *
+ * Form factor — a phone screen. [data-a63-form-factor='phone'] sets the type steps and the
+ * control sizing of a phone (iOS text sizes: body 17, subheadline 15, footnote 13). Viewport
+ * width does not apply it; a phone layout stamps it (AppView layout="phone"). The type roles
+ * are redeclared on the same scope (type-roles.css), so text-body and the other roles follow it.
  */
 @import './environment.native.css';
 
@@ -151,4 +156,73 @@
   --a63-row-padding-block-md: var(--a63-space-2);
   /* Larger, iconic iOS pill switch (web default is 1rem in selection.css). */
   --a63-switch-thumb-size: 1.375rem;
+}
+
+[data-a63-form-factor='phone'] {
+  /* The type steps of a phone screen, after the iOS text styles at the default Dynamic Type size:
+        body 17 (base), subheadline 15 (sm), footnote 13 (xs), caption2 11 (2xs), title3 20 (2xl),
+        title2 22 (3xl), title1 28 (5xl), largeTitle 34 (6xl). Steps without an iOS style keep the
+        scale in order. Complete, so the phone scope wins over the viewport and window steps. */
+  --typography-2xs-font-size: calc(11px * var(--typography-scale, 1));
+  --typography-2xs-line-height: calc(13px * var(--typography-scale, 1));
+  --typography-xs-font-size: calc(13px * var(--typography-scale, 1));
+  --typography-xs-line-height: calc(18px * var(--typography-scale, 1));
+  --typography-sm-font-size: calc(15px * var(--typography-scale, 1));
+  --typography-sm-line-height: calc(20px * var(--typography-scale, 1));
+  --typography-base-font-size: calc(17px * var(--typography-scale, 1));
+  --typography-base-line-height: calc(22px * var(--typography-scale, 1));
+  --typography-lg-font-size: calc(18px * var(--typography-scale, 1));
+  --typography-lg-line-height: calc(24px * var(--typography-scale, 1));
+  --typography-xl-font-size: calc(19px * var(--typography-scale, 1));
+  --typography-xl-line-height: calc(24px * var(--typography-scale, 1));
+  --typography-2xl-font-size: calc(20px * var(--typography-scale, 1));
+  --typography-2xl-line-height: calc(25px * var(--typography-scale, 1));
+  --typography-3xl-font-size: calc(22px * var(--typography-scale, 1));
+  --typography-3xl-line-height: calc(28px * var(--typography-scale, 1));
+  --typography-4xl-font-size: calc(25px * var(--typography-scale, 1));
+  --typography-4xl-line-height: calc(31px * var(--typography-scale, 1));
+  --typography-5xl-font-size: calc(28px * var(--typography-scale, 1));
+  --typography-5xl-line-height: calc(34px * var(--typography-scale, 1));
+  --typography-6xl-font-size: calc(34px * var(--typography-scale, 1));
+  --typography-6xl-line-height: calc(41px * var(--typography-scale, 1));
+  --typography-7xl-font-size: calc(36px * var(--typography-scale, 1));
+  --typography-7xl-line-height: calc(44px * var(--typography-scale, 1));
+  --typography-8xl-font-size: calc(39px * var(--typography-scale, 1));
+  --typography-8xl-line-height: calc(49px * var(--typography-scale, 1));
+  --typography-9xl-font-size: calc(44px * var(--typography-scale, 1));
+  --typography-9xl-line-height: calc(55px * var(--typography-scale, 1));
+  --typography-10xl-font-size: calc(40px * var(--typography-scale, 1));
+  --typography-10xl-line-height: calc(44px * var(--typography-scale, 1));
+  --typography-11xl-font-size: calc(56px * var(--typography-scale, 1));
+  --typography-11xl-line-height: calc(60px * var(--typography-scale, 1));
+  /* Controls on a phone: the iOS height ramp (36/40/44/48/52), and every standard control label
+        at body size (17), as iOS sets buttons, rows, fields and menus. xs stays at footnote size
+        for badges, shortcuts and initials. Weight and press feedback stay with the design language. */
+  --a63-control-height-xs: calc(var(--a63-space-unit) * 9);
+  --a63-control-height-sm: calc(var(--a63-space-unit) * 10);
+  --a63-control-height-md: calc(var(--a63-space-unit) * 11);
+  --a63-control-height-lg: calc(var(--a63-space-unit) * 12);
+  --a63-control-height-xl: calc(var(--a63-space-unit) * 13);
+  --a63-control-padding-inline-xs: var(--a63-space-3);
+  --a63-control-padding-inline-sm: var(--a63-space-3_5);
+  --a63-control-padding-inline-md: var(--a63-space-4);
+  --a63-control-padding-inline-lg: var(--a63-space-5);
+  --a63-control-padding-inline-xl: var(--a63-space-6);
+  --a63-control-font-size-xs: var(--typography-xs-font-size);
+  --a63-control-font-size-sm: var(--typography-base-font-size);
+  --a63-control-font-size-md: var(--typography-base-font-size);
+  --a63-control-font-size-lg: var(--typography-base-font-size);
+  --a63-control-font-size-xl: var(--typography-lg-font-size);
+  /* The secondary line under a title or label (an Item, Field or Form description, a Frame or
+        ConnectedPanel description): subheadline size (15), so it stays below the 17px title. Declared
+        only here; recipes fall back to --a63-control-font-size-sm, so other scopes are unchanged. */
+  --a63-control-font-size-secondary: var(--typography-sm-font-size);
+  --a63-control-icon-size-xs: 0.875rem;
+  --a63-control-icon-size-sm: 1rem;
+  --a63-control-icon-size-md: 1.125rem;
+  --a63-control-icon-size-lg: 1.25rem;
+  --a63-control-icon-size-xl: 1.375rem;
+  --a63-row-padding-block-xs: var(--a63-space-1);
+  --a63-row-padding-block-sm: var(--a63-space-1_5);
+  --a63-row-padding-block-md: var(--a63-space-2);
 }

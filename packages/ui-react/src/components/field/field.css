@@ -198,7 +198,7 @@
   text-align: start;
   color: var(--a63-text-secondary);
   font-family: var(--a63-control-font-family);
-  font-size: var(--a63-control-font-size-sm);
+  font-size: var(--a63-control-font-size-secondary, var(--a63-control-font-size-sm));
   font-weight: 400;
   line-height: 1.5;
 }

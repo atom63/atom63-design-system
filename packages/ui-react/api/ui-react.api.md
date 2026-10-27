@@ -7,6 +7,7 @@
 import { Accordion as Accordion_2 } from '@base-ui/react/accordion';
 import { AlertDialog as AlertDialogPrimitive } from '@base-ui/react/alert-dialog';
 import { AlertVariant } from '@atom63/ui-foundation';
+import { AmountSize } from '@atom63/ui-foundation';
 import { AnimatedCheckVariant } from '@atom63/ui-foundation';
 import { Autocomplete as AutocompletePrimitive } from '@base-ui/react/autocomplete';
 import { Avatar as AvatarPrimitive } from '@base-ui/react/avatar';
@@ -253,6 +254,18 @@ export type AlertProps = React$1.ComponentProps<'div'> & {
 
 // @public (undocumented)
 export function AlertTitle(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
+
+// @public (undocumented)
+export function Amount(input: AmountProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type AmountProps = Omit<React$1.ComponentProps<'span'>, 'children'> & {
+    value: number;
+    currency: string;
+    locale?: string;
+    size?: AmountSize;
+    strong?: boolean;
+};
 
 // @public (undocumented)
 export function AnimatedCheck(input: AnimatedCheckProps): React$1.ReactElement;

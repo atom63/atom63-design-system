@@ -149,6 +149,16 @@
         }
       }
     },
+    "amount": {
+      "source": "packages/ui-foundation/contracts/components/amount.json",
+      "exportName": "amountContract",
+      "maturity": "preview",
+      "axes": [{ "name": "sizes", "values": ["md", "lg"], "default": "md" }],
+      "slots": ["amount", "amount-fraction"],
+      "states": ["rest"],
+      "tokenSlots": [],
+      "visualArchetypes": ["surface"]
+    },
     "animated-check": {
       "source": "packages/ui-foundation/contracts/components/animated-check.json",
       "exportName": "animatedCheckContract",

@@ -114,13 +114,18 @@ const topicGolden = [
   ['fade', '--a63-gradient-brand-fade', 1],
   ['fade', '--a63-gradient-scrim', 2],
   ['scrim over photo', '--a63-gradient-scrim', 1],
-  ['display', 'foundation-typography', 1],
-  ['display', '--a63-type-display-font-size', 2],
-  ['large number', 'foundation-typography', 1],
-  ['balance', 'foundation-typography', 1],
-  ['amount fraction', 'foundation-typography', 1],
-  ['price cents', 'foundation-typography', 1],
-  ['currency', 'foundation-typography', 1],
+  ['display', 'amount', 1],
+  ['display', 'foundation-typography', 2],
+  ['display', '--a63-type-display-font-size', 3],
+  ['large number', 'foundation-typography', 2],
+  ['balance', 'amount', 1],
+  ['balance', 'foundation-typography', 2],
+  ['amount fraction', 'amount', 1],
+  ['amount fraction', 'foundation-typography', 2],
+  ['price cents', 'foundation-typography', 2],
+  ['currency', 'foundation-typography', 2],
+  ['send money', 'amount', 1],
+  ['order total', 'amount', 1],
   ['persistent sheet', 'drawer/PersistentSheet', 1],
   ['bottom sheet', 'drawer/PersistentSheet', 1],
   ['non-modal sheet', 'drawer/PersistentSheet', 1],
@@ -225,9 +230,11 @@ describe('topics', () => {
   })
 
   it('says what to use from a topic entry', () => {
-    const [first] = search(index, 'price').data.results
+    const [first, second] = search(index, 'price').data.results
+    assert.match(first.summary, /<Amount /)
     assert.match(first.summary, /amount-fraction/)
-    assert.equal(first.next, 'atom63 docs foundation-typography')
+    assert.equal(first.next, 'atom63 component amount')
+    assert.equal(second.next, 'atom63 docs foundation-typography')
   })
 
   it('names the iOS renderer for the list, dots and avatar badge topics', () => {
@@ -342,6 +349,48 @@ describe('templates', () => {
     for (const [, file] of phone.imports.join('\n').matchAll(/'\.\/(.+)'/g)) {
       assert.ok(paths.includes(`${file}.tsx`), file)
     }
+  })
+
+  /* Ideas whose hero is a money amount; the kit must give Amount and the display role. */
+  const amountIdeas = [
+    'bank home on a phone',
+    'send money amount',
+    'balance',
+    'Revolut home screen on a phone: balance, accounts, recent transactions, bottom tab bar',
+    'product page with a price and a buy button',
+    'checkout with the order total',
+  ]
+  for (const idea of amountIdeas) {
+    it(`gives "${idea}" the display amount`, () => {
+      const kit = build(index, idea).data
+      assert.equal(kit.amount?.component, 'amount')
+      assert.match(kit.amount.use, /text-display/)
+      assert.match(kit.amount.snippet, /<Amount /)
+      assert.match(kit.amount.snippet, /className="text-display tabular-nums"/)
+      assert.match(kit.amount.snippet, /className="amount-fraction"/)
+      assert.match(formatEnvelope(build(index, idea)), /^## Display amount$/m)
+    })
+  }
+
+  it('keeps the display amount out of ideas with no amount', () => {
+    for (const idea of ['music player', 'billing settings page', 'iPhone chat thread screen']) {
+      assert.equal(build(index, idea).data.amount, undefined, idea)
+    }
+  })
+
+  it('points the display amount at a component, props and utilities that exist', () => {
+    const { amount } = build(index, 'balance').data
+    const entry = component(index, amount.component).data
+    assert.match(entry.importLine ?? JSON.stringify(entry), /Amount/)
+    for (const prop of ['currency', 'size', 'strong', 'value']) {
+      assert.match(amount.snippet, new RegExp(`${prop}[=\\s]`), prop)
+    }
+    const sizes = JSON.stringify(entry)
+    assert.match(sizes, /"lg"/)
+  })
+
+  it('tells a phone screen that AppView sets phone-sized type', () => {
+    assert.match(build(index, 'phone app').data.phone.use, /data-a63-form-factor="phone"/)
   })
 
   it('returns the playbook for build with no idea', () => {

@@ -10,11 +10,14 @@
  * styles (for balances, prices and hero headlines); iOS draws them at the same size, scaled with
  * Dynamic Type like largeTitle (AtomDisplayRole, AtomAmountText). Web sizes follow web conventions (body is 15px here, 17pt on
  * iOS); the role, not the number, is what stays the same.
- * The roles are declared on :root and on every [data-window-size] scope, where the
- * steps they read are redeclared, so a role inside an OS window takes that window's sizes.
+ * A phone screen ([data-a63-form-factor='phone'], which AppView layout="phone" stamps) takes the iOS
+ * sizes instead: body 17, subhead 15, footnote 13.
+ * The roles are declared on :root, on every [data-window-size] scope and on the phone scope, where the
+ * steps they read are redeclared, so a role inside an OS window or a phone screen takes its sizes.
  */
 :root,
-[data-window-size] {
+[data-window-size],
+[data-a63-form-factor] {
   /* Display numbers and hero headlines: balances, prices, a score. Above Apple's text styles, so iOS draws the same size scaled like largeTitle: AtomDisplayRole.displayLarge. */
   --a63-type-display-large-font-size: var(--typography-11xl-font-size);
   --a63-type-display-large-line-height: var(--typography-11xl-line-height);

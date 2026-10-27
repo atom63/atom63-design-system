@@ -1234,6 +1234,11 @@
   .text-end {
     text-align: end;
   }
+  .amount-fraction {
+    font-size: 0.5em;
+    line-height: 0;
+    vertical-align: 0.8em;
+  }
   .font-mono {
     font-family: var(--font-family-mono);
   }

@@ -171,6 +171,20 @@ export type {
   AlertDialogVisualArchetype,
 } from './components/alert-dialog'
 export {
+  amountContract,
+  amountSizes,
+  amountSlots,
+  amountStates,
+  amountVisualArchetypes,
+} from './components/amount/amount-contract'
+export type {
+  AmountContract,
+  AmountSize,
+  AmountSlot,
+  AmountState,
+  AmountVisualArchetype,
+} from './components/amount/amount-contract'
+export {
   badgeContract,
   badgeDotColors,
   badgePaletteVariants,

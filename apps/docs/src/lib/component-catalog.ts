@@ -63,6 +63,14 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     usage: 'Reserve it for decisions that need explicit acknowledgement, not routine information.',
     usageExports: ['AlertDialog', 'AlertDialogTrigger', 'AlertDialogContent', 'AlertDialogAction'],
   },
+  amount: {
+    relatedSlugs: ['badge', 'text-ticker'],
+    summary:
+      'Amount draws a money amount in a display text role, with the fraction smaller and raised, as banking and pricing screens draw a balance.',
+    usage:
+      'Use Amount for a balance, a price or the amount being sent: the hero number of a screen. It formats the value for the locale with Intl.NumberFormat and reads as one label. Body-size amounts in rows stay plain text with tabular-nums. iOS: AtomAmountText.',
+    usageExports: ['Amount'],
+  },
   'animated-check': {
     relatedSlugs: ['spinner', 'progress', 'feedback-state'],
     summary: 'Animated Check is a decorative completion mark with a reduced-motion fallback.',
@@ -779,6 +787,7 @@ export const componentCatalogGroups = [
     items: components('content-and-surfaces', [
       'accordion',
       'alert',
+      'amount',
       'avatar',
       'badge',
       'card',

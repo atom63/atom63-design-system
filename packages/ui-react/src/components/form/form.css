@@ -19,7 +19,7 @@
   margin: 0;
   color: var(--a63-text-secondary);
   font-family: var(--a63-control-font-family);
-  font-size: var(--a63-control-font-size-sm);
+  font-size: var(--a63-control-font-size-secondary, var(--a63-control-font-size-sm));
   line-height: var(--typography-sm-line-height);
 }
 
