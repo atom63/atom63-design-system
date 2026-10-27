@@ -178,17 +178,6 @@
               }
             }
           },
-          "tone": {
-            "list": "tones",
-            "map": {
-              "neutral": {}
-            },
-            "extensions": {
-              "muted": {
-                "description": "Ghost only: the glyph and label rest in the secondary text colour and go to full contrast on hover, focus and press. For quiet secondary actions in toolbars, rows and card headers."
-              }
-            }
-          },
           "size": {
             "list": "sizes",
             "map": {
