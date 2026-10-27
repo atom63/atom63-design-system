@@ -123,7 +123,8 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
           'Light fill, soft shadow, no border; with shape="round", the floating button over a map or a light photo.',
         outline: 'Lower-emphasis alternative (Duplicate).',
         dashed: 'Add or filter affordance drawn as a dashed pill (+ Status).',
-        ghost: 'Lowest emphasis; toolbars and dismissals.',
+        ghost:
+          'Lowest emphasis; toolbars and dismissals, with tone="muted" for quiet secondary actions.',
         link: 'Inline action styled as text; navigation should use a real link.',
         destructive: 'Only when the outcome destroys data.',
         'destructive-outline': 'Quieter destructive action, beside a safe default.',
@@ -150,7 +151,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['button-group', 'toggle', 'copy-button'],
     summary: 'Button is the shared action primitive and defaults to safe non-submit behavior.',
     usage:
-      'Use it for an in-place action such as submitting, saving, confirming or changing state; use a link when the outcome is navigation. Choose emphasis from the action hierarchy rather than making every action primary, and give icon-only buttons an accessible name. shape="round" makes icon buttons circles (a play button) and labelled buttons pills.',
+      'Use it for an in-place action such as submitting, saving, confirming or changing state; use a link when the outcome is navigation. Choose emphasis from the action hierarchy rather than making every action primary, and give icon-only buttons an accessible name. Draw secondary actions in toolbars, rows and card headers as variant="ghost" with tone="muted". shape="round" makes icon buttons circles (a play button) and labelled buttons pills.',
     usageExports: ['Button'],
   },
   'button-group': {

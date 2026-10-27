@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 1980,
-    "uniqueCssVariables": 1196,
-    "figmaMappedDeclarations": 1918
+    "declarations": 1985,
+    "uniqueCssVariables": 1201,
+    "figmaMappedDeclarations": 1923
   },
   "entries": [
     {
@@ -6204,6 +6204,76 @@
       "layer": "theme",
       "lifecycle": "preview",
       "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-control-icon-only-size-lg",
+      "cssVar": "--a63-control-icon-only-size-lg",
+      "type": "dimension",
+      "value": "1.25rem",
+      "sourceFile": "packages/styles/src/contracts/control.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/icon/only/size/lg"
+      },
+      "lifecycle": "preview",
+      "scope": ":root"
+    },
+    {
+      "name": "a63-control-icon-only-size-md",
+      "cssVar": "--a63-control-icon-only-size-md",
+      "type": "dimension",
+      "value": "1.125rem",
+      "sourceFile": "packages/styles/src/contracts/control.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/icon/only/size/md"
+      },
+      "lifecycle": "preview",
+      "scope": ":root"
+    },
+    {
+      "name": "a63-control-icon-only-size-sm",
+      "cssVar": "--a63-control-icon-only-size-sm",
+      "type": "dimension",
+      "value": "1rem",
+      "sourceFile": "packages/styles/src/contracts/control.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/icon/only/size/sm"
+      },
+      "lifecycle": "preview",
+      "scope": ":root"
+    },
+    {
+      "name": "a63-control-icon-only-size-xl",
+      "cssVar": "--a63-control-icon-only-size-xl",
+      "type": "dimension",
+      "value": "1.375rem",
+      "sourceFile": "packages/styles/src/contracts/control.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/icon/only/size/xl"
+      },
+      "lifecycle": "preview",
+      "scope": ":root"
+    },
+    {
+      "name": "a63-control-icon-only-size-xs",
+      "cssVar": "--a63-control-icon-only-size-xs",
+      "type": "dimension",
+      "value": "0.875rem",
+      "sourceFile": "packages/styles/src/contracts/control.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/icon/only/size/xs"
+      },
+      "lifecycle": "preview",
+      "scope": ":root"
     },
     {
       "name": "a63-control-icon-size-lg",

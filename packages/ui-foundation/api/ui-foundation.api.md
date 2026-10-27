@@ -720,6 +720,8 @@ export interface ButtonContract {
     // (undocumented)
     defaultSize: ButtonSize;
     // (undocumented)
+    defaultTone: ButtonTone;
+    // (undocumented)
     defaultVariant: ButtonVariant;
     // (undocumented)
     shapes: readonly ButtonShape[];
@@ -730,6 +732,8 @@ export interface ButtonContract {
     // (undocumented)
     tokenSlots: readonly ButtonTokenSlot[];
     // (undocumented)
+    tones: readonly ButtonTone[];
+    // (undocumented)
     variants: readonly ButtonVariant[];
     // (undocumented)
     visualArchetypes: readonly ButtonVisualArchetype[];
@@ -739,11 +743,13 @@ export interface ButtonContract {
 export const buttonContract: {
     defaultShape: "default";
     defaultSize: "md";
+    defaultTone: "neutral";
     defaultVariant: "default";
     shapes: readonly ["default", "round"];
     slots: readonly ["root", "label", "icon", "spinner", "indicator"];
     states: readonly ["rest", "hover", "pressed", "focusVisible", "disabled", "loading"];
     tokenSlots: readonly ["button.background", "button.foreground", "button.border.color", "button.border.width", "button.radius", "button.shadow", "button.focusRing", "button.height", "button.paddingInline", "button.gap", "button.iconSize", "button.motion.press"];
+    tones: readonly ["neutral", "muted"];
     variants: readonly ["default", "primary", "secondary", "raised", "destructive", "destructive-outline", "outline", "dashed", "ghost", "link", "overlay", "glass"];
     visualArchetypes: readonly ["action"];
 };
@@ -836,6 +842,12 @@ export type ButtonTokenSlot = (typeof buttonTokenSlots)[number];
 
 // @public (undocumented)
 export const buttonTokenSlots: readonly ["button.background", "button.foreground", "button.border.color", "button.border.width", "button.radius", "button.shadow", "button.focusRing", "button.height", "button.paddingInline", "button.gap", "button.iconSize", "button.motion.press"];
+
+// @public (undocumented)
+export type ButtonTone = (typeof buttonTones)[number];
+
+// @public (undocumented)
+export const buttonTones: readonly ["neutral", "muted"];
 
 // @public (undocumented)
 export type ButtonVariant = (typeof buttonVariants)[number];

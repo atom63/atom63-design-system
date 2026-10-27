@@ -1,6 +1,14 @@
 import { DocExample } from '@atom63/mdx/blocks'
 import { Button } from '@atom63/ui-react'
-import { ArrowRight, ChevronLeft, LocateFixed, Trash2 } from 'lucide-react'
+import {
+  ArrowRight,
+  Bell,
+  ChevronLeft,
+  Ellipsis,
+  LocateFixed,
+  Share,
+  Trash2,
+} from 'lucide-react'
 import { ComponentGuidanceSection, ComponentUsage } from '../components/component-guidance'
 
 # Button
@@ -40,8 +48,8 @@ The root always renders `data-slot="button"` and carries `data-variant` and `dat
 
 | Layer | Examples |
 |-------|----------|
-| Public API | `variant`, `size`, `loading`, `disabled`, `render`, `type`. |
-| Stable metadata | `data-slot="button"`, `data-size`, `data-variant`, `data-loading`, `data-disabled`. |
+| Public API | `variant`, `size`, `tone`, `shape`, `loading`, `disabled`, `render`, `type`. |
+| Stable metadata | `data-slot="button"`, `data-size`, `data-variant`, `data-tone`, `data-loading`, `data-disabled`. |
 | Local recipe vars | `--button-background`, `--button-foreground`, `--button-shadow`, `--button-radius`. |
 | System vars | `--a63-action-*`, `--a63-control-*`, `--a63-density-scale`, `--a63-focus-ring`. |
 
@@ -49,7 +57,7 @@ The root always renders `data-slot="button"` and carries `data-variant` and `dat
 
 ## Sizes and icons
 
-The size ramp scales height, inline padding, gap, and icon size together through `--a63-density-scale`. Icon-only buttons use the `icon-*` steps so the control stays square. Button owns the icon gap — never add `mr-`/`ml-` margins to an icon inside one.
+The size ramp scales height, inline padding, gap, and icon size together through `--a63-density-scale`. Icon-only buttons use the `icon-*` steps so the control stays square, and draw their glyph from `--a63-control-icon-only-size-*`, about 0.56 of the box (24/14, 28/16, 32/18). An icon beside a label stays on the smaller `--a63-control-icon-size-*` ramp. Button owns the icon gap — never add `mr-`/`ml-` margins to an icon inside one.
 
 Hide decorative icons from assistive technology when the visible label already names the action.
 
@@ -90,6 +98,37 @@ Hide decorative icons from assistive technology when the visible label already n
 ## Emphasis without the accent
 
 `default` is the neutral solid: high emphasis without the brand colour, such as a white play button on dark or a black Pay button. `primary` is the main action when the product's main action is in its brand colour. Use the accent for one or two cues per view; the main action may be neutral.
+
+## Quiet secondary actions
+
+Secondary actions in toolbars, list rows and card headers are ghost buttons with `tone="muted"`. The glyph and label rest in the secondary text colour and go to full contrast on hover, keyboard focus and press, so the row reads calm and the action still answers the pointer. Only `ghost` reads the tone; keep the main action at full contrast.
+
+<DocExample
+  title="Muted toolbar actions"
+  code={`<Button aria-label="Notifications" size="icon-sm" tone="muted" variant="ghost">
+  <Bell />
+</Button>
+<Button aria-label="More" size="icon-sm" tone="muted" variant="ghost">
+  <Ellipsis />
+</Button>
+<Button size="sm" tone="muted" variant="ghost">
+  <Share />
+  Share
+</Button>`}
+>
+  <div className="flex flex-wrap items-center justify-center gap-1">
+    <Button aria-label="Notifications" size="icon-sm" tone="muted" variant="ghost">
+      <Bell />
+    </Button>
+    <Button aria-label="More" size="icon-sm" tone="muted" variant="ghost">
+      <Ellipsis />
+    </Button>
+    <Button size="sm" tone="muted" variant="ghost">
+      <Share />
+      Share
+    </Button>
+  </div>
+</DocExample>
 
 ## Floating buttons
 

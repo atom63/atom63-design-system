@@ -459,6 +459,22 @@
   --button-state-hover-border-color: transparent;
 }
 
+/* Muted tone: a quiet secondary action (toolbar, row and card-header actions).
+   The glyph and label rest in the secondary text colour and go to full contrast
+   under the pointer, on keyboard focus, while pressed and while its menu is open.
+   Only ghost reads the tone. */
+.a63-Button[data-variant='ghost'][data-tone='muted'] {
+  --button-foreground: var(--a63-text-secondary);
+}
+
+.a63-Button[data-variant='ghost'][data-tone='muted']:where(:not(:disabled, [data-disabled])):hover,
+.a63-Button[data-variant='ghost'][data-tone='muted']:focus-visible,
+.a63-Button[data-variant='ghost'][data-tone='muted']:active,
+.a63-Button[data-variant='ghost'][data-tone='muted'][data-pressed],
+.a63-Button[data-variant='ghost'][data-tone='muted'][aria-expanded='true'] {
+  --button-foreground: var(--a63-text-primary);
+}
+
 .a63-Button[data-variant='link'] {
   --button-gloss: none;
   --button-highlight: none;
@@ -636,7 +652,7 @@
      keep the `--button-height: max(` guard in recipes.test.ts matching; custom
      property order within a rule does not affect resolution. */
   --button-content-lh: var(--typography-xs-line-height);
-  --button-icon-size: var(--a63-control-icon-size-xs);
+  --button-icon-size: var(--a63-control-icon-only-size-xs);
 }
 
 .a63-Button[data-size='icon-sm'] {
@@ -646,7 +662,7 @@
     var(--button-content-floor)
   );
   --button-content-lh: var(--typography-xs-line-height);
-  --button-icon-size: var(--a63-control-icon-size-sm);
+  --button-icon-size: var(--a63-control-icon-only-size-sm);
 }
 
 .a63-Button[data-size='icon'] {
@@ -655,7 +671,7 @@
     var(--a63-control-min-size),
     var(--button-content-floor)
   );
-  --button-icon-size: var(--a63-control-icon-size-md);
+  --button-icon-size: var(--a63-control-icon-only-size-md);
 }
 
 .a63-Button[data-size='icon-lg'] {
@@ -665,7 +681,7 @@
     var(--button-content-floor)
   );
   --button-content-lh: var(--typography-base-line-height);
-  --button-icon-size: var(--a63-control-icon-size-lg);
+  --button-icon-size: var(--a63-control-icon-only-size-lg);
 }
 
 .a63-Button[data-size='icon-xl'] {
@@ -675,7 +691,7 @@
     var(--button-content-floor)
   );
   --button-content-lh: var(--typography-lg-line-height);
-  --button-icon-size: var(--a63-control-icon-size-xl);
+  --button-icon-size: var(--a63-control-icon-only-size-xl);
 }
 
 .a63-Button :where(svg) {

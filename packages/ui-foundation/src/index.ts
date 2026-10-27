@@ -230,6 +230,7 @@ export {
   buttonSlots,
   buttonStates,
   buttonTokenSlots,
+  buttonTones,
   buttonVariants,
   buttonVisualArchetypes,
 } from './components/button/button-contract'
@@ -240,6 +241,7 @@ export type {
   ButtonSlot,
   ButtonState,
   ButtonTokenSlot,
+  ButtonTone,
   ButtonVariant,
   ButtonVisualArchetype,
 } from './components/button/button-contract'

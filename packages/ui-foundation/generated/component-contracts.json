@@ -517,6 +517,7 @@
       "description": "`default` is the neutral solid: high emphasis without the brand colour (a white play button on dark, a black Pay button). `primary` is the main action when the product's main action is in its brand colour; use the accent for one or two cues per view, and keep it where the product's main action or links are brand-coloured. `raised` is a light button with a soft shadow and no border, the floating button over a map or a light photo with shape=\"round\".",
       "axes": [
         { "name": "shapes", "values": ["default", "round"], "default": "default" },
+        { "name": "tones", "values": ["neutral", "muted"], "default": "neutral" },
         {
           "name": "variants",
           "values": [
@@ -631,6 +632,15 @@
                   "glass": {
                     "description": "The earlier name of overlay.",
                     "deprecatedFor": "overlay"
+                  }
+                }
+              },
+              "tone": {
+                "list": "tones",
+                "map": { "neutral": {} },
+                "extensions": {
+                  "muted": {
+                    "description": "Ghost only: the glyph and label rest in the secondary text colour and go to full contrast on hover, focus and press. For quiet secondary actions in toolbars, rows and card headers."
                   }
                 }
               },
