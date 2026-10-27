@@ -1547,7 +1547,7 @@
       "values": {
         "density=comfortable,design-language=web": 36,
         "density=comfortable,design-language=ios": 48,
-        "density=compact,design-language=web": 31.5,
+        "density=compact,design-language=web": 32,
         "density=compact,design-language=ios": 42
       }
     },
@@ -1557,7 +1557,7 @@
         "density=comfortable,design-language=web": 32,
         "density=comfortable,design-language=ios": 44,
         "density=compact,design-language=web": 28,
-        "density=compact,design-language=ios": 38.5
+        "density=compact,design-language=ios": 39
       }
     },
     "--a63-control-height-sm": {
@@ -1565,7 +1565,7 @@
       "values": {
         "density=comfortable,design-language=web": 28,
         "density=comfortable,design-language=ios": 40,
-        "density=compact,design-language=web": 24.5,
+        "density=compact,design-language=web": 25,
         "density=compact,design-language=ios": 35
       }
     },
@@ -1575,7 +1575,7 @@
         "density=comfortable,design-language=web": 40,
         "density=comfortable,design-language=ios": 52,
         "density=compact,design-language=web": 35,
-        "density=compact,design-language=ios": 45.5
+        "density=compact,design-language=ios": 46
       }
     },
     "--a63-control-height-xs": {
@@ -1584,7 +1584,7 @@
         "density=comfortable,design-language=web": 24,
         "density=comfortable,design-language=ios": 36,
         "density=compact,design-language=web": 21,
-        "density=compact,design-language=ios": 31.5
+        "density=compact,design-language=ios": 32
       }
     },
     "--a63-control-shadow": {
@@ -1814,6 +1814,33 @@
         "brand=b6,theme=aqua": "inset 0 1px 0 color-mix(in oklch, white 60%, transparent), 0 12px 32px -8px color-mix(in oklch, black 30%, transparent),\n    0 2px 8px -3px color-mix(in oklch, black 16%, transparent)",
         "brand=b6,theme=retro": "inset 1px 1px 0 color-mix(in oklch, white 50%, transparent),\n    inset -1px -1px 0 color-mix(in oklch, black 22%, transparent), 3px 3px 0 color-mix(in oklch, black 30%, transparent)",
         "brand=b6,theme=terminal": "inset 0 0 0 1px color-mix(in oklch, rgba(205, 12, 61, 1) 30%, transparent),\n    0 0 20px -4px\n    color-mix(in oklch, rgba(205, 12, 61, 1) 40%, transparent)"
+      }
+    },
+    "--a63-row-padding-block-md": {
+      "variesOn": ["density","design-language"],
+      "values": {
+        "density=comfortable,design-language=web": 16,
+        "density=comfortable,design-language=ios": 8,
+        "density=compact,design-language=web": 14,
+        "density=compact,design-language=ios": 7
+      }
+    },
+    "--a63-row-padding-block-sm": {
+      "variesOn": ["density","design-language"],
+      "values": {
+        "density=comfortable,design-language=web": 12,
+        "density=comfortable,design-language=ios": 6,
+        "density=compact,design-language=web": 11,
+        "density=compact,design-language=ios": 5
+      }
+    },
+    "--a63-row-padding-block-xs": {
+      "variesOn": ["density","design-language"],
+      "values": {
+        "density=comfortable,design-language=web": 8,
+        "density=comfortable,design-language=ios": 4,
+        "density=compact,design-language=web": 7,
+        "density=compact,design-language=ios": 4
       }
     },
     "--a63-segment-primary-shadow": {

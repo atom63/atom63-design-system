@@ -362,35 +362,35 @@
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 9)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 9), 1px)"
                   }
                 },
                 "sm": {
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 10)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 10), 1px)"
                   }
                 },
                 "md": {
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 11)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 11), 1px)"
                   }
                 },
                 "lg": {
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 12)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 12), 1px)"
                   }
                 },
                 "xl": {
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 13)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 13), 1px)"
                   }
                 }
               },
@@ -498,15 +498,24 @@
                   "xs": {
                     "$type": "dimension",
                     "$value": "{a63.space.1}",
-                    "$description": "Rows stop padding their way to height and let the control ramp floor them,\n   so a single-line row lands on 44pt and a two-line row on ~59pt, instead of\n   52pt and 75pt. Targets are from our measurement study, not a published\n   Apple row height — there isn't one."
+                    "$description": "Rows stop padding their way to height and let the control ramp floor them,\n   so a single-line row lands on 44pt and a two-line row on ~59pt, instead of\n   52pt and 75pt. Targets are from our measurement study, not a published\n   Apple row height — there isn't one.",
+                    "$extensions": {
+                      "io.atom63.derive": "round(nearest, {a63.space.1}, 1px)"
+                    }
                   },
                   "sm": {
                     "$type": "dimension",
-                    "$value": "{a63.space.1_5}"
+                    "$value": "{a63.space.1_5}",
+                    "$extensions": {
+                      "io.atom63.derive": "round(nearest, {a63.space.1_5}, 1px)"
+                    }
                   },
                   "md": {
                     "$type": "dimension",
-                    "$value": "{a63.space.2}"
+                    "$value": "{a63.space.2}",
+                    "$extensions": {
+                      "io.atom63.derive": "round(nearest, {a63.space.2}, 1px)"
+                    }
                   }
                 }
               }
@@ -961,7 +970,7 @@
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 9)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 9), 1px)"
                   },
                   "$description": "Controls on a phone: the iOS height ramp (36/40/44/48/52), and every standard control label\n   at body size (17), as iOS sets buttons, rows, fields and menus. xs stays at footnote size\n   for badges, shortcuts and initials. Weight and press feedback stay with the design language."
                 },
@@ -969,28 +978,28 @@
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 10)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 10), 1px)"
                   }
                 },
                 "md": {
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 11)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 11), 1px)"
                   }
                 },
                 "lg": {
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 12)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 12), 1px)"
                   }
                 },
                 "xl": {
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 13)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 13), 1px)"
                   }
                 }
               },
@@ -1092,15 +1101,24 @@
                 "block": {
                   "xs": {
                     "$type": "dimension",
-                    "$value": "{a63.space.1}"
+                    "$value": "{a63.space.1}",
+                    "$extensions": {
+                      "io.atom63.derive": "round(nearest, {a63.space.1}, 1px)"
+                    }
                   },
                   "sm": {
                     "$type": "dimension",
-                    "$value": "{a63.space.1_5}"
+                    "$value": "{a63.space.1_5}",
+                    "$extensions": {
+                      "io.atom63.derive": "round(nearest, {a63.space.1_5}, 1px)"
+                    }
                   },
                   "md": {
                     "$type": "dimension",
-                    "$value": "{a63.space.2}"
+                    "$value": "{a63.space.2}",
+                    "$extensions": {
+                      "io.atom63.derive": "round(nearest, {a63.space.2}, 1px)"
+                    }
                   }
                 }
               }
@@ -1128,7 +1146,7 @@
                     "$type": "dimension",
                     "$value": "{a63.space.unit}",
                     "$extensions": {
-                      "io.atom63.derive": "calc({a63.space.unit} * 13)"
+                      "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 13), 1px)"
                     },
                     "$description": "The row of a phone's grouped list (ItemGroup variant=\"inset\", default and sm rows): 52px tall, as iOS 26 Settings and a 3x reference capture both measure (51-52pt). Declared only here; the Item recipe falls back to its control-height floor elsewhere."
                   }

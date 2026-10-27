@@ -5984,7 +5984,7 @@
       "name": "a63-control-height-lg",
       "cssVar": "--a63-control-height-lg",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 9)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 9), 1px)",
       "sourceFile": "packages/styles/src/contracts/control.css",
       "layer": "contract",
       "figma": {
@@ -5999,7 +5999,7 @@
       "name": "a63-control-height-lg",
       "cssVar": "--a63-control-height-lg",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 9)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 9), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6014,7 +6014,7 @@
       "name": "a63-control-height-lg",
       "cssVar": "--a63-control-height-lg",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 12)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 12), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6030,7 +6030,7 @@
       "name": "a63-control-height-lg",
       "cssVar": "--a63-control-height-lg",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 12)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 12), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6046,7 +6046,7 @@
       "name": "a63-control-height-md",
       "cssVar": "--a63-control-height-md",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 8)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 8), 1px)",
       "sourceFile": "packages/styles/src/contracts/control.css",
       "layer": "contract",
       "figma": {
@@ -6061,7 +6061,7 @@
       "name": "a63-control-height-md",
       "cssVar": "--a63-control-height-md",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 8)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 8), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6076,7 +6076,7 @@
       "name": "a63-control-height-md",
       "cssVar": "--a63-control-height-md",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 11)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 11), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6092,7 +6092,7 @@
       "name": "a63-control-height-md",
       "cssVar": "--a63-control-height-md",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 11)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 11), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6108,7 +6108,7 @@
       "name": "a63-control-height-sm",
       "cssVar": "--a63-control-height-sm",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 7)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 7), 1px)",
       "sourceFile": "packages/styles/src/contracts/control.css",
       "layer": "contract",
       "figma": {
@@ -6123,7 +6123,7 @@
       "name": "a63-control-height-sm",
       "cssVar": "--a63-control-height-sm",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 7)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 7), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6138,7 +6138,7 @@
       "name": "a63-control-height-sm",
       "cssVar": "--a63-control-height-sm",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 10)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 10), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6154,7 +6154,7 @@
       "name": "a63-control-height-sm",
       "cssVar": "--a63-control-height-sm",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 10)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 10), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6170,7 +6170,7 @@
       "name": "a63-control-height-xl",
       "cssVar": "--a63-control-height-xl",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 10)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 10), 1px)",
       "sourceFile": "packages/styles/src/contracts/control.css",
       "layer": "contract",
       "figma": {
@@ -6185,7 +6185,7 @@
       "name": "a63-control-height-xl",
       "cssVar": "--a63-control-height-xl",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 10)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 10), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6200,7 +6200,7 @@
       "name": "a63-control-height-xl",
       "cssVar": "--a63-control-height-xl",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 13)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 13), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6216,7 +6216,7 @@
       "name": "a63-control-height-xl",
       "cssVar": "--a63-control-height-xl",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 13)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 13), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6232,7 +6232,7 @@
       "name": "a63-control-height-xs",
       "cssVar": "--a63-control-height-xs",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 6)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 6), 1px)",
       "sourceFile": "packages/styles/src/contracts/control.css",
       "layer": "contract",
       "figma": {
@@ -6247,7 +6247,7 @@
       "name": "a63-control-height-xs",
       "cssVar": "--a63-control-height-xs",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 6)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 6), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6262,7 +6262,7 @@
       "name": "a63-control-height-xs",
       "cssVar": "--a63-control-height-xs",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 9)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 9), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6278,7 +6278,7 @@
       "name": "a63-control-height-xs",
       "cssVar": "--a63-control-height-xs",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 9)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 9), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -8025,7 +8025,7 @@
       "name": "a63-inset-row-min-size",
       "cssVar": "--a63-inset-row-min-size",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 13)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 13), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -9207,7 +9207,7 @@
       "name": "a63-row-padding-block-md",
       "cssVar": "--a63-row-padding-block-md",
       "type": "dimension",
-      "value": "var(--a63-space-4)",
+      "value": "round(nearest, var(--a63-space-4), 1px)",
       "sourceFile": "packages/styles/src/contracts/control.css",
       "layer": "contract",
       "figma": {
@@ -9222,7 +9222,7 @@
       "name": "a63-row-padding-block-md",
       "cssVar": "--a63-row-padding-block-md",
       "type": "dimension",
-      "value": "var(--a63-space-4)",
+      "value": "round(nearest, var(--a63-space-4), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -9237,7 +9237,7 @@
       "name": "a63-row-padding-block-md",
       "cssVar": "--a63-row-padding-block-md",
       "type": "dimension",
-      "value": "var(--a63-space-2)",
+      "value": "round(nearest, var(--a63-space-2), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -9253,7 +9253,7 @@
       "name": "a63-row-padding-block-md",
       "cssVar": "--a63-row-padding-block-md",
       "type": "dimension",
-      "value": "var(--a63-space-2)",
+      "value": "round(nearest, var(--a63-space-2), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -9269,7 +9269,7 @@
       "name": "a63-row-padding-block-sm",
       "cssVar": "--a63-row-padding-block-sm",
       "type": "dimension",
-      "value": "var(--a63-space-3)",
+      "value": "round(nearest, var(--a63-space-3), 1px)",
       "sourceFile": "packages/styles/src/contracts/control.css",
       "layer": "contract",
       "figma": {
@@ -9284,7 +9284,7 @@
       "name": "a63-row-padding-block-sm",
       "cssVar": "--a63-row-padding-block-sm",
       "type": "dimension",
-      "value": "var(--a63-space-3)",
+      "value": "round(nearest, var(--a63-space-3), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -9299,7 +9299,7 @@
       "name": "a63-row-padding-block-sm",
       "cssVar": "--a63-row-padding-block-sm",
       "type": "dimension",
-      "value": "var(--a63-space-1_5)",
+      "value": "round(nearest, var(--a63-space-1_5), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -9315,7 +9315,7 @@
       "name": "a63-row-padding-block-sm",
       "cssVar": "--a63-row-padding-block-sm",
       "type": "dimension",
-      "value": "var(--a63-space-1_5)",
+      "value": "round(nearest, var(--a63-space-1_5), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -9331,7 +9331,7 @@
       "name": "a63-row-padding-block-xs",
       "cssVar": "--a63-row-padding-block-xs",
       "type": "dimension",
-      "value": "var(--a63-space-2)",
+      "value": "round(nearest, var(--a63-space-2), 1px)",
       "sourceFile": "packages/styles/src/contracts/control.css",
       "layer": "contract",
       "figma": {
@@ -9346,7 +9346,7 @@
       "name": "a63-row-padding-block-xs",
       "cssVar": "--a63-row-padding-block-xs",
       "type": "dimension",
-      "value": "var(--a63-space-2)",
+      "value": "round(nearest, var(--a63-space-2), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -9361,7 +9361,7 @@
       "name": "a63-row-padding-block-xs",
       "cssVar": "--a63-row-padding-block-xs",
       "type": "dimension",
-      "value": "var(--a63-space-1)",
+      "value": "round(nearest, var(--a63-space-1), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -9377,7 +9377,7 @@
       "name": "a63-row-padding-block-xs",
       "cssVar": "--a63-row-padding-block-xs",
       "type": "dimension",
-      "value": "var(--a63-space-1)",
+      "value": "round(nearest, var(--a63-space-1), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {

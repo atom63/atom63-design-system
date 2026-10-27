@@ -5,9 +5,9 @@
   "summary": {
     "collections": 14,
     "variables": 1139,
-    "aliasValues": 789,
+    "aliasValues": 783,
     "skipped": 279,
-    "computed": 61
+    "computed": 64
   },
   "collections": [
     {
@@ -19008,10 +19008,10 @@
           "type": "FLOAT",
           "values": {
             "web": {
-              "alias": "--a63-space-4"
+              "value": 16
             },
             "ios": {
-              "alias": "--a63-space-2"
+              "value": 8
             }
           },
           "codeSyntax": "var(--a63-row-padding-block-md)",
@@ -19025,10 +19025,10 @@
           "type": "FLOAT",
           "values": {
             "web": {
-              "alias": "--a63-space-3"
+              "value": 12
             },
             "ios": {
-              "alias": "--a63-space-1_5"
+              "value": 6
             }
           },
           "codeSyntax": "var(--a63-row-padding-block-sm)",
@@ -19042,10 +19042,10 @@
           "type": "FLOAT",
           "values": {
             "web": {
-              "alias": "--a63-space-2"
+              "value": 8
             },
             "ios": {
-              "alias": "--a63-space-1"
+              "value": 4
             }
           },
           "codeSyntax": "var(--a63-row-padding-block-xs)",
@@ -21764,7 +21764,7 @@
         "density",
         "design-language"
       ],
-      "expression": "calc(var(--a63-space-unit) * 9)"
+      "expression": "round(nearest, calc(var(--a63-space-unit) * 9), 1px)"
     },
     {
       "token": "--a63-control-height-md",
@@ -21773,7 +21773,7 @@
         "density",
         "design-language"
       ],
-      "expression": "calc(var(--a63-space-unit) * 8)"
+      "expression": "round(nearest, calc(var(--a63-space-unit) * 8), 1px)"
     },
     {
       "token": "--a63-control-height-sm",
@@ -21782,7 +21782,7 @@
         "density",
         "design-language"
       ],
-      "expression": "calc(var(--a63-space-unit) * 7)"
+      "expression": "round(nearest, calc(var(--a63-space-unit) * 7), 1px)"
     },
     {
       "token": "--a63-control-height-xl",
@@ -21791,7 +21791,7 @@
         "density",
         "design-language"
       ],
-      "expression": "calc(var(--a63-space-unit) * 10)"
+      "expression": "round(nearest, calc(var(--a63-space-unit) * 10), 1px)"
     },
     {
       "token": "--a63-control-height-xs",
@@ -21800,7 +21800,7 @@
         "density",
         "design-language"
       ],
-      "expression": "calc(var(--a63-space-unit) * 6)"
+      "expression": "round(nearest, calc(var(--a63-space-unit) * 6), 1px)"
     },
     {
       "token": "--a63-control-shadow",
@@ -21882,6 +21882,33 @@
         "theme"
       ],
       "expression": "0 8px 24px -6px color-mix(in oklch, black 22%, transparent), 0 2px 6px -2px color-mix(in oklch, black 12%, transparent)"
+    },
+    {
+      "token": "--a63-row-padding-block-md",
+      "collection": "Design Language",
+      "variesOn": [
+        "density",
+        "design-language"
+      ],
+      "expression": "round(nearest, var(--a63-space-4), 1px)"
+    },
+    {
+      "token": "--a63-row-padding-block-sm",
+      "collection": "Design Language",
+      "variesOn": [
+        "density",
+        "design-language"
+      ],
+      "expression": "round(nearest, var(--a63-space-3), 1px)"
+    },
+    {
+      "token": "--a63-row-padding-block-xs",
+      "collection": "Design Language",
+      "variesOn": [
+        "density",
+        "design-language"
+      ],
+      "expression": "round(nearest, var(--a63-space-2), 1px)"
     },
     {
       "token": "--a63-segment-primary-shadow",

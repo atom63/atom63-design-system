@@ -7,7 +7,7 @@
           "$type": "dimension",
           "$value": "{a63.space.unit}",
           "$extensions": {
-            "io.atom63.derive": "calc({a63.space.unit} * 6)"
+            "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 6), 1px)"
           },
           "$description": "Height ramp (xs..xl) — web defaults (desktop density: 24/28/32/36/40, to\n   match production @atom63/ui). iOS overrides in environment.css."
         },
@@ -15,28 +15,28 @@
           "$type": "dimension",
           "$value": "{a63.space.unit}",
           "$extensions": {
-            "io.atom63.derive": "calc({a63.space.unit} * 7)"
+            "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 7), 1px)"
           }
         },
         "md": {
           "$type": "dimension",
           "$value": "{a63.space.unit}",
           "$extensions": {
-            "io.atom63.derive": "calc({a63.space.unit} * 8)"
+            "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 8), 1px)"
           }
         },
         "lg": {
           "$type": "dimension",
           "$value": "{a63.space.unit}",
           "$extensions": {
-            "io.atom63.derive": "calc({a63.space.unit} * 9)"
+            "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 9), 1px)"
           }
         },
         "xl": {
           "$type": "dimension",
           "$value": "{a63.space.unit}",
           "$extensions": {
-            "io.atom63.derive": "calc({a63.space.unit} * 10)"
+            "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 10), 1px)"
           }
         }
       },
@@ -223,15 +223,24 @@
           "xs": {
             "$type": "dimension",
             "$value": "{a63.space.2}",
-            "$description": "Row block padding. Rows (Item today; Menu/Command rows are the intended\n   next tenants) take their height from content + this padding, floored by the\n   control ramp, so a single-line row lands on ~44pt and a two-line row on\n   ~59pt. Those targets come from our own measurement of shipping iOS apps\n   (docs/design-system/web-ios-token-parity.md) — Apple publishes no iOS row\n   height, so do not cite UIKit cell metrics for them. It lives here rather\n   than in the recipe\n   because the design-language axis has to retune it (contracts/environment.css)\n   and axes own tokens; recipes only read them."
+            "$description": "Row block padding. Rows (Item today; Menu/Command rows are the intended\n   next tenants) take their height from content + this padding, floored by the\n   control ramp, so a single-line row lands on ~44pt and a two-line row on\n   ~59pt. Those targets come from our own measurement of shipping iOS apps\n   (docs/design-system/web-ios-token-parity.md) — Apple publishes no iOS row\n   height, so do not cite UIKit cell metrics for them. It lives here rather\n   than in the recipe\n   because the design-language axis has to retune it (contracts/environment.css)\n   and axes own tokens; recipes only read them.",
+            "$extensions": {
+              "io.atom63.derive": "round(nearest, {a63.space.2}, 1px)"
+            }
           },
           "sm": {
             "$type": "dimension",
-            "$value": "{a63.space.3}"
+            "$value": "{a63.space.3}",
+            "$extensions": {
+              "io.atom63.derive": "round(nearest, {a63.space.3}, 1px)"
+            }
           },
           "md": {
             "$type": "dimension",
-            "$value": "{a63.space.4}"
+            "$value": "{a63.space.4}",
+            "$extensions": {
+              "io.atom63.derive": "round(nearest, {a63.space.4}, 1px)"
+            }
           }
         }
       }

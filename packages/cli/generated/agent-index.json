@@ -8802,7 +8802,7 @@
   {
    "area": "foundations",
    "label": "Personalization",
-   "markdown": "# Personalization\n\nPersonalization is not a theme picker bolted onto the UI. It is the shape of the foundation: independent axes stamped as `data-a63-*` attributes (plus one scalar tint token), resolving through one semantic `--a63-*` layer.\n\n## Axes, not presets\n\nPresets demo well and compose badly. The moment someone wants Aqua material with a different neutral family and sharper radius, a preset model becomes a matrix of one-offs.\n\nATOM63 uses axes instead. Each axis owns a distinct slice of the system. CSS-backed component recipes inherit the resolved tokens instead of branching on axis values; `iconTheme` is the explicit React-consumed exception.\n\nThe live registry lives in `@atom63/ui-foundation` → `personalizationAxes`. The table below mirrors it:\n\n| Axis | Values | Applied as | Owns |\n|------|--------|------------|------|\n| Design language | `web` · `ios` | `data-a63-design-language` | Control proportions and interaction feedback. |\n| Mode | `light` · `dark` · `system` | `.light` / `.dark` + `data-a63-mode` | Light/dark semantic color resolution. |\n| Theme | `modern` · `aqua` · `retro` · `terminal` | `data-a63-theme` | Material values: gloss, shadow, bevel, texture, blur. |\n| Brand | `auto` · `b1`–`b6` | `data-a63-brand` | Primary tonal ramp and focus color. |\n| Surface | `n1`–`n6` | `data-a63-surface` | Neutral surface palette. |\n| Surface tint | `0%`–`100%` | `--a63-surface-tint` | Continuous brand bend on semantic surfaces. |\n| Type scale | `compact` · `normal` · `comfortable` · `large` | `data-a63-type-scale` | Global typographic scale. |\n| Radius | `none` · `subtle` · `default` · `round` | `data-a63-radius` | Corner multiplier across the radius ramp. |\n| Font | `sans` · `serif` · `mono` · `pixel` | `data-a63-font` | Active type personality. |\n| Input | `touch` · `pointer` · `keyboard` | `data-a63-input` | Hit target ergonomics. |\n| Density | `compact` · `comfortable` | `data-a63-density` | Spacing rhythm and proportional control sizing. |\n| OS | `macos` · `windows` | `data-a63-os` | Shell chrome and platform framing. |\n| Icon theme | `realistic` · `color` · `neutral` · `primary` | `data-a63-icon-theme` | Icon rendering style (React-consumed). |\n\n`UIProvider` stamps design language, mode, theme, brand, input, density, and surface when those props are supplied. `applyPersonalization` / `PersonalizationController` stamps mode, theme, brand, surface, tint, type scale, radius, font, OS, and icon theme. Together they cover every live axis; neither stamper resets dimensions it does not own. The contract is attributes (or one scalar) in, tokens out.\n\nRuntime availability and implementation completeness answer different questions: an axis can be stampable while one of its owned token groups is still expanding. The live registry in `packages/ui-foundation/src/axes.ts` is the source of truth for that implementation metadata; public documentation describes the stable contract rather than duplicating the internal backlog.\n\n## Density\n\nDensity sets one number, the space unit (`--a63-space-unit`): 4px when comfortable, 3.5px when compact. The space steps, gaps, paddings, row padding and control heights are all built on it, so compact scales them once, by 0.875: a 32px control becomes 28px and a 16px gap 14px. Text keeps its size; the type scale axis owns that.\n\nIt works the same on `<html>` and on a nested scope. Every token built on the unit is declared again on `[data-a63-density]`, so `<UIProvider density=\"compact\">` around one region recomputes them there, and a design-language or phone scope keeps its own height ramp at the compact unit.\n\nDensity is also a product choice, not only a user preference. Use compact for dense product screens, where rows of data are scanned and acted on: tables, inboxes, issue trackers, admin dashboards and file lists.\n\n```tsx\n\n```\n\nFor a whole app, set `data-a63-density=\"compact\"` on `<html>`. `atom63 build` suggests it for these screens.\n\n## One semantic layer\n\nThe rule is deliberately small:\n\n> Axes set attributes. The cascade resolves `--a63-*`. Components read `--a63-*`.\n\nThat means no component writes `--primary`, `--background`, or raw `--surface-*` values inline to express personalization. Those names are either compatibility aliases or palette primitives; writing them directly freezes a value at the wrong layer.\n\n## Why surface tint is continuous\n\nBrand and surface are separate axes because color personality has two jobs: accent and neutrality. `data-a63-brand` chooses the accent ramp. `data-a63-surface` chooses the neutral family. `--a63-surface-tint` bends the semantic surfaces toward the brand hue without generating a bespoke palette for every tint value.\n\nThe implementation mixes a small set of semantic surface and border roles rather than every raw ramp stop. That is the practical tradeoff: fewer computed colors, more predictable UI, and enough expressiveness for product-level personalization.\n\n## OS is not a theme\n\nTheme is material character. OS is platform structure. I split them because \"Windows\" should not imply one permanent visual skin, and \"Terminal\" should not dictate where caption controls live.\n\nThis lets OS63 compose coordinates such as `theme=terminal` with `os=macos`, or `theme=aqua` with `os=windows`, without inventing new theme names.\n\nRadius, type scale, and font are also **not** theme — they are independent appearance axes so you can keep Aqua material while sharpening corners or enlarging type.\n\n## What this enables\n\n- A subtree can override one axis without resetting the others.\n- Theme work can happen in CSS without React conditionals.\n- Agents can reason from the axis table instead of guessing local conventions.\n- Public docs can explain the architecture at the same level the code enforces it.",
+   "markdown": "# Personalization\n\nPersonalization is not a theme picker bolted onto the UI. It is the shape of the foundation: independent axes stamped as `data-a63-*` attributes (plus one scalar tint token), resolving through one semantic `--a63-*` layer.\n\n## Axes, not presets\n\nPresets demo well and compose badly. The moment someone wants Aqua material with a different neutral family and sharper radius, a preset model becomes a matrix of one-offs.\n\nATOM63 uses axes instead. Each axis owns a distinct slice of the system. CSS-backed component recipes inherit the resolved tokens instead of branching on axis values; `iconTheme` is the explicit React-consumed exception.\n\nThe live registry lives in `@atom63/ui-foundation` → `personalizationAxes`. The table below mirrors it:\n\n| Axis | Values | Applied as | Owns |\n|------|--------|------------|------|\n| Design language | `web` · `ios` | `data-a63-design-language` | Control proportions and interaction feedback. |\n| Mode | `light` · `dark` · `system` | `.light` / `.dark` + `data-a63-mode` | Light/dark semantic color resolution. |\n| Theme | `modern` · `aqua` · `retro` · `terminal` | `data-a63-theme` | Material values: gloss, shadow, bevel, texture, blur. |\n| Brand | `auto` · `b1`–`b6` | `data-a63-brand` | Primary tonal ramp and focus color. |\n| Surface | `n1`–`n6` | `data-a63-surface` | Neutral surface palette. |\n| Surface tint | `0%`–`100%` | `--a63-surface-tint` | Continuous brand bend on semantic surfaces. |\n| Type scale | `compact` · `normal` · `comfortable` · `large` | `data-a63-type-scale` | Global typographic scale. |\n| Radius | `none` · `subtle` · `default` · `round` | `data-a63-radius` | Corner multiplier across the radius ramp. |\n| Font | `sans` · `serif` · `mono` · `pixel` | `data-a63-font` | Active type personality. |\n| Input | `touch` · `pointer` · `keyboard` | `data-a63-input` | Hit target ergonomics. |\n| Density | `compact` · `comfortable` | `data-a63-density` | Spacing rhythm and proportional control sizing. |\n| OS | `macos` · `windows` | `data-a63-os` | Shell chrome and platform framing. |\n| Icon theme | `realistic` · `color` · `neutral` · `primary` | `data-a63-icon-theme` | Icon rendering style (React-consumed). |\n\n`UIProvider` stamps design language, mode, theme, brand, input, density, and surface when those props are supplied. `applyPersonalization` / `PersonalizationController` stamps mode, theme, brand, surface, tint, type scale, radius, font, OS, and icon theme. Together they cover every live axis; neither stamper resets dimensions it does not own. The contract is attributes (or one scalar) in, tokens out.\n\nRuntime availability and implementation completeness answer different questions: an axis can be stampable while one of its owned token groups is still expanding. The live registry in `packages/ui-foundation/src/axes.ts` is the source of truth for that implementation metadata; public documentation describes the stable contract rather than duplicating the internal backlog.\n\n## Density\n\nDensity sets one number, the space unit (`--a63-space-unit`): 4px when comfortable, 3.5px when compact. The space steps, gaps, paddings, row padding and control heights are all built on it, so compact scales them once, by 0.875: a 32px control becomes 28px and a 16px gap 14px. Control heights and row padding round to whole pixels, so a 36px control becomes 32px rather than 31.5px. Text keeps its size; the type scale axis owns that.\n\nIt works the same on `<html>` and on a nested scope. Every token built on the unit is declared again on `[data-a63-density]`, so `<UIProvider density=\"compact\">` around one region recomputes them there, and a design-language or phone scope keeps its own height ramp at the compact unit.\n\nDensity is also a product choice, not only a user preference. Use compact for dense product screens, where rows of data are scanned and acted on: tables, inboxes, issue trackers, admin dashboards and file lists.\n\n```tsx\n\n```\n\nFor a whole app, set `data-a63-density=\"compact\"` on `<html>`. `atom63 build` suggests it for these screens.\n\n## One semantic layer\n\nThe rule is deliberately small:\n\n> Axes set attributes. The cascade resolves `--a63-*`. Components read `--a63-*`.\n\nThat means no component writes `--primary`, `--background`, or raw `--surface-*` values inline to express personalization. Those names are either compatibility aliases or palette primitives; writing them directly freezes a value at the wrong layer.\n\n## Why surface tint is continuous\n\nBrand and surface are separate axes because color personality has two jobs: accent and neutrality. `data-a63-brand` chooses the accent ramp. `data-a63-surface` chooses the neutral family. `--a63-surface-tint` bends the semantic surfaces toward the brand hue without generating a bespoke palette for every tint value.\n\nThe implementation mixes a small set of semantic surface and border roles rather than every raw ramp stop. That is the practical tradeoff: fewer computed colors, more predictable UI, and enough expressiveness for product-level personalization.\n\n## OS is not a theme\n\nTheme is material character. OS is platform structure. I split them because \"Windows\" should not imply one permanent visual skin, and \"Terminal\" should not dictate where caption controls live.\n\nThis lets OS63 compose coordinates such as `theme=terminal` with `os=macos`, or `theme=aqua` with `os=windows`, without inventing new theme names.\n\nRadius, type scale, and font are also **not** theme — they are independent appearance axes so you can keep Aqua material while sharpening corners or enlarging type.\n\n## What this enables\n\n- A subtree can override one axis without resetting the others.\n- Theme work can happen in CSS without React conditionals.\n- Agents can reason from the axis table instead of guessing local conventions.\n- Public docs can explain the architecture at the same level the code enforces it.",
    "route": "/foundations/foundation-personalization",
    "slug": "foundation-personalization"
   },
@@ -13308,19 +13308,19 @@
    "values": [
     {
      "scope": ":root",
-     "value": "calc(var(--a63-space-unit) * 9)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 9), 1px)"
     },
     {
      "scope": ":is([data-a63-density], [data-density])",
-     "value": "calc(var(--a63-space-unit) * 9)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 9), 1px)"
     },
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
-     "value": "calc(var(--a63-space-unit) * 12)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 12), 1px)"
     },
     {
      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
-     "value": "calc(var(--a63-space-unit) * 12)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 12), 1px)"
     }
    ]
   },
@@ -13336,19 +13336,19 @@
    "values": [
     {
      "scope": ":root",
-     "value": "calc(var(--a63-space-unit) * 8)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 8), 1px)"
     },
     {
      "scope": ":is([data-a63-density], [data-density])",
-     "value": "calc(var(--a63-space-unit) * 8)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 8), 1px)"
     },
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
-     "value": "calc(var(--a63-space-unit) * 11)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 11), 1px)"
     },
     {
      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
-     "value": "calc(var(--a63-space-unit) * 11)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 11), 1px)"
     }
    ]
   },
@@ -13364,19 +13364,19 @@
    "values": [
     {
      "scope": ":root",
-     "value": "calc(var(--a63-space-unit) * 7)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 7), 1px)"
     },
     {
      "scope": ":is([data-a63-density], [data-density])",
-     "value": "calc(var(--a63-space-unit) * 7)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 7), 1px)"
     },
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
-     "value": "calc(var(--a63-space-unit) * 10)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 10), 1px)"
     },
     {
      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
-     "value": "calc(var(--a63-space-unit) * 10)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 10), 1px)"
     }
    ]
   },
@@ -13392,19 +13392,19 @@
    "values": [
     {
      "scope": ":root",
-     "value": "calc(var(--a63-space-unit) * 10)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 10), 1px)"
     },
     {
      "scope": ":is([data-a63-density], [data-density])",
-     "value": "calc(var(--a63-space-unit) * 10)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 10), 1px)"
     },
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
-     "value": "calc(var(--a63-space-unit) * 13)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 13), 1px)"
     },
     {
      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
-     "value": "calc(var(--a63-space-unit) * 13)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 13), 1px)"
     }
    ]
   },
@@ -13420,19 +13420,19 @@
    "values": [
     {
      "scope": ":root",
-     "value": "calc(var(--a63-space-unit) * 6)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 6), 1px)"
     },
     {
      "scope": ":is([data-a63-density], [data-density])",
-     "value": "calc(var(--a63-space-unit) * 6)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 6), 1px)"
     },
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
-     "value": "calc(var(--a63-space-unit) * 9)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 9), 1px)"
     },
     {
      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
-     "value": "calc(var(--a63-space-unit) * 9)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 9), 1px)"
     }
    ]
   },
@@ -14363,7 +14363,7 @@
    "values": [
     {
      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
-     "value": "calc(var(--a63-space-unit) * 13)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 13), 1px)"
     }
    ]
   },
@@ -15250,19 +15250,19 @@
    "values": [
     {
      "scope": ":root",
-     "value": "var(--a63-space-4)"
+     "value": "round(nearest, var(--a63-space-4), 1px)"
     },
     {
      "scope": ":is([data-a63-density], [data-density])",
-     "value": "var(--a63-space-4)"
+     "value": "round(nearest, var(--a63-space-4), 1px)"
     },
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
-     "value": "var(--a63-space-2)"
+     "value": "round(nearest, var(--a63-space-2), 1px)"
     },
     {
      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
-     "value": "var(--a63-space-2)"
+     "value": "round(nearest, var(--a63-space-2), 1px)"
     }
    ]
   },
@@ -15278,19 +15278,19 @@
    "values": [
     {
      "scope": ":root",
-     "value": "var(--a63-space-3)"
+     "value": "round(nearest, var(--a63-space-3), 1px)"
     },
     {
      "scope": ":is([data-a63-density], [data-density])",
-     "value": "var(--a63-space-3)"
+     "value": "round(nearest, var(--a63-space-3), 1px)"
     },
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
-     "value": "var(--a63-space-1_5)"
+     "value": "round(nearest, var(--a63-space-1_5), 1px)"
     },
     {
      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
-     "value": "var(--a63-space-1_5)"
+     "value": "round(nearest, var(--a63-space-1_5), 1px)"
     }
    ]
   },
@@ -15306,19 +15306,19 @@
    "values": [
     {
      "scope": ":root",
-     "value": "var(--a63-space-2)"
+     "value": "round(nearest, var(--a63-space-2), 1px)"
     },
     {
      "scope": ":is([data-a63-density], [data-density])",
-     "value": "var(--a63-space-2)"
+     "value": "round(nearest, var(--a63-space-2), 1px)"
     },
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
-     "value": "var(--a63-space-1)"
+     "value": "round(nearest, var(--a63-space-1), 1px)"
     },
     {
      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
-     "value": "var(--a63-space-1)"
+     "value": "round(nearest, var(--a63-space-1), 1px)"
     }
    ]
   },

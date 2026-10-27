@@ -45,13 +45,13 @@ function expectCompact(element: HTMLElement) {
   expect(height(element, token('--a63-space-1_5'))).toBe('5.25px')
   expect(height(element, token('--a63-control-height-md'))).toBe('28px')
   expect(height(element, controlHeight('md'))).toBe('28px')
-  expect(height(element, controlHeight('lg'))).toBe('31.5px')
+  expect(height(element, controlHeight('lg'))).toBe('32px')
   // xs is 21px, so the 24px pointer floor holds it.
   expect(height(element, controlHeight('xs'))).toBe('24px')
   expect(height(element, token('--a63-control-padding-inline-md'))).toBe('10.5px')
   expect(height(element, token('--a63-control-gap'))).toBe('7px')
   expect(height(element, token('--a63-trigger-gap'))).toBe('7px')
-  expect(height(element, token('--a63-row-padding-block-sm'))).toBe('10.5px')
+  expect(height(element, token('--a63-row-padding-block-sm'))).toBe('11px')
   expect(height(element, token('--a63-menu-item-padding-inline'))).toBe('7px')
 }
 
@@ -86,23 +86,56 @@ describe('density', () => {
   it('keeps the iOS height ramp in a compact scope inside the iOS design language', () => {
     const ios = scope({ 'data-a63-design-language': 'ios' })
     const compact = scope({ 'data-a63-density': 'compact' }, ios)
-    // iOS md is 11 units: 44px, and 38.5px at the compact unit.
+    // iOS md is 11 units: 44px, and 38.5px at the compact unit, rounded to 39px.
     expect(height(ios, controlHeight('md'))).toBe('44px')
-    expect(height(compact, controlHeight('md'))).toBe('38.5px')
+    expect(height(compact, controlHeight('md'))).toBe('39px')
     expect(height(compact, token('--a63-control-padding-inline-md'))).toBe('14px')
     // On the same element.
     const both = scope({ 'data-a63-design-language': 'ios', 'data-a63-density': 'compact' })
-    expect(height(both, controlHeight('md'))).toBe('38.5px')
+    expect(height(both, controlHeight('md'))).toBe('39px')
   })
 
   it('keeps the phone sizes in a compact scope inside a phone screen', () => {
     const phone = scope({ 'data-a63-form-factor': 'phone' })
     const compact = scope({ 'data-a63-density': 'compact' }, phone)
-    expect(height(compact, controlHeight('md'))).toBe('38.5px')
-    expect(height(compact, token('--a63-inset-row-min-size'))).toBe('45.5px')
+    expect(height(compact, controlHeight('md'))).toBe('39px')
+    expect(height(compact, token('--a63-inset-row-min-size'))).toBe('46px')
     expect(getComputedStyle(compact).getPropertyValue('--a63-control-font-size-md').trim()).toBe(
       getComputedStyle(phone).getPropertyValue('--a63-control-font-size-md').trim()
     )
+  })
+
+  it('lands every control height and row padding on whole pixels in every density', () => {
+    const sizes = ['xs', 'sm', 'md', 'lg', 'xl']
+    const tokens = [
+      ...sizes.map(size => token(`--a63-control-height-${size}`)),
+      ...sizes.map(controlHeight),
+      ...['xs', 'sm', 'md'].map(size => token(`--a63-row-padding-block-${size}`)),
+    ]
+    for (const density of ['compact', 'comfortable', undefined]) {
+      for (const scopeAttributes of [
+        {},
+        { 'data-a63-design-language': 'ios' },
+        { 'data-a63-form-factor': 'phone' },
+      ]) {
+        const element = scope({
+          ...scopeAttributes,
+          ...(density ? { 'data-a63-density': density } : {}),
+        })
+        for (const expression of [
+          ...tokens,
+          ...(scopeAttributes['data-a63-form-factor' as keyof typeof scopeAttributes]
+            ? [token('--a63-inset-row-min-size')]
+            : []),
+        ]) {
+          const px = Number.parseFloat(height(element, expression))
+          expect(
+            Number.isInteger(px),
+            `${expression} in ${density} ${JSON.stringify(scopeAttributes)}: ${px}`
+          ).toBe(true)
+        }
+      }
+    }
   })
 
   it('does not change text sizes', () => {
