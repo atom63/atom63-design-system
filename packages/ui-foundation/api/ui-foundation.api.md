@@ -350,6 +350,53 @@ export type AlertVisualArchetype = (typeof alertVisualArchetypes)[number];
 export const alertVisualArchetypes: readonly ["surface"];
 
 // @public (undocumented)
+export interface AmountContract {
+    // (undocumented)
+    defaultSize: AmountSize;
+    // (undocumented)
+    sizes: readonly AmountSize[];
+    // (undocumented)
+    slots: readonly AmountSlot[];
+    // (undocumented)
+    states: readonly AmountState[];
+    // (undocumented)
+    visualArchetypes: readonly AmountVisualArchetype[];
+}
+
+// @public (undocumented)
+export const amountContract: {
+    defaultSize: "md";
+    sizes: readonly ["md", "lg"];
+    slots: readonly ["amount", "amount-fraction"];
+    states: readonly ["rest"];
+    visualArchetypes: readonly ["surface"];
+};
+
+// @public (undocumented)
+export type AmountSize = (typeof amountSizes)[number];
+
+// @public (undocumented)
+export const amountSizes: readonly ["md", "lg"];
+
+// @public (undocumented)
+export type AmountSlot = (typeof amountSlots)[number];
+
+// @public (undocumented)
+export const amountSlots: readonly ["amount", "amount-fraction"];
+
+// @public (undocumented)
+export type AmountState = (typeof amountStates)[number];
+
+// @public (undocumented)
+export const amountStates: readonly ["rest"];
+
+// @public (undocumented)
+export type AmountVisualArchetype = (typeof amountVisualArchetypes)[number];
+
+// @public (undocumented)
+export const amountVisualArchetypes: readonly ["surface"];
+
+// @public (undocumented)
 export interface AnimatedCheckContract {
     // (undocumented)
     defaultVariant: AnimatedCheckVariant;
@@ -5330,7 +5377,7 @@ export const visualArchetypes: {
         readonly id: "surface";
         readonly label: "Static content surfaces";
         readonly description: "In-flow containers and content surfaces that do not inherently manipulate state.";
-        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps"];
+        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps", "Amount"];
         readonly contracts: readonly ["surface"];
     };
 };

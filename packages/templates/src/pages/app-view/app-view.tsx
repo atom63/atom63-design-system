@@ -40,7 +40,7 @@ export const template = {
   kind: 'page',
   title: 'App view',
   description:
-    'A full-window product view with no site header or footer: a top bar across the window, a side panel and the main region below it, and an optional bar docked at the bottom, such as a media player or a status bar. layout="phone" makes it a phone app screen: edge to edge with no card or inset, the top bar optional, safe-area aware, and the tab-bar block docked at the bottom. Copy-only: paste the files `atom63 template app-view` prints.',
+    'A full-window product view with no site header or footer: a top bar across the window, a side panel and the main region below it, and an optional bar docked at the bottom, such as a media player or a status bar. layout="phone" makes it a phone app screen: edge to edge with no card or inset, the top bar optional, safe-area aware, phone-sized type and controls (body 17px, 44px controls), and the tab-bar block docked at the bottom. Copy-only: paste the files `atom63 template app-view` prints.',
   category: 'layout',
   tags: [
     'app',
@@ -72,6 +72,10 @@ export interface AppViewProps {
    * card, the side panel from `md` up and the tab bar on phones only.
    * `phone`: a phone app screen. The main region runs edge to edge with no
    * card or inset, the side panel is not drawn, and the tab bar always shows.
+   * It stamps `data-a63-form-factor="phone"`, which sets phone-sized type and
+   * controls inside it (the iOS text sizes: body 17px, subhead 15px, footnote
+   * 13px, and 44px controls), so text-* utilities, text roles and components
+   * all follow without extra classes.
    * The top bar is optional and takes the top safe-area inset; without one the
    * content reaches the top edge (under the status bar with
    * `viewport-fit=cover`), so give its first block `pt-[env(safe-area-inset-top)]`.
@@ -111,9 +115,14 @@ export function AppView({
      * A column, no gaps or radius: the top bar, the main region (the only part
      * that scrolls), the docked bar, then the tab bar, which pads itself for
      * the home indicator. Without a tab bar the docked bar takes that inset.
+     * data-a63-form-factor="phone" sets the phone type steps and control sizes
+     * for everything inside; text-base sets the body size the screen inherits.
      */
     return (
-      <div className="bg-background text-foreground flex h-dvh flex-col">
+      <div
+        className="bg-background text-foreground flex h-dvh flex-col text-base"
+        data-a63-form-factor="phone"
+      >
         {topBar ? (
           <header className="border-border flex min-h-14 shrink-0 items-center gap-2 border-b px-4 pt-[env(safe-area-inset-top)]">
             {topBar}

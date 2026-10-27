@@ -165,7 +165,7 @@ export function isPhoneIdea(idea) {
 /* What a phone idea is told to build on: the app-view template's phone layout. */
 const phoneScreen = {
   template: 'app-view',
-  use: 'Use AppView layout="phone" for the screen: edge to edge with no card or inset, safe-area aware, the top bar optional, and the tab bar docked at the bottom. Only the main region scrolls, so its last row stays visible above the tab bar. On a screen with no tab bar (a chat, a detail or a checkout step), leave tabBar out and dock the composer or action bar as bottomBar. The default layout ("window") is a padded desktop window with a rounded main card; do not use it on a phone.',
+  use: 'Use AppView layout="phone" for the screen: edge to edge with no card or inset, safe-area aware, the top bar optional, and the tab bar docked at the bottom. It sets phone-sized type and controls inside it (data-a63-form-factor="phone": body 17px, subhead 15px, footnote 13px, 44px controls), so keep rows and labels on the defaults or the text roles (text-body, text-subhead, text-footnote) instead of shrinking them with text-sm or text-xs. Only the main region scrolls, so its last row stays visible above the tab bar. On a screen with no tab bar (a chat, a detail or a checkout step), leave tabBar out and dock the composer or action bar as bottomBar. The default layout ("window") is a padded desktop window with a rounded main card; do not use it on a phone.',
   files:
     'AppView ships in no package: it is the app-view page template. Paste pages/app-view/app-view.tsx and blocks/tab-bar/tab-bar.tsx, which `atom63 template app-view` prints in full (or run `atom63 copy app-view src`). Its AppViewPhonePage is the phone sample to start from.',
   imports: [
@@ -190,6 +190,44 @@ const phoneScreen = {
     '</AppView>',
   ].join('\n'),
   next: 'atom63 template app-view',
+}
+
+/* Words that mark an idea as showing a money amount as its hero number. */
+const amountWords = new Set([
+  'amount',
+  'balance',
+  'bank',
+  'banking',
+  'checkout',
+  'fintech',
+  'money',
+  'payment',
+  'price',
+  'pricing',
+  'total',
+  'wallet',
+])
+
+/** Whether an idea shows a money amount: a balance, a price, a total or an amount to send. */
+export function isAmountIdea(idea) {
+  return queryTerms(idea).some(({ term, weight }) => weight === 1 && amountWords.has(term))
+}
+
+/* How an amount idea is told to draw its hero number. */
+const displayAmount = {
+  component: 'amount',
+  use: 'Draw the hero number (a balance, a price, the amount to send) with Amount: the display text role (size="md", 40px; size="lg" for display-large, 56px), the cents at half size and raised, tabular figures, formatted for the locale and read as one label. Keep amounts in list rows at body size with tabular-nums. Without the component, put the whole amount in one text-display tabular-nums span and wrap the fraction in amount-fraction. iOS: AtomAmountText.',
+  imports: ["import { Amount } from '@atom63/ui-react'"],
+  snippet: [
+    '<p className="text-footnote text-muted-foreground">Main account</p>',
+    '<Amount currency="USD" size="lg" strong value={13250.75} />',
+    '',
+    '{/* The same without the component: */}',
+    '<span className="text-display tabular-nums">',
+    '  $13,250<span className="amount-fraction">.75</span>',
+    '</span>',
+  ].join('\n'),
+  next: 'atom63 component amount',
 }
 
 /**
@@ -242,6 +280,7 @@ export function build(index, idea) {
     data: {
       idea,
       ...(phone ? { phone: phoneScreen } : {}),
+      ...(isAmountIdea(idea) ? { amount: displayAmount } : {}),
       pages,
       blocks,
       components,

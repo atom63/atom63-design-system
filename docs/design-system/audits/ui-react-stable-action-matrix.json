@@ -76,37 +76,37 @@
     }
   },
   "summary": {
-    "sourceFamilies": 79,
-    "sourceExports": 629,
+    "sourceFamilies": 80,
+    "sourceExports": 631,
     "sourceTierCounts": {
       "monitor-high-risk": 79,
       "preview-experimental-candidate": 31,
-      "beta-supported-core": 335,
+      "beta-supported-core": 337,
       "beta-supported-composition-conditional": 184
     },
     "sourceActionCounts": {
       "assign-owner-and-evidence": 15,
       "move-to-preview-or-approve": 15,
       "document-before-stable": 12,
-      "keep-stable-candidate": 37
+      "keep-stable-candidate": 38
     },
     "sourcePriorityCounts": {
       "P0": 30,
       "P1": 12,
-      "P2": 37
+      "P2": 38
     },
-    "packageSubpaths": 77,
+    "packageSubpaths": 78,
     "subpathActionCounts": {
       "assign-owner-and-evidence": 1,
       "keep-preview-subpath-or-add-evidence": 2,
       "keep-preview-labeled": 1,
       "document-subpath-contract": 2,
-      "keep-import-path-stable": 71
+      "keep-import-path-stable": 72
     },
     "subpathPriorityCounts": {
       "P0": 4,
       "P1": 2,
-      "P2": 71
+      "P2": 72
     }
   },
   "sourceActions": [
@@ -1572,6 +1572,29 @@
       "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
     },
     {
+      "source": "./components/amount",
+      "family": "components/amount",
+      "kind": "component-family",
+      "totalExports": 2,
+      "valueExports": 1,
+      "typeExports": 1,
+      "tierCounts": {
+        "beta-supported-core": 2
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["Amount", "AmountProps"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
       "source": "./components/badge",
       "family": "components/badge",
       "kind": "component-family",
@@ -2629,6 +2652,15 @@
       "subpath": "./recipes/alert.css",
       "kind": "css",
       "target": "./src/components/alert/alert.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/amount.css",
+      "kind": "css",
+      "target": "./src/components/amount/amount.css",
       "recommendedAction": "keep-import-path-stable",
       "priority": "P2",
       "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",

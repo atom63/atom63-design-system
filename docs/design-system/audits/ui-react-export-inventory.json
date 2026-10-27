@@ -45,10 +45,10 @@
     ]
   },
   "counts": {
-    "rootValueExports": 433,
-    "rootTypeExports": 196,
-    "packageExportKeys": 77,
-    "cssExportKeys": 70
+    "rootValueExports": 434,
+    "rootTypeExports": 197,
+    "packageExportKeys": 78,
+    "cssExportKeys": 71
   },
   "packageExportKeys": [
     ".",
@@ -61,6 +61,7 @@
     "./recipes/accordion.css",
     "./recipes/alert-dialog.css",
     "./recipes/alert.css",
+    "./recipes/amount.css",
     "./recipes/autocomplete.css",
     "./recipes/avatar.css",
     "./recipes/badge.css",
@@ -134,6 +135,7 @@
     "./recipes/accordion.css",
     "./recipes/alert-dialog.css",
     "./recipes/alert.css",
+    "./recipes/amount.css",
     "./recipes/autocomplete.css",
     "./recipes/avatar.css",
     "./recipes/badge.css",
@@ -275,6 +277,11 @@
       "subpath": "./recipes/alert.css",
       "kind": "css",
       "target": "./src/components/alert/alert.css"
+    },
+    {
+      "subpath": "./recipes/amount.css",
+      "kind": "css",
+      "target": "./src/components/amount/amount.css"
     },
     {
       "subpath": "./recipes/autocomplete.css",
@@ -775,6 +782,21 @@
         }
       ],
       "types": []
+    },
+    {
+      "source": "./components/amount",
+      "values": [
+        {
+          "name": "Amount",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "AmountProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
     },
     {
       "source": "./components/animated-check",

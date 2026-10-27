@@ -146,6 +146,7 @@ export const visualArchetypes = {
       'Toaster',
       'ChatMessage',
       'ChatSteps',
+      'Amount',
     ],
     contracts: ['surface'],
   },

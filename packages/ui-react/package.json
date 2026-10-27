@@ -60,6 +60,7 @@
       "import": "./dist/preview/index.js"
     },
     "./recipes.css": "./src/styles/recipes.css",
+    "./recipes/amount.css": "./src/components/amount/amount.css",
     "./recipes/chat-composer.css": "./src/components/chat-composer/chat-composer.css",
     "./recipes/chat-message.css": "./src/components/chat-message/chat-message.css",
     "./recipes/chat-steps.css": "./src/components/chat-steps/chat-steps.css",

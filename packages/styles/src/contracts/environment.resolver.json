@@ -1,6 +1,6 @@
 {
   "version": "2025.10",
-  "description": "Environment dimensions.\n\nEach dimension owns a distinct slice (see packages/styles/README.md — the\ndimension-ownership table):\n  - Design Language → component sizing/proportions + interaction feedback\n  - Input           → ergonomics (min touch target)\n  - Density         → proportional rhythm\n\nRadius, color, and shadow are NOT design-language concerns — they belong to\nthe semantic ramp + theme (personalization). Design language never sets radius.\n\nPrevent focus zoom in mobile Safari without inflating non-editable control\n labels. Editable recipes combine this floor with their normal type token.\n\nDensity — proportional rhythm\n\nAuto-detect coarse pointers. Without this, touch ergonomics only apply when an\n app explicitly passes `input` to UIProvider — an opt-in almost nothing does, so\n controls stay at their 24px floor on phones. Declared before the attribute\n rules below (equal specificity) so an explicit data-a63-input always wins.\n\nInput — ergonomics (touch target). Independent of design language.\n\nExplicit fine-pointer choices override coarse auto-detection (hybrid devices,\n or a user who picked \"pointer\" in the appearance panel on a touchscreen).\n\nDesign language — component sizing/proportions + interaction feedback only.\nThe base :root (control.css) is the web default; iOS overrides sizing + feel.\nNo radius, color, or touch-target here.",
+  "description": "Environment dimensions.\n\nEach dimension owns a distinct slice (see packages/styles/README.md — the\ndimension-ownership table):\n  - Design Language → component sizing/proportions + interaction feedback\n  - Input           → ergonomics (min touch target)\n  - Density         → proportional rhythm\n\nRadius, color, and shadow are NOT design-language concerns — they belong to\nthe semantic ramp + theme (personalization). Design language never sets radius.\n\nPrevent focus zoom in mobile Safari without inflating non-editable control\n labels. Editable recipes combine this floor with their normal type token.\n\nDensity — proportional rhythm\n\nAuto-detect coarse pointers. Without this, touch ergonomics only apply when an\n app explicitly passes `input` to UIProvider — an opt-in almost nothing does, so\n controls stay at their 24px floor on phones. Declared before the attribute\n rules below (equal specificity) so an explicit data-a63-input always wins.\n\nInput — ergonomics (touch target). Independent of design language.\n\nExplicit fine-pointer choices override coarse auto-detection (hybrid devices,\n or a user who picked \"pointer\" in the appearance panel on a touchscreen).\n\nDesign language — component sizing/proportions + interaction feedback only.\nThe base :root (control.css) is the web default; iOS overrides sizing + feel.\nNo radius, color, or touch-target here.\n\nForm factor — a phone screen. [data-a63-form-factor='phone'] sets the type steps and the\ncontrol sizing of a phone (iOS text sizes: body 17, subheadline 15, footnote 13). Viewport\nwidth does not apply it; a phone layout stamps it (AppView layout=\"phone\"). The type roles\nare redeclared on the same scope (type-roles.css), so text-body and the other roles follow it.",
   "sets": {
     "01-root": {
       "sources": [
@@ -533,6 +533,583 @@
           "selector": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
         }
       }
+    },
+    "10-data-a63-form-factor-phone": {
+      "sources": [
+        {
+          "typography": {
+            "2xs": {
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 11,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  },
+                  "$description": "The type steps of a phone screen, after the iOS text styles at the default Dynamic Type size:\n   body 17 (base), subheadline 15 (sm), footnote 13 (xs), caption2 11 (2xs), title3 20 (2xl),\n   title2 22 (3xl), title1 28 (5xl), largeTitle 34 (6xl). Steps without an iOS style keep the\n   scale in order. Complete, so the phone scope wins over the viewport and window steps."
+                }
+              },
+              "line": {
+                "height": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 13,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "xs": {
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 13,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 18,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "sm": {
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 15,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 20,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "base": {
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 17,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 22,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "lg": {
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 18,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 24,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "xl": {
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 19,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 24,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "2xl": {
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 20,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 25,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "3xl": {
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 22,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 28,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "4xl": {
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 25,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 31,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "5xl": {
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 28,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 34,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "6xl": {
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 34,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 41,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "7xl": {
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 36,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 44,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "8xl": {
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 39,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 49,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "9xl": {
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 44,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 55,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "10xl": {
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 40,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 44,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            },
+            "11xl": {
+              "font": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 56,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              },
+              "line": {
+                "height": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 60,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({$value} * var(--typography-scale, 1))"
+                  }
+                }
+              }
+            }
+          },
+          "a63": {
+            "control": {
+              "height": {
+                "xs": {
+                  "$type": "dimension",
+                  "$value": "{a63.space.unit}",
+                  "$extensions": {
+                    "io.atom63.derive": "calc({a63.space.unit} * 9)"
+                  },
+                  "$description": "Controls on a phone: the iOS height ramp (36/40/44/48/52), and every standard control label\n   at body size (17), as iOS sets buttons, rows, fields and menus. xs stays at footnote size\n   for badges, shortcuts and initials. Weight and press feedback stay with the design language."
+                },
+                "sm": {
+                  "$type": "dimension",
+                  "$value": "{a63.space.unit}",
+                  "$extensions": {
+                    "io.atom63.derive": "calc({a63.space.unit} * 10)"
+                  }
+                },
+                "md": {
+                  "$type": "dimension",
+                  "$value": "{a63.space.unit}",
+                  "$extensions": {
+                    "io.atom63.derive": "calc({a63.space.unit} * 11)"
+                  }
+                },
+                "lg": {
+                  "$type": "dimension",
+                  "$value": "{a63.space.unit}",
+                  "$extensions": {
+                    "io.atom63.derive": "calc({a63.space.unit} * 12)"
+                  }
+                },
+                "xl": {
+                  "$type": "dimension",
+                  "$value": "{a63.space.unit}",
+                  "$extensions": {
+                    "io.atom63.derive": "calc({a63.space.unit} * 13)"
+                  }
+                }
+              },
+              "padding": {
+                "inline": {
+                  "xs": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.3}"
+                  },
+                  "sm": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.3_5}"
+                  },
+                  "md": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.4}"
+                  },
+                  "lg": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.5}"
+                  },
+                  "xl": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.6}"
+                  }
+                }
+              },
+              "font": {
+                "size": {
+                  "xs": {
+                    "$type": "dimension",
+                    "$value": "{typography.xs.font.size}"
+                  },
+                  "sm": {
+                    "$type": "dimension",
+                    "$value": "{typography.base.font.size}"
+                  },
+                  "md": {
+                    "$type": "dimension",
+                    "$value": "{typography.base.font.size}"
+                  },
+                  "lg": {
+                    "$type": "dimension",
+                    "$value": "{typography.base.font.size}"
+                  },
+                  "xl": {
+                    "$type": "dimension",
+                    "$value": "{typography.lg.font.size}"
+                  }
+                }
+              },
+              "icon": {
+                "size": {
+                  "xs": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 0.875,
+                      "unit": "rem"
+                    }
+                  },
+                  "sm": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 1,
+                      "unit": "rem"
+                    }
+                  },
+                  "md": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 1.125,
+                      "unit": "rem"
+                    }
+                  },
+                  "lg": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 1.25,
+                      "unit": "rem"
+                    }
+                  },
+                  "xl": {
+                    "$type": "dimension",
+                    "$value": {
+                      "value": 1.375,
+                      "unit": "rem"
+                    }
+                  }
+                }
+              }
+            },
+            "row": {
+              "padding": {
+                "block": {
+                  "xs": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.1}"
+                  },
+                  "sm": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.1_5}"
+                  },
+                  "md": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.2}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": "[data-a63-form-factor='phone']"
+        }
+      }
     }
   },
   "resolutionOrder": [
@@ -559,6 +1136,9 @@
     },
     {
       "$ref": "#/sets/09-is-data-a63-design-language-ios-data-design-lang"
+    },
+    {
+      "$ref": "#/sets/10-data-a63-form-factor-phone"
     }
   ],
   "$extensions": {

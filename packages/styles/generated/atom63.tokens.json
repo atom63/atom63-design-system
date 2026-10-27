@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 1919,
+    "declarations": 1974,
     "uniqueCssVariables": 1192,
-    "figmaMappedDeclarations": 1857
+    "figmaMappedDeclarations": 1912
   },
   "entries": [
     {
@@ -5646,6 +5646,22 @@
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
     },
     {
+      "name": "a63-control-font-size-lg",
+      "cssVar": "--a63-control-font-size-lg",
+      "type": "typography",
+      "value": "var(--typography-base-font-size)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/font/size/lg",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-base-font-size"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
       "name": "a63-control-font-size-md",
       "cssVar": "--a63-control-font-size-md",
       "type": "typography",
@@ -5675,6 +5691,22 @@
       "lifecycle": "preview",
       "aliases": ["--typography-base-font-size"],
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+    },
+    {
+      "name": "a63-control-font-size-md",
+      "cssVar": "--a63-control-font-size-md",
+      "type": "typography",
+      "value": "var(--typography-base-font-size)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/font/size/md",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-base-font-size"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "a63-control-font-size-sm",
@@ -5708,6 +5740,22 @@
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
     },
     {
+      "name": "a63-control-font-size-sm",
+      "cssVar": "--a63-control-font-size-sm",
+      "type": "typography",
+      "value": "var(--typography-base-font-size)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/font/size/sm",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-base-font-size"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
       "name": "a63-control-font-size-xl",
       "cssVar": "--a63-control-font-size-xl",
       "type": "typography",
@@ -5739,6 +5787,22 @@
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
     },
     {
+      "name": "a63-control-font-size-xl",
+      "cssVar": "--a63-control-font-size-xl",
+      "type": "typography",
+      "value": "var(--typography-lg-font-size)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/font/size/xl",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-lg-font-size"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
       "name": "a63-control-font-size-xs",
       "cssVar": "--a63-control-font-size-xs",
       "type": "typography",
@@ -5768,6 +5832,22 @@
       "lifecycle": "preview",
       "aliases": ["--typography-xs-font-size"],
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+    },
+    {
+      "name": "a63-control-font-size-xs",
+      "cssVar": "--a63-control-font-size-xs",
+      "type": "typography",
+      "value": "var(--typography-xs-font-size)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/font/size/xs",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-xs-font-size"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "a63-control-font-weight",
@@ -5886,6 +5966,22 @@
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
     },
     {
+      "name": "a63-control-height-lg",
+      "cssVar": "--a63-control-height-lg",
+      "type": "dimension",
+      "value": "calc(var(--a63-space-unit) * 12)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/height/lg",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
       "name": "a63-control-height-md",
       "cssVar": "--a63-control-height-md",
       "type": "dimension",
@@ -5915,6 +6011,22 @@
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+    },
+    {
+      "name": "a63-control-height-md",
+      "cssVar": "--a63-control-height-md",
+      "type": "dimension",
+      "value": "calc(var(--a63-space-unit) * 11)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/height/md",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "a63-control-height-sm",
@@ -5948,6 +6060,22 @@
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
     },
     {
+      "name": "a63-control-height-sm",
+      "cssVar": "--a63-control-height-sm",
+      "type": "dimension",
+      "value": "calc(var(--a63-space-unit) * 10)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/height/sm",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
       "name": "a63-control-height-xl",
       "cssVar": "--a63-control-height-xl",
       "type": "dimension",
@@ -5979,6 +6107,22 @@
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
     },
     {
+      "name": "a63-control-height-xl",
+      "cssVar": "--a63-control-height-xl",
+      "type": "dimension",
+      "value": "calc(var(--a63-space-unit) * 13)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/height/xl",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
       "name": "a63-control-height-xs",
       "cssVar": "--a63-control-height-xs",
       "type": "dimension",
@@ -6008,6 +6152,22 @@
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+    },
+    {
+      "name": "a63-control-height-xs",
+      "cssVar": "--a63-control-height-xs",
+      "type": "dimension",
+      "value": "calc(var(--a63-space-unit) * 9)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/height/xs",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "a63-control-highlight",
@@ -6059,6 +6219,21 @@
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
     },
     {
+      "name": "a63-control-icon-size-lg",
+      "cssVar": "--a63-control-icon-size-lg",
+      "type": "dimension",
+      "value": "1.25rem",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/icon/size/lg",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
       "name": "a63-control-icon-size-md",
       "cssVar": "--a63-control-icon-size-md",
       "type": "dimension",
@@ -6086,6 +6261,21 @@
       },
       "lifecycle": "preview",
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+    },
+    {
+      "name": "a63-control-icon-size-md",
+      "cssVar": "--a63-control-icon-size-md",
+      "type": "dimension",
+      "value": "1.125rem",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/icon/size/md",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "a63-control-icon-size-sm",
@@ -6117,6 +6307,21 @@
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
     },
     {
+      "name": "a63-control-icon-size-sm",
+      "cssVar": "--a63-control-icon-size-sm",
+      "type": "dimension",
+      "value": "1rem",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/icon/size/sm",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
       "name": "a63-control-icon-size-xl",
       "cssVar": "--a63-control-icon-size-xl",
       "type": "dimension",
@@ -6146,6 +6351,21 @@
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
     },
     {
+      "name": "a63-control-icon-size-xl",
+      "cssVar": "--a63-control-icon-size-xl",
+      "type": "dimension",
+      "value": "1.375rem",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/icon/size/xl",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
       "name": "a63-control-icon-size-xs",
       "cssVar": "--a63-control-icon-size-xs",
       "type": "dimension",
@@ -6173,6 +6393,21 @@
       },
       "lifecycle": "preview",
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+    },
+    {
+      "name": "a63-control-icon-size-xs",
+      "cssVar": "--a63-control-icon-size-xs",
+      "type": "dimension",
+      "value": "0.875rem",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/icon/size/xs",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "a63-control-min-size",
@@ -6659,6 +6894,22 @@
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
     },
     {
+      "name": "a63-control-padding-inline-lg",
+      "cssVar": "--a63-control-padding-inline-lg",
+      "type": "dimension",
+      "value": "var(--a63-space-5)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/padding/inline/lg",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-5"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
       "name": "a63-control-padding-inline-md",
       "cssVar": "--a63-control-padding-inline-md",
       "type": "dimension",
@@ -6688,6 +6939,22 @@
       "lifecycle": "preview",
       "aliases": ["--a63-space-4"],
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+    },
+    {
+      "name": "a63-control-padding-inline-md",
+      "cssVar": "--a63-control-padding-inline-md",
+      "type": "dimension",
+      "value": "var(--a63-space-4)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/padding/inline/md",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-4"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "a63-control-padding-inline-sm",
@@ -6721,6 +6988,22 @@
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
     },
     {
+      "name": "a63-control-padding-inline-sm",
+      "cssVar": "--a63-control-padding-inline-sm",
+      "type": "dimension",
+      "value": "var(--a63-space-3_5)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/padding/inline/sm",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-3_5"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
       "name": "a63-control-padding-inline-xl",
       "cssVar": "--a63-control-padding-inline-xl",
       "type": "dimension",
@@ -6752,6 +7035,22 @@
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
     },
     {
+      "name": "a63-control-padding-inline-xl",
+      "cssVar": "--a63-control-padding-inline-xl",
+      "type": "dimension",
+      "value": "var(--a63-space-6)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/padding/inline/xl",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-6"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
       "name": "a63-control-padding-inline-xs",
       "cssVar": "--a63-control-padding-inline-xs",
       "type": "dimension",
@@ -6781,6 +7080,22 @@
       "lifecycle": "preview",
       "aliases": ["--a63-space-3"],
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+    },
+    {
+      "name": "a63-control-padding-inline-xs",
+      "cssVar": "--a63-control-padding-inline-xs",
+      "type": "dimension",
+      "value": "var(--a63-space-3)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/padding/inline/xs",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-3"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "a63-control-press-transform",
@@ -8647,6 +8962,22 @@
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
     },
     {
+      "name": "a63-row-padding-block-md",
+      "cssVar": "--a63-row-padding-block-md",
+      "type": "dimension",
+      "value": "var(--a63-space-2)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "row/padding/block/md",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-2"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
       "name": "a63-row-padding-block-sm",
       "cssVar": "--a63-row-padding-block-sm",
       "type": "dimension",
@@ -8678,6 +9009,22 @@
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
     },
     {
+      "name": "a63-row-padding-block-sm",
+      "cssVar": "--a63-row-padding-block-sm",
+      "type": "dimension",
+      "value": "var(--a63-space-1_5)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "row/padding/block/sm",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-1_5"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
       "name": "a63-row-padding-block-xs",
       "cssVar": "--a63-row-padding-block-xs",
       "type": "dimension",
@@ -8707,6 +9054,22 @@
       "lifecycle": "preview",
       "aliases": ["--a63-space-1"],
       "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+    },
+    {
+      "name": "a63-row-padding-block-xs",
+      "cssVar": "--a63-row-padding-block-xs",
+      "type": "dimension",
+      "value": "var(--a63-space-1)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "row/padding/block/xs",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-1"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "a63-safe-area-bottom",
@@ -11758,7 +12121,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-base-font-size"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-body-font-weight",
@@ -11772,7 +12135,7 @@
         "path": "type/body/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-body-font-weight-strong",
@@ -11786,7 +12149,7 @@
         "path": "type/body/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-body-line-height",
@@ -11801,7 +12164,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-base-line-height"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-callout-font-size",
@@ -11816,7 +12179,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-base-font-size"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-callout-font-weight",
@@ -11830,7 +12193,7 @@
         "path": "type/callout/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-callout-font-weight-strong",
@@ -11844,7 +12207,7 @@
         "path": "type/callout/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-callout-line-height",
@@ -11859,7 +12222,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-base-line-height"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-caption-1-font-size",
@@ -11874,7 +12237,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-xs-font-size"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-caption-1-font-weight",
@@ -11888,7 +12251,7 @@
         "path": "type/caption/1/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-caption-1-font-weight-strong",
@@ -11902,7 +12265,7 @@
         "path": "type/caption/1/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-caption-1-line-height",
@@ -11917,7 +12280,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-xs-line-height"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-caption-2-font-size",
@@ -11932,7 +12295,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-2xs-font-size"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-caption-2-font-weight",
@@ -11946,7 +12309,7 @@
         "path": "type/caption/2/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-caption-2-font-weight-strong",
@@ -11960,7 +12323,7 @@
         "path": "type/caption/2/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-caption-2-line-height",
@@ -11975,7 +12338,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-2xs-line-height"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-display-font-size",
@@ -11990,7 +12353,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-10xl-font-size"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-display-font-weight",
@@ -12004,7 +12367,7 @@
         "path": "type/display/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-display-font-weight-strong",
@@ -12018,7 +12381,7 @@
         "path": "type/display/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-display-large-font-size",
@@ -12033,7 +12396,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-11xl-font-size"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-display-large-font-weight",
@@ -12047,7 +12410,7 @@
         "path": "type/display/large/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-display-large-font-weight-strong",
@@ -12061,7 +12424,7 @@
         "path": "type/display/large/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-display-large-line-height",
@@ -12076,7 +12439,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-11xl-line-height"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-display-line-height",
@@ -12091,7 +12454,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-10xl-line-height"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-footnote-font-size",
@@ -12106,7 +12469,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-xs-font-size"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-footnote-font-weight",
@@ -12120,7 +12483,7 @@
         "path": "type/footnote/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-footnote-font-weight-strong",
@@ -12134,7 +12497,7 @@
         "path": "type/footnote/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-footnote-line-height",
@@ -12149,7 +12512,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-xs-line-height"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-headline-font-size",
@@ -12164,7 +12527,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-base-font-size"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-headline-font-weight",
@@ -12178,7 +12541,7 @@
         "path": "type/headline/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-headline-font-weight-strong",
@@ -12192,7 +12555,7 @@
         "path": "type/headline/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-headline-line-height",
@@ -12207,7 +12570,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-base-line-height"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-large-title-font-size",
@@ -12222,7 +12585,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-6xl-font-size"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-large-title-font-weight",
@@ -12236,7 +12599,7 @@
         "path": "type/large/title/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-large-title-font-weight-strong",
@@ -12250,7 +12613,7 @@
         "path": "type/large/title/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-large-title-line-height",
@@ -12265,7 +12628,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-6xl-line-height"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-subhead-font-size",
@@ -12280,7 +12643,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-sm-font-size"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-subhead-font-weight",
@@ -12294,7 +12657,7 @@
         "path": "type/subhead/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-subhead-font-weight-strong",
@@ -12308,7 +12671,7 @@
         "path": "type/subhead/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-subhead-line-height",
@@ -12323,7 +12686,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-sm-line-height"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-title-1-font-size",
@@ -12338,7 +12701,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-5xl-font-size"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-title-1-font-weight",
@@ -12352,7 +12715,7 @@
         "path": "type/title/1/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-title-1-font-weight-strong",
@@ -12366,7 +12729,7 @@
         "path": "type/title/1/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-title-1-line-height",
@@ -12381,7 +12744,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-5xl-line-height"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-title-2-font-size",
@@ -12396,7 +12759,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-3xl-font-size"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-title-2-font-weight",
@@ -12410,7 +12773,7 @@
         "path": "type/title/2/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-title-2-font-weight-strong",
@@ -12424,7 +12787,7 @@
         "path": "type/title/2/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-title-2-line-height",
@@ -12439,7 +12802,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-3xl-line-height"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-title-3-font-size",
@@ -12454,7 +12817,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-2xl-font-size"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-title-3-font-weight",
@@ -12468,7 +12831,7 @@
         "path": "type/title/3/font/weight"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-title-3-font-weight-strong",
@@ -12482,7 +12845,7 @@
         "path": "type/title/3/font/weight/strong"
       },
       "lifecycle": "preview",
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-type-title-3-line-height",
@@ -12497,7 +12860,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-2xl-line-height"],
-      "scope": ":root, [data-window-size]"
+      "scope": ":root, [data-window-size], [data-a63-form-factor]"
     },
     {
       "name": "a63-viewport-height",
@@ -25526,6 +25889,22 @@
       "cssVar": "--typography-10xl-font-size",
       "type": "typography",
       "value": "calc(40px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/10xl/font/size",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-10xl-font-size",
+      "cssVar": "--typography-10xl-font-size",
+      "type": "typography",
+      "value": "calc(40px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
       "figma": {
@@ -25583,6 +25962,22 @@
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
       "scope": "[data-window-size='xs']"
+    },
+    {
+      "name": "typography-10xl-line-height",
+      "cssVar": "--typography-10xl-line-height",
+      "type": "typography",
+      "value": "calc(44px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/10xl/line/height",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "typography-10xl-line-height",
@@ -25652,6 +26047,22 @@
       "cssVar": "--typography-11xl-font-size",
       "type": "typography",
       "value": "calc(56px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/11xl/font/size",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-11xl-font-size",
+      "cssVar": "--typography-11xl-font-size",
+      "type": "typography",
+      "value": "calc(56px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
       "figma": {
@@ -25715,6 +26126,22 @@
       "cssVar": "--typography-11xl-line-height",
       "type": "typography",
       "value": "calc(60px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/11xl/line/height",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-11xl-line-height",
+      "cssVar": "--typography-11xl-line-height",
+      "type": "typography",
+      "value": "calc(60px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
       "figma": {
@@ -25772,6 +26199,22 @@
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
       "scope": "[data-window-size='xs']"
+    },
+    {
+      "name": "typography-2xl-font-size",
+      "cssVar": "--typography-2xl-font-size",
+      "type": "typography",
+      "value": "calc(20px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/2xl/font/size",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "typography-2xl-font-size",
@@ -25869,6 +26312,22 @@
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
       "scope": "[data-window-size='xs']"
+    },
+    {
+      "name": "typography-2xl-line-height",
+      "cssVar": "--typography-2xl-line-height",
+      "type": "typography",
+      "value": "calc(25px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/2xl/line/height",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "typography-2xl-line-height",
@@ -25972,6 +26431,22 @@
       "cssVar": "--typography-2xs-font-size",
       "type": "typography",
       "value": "calc(11px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/2xs/font/size",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-2xs-font-size",
+      "cssVar": "--typography-2xs-font-size",
+      "type": "typography",
+      "value": "calc(11px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
       "figma": {
@@ -26035,6 +26510,22 @@
       "cssVar": "--typography-2xs-line-height",
       "type": "typography",
       "value": "calc(13px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/2xs/line/height",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-2xs-line-height",
+      "cssVar": "--typography-2xs-line-height",
+      "type": "typography",
+      "value": "calc(13px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
       "figma": {
@@ -26092,6 +26583,22 @@
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
       "scope": "[data-window-size='xs']"
+    },
+    {
+      "name": "typography-3xl-font-size",
+      "cssVar": "--typography-3xl-font-size",
+      "type": "typography",
+      "value": "calc(22px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/3xl/font/size",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "typography-3xl-font-size",
@@ -26194,6 +26701,22 @@
       "name": "typography-3xl-line-height",
       "cssVar": "--typography-3xl-line-height",
       "type": "typography",
+      "value": "calc(28px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/3xl/line/height",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-3xl-line-height",
+      "cssVar": "--typography-3xl-line-height",
+      "type": "typography",
       "value": "calc(26px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
@@ -26286,6 +26809,22 @@
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
       "scope": "[data-window-size='xs']"
+    },
+    {
+      "name": "typography-4xl-font-size",
+      "cssVar": "--typography-4xl-font-size",
+      "type": "typography",
+      "value": "calc(25px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/4xl/font/size",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "typography-4xl-font-size",
@@ -26388,6 +26927,22 @@
       "name": "typography-4xl-line-height",
       "cssVar": "--typography-4xl-line-height",
       "type": "typography",
+      "value": "calc(31px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/4xl/line/height",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-4xl-line-height",
+      "cssVar": "--typography-4xl-line-height",
+      "type": "typography",
       "value": "calc(29px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
@@ -26480,6 +27035,22 @@
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
       "scope": "[data-window-size='xs']"
+    },
+    {
+      "name": "typography-5xl-font-size",
+      "cssVar": "--typography-5xl-font-size",
+      "type": "typography",
+      "value": "calc(28px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/5xl/font/size",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "typography-5xl-font-size",
@@ -26582,6 +27153,22 @@
       "name": "typography-5xl-line-height",
       "cssVar": "--typography-5xl-line-height",
       "type": "typography",
+      "value": "calc(34px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/5xl/line/height",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-5xl-line-height",
+      "cssVar": "--typography-5xl-line-height",
+      "type": "typography",
       "value": "calc(33px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
@@ -26674,6 +27261,22 @@
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
       "scope": "[data-window-size='xs']"
+    },
+    {
+      "name": "typography-6xl-font-size",
+      "cssVar": "--typography-6xl-font-size",
+      "type": "typography",
+      "value": "calc(34px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/6xl/font/size",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "typography-6xl-font-size",
@@ -26776,6 +27379,22 @@
       "name": "typography-6xl-line-height",
       "cssVar": "--typography-6xl-line-height",
       "type": "typography",
+      "value": "calc(41px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/6xl/line/height",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-6xl-line-height",
+      "cssVar": "--typography-6xl-line-height",
+      "type": "typography",
       "value": "calc(35px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
@@ -26868,6 +27487,22 @@
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
       "scope": "[data-window-size='xs']"
+    },
+    {
+      "name": "typography-7xl-font-size",
+      "cssVar": "--typography-7xl-font-size",
+      "type": "typography",
+      "value": "calc(36px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/7xl/font/size",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "typography-7xl-font-size",
@@ -26970,6 +27605,22 @@
       "name": "typography-7xl-line-height",
       "cssVar": "--typography-7xl-line-height",
       "type": "typography",
+      "value": "calc(44px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/7xl/line/height",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-7xl-line-height",
+      "cssVar": "--typography-7xl-line-height",
+      "type": "typography",
       "value": "calc(39px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
@@ -27062,6 +27713,22 @@
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
       "scope": "[data-window-size='xs']"
+    },
+    {
+      "name": "typography-8xl-font-size",
+      "cssVar": "--typography-8xl-font-size",
+      "type": "typography",
+      "value": "calc(39px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/8xl/font/size",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "typography-8xl-font-size",
@@ -27164,6 +27831,22 @@
       "name": "typography-8xl-line-height",
       "cssVar": "--typography-8xl-line-height",
       "type": "typography",
+      "value": "calc(49px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/8xl/line/height",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-8xl-line-height",
+      "cssVar": "--typography-8xl-line-height",
+      "type": "typography",
       "value": "calc(44px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
@@ -27256,6 +27939,22 @@
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
       "scope": "[data-window-size='xs']"
+    },
+    {
+      "name": "typography-9xl-font-size",
+      "cssVar": "--typography-9xl-font-size",
+      "type": "typography",
+      "value": "calc(44px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/9xl/font/size",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "typography-9xl-font-size",
@@ -27358,6 +28057,22 @@
       "name": "typography-9xl-line-height",
       "cssVar": "--typography-9xl-line-height",
       "type": "typography",
+      "value": "calc(55px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/9xl/line/height",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-9xl-line-height",
+      "cssVar": "--typography-9xl-line-height",
+      "type": "typography",
       "value": "calc(49px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
@@ -27455,6 +28170,22 @@
       "name": "typography-base-font-size",
       "cssVar": "--typography-base-font-size",
       "type": "typography",
+      "value": "calc(17px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/base/font/size",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-base-font-size",
+      "cssVar": "--typography-base-font-size",
+      "type": "typography",
       "value": "calc(15px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
@@ -27518,6 +28249,22 @@
       "name": "typography-base-line-height",
       "cssVar": "--typography-base-line-height",
       "type": "typography",
+      "value": "calc(22px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/base/line/height",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-base-line-height",
+      "cssVar": "--typography-base-line-height",
+      "type": "typography",
       "value": "calc(23px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
@@ -27576,6 +28323,22 @@
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
       "scope": "[data-window-size='xs']"
+    },
+    {
+      "name": "typography-lg-font-size",
+      "cssVar": "--typography-lg-font-size",
+      "type": "typography",
+      "value": "calc(18px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/lg/font/size",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "typography-lg-font-size",
@@ -27656,6 +28419,22 @@
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
       "scope": "[data-window-size='xs']"
+    },
+    {
+      "name": "typography-lg-line-height",
+      "cssVar": "--typography-lg-line-height",
+      "type": "typography",
+      "value": "calc(24px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/lg/line/height",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "typography-lg-line-height",
@@ -27865,6 +28644,22 @@
       "name": "typography-sm-font-size",
       "cssVar": "--typography-sm-font-size",
       "type": "typography",
+      "value": "calc(15px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/sm/font/size",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-sm-font-size",
+      "cssVar": "--typography-sm-font-size",
+      "type": "typography",
       "value": "calc(13px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
@@ -27929,6 +28724,22 @@
       "cssVar": "--typography-sm-line-height",
       "type": "typography",
       "value": "calc(20px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/sm/line/height",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-sm-line-height",
+      "cssVar": "--typography-sm-line-height",
+      "type": "typography",
+      "value": "calc(20px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
       "figma": {
@@ -27986,6 +28797,22 @@
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
       "scope": "[data-window-size='xs']"
+    },
+    {
+      "name": "typography-xl-font-size",
+      "cssVar": "--typography-xl-font-size",
+      "type": "typography",
+      "value": "calc(19px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/xl/font/size",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "typography-xl-font-size",
@@ -28071,6 +28898,22 @@
       "name": "typography-xl-line-height",
       "cssVar": "--typography-xl-line-height",
       "type": "typography",
+      "value": "calc(24px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/xl/line/height",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-xl-line-height",
+      "cssVar": "--typography-xl-line-height",
+      "type": "typography",
       "value": "calc(23px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
@@ -28151,6 +28994,22 @@
       "name": "typography-xs-font-size",
       "cssVar": "--typography-xs-font-size",
       "type": "typography",
+      "value": "calc(13px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/xs/font/size",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "typography-xs-font-size",
+      "cssVar": "--typography-xs-font-size",
+      "type": "typography",
       "value": "calc(12px * var(--typography-scale, 1))",
       "sourceFile": "packages/styles/src/tokens/foundation/typography.css",
       "layer": "foundation",
@@ -28209,6 +29068,22 @@
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
       "scope": "[data-window-size='xs']"
+    },
+    {
+      "name": "typography-xs-line-height",
+      "cssVar": "--typography-xs-line-height",
+      "type": "typography",
+      "value": "calc(18px * var(--typography-scale, 1))",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "typography/xs/line/height",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-scale"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "typography-xs-line-height",

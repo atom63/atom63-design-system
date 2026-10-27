@@ -126,8 +126,11 @@ Primitive → Semantic (--a63-*) → Design Language → Mode → Theme → OS �
 ```
 
 - **Primitive / Semantic** — `tokens/foundation/*`, `tokens/semantics.css`
-- **Design Language / Input / Density** — `contracts/environment.css`
-  (`[data-a63-design-language]`, `[data-a63-input]`, `[data-a63-density]`)
+- **Design Language / Input / Density / Form factor** — `contracts/environment.css`
+  (`[data-a63-design-language]`, `[data-a63-input]`, `[data-a63-density]`,
+  `[data-a63-form-factor='phone']`). The phone form factor sets the type steps
+  to the iOS text sizes (body 17px) and the iOS control ramp inside a phone
+  screen; `AppView layout="phone"` stamps it, viewport width does not.
 - **Mode** — `.light` / `.dark` (`[data-a63-mode]`) on the semantic layer
 - **Theme** — `themes/*.css` under `[data-a63-theme]` (visual skin / paint)
 - **OS** — `os/*.css` under `[data-a63-os]` (chrome structure + chrome paint

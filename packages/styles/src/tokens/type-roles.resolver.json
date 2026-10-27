@@ -1,6 +1,6 @@
 {
   "version": "2025.10",
-  "description": "Text roles, named after the Apple HIG text styles so one intent maps to every platform. Each\nrole takes a step of the web type scale (and so follows the window size and type scale) and\nrecords its iOS text style in $extensions[\"io.atom63.platforms\"]; on iOS the role uses that\nFont.TextStyle and Dynamic Type. -strong is the emphasized weight: bold for the display roles and the three\nlargest titles, semibold for the rest. display and display-large sit above Apple's text\nstyles (for balances, prices and hero headlines); iOS draws them at the same size, scaled with\nDynamic Type like largeTitle (AtomDisplayRole, AtomAmountText). Web sizes follow web conventions (body is 15px here, 17pt on\niOS); the role, not the number, is what stays the same.\nThe roles are declared on :root and on every [data-window-size] scope, where the\nsteps they read are redeclared, so a role inside an OS window takes that window's sizes.",
+  "description": "Text roles, named after the Apple HIG text styles so one intent maps to every platform. Each\nrole takes a step of the web type scale (and so follows the window size and type scale) and\nrecords its iOS text style in $extensions[\"io.atom63.platforms\"]; on iOS the role uses that\nFont.TextStyle and Dynamic Type. -strong is the emphasized weight: bold for the display roles and the three\nlargest titles, semibold for the rest. display and display-large sit above Apple's text\nstyles (for balances, prices and hero headlines); iOS draws them at the same size, scaled with\nDynamic Type like largeTitle (AtomDisplayRole, AtomAmountText). Web sizes follow web conventions (body is 15px here, 17pt on\niOS); the role, not the number, is what stays the same.\nA phone screen ([data-a63-form-factor='phone'], which AppView layout=\"phone\" stamps) takes the iOS\nsizes instead: body 17, subhead 15, footnote 13.\nThe roles are declared on :root, on every [data-window-size] scope and on the phone scope, where the\nsteps they read are redeclared, so a role inside an OS window or a phone screen takes its sizes.",
   "sets": {
     "base": {
       "sources": [
@@ -353,7 +353,7 @@
       ],
       "$extensions": {
         "io.atom63.css": {
-          "selector": ":root,\n[data-window-size]"
+          "selector": ":root,\n[data-window-size],\n[data-a63-form-factor]"
         }
       }
     }

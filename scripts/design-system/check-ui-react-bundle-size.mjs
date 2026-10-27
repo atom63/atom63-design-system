@@ -87,7 +87,12 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // or the host's value, Enter to send outside an input method's composition,
 // and the send button that turns into stop. Six case runs hand-built chat.
 // With the filled and elevated cards and the raised button it holds 94.8.
-const gzipBudgetBytes = 95 * 1024
+//
+// 95 kB held 94.9 kB. Amount adds 0.4 kB, taking it to 95.3, so it moves to
+// 96. It is the formatted amount split into runs with Intl formatToParts (the
+// fraction drawn small and raised) and its single accessible label. No web run
+// in case study round 5 drew a hero balance or amount in a display role.
+const gzipBudgetBytes = 96 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()

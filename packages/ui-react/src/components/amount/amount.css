@@ -1,0 +1,54 @@
+/*
+ * Amount recipe — the SURFACE archetype. Reads the display text roles
+ * (--a63-type-display-*, --a63-type-display-large-*), so it follows the type
+ * scale, the window size and the phone form factor. The fraction matches the
+ * `amount-fraction` utility and iOS AtomTokens.AmountFraction: half size,
+ * raised 0.8em, with no line height of its own so the line keeps the role's.
+ */
+
+.a63-Amount {
+  --amount-font-size: var(--a63-type-display-font-size);
+  --amount-line-height: var(--a63-type-display-line-height);
+  --amount-font-weight: var(--a63-type-display-font-weight);
+  --amount-font-weight-strong: var(--a63-type-display-font-weight-strong);
+
+  position: relative;
+  display: inline-block;
+  font-size: var(--amount-font-size);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--amount-font-weight);
+  line-height: var(--amount-line-height);
+  white-space: nowrap;
+}
+
+.a63-Amount[data-size='lg'] {
+  --amount-font-size: var(--a63-type-display-large-font-size);
+  --amount-line-height: var(--a63-type-display-large-line-height);
+  --amount-font-weight: var(--a63-type-display-large-font-weight);
+  --amount-font-weight-strong: var(--a63-type-display-large-font-weight-strong);
+}
+
+.a63-Amount[data-strong] {
+  font-weight: var(--amount-font-weight-strong);
+}
+
+.a63-AmountFraction {
+  font-size: 0.5em;
+  line-height: 0;
+  vertical-align: 0.8em;
+}
+
+/* The whole amount as one label for assistive technology; the drawn parts are
+   aria-hidden. Not selectable, so copying the amount copies it once. */
+.a63-Amount-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+  user-select: none;
+}

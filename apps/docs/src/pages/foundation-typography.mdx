@@ -84,7 +84,25 @@ Text roles name what text is for, after the Apple HIG text styles, so one intent
 | `caption-1` | `xs` | `caption` |
 | `caption-2` | `2xs` | `caption2` |
 
-`-strong` is the emphasized weight: bold for the display roles, `large-title`, `title-1` and `title-2`, semibold for the rest. The display roles are for balances, prices and hero headlines; iOS has no larger text style, so `AtomDisplayRole` draws them at the web size and scales it with Dynamic Type like `largeTitle`. For an amount such as `$13.25`, put the whole number in one `text-display tabular-nums` span and wrap the fraction in `amount-fraction`, which sets it at half size and raises it. On iOS, `AtomAmountText(13.25, currencyCode: "USD", role: .display)` formats the amount for the locale, draws the fraction the same way with monospaced digits and reads as one VoiceOver label; `.atomDisplayFont()` sets a display role on any other text. Web sizes follow web conventions (body is 15px; iOS body is 17pt); the role is what stays the same. Size steps are fine while exploring; settled UI should use roles.
+`-strong` is the emphasized weight: bold for the display roles, `large-title`, `title-1` and `title-2`, semibold for the rest. The display roles are for balances, prices and hero headlines; iOS has no larger text style, so `AtomDisplayRole` draws them at the web size and scales it with Dynamic Type like `largeTitle`. For an amount such as `$13.25`, use `Amount` from `@atom63/ui-react` (`<Amount value={13.25} currency="USD" />`, `size="lg"` for `display-large`): it formats the value for the locale with `Intl.NumberFormat`, draws the fraction at half size and raised with tabular figures, and reads as one label. Without the component, put the whole number in one `text-display tabular-nums` span and wrap the fraction in `amount-fraction`, which sets it at half size and raises it. On iOS, `AtomAmountText(13.25, currencyCode: "USD", role: .display)` formats the amount for the locale, draws the fraction the same way with monospaced digits and reads as one VoiceOver label; `.atomDisplayFont()` sets a display role on any other text. Web sizes follow web conventions (body is 15px; iOS body is 17pt); the role is what stays the same. Size steps are fine while exploring; settled UI should use roles.
+
+## Phone screens
+
+The web scale is set for pages and desktop apps: body is 15px and compact control labels are 12–13px. A phone app screen reads at the iOS sizes instead, so `[data-a63-form-factor="phone"]` gives a subtree the type steps and control sizing of a phone. `AppView layout="phone"` (the app-view page template) stamps it on the screen; stamp it yourself on the root of a phone-only web app. Viewport width does not apply it, so a docs page or a marketing page on a phone keeps the web sizes.
+
+| Role | Web, under 640px | Phone (`data-a63-form-factor="phone"`) | iOS text style |
+|------|------------------|-----------------------------------------|----------------|
+| `body`, `headline`, `callout` | 15px | 17px | `body` 17pt |
+| `subhead` | 13px | 15px | `subheadline` 15pt |
+| `footnote`, `caption-1` | 12px | 13px | `footnote` 13pt |
+| `caption-2` | 11px | 11px | `caption2` 11pt |
+| `title-3` | 19px | 20px | `title3` 20pt |
+| `title-2` | 21px | 22px | `title2` 22pt |
+| `title-1` | 26px | 28px | `title` 28pt |
+| `large-title` | 28px | 34px | `largeTitle` 34pt |
+| `display`, `display-large` | 40px, 56px | 40px, 56px | `AtomDisplayRole` |
+
+The scope sets the steps themselves (`text-sm` is 15px and `text-base` 17px inside it), redeclares the text roles, and sizes controls the iOS way: heights of 36, 40, 44, 48 and 52px, and every standard control label (buttons, rows, fields, menus) at body size, with `xs` at footnote size for badges, shortcuts and initials. The type scale preference still multiplies the phone steps. Inside a phone screen, keep rows and labels on the component defaults or the text roles; shrinking them with `text-sm` or `text-xs` brings back the desktop sizes.
 
 ## Usage guidance
 

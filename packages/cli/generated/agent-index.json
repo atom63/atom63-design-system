@@ -5607,6 +5607,81 @@
    "contract": {
     "archetypes": [
      {
+      "description": "In-flow containers and content surfaces that do not inherently manipulate state.",
+      "id": "surface",
+      "label": "Static content surfaces"
+     }
+    ],
+    "axes": [
+     {
+      "name": "sizes",
+      "values": [
+       "md",
+       "lg"
+      ],
+      "default": "md"
+     }
+    ],
+    "exportName": "amountContract",
+    "slots": [
+     "amount",
+     "amount-fraction"
+    ],
+    "source": "packages/ui-foundation/contracts/components/amount.json",
+    "states": [
+     "rest"
+    ],
+    "tokenSlots": []
+   },
+   "exports": {
+    "types": [
+     "AmountProps"
+    ],
+    "values": [
+     "Amount"
+    ]
+   },
+   "group": {
+    "id": "content-and-surfaces",
+    "title": "Content and surfaces"
+   },
+   "guidance": [
+    "Use Amount for a balance, a price or the amount being sent: the hero number of a screen. It formats the value for the locale with Intl.NumberFormat and reads as one label. Body-size amounts in rows stay plain text with tabular-nums. iOS: AtomAmountText.",
+    "Keep product data and fetching outside the presentational component.",
+    "Test long, empty, and narrow content before adding local layout overrides."
+   ],
+   "importPath": "@atom63/ui-react",
+   "label": "Amount",
+   "markdown": "# Amount\n\nAmount draws a money amount in a display text role, with the fraction smaller and raised, as banking and pricing screens draw a balance.\n\n**Status:** Preview\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Use Amount for a balance, a price or the amount being sent: the hero number of a screen. It formats the value for the locale with Intl.NumberFormat and reads as one label. Body-size amounts in rows stay plain text with tabular-nums. iOS: AtomAmountText.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Amount } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Amount`\n\n**Types:** `AmountProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/amount.json` (`amountContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `sizes` | `md`, `lg` | `md` |\n\n**Slots:** `amount`, `amount-fraction`\n\n**States:** `rest`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.\n\n## Related components\n\n- [Badge](/components/component-badge)\n- [Text Ticker](/components/component-text-ticker)\n",
+   "related": [
+    "badge",
+    "text-ticker"
+   ],
+   "route": "/components/component-amount",
+   "slug": "amount",
+   "status": "preview",
+   "stories": {
+    "file": "packages/ui-react/src/components/amount/amount.stories.tsx",
+    "names": [
+     "Playground",
+     "Sizes",
+     "Locales",
+     "PhoneBalance",
+     "Themes"
+    ],
+    "source": "import { amountSizes, themes } from '@atom63/ui-foundation'\nimport { Amount, UIProvider } from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\n\nconst meta = {\n  title: 'UI React/Amount',\n  component: Amount,\n  argTypes: {\n    size: { control: 'inline-radio', options: amountSizes },\n  },\n  args: { currency: 'USD', locale: 'en-US', size: 'md', value: 13.25 },\n} satisfies Meta<typeof Amount>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nexport const Playground: Story = {}\n\nexport const Sizes: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12, justifyItems: 'start' }}>\n      {amountSizes.map(size => (\n        <Amount currency=\"USD\" key={size} locale=\"en-US\" size={size} value={2480.5} />\n      ))}\n      <Amount currency=\"USD\" locale=\"en-US\" size=\"lg\" strong value={2480.5} />\n    </div>\n  ),\n}\n\n/* The locale decides the separators and where the symbol goes; only the decimal\n   separator and the digits after it are drawn small. */\nexport const Locales: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12, justifyItems: 'start' }}>\n      <Amount currency=\"USD\" locale=\"en-US\" value={1234.56} />\n      <Amount currency=\"EUR\" locale=\"de-DE\" value={1234.56} />\n      <Amount currency=\"GBP\" locale=\"en-GB\" value={-42.1} />\n      <Amount currency=\"JPY\" locale=\"ja-JP\" value={980} />\n    </div>\n  ),\n}\n\n/* A balance as a bank home screen draws it: a footnote label over the amount,\n   inside the phone form factor that AppView layout=\"phone\" stamps. */\nexport const PhoneBalance: Story = {\n  render: () => (\n    <div\n      data-a63-form-factor=\"phone\"\n      style={{ display: 'grid', gap: 4, maxWidth: 390, padding: 16 }}\n    >\n      <p\n        style={{\n          color: 'var(--a63-text-secondary)',\n          fontSize: 'var(--a63-type-footnote-font-size)',\n          lineHeight: 'var(--a63-type-footnote-line-height)',\n          margin: 0,\n        }}\n      >\n        Main account\n      </p>\n      <Amount currency=\"USD\" locale=\"en-US\" size=\"lg\" strong value={13250.75} />\n    </div>\n  ),\n}\n\nexport const Themes: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {themes.map(theme =>\n        (['light', 'dark'] as const).map(mode => (\n          <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>\n            <div style={{ background: 'var(--a63-surface-page)', padding: '0.75rem' }}>\n              <Amount currency=\"USD\" locale=\"en-US\" value={13.25} />\n            </div>\n          </UIProvider>\n        ))\n      )}\n    </div>\n  ),\n}\n"
+   },
+   "summary": "Amount draws a money amount in a display text role, with the fraction smaller and raised, as banking and pricing screens draw a balance.",
+   "usage": "Use Amount for a balance, a price or the amount being sent: the hero number of a screen. It formats the value for the locale with Intl.NumberFormat and reads as one label. Body-size amounts in rows stay plain text with tabular-nums. iOS: AtomAmountText.",
+   "usageExports": [
+    "Amount"
+   ]
+  },
+  {
+   "axisGuidance": null,
+   "contract": {
+    "archetypes": [
+     {
       "description": "Compact presentational labels, statuses, and keyboard hints.",
       "id": "marker",
       "label": "Markers and keycaps"
@@ -8693,7 +8768,7 @@
   {
    "area": "foundations",
    "label": "Typography",
-   "markdown": "# Typography\n\nThe type system targets dense information interfaces rather than marketing pages. Body text starts at 15px—between compact 14px UI conventions and the browser's 16px default—to balance information density with sustained reading.\n\n## Design intent\n\nI wanted a scale that serves three very different surfaces from the same tokens: portfolio pages with expressive display type, documentation with dense readable prose, and app panels with compact controls. The solution is one responsive scale plus an independent `--typography-scale` multiplier that any subtree can adjust.\n\nThe shipped scale is deliberately not fluid. It uses viewport breakpoints for pages and `data-window-size` overrides for OS windows, so a constrained window can use its own size band even on a wide viewport. The separate `data-a63-type-scale` axis adjusts the whole ramp for user preference.\n\n## Font families\n\n| CSS variable | Tailwind | Stack |\n|--------------|----------|-------|\n| `--font-family-sans` | `font-sans` | Geist, system UI |\n| `--font-family-serif` | `font-serif` | Brawler, Georgia |\n| `--font-family-mono` | `font-mono` | Geist Mono, monospace |\n\nI chose Geist because it's optimized for interfaces — generous x-height, clear at small sizes, and a mono companion that shares the same metrics. Brawler is reserved for rare editorial moments in the portfolio; the system defaults to sans everywhere.\n\n## How the scale works\n\nSixteen steps from `2xs` (11px) to `11xl` (56px). Up to `9xl` (39px at mobile, 49px at `768px+`) the scale grows at `640px` and `768px`, and `[data-window-size='xs'|'sm'|'md'|'lg'|'xl']` applies the same bands inside OS windows; the two display steps, `10xl` (40px) and `11xl` (56px), stay the same at every width.\n\n## Mental model\n\nTypography has three separate jobs:\n\n| Job | What it controls | Examples |\n|-----|------------------|----------|\n| Reading | Long-form comfort | Prose, docs, descriptions |\n| Hierarchy | Relative importance | Page titles, section headers, labels |\n| Density | How much interface fits | Sidebars, tables, controls, OS windows |\n\nDo not solve all three with one heading scale. A docs page, a compact sidebar, and a portfolio hero need different hierarchy even when they share the same tokens.\n\n### Line-height strategy\n\nBody text (`xs` through `lg`) uses a ~1.5× ratio for comfortable reading. Display sizes (`xl` and above) compress to ~1.25× — tighter line-height at large sizes prevents headings from floating away from their content.\n\n### The scale multiplier\n\n`--typography-scale` defaults to `1`. The shipped `data-a63-type-scale` values map to `0.9` (`compact`), `1` (`normal`), `1.1` (`comfortable`), and `1.2` (`large`). OS window width is handled separately by `data-window-size`; the multiplier is a personalization control, not the window breakpoint mechanism.\n\n## Decisions worth knowing\n\n### 15px base, not 16px\n\nMost systems use 16px because browsers default to it. I chose 15px after testing information-dense layouts — docs tables, prop references, sidebar navigation. At 16px, content felt loose and wasted space. At 14px, extended reading got fatiguing. 15px is the sweet spot for my use cases: dense enough for tool interfaces, comfortable enough for documentation prose.\n\n### Breakpoints over fluid\n\nFluid typography (`clamp()`) assumes the viewport is the right proxy for text size. In the OS metaphor, multiple windows have arbitrary widths on one screen. Breakpoint jumps plus `data-window-size` attributes let window content follow its container band instead of the outer viewport.\n\n### No heading-element-to-scale mapping in CSS\n\nI don't automatically map `h1` to `9xl` or `h2` to `8xl` in the base tokens. Different surfaces need different heading scales — a docs `h2` should be smaller than a portfolio `h2`. The MDX variants handle heading sizing per context, and the raw scale stays available for explicit use via `text-*` utilities.\n\n### Visual hierarchy and semantics are separate\n\nA semantic `h2` does not always need to look like the second-largest text on the page. The `SectionHeader` pattern follows this rule: `variant` controls visual scale, while `level` can control document outline. That keeps accessibility and visual rhythm from fighting each other.\n\n## Text roles\n\nText roles name what text is for, after the Apple HIG text styles, so one intent works on every platform. Each role picks a step of the scale on the web and a `Font.TextStyle` (with Dynamic Type) on iOS. The source is `packages/styles/src/tokens/type-roles.resolver.json`; each role has `--a63-type-<role>-font-size`, `-line-height`, `-font-weight` and `-font-weight-strong`, and the Tailwind utilities `text-<role>` and `text-<role>-strong` set all three at once.\n\n| Role | Web step | iOS text style |\n|------|----------|----------------|\n| `display-large` | `11xl`, weight 600 | 56pt, scaled like `largeTitle` |\n| `display` | `10xl`, weight 600 | 40pt, scaled like `largeTitle` |\n| `large-title` | `6xl` | `largeTitle` |\n| `title-1` | `5xl` | `title` |\n| `title-2` | `3xl` | `title2` |\n| `title-3` | `2xl` | `title3` |\n| `headline` | `base`, weight 600 | `headline` |\n| `body` | `base` | `body` |\n| `callout` | `base` | `callout` |\n| `subhead` | `sm` | `subheadline` |\n| `footnote` | `xs` | `footnote` |\n| `caption-1` | `xs` | `caption` |\n| `caption-2` | `2xs` | `caption2` |\n\n`-strong` is the emphasized weight: bold for the display roles, `large-title`, `title-1` and `title-2`, semibold for the rest. The display roles are for balances, prices and hero headlines; iOS has no larger text style, so `AtomDisplayRole` draws them at the web size and scales it with Dynamic Type like `largeTitle`. For an amount such as `$13.25`, put the whole number in one `text-display tabular-nums` span and wrap the fraction in `amount-fraction`, which sets it at half size and raises it. On iOS, `AtomAmountText(13.25, currencyCode: \"USD\", role: .display)` formats the amount for the locale, draws the fraction the same way with monospaced digits and reads as one VoiceOver label; `.atomDisplayFont()` sets a display role on any other text. Web sizes follow web conventions (body is 15px; iOS body is 17pt); the role is what stays the same. Size steps are fine while exploring; settled UI should use roles.\n\n## Usage guidance\n\n| Surface | Typical range | Scale multiplier |\n|---------|---------------|------------------|\n| Portfolio hero | `4xl`–`9xl` | Usually `normal`; user preference still applies |\n| Documentation prose | `sm`–`xl` | `1` |\n| App panels / OS windows | `xs`–`lg` | Window-size band + active type-scale axis |\n| Code blocks | `sm` mono | `1` |\n\n## Anti-patterns\n\n```tsx\n// Avoid: viewport-sized type inside a constrained panel.\n```\n\nThe panel is narrow even if the viewport is wide. The text should respond to the container's role, not the browser width.\n\n```tsx\n// Prefer: choose a scale for the surface.\n```\n\n## Review checklist\n\nWhen reviewing typography, ask:\n\n1. Is this text sized for its container, not only the viewport?\n2. Does the hierarchy still work if the content wraps?\n3. Is the line-height comfortable for the amount of reading?\n4. Are semantic heading levels valid independent of visual size?\n5. Is display type reserved for display moments?",
+   "markdown": "# Typography\n\nThe type system targets dense information interfaces rather than marketing pages. Body text starts at 15px—between compact 14px UI conventions and the browser's 16px default—to balance information density with sustained reading.\n\n## Design intent\n\nI wanted a scale that serves three very different surfaces from the same tokens: portfolio pages with expressive display type, documentation with dense readable prose, and app panels with compact controls. The solution is one responsive scale plus an independent `--typography-scale` multiplier that any subtree can adjust.\n\nThe shipped scale is deliberately not fluid. It uses viewport breakpoints for pages and `data-window-size` overrides for OS windows, so a constrained window can use its own size band even on a wide viewport. The separate `data-a63-type-scale` axis adjusts the whole ramp for user preference.\n\n## Font families\n\n| CSS variable | Tailwind | Stack |\n|--------------|----------|-------|\n| `--font-family-sans` | `font-sans` | Geist, system UI |\n| `--font-family-serif` | `font-serif` | Brawler, Georgia |\n| `--font-family-mono` | `font-mono` | Geist Mono, monospace |\n\nI chose Geist because it's optimized for interfaces — generous x-height, clear at small sizes, and a mono companion that shares the same metrics. Brawler is reserved for rare editorial moments in the portfolio; the system defaults to sans everywhere.\n\n## How the scale works\n\nSixteen steps from `2xs` (11px) to `11xl` (56px). Up to `9xl` (39px at mobile, 49px at `768px+`) the scale grows at `640px` and `768px`, and `[data-window-size='xs'|'sm'|'md'|'lg'|'xl']` applies the same bands inside OS windows; the two display steps, `10xl` (40px) and `11xl` (56px), stay the same at every width.\n\n## Mental model\n\nTypography has three separate jobs:\n\n| Job | What it controls | Examples |\n|-----|------------------|----------|\n| Reading | Long-form comfort | Prose, docs, descriptions |\n| Hierarchy | Relative importance | Page titles, section headers, labels |\n| Density | How much interface fits | Sidebars, tables, controls, OS windows |\n\nDo not solve all three with one heading scale. A docs page, a compact sidebar, and a portfolio hero need different hierarchy even when they share the same tokens.\n\n### Line-height strategy\n\nBody text (`xs` through `lg`) uses a ~1.5× ratio for comfortable reading. Display sizes (`xl` and above) compress to ~1.25× — tighter line-height at large sizes prevents headings from floating away from their content.\n\n### The scale multiplier\n\n`--typography-scale` defaults to `1`. The shipped `data-a63-type-scale` values map to `0.9` (`compact`), `1` (`normal`), `1.1` (`comfortable`), and `1.2` (`large`). OS window width is handled separately by `data-window-size`; the multiplier is a personalization control, not the window breakpoint mechanism.\n\n## Decisions worth knowing\n\n### 15px base, not 16px\n\nMost systems use 16px because browsers default to it. I chose 15px after testing information-dense layouts — docs tables, prop references, sidebar navigation. At 16px, content felt loose and wasted space. At 14px, extended reading got fatiguing. 15px is the sweet spot for my use cases: dense enough for tool interfaces, comfortable enough for documentation prose.\n\n### Breakpoints over fluid\n\nFluid typography (`clamp()`) assumes the viewport is the right proxy for text size. In the OS metaphor, multiple windows have arbitrary widths on one screen. Breakpoint jumps plus `data-window-size` attributes let window content follow its container band instead of the outer viewport.\n\n### No heading-element-to-scale mapping in CSS\n\nI don't automatically map `h1` to `9xl` or `h2` to `8xl` in the base tokens. Different surfaces need different heading scales — a docs `h2` should be smaller than a portfolio `h2`. The MDX variants handle heading sizing per context, and the raw scale stays available for explicit use via `text-*` utilities.\n\n### Visual hierarchy and semantics are separate\n\nA semantic `h2` does not always need to look like the second-largest text on the page. The `SectionHeader` pattern follows this rule: `variant` controls visual scale, while `level` can control document outline. That keeps accessibility and visual rhythm from fighting each other.\n\n## Text roles\n\nText roles name what text is for, after the Apple HIG text styles, so one intent works on every platform. Each role picks a step of the scale on the web and a `Font.TextStyle` (with Dynamic Type) on iOS. The source is `packages/styles/src/tokens/type-roles.resolver.json`; each role has `--a63-type-<role>-font-size`, `-line-height`, `-font-weight` and `-font-weight-strong`, and the Tailwind utilities `text-<role>` and `text-<role>-strong` set all three at once.\n\n| Role | Web step | iOS text style |\n|------|----------|----------------|\n| `display-large` | `11xl`, weight 600 | 56pt, scaled like `largeTitle` |\n| `display` | `10xl`, weight 600 | 40pt, scaled like `largeTitle` |\n| `large-title` | `6xl` | `largeTitle` |\n| `title-1` | `5xl` | `title` |\n| `title-2` | `3xl` | `title2` |\n| `title-3` | `2xl` | `title3` |\n| `headline` | `base`, weight 600 | `headline` |\n| `body` | `base` | `body` |\n| `callout` | `base` | `callout` |\n| `subhead` | `sm` | `subheadline` |\n| `footnote` | `xs` | `footnote` |\n| `caption-1` | `xs` | `caption` |\n| `caption-2` | `2xs` | `caption2` |\n\n`-strong` is the emphasized weight: bold for the display roles, `large-title`, `title-1` and `title-2`, semibold for the rest. The display roles are for balances, prices and hero headlines; iOS has no larger text style, so `AtomDisplayRole` draws them at the web size and scales it with Dynamic Type like `largeTitle`. For an amount such as `$13.25`, use `Amount` from `@atom63/ui-react` (`<Amount value={13.25} currency=\"USD\" />`, `size=\"lg\"` for `display-large`): it formats the value for the locale with `Intl.NumberFormat`, draws the fraction at half size and raised with tabular figures, and reads as one label. Without the component, put the whole number in one `text-display tabular-nums` span and wrap the fraction in `amount-fraction`, which sets it at half size and raises it. On iOS, `AtomAmountText(13.25, currencyCode: \"USD\", role: .display)` formats the amount for the locale, draws the fraction the same way with monospaced digits and reads as one VoiceOver label; `.atomDisplayFont()` sets a display role on any other text. Web sizes follow web conventions (body is 15px; iOS body is 17pt); the role is what stays the same. Size steps are fine while exploring; settled UI should use roles.\n\n## Phone screens\n\nThe web scale is set for pages and desktop apps: body is 15px and compact control labels are 12–13px. A phone app screen reads at the iOS sizes instead, so `[data-a63-form-factor=\"phone\"]` gives a subtree the type steps and control sizing of a phone. `AppView layout=\"phone\"` (the app-view page template) stamps it on the screen; stamp it yourself on the root of a phone-only web app. Viewport width does not apply it, so a docs page or a marketing page on a phone keeps the web sizes.\n\n| Role | Web, under 640px | Phone (`data-a63-form-factor=\"phone\"`) | iOS text style |\n|------|------------------|-----------------------------------------|----------------|\n| `body`, `headline`, `callout` | 15px | 17px | `body` 17pt |\n| `subhead` | 13px | 15px | `subheadline` 15pt |\n| `footnote`, `caption-1` | 12px | 13px | `footnote` 13pt |\n| `caption-2` | 11px | 11px | `caption2` 11pt |\n| `title-3` | 19px | 20px | `title3` 20pt |\n| `title-2` | 21px | 22px | `title2` 22pt |\n| `title-1` | 26px | 28px | `title` 28pt |\n| `large-title` | 28px | 34px | `largeTitle` 34pt |\n| `display`, `display-large` | 40px, 56px | 40px, 56px | `AtomDisplayRole` |\n\nThe scope sets the steps themselves (`text-sm` is 15px and `text-base` 17px inside it), redeclares the text roles, and sizes controls the iOS way: heights of 36, 40, 44, 48 and 52px, and every standard control label (buttons, rows, fields, menus) at body size, with `xs` at footnote size for badges, shortcuts and initials. The type scale preference still multiplies the phone steps. Inside a phone screen, keep rows and labels on the component defaults or the text roles; shrinking them with `text-sm` or `text-xs` brings back the desktop sizes.\n\n## Usage guidance\n\n| Surface | Typical range | Scale multiplier |\n|---------|---------------|------------------|\n| Portfolio hero | `4xl`–`9xl` | Usually `normal`; user preference still applies |\n| Documentation prose | `sm`–`xl` | `1` |\n| App panels / OS windows | `xs`–`lg` | Window-size band + active type-scale axis |\n| Code blocks | `sm` mono | `1` |\n\n## Anti-patterns\n\n```tsx\n// Avoid: viewport-sized type inside a constrained panel.\n```\n\nThe panel is narrow even if the viewport is wide. The text should respond to the container's role, not the browser width.\n\n```tsx\n// Prefer: choose a scale for the surface.\n```\n\n## Review checklist\n\nWhen reviewing typography, ask:\n\n1. Is this text sized for its container, not only the viewport?\n2. Does the hierarchy still work if the content wraps?\n3. Is the line-height comfortable for the amount of reading?\n4. Are semantic heading levels valid independent of visual size?\n5. Is display type reserved for display moments?",
    "route": "/foundations/foundation-typography",
    "slug": "foundation-typography"
   },
@@ -8780,7 +8855,7 @@
    "id": "app-view",
    "kind": "page",
    "title": "App view",
-   "description": "A full-window product view with no site header or footer: a top bar across the window, a side panel and the main region below it, and an optional bar docked at the bottom, such as a media player or a status bar. layout=\"phone\" makes it a phone app screen: edge to edge with no card or inset, the top bar optional, safe-area aware, and the tab-bar block docked at the bottom. Copy-only: paste the files `atom63 template app-view` prints.",
+   "description": "A full-window product view with no site header or footer: a top bar across the window, a side panel and the main region below it, and an optional bar docked at the bottom, such as a media player or a status bar. layout=\"phone\" makes it a phone app screen: edge to edge with no card or inset, the top bar optional, safe-area aware, phone-sized type and controls (body 17px, 44px controls), and the tab-bar block docked at the bottom. Copy-only: paste the files `atom63 template app-view` prints.",
    "category": "layout",
    "tags": [
     "app",
@@ -8822,7 +8897,7 @@
    "files": [
     {
      "path": "pages/app-view/app-view.tsx",
-     "source": "import {\n  Avatar,\n  AvatarFallback,\n  Button,\n  Item,\n  ItemContent,\n  ItemDescription,\n  ItemGroup,\n  ItemTitle,\n  SearchField,\n  Slider,\n  Table,\n  TableBody,\n  TableCell,\n  TableHead,\n  TableHeader,\n  TableRow,\n  Toggle,\n} from '@atom63/ui-react'\nimport {\n  Bell,\n  House,\n  Library,\n  ListMusic,\n  Pause,\n  Play,\n  Repeat,\n  Search,\n  Shuffle,\n  SkipBack,\n  SkipForward,\n  Volume2,\n} from 'lucide-react'\nimport { type ReactNode, useState } from 'react'\n\nimport { TabBar } from '../../blocks/tab-bar/tab-bar'\n\nexport const template = {\n  id: 'app-view',\n  kind: 'page',\n  title: 'App view',\n  description:\n    'A full-window product view with no site header or footer: a top bar across the window, a side panel and the main region below it, and an optional bar docked at the bottom, such as a media player or a status bar. layout=\"phone\" makes it a phone app screen: edge to edge with no card or inset, the top bar optional, safe-area aware, and the tab-bar block docked at the bottom. Copy-only: paste the files `atom63 template app-view` prints.',\n  category: 'layout',\n  tags: [\n    'app',\n    'full window',\n    'workspace',\n    'library',\n    'player',\n    'media',\n    'docked bar',\n    'side panel',\n    'top bar',\n    'layout',\n    'phone',\n    'mobile',\n    'phone app',\n    'edge to edge',\n    'tab bar',\n    'bottom navigation',\n    'safe area',\n  ],\n  readiness: 'draft',\n} as const\n\nexport interface AppViewProps {\n  /** The main region; it scrolls on its own. */\n  children: ReactNode\n  /**\n   * `window` (the default): a padded window with the main region on a rounded\n   * card, the side panel from `md` up and the tab bar on phones only.\n   * `phone`: a phone app screen. The main region runs edge to edge with no\n   * card or inset, the side panel is not drawn, and the tab bar always shows.\n   * The top bar is optional and takes the top safe-area inset; without one the\n   * content reaches the top edge (under the status bar with\n   * `viewport-fit=cover`), so give its first block `pt-[env(safe-area-inset-top)]`.\n   */\n  layout?: 'phone' | 'window'\n  /** A bar docked at the bottom of the window, such as a player or a status bar. */\n  bottomBar?: ReactNode\n  /** The accessible name of the bottom bar's region. */\n  bottomBarLabel?: string\n  /** A side panel next to the main region, hidden on phones. */\n  panel?: ReactNode\n  /** The accessible name of the side panel. */\n  panelLabel?: string\n  /** Bottom navigation shown on phones only, under the docked bar, such as the tab-bar block. */\n  tabBar?: ReactNode\n  /** The bar across the top of the window. Optional with `layout=\"phone\"`. */\n  topBar?: ReactNode\n}\n\n/*\n * The window is a three-row grid: the top bar, the body (side panel and main,\n * each scrolling on its own) and the docked bar. Both bars span the full width,\n * which the app shell's sidebar layout cannot do.\n */\nexport function AppView({\n  bottomBar,\n  bottomBarLabel = 'Player',\n  children,\n  layout = 'window',\n  panel,\n  panelLabel = 'Library',\n  tabBar,\n  topBar,\n}: AppViewProps) {\n  if (layout === 'phone') {\n    /*\n     * A column, no gaps or radius: the top bar, the main region (the only part\n     * that scrolls), the docked bar, then the tab bar, which pads itself for\n     * the home indicator. Without a tab bar the docked bar takes that inset.\n     */\n    return (\n      <div className=\"bg-background text-foreground flex h-dvh flex-col\">\n        {topBar ? (\n          <header className=\"border-border flex min-h-14 shrink-0 items-center gap-2 border-b px-4 pt-[env(safe-area-inset-top)]\">\n            {topBar}\n          </header>\n        ) : null}\n        <main className=\"min-h-0 flex-1 overflow-y-auto\">{children}</main>\n        {bottomBar ? (\n          <section\n            aria-label={bottomBarLabel}\n            className={`border-border flex shrink-0 items-center gap-3 border-t px-4 py-2 ${tabBar ? '' : 'pb-[max(env(safe-area-inset-bottom),--spacing(2))]'}`}\n          >\n            {bottomBar}\n          </section>\n        ) : null}\n        {tabBar ? <div className=\"shrink-0\">{tabBar}</div> : null}\n      </div>\n    )\n  }\n  return (\n    <div className=\"bg-background text-foreground grid h-dvh grid-rows-[auto_minmax(0,1fr)_auto_auto] gap-2 p-2\">\n      <header className=\"flex items-center gap-2\">{topBar}</header>\n      <div className=\"flex min-h-0 gap-2\">\n        {panel ? (\n          <aside\n            aria-label={panelLabel}\n            className=\"bg-card hidden w-72 shrink-0 flex-col overflow-y-auto rounded-xl p-2 md:flex\"\n          >\n            {panel}\n          </aside>\n        ) : null}\n        <main className=\"bg-card min-w-0 flex-1 overflow-y-auto rounded-xl\">{children}</main>\n      </div>\n      {bottomBar ? (\n        <section aria-label={bottomBarLabel} className=\"flex items-center gap-4 px-2\">\n          {bottomBar}\n        </section>\n      ) : null}\n      {tabBar ? <div className=\"-mx-2 -mb-2 md:hidden\">{tabBar}</div> : null}\n    </div>\n  )\n}\n\nconst library = [\n  { current: false, kind: 'Playlist', title: 'Morning rotation' },\n  { current: true, kind: 'Album', title: 'Quiet hours' },\n  { current: false, kind: 'Playlist', title: 'Late drive' },\n  { current: false, kind: 'Artist', title: 'Mara Vale' },\n  { current: false, kind: 'Album', title: 'Paper lanterns' },\n]\n\nconst tracks = [\n  { length: '3:12', title: 'First light' },\n  { length: '2:48', title: 'Low tide' },\n  { length: '4:05', title: 'Window seat' },\n  { length: '3:31', title: 'Long way home' },\n  { length: '2:57', title: 'Afterglow' },\n]\n\n/* A sample app view: a music library with a docked player. */\nexport function AppViewPage() {\n  const [query, setQuery] = useState('')\n  const [playing, setPlaying] = useState(false)\n  const [position, setPosition] = useState(35)\n  const [volume, setVolume] = useState(70)\n\n  return (\n    <AppView\n      bottomBar={\n        <>\n          <div className=\"hidden min-w-0 flex-1 sm:block\">\n            <p className=\"truncate text-sm font-medium\">First light</p>\n            <p className=\"text-muted-foreground truncate text-xs\">Mara Vale</p>\n          </div>\n          <div className=\"flex flex-[2] flex-col items-center gap-1\">\n            <div className=\"flex items-center gap-1\">\n              <Toggle aria-label=\"Shuffle\" size=\"sm\">\n                <Shuffle aria-hidden />\n              </Toggle>\n              <Button aria-label=\"Previous track\" size=\"icon-sm\" variant=\"ghost\">\n                <SkipBack aria-hidden />\n              </Button>\n              <Button\n                aria-label={playing ? 'Pause' : 'Play'}\n                onClick={() => setPlaying(!playing)}\n                size=\"icon\"\n                variant=\"primary\"\n              >\n                {playing ? <Pause aria-hidden /> : <Play aria-hidden />}\n              </Button>\n              <Button aria-label=\"Next track\" size=\"icon-sm\" variant=\"ghost\">\n                <SkipForward aria-hidden />\n              </Button>\n              <Toggle aria-label=\"Repeat\" size=\"sm\">\n                <Repeat aria-hidden />\n              </Toggle>\n            </div>\n            <Slider\n              aria-label=\"Position\"\n              className=\"w-full max-w-md\"\n              max={100}\n              min={0}\n              onValueChange={value => setPosition(Number(value))}\n              value={position}\n            />\n          </div>\n          <div className=\"hidden flex-1 items-center justify-end gap-2 md:flex\">\n            <Volume2 aria-hidden className=\"text-muted-foreground size-4\" />\n            <Slider\n              aria-label=\"Volume\"\n              className=\"w-28\"\n              max={100}\n              min={0}\n              onValueChange={value => setVolume(Number(value))}\n              value={volume}\n            />\n          </div>\n        </>\n      }\n      panel={\n        <>\n          <h2 className=\"flex items-center gap-2 px-2 py-1 text-sm font-semibold\">\n            <ListMusic aria-hidden className=\"size-4\" />\n            Your library\n          </h2>\n          <ItemGroup>\n            {library.map(entry => (\n              <Item\n                key={entry.title}\n                render={\n                  <a aria-current={entry.current ? 'page' : undefined} href={`#${entry.title}`}>\n                    <ItemContent>\n                      <ItemTitle>{entry.title}</ItemTitle>\n                      <ItemDescription>{entry.kind}</ItemDescription>\n                    </ItemContent>\n                  </a>\n                }\n                size=\"xs\"\n              />\n            ))}\n          </ItemGroup>\n        </>\n      }\n      tabBar={\n        <TabBar\n          items={[\n            { href: '#home', icon: <House aria-hidden />, label: 'Home' },\n            { href: '#search', icon: <Search aria-hidden />, label: 'Search' },\n            { current: true, href: '#library', icon: <Library aria-hidden />, label: 'Library' },\n          ]}\n        />\n      }\n      topBar={\n        <>\n          <Button aria-label=\"Home\" size=\"icon\" variant=\"ghost\">\n            <House aria-hidden />\n          </Button>\n          <form\n            className=\"max-w-md flex-1\"\n            onSubmit={event => event.preventDefault()}\n            role=\"search\"\n          >\n            <SearchField\n              aria-label=\"Search the library\"\n              onValueChange={setQuery}\n              placeholder=\"What do you want to play?\"\n              value={query}\n            />\n          </form>\n          <div className=\"ms-auto flex items-center gap-2\">\n            <Button aria-label=\"Notifications\" size=\"icon\" variant=\"ghost\">\n              <Bell aria-hidden />\n            </Button>\n            <Avatar>\n              <AvatarFallback>JL</AvatarFallback>\n            </Avatar>\n          </div>\n        </>\n      }\n    >\n      <div className=\"flex flex-col gap-6 p-6\">\n        <div>\n          <p className=\"text-muted-foreground text-sm\">Album · 2024 · 5 songs</p>\n          <h1 className=\"font-heading text-3xl font-semibold\">Quiet hours</h1>\n        </div>\n        <Table>\n          <TableHeader>\n            <TableRow>\n              <TableHead>#</TableHead>\n              <TableHead>Title</TableHead>\n              <TableHead className=\"text-end\">Length</TableHead>\n            </TableRow>\n          </TableHeader>\n          <TableBody>\n            {tracks.map((track, index) => (\n              <TableRow key={track.title}>\n                <TableCell className=\"text-muted-foreground\">{index + 1}</TableCell>\n                <TableCell>{track.title}</TableCell>\n                <TableCell className=\"text-muted-foreground text-end tabular-nums\">\n                  {track.length}\n                </TableCell>\n              </TableRow>\n            ))}\n          </TableBody>\n        </Table>\n      </div>\n    </AppView>\n  )\n}\n\n/*\n * The same app as a phone screen: layout=\"phone\" with no top bar, so the album\n * header reaches the top edge and pads itself for the status bar; a mini\n * player and the tab bar dock at the bottom.\n */\nexport function AppViewPhonePage() {\n  const [playing, setPlaying] = useState(false)\n\n  return (\n    <AppView\n      bottomBar={\n        <>\n          <div className=\"min-w-0 flex-1\">\n            <p className=\"truncate text-sm font-medium\">First light</p>\n            <p className=\"text-muted-foreground truncate text-xs\">Mara Vale</p>\n          </div>\n          <Button\n            aria-label={playing ? 'Pause' : 'Play'}\n            onClick={() => setPlaying(!playing)}\n            size=\"icon\"\n            variant=\"primary\"\n          >\n            {playing ? <Pause aria-hidden /> : <Play aria-hidden />}\n          </Button>\n          <Button aria-label=\"Next track\" size=\"icon\" variant=\"ghost\">\n            <SkipForward aria-hidden />\n          </Button>\n        </>\n      }\n      layout=\"phone\"\n      tabBar={\n        <TabBar\n          items={[\n            { href: '#home', icon: <House aria-hidden />, label: 'Home' },\n            { href: '#search', icon: <Search aria-hidden />, label: 'Search' },\n            { current: true, href: '#library', icon: <Library aria-hidden />, label: 'Library' },\n          ]}\n        />\n      }\n    >\n      <div className=\"flex flex-col gap-2 pt-[env(safe-area-inset-top)]\">\n        <div className=\"px-4 pt-6\">\n          <p className=\"text-muted-foreground text-sm\">Album · 2024 · 5 songs</p>\n          <h1 className=\"font-heading text-3xl font-semibold\">Quiet hours</h1>\n        </div>\n        <ItemGroup>\n          {tracks.map((track, index) => (\n            <Item\n              key={track.title}\n              render={\n                <a href={`#${track.title}`}>\n                  <ItemContent>\n                    <ItemTitle>{track.title}</ItemTitle>\n                    <ItemDescription>\n                      {index + 1} · {track.length}\n                    </ItemDescription>\n                  </ItemContent>\n                </a>\n              }\n              size=\"sm\"\n            />\n          ))}\n        </ItemGroup>\n      </div>\n    </AppView>\n  )\n}\n"
+     "source": "import {\n  Avatar,\n  AvatarFallback,\n  Button,\n  Item,\n  ItemContent,\n  ItemDescription,\n  ItemGroup,\n  ItemTitle,\n  SearchField,\n  Slider,\n  Table,\n  TableBody,\n  TableCell,\n  TableHead,\n  TableHeader,\n  TableRow,\n  Toggle,\n} from '@atom63/ui-react'\nimport {\n  Bell,\n  House,\n  Library,\n  ListMusic,\n  Pause,\n  Play,\n  Repeat,\n  Search,\n  Shuffle,\n  SkipBack,\n  SkipForward,\n  Volume2,\n} from 'lucide-react'\nimport { type ReactNode, useState } from 'react'\n\nimport { TabBar } from '../../blocks/tab-bar/tab-bar'\n\nexport const template = {\n  id: 'app-view',\n  kind: 'page',\n  title: 'App view',\n  description:\n    'A full-window product view with no site header or footer: a top bar across the window, a side panel and the main region below it, and an optional bar docked at the bottom, such as a media player or a status bar. layout=\"phone\" makes it a phone app screen: edge to edge with no card or inset, the top bar optional, safe-area aware, phone-sized type and controls (body 17px, 44px controls), and the tab-bar block docked at the bottom. Copy-only: paste the files `atom63 template app-view` prints.',\n  category: 'layout',\n  tags: [\n    'app',\n    'full window',\n    'workspace',\n    'library',\n    'player',\n    'media',\n    'docked bar',\n    'side panel',\n    'top bar',\n    'layout',\n    'phone',\n    'mobile',\n    'phone app',\n    'edge to edge',\n    'tab bar',\n    'bottom navigation',\n    'safe area',\n  ],\n  readiness: 'draft',\n} as const\n\nexport interface AppViewProps {\n  /** The main region; it scrolls on its own. */\n  children: ReactNode\n  /**\n   * `window` (the default): a padded window with the main region on a rounded\n   * card, the side panel from `md` up and the tab bar on phones only.\n   * `phone`: a phone app screen. The main region runs edge to edge with no\n   * card or inset, the side panel is not drawn, and the tab bar always shows.\n   * It stamps `data-a63-form-factor=\"phone\"`, which sets phone-sized type and\n   * controls inside it (the iOS text sizes: body 17px, subhead 15px, footnote\n   * 13px, and 44px controls), so text-* utilities, text roles and components\n   * all follow without extra classes.\n   * The top bar is optional and takes the top safe-area inset; without one the\n   * content reaches the top edge (under the status bar with\n   * `viewport-fit=cover`), so give its first block `pt-[env(safe-area-inset-top)]`.\n   */\n  layout?: 'phone' | 'window'\n  /** A bar docked at the bottom of the window, such as a player or a status bar. */\n  bottomBar?: ReactNode\n  /** The accessible name of the bottom bar's region. */\n  bottomBarLabel?: string\n  /** A side panel next to the main region, hidden on phones. */\n  panel?: ReactNode\n  /** The accessible name of the side panel. */\n  panelLabel?: string\n  /** Bottom navigation shown on phones only, under the docked bar, such as the tab-bar block. */\n  tabBar?: ReactNode\n  /** The bar across the top of the window. Optional with `layout=\"phone\"`. */\n  topBar?: ReactNode\n}\n\n/*\n * The window is a three-row grid: the top bar, the body (side panel and main,\n * each scrolling on its own) and the docked bar. Both bars span the full width,\n * which the app shell's sidebar layout cannot do.\n */\nexport function AppView({\n  bottomBar,\n  bottomBarLabel = 'Player',\n  children,\n  layout = 'window',\n  panel,\n  panelLabel = 'Library',\n  tabBar,\n  topBar,\n}: AppViewProps) {\n  if (layout === 'phone') {\n    /*\n     * A column, no gaps or radius: the top bar, the main region (the only part\n     * that scrolls), the docked bar, then the tab bar, which pads itself for\n     * the home indicator. Without a tab bar the docked bar takes that inset.\n     * data-a63-form-factor=\"phone\" sets the phone type steps and control sizes\n     * for everything inside; text-base sets the body size the screen inherits.\n     */\n    return (\n      <div\n        className=\"bg-background text-foreground flex h-dvh flex-col text-base\"\n        data-a63-form-factor=\"phone\"\n      >\n        {topBar ? (\n          <header className=\"border-border flex min-h-14 shrink-0 items-center gap-2 border-b px-4 pt-[env(safe-area-inset-top)]\">\n            {topBar}\n          </header>\n        ) : null}\n        <main className=\"min-h-0 flex-1 overflow-y-auto\">{children}</main>\n        {bottomBar ? (\n          <section\n            aria-label={bottomBarLabel}\n            className={`border-border flex shrink-0 items-center gap-3 border-t px-4 py-2 ${tabBar ? '' : 'pb-[max(env(safe-area-inset-bottom),--spacing(2))]'}`}\n          >\n            {bottomBar}\n          </section>\n        ) : null}\n        {tabBar ? <div className=\"shrink-0\">{tabBar}</div> : null}\n      </div>\n    )\n  }\n  return (\n    <div className=\"bg-background text-foreground grid h-dvh grid-rows-[auto_minmax(0,1fr)_auto_auto] gap-2 p-2\">\n      <header className=\"flex items-center gap-2\">{topBar}</header>\n      <div className=\"flex min-h-0 gap-2\">\n        {panel ? (\n          <aside\n            aria-label={panelLabel}\n            className=\"bg-card hidden w-72 shrink-0 flex-col overflow-y-auto rounded-xl p-2 md:flex\"\n          >\n            {panel}\n          </aside>\n        ) : null}\n        <main className=\"bg-card min-w-0 flex-1 overflow-y-auto rounded-xl\">{children}</main>\n      </div>\n      {bottomBar ? (\n        <section aria-label={bottomBarLabel} className=\"flex items-center gap-4 px-2\">\n          {bottomBar}\n        </section>\n      ) : null}\n      {tabBar ? <div className=\"-mx-2 -mb-2 md:hidden\">{tabBar}</div> : null}\n    </div>\n  )\n}\n\nconst library = [\n  { current: false, kind: 'Playlist', title: 'Morning rotation' },\n  { current: true, kind: 'Album', title: 'Quiet hours' },\n  { current: false, kind: 'Playlist', title: 'Late drive' },\n  { current: false, kind: 'Artist', title: 'Mara Vale' },\n  { current: false, kind: 'Album', title: 'Paper lanterns' },\n]\n\nconst tracks = [\n  { length: '3:12', title: 'First light' },\n  { length: '2:48', title: 'Low tide' },\n  { length: '4:05', title: 'Window seat' },\n  { length: '3:31', title: 'Long way home' },\n  { length: '2:57', title: 'Afterglow' },\n]\n\n/* A sample app view: a music library with a docked player. */\nexport function AppViewPage() {\n  const [query, setQuery] = useState('')\n  const [playing, setPlaying] = useState(false)\n  const [position, setPosition] = useState(35)\n  const [volume, setVolume] = useState(70)\n\n  return (\n    <AppView\n      bottomBar={\n        <>\n          <div className=\"hidden min-w-0 flex-1 sm:block\">\n            <p className=\"truncate text-sm font-medium\">First light</p>\n            <p className=\"text-muted-foreground truncate text-xs\">Mara Vale</p>\n          </div>\n          <div className=\"flex flex-[2] flex-col items-center gap-1\">\n            <div className=\"flex items-center gap-1\">\n              <Toggle aria-label=\"Shuffle\" size=\"sm\">\n                <Shuffle aria-hidden />\n              </Toggle>\n              <Button aria-label=\"Previous track\" size=\"icon-sm\" variant=\"ghost\">\n                <SkipBack aria-hidden />\n              </Button>\n              <Button\n                aria-label={playing ? 'Pause' : 'Play'}\n                onClick={() => setPlaying(!playing)}\n                size=\"icon\"\n                variant=\"primary\"\n              >\n                {playing ? <Pause aria-hidden /> : <Play aria-hidden />}\n              </Button>\n              <Button aria-label=\"Next track\" size=\"icon-sm\" variant=\"ghost\">\n                <SkipForward aria-hidden />\n              </Button>\n              <Toggle aria-label=\"Repeat\" size=\"sm\">\n                <Repeat aria-hidden />\n              </Toggle>\n            </div>\n            <Slider\n              aria-label=\"Position\"\n              className=\"w-full max-w-md\"\n              max={100}\n              min={0}\n              onValueChange={value => setPosition(Number(value))}\n              value={position}\n            />\n          </div>\n          <div className=\"hidden flex-1 items-center justify-end gap-2 md:flex\">\n            <Volume2 aria-hidden className=\"text-muted-foreground size-4\" />\n            <Slider\n              aria-label=\"Volume\"\n              className=\"w-28\"\n              max={100}\n              min={0}\n              onValueChange={value => setVolume(Number(value))}\n              value={volume}\n            />\n          </div>\n        </>\n      }\n      panel={\n        <>\n          <h2 className=\"flex items-center gap-2 px-2 py-1 text-sm font-semibold\">\n            <ListMusic aria-hidden className=\"size-4\" />\n            Your library\n          </h2>\n          <ItemGroup>\n            {library.map(entry => (\n              <Item\n                key={entry.title}\n                render={\n                  <a aria-current={entry.current ? 'page' : undefined} href={`#${entry.title}`}>\n                    <ItemContent>\n                      <ItemTitle>{entry.title}</ItemTitle>\n                      <ItemDescription>{entry.kind}</ItemDescription>\n                    </ItemContent>\n                  </a>\n                }\n                size=\"xs\"\n              />\n            ))}\n          </ItemGroup>\n        </>\n      }\n      tabBar={\n        <TabBar\n          items={[\n            { href: '#home', icon: <House aria-hidden />, label: 'Home' },\n            { href: '#search', icon: <Search aria-hidden />, label: 'Search' },\n            { current: true, href: '#library', icon: <Library aria-hidden />, label: 'Library' },\n          ]}\n        />\n      }\n      topBar={\n        <>\n          <Button aria-label=\"Home\" size=\"icon\" variant=\"ghost\">\n            <House aria-hidden />\n          </Button>\n          <form\n            className=\"max-w-md flex-1\"\n            onSubmit={event => event.preventDefault()}\n            role=\"search\"\n          >\n            <SearchField\n              aria-label=\"Search the library\"\n              onValueChange={setQuery}\n              placeholder=\"What do you want to play?\"\n              value={query}\n            />\n          </form>\n          <div className=\"ms-auto flex items-center gap-2\">\n            <Button aria-label=\"Notifications\" size=\"icon\" variant=\"ghost\">\n              <Bell aria-hidden />\n            </Button>\n            <Avatar>\n              <AvatarFallback>JL</AvatarFallback>\n            </Avatar>\n          </div>\n        </>\n      }\n    >\n      <div className=\"flex flex-col gap-6 p-6\">\n        <div>\n          <p className=\"text-muted-foreground text-sm\">Album · 2024 · 5 songs</p>\n          <h1 className=\"font-heading text-3xl font-semibold\">Quiet hours</h1>\n        </div>\n        <Table>\n          <TableHeader>\n            <TableRow>\n              <TableHead>#</TableHead>\n              <TableHead>Title</TableHead>\n              <TableHead className=\"text-end\">Length</TableHead>\n            </TableRow>\n          </TableHeader>\n          <TableBody>\n            {tracks.map((track, index) => (\n              <TableRow key={track.title}>\n                <TableCell className=\"text-muted-foreground\">{index + 1}</TableCell>\n                <TableCell>{track.title}</TableCell>\n                <TableCell className=\"text-muted-foreground text-end tabular-nums\">\n                  {track.length}\n                </TableCell>\n              </TableRow>\n            ))}\n          </TableBody>\n        </Table>\n      </div>\n    </AppView>\n  )\n}\n\n/*\n * The same app as a phone screen: layout=\"phone\" with no top bar, so the album\n * header reaches the top edge and pads itself for the status bar; a mini\n * player and the tab bar dock at the bottom.\n */\nexport function AppViewPhonePage() {\n  const [playing, setPlaying] = useState(false)\n\n  return (\n    <AppView\n      bottomBar={\n        <>\n          <div className=\"min-w-0 flex-1\">\n            <p className=\"truncate text-sm font-medium\">First light</p>\n            <p className=\"text-muted-foreground truncate text-xs\">Mara Vale</p>\n          </div>\n          <Button\n            aria-label={playing ? 'Pause' : 'Play'}\n            onClick={() => setPlaying(!playing)}\n            size=\"icon\"\n            variant=\"primary\"\n          >\n            {playing ? <Pause aria-hidden /> : <Play aria-hidden />}\n          </Button>\n          <Button aria-label=\"Next track\" size=\"icon\" variant=\"ghost\">\n            <SkipForward aria-hidden />\n          </Button>\n        </>\n      }\n      layout=\"phone\"\n      tabBar={\n        <TabBar\n          items={[\n            { href: '#home', icon: <House aria-hidden />, label: 'Home' },\n            { href: '#search', icon: <Search aria-hidden />, label: 'Search' },\n            { current: true, href: '#library', icon: <Library aria-hidden />, label: 'Library' },\n          ]}\n        />\n      }\n    >\n      <div className=\"flex flex-col gap-2 pt-[env(safe-area-inset-top)]\">\n        <div className=\"px-4 pt-6\">\n          <p className=\"text-muted-foreground text-sm\">Album · 2024 · 5 songs</p>\n          <h1 className=\"font-heading text-3xl font-semibold\">Quiet hours</h1>\n        </div>\n        <ItemGroup>\n          {tracks.map((track, index) => (\n            <Item\n              key={track.title}\n              render={\n                <a href={`#${track.title}`}>\n                  <ItemContent>\n                    <ItemTitle>{track.title}</ItemTitle>\n                    <ItemDescription>\n                      {index + 1} · {track.length}\n                    </ItemDescription>\n                  </ItemContent>\n                </a>\n              }\n              size=\"sm\"\n            />\n          ))}\n        </ItemGroup>\n      </div>\n    </AppView>\n  )\n}\n"
     }
    ]
   },
@@ -12978,6 +13053,10 @@
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
      "value": "var(--typography-lg-font-size)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "var(--typography-base-font-size)"
     }
    ]
   },
@@ -12997,6 +13076,10 @@
     },
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "value": "var(--typography-base-font-size)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
      "value": "var(--typography-base-font-size)"
     }
    ]
@@ -13018,6 +13101,10 @@
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
      "value": "var(--typography-sm-font-size)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "var(--typography-base-font-size)"
     }
    ]
   },
@@ -13038,6 +13125,10 @@
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
      "value": "var(--typography-lg-font-size)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "var(--typography-lg-font-size)"
     }
    ]
   },
@@ -13057,6 +13148,10 @@
     },
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "value": "var(--typography-xs-font-size)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
      "value": "var(--typography-xs-font-size)"
     }
    ]
@@ -13139,6 +13234,10 @@
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
      "value": "calc(var(--a63-space-unit) * 12)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(var(--a63-space-unit) * 12)"
     }
    ]
   },
@@ -13158,6 +13257,10 @@
     },
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "value": "calc(var(--a63-space-unit) * 11)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
      "value": "calc(var(--a63-space-unit) * 11)"
     }
    ]
@@ -13179,6 +13282,10 @@
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
      "value": "calc(var(--a63-space-unit) * 10)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(var(--a63-space-unit) * 10)"
     }
    ]
   },
@@ -13199,6 +13306,10 @@
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
      "value": "calc(var(--a63-space-unit) * 13)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(var(--a63-space-unit) * 13)"
     }
    ]
   },
@@ -13218,6 +13329,10 @@
     },
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "value": "calc(var(--a63-space-unit) * 9)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
      "value": "calc(var(--a63-space-unit) * 9)"
     }
    ]
@@ -13256,6 +13371,10 @@
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
      "value": "1.25rem"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "1.25rem"
     }
    ]
   },
@@ -13275,6 +13394,10 @@
     },
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "value": "1.125rem"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
      "value": "1.125rem"
     }
    ]
@@ -13296,6 +13419,10 @@
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
      "value": "1rem"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "1rem"
     }
    ]
   },
@@ -13316,6 +13443,10 @@
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
      "value": "1.375rem"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "1.375rem"
     }
    ]
   },
@@ -13335,6 +13466,10 @@
     },
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "value": "0.875rem"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
      "value": "0.875rem"
     }
    ]
@@ -13580,6 +13715,10 @@
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
      "value": "var(--a63-space-5)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "var(--a63-space-5)"
     }
    ]
   },
@@ -13599,6 +13738,10 @@
     },
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "value": "var(--a63-space-4)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
      "value": "var(--a63-space-4)"
     }
    ]
@@ -13620,6 +13763,10 @@
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
      "value": "var(--a63-space-3_5)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "var(--a63-space-3_5)"
     }
    ]
   },
@@ -13640,6 +13787,10 @@
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
      "value": "var(--a63-space-6)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "var(--a63-space-6)"
     }
    ]
   },
@@ -13659,6 +13810,10 @@
     },
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "value": "var(--a63-space-3)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
      "value": "var(--a63-space-3)"
     }
    ]
@@ -14937,6 +15092,10 @@
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
      "value": "var(--a63-space-2)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "var(--a63-space-2)"
     }
    ]
   },
@@ -14957,6 +15116,10 @@
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
      "value": "var(--a63-space-1_5)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "var(--a63-space-1_5)"
     }
    ]
   },
@@ -14976,6 +15139,10 @@
     },
     {
      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "value": "var(--a63-space-1)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone']",
      "value": "var(--a63-space-1)"
     }
    ]
@@ -16970,7 +17137,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-base-font-size)"
     }
    ]
@@ -16986,7 +17153,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "400"
     }
    ]
@@ -17002,7 +17169,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "600"
     }
    ]
@@ -17018,7 +17185,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-base-line-height)"
     }
    ]
@@ -17034,7 +17201,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-base-font-size)"
     }
    ]
@@ -17050,7 +17217,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "400"
     }
    ]
@@ -17066,7 +17233,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "600"
     }
    ]
@@ -17082,7 +17249,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-base-line-height)"
     }
    ]
@@ -17098,7 +17265,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-xs-font-size)"
     }
    ]
@@ -17114,7 +17281,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "400"
     }
    ]
@@ -17130,7 +17297,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "600"
     }
    ]
@@ -17146,7 +17313,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-xs-line-height)"
     }
    ]
@@ -17162,7 +17329,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-2xs-font-size)"
     }
    ]
@@ -17178,7 +17345,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "400"
     }
    ]
@@ -17194,7 +17361,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "600"
     }
    ]
@@ -17210,7 +17377,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-2xs-line-height)"
     }
    ]
@@ -17226,7 +17393,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-10xl-font-size)"
     }
    ]
@@ -17242,7 +17409,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "600"
     }
    ]
@@ -17258,7 +17425,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "700"
     }
    ]
@@ -17274,7 +17441,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-11xl-font-size)"
     }
    ]
@@ -17290,7 +17457,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "600"
     }
    ]
@@ -17306,7 +17473,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "700"
     }
    ]
@@ -17322,7 +17489,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-11xl-line-height)"
     }
    ]
@@ -17338,7 +17505,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-10xl-line-height)"
     }
    ]
@@ -17354,7 +17521,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-xs-font-size)"
     }
    ]
@@ -17370,7 +17537,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "400"
     }
    ]
@@ -17386,7 +17553,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "600"
     }
    ]
@@ -17402,7 +17569,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-xs-line-height)"
     }
    ]
@@ -17418,7 +17585,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-base-font-size)"
     }
    ]
@@ -17434,7 +17601,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "600"
     }
    ]
@@ -17450,7 +17617,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "600"
     }
    ]
@@ -17466,7 +17633,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-base-line-height)"
     }
    ]
@@ -17482,7 +17649,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-6xl-font-size)"
     }
    ]
@@ -17498,7 +17665,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "400"
     }
    ]
@@ -17514,7 +17681,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "700"
     }
    ]
@@ -17530,7 +17697,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-6xl-line-height)"
     }
    ]
@@ -17546,7 +17713,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-sm-font-size)"
     }
    ]
@@ -17562,7 +17729,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "400"
     }
    ]
@@ -17578,7 +17745,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "600"
     }
    ]
@@ -17594,7 +17761,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-sm-line-height)"
     }
    ]
@@ -17610,7 +17777,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-5xl-font-size)"
     }
    ]
@@ -17626,7 +17793,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "400"
     }
    ]
@@ -17642,7 +17809,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "700"
     }
    ]
@@ -17658,7 +17825,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-5xl-line-height)"
     }
    ]
@@ -17674,7 +17841,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-3xl-font-size)"
     }
    ]
@@ -17690,7 +17857,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "400"
     }
    ]
@@ -17706,7 +17873,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "700"
     }
    ]
@@ -17722,7 +17889,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-3xl-line-height)"
     }
    ]
@@ -17738,7 +17905,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-2xl-font-size)"
     }
    ]
@@ -17754,7 +17921,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "400"
     }
    ]
@@ -17770,7 +17937,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "600"
     }
    ]
@@ -17786,7 +17953,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": ":root, [data-window-size]",
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-2xl-line-height)"
     }
    ]
@@ -29857,13 +30024,17 @@
   {
    "cssVar": "--typography-10xl-font-size",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/10xl/font/size"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(40px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(40px * var(--typography-scale, 1))"
@@ -29885,13 +30056,17 @@
   {
    "cssVar": "--typography-10xl-line-height",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/10xl/line/height"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(44px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(44px * var(--typography-scale, 1))"
@@ -29913,13 +30088,17 @@
   {
    "cssVar": "--typography-11xl-font-size",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/11xl/font/size"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(56px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(56px * var(--typography-scale, 1))"
@@ -29941,13 +30120,17 @@
   {
    "cssVar": "--typography-11xl-line-height",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/11xl/line/height"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(60px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(60px * var(--typography-scale, 1))"
@@ -29969,13 +30152,17 @@
   {
    "cssVar": "--typography-2xl-font-size",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/2xl/font/size"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(20px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(19px * var(--typography-scale, 1))"
@@ -30005,13 +30192,17 @@
   {
    "cssVar": "--typography-2xl-line-height",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/2xl/line/height"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(25px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(24px * var(--typography-scale, 1))"
@@ -30041,13 +30232,17 @@
   {
    "cssVar": "--typography-2xs-font-size",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/2xs/font/size"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(11px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(11px * var(--typography-scale, 1))"
@@ -30069,13 +30264,17 @@
   {
    "cssVar": "--typography-2xs-line-height",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/2xs/line/height"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(13px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(13px * var(--typography-scale, 1))"
@@ -30097,13 +30296,17 @@
   {
    "cssVar": "--typography-3xl-font-size",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/3xl/font/size"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(22px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(21px * var(--typography-scale, 1))"
@@ -30133,13 +30336,17 @@
   {
    "cssVar": "--typography-3xl-line-height",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/3xl/line/height"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(28px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(26px * var(--typography-scale, 1))"
@@ -30169,13 +30376,17 @@
   {
    "cssVar": "--typography-4xl-font-size",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/4xl/font/size"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(25px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(23px * var(--typography-scale, 1))"
@@ -30205,13 +30416,17 @@
   {
    "cssVar": "--typography-4xl-line-height",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/4xl/line/height"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(31px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(29px * var(--typography-scale, 1))"
@@ -30241,13 +30456,17 @@
   {
    "cssVar": "--typography-5xl-font-size",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/5xl/font/size"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(28px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(26px * var(--typography-scale, 1))"
@@ -30277,13 +30496,17 @@
   {
    "cssVar": "--typography-5xl-line-height",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/5xl/line/height"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(34px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(33px * var(--typography-scale, 1))"
@@ -30313,13 +30536,17 @@
   {
    "cssVar": "--typography-6xl-font-size",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/6xl/font/size"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(34px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(28px * var(--typography-scale, 1))"
@@ -30349,13 +30576,17 @@
   {
    "cssVar": "--typography-6xl-line-height",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/6xl/line/height"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(41px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(35px * var(--typography-scale, 1))"
@@ -30385,13 +30616,17 @@
   {
    "cssVar": "--typography-7xl-font-size",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/7xl/font/size"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(36px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(31px * var(--typography-scale, 1))"
@@ -30421,13 +30656,17 @@
   {
    "cssVar": "--typography-7xl-line-height",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/7xl/line/height"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(44px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(39px * var(--typography-scale, 1))"
@@ -30457,13 +30696,17 @@
   {
    "cssVar": "--typography-8xl-font-size",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/8xl/font/size"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(39px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(35px * var(--typography-scale, 1))"
@@ -30493,13 +30736,17 @@
   {
    "cssVar": "--typography-8xl-line-height",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/8xl/line/height"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(49px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(44px * var(--typography-scale, 1))"
@@ -30529,13 +30776,17 @@
   {
    "cssVar": "--typography-9xl-font-size",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/9xl/font/size"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(44px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(39px * var(--typography-scale, 1))"
@@ -30565,13 +30816,17 @@
   {
    "cssVar": "--typography-9xl-line-height",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/9xl/line/height"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(55px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(49px * var(--typography-scale, 1))"
@@ -30601,13 +30856,17 @@
   {
    "cssVar": "--typography-base-font-size",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/base/font/size"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(17px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(15px * var(--typography-scale, 1))"
@@ -30629,13 +30888,17 @@
   {
    "cssVar": "--typography-base-line-height",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/base/line/height"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(22px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(23px * var(--typography-scale, 1))"
@@ -30657,13 +30920,17 @@
   {
    "cssVar": "--typography-lg-font-size",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/lg/font/size"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(18px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(16px * var(--typography-scale, 1))"
@@ -30689,13 +30956,17 @@
   {
    "cssVar": "--typography-lg-line-height",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/lg/line/height"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(24px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(24px * var(--typography-scale, 1))"
@@ -30765,13 +31036,17 @@
   {
    "cssVar": "--typography-sm-font-size",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/sm/font/size"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(15px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(13px * var(--typography-scale, 1))"
@@ -30793,13 +31068,17 @@
   {
    "cssVar": "--typography-sm-line-height",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/sm/line/height"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(20px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(20px * var(--typography-scale, 1))"
@@ -30821,13 +31100,17 @@
   {
    "cssVar": "--typography-xl-font-size",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/xl/font/size"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(19px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(18px * var(--typography-scale, 1))"
@@ -30853,13 +31136,17 @@
   {
    "cssVar": "--typography-xl-line-height",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/xl/line/height"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(24px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(23px * var(--typography-scale, 1))"
@@ -30885,13 +31172,17 @@
   {
    "cssVar": "--typography-xs-font-size",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/xs/font/size"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(13px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(12px * var(--typography-scale, 1))"
@@ -30913,13 +31204,17 @@
   {
    "cssVar": "--typography-xs-line-height",
    "figma": {
-    "collection": "Foundation",
+    "collection": "Contract",
     "path": "typography/xs/line/height"
    },
-   "layer": "foundation",
+   "layer": "contract",
    "swift": null,
    "type": "typography",
    "values": [
+    {
+     "scope": "[data-a63-form-factor='phone']",
+     "value": "calc(18px * var(--typography-scale, 1))"
+    },
     {
      "scope": ":root",
      "value": "calc(18px * var(--typography-scale, 1))"
