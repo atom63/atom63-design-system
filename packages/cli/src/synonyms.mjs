@@ -251,6 +251,25 @@ const mediaList = [
   },
 ]
 
+const denseTable = [
+  {
+    id: 'component:table',
+    note: 'Dense tables (admin, payments, issues): <Table size="sm"> draws 33px rows; a row checkbox or a 24px row menu (<Button size="icon-xs" variant="ghost">) keeps its hit area without making the row taller.',
+  },
+  {
+    id: 'example:table/DenseRowActions',
+    note: 'A size="sm" table with row checkboxes and a row menu: 33px rows.',
+  },
+]
+
+const denseList = [
+  {
+    id: 'component:item',
+    note: 'Dense lists (an inbox, a message list): <Item size="sm"> (12px block padding) or size="xs" (8px) instead of the 16px default. For one-line rows with columns, use <Table size="sm"> (33px rows).',
+  },
+  { id: 'component:table', note: denseTable[0].note },
+]
+
 const floatingButton = [
   {
     id: 'example:button/FloatingOverMap',
@@ -342,6 +361,18 @@ export const topics = {
   'media list': mediaList,
   episodes: mediaList,
   songs: mediaList,
+  'admin table': denseTable,
+  'compact table': denseTable,
+  'data table': denseTable,
+  'dense table': denseTable,
+  'payments table': denseTable,
+  'compact list': denseList,
+  'dense list': denseList,
+  'email list': denseList,
+  inbox: denseList,
+  'mail list': denseList,
+  mailbox: denseList,
+  'message list': denseList,
   'floating button': floatingButton,
   'floating buttons': floatingButton,
   'map button': floatingButton,

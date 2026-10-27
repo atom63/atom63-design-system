@@ -121,6 +121,31 @@
   :is(.a63-Checkbox, .a63-Radio) {
   margin: 0;
 }
+/* Outside a phone, a row's checkbox, radio or button (a row menu, an inline
+   action) keeps its own size and hit area but counts as 1rem in the row's
+   layout, centred on the text, so a dense row stays 8 + 16 + 8 + 1 = 33px
+   whatever controls it holds. A phone keeps its controls in the row: they are
+   taller there than its 4px row padding could absorb. */
+.a63-Table-container[data-size='sm']:not([data-a63-form-factor='phone'] *)
+  :is(.a63-Table-head, .a63-Table-cell)
+  :is(.a63-Checkbox, .a63-Radio, .a63-Button) {
+  vertical-align: middle;
+}
+.a63-Table-container[data-size='sm']:not([data-a63-form-factor='phone'] *)
+  :is(.a63-Table-head, .a63-Table-cell)
+  .a63-Checkbox {
+  margin-block: calc((1rem - var(--checkbox-size)) / 2);
+}
+.a63-Table-container[data-size='sm']:not([data-a63-form-factor='phone'] *)
+  :is(.a63-Table-head, .a63-Table-cell)
+  .a63-Radio {
+  margin-block: calc((1rem - var(--radio-size)) / 2);
+}
+.a63-Table-container[data-size='sm']:not([data-a63-form-factor='phone'] *)
+  :is(.a63-Table-head, .a63-Table-cell)
+  .a63-Button {
+  margin-block: calc((1rem - var(--button-height)) / 2);
+}
 
 /* ── Plain variant: no dividers between body rows ─────────────────────── */
 .a63-Table-container[data-variant='plain'] .a63-Table-body .a63-Table-row {

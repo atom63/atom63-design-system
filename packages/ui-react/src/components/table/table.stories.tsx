@@ -14,6 +14,7 @@ import {
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { Ellipsis } from 'lucide-react'
 
 const meta = {
   title: 'UI React/Table',
@@ -220,6 +221,58 @@ export const SelectableRows: Story = {
       </Table>
     </div>
   ),
+}
+
+/* size="sm" with a row menu in each row: the 24px button keeps its size and hit
+   area but counts as 1rem in the row, so the rows stay as dense as checkbox rows. */
+export const DenseRowActions: Story = {
+  render: () => (
+    <div style={{ width: 480 }}>
+      <Table size="sm">
+        <TableHeader>
+          <TableRow>
+            <TableHead>
+              <Checkbox aria-label="Select all invoices" />
+            </TableHead>
+            <TableHead>Invoice</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Amount</TableHead>
+            <TableHead>
+              <span className="sr-only">Actions</span>
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map(r => (
+            <TableRow key={r.invoice}>
+              <TableCell>
+                <Checkbox aria-label={`Select ${r.invoice}`} />
+              </TableCell>
+              <TableCell>{r.invoice}</TableCell>
+              <TableCell>{r.status}</TableCell>
+              <TableCell>{r.amount}</TableCell>
+              <TableCell style={{ textAlign: 'end' }}>
+                <Button aria-label={`More actions for ${r.invoice}`} size="icon-xs" variant="ghost">
+                  <Ellipsis />
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  ),
+  play: ({ canvasElement }) => {
+    const row = canvasElement.querySelector<HTMLElement>('[data-slot="table-body"] tr')
+    const button = row?.querySelector<HTMLElement>('button[aria-label^="More actions"]')
+    if (!row || !button) throw new Error('Expected a body row with a row menu')
+    const rowHeight = row.getBoundingClientRect().height
+    const buttonHeight = button.getBoundingClientRect().height
+    if (rowHeight < 32 || rowHeight > 36) {
+      throw new Error(`Expected a 32-36px dense row, got ${rowHeight}px`)
+    }
+    if (buttonHeight < 24) throw new Error(`Expected a 24px row button, got ${buttonHeight}px`)
+  },
 }
 
 /* tone colours selected rows (data-state="selected"): neutral (the default) is a
