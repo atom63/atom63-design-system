@@ -195,7 +195,8 @@ export const InsetGroup: Story = {
 
 /* surface="muted": grey cards on a white page (bg-card), the other common
    grouped-settings look. Inside the phone form factor, as AppView layout="phone"
-   draws it, the switch takes the iOS 26 shape. */
+   draws it, the switch takes the iOS 26 shape, rows are 52px tall and the card
+   has an 18px corner. */
 export const InsetGroupMuted: Story = {
   render: () => (
     <div

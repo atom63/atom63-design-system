@@ -273,7 +273,7 @@ const groupedList = [
   },
   {
     id: 'example:item/InsetGroupMuted',
-    note: 'Grey inset groups on a white page, with phone-sized switches: <ItemGroup surface="muted" variant="inset"> inside data-a63-form-factor="phone".',
+    note: 'Grey inset groups on a white page, with phone-sized switches, 52px rows and an 18px card corner: <ItemGroup surface="muted" variant="inset"> inside data-a63-form-factor="phone".',
   },
   { id: 'template:settings-page' },
 ]

@@ -6,7 +6,7 @@
     "collections": 14,
     "variables": 1139,
     "aliasValues": 789,
-    "skipped": 245,
+    "skipped": 247,
     "computed": 61
   },
   "collections": [
@@ -20790,6 +20790,14 @@
     {
       "token": "--a63-gradient-scrim",
       "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-inset-group-radius",
+      "reason": "context scope: [data-a63-form-factor='phone']"
+    },
+    {
+      "token": "--a63-inset-row-min-size",
+      "reason": "context scope: [data-a63-form-factor='phone']"
     },
     {
       "token": "--a63-menu-highlight-background",

@@ -96,6 +96,16 @@ describe('phone form factor', () => {
     expect(width(web, track)).toBe('38px')
   })
 
+  it('gives a grouped list the iOS row height and a rounder card, on a phone only', () => {
+    const phone = scope({ 'data-a63-form-factor': 'phone' })
+    expect(height(phone, '--a63-inset-row-min-size')).toBe('52px')
+    expect(height(phone, '--a63-inset-group-radius')).toBe('18px')
+    // Outside a phone neither is declared, so the Item recipe takes its fallbacks.
+    const web = getComputedStyle(scope())
+    expect(web.getPropertyValue('--a63-inset-row-min-size')).toBe('')
+    expect(web.getPropertyValue('--a63-inset-group-radius')).toBe('')
+  })
+
   it('leaves the page outside the phone scope on the web sizes', () => {
     const web = scope()
     expect(fontSize(web, '--typography-base-font-size')).toBe('15px')

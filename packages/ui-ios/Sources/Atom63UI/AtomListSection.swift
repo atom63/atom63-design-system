@@ -13,6 +13,10 @@ import SwiftUI
 /// `AtomValueRow`, `AtomListRow`, `AtomSelectionRow` and `AtomToggle` already do; give a
 /// custom row the modifier inside the link's label.
 ///
+/// Rows are at least 52 points tall, as in iOS 26 Settings, and grow with Dynamic Type. The
+/// panel has an 18-point continuous corner. The web side is the phone form factor's
+/// `--a63-inset-row-min-size` and `--a63-inset-group-radius`.
+///
 /// `surface` picks the section's fill: `.card` (the default) is the panel on a `surfacePage`
 /// background, as in iOS Settings; `.muted` is the grey card for a white (`surfacePanel`) page.
 /// The web side is `ItemGroup surface`.
@@ -68,7 +72,7 @@ public struct AtomListSection<Content: View>: View {
         .environment(\.atomListRowInsets, AtomListSectionMetrics.rowInsets)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(fill)
-        .clipShape(.rect(cornerRadius: AtomTokens.Radius.large))
+        .clipShape(.rect(cornerRadius: AtomListSectionMetrics.cornerRadius, style: .continuous))
 
       if let footer {
         Text(footer)
@@ -116,6 +120,12 @@ enum AtomListSectionMetrics {
     bottom: AtomTokens.Space.x2,
     trailing: AtomTokens.Space.x4
   )
+  /// The minimum row height at the default Dynamic Type size: the 52-point row of iOS 26
+  /// Settings. The web side is `--a63-inset-row-min-size` in the phone form factor.
+  static let minRowHeight: CGFloat = 52
+  /// The panel's continuous corner radius. The web side is `--a63-inset-group-radius`
+  /// (`--radius-2xl`, 18px) in the phone form factor.
+  static let cornerRadius: CGFloat = 18
 }
 
 extension EnvironmentValues {
@@ -124,8 +134,9 @@ extension EnvironmentValues {
 }
 
 extension View {
-  /// Pads a row by the insets of the `AtomListSection` it is in, gives it the 44-point minimum
-  /// height, and makes the padding part of its tap area. Outside a section it does nothing.
+  /// Pads a row by the insets of the `AtomListSection` it is in, gives it the 52-point minimum
+  /// height (scaled with Dynamic Type), and makes the padding part of its tap area. Outside a
+  /// section it does nothing.
   ///
   /// Apply it inside a `NavigationLink` or `Button` label, not to the link, so the padding is
   /// tappable. Atom63 rows apply it themselves.
@@ -136,6 +147,7 @@ extension View {
 
 private struct AtomListRowInsetsModifier: ViewModifier {
   @Environment(\.atomListRowInsets) private var insets
+  @ScaledMetric(relativeTo: .body) private var minHeight = AtomListSectionMetrics.minRowHeight
 
   func body(content: Content) -> some View {
     if let insets {
@@ -145,7 +157,7 @@ private struct AtomListRowInsetsModifier: ViewModifier {
         .padding(insets)
         .frame(
           maxWidth: .infinity,
-          minHeight: AtomTokens.Control.minTouchTarget,
+          minHeight: minHeight,
           alignment: .leading
         )
         .contentShape(.rect)

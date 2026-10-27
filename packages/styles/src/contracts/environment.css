@@ -228,4 +228,8 @@
   /* The switch of a phone (iOS 26): a 22px-tall pill knob 1.6 times as wide, on a track of about 63 by 28, as measured on a 3x iPhone screenshot. The height matches the iOS design language; the wide thumb is the phone's own. */
   --a63-switch-thumb-size: 1.375rem;
   --a63-switch-thumb-aspect: 1.6;
+  /* The row of a phone's grouped list (ItemGroup variant="inset", default and sm rows): 52px tall, as iOS 26 Settings and a 3x reference capture both measure (51-52pt). Declared only here; the Item recipe falls back to its control-height floor elsewhere. */
+  --a63-inset-row-min-size: calc(var(--a63-space-unit) * 13);
+  /* The corner of a phone's grouped-list card (ItemGroup variant="inset"): the 2xl step (18px at defaults), after a 3x reference capture that fits a 19pt corner. Follows the radius axis. Declared only here; the Item recipe falls back to --radius-lg elsewhere. */
+  --a63-inset-group-radius: var(--radius-2xl);
 }

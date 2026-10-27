@@ -4,6 +4,7 @@ public struct AtomToggle: View {
   @Environment(\.atomTheme) private var theme
   @Environment(\.colorScheme) private var colorScheme
   @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+  @Environment(\.atomListRowInsets) private var listRowInsets
 
   @Binding private var isOn: Bool
   private let title: String
@@ -50,7 +51,9 @@ public struct AtomToggle: View {
     }
     .toggleStyle(.switch)
     .tint(theme.colors.actionPrimary.resolve(for: colorScheme))
-    .frame(minHeight: 44)
+    // In an AtomListSection the row insets floor the padded row instead, so a toggle row is
+    // as tall as the value rows around it.
+    .frame(minHeight: listRowInsets == nil ? 44 : nil)
     .atomListRowInsets()
   }
 

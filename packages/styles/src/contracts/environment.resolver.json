@@ -1122,6 +1122,27 @@
                   "$value": 1.6
                 }
               }
+            },
+            "inset": {
+              "row": {
+                "min": {
+                  "size": {
+                    "$type": "dimension",
+                    "$value": "{a63.space.unit}",
+                    "$extensions": {
+                      "io.atom63.derive": "calc({a63.space.unit} * 13)"
+                    },
+                    "$description": "The row of a phone's grouped list (ItemGroup variant=\"inset\", default and sm rows): 52px tall, as iOS 26 Settings and a 3x reference capture both measure (51-52pt). Declared only here; the Item recipe falls back to its control-height floor elsewhere."
+                  }
+                }
+              },
+              "group": {
+                "radius": {
+                  "$type": "dimension",
+                  "$value": "{radius.2xl}",
+                  "$description": "The corner of a phone's grouped-list card (ItemGroup variant=\"inset\"): the 2xl step (18px at defaults), after a 3x reference capture that fits a 19pt corner. Follows the radius axis. Declared only here; the Item recipe falls back to --radius-lg elsewhere."
+                }
+              }
             }
           }
         }
