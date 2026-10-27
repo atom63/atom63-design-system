@@ -14,11 +14,11 @@
 :root {
   /* Height ramp (xs..xl) — web defaults (desktop density: 24/28/32/36/40, to
         match production @atom63/ui). iOS overrides in environment.css. */
-  --a63-control-height-xs: calc(var(--a63-space-unit) * 6);
-  --a63-control-height-sm: calc(var(--a63-space-unit) * 7);
-  --a63-control-height-md: calc(var(--a63-space-unit) * 8);
-  --a63-control-height-lg: calc(var(--a63-space-unit) * 9);
-  --a63-control-height-xl: calc(var(--a63-space-unit) * 10);
+  --a63-control-height-xs: round(nearest, calc(var(--a63-space-unit) * 6), 1px);
+  --a63-control-height-sm: round(nearest, calc(var(--a63-space-unit) * 7), 1px);
+  --a63-control-height-md: round(nearest, calc(var(--a63-space-unit) * 8), 1px);
+  --a63-control-height-lg: round(nearest, calc(var(--a63-space-unit) * 9), 1px);
+  --a63-control-height-xl: round(nearest, calc(var(--a63-space-unit) * 10), 1px);
   /* Recipes resolve rendered size at their own use-site:
        max(calc(height * density), size-appropriate min-SIZE)
      Do not cache that formula in a :root custom property. Input, density, and
@@ -93,7 +93,7 @@
         than in the recipe
         because the design-language axis has to retune it (contracts/environment.css)
         and axes own tokens; recipes only read them. */
-  --a63-row-padding-block-xs: var(--a63-space-2);
-  --a63-row-padding-block-sm: var(--a63-space-3);
-  --a63-row-padding-block-md: var(--a63-space-4);
+  --a63-row-padding-block-xs: round(nearest, var(--a63-space-2), 1px);
+  --a63-row-padding-block-sm: round(nearest, var(--a63-space-3), 1px);
+  --a63-row-padding-block-md: round(nearest, var(--a63-space-4), 1px);
 }

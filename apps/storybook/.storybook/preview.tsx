@@ -48,9 +48,9 @@ interface Axes {
 
 /**
  * Applies the personalization axes to <html>, the way an app does at runtime.
- * Density and type scale must land on the root: control heights resolve there
- * from `--a63-space-unit`, so stamping them on a wrapper would only half-apply
- * the axis.
+ * Type scale must land on the root: the type steps resolve there from
+ * `--typography-scale`. Density works on any scope; it goes on the root here
+ * so every story follows the toolbar.
  */
 function PersonalizationShell({ axes, children }: { axes: Axes; children: ReactNode }) {
   useEffect(() => {

@@ -8713,7 +8713,7 @@
   {
    "area": "components",
    "label": "Button",
-   "markdown": "# Button\n\nButton is the reference action primitive for the current system: typed variants from `@atom63/ui-foundation`, Base UI-compatible rendering in `@atom63/ui-react`, and material values from the `control` and `action` contracts.\n\n```tsx\nimport { Button } from '@atom63/ui-react'\n\n<Button variant=\"primary\">Save changes</Button>\n<Button>Cancel</Button>\n<Button variant=\"outline\">Duplicate</Button>\n<Button variant=\"ghost\">Dismiss</Button>\n<Button variant=\"destructive\">Delete</Button>\n```\n\n## When to use\n\nUse it for an in-place action such as submitting, saving, confirming or changing state; use a link when the outcome is navigation. Choose emphasis from the action hierarchy rather than making every action primary, and give icon-only buttons an accessible name. Draw secondary actions in toolbars, rows and card headers as variant=\"ghost\" with tone=\"muted\". shape=\"round\" makes icon buttons circles (a play button) and labelled buttons pills.\n\n## Why it exists\n\nRaw buttons are easy until they need to survive themes, density, loading, icon-only sizing, pressed states, and form safety. The shared Button exists so every product surface gets those decisions once.\n\n## Contract shape\n\nThe root always renders `data-slot=\"button\"` and carries `data-variant` and `data-size`. Trigger-specific composition can mirror a different slot through `data-trigger-slot`, while the anatomy stays a button.\n\n| Layer | Examples |\n|-------|----------|\n| Public API | `variant`, `size`, `tone`, `shape`, `loading`, `disabled`, `render`, `type`. |\n| Stable metadata | `data-slot=\"button\"`, `data-size`, `data-variant`, `data-tone`, `data-loading`, `data-disabled`. |\n| Local recipe vars | `--button-background`, `--button-foreground`, `--button-shadow`, `--button-radius`. |\n| System vars | `--a63-action-*`, `--a63-control-*`, `--a63-density-scale`, `--a63-focus-ring`. |\n\n## Variants, sizes and states\n\n| Axis | Value | Guidance |\n| --- | --- | --- |\n| Variant | `primary` | The one primary action per view, when the product's main action is in its brand colour. |\n| Variant | `default` | Neutral solid: high emphasis without the brand colour (a white play button on dark, a black Pay button). |\n| Variant | `secondary` | Muted neutral action for supporting tasks. |\n| Variant | `raised` | Light fill, soft shadow, no border; with shape=\"round\", the floating button over a map or a light photo. |\n| Variant | `outline` | Lower-emphasis alternative (Duplicate). |\n| Variant | `dashed` | Add or filter affordance drawn as a dashed pill (+ Status). |\n| Variant | `ghost` | Lowest emphasis; toolbars and dismissals, with tone=\"muted\" for quiet secondary actions. |\n| Variant | `link` | Inline action styled as text; navigation should use a real link. |\n| Variant | `destructive` | Only when the outcome destroys data. |\n| Variant | `destructive-outline` | Quieter destructive action, beside a safe default. |\n| Variant | `overlay` | Forced contrast over media and imagery; the floating button over dark media. |\n| Variant | `glass` | Compatibility alias of overlay; new work uses overlay. |\n| Size | `xs` | Dense UI. |\n| Size | `sm` | Compact rows and toolbars. |\n| Size | `md` | Default. |\n| Size | `lg` | Prominent calls to action. |\n| Size | `xl` | Hero and marketing surfaces. |\n| State | `rest` | Resting appearance. |\n| State | `hover` | Pointer over an enabled button. |\n| State | `pressed` | While pressed, or held with data-pressed. |\n| State | `focusVisible` | Keyboard focus only; drawn as an outline. |\n| State | `disabled` | A neutral grey fill and muted label; ghost, link, overlay and glass fade only the label. |\n| State | `loading` | Label keeps its width; the spinner overlays it. |\n\n## Sizes and icons\n\nThe size ramp scales height, inline padding, gap, and icon size together through `--a63-density-scale`. Icon-only buttons use the `icon-*` steps so the control stays square, and draw their glyph from `--a63-control-icon-only-size-*`, about 0.56 of the box (24/14, 28/16, 32/18). An icon beside a label stays on the smaller `--a63-control-icon-size-*` ramp. Button owns the icon gap — never add `mr-`/`ml-` margins to an icon inside one.\n\nHide decorative icons from assistive technology when the visible label already names the action.\n\n```tsx\n<Button size=\"xs\">Extra small</Button>\n<Button size=\"sm\">Small</Button>\n<Button size=\"md\">Medium</Button>\n<Button size=\"lg\">Large</Button>\n\n<Button variant=\"primary\">\n  Continue\n  <ArrowRight />\n</Button>\n<Button aria-label=\"Delete\" size=\"icon\" variant=\"destructive\">\n  <Trash2 />\n</Button>\n```\n\n## Emphasis without the accent\n\n`default` is the neutral solid: high emphasis without the brand colour, such as a white play button on dark or a black Pay button. `primary` is the main action when the product's main action is in its brand colour. Use the accent for one or two cues per view; the main action may be neutral.\n\n## Quiet secondary actions\n\nSecondary actions in toolbars, list rows and card headers are ghost buttons with `tone=\"muted\"`. The glyph and label rest in the secondary text colour and go to full contrast on hover, keyboard focus and press, so the row reads calm and the action still answers the pointer. Only `ghost` reads the tone; keep the main action at full contrast.\n\n```tsx\n<Button aria-label=\"Notifications\" size=\"icon-sm\" tone=\"muted\" variant=\"ghost\">\n  <Bell />\n</Button>\n<Button aria-label=\"More\" size=\"icon-sm\" tone=\"muted\" variant=\"ghost\">\n  <Ellipsis />\n</Button>\n<Button size=\"sm\" tone=\"muted\" variant=\"ghost\">\n  <Share />\n  Share\n</Button>\n```\n\n## Floating buttons\n\n`raised` is a light button lifted off its ground: the panel fill, primary text and a soft shadow, with no border. With `shape=\"round\"` at an icon size it is the floating button maps and light heroes use for back, locate and layers. Over a dark photo or video use `overlay` instead.\n\n```tsx\n<Button aria-label=\"Back\" shape=\"round\" size=\"icon-lg\" variant=\"raised\">\n  <ChevronLeft />\n</Button>\n<Button aria-label=\"Show my location\" shape=\"round\" size=\"icon-lg\" variant=\"raised\">\n  <LocateFixed />\n</Button>\n<Button shape=\"round\" variant=\"raised\">Search this area</Button>\n```\n\n## Decisions worth knowing\n\n### Button sets `type=\"button\"`\n\nI make the safe form behavior explicit. A shared Button should not accidentally submit a form because it was mounted inside one.\n\n### Loading preserves layout\n\nLoading hides the label visually and overlays a spinner rather than swapping content. That keeps button width stable and avoids a small but very noticeable layout jump.\n\n```tsx\n<Button loading variant=\"primary\">Save changes</Button>\n<Button loading>Save changes</Button>\n<Button disabled variant=\"primary\">Save changes</Button>\n```\n\nCompare the loading and resting buttons above: the label reserves its width, so the row never reflows when a request starts.\n\n### Themes change material, not intent\n\nAqua adds gloss and tint through `--a63-control-gloss`, `--a63-control-highlight`, and `--a63-control-shadow`. Terminal can flatten those values. The Button recipe does not branch on `theme`; it consumes the same variables in every theme.\n\n## Usage\n\n```tsx\nimport { Button } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Button`\n\n**Types:** `ButtonProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/button.json` (`buttonContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `shapes` | `default`, `round` | `default` |\n| `tones` | `neutral`, `muted` | `neutral` |\n| `variants` | `default`, `primary`, `secondary`, `raised`, `destructive`, `destructive-outline`, `outline`, `dashed`, `ghost`, `link`, `overlay`, `glass` | `default` |\n| `sizes` | `xs`, `sm`, `md`, `lg`, `xl`, `tile`, `icon-xs`, `icon-sm`, `icon`, `icon-lg`, `icon-xl` | `md` |\n\n**Slots:** `root`, `label`, `icon`, `spinner`, `indicator`\n\n**States:** `rest`, `hover`, `pressed`, `focusVisible`, `disabled`, `loading`\n\n**Token slots:** `button.background`, `button.foreground`, `button.border.color`, `button.border.width`, `button.radius`, `button.shadow`, `button.focusRing`, `button.height`, `button.paddingInline`, `button.gap`, `button.iconSize`, `button.motion.press`\n\n**Visual archetype:** Action controls — Momentary controls that perform an action now.\n\n### Web and iOS\n\nTrigger a user-initiated action with explicit hierarchy and feedback. Rendered by `AtomButton` in SwiftUI, with `recipe` parity.\n\n**Required states:** `rest`, `pressed`, `disabled`, `loading`\n\n**Shared outcomes:**\n\n- Action fires once\n- Loading blocks repeat activation\n- Disabled prevents activation\n\n**Accessibility outcomes:**\n\n- Exposes label\n- Announces loading\n- Disabled while loading\n\n**Platform adaptations:**\n\n- React: Uses HTML button semantics with pointer and focus-visible feedback.\n- SwiftUI: Uses SwiftUI Button with native touch and keyboard activation.\n- SwiftUI: The round shape is a capsule: a circle at the icon size, a pill with a label.\n\n## Related components\n\n- [Button Group](/components/component-button-group)\n- [Toggle](/components/component-toggle)\n- [Copy Button](/components/component-copy-button)",
+   "markdown": "# Button\n\nButton is the reference action primitive for the current system: typed variants from `@atom63/ui-foundation`, Base UI-compatible rendering in `@atom63/ui-react`, and material values from the `control` and `action` contracts.\n\n```tsx\nimport { Button } from '@atom63/ui-react'\n\n<Button variant=\"primary\">Save changes</Button>\n<Button>Cancel</Button>\n<Button variant=\"outline\">Duplicate</Button>\n<Button variant=\"ghost\">Dismiss</Button>\n<Button variant=\"destructive\">Delete</Button>\n```\n\n## When to use\n\nUse it for an in-place action such as submitting, saving, confirming or changing state; use a link when the outcome is navigation. Choose emphasis from the action hierarchy rather than making every action primary, and give icon-only buttons an accessible name. Draw secondary actions in toolbars, rows and card headers as variant=\"ghost\" with tone=\"muted\". shape=\"round\" makes icon buttons circles (a play button) and labelled buttons pills.\n\n## Why it exists\n\nRaw buttons are easy until they need to survive themes, density, loading, icon-only sizing, pressed states, and form safety. The shared Button exists so every product surface gets those decisions once.\n\n## Contract shape\n\nThe root always renders `data-slot=\"button\"` and carries `data-variant` and `data-size`. Trigger-specific composition can mirror a different slot through `data-trigger-slot`, while the anatomy stays a button.\n\n| Layer | Examples |\n|-------|----------|\n| Public API | `variant`, `size`, `tone`, `shape`, `loading`, `disabled`, `render`, `type`. |\n| Stable metadata | `data-slot=\"button\"`, `data-size`, `data-variant`, `data-tone`, `data-loading`, `data-disabled`. |\n| Local recipe vars | `--button-background`, `--button-foreground`, `--button-shadow`, `--button-radius`. |\n| System vars | `--a63-action-*`, `--a63-control-*`, `--a63-density-scale`, `--a63-focus-ring`. |\n\n## Variants, sizes and states\n\n| Axis | Value | Guidance |\n| --- | --- | --- |\n| Variant | `primary` | The one primary action per view, when the product's main action is in its brand colour. |\n| Variant | `default` | Neutral solid: high emphasis without the brand colour (a white play button on dark, a black Pay button). |\n| Variant | `secondary` | Muted neutral action for supporting tasks. |\n| Variant | `raised` | Light fill, soft shadow, no border; with shape=\"round\", the floating button over a map or a light photo. |\n| Variant | `outline` | Lower-emphasis alternative (Duplicate). |\n| Variant | `dashed` | Add or filter affordance drawn as a dashed pill (+ Status). |\n| Variant | `ghost` | Lowest emphasis; toolbars and dismissals, with tone=\"muted\" for quiet secondary actions. |\n| Variant | `link` | Inline action styled as text; navigation should use a real link. |\n| Variant | `destructive` | Only when the outcome destroys data. |\n| Variant | `destructive-outline` | Quieter destructive action, beside a safe default. |\n| Variant | `overlay` | Forced contrast over media and imagery; the floating button over dark media. |\n| Variant | `glass` | Compatibility alias of overlay; new work uses overlay. |\n| Size | `xs` | Dense UI. |\n| Size | `sm` | Compact rows and toolbars. |\n| Size | `md` | Default. |\n| Size | `lg` | Prominent calls to action. |\n| Size | `xl` | Hero and marketing surfaces. |\n| State | `rest` | Resting appearance. |\n| State | `hover` | Pointer over an enabled button. |\n| State | `pressed` | While pressed, or held with data-pressed. |\n| State | `focusVisible` | Keyboard focus only; drawn as an outline. |\n| State | `disabled` | A neutral grey fill and muted label; ghost, link, overlay and glass fade only the label. |\n| State | `loading` | Label keeps its width; the spinner overlays it. |\n\n## Sizes and icons\n\nEach size step sets height, inline padding, gap and icon size together. Height, padding and gap are built on `--a63-space-unit`, so density scales them once (compact `md` is 28px, rounded to whole pixels); icon sizes stay the same. Icon-only buttons use the `icon-*` steps so the control stays square, and draw their glyph from `--a63-control-icon-only-size-*`, about 0.56 of the box (24/14, 28/16, 32/18). An icon beside a label stays on the smaller `--a63-control-icon-size-*` ramp. Button owns the icon gap — never add `mr-`/`ml-` margins to an icon inside one.\n\nHide decorative icons from assistive technology when the visible label already names the action.\n\n```tsx\n<Button size=\"xs\">Extra small</Button>\n<Button size=\"sm\">Small</Button>\n<Button size=\"md\">Medium</Button>\n<Button size=\"lg\">Large</Button>\n\n<Button variant=\"primary\">\n  Continue\n  <ArrowRight />\n</Button>\n<Button aria-label=\"Delete\" size=\"icon\" variant=\"destructive\">\n  <Trash2 />\n</Button>\n```\n\n## Emphasis without the accent\n\n`default` is the neutral solid: high emphasis without the brand colour, such as a white play button on dark or a black Pay button. `primary` is the main action when the product's main action is in its brand colour. Use the accent for one or two cues per view; the main action may be neutral.\n\n## Quiet secondary actions\n\nSecondary actions in toolbars, list rows and card headers are ghost buttons with `tone=\"muted\"`. The glyph and label rest in the secondary text colour and go to full contrast on hover, keyboard focus and press, so the row reads calm and the action still answers the pointer. Only `ghost` reads the tone; keep the main action at full contrast.\n\n```tsx\n<Button aria-label=\"Notifications\" size=\"icon-sm\" tone=\"muted\" variant=\"ghost\">\n  <Bell />\n</Button>\n<Button aria-label=\"More\" size=\"icon-sm\" tone=\"muted\" variant=\"ghost\">\n  <Ellipsis />\n</Button>\n<Button size=\"sm\" tone=\"muted\" variant=\"ghost\">\n  <Share />\n  Share\n</Button>\n```\n\n## Floating buttons\n\n`raised` is a light button lifted off its ground: the panel fill, primary text and a soft shadow, with no border. With `shape=\"round\"` at an icon size it is the floating button maps and light heroes use for back, locate and layers. Over a dark photo or video use `overlay` instead.\n\n```tsx\n<Button aria-label=\"Back\" shape=\"round\" size=\"icon-lg\" variant=\"raised\">\n  <ChevronLeft />\n</Button>\n<Button aria-label=\"Show my location\" shape=\"round\" size=\"icon-lg\" variant=\"raised\">\n  <LocateFixed />\n</Button>\n<Button shape=\"round\" variant=\"raised\">Search this area</Button>\n```\n\n## Decisions worth knowing\n\n### Button sets `type=\"button\"`\n\nI make the safe form behavior explicit. A shared Button should not accidentally submit a form because it was mounted inside one.\n\n### Loading preserves layout\n\nLoading hides the label visually and overlays a spinner rather than swapping content. That keeps button width stable and avoids a small but very noticeable layout jump.\n\n```tsx\n<Button loading variant=\"primary\">Save changes</Button>\n<Button loading>Save changes</Button>\n<Button disabled variant=\"primary\">Save changes</Button>\n```\n\nCompare the loading and resting buttons above: the label reserves its width, so the row never reflows when a request starts.\n\n### Themes change material, not intent\n\nAqua adds gloss and tint through `--a63-control-gloss`, `--a63-control-highlight`, and `--a63-control-shadow`. Terminal can flatten those values. The Button recipe does not branch on `theme`; it consumes the same variables in every theme.\n\n## Usage\n\n```tsx\nimport { Button } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Button`\n\n**Types:** `ButtonProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/button.json` (`buttonContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `shapes` | `default`, `round` | `default` |\n| `tones` | `neutral`, `muted` | `neutral` |\n| `variants` | `default`, `primary`, `secondary`, `raised`, `destructive`, `destructive-outline`, `outline`, `dashed`, `ghost`, `link`, `overlay`, `glass` | `default` |\n| `sizes` | `xs`, `sm`, `md`, `lg`, `xl`, `tile`, `icon-xs`, `icon-sm`, `icon`, `icon-lg`, `icon-xl` | `md` |\n\n**Slots:** `root`, `label`, `icon`, `spinner`, `indicator`\n\n**States:** `rest`, `hover`, `pressed`, `focusVisible`, `disabled`, `loading`\n\n**Token slots:** `button.background`, `button.foreground`, `button.border.color`, `button.border.width`, `button.radius`, `button.shadow`, `button.focusRing`, `button.height`, `button.paddingInline`, `button.gap`, `button.iconSize`, `button.motion.press`\n\n**Visual archetype:** Action controls — Momentary controls that perform an action now.\n\n### Web and iOS\n\nTrigger a user-initiated action with explicit hierarchy and feedback. Rendered by `AtomButton` in SwiftUI, with `recipe` parity.\n\n**Required states:** `rest`, `pressed`, `disabled`, `loading`\n\n**Shared outcomes:**\n\n- Action fires once\n- Loading blocks repeat activation\n- Disabled prevents activation\n\n**Accessibility outcomes:**\n\n- Exposes label\n- Announces loading\n- Disabled while loading\n\n**Platform adaptations:**\n\n- React: Uses HTML button semantics with pointer and focus-visible feedback.\n- SwiftUI: Uses SwiftUI Button with native touch and keyboard activation.\n- SwiftUI: The round shape is a capsule: a circle at the icon size, a pill with a label.\n\n## Related components\n\n- [Button Group](/components/component-button-group)\n- [Toggle](/components/component-toggle)\n- [Copy Button](/components/component-copy-button)",
    "route": "/components/component-button",
    "slug": "component-button"
   },
@@ -8811,7 +8811,7 @@
   {
    "area": "foundations",
    "label": "Personalization",
-   "markdown": "# Personalization\n\nPersonalization is not a theme picker bolted onto the UI. It is the shape of the foundation: independent axes stamped as `data-a63-*` attributes (plus one scalar tint token), resolving through one semantic `--a63-*` layer.\n\n## Axes, not presets\n\nPresets demo well and compose badly. The moment someone wants Aqua material with a different neutral family and sharper radius, a preset model becomes a matrix of one-offs.\n\nATOM63 uses axes instead. Each axis owns a distinct slice of the system. CSS-backed component recipes inherit the resolved tokens instead of branching on axis values; `iconTheme` is the explicit React-consumed exception.\n\nThe live registry lives in `@atom63/ui-foundation` → `personalizationAxes`. The table below mirrors it:\n\n| Axis | Values | Applied as | Owns |\n|------|--------|------------|------|\n| Design language | `web` · `ios` | `data-a63-design-language` | Control proportions and interaction feedback. |\n| Mode | `light` · `dark` · `system` | `.light` / `.dark` + `data-a63-mode` | Light/dark semantic color resolution. |\n| Theme | `modern` · `aqua` · `retro` · `terminal` | `data-a63-theme` | Material values: gloss, shadow, bevel, texture, blur. |\n| Brand | `auto` · `b1`–`b6` | `data-a63-brand` | Primary tonal ramp and focus color. |\n| Surface | `n1`–`n6` | `data-a63-surface` | Neutral surface palette. |\n| Surface tint | `0%`–`100%` | `--a63-surface-tint` | Continuous brand bend on semantic surfaces. |\n| Type scale | `compact` · `normal` · `comfortable` · `large` | `data-a63-type-scale` | Global typographic scale. |\n| Radius | `none` · `subtle` · `default` · `round` | `data-a63-radius` | Corner multiplier across the radius ramp. |\n| Font | `sans` · `serif` · `mono` · `pixel` | `data-a63-font` | Active type personality. |\n| Input | `touch` · `pointer` · `keyboard` | `data-a63-input` | Hit target ergonomics. |\n| Density | `compact` · `comfortable` | `data-a63-density` | Spacing rhythm and proportional control sizing. |\n| OS | `macos` · `windows` | `data-a63-os` | Shell chrome and platform framing. |\n| Icon theme | `realistic` · `color` · `neutral` · `primary` | `data-a63-icon-theme` | Icon rendering style (React-consumed). |\n\n`UIProvider` stamps design language, mode, theme, brand, input, density, and surface when those props are supplied. `applyPersonalization` / `PersonalizationController` stamps mode, theme, brand, surface, tint, type scale, radius, font, OS, and icon theme. Together they cover every live axis; neither stamper resets dimensions it does not own. The contract is attributes (or one scalar) in, tokens out.\n\nRuntime availability and implementation completeness answer different questions: an axis can be stampable while one of its owned token groups is still expanding. The live registry in `packages/ui-foundation/src/axes.ts` is the source of truth for that implementation metadata; public documentation describes the stable contract rather than duplicating the internal backlog.\n\n## One semantic layer\n\nThe rule is deliberately small:\n\n> Axes set attributes. The cascade resolves `--a63-*`. Components read `--a63-*`.\n\nThat means no component writes `--primary`, `--background`, or raw `--surface-*` values inline to express personalization. Those names are either compatibility aliases or palette primitives; writing them directly freezes a value at the wrong layer.\n\n## Why surface tint is continuous\n\nBrand and surface are separate axes because color personality has two jobs: accent and neutrality. `data-a63-brand` chooses the accent ramp. `data-a63-surface` chooses the neutral family. `--a63-surface-tint` bends the semantic surfaces toward the brand hue without generating a bespoke palette for every tint value.\n\nThe implementation mixes a small set of semantic surface and border roles rather than every raw ramp stop. That is the practical tradeoff: fewer computed colors, more predictable UI, and enough expressiveness for product-level personalization.\n\n## OS is not a theme\n\nTheme is material character. OS is platform structure. I split them because \"Windows\" should not imply one permanent visual skin, and \"Terminal\" should not dictate where caption controls live.\n\nThis lets OS63 compose coordinates such as `theme=terminal` with `os=macos`, or `theme=aqua` with `os=windows`, without inventing new theme names.\n\nRadius, type scale, and font are also **not** theme — they are independent appearance axes so you can keep Aqua material while sharpening corners or enlarging type.\n\n## What this enables\n\n- A subtree can override one axis without resetting the others.\n- Theme work can happen in CSS without React conditionals.\n- Agents can reason from the axis table instead of guessing local conventions.\n- Public docs can explain the architecture at the same level the code enforces it.",
+   "markdown": "# Personalization\n\nPersonalization is not a theme picker bolted onto the UI. It is the shape of the foundation: independent axes stamped as `data-a63-*` attributes (plus one scalar tint token), resolving through one semantic `--a63-*` layer.\n\n## Axes, not presets\n\nPresets demo well and compose badly. The moment someone wants Aqua material with a different neutral family and sharper radius, a preset model becomes a matrix of one-offs.\n\nATOM63 uses axes instead. Each axis owns a distinct slice of the system. CSS-backed component recipes inherit the resolved tokens instead of branching on axis values; `iconTheme` is the explicit React-consumed exception.\n\nThe live registry lives in `@atom63/ui-foundation` → `personalizationAxes`. The table below mirrors it:\n\n| Axis | Values | Applied as | Owns |\n|------|--------|------------|------|\n| Design language | `web` · `ios` | `data-a63-design-language` | Control proportions and interaction feedback. |\n| Mode | `light` · `dark` · `system` | `.light` / `.dark` + `data-a63-mode` | Light/dark semantic color resolution. |\n| Theme | `modern` · `aqua` · `retro` · `terminal` | `data-a63-theme` | Material values: gloss, shadow, bevel, texture, blur. |\n| Brand | `auto` · `b1`–`b6` | `data-a63-brand` | Primary tonal ramp and focus color. |\n| Surface | `n1`–`n6` | `data-a63-surface` | Neutral surface palette. |\n| Surface tint | `0%`–`100%` | `--a63-surface-tint` | Continuous brand bend on semantic surfaces. |\n| Type scale | `compact` · `normal` · `comfortable` · `large` | `data-a63-type-scale` | Global typographic scale. |\n| Radius | `none` · `subtle` · `default` · `round` | `data-a63-radius` | Corner multiplier across the radius ramp. |\n| Font | `sans` · `serif` · `mono` · `pixel` | `data-a63-font` | Active type personality. |\n| Input | `touch` · `pointer` · `keyboard` | `data-a63-input` | Hit target ergonomics. |\n| Density | `compact` · `comfortable` | `data-a63-density` | Spacing rhythm and proportional control sizing. |\n| OS | `macos` · `windows` | `data-a63-os` | Shell chrome and platform framing. |\n| Icon theme | `realistic` · `color` · `neutral` · `primary` | `data-a63-icon-theme` | Icon rendering style (React-consumed). |\n\n`UIProvider` stamps design language, mode, theme, brand, input, density, and surface when those props are supplied. `applyPersonalization` / `PersonalizationController` stamps mode, theme, brand, surface, tint, type scale, radius, font, OS, and icon theme. Together they cover every live axis; neither stamper resets dimensions it does not own. The contract is attributes (or one scalar) in, tokens out.\n\nRuntime availability and implementation completeness answer different questions: an axis can be stampable while one of its owned token groups is still expanding. The live registry in `packages/ui-foundation/src/axes.ts` is the source of truth for that implementation metadata; public documentation describes the stable contract rather than duplicating the internal backlog.\n\n## Density\n\nDensity sets one number, the space unit (`--a63-space-unit`): 4px when comfortable, 3.5px when compact. The space steps, gaps, paddings, row padding and control heights are all built on it, so compact scales them once, by 0.875: a 32px control becomes 28px and a 16px gap 14px. Control heights and row padding round to whole pixels, so a 36px control becomes 32px rather than 31.5px. Text keeps its size; the type scale axis owns that.\n\nIt works the same on `<html>` and on a nested scope. Every token built on the unit is declared again on `[data-a63-density]`, so `<UIProvider density=\"compact\">` around one region recomputes them there, and a design-language or phone scope keeps its own height ramp at the compact unit.\n\nDensity is also a product choice, not only a user preference. Use compact for dense product screens, where rows of data are scanned and acted on: tables, inboxes, issue trackers, admin dashboards and file lists.\n\n```tsx\n\n```\n\nFor a whole app, set `data-a63-density=\"compact\"` on `<html>`. `atom63 build` suggests it for these screens.\n\n## One semantic layer\n\nThe rule is deliberately small:\n\n> Axes set attributes. The cascade resolves `--a63-*`. Components read `--a63-*`.\n\nThat means no component writes `--primary`, `--background`, or raw `--surface-*` values inline to express personalization. Those names are either compatibility aliases or palette primitives; writing them directly freezes a value at the wrong layer.\n\n## Why surface tint is continuous\n\nBrand and surface are separate axes because color personality has two jobs: accent and neutrality. `data-a63-brand` chooses the accent ramp. `data-a63-surface` chooses the neutral family. `--a63-surface-tint` bends the semantic surfaces toward the brand hue without generating a bespoke palette for every tint value.\n\nThe implementation mixes a small set of semantic surface and border roles rather than every raw ramp stop. That is the practical tradeoff: fewer computed colors, more predictable UI, and enough expressiveness for product-level personalization.\n\n## OS is not a theme\n\nTheme is material character. OS is platform structure. I split them because \"Windows\" should not imply one permanent visual skin, and \"Terminal\" should not dictate where caption controls live.\n\nThis lets OS63 compose coordinates such as `theme=terminal` with `os=macos`, or `theme=aqua` with `os=windows`, without inventing new theme names.\n\nRadius, type scale, and font are also **not** theme — they are independent appearance axes so you can keep Aqua material while sharpening corners or enlarging type.\n\n## What this enables\n\n- A subtree can override one axis without resetting the others.\n- Theme work can happen in CSS without React conditionals.\n- Agents can reason from the axis table instead of guessing local conventions.\n- Public docs can explain the architecture at the same level the code enforces it.",
    "route": "/foundations/foundation-personalization",
    "slug": "foundation-personalization"
   },
@@ -8832,7 +8832,7 @@
   {
    "area": "foundations",
    "label": "Typography",
-   "markdown": "# Typography\n\nThe type system targets dense information interfaces rather than marketing pages. Body text starts at 15px—between compact 14px UI conventions and the browser's 16px default—to balance information density with sustained reading.\n\n## Design intent\n\nI wanted a scale that serves three very different surfaces from the same tokens: portfolio pages with expressive display type, documentation with dense readable prose, and app panels with compact controls. The solution is one responsive scale plus an independent `--typography-scale` multiplier that any subtree can adjust.\n\nThe shipped scale is deliberately not fluid. It uses viewport breakpoints for pages and `data-window-size` overrides for OS windows, so a constrained window can use its own size band even on a wide viewport. The separate `data-a63-type-scale` axis adjusts the whole ramp for user preference.\n\n## Font families\n\n| CSS variable | Tailwind | Stack |\n|--------------|----------|-------|\n| `--font-family-sans` | `font-sans` | Geist, system UI |\n| `--font-family-serif` | `font-serif` | Brawler, Georgia |\n| `--font-family-mono` | `font-mono` | Geist Mono, monospace |\n\nI chose Geist because it's optimized for interfaces — generous x-height, clear at small sizes, and a mono companion that shares the same metrics. Brawler is reserved for rare editorial moments in the portfolio; the system defaults to sans everywhere.\n\n## How the scale works\n\nSixteen steps from `2xs` (11px) to `11xl` (56px). Up to `9xl` (39px at mobile, 49px at `768px+`) the scale grows at `640px` and `768px`, and `[data-window-size='xs'|'sm'|'md'|'lg'|'xl']` applies the same bands inside OS windows; the two display steps, `10xl` (40px) and `11xl` (56px), stay the same at every width.\n\n## Mental model\n\nTypography has three separate jobs:\n\n| Job | What it controls | Examples |\n|-----|------------------|----------|\n| Reading | Long-form comfort | Prose, docs, descriptions |\n| Hierarchy | Relative importance | Page titles, section headers, labels |\n| Density | How much interface fits | Sidebars, tables, controls, OS windows |\n\nDo not solve all three with one heading scale. A docs page, a compact sidebar, and a portfolio hero need different hierarchy even when they share the same tokens.\n\n### Line-height strategy\n\nBody text (`xs` through `lg`) uses a ~1.5× ratio for comfortable reading. Display sizes (`xl` and above) compress to ~1.25× — tighter line-height at large sizes prevents headings from floating away from their content.\n\n### The scale multiplier\n\n`--typography-scale` defaults to `1`. The shipped `data-a63-type-scale` values map to `0.9` (`compact`), `1` (`normal`), `1.1` (`comfortable`), and `1.2` (`large`). OS window width is handled separately by `data-window-size`; the multiplier is a personalization control, not the window breakpoint mechanism.\n\n## Decisions worth knowing\n\n### 15px base, not 16px\n\nMost systems use 16px because browsers default to it. I chose 15px after testing information-dense layouts — docs tables, prop references, sidebar navigation. At 16px, content felt loose and wasted space. At 14px, extended reading got fatiguing. 15px is the sweet spot for my use cases: dense enough for tool interfaces, comfortable enough for documentation prose.\n\n### Breakpoints over fluid\n\nFluid typography (`clamp()`) assumes the viewport is the right proxy for text size. In the OS metaphor, multiple windows have arbitrary widths on one screen. Breakpoint jumps plus `data-window-size` attributes let window content follow its container band instead of the outer viewport.\n\n### No heading-element-to-scale mapping in CSS\n\nI don't automatically map `h1` to `9xl` or `h2` to `8xl` in the base tokens. Different surfaces need different heading scales — a docs `h2` should be smaller than a portfolio `h2`. The MDX variants handle heading sizing per context, and the raw scale stays available for explicit use via `text-*` utilities.\n\n### Visual hierarchy and semantics are separate\n\nA semantic `h2` does not always need to look like the second-largest text on the page. The `SectionHeader` pattern follows this rule: `variant` controls visual scale, while `level` can control document outline. That keeps accessibility and visual rhythm from fighting each other.\n\n## Text roles\n\nText roles name what text is for, after the Apple HIG text styles, so one intent works on every platform. Each role picks a step of the scale on the web and a `Font.TextStyle` (with Dynamic Type) on iOS. The source is `packages/styles/src/tokens/type-roles.resolver.json`; each role has `--a63-type-<role>-font-size`, `-line-height`, `-font-weight` and `-font-weight-strong`, and the Tailwind utilities `text-<role>` and `text-<role>-strong` set all three at once.\n\n| Role | Web step | iOS text style |\n|------|----------|----------------|\n| `display-large` | `11xl`, weight 600 | 56pt, scaled like `largeTitle` |\n| `display` | `10xl`, weight 600 | 40pt, scaled like `largeTitle` |\n| `large-title` | `6xl` | `largeTitle` |\n| `title-1` | `5xl` | `title` |\n| `title-2` | `3xl` | `title2` |\n| `title-3` | `2xl` | `title3` |\n| `headline` | `base`, weight 600 | `headline` |\n| `body` | `base` | `body` |\n| `callout` | `base` | `callout` |\n| `subhead` | `sm` | `subheadline` |\n| `footnote` | `xs` | `footnote` |\n| `caption-1` | `xs` | `caption` |\n| `caption-2` | `2xs` | `caption2` |\n\n`-strong` is the emphasized weight: bold for the display roles, `large-title`, `title-1` and `title-2`, semibold for the rest. The display roles are for balances, prices and hero headlines; iOS has no larger text style, so `AtomDisplayRole` draws them at the web size and scales it with Dynamic Type like `largeTitle`. For an amount such as `$13.25`, use `Amount` from `@atom63/ui-react` (`<Amount value={13.25} currency=\"USD\" />`, `size=\"lg\"` for `display-large`): it formats the value for the locale with `Intl.NumberFormat`, draws the fraction at half size and raised with tabular figures, and reads as one label. `fraction=\"baseline\"` keeps the half-size fraction on the baseline of the integer digits instead, as some banking apps draw a balance; `raised` is the default. Without the component, put the whole number in one `text-display tabular-nums` span and wrap the fraction in `amount-fraction`, which sets it at half size and raises it, or in `amount-fraction-baseline`, which sets it at half size on the baseline. On iOS, `AtomAmountText(13.25, currencyCode: \"USD\", role: .display)` formats the amount for the locale, draws the fraction the same way with monospaced digits and reads as one VoiceOver label, and `fraction: .baseline` keeps it on the baseline; `.atomDisplayFont()` sets a display role on any other text. Web sizes follow web conventions (body is 15px; iOS body is 17pt); the role is what stays the same. Size steps are fine while exploring; settled UI should use roles.\n\n## Phone screens\n\nThe web scale is set for pages and desktop apps: body is 15px and compact control labels are 12–13px. A phone app screen reads at the iOS sizes instead, so `[data-a63-form-factor=\"phone\"]` gives a subtree the type steps and control sizing of a phone. `AppView layout=\"phone\"` (the app-view page template) stamps it on the screen; stamp it yourself on the root of a phone-only web app. Viewport width does not apply it, so a docs page or a marketing page on a phone keeps the web sizes.\n\n| Role | Web, under 640px | Phone (`data-a63-form-factor=\"phone\"`) | iOS text style |\n|------|------------------|-----------------------------------------|----------------|\n| `body`, `headline`, `callout` | 15px | 17px | `body` 17pt |\n| `subhead` | 13px | 15px | `subheadline` 15pt |\n| `footnote`, `caption-1` | 12px | 13px | `footnote` 13pt |\n| `caption-2` | 11px | 11px | `caption2` 11pt |\n| `title-3` | 19px | 20px | `title3` 20pt |\n| `title-2` | 21px | 22px | `title2` 22pt |\n| `title-1` | 26px | 28px | `title` 28pt |\n| `large-title` | 28px | 34px | `largeTitle` 34pt |\n| `display`, `display-large` | 40px, 56px | 40px, 56px | `AtomDisplayRole` |\n\nThe scope sets the steps themselves (`text-sm` is 15px and `text-base` 17px inside it), redeclares the text roles, and sizes controls the iOS way: heights of 36, 40, 44, 48 and 52px, and every standard control label (buttons, rows, fields, menus) at body size, with `xs` at footnote size for badges, shortcuts and initials. A Switch takes the iOS 26 shape: a pill knob 1.6 times as wide as it is tall (`--a63-switch-thumb-aspect`) on a track of about 63 by 28px. A grouped list (`ItemGroup variant=\"inset\"`) takes the iOS 26 Settings rows: its default and `sm` rows, static or interactive, are at least 52px tall (`--a63-inset-row-min-size`), so a 17px label sits in about 15px of space above and below, and the card has the `2xl` corner, 18px at defaults (`--a63-inset-group-radius`). Outside the phone scope neither variable is declared, and the group keeps its control-height rows and `--radius-lg` corner. The secondary line under a title or label (an Item, Field or Form description, a Frame or ConnectedPanel description) reads `--a63-control-font-size-secondary`, which the phone scope sets to subhead size (15px) so it stays below its 17px title; elsewhere it falls back to the control `sm` size. The type scale preference still multiplies the phone steps. Inside a phone screen, keep rows and labels on the component defaults or the text roles; shrinking them with `text-sm` or `text-xs` brings back the desktop sizes.\n\n## Usage guidance\n\n| Surface | Typical range | Scale multiplier |\n|---------|---------------|------------------|\n| Portfolio hero | `4xl`–`9xl` | Usually `normal`; user preference still applies |\n| Documentation prose | `sm`–`xl` | `1` |\n| App panels / OS windows | `xs`–`lg` | Window-size band + active type-scale axis |\n| Code blocks | `sm` mono | `1` |\n\n## Anti-patterns\n\n```tsx\n// Avoid: viewport-sized type inside a constrained panel.\n```\n\nThe panel is narrow even if the viewport is wide. The text should respond to the container's role, not the browser width.\n\n```tsx\n// Prefer: choose a scale for the surface.\n```\n\n## Review checklist\n\nWhen reviewing typography, ask:\n\n1. Is this text sized for its container, not only the viewport?\n2. Does the hierarchy still work if the content wraps?\n3. Is the line-height comfortable for the amount of reading?\n4. Are semantic heading levels valid independent of visual size?\n5. Is display type reserved for display moments?",
+   "markdown": "# Typography\n\nThe type system targets dense information interfaces rather than marketing pages. Body text starts at 15px—between compact 14px UI conventions and the browser's 16px default—to balance information density with sustained reading.\n\n## Design intent\n\nI wanted a scale that serves three very different surfaces from the same tokens: portfolio pages with expressive display type, documentation with dense readable prose, and app panels with compact controls. The solution is one responsive scale plus an independent `--typography-scale` multiplier that any subtree can adjust.\n\nThe shipped scale is deliberately not fluid. It uses viewport breakpoints for pages and `data-window-size` overrides for OS windows, so a constrained window can use its own size band even on a wide viewport. The separate `data-a63-type-scale` axis adjusts the whole ramp for user preference.\n\n## Font families\n\n| CSS variable | Tailwind | Stack |\n|--------------|----------|-------|\n| `--font-family-sans` | `font-sans` | Geist, system UI |\n| `--font-family-serif` | `font-serif` | Brawler, Georgia |\n| `--font-family-mono` | `font-mono` | Geist Mono, monospace |\n\nI chose Geist because it's optimized for interfaces — generous x-height, clear at small sizes, and a mono companion that shares the same metrics. Brawler is reserved for rare editorial moments in the portfolio; the system defaults to sans everywhere.\n\n## How the scale works\n\nSixteen steps from `2xs` (11px) to `11xl` (56px). Up to `9xl` (39px at mobile, 49px at `768px+`) the scale grows at `640px` and `768px`, and `[data-window-size='xs'|'sm'|'md'|'lg'|'xl']` applies the same bands inside OS windows; the two display steps, `10xl` (40px) and `11xl` (56px), stay the same at every width.\n\n## Mental model\n\nTypography has three separate jobs:\n\n| Job | What it controls | Examples |\n|-----|------------------|----------|\n| Reading | Long-form comfort | Prose, docs, descriptions |\n| Hierarchy | Relative importance | Page titles, section headers, labels |\n| Density | How much interface fits | Sidebars, tables, controls, OS windows |\n\nDo not solve all three with one heading scale. A docs page, a compact sidebar, and a portfolio hero need different hierarchy even when they share the same tokens.\n\n### Line-height strategy\n\nBody text (`xs` through `lg`) uses a ~1.5× ratio for comfortable reading. Display sizes (`xl` and above) compress to ~1.25× — tighter line-height at large sizes prevents headings from floating away from their content.\n\n### The scale multiplier\n\n`--typography-scale` defaults to `1`. The shipped `data-a63-type-scale` values map to `0.9` (`compact`), `1` (`normal`), `1.1` (`comfortable`), and `1.2` (`large`). OS window width is handled separately by `data-window-size`; the multiplier is a personalization control, not the window breakpoint mechanism.\n\n## Decisions worth knowing\n\n### 15px base, not 16px\n\nMost systems use 16px because browsers default to it. I chose 15px after testing information-dense layouts — docs tables, prop references, sidebar navigation. At 16px, content felt loose and wasted space. At 14px, extended reading got fatiguing. 15px is the sweet spot for my use cases: dense enough for tool interfaces, comfortable enough for documentation prose.\n\nText without a size class takes the body role too, not the browser's 16px. `@atom63/styles` sets `--a63-type-body-font-size` and `--a63-type-body-line-height` (15/23) on `body` and on a phone scope (17/22 there), and the `@atom63/ui-react` reset sets them on `Atom63Theme` and `UIProvider`. `html` keeps the browser size, so `1rem` stays 16px and every rem-based token is unchanged. Set a size class or a text role where text should be smaller, such as `text-sm` in a dense table.\n\n### Breakpoints over fluid\n\nFluid typography (`clamp()`) assumes the viewport is the right proxy for text size. In the OS metaphor, multiple windows have arbitrary widths on one screen. Breakpoint jumps plus `data-window-size` attributes let window content follow its container band instead of the outer viewport.\n\n### No heading-element-to-scale mapping in CSS\n\nI don't automatically map `h1` to `9xl` or `h2` to `8xl` in the base tokens. Different surfaces need different heading scales — a docs `h2` should be smaller than a portfolio `h2`. The MDX variants handle heading sizing per context, and the raw scale stays available for explicit use via `text-*` utilities.\n\n### Visual hierarchy and semantics are separate\n\nA semantic `h2` does not always need to look like the second-largest text on the page. The `SectionHeader` pattern follows this rule: `variant` controls visual scale, while `level` can control document outline. That keeps accessibility and visual rhythm from fighting each other.\n\n## Text roles\n\nText roles name what text is for, after the Apple HIG text styles, so one intent works on every platform. Each role picks a step of the scale on the web and a `Font.TextStyle` (with Dynamic Type) on iOS. The source is `packages/styles/src/tokens/type-roles.resolver.json`; each role has `--a63-type-<role>-font-size`, `-line-height`, `-font-weight` and `-font-weight-strong`, and the Tailwind utilities `text-<role>` and `text-<role>-strong` set all three at once.\n\n| Role | Web step | iOS text style |\n|------|----------|----------------|\n| `display-large` | `11xl`, weight 600 | 56pt, scaled like `largeTitle` |\n| `display` | `10xl`, weight 600 | 40pt, scaled like `largeTitle` |\n| `large-title` | `6xl` | `largeTitle` |\n| `title-1` | `5xl` | `title` |\n| `title-2` | `3xl` | `title2` |\n| `title-3` | `2xl` | `title3` |\n| `headline` | `base`, weight 600 | `headline` |\n| `body` | `base` | `body` |\n| `callout` | `base` | `callout` |\n| `subhead` | `sm` | `subheadline` |\n| `footnote` | `xs` | `footnote` |\n| `caption-1` | `xs` | `caption` |\n| `caption-2` | `2xs` | `caption2` |\n\n`-strong` is the emphasized weight: bold for the display roles, `large-title`, `title-1` and `title-2`, semibold for the rest. The display roles are for balances, prices and hero headlines; iOS has no larger text style, so `AtomDisplayRole` draws them at the web size and scales it with Dynamic Type like `largeTitle`. For an amount such as `$13.25`, use `Amount` from `@atom63/ui-react` (`<Amount value={13.25} currency=\"USD\" />`, `size=\"lg\"` for `display-large`): it formats the value for the locale with `Intl.NumberFormat`, draws the fraction at half size and raised with tabular figures, and reads as one label. `fraction=\"baseline\"` keeps the half-size fraction on the baseline of the integer digits instead, as some banking apps draw a balance; `raised` is the default. Without the component, put the whole number in one `text-display tabular-nums` span and wrap the fraction in `amount-fraction`, which sets it at half size and raises it, or in `amount-fraction-baseline`, which sets it at half size on the baseline. On iOS, `AtomAmountText(13.25, currencyCode: \"USD\", role: .display)` formats the amount for the locale, draws the fraction the same way with monospaced digits and reads as one VoiceOver label, and `fraction: .baseline` keeps it on the baseline; `.atomDisplayFont()` sets a display role on any other text. Web sizes follow web conventions (body is 15px; iOS body is 17pt); the role is what stays the same. Size steps are fine while exploring; settled UI should use roles.\n\n## Phone screens\n\nThe web scale is set for pages and desktop apps: body is 15px and compact control labels are 12–13px. A phone app screen reads at the iOS sizes instead, so `[data-a63-form-factor=\"phone\"]` gives a subtree the type steps and control sizing of a phone. `AppView layout=\"phone\"` (the app-view page template) stamps it on the screen; stamp it yourself on the root of a phone-only web app. Viewport width does not apply it, so a docs page or a marketing page on a phone keeps the web sizes.\n\n| Role | Web, under 640px | Phone (`data-a63-form-factor=\"phone\"`) | iOS text style |\n|------|------------------|-----------------------------------------|----------------|\n| `body`, `headline`, `callout` | 15px | 17px | `body` 17pt |\n| `subhead` | 13px | 15px | `subheadline` 15pt |\n| `footnote`, `caption-1` | 12px | 13px | `footnote` 13pt |\n| `caption-2` | 11px | 11px | `caption2` 11pt |\n| `title-3` | 19px | 20px | `title3` 20pt |\n| `title-2` | 21px | 22px | `title2` 22pt |\n| `title-1` | 26px | 28px | `title` 28pt |\n| `large-title` | 28px | 34px | `largeTitle` 34pt |\n| `display`, `display-large` | 40px, 56px | 40px, 56px | `AtomDisplayRole` |\n\nThe scope sets the steps themselves (`text-sm` is 15px and `text-base` 17px inside it), redeclares the text roles, and sizes controls the iOS way: heights of 36, 40, 44, 48 and 52px, and every standard control label (buttons, rows, fields, menus) at body size, with `xs` at footnote size for badges, shortcuts and initials. A Switch takes the iOS 26 shape: a pill knob 1.6 times as wide as it is tall (`--a63-switch-thumb-aspect`) on a track of about 63 by 28px. A grouped list (`ItemGroup variant=\"inset\"`) takes the iOS 26 Settings rows: its default and `sm` rows, static or interactive, are at least 52px tall (`--a63-inset-row-min-size`), so a 17px label sits in about 15px of space above and below, and the card has the `2xl` corner, 18px at defaults (`--a63-inset-group-radius`). Outside the phone scope neither variable is declared, and the group keeps its control-height rows and `--radius-lg` corner. The secondary line under a title or label (an Item, Field or Form description, a Frame or ConnectedPanel description) reads `--a63-control-font-size-secondary`, which the phone scope sets to subhead size (15px) so it stays below its 17px title; elsewhere it falls back to the control `sm` size. The type scale preference still multiplies the phone steps. Inside a phone screen, keep rows and labels on the component defaults or the text roles; shrinking them with `text-sm` or `text-xs` brings back the desktop sizes.\n\n## Usage guidance\n\n| Surface | Typical range | Scale multiplier |\n|---------|---------------|------------------|\n| Portfolio hero | `4xl`–`9xl` | Usually `normal`; user preference still applies |\n| Documentation prose | `sm`–`xl` | `1` |\n| App panels / OS windows | `xs`–`lg` | Window-size band + active type-scale axis |\n| Code blocks | `sm` mono | `1` |\n\n## Anti-patterns\n\n```tsx\n// Avoid: viewport-sized type inside a constrained panel.\n```\n\nThe panel is narrow even if the viewport is wide. The text should respond to the container's role, not the browser width.\n\n```tsx\n// Prefer: choose a scale for the surface.\n```\n\n## Review checklist\n\nWhen reviewing typography, ask:\n\n1. Is this text sized for its container, not only the viewport?\n2. Does the hierarchy still work if the content wraps?\n3. Is the line-height comfortable for the amount of reading?\n4. Are semantic heading levels valid independent of visual size?\n5. Is display type reserved for display moments?",
    "route": "/foundations/foundation-typography",
    "slug": "foundation-typography"
   },
@@ -8919,7 +8919,7 @@
    "id": "app-view",
    "kind": "page",
    "title": "App view",
-   "description": "A full-window product view with no site header or footer: a top bar across the window, a side panel and the main region below it, and an optional bar docked at the bottom, such as a media player or a status bar. layout=\"phone\" makes it a phone app screen: edge to edge with no card or inset, the top bar optional, safe-area aware, phone-sized type and controls (body 17px, 44px controls), and the tab-bar block docked at the bottom. Copy-only: paste the files `atom63 template app-view` prints.",
+   "description": "A full-window product view with no site header or footer: a top bar across the window, a side panel and the main region below it, and an optional bar docked at the bottom, such as a media player or a status bar. layout=\"phone\" makes it a phone app screen: edge to edge with no card or inset, the top bar optional, safe-area aware, phone-sized type and controls (body 17px, 44px controls), and the tab-bar block docked at the bottom. For a dense product view (a table, an inbox, an issue tracker, an admin dashboard, a file list), wrap it in <UIProvider density=\"compact\">: spacing and control heights scale once by 0.875 (32px controls become 28px) and text keeps its size. Copy-only: paste the files `atom63 template app-view` prints.",
    "category": "layout",
    "tags": [
     "app",
@@ -8961,7 +8961,7 @@
    "files": [
     {
      "path": "pages/app-view/app-view.tsx",
-     "source": "import {\n  Avatar,\n  AvatarFallback,\n  Button,\n  Item,\n  ItemContent,\n  ItemDescription,\n  ItemGroup,\n  ItemTitle,\n  SearchField,\n  Slider,\n  Table,\n  TableBody,\n  TableCell,\n  TableHead,\n  TableHeader,\n  TableRow,\n  Toggle,\n} from '@atom63/ui-react'\nimport {\n  Bell,\n  House,\n  Library,\n  ListMusic,\n  Pause,\n  Play,\n  Repeat,\n  Search,\n  Shuffle,\n  SkipBack,\n  SkipForward,\n  Volume2,\n} from 'lucide-react'\nimport { type ReactNode, useState } from 'react'\n\nimport { TabBar } from '../../blocks/tab-bar/tab-bar'\n\nexport const template = {\n  id: 'app-view',\n  kind: 'page',\n  title: 'App view',\n  description:\n    'A full-window product view with no site header or footer: a top bar across the window, a side panel and the main region below it, and an optional bar docked at the bottom, such as a media player or a status bar. layout=\"phone\" makes it a phone app screen: edge to edge with no card or inset, the top bar optional, safe-area aware, phone-sized type and controls (body 17px, 44px controls), and the tab-bar block docked at the bottom. Copy-only: paste the files `atom63 template app-view` prints.',\n  category: 'layout',\n  tags: [\n    'app',\n    'full window',\n    'workspace',\n    'library',\n    'player',\n    'media',\n    'docked bar',\n    'side panel',\n    'top bar',\n    'layout',\n    'phone',\n    'mobile',\n    'phone app',\n    'edge to edge',\n    'tab bar',\n    'bottom navigation',\n    'safe area',\n  ],\n  readiness: 'draft',\n} as const\n\nexport interface AppViewProps {\n  /** The main region; it scrolls on its own. */\n  children: ReactNode\n  /**\n   * `window` (the default): a padded window with the main region on a rounded\n   * card, the side panel from `md` up and the tab bar on phones only.\n   * `phone`: a phone app screen. The main region runs edge to edge with no\n   * card or inset, the side panel is not drawn, and the tab bar always shows.\n   * It stamps `data-a63-form-factor=\"phone\"`, which sets phone-sized type and\n   * controls inside it (the iOS text sizes: body 17px, subhead 15px, footnote\n   * 13px, and 44px controls), so text-* utilities, text roles and components\n   * all follow without extra classes.\n   * The top bar is optional and takes the top safe-area inset; without one the\n   * content reaches the top edge (under the status bar with\n   * `viewport-fit=cover`), so give its first block `pt-[env(safe-area-inset-top)]`.\n   */\n  layout?: 'phone' | 'window'\n  /** A bar docked at the bottom of the window, such as a player or a status bar. */\n  bottomBar?: ReactNode\n  /** The accessible name of the bottom bar's region. */\n  bottomBarLabel?: string\n  /** A side panel next to the main region, hidden on phones. */\n  panel?: ReactNode\n  /** The accessible name of the side panel. */\n  panelLabel?: string\n  /** Bottom navigation shown on phones only, under the docked bar, such as the tab-bar block. */\n  tabBar?: ReactNode\n  /** The bar across the top of the window. Optional with `layout=\"phone\"`. */\n  topBar?: ReactNode\n}\n\n/*\n * The window is a three-row grid: the top bar, the body (side panel and main,\n * each scrolling on its own) and the docked bar. Both bars span the full width,\n * which the app shell's sidebar layout cannot do.\n */\nexport function AppView({\n  bottomBar,\n  bottomBarLabel = 'Player',\n  children,\n  layout = 'window',\n  panel,\n  panelLabel = 'Library',\n  tabBar,\n  topBar,\n}: AppViewProps) {\n  if (layout === 'phone') {\n    /*\n     * A column, no gaps or radius: the top bar, the main region (the only part\n     * that scrolls), the docked bar, then the tab bar, which pads itself for\n     * the home indicator. Without a tab bar the docked bar takes that inset.\n     * data-a63-form-factor=\"phone\" sets the phone type steps and control sizes\n     * for everything inside; text-base sets the body size the screen inherits.\n     */\n    return (\n      <div\n        className=\"bg-background text-foreground flex h-dvh flex-col text-base\"\n        data-a63-form-factor=\"phone\"\n      >\n        {topBar ? (\n          <header className=\"border-border flex min-h-14 shrink-0 items-center gap-2 border-b px-4 pt-[env(safe-area-inset-top)]\">\n            {topBar}\n          </header>\n        ) : null}\n        <main className=\"min-h-0 flex-1 overflow-y-auto\">{children}</main>\n        {bottomBar ? (\n          <section\n            aria-label={bottomBarLabel}\n            className={`border-border flex shrink-0 items-center gap-3 border-t px-4 py-2 ${tabBar ? '' : 'pb-[max(env(safe-area-inset-bottom),--spacing(2))]'}`}\n          >\n            {bottomBar}\n          </section>\n        ) : null}\n        {tabBar ? <div className=\"shrink-0\">{tabBar}</div> : null}\n      </div>\n    )\n  }\n  return (\n    <div className=\"bg-background text-foreground grid h-dvh grid-rows-[auto_minmax(0,1fr)_auto_auto] gap-2 p-2\">\n      <header className=\"flex items-center gap-2\">{topBar}</header>\n      <div className=\"flex min-h-0 gap-2\">\n        {panel ? (\n          <aside\n            aria-label={panelLabel}\n            className=\"bg-card hidden w-72 shrink-0 flex-col overflow-y-auto rounded-xl p-2 md:flex\"\n          >\n            {panel}\n          </aside>\n        ) : null}\n        <main className=\"bg-card min-w-0 flex-1 overflow-y-auto rounded-xl\">{children}</main>\n      </div>\n      {bottomBar ? (\n        <section aria-label={bottomBarLabel} className=\"flex items-center gap-4 px-2\">\n          {bottomBar}\n        </section>\n      ) : null}\n      {tabBar ? <div className=\"-mx-2 -mb-2 md:hidden\">{tabBar}</div> : null}\n    </div>\n  )\n}\n\nconst library = [\n  { current: false, kind: 'Playlist', title: 'Morning rotation' },\n  { current: true, kind: 'Album', title: 'Quiet hours' },\n  { current: false, kind: 'Playlist', title: 'Late drive' },\n  { current: false, kind: 'Artist', title: 'Mara Vale' },\n  { current: false, kind: 'Album', title: 'Paper lanterns' },\n]\n\nconst tracks = [\n  { length: '3:12', title: 'First light' },\n  { length: '2:48', title: 'Low tide' },\n  { length: '4:05', title: 'Window seat' },\n  { length: '3:31', title: 'Long way home' },\n  { length: '2:57', title: 'Afterglow' },\n]\n\n/* A sample app view: a music library with a docked player. */\nexport function AppViewPage() {\n  const [query, setQuery] = useState('')\n  const [playing, setPlaying] = useState(false)\n  const [position, setPosition] = useState(35)\n  const [volume, setVolume] = useState(70)\n\n  return (\n    <AppView\n      bottomBar={\n        <>\n          <div className=\"hidden min-w-0 flex-1 sm:block\">\n            <p className=\"truncate text-sm font-medium\">First light</p>\n            <p className=\"text-muted-foreground truncate text-xs\">Mara Vale</p>\n          </div>\n          <div className=\"flex flex-[2] flex-col items-center gap-1\">\n            <div className=\"flex items-center gap-1\">\n              <Toggle aria-label=\"Shuffle\" size=\"sm\">\n                <Shuffle aria-hidden />\n              </Toggle>\n              <Button aria-label=\"Previous track\" size=\"icon-sm\" variant=\"ghost\">\n                <SkipBack aria-hidden />\n              </Button>\n              <Button\n                aria-label={playing ? 'Pause' : 'Play'}\n                onClick={() => setPlaying(!playing)}\n                size=\"icon\"\n                variant=\"primary\"\n              >\n                {playing ? <Pause aria-hidden /> : <Play aria-hidden />}\n              </Button>\n              <Button aria-label=\"Next track\" size=\"icon-sm\" variant=\"ghost\">\n                <SkipForward aria-hidden />\n              </Button>\n              <Toggle aria-label=\"Repeat\" size=\"sm\">\n                <Repeat aria-hidden />\n              </Toggle>\n            </div>\n            <Slider\n              aria-label=\"Position\"\n              className=\"w-full max-w-md\"\n              max={100}\n              min={0}\n              onValueChange={value => setPosition(Number(value))}\n              value={position}\n            />\n          </div>\n          <div className=\"hidden flex-1 items-center justify-end gap-2 md:flex\">\n            <Volume2 aria-hidden className=\"text-muted-foreground size-4\" />\n            <Slider\n              aria-label=\"Volume\"\n              className=\"w-28\"\n              max={100}\n              min={0}\n              onValueChange={value => setVolume(Number(value))}\n              value={volume}\n            />\n          </div>\n        </>\n      }\n      panel={\n        <>\n          <h2 className=\"flex items-center gap-2 px-2 py-1 text-sm font-semibold\">\n            <ListMusic aria-hidden className=\"size-4\" />\n            Your library\n          </h2>\n          <ItemGroup>\n            {library.map(entry => (\n              <Item\n                key={entry.title}\n                render={\n                  <a aria-current={entry.current ? 'page' : undefined} href={`#${entry.title}`}>\n                    <ItemContent>\n                      <ItemTitle>{entry.title}</ItemTitle>\n                      <ItemDescription>{entry.kind}</ItemDescription>\n                    </ItemContent>\n                  </a>\n                }\n                size=\"xs\"\n              />\n            ))}\n          </ItemGroup>\n        </>\n      }\n      tabBar={\n        <TabBar\n          items={[\n            { href: '#home', icon: <House aria-hidden />, label: 'Home' },\n            { href: '#search', icon: <Search aria-hidden />, label: 'Search' },\n            { current: true, href: '#library', icon: <Library aria-hidden />, label: 'Library' },\n          ]}\n        />\n      }\n      topBar={\n        <>\n          <Button aria-label=\"Home\" size=\"icon\" variant=\"ghost\">\n            <House aria-hidden />\n          </Button>\n          <form\n            className=\"max-w-md flex-1\"\n            onSubmit={event => event.preventDefault()}\n            role=\"search\"\n          >\n            <SearchField\n              aria-label=\"Search the library\"\n              onValueChange={setQuery}\n              placeholder=\"What do you want to play?\"\n              value={query}\n            />\n          </form>\n          <div className=\"ms-auto flex items-center gap-2\">\n            <Button aria-label=\"Notifications\" size=\"icon\" variant=\"ghost\">\n              <Bell aria-hidden />\n            </Button>\n            <Avatar>\n              <AvatarFallback>JL</AvatarFallback>\n            </Avatar>\n          </div>\n        </>\n      }\n    >\n      <div className=\"flex flex-col gap-6 p-6\">\n        <div>\n          <p className=\"text-muted-foreground text-sm\">Album · 2024 · 5 songs</p>\n          <h1 className=\"font-heading text-3xl font-semibold\">Quiet hours</h1>\n        </div>\n        <Table>\n          <TableHeader>\n            <TableRow>\n              <TableHead>#</TableHead>\n              <TableHead>Title</TableHead>\n              <TableHead className=\"text-end\">Length</TableHead>\n            </TableRow>\n          </TableHeader>\n          <TableBody>\n            {tracks.map((track, index) => (\n              <TableRow key={track.title}>\n                <TableCell className=\"text-muted-foreground\">{index + 1}</TableCell>\n                <TableCell>{track.title}</TableCell>\n                <TableCell className=\"text-muted-foreground text-end tabular-nums\">\n                  {track.length}\n                </TableCell>\n              </TableRow>\n            ))}\n          </TableBody>\n        </Table>\n      </div>\n    </AppView>\n  )\n}\n\n/*\n * The same app as a phone screen: layout=\"phone\" with no top bar, so the album\n * header reaches the top edge and pads itself for the status bar; a mini\n * player and the tab bar dock at the bottom.\n */\nexport function AppViewPhonePage() {\n  const [playing, setPlaying] = useState(false)\n\n  return (\n    <AppView\n      bottomBar={\n        <>\n          <div className=\"min-w-0 flex-1\">\n            <p className=\"truncate text-sm font-medium\">First light</p>\n            <p className=\"text-muted-foreground truncate text-xs\">Mara Vale</p>\n          </div>\n          <Button\n            aria-label={playing ? 'Pause' : 'Play'}\n            onClick={() => setPlaying(!playing)}\n            size=\"icon\"\n            variant=\"primary\"\n          >\n            {playing ? <Pause aria-hidden /> : <Play aria-hidden />}\n          </Button>\n          <Button aria-label=\"Next track\" size=\"icon\" variant=\"ghost\">\n            <SkipForward aria-hidden />\n          </Button>\n        </>\n      }\n      layout=\"phone\"\n      tabBar={\n        <TabBar\n          items={[\n            { href: '#home', icon: <House aria-hidden />, label: 'Home' },\n            { href: '#search', icon: <Search aria-hidden />, label: 'Search' },\n            { current: true, href: '#library', icon: <Library aria-hidden />, label: 'Library' },\n          ]}\n        />\n      }\n    >\n      <div className=\"flex flex-col gap-2 pt-[env(safe-area-inset-top)]\">\n        <div className=\"px-4 pt-6\">\n          <p className=\"text-muted-foreground text-sm\">Album · 2024 · 5 songs</p>\n          <h1 className=\"font-heading text-3xl font-semibold\">Quiet hours</h1>\n        </div>\n        <ItemGroup>\n          {tracks.map((track, index) => (\n            <Item\n              key={track.title}\n              render={\n                <a href={`#${track.title}`}>\n                  <ItemContent>\n                    <ItemTitle>{track.title}</ItemTitle>\n                    <ItemDescription>\n                      {index + 1} · {track.length}\n                    </ItemDescription>\n                  </ItemContent>\n                </a>\n              }\n              size=\"sm\"\n            />\n          ))}\n        </ItemGroup>\n      </div>\n    </AppView>\n  )\n}\n"
+     "source": "import {\n  Avatar,\n  AvatarFallback,\n  Button,\n  Item,\n  ItemContent,\n  ItemDescription,\n  ItemGroup,\n  ItemTitle,\n  SearchField,\n  Slider,\n  Table,\n  TableBody,\n  TableCell,\n  TableHead,\n  TableHeader,\n  TableRow,\n  Toggle,\n} from '@atom63/ui-react'\nimport {\n  Bell,\n  House,\n  Library,\n  ListMusic,\n  Pause,\n  Play,\n  Repeat,\n  Search,\n  Shuffle,\n  SkipBack,\n  SkipForward,\n  Volume2,\n} from 'lucide-react'\nimport { type ReactNode, useState } from 'react'\n\nimport { TabBar } from '../../blocks/tab-bar/tab-bar'\n\nexport const template = {\n  id: 'app-view',\n  kind: 'page',\n  title: 'App view',\n  description:\n    'A full-window product view with no site header or footer: a top bar across the window, a side panel and the main region below it, and an optional bar docked at the bottom, such as a media player or a status bar. layout=\"phone\" makes it a phone app screen: edge to edge with no card or inset, the top bar optional, safe-area aware, phone-sized type and controls (body 17px, 44px controls), and the tab-bar block docked at the bottom. For a dense product view (a table, an inbox, an issue tracker, an admin dashboard, a file list), wrap it in <UIProvider density=\"compact\">: spacing and control heights scale once by 0.875 (32px controls become 28px) and text keeps its size. Copy-only: paste the files `atom63 template app-view` prints.',\n  category: 'layout',\n  tags: [\n    'app',\n    'full window',\n    'workspace',\n    'library',\n    'player',\n    'media',\n    'docked bar',\n    'side panel',\n    'top bar',\n    'layout',\n    'phone',\n    'mobile',\n    'phone app',\n    'edge to edge',\n    'tab bar',\n    'bottom navigation',\n    'safe area',\n  ],\n  readiness: 'draft',\n} as const\n\nexport interface AppViewProps {\n  /** The main region; it scrolls on its own. */\n  children: ReactNode\n  /**\n   * `window` (the default): a padded window with the main region on a rounded\n   * card, the side panel from `md` up and the tab bar on phones only.\n   * `phone`: a phone app screen. The main region runs edge to edge with no\n   * card or inset, the side panel is not drawn, and the tab bar always shows.\n   * It stamps `data-a63-form-factor=\"phone\"`, which sets phone-sized type and\n   * controls inside it (the iOS text sizes: body 17px, subhead 15px, footnote\n   * 13px, and 44px controls), so text-* utilities, text roles and components\n   * all follow without extra classes.\n   * The top bar is optional and takes the top safe-area inset; without one the\n   * content reaches the top edge (under the status bar with\n   * `viewport-fit=cover`), so give its first block `pt-[env(safe-area-inset-top)]`.\n   */\n  layout?: 'phone' | 'window'\n  /** A bar docked at the bottom of the window, such as a player or a status bar. */\n  bottomBar?: ReactNode\n  /** The accessible name of the bottom bar's region. */\n  bottomBarLabel?: string\n  /** A side panel next to the main region, hidden on phones. */\n  panel?: ReactNode\n  /** The accessible name of the side panel. */\n  panelLabel?: string\n  /** Bottom navigation shown on phones only, under the docked bar, such as the tab-bar block. */\n  tabBar?: ReactNode\n  /** The bar across the top of the window. Optional with `layout=\"phone\"`. */\n  topBar?: ReactNode\n}\n\n/*\n * The window is a three-row grid: the top bar, the body (side panel and main,\n * each scrolling on its own) and the docked bar. Both bars span the full width,\n * which the app shell's sidebar layout cannot do.\n * For a dense product view (a table, an inbox, an issue tracker, an admin\n * dashboard, a file list), wrap it in <UIProvider density=\"compact\"> from\n * @atom63/ui-react: the space steps, gaps, paddings and control heights scale\n * once by 0.875 and text keeps its size.\n */\nexport function AppView({\n  bottomBar,\n  bottomBarLabel = 'Player',\n  children,\n  layout = 'window',\n  panel,\n  panelLabel = 'Library',\n  tabBar,\n  topBar,\n}: AppViewProps) {\n  if (layout === 'phone') {\n    /*\n     * A column, no gaps or radius: the top bar, the main region (the only part\n     * that scrolls), the docked bar, then the tab bar, which pads itself for\n     * the home indicator. Without a tab bar the docked bar takes that inset.\n     * data-a63-form-factor=\"phone\" sets the phone type steps and control sizes\n     * for everything inside; text-base sets the body size the screen inherits.\n     */\n    return (\n      <div\n        className=\"bg-background text-foreground flex h-dvh flex-col text-base\"\n        data-a63-form-factor=\"phone\"\n      >\n        {topBar ? (\n          <header className=\"border-border flex min-h-14 shrink-0 items-center gap-2 border-b px-4 pt-[env(safe-area-inset-top)]\">\n            {topBar}\n          </header>\n        ) : null}\n        <main className=\"min-h-0 flex-1 overflow-y-auto\">{children}</main>\n        {bottomBar ? (\n          <section\n            aria-label={bottomBarLabel}\n            className={`border-border flex shrink-0 items-center gap-3 border-t px-4 py-2 ${tabBar ? '' : 'pb-[max(env(safe-area-inset-bottom),--spacing(2))]'}`}\n          >\n            {bottomBar}\n          </section>\n        ) : null}\n        {tabBar ? <div className=\"shrink-0\">{tabBar}</div> : null}\n      </div>\n    )\n  }\n  return (\n    <div className=\"bg-background text-foreground grid h-dvh grid-rows-[auto_minmax(0,1fr)_auto_auto] gap-2 p-2\">\n      <header className=\"flex items-center gap-2\">{topBar}</header>\n      <div className=\"flex min-h-0 gap-2\">\n        {panel ? (\n          <aside\n            aria-label={panelLabel}\n            className=\"bg-card hidden w-72 shrink-0 flex-col overflow-y-auto rounded-xl p-2 md:flex\"\n          >\n            {panel}\n          </aside>\n        ) : null}\n        <main className=\"bg-card min-w-0 flex-1 overflow-y-auto rounded-xl\">{children}</main>\n      </div>\n      {bottomBar ? (\n        <section aria-label={bottomBarLabel} className=\"flex items-center gap-4 px-2\">\n          {bottomBar}\n        </section>\n      ) : null}\n      {tabBar ? <div className=\"-mx-2 -mb-2 md:hidden\">{tabBar}</div> : null}\n    </div>\n  )\n}\n\nconst library = [\n  { current: false, kind: 'Playlist', title: 'Morning rotation' },\n  { current: true, kind: 'Album', title: 'Quiet hours' },\n  { current: false, kind: 'Playlist', title: 'Late drive' },\n  { current: false, kind: 'Artist', title: 'Mara Vale' },\n  { current: false, kind: 'Album', title: 'Paper lanterns' },\n]\n\nconst tracks = [\n  { length: '3:12', title: 'First light' },\n  { length: '2:48', title: 'Low tide' },\n  { length: '4:05', title: 'Window seat' },\n  { length: '3:31', title: 'Long way home' },\n  { length: '2:57', title: 'Afterglow' },\n]\n\n/* A sample app view: a music library with a docked player. */\nexport function AppViewPage() {\n  const [query, setQuery] = useState('')\n  const [playing, setPlaying] = useState(false)\n  const [position, setPosition] = useState(35)\n  const [volume, setVolume] = useState(70)\n\n  return (\n    <AppView\n      bottomBar={\n        <>\n          <div className=\"hidden min-w-0 flex-1 sm:block\">\n            <p className=\"truncate text-sm font-medium\">First light</p>\n            <p className=\"text-muted-foreground truncate text-xs\">Mara Vale</p>\n          </div>\n          <div className=\"flex flex-[2] flex-col items-center gap-1\">\n            <div className=\"flex items-center gap-1\">\n              <Toggle aria-label=\"Shuffle\" size=\"sm\">\n                <Shuffle aria-hidden />\n              </Toggle>\n              <Button aria-label=\"Previous track\" size=\"icon-sm\" variant=\"ghost\">\n                <SkipBack aria-hidden />\n              </Button>\n              <Button\n                aria-label={playing ? 'Pause' : 'Play'}\n                onClick={() => setPlaying(!playing)}\n                size=\"icon\"\n                variant=\"primary\"\n              >\n                {playing ? <Pause aria-hidden /> : <Play aria-hidden />}\n              </Button>\n              <Button aria-label=\"Next track\" size=\"icon-sm\" variant=\"ghost\">\n                <SkipForward aria-hidden />\n              </Button>\n              <Toggle aria-label=\"Repeat\" size=\"sm\">\n                <Repeat aria-hidden />\n              </Toggle>\n            </div>\n            <Slider\n              aria-label=\"Position\"\n              className=\"w-full max-w-md\"\n              max={100}\n              min={0}\n              onValueChange={value => setPosition(Number(value))}\n              value={position}\n            />\n          </div>\n          <div className=\"hidden flex-1 items-center justify-end gap-2 md:flex\">\n            <Volume2 aria-hidden className=\"text-muted-foreground size-4\" />\n            <Slider\n              aria-label=\"Volume\"\n              className=\"w-28\"\n              max={100}\n              min={0}\n              onValueChange={value => setVolume(Number(value))}\n              value={volume}\n            />\n          </div>\n        </>\n      }\n      panel={\n        <>\n          <h2 className=\"flex items-center gap-2 px-2 py-1 text-sm font-semibold\">\n            <ListMusic aria-hidden className=\"size-4\" />\n            Your library\n          </h2>\n          <ItemGroup>\n            {library.map(entry => (\n              <Item\n                key={entry.title}\n                render={\n                  <a aria-current={entry.current ? 'page' : undefined} href={`#${entry.title}`}>\n                    <ItemContent>\n                      <ItemTitle>{entry.title}</ItemTitle>\n                      <ItemDescription>{entry.kind}</ItemDescription>\n                    </ItemContent>\n                  </a>\n                }\n                size=\"xs\"\n              />\n            ))}\n          </ItemGroup>\n        </>\n      }\n      tabBar={\n        <TabBar\n          items={[\n            { href: '#home', icon: <House aria-hidden />, label: 'Home' },\n            { href: '#search', icon: <Search aria-hidden />, label: 'Search' },\n            { current: true, href: '#library', icon: <Library aria-hidden />, label: 'Library' },\n          ]}\n        />\n      }\n      topBar={\n        <>\n          <Button aria-label=\"Home\" size=\"icon\" variant=\"ghost\">\n            <House aria-hidden />\n          </Button>\n          <form\n            className=\"max-w-md flex-1\"\n            onSubmit={event => event.preventDefault()}\n            role=\"search\"\n          >\n            <SearchField\n              aria-label=\"Search the library\"\n              onValueChange={setQuery}\n              placeholder=\"What do you want to play?\"\n              value={query}\n            />\n          </form>\n          <div className=\"ms-auto flex items-center gap-2\">\n            <Button aria-label=\"Notifications\" size=\"icon\" variant=\"ghost\">\n              <Bell aria-hidden />\n            </Button>\n            <Avatar>\n              <AvatarFallback>JL</AvatarFallback>\n            </Avatar>\n          </div>\n        </>\n      }\n    >\n      <div className=\"flex flex-col gap-6 p-6\">\n        <div>\n          <p className=\"text-muted-foreground text-sm\">Album · 2024 · 5 songs</p>\n          <h1 className=\"font-heading text-3xl font-semibold\">Quiet hours</h1>\n        </div>\n        <Table>\n          <TableHeader>\n            <TableRow>\n              <TableHead>#</TableHead>\n              <TableHead>Title</TableHead>\n              <TableHead className=\"text-end\">Length</TableHead>\n            </TableRow>\n          </TableHeader>\n          <TableBody>\n            {tracks.map((track, index) => (\n              <TableRow key={track.title}>\n                <TableCell className=\"text-muted-foreground\">{index + 1}</TableCell>\n                <TableCell>{track.title}</TableCell>\n                <TableCell className=\"text-muted-foreground text-end tabular-nums\">\n                  {track.length}\n                </TableCell>\n              </TableRow>\n            ))}\n          </TableBody>\n        </Table>\n      </div>\n    </AppView>\n  )\n}\n\n/*\n * The same app as a phone screen: layout=\"phone\" with no top bar, so the album\n * header reaches the top edge and pads itself for the status bar; a mini\n * player and the tab bar dock at the bottom.\n */\nexport function AppViewPhonePage() {\n  const [playing, setPlaying] = useState(false)\n\n  return (\n    <AppView\n      bottomBar={\n        <>\n          <div className=\"min-w-0 flex-1\">\n            <p className=\"truncate text-sm font-medium\">First light</p>\n            <p className=\"text-muted-foreground truncate text-xs\">Mara Vale</p>\n          </div>\n          <Button\n            aria-label={playing ? 'Pause' : 'Play'}\n            onClick={() => setPlaying(!playing)}\n            size=\"icon\"\n            variant=\"primary\"\n          >\n            {playing ? <Pause aria-hidden /> : <Play aria-hidden />}\n          </Button>\n          <Button aria-label=\"Next track\" size=\"icon\" variant=\"ghost\">\n            <SkipForward aria-hidden />\n          </Button>\n        </>\n      }\n      layout=\"phone\"\n      tabBar={\n        <TabBar\n          items={[\n            { href: '#home', icon: <House aria-hidden />, label: 'Home' },\n            { href: '#search', icon: <Search aria-hidden />, label: 'Search' },\n            { current: true, href: '#library', icon: <Library aria-hidden />, label: 'Library' },\n          ]}\n        />\n      }\n    >\n      <div className=\"flex flex-col gap-2 pt-[env(safe-area-inset-top)]\">\n        <div className=\"px-4 pt-6\">\n          <p className=\"text-muted-foreground text-sm\">Album · 2024 · 5 songs</p>\n          <h1 className=\"font-heading text-3xl font-semibold\">Quiet hours</h1>\n        </div>\n        <ItemGroup>\n          {tracks.map((track, index) => (\n            <Item\n              key={track.title}\n              render={\n                <a href={`#${track.title}`}>\n                  <ItemContent>\n                    <ItemTitle>{track.title}</ItemTitle>\n                    <ItemDescription>\n                      {index + 1} · {track.length}\n                    </ItemDescription>\n                  </ItemContent>\n                </a>\n              }\n              size=\"sm\"\n            />\n          ))}\n        </ItemGroup>\n      </div>\n    </AppView>\n  )\n}\n"
     }
    ]
   },
@@ -9660,6 +9660,10 @@
    "values": [
     {
      "scope": ":root",
+     "value": "var(--a63-control-gap)"
+    },
+    {
+     "scope": ":is([data-a63-density], [data-density])",
      "value": "var(--a63-control-gap)"
     }
    ]
@@ -13031,7 +13035,7 @@
      "value": "var(--a63-motion-ease-standard)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "var(--a63-motion-ease-emphasized)"
     }
    ]
@@ -13115,11 +13119,11 @@
      "value": "var(--typography-base-font-size)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "var(--typography-lg-font-size)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "var(--typography-base-font-size)"
     }
    ]
@@ -13139,11 +13143,11 @@
      "value": "var(--typography-sm-font-size)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "var(--typography-base-font-size)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "var(--typography-base-font-size)"
     }
    ]
@@ -13159,7 +13163,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "var(--typography-sm-font-size)"
     }
    ]
@@ -13179,11 +13183,11 @@
      "value": "var(--typography-xs-font-size)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "var(--typography-sm-font-size)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "var(--typography-base-font-size)"
     }
    ]
@@ -13203,11 +13207,11 @@
      "value": "var(--typography-lg-font-size)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "var(--typography-lg-font-size)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "var(--typography-lg-font-size)"
     }
    ]
@@ -13227,11 +13231,11 @@
      "value": "var(--typography-xs-font-size)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "var(--typography-xs-font-size)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "var(--typography-xs-font-size)"
     }
    ]
@@ -13251,7 +13255,7 @@
      "value": "var(--font-weight-medium, 500)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "600"
     }
    ]
@@ -13268,6 +13272,10 @@
    "values": [
     {
      "scope": ":root",
+     "value": "var(--a63-space-2)"
+    },
+    {
+     "scope": ":is([data-a63-density], [data-density])",
      "value": "var(--a63-space-2)"
     }
    ]
@@ -13309,15 +13317,19 @@
    "values": [
     {
      "scope": ":root",
-     "value": "calc(var(--a63-space-unit) * 9)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 9), 1px)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
-     "value": "calc(var(--a63-space-unit) * 12)"
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "round(nearest, calc(var(--a63-space-unit) * 9), 1px)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
-     "value": "calc(var(--a63-space-unit) * 12)"
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
+     "value": "round(nearest, calc(var(--a63-space-unit) * 12), 1px)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
+     "value": "round(nearest, calc(var(--a63-space-unit) * 12), 1px)"
     }
    ]
   },
@@ -13333,15 +13345,19 @@
    "values": [
     {
      "scope": ":root",
-     "value": "calc(var(--a63-space-unit) * 8)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 8), 1px)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
-     "value": "calc(var(--a63-space-unit) * 11)"
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "round(nearest, calc(var(--a63-space-unit) * 8), 1px)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
-     "value": "calc(var(--a63-space-unit) * 11)"
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
+     "value": "round(nearest, calc(var(--a63-space-unit) * 11), 1px)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
+     "value": "round(nearest, calc(var(--a63-space-unit) * 11), 1px)"
     }
    ]
   },
@@ -13357,15 +13373,19 @@
    "values": [
     {
      "scope": ":root",
-     "value": "calc(var(--a63-space-unit) * 7)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 7), 1px)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
-     "value": "calc(var(--a63-space-unit) * 10)"
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "round(nearest, calc(var(--a63-space-unit) * 7), 1px)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
-     "value": "calc(var(--a63-space-unit) * 10)"
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
+     "value": "round(nearest, calc(var(--a63-space-unit) * 10), 1px)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
+     "value": "round(nearest, calc(var(--a63-space-unit) * 10), 1px)"
     }
    ]
   },
@@ -13381,15 +13401,19 @@
    "values": [
     {
      "scope": ":root",
-     "value": "calc(var(--a63-space-unit) * 10)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 10), 1px)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
-     "value": "calc(var(--a63-space-unit) * 13)"
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "round(nearest, calc(var(--a63-space-unit) * 10), 1px)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
-     "value": "calc(var(--a63-space-unit) * 13)"
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
+     "value": "round(nearest, calc(var(--a63-space-unit) * 13), 1px)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
+     "value": "round(nearest, calc(var(--a63-space-unit) * 13), 1px)"
     }
    ]
   },
@@ -13405,15 +13429,19 @@
    "values": [
     {
      "scope": ":root",
-     "value": "calc(var(--a63-space-unit) * 6)"
+     "value": "round(nearest, calc(var(--a63-space-unit) * 6), 1px)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
-     "value": "calc(var(--a63-space-unit) * 9)"
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "round(nearest, calc(var(--a63-space-unit) * 6), 1px)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
-     "value": "calc(var(--a63-space-unit) * 9)"
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
+     "value": "round(nearest, calc(var(--a63-space-unit) * 9), 1px)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
+     "value": "round(nearest, calc(var(--a63-space-unit) * 9), 1px)"
     }
    ]
   },
@@ -13529,11 +13557,11 @@
      "value": "1.125rem"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "1.25rem"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "1.25rem"
     }
    ]
@@ -13553,11 +13581,11 @@
      "value": "1rem"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "1.125rem"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "1.125rem"
     }
    ]
@@ -13577,11 +13605,11 @@
      "value": "0.875rem"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "1rem"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "1rem"
     }
    ]
@@ -13601,11 +13629,11 @@
      "value": "1.25rem"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "1.375rem"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "1.375rem"
     }
    ]
@@ -13625,11 +13653,11 @@
      "value": "0.75rem"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "0.875rem"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "0.875rem"
     }
    ]
@@ -13873,11 +13901,15 @@
      "value": "var(--a63-space-3_5)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "var(--a63-space-3_5)"
+    },
+    {
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "var(--a63-space-5)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "var(--a63-space-5)"
     }
    ]
@@ -13897,11 +13929,15 @@
      "value": "var(--a63-space-3)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "var(--a63-space-3)"
+    },
+    {
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "var(--a63-space-4)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "var(--a63-space-4)"
     }
    ]
@@ -13921,11 +13957,15 @@
      "value": "var(--a63-space-2_5)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "var(--a63-space-2_5)"
+    },
+    {
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "var(--a63-space-3_5)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "var(--a63-space-3_5)"
     }
    ]
@@ -13945,11 +13985,15 @@
      "value": "var(--a63-space-4)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "var(--a63-space-4)"
+    },
+    {
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "var(--a63-space-6)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "var(--a63-space-6)"
     }
    ]
@@ -13969,11 +14013,15 @@
      "value": "var(--a63-space-2)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "var(--a63-space-2)"
+    },
+    {
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "var(--a63-space-3)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "var(--a63-space-3)"
     }
    ]
@@ -14165,14 +14213,6 @@
    "swift": null,
    "type": "dimension",
    "values": [
-    {
-     "scope": ":is([data-a63-density='comfortable'], [data-density='comfortable'])",
-     "value": "1"
-    },
-    {
-     "scope": ":is([data-a63-density='compact'], [data-density='compact'])",
-     "value": "0.9"
-    },
     {
      "scope": ":root",
      "value": "1"
@@ -14395,7 +14435,7 @@
    "type": "radius",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "var(--radius-2xl)"
     }
    ]
@@ -14411,8 +14451,8 @@
    "type": "dimension",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
-     "value": "calc(var(--a63-space-unit) * 13)"
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
+     "value": "round(nearest, calc(var(--a63-space-unit) * 13), 1px)"
     }
    ]
   },
@@ -14535,6 +14575,10 @@
    "type": "dimension",
    "values": [
     {
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "var(--a63-space-0_5)"
+    },
+    {
      "scope": ":root",
      "value": "var(--a63-space-0_5)"
     },
@@ -14616,6 +14660,10 @@
    "type": "dimension",
    "values": [
     {
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "var(--a63-space-2)"
+    },
+    {
      "scope": ":root",
      "value": "var(--a63-space-2)"
     }
@@ -14648,6 +14696,10 @@
    "type": "dimension",
    "values": [
     {
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "var(--a63-space-1_5)"
+    },
+    {
      "scope": ":root",
      "value": "var(--a63-space-1_5)"
     }
@@ -14663,6 +14715,10 @@
    "swift": null,
    "type": "dimension",
    "values": [
+    {
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "var(--a63-space-2)"
+    },
     {
      "scope": ":root",
      "value": "var(--a63-space-2)"
@@ -14724,6 +14780,10 @@
    "swift": null,
    "type": "dimension",
    "values": [
+    {
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "var(--a63-space-1)"
+    },
     {
      "scope": ":root",
      "value": "var(--a63-space-1)"
@@ -15279,15 +15339,19 @@
    "values": [
     {
      "scope": ":root",
-     "value": "var(--a63-space-4)"
+     "value": "round(nearest, var(--a63-space-4), 1px)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
-     "value": "var(--a63-space-2)"
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "round(nearest, var(--a63-space-4), 1px)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
-     "value": "var(--a63-space-2)"
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
+     "value": "round(nearest, var(--a63-space-2), 1px)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
+     "value": "round(nearest, var(--a63-space-2), 1px)"
     }
    ]
   },
@@ -15303,15 +15367,19 @@
    "values": [
     {
      "scope": ":root",
-     "value": "var(--a63-space-3)"
+     "value": "round(nearest, var(--a63-space-3), 1px)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
-     "value": "var(--a63-space-1_5)"
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "round(nearest, var(--a63-space-3), 1px)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
-     "value": "var(--a63-space-1_5)"
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
+     "value": "round(nearest, var(--a63-space-1_5), 1px)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
+     "value": "round(nearest, var(--a63-space-1_5), 1px)"
     }
    ]
   },
@@ -15327,15 +15395,19 @@
    "values": [
     {
      "scope": ":root",
-     "value": "var(--a63-space-2)"
+     "value": "round(nearest, var(--a63-space-2), 1px)"
     },
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
-     "value": "var(--a63-space-1)"
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "round(nearest, var(--a63-space-2), 1px)"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
-     "value": "var(--a63-space-1)"
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
+     "value": "round(nearest, var(--a63-space-1), 1px)"
+    },
+    {
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
+     "value": "round(nearest, var(--a63-space-1), 1px)"
     }
    ]
   },
@@ -16025,13 +16097,17 @@
   {
    "cssVar": "--a63-space-0_5",
    "figma": {
-    "collection": "Semantic",
+    "collection": "Contract",
     "path": "space/0_5"
    },
-   "layer": "semantic",
+   "layer": "contract",
    "swift": null,
    "type": "dimension",
    "values": [
+    {
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "calc(var(--a63-space-unit) * 0.5)"
+    },
     {
      "scope": ":root",
      "value": "calc(var(--a63-space-unit) * 0.5)"
@@ -16041,13 +16117,17 @@
   {
    "cssVar": "--a63-space-1",
    "figma": {
-    "collection": "Semantic",
+    "collection": "Contract",
     "path": "space/1"
    },
-   "layer": "semantic",
+   "layer": "contract",
    "swift": null,
    "type": "dimension",
    "values": [
+    {
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "var(--a63-space-unit)"
+    },
     {
      "scope": ":root",
      "value": "var(--a63-space-unit)"
@@ -16057,13 +16137,17 @@
   {
    "cssVar": "--a63-space-1_5",
    "figma": {
-    "collection": "Semantic",
+    "collection": "Contract",
     "path": "space/1_5"
    },
-   "layer": "semantic",
+   "layer": "contract",
    "swift": null,
    "type": "dimension",
    "values": [
+    {
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "calc(var(--a63-space-unit) * 1.5)"
+    },
     {
      "scope": ":root",
      "value": "calc(var(--a63-space-unit) * 1.5)"
@@ -16073,13 +16157,17 @@
   {
    "cssVar": "--a63-space-2",
    "figma": {
-    "collection": "Semantic",
+    "collection": "Contract",
     "path": "space/2"
    },
-   "layer": "semantic",
+   "layer": "contract",
    "swift": null,
    "type": "dimension",
    "values": [
+    {
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "calc(var(--a63-space-unit) * 2)"
+    },
     {
      "scope": ":root",
      "value": "calc(var(--a63-space-unit) * 2)"
@@ -16089,13 +16177,17 @@
   {
    "cssVar": "--a63-space-2_5",
    "figma": {
-    "collection": "Semantic",
+    "collection": "Contract",
     "path": "space/2_5"
    },
-   "layer": "semantic",
+   "layer": "contract",
    "swift": null,
    "type": "dimension",
    "values": [
+    {
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "calc(var(--a63-space-unit) * 2.5)"
+    },
     {
      "scope": ":root",
      "value": "calc(var(--a63-space-unit) * 2.5)"
@@ -16105,13 +16197,17 @@
   {
    "cssVar": "--a63-space-3",
    "figma": {
-    "collection": "Semantic",
+    "collection": "Contract",
     "path": "space/3"
    },
-   "layer": "semantic",
+   "layer": "contract",
    "swift": null,
    "type": "dimension",
    "values": [
+    {
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "calc(var(--a63-space-unit) * 3)"
+    },
     {
      "scope": ":root",
      "value": "calc(var(--a63-space-unit) * 3)"
@@ -16121,13 +16217,17 @@
   {
    "cssVar": "--a63-space-3_5",
    "figma": {
-    "collection": "Semantic",
+    "collection": "Contract",
     "path": "space/3_5"
    },
-   "layer": "semantic",
+   "layer": "contract",
    "swift": null,
    "type": "dimension",
    "values": [
+    {
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "calc(var(--a63-space-unit) * 3.5)"
+    },
     {
      "scope": ":root",
      "value": "calc(var(--a63-space-unit) * 3.5)"
@@ -16137,13 +16237,17 @@
   {
    "cssVar": "--a63-space-4",
    "figma": {
-    "collection": "Semantic",
+    "collection": "Contract",
     "path": "space/4"
    },
-   "layer": "semantic",
+   "layer": "contract",
    "swift": null,
    "type": "dimension",
    "values": [
+    {
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "calc(var(--a63-space-unit) * 4)"
+    },
     {
      "scope": ":root",
      "value": "calc(var(--a63-space-unit) * 4)"
@@ -16153,13 +16257,17 @@
   {
    "cssVar": "--a63-space-5",
    "figma": {
-    "collection": "Semantic",
+    "collection": "Contract",
     "path": "space/5"
    },
-   "layer": "semantic",
+   "layer": "contract",
    "swift": null,
    "type": "dimension",
    "values": [
+    {
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "calc(var(--a63-space-unit) * 5)"
+    },
     {
      "scope": ":root",
      "value": "calc(var(--a63-space-unit) * 5)"
@@ -16169,13 +16277,17 @@
   {
    "cssVar": "--a63-space-6",
    "figma": {
-    "collection": "Semantic",
+    "collection": "Contract",
     "path": "space/6"
    },
-   "layer": "semantic",
+   "layer": "contract",
    "swift": null,
    "type": "dimension",
    "values": [
+    {
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "calc(var(--a63-space-unit) * 6)"
+    },
     {
      "scope": ":root",
      "value": "calc(var(--a63-space-unit) * 6)"
@@ -16885,7 +16997,7 @@
    "type": "dimension",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "1.6"
     },
     {
@@ -16905,11 +17017,11 @@
    "type": "dimension",
    "values": [
     {
-     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])",
+     "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])",
      "value": "1.375rem"
     },
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "1.375rem"
     },
     {
@@ -17084,6 +17196,10 @@
    "swift": null,
    "type": "dimension",
    "values": [
+    {
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "var(--a63-control-gap)"
+    },
     {
      "scope": ":root",
      "value": "var(--a63-control-gap)"
@@ -17272,6 +17388,10 @@
    "swift": null,
    "type": "dimension",
    "values": [
+    {
+     "scope": ":is([data-a63-density], [data-density])",
+     "value": "var(--a63-control-gap)"
+    },
     {
      "scope": ":root",
      "value": "var(--a63-control-gap)"
@@ -30248,7 +30368,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(40px * var(--typography-scale, 1))"
     },
     {
@@ -30280,7 +30400,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(44px * var(--typography-scale, 1))"
     },
     {
@@ -30312,7 +30432,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(56px * var(--typography-scale, 1))"
     },
     {
@@ -30344,7 +30464,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(60px * var(--typography-scale, 1))"
     },
     {
@@ -30376,7 +30496,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(20px * var(--typography-scale, 1))"
     },
     {
@@ -30416,7 +30536,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(25px * var(--typography-scale, 1))"
     },
     {
@@ -30456,7 +30576,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(11px * var(--typography-scale, 1))"
     },
     {
@@ -30488,7 +30608,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(13px * var(--typography-scale, 1))"
     },
     {
@@ -30520,7 +30640,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(22px * var(--typography-scale, 1))"
     },
     {
@@ -30560,7 +30680,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(28px * var(--typography-scale, 1))"
     },
     {
@@ -30600,7 +30720,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(25px * var(--typography-scale, 1))"
     },
     {
@@ -30640,7 +30760,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(31px * var(--typography-scale, 1))"
     },
     {
@@ -30680,7 +30800,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(28px * var(--typography-scale, 1))"
     },
     {
@@ -30720,7 +30840,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(34px * var(--typography-scale, 1))"
     },
     {
@@ -30760,7 +30880,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(34px * var(--typography-scale, 1))"
     },
     {
@@ -30800,7 +30920,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(41px * var(--typography-scale, 1))"
     },
     {
@@ -30840,7 +30960,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(36px * var(--typography-scale, 1))"
     },
     {
@@ -30880,7 +31000,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(44px * var(--typography-scale, 1))"
     },
     {
@@ -30920,7 +31040,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(39px * var(--typography-scale, 1))"
     },
     {
@@ -30960,7 +31080,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(49px * var(--typography-scale, 1))"
     },
     {
@@ -31000,7 +31120,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(44px * var(--typography-scale, 1))"
     },
     {
@@ -31040,7 +31160,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(55px * var(--typography-scale, 1))"
     },
     {
@@ -31080,7 +31200,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(17px * var(--typography-scale, 1))"
     },
     {
@@ -31112,7 +31232,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(22px * var(--typography-scale, 1))"
     },
     {
@@ -31144,7 +31264,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(18px * var(--typography-scale, 1))"
     },
     {
@@ -31180,7 +31300,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(24px * var(--typography-scale, 1))"
     },
     {
@@ -31260,7 +31380,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(15px * var(--typography-scale, 1))"
     },
     {
@@ -31292,7 +31412,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(20px * var(--typography-scale, 1))"
     },
     {
@@ -31324,7 +31444,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(19px * var(--typography-scale, 1))"
     },
     {
@@ -31360,7 +31480,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(24px * var(--typography-scale, 1))"
     },
     {
@@ -31396,7 +31516,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(13px * var(--typography-scale, 1))"
     },
     {
@@ -31428,7 +31548,7 @@
    "type": "typography",
    "values": [
     {
-     "scope": "[data-a63-form-factor='phone']",
+     "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])",
      "value": "calc(18px * var(--typography-scale, 1))"
     },
     {

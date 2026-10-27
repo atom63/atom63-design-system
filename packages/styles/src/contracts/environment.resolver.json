@@ -1,6 +1,6 @@
 {
   "version": "2025.10",
-  "description": "Environment dimensions.\n\nEach dimension owns a distinct slice (see packages/styles/README.md — the\ndimension-ownership table):\n  - Design Language → component sizing/proportions + interaction feedback\n  - Input           → ergonomics (min touch target)\n  - Density         → proportional rhythm\n\nRadius, color, and shadow are NOT design-language concerns — they belong to\nthe semantic ramp + theme (personalization). Design language never sets radius.\n\nPrevent focus zoom in mobile Safari without inflating non-editable control\n labels. Editable recipes combine this floor with their normal type token.\n\nDensity — proportional rhythm\n\nAuto-detect coarse pointers. Without this, touch ergonomics only apply when an\n app explicitly passes `input` to UIProvider — an opt-in almost nothing does, so\n controls stay at their 24px floor on phones. Declared before the attribute\n rules below (equal specificity) so an explicit data-a63-input always wins.\n\nInput — ergonomics (touch target). Independent of design language.\n\nExplicit fine-pointer choices override coarse auto-detection (hybrid devices,\n or a user who picked \"pointer\" in the appearance panel on a touchscreen).\n\nDesign language — component sizing/proportions + interaction feedback only.\nThe base :root (control.css) is the web default; iOS overrides sizing + feel.\nNo radius, color, or touch-target here.\n\nForm factor — a phone screen. [data-a63-form-factor='phone'] sets the type steps and the\ncontrol sizing of a phone (iOS text sizes: body 17, subheadline 15, footnote 13). Viewport\nwidth does not apply it; a phone layout stamps it (AppView layout=\"phone\"). The type roles\nare redeclared on the same scope (type-roles.css), so text-body and the other roles follow it.",
+  "description": "Environment dimensions.\n\nEach dimension owns a distinct slice (see packages/styles/README.md — the\ndimension-ownership table):\n  - Design Language → component sizing/proportions + interaction feedback\n  - Input           → ergonomics (min touch target)\n  - Density         → proportional rhythm\n\nRadius, color, and shadow are NOT design-language concerns — they belong to\nthe semantic ramp + theme (personalization). Design language never sets radius.\n\nPrevent focus zoom in mobile Safari without inflating non-editable control\n labels. Editable recipes combine this floor with their normal type token.\n\nDensity — proportional rhythm. A density scope sets --a63-space-unit, and every :root token\nbuilt on it (the space steps, control heights and paddings, row padding, gaps) is declared\nagain on [data-a63-density], so a nested scope recomputes them once, the same as the root.\nThe design-language and phone scopes are also declared on a density scope inside them, so\nit keeps their sizes.\n\nAuto-detect coarse pointers. Without this, touch ergonomics only apply when an\n app explicitly passes `input` to UIProvider — an opt-in almost nothing does, so\n controls stay at their 24px floor on phones. Declared before the attribute\n rules below (equal specificity) so an explicit data-a63-input always wins.\n\nInput — ergonomics (touch target). Independent of design language.\n\nExplicit fine-pointer choices override coarse auto-detection (hybrid devices,\n or a user who picked \"pointer\" in the appearance panel on a touchscreen).\n\nDesign language — component sizing/proportions + interaction feedback only.\nThe base :root (control.css) is the web default; iOS overrides sizing + feel.\nNo radius, color, or touch-target here.\n\nForm factor — a phone screen. [data-a63-form-factor='phone'] sets the type steps and the\ncontrol sizing of a phone (iOS text sizes: body 17, subheadline 15, footnote 13). Viewport\nwidth does not apply it; a phone layout stamps it (AppView layout=\"phone\"). The type roles\nare redeclared on the same scope (type-roles.css), so text-body and the other roles follow it.",
   "sets": {
     "01-root": {
       "sources": [
@@ -9,7 +9,8 @@
             "density": {
               "scale": {
                 "$type": "number",
-                "$value": 1
+                "$value": 1,
+                "$description": "An extra multiplier recipes apply to control heights. It stays 1 in every density: density reaches sizes through --a63-space-unit, which the control heights are built on, so scaling them again would shrink controls twice."
               }
             },
             "editable": {
@@ -109,12 +110,6 @@
       "sources": [
         {
           "a63": {
-            "density": {
-              "scale": {
-                "$type": "number",
-                "$value": 0.9
-              }
-            },
             "space": {
               "unit": {
                 "$type": "dimension",
@@ -137,12 +132,6 @@
       "sources": [
         {
           "a63": {
-            "density": {
-              "scale": {
-                "$type": "number",
-                "$value": 1
-              }
-            },
             "space": {
               "unit": {
                 "$type": "dimension",
@@ -155,6 +144,15 @@
       "$extensions": {
         "io.atom63.css": {
           "selector": ":is([data-a63-density='comfortable'], [data-density='comfortable'])"
+        }
+      }
+    },
+    "05a-density-scope": {
+      "sources": [],
+      "$extensions": {
+        "io.atom63.css": {
+          "selector": ":is([data-a63-density], [data-density])",
+          "rederive": "{a63.space.unit}"
         }
       }
     },
@@ -364,35 +362,35 @@
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 9)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 9), 1px)"
                   }
                 },
                 "sm": {
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 10)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 10), 1px)"
                   }
                 },
                 "md": {
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 11)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 11), 1px)"
                   }
                 },
                 "lg": {
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 12)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 12), 1px)"
                   }
                 },
                 "xl": {
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 13)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 13), 1px)"
                   }
                 }
               },
@@ -500,15 +498,24 @@
                   "xs": {
                     "$type": "dimension",
                     "$value": "{a63.space.1}",
-                    "$description": "Rows stop padding their way to height and let the control ramp floor them,\n   so a single-line row lands on 44pt and a two-line row on ~59pt, instead of\n   52pt and 75pt. Targets are from our measurement study, not a published\n   Apple row height — there isn't one."
+                    "$description": "Rows stop padding their way to height and let the control ramp floor them,\n   so a single-line row lands on 44pt and a two-line row on ~59pt, instead of\n   52pt and 75pt. Targets are from our measurement study, not a published\n   Apple row height — there isn't one.",
+                    "$extensions": {
+                      "io.atom63.derive": "round(nearest, {a63.space.1}, 1px)"
+                    }
                   },
                   "sm": {
                     "$type": "dimension",
-                    "$value": "{a63.space.1_5}"
+                    "$value": "{a63.space.1_5}",
+                    "$extensions": {
+                      "io.atom63.derive": "round(nearest, {a63.space.1_5}, 1px)"
+                    }
                   },
                   "md": {
                     "$type": "dimension",
-                    "$value": "{a63.space.2}"
+                    "$value": "{a63.space.2}",
+                    "$extensions": {
+                      "io.atom63.derive": "round(nearest, {a63.space.2}, 1px)"
+                    }
                   }
                 }
               }
@@ -530,7 +537,7 @@
       ],
       "$extensions": {
         "io.atom63.css": {
-          "selector": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+          "selector": ":is([data-a63-design-language='ios'], [data-design-language='ios']),\n:is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
         }
       }
     },
@@ -963,7 +970,7 @@
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 9)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 9), 1px)"
                   },
                   "$description": "Controls on a phone: the iOS height ramp (36/40/44/48/52), and every standard control label\n   at body size (17), as iOS sets buttons, rows, fields and menus. xs stays at footnote size\n   for badges, shortcuts and initials. Weight and press feedback stay with the design language."
                 },
@@ -971,28 +978,28 @@
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 10)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 10), 1px)"
                   }
                 },
                 "md": {
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 11)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 11), 1px)"
                   }
                 },
                 "lg": {
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 12)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 12), 1px)"
                   }
                 },
                 "xl": {
                   "$type": "dimension",
                   "$value": "{a63.space.unit}",
                   "$extensions": {
-                    "io.atom63.derive": "calc({a63.space.unit} * 13)"
+                    "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 13), 1px)"
                   }
                 }
               },
@@ -1094,15 +1101,24 @@
                 "block": {
                   "xs": {
                     "$type": "dimension",
-                    "$value": "{a63.space.1}"
+                    "$value": "{a63.space.1}",
+                    "$extensions": {
+                      "io.atom63.derive": "round(nearest, {a63.space.1}, 1px)"
+                    }
                   },
                   "sm": {
                     "$type": "dimension",
-                    "$value": "{a63.space.1_5}"
+                    "$value": "{a63.space.1_5}",
+                    "$extensions": {
+                      "io.atom63.derive": "round(nearest, {a63.space.1_5}, 1px)"
+                    }
                   },
                   "md": {
                     "$type": "dimension",
-                    "$value": "{a63.space.2}"
+                    "$value": "{a63.space.2}",
+                    "$extensions": {
+                      "io.atom63.derive": "round(nearest, {a63.space.2}, 1px)"
+                    }
                   }
                 }
               }
@@ -1130,7 +1146,7 @@
                     "$type": "dimension",
                     "$value": "{a63.space.unit}",
                     "$extensions": {
-                      "io.atom63.derive": "calc({a63.space.unit} * 13)"
+                      "io.atom63.derive": "round(nearest, calc({a63.space.unit} * 13), 1px)"
                     },
                     "$description": "The row of a phone's grouped list (ItemGroup variant=\"inset\", default and sm rows): 52px tall, as iOS 26 Settings and a 3x reference capture both measure (51-52pt). Declared only here; the Item recipe falls back to its control-height floor elsewhere."
                   }
@@ -1149,7 +1165,7 @@
       ],
       "$extensions": {
         "io.atom63.css": {
-          "selector": "[data-a63-form-factor='phone']"
+          "selector": "[data-a63-form-factor='phone'],\n[data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
         }
       }
     }
@@ -1166,6 +1182,9 @@
     },
     {
       "$ref": "#/sets/05-is-data-a63-density-comfortable-data-density-com"
+    },
+    {
+      "$ref": "#/sets/05a-density-scope"
     },
     {
       "$ref": "#/sets/06-media-pointer-coarse-root"

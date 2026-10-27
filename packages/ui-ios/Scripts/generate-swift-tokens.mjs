@@ -70,20 +70,23 @@ if (!Number.isFinite(spaceUnitPx)) {
   throw new Error('Expected --spacing-1 to be a pixel value')
 }
 
-/** `calc(var(--a63-space-unit) * 11)` → 44 */
+/** The expression inside `round(nearest, <expression>, 1px)`, which web uses for whole pixels. */
+const unrounded = value => /^round\(nearest, (.+), 1px\)$/.exec(value)?.[1] ?? value
+
+/** `calc(var(--a63-space-unit) * 11)` → 44, also inside `round(nearest, …, 1px)` */
 function spaceUnits(block, name) {
   const value = blockValue(block, name)
-  const match = /^calc\(var\(--a63-space-unit\) \* ([\d.]+)\)$/.exec(value)
+  const match = /^calc\(var\(--a63-space-unit\) \* ([\d.]+)\)$/.exec(unrounded(value))
   if (!match) throw new Error(`Expected --${name} to be a space-unit multiple, received ${value}`)
-  return Number(match[1]) * spaceUnitPx
+  return Math.round(Number(match[1]) * spaceUnitPx)
 }
 
 /** `var(--a63-space-3_5)` → 14 */
 function spaceToken(block, name) {
   const value = blockValue(block, name)
-  const match = /^var\(--a63-space-([\d_]+)\)$/.exec(value)
+  const match = /^var\(--a63-space-([\d_]+)\)$/.exec(unrounded(value))
   if (!match) throw new Error(`Expected --${name} to be a space token, received ${value}`)
-  return Number(match[1].replace('_', '.')) * spaceUnitPx
+  return Math.round(Number(match[1].replace('_', '.')) * spaceUnitPx)
 }
 
 /** `2.75rem` → 44 */

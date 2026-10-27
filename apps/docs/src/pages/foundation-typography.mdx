@@ -52,6 +52,8 @@ Body text (`xs` through `lg`) uses a ~1.5× ratio for comfortable reading. Displ
 
 Most systems use 16px because browsers default to it. I chose 15px after testing information-dense layouts — docs tables, prop references, sidebar navigation. At 16px, content felt loose and wasted space. At 14px, extended reading got fatiguing. 15px is the sweet spot for my use cases: dense enough for tool interfaces, comfortable enough for documentation prose.
 
+Text without a size class takes the body role too, not the browser's 16px. `@atom63/styles` sets `--a63-type-body-font-size` and `--a63-type-body-line-height` (15/23) on `body` and on a phone scope (17/22 there), and the `@atom63/ui-react` reset sets them on `Atom63Theme` and `UIProvider`. `html` keeps the browser size, so `1rem` stays 16px and every rem-based token is unchanged. Set a size class or a text role where text should be smaller, such as `text-sm` in a dense table.
+
 ### Breakpoints over fluid
 
 Fluid typography (`clamp()`) assumes the viewport is the right proxy for text size. In the OS metaphor, multiple windows have arbitrary widths on one screen. Breakpoint jumps plus `data-window-size` attributes let window content follow its container band instead of the outer viewport.

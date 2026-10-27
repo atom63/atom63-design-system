@@ -26,6 +26,11 @@
  * selector of any context, replacing the attribute selector (the mode axis
  * also answers to `.light` / `.dark` classes). A token's `$description` is kept as a comment above its declaration.
  *
+ * A set with no sources may name a token in `$extensions["io.atom63.css"].rederive`
+ * (`"{a63.space.unit}"`): it then declares again, under its selector, every
+ * plain-`:root` token that reads that token directly or through other `:root`
+ * tokens, with the same expression, so a scope that changes it recomputes them.
+ *
  * A token whose value is computed in CSS keeps a plain DTCG `$value` (its main
  * input, usually an alias, which is what Figma and other readers see) and puts
  * the CSS expression in `$extensions["io.atom63.derive"]`. `{token.path}`
@@ -259,9 +264,18 @@ function toRules(sourcePath, document) {
     const setName = /^#\/sets\/(.+)$/.exec($ref ?? '')?.[1]
     const set = setName && document.sets?.[setName]
     if (!set) throw new Error(`${sourcePath}: resolutionOrder entry ${$ref} does not resolve`)
-    const { selector, atRule } = set.$extensions?.['io.atom63.css'] ?? {}
+    const { selector, atRule, rederive } = set.$extensions?.['io.atom63.css'] ?? {}
     if (!selector) {
       throw new Error(`${sourcePath}: set "${setName}" needs $extensions["io.atom63.css"].selector`)
+    }
+    if (rederive !== undefined) {
+      const seed = typeof rederive === 'string' ? rederive.match(ALIAS)?.[1] : undefined
+      if (!seed || set.sources.length > 0) {
+        throw new Error(
+          `${sourcePath}: set "${setName}": rederive must be a single {token} alias on a set with no sources`
+        )
+      }
+      return [{ selector, atRule, groups: [], rederive: aliasTarget(seed) }]
     }
     return [{ selector, atRule, groups: inline(set.sources) }]
   })
@@ -370,6 +384,59 @@ const sourceRoots = [
 for (const sourcePath of (await Promise.all(sourceRoots.map(findSources))).flat()) {
   const document = JSON.parse(await readFile(sourcePath, 'utf8'))
   sources.push([sourcePath, document, toRules(sourcePath, document)])
+}
+fillRederivedRules(sources)
+
+/**
+ * Fills each `rederive` set: every token declared on plain `:root` whose value
+ * reads the named token, directly or through other `:root` tokens, declared again
+ * with the same expression. A custom property that reads another resolves where it
+ * is declared, so without this a scope that changes the named token (density
+ * changes `--a63-space-unit`) would keep the values `:root` resolved.
+ */
+function fillRederivedRules(sources) {
+  const rootTokens = new Map()
+  for (const [, , rules] of sources) {
+    for (const rule of rules) {
+      if (rule.selector !== ':root' || rule.atRule) continue
+      for (const [name, $type, $value, derive] of tokensOf([rule])) {
+        const references = [$value, derive]
+          .filter(text => typeof text === 'string')
+          .flatMap(text => [...text.matchAll(/\{([^{}]+)\}/g)].map(([, reference]) => reference))
+          .filter(reference => reference !== '$value')
+          .map(aliasTarget)
+        const node = { $type, $value }
+        if (derive !== undefined) node.$extensions = { 'io.atom63.derive': derive }
+        rootTokens.set(name, { node, references })
+      }
+    }
+  }
+  for (const [sourcePath, , rules] of sources) {
+    for (const rule of rules) {
+      if (!rule.rederive) continue
+      if (!rootTokens.has(rule.rederive)) {
+        throw new Error(`${sourcePath}: rederive {${rule.rederive}} is not a :root token`)
+      }
+      const reads = new Set([rule.rederive])
+      for (let grew = true; grew;) {
+        grew = false
+        for (const [name, { references }] of rootTokens) {
+          if (!reads.has(name) && references.some(reference => reads.has(reference))) {
+            reads.add(name)
+            grew = true
+          }
+        }
+      }
+      reads.delete(rule.rederive)
+      rule.groups = [
+        Object.fromEntries(
+          [...rootTokens]
+            .filter(([name]) => reads.has(name))
+            .map(([name, { node }]) => [name, node])
+        ),
+      ]
+    }
+  }
 }
 // Every token name across all sources, so aliases can point into any file, plus
 // every custom property the package's hand-written CSS declares: while a layer is

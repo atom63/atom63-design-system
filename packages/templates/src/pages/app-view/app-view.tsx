@@ -40,7 +40,7 @@ export const template = {
   kind: 'page',
   title: 'App view',
   description:
-    'A full-window product view with no site header or footer: a top bar across the window, a side panel and the main region below it, and an optional bar docked at the bottom, such as a media player or a status bar. layout="phone" makes it a phone app screen: edge to edge with no card or inset, the top bar optional, safe-area aware, phone-sized type and controls (body 17px, 44px controls), and the tab-bar block docked at the bottom. Copy-only: paste the files `atom63 template app-view` prints.',
+    'A full-window product view with no site header or footer: a top bar across the window, a side panel and the main region below it, and an optional bar docked at the bottom, such as a media player or a status bar. layout="phone" makes it a phone app screen: edge to edge with no card or inset, the top bar optional, safe-area aware, phone-sized type and controls (body 17px, 44px controls), and the tab-bar block docked at the bottom. For a dense product view (a table, an inbox, an issue tracker, an admin dashboard, a file list), wrap it in <UIProvider density="compact">: spacing and control heights scale once by 0.875 (32px controls become 28px) and text keeps its size. Copy-only: paste the files `atom63 template app-view` prints.',
   category: 'layout',
   tags: [
     'app',
@@ -99,6 +99,10 @@ export interface AppViewProps {
  * The window is a three-row grid: the top bar, the body (side panel and main,
  * each scrolling on its own) and the docked bar. Both bars span the full width,
  * which the app shell's sidebar layout cannot do.
+ * For a dense product view (a table, an inbox, an issue tracker, an admin
+ * dashboard, a file list), wrap it in <UIProvider density="compact"> from
+ * @atom63/ui-react: the space steps, gaps, paddings and control heights scale
+ * once by 0.875 and text keeps its size.
  */
 export function AppView({
   bottomBar,

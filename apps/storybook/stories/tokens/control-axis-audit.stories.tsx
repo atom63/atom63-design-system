@@ -18,6 +18,7 @@ import {
   TabsList,
   TabsTab,
   Toggle,
+  UIProvider,
 } from '@atom63/ui-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
@@ -128,7 +129,7 @@ export const ControlRows: Story = {
     <div className="flex flex-col gap-3 p-4">
       <div className="text-muted-foreground font-mono text-[11px]">
         Drive <code>Density</code> and <code>Type scale</code> from the toolbar. Both are stamped on
-        the document root, which is the only scope where they fully resolve.
+        the document root; density also resolves on a nested scope (see Nested Density).
       </div>
       {STEPS.map(step => (
         <div className="border-border rounded-lg border p-3" key={step.button}>
@@ -138,6 +139,30 @@ export const ControlRows: Story = {
           <ControlRow step={step} />
         </div>
       ))}
+    </div>
+  ),
+}
+
+/**
+ * The same row at the default density and inside `<UIProvider density="compact">`.
+ * The nested scope recomputes the space unit's tokens, so its controls are 28px
+ * at `md` (not 32 × 0.9) and its gaps and paddings shrink too; text keeps its size.
+ * With the toolbar on Compact, the top row matches the bottom one: density
+ * applies once, on the root or nested.
+ */
+export const NestedDensity: Story = {
+  render: () => (
+    <div className="flex flex-col gap-3 p-4">
+      <div className="border-border rounded-lg border p-3">
+        <div className="text-muted-foreground mb-2 font-mono text-[11px]">toolbar density</div>
+        <ControlRow step={STEPS[1]} />
+      </div>
+      <UIProvider className="border-border rounded-lg border p-3" density="compact">
+        <div className="text-muted-foreground mb-2 font-mono text-[11px]">
+          UIProvider density=&quot;compact&quot;
+        </div>
+        <ControlRow step={STEPS[1]} />
+      </UIProvider>
     </div>
   ),
 }

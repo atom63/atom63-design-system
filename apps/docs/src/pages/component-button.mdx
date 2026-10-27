@@ -57,7 +57,7 @@ The root always renders `data-slot="button"` and carries `data-variant` and `dat
 
 ## Sizes and icons
 
-The size ramp scales height, inline padding, gap, and icon size together through `--a63-density-scale`. Icon-only buttons use the `icon-*` steps so the control stays square, and draw their glyph from `--a63-control-icon-only-size-*`, about 0.56 of the box (24/14, 28/16, 32/18). An icon beside a label stays on the smaller `--a63-control-icon-size-*` ramp. Button owns the icon gap — never add `mr-`/`ml-` margins to an icon inside one.
+Each size step sets height, inline padding, gap and icon size together. Height, padding and gap are built on `--a63-space-unit`, so density scales them once (compact `md` is 28px, rounded to whole pixels); icon sizes stay the same. Icon-only buttons use the `icon-*` steps so the control stays square, and draw their glyph from `--a63-control-icon-only-size-*`, about 0.56 of the box (24/14, 28/16, 32/18). An icon beside a label stays on the smaller `--a63-control-icon-size-*` ramp. Button owns the icon gap — never add `mr-`/`ml-` margins to an icon inside one.
 
 Hide decorative icons from assistive technology when the visible label already names the action.
 

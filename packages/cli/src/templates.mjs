@@ -230,6 +230,55 @@ const displayAmount = {
   next: 'atom63 component amount',
 }
 
+/* Words that mark an idea as a dense product screen: rows of data to scan and act on. */
+const denseWords = new Set([
+  'admin',
+  'backlog',
+  'crm',
+  'dashboard',
+  'dashboards',
+  'datagrid',
+  'email',
+  'files',
+  'inbox',
+  'inboxes',
+  'issue',
+  'issues',
+  'mail',
+  'spreadsheet',
+  'table',
+  'tables',
+  'ticket',
+  'tickets',
+  'tracker',
+  'triage',
+])
+
+/** Whether an idea is a dense desktop product screen: a table, an inbox, an issue tracker, an admin dashboard or a file list. */
+export function isDenseIdea(idea) {
+  if (isPhoneIdea(idea)) return false
+  const terms = queryTerms(idea).filter(({ weight }) => weight === 1)
+  return (
+    terms.some(({ term }) => denseWords.has(term)) ||
+    /\bfile (list|browser|manager|explorer)s?\b/i.test(idea)
+  )
+}
+
+/* How a dense product screen is told to use compact density. */
+const compactDensity = {
+  use: 'A dense product screen (a table, an inbox, an issue tracker, an admin dashboard, a file list) uses compact density: wrap the screen, or the dense region of it, in <UIProvider density="compact">. Compact sets the space unit to 3.5px instead of 4px, so the space steps, gaps, paddings and control heights all scale once by 0.875 (32px controls become 28px, a 16px gap 14px); text keeps its size. For the whole app, set data-a63-density="compact" on <html> instead.',
+  imports: ["import { UIProvider } from '@atom63/ui-react'"],
+  snippet: [
+    '<UIProvider density="compact">',
+    '  {/* the table, inbox or list */}',
+    '</UIProvider>',
+    '',
+    '// The whole app:',
+    "document.documentElement.dataset.a63Density = 'compact'",
+  ].join('\n'),
+  next: 'atom63 docs foundation-personalization',
+}
+
 /**
  * A composition kit for an idea: the closest pages and blocks, the components
  * the idea names, the always-on foundation and the rules. With no idea, the
@@ -281,6 +330,7 @@ export function build(index, idea) {
       idea,
       ...(phone ? { phone: phoneScreen } : {}),
       ...(isAmountIdea(idea) ? { amount: displayAmount } : {}),
+      ...(isDenseIdea(idea) ? { density: compactDensity } : {}),
       pages,
       blocks,
       components,

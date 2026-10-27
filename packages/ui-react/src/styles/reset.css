@@ -12,8 +12,13 @@
     min-width: 0;
     color: var(--a63-text-primary);
     font-family: var(--font-family-sans);
-    font-size: var(--typography-sm-font-size);
-    line-height: var(--typography-sm-line-height);
+  }
+
+  /* Text without a size class takes the body role, as it does on body. */
+  .a63-UIProvider,
+  .a63-Atom63Theme {
+    font-size: var(--a63-type-body-font-size);
+    line-height: var(--a63-type-body-line-height);
   }
 
   .a63-UIProvider :where(button, input, textarea, select) {

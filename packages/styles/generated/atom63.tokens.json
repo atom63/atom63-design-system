@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 1985,
+    "declarations": 2015,
     "uniqueCssVariables": 1201,
-    "figmaMappedDeclarations": 1923
+    "figmaMappedDeclarations": 1953
   },
   "entries": [
     {
@@ -111,6 +111,21 @@
       "lifecycle": "preview",
       "aliases": ["--a63-control-gap"],
       "scope": ":root"
+    },
+    {
+      "name": "a63-action-control-gap",
+      "cssVar": "--a63-action-control-gap",
+      "type": "dimension",
+      "value": "var(--a63-control-gap)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "action/control/gap"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-control-gap"],
+      "scope": ":is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-action-control-gloss",
@@ -5506,7 +5521,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-motion-ease-emphasized"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-focus-ring-color",
@@ -5643,7 +5658,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-lg-font-size"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-font-size-lg",
@@ -5659,7 +5674,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-base-font-size"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-font-size-md",
@@ -5690,7 +5705,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-base-font-size"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-font-size-md",
@@ -5706,7 +5721,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-base-font-size"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-font-size-secondary",
@@ -5722,7 +5737,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-sm-font-size"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-font-size-sm",
@@ -5753,7 +5768,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-sm-font-size"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-font-size-sm",
@@ -5769,7 +5784,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-base-font-size"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-font-size-xl",
@@ -5800,7 +5815,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-lg-font-size"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-font-size-xl",
@@ -5816,7 +5831,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-lg-font-size"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-font-size-xs",
@@ -5847,7 +5862,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-xs-font-size"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-font-size-xs",
@@ -5863,7 +5878,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-xs-font-size"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-font-weight",
@@ -5893,7 +5908,7 @@
         "mode": "design-language: ios"
       },
       "lifecycle": "preview",
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-gap",
@@ -5909,6 +5924,21 @@
       "lifecycle": "preview",
       "aliases": ["--a63-space-2"],
       "scope": ":root"
+    },
+    {
+      "name": "a63-control-gap",
+      "cssVar": "--a63-control-gap",
+      "type": "dimension",
+      "value": "var(--a63-space-2)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/gap"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-2"],
+      "scope": ":is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-gloss",
@@ -5954,7 +5984,7 @@
       "name": "a63-control-height-lg",
       "cssVar": "--a63-control-height-lg",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 9)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 9), 1px)",
       "sourceFile": "packages/styles/src/contracts/control.css",
       "layer": "contract",
       "figma": {
@@ -5969,7 +5999,22 @@
       "name": "a63-control-height-lg",
       "cssVar": "--a63-control-height-lg",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 12)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 9), 1px)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/height/lg"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-control-height-lg",
+      "cssVar": "--a63-control-height-lg",
+      "type": "dimension",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 12), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -5979,13 +6024,13 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-height-lg",
       "cssVar": "--a63-control-height-lg",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 12)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 12), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -5995,13 +6040,13 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-height-md",
       "cssVar": "--a63-control-height-md",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 8)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 8), 1px)",
       "sourceFile": "packages/styles/src/contracts/control.css",
       "layer": "contract",
       "figma": {
@@ -6016,7 +6061,22 @@
       "name": "a63-control-height-md",
       "cssVar": "--a63-control-height-md",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 11)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 8), 1px)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/height/md"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-control-height-md",
+      "cssVar": "--a63-control-height-md",
+      "type": "dimension",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 11), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6026,13 +6086,13 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-height-md",
       "cssVar": "--a63-control-height-md",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 11)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 11), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6042,13 +6102,13 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-height-sm",
       "cssVar": "--a63-control-height-sm",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 7)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 7), 1px)",
       "sourceFile": "packages/styles/src/contracts/control.css",
       "layer": "contract",
       "figma": {
@@ -6063,7 +6123,22 @@
       "name": "a63-control-height-sm",
       "cssVar": "--a63-control-height-sm",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 10)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 7), 1px)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/height/sm"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-control-height-sm",
+      "cssVar": "--a63-control-height-sm",
+      "type": "dimension",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 10), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6073,13 +6148,13 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-height-sm",
       "cssVar": "--a63-control-height-sm",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 10)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 10), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6089,13 +6164,13 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-height-xl",
       "cssVar": "--a63-control-height-xl",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 10)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 10), 1px)",
       "sourceFile": "packages/styles/src/contracts/control.css",
       "layer": "contract",
       "figma": {
@@ -6110,7 +6185,22 @@
       "name": "a63-control-height-xl",
       "cssVar": "--a63-control-height-xl",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 13)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 10), 1px)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/height/xl"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-control-height-xl",
+      "cssVar": "--a63-control-height-xl",
+      "type": "dimension",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 13), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6120,13 +6210,13 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-height-xl",
       "cssVar": "--a63-control-height-xl",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 13)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 13), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6136,13 +6226,13 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-height-xs",
       "cssVar": "--a63-control-height-xs",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 6)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 6), 1px)",
       "sourceFile": "packages/styles/src/contracts/control.css",
       "layer": "contract",
       "figma": {
@@ -6157,7 +6247,22 @@
       "name": "a63-control-height-xs",
       "cssVar": "--a63-control-height-xs",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 9)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 6), 1px)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/height/xs"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-control-height-xs",
+      "cssVar": "--a63-control-height-xs",
+      "type": "dimension",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 9), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6167,13 +6272,13 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-height-xs",
       "cssVar": "--a63-control-height-xs",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 9)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 9), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -6183,7 +6288,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-highlight",
@@ -6302,7 +6407,7 @@
         "mode": "design-language: ios"
       },
       "lifecycle": "preview",
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-icon-size-lg",
@@ -6317,7 +6422,7 @@
         "mode": "form-factor: phone"
       },
       "lifecycle": "preview",
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-icon-size-md",
@@ -6346,7 +6451,7 @@
         "mode": "design-language: ios"
       },
       "lifecycle": "preview",
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-icon-size-md",
@@ -6361,7 +6466,7 @@
         "mode": "form-factor: phone"
       },
       "lifecycle": "preview",
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-icon-size-sm",
@@ -6390,7 +6495,7 @@
         "mode": "design-language: ios"
       },
       "lifecycle": "preview",
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-icon-size-sm",
@@ -6405,7 +6510,7 @@
         "mode": "form-factor: phone"
       },
       "lifecycle": "preview",
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-icon-size-xl",
@@ -6434,7 +6539,7 @@
         "mode": "design-language: ios"
       },
       "lifecycle": "preview",
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-icon-size-xl",
@@ -6449,7 +6554,7 @@
         "mode": "form-factor: phone"
       },
       "lifecycle": "preview",
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-icon-size-xs",
@@ -6478,7 +6583,7 @@
         "mode": "design-language: ios"
       },
       "lifecycle": "preview",
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-icon-size-xs",
@@ -6493,7 +6598,7 @@
         "mode": "form-factor: phone"
       },
       "lifecycle": "preview",
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-min-size",
@@ -6967,6 +7072,21 @@
       "name": "a63-control-padding-inline-lg",
       "cssVar": "--a63-control-padding-inline-lg",
       "type": "dimension",
+      "value": "var(--a63-space-3_5)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/padding/inline/lg"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-3_5"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-control-padding-inline-lg",
+      "cssVar": "--a63-control-padding-inline-lg",
+      "type": "dimension",
       "value": "var(--a63-space-5)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
@@ -6977,7 +7097,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-5"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-padding-inline-lg",
@@ -6993,7 +7113,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-5"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-padding-inline-md",
@@ -7014,6 +7134,21 @@
       "name": "a63-control-padding-inline-md",
       "cssVar": "--a63-control-padding-inline-md",
       "type": "dimension",
+      "value": "var(--a63-space-3)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/padding/inline/md"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-3"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-control-padding-inline-md",
+      "cssVar": "--a63-control-padding-inline-md",
+      "type": "dimension",
       "value": "var(--a63-space-4)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
@@ -7024,7 +7159,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-4"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-padding-inline-md",
@@ -7040,7 +7175,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-4"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-padding-inline-sm",
@@ -7061,6 +7196,21 @@
       "name": "a63-control-padding-inline-sm",
       "cssVar": "--a63-control-padding-inline-sm",
       "type": "dimension",
+      "value": "var(--a63-space-2_5)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/padding/inline/sm"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-2_5"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-control-padding-inline-sm",
+      "cssVar": "--a63-control-padding-inline-sm",
+      "type": "dimension",
       "value": "var(--a63-space-3_5)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
@@ -7071,7 +7221,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-3_5"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-padding-inline-sm",
@@ -7087,7 +7237,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-3_5"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-padding-inline-xl",
@@ -7108,6 +7258,21 @@
       "name": "a63-control-padding-inline-xl",
       "cssVar": "--a63-control-padding-inline-xl",
       "type": "dimension",
+      "value": "var(--a63-space-4)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/padding/inline/xl"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-4"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-control-padding-inline-xl",
+      "cssVar": "--a63-control-padding-inline-xl",
+      "type": "dimension",
       "value": "var(--a63-space-6)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
@@ -7118,7 +7283,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-6"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-padding-inline-xl",
@@ -7134,7 +7299,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-6"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-padding-inline-xs",
@@ -7155,6 +7320,21 @@
       "name": "a63-control-padding-inline-xs",
       "cssVar": "--a63-control-padding-inline-xs",
       "type": "dimension",
+      "value": "var(--a63-space-2)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/padding/inline/xs"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-2"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-control-padding-inline-xs",
+      "cssVar": "--a63-control-padding-inline-xs",
+      "type": "dimension",
       "value": "var(--a63-space-3)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
@@ -7165,7 +7345,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-3"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-padding-inline-xs",
@@ -7181,7 +7361,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-3"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-control-press-transform",
@@ -7536,36 +7716,6 @@
       "lifecycle": "preview",
       "aliases": ["--a63-action-primary"],
       "scope": "[data-a63-theme='terminal']"
-    },
-    {
-      "name": "a63-density-scale",
-      "cssVar": "--a63-density-scale",
-      "type": "dimension",
-      "value": "1",
-      "sourceFile": "packages/styles/src/contracts/environment.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "density/scale",
-        "mode": "density: comfortable"
-      },
-      "lifecycle": "preview",
-      "scope": ":is([data-a63-density='comfortable'], [data-density='comfortable'])"
-    },
-    {
-      "name": "a63-density-scale",
-      "cssVar": "--a63-density-scale",
-      "type": "dimension",
-      "value": "0.9",
-      "sourceFile": "packages/styles/src/contracts/environment.css",
-      "layer": "contract",
-      "figma": {
-        "collection": "Contract",
-        "path": "density/scale",
-        "mode": "density: compact"
-      },
-      "lifecycle": "preview",
-      "scope": ":is([data-a63-density='compact'], [data-density='compact'])"
     },
     {
       "name": "a63-density-scale",
@@ -7939,13 +8089,13 @@
       },
       "lifecycle": "preview",
       "aliases": ["--radius-2xl"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-inset-row-min-size",
       "cssVar": "--a63-inset-row-min-size",
       "type": "dimension",
-      "value": "calc(var(--a63-space-unit) * 13)",
+      "value": "round(nearest, calc(var(--a63-space-unit) * 13), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -7955,7 +8105,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-marker-shadow",
@@ -8146,6 +8296,21 @@
       "cssVar": "--a63-menu-gap",
       "type": "dimension",
       "value": "var(--a63-space-0_5)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "menu/gap"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-0_5"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-menu-gap",
+      "cssVar": "--a63-menu-gap",
+      "type": "dimension",
+      "value": "var(--a63-space-0_5)",
       "sourceFile": "packages/styles/src/contracts/menu.css",
       "layer": "contract",
       "figma": {
@@ -8230,6 +8395,21 @@
       "cssVar": "--a63-menu-item-gap",
       "type": "dimension",
       "value": "var(--a63-space-2)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "menu/item/gap"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-2"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-menu-item-gap",
+      "cssVar": "--a63-menu-item-gap",
+      "type": "dimension",
+      "value": "var(--a63-space-2)",
       "sourceFile": "packages/styles/src/contracts/menu.css",
       "layer": "contract",
       "figma": {
@@ -8259,6 +8439,21 @@
       "cssVar": "--a63-menu-item-padding-block",
       "type": "dimension",
       "value": "var(--a63-space-1_5)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "menu/item/padding/block"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-1_5"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-menu-item-padding-block",
+      "cssVar": "--a63-menu-item-padding-block",
+      "type": "dimension",
+      "value": "var(--a63-space-1_5)",
       "sourceFile": "packages/styles/src/contracts/menu.css",
       "layer": "contract",
       "figma": {
@@ -8268,6 +8463,21 @@
       "lifecycle": "preview",
       "aliases": ["--a63-space-1_5"],
       "scope": ":root"
+    },
+    {
+      "name": "a63-menu-item-padding-inline",
+      "cssVar": "--a63-menu-item-padding-inline",
+      "type": "dimension",
+      "value": "var(--a63-space-2)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "menu/item/padding/inline"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-2"],
+      "scope": ":is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-menu-item-padding-inline",
@@ -8324,6 +8534,21 @@
       "layer": "theme",
       "lifecycle": "preview",
       "scope": "[data-a63-theme='aqua']"
+    },
+    {
+      "name": "a63-menu-popup-padding",
+      "cssVar": "--a63-menu-popup-padding",
+      "type": "dimension",
+      "value": "var(--a63-space-1)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "menu/popup/padding"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-1"],
+      "scope": ":is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-menu-popup-padding",
@@ -9052,7 +9277,7 @@
       "name": "a63-row-padding-block-md",
       "cssVar": "--a63-row-padding-block-md",
       "type": "dimension",
-      "value": "var(--a63-space-4)",
+      "value": "round(nearest, var(--a63-space-4), 1px)",
       "sourceFile": "packages/styles/src/contracts/control.css",
       "layer": "contract",
       "figma": {
@@ -9067,7 +9292,22 @@
       "name": "a63-row-padding-block-md",
       "cssVar": "--a63-row-padding-block-md",
       "type": "dimension",
-      "value": "var(--a63-space-2)",
+      "value": "round(nearest, var(--a63-space-4), 1px)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "row/padding/block/md"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-4"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-row-padding-block-md",
+      "cssVar": "--a63-row-padding-block-md",
+      "type": "dimension",
+      "value": "round(nearest, var(--a63-space-2), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -9077,13 +9317,13 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-2"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-row-padding-block-md",
       "cssVar": "--a63-row-padding-block-md",
       "type": "dimension",
-      "value": "var(--a63-space-2)",
+      "value": "round(nearest, var(--a63-space-2), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -9093,13 +9333,13 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-2"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-row-padding-block-sm",
       "cssVar": "--a63-row-padding-block-sm",
       "type": "dimension",
-      "value": "var(--a63-space-3)",
+      "value": "round(nearest, var(--a63-space-3), 1px)",
       "sourceFile": "packages/styles/src/contracts/control.css",
       "layer": "contract",
       "figma": {
@@ -9114,7 +9354,22 @@
       "name": "a63-row-padding-block-sm",
       "cssVar": "--a63-row-padding-block-sm",
       "type": "dimension",
-      "value": "var(--a63-space-1_5)",
+      "value": "round(nearest, var(--a63-space-3), 1px)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "row/padding/block/sm"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-3"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-row-padding-block-sm",
+      "cssVar": "--a63-row-padding-block-sm",
+      "type": "dimension",
+      "value": "round(nearest, var(--a63-space-1_5), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -9124,13 +9379,13 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-1_5"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-row-padding-block-sm",
       "cssVar": "--a63-row-padding-block-sm",
       "type": "dimension",
-      "value": "var(--a63-space-1_5)",
+      "value": "round(nearest, var(--a63-space-1_5), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -9140,13 +9395,13 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-1_5"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-row-padding-block-xs",
       "cssVar": "--a63-row-padding-block-xs",
       "type": "dimension",
-      "value": "var(--a63-space-2)",
+      "value": "round(nearest, var(--a63-space-2), 1px)",
       "sourceFile": "packages/styles/src/contracts/control.css",
       "layer": "contract",
       "figma": {
@@ -9161,7 +9416,22 @@
       "name": "a63-row-padding-block-xs",
       "cssVar": "--a63-row-padding-block-xs",
       "type": "dimension",
-      "value": "var(--a63-space-1)",
+      "value": "round(nearest, var(--a63-space-2), 1px)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "row/padding/block/xs"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-2"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-row-padding-block-xs",
+      "cssVar": "--a63-row-padding-block-xs",
+      "type": "dimension",
+      "value": "round(nearest, var(--a63-space-1), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -9171,13 +9441,13 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-1"],
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-row-padding-block-xs",
       "cssVar": "--a63-row-padding-block-xs",
       "type": "dimension",
-      "value": "var(--a63-space-1)",
+      "value": "round(nearest, var(--a63-space-1), 1px)",
       "sourceFile": "packages/styles/src/contracts/environment.css",
       "layer": "contract",
       "figma": {
@@ -9187,7 +9457,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--a63-space-1"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-safe-area-bottom",
@@ -10335,6 +10605,21 @@
       "cssVar": "--a63-space-0_5",
       "type": "dimension",
       "value": "calc(var(--a63-space-unit) * 0.5)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "space/0_5"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-space-0_5",
+      "cssVar": "--a63-space-0_5",
+      "type": "dimension",
+      "value": "calc(var(--a63-space-unit) * 0.5)",
       "sourceFile": "packages/styles/src/tokens/space.css",
       "layer": "semantic",
       "figma": {
@@ -10344,6 +10629,21 @@
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
       "scope": ":root"
+    },
+    {
+      "name": "a63-space-1",
+      "cssVar": "--a63-space-1",
+      "type": "dimension",
+      "value": "var(--a63-space-unit)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "space/1"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": ":is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-space-1",
@@ -10365,6 +10665,21 @@
       "cssVar": "--a63-space-1_5",
       "type": "dimension",
       "value": "calc(var(--a63-space-unit) * 1.5)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "space/1_5"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-space-1_5",
+      "cssVar": "--a63-space-1_5",
+      "type": "dimension",
+      "value": "calc(var(--a63-space-unit) * 1.5)",
       "sourceFile": "packages/styles/src/tokens/space.css",
       "layer": "semantic",
       "figma": {
@@ -10374,6 +10689,21 @@
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
       "scope": ":root"
+    },
+    {
+      "name": "a63-space-2",
+      "cssVar": "--a63-space-2",
+      "type": "dimension",
+      "value": "calc(var(--a63-space-unit) * 2)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "space/2"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": ":is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-space-2",
@@ -10395,6 +10725,21 @@
       "cssVar": "--a63-space-2_5",
       "type": "dimension",
       "value": "calc(var(--a63-space-unit) * 2.5)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "space/2_5"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-space-2_5",
+      "cssVar": "--a63-space-2_5",
+      "type": "dimension",
+      "value": "calc(var(--a63-space-unit) * 2.5)",
       "sourceFile": "packages/styles/src/tokens/space.css",
       "layer": "semantic",
       "figma": {
@@ -10404,6 +10749,21 @@
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
       "scope": ":root"
+    },
+    {
+      "name": "a63-space-3",
+      "cssVar": "--a63-space-3",
+      "type": "dimension",
+      "value": "calc(var(--a63-space-unit) * 3)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "space/3"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": ":is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-space-3",
@@ -10425,6 +10785,21 @@
       "cssVar": "--a63-space-3_5",
       "type": "dimension",
       "value": "calc(var(--a63-space-unit) * 3.5)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "space/3_5"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-space-3_5",
+      "cssVar": "--a63-space-3_5",
+      "type": "dimension",
+      "value": "calc(var(--a63-space-unit) * 3.5)",
       "sourceFile": "packages/styles/src/tokens/space.css",
       "layer": "semantic",
       "figma": {
@@ -10434,6 +10809,21 @@
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
       "scope": ":root"
+    },
+    {
+      "name": "a63-space-4",
+      "cssVar": "--a63-space-4",
+      "type": "dimension",
+      "value": "calc(var(--a63-space-unit) * 4)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "space/4"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": ":is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-space-4",
@@ -10455,6 +10845,21 @@
       "cssVar": "--a63-space-5",
       "type": "dimension",
       "value": "calc(var(--a63-space-unit) * 5)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "space/5"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-space-5",
+      "cssVar": "--a63-space-5",
+      "type": "dimension",
+      "value": "calc(var(--a63-space-unit) * 5)",
       "sourceFile": "packages/styles/src/tokens/space.css",
       "layer": "semantic",
       "figma": {
@@ -10464,6 +10869,21 @@
       "lifecycle": "preview",
       "aliases": ["--a63-space-unit"],
       "scope": ":root"
+    },
+    {
+      "name": "a63-space-6",
+      "cssVar": "--a63-space-6",
+      "type": "dimension",
+      "value": "calc(var(--a63-space-unit) * 6)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "space/6"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": ":is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-space-6",
@@ -11645,7 +12065,7 @@
         "mode": "form-factor: phone"
       },
       "lifecycle": "preview",
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-switch-thumb-aspect",
@@ -11674,7 +12094,7 @@
         "mode": "design-language: ios"
       },
       "lifecycle": "preview",
-      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios'])"
+      "scope": ":is([data-a63-design-language='ios'], [data-design-language='ios']), :is([data-a63-design-language='ios'], [data-design-language='ios']) :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-switch-thumb-size",
@@ -11689,7 +12109,7 @@
         "mode": "form-factor: phone"
       },
       "lifecycle": "preview",
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-switch-thumb-size",
@@ -11995,6 +12415,21 @@
       "cssVar": "--a63-toggle-gap",
       "type": "dimension",
       "value": "var(--a63-control-gap)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "toggle/gap"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-control-gap"],
+      "scope": ":is([data-a63-density], [data-density])"
+    },
+    {
+      "name": "a63-toggle-gap",
+      "cssVar": "--a63-toggle-gap",
+      "type": "dimension",
+      "value": "var(--a63-control-gap)",
       "sourceFile": "packages/styles/src/contracts/toggle.css",
       "layer": "contract",
       "figma": {
@@ -12196,6 +12631,21 @@
       "lifecycle": "preview",
       "aliases": ["--a63-control-focus-ring-width"],
       "scope": ":root"
+    },
+    {
+      "name": "a63-trigger-gap",
+      "cssVar": "--a63-trigger-gap",
+      "type": "dimension",
+      "value": "var(--a63-control-gap)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "trigger/gap"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-control-gap"],
+      "scope": ":is([data-a63-density], [data-density])"
     },
     {
       "name": "a63-trigger-gap",
@@ -26060,7 +26510,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-10xl-font-size",
@@ -26139,7 +26589,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-10xl-line-height",
@@ -26218,7 +26668,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-11xl-font-size",
@@ -26297,7 +26747,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-11xl-line-height",
@@ -26376,7 +26826,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-2xl-font-size",
@@ -26489,7 +26939,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-2xl-line-height",
@@ -26602,7 +27052,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-2xs-font-size",
@@ -26681,7 +27131,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-2xs-line-height",
@@ -26760,7 +27210,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-3xl-font-size",
@@ -26873,7 +27323,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-3xl-line-height",
@@ -26986,7 +27436,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-4xl-font-size",
@@ -27099,7 +27549,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-4xl-line-height",
@@ -27212,7 +27662,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-5xl-font-size",
@@ -27325,7 +27775,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-5xl-line-height",
@@ -27438,7 +27888,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-6xl-font-size",
@@ -27551,7 +28001,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-6xl-line-height",
@@ -27664,7 +28114,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-7xl-font-size",
@@ -27777,7 +28227,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-7xl-line-height",
@@ -27890,7 +28340,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-8xl-font-size",
@@ -28003,7 +28453,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-8xl-line-height",
@@ -28116,7 +28566,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-9xl-font-size",
@@ -28229,7 +28679,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-9xl-line-height",
@@ -28342,7 +28792,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-base-font-size",
@@ -28421,7 +28871,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-base-line-height",
@@ -28500,7 +28950,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-lg-font-size",
@@ -28596,7 +29046,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-lg-line-height",
@@ -28816,7 +29266,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-sm-font-size",
@@ -28895,7 +29345,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-sm-line-height",
@@ -28974,7 +29424,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-xl-font-size",
@@ -29070,7 +29520,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-xl-line-height",
@@ -29166,7 +29616,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-xs-font-size",
@@ -29245,7 +29695,7 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-scale"],
-      "scope": "[data-a63-form-factor='phone']"
+      "scope": "[data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "name": "typography-xs-line-height",
