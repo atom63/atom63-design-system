@@ -229,6 +229,20 @@ describe('topics', () => {
     assert.match(table.summary, /variant="plain"/)
   })
 
+  for (const [idea, slug, pattern] of [
+    ['admin table', 'table', /size="sm"/],
+    ['payments table with row actions', 'table', /size="sm"/],
+    ['inbox', 'item', /size="sm"/],
+    ['mail inbox', 'table', /size="sm"/],
+  ]) {
+    it(`points "${idea}" at a dense ${slug} in the build kit`, () => {
+      const kit = build(index, idea).data
+      const entry = kit.components.find(component => component.slug === slug)
+      assert.ok(entry, kit.components.map(component => component.slug).join(', '))
+      assert.match(entry.summary, pattern)
+    })
+  }
+
   it('says what to use from a topic entry', () => {
     const [first, second] = search(index, 'price').data.results
     assert.match(first.summary, /<Amount /)
