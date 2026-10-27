@@ -285,9 +285,11 @@ const valueRow = [
 const pageDots = [
   {
     id: 'component:carousel',
-    note: 'Page dots: web <CarouselDots /> inside Carousel; iOS AtomPageDots(count:selection:) under a TabView with .page(indexDisplayMode: .never).',
+    note: 'Page dots: web <CarouselDots /> inside Carousel; iOS AtomPageDots(count:selection:) under a TabView with .page(indexDisplayMode: .never). Round dots by default; shape="pill" (iOS shape: .pill) stretches the current one, tone="accent" tints it and tone="on-media" (iOS .onMedia) draws white dots over photos.',
   },
   { id: 'example:carousel/WithDots' },
+  { id: 'example:carousel/DotShapes' },
+  { id: 'example:carousel/DotTones' },
 ]
 
 const avatarBadge = [

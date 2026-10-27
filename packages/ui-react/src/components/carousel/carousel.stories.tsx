@@ -65,7 +65,7 @@ export const Playground: Story = {
   ),
 }
 
-/* Dots under the slides: one per snap point, the current one a pill. */
+/* Dots under the slides: one round dot per snap point, the current one darker. */
 export const WithDots: Story = {
   render: () => (
     <div style={{ maxWidth: 520 }}>
@@ -78,6 +78,77 @@ export const WithDots: Story = {
           ))}
         </CarouselContent>
         <CarouselDots />
+      </Carousel>
+    </div>
+  ),
+}
+
+/* shape="dot" (default) keeps every dot round and marks the current one by colour;
+ * shape="pill" stretches the current one into a pill. */
+export const DotShapes: Story = {
+  parameters: repeatedLandmarks,
+  render: () => (
+    <div style={{ display: 'grid', gap: 24, maxWidth: 520 }}>
+      {(['dot', 'pill'] as const).map(shape => (
+        <Carousel key={shape}>
+          <CarouselContent>
+            {slides.map(label => (
+              <CarouselItem key={label}>
+                <Slide label={`${label} · ${shape}`} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselDots shape={shape} />
+        </Carousel>
+      ))}
+    </div>
+  ),
+}
+
+/* tone="neutral" (default) and tone="accent" under the slides; tone="on-media" draws white
+ * dots over a photo or video, here laid over the media stage. */
+export const DotTones: Story = {
+  parameters: repeatedLandmarks,
+  render: () => (
+    <div style={{ display: 'grid', gap: 24, maxWidth: 520 }}>
+      {(['neutral', 'accent'] as const).map(tone => (
+        <Carousel key={tone}>
+          <CarouselContent>
+            {slides.map(label => (
+              <CarouselItem key={label}>
+                <Slide label={`${label} · ${tone}`} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselDots tone={tone} />
+        </Carousel>
+      ))}
+      <Carousel>
+        <CarouselContent>
+          {slides.map(label => (
+            <CarouselItem key={label}>
+              <div
+                style={{
+                  alignItems: 'center',
+                  background: 'var(--a63-media-stage)',
+                  borderRadius: '0.75rem',
+                  color: 'var(--a63-on-media-foreground)',
+                  display: 'flex',
+                  fontSize: 32,
+                  fontWeight: 600,
+                  height: 220,
+                  justifyContent: 'center',
+                }}
+              >
+                {label} · on-media
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselDots
+          style={{ bottom: 'var(--a63-space-2)', insetInline: 0, position: 'absolute' }}
+          tone="on-media"
+        />
       </Carousel>
     </div>
   ),

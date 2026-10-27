@@ -26,6 +26,8 @@ import { CardContentPadding } from '@atom63/ui-foundation';
 import { CardLineClamp } from '@atom63/ui-foundation';
 import { CardPadding } from '@atom63/ui-foundation';
 import { CardVariant } from '@atom63/ui-foundation';
+import { CarouselDotShape } from '@atom63/ui-foundation';
+import { CarouselDotTone } from '@atom63/ui-foundation';
 import { ChatComposerLayout } from '@atom63/ui-foundation';
 import { ChatComposerStatus } from '@atom63/ui-foundation';
 import { ChatMessageAppearance } from '@atom63/ui-foundation';
@@ -648,6 +650,8 @@ export function CarouselDots(input: CarouselDotsProps): React$1.ReactElement;
 // @public (undocumented)
 export type CarouselDotsProps = React$1.ComponentProps<'div'> & {
     getLabel?: (index: number, count: number) => string;
+    shape?: CarouselDotShape;
+    tone?: CarouselDotTone;
 };
 
 // @public (undocumented)
