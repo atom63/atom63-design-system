@@ -5,8 +5,9 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 
 // `default` is the neutral solid: high emphasis without the brand colour (a white play button on
 // dark, a black Pay button). `primary` is the main action when the product's main action is in its
-// brand colour; use the accent for one or two cues per view. `raised` is a light button with a soft
-// shadow and no border, the floating button over a map or a light photo with shape="round".
+// brand colour; use the accent for one or two cues per view, and keep it where the product's main
+// action or links are brand-coloured. `raised` is a light button with a soft shadow and no border,
+// the floating button over a map or a light photo with shape="round".
 
 export const buttonVariants = [
   'default',
