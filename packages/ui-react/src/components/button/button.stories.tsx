@@ -90,6 +90,71 @@ export const Variants: Story = {
   ),
 }
 
+/* Secondary actions in a toolbar, a row or a card header: ghost with
+   tone="muted" rests in the secondary text colour and goes to full contrast on
+   hover, focus and press. The pressed one shows that state. The top row is the
+   plain ghost for comparison. */
+export const QuietSecondaryActions: Story = {
+  render: () => (
+    <EnvironmentShell>
+      <div style={{ display: 'grid', gap: '0.75rem' }}>
+        {(['neutral', 'muted'] as const).map(tone => (
+          <div
+            data-testid={`tone-${tone}`}
+            key={tone}
+            style={{ alignItems: 'center', display: 'flex', gap: '0.25rem' }}
+          >
+            <Button aria-label="Add" size="icon-xs" tone={tone} variant="ghost">
+              <Plus aria-hidden />
+            </Button>
+            <Button aria-label="Notifications" size="icon-sm" tone={tone} variant="ghost">
+              <Bell aria-hidden />
+            </Button>
+            <Button aria-label="Inbox" size="icon-sm" tone={tone} variant="ghost">
+              <Inbox aria-hidden />
+            </Button>
+            <Button
+              aria-label="More"
+              data-pressed={tone === 'muted' ? '' : undefined}
+              size="icon"
+              tone={tone}
+              variant="ghost"
+            >
+              <Ellipsis aria-hidden />
+            </Button>
+            <Button size="sm" tone={tone} variant="ghost">
+              <Send aria-hidden />
+              Share
+            </Button>
+          </div>
+        ))}
+      </div>
+    </EnvironmentShell>
+  ),
+  play: ({ canvasElement }) => {
+    const row = canvasElement.querySelector('[data-testid="tone-muted"]')
+    const buttons = [...(row?.querySelectorAll<HTMLElement>('.a63-Button') ?? [])]
+    const foreground = (el: HTMLElement) =>
+      getComputedStyle(el).getPropertyValue('--button-foreground').trim()
+    const token = (el: HTMLElement, name: string) =>
+      getComputedStyle(el).getPropertyValue(name).trim()
+    const [add, bell, , more] = buttons
+    if (!add || !bell || !more) throw new Error('Expected the muted toolbar buttons')
+    if (foreground(bell) !== token(bell, '--a63-text-secondary')) {
+      throw new Error('A resting muted ghost should use the secondary text colour')
+    }
+    if (foreground(more) !== token(more, '--a63-text-primary')) {
+      throw new Error('A pressed muted ghost should go to full contrast')
+    }
+    const glyphs = [add, bell, more].map(
+      el => el.querySelector('svg')?.getBoundingClientRect().width
+    )
+    if (glyphs.join() !== '14,16,18') {
+      throw new Error(`Expected 14/16/18px glyphs in icon-xs/icon-sm/icon, got ${glyphs.join('/')}`)
+    }
+  },
+}
+
 /* The parity sweep added two media-facing variants — `overlay` (frosted, sits
    on light imagery) and `glass` (dark-glass, sits on busy or bright imagery).
    Both are meant to float over media, so they only read correctly against a

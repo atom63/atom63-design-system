@@ -22,6 +22,7 @@ import { ButtonGroupOrientation } from '@atom63/ui-foundation';
 import { ButtonGroupSize } from '@atom63/ui-foundation';
 import { ButtonShape } from '@atom63/ui-foundation';
 import { ButtonSize } from '@atom63/ui-foundation';
+import { ButtonTone } from '@atom63/ui-foundation';
 import { ButtonVariant } from '@atom63/ui-foundation';
 import { CardContentPadding } from '@atom63/ui-foundation';
 import { CardLineClamp } from '@atom63/ui-foundation';
@@ -507,6 +508,7 @@ export interface ButtonProps extends useRender.ComponentProps<'button'> {
     shape?: ButtonShape;
     // (undocumented)
     size?: ButtonSize;
+    tone?: ButtonTone;
     // (undocumented)
     variant?: ButtonVariant;
 }

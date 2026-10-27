@@ -60,7 +60,8 @@ describe('the component doc block', () => {
         variant: {
           primary:
             "The one primary action per view, when the product's main action is in its brand colour.",
-          ghost: 'Lowest emphasis; toolbars and dismissals.',
+          ghost:
+            'Lowest emphasis; toolbars and dismissals, with tone="muted" for quiet secondary actions.',
         },
         size: { sm: 'Compact rows and toolbars.' },
         state: { rest: 'Resting appearance.', hover: 'Pointer over an enabled button.' },

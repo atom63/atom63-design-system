@@ -3,6 +3,7 @@
 import {
   type ButtonShape,
   type ButtonSize,
+  type ButtonTone,
   type ButtonVariant,
   buttonContract,
 } from '@atom63/ui-foundation'
@@ -21,6 +22,8 @@ export interface ButtonProps extends useRender.ComponentProps<'button'> {
   /** `round` gives a full radius: a circle for icon sizes, a pill for labelled ones. */
   shape?: ButtonShape
   size?: ButtonSize
+  /** `muted` (ghost only) rests in the secondary text colour and goes to full contrast on hover, focus and press: a quiet secondary action. */
+  tone?: ButtonTone
   variant?: ButtonVariant
   /** Mirrored to `data-trigger-slot`; root `data-slot` stays `"button"`. */
   'data-slot'?: string
@@ -44,6 +47,7 @@ export function Button({
   render,
   shape = buttonContract.defaultShape,
   size = buttonContract.defaultSize,
+  tone = buttonContract.defaultTone,
   type,
   variant = buttonContract.defaultVariant,
   'data-slot': triggerSlot,
@@ -89,6 +93,7 @@ export function Button({
     'data-shape': shape,
     'data-size': size,
     'data-slot': 'button',
+    'data-tone': tone,
     'data-trigger-slot': triggerSlot,
     'data-variant': variant,
     disabled: isDisabled,

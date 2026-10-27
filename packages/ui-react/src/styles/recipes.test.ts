@@ -112,6 +112,26 @@ describe('recipes.css cascade layering', () => {
       expect(buttonCss).toContain('aspect-ratio: 1')
     })
 
+    it('sizes icon-only glyphs from the icon-only ramp, and labelled ones from the icon ramp', () => {
+      const buttonCss = readRecipe('button')
+      for (const [size, step] of [
+        ['icon-xs', 'xs'],
+        ['icon-sm', 'sm'],
+        ['icon', 'md'],
+        ['icon-lg', 'lg'],
+        ['icon-xl', 'xl'],
+      ]) {
+        expect(buttonCss).toMatch(
+          new RegExp(
+            String.raw`\[data-size='${size}'\] \{[^}]*--button-icon-size: var\(--a63-control-icon-only-size-${step}\)`
+          )
+        )
+      }
+      expect(buttonCss).toMatch(
+        /\[data-size='sm'\] \{[^}]*--button-icon-size: var\(--a63-control-icon-size-sm\)/
+      )
+    })
+
     it.each(['button', 'button-group'])('%s retains the lg/xl size hierarchy', name => {
       const recipe = readRecipe(name)
       expect(recipe).toContain('--a63-control-min-size-lg')

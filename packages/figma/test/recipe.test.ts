@@ -264,6 +264,31 @@ describe('the real Button recipe', () => {
       { what: '.a63-Button > span.a63-Button-indicator-label', reason: 'descendant' },
       // The web-only shape axis is not a Figma variant property yet.
       { what: ".a63-Button[data-shape='round']", reason: 'unsupported selector' },
+      // Nor is the web-only tone (ghost + muted).
+      {
+        what: ".a63-Button[data-variant='ghost'][data-tone='muted']",
+        reason: 'unsupported selector',
+      },
+      {
+        what: ".a63-Button[data-variant='ghost'][data-tone='muted']:where(:not(:disabled, [data-disabled])):hover",
+        reason: 'unsupported selector',
+      },
+      {
+        what: ".a63-Button[data-variant='ghost'][data-tone='muted']:focus-visible",
+        reason: 'unsupported selector',
+      },
+      {
+        what: ".a63-Button[data-variant='ghost'][data-tone='muted']:active",
+        reason: 'unsupported selector',
+      },
+      {
+        what: ".a63-Button[data-variant='ghost'][data-tone='muted'][data-pressed]",
+        reason: 'unsupported selector',
+      },
+      {
+        what: ".a63-Button[data-variant='ghost'][data-tone='muted'][aria-expanded='true']",
+        reason: 'unsupported selector',
+      },
       { what: ".a63-Button[data-size='tile'].h-full", reason: 'unsupported selector' },
       { what: ".a63-Button[data-size='tile'].size-full", reason: 'unsupported selector' },
       { what: '.a63-Button :where(svg)', reason: 'descendant' },

@@ -59,6 +59,12 @@
   --a63-control-icon-size-md: 1rem;
   --a63-control-icon-size-lg: 1.125rem;
   --a63-control-icon-size-xl: 1.25rem;
+  /* The glyph of an icon-only control (24/14, 28/16, 32/18, 36/20, 40/22): about 0.56 of the box, where an icon beside a label keeps the size ramp above. The iOS design language and the phone form factor already draw that ramp at these values on their taller boxes, so they need no override. */
+  --a63-control-icon-only-size-xs: 0.875rem;
+  --a63-control-icon-only-size-sm: 1rem;
+  --a63-control-icon-only-size-md: 1.125rem;
+  --a63-control-icon-only-size-lg: 1.25rem;
+  --a63-control-icon-only-size-xl: 1.375rem;
   --a63-control-gap: var(--a63-space-2);
   --a63-control-radius: var(--a63-radius-control);
   --a63-control-border-width: 1px;
