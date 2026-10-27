@@ -76,13 +76,11 @@ export function Toaster({
         success: <CircleCheckIcon className="size-4" />,
         warning: <TriangleAlertIcon className="size-4" />,
       }}
-      style={
-        {
-          ...variantStyles[variant],
-          zIndex: 'var(--z-layer-toast)',
-          ...style,
-        } as React.CSSProperties
-      }
+      style={{
+        ...variantStyles[variant],
+        zIndex: 'var(--z-layer-toast)',
+        ...style,
+      }}
       {...props}
       toastOptions={{
         ...toastOptions,
