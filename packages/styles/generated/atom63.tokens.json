@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 1978,
-    "uniqueCssVariables": 1194,
-    "figmaMappedDeclarations": 1916
+    "declarations": 1980,
+    "uniqueCssVariables": 1196,
+    "figmaMappedDeclarations": 1918
   },
   "entries": [
     {
@@ -7854,6 +7854,38 @@
       "layer": "semantic",
       "lifecycle": "preview",
       "scope": ":root"
+    },
+    {
+      "name": "a63-inset-group-radius",
+      "cssVar": "--a63-inset-group-radius",
+      "type": "radius",
+      "value": "var(--radius-2xl)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "inset/group/radius",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--radius-2xl"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "a63-inset-row-min-size",
+      "cssVar": "--a63-inset-row-min-size",
+      "type": "dimension",
+      "value": "calc(var(--a63-space-unit) * 13)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "inset/row/min/size",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-space-unit"],
+      "scope": "[data-a63-form-factor='phone']"
     },
     {
       "name": "a63-marker-shadow",

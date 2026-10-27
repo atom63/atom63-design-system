@@ -65,6 +65,12 @@ The section is the panel fill on a `surfacePage` background, as in iOS Settings.
 For grey cards on a white page, pass `surface: .muted` and put the sections on
 `surfacePanel`. The web side is `ItemGroup surface="muted"`.
 
+Rows in a section are at least 52 points tall, as in iOS 26 Settings, and the
+minimum grows with Dynamic Type; `AtomToggle` and `AtomSelectionRow` drop their
+own 44-point floor inside a section, so every row is the same height. The panel
+has an 18-point continuous corner. The web side is the phone form factor's
+`--a63-inset-row-min-size` and `--a63-inset-group-radius`.
+
 Inside a `List` or `Form`, use the native `Section`: the list draws the inset
 group, and `NavigationLink` adds its own chevron, so leave `showsDisclosure` off.
 

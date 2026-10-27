@@ -3,6 +3,7 @@ import SwiftUI
 public struct AtomSelectionRow: View {
   @Environment(\.atomTheme) private var theme
   @Environment(\.colorScheme) private var colorScheme
+  @Environment(\.atomListRowInsets) private var listRowInsets
 
   private let title: String
   private let subtitle: String?
@@ -44,7 +45,8 @@ public struct AtomSelectionRow: View {
           )
           .accessibilityHidden(true)
       }
-      .frame(minHeight: 44)
+      // In an AtomListSection the row insets floor the padded row instead.
+      .frame(minHeight: listRowInsets == nil ? 44 : nil)
       .atomListRowInsets()
       .contentShape(.rect)
     }

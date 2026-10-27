@@ -27,7 +27,7 @@
 .a63-ItemGroup[data-variant='inset'] {
   gap: 0;
   overflow: hidden;
-  border-radius: var(--radius-lg);
+  border-radius: var(--a63-inset-group-radius, var(--radius-lg));
   background-color: var(--a63-surface-panel);
 }
 /* surface="muted": the grey card for a white page. A row's hover (half the muted
@@ -42,6 +42,29 @@
 .a63-ItemGroup[data-variant='inset'] > .a63-Item {
   position: relative;
   border-radius: 0;
+}
+/* The phone form factor sets --a63-inset-row-min-size (52px, the iOS grouped-list
+   row) for default and sm rows, static ones included. Elsewhere the variable is
+   unset: the static rule then computes to no minimum, and the interactive rule
+   keeps its control-height floor, so nothing changes outside a phone. */
+.a63-ItemGroup[data-variant='inset'] > .a63-Item:is([data-size='default'], [data-size='sm']) {
+  min-height: calc(var(--a63-inset-row-min-size) * var(--a63-density-scale, 1));
+}
+.a63-ItemGroup[data-variant='inset']
+  > :where(a, button, [role='button'], [role='link']).a63-Item[data-size='default'] {
+  min-height: max(
+    calc(var(--a63-inset-row-min-size, 0px) * var(--a63-density-scale, 1)),
+    calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+}
+.a63-ItemGroup[data-variant='inset']
+  > :where(a, button, [role='button'], [role='link']).a63-Item[data-size='sm'] {
+  min-height: max(
+    calc(var(--a63-inset-row-min-size, 0px) * var(--a63-density-scale, 1)),
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
 }
 .a63-ItemGroup[data-variant='inset'] > .a63-Item + .a63-Item::before {
   content: '';
