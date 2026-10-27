@@ -193,9 +193,9 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
   'chat-composer': {
     relatedSlugs: ['textarea', 'input', 'button'],
     summary:
-      'ChatComposer is the message field of an assistant chat: a growing textarea with an attach slot and a send button that turns into stop while a reply streams.',
+      'ChatComposer is the message field of an assistant chat: by default one pill row with the attach slot, a growing textarea, the actions and a solid send button that turns into stop while a reply streams.',
     usage:
-      'Place it at the bottom of a chat surface; Enter sends, Shift+Enter adds a line, and the footnote holds the AI disclaimer.',
+      'Place it at the bottom of a chat surface, the same width as the transcript; Enter sends, Shift+Enter adds a line, and the footnote holds the AI disclaimer. Keep the default inline layout (it grows into a block when the text wraps); use layout="stacked" when several actions need their own row. Pass onVoice for a voice button while the field is empty.',
     usageExports: ['ChatComposer'],
   },
   'chat-message': {
@@ -203,7 +203,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       "ChatMessage shows one turn of a conversation: the user's message in a tinted bubble on the trailing side, the assistant's as plain text or a bubble.",
     usage:
-      'Render each turn of an assistant conversation inside a list; put copy and feedback buttons in its actions slot.',
+      'Render each turn of an assistant conversation inside a list about 48rem wide; put copy and feedback buttons in its actions slot. Render markdown replies at the full column width: the narrow MDX variant caps prose at 36rem.',
     usageExports: ['ChatMessageList', 'ChatMessage'],
   },
   'chat-steps': {

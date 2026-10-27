@@ -511,7 +511,7 @@
       "source": "packages/ui-foundation/contracts/components/button.json",
       "exportName": "buttonContract",
       "maturity": "stable",
-      "description": "`default` is the neutral solid: high emphasis without the brand colour (a white play button on dark, a black Pay button). `primary` is the main action when the product's main action is in its brand colour; use the accent for one or two cues per view. `raised` is a light button with a soft shadow and no border, the floating button over a map or a light photo with shape=\"round\".",
+      "description": "`default` is the neutral solid: high emphasis without the brand colour (a white play button on dark, a black Pay button). `primary` is the main action when the product's main action is in its brand colour; use the accent for one or two cues per view, and keep it where the product's main action or links are brand-coloured. `raised` is a light button with a soft shadow and no border, the floating button over a map or a light photo with shape=\"round\".",
       "axes": [
         { "name": "shapes", "values": ["default", "round"], "default": "default" },
         {
@@ -884,8 +884,11 @@
       "source": "packages/ui-foundation/contracts/components/chat-composer.json",
       "exportName": "chatComposerContract",
       "maturity": "preview",
-      "description": "The message field of an assistant chat: a rounded field with a growing textarea, an attach slot and a trailing send button. While a reply is submitted or streaming the send button becomes a stop button.",
-      "axes": [{ "name": "statuses", "values": ["idle", "submitted", "streaming"] }],
+      "description": "The message field of an assistant chat: a rounded field with a growing textarea, an attach slot and a trailing send button. The inline layout is one pill row (attach, field, actions and send) that grows into a block when the text wraps; the stacked layout keeps the controls in a row under the field. While a reply is submitted or streaming the send button becomes a stop button.",
+      "axes": [
+        { "name": "statuses", "values": ["idle", "submitted", "streaming"] },
+        { "name": "layouts", "values": ["inline", "stacked"], "default": "inline" }
+      ],
       "slots": [
         "chat-composer",
         "chat-composer-field",
