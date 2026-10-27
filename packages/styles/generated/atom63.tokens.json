@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 1974,
-    "uniqueCssVariables": 1192,
-    "figmaMappedDeclarations": 1912
+    "declarations": 1975,
+    "uniqueCssVariables": 1193,
+    "figmaMappedDeclarations": 1913
   },
   "entries": [
     {
@@ -5706,6 +5706,22 @@
       },
       "lifecycle": "preview",
       "aliases": ["--typography-base-font-size"],
+      "scope": "[data-a63-form-factor='phone']"
+    },
+    {
+      "name": "a63-control-font-size-secondary",
+      "cssVar": "--a63-control-font-size-secondary",
+      "type": "typography",
+      "value": "var(--typography-sm-font-size)",
+      "sourceFile": "packages/styles/src/contracts/environment.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "control/font/size/secondary",
+        "mode": "form-factor: phone"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--typography-sm-font-size"],
       "scope": "[data-a63-form-factor='phone']"
     },
     {

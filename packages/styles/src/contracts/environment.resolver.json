@@ -1041,6 +1041,11 @@
                   "xl": {
                     "$type": "dimension",
                     "$value": "{typography.lg.font.size}"
+                  },
+                  "secondary": {
+                    "$type": "dimension",
+                    "$value": "{typography.sm.font.size}",
+                    "$description": "The secondary line under a title or label (an Item, Field or Form description, a Frame or\n   ConnectedPanel description): subheadline size (15), so it stays below the 17px title. Declared\n   only here; recipes fall back to --a63-control-font-size-sm, so other scopes are unchanged."
                   }
                 }
               },

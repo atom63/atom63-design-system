@@ -6,7 +6,7 @@
     "collections": 14,
     "variables": 1138,
     "aliasValues": 789,
-    "skipped": 242,
+    "skipped": 243,
     "computed": 61
   },
   "collections": [
@@ -20617,6 +20617,10 @@
     },
     {
       "token": "--a63-control-font-size-md",
+      "reason": "context scope: [data-a63-form-factor='phone']"
+    },
+    {
+      "token": "--a63-control-font-size-secondary",
       "reason": "context scope: [data-a63-form-factor='phone']"
     },
     {

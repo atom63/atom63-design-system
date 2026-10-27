@@ -69,6 +69,14 @@ describe('phone form factor', () => {
     expect(height(phone, '--a63-control-height-md')).toBe('44px')
   })
 
+  it('keeps a secondary line below its title: subheadline size on a phone, sm elsewhere', () => {
+    const secondary = '--a63-control-font-size-secondary, var(--a63-control-font-size-sm)'
+    const phone = scope({ 'data-a63-form-factor': 'phone' })
+    expect(fontSize(phone, secondary)).toBe('15px')
+    expect(fontSize(phone, '--a63-control-font-size-sm')).toBe('17px')
+    expect(fontSize(scope(), secondary)).toBe('12px')
+  })
+
   it('leaves the page outside the phone scope on the web sizes', () => {
     const web = scope()
     expect(fontSize(web, '--typography-base-font-size')).toBe('15px')

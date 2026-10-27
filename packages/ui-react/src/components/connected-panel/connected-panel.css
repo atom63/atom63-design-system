@@ -398,7 +398,7 @@
   min-width: 0;
   overflow: hidden;
   color: var(--a63-text-secondary);
-  font-size: var(--a63-control-font-size-sm);
+  font-size: var(--a63-control-font-size-secondary, var(--a63-control-font-size-sm));
 }
 
 /* ── Body / Footer ─────────────────────────────────────────────────────── */

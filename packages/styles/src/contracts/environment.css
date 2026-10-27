@@ -213,6 +213,10 @@
   --a63-control-font-size-md: var(--typography-base-font-size);
   --a63-control-font-size-lg: var(--typography-base-font-size);
   --a63-control-font-size-xl: var(--typography-lg-font-size);
+  /* The secondary line under a title or label (an Item, Field or Form description, a Frame or
+        ConnectedPanel description): subheadline size (15), so it stays below the 17px title. Declared
+        only here; recipes fall back to --a63-control-font-size-sm, so other scopes are unchanged. */
+  --a63-control-font-size-secondary: var(--typography-sm-font-size);
   --a63-control-icon-size-xs: 0.875rem;
   --a63-control-icon-size-sm: 1rem;
   --a63-control-icon-size-md: 1.125rem;
