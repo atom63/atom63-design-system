@@ -28,6 +28,20 @@ describe('Button', () => {
     expect(el).toHaveAttribute('data-size', buttonContract.defaultSize)
   })
 
+  it('defaults to the neutral tone and takes muted', () => {
+    const { rerender } = render(<Button variant="ghost">Share</Button>)
+    expect(screen.getByRole('button', { name: 'Share' })).toHaveAttribute(
+      'data-tone',
+      buttonContract.defaultTone
+    )
+    rerender(
+      <Button tone="muted" variant="ghost">
+        Share
+      </Button>
+    )
+    expect(screen.getByRole('button', { name: 'Share' })).toHaveAttribute('data-tone', 'muted')
+  })
+
   it('marks loading state', () => {
     render(<Button loading>Busy</Button>)
     const el = screen.getByRole('button', { name: 'Busy' })

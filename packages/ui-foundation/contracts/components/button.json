@@ -32,6 +32,7 @@
       "icon-xl"
     ],
     "shapes": ["default", "round"],
+    "tones": ["neutral", "muted"],
     "states": ["rest", "hover", "pressed", "focusVisible", "disabled", "loading"],
     "slots": ["root", "label", "icon", "spinner", "indicator"],
     "tokenSlots": [
@@ -53,6 +54,7 @@
   "contract": {
     "defaultShape": "default",
     "defaultSize": "md",
+    "defaultTone": "neutral",
     "defaultVariant": "default",
     "shapes": {
       "$ref": "#/lists/shapes"
@@ -65,6 +67,9 @@
     },
     "tokenSlots": {
       "$ref": "#/lists/tokenSlots"
+    },
+    "tones": {
+      "$ref": "#/lists/tones"
     },
     "variants": {
       "$ref": "#/lists/variants"

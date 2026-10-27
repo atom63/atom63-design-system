@@ -120,8 +120,8 @@
   outline: none;
 }
 .a63-Dialog-close-button svg {
-  width: var(--a63-control-icon-size-sm);
-  height: var(--a63-control-icon-size-sm);
+  width: var(--a63-control-icon-only-size-sm);
+  height: var(--a63-control-icon-only-size-sm);
 }
 @media (hover: hover) {
   .a63-Dialog-close-button:hover {

@@ -145,6 +145,46 @@
               "unit": "rem"
             }
           }
+        },
+        "only": {
+          "size": {
+            "xs": {
+              "$type": "dimension",
+              "$value": {
+                "value": 0.875,
+                "unit": "rem"
+              },
+              "$description": "The glyph of an icon-only control (24/14, 28/16, 32/18, 36/20, 40/22): about 0.56 of the box, where an icon beside a label keeps the size ramp above. The iOS design language and the phone form factor already draw that ramp at these values on their taller boxes, so they need no override."
+            },
+            "sm": {
+              "$type": "dimension",
+              "$value": {
+                "value": 1,
+                "unit": "rem"
+              }
+            },
+            "md": {
+              "$type": "dimension",
+              "$value": {
+                "value": 1.125,
+                "unit": "rem"
+              }
+            },
+            "lg": {
+              "$type": "dimension",
+              "$value": {
+                "value": 1.25,
+                "unit": "rem"
+              }
+            },
+            "xl": {
+              "$type": "dimension",
+              "$value": {
+                "value": 1.375,
+                "unit": "rem"
+              }
+            }
+          }
         }
       },
       "gap": {

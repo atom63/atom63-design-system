@@ -38156,6 +38156,30 @@
       "reason": "unsupported selector"
     },
     {
+      "what": ".a63-Button[data-variant='ghost'][data-tone='muted']",
+      "reason": "unsupported selector"
+    },
+    {
+      "what": ".a63-Button[data-variant='ghost'][data-tone='muted']:where(:not(:disabled, [data-disabled])):hover",
+      "reason": "unsupported selector"
+    },
+    {
+      "what": ".a63-Button[data-variant='ghost'][data-tone='muted']:focus-visible",
+      "reason": "unsupported selector"
+    },
+    {
+      "what": ".a63-Button[data-variant='ghost'][data-tone='muted']:active",
+      "reason": "unsupported selector"
+    },
+    {
+      "what": ".a63-Button[data-variant='ghost'][data-tone='muted'][data-pressed]",
+      "reason": "unsupported selector"
+    },
+    {
+      "what": ".a63-Button[data-variant='ghost'][data-tone='muted'][aria-expanded='true']",
+      "reason": "unsupported selector"
+    },
+    {
       "what": ".a63-Button[data-size='tile'].h-full",
       "reason": "unsupported selector"
     },
@@ -38176,7 +38200,7 @@
       "title": "Actions"
     },
     "summary": "Button is the shared action primitive and defaults to safe non-submit behavior.",
-    "usage": "Use it for an in-place action such as submitting, saving, confirming or changing state; use a link when the outcome is navigation. Choose emphasis from the action hierarchy rather than making every action primary, and give icon-only buttons an accessible name. shape=\"round\" makes icon buttons circles (a play button) and labelled buttons pills.",
+    "usage": "Use it for an in-place action such as submitting, saving, confirming or changing state; use a link when the outcome is navigation. Choose emphasis from the action hierarchy rather than making every action primary, and give icon-only buttons an accessible name. Draw secondary actions in toolbars, rows and card headers as variant=\"ghost\" with tone=\"muted\". shape=\"round\" makes icon buttons circles (a play button) and labelled buttons pills.",
     "related": [
       {
         "slug": "button-group",
@@ -38201,7 +38225,7 @@
         "destructive-outline": "Quieter destructive action, beside a safe default.",
         "outline": "Lower-emphasis alternative (Duplicate).",
         "dashed": "Add or filter affordance drawn as a dashed pill (+ Status).",
-        "ghost": "Lowest emphasis; toolbars and dismissals.",
+        "ghost": "Lowest emphasis; toolbars and dismissals, with tone=\"muted\" for quiet secondary actions.",
         "link": "Inline action styled as text; navigation should use a real link.",
         "overlay": "Forced contrast over media and imagery; the floating button over dark media.",
         "glass": "Compatibility alias of overlay; new work uses overlay."

@@ -32,6 +32,11 @@ export const rules = [
     why: 'An accent on every control points at nothing. Button `default` is a high-emphasis neutral solid; `primary` is for a main action in the brand colour. The vibe measures warn at more than one primary Button per file. Taking the accent off a product whose main action is brand-coloured loses the cue the product relies on.',
   },
   {
+    id: 'quiet-secondary-actions',
+    rule: 'Draw secondary actions in toolbars, list rows and card headers as `variant="ghost"` Buttons with `tone="muted"`, icon-only at `icon-sm` or `icon-xs` in dense rows. Keep the main action at full contrast.',
+    why: 'Muted ghost actions rest in the secondary text colour, with no box, and go to full contrast on hover, focus and press, so a row of actions stays calm and still answers the pointer.',
+  },
+  {
     id: 'one-boundary',
     rule: "One boundary per element: border, fill or shadow, not two. Don't nest outlined containers.",
     why: 'Each extra edge is another line to read past. Card `filled` and `elevated` and Button `raised` give a fill or a shadow without the border.',

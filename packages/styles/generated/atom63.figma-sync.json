@@ -4,7 +4,7 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1139,
+    "variables": 1144,
     "aliasValues": 789,
     "skipped": 247,
     "computed": 61
@@ -2394,6 +2394,76 @@
           "codeSyntax": "var(--a63-control-gap)",
           "scopes": [
             "GAP"
+          ]
+        },
+        {
+          "name": "control/icon/only/size/lg",
+          "token": "--a63-control-icon-only-size-lg",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 20
+            }
+          },
+          "codeSyntax": "var(--a63-control-icon-only-size-lg)",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ]
+        },
+        {
+          "name": "control/icon/only/size/md",
+          "token": "--a63-control-icon-only-size-md",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 18
+            }
+          },
+          "codeSyntax": "var(--a63-control-icon-only-size-md)",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ]
+        },
+        {
+          "name": "control/icon/only/size/sm",
+          "token": "--a63-control-icon-only-size-sm",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 16
+            }
+          },
+          "codeSyntax": "var(--a63-control-icon-only-size-sm)",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ]
+        },
+        {
+          "name": "control/icon/only/size/xl",
+          "token": "--a63-control-icon-only-size-xl",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 22
+            }
+          },
+          "codeSyntax": "var(--a63-control-icon-only-size-xl)",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ]
+        },
+        {
+          "name": "control/icon/only/size/xs",
+          "token": "--a63-control-icon-only-size-xs",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 14
+            }
+          },
+          "codeSyntax": "var(--a63-control-icon-only-size-xs)",
+          "scopes": [
+            "WIDTH_HEIGHT"
           ]
         },
         {

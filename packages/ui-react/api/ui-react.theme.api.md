@@ -6,6 +6,7 @@
 
 import { ButtonShape } from '@atom63/ui-foundation';
 import { ButtonSize } from '@atom63/ui-foundation';
+import { ButtonTone } from '@atom63/ui-foundation';
 import { ButtonVariant } from '@atom63/ui-foundation';
 import { ComponentProps } from 'react';
 import * as React_2 from 'react';
