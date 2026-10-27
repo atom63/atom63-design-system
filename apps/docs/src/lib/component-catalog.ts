@@ -361,7 +361,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Item provides structured row regions for media, content, actions, and supporting detail.',
     usage:
-      'Keep the row hierarchy predictable and avoid nesting unrelated actions inside a row-level link.',
+      'Keep the row hierarchy predictable and avoid nesting unrelated actions inside a row-level link. For a dense list (an inbox, a message list), pass size="sm" (12px block padding) or size="xs" (8px); the default is 16px.',
     usageExports: ['Item', 'ItemContent', 'ItemTitle', 'ItemActions'],
   },
   kbd: {
@@ -588,7 +588,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['pagination', 'scroll-area'],
     summary: 'Table provides semantic table regions with shared typography, spacing, and states.',
     usage:
-      'Keep header relationships intact and add horizontal containment for genuinely wide data.',
+      'Keep header relationships intact and add horizontal containment for genuinely wide data. For a dense table (admin, payments, issues), pass size="sm": rows are 33px, and a row checkbox or a 24px row menu (size="icon-xs") keeps its hit area without making the row taller.',
     usageExports: ['Table', 'TableHeader', 'TableBody', 'TableRow', 'TableHead', 'TableCell'],
   },
   tabs: {
