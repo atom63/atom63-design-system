@@ -530,6 +530,14 @@
                   "$type": "color",
                   "$value": "{surface.light.11}"
                 },
+                "tertiary": {
+                  "$type": "color",
+                  "$value": "{surface.light.11}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklab, {surface.light.11} 70%, {surface.light.10})"
+                  },
+                  "$description": "The third text grey, lighter than secondary: placeholders, meta and timestamps.\nSeven parts step 11 to three parts step 10, so it keeps WCAG AA 4.5:1 on the page,\nthe panel, the field fill and the muted fill of a filled field."
+                },
                 "accent": {
                   "$type": "color",
                   "$value": "{a63.brand.text}",
@@ -1078,6 +1086,14 @@
                 "secondary": {
                   "$type": "color",
                   "$value": "{surface.dark.11}"
+                },
+                "tertiary": {
+                  "$type": "color",
+                  "$value": "{surface.dark.10}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklab, {surface.dark.11} 30%, {surface.dark.10})"
+                  },
+                  "$description": "Three parts step 11 to seven parts step 10: WCAG AA 4.5:1 on the page, the panel,\nthe field fill and the muted fill."
                 },
                 "accent": {
                   "$type": "color",

@@ -7,7 +7,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 
 import { rules as ruleTable } from './rules.mjs'
-import { synonyms, topics } from './synonyms.mjs'
+import { grounds, synonyms, topics } from './synonyms.mjs'
 
 const defaultIndexPath = fileURLToPath(new URL('../generated/agent-index.json', import.meta.url))
 
@@ -145,6 +145,15 @@ export function topicHits(query) {
     })
   }
   return hits
+}
+
+/** The ground (neutral family and page color) an idea names (see `grounds`), or undefined. */
+export function groundFor(idea) {
+  const text = ` ${normalize(idea)} `
+  const match = grounds.find(({ key }) => text.includes(` ${key} `))
+  if (!match) return undefined
+  const { surface, page, note } = match
+  return { surface, page, note }
 }
 
 /** Tokens a query term names through a synonym, with the same boost as components. */

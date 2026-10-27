@@ -2,6 +2,7 @@
 // Do not edit; change the JSON and run `pnpm --filter @atom63/ui-foundation generate:contracts`.
 
 import type { VisualArchetypeId } from '../../visual-archetypes'
+import { type InputVariant, inputVariants } from '../input/input-contract'
 
 export const searchFieldStates = ['empty', 'query', 'focus', 'disabled'] as const
 export const searchFieldSlots = [
@@ -21,13 +22,17 @@ export type SearchFieldSlot = (typeof searchFieldSlots)[number]
 export type SearchFieldVisualArchetype = (typeof searchFieldVisualArchetypes)[number]
 
 export interface SearchFieldContract {
+  defaultVariant: InputVariant
   slots: readonly SearchFieldSlot[]
   states: readonly SearchFieldState[]
+  variants: readonly InputVariant[]
   visualArchetypes: readonly SearchFieldVisualArchetype[]
 }
 
 export const searchFieldContract = {
+  defaultVariant: 'default',
   slots: searchFieldSlots,
   states: searchFieldStates,
+  variants: inputVariants,
   visualArchetypes: searchFieldVisualArchetypes,
 } satisfies SearchFieldContract

@@ -1,6 +1,10 @@
 'use client'
 
-import { searchFieldContract, type SearchFieldState } from '@atom63/ui-foundation'
+import {
+  type InputVariant,
+  searchFieldContract,
+  type SearchFieldState,
+} from '@atom63/ui-foundation'
 import * as React from 'react'
 
 import { cn } from '../../lib/cn'
@@ -25,6 +29,9 @@ export interface SearchFieldProps extends Omit<
   onClear?: () => void
   onValueChange?: (value: string) => void
   value?: string
+  /** Field chrome. `filled` (a muted fill, no resting border) suits a search or
+   *  filter field on a page; `plain` suits one inside a menu or popover. */
+  variant?: InputVariant
 }
 
 function SearchIcon() {
@@ -56,6 +63,7 @@ export function SearchField({
   onValueChange,
   spellCheck = false,
   value,
+  variant = searchFieldContract.defaultVariant,
   ...props
 }: SearchFieldProps): React.ReactElement {
   const inputRef = React.useRef<HTMLInputElement>(null)
@@ -81,6 +89,7 @@ export function SearchField({
       data-search-state={state}
       data-slot="search-field"
       disabled={disabled}
+      variant={variant}
     >
       <InputGroupAddon data-slot="search-field-icon">
         <SearchIcon />

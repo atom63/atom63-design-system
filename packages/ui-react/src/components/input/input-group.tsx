@@ -1,6 +1,11 @@
 'use client'
 
-import { type InputGroupAlign, type InputSize, inputContract } from '@atom63/ui-foundation'
+import {
+  type InputGroupAlign,
+  type InputSize,
+  type InputVariant,
+  inputContract,
+} from '@atom63/ui-foundation'
 import * as React from 'react'
 import { cn } from '../../lib/cn'
 import { Button, type ButtonProps } from '../button'
@@ -29,6 +34,10 @@ export interface InputGroupProps extends Omit<React.ComponentProps<'div'>, 'clas
   /** Drop the recessed field shadow — for groups on translucent/flat chrome
    *  (search bars, toolbars). Mirrors Input's `shadow`. Defaults to true. */
   shadow?: boolean
+  /** Field chrome, as on Input: `default` for form fields, `filled` for search
+   *  and filter fields with an icon and placeholder, `plain` for a field inside a
+   *  menu, popover or command palette. */
+  variant?: InputVariant
 }
 
 const ADDON_INTERACTIVE_SELECTOR =
@@ -50,6 +59,7 @@ export function InputGroup({
   invalid = false,
   shadow = true,
   size = inputContract.defaultSize,
+  variant = inputContract.defaultVariant,
   ...props
 }: InputGroupProps): React.ReactElement {
   const context = React.useMemo(() => ({ disabled, invalid, size }), [disabled, invalid, size])
@@ -62,6 +72,7 @@ export function InputGroup({
         data-shadow={shadow ? undefined : 'false'}
         data-size={size}
         data-slot="input-group"
+        data-variant={variant}
         role="group"
         {...props}
       >
@@ -122,7 +133,7 @@ export function InputGroupAddon({
   )
 }
 
-export type InputGroupInputProps = Omit<InputProps, 'unstyled'>
+export type InputGroupInputProps = Omit<InputProps, 'unstyled' | 'variant'>
 
 /*
  * The chrome-less field for a group — reads size/disabled/invalid from context.

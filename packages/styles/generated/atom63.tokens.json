@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 1915,
-    "uniqueCssVariables": 1191,
-    "figmaMappedDeclarations": 1853
+    "declarations": 1919,
+    "uniqueCssVariables": 1192,
+    "figmaMappedDeclarations": 1857
   },
   "entries": [
     {
@@ -11370,6 +11370,70 @@
       },
       "lifecycle": "preview",
       "aliases": ["--surface-light-11"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-text-tertiary",
+      "cssVar": "--a63-text-tertiary",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 80%, black)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Theme",
+        "path": "text/tertiary",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-text-tertiary",
+      "cssVar": "--a63-text-tertiary",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10))",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Theme",
+        "path": "text/tertiary",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-accent", "--surface-dark-10"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-text-tertiary",
+      "cssVar": "--a63-text-tertiary",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10))",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "text/tertiary",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--surface-dark-10", "--surface-dark-11"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-text-tertiary",
+      "cssVar": "--a63-text-tertiary",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--surface-light-11) 70%, var(--surface-light-10))",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "text/tertiary",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--surface-light-10", "--surface-light-11"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {

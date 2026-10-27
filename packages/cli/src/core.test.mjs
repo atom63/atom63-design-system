@@ -13,7 +13,7 @@ import {
   token,
 } from './core.mjs'
 import { formatEnvelope } from './format.mjs'
-import { synonyms, topics } from './synonyms.mjs'
+import { grounds, synonyms, topics } from './synonyms.mjs'
 import { build, template } from './templates.mjs'
 
 const index = loadIndex()
@@ -138,6 +138,9 @@ const topicGolden = [
   ['phone app', 'app-view', 1],
   ['mobile app with tab bar', 'app-view', 2],
   ['edge to edge phone screen', 'app-view', 1],
+  ['notion-like docs', 'foundation-colors', 1],
+  ['notes app', 'foundation-colors', 1],
+  ['writing editor', 'foundation-colors', 1],
   ['track list', 'table', 1],
   ['album track list', 'table/Plain', 2],
   ['playlist', 'table', 1],
@@ -168,6 +171,43 @@ const topicGolden = [
   ['tool calls', 'chat-steps', 1],
   ['ai disclaimer', 'chat-composer/Playground', 1],
 ]
+
+/**
+ * Ideas that name a warm paper or document product get the warm n6 neutral and
+ * a near-white page in their build kit; other ideas get no ground.
+ */
+const groundGolden = [
+  ['Notion-like docs page', 'n6'],
+  ['notes app with a sidebar', 'n6'],
+  ['markdown editor', 'n6'],
+  ['writing app', 'n6'],
+  ['team wiki', 'n6'],
+  ['knowledge base article', 'n6'],
+  ['billing settings page', undefined],
+  ['analytics dashboard', undefined],
+  ['music player', undefined],
+]
+
+describe('build ground', () => {
+  for (const [idea, surface] of groundGolden) {
+    it(`suggests ${surface ?? 'no ground'} for "${idea}"`, () => {
+      const kit = build(index, idea).data
+      assert.equal(kit.ground?.surface, surface)
+      if (surface) {
+        assert.equal(kit.ground.page, '--a63-surface-panel')
+        assert.match(
+          formatEnvelope(build(index, idea)),
+          /## Ground\n- Neutral n6, page --a63-surface-panel/
+        )
+      }
+    })
+  }
+
+  it('only points grounds at tokens that exist', () => {
+    const tokens = new Set(index.tokens.map(entry => entry.cssVar))
+    for (const { key, page } of grounds) assert.ok(tokens.has(page), `${key} → ${page}`)
+  })
+})
 
 describe('topics', () => {
   for (const [query, expected, within] of topicGolden) {

@@ -66,6 +66,7 @@ import { HTMLMotionProps } from 'motion/react';
 import { InputGroupAlign } from '@atom63/ui-foundation';
 import { Input as InputPrimitive } from '@base-ui/react/input';
 import { InputSize } from '@atom63/ui-foundation';
+import { InputVariant } from '@atom63/ui-foundation';
 import { ItemGroupVariant } from '@atom63/ui-foundation';
 import { ItemMediaVariant } from '@atom63/ui-foundation';
 import { ItemSize } from '@atom63/ui-foundation';
@@ -1555,7 +1556,7 @@ export type InputGroupButtonProps = ButtonProps;
 export function InputGroupInput(input: InputGroupInputProps): React$1.ReactElement;
 
 // @public (undocumented)
-export type InputGroupInputProps = Omit<InputProps, 'unstyled'>;
+export type InputGroupInputProps = Omit<InputProps, 'unstyled' | 'variant'>;
 
 // @public (undocumented)
 export interface InputGroupProps extends Omit<React$1.ComponentProps<'div'>, 'className'> {
@@ -1568,6 +1569,7 @@ export interface InputGroupProps extends Omit<React$1.ComponentProps<'div'>, 'cl
     shadow?: boolean;
     // (undocumented)
     size?: InputSize;
+    variant?: InputVariant;
 }
 
 // @public (undocumented)
@@ -1611,6 +1613,7 @@ export type InputProps = Omit<InputPrimitive.Props & React$1.RefAttributes<HTMLI
     nativeInput?: boolean;
     inputClassName?: string;
     shadow?: boolean;
+    variant?: InputVariant;
 };
 
 // @public (undocumented)
@@ -2326,6 +2329,7 @@ export interface SearchFieldProps extends Omit<InputGroupInputProps, 'className'
     onValueChange?: (value: string) => void;
     // (undocumented)
     value?: string;
+    variant?: InputVariant;
 }
 
 // @public (undocumented)

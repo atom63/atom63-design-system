@@ -556,6 +556,7 @@ export {
   inputSlots,
   inputStates,
   inputTokenSlots,
+  inputVariants,
   inputVisualArchetypes,
 } from './components/input/input-contract'
 export type {
@@ -568,6 +569,7 @@ export type {
   InputSlot,
   InputState,
   InputTokenSlot,
+  InputVariant,
   InputVisualArchetype,
 } from './components/input/input-contract'
 export {

@@ -23,6 +23,7 @@
   --a63-surface-control-hover: var(--accent);
   --a63-text-primary: var(--foreground);
   --a63-text-secondary: var(--muted-foreground);
+  --a63-text-tertiary: var(--muted-foreground);
   --a63-border-subtle: var(--border);
   --a63-border-control: var(--input);
   --a63-border-input: var(--input);

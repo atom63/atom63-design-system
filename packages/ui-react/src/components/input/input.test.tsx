@@ -27,6 +27,28 @@ describe('Input', () => {
     )
   })
 
+  it('falls back to the contract default variant and reflects every contract variant', () => {
+    const { container, rerender } = render(<Input />)
+    const control = () => container.querySelector('[data-slot="input-control"]')
+    expect(control()).toHaveAttribute('data-variant', inputContract.defaultVariant)
+    for (const variant of inputContract.variants) {
+      rerender(<Input variant={variant} />)
+      expect(control()).toHaveAttribute('data-variant', variant)
+    }
+  })
+
+  it('carries the variant on an input group', () => {
+    const { container } = render(
+      <InputGroup variant="filled">
+        <InputGroupInput aria-label="Search" />
+      </InputGroup>
+    )
+    expect(container.querySelector('[data-slot="input-group"]')).toHaveAttribute(
+      'data-variant',
+      'filled'
+    )
+  })
+
   it('reflects invalid and disabled on the control and syncs aria-invalid', () => {
     const { container } = render(<Input disabled invalid />)
     const control = container.querySelector('[data-slot="input-control"]')

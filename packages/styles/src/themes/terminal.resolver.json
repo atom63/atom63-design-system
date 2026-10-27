@@ -242,6 +242,14 @@
                 "$extensions": {
                   "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 52%, black)"
                 }
+              },
+              "tertiary": {
+                "$type": "color",
+                "$value": "{a63.action.primary}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 80%, black)"
+                },
+                "$description": "Placeholders and meta: a lighter phosphor ink on paper, still AA 4.5:1."
               }
             },
             "border": {
@@ -392,6 +400,14 @@
                   "io.atom63.derive": "color-mix(in oklab, {a63.text.accent} 48%, {surface.dark.11})"
                 },
                 "$description": "Text mixes read the brand-as-text token; the primary fill is too dark here."
+              },
+              "tertiary": {
+                "$type": "color",
+                "$value": "{a63.text.accent}",
+                "$extensions": {
+                  "io.atom63.derive": "color-mix(in oklab, {a63.text.accent} 40%, {surface.dark.10})"
+                },
+                "$description": "Placeholders and meta: a dimmer phosphor than secondary, still AA 4.5:1."
               }
             },
             "border": {

@@ -4,10 +4,10 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1137,
+    "variables": 1138,
     "aliasValues": 789,
     "skipped": 187,
-    "computed": 60
+    "computed": 61
   },
   "collections": [
     {
@@ -1500,6 +1500,81 @@
             }
           },
           "codeSyntax": "var(--a63-text-secondary)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "text/tertiary",
+          "token": "--a63-text-tertiary",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "value": {
+                "r": 0.428008,
+                "g": 0.428009,
+                "b": 0.428009,
+                "a": 1
+              }
+            },
+            "modern-dark": {
+              "value": {
+                "r": 0.547762,
+                "g": 0.547762,
+                "b": 0.547762,
+                "a": 1
+              }
+            },
+            "aqua-light": {
+              "value": {
+                "r": 0.428008,
+                "g": 0.428009,
+                "b": 0.428009,
+                "a": 1
+              }
+            },
+            "aqua-dark": {
+              "value": {
+                "r": 0.547762,
+                "g": 0.547762,
+                "b": 0.547762,
+                "a": 1
+              }
+            },
+            "retro-light": {
+              "value": {
+                "r": 0.428008,
+                "g": 0.428009,
+                "b": 0.428009,
+                "a": 1
+              }
+            },
+            "retro-dark": {
+              "value": {
+                "r": 0.547762,
+                "g": 0.547762,
+                "b": 0.547762,
+                "a": 1
+              }
+            },
+            "terminal-light": {
+              "value": {
+                "r": 0.010041,
+                "g": 0.262546,
+                "b": 0.609689,
+                "a": 1
+              }
+            },
+            "terminal-dark": {
+              "value": {
+                "r": 0.486106,
+                "g": 0.589549,
+                "b": 0.685106,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-text-tertiary)",
           "scopes": [
             "TEXT_FILL"
           ]
@@ -21512,6 +21587,17 @@
         "theme"
       ],
       "expression": "var(--surface-dark-11)"
+    },
+    {
+      "token": "--a63-text-tertiary",
+      "collection": "Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "surface",
+        "theme"
+      ],
+      "expression": "color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10))"
     },
     {
       "token": "--a63-track-shadow",

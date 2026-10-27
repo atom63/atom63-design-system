@@ -12,6 +12,12 @@ const modes = ['light', 'dark'] as const
 const textPairs = [
   { fg: '--a63-text-primary', bg: '--a63-surface-page', min: AA_TEXT },
   { fg: '--a63-text-secondary', bg: '--a63-surface-page', min: AA_TEXT },
+  // The third grey paints placeholders, meta and timestamps: on the page and the
+  // panel, in a field (the control fill) and in a filled field (the muted fill).
+  { fg: '--a63-text-tertiary', bg: '--a63-surface-page', min: AA_TEXT },
+  { fg: '--a63-text-tertiary', bg: '--a63-surface-panel', min: AA_TEXT },
+  { fg: '--a63-text-tertiary', bg: '--a63-surface-control', min: AA_TEXT },
+  { fg: '--a63-text-tertiary', bg: '--a63-surface-muted', min: AA_TEXT },
   { fg: '--a63-text-primary', bg: '--a63-surface-panel', min: AA_TEXT },
   { fg: '--a63-text-accent', bg: '--a63-surface-page', min: AA_TEXT },
   { fg: '--a63-text-accent', bg: '--a63-surface-panel', min: AA_TEXT },

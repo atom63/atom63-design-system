@@ -52,6 +52,49 @@ export const EndAddon: Story = {
   ),
 }
 
+/* filled: a muted fill and no resting border, for a search or filter field on a
+   page; the border shows on hover and focus. */
+export const Filled: Story = {
+  render: () => (
+    <div style={{ maxWidth: 360 }}>
+      <SearchField aria-label="Search issues" placeholder="Search issues" variant="filled" />
+    </div>
+  ),
+}
+
+/* plain: no border or fill and a separator below, for a search field at the top
+   of a menu or popover. */
+export const Plain: Story = {
+  render: () => (
+    <div
+      style={{
+        background: 'var(--a63-surface-overlay)',
+        border: '1px solid var(--a63-border-subtle)',
+        borderRadius: 'var(--a63-overlay-radius, var(--radius-lg))',
+        boxShadow: 'var(--a63-overlay-shadow)',
+        maxWidth: 280,
+        overflow: 'hidden',
+      }}
+    >
+      <SearchField aria-label="Filter labels" placeholder="Filter…" variant="plain" />
+      <ul
+        style={{
+          color: 'var(--a63-text-primary)',
+          listStyle: 'none',
+          margin: 0,
+          padding: 'var(--a63-space-2) var(--a63-space-3)',
+        }}
+      >
+        <li>Bug</li>
+        <li>Feature</li>
+        <li>Design</li>
+      </ul>
+    </div>
+  ),
+}
+
+export const FilledDark: Story = { ...Filled, globals: { mode: 'dark' } }
+
 export const Disabled: Story = {
   args: {
     'aria-label': 'Search projects',

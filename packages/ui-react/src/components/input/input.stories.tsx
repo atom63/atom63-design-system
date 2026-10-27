@@ -1,4 +1,10 @@
-import { inputContract, inputGroupContract, inputSizes, themes } from '@atom63/ui-foundation'
+import {
+  inputContract,
+  inputGroupContract,
+  inputSizes,
+  inputVariants,
+  themes,
+} from '@atom63/ui-foundation'
 import { Search, X } from 'lucide-react'
 import {
   Input,
@@ -21,6 +27,10 @@ const meta = {
       control: 'select',
       options: inputSizes,
     },
+    variant: {
+      control: 'select',
+      options: inputVariants,
+    },
     invalid: { control: 'boolean' },
     disabled: { control: 'boolean' },
     shadow: { control: 'boolean' },
@@ -33,6 +43,7 @@ const meta = {
     shadow: true,
     placeholder: 'you@atom63.io',
     size: 'md',
+    variant: 'default',
   },
 } satisfies Meta<typeof Input>
 
@@ -266,6 +277,44 @@ export const FieldChrome: Story = {
   ),
 }
 
+/* Field chrome by use: `default` for form fields, `filled` for a search or
+   filter field with an icon and placeholder, `plain` for a field inside a menu,
+   popover or command palette (no border or fill, a separator below). */
+export const Variants: Story = {
+  render: () => (
+    <EnvironmentShell>
+      <div style={{ display: 'grid', gap: '0.75rem' }}>
+        <Input aria-label="Email" placeholder="you@atom63.io" style={{ width: '100%' }} />
+        <InputGroup style={{ width: '100%' }} variant="filled">
+          <InputGroupAddon>
+            <Search aria-hidden />
+          </InputGroupAddon>
+          <InputGroupInput aria-label="Search issues" placeholder="Search issues" />
+        </InputGroup>
+        <Input
+          aria-label="Filter, filled"
+          placeholder="Filter by name"
+          style={{ width: '100%' }}
+          variant="filled"
+        />
+        <Input
+          aria-label="Filter, filled and invalid"
+          defaultValue="no match"
+          invalid
+          style={{ width: '100%' }}
+          variant="filled"
+        />
+        <InputGroup style={{ width: '100%' }} variant="plain">
+          <InputGroupAddon>
+            <Search aria-hidden />
+          </InputGroupAddon>
+          <InputGroupInput aria-label="Filter labels" placeholder="Filter…" />
+        </InputGroup>
+      </div>
+    </EnvironmentShell>
+  ),
+}
+
 /* The payoff: the recessed field reads correctly across every theme — the inset
    counterpart to the raised Button, from the same token architecture. */
 export const Themes: Story = {
@@ -294,6 +343,12 @@ export const Themes: Story = {
                   defaultValue="focused-look"
                   invalid
                   style={{ width: '100%' }}
+                />
+                <Input
+                  aria-label="Example filter field"
+                  placeholder="Filter…"
+                  style={{ width: '100%' }}
+                  variant="filled"
                 />
               </div>
             </PreviewCard>

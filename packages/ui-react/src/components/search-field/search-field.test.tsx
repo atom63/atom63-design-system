@@ -1,3 +1,4 @@
+import { searchFieldContract } from '@atom63/ui-foundation'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { type FormEvent, useState } from 'react'
@@ -61,6 +62,14 @@ describe('SearchField', () => {
 
     expect(screen.getByRole('searchbox', { name: 'Search projects' })).toBeDisabled()
     expect(screen.queryByRole('button', { name: 'Clear search' })).not.toBeInTheDocument()
+  })
+
+  it('draws the contract default variant and passes a variant to its group', () => {
+    const { container, rerender } = render(<SearchField aria-label="Search" />)
+    const group = () => container.querySelector('[data-slot="search-field"]')
+    expect(group()).toHaveAttribute('data-variant', searchFieldContract.defaultVariant)
+    rerender(<SearchField aria-label="Search" variant="filled" />)
+    expect(group()).toHaveAttribute('data-variant', 'filled')
   })
 
   it('renders an end addon after the field', () => {

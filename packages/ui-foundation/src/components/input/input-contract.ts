@@ -4,6 +4,10 @@
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 export const inputSizes = ['sm', 'md', 'lg'] as const
+// Field chrome. default: the outlined form field. filled: a muted fill with no resting border, for
+// search and filter fields with an icon and placeholder. plain: no border or fill and a separator
+// below, for a field inside a menu, popover or command palette.
+export const inputVariants = ['default', 'filled', 'plain'] as const
 export const inputStates = ['rest', 'hover', 'focus', 'disabled', 'invalid'] as const
 // Two-part anatomy (mirrors Base UI / production @atom63/ui input): a control wrapper owns the
 // chrome, the inner input is the transparent text field.
@@ -22,6 +26,7 @@ export const inputTokenSlots = [
 export const inputVisualArchetypes = ['field'] as const satisfies readonly VisualArchetypeId[]
 
 export type InputSize = (typeof inputSizes)[number]
+export type InputVariant = (typeof inputVariants)[number]
 export type InputState = (typeof inputStates)[number]
 export type InputSlot = (typeof inputSlots)[number]
 export type InputTokenSlot = (typeof inputTokenSlots)[number]
@@ -29,8 +34,10 @@ export type InputVisualArchetype = (typeof inputVisualArchetypes)[number]
 
 export interface InputContract {
   defaultSize: InputSize
+  defaultVariant: InputVariant
   slots: readonly InputSlot[]
   states: readonly InputState[]
+  variants: readonly InputVariant[]
   tokenSlots: readonly InputTokenSlot[]
   sizes: readonly InputSize[]
   visualArchetypes: readonly InputVisualArchetype[]
@@ -38,8 +45,10 @@ export interface InputContract {
 
 export const inputContract = {
   defaultSize: 'md',
+  defaultVariant: 'default',
   slots: inputSlots,
   states: inputStates,
+  variants: inputVariants,
   tokenSlots: inputTokenSlots,
   sizes: inputSizes,
   visualArchetypes: inputVisualArchetypes,
@@ -63,11 +72,13 @@ export type InputGroupVisualArchetype = (typeof inputGroupVisualArchetypes)[numb
 export interface InputGroupContract {
   aligns: readonly InputGroupAlign[]
   slots: readonly InputGroupSlot[]
+  variants: readonly InputVariant[]
   visualArchetypes: readonly InputGroupVisualArchetype[]
 }
 
 export const inputGroupContract = {
   aligns: inputGroupAligns,
   slots: inputGroupSlots,
+  variants: inputVariants,
   visualArchetypes: inputGroupVisualArchetypes,
 } satisfies InputGroupContract
