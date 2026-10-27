@@ -1,0 +1,32 @@
+/*
+ * Toaster recipe — the inverse variant's compact pill. Sonner positions each
+ * toast and draws its fill, text and corner from the host's --normal-* and
+ * --border-radius (set by Toaster). Its own sheet is unlayered, so this file only
+ * sets what that sheet leaves alone, and custom properties it reads on the toast.
+ */
+
+.a63-Toast--inverse {
+  /* Sonner sizes a toast by --width (356px on the host); the pill hugs its text. */
+  --width: fit-content;
+  --toast-icon-margin-start: 0;
+  --toast-icon-margin-end: 0;
+  --toast-svg-margin-start: 0;
+  --toast-svg-margin-end: 0;
+
+  max-width: 100%;
+  inset-inline: 0;
+  margin-inline: auto;
+}
+
+.a63-Toast--inverse[data-x-position='left'] {
+  margin-inline: 0 auto;
+}
+
+.a63-Toast--inverse[data-x-position='right'] {
+  margin-inline: auto 0;
+}
+
+/* The status icon (a spinner, a check) follows the message. */
+.a63-Toast--inverse [data-icon] {
+  order: 1;
+}

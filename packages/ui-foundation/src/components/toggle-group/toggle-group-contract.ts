@@ -3,10 +3,12 @@
 
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
-// `segmented` (default) welds the items into one bar; `pills` draws each item as a separate capsule
-// with a gap, for filter rows such as Playlists / Artists / Albums.
+// `segmented` (default) welds the items into one bar; `pills` draws each item as a separate filled
+// capsule with a gap, for filter rows such as Playlists / Artists / Albums; `ghost` leaves the items
+// as plain text and gives only the selected one a soft fill, for quiet filters in a toolbar such as
+// All / Read / Unread.
 
-export const toggleGroupVariants = ['segmented', 'pills'] as const
+export const toggleGroupVariants = ['segmented', 'pills', 'ghost'] as const
 export const toggleGroupOrientations = ['horizontal', 'vertical'] as const
 export const toggleGroupSelectionModes = ['single', 'multiple'] as const
 export const toggleGroupStates = ['rest', 'hover', 'focus', 'selected', 'disabled'] as const

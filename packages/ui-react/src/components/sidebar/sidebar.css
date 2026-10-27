@@ -16,14 +16,24 @@
  *   background (inset/input) → --a63-surface-page
  */
 
-.a63-Sidebar-wrapper {
+/*
+ * A custom property that names another one is resolved where it is declared, so
+ * aliases declared on the wrapper would keep the wrapper's mode inside a nested
+ * mode scope (a dark sidebar on a light app: <UIProvider mode="dark"><Sidebar>).
+ * Every UIProvider or Atom63Theme scope inside the wrapper declares them again
+ * and resolves them for its own mode.
+ */
+.a63-Sidebar-wrapper,
+.a63-Sidebar-wrapper :is(.a63-UIProvider, .a63-Atom63Theme) {
   --sidebar-bg: var(--a63-surface-sidebar);
   --sidebar-fg: var(--a63-text-primary);
   --sidebar-accent: var(--a63-surface-control-hover);
   --sidebar-accent-fg: var(--a63-text-primary);
   --sidebar-border: var(--a63-border-subtle);
   --sidebar-ring: var(--a63-focus-ring);
+}
 
+.a63-Sidebar-wrapper {
   display: flex;
   min-height: 100svh;
   width: 100%;

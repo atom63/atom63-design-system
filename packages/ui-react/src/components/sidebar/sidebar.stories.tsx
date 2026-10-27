@@ -1,5 +1,6 @@
 import { sidebarContract, sidebarMenuButtonTones, themes } from '@atom63/ui-foundation'
 import {
+  Button,
   Sidebar,
   SidebarContent,
   SidebarFooter,
@@ -10,6 +11,7 @@ import {
   SidebarInput,
   SidebarInset,
   SidebarMenu,
+  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -22,6 +24,7 @@ import {
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { FileText, Inbox, Send, Star } from 'lucide-react'
 
 const meta = {
   title: 'UI React/Sidebar',
@@ -211,6 +214,88 @@ export const Variants: Story = {
       ))}
     </div>
   ),
+}
+
+/*
+ * A dark sidebar on a light app (a mail client, a chat app): wrap the Sidebar in
+ * <UIProvider mode="dark">. The scope keeps the theme, brand and density of the
+ * app and resolves every token inside it for dark mode, so the sidebar surface,
+ * its text, the active item, badges and the primary button all follow with no
+ * mode checks. The rest of the app stays light.
+ */
+export const DarkSidebar: Story = {
+  render: () => (
+    <UIProvider mode="light">
+      <SidebarProvider style={{ minHeight: 0 }}>
+        <UIProvider mode="dark">
+          <Sidebar aria-label="Mailboxes" collapsible="none" style={{ width: '14rem' }}>
+            <SidebarHeader>
+              <span style={{ fontWeight: 600, paddingInline: 'var(--a63-space-2)' }}>Mail</span>
+              <Button variant="primary">New message</Button>
+            </SidebarHeader>
+            <SidebarContent>
+              <SidebarGroup>
+                <SidebarMenu>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton isActive>
+                      <Inbox aria-hidden />
+                      <span>Inbox</span>
+                    </SidebarMenuButton>
+                    <SidebarMenuBadge>16</SidebarMenuBadge>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton>
+                      <FileText aria-hidden />
+                      <span>Drafts</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton>
+                      <Send aria-hidden />
+                      <span>Sent</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                  <SidebarMenuItem>
+                    <SidebarMenuButton>
+                      <Star aria-hidden />
+                      <span>Starred</span>
+                    </SidebarMenuButton>
+                    <SidebarMenuBadge>3</SidebarMenuBadge>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarGroup>
+            </SidebarContent>
+          </Sidebar>
+        </UIProvider>
+        <main
+          data-testid="light-app"
+          style={{
+            background: 'var(--a63-surface-panel)',
+            color: 'var(--a63-text-primary)',
+            flex: 1,
+            padding: 'var(--a63-space-4)',
+          }}
+        >
+          The inbox stays light.
+        </main>
+      </SidebarProvider>
+    </UIProvider>
+  ),
+  play: ({ canvasElement }) => {
+    const sidebar = canvasElement.querySelector<HTMLElement>('[data-slot="sidebar"]')
+    const app = canvasElement.querySelector<HTMLElement>('[data-testid="light-app"]')
+    if (!sidebar || !app) throw new Error('Expected the sidebar and the app')
+    const style = getComputedStyle(sidebar)
+    // The sidebar's aliases resolve in its own (dark) scope, not in the wrapper's.
+    const alias = style.getPropertyValue('--sidebar-bg').trim()
+    const token = style.getPropertyValue('--a63-surface-sidebar').trim()
+    if (alias !== token) {
+      throw new Error(`Expected --sidebar-bg to resolve in the dark scope: ${alias} vs ${token}`)
+    }
+    if (style.color === getComputedStyle(app).color) {
+      throw new Error(`Expected light sidebar text on the dark surface, got ${style.color}`)
+    }
+  },
 }
 
 export const Themes: Story = {

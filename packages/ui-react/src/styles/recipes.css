@@ -38,6 +38,7 @@
 @import '../components/tabs/tabs.css' layer(components);
 @import '../components/text-ticker/text-ticker.css' layer(components);
 @import '../components/textarea/textarea.css' layer(components);
+@import '../components/toaster/toaster.css' layer(components);
 @import '../components/toggle/toggle.css' layer(components);
 @import '../components/tooltip/tooltip.css' layer(components);
 @import '../components/toggle-group/toggle-group.css' layer(components);

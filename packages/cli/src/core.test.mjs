@@ -176,6 +176,15 @@ const topicGolden = [
   ['send and stop button', 'chat-composer', 1],
   ['tool calls', 'chat-steps', 1],
   ['ai disclaimer', 'chat-composer/Playground', 1],
+  ['dark sidebar', 'sidebar', 1],
+  ['dark sidebar', 'sidebar/DarkSidebar', 2],
+  ['dark sidebar on a light app', 'sidebar', 1],
+  ['dark region on a light page', 'sidebar/DarkSidebar', 1],
+  ['dark toast', 'toaster', 1],
+  ['compact dark toast with a spinner', 'toaster/Inverse', 2],
+  ['filter chips', 'toggle-group', 1],
+  ['filter chips', 'toggle-group/Ghost', 2],
+  ['inbox filters', 'toggle-group', 2],
 ]
 
 /**
@@ -237,6 +246,20 @@ describe('topics', () => {
     ['mail inbox', 'table', /size="sm"/],
   ]) {
     it(`points "${idea}" at a dense ${slug} in the build kit`, () => {
+      const kit = build(index, idea).data
+      const entry = kit.components.find(component => component.slug === slug)
+      assert.ok(entry, kit.components.map(component => component.slug).join(', '))
+      assert.match(entry.summary, pattern)
+    })
+  }
+
+  /* The mail-inbox case study: a dark sidebar, a compact dark toast and quiet filters. */
+  for (const [idea, slug, pattern] of [
+    ['mail inbox with a dark sidebar', 'sidebar', /<UIProvider mode="dark">/],
+    ['inbox with a compact dark toast', 'toaster', /variant="inverse"/],
+    ['inbox toolbar with filter chips', 'toggle-group', /variant="ghost"/],
+  ]) {
+    it(`points "${idea}" at ${slug} ${pattern.source} in the build kit`, () => {
       const kit = build(index, idea).data
       const entry = kit.components.find(component => component.slug === slug)
       assert.ok(entry, kit.components.map(component => component.slug).join(', '))

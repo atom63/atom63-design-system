@@ -2639,7 +2639,9 @@
       "source": "packages/ui-foundation/contracts/components/toaster.json",
       "exportName": "toasterContract",
       "maturity": "stable",
+      "description": "`default` is a card on the overlay surface with the icon before the message; `inverse` is a compact pill in the inverse colours (dark on a light app, light on a dark one) with the icon after the message, the macOS and iOS look for a short status such as Scheduling message….",
       "axes": [
+        { "name": "variants", "values": ["default", "inverse"], "default": "default" },
         { "name": "tones", "values": ["default", "info", "success", "warning", "error", "loading"] }
       ],
       "slots": ["toaster", "toast", "toast-icon", "toast-message"],
@@ -2677,9 +2679,9 @@
       "source": "packages/ui-foundation/contracts/components/toggle-group.json",
       "exportName": "toggleGroupContract",
       "maturity": "stable",
-      "description": "`segmented` (default) welds the items into one bar; `pills` draws each item as a separate capsule with a gap, for filter rows such as Playlists / Artists / Albums.",
+      "description": "`segmented` (default) welds the items into one bar; `pills` draws each item as a separate filled capsule with a gap, for filter rows such as Playlists / Artists / Albums; `ghost` leaves the items as plain text and gives only the selected one a soft fill, for quiet filters in a toolbar such as All / Read / Unread.",
       "axes": [
-        { "name": "variants", "values": ["segmented", "pills"], "default": "segmented" },
+        { "name": "variants", "values": ["segmented", "pills", "ghost"], "default": "segmented" },
         { "name": "orientations", "values": ["horizontal", "vertical"], "default": "horizontal" },
         { "name": "selectionModes", "values": ["single", "multiple"], "default": "single" }
       ],

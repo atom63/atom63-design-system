@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "module": "Atom63UI",
-  "symbolCount": 512,
+  "symbolCount": 516,
   "symbols": [
     {
       "id": "s:8Atom63UI10AtomAmountV",
@@ -2139,6 +2139,27 @@
       "source": "AtomSemanticTone.swift"
     },
     {
+      "id": "s:8Atom63UI16AtomToastVariantO",
+      "kind": "swift.enum",
+      "path": "AtomToastVariant",
+      "declaration": "enum AtomToastVariant",
+      "source": "AtomToast.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomToastVariantO7inverseyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomToastVariant.inverse",
+      "declaration": "case inverse",
+      "source": "AtomToast.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomToastVariantO8standardyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomToastVariant.standard",
+      "declaration": "case standard",
+      "source": "AtomToast.swift"
+    },
+    {
       "id": "s:8Atom63UI16AtomWidgetHeaderV",
       "kind": "swift.struct",
       "path": "AtomWidgetHeader",
@@ -3574,10 +3595,10 @@
       "source": "AtomToast.swift"
     },
     {
-      "id": "s:8Atom63UI9AtomToastV2id7message11systemImageAC10Foundation4UUIDV_S2Stcfc",
+      "id": "s:8Atom63UI9AtomToastV2id7message11systemImage7variantAC10Foundation4UUIDV_S2SAA0cD7VariantOtcfc",
       "kind": "swift.init",
-      "path": "AtomToast.init(id:message:systemImage:)",
-      "declaration": "init(id: UUID = UUID(), message: String, systemImage: String = \"checkmark.circle.fill\")",
+      "path": "AtomToast.init(id:message:systemImage:variant:)",
+      "declaration": "init(id: UUID = UUID(), message: String, systemImage: String = \"checkmark.circle.fill\", variant: AtomToastVariant = .standard)",
       "source": "AtomToast.swift"
     },
     {
@@ -3585,6 +3606,13 @@
       "kind": "swift.property",
       "path": "AtomToast.message",
       "declaration": "let message: String",
+      "source": "AtomToast.swift"
+    },
+    {
+      "id": "s:8Atom63UI9AtomToastV7variantAA0cD7VariantOvp",
+      "kind": "swift.property",
+      "path": "AtomToast.variant",
+      "declaration": "let variant: AtomToastVariant",
       "source": "AtomToast.swift"
     }
   ],
@@ -5500,6 +5528,41 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI16AtomToastVariantO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomToastVariantO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomToastVariantO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomToastVariantO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomToastVariantO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomToastVariantO7inverseyA2CmF",
+      "target": "s:8Atom63UI16AtomToastVariantO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomToastVariantO8standardyA2CmF",
+      "target": "s:8Atom63UI16AtomToastVariantO",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI16AtomWidgetHeaderV",
       "target": "external:Sendable",
       "kind": "conformsTo"
@@ -6895,12 +6958,17 @@
       "kind": "memberOf"
     },
     {
-      "source": "s:8Atom63UI9AtomToastV2id7message11systemImageAC10Foundation4UUIDV_S2Stcfc",
+      "source": "s:8Atom63UI9AtomToastV2id7message11systemImage7variantAC10Foundation4UUIDV_S2SAA0cD7VariantOtcfc",
       "target": "s:8Atom63UI9AtomToastV",
       "kind": "memberOf"
     },
     {
       "source": "s:8Atom63UI9AtomToastV7messageSSvp",
+      "target": "s:8Atom63UI9AtomToastV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI9AtomToastV7variantAA0cD7VariantOvp",
       "target": "s:8Atom63UI9AtomToastV",
       "kind": "memberOf"
     }

@@ -4,6 +4,7 @@ export {
   toasterSlots,
   toasterStates,
   toasterTones,
+  toasterVariants,
   toasterVisualArchetypes,
 } from './toaster-contract'
 export type {
@@ -11,5 +12,6 @@ export type {
   ToasterSlot,
   ToasterState,
   ToasterTone,
+  ToasterVariant,
   ToasterVisualArchetype,
 } from './toaster-contract'

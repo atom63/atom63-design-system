@@ -542,7 +542,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Sidebar provides responsive application-shell structure, state, rail, menus, and inset content.',
     usage:
-      'Mount it through Sidebar Provider and keep responsive visibility aligned to the md breakpoint. For navigation with folding groups and expandable sections, compose Sidebar Nav Tree (SidebarNavGroup collapsible) inside it. A component you pass with asChild must spread the props it receives onto the element it renders and forward its ref.',
+      'Mount it through Sidebar Provider and keep responsive visibility aligned to the md breakpoint. For navigation with folding groups and expandable sections, compose Sidebar Nav Tree (SidebarNavGroup collapsible) inside it. For a dark sidebar on a light app (a mail or chat client), wrap the Sidebar in <UIProvider mode="dark">: every token inside resolves for dark, so its surface, text, active item and buttons follow, and the rest of the app stays light. A component you pass with asChild must spread the props it receives onto the element it renders and forward its ref.',
     usageExports: [
       'SidebarProvider',
       'Sidebar',
@@ -615,11 +615,18 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
   },
   toaster: {
     additionalValueExports: ['toast'],
+    axisGuidance: {
+      variant: {
+        default: 'A card on the overlay surface, the icon before the message.',
+        inverse:
+          'A compact pill in the inverse colours, the icon after the message (a status with a spinner).',
+      },
+    },
     relatedSlugs: ['alert', 'feedback-state', 'copy-button'],
     summary:
       'Toaster is the app-level host for transient messages raised through the exported toast API.',
     usage:
-      'Mount one host near the app root and keep messages concise, actionable, and non-essential.',
+      'Mount one host near the app root and keep messages concise, actionable, and non-essential. For a short status in a dark pill, as macOS and iOS draw it, use <Toaster variant="inverse" position="bottom-center" /> with toast.loading(…).',
     usageExports: ['Toaster', 'toast'],
   },
   toggle: {
@@ -629,6 +636,15 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     usageExports: ['Toggle'],
   },
   'toggle-group': {
+    axisGuidance: {
+      variant: {
+        segmented: 'One welded bar for a mode switch (Left / Center / Right).',
+        pills:
+          'Separate filled capsules, the selected one solid, for a prominent filter row (Playlists / Artists / Albums).',
+        ghost:
+          'Plain text items, only the selected one softly filled, for quiet filters in a toolbar (All / Read / Unread).',
+      },
+    },
     relatedSlugs: ['toggle', 'segmented-control', 'button-group'],
     summary: 'Toggle Group coordinates single or multiple pressed controls on a shared track.',
     usage: 'Choose single or multiple selection deliberately and label icon-only items.',

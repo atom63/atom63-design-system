@@ -2,9 +2,9 @@
   "$schema": "../schema/component-intent.schema.json",
   "component": "toggle-group",
   "maturity": "stable",
-  "description": "`segmented` (default) welds the items into one bar; `pills` draws each item as a separate capsule with a gap, for filter rows such as Playlists / Artists / Albums.",
+  "description": "`segmented` (default) welds the items into one bar; `pills` draws each item as a separate filled capsule with a gap, for filter rows such as Playlists / Artists / Albums; `ghost` leaves the items as plain text and gives only the selected one a soft fill, for quiet filters in a toolbar such as All / Read / Unread.",
   "lists": {
-    "variants": ["segmented", "pills"],
+    "variants": ["segmented", "pills", "ghost"],
     "orientations": ["horizontal", "vertical"],
     "selectionModes": ["single", "multiple"],
     "states": ["rest", "hover", "focus", "selected", "disabled"],

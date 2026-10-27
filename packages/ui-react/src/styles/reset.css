@@ -14,6 +14,12 @@
     font-family: var(--font-family-sans);
   }
 
+  /* A nested mode scope (a dark region on a light page) recolors the text that
+     inherits into it, not only the tokens. */
+  .a63-Atom63Theme {
+    color: var(--a63-text-primary);
+  }
+
   /* Text without a size class takes the body role, as it does on body. */
   .a63-UIProvider,
   .a63-Atom63Theme {
