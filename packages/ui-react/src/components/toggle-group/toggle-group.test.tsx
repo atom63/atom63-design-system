@@ -85,7 +85,7 @@ describe('ToggleGroup', () => {
     expect(screen.getByRole('button', { name: 'B' })).toHaveAttribute('data-size', 'sm')
   })
 
-  it('defaults to the segmented variant and accepts pills', () => {
+  it('defaults to the segmented variant and accepts pills and ghost', () => {
     const { container, rerender } = render(
       <ToggleGroup>
         <ToggleGroupItem value="a">A</ToggleGroupItem>
@@ -99,5 +99,11 @@ describe('ToggleGroup', () => {
       </ToggleGroup>
     )
     expect(group()).toHaveAttribute('data-variant', 'pills')
+    rerender(
+      <ToggleGroup variant="ghost">
+        <ToggleGroupItem value="a">A</ToggleGroupItem>
+      </ToggleGroup>
+    )
+    expect(group()).toHaveAttribute('data-variant', 'ghost')
   })
 })

@@ -121,6 +121,39 @@
   color: var(--a63-text-accent);
 }
 
+/* ── Ghost variant ─────────────────────────────────────────────────────
+   Quiet toolbar filters (All / Read / Unread): the items are plain text with a
+   small gap, and only the selected one gets a fill — the soft selection fill,
+   not a solid. Like pills it undoes the welded chrome above, so it must stay
+   after those rules. */
+.a63-ToggleGroup[data-variant='ghost'] {
+  flex-wrap: wrap;
+  gap: var(--a63-space-1);
+  border-radius: 0;
+}
+.a63-ToggleGroup[data-variant='ghost'] .a63-Toggle.a63-Toggle {
+  border-width: var(--a63-control-border-width);
+  border-radius: var(--toggle-radius);
+  border-color: transparent;
+  background-color: transparent;
+  background-image: none;
+  box-shadow: none;
+  color: var(--a63-text-secondary);
+}
+.a63-ToggleGroup[data-variant='ghost'] .a63-Toggle:hover:not([data-pressed]):not([data-disabled]) {
+  background-color: var(--a63-surface-control-hover);
+  color: var(--a63-text-primary);
+}
+.a63-ToggleGroup[data-variant='ghost'] .a63-Toggle[data-pressed][data-tone='neutral'],
+.a63-ToggleGroup[data-variant='ghost'] .a63-Toggle[data-pressed][data-tone='subtle'] {
+  background-color: var(--a63-selected-background);
+  color: var(--a63-selected-foreground);
+}
+.a63-ToggleGroup[data-variant='ghost'] .a63-Toggle[data-pressed][data-tone='accent'] {
+  background-color: var(--a63-selected-accent-background);
+  color: var(--a63-selected-accent-foreground);
+}
+
 /* ── Separator ─────────────────────────────────────────────────────────── */
 
 .a63-ToggleGroup-separator {

@@ -3,17 +3,25 @@
 
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
+// `default` is a card on the overlay surface with the icon before the message; `inverse` is a
+// compact pill in the inverse colours (dark on a light app, light on a dark one) with the icon after
+// the message, the macOS and iOS look for a short status such as Scheduling message….
+
+export const toasterVariants = ['default', 'inverse'] as const
 export const toasterStates = ['visible', 'dismissing', 'reduced-motion'] as const
 export const toasterTones = ['default', 'info', 'success', 'warning', 'error', 'loading'] as const
 export const toasterSlots = ['toaster', 'toast', 'toast-icon', 'toast-message'] as const
 export const toasterVisualArchetypes = ['surface'] as const satisfies readonly VisualArchetypeId[]
 
+export type ToasterVariant = (typeof toasterVariants)[number]
 export type ToasterState = (typeof toasterStates)[number]
 export type ToasterTone = (typeof toasterTones)[number]
 export type ToasterSlot = (typeof toasterSlots)[number]
 export type ToasterVisualArchetype = (typeof toasterVisualArchetypes)[number]
 
 export interface ToasterContract {
+  defaultVariant: ToasterVariant
+  variants: readonly ToasterVariant[]
   slots: readonly ToasterSlot[]
   states: readonly ToasterState[]
   tones: readonly ToasterTone[]
@@ -21,6 +29,8 @@ export interface ToasterContract {
 }
 
 export const toasterContract = {
+  defaultVariant: 'default',
+  variants: toasterVariants,
   slots: toasterSlots,
   states: toasterStates,
   tones: toasterTones,

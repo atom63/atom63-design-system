@@ -185,6 +185,53 @@ export const Pills: Story = {
   },
 }
 
+/* Ghost: quiet toolbar filters. The items are plain text; only the selected one
+   gets the soft selection fill (an inbox's All / Read / Unread). */
+function GhostDemo({ tone }: { tone?: (typeof toggleTones)[number] }) {
+  const [value, setValue] = useState<string[]>(['all'])
+  return (
+    <ToggleGroup
+      aria-label={`Filter messages (${tone ?? 'neutral'})`}
+      onValueChange={setValue}
+      size="sm"
+      tone={tone}
+      value={value}
+      variant="ghost"
+    >
+      <ToggleGroupItem value="all">All</ToggleGroupItem>
+      <ToggleGroupItem value="read">Read</ToggleGroupItem>
+      <ToggleGroupItem value="unread">Unread</ToggleGroupItem>
+      <ToggleGroupItem value="file">Has file</ToggleGroupItem>
+    </ToggleGroup>
+  )
+}
+
+export const Ghost: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 16 }}>
+      <GhostDemo tone="neutral" />
+      <GhostDemo tone="accent" />
+    </div>
+  ),
+  /* Unselected items are plain text; the selected one has a fill and no shadow. */
+  play: ({ canvasElement }) => {
+    const rest = canvasElement.querySelector<HTMLElement>('.a63-Toggle:not([data-pressed])')
+    const selected = canvasElement.querySelector<HTMLElement>('.a63-Toggle[data-pressed]')
+    if (!rest || !selected) throw new Error('Expected a selected and an unselected item')
+    const restStyle = getComputedStyle(rest)
+    if (restStyle.backgroundColor !== 'rgba(0, 0, 0, 0)') {
+      throw new Error(`Expected no fill at rest, got ${restStyle.backgroundColor}`)
+    }
+    const selectedStyle = getComputedStyle(selected)
+    if (selectedStyle.backgroundColor === 'rgba(0, 0, 0, 0)') {
+      throw new Error('Expected a soft fill on the selected item')
+    }
+    if (selectedStyle.boxShadow !== 'none') {
+      throw new Error(`Expected no shadow on the selected item, got ${selectedStyle.boxShadow}`)
+    }
+  },
+}
+
 export const Vertical: Story = { render: () => <Demo orientation="vertical" /> }
 
 export const Disabled: Story = {

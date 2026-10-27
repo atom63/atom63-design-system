@@ -1165,6 +1165,7 @@ export {
   toasterSlots,
   toasterStates,
   toasterTones,
+  toasterVariants,
   toasterVisualArchetypes,
 } from './components/toaster'
 export type {
@@ -1172,6 +1173,7 @@ export type {
   ToasterSlot,
   ToasterState,
   ToasterTone,
+  ToasterVariant,
   ToasterVisualArchetype,
 } from './components/toaster'
 export {

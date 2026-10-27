@@ -1596,6 +1596,13 @@ private struct ToastShowcase: View {
           systemImage: "wifi.slash"
         )
       }
+      AtomButton("Show inverse toast", variant: .outline) {
+        toast = AtomToast(
+          message: "Scheduling message…",
+          systemImage: "clock",
+          variant: .inverse
+        )
+      }
     }
     .frame(maxWidth: .infinity, minHeight: 120, alignment: .topLeading)
     .atomToast($toast)

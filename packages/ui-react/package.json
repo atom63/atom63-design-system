@@ -125,6 +125,7 @@
     "./recipes/tabs.css": "./src/components/tabs/tabs.css",
     "./recipes/text-ticker.css": "./src/components/text-ticker/text-ticker.css",
     "./recipes/textarea.css": "./src/components/textarea/textarea.css",
+    "./recipes/toaster.css": "./src/components/toaster/toaster.css",
     "./recipes/toggle-group.css": "./src/components/toggle-group/toggle-group.css",
     "./recipes/toggle.css": "./src/components/toggle/toggle.css",
     "./recipes/tooltip.css": "./src/components/tooltip/tooltip.css",

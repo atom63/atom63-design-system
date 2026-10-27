@@ -141,7 +141,8 @@ import { TextareaSize } from '@atom63/ui-foundation';
 import { TextTickerVariant } from '@atom63/ui-foundation';
 import { Theme } from '@atom63/ui-foundation';
 import { toast } from 'sonner';
-import { ToasterProps } from 'sonner';
+import { ToasterProps as ToasterProps_2 } from 'sonner';
+import { ToasterVariant } from '@atom63/ui-foundation';
 import { Toggle as Toggle_2 } from '@base-ui/react/toggle';
 import { ToggleGroup as ToggleGroup_2 } from '@base-ui/react/toggle-group';
 import { ToggleGroupVariant } from '@atom63/ui-foundation';
@@ -2900,7 +2901,10 @@ export { toast }
 // @public (undocumented)
 export function Toaster(input: ToasterProps): React$1.ReactElement;
 
-export { ToasterProps }
+// @public (undocumented)
+export interface ToasterProps extends ToasterProps_2 {
+    variant?: ToasterVariant;
+}
 
 // @public (undocumented)
 export function Toggle(input: ToggleProps): React$1.ReactElement;

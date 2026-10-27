@@ -9,7 +9,7 @@
 ## Summary
 
 - Root export symbols: **631** across **80** source families.
-- Package export-map subpaths: **78**.
+- Package export-map subpaths: **79**.
 - P0 root/source families: **30**.
 - P1 root/source families: **12**.
 - P0 package subpaths: **4**.

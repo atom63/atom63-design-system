@@ -5069,17 +5069,23 @@ export const themes: readonly ["modern", "aqua", "retro", "terminal"];
 // @public (undocumented)
 export interface ToasterContract {
     // (undocumented)
+    defaultVariant: ToasterVariant;
+    // (undocumented)
     slots: readonly ToasterSlot[];
     // (undocumented)
     states: readonly ToasterState[];
     // (undocumented)
     tones: readonly ToasterTone[];
     // (undocumented)
+    variants: readonly ToasterVariant[];
+    // (undocumented)
     visualArchetypes: readonly ToasterVisualArchetype[];
 }
 
 // @public (undocumented)
 export const toasterContract: {
+    defaultVariant: "default";
+    variants: readonly ["default", "inverse"];
     slots: readonly ["toaster", "toast", "toast-icon", "toast-message"];
     states: readonly ["visible", "dismissing", "reduced-motion"];
     tones: readonly ["default", "info", "success", "warning", "error", "loading"];
@@ -5103,6 +5109,12 @@ export type ToasterTone = (typeof toasterTones)[number];
 
 // @public (undocumented)
 export const toasterTones: readonly ["default", "info", "success", "warning", "error", "loading"];
+
+// @public (undocumented)
+export type ToasterVariant = (typeof toasterVariants)[number];
+
+// @public (undocumented)
+export const toasterVariants: readonly ["default", "inverse"];
 
 // @public (undocumented)
 export type ToasterVisualArchetype = (typeof toasterVisualArchetypes)[number];
@@ -5171,7 +5183,7 @@ export const toggleGroupContract: {
     defaultVariant: "segmented";
     defaultOrientation: "horizontal";
     defaultSelectionMode: "single";
-    variants: readonly ["segmented", "pills"];
+    variants: readonly ["segmented", "pills", "ghost"];
     orientations: readonly ["horizontal", "vertical"];
     selectionModes: readonly ["single", "multiple"];
     slots: readonly ["toggle-group", "toggle-group-item", "toggle-group-separator"];
@@ -5214,7 +5226,7 @@ export const toggleGroupTokenSlots: readonly ["segment.gap", "segment.radius", "
 export type ToggleGroupVariant = (typeof toggleGroupVariants)[number];
 
 // @public (undocumented)
-export const toggleGroupVariants: readonly ["segmented", "pills"];
+export const toggleGroupVariants: readonly ["segmented", "pills", "ghost"];
 
 // @public (undocumented)
 export type ToggleGroupVisualArchetype = (typeof toggleGroupVisualArchetypes)[number];

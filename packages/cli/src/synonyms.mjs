@@ -265,9 +265,50 @@ const denseTable = [
 const denseList = [
   {
     id: 'component:item',
-    note: 'Dense lists (an inbox, a message list): <Item size="sm"> (12px block padding) or size="xs" (8px) instead of the 16px default. For one-line rows with columns, use <Table size="sm"> (33px rows).',
+    note: 'Dense lists (an inbox, a message list): <Item size="sm"> (12px block padding) or size="xs" (8px) instead of the 16px default. For one-line rows with columns, use <Table size="sm"> (33px rows). Let the size set the row height, not a fixed h-*.',
   },
   { id: 'component:table', note: denseTable[0].note },
+]
+
+const darkSidebar = [
+  {
+    id: 'component:sidebar',
+    note: 'A dark sidebar on a light app: wrap <Sidebar> in <UIProvider mode="dark">. Every token inside resolves for dark (surface, text, active item, badges, buttons) and the rest of the app stays light. No mode checks, no literal colours.',
+  },
+  {
+    id: 'example:sidebar/DarkSidebar',
+    note: 'A mail sidebar in <UIProvider mode="dark"> beside a light inbox.',
+  },
+]
+
+const darkRegion = [
+  {
+    id: 'example:sidebar/DarkSidebar',
+    note: 'A dark region on a light page: <UIProvider mode="dark"> around it keeps the theme, brand and density and resolves every token inside for dark.',
+  },
+  { id: 'component:sidebar', note: darkSidebar[0].note },
+]
+
+const inverseToast = [
+  {
+    id: 'component:toaster',
+    note: 'A compact dark toast (macOS, iOS): <Toaster variant="inverse" position="bottom-center" /> with toast.loading("Scheduling message…") draws a pill in the inverse colours with the spinner after the message.',
+  },
+  {
+    id: 'example:toaster/Inverse',
+    note: 'The inverse pill with a loading spinner after the message.',
+  },
+]
+
+const quietFilters = [
+  {
+    id: 'component:toggle-group',
+    note: 'Quiet toolbar filters (All / Read / Unread): <ToggleGroup variant="ghost" size="sm">, plain text items with only the selected one softly filled. variant="pills" draws filled capsules with a solid selected one, for a prominent filter row.',
+  },
+  {
+    id: 'example:toggle-group/Ghost',
+    note: 'An inbox filter row: plain items, the selected one on the soft selection fill.',
+  },
 ]
 
 const floatingButton = [
@@ -433,6 +474,22 @@ export const topics = {
   'page control': pageDots,
   'page dots': pageDots,
   'page indicator': pageDots,
+  'dark sidebar': darkSidebar,
+  'dark nav': darkSidebar,
+  'dark navigation': darkSidebar,
+  'inverse sidebar': darkSidebar,
+  'dark region': darkRegion,
+  'dark section': darkRegion,
+  'dark toast': inverseToast,
+  'inverse toast': inverseToast,
+  'compact toast': inverseToast,
+  'toast pill': inverseToast,
+  'status pill': inverseToast,
+  'filter chips': quietFilters,
+  'filter tabs': quietFilters,
+  'inbox filters': quietFilters,
+  'quiet filters': quietFilters,
+  'toolbar filters': quietFilters,
   'avatar badge': avatarBadge,
   'online indicator': avatarBadge,
   'presence dot': avatarBadge,
