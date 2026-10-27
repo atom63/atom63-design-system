@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "module": "Atom63UI",
-  "symbolCount": 499,
+  "symbolCount": 506,
   "symbols": [
     {
       "id": "s:8Atom63UI10AtomAmountV",
@@ -935,10 +935,10 @@
       "source": "AtomPageDots.swift"
     },
     {
-      "id": "s:8Atom63UI12AtomPageDotsV5count9selection18accessibilityLabel04pageI0ACSi_05SwiftB07BindingVySiGS2SSi_Sitctcfc",
+      "id": "s:8Atom63UI12AtomPageDotsV5count9selection5shape4tone18accessibilityLabel04pageK0ACSi_05SwiftB07BindingVySiGAA0cdE5ShapeOAA0cdE4ToneOS2SSi_Sitctcfc",
       "kind": "swift.init",
-      "path": "AtomPageDots.init(count:selection:accessibilityLabel:pageLabel:)",
-      "declaration": "init(count: Int, selection: Binding<Int>, accessibilityLabel: String = \"Slides\", pageLabel: @escaping (Int, Int) -> String = { index, count in \"Slide \\(index + 1) of \\(count)\" })",
+      "path": "AtomPageDots.init(count:selection:shape:tone:accessibilityLabel:pageLabel:)",
+      "declaration": "init(count: Int, selection: Binding<Int>, shape: AtomPageDotsShape = .dot, tone: AtomPageDotsTone = .neutral, accessibilityLabel: String = \"Slides\", pageLabel: @escaping (Int, Int) -> String = { index, count in \"Slide \\(index + 1) of \\(count)\" })",
       "source": "AtomPageDots.swift"
     },
     {
@@ -2027,6 +2027,34 @@
       "source": "AtomLoadMoreView.swift"
     },
     {
+      "id": "s:8Atom63UI16AtomPageDotsToneO",
+      "kind": "swift.enum",
+      "path": "AtomPageDotsTone",
+      "declaration": "enum AtomPageDotsTone",
+      "source": "AtomPageDots.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomPageDotsToneO6accentyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomPageDotsTone.accent",
+      "declaration": "case accent",
+      "source": "AtomPageDots.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomPageDotsToneO7neutralyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomPageDotsTone.neutral",
+      "declaration": "case neutral",
+      "source": "AtomPageDots.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomPageDotsToneO7onMediayA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomPageDotsTone.onMedia",
+      "declaration": "case onMedia",
+      "source": "AtomPageDots.swift"
+    },
+    {
       "id": "s:8Atom63UI16AtomProgressViewV",
       "kind": "swift.struct",
       "path": "AtomProgressView",
@@ -2424,6 +2452,27 @@
       "path": "AtomInformSurface.spotlight",
       "declaration": "case spotlight",
       "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomPageDotsShapeO",
+      "kind": "swift.enum",
+      "path": "AtomPageDotsShape",
+      "declaration": "enum AtomPageDotsShape",
+      "source": "AtomPageDots.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomPageDotsShapeO3dotyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomPageDotsShape.dot",
+      "declaration": "case dot",
+      "source": "AtomPageDots.swift"
+    },
+    {
+      "id": "s:8Atom63UI17AtomPageDotsShapeO4pillyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomPageDotsShape.pill",
+      "declaration": "case pill",
+      "source": "AtomPageDots.swift"
     },
     {
       "id": "s:8Atom63UI17AtomSectionHeaderV",
@@ -4229,7 +4278,7 @@
       "kind": "memberOf"
     },
     {
-      "source": "s:8Atom63UI12AtomPageDotsV5count9selection18accessibilityLabel04pageI0ACSi_05SwiftB07BindingVySiGS2SSi_Sitctcfc",
+      "source": "s:8Atom63UI12AtomPageDotsV5count9selection5shape4tone18accessibilityLabel04pageK0ACSi_05SwiftB07BindingVySiGAA0cdE5ShapeOAA0cdE4ToneOS2SSi_Sitctcfc",
       "target": "s:8Atom63UI12AtomPageDotsV",
       "kind": "memberOf"
     },
@@ -5279,6 +5328,46 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI16AtomPageDotsToneO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomPageDotsToneO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomPageDotsToneO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomPageDotsToneO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomPageDotsToneO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomPageDotsToneO6accentyA2CmF",
+      "target": "s:8Atom63UI16AtomPageDotsToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomPageDotsToneO7neutralyA2CmF",
+      "target": "s:8Atom63UI16AtomPageDotsToneO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomPageDotsToneO7onMediayA2CmF",
+      "target": "s:8Atom63UI16AtomPageDotsToneO",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI16AtomProgressViewV",
       "target": "external:Sendable",
       "kind": "conformsTo"
@@ -5626,6 +5715,41 @@
     {
       "source": "s:8Atom63UI17AtomInformSurfaceO9spotlightyA2CmF",
       "target": "s:8Atom63UI17AtomInformSurfaceO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomPageDotsShapeO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomPageDotsShapeO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomPageDotsShapeO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomPageDotsShapeO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomPageDotsShapeO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI17AtomPageDotsShapeO3dotyA2CmF",
+      "target": "s:8Atom63UI17AtomPageDotsShapeO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI17AtomPageDotsShapeO4pillyA2CmF",
+      "target": "s:8Atom63UI17AtomPageDotsShapeO",
       "kind": "memberOf"
     },
     {

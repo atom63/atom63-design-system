@@ -233,6 +233,7 @@ describe('topics', () => {
   it('names the iOS renderer for the list, dots and avatar badge topics', () => {
     assert.match(search(index, 'grouped list ios').data.results[0].summary, /AtomListSection/)
     assert.match(search(index, 'page dots').data.results[0].summary, /AtomPageDots/)
+    assert.match(search(index, 'page dots').data.results[0].summary, /shape="pill"/)
     assert.match(search(index, 'avatar badge').data.results[0].summary, /AtomAvatar\(name:badge:/)
   })
 

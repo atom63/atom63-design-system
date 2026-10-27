@@ -1,5 +1,10 @@
 'use client'
 
+import {
+  type CarouselDotShape,
+  type CarouselDotTone,
+  carouselContract,
+} from '@atom63/ui-foundation'
 import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react'
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react'
@@ -382,6 +387,10 @@ export function CarouselNext({
 export type CarouselDotsProps = React.ComponentProps<'div'> & {
   /** The name of each dot; "Slide 2 of 5" by default. */
   getLabel?: (index: number, count: number) => string
+  /** `dot` (default): every page a round dot, the current one marked by colour. `pill`: the current dot stretches into a pill. */
+  shape?: CarouselDotShape
+  /** `neutral` (default) marks the current dot in the primary text colour, `accent` in the primary action colour; `on-media` draws white dots over photos or video. */
+  tone?: CarouselDotTone
 }
 
 /* One button per snap point. The current one carries aria-current, and a
@@ -389,6 +398,8 @@ export type CarouselDotsProps = React.ComponentProps<'div'> & {
 export function CarouselDots({
   className,
   getLabel = (index, count) => `Slide ${index + 1} of ${count}`,
+  shape = carouselContract.defaultDotShape,
+  tone = carouselContract.defaultDotTone,
   ...props
 }: CarouselDotsProps): React.ReactElement {
   const { api, orientation } = useCarousel()
@@ -415,7 +426,9 @@ export function CarouselDots({
       aria-label="Slides"
       className={cn('a63-Carousel-dots', className)}
       data-orientation={orientation}
+      data-shape={shape}
       data-slot="carousel-dots"
+      data-tone={tone}
       role="group"
       {...props}
     >

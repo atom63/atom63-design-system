@@ -4,6 +4,12 @@
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 export const carouselOrientations = ['horizontal', 'vertical'] as const
+// The look of the page dots. `dot` draws every page as a small round dot and marks the current one
+// by colour alone, as UIPageControl does; `pill` stretches the current dot into a pill.
+export const carouselDotShapes = ['dot', 'pill'] as const
+// The colours of the page dots. `neutral` marks the current dot in the primary text colour, `accent`
+// in the primary action colour, and `on-media` draws white dots for a carousel of photos or video.
+export const carouselDotTones = ['neutral', 'accent', 'on-media'] as const
 export const carouselSlots = [
   'carousel',
   'carousel-content',
@@ -29,6 +35,8 @@ export const carouselVisualArchetypes = [
 ] as const satisfies readonly VisualArchetypeId[]
 
 export type CarouselOrientation = (typeof carouselOrientations)[number]
+export type CarouselDotShape = (typeof carouselDotShapes)[number]
+export type CarouselDotTone = (typeof carouselDotTones)[number]
 export type CarouselSlot = (typeof carouselSlots)[number]
 export type CarouselState = (typeof carouselStates)[number]
 export type CarouselVisualArchetype = (typeof carouselVisualArchetypes)[number]
@@ -36,6 +44,10 @@ export type CarouselVisualArchetype = (typeof carouselVisualArchetypes)[number]
 export interface CarouselContract {
   defaultOrientation: CarouselOrientation
   orientations: readonly CarouselOrientation[]
+  defaultDotShape: CarouselDotShape
+  dotShapes: readonly CarouselDotShape[]
+  defaultDotTone: CarouselDotTone
+  dotTones: readonly CarouselDotTone[]
   slots: readonly CarouselSlot[]
   states: readonly CarouselState[]
   visualArchetypes: readonly CarouselVisualArchetype[]
@@ -44,6 +56,10 @@ export interface CarouselContract {
 export const carouselContract = {
   defaultOrientation: 'horizontal',
   orientations: carouselOrientations,
+  defaultDotShape: 'dot',
+  dotShapes: carouselDotShapes,
+  defaultDotTone: 'neutral',
+  dotTones: carouselDotTones,
   slots: carouselSlots,
   states: carouselStates,
   visualArchetypes: carouselVisualArchetypes,

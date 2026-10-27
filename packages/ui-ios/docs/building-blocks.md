@@ -68,7 +68,10 @@ group, and `NavigationLink` adds its own chevron, so leave `showsDisclosure` off
 
 Page with `TabView` and `.tabViewStyle(.page(indexDisplayMode: .never))`, then
 bind `AtomPageDots(count:selection:)` to the same selection. VoiceOver reads the
-dots as one adjustable element.
+dots as one adjustable element. The dots are round by default, the current one
+marked by colour as `UIPageControl` does; pass `shape: .pill` to stretch the
+current one, `tone: .accent` to tint it, and `tone: .onMedia` for white dots over
+photos or video.
 
 ## Form presentation ownership
 

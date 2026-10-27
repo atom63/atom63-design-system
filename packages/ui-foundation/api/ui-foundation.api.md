@@ -914,7 +914,15 @@ export const cardVisualArchetypes: readonly ["surface"];
 // @public (undocumented)
 export interface CarouselContract {
     // (undocumented)
+    defaultDotShape: CarouselDotShape;
+    // (undocumented)
+    defaultDotTone: CarouselDotTone;
+    // (undocumented)
     defaultOrientation: CarouselOrientation;
+    // (undocumented)
+    dotShapes: readonly CarouselDotShape[];
+    // (undocumented)
+    dotTones: readonly CarouselDotTone[];
     // (undocumented)
     orientations: readonly CarouselOrientation[];
     // (undocumented)
@@ -929,10 +937,26 @@ export interface CarouselContract {
 export const carouselContract: {
     defaultOrientation: "horizontal";
     orientations: readonly ["horizontal", "vertical"];
+    defaultDotShape: "dot";
+    dotShapes: readonly ["dot", "pill"];
+    defaultDotTone: "neutral";
+    dotTones: readonly ["neutral", "accent", "on-media"];
     slots: readonly ["carousel", "carousel-content", "carousel-item", "carousel-previous", "carousel-next", "carousel-cursor", "carousel-dots", "carousel-dot"];
     states: readonly ["rest", "hover", "focus-visible", "disabled", "cursor-active", "can-scroll"];
     visualArchetypes: readonly ["surface", "overlay", "action"];
 };
+
+// @public (undocumented)
+export type CarouselDotShape = (typeof carouselDotShapes)[number];
+
+// @public (undocumented)
+export const carouselDotShapes: readonly ["dot", "pill"];
+
+// @public (undocumented)
+export type CarouselDotTone = (typeof carouselDotTones)[number];
+
+// @public (undocumented)
+export const carouselDotTones: readonly ["neutral", "accent", "on-media"];
 
 // @public (undocumented)
 export type CarouselOrientation = (typeof carouselOrientations)[number];
@@ -1991,8 +2015,8 @@ export const crossRendererContracts: readonly [{
     readonly sharedOutcomes: readonly ["one-dot-per-slide", "current-slide-is-marked", "choosing-a-dot-shows-its-slide"];
     readonly accessibilityOutcomes: readonly ["names-the-indicator", "exposes-the-current-position"];
     readonly platformAdaptations: {
-        readonly react: readonly ["One button per snap point, named \"Slide 2 of 5\"; the current one carries aria-current."];
-        readonly swiftUI: readonly ["TabView with .page(indexDisplayMode: .never) pages the slides; AtomPageDots binds to its selection.", "VoiceOver reads the dots as one adjustable element; swiping up or down changes the slide."];
+        readonly react: readonly ["One button per snap point, named \"Slide 2 of 5\"; the current one carries aria-current.", "`shape` and `tone` on CarouselDots pick round dots or a pill, and neutral, accent or on-media colours."];
+        readonly swiftUI: readonly ["TabView with .page(indexDisplayMode: .never) pages the slides; AtomPageDots binds to its selection.", "VoiceOver reads the dots as one adjustable element; swiping up or down changes the slide.", "`shape:` and `tone:` on AtomPageDots take the same values; the round dots sit closer together, as UIPageControl does, because VoiceOver adjusts the indicator as one element."];
     };
 }];
 

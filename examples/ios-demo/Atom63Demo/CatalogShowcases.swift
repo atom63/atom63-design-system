@@ -1210,6 +1210,13 @@ private struct PageDotsShowcase: View {
       .frame(height: 160)
 
       AtomPageDots(count: slides.count, selection: $page)
+      AtomPageDots(count: slides.count, selection: $page, tone: .accent)
+      AtomPageDots(count: slides.count, selection: $page, shape: .pill)
+
+      AtomPageDots(count: slides.count, selection: $page, tone: .onMedia)
+        .frame(maxWidth: .infinity)
+        .background(AtomTokens.Color.mediaStage.resolve(for: colorScheme))
+        .clipShape(.rect(cornerRadius: AtomTokens.Radius.large))
     }
   }
 }

@@ -249,6 +249,8 @@ export type {
 } from './components/card/card-contract'
 export {
   carouselContract,
+  carouselDotShapes,
+  carouselDotTones,
   carouselOrientations,
   carouselSlots,
   carouselStates,
@@ -256,6 +258,8 @@ export {
 } from './components/carousel'
 export type {
   CarouselContract,
+  CarouselDotShape,
+  CarouselDotTone,
   CarouselOrientation,
   CarouselSlot,
   CarouselState,
