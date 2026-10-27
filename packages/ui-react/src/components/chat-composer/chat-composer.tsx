@@ -1,7 +1,11 @@
 'use client'
 
-import { type ChatComposerStatus } from '@atom63/ui-foundation'
-import { ArrowUp, Square } from 'lucide-react'
+import {
+  type ChatComposerLayout,
+  type ChatComposerStatus,
+  chatComposerContract,
+} from '@atom63/ui-foundation'
+import { ArrowUp, AudioLines, Square } from 'lucide-react'
 import * as React from 'react'
 
 import { cn } from '../../lib/cn'
@@ -19,7 +23,7 @@ export type ChatComposerProps = Omit<
 > & {
   /** Controls after the attach slot and before the send button, such as a model picker or a mic button. */
   actions?: React.ReactNode
-  /** A leading control in the toolbar, usually a `+` button that attaches a file. */
+  /** A leading control, usually a `+` button that attaches a file. */
   attach?: React.ReactNode
   /** The starting text when the composer owns its value. */
   defaultValue?: string
@@ -29,10 +33,22 @@ export type ChatComposerProps = Omit<
   footnote?: React.ReactNode
   /** The field's accessible name. Defaults to "Message". */
   label?: string
+  /**
+   * `inline` (the default) is one pill row: the attach slot, the field, then the
+   * actions and the send button. It grows into a block, the controls in a row
+   * under the text, once the text wraps. `stacked` always keeps the controls in
+   * a row under the field.
+   */
+  layout?: ChatComposerLayout
   /** Called with the new text on every change. */
   onValueChange?: (value: string) => void
   /** Called when the reader stops a reply with the stop button. */
   onStop?: () => void
+  /**
+   * Starts voice mode. When it is given, an empty idle composer shows a voice
+   * button in place of the send button, as most assistants do.
+   */
+  onVoice?: () => void
   /**
    * Called with the text when the reader sends it, with the send button or
    * Enter. When the composer owns its value it clears the field after.
@@ -56,16 +72,33 @@ export type ChatComposerProps = Omit<
   >
   /** The text, when the host owns it (pair it with `onValueChange`). */
   value?: string
+  /** Replaces the voice icon (sound bars). */
+  voiceIcon?: React.ReactNode
+  /** The voice button's accessible name. Defaults to "Start voice mode". */
+  voiceLabel?: string
+}
+
+/* True when the text runs past one line of the field. */
+function wraps(field: HTMLTextAreaElement): boolean {
+  const style = getComputedStyle(field)
+  const line = Number.parseFloat(style.lineHeight)
+  if (!Number.isFinite(line)) return false
+  const padding = Number.parseFloat(style.paddingTop) + Number.parseFloat(style.paddingBottom)
+  return field.scrollHeight - (padding || 0) > line * 1.5
 }
 
 /*
  * The message field at the bottom of a chat: a rounded field with a textarea
- * that grows with its text, a toolbar under it with the attach slot on the
- * leading side and the send button on the trailing side. Enter sends and
- * Shift+Enter starts a new line (an input method's composition is left
- * alone). While a reply is submitted or streaming, the send button becomes a
- * stop button and Enter does not send. Built from InputGroup, Textarea and
- * Button; it sends nothing itself, `onSubmit` hands the text to the host.
+ * that grows with its text, the attach slot on the leading side and the
+ * actions and send button on the trailing side. Inline, they share one pill
+ * row until the text wraps, then the field takes the full width and the
+ * controls move to a row under it (back to one row once the text is shorter
+ * than where it wrapped and has no line breaks). Enter sends and Shift+Enter
+ * starts a new line (an input method's composition is left alone). While a
+ * reply is submitted or streaming, the send button becomes a stop button and
+ * Enter does not send. The send, stop and voice buttons are neutral solid
+ * circles. Built from InputGroup, Textarea and Button; it sends nothing
+ * itself, `onSubmit` hands the text to the host.
  */
 export function ChatComposer({
   actions,
@@ -75,7 +108,9 @@ export function ChatComposer({
   disabled = false,
   footnote,
   label = 'Message',
+  layout = chatComposerContract.defaultLayout,
   onStop,
+  onVoice,
   onSubmit,
   onValueChange,
   placeholder,
@@ -86,13 +121,21 @@ export function ChatComposer({
   stopLabel = 'Stop response',
   textareaProps,
   value: valueProp,
+  voiceIcon,
+  voiceLabel = 'Start voice mode',
   ...props
 }: ChatComposerProps): React.ReactElement {
   const [ownValue, setOwnValue] = React.useState(defaultValue)
   const controlled = valueProp !== undefined
   const value = controlled ? valueProp : ownValue
   const busy = status !== 'idle'
-  const canSend = !disabled && !busy && value.trim() !== ''
+  const empty = value.trim() === ''
+  const canSend = !disabled && !busy && !empty
+  // The text length at which the inline row wrapped; null while it fits.
+  const [wrappedAt, setWrappedAt] = React.useState<number | null>(null)
+  const multiline =
+    layout === 'inline' &&
+    (value.includes('\n') || (wrappedAt !== null && value.length >= wrappedAt))
 
   const setValue = (next: string) => {
     if (!controlled) setOwnValue(next)
@@ -111,6 +154,8 @@ export function ChatComposer({
     <form
       className={cn('a63-ChatComposer', className)}
       data-disabled={disabled ? '' : undefined}
+      data-layout={layout}
+      data-multiline={multiline ? '' : undefined}
       data-slot="chat-composer"
       data-status={status}
       onSubmit={event => {
@@ -127,7 +172,16 @@ export function ChatComposer({
           textareaClassName="a63-ChatComposer-field"
           {...fieldProps}
           disabled={disabled}
-          onChange={event => setValue(event.currentTarget.value)}
+          onChange={event => {
+            const field = event.currentTarget
+            if (layout === 'inline') {
+              if (wrappedAt !== null && field.value.length < wrappedAt) setWrappedAt(null)
+              else if (wrappedAt === null && !multiline && wraps(field)) {
+                setWrappedAt(field.value.length)
+              }
+            }
+            setValue(field.value)
+          }}
           onKeyDown={event => {
             onKeyDown?.(event)
             if (event.defaultPrevented) return
@@ -138,42 +192,61 @@ export function ChatComposer({
           placeholder={placeholder}
           value={value}
         />
-        <InputGroupAddon align="block-end" className="a63-ChatComposer-toolbar">
-          {attach ? (
-            <div className="a63-ChatComposer-attach" data-slot="chat-composer-attach">
-              {attach}
-            </div>
-          ) : null}
-          <div className="a63-ChatComposer-actions" data-slot="chat-composer-actions">
-            {actions}
-            {busy ? (
-              <Button
-                aria-label={stopLabel}
-                className="a63-ChatComposer-submit"
-                data-slot="chat-composer-submit"
-                disabled={disabled}
-                onClick={onStop}
-                shape="round"
-                size="icon-sm"
-                variant="primary"
-              >
-                {stopIcon ?? <Square aria-hidden fill="currentColor" />}
-              </Button>
-            ) : (
-              <Button
-                aria-label={sendLabel}
-                className="a63-ChatComposer-submit"
-                data-slot="chat-composer-submit"
-                disabled={!canSend}
-                shape="round"
-                size="icon-sm"
-                type="submit"
-                variant="primary"
-              >
-                {sendIcon ?? <ArrowUp aria-hidden />}
-              </Button>
-            )}
-          </div>
+        {attach ? (
+          <InputGroupAddon
+            align="inline-start"
+            className="a63-ChatComposer-attach"
+            data-slot="chat-composer-attach"
+          >
+            {attach}
+          </InputGroupAddon>
+        ) : null}
+        <InputGroupAddon
+          align="inline-end"
+          className="a63-ChatComposer-actions"
+          data-slot="chat-composer-actions"
+        >
+          {actions}
+          {busy ? (
+            <Button
+              aria-label={stopLabel}
+              className="a63-ChatComposer-submit"
+              data-slot="chat-composer-submit"
+              disabled={disabled}
+              onClick={onStop}
+              shape="round"
+              size="icon-sm"
+              variant="default"
+            >
+              {stopIcon ?? <Square aria-hidden fill="currentColor" />}
+            </Button>
+          ) : onVoice && empty ? (
+            <Button
+              aria-label={voiceLabel}
+              className="a63-ChatComposer-submit"
+              data-slot="chat-composer-submit"
+              disabled={disabled}
+              onClick={onVoice}
+              shape="round"
+              size="icon-sm"
+              variant="default"
+            >
+              {voiceIcon ?? <AudioLines aria-hidden />}
+            </Button>
+          ) : (
+            <Button
+              aria-label={sendLabel}
+              className="a63-ChatComposer-submit"
+              data-slot="chat-composer-submit"
+              disabled={!canSend}
+              shape="round"
+              size="icon-sm"
+              type="submit"
+              variant="default"
+            >
+              {sendIcon ?? <ArrowUp aria-hidden />}
+            </Button>
+          )}
         </InputGroupAddon>
       </InputGroup>
       {footnote ? (

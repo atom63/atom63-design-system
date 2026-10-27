@@ -985,6 +985,10 @@ export const carouselVisualArchetypes: readonly ["surface", "overlay", "action"]
 // @public (undocumented)
 export interface ChatComposerContract {
     // (undocumented)
+    defaultLayout: ChatComposerLayout;
+    // (undocumented)
+    layouts: readonly ChatComposerLayout[];
+    // (undocumented)
     slots: readonly ChatComposerSlot[];
     // (undocumented)
     states: readonly ChatComposerState[];
@@ -997,10 +1001,18 @@ export interface ChatComposerContract {
 // @public (undocumented)
 export const chatComposerContract: {
     statuses: readonly ["idle", "submitted", "streaming"];
+    defaultLayout: "inline";
+    layouts: readonly ["inline", "stacked"];
     slots: readonly ["chat-composer", "chat-composer-field", "chat-composer-attach", "chat-composer-actions", "chat-composer-submit", "chat-composer-footnote"];
     states: readonly ["rest", "focus-visible", "disabled", "streaming"];
     visualArchetypes: readonly ["field"];
 };
+
+// @public (undocumented)
+export type ChatComposerLayout = (typeof chatComposerLayouts)[number];
+
+// @public (undocumented)
+export const chatComposerLayouts: readonly ["inline", "stacked"];
 
 // @public (undocumented)
 export type ChatComposerSlot = (typeof chatComposerSlots)[number];
