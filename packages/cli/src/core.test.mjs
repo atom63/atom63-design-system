@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import { describe, it } from 'node:test'
 
 import {
@@ -394,6 +395,51 @@ describe('templates', () => {
     }
     const sizes = JSON.stringify(entry)
     assert.match(sizes, /"lg"/)
+  })
+
+  /* Dense product screens; the kit must offer compact density with the exact API. */
+  const denseIdeas = [
+    'Stripe payments table with filters',
+    'Proton mail inbox',
+    'Linear issue tracker triage view',
+    'admin dashboard for user accounts',
+    'Google Drive style file list',
+    'support tickets queue',
+  ]
+  for (const idea of denseIdeas) {
+    it(`offers "${idea}" compact density`, () => {
+      const kit = build(index, idea).data
+      assert.match(kit.density?.use, /<UIProvider density="compact">/)
+      assert.match(kit.density.snippet, /<UIProvider density="compact">/)
+      assert.match(kit.density.snippet, /dataset\.a63Density = 'compact'/)
+      assert.deepEqual(kit.density.imports, ["import { UIProvider } from '@atom63/ui-react'"])
+      assert.match(formatEnvelope(build(index, idea)), /^## Compact density$/m)
+    })
+  }
+
+  it('keeps compact density out of phone screens and roomy pages', () => {
+    for (const idea of [
+      'Spotify mobile home with tab bar',
+      'billing settings page',
+      'music player',
+      'marketing landing page',
+      'phone inbox',
+    ]) {
+      assert.equal(build(index, idea).data.density, undefined, idea)
+    }
+  })
+
+  it('points compact density at a prop and a docs page that exist', () => {
+    const { density } = build(index, 'issue tracker').data
+    const uiReact = new URL('../../ui-react/src/', import.meta.url)
+    assert.match(readFileSync(new URL('index.ts', uiReact), 'utf8'), /export \{ UIProvider\b/)
+    assert.match(
+      readFileSync(new URL('provider.tsx', uiReact), 'utf8'),
+      /'data-a63-density': density/
+    )
+    const [, slug] = density.next.split(' docs ')
+    assert.equal(docsPage(index, slug).type, 'docs.page')
+    assert.match(docsPage(index, slug).data.markdown, /<UIProvider density="compact">/)
   })
 
   it('tells a phone screen that AppView sets phone-sized type', () => {

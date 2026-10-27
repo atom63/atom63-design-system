@@ -30,6 +30,24 @@ The live registry lives in `@atom63/ui-foundation` → `personalizationAxes`. Th
 
 Runtime availability and implementation completeness answer different questions: an axis can be stampable while one of its owned token groups is still expanding. The live registry in `packages/ui-foundation/src/axes.ts` is the source of truth for that implementation metadata; public documentation describes the stable contract rather than duplicating the internal backlog.
 
+## Density
+
+Density sets one number, the space unit (`--a63-space-unit`): 4px when comfortable, 3.5px when compact. The space steps, gaps, paddings, row padding and control heights are all built on it, so compact scales them once, by 0.875: a 32px control becomes 28px and a 16px gap 14px. Text keeps its size; the type scale axis owns that.
+
+It works the same on `<html>` and on a nested scope. Every token built on the unit is declared again on `[data-a63-density]`, so `<UIProvider density="compact">` around one region recomputes them there, and a design-language or phone scope keeps its own height ramp at the compact unit.
+
+Density is also a product choice, not only a user preference. Use compact for dense product screens, where rows of data are scanned and acted on: tables, inboxes, issue trackers, admin dashboards and file lists.
+
+```tsx
+import { UIProvider } from '@atom63/ui-react'
+
+<UIProvider density="compact">
+  {/* the table, inbox or list */}
+</UIProvider>
+```
+
+For a whole app, set `data-a63-density="compact"` on `<html>`. `atom63 build` suggests it for these screens.
+
 ## One semantic layer
 
 The rule is deliberately small:

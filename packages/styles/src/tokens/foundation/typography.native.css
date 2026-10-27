@@ -1,11 +1,21 @@
 /*
  * Element styles that belong with the type scale but are not tokens: <small>
- * uses the xs step. Kept next to typography.resolver.json, which generates the
- * scale itself; see docs/design-system/token-single-source.md.
+ * uses the xs step, and text without a size class takes the body role. Kept
+ * next to typography.resolver.json, which generates the scale itself; see
+ * docs/design-system/token-single-source.md.
  */
 @layer base {
   small {
     font-size: var(--typography-xs-font-size);
     line-height: var(--typography-xs-line-height);
+  }
+
+  /* The body role (15/23 on the web, 17/22 on a phone), instead of the browser's
+     16px and a 1.5 line height. Set on body, not html, so 1rem stays 16px. A phone
+     scope redeclares the role, so it sets the size again for the text inside it. */
+  body,
+  [data-a63-form-factor] {
+    font-size: var(--a63-type-body-font-size);
+    line-height: var(--a63-type-body-line-height);
   }
 }

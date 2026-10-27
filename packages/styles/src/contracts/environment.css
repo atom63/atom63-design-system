@@ -16,7 +16,11 @@
  * Prevent focus zoom in mobile Safari without inflating non-editable control
  *  labels. Editable recipes combine this floor with their normal type token.
  *
- * Density — proportional rhythm
+ * Density — proportional rhythm. A density scope sets --a63-space-unit, and every :root token
+ * built on it (the space steps, control heights and paddings, row padding, gaps) is declared
+ * again on [data-a63-density], so a nested scope recomputes them once, the same as the root.
+ * The design-language and phone scopes are also declared on a density scope inside them, so
+ * it keeps their sizes.
  *
  * Auto-detect coarse pointers. Without this, touch ergonomics only apply when an
  *  app explicitly passes `input` to UIProvider — an opt-in almost nothing does, so
@@ -40,6 +44,7 @@
 @import './environment.native.css';
 
 :root {
+  /* An extra multiplier recipes apply to control heights. It stays 1 in every density: density reaches sizes through --a63-space-unit, which the control heights are built on, so scaling them again would shrink controls twice. */
   --a63-density-scale: 1;
   --a63-editable-font-size-min: 0px;
   /* Two different numbers, deliberately separate:
@@ -78,13 +83,46 @@
 }
 
 :is([data-a63-density='compact'], [data-density='compact']) {
-  --a63-density-scale: 0.9;
   --a63-space-unit: calc(var(--spacing-1) * 0.875);
 }
 
 :is([data-a63-density='comfortable'], [data-density='comfortable']) {
-  --a63-density-scale: 1;
   --a63-space-unit: var(--spacing-1);
+}
+
+:is([data-a63-density], [data-density]) {
+  --a63-space-1: var(--a63-space-unit);
+  --a63-space-2: calc(var(--a63-space-unit) * 2);
+  --a63-space-3: calc(var(--a63-space-unit) * 3);
+  --a63-space-4: calc(var(--a63-space-unit) * 4);
+  --a63-space-5: calc(var(--a63-space-unit) * 5);
+  --a63-space-6: calc(var(--a63-space-unit) * 6);
+  --a63-space-0_5: calc(var(--a63-space-unit) * 0.5);
+  --a63-space-1_5: calc(var(--a63-space-unit) * 1.5);
+  --a63-space-2_5: calc(var(--a63-space-unit) * 2.5);
+  --a63-space-3_5: calc(var(--a63-space-unit) * 3.5);
+  --a63-action-control-gap: var(--a63-control-gap);
+  --a63-control-height-xs: calc(var(--a63-space-unit) * 6);
+  --a63-control-height-sm: calc(var(--a63-space-unit) * 7);
+  --a63-control-height-md: calc(var(--a63-space-unit) * 8);
+  --a63-control-height-lg: calc(var(--a63-space-unit) * 9);
+  --a63-control-height-xl: calc(var(--a63-space-unit) * 10);
+  --a63-control-padding-inline-xs: var(--a63-space-2);
+  --a63-control-padding-inline-sm: var(--a63-space-2_5);
+  --a63-control-padding-inline-md: var(--a63-space-3);
+  --a63-control-padding-inline-lg: var(--a63-space-3_5);
+  --a63-control-padding-inline-xl: var(--a63-space-4);
+  --a63-control-gap: var(--a63-space-2);
+  --a63-row-padding-block-xs: var(--a63-space-2);
+  --a63-row-padding-block-sm: var(--a63-space-3);
+  --a63-row-padding-block-md: var(--a63-space-4);
+  --a63-menu-popup-padding: var(--a63-space-1);
+  --a63-menu-item-padding-block: var(--a63-space-1_5);
+  --a63-menu-item-padding-inline: var(--a63-space-2);
+  --a63-menu-item-gap: var(--a63-space-2);
+  --a63-menu-gap: var(--a63-space-0_5);
+  --a63-toggle-gap: var(--a63-control-gap);
+  --a63-trigger-gap: var(--a63-control-gap);
 }
 
 @media (pointer: coarse) {
@@ -124,7 +162,9 @@
   --a63-row-min-size: var(--a63-control-min-size);
 }
 
-:is([data-a63-design-language='ios'], [data-design-language='ios']) {
+:is([data-a63-design-language='ios'], [data-design-language='ios']),
+:is([data-a63-design-language='ios'], [data-design-language='ios'])
+  :is([data-a63-density], [data-density]) {
   --a63-control-height-xs: calc(var(--a63-space-unit) * 9);
   --a63-control-height-sm: calc(var(--a63-space-unit) * 10);
   --a63-control-height-md: calc(var(--a63-space-unit) * 11);
@@ -158,7 +198,8 @@
   --a63-switch-thumb-size: 1.375rem;
 }
 
-[data-a63-form-factor='phone'] {
+[data-a63-form-factor='phone'],
+[data-a63-form-factor='phone'] :is([data-a63-density], [data-density]) {
   /* The type steps of a phone screen, after the iOS text styles at the default Dynamic Type size:
         body 17 (base), subheadline 15 (sm), footnote 13 (xs), caption2 11 (2xs), title3 20 (2xl),
         title2 22 (3xl), title1 28 (5xl), largeTitle 34 (6xl). Steps without an iOS style keep the

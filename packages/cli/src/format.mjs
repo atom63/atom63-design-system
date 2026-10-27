@@ -149,6 +149,20 @@ function buildKit(data) {
           '',
         ]
       : []),
+    ...(data.density
+      ? [
+          '## Compact density',
+          data.density.use,
+          '',
+          '```tsx',
+          ...data.density.imports,
+          '',
+          data.density.snippet,
+          '```',
+          `→ ${data.density.next}`,
+          '',
+        ]
+      : []),
     ...section(
       'Pages',
       data.pages,

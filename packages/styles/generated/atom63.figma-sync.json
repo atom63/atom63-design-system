@@ -6,7 +6,7 @@
     "collections": 14,
     "variables": 1139,
     "aliasValues": 789,
-    "skipped": 247,
+    "skipped": 279,
     "computed": 61
   },
   "collections": [
@@ -2397,6 +2397,18 @@
           ]
         },
         {
+          "name": "density/scale",
+          "token": "--a63-density-scale",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 1
+            }
+          },
+          "codeSyntax": "var(--a63-density-scale)",
+          "scopes": []
+        },
+        {
           "name": "editable/font/size/min",
           "token": "--a63-editable-font-size-min",
           "type": "FLOAT",
@@ -2850,20 +2862,6 @@
           "codeSyntax": "var(--a63-trigger-gap)",
           "scopes": [
             "GAP"
-          ]
-        },
-        {
-          "name": "trigger/indicator/size",
-          "token": "--a63-trigger-indicator-size",
-          "type": "FLOAT",
-          "values": {
-            "Value": {
-              "value": 16
-            }
-          },
-          "codeSyntax": "var(--a63-trigger-indicator-size)",
-          "scopes": [
-            "WIDTH_HEIGHT"
           ]
         },
         {
@@ -19232,21 +19230,6 @@
       ],
       "variables": [
         {
-          "name": "density/scale",
-          "token": "--a63-density-scale",
-          "type": "FLOAT",
-          "values": {
-            "comfortable": {
-              "value": 1
-            },
-            "compact": {
-              "value": 0.9
-            }
-          },
-          "codeSyntax": "var(--a63-density-scale)",
-          "scopes": []
-        },
-        {
           "name": "space/0_5",
           "token": "--a63-space-0_5",
           "type": "FLOAT",
@@ -19806,6 +19789,29 @@
         "large"
       ],
       "variables": [
+        {
+          "name": "trigger/indicator/size",
+          "token": "--a63-trigger-indicator-size",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 15
+            },
+            "compact": {
+              "value": 13.5
+            },
+            "comfortable": {
+              "value": 16.5
+            },
+            "large": {
+              "value": 18
+            }
+          },
+          "codeSyntax": "var(--a63-trigger-indicator-size)",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ]
+        },
         {
           "name": "typography/10xl/font/size",
           "token": "--typography-10xl-font-size",
@@ -20552,6 +20558,10 @@
   ],
   "skipped": [
     {
+      "token": "--a63-action-control-gap",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
       "token": "--a63-action-control-gloss",
       "reason": "unsupported type: string"
     },
@@ -20625,27 +20635,31 @@
     },
     {
       "token": "--a63-control-font-size-lg",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-font-size-md",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-font-size-secondary",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-font-size-sm",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-font-size-xl",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-font-size-xs",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-control-gap",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-gloss",
@@ -20665,23 +20679,43 @@
     },
     {
       "token": "--a63-control-height-lg",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-control-height-lg",
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-height-md",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-control-height-md",
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-height-sm",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-control-height-sm",
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-height-xl",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-control-height-xl",
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-height-xs",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-control-height-xs",
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-highlight",
@@ -20693,23 +20727,23 @@
     },
     {
       "token": "--a63-control-icon-size-lg",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-icon-size-md",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-icon-size-sm",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-icon-size-xl",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-icon-size-xs",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-min-size",
@@ -20737,23 +20771,43 @@
     },
     {
       "token": "--a63-control-padding-inline-lg",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-control-padding-inline-lg",
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-padding-inline-md",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-control-padding-inline-md",
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-padding-inline-sm",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-control-padding-inline-sm",
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-padding-inline-xl",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-control-padding-inline-xl",
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-padding-inline-xs",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-control-padding-inline-xs",
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-control-press-transform",
@@ -20793,11 +20847,15 @@
     },
     {
       "token": "--a63-inset-group-radius",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-inset-row-min-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-menu-gap",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-menu-highlight-background",
@@ -20810,6 +20868,18 @@
     {
       "token": "--a63-menu-highlight-gloss",
       "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-menu-item-gap",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-menu-item-padding-block",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-menu-item-padding-inline",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-menu-item-radius",
@@ -20826,6 +20896,10 @@
     {
       "token": "--a63-menu-popup-gloss",
       "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-menu-popup-padding",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-motion-control-feedback-duration",
@@ -20909,15 +20983,27 @@
     },
     {
       "token": "--a63-row-padding-block-md",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-row-padding-block-md",
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-row-padding-block-sm",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-row-padding-block-sm",
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-row-padding-block-xs",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-row-padding-block-xs",
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-segment-disabled-opacity",
@@ -20992,6 +21078,46 @@
       "reason": "unresolvable value: (empty)"
     },
     {
+      "token": "--a63-space-0_5",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-space-1",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-space-1_5",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-space-2",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-space-2_5",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-space-3",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-space-3_5",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-space-4",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-space-5",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-space-6",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
       "token": "--a63-surface-backdrop",
       "reason": "theme value not representable, kept its default: terminal-dark: none"
     },
@@ -21041,11 +21167,19 @@
     },
     {
       "token": "--a63-switch-thumb-aspect",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-switch-thumb-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-toggle-gap",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-trigger-gap",
+      "reason": "context scope: :is([data-a63-density], [data-density])"
     },
     {
       "token": "--a63-viewport-height",
@@ -21253,23 +21387,23 @@
     },
     {
       "token": "--typography-10xl-font-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-10xl-line-height",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-11xl-font-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-11xl-line-height",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-2xl-font-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-2xl-font-size",
@@ -21281,7 +21415,7 @@
     },
     {
       "token": "--typography-2xl-line-height",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-2xl-line-height",
@@ -21293,15 +21427,15 @@
     },
     {
       "token": "--typography-2xs-font-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-2xs-line-height",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-3xl-font-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-3xl-font-size",
@@ -21313,7 +21447,7 @@
     },
     {
       "token": "--typography-3xl-line-height",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-3xl-line-height",
@@ -21325,7 +21459,7 @@
     },
     {
       "token": "--typography-4xl-font-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-4xl-font-size",
@@ -21337,7 +21471,7 @@
     },
     {
       "token": "--typography-4xl-line-height",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-4xl-line-height",
@@ -21349,7 +21483,7 @@
     },
     {
       "token": "--typography-5xl-font-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-5xl-font-size",
@@ -21361,7 +21495,7 @@
     },
     {
       "token": "--typography-5xl-line-height",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-5xl-line-height",
@@ -21373,7 +21507,7 @@
     },
     {
       "token": "--typography-6xl-font-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-6xl-font-size",
@@ -21385,7 +21519,7 @@
     },
     {
       "token": "--typography-6xl-line-height",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-6xl-line-height",
@@ -21397,7 +21531,7 @@
     },
     {
       "token": "--typography-7xl-font-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-7xl-font-size",
@@ -21409,7 +21543,7 @@
     },
     {
       "token": "--typography-7xl-line-height",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-7xl-line-height",
@@ -21421,7 +21555,7 @@
     },
     {
       "token": "--typography-8xl-font-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-8xl-font-size",
@@ -21433,7 +21567,7 @@
     },
     {
       "token": "--typography-8xl-line-height",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-8xl-line-height",
@@ -21445,7 +21579,7 @@
     },
     {
       "token": "--typography-9xl-font-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-9xl-font-size",
@@ -21457,7 +21591,7 @@
     },
     {
       "token": "--typography-9xl-line-height",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-9xl-line-height",
@@ -21469,15 +21603,15 @@
     },
     {
       "token": "--typography-base-font-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-base-line-height",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-lg-font-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-lg-font-size",
@@ -21485,7 +21619,7 @@
     },
     {
       "token": "--typography-lg-line-height",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-lg-line-height",
@@ -21509,15 +21643,15 @@
     },
     {
       "token": "--typography-sm-font-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-sm-line-height",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-xl-font-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-xl-font-size",
@@ -21525,7 +21659,7 @@
     },
     {
       "token": "--typography-xl-line-height",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-xl-line-height",
@@ -21533,11 +21667,11 @@
     },
     {
       "token": "--typography-xs-font-size",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
       "token": "--typography-xs-line-height",
-      "reason": "context scope: [data-a63-form-factor='phone']"
+      "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     }
   ],
   "computed": [

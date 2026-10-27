@@ -8,7 +8,7 @@
       "name": "app-view",
       "type": "registry:page",
       "title": "App view",
-      "description": "A full-window product view with no site header or footer: a top bar across the window, a side panel and the main region below it, and an optional bar docked at the bottom, such as a media player or a status bar. layout=\"phone\" makes it a phone app screen: edge to edge with no card or inset, the top bar optional, safe-area aware, phone-sized type and controls (body 17px, 44px controls), and the tab-bar block docked at the bottom. Copy-only: paste the files `atom63 template app-view` prints.",
+      "description": "A full-window product view with no site header or footer: a top bar across the window, a side panel and the main region below it, and an optional bar docked at the bottom, such as a media player or a status bar. layout=\"phone\" makes it a phone app screen: edge to edge with no card or inset, the top bar optional, safe-area aware, phone-sized type and controls (body 17px, 44px controls), and the tab-bar block docked at the bottom. For a dense product view (a table, an inbox, an issue tracker, an admin dashboard, a file list), wrap it in <UIProvider density=\"compact\">: spacing and control heights scale once by 0.875 (32px controls become 28px) and text keeps its size. Copy-only: paste the files `atom63 template app-view` prints.",
       "dependencies": [
         "@atom63/ui-react",
         "lucide-react"

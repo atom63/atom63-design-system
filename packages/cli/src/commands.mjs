@@ -46,7 +46,7 @@ export const commands = [
   {
     name: 'build',
     summary:
-      'A composition kit for an idea: the closest page templates and blocks, the components it needs, the foundation and the rules. For a phone screen, it leads with AppView layout="phone"; for a balance, a price or an amount to send, it adds the display amount. With no idea, the build playbook.',
+      'A composition kit for an idea: the closest page templates and blocks, the components it needs, the foundation and the rules. For a phone screen, it leads with AppView layout="phone"; for a balance, a price or an amount to send, it adds the display amount. For a dense product screen (a table, an inbox, an issue tracker, an admin dashboard, a file list), it adds compact density. With no idea, the build playbook.',
     args: [
       {
         name: 'idea',

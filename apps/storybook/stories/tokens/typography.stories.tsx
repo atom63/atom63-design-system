@@ -142,3 +142,22 @@ export const ScaleMultiplierStory: Story = {
   name: 'Scale Multiplier',
   render: () => <ScaleMultiplier />,
 }
+
+/**
+ * Text without a size class: the body role (15/23), not the browser's 16/24.
+ * `@atom63/styles` sets it on body; `Atom63Theme` and `UIProvider` set it on
+ * their scope with the `@atom63/ui-react` reset. `html` keeps 16px, so 1rem is
+ * unchanged.
+ */
+export const UnstyledText: Story = {
+  name: 'Unstyled Text',
+  render: () => (
+    <div className="text-foreground flex max-w-prose flex-col gap-3">
+      <p>
+        This paragraph has no size class. It inherits the body role from body: 15px on a 23px line,
+        the size of text-body.
+      </p>
+      <p className="text-body">This one sets text-body, and should look the same.</p>
+    </div>
+  ),
+}
