@@ -3,9 +3,19 @@ import SwiftUI
 // AtomDisplayRole and AtomTokens.AmountFraction are generated from the display
 // text roles and the amount-fraction utility in Atom63Tokens.generated.swift.
 
+/// Where `AtomAmountText` draws the fraction. Mirrors the amount contract's
+/// `fractions` axis and the web `Amount` `fraction` prop.
+public enum AtomAmountFraction: String, CaseIterable, Sendable {
+  /// Half size, its baseline raised like a superscript (`amount-fraction`).
+  case raised
+  /// Half size, on the baseline of the integer digits (`amount-fraction-baseline`).
+  case baseline
+}
+
 /// A money amount in a display role, as banking and pricing screens draw a
 /// balance: "$13.25" with the integer part at the role size and the fraction
-/// (".25") smaller and raised, like the web's `text-display` with `amount-fraction`.
+/// (".25") smaller and raised, like the web's `text-display` with `amount-fraction`;
+/// `fraction: .baseline` keeps it on the baseline, like `amount-fraction-baseline`.
 ///
 /// The amount is formatted for the locale with `FormatStyle.Currency`, drawn with
 /// monospaced digits, scales with Dynamic Type and reads as one accessibility
@@ -18,30 +28,36 @@ public struct AtomAmountText: View {
   private let currencyCode: String
   private let role: AtomDisplayRole
   private let strong: Bool
+  private let fraction: AtomAmountFraction
   private let locale: Locale?
 
   /// - Parameters:
   ///   - currencyCode: An ISO 4217 code, such as "USD" or "EUR".
   ///   - strong: The emphasized weight of the role.
+  ///   - fraction: Raised like a superscript (the default) or on the baseline.
   ///   - locale: Formats for this locale instead of the environment's.
   public init(
     _ value: Decimal,
     currencyCode: String,
     role: AtomDisplayRole = .display,
     strong: Bool = false,
+    fraction: AtomAmountFraction = .raised,
     locale: Locale? = nil
   ) {
     self.value = value
     self.currencyCode = currencyCode
     self.role = role
     self.strong = strong
+    self.fraction = fraction
     self.locale = locale
     _size = ScaledMetric(wrappedValue: role.size, relativeTo: role.textStyle)
   }
 
   public var body: some View {
     let amount = AtomAmount(value, currencyCode: currencyCode, locale: locale ?? environmentLocale)
-    Text(amount.attributedString(size: size, weight: strong ? role.strongWeight : role.weight))
+    Text(
+      amount.attributedString(
+        size: size, weight: strong ? role.strongWeight : role.weight, fraction: fraction))
       .lineLimit(1)
       .minimumScaleFactor(0.5)
       .accessibilityLabel(amount.formatted)
@@ -81,15 +97,18 @@ public struct AtomAmount: Equatable, Sendable {
     self.parts = parts
   }
 
-  /// The parts at the role size, with the fraction scaled and raised.
-  public func attributedString(size: Double, weight: Font.Weight) -> AttributedString {
+  /// The parts at the role size, with the fraction scaled and, unless `fraction`
+  /// is `.baseline`, raised.
+  public func attributedString(
+    size: Double, weight: Font.Weight, fraction: AtomAmountFraction = .raised
+  ) -> AttributedString {
     let fractionSize = size * AtomTokens.AmountFraction.scale
     var result = AttributedString()
     for part in parts {
       var run = AttributedString(part.text)
       run[AttributeScopes.SwiftUIAttributes.FontAttribute.self] =
         Font.system(size: part.isFraction ? fractionSize : size, weight: weight).monospacedDigit()
-      if part.isFraction {
+      if part.isFraction, fraction == .raised {
         run[AttributeScopes.SwiftUIAttributes.BaselineOffsetAttribute.self] =
           fractionSize * AtomTokens.AmountFraction.raise
       }

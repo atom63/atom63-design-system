@@ -372,6 +372,13 @@ describe('templates', () => {
     })
   }
 
+  it('tells a Revolut balance how to keep the cents on the baseline', () => {
+    const kit = build(index, 'Revolut balance on a phone').data
+    assert.equal(kit.amount?.component, 'amount')
+    assert.match(kit.amount.use, /fraction="baseline"/)
+    assert.match(kit.amount.use, /amount-fraction-baseline/)
+  })
+
   it('keeps the display amount out of ideas with no amount', () => {
     for (const idea of ['music player', 'billing settings page', 'iPhone chat thread screen']) {
       assert.equal(build(index, idea).data.amount, undefined, idea)

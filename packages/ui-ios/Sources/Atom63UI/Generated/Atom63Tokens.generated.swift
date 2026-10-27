@@ -170,6 +170,7 @@ public enum AtomTokens {
     /// The amount-fraction utility: the fraction of a display amount (".25" of
     /// "$13.25") at `scale` of the role size, its baseline raised by `raise` of
     /// its own size (`font-size: 0.5em; vertical-align: 0.8em`).
+    /// `AtomAmountFraction.baseline` keeps `scale` with no raise (`amount-fraction-baseline`).
     public enum AmountFraction {
         public static let scale: Double = 0.5
         public static let raise: Double = 0.8

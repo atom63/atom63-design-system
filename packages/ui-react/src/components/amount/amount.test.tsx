@@ -12,6 +12,7 @@ describe('Amount', () => {
   it('renders its slot with the default size', () => {
     const { container } = render(<Amount currency="USD" locale="en-US" value={13.25} />)
     expect(amount(container)).toHaveAttribute('data-size', amountContract.defaultSize)
+    expect(amount(container)).toHaveAttribute('data-fraction', amountContract.defaultFraction)
     expect(amount(container)).not.toHaveAttribute('data-strong')
   })
 
@@ -21,6 +22,16 @@ describe('Amount', () => {
     )
     expect(amount(container)).toHaveAttribute('data-size', 'lg')
     expect(amount(container)).toHaveAttribute('data-strong', '')
+  })
+
+  it('keeps the fraction on the baseline when asked', () => {
+    const { container } = render(
+      <Amount currency="USD" fraction="baseline" locale="en-US" value={13.25} />
+    )
+    expect(amountContract.fractions).toEqual(['raised', 'baseline'])
+    expect(amount(container)).toHaveAttribute('data-fraction', 'baseline')
+    expect(container.querySelector('[data-slot="amount-fraction"]')).toHaveTextContent(/^\.25$/)
+    expect(amount(container).lastElementChild).toHaveTextContent(/^\$13\.25$/)
   })
 
   it('draws the decimal separator and the digits after it as the fraction', () => {

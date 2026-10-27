@@ -216,7 +216,7 @@ export function isAmountIdea(idea) {
 /* How an amount idea is told to draw its hero number. */
 const displayAmount = {
   component: 'amount',
-  use: 'Draw the hero number (a balance, a price, the amount to send) with Amount: the display text role (size="md", 40px; size="lg" for display-large, 56px), the cents at half size and raised, tabular figures, formatted for the locale and read as one label. Keep amounts in list rows at body size with tabular-nums. Without the component, put the whole amount in one text-display tabular-nums span and wrap the fraction in amount-fraction. iOS: AtomAmountText.',
+  use: 'Draw the hero number (a balance, a price, the amount to send) with Amount: the display text role (size="md", 40px; size="lg" for display-large, 56px), the cents at half size and raised, tabular figures, formatted for the locale and read as one label. Where the reference keeps the smaller cents on the baseline (a Revolut-style balance), pass fraction="baseline" (iOS: fraction: .baseline). Keep amounts in list rows at body size with tabular-nums. Without the component, put the whole amount in one text-display tabular-nums span and wrap the fraction in amount-fraction (amount-fraction-baseline for cents on the baseline). iOS: AtomAmountText.',
   imports: ["import { Amount } from '@atom63/ui-react'"],
   snippet: [
     '<p className="text-footnote text-muted-foreground">Main account</p>',

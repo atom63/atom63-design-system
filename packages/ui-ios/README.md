@@ -104,11 +104,13 @@ The display text roles (`--a63-type-display*`) are `AtomDisplayRole.display`
 (40pt) and `.displayLarge` (56pt), scaled with Dynamic Type like `largeTitle`.
 `AtomAmountText` draws a balance or price in one: the amount is formatted for the
 locale, the fraction (".25" of "$13.25") is half size and raised as the web's
-`amount-fraction` draws it, the digits are monospaced and VoiceOver reads the
+`amount-fraction` draws it (`fraction: .baseline` keeps it on the baseline, as
+`amount-fraction-baseline` does), the digits are monospaced and VoiceOver reads the
 whole amount. `.atomDisplayFont()` sets a display role on any other text:
 
 ```swift
 AtomAmountText(13.25, currencyCode: "USD", role: .displayLarge, strong: true)
+AtomAmountText(13.25, currencyCode: "USD", fraction: .baseline)
 Text("Total balance").atomDisplayFont()
 ```
 

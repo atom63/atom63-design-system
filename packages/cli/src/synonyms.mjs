@@ -104,7 +104,7 @@ const gradients = [
 const displayType = [
   {
     id: 'component:amount',
-    note: 'Hero amounts (a balance, a price, the amount to send): <Amount value={13.25} currency="USD" /> draws text-display (size="lg" for text-display-large) with the cents in amount-fraction, tabular figures and one label. iOS: AtomAmountText(13.25, currencyCode: "USD").',
+    note: 'Hero amounts (a balance, a price, the amount to send): <Amount value={13.25} currency="USD" /> draws text-display (size="lg" for text-display-large) with the cents in amount-fraction (fraction="baseline" keeps them on the baseline), tabular figures and one label. iOS: AtomAmountText(13.25, currencyCode: "USD").',
   },
   {
     id: 'doc:foundation-typography',

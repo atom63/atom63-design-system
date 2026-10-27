@@ -352,7 +352,11 @@ export const alertVisualArchetypes: readonly ["surface"];
 // @public (undocumented)
 export interface AmountContract {
     // (undocumented)
+    defaultFraction: AmountFraction;
+    // (undocumented)
     defaultSize: AmountSize;
+    // (undocumented)
+    fractions: readonly AmountFraction[];
     // (undocumented)
     sizes: readonly AmountSize[];
     // (undocumented)
@@ -367,10 +371,18 @@ export interface AmountContract {
 export const amountContract: {
     defaultSize: "md";
     sizes: readonly ["md", "lg"];
+    defaultFraction: "raised";
+    fractions: readonly ["raised", "baseline"];
     slots: readonly ["amount", "amount-fraction"];
     states: readonly ["rest"];
     visualArchetypes: readonly ["surface"];
 };
+
+// @public (undocumented)
+export type AmountFraction = (typeof amountFractions)[number];
+
+// @public (undocumented)
+export const amountFractions: readonly ["raised", "baseline"];
 
 // @public (undocumented)
 export type AmountSize = (typeof amountSizes)[number];
