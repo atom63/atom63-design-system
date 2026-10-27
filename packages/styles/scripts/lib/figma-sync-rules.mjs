@@ -78,7 +78,7 @@ const numberRules = [
   },
   {
     group: 'no Figma field (motion, scales, stacking, gradient stops)',
-    test: /(^|-)(duration|delay|scale|multiplier|tint|strength|z|layer|density|breakpoint|container|zone)(-|$)/,
+    test: /(^|-)(duration|delay|scale|aspect|multiplier|tint|strength|z|layer|density|breakpoint|container|zone)(-|$)/,
     scopes: [],
   },
 ]

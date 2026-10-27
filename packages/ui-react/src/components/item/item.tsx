@@ -1,6 +1,7 @@
 'use client'
 
 import {
+  type ItemGroupSurface,
   type ItemGroupVariant,
   type ItemMediaVariant,
   type ItemSize,
@@ -24,17 +25,24 @@ import { Separator } from '../separator'
 export type ItemGroupProps = React.ComponentProps<'div'> & {
   /** `inset` draws the group as a rounded card with hairline dividers (a grouped settings list). */
   variant?: ItemGroupVariant
+  /**
+   * The fill of an `inset` group. `card` (the default) is the panel fill, for a grey page
+   * (`bg-background`); `muted` is the grey fill, for a white page (`bg-card`).
+   */
+  surface?: ItemGroupSurface
 }
 
 export function ItemGroup({
   className,
   variant = itemContract.defaultGroupVariant,
+  surface = itemContract.defaultGroupSurface,
   ...props
 }: ItemGroupProps): React.ReactElement {
   return (
     <div
       className={cn('a63-ItemGroup', className)}
       data-slot="item-group"
+      data-surface={surface}
       data-variant={variant}
       {...props}
     />

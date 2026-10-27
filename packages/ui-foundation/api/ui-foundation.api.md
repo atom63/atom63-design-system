@@ -2070,8 +2070,8 @@ export const crossRendererContracts: readonly [{
     readonly sharedOutcomes: readonly ["rows-keep-reading-order", "dividers-are-decorative"];
     readonly accessibilityOutcomes: readonly ["preserves-row-order", "hides-dividers-from-assistive-technology"];
     readonly platformAdaptations: {
-        readonly react: readonly ["ItemGroup variant=\"inset\" draws the group; a heading above it and a note below it belong to the page.", "A row that navigates is an Item rendered as a link, with its value in bold and a chevron in ItemActions."];
-        readonly swiftUI: readonly ["AtomListSection draws the group inside a ScrollView and takes an optional header and footer; inside a List or Form, the native Section draws it.", "AtomValueRow(_:value:emphasizesValue:showsDisclosure:) is the label, value and chevron row.", "Rows pad themselves with atomListRowInsets() inside their tap area, so a NavigationLink or Button row is tappable edge to edge; Atom63 rows do it already, and a custom row takes the modifier inside its label."];
+        readonly react: readonly ["ItemGroup variant=\"inset\" draws the group; a heading above it and a note below it belong to the page.", "ItemGroup surface=\"muted\" fills the inset group with the muted grey, for a white page (bg-card); the default card fill sits on the grey page.", "A row that navigates is an Item rendered as a link, with its value in bold and a chevron in ItemActions."];
+        readonly swiftUI: readonly ["AtomListSection draws the group inside a ScrollView and takes an optional header and footer; inside a List or Form, the native Section draws it.", "AtomListSection(surface: .muted) fills the section with surfaceMuted for a surfacePanel page; the default .card fill sits on surfacePage.", "AtomValueRow(_:value:emphasizesValue:showsDisclosure:) is the label, value and chevron row.", "Rows pad themselves with atomListRowInsets() inside their tap area, so a NavigationLink or Button row is tappable edge to edge; Atom63 rows do it already, and a custom row takes the modifier inside its label."];
     };
 }, {
     readonly id: "carousel";
@@ -2875,6 +2875,8 @@ export const inputVisualArchetypes: readonly ["field"];
 // @public (undocumented)
 export interface ItemContract {
     // (undocumented)
+    defaultGroupSurface: ItemGroupSurface;
+    // (undocumented)
     defaultGroupVariant: ItemGroupVariant;
     // (undocumented)
     defaultMediaVariant: ItemMediaVariant;
@@ -2884,6 +2886,8 @@ export interface ItemContract {
     defaultTone: ItemTone;
     // (undocumented)
     defaultVariant: ItemVariant;
+    // (undocumented)
+    groupSurfaces: readonly ItemGroupSurface[];
     // (undocumented)
     groupVariants: readonly ItemGroupVariant[];
     // (undocumented)
@@ -2908,6 +2912,7 @@ export const itemContract: {
     defaultSize: "default";
     defaultMediaVariant: "default";
     defaultGroupVariant: "default";
+    defaultGroupSurface: "card";
     defaultTone: "neutral";
     variants: readonly ["default", "outline", "muted"];
     sizes: readonly ["default", "sm", "xs"];
@@ -2916,8 +2921,15 @@ export const itemContract: {
     states: readonly ["rest", "hover", "focus", "selected", "current"];
     visualArchetypes: readonly ["surface"];
     groupVariants: readonly ["default", "inset"];
+    groupSurfaces: readonly ["card", "muted"];
     tones: readonly ["neutral", "accent"];
 };
+
+// @public (undocumented)
+export type ItemGroupSurface = (typeof itemGroupSurfaces)[number];
+
+// @public (undocumented)
+export const itemGroupSurfaces: readonly ["card", "muted"];
 
 // @public (undocumented)
 export type ItemGroupVariant = (typeof itemGroupVariants)[number];

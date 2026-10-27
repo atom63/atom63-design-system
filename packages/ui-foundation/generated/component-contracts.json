@@ -1611,12 +1611,13 @@
       "source": "packages/ui-foundation/contracts/components/item.json",
       "exportName": "itemContract",
       "maturity": "stable",
-      "description": "Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size (default/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off data-variant / data-size, and styles a row with aria-current or data-selected as current or selected. ItemGroup takes variant (default/inset): inset is a rounded card with hairline dividers, the grouped settings list. A selected or current row follows tone (neutral/accent, data-tone): neutral is the muted fill with primary text, accent is the opt-in primary wash with accent text.",
+      "description": "Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size (default/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off data-variant / data-size, and styles a row with aria-current or data-selected as current or selected. ItemGroup takes variant (default/inset): inset is a rounded card with hairline dividers, the grouped settings list. ItemGroup surface (card/muted, data-surface) fills an inset group: card (the default) is the panel fill for a grey page, muted is the grey fill for a white page. A selected or current row follows tone (neutral/accent, data-tone): neutral is the muted fill with primary text, accent is the opt-in primary wash with accent text.",
       "axes": [
         { "name": "variants", "values": ["default", "outline", "muted"], "default": "default" },
         { "name": "sizes", "values": ["default", "sm", "xs"], "default": "default" },
         { "name": "mediaVariants", "values": ["default", "icon", "image"], "default": "default" },
         { "name": "groupVariants", "values": ["default", "inset"], "default": "default" },
+        { "name": "groupSurfaces", "values": ["card", "muted"], "default": "card" },
         { "name": "tones", "values": ["neutral", "accent"], "default": "neutral" }
       ],
       "slots": [
@@ -1650,10 +1651,12 @@
         "platformAdaptations": {
           "react": [
             "ItemGroup variant=\"inset\" draws the group; a heading above it and a note below it belong to the page.",
+            "ItemGroup surface=\"muted\" fills the inset group with the muted grey, for a white page (bg-card); the default card fill sits on the grey page.",
             "A row that navigates is an Item rendered as a link, with its value in bold and a chevron in ItemActions."
           ],
           "swiftUI": [
             "AtomListSection draws the group inside a ScrollView and takes an optional header and footer; inside a List or Form, the native Section draws it.",
+            "AtomListSection(surface: .muted) fills the section with surfaceMuted for a surfacePanel page; the default .card fill sits on surfacePage.",
             "AtomValueRow(_:value:emphasizesValue:showsDisclosure:) is the label, value and chevron row.",
             "Rows pad themselves with atomListRowInsets() inside their tap area, so a NavigationLink or Button row is tappable edge to edge; Atom63 rows do it already, and a custom row takes the modifier inside its label."
           ]

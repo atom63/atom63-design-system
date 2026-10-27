@@ -4,9 +4,9 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1138,
+    "variables": 1139,
     "aliasValues": 789,
-    "skipped": 243,
+    "skipped": 245,
     "computed": 61
   },
   "collections": [
@@ -2666,6 +2666,18 @@
             }
           },
           "codeSyntax": "var(--a63-surface-inner-shadow)",
+          "scopes": []
+        },
+        {
+          "name": "switch/thumb/aspect",
+          "token": "--a63-switch-thumb-aspect",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 1
+            }
+          },
+          "codeSyntax": "var(--a63-switch-thumb-aspect)",
           "scopes": []
         },
         {
@@ -21018,6 +21030,14 @@
     {
       "token": "--a63-surface-texture-image",
       "reason": "unresolvable value: none"
+    },
+    {
+      "token": "--a63-switch-thumb-aspect",
+      "reason": "context scope: [data-a63-form-factor='phone']"
+    },
+    {
+      "token": "--a63-switch-thumb-size",
+      "reason": "context scope: [data-a63-form-factor='phone']"
     },
     {
       "token": "--a63-viewport-height",

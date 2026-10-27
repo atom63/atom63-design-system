@@ -1152,7 +1152,10 @@ private struct ValueRowShowcase: View {
 }
 
 private struct ListSectionShowcase: View {
+  @Environment(\.atomTheme) private var theme
+  @Environment(\.colorScheme) private var colorScheme
   @State private var notifications = true
+  @State private var includeSteps = true
 
   var body: some View {
     VStack(spacing: AtomTokens.Space.x6) {
@@ -1190,6 +1193,15 @@ private struct ListSectionShowcase: View {
           showsDisclosure: true
         )
       }
+
+      // surface: .muted — grey cards for a white page.
+      AtomListSection("On a white page", surface: .muted) {
+        AtomValueRow("Units of measure", value: "Imperial", emphasizesValue: true, showsDisclosure: true)
+        AtomToggle("Include steps", isOn: $includeSteps)
+      }
+      .padding(AtomTokens.Space.x4)
+      .background(theme.colors.surfacePanel.resolve(for: colorScheme))
+      .clipShape(.rect(cornerRadius: AtomTokens.Radius.large))
     }
   }
 }

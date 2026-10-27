@@ -39,6 +39,14 @@ function height(parent: HTMLElement, name: string): string {
   return getComputedStyle(probe).height
 }
 
+/** The px a nested element renders `width: <expression>` at. */
+function width(parent: HTMLElement, expression: string): string {
+  const probe = document.createElement('div')
+  probe.style.width = expression
+  parent.appendChild(probe)
+  return getComputedStyle(probe).width
+}
+
 describe('phone form factor', () => {
   it('sets the iOS text sizes on the type steps', () => {
     const phone = scope({ 'data-a63-form-factor': 'phone' })
@@ -75,6 +83,17 @@ describe('phone form factor', () => {
     expect(fontSize(phone, secondary)).toBe('15px')
     expect(fontSize(phone, '--a63-control-font-size-sm')).toBe('17px')
     expect(fontSize(scope(), secondary)).toBe('12px')
+  })
+
+  it('gives the switch the iOS 26 proportions: a wide pill knob on a 63 by 28 track', () => {
+    // The Switch recipe's track: thumb × (1 + aspect) + 6px wide, thumb + 6px tall.
+    const track = 'calc(var(--a63-switch-thumb-size) * (1 + var(--a63-switch-thumb-aspect)) + 6px)'
+    const phone = scope({ 'data-a63-form-factor': 'phone' })
+    expect(height(phone, '--a63-switch-thumb-size')).toBe('22px')
+    expect(Number.parseFloat(width(phone, track))).toBeCloseTo(63.2, 1)
+    const web = scope()
+    expect(height(web, '--a63-switch-thumb-size')).toBe('16px')
+    expect(width(web, track)).toBe('38px')
   })
 
   it('leaves the page outside the phone scope on the web sizes', () => {
