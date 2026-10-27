@@ -1,4 +1,4 @@
-import { chatComposerStatuses } from '@atom63/ui-foundation'
+import { chatComposerLayouts, chatComposerStatuses } from '@atom63/ui-foundation'
 import { Button, ChatComposer } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
@@ -11,6 +11,7 @@ const meta = {
   title: 'UI React/ChatComposer',
   component: ChatComposer,
   argTypes: {
+    layout: { control: 'inline-radio', options: chatComposerLayouts },
     status: { control: 'inline-radio', options: chatComposerStatuses },
   },
   args: {
@@ -20,7 +21,7 @@ const meta = {
   },
   decorators: [
     Story => (
-      <div style={{ maxWidth: 640 }}>
+      <div style={{ inlineSize: 640, maxInlineSize: '100%' }}>
         <Story />
       </div>
     ),
@@ -46,17 +47,31 @@ export const Playground: Story = {
   args: { actions: mic, attach },
 }
 
+/* With onVoice, an empty composer shows a voice button where send goes; it
+   becomes the send button once there is text. */
+export const Voice: Story = {
+  args: { actions: mic, attach, onVoice: () => {} },
+}
+
 /* While a reply streams the send button is a stop button. */
 export const Streaming: Story = {
   args: { actions: mic, attach, defaultValue: '', status: 'streaming' },
 }
 
+/* Text with a line break (or text that wraps) turns the inline row into a
+   block: the field on top, the controls in a row under it. */
 export const WithText: Story = {
   args: {
     attach,
     defaultValue:
       'Draft a short note to my landlord asking to move the inspection to next Tuesday.\nKeep it friendly.',
   },
+}
+
+/* The stacked layout keeps the controls in a row under the field, for a
+   composer with several actions such as a model picker. */
+export const Stacked: Story = {
+  args: { actions: mic, attach, layout: 'stacked' },
 }
 
 export const Disabled: Story = {
@@ -111,6 +126,13 @@ export const Themes: Story = {
       <div style={{ display: 'grid', gap: 12 }}>
         <ChatComposer {...args} attach={attach} footnote={undefined} />
         <ChatComposer {...args} attach={attach} footnote={undefined} status="streaming" />
+        <ChatComposer
+          {...args}
+          attach={attach}
+          defaultValue="Summarise this thread"
+          footnote={undefined}
+          layout="stacked"
+        />
       </div>
     </ThemeMatrix>
   ),

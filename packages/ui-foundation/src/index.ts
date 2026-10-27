@@ -277,6 +277,7 @@ export type {
 } from './components/calendar'
 export {
   chatComposerContract,
+  chatComposerLayouts,
   chatComposerSlots,
   chatComposerStates,
   chatComposerStatuses,
@@ -284,6 +285,7 @@ export {
 } from './components/chat-composer/chat-composer-contract'
 export type {
   ChatComposerContract,
+  ChatComposerLayout,
   ChatComposerSlot,
   ChatComposerState,
   ChatComposerStatus,

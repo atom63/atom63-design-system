@@ -25,6 +25,7 @@ import { CardContentPadding } from '@atom63/ui-foundation';
 import { CardLineClamp } from '@atom63/ui-foundation';
 import { CardPadding } from '@atom63/ui-foundation';
 import { CardVariant } from '@atom63/ui-foundation';
+import { ChatComposerLayout } from '@atom63/ui-foundation';
 import { ChatComposerStatus } from '@atom63/ui-foundation';
 import { ChatMessageAppearance } from '@atom63/ui-foundation';
 import { ChatMessageRole } from '@atom63/ui-foundation';
@@ -673,8 +674,10 @@ export type ChatComposerProps = Omit<React$1.ComponentProps<'form'>, 'children' 
     disabled?: boolean;
     footnote?: React$1.ReactNode;
     label?: string;
+    layout?: ChatComposerLayout;
     onValueChange?: (value: string) => void;
     onStop?: () => void;
+    onVoice?: () => void;
     onSubmit?: (value: string) => void;
     placeholder?: string;
     sendIcon?: React$1.ReactNode;
@@ -684,6 +687,8 @@ export type ChatComposerProps = Omit<React$1.ComponentProps<'form'>, 'children' 
     stopLabel?: string;
     textareaProps?: Omit<InputGroupTextareaProps, 'defaultValue' | 'disabled' | 'onChange' | 'placeholder' | 'value'>;
     value?: string;
+    voiceIcon?: React$1.ReactNode;
+    voiceLabel?: string;
 };
 
 // @public (undocumented)
