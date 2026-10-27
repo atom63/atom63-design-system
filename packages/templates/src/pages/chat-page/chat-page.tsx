@@ -24,7 +24,7 @@ export const template = {
   kind: 'page',
   title: 'Chat page',
   description:
-    'A full-page AI assistant: past conversations in the sidebar with a new chat button, the open conversation in a reading-width column, and the composer at the bottom. With no messages it is the start screen: a large greeting, the composer and suggestion chips. Uses the chat-panel block for the conversation; wire it to @atom63/agent or any runtime through props.',
+    'A full-page AI assistant: past conversations in the sidebar with a new chat button, the open conversation in a 48rem reading column with replies at its full width, and the one-row composer at the bottom of the same column. With no messages it is the start screen: a large greeting, the composer and suggestion chips. Uses the chat-panel block for the conversation; wire it to @atom63/agent or any runtime through props.',
   category: 'ai',
   tags: [
     'chat',

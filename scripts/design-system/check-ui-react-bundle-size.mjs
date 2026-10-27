@@ -87,7 +87,14 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // or the host's value, Enter to send outside an input method's composition,
 // and the send button that turns into stop. Six case runs hand-built chat.
 // With the filled and elevated cards and the raised button it holds 94.8.
-const gzipBudgetBytes = 95 * 1024
+//
+// 95 kB held 94.9 kB. The composer's inline layout takes it to 95.3, so it
+// moves to 96. The +0.4 kB is the `layout` axis, the check that turns the one
+// pill row into a block once the text wraps (and back once it is shorter), and
+// the voice button with its icon that an empty composer shows when the host
+// passes `onVoice`. The ai-chat case study's reference composer is one row with
+// a solid voice button; ours was two rows with a disabled send.
+const gzipBudgetBytes = 96 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()

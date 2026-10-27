@@ -84,3 +84,37 @@ describe('ChatComposer', () => {
     expect(screen.getByText('AI can make mistakes.')).toBeInTheDocument()
   })
 })
+
+describe('ChatComposer layout', () => {
+  it('is one inline row by default and grows into a block on a line break', () => {
+    const { container } = render(<ChatComposer />)
+    const form = container.querySelector('[data-slot="chat-composer"]')
+    expect(form).toHaveAttribute('data-layout', 'inline')
+    expect(form).not.toHaveAttribute('data-multiline')
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'One\nTwo' } })
+    expect(form).toHaveAttribute('data-multiline')
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: '' } })
+    expect(form).not.toHaveAttribute('data-multiline')
+  })
+
+  it('keeps the stacked layout without a multiline flag', () => {
+    const { container } = render(<ChatComposer defaultValue={'One\nTwo'} layout="stacked" />)
+    const form = container.querySelector('[data-slot="chat-composer"]')
+    expect(form).toHaveAttribute('data-layout', 'stacked')
+    expect(form).not.toHaveAttribute('data-multiline')
+  })
+
+  it('shows a voice button in place of send while the field is empty', () => {
+    const onVoice = vi.fn()
+    render(<ChatComposer onVoice={onVoice} />)
+    expect(screen.queryByRole('button', { name: 'Send message' })).toBeNull()
+    fireEvent.click(screen.getByRole('button', { name: 'Start voice mode' }))
+    expect(onVoice).toHaveBeenCalledOnce()
+
+    fireEvent.change(screen.getByRole('textbox'), { target: { value: 'Hi' } })
+    expect(screen.queryByRole('button', { name: 'Start voice mode' })).toBeNull()
+    expect(screen.getByRole('button', { name: 'Send message' })).toBeEnabled()
+  })
+})

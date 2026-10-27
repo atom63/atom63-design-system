@@ -60,7 +60,11 @@ export interface ChatThreadProps {
   disclaimer?: string
   /** The start screen's heading when there are no messages. */
   greeting?: string
-  /** `panel` fills a narrow column; `page` centres a reading-width column. */
+  /**
+   * `panel` fills a narrow column and gives replies an avatar; `page` centres a
+   * 48rem reading column (the composer's width too) with replies at its full
+   * width.
+   */
   layout?: 'page' | 'panel'
   messages: readonly ChatPanelMessage[]
   /** Adds thumbs up and down to finished replies. */
@@ -83,9 +87,11 @@ const assistantAvatar = (
 )
 
 function Reply({
+  avatar,
   message,
   onFeedback,
 }: {
+  avatar: boolean
   message: ChatPanelMessage
   onFeedback?: ChatThreadProps['onFeedback']
 }) {
@@ -120,7 +126,7 @@ function Reply({
           </>
         ) : null
       }
-      avatar={assistantAvatar}
+      avatar={avatar ? assistantAvatar : undefined}
       from="assistant"
       streaming={message.streaming}
     >
@@ -237,7 +243,12 @@ export function ChatThread({
                 {message.text}
               </ChatMessage>
             ) : (
-              <Reply key={message.id} message={message} onFeedback={onFeedback} />
+              <Reply
+                avatar={layout === 'panel'}
+                key={message.id}
+                message={message}
+                onFeedback={onFeedback}
+              />
             )
           )}
         </ChatMessageList>

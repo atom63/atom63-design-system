@@ -4,10 +4,12 @@
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 // The message field of an assistant chat: a rounded field with a growing textarea, an attach slot
-// and a trailing send button. While a reply is submitted or streaming the send button becomes a stop
-// button.
+// and a trailing send button. The inline layout is one pill row (attach, field, actions and send)
+// that grows into a block when the text wraps; the stacked layout keeps the controls in a row under
+// the field. While a reply is submitted or streaming the send button becomes a stop button.
 
 export const chatComposerStatuses = ['idle', 'submitted', 'streaming'] as const
+export const chatComposerLayouts = ['inline', 'stacked'] as const
 export const chatComposerSlots = [
   'chat-composer',
   'chat-composer-field',
@@ -22,12 +24,15 @@ export const chatComposerVisualArchetypes = [
 ] as const satisfies readonly VisualArchetypeId[]
 
 export type ChatComposerStatus = (typeof chatComposerStatuses)[number]
+export type ChatComposerLayout = (typeof chatComposerLayouts)[number]
 export type ChatComposerSlot = (typeof chatComposerSlots)[number]
 export type ChatComposerState = (typeof chatComposerStates)[number]
 export type ChatComposerVisualArchetype = (typeof chatComposerVisualArchetypes)[number]
 
 export interface ChatComposerContract {
   statuses: readonly ChatComposerStatus[]
+  defaultLayout: ChatComposerLayout
+  layouts: readonly ChatComposerLayout[]
   slots: readonly ChatComposerSlot[]
   states: readonly ChatComposerState[]
   visualArchetypes: readonly ChatComposerVisualArchetype[]
@@ -35,6 +40,8 @@ export interface ChatComposerContract {
 
 export const chatComposerContract = {
   statuses: chatComposerStatuses,
+  defaultLayout: 'inline',
+  layouts: chatComposerLayouts,
   slots: chatComposerSlots,
   states: chatComposerStates,
   visualArchetypes: chatComposerVisualArchetypes,

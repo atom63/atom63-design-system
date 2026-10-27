@@ -2,12 +2,13 @@
   "$schema": "../schema/component-intent.schema.json",
   "component": "chat-composer",
   "maturity": "preview",
-  "description": "The message field of an assistant chat: a rounded field with a growing textarea, an attach slot and a trailing send button. While a reply is submitted or streaming the send button becomes a stop button.",
+  "description": "The message field of an assistant chat: a rounded field with a growing textarea, an attach slot and a trailing send button. The inline layout is one pill row (attach, field, actions and send) that grows into a block when the text wraps; the stacked layout keeps the controls in a row under the field. While a reply is submitted or streaming the send button becomes a stop button.",
   "lists": {
     "statuses": {
       "values": ["idle", "submitted", "streaming"],
       "typeName": "ChatComposerStatus"
     },
+    "layouts": ["inline", "stacked"],
     "slots": [
       "chat-composer",
       "chat-composer-field",
@@ -22,6 +23,10 @@
   "contract": {
     "statuses": {
       "$ref": "#/lists/statuses"
+    },
+    "defaultLayout": "inline",
+    "layouts": {
+      "$ref": "#/lists/layouts"
     },
     "slots": {
       "$ref": "#/lists/slots"
