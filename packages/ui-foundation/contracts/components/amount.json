@@ -4,6 +4,10 @@
   "maturity": "preview",
   "lists": {
     "sizes": ["md", "lg"],
+    "fractions": {
+      "description": "Where the fraction (\".25\" of \"$13.25\") sits. Both draw it at half size: `raised` lifts it towards the top of the integer digits, as a superscript; `baseline` keeps it on the baseline of the integer digits.",
+      "values": ["raised", "baseline"]
+    },
     "slots": ["amount", "amount-fraction"],
     "states": ["rest"],
     "visualArchetypes": ["surface"]
@@ -12,6 +16,10 @@
     "defaultSize": "md",
     "sizes": {
       "$ref": "#/lists/sizes"
+    },
+    "defaultFraction": "raised",
+    "fractions": {
+      "$ref": "#/lists/fractions"
     },
     "slots": {
       "$ref": "#/lists/slots"

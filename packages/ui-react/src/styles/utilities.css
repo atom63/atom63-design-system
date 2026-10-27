@@ -1242,6 +1242,11 @@
     line-height: 0;
     vertical-align: 0.8em;
   }
+  .amount-fraction-baseline {
+    font-size: 0.5em;
+    line-height: 0;
+    vertical-align: baseline;
+  }
   .font-mono {
     font-family: var(--font-family-mono);
   }

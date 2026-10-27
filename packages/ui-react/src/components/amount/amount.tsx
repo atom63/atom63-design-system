@@ -1,4 +1,4 @@
-import { type AmountSize, amountContract } from '@atom63/ui-foundation'
+import { type AmountFraction, type AmountSize, amountContract } from '@atom63/ui-foundation'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
@@ -14,6 +14,11 @@ export type AmountProps = Omit<React.ComponentProps<'span'>, 'children'> & {
   size?: AmountSize
   /** The emphasized weight of the role. */
   strong?: boolean
+  /**
+   * Where the half-size fraction sits: `raised` (the default) lifts it like a
+   * superscript; `baseline` keeps it on the baseline of the integer digits.
+   */
+  fraction?: AmountFraction
 }
 
 interface AmountRun {
@@ -35,15 +40,19 @@ function amountRuns(parts: Intl.NumberFormatPart[]): AmountRun[] {
 
 /*
  * A money amount in a display text role, as banking and pricing screens draw a
- * balance: "$13.25" with the fraction (".25") at half size and raised. The
- * value is formatted for the locale with Intl.NumberFormat, drawn with tabular
- * figures, and read by assistive technology as one label ("$13.25"). The web
- * counterpart of iOS AtomAmountText. For an amount at body size, such as a row
- * in a transaction list, use plain text with `tabular-nums` instead.
+ * balance: "$13.25" with the fraction (".25") at half size, raised or, with
+ * fraction="baseline", on the baseline. The value is formatted for the locale
+ * with Intl.NumberFormat, drawn with tabular figures, and read by assistive
+ * technology as one label ("$13.25"). The web counterpart of iOS
+ * AtomAmountText. Without the component, the `amount-fraction` and
+ * `amount-fraction-baseline` utilities draw the fraction the same two ways.
+ * For an amount at body size, such as a row in a transaction list, use plain
+ * text with `tabular-nums` instead.
  */
 export function Amount({
   className,
   currency,
+  fraction = amountContract.defaultFraction,
   locale,
   size = amountContract.defaultSize,
   strong = false,
@@ -55,6 +64,7 @@ export function Amount({
   return (
     <span
       className={cn('a63-Amount', className)}
+      data-fraction={fraction}
       data-size={size}
       data-slot="amount"
       data-strong={strong ? '' : undefined}

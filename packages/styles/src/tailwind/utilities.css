@@ -48,3 +48,11 @@
   line-height: 0;
   vertical-align: 0.8em;
 }
+
+/* The same fraction kept on the baseline of the integer digits ("$13.25" with
+   ".25" small and level with the bottom of "13"), as some banking apps draw a balance. */
+@utility amount-fraction-baseline {
+  font-size: 0.5em;
+  line-height: 0;
+  vertical-align: baseline;
+}

@@ -61,6 +61,29 @@ struct AtomAmountTextTests {
   }
 
   @Test
+  func baselineFractionsAreHalfSizeOnTheBaseline() {
+    // The amount contract lists fractions raised and baseline; iOS mirrors them.
+    #expect(AtomAmountFraction.allCases.map(\.rawValue) == ["raised", "baseline"])
+    for identifier in ["en_US", "de_DE", "ar_EG"] {
+      let amount = AtomAmount(13.25, currencyCode: "USD", locale: Locale(identifier: identifier))
+      let size = AtomDisplayRole.display.size
+      let attributed = amount.attributedString(size: size, weight: .semibold, fraction: .baseline)
+      #expect(attributed.runs.allSatisfy {
+        $0[AttributeScopes.SwiftUIAttributes.BaselineOffsetAttribute.self] == nil
+      })
+      #expect(attributed.runs.count == amount.parts.count)
+      #expect(String(attributed.characters) == amount.formatted)
+      let fractionFonts = zip(attributed.runs, amount.parts).filter { $0.1.isFraction }
+        .map { $0.0[AttributeScopes.SwiftUIAttributes.FontAttribute.self] }
+      #expect(!fractionFonts.isEmpty, "\(identifier)")
+      #expect(fractionFonts.allSatisfy {
+        $0 == Font.system(size: size * AtomTokens.AmountFraction.scale, weight: .semibold)
+          .monospacedDigit()
+      })
+    }
+  }
+
+  @Test
   func displayRolesFollowTheWebScale() {
     #expect(AtomDisplayRole.display.size == 40)
     #expect(AtomDisplayRole.displayLarge.size == 56)

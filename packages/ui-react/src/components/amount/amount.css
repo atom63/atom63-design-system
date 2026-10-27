@@ -4,6 +4,8 @@
  * scale, the window size and the phone form factor. The fraction matches the
  * `amount-fraction` utility and iOS AtomTokens.AmountFraction: half size,
  * raised 0.8em, with no line height of its own so the line keeps the role's.
+ * data-fraction='baseline' matches `amount-fraction-baseline` and iOS
+ * AtomAmountFraction.baseline: the same size, on the baseline.
  */
 
 .a63-Amount {
@@ -36,6 +38,10 @@
   font-size: 0.5em;
   line-height: 0;
   vertical-align: 0.8em;
+}
+
+.a63-Amount[data-fraction='baseline'] .a63-AmountFraction {
+  vertical-align: baseline;
 }
 
 /* The whole amount as one label for assistive technology; the drawn parts are

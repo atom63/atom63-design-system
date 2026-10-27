@@ -4,11 +4,16 @@
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 export const amountSizes = ['md', 'lg'] as const
+// Where the fraction (".25" of "$13.25") sits. Both draw it at half size: `raised` lifts it towards
+// the top of the integer digits, as a superscript; `baseline` keeps it on the baseline of the
+// integer digits.
+export const amountFractions = ['raised', 'baseline'] as const
 export const amountSlots = ['amount', 'amount-fraction'] as const
 export const amountStates = ['rest'] as const
 export const amountVisualArchetypes = ['surface'] as const satisfies readonly VisualArchetypeId[]
 
 export type AmountSize = (typeof amountSizes)[number]
+export type AmountFraction = (typeof amountFractions)[number]
 export type AmountSlot = (typeof amountSlots)[number]
 export type AmountState = (typeof amountStates)[number]
 export type AmountVisualArchetype = (typeof amountVisualArchetypes)[number]
@@ -16,6 +21,8 @@ export type AmountVisualArchetype = (typeof amountVisualArchetypes)[number]
 export interface AmountContract {
   defaultSize: AmountSize
   sizes: readonly AmountSize[]
+  defaultFraction: AmountFraction
+  fractions: readonly AmountFraction[]
   slots: readonly AmountSlot[]
   states: readonly AmountState[]
   visualArchetypes: readonly AmountVisualArchetype[]
@@ -24,6 +31,8 @@ export interface AmountContract {
 export const amountContract = {
   defaultSize: 'md',
   sizes: amountSizes,
+  defaultFraction: 'raised',
+  fractions: amountFractions,
   slots: amountSlots,
   states: amountStates,
   visualArchetypes: amountVisualArchetypes,

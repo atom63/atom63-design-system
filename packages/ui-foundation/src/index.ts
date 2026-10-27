@@ -172,6 +172,7 @@ export type {
 } from './components/alert-dialog'
 export {
   amountContract,
+  amountFractions,
   amountSizes,
   amountSlots,
   amountStates,
@@ -179,6 +180,7 @@ export {
 } from './components/amount/amount-contract'
 export type {
   AmountContract,
+  AmountFraction,
   AmountSize,
   AmountSlot,
   AmountState,

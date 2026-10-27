@@ -7,6 +7,7 @@
 import { Accordion as Accordion_2 } from '@base-ui/react/accordion';
 import { AlertDialog as AlertDialogPrimitive } from '@base-ui/react/alert-dialog';
 import { AlertVariant } from '@atom63/ui-foundation';
+import { AmountFraction } from '@atom63/ui-foundation';
 import { AmountSize } from '@atom63/ui-foundation';
 import { AnimatedCheckVariant } from '@atom63/ui-foundation';
 import { Autocomplete as AutocompletePrimitive } from '@base-ui/react/autocomplete';
@@ -266,6 +267,7 @@ export type AmountProps = Omit<React$1.ComponentProps<'span'>, 'children'> & {
     locale?: string;
     size?: AmountSize;
     strong?: boolean;
+    fraction?: AmountFraction;
 };
 
 // @public (undocumented)

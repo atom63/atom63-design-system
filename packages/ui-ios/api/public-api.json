@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "module": "Atom63UI",
-  "symbolCount": 509,
+  "symbolCount": 512,
   "symbols": [
     {
       "id": "s:8Atom63UI10AtomAmountV",
@@ -18,10 +18,10 @@
       "source": "AtomAmountText.swift"
     },
     {
-      "id": "s:8Atom63UI10AtomAmountV16attributedString4size6weight10Foundation010AttributedF0VSd_05SwiftB04FontV6WeightVtF",
+      "id": "s:8Atom63UI10AtomAmountV16attributedString4size6weight8fraction10Foundation010AttributedF0VSd_05SwiftB04FontV6WeightVAA0cD8FractionOtF",
       "kind": "swift.method",
-      "path": "AtomAmount.attributedString(size:weight:)",
-      "declaration": "func attributedString(size: Double, weight: Font.Weight) -> AttributedString",
+      "path": "AtomAmount.attributedString(size:weight:fraction:)",
+      "declaration": "func attributedString(size: Double, weight: Font.Weight, fraction: AtomAmountFraction = .raised) -> AttributedString",
       "source": "AtomAmountText.swift"
     },
     {
@@ -1089,10 +1089,10 @@
       "source": "AtomAmountText.swift"
     },
     {
-      "id": "s:8Atom63UI14AtomAmountTextV_12currencyCode4role6strong6localeACSo9NSDecimala_SSAA0C11DisplayRoleOSb10Foundation6LocaleVSgtcfc",
+      "id": "s:8Atom63UI14AtomAmountTextV_12currencyCode4role6strong8fraction6localeACSo9NSDecimala_SSAA0C11DisplayRoleOSbAA0cD8FractionO10Foundation6LocaleVSgtcfc",
       "kind": "swift.init",
-      "path": "AtomAmountText.init(_:currencyCode:role:strong:locale:)",
-      "declaration": "init(_ value: Decimal, currencyCode: String, role: AtomDisplayRole = .display, strong: Bool = false, locale: Locale? = nil)",
+      "path": "AtomAmountText.init(_:currencyCode:role:strong:fraction:locale:)",
+      "declaration": "init(_ value: Decimal, currencyCode: String, role: AtomDisplayRole = .display, strong: Bool = false, fraction: AtomAmountFraction = .raised, locale: Locale? = nil)",
       "source": "AtomAmountText.swift"
     },
     {
@@ -2496,6 +2496,27 @@
       "source": "AtomSectionHeader.swift"
     },
     {
+      "id": "s:8Atom63UI18AtomAmountFractionO",
+      "kind": "swift.enum",
+      "path": "AtomAmountFraction",
+      "declaration": "enum AtomAmountFraction",
+      "source": "AtomAmountText.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomAmountFractionO6raisedyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomAmountFraction.raised",
+      "declaration": "case raised",
+      "source": "AtomAmountText.swift"
+    },
+    {
+      "id": "s:8Atom63UI18AtomAmountFractionO8baselineyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomAmountFraction.baseline",
+      "declaration": "case baseline",
+      "source": "AtomAmountText.swift"
+    },
+    {
       "id": "s:8Atom63UI18AtomButtonEmphasisO",
       "kind": "swift.enum",
       "path": "AtomButtonEmphasis",
@@ -3584,7 +3605,7 @@
       "kind": "memberOf"
     },
     {
-      "source": "s:8Atom63UI10AtomAmountV16attributedString4size6weight10Foundation010AttributedF0VSd_05SwiftB04FontV6WeightVtF",
+      "source": "s:8Atom63UI10AtomAmountV16attributedString4size6weight8fraction10Foundation010AttributedF0VSd_05SwiftB04FontV6WeightVAA0cD8FractionOtF",
       "target": "s:8Atom63UI10AtomAmountV",
       "kind": "memberOf"
     },
@@ -4444,7 +4465,7 @@
       "kind": "conformsTo"
     },
     {
-      "source": "s:8Atom63UI14AtomAmountTextV_12currencyCode4role6strong6localeACSo9NSDecimala_SSAA0C11DisplayRoleOSb10Foundation6LocaleVSgtcfc",
+      "source": "s:8Atom63UI14AtomAmountTextV_12currencyCode4role6strong8fraction6localeACSo9NSDecimala_SSAA0C11DisplayRoleOSbAA0cD8FractionO10Foundation6LocaleVSgtcfc",
       "target": "s:8Atom63UI14AtomAmountTextV",
       "kind": "memberOf"
     },
@@ -5791,6 +5812,41 @@
     {
       "source": "s:8Atom63UI17AtomSectionHeaderV4bodyQrvp",
       "target": "s:8Atom63UI17AtomSectionHeaderV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomAmountFractionO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomAmountFractionO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomAmountFractionO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomAmountFractionO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomAmountFractionO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI18AtomAmountFractionO6raisedyA2CmF",
+      "target": "s:8Atom63UI18AtomAmountFractionO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI18AtomAmountFractionO8baselineyA2CmF",
+      "target": "s:8Atom63UI18AtomAmountFractionO",
       "kind": "memberOf"
     },
     {
