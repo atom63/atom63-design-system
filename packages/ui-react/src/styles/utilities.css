@@ -1090,6 +1090,9 @@
       background-color: color-mix(in oklab, var(--a63-surface-page) 84%, transparent);
     }
   }
+  .bg-card {
+    background-color: var(--a63-surface-panel);
+  }
   .bg-current {
     background-color: currentcolor;
   }

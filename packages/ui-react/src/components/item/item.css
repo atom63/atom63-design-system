@@ -30,6 +30,15 @@
   border-radius: var(--radius-lg);
   background-color: var(--a63-surface-panel);
 }
+/* surface="muted": the grey card for a white page. A row's hover (half the muted
+   fill) would vanish on it, so it darkens the card's own fill instead. */
+.a63-ItemGroup[data-variant='inset'][data-surface='muted'] {
+  background-color: var(--a63-surface-muted);
+}
+.a63-ItemGroup[data-variant='inset'][data-surface='muted']
+  > :where(a, button, [role='button'], [role='link']).a63-Item:hover {
+  background-color: color-mix(in oklch, var(--a63-surface-muted), var(--a63-text-primary) 6%);
+}
 .a63-ItemGroup[data-variant='inset'] > .a63-Item {
   position: relative;
   border-radius: 0;

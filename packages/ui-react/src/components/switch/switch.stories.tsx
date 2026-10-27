@@ -172,6 +172,47 @@ export const Sizes: Story = {
   ),
 }
 
+/* The phone form factor (data-a63-form-factor="phone", stamped by AppView
+   layout="phone") gives the switch the iOS 26 shape: a pill knob 1.6 times as
+   wide as it is tall, on a track of about 63 by 28. Outside it, the knob is round. */
+export const PhoneFormFactor: Story = {
+  render: () => (
+    <div
+      style={{
+        display: 'grid',
+        gap: '1rem',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(15rem, 1fr))',
+      }}
+    >
+      <UIProvider designLanguage="web" input="pointer" mode="light">
+        <PreviewCard label="web / light">
+          <Row>
+            <Switch aria-label="Example switch" />
+            <Switch aria-label="Example switch, checked" defaultChecked />
+          </Row>
+        </PreviewCard>
+      </UIProvider>
+      {(['light', 'dark'] as const).map(mode => (
+        <UIProvider designLanguage="web" input="pointer" key={mode} mode={mode}>
+          <div data-a63-form-factor="phone">
+            <PreviewCard label={`phone / ${mode}`}>
+              {switchSizes.map(size => (
+                <Row key={size}>
+                  <Switch aria-label="Example switch" size={size} />
+                  <Switch aria-label="Example switch, checked" defaultChecked size={size} />
+                  <span style={{ color: 'var(--a63-text-secondary)', fontSize: '0.75rem' }}>
+                    {size}
+                  </span>
+                </Row>
+              ))}
+            </PreviewCard>
+          </div>
+        </UIProvider>
+      ))}
+    </div>
+  ),
+}
+
 /**
  * Thumb children (icons) with package-default root styling — use this to
  * validate track/thumb/focus before any consumer color overrides.

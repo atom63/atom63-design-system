@@ -225,4 +225,7 @@
   --a63-row-padding-block-xs: var(--a63-space-1);
   --a63-row-padding-block-sm: var(--a63-space-1_5);
   --a63-row-padding-block-md: var(--a63-space-2);
+  /* The switch of a phone (iOS 26): a 22px-tall pill knob 1.6 times as wide, on a track of about 63 by 28, as measured on a 3x iPhone screenshot. The height matches the iOS design language; the wide thumb is the phone's own. */
+  --a63-switch-thumb-size: 1.375rem;
+  --a63-switch-thumb-aspect: 1.6;
 }

@@ -10,6 +10,7 @@ import {
   ItemMedia,
   ItemSeparator,
   ItemTitle,
+  Switch,
   UIProvider,
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
@@ -186,6 +187,64 @@ export const InsetGroup: Story = {
             }
             size="sm"
           />
+        ))}
+      </ItemGroup>
+    </div>
+  ),
+}
+
+/* surface="muted": grey cards on a white page (bg-card), the other common
+   grouped-settings look. Inside the phone form factor, as AppView layout="phone"
+   draws it, the switch takes the iOS 26 shape. */
+export const InsetGroupMuted: Story = {
+  render: () => (
+    <div
+      data-a63-form-factor="phone"
+      style={{
+        background: 'var(--a63-surface-panel)',
+        display: 'grid',
+        gap: 24,
+        padding: 16,
+        width: 'min(390px, 100%)',
+      }}
+    >
+      <ItemGroup surface="muted" variant="inset">
+        {[
+          ['Units of measure', 'Imperial'],
+          ['Start week on', 'Sunday'],
+        ].map(([label, value]) => (
+          <Item
+            key={label}
+            render={
+              <a href={`#${label}`}>
+                <ItemContent>
+                  <ItemTitle>{label}</ItemTitle>
+                </ItemContent>
+                <ItemActions>
+                  <strong>{value}</strong>
+                  <ChevronRight aria-hidden />
+                </ItemActions>
+              </a>
+            }
+            size="sm"
+          />
+        ))}
+      </ItemGroup>
+      <ItemGroup surface="muted" variant="inset">
+        {(
+          [
+            ['Include steps', true],
+            ['Sync with Health', false],
+          ] as const
+        ).map(([label, checked]) => (
+          <Item key={label} size="sm">
+            <ItemContent>
+              <ItemTitle>{label}</ItemTitle>
+            </ItemContent>
+            <ItemActions>
+              <Switch aria-label={label} defaultChecked={checked} />
+            </ItemActions>
+          </Item>
         ))}
       </ItemGroup>
     </div>

@@ -13,6 +13,10 @@ import SwiftUI
 /// `AtomValueRow`, `AtomListRow`, `AtomSelectionRow` and `AtomToggle` already do; give a
 /// custom row the modifier inside the link's label.
 ///
+/// `surface` picks the section's fill: `.card` (the default) is the panel on a `surfacePage`
+/// background, as in iOS Settings; `.muted` is the grey card for a white (`surfacePanel`) page.
+/// The web side is `ItemGroup surface`.
+///
 /// ```swift
 /// AtomListSection("Preferences", footer: "Applies to every device.") {
 ///   NavigationLink(value: Route.currency) {
@@ -24,21 +28,32 @@ import SwiftUI
 ///   AtomToggle("Notifications", isOn: $notifications)
 /// }
 /// ```
+/// The fill of an `AtomListSection`, after the web `ItemGroup surface` axis.
+public enum AtomListSectionSurface: String, CaseIterable, Sendable {
+  /// The panel fill, for a `surfacePage` background (the default).
+  case card
+  /// The muted grey fill, for a white `surfacePanel` page.
+  case muted
+}
+
 public struct AtomListSection<Content: View>: View {
   @Environment(\.atomTheme) private var theme
   @Environment(\.colorScheme) private var colorScheme
 
   private let header: String?
   private let footer: String?
+  private let surface: AtomListSectionSurface
   private let content: Content
 
   public init(
     _ header: String? = nil,
     footer: String? = nil,
+    surface: AtomListSectionSurface = .card,
     @ViewBuilder content: () -> Content
   ) {
     self.header = header
     self.footer = footer
+    self.surface = surface
     self.content = content()
   }
 
@@ -52,7 +67,7 @@ public struct AtomListSection<Content: View>: View {
       rows
         .environment(\.atomListRowInsets, AtomListSectionMetrics.rowInsets)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(theme.colors.surfacePanel.resolve(for: colorScheme))
+        .background(fill)
         .clipShape(.rect(cornerRadius: AtomTokens.Radius.large))
 
       if let footer {
@@ -64,6 +79,13 @@ public struct AtomListSection<Content: View>: View {
     }
     .frame(maxWidth: .infinity, alignment: .leading)
     .accessibilityElement(children: .contain)
+  }
+
+  private var fill: Color {
+    switch surface {
+    case .card: theme.colors.surfacePanel.resolve(for: colorScheme)
+    case .muted: theme.colors.surfaceMuted.resolve(for: colorScheme)
+    }
   }
 
   @ViewBuilder private var rows: some View {

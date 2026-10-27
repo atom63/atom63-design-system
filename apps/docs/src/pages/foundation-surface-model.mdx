@@ -35,6 +35,7 @@ The tokens matter because they let components share intent. A dialog and a dropd
 | Page canvas | No | No | It is the base layer |
 | Static card | Usually yes | Low lift in the shipped surface contract | It groups content without competing with overlays |
 | Filled card (`variant="filled"`) | No | No | The muted fill is its one boundary, on a white page |
+| Grouped list (`ItemGroup variant="inset"`) | No | No | The panel fill on the grey page (`bg-background`), as in iOS Settings; `surface="muted"` is the grey card for a white page (`bg-card`) |
 | Elevated card (`variant="elevated"`) | No | `--a63-surface-raised-shadow` | The soft lift is its one boundary, on a tinted or grey ground |
 | Floating button (`variant="raised"`) | No | `--a63-surface-raised-shadow` | It floats over a map or a light photo |
 | Input or trigger | Yes | No | The control is interactive, not elevated |

@@ -1106,6 +1106,22 @@
                   }
                 }
               }
+            },
+            "switch": {
+              "thumb": {
+                "size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 1.375,
+                    "unit": "rem"
+                  },
+                  "$description": "The switch of a phone (iOS 26): a 22px-tall pill knob 1.6 times as wide, on a track of about 63 by 28, as measured on a 3x iPhone screenshot. The height matches the iOS design language; the wide thumb is the phone's own."
+                },
+                "aspect": {
+                  "$type": "number",
+                  "$value": 1.6
+                }
+              }
             }
           }
         }

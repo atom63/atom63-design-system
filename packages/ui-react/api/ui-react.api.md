@@ -71,6 +71,7 @@ import { InputGroupAlign } from '@atom63/ui-foundation';
 import { Input as InputPrimitive } from '@base-ui/react/input';
 import { InputSize } from '@atom63/ui-foundation';
 import { InputVariant } from '@atom63/ui-foundation';
+import { ItemGroupSurface } from '@atom63/ui-foundation';
 import { ItemGroupVariant } from '@atom63/ui-foundation';
 import { ItemMediaVariant } from '@atom63/ui-foundation';
 import { ItemSize } from '@atom63/ui-foundation';
@@ -1659,6 +1660,7 @@ export function ItemGroup(input: ItemGroupProps): React$1.ReactElement;
 // @public (undocumented)
 export type ItemGroupProps = React$1.ComponentProps<'div'> & {
     variant?: ItemGroupVariant;
+    surface?: ItemGroupSurface;
 };
 
 // @public (undocumented)

@@ -265,11 +265,15 @@ const floatingButton = [
 const groupedList = [
   {
     id: 'component:item',
-    note: 'Grouped inset list (settings): web <ItemGroup variant="inset">; iOS AtomListSection(header, footer:) { AtomValueRow(…, showsDisclosure: true) }.',
+    note: 'Grouped inset list (settings): web <ItemGroup variant="inset">; iOS AtomListSection(header, footer:) { AtomValueRow(…, showsDisclosure: true) }. White cards on a grey page by default; for grey cards on a white page, put the page on bg-card and pass surface="muted" (iOS surface: .muted).',
   },
   {
     id: 'example:item/InsetGroup',
     note: 'An inset group of label, bold value and chevron rows (iOS: AtomValueRow(emphasizesValue:showsDisclosure:)).',
+  },
+  {
+    id: 'example:item/InsetGroupMuted',
+    note: 'Grey inset groups on a white page, with phone-sized switches: <ItemGroup surface="muted" variant="inset"> inside data-a63-form-factor="phone".',
   },
   { id: 'template:settings-page' },
 ]
@@ -387,6 +391,7 @@ export const topics = {
   'ai can make mistakes': aiDisclaimer,
   'grouped list': groupedList,
   'grouped section': groupedList,
+  'grouped settings': groupedList,
   'inset group': groupedList,
   'inset list': groupedList,
   'list section': groupedList,
