@@ -312,6 +312,16 @@ export const reactRendererConformance = [
     verifiesMotionRecipe: false,
   },
   {
+    contractId: 'toggle-group',
+    implementedStates: ['rest', 'selected', 'disabled'],
+    verifiedSharedOutcomes: [
+      'selection-state-is-visible',
+      'disabled-options-cannot-change-selection',
+    ],
+    verifiedAccessibilityOutcomes: ['exposes-selection', 'exposes-disabled-state'],
+    verifiesMotionRecipe: false,
+  },
+  {
     contractId: 'card',
     implementedStates: ['rest', 'interactive', 'focus-visible'],
     verifiedSharedOutcomes: [
