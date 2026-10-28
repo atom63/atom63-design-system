@@ -42,7 +42,8 @@ export const crossRendererContracts = [
       ],
       "swiftUI": [
         "Uses SwiftUI Button with native touch and keyboard activation.",
-        "The round shape is a capsule: a circle at the icon size, a pill with a label."
+        "The round shape is a capsule: a circle at the icon size, a pill with a label.",
+        "The raised emphasis uses the panel fill and a soft shadow with no border; muted tone only quiets ghost labels."
       ]
     }
   },
@@ -175,7 +176,8 @@ export const crossRendererContracts = [
       ],
       "swiftUI": [
         "Uses TextField or SecureField with the native keyboard and autofill.",
-        "Adapts visual chrome when a grouped Form or sheet container owns the row surface without changing label, value, focus, disabled, or validation semantics."
+        "Adapts visual chrome when a grouped Form or sheet container owns the row surface without changing label, value, focus, disabled, or validation semantics.",
+        "AtomFieldVariant.filled uses the muted fill with no resting border while preserving focus and invalid borders."
       ]
     }
   },
@@ -318,6 +320,38 @@ export const crossRendererContracts = [
     }
   },
   {
+    "id": "toggle-group",
+    "foundationContract": "toggle-group",
+    "foundationAxis": "states",
+    "catalogItem": "toggleGroup",
+    "reactRenderer": "ToggleGroup",
+    "swiftUIRenderer": "Picker(.segmented) / AtomGhostToggleGroup",
+    "intent": "Choose one or more options from a compact peer group.",
+    "parity": "platform-adaptive",
+    "requiredStates": [
+      "rest",
+      "selected",
+      "disabled"
+    ],
+    "sharedOutcomes": [
+      "selection-state-is-visible",
+      "disabled-options-cannot-change-selection"
+    ],
+    "accessibilityOutcomes": [
+      "exposes-selection",
+      "exposes-disabled-state"
+    ],
+    "platformAdaptations": {
+      "react": [
+        "Supports segmented, pills, and ghost recipes with horizontal or vertical layout."
+      ],
+      "swiftUI": [
+        "Uses Picker with segmented style for the joined segmented variant.",
+        "Uses AtomGhostToggleGroup with AtomGhostToggleGroupItem for quiet toolbar filters; each item remains a native Button with the selected trait."
+      ]
+    }
+  },
+  {
     "id": "card",
     "foundationContract": "card",
     "foundationAxis": "states",
@@ -345,7 +379,8 @@ export const crossRendererContracts = [
         "Hover and focus-visible may communicate interactivity."
       ],
       "swiftUI": [
-        "Touch and keyboard feedback replace pointer-only hover affordances."
+        "Touch and keyboard feedback replace pointer-only hover affordances.",
+        "AtomCardVariant.default uses a border, filled uses the muted fill, and elevated uses a shadow; each keeps one visual boundary."
       ]
     }
   },
@@ -509,7 +544,8 @@ export const crossRendererContracts = [
         "Supports horizontal or vertical orientation and optional multi-thumb ranges through web pointer and keyboard input."
       ],
       "swiftUI": [
-        "Uses the native horizontal Slider with platform drag, keyboard, and accessibility-adjustable behavior."
+        "Uses the native horizontal Slider with platform drag, keyboard, and accessibility-adjustable behavior.",
+        "atomSliderTone(_:) keeps accent as the default and uses primary text for the neutral tint."
       ]
     }
   },
@@ -818,7 +854,8 @@ export const crossRendererContracts = [
         "May use a custom CSS indicator that follows web geometry."
       ],
       "swiftUI": [
-        "Uses native ProgressView styles and platform progress animation."
+        "Uses native ProgressView styles and platform progress animation.",
+        "AtomProgressView tone keeps accent as the default and uses primary text for neutral progress."
       ]
     }
   },

@@ -173,7 +173,8 @@
       "react": ["Uses HTML input behavior, browser autofill, and web focus chrome."],
       "swiftUI": [
         "Uses TextField or SecureField with the native keyboard and autofill.",
-        "Adapts visual chrome when a grouped Form or sheet container owns the row surface without changing label, value, focus, disabled, or validation semantics."
+        "Adapts visual chrome when a grouped Form or sheet container owns the row surface without changing label, value, focus, disabled, or validation semantics.",
+        "AtomFieldVariant.filled uses the muted fill with no resting border while preserving focus and invalid borders."
       ]
     }
   }

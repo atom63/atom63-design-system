@@ -62,7 +62,8 @@
         "Supports horizontal or vertical orientation and optional multi-thumb ranges through web pointer and keyboard input."
       ],
       "swiftUI": [
-        "Uses the native horizontal Slider with platform drag, keyboard, and accessibility-adjustable behavior."
+        "Uses the native horizontal Slider with platform drag, keyboard, and accessibility-adjustable behavior.",
+        "atomSliderTone(_:) keeps accent as the default and uses primary text for the neutral tint."
       ]
     }
   }

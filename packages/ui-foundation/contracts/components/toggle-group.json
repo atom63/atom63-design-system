@@ -51,5 +51,23 @@
     "visualArchetypes": {
       "$ref": "#/lists/visualArchetypes"
     }
+  },
+  "crossRenderer": {
+    "foundationAxis": "states",
+    "catalogItem": "toggleGroup",
+    "reactRenderer": "ToggleGroup",
+    "swiftUIRenderer": "Picker(.segmented) / AtomGhostToggleGroup",
+    "intent": "Choose one or more options from a compact peer group.",
+    "parity": "platform-adaptive",
+    "requiredStates": ["rest", "selected", "disabled"],
+    "sharedOutcomes": ["selection-state-is-visible", "disabled-options-cannot-change-selection"],
+    "accessibilityOutcomes": ["exposes-selection", "exposes-disabled-state"],
+    "platformAdaptations": {
+      "react": ["Supports segmented, pills, and ghost recipes with horizontal or vertical layout."],
+      "swiftUI": [
+        "Uses Picker with segmented style for the joined segmented variant.",
+        "Uses AtomGhostToggleGroup with AtomGhostToggleGroupItem for quiet toolbar filters; each item remains a native Button with the selected trait."
+      ]
+    }
   }
 }

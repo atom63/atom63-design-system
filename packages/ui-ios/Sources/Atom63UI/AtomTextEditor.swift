@@ -11,6 +11,7 @@ public struct AtomTextEditor: View {
   private let supportingText: String?
   private let errorMessage: String?
   private let minHeight: CGFloat
+  private let variant: AtomFieldVariant
 
   public init(
     _ title: String,
@@ -18,7 +19,8 @@ public struct AtomTextEditor: View {
     prompt: String? = nil,
     supportingText: String? = nil,
     errorMessage: String? = nil,
-    minHeight: CGFloat = 112
+    minHeight: CGFloat = 112,
+    variant: AtomFieldVariant = .default
   ) {
     self.title = title
     _text = text
@@ -26,6 +28,7 @@ public struct AtomTextEditor: View {
     self.supportingText = supportingText
     self.errorMessage = errorMessage
     self.minHeight = minHeight
+    self.variant = variant
   }
 
   public var body: some View {
@@ -33,7 +36,8 @@ public struct AtomTextEditor: View {
       title,
       supportingText: supportingText,
       errorMessage: errorMessage,
-      isFocused: isFocused
+      isFocused: isFocused,
+      variant: variant
     ) {
       ZStack(alignment: .topLeading) {
         if text.isEmpty, let prompt {

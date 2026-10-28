@@ -64,7 +64,7 @@ public enum AtomComponentContracts {
       sharedOutcomes: ["action-fires-once", "loading-blocks-repeat-activation", "disabled-prevents-activation"],
       accessibilityOutcomes: ["exposes-label", "announces-loading", "disabled-while-loading"],
       motion: AtomMotionContract(kind: "press-feedback", durationToken: "motion-control-feedback", easing: "ease-out", direction: "none", reducedMotion: "none"),
-      platformAdaptations: AtomPlatformAdaptations(react: ["Uses HTML button semantics with pointer and focus-visible feedback."], swiftUI: ["Uses SwiftUI Button with native touch and keyboard activation.", "The round shape is a capsule: a circle at the icon size, a pill with a label."])
+      platformAdaptations: AtomPlatformAdaptations(react: ["Uses HTML button semantics with pointer and focus-visible feedback."], swiftUI: ["Uses SwiftUI Button with native touch and keyboard activation.", "The round shape is a capsule: a circle at the icon size, a pill with a label.", "The raised emphasis uses the panel fill and a soft shadow with no border; muted tone only quiets ghost labels."])
     ),
     AtomComponentContract(
       id: "dialog",
@@ -132,7 +132,7 @@ public enum AtomComponentContracts {
       sharedOutcomes: ["value-remains-editable-when-enabled", "focus-is-visible", "invalid-state-is-announced"],
       accessibilityOutcomes: ["exposes-label", "exposes-value", "announces-invalid"],
       motion: nil,
-      platformAdaptations: AtomPlatformAdaptations(react: ["Uses HTML input behavior, browser autofill, and web focus chrome."], swiftUI: ["Uses TextField or SecureField with the native keyboard and autofill.", "Adapts visual chrome when a grouped Form or sheet container owns the row surface without changing label, value, focus, disabled, or validation semantics."])
+      platformAdaptations: AtomPlatformAdaptations(react: ["Uses HTML input behavior, browser autofill, and web focus chrome."], swiftUI: ["Uses TextField or SecureField with the native keyboard and autofill.", "Adapts visual chrome when a grouped Form or sheet container owns the row surface without changing label, value, focus, disabled, or validation semantics.", "AtomFieldVariant.filled uses the muted fill with no resting border while preserving focus and invalid borders."])
     ),
     AtomComponentContract(
       id: "textarea",
@@ -203,6 +203,23 @@ public enum AtomComponentContracts {
       platformAdaptations: AtomPlatformAdaptations(react: ["Uses a pressed-state web toggle with hover and focus-visible feedback.", "The subtle tone (accent color, no fill) is web-only."], swiftUI: ["Uses a touch-sized button-backed chip for compact filter selection."])
     ),
     AtomComponentContract(
+      id: "toggle-group",
+      foundationContract: "toggle-group",
+      foundationAxis: "states",
+      catalogItem: "toggleGroup",
+      reactRenderer: "ToggleGroup",
+      swiftUIRenderer: "Picker(.segmented) / AtomGhostToggleGroup",
+      swiftUIRendererByVariant: [],
+      intent: "Choose one or more options from a compact peer group.",
+      parity: .platformAdaptive,
+      requiredStates: ["rest", "selected", "disabled"],
+      stateTones: [:],
+      sharedOutcomes: ["selection-state-is-visible", "disabled-options-cannot-change-selection"],
+      accessibilityOutcomes: ["exposes-selection", "exposes-disabled-state"],
+      motion: nil,
+      platformAdaptations: AtomPlatformAdaptations(react: ["Supports segmented, pills, and ghost recipes with horizontal or vertical layout."], swiftUI: ["Uses Picker with segmented style for the joined segmented variant.", "Uses AtomGhostToggleGroup with AtomGhostToggleGroupItem for quiet toolbar filters; each item remains a native Button with the selected trait."])
+    ),
+    AtomComponentContract(
       id: "card",
       foundationContract: "card",
       foundationAxis: "states",
@@ -217,7 +234,7 @@ public enum AtomComponentContracts {
       sharedOutcomes: ["content-order-is-preserved", "static-card-does-not-imply-action", "interactive-card-has-one-primary-action"],
       accessibilityOutcomes: ["preserves-content-order", "does-not-imply-action-when-static"],
       motion: nil,
-      platformAdaptations: AtomPlatformAdaptations(react: ["Hover and focus-visible may communicate interactivity."], swiftUI: ["Touch and keyboard feedback replace pointer-only hover affordances."])
+      platformAdaptations: AtomPlatformAdaptations(react: ["Hover and focus-visible may communicate interactivity."], swiftUI: ["Touch and keyboard feedback replace pointer-only hover affordances.", "AtomCardVariant.default uses a border, filled uses the muted fill, and elevated uses a shadow; each keeps one visual boundary."])
     ),
     AtomComponentContract(
       id: "destination-link",
@@ -302,7 +319,7 @@ public enum AtomComponentContracts {
       sharedOutcomes: ["value-remains-within-the-declared-range", "interaction-updates-value-using-the-declared-step", "disabled-control-prevents-value-change"],
       accessibilityOutcomes: ["exposes-label", "exposes-current-value-and-range", "supports-adjustable-actions"],
       motion: nil,
-      platformAdaptations: AtomPlatformAdaptations(react: ["Supports horizontal or vertical orientation and optional multi-thumb ranges through web pointer and keyboard input."], swiftUI: ["Uses the native horizontal Slider with platform drag, keyboard, and accessibility-adjustable behavior."])
+      platformAdaptations: AtomPlatformAdaptations(react: ["Supports horizontal or vertical orientation and optional multi-thumb ranges through web pointer and keyboard input."], swiftUI: ["Uses the native horizontal Slider with platform drag, keyboard, and accessibility-adjustable behavior.", "atomSliderTone(_:) keeps accent as the default and uses primary text for the neutral tint."])
     ),
     AtomComponentContract(
       id: "dropdown-menu",
@@ -455,7 +472,7 @@ public enum AtomComponentContracts {
       sharedOutcomes: ["label-identifies-operation", "determinate-value-is-exposed", "completion-is-distinguishable"],
       accessibilityOutcomes: ["exposes-label", "announces-progress-value"],
       motion: nil,
-      platformAdaptations: AtomPlatformAdaptations(react: ["May use a custom CSS indicator that follows web geometry."], swiftUI: ["Uses native ProgressView styles and platform progress animation."])
+      platformAdaptations: AtomPlatformAdaptations(react: ["May use a custom CSS indicator that follows web geometry."], swiftUI: ["Uses native ProgressView styles and platform progress animation.", "AtomProgressView tone keeps accent as the default and uses primary text for neutral progress."])
     ),
     AtomComponentContract(
       id: "skeleton",

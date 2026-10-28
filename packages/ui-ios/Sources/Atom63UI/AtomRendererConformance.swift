@@ -328,6 +328,19 @@ public enum AtomRendererConformance {
       verifiesMotionRecipe: false
     ),
     AtomRendererConformanceEvidence(
+      contractId: "toggle-group",
+      implementedStates: ["rest", "selected", "disabled"],
+      verifiedSharedOutcomes: [
+        "selection-state-is-visible",
+        "disabled-options-cannot-change-selection",
+      ],
+      verifiedAccessibilityOutcomes: [
+        "exposes-selection",
+        "exposes-disabled-state",
+      ],
+      verifiesMotionRecipe: false
+    ),
+    AtomRendererConformanceEvidence(
       contractId: "card",
       implementedStates: ["rest", "interactive", "focus-visible"],
       verifiedSharedOutcomes: [

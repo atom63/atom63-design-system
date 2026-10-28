@@ -574,8 +574,8 @@
       "intent": {
         "description": "What a button is for, independent of any platform: its tone (what kind of action), its emphasis (how strongly it is drawn), its size and whether it shows a label or only an icon. Each platform maps its own API onto these; values only one platform draws are that platform's extensions.",
         "axes": {
-          "tone": ["neutral", "primary", "destructive"],
-          "emphasis": ["solid", "soft", "outline", "ghost"],
+          "tone": ["neutral", "muted", "primary", "destructive"],
+          "emphasis": ["solid", "soft", "outline", "ghost", "raised"],
           "content": ["label", "icon-only"]
         },
         "sizes": {
@@ -613,6 +613,7 @@
                   "secondary": { "tone": "neutral", "emphasis": "soft" },
                   "outline": { "tone": "neutral", "emphasis": "outline" },
                   "ghost": { "tone": "neutral", "emphasis": "ghost" },
+                  "raised": { "tone": "neutral", "emphasis": "raised" },
                   "destructive": { "tone": "destructive", "emphasis": "solid" },
                   "destructive-outline": { "tone": "destructive", "emphasis": "soft" }
                 },
@@ -622,9 +623,6 @@
                   },
                   "overlay": {
                     "description": "For controls drawn over photos or video, on the on-media tokens."
-                  },
-                  "raised": {
-                    "description": "A light button lifted off its ground: the panel fill, primary text and a soft shadow, no border. With shape=\"round\" at an icon size it is the floating button over a map or a light photo; over dark media use overlay. Web-only for now."
                   },
                   "dashed": {
                     "description": "A pill-shaped outline with a dashed border, for add and filter affordances such as \"+ Status\". Web-only."
@@ -668,7 +666,8 @@
                   "secondary": { "tone": "neutral", "emphasis": "soft" },
                   "destructive": { "tone": "destructive", "emphasis": "solid" },
                   "outline": { "tone": "neutral", "emphasis": "outline" },
-                  "ghost": { "tone": "neutral", "emphasis": "ghost" }
+                  "ghost": { "tone": "neutral", "emphasis": "ghost" },
+                  "raised": { "tone": "neutral", "emphasis": "raised" }
                 },
                 "extensions": {}
               },
@@ -712,7 +711,8 @@
           "react": ["Uses HTML button semantics with pointer and focus-visible feedback."],
           "swiftUI": [
             "Uses SwiftUI Button with native touch and keyboard activation.",
-            "The round shape is a capsule: a circle at the icon size, a pill with a label."
+            "The round shape is a capsule: a circle at the icon size, a pill with a label.",
+            "The raised emphasis uses the panel fill and a soft shadow with no border; muted tone only quiets ghost labels."
           ]
         }
       }
@@ -835,7 +835,10 @@
         "accessibilityOutcomes": ["preserves-content-order", "does-not-imply-action-when-static"],
         "platformAdaptations": {
           "react": ["Hover and focus-visible may communicate interactivity."],
-          "swiftUI": ["Touch and keyboard feedback replace pointer-only hover affordances."]
+          "swiftUI": [
+            "Touch and keyboard feedback replace pointer-only hover affordances.",
+            "AtomCardVariant.default uses a border, filled uses the muted fill, and elevated uses a shadow; each keeps one visual boundary."
+          ]
         }
       }
     },
@@ -1603,7 +1606,8 @@
           "react": ["Uses HTML input behavior, browser autofill, and web focus chrome."],
           "swiftUI": [
             "Uses TextField or SecureField with the native keyboard and autofill.",
-            "Adapts visual chrome when a grouped Form or sheet container owns the row surface without changing label, value, focus, disabled, or validation semantics."
+            "Adapts visual chrome when a grouped Form or sheet container owns the row surface without changing label, value, focus, disabled, or validation semantics.",
+            "AtomFieldVariant.filled uses the muted fill with no resting border while preserving focus and invalid borders."
           ]
         }
       }
@@ -1944,7 +1948,10 @@
         "accessibilityOutcomes": ["exposes-label", "announces-progress-value"],
         "platformAdaptations": {
           "react": ["May use a custom CSS indicator that follows web geometry."],
-          "swiftUI": ["Uses native ProgressView styles and platform progress animation."]
+          "swiftUI": [
+            "Uses native ProgressView styles and platform progress animation.",
+            "AtomProgressView tone keeps accent as the default and uses primary text for neutral progress."
+          ]
         }
       }
     },
@@ -2444,7 +2451,8 @@
             "Supports horizontal or vertical orientation and optional multi-thumb ranges through web pointer and keyboard input."
           ],
           "swiftUI": [
-            "Uses the native horizontal Slider with platform drag, keyboard, and accessibility-adjustable behavior."
+            "Uses the native horizontal Slider with platform drag, keyboard, and accessibility-adjustable behavior.",
+            "atomSliderTone(_:) keeps accent as the default and uses primary text for the neutral tint."
           ]
         }
       }
@@ -2702,7 +2710,30 @@
         "segment.primaryForeground",
         "segment.primaryShadow"
       ],
-      "visualArchetypes": ["toggle", "segment"]
+      "visualArchetypes": ["toggle", "segment"],
+      "crossRenderer": {
+        "foundationAxis": "states",
+        "catalogItem": "toggleGroup",
+        "reactRenderer": "ToggleGroup",
+        "swiftUIRenderer": "Picker(.segmented) / AtomGhostToggleGroup",
+        "intent": "Choose one or more options from a compact peer group.",
+        "parity": "platform-adaptive",
+        "requiredStates": ["rest", "selected", "disabled"],
+        "sharedOutcomes": [
+          "selection-state-is-visible",
+          "disabled-options-cannot-change-selection"
+        ],
+        "accessibilityOutcomes": ["exposes-selection", "exposes-disabled-state"],
+        "platformAdaptations": {
+          "react": [
+            "Supports segmented, pills, and ghost recipes with horizontal or vertical layout."
+          ],
+          "swiftUI": [
+            "Uses Picker with segmented style for the joined segmented variant.",
+            "Uses AtomGhostToggleGroup with AtomGhostToggleGroupItem for quiet toolbar filters; each item remains a native Button with the selected trait."
+          ]
+        }
+      }
     },
     "toggle": {
       "source": "packages/ui-foundation/contracts/components/toggle.json",

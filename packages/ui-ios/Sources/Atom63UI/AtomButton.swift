@@ -176,7 +176,7 @@ public struct AtomButtonStyle: ButtonStyle {
     return configuration.label
       .font(font)
       .fontWeight(.semibold)
-      .foregroundStyle(palette.foreground)
+      .foregroundStyle(foreground(isPressed: configuration.isPressed))
       .padding(.horizontal, horizontalPadding)
       .padding(.vertical, AtomTokens.Space.x2)
       .frame(minHeight: minimumHeight)
@@ -187,6 +187,11 @@ public struct AtomButtonStyle: ButtonStyle {
       }
       .compositingGroup()
       .clipShape(outline)
+      .shadow(
+        color: shadowColor(isPressed: configuration.isPressed),
+        radius: shadowRadius(isPressed: configuration.isPressed),
+        y: shadowY(isPressed: configuration.isPressed)
+      )
       .scaleEffect(configuration.isPressed ? AtomTokens.Control.pressScale : 1)
       // Loading disables the button too, but keeps its fill and fades the whole
       // control as before; a plain disabled button takes the disabled colors.
@@ -216,6 +221,13 @@ public struct AtomButtonStyle: ButtonStyle {
       colorScheme: colorScheme,
       isEnabled: isEnabled || isLoading
     )
+  }
+
+  private func foreground(isPressed: Bool) -> Color {
+    if isPressed, tone == .muted, emphasis == .ghost {
+      return theme.colors.textPrimary.resolve(for: colorScheme)
+    }
+    return palette.foreground
   }
 
   private var font: Font {
@@ -279,6 +291,21 @@ public struct AtomButtonStyle: ButtonStyle {
     guard emphasis == .outline else { return 0 }
     return accessibilityContrast == .increased ? 2 : 1
   }
+
+  private func shadowColor(isPressed: Bool) -> Color {
+    guard emphasis == .raised, isEnabled else { return .clear }
+    return theme.colors.textPrimary.resolve(for: colorScheme).opacity(isPressed ? 0.08 : 0.14)
+  }
+
+  private func shadowRadius(isPressed: Bool) -> CGFloat {
+    guard emphasis == .raised, isEnabled else { return 0 }
+    return isPressed ? 4 : 8
+  }
+
+  private func shadowY(isPressed: Bool) -> CGFloat {
+    guard emphasis == .raised, isEnabled else { return 0 }
+    return isPressed ? 2 : 4
+  }
 }
 
 extension EnvironmentValues {
@@ -315,13 +342,15 @@ struct AtomButtonPalette {
 
   private var enabledForeground: Color {
     switch (emphasis, tone) {
-    case (.solid, .neutral):
+    case (.solid, .neutral), (.solid, .muted):
       theme.colors.actionNeutralForeground.resolve(for: colorScheme)
     case (.solid, .primary):
       theme.colors.actionPrimaryForeground.resolve(for: colorScheme)
     case (.solid, .destructive):
       theme.colors.actionDangerForeground.resolve(for: colorScheme)
-    case (_, .neutral):
+    case (.ghost, .muted):
+      theme.colors.textSecondary.resolve(for: colorScheme)
+    case (_, .neutral), (_, .muted):
       theme.colors.textPrimary.resolve(for: colorScheme)
     case (_, .primary):
       theme.colors.actionPrimary.resolve(for: colorScheme)
@@ -335,19 +364,21 @@ struct AtomButtonPalette {
       return theme.colors.actionDisabledBackground.resolve(for: colorScheme)
     }
     switch (emphasis, tone) {
-    case (.solid, .neutral):
+    case (.solid, .neutral), (.solid, .muted):
       return theme.colors.actionNeutral.resolve(for: colorScheme)
     case (.solid, .primary):
       let token = isPressed ? theme.colors.actionPrimaryPressed : theme.colors.actionPrimary
       return token.resolve(for: colorScheme)
     case (.solid, .destructive):
       return theme.colors.actionDanger.resolve(for: colorScheme)
-    case (.soft, .neutral):
+    case (.soft, .neutral), (.soft, .muted):
       return theme.colors.surfaceMuted.resolve(for: colorScheme)
     case (.soft, .primary):
       return theme.colors.actionPrimary.resolve(for: colorScheme).opacity(0.1)
     case (.soft, .destructive):
       return theme.colors.actionDanger.resolve(for: colorScheme).opacity(0.1)
+    case (.raised, _):
+      return theme.colors.surfacePanel.resolve(for: colorScheme)
     case (.outline, _), (.ghost, _):
       return .clear
     }
@@ -359,7 +390,7 @@ struct AtomButtonPalette {
       return theme.colors.actionDisabledBorder.resolve(for: colorScheme)
     }
     switch tone {
-    case .neutral:
+    case .neutral, .muted:
       return theme.colors.borderControl.resolve(for: colorScheme)
     case .primary:
       return theme.colors.actionPrimary.resolve(for: colorScheme)

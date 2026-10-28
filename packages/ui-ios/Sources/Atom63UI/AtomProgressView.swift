@@ -8,17 +8,20 @@ public struct AtomProgressView: View {
   private let message: String?
   private let value: Double?
   private let total: Double
+  private let tone: AtomTrackTone
 
   public init(
     _ title: String,
     message: String? = nil,
     value: Double? = nil,
-    total: Double = 1
+    total: Double = 1,
+    tone: AtomTrackTone = .accent
   ) {
     self.title = title
     self.message = message
     self.value = value
     self.total = total
+    self.tone = tone
   }
 
   public var body: some View {
@@ -27,6 +30,7 @@ public struct AtomProgressView: View {
         if value == nil {
           ProgressView()
             .controlSize(.small)
+            .tint(toneColor)
             .accessibilityHidden(true)
         }
 
@@ -53,7 +57,7 @@ public struct AtomProgressView: View {
 
       if let value {
         ProgressView(value: value, total: total)
-          .tint(theme.colors.actionPrimary.resolve(for: colorScheme))
+          .tint(toneColor)
           .accessibilityHidden(true)
       }
     }
@@ -65,6 +69,10 @@ public struct AtomProgressView: View {
   private var accessibilityValue: String {
     guard let value else { return "In progress" }
     return progressFraction(value).formatted(.percent.precision(.fractionLength(0)))
+  }
+
+  private var toneColor: Color {
+    tone.color(theme: theme, colorScheme: colorScheme)
   }
 
   private func progressFraction(_ value: Double) -> Double {
