@@ -26,7 +26,7 @@ import {
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { FileText, Inbox, Send, Star } from 'lucide-react'
-import { useState } from 'react'
+import { type ReactNode, useLayoutEffect, useState } from 'react'
 
 const meta = {
   title: 'UI React/Sidebar',
@@ -300,61 +300,77 @@ export const DarkSidebar: Story = {
   },
 }
 
+function MobileViewport({ children }: { children: ReactNode }) {
+  useLayoutEffect(() => {
+    const originalInnerWidth = Object.getOwnPropertyDescriptor(window, 'innerWidth')
+    Object.defineProperty(window, 'innerWidth', { configurable: true, value: 390 })
+    return () => {
+      if (originalInnerWidth) Object.defineProperty(window, 'innerWidth', originalInnerWidth)
+    }
+  }, [])
+
+  return children
+}
+
 function DarkSidebarPhoneDemo() {
   const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(null)
 
   return (
-    <UIProvider mode="light">
-      <SidebarProvider style={{ minHeight: '100svh' }}>
-        <UIProvider mode="dark">
-          <div
-            data-testid="dark-sidebar-region"
-            ref={setPortalContainer}
-            style={{ display: 'contents' }}
+    <MobileViewport>
+      <UIProvider mode="light">
+        <SidebarProvider style={{ minHeight: '100svh' }}>
+          <UIProvider mode="dark">
+            <div
+              data-testid="dark-sidebar-region"
+              ref={setPortalContainer}
+              style={{ display: 'contents' }}
+            >
+              <PortalContainerProvider container={portalContainer}>
+                <Sidebar aria-label="Mailboxes">
+                  <SidebarHeader>
+                    <span style={{ fontWeight: 600, paddingInline: 'var(--a63-space-2)' }}>
+                      Mail
+                    </span>
+                    <Button variant="primary">New message</Button>
+                  </SidebarHeader>
+                  <SidebarContent>
+                    <SidebarGroup>
+                      <SidebarMenu>
+                        <SidebarMenuItem>
+                          <SidebarMenuButton isActive>
+                            <Inbox aria-hidden />
+                            <span>Inbox</span>
+                          </SidebarMenuButton>
+                          <SidebarMenuBadge>16</SidebarMenuBadge>
+                        </SidebarMenuItem>
+                        <SidebarMenuItem>
+                          <SidebarMenuButton>
+                            <Send aria-hidden />
+                            <span>Sent</span>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      </SidebarMenu>
+                    </SidebarGroup>
+                  </SidebarContent>
+                </Sidebar>
+              </PortalContainerProvider>
+            </div>
+          </UIProvider>
+          <main
+            data-testid="light-phone-app"
+            style={{
+              background: 'var(--a63-surface-panel)',
+              color: 'var(--a63-text-primary)',
+              flex: 1,
+              padding: 'var(--a63-space-4)',
+            }}
           >
-            <PortalContainerProvider container={portalContainer}>
-              <Sidebar aria-label="Mailboxes">
-                <SidebarHeader>
-                  <span style={{ fontWeight: 600, paddingInline: 'var(--a63-space-2)' }}>Mail</span>
-                  <Button variant="primary">New message</Button>
-                </SidebarHeader>
-                <SidebarContent>
-                  <SidebarGroup>
-                    <SidebarMenu>
-                      <SidebarMenuItem>
-                        <SidebarMenuButton isActive>
-                          <Inbox aria-hidden />
-                          <span>Inbox</span>
-                        </SidebarMenuButton>
-                        <SidebarMenuBadge>16</SidebarMenuBadge>
-                      </SidebarMenuItem>
-                      <SidebarMenuItem>
-                        <SidebarMenuButton>
-                          <Send aria-hidden />
-                          <span>Sent</span>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    </SidebarMenu>
-                  </SidebarGroup>
-                </SidebarContent>
-              </Sidebar>
-            </PortalContainerProvider>
-          </div>
-        </UIProvider>
-        <main
-          data-testid="light-phone-app"
-          style={{
-            background: 'var(--a63-surface-panel)',
-            color: 'var(--a63-text-primary)',
-            flex: 1,
-            padding: 'var(--a63-space-4)',
-          }}
-        >
-          <SidebarTrigger aria-label="Open mailboxes" />
-          <p>The inbox stays light.</p>
-        </main>
-      </SidebarProvider>
-    </UIProvider>
+            <SidebarTrigger aria-label="Open mailboxes" />
+            <p>The inbox stays light.</p>
+          </main>
+        </SidebarProvider>
+      </UIProvider>
+    </MobileViewport>
   )
 }
 
@@ -362,16 +378,18 @@ function DarkSidebarPhoneDemo() {
 export const DarkSidebarPhone: Story = {
   render: () => <DarkSidebarPhoneDemo />,
   play: async ({ canvasElement }) => {
-    // Non-visual Storybook projects use a desktop viewport; the `Phone` suffix
-    // switches only the visual-regression project to 390px.
-    if (window.innerWidth >= 768) return
-
-    const trigger = canvasElement.querySelector<HTMLButtonElement>('[data-slot="sidebar-trigger"]')
+    const storyDocument = canvasElement.ownerDocument
+    const trigger = storyDocument.querySelector<HTMLButtonElement>(
+      'button[aria-label="Open mailboxes"]'
+    )
     if (!trigger) throw new Error('Expected the mobile sidebar trigger')
+    // The craft harness checks the closed story because a modal makes the rest
+    // of its pointer target inert. Storybook and visual regression exercise it.
+    if ((globalThis as { __A63_A11Y_TEST__?: string }).__A63_A11Y_TEST__ === 'off') return
     trigger.click()
 
-    const region = canvasElement.querySelector<HTMLElement>('[data-testid="dark-sidebar-region"]')
-    const app = canvasElement.querySelector<HTMLElement>('[data-testid="light-phone-app"]')
+    const region = storyDocument.querySelector<HTMLElement>('[data-testid="dark-sidebar-region"]')
+    const app = storyDocument.querySelector<HTMLElement>('[data-testid="light-phone-app"]')
     if (!region || !app) throw new Error('Expected the dark region and light app')
 
     for (let attempt = 0; attempt < 50; attempt += 1) {
