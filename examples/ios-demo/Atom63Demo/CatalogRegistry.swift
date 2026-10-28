@@ -53,6 +53,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
   case picker
   case search
   case segmentedControl
+  case toggleGroup
   case radioGroup
   case slider
   case datePicker
@@ -90,7 +91,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .destinationLink, .tabs:
       .navigation
     case .formField, .textField, .textEditor, .toggle, .picker, .search, .segmentedControl,
-      .radioGroup, .slider, .datePicker, .formMessage:
+      .toggleGroup, .radioGroup, .slider, .datePicker, .formMessage:
       .forms
     case .card, .widgetCard, .listRow, .valueRow, .listSection, .pageDots, .selectionRow,
       .disclosureGroup, .sectionHeader, .chip, .badge, .avatar, .asyncImage:
@@ -119,6 +120,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .picker: "Picker"
     case .search: "Search"
     case .segmentedControl: "Segmented control"
+    case .toggleGroup: "Toggle group"
     case .radioGroup: "Radio group"
     case .slider: "Slider"
     case .datePicker: "Date picker"
@@ -166,6 +168,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .picker: "checklist"
     case .search: "magnifyingglass"
     case .segmentedControl: "rectangle.split.3x1"
+    case .toggleGroup: "line.3.horizontal.decrease"
     case .radioGroup: "circle.inset.filled"
     case .slider: "slider.horizontal.3"
     case .datePicker: "calendar"
@@ -230,6 +233,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
       "Native collection search with query editing, clear, submit, cancellation, and platform placement."
     case .segmentedControl:
       "Compact native single selection for switching a local mode or view."
+    case .toggleGroup:
+      "Quiet peer filters with visible selection and disabled-option semantics."
     case .radioGroup:
       "Visible mutually exclusive options rendered as an inline Picker or selection rows."
     case .slider:
@@ -302,6 +307,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .picker: "Picker"
     case .search: "searchable(text:prompt:)"
     case .segmentedControl: "Picker(.segmented)"
+    case .toggleGroup: "Picker(.segmented) / AtomGhostToggleGroup"
     case .radioGroup: "Picker(.inline) / AtomSelectionRow"
     case .slider: "Slider"
     case .datePicker: "DatePicker"
@@ -366,6 +372,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
       "ProjectList()\n  .searchable(text: $query, prompt: \"Search projects\")\n  .onSubmit(of: .search, submitSearch)"
     case .segmentedControl:
       "Picker(\"Layout\", selection: $layout) {\n  Text(\"List\").tag(Layout.list)\n  Text(\"Grid\").tag(Layout.grid)\n}\n.pickerStyle(.segmented)"
+    case .toggleGroup:
+      "AtomGhostToggleGroup {\n  AtomGhostToggleGroupItem(\"All\", isSelected: filter == .all) {\n    filter = .all\n  }\n}"
     case .radioGroup:
       "Picker(\"Renderer\", selection: $renderer) {\n  Text(\"Native SwiftUI\").tag(Renderer.native)\n  Text(\"Web container\").tag(Renderer.web)\n}\n.pickerStyle(.inline)"
     case .slider:

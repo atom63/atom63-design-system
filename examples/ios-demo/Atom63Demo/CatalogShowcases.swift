@@ -40,6 +40,8 @@ struct CatalogShowcase: View {
       SearchShowcase()
     case .segmentedControl:
       SegmentedControlShowcase()
+    case .toggleGroup:
+      ToggleGroupShowcase()
     case .radioGroup:
       RadioGroupShowcase()
     case .slider:
@@ -1003,6 +1005,23 @@ private struct SegmentedControlShowcase: View {
       .pickerStyle(.segmented)
 
       LabeledContent("Selected layout", value: selection.rawValue)
+    }
+  }
+}
+
+private struct ToggleGroupShowcase: View {
+  @State private var selection: CompactSelection = .list
+
+  var body: some View {
+    AtomGhostToggleGroup {
+      ForEach(CompactSelection.allCases) { value in
+        AtomGhostToggleGroupItem(
+          value.rawValue,
+          isSelected: selection == value,
+          action: { selection = value }
+        )
+        .disabled(value == .timeline)
+      }
     }
   }
 }
