@@ -1,6 +1,7 @@
 import { render } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
+import { PortalContainerProvider } from '../portal-container'
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from './sheet'
 
 describe('Sheet', () => {
@@ -39,6 +40,45 @@ describe('Sheet', () => {
       'data-side',
       'left'
     )
+  })
+
+  it('portals into PortalContainerProvider when set', () => {
+    const portalHost = document.createElement('div')
+    document.body.append(portalHost)
+
+    render(
+      <PortalContainerProvider container={portalHost}>
+        <Sheet open>
+          <SheetContent>
+            <SheetTitle>Scoped navigation</SheetTitle>
+          </SheetContent>
+        </Sheet>
+      </PortalContainerProvider>
+    )
+
+    expect(portalHost.querySelector('[data-slot="sheet-popup"]')).not.toBeNull()
+    portalHost.remove()
+  })
+
+  it('prefers an explicit portal container over PortalContainerProvider', () => {
+    const contextHost = document.createElement('div')
+    const explicitHost = document.createElement('div')
+    document.body.append(contextHost, explicitHost)
+
+    render(
+      <PortalContainerProvider container={contextHost}>
+        <Sheet open>
+          <SheetContent portalProps={{ container: explicitHost }}>
+            <SheetTitle>Explicit navigation</SheetTitle>
+          </SheetContent>
+        </Sheet>
+      </PortalContainerProvider>
+    )
+
+    expect(explicitHost.querySelector('[data-slot="sheet-popup"]')).not.toBeNull()
+    expect(contextHost.querySelector('[data-slot="sheet-popup"]')).toBeNull()
+    contextHost.remove()
+    explicitHost.remove()
   })
 
   it('tracks controlled open state on the body and cleans up on unmount', () => {
