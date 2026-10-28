@@ -1626,7 +1626,7 @@ export const crossRendererContracts: readonly [{
     };
     readonly platformAdaptations: {
         readonly react: readonly ["Uses HTML button semantics with pointer and focus-visible feedback."];
-        readonly swiftUI: readonly ["Uses SwiftUI Button with native touch and keyboard activation.", "The round shape is a capsule: a circle at the icon size, a pill with a label."];
+        readonly swiftUI: readonly ["Uses SwiftUI Button with native touch and keyboard activation.", "The round shape is a capsule: a circle at the icon size, a pill with a label.", "The raised emphasis uses the panel fill and a soft shadow with no border; muted tone only quiets ghost labels."];
     };
 }, {
     readonly id: "dialog";
@@ -1690,7 +1690,7 @@ export const crossRendererContracts: readonly [{
     readonly accessibilityOutcomes: readonly ["exposes-label", "exposes-value", "announces-invalid"];
     readonly platformAdaptations: {
         readonly react: readonly ["Uses HTML input behavior, browser autofill, and web focus chrome."];
-        readonly swiftUI: readonly ["Uses TextField or SecureField with the native keyboard and autofill.", "Adapts visual chrome when a grouped Form or sheet container owns the row surface without changing label, value, focus, disabled, or validation semantics."];
+        readonly swiftUI: readonly ["Uses TextField or SecureField with the native keyboard and autofill.", "Adapts visual chrome when a grouped Form or sheet container owns the row surface without changing label, value, focus, disabled, or validation semantics.", "AtomFieldVariant.filled uses the muted fill with no resting border while preserving focus and invalid borders."];
     };
 }, {
     readonly id: "textarea";
@@ -1757,6 +1757,22 @@ export const crossRendererContracts: readonly [{
         readonly swiftUI: readonly ["Uses a touch-sized button-backed chip for compact filter selection."];
     };
 }, {
+    readonly id: "toggle-group";
+    readonly foundationContract: "toggle-group";
+    readonly foundationAxis: "states";
+    readonly catalogItem: "toggleGroup";
+    readonly reactRenderer: "ToggleGroup";
+    readonly swiftUIRenderer: "Picker(.segmented) / AtomGhostToggleGroup";
+    readonly intent: "Choose one or more options from a compact peer group.";
+    readonly parity: "platform-adaptive";
+    readonly requiredStates: readonly ["rest", "selected", "disabled"];
+    readonly sharedOutcomes: readonly ["selection-state-is-visible", "disabled-options-cannot-change-selection"];
+    readonly accessibilityOutcomes: readonly ["exposes-selection", "exposes-disabled-state"];
+    readonly platformAdaptations: {
+        readonly react: readonly ["Supports segmented, pills, and ghost recipes with horizontal or vertical layout."];
+        readonly swiftUI: readonly ["Uses Picker with segmented style for the joined segmented variant.", "Uses AtomGhostToggleGroup with AtomGhostToggleGroupItem for quiet toolbar filters; each item remains a native Button with the selected trait."];
+    };
+}, {
     readonly id: "card";
     readonly foundationContract: "card";
     readonly foundationAxis: "states";
@@ -1770,7 +1786,7 @@ export const crossRendererContracts: readonly [{
     readonly accessibilityOutcomes: readonly ["preserves-content-order", "does-not-imply-action-when-static"];
     readonly platformAdaptations: {
         readonly react: readonly ["Hover and focus-visible may communicate interactivity."];
-        readonly swiftUI: readonly ["Touch and keyboard feedback replace pointer-only hover affordances."];
+        readonly swiftUI: readonly ["Touch and keyboard feedback replace pointer-only hover affordances.", "AtomCardVariant.default uses a border, filled uses the muted fill, and elevated uses a shadow; each keeps one visual boundary."];
     };
 }, {
     readonly id: "destination-link";
@@ -1850,7 +1866,7 @@ export const crossRendererContracts: readonly [{
     readonly accessibilityOutcomes: readonly ["exposes-label", "exposes-current-value-and-range", "supports-adjustable-actions"];
     readonly platformAdaptations: {
         readonly react: readonly ["Supports horizontal or vertical orientation and optional multi-thumb ranges through web pointer and keyboard input."];
-        readonly swiftUI: readonly ["Uses the native horizontal Slider with platform drag, keyboard, and accessibility-adjustable behavior."];
+        readonly swiftUI: readonly ["Uses the native horizontal Slider with platform drag, keyboard, and accessibility-adjustable behavior.", "atomSliderTone(_:) keeps accent as the default and uses primary text for the neutral tint."];
     };
 }, {
     readonly id: "dropdown-menu";
@@ -1999,7 +2015,7 @@ export const crossRendererContracts: readonly [{
     readonly accessibilityOutcomes: readonly ["exposes-label", "announces-progress-value"];
     readonly platformAdaptations: {
         readonly react: readonly ["May use a custom CSS indicator that follows web geometry."];
-        readonly swiftUI: readonly ["Uses native ProgressView styles and platform progress animation."];
+        readonly swiftUI: readonly ["Uses native ProgressView styles and platform progress animation.", "AtomProgressView tone keeps accent as the default and uses primary text for neutral progress."];
     };
 }, {
     readonly id: "skeleton";
