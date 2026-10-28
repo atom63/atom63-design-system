@@ -69,7 +69,10 @@
     "accessibilityOutcomes": ["preserves-content-order", "does-not-imply-action-when-static"],
     "platformAdaptations": {
       "react": ["Hover and focus-visible may communicate interactivity."],
-      "swiftUI": ["Touch and keyboard feedback replace pointer-only hover affordances."]
+      "swiftUI": [
+        "Touch and keyboard feedback replace pointer-only hover affordances.",
+        "AtomCardVariant.default uses a border, filled uses the muted fill, and elevated uses a shadow; each keeps one visual boundary."
+      ]
     }
   }
 }

@@ -11,6 +11,7 @@ public struct AtomTextField: View {
   private let supportingText: String?
   private let isSecure: Bool
   private let errorMessage: String?
+  private let variant: AtomFieldVariant
 
   public init(
     _ title: String,
@@ -18,7 +19,8 @@ public struct AtomTextField: View {
     prompt: String? = nil,
     supportingText: String? = nil,
     isSecure: Bool = false,
-    errorMessage: String? = nil
+    errorMessage: String? = nil,
+    variant: AtomFieldVariant = .default
   ) {
     self.title = title
     _text = text
@@ -26,6 +28,7 @@ public struct AtomTextField: View {
     self.supportingText = supportingText
     self.isSecure = isSecure
     self.errorMessage = errorMessage
+    self.variant = variant
   }
 
   public var body: some View {
@@ -33,7 +36,8 @@ public struct AtomTextField: View {
       title,
       supportingText: supportingText,
       errorMessage: errorMessage,
-      isFocused: isFocused
+      isFocused: isFocused,
+      variant: variant
     ) {
       field
         .textFieldStyle(.plain)

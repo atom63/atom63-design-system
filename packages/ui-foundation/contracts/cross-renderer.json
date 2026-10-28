@@ -11,6 +11,7 @@
     "switch",
     "select",
     "toggle",
+    "toggle-group",
     "card",
     "destination-link",
     "badge",

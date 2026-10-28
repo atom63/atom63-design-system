@@ -17,6 +17,7 @@ public enum AtomBadgeTone: Sendable {
 /// The tone of Button, from the intent in packages/ui-foundation/contracts/components/button.json.
 public enum AtomButtonTone: Sendable {
   case neutral
+  case muted
   case primary
   case destructive
 }
@@ -27,6 +28,7 @@ public enum AtomButtonEmphasis: Sendable {
   case soft
   case outline
   case ghost
+  case raised
 }
 
 /// The variant values of Button on iOS, from packages/ui-foundation/contracts/components/button.json. Use tone and emphasis.
@@ -37,6 +39,7 @@ public enum AtomButtonVariant: Sendable {
   case destructive
   case outline
   case ghost
+  case raised
 }
 
 extension AtomButtonVariant {
@@ -49,6 +52,7 @@ extension AtomButtonVariant {
     case .destructive: .destructive
     case .outline: .neutral
     case .ghost: .neutral
+    case .raised: .neutral
     }
   }
 }
@@ -63,6 +67,7 @@ extension AtomButtonVariant {
     case .destructive: .solid
     case .outline: .outline
     case .ghost: .ghost
+    case .raised: .raised
     }
   }
 }

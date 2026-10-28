@@ -60,6 +60,7 @@ import { Tabs, TabsList, TabsPanel, TabsTab } from '../components/tabs'
 import { Textarea } from '../components/textarea'
 import { Toaster } from '../components/toaster'
 import { Toggle } from '../components/toggle'
+import { ToggleGroup, ToggleGroupItem } from '../components/toggle-group'
 import { reactRendererConformance } from './renderer-conformance'
 
 // embla-carousel measures layout jsdom does not have, so the carousel's API is a stub with three
@@ -195,6 +196,30 @@ describe('React renderer conformance', () => {
     const disabledToggle = screen.getByRole('button', { name: 'Disabled pinned' })
     await user.click(disabledToggle)
     expect(disabledToggle).toHaveAttribute('aria-pressed', 'true')
+  })
+
+  it('verifies toggle group selection and disabled option outcomes', async () => {
+    const user = userEvent.setup()
+    const onValueChange = vi.fn()
+    render(
+      <ToggleGroup onValueChange={onValueChange} value={['list']}>
+        <ToggleGroupItem value="list">List</ToggleGroupItem>
+        <ToggleGroupItem value="grid">Grid</ToggleGroupItem>
+        <ToggleGroupItem disabled value="timeline">
+          Timeline
+        </ToggleGroupItem>
+      </ToggleGroup>
+    )
+
+    expect(screen.getByRole('button', { name: 'List' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getByRole('button', { name: 'Grid' })).toHaveAttribute('aria-pressed', 'false')
+    expect(screen.getByRole('button', { name: 'Timeline' })).toBeDisabled()
+
+    await user.click(screen.getByRole('button', { name: 'Grid' }))
+    expect(onValueChange.mock.calls[0]?.[0]).toEqual(['grid'])
+
+    await user.click(screen.getByRole('button', { name: 'Timeline' }))
+    expect(onValueChange).toHaveBeenCalledOnce()
   })
 
   it('verifies static and single-action card semantics', async () => {

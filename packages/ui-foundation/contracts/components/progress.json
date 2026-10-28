@@ -45,7 +45,10 @@
     "accessibilityOutcomes": ["exposes-label", "announces-progress-value"],
     "platformAdaptations": {
       "react": ["May use a custom CSS indicator that follows web geometry."],
-      "swiftUI": ["Uses native ProgressView styles and platform progress animation."]
+      "swiftUI": [
+        "Uses native ProgressView styles and platform progress animation.",
+        "AtomProgressView tone keeps accent as the default and uses primary text for neutral progress."
+      ]
     }
   }
 }

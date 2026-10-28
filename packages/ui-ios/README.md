@@ -28,6 +28,7 @@ The package targets iOS 17+ and macOS 14+.
 - `AtomTextField`
 - `AtomTextEditor`
 - `AtomToggle`
+- `AtomGhostToggleGroup` and `AtomGhostToggleGroupItem`
 - `AtomCard`
 - `AtomListRow`
 - `AtomValueRow`
@@ -52,6 +53,27 @@ The package targets iOS 17+ and macOS 14+.
 - generated `AtomComponentContracts`
 - `AtomRendererConformance` verified renderer evidence
 - `AtomTheme` and generated `AtomTokens`
+
+## Shared variants
+
+The web surface and emphasis additions have native SwiftUI counterparts. Defaults
+preserve the earlier rendering, so existing call sites do not need to pass the
+new arguments:
+
+```swift
+AtomTextField("Search", text: $query, variant: .filled)
+AtomCard(variant: .elevated) { ProjectSummary() }
+AtomButton("Locate", tone: .neutral, emphasis: .raised, shape: .round) {}
+AtomButton("More", tone: .muted, emphasis: .ghost) {}
+
+AtomGhostToggleGroup {
+  AtomGhostToggleGroupItem("All", isSelected: filter == .all) { filter = .all }
+  AtomGhostToggleGroupItem("Unread", isSelected: filter == .unread) { filter = .unread }
+}
+
+Slider(value: $volume).atomSliderTone(.neutral)
+AtomProgressView("Upload", value: progress, tone: .neutral)
+```
 
 The JSON files in `tokens/` document how the platform-neutral component slots
 map to SwiftUI. Component anatomy and behavior remain native to iOS.

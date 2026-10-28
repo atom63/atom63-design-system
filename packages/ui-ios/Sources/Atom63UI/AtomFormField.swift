@@ -1,5 +1,12 @@
 import SwiftUI
 
+/// The standalone text-field chrome. Grouped and sheet presentations keep
+/// their container-owned row treatment for either value.
+public enum AtomFieldVariant: String, CaseIterable, Sendable {
+  case `default`
+  case filled
+}
+
 public struct AtomFormField<Content: View>: View {
   @Environment(\.atomTheme) private var theme
   @Environment(\.colorScheme) private var colorScheme
@@ -10,6 +17,7 @@ public struct AtomFormField<Content: View>: View {
   private let supportingText: String?
   private let errorMessage: String?
   private let isFocused: Bool
+  private let variant: AtomFieldVariant
   private let content: Content
 
   public init(
@@ -17,12 +25,14 @@ public struct AtomFormField<Content: View>: View {
     supportingText: String? = nil,
     errorMessage: String? = nil,
     isFocused: Bool = false,
+    variant: AtomFieldVariant = .default,
     @ViewBuilder content: () -> Content
   ) {
     self.title = title
     self.supportingText = supportingText
     self.errorMessage = errorMessage
     self.isFocused = isFocused
+    self.variant = variant
     self.content = content()
   }
 
@@ -56,7 +66,7 @@ public struct AtomFormField<Content: View>: View {
         .padding(.horizontal, AtomTokens.Space.x3)
         .padding(.vertical, AtomTokens.Space.x2)
         .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-        .background(theme.colors.surfaceControl.resolve(for: colorScheme))
+        .background(standaloneBackground)
         .overlay {
           RoundedRectangle(cornerRadius: AtomTokens.Radius.large)
             .strokeBorder(borderColor, lineWidth: standaloneBorderWidth)
@@ -92,6 +102,9 @@ public struct AtomFormField<Content: View>: View {
     if isFocused {
       return theme.colors.actionPrimary.resolve(for: colorScheme)
     }
+    if variant == .filled, presentation == .standalone {
+      return .clear
+    }
     return theme.colors.borderInput.resolve(for: colorScheme)
   }
 
@@ -100,6 +113,15 @@ public struct AtomFormField<Content: View>: View {
       return emphasisLineWidth
     }
     return accessibilityContrast == .increased ? 2 : 1
+  }
+
+  private var standaloneBackground: Color {
+    switch variant {
+    case .default:
+      theme.colors.surfaceControl.resolve(for: colorScheme)
+    case .filled:
+      theme.colors.surfaceMuted.resolve(for: colorScheme)
+    }
   }
 
   private var emphasisLineWidth: CGFloat {

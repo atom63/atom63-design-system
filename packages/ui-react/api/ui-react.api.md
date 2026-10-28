@@ -2200,6 +2200,12 @@ export const reactRendererConformance: readonly [{
     readonly verifiedAccessibilityOutcomes: readonly ["exposes-label", "announces-selected-state", "preserves-button-role"];
     readonly verifiesMotionRecipe: false;
 }, {
+    readonly contractId: "toggle-group";
+    readonly implementedStates: readonly ["rest", "selected", "disabled"];
+    readonly verifiedSharedOutcomes: readonly ["selection-state-is-visible", "disabled-options-cannot-change-selection"];
+    readonly verifiedAccessibilityOutcomes: readonly ["exposes-selection", "exposes-disabled-state"];
+    readonly verifiesMotionRecipe: false;
+}, {
     readonly contractId: "card";
     readonly implementedStates: readonly ["rest", "interactive", "focus-visible"];
     readonly verifiedSharedOutcomes: readonly ["content-order-is-preserved", "static-card-does-not-imply-action", "interactive-card-has-one-primary-action"];

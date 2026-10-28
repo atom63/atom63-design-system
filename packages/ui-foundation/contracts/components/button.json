@@ -81,8 +81,8 @@
   "intent": {
     "description": "What a button is for, independent of any platform: its tone (what kind of action), its emphasis (how strongly it is drawn), its size and whether it shows a label or only an icon. Each platform maps its own API onto these; values only one platform draws are that platform's extensions.",
     "axes": {
-      "tone": ["neutral", "primary", "destructive"],
-      "emphasis": ["solid", "soft", "outline", "ghost"],
+      "tone": ["neutral", "muted", "primary", "destructive"],
+      "emphasis": ["solid", "soft", "outline", "ghost", "raised"],
       "content": ["label", "icon-only"]
     },
     "sizes": {
@@ -150,6 +150,10 @@
                 "tone": "neutral",
                 "emphasis": "ghost"
               },
+              "raised": {
+                "tone": "neutral",
+                "emphasis": "raised"
+              },
               "destructive": {
                 "tone": "destructive",
                 "emphasis": "solid"
@@ -165,9 +169,6 @@
               },
               "overlay": {
                 "description": "For controls drawn over photos or video, on the on-media tokens."
-              },
-              "raised": {
-                "description": "A light button lifted off its ground: the panel fill, primary text and a soft shadow, no border. With shape=\"round\" at an icon size it is the floating button over a map or a light photo; over dark media use overlay. Web-only for now."
               },
               "dashed": {
                 "description": "A pill-shaped outline with a dashed border, for add and filter affordances such as \"+ Status\". Web-only."
@@ -260,6 +261,10 @@
               "ghost": {
                 "tone": "neutral",
                 "emphasis": "ghost"
+              },
+              "raised": {
+                "tone": "neutral",
+                "emphasis": "raised"
               }
             },
             "extensions": {}
@@ -318,7 +323,8 @@
       "react": ["Uses HTML button semantics with pointer and focus-visible feedback."],
       "swiftUI": [
         "Uses SwiftUI Button with native touch and keyboard activation.",
-        "The round shape is a capsule: a circle at the icon size, a pill with a label."
+        "The round shape is a capsule: a circle at the icon size, a pill with a label.",
+        "The raised emphasis uses the panel fill and a soft shadow with no border; muted tone only quiets ghost labels."
       ]
     }
   }
