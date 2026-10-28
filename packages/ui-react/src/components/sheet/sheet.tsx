@@ -76,16 +76,14 @@ export function Sheet({ onOpenChange, open, defaultOpen, ...props }: SheetPrimit
   )
 }
 
-export function SheetPortal({
-  container,
-  ...props
-}: SheetPrimitive.Portal.Props): React.ReactElement {
+export function SheetPortal(props: SheetPrimitive.Portal.Props): React.ReactElement {
+  const { container, ...portalProps } = props
   const contextPortalContainer = usePortalContainer()
   return (
     <SheetPrimitive.Portal
       container={container ?? contextPortalContainer}
       data-slot="sheet-portal"
-      {...props}
+      {...portalProps}
     />
   )
 }
