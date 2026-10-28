@@ -29,7 +29,8 @@ final class CatalogSnapshotTests: XCTestCase {
 
   /// Spinners (`ProgressView()`, a `UIActivityIndicatorView`) share a phase taken from the wall
   /// clock, so each capture would catch a different frame. While the tests run, `startAnimating()`
-  /// leaves the spinner still and visible instead. Calling this again restores it.
+  /// starts the indicator, then freezes its layer tree at a fixed local time. Calling this again
+  /// restores the original implementation.
   private static func swapSpinnerStart() {
     guard
       let original = class_getInstanceMethod(
@@ -248,7 +249,10 @@ private struct SnapshotCanvas: View {
 extension UIActivityIndicatorView {
   /// Swapped in for `startAnimating()` during the snapshot tests.
   @objc fileprivate func atom63SnapshotStartAnimating() {
-    hidesWhenStopped = false
+    // After swizzling, this invokes UIKit's original startAnimating() implementation.
+    atom63SnapshotStartAnimating()
+    layer.speed = 0
+    layer.timeOffset = 0.25
   }
 }
 
