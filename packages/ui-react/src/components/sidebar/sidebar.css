@@ -66,11 +66,11 @@
 /*
  * Mobile drawer body (rendered inside Sheet).
  *
- * The Sheet portals to <body>, so the drawer is NOT a descendant of
- * .a63-Sidebar-wrapper and inherits none of the --sidebar-* aliases declared
- * there. They must be redeclared locally, or every declaration below resolves
- * to an invalid value: the drawer paints transparent over the page and nav
- * items lose their hover/active material, borders, and focus rings.
+ * Without a PortalContainerProvider, the Sheet portals to <body>, so the drawer
+ * is NOT a descendant of .a63-Sidebar-wrapper and inherits none of the
+ * --sidebar-* aliases declared there. They stay redeclared locally so the body
+ * fallback remains complete; a scoped portal can additionally inherit the dark
+ * region's token values.
  */
 .a63-Sidebar-mobile {
   --sidebar-bg: var(--a63-surface-sidebar);

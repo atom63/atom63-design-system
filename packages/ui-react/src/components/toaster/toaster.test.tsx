@@ -2,6 +2,7 @@ import { act, render, screen } from '@testing-library/react'
 import { toast } from 'sonner'
 import { describe, expect, it } from 'vitest'
 
+import { PortalContainerProvider } from '../portal-container'
 import { Toaster } from './toaster'
 
 describe('Toaster', () => {
@@ -11,6 +12,28 @@ describe('Toaster', () => {
     const host = await screen.findByLabelText(/Notifications/)
     expect(host.tagName).toBe('SECTION')
     expect(document.body).toContainElement(host)
+  })
+
+  it('mounts inside PortalContainerProvider and uses the application font', async () => {
+    const portalHost = document.createElement('div')
+    document.body.append(portalHost)
+
+    render(
+      <PortalContainerProvider container={portalHost}>
+        <Toaster position="bottom-right" />
+      </PortalContainerProvider>
+    )
+
+    const host = await screen.findByLabelText(/Notifications/)
+    expect(portalHost).toContainElement(host)
+    act(() => {
+      toast.info('Scoped notification', { id: 'scoped-font' })
+    })
+    const message = await screen.findByText('Scoped notification')
+    const toaster = message.closest<HTMLElement>('[data-sonner-toaster]')
+    expect(toaster?.style.fontFamily).toBe('var(--a63-font-app, var(--font-family-sans))')
+    act(() => toast.dismiss('scoped-font'))
+    portalHost.remove()
   })
 
   it('draws the inverse variant as a pill in the inverse colours', async () => {

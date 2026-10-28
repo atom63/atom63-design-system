@@ -1,6 +1,7 @@
-import { fireEvent, render } from '@testing-library/react'
+import { fireEvent, render, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
+import { PortalContainerProvider } from '../portal-container'
 import {
   Sidebar,
   SidebarContent,
@@ -12,6 +13,7 @@ import {
   SidebarMenuItem,
   SidebarMenuSubButton,
   SidebarProvider,
+  SidebarTrigger,
   useSidebar,
 } from './sidebar'
 
@@ -175,6 +177,39 @@ describe('Sidebar', () => {
     fireEvent.keyDown(window, { key: 'b', ctrlKey: true })
     expect(onOpenChange).toHaveBeenCalledWith(false)
     expect(document.cookie).not.toContain('sidebar_state')
+  })
+
+  it('portals the mobile sheet into PortalContainerProvider', async () => {
+    const originalInnerWidth = Object.getOwnPropertyDescriptor(window, 'innerWidth')
+    Object.defineProperty(window, 'innerWidth', { configurable: true, value: 390 })
+    const portalHost = document.createElement('div')
+    document.body.append(portalHost)
+
+    try {
+      const { container, getByRole } = render(
+        <PortalContainerProvider container={portalHost}>
+          <SidebarProvider>
+            <Sidebar aria-label="Mobile navigation">
+              <SidebarContent>Mobile content</SidebarContent>
+            </Sidebar>
+            <SidebarTrigger aria-label="Open mobile navigation" />
+          </SidebarProvider>
+        </PortalContainerProvider>
+      )
+
+      const trigger = getByRole('button', { name: 'Open mobile navigation' })
+      await waitFor(() => expect(container.querySelector('[data-slot="sidebar"]')).toBeNull())
+      fireEvent.click(trigger)
+
+      await waitFor(() => {
+        expect(portalHost.querySelector('[data-mobile="true"]')).toHaveTextContent('Mobile content')
+      })
+    } finally {
+      portalHost.remove()
+      if (originalInnerWidth) {
+        Object.defineProperty(window, 'innerWidth', originalInnerWidth)
+      }
+    }
   })
 
   describe('render', () => {

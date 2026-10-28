@@ -1,6 +1,7 @@
 import { sidebarContract, sidebarMenuButtonTones, themes } from '@atom63/ui-foundation'
 import {
   Button,
+  PortalContainerProvider,
   Sidebar,
   SidebarContent,
   SidebarFooter,
@@ -25,6 +26,7 @@ import {
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { FileText, Inbox, Send, Star } from 'lucide-react'
+import { useState } from 'react'
 
 const meta = {
   title: 'UI React/Sidebar',
@@ -295,6 +297,94 @@ export const DarkSidebar: Story = {
     if (style.color === getComputedStyle(app).color) {
       throw new Error(`Expected light sidebar text on the dark surface, got ${style.color}`)
     }
+  },
+}
+
+function DarkSidebarPhoneDemo() {
+  const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(null)
+
+  return (
+    <UIProvider mode="light">
+      <SidebarProvider style={{ minHeight: '100svh' }}>
+        <UIProvider mode="dark">
+          <div
+            data-testid="dark-sidebar-region"
+            ref={setPortalContainer}
+            style={{ display: 'contents' }}
+          >
+            <PortalContainerProvider container={portalContainer}>
+              <Sidebar aria-label="Mailboxes">
+                <SidebarHeader>
+                  <span style={{ fontWeight: 600, paddingInline: 'var(--a63-space-2)' }}>Mail</span>
+                  <Button variant="primary">New message</Button>
+                </SidebarHeader>
+                <SidebarContent>
+                  <SidebarGroup>
+                    <SidebarMenu>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton isActive>
+                          <Inbox aria-hidden />
+                          <span>Inbox</span>
+                        </SidebarMenuButton>
+                        <SidebarMenuBadge>16</SidebarMenuBadge>
+                      </SidebarMenuItem>
+                      <SidebarMenuItem>
+                        <SidebarMenuButton>
+                          <Send aria-hidden />
+                          <span>Sent</span>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    </SidebarMenu>
+                  </SidebarGroup>
+                </SidebarContent>
+              </Sidebar>
+            </PortalContainerProvider>
+          </div>
+        </UIProvider>
+        <main
+          data-testid="light-phone-app"
+          style={{
+            background: 'var(--a63-surface-panel)',
+            color: 'var(--a63-text-primary)',
+            flex: 1,
+            padding: 'var(--a63-space-4)',
+          }}
+        >
+          <SidebarTrigger aria-label="Open mailboxes" />
+          <p>The inbox stays light.</p>
+        </main>
+      </SidebarProvider>
+    </UIProvider>
+  )
+}
+
+/** The `Phone` suffix gives this story a 390px visual-regression viewport. */
+export const DarkSidebarPhone: Story = {
+  render: () => <DarkSidebarPhoneDemo />,
+  play: async ({ canvasElement }) => {
+    // Non-visual Storybook projects use a desktop viewport; the `Phone` suffix
+    // switches only the visual-regression project to 390px.
+    if (window.innerWidth >= 768) return
+
+    const trigger = canvasElement.querySelector<HTMLButtonElement>('[data-slot="sidebar-trigger"]')
+    if (!trigger) throw new Error('Expected the mobile sidebar trigger')
+    trigger.click()
+
+    const region = canvasElement.querySelector<HTMLElement>('[data-testid="dark-sidebar-region"]')
+    const app = canvasElement.querySelector<HTMLElement>('[data-testid="light-phone-app"]')
+    if (!region || !app) throw new Error('Expected the dark region and light app')
+
+    for (let attempt = 0; attempt < 50; attempt += 1) {
+      const sidebar = region.querySelector<HTMLElement>('[data-mobile="true"]')
+      if (sidebar) {
+        if (getComputedStyle(sidebar).color === getComputedStyle(app).color) {
+          throw new Error('Expected dark-region sidebar text to differ from the light app')
+        }
+        return
+      }
+      await new Promise(resolve => setTimeout(resolve, 20))
+    }
+    throw new Error('Expected the mobile sidebar inside the dark region')
   },
 }
 

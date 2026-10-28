@@ -14,6 +14,7 @@ import * as React from 'react'
 
 import { cn } from '../../lib/cn'
 import { Button } from '../button'
+import { usePortalContainer } from '../portal-container'
 import { ScrollArea } from '../scroll-area'
 
 /*
@@ -75,8 +76,18 @@ export function Sheet({ onOpenChange, open, defaultOpen, ...props }: SheetPrimit
   )
 }
 
-export function SheetPortal(props: SheetPrimitive.Portal.Props): React.ReactElement {
-  return <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />
+export function SheetPortal({
+  container,
+  ...props
+}: SheetPrimitive.Portal.Props): React.ReactElement {
+  const contextPortalContainer = usePortalContainer()
+  return (
+    <SheetPrimitive.Portal
+      container={container ?? contextPortalContainer}
+      data-slot="sheet-portal"
+      {...props}
+    />
+  )
 }
 
 export function SheetTrigger({

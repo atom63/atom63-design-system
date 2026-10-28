@@ -14,6 +14,7 @@ import { Toaster as Sonner, type ToasterProps as SonnerToasterProps } from 'sonn
 import { type ToasterVariant, toasterContract } from '@atom63/ui-foundation'
 
 import { cn } from '../../lib/cn'
+import { usePortalContainer } from '../portal-container'
 
 export interface ToasterProps extends SonnerToasterProps {
   /**
@@ -55,8 +56,9 @@ const inverseToastStyle: React.CSSProperties = {
  * (CopyButton being the main one). It ships here so consuming apps do not need
  * their own sonner dependency just to make package components audible.
  *
- * Colors resolve from the theme contract rather than sonner's built-in
- * palette, so the surface tracks the active Atom63 theme.
+ * Colors and font resolve from the theme contract rather than sonner's built-in
+ * palette and system stack. PortalContainerProvider keeps a host inside a
+ * nested theme region; without one, the host keeps its document-body fallback.
  */
 export function Toaster({
   style,
@@ -65,6 +67,7 @@ export function Toaster({
   ...props
 }: ToasterProps): React.ReactElement {
   const inverse = variant === 'inverse'
+  const portalContainer = usePortalContainer()
   const toaster = (
     <Sonner
       className="toaster group"
@@ -78,6 +81,7 @@ export function Toaster({
       }}
       style={{
         ...variantStyles[variant],
+        fontFamily: 'var(--a63-font-app, var(--font-family-sans))',
         zIndex: 'var(--z-layer-toast)',
         ...style,
       }}
@@ -101,5 +105,5 @@ export function Toaster({
     return toaster
   }
 
-  return createPortal(toaster, document.body)
+  return createPortal(toaster, portalContainer ?? document.body)
 }

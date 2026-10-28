@@ -1,8 +1,8 @@
 import { toasterContract } from '@atom63/ui-foundation'
-import { Button, Toaster, toast } from '@atom63/ui-react'
+import { Button, PortalContainerProvider, Toaster, toast, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 const meta = {
   title: 'UI React/Toaster',
@@ -54,6 +54,71 @@ export const Playground: Story = {
 /* Playground in dark mode, so visual regression covers dark for this component,
    which has no Themes matrix. The global applies to <html>, so portals are dark too. */
 export const Dark: Story = { ...Playground, globals: { mode: 'dark' } }
+
+function ScopedDarkToastDemo() {
+  const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    toast.success('Dark region saved', { id: 'scoped-dark-story' })
+    return () => {
+      toast.dismiss('scoped-dark-story')
+    }
+  }, [])
+
+  return (
+    <UIProvider mode="light">
+      <div
+        style={{
+          background: 'var(--a63-surface-panel)',
+          color: 'var(--a63-text-primary)',
+          minHeight: 240,
+          padding: 24,
+          width: 480,
+        }}
+      >
+        Light app
+        <UIProvider mode="dark">
+          <div
+            data-testid="dark-toast-region"
+            ref={setPortalContainer}
+            style={{
+              background: 'var(--a63-surface-page)',
+              color: 'var(--a63-text-primary)',
+              marginBlockStart: 16,
+              minHeight: 160,
+              padding: 24,
+            }}
+          >
+            Dark region
+            <PortalContainerProvider container={portalContainer}>
+              <Toaster position="bottom-center" />
+            </PortalContainerProvider>
+          </div>
+        </UIProvider>
+      </div>
+    </UIProvider>
+  )
+}
+
+/** A nested dark region owns the toast portal and its font/theme variables. */
+export const ScopedDarkRegion: Story = {
+  render: () => <ScopedDarkToastDemo />,
+  play: async ({ canvasElement }) => {
+    const region = canvasElement.querySelector<HTMLElement>('[data-testid="dark-toast-region"]')
+    if (!region) throw new Error('Expected the dark toast region')
+    for (let attempt = 0; attempt < 50; attempt += 1) {
+      const toaster = region.querySelector<HTMLElement>('[data-sonner-toaster]')
+      if (toaster) {
+        if (toaster.style.fontFamily !== 'var(--a63-font-app, var(--font-family-sans))') {
+          throw new Error(`Expected the application font, got ${toaster.style.fontFamily}`)
+        }
+        return
+      }
+      await new Promise(resolve => setTimeout(resolve, 20))
+    }
+    throw new Error('Expected the toast inside the dark region')
+  },
+}
 
 function RaiseOnMount() {
   useEffect(() => {
