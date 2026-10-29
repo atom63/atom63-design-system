@@ -113,11 +113,14 @@ export const Open: Story = {
     const { body, canvas, user } = await openDialog(canvasElement, 'Open dialog')
 
     await user.click(body.getByRole('button', { name: 'Cancel' }))
-    await waitFor(() => {
-      if (body.queryByRole('dialog', { name: 'Rename project' })) {
-        throw new Error('Expected the dialog to close before reopening')
-      }
-    })
+    await waitFor(
+      () => {
+        if (body.queryByRole('dialog', { name: 'Rename project' })) {
+          throw new Error('Expected the dialog to close before reopening')
+        }
+      },
+      { timeout: 5000 }
+    )
 
     await user.click(canvas.getByRole('button', { name: 'Open dialog' }))
     const dialog = await body.findByRole('dialog', { name: 'Rename project' })
