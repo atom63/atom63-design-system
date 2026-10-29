@@ -15,7 +15,7 @@ catalog:
   '@vitejs/plugin-react': ^6.1.2
   jsdom: 29.1.1
   tailwindcss: ^4.3.2
-  typescript: ~5.8.3
+  typescript: ~6.0.3
   vite: 8.3.4
   vitest: 4.1.11
 
