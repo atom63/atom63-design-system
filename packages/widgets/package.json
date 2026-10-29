@@ -67,7 +67,7 @@
   "dependencies": {
     "@atom63/ui-react": "workspace:*",
     "lucide-react": "^1.34.0",
-    "motion": "^13.1.1"
+    "motion": "^14.6.0"
   },
   "peerDependencies": {
     "react": "^19.1.0",
