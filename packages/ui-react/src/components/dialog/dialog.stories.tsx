@@ -14,6 +14,8 @@ import {
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { waitFor, within } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { type ComponentProps, type RefObject, useRef } from 'react'
 
 const meta = {
@@ -90,6 +92,57 @@ function ReviewCell({ label, providerProps }: { label: string; providerProps: Pr
 
 export const Playground: Story = {
   render: () => <RenameDialog triggerLabel="Open dialog" />,
+}
+
+async function openDialog(canvasElement: HTMLElement, triggerLabel: string) {
+  const canvas = within(canvasElement)
+  const body = within(canvasElement.ownerDocument.body)
+  const user = userEvent.setup()
+
+  await user.click(canvas.getByRole('button', { name: triggerLabel }))
+  const dialog = await body.findByRole('dialog', { name: 'Rename project' })
+  if (dialog.getClientRects().length === 0) throw new Error('Expected the dialog to be visible')
+
+  return { body, canvas, user }
+}
+
+/** Opens, closes and reopens through real pointer interactions, then leaves the popup visible. */
+export const Open: Story = {
+  render: () => <RenameDialog triggerLabel="Open dialog" />,
+  play: async ({ canvasElement }) => {
+    const { body, canvas, user } = await openDialog(canvasElement, 'Open dialog')
+
+    await user.click(body.getByRole('button', { name: 'Cancel' }))
+    await waitFor(() => {
+      if (body.queryByRole('dialog', { name: 'Rename project' })) {
+        throw new Error('Expected the dialog to close before reopening')
+      }
+    })
+
+    await user.click(canvas.getByRole('button', { name: 'Open dialog' }))
+    const dialog = await body.findByRole('dialog', { name: 'Rename project' })
+    if (dialog.getClientRects().length === 0) {
+      throw new Error('Expected the reopened dialog to be visible')
+    }
+  },
+}
+
+/** A portalled popup that must keep the tokens from its scoped dark provider. */
+export const OpenDark: Story = {
+  render: () => (
+    <ReviewCell label="modern / dark" providerProps={{ mode: 'dark', theme: 'modern' }} />
+  ),
+  play: async ({ canvasElement }) => {
+    await openDialog(canvasElement, 'Rename project')
+  },
+}
+
+/** The `Phone` suffix gives this opened story a 390px visual-regression viewport. */
+export const OpenPhone: Story = {
+  render: () => <RenameDialog triggerLabel="Open dialog" />,
+  play: async ({ canvasElement }) => {
+    await openDialog(canvasElement, 'Open dialog')
+  },
 }
 
 export const Sizes: Story = {
