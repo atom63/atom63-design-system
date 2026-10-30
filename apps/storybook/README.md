@@ -130,7 +130,9 @@ the test grows the viewport to the page before capturing. To keep screenshots de
 test freezes CSS motion, loads the Geist fonts before capturing, and replaces remote images with
 one fixed placeholder.
 
-Font rendering differs across operating systems, so only the Linux baselines produced by the
+The comparison is the `visual` job of [CI](../../.github/workflows/ci.yml), so a failed comparison
+fails the required `ci-status` check and blocks the merge. Font rendering differs across operating
+systems, so only the Linux baselines produced by the
 [Visual regression workflow](../../.github/workflows/visual.yml) are committed. Local runs write
 `-darwin` or `-win32` screenshots, which are ignored by git and useful only for comparing two
 local runs:
@@ -140,11 +142,10 @@ pnpm --filter @atom63/storybook test:visual
 ```
 
 When a pull request changes how something looks on purpose, run the **Visual regression**
-workflow manually on the branch with **update** checked. It regenerates the baselines in the same
-container, commits them to the branch, and starts CI and a comparison run for that commit; review
-the changed images in the commit. When the
-comparison fails, the workflow uploads the actual and diff images as the `visual-results`
-artifact.
+workflow manually on the branch. It regenerates the baselines in the same container, commits them
+to the branch, and starts CI, with its comparison, for that commit; review the changed images in
+the commit. When the comparison fails, the CI `visual` job uploads the actual and diff images as
+the `visual-results` artifact.
 
 A story without a baseline fails too. On CI, Vitest saves its capture in the same artifact as
 `<story>-reference-chromium-linux.png` instead of writing a baseline. To add it, drop the

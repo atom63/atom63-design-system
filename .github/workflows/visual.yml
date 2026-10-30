@@ -1,23 +1,17 @@
 name: Visual regression
 
-# Compares every Storybook story against its committed baseline screenshot.
-# Baselines are generated and compared only here, inside the pinned Playwright
-# container, because font rendering differs across operating systems.
+# Regenerates the Storybook baseline screenshots. The comparison itself is the
+# `visual` job in ci.yml, so a visual regression fails the required `ci-status`.
+# Baselines are generated only inside the pinned Playwright container, the same
+# one the comparison uses, because font rendering differs across operating
+# systems.
 #
 # To create or update baselines after an intentional visual change, run this
-# workflow manually on your branch with `update` checked. It regenerates the
-# screenshots in the same container and commits them to that branch.
+# workflow manually on your branch. It regenerates the screenshots and commits
+# them to that branch.
 
 on:
-  push:
-    branches: [main]
-  pull_request:
   workflow_dispatch:
-    inputs:
-      update:
-        description: Regenerate the baseline screenshots and commit them to this branch
-        type: boolean
-        default: false
 
 permissions:
   contents: read
@@ -27,53 +21,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # Runs pull request code, so its token stays read-only.
-  visual:
-    if: ${{ !inputs.update }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    # Keep in step with the root `playwright` version.
-    container: mcr.microsoft.com/playwright:v1.61.1-noble
-
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - name: Set up Node.js
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
-        with:
-          node-version-file: .nvmrc
-
-      - name: Enable pnpm with Corepack
-        run: corepack enable
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Compare stories with baselines
-        run: pnpm --filter @atom63/storybook test:visual
-
-      # Diffs for failed comparisons. On CI Vitest does not write a missing
-      # baseline into __screenshots__; it saves the capture here as
-      # `<story>-reference-chromium-linux.png`, so this artifact is also how a
-      # new story's first baseline gets into a pull request.
-      - name: Upload screenshot results
-        if: failure()
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: visual-results
-          path: apps/storybook/visual/__diff__
-          if-no-files-found: ignore
-
-  # Only a manual run with `update` checked can push baselines, and only this
-  # job gets write access.
+  # Only a manual run can push baselines, and only through the bot app's token.
   update-baselines:
-    if: ${{ inputs.update }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    # Keep in step with the root `playwright` version and the visual job in ci.yml.
     container: mcr.microsoft.com/playwright:v1.61.1-noble
-    # The baseline commit is pushed by the Atom63 bot app, so CI and the visual
-    # comparison run on it like on any other push.
+    # The baseline commit is pushed by the Atom63 bot app, so CI, with its visual
+    # comparison, runs on it like on any other push.
     permissions:
       contents: read
 
