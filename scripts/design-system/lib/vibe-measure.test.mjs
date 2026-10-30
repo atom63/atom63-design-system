@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 
 import {
+  caseValidity,
   changedFiles,
   countJsxElements,
   countTypeErrors,
@@ -264,5 +265,69 @@ describe('measureSources', () => {
       [['src/pages/a.tsx', 'multiple-primary']]
     )
     assert.deepEqual(measures.craft, [])
+  })
+})
+
+describe('caseValidity', () => {
+  const page = variant =>
+    `import { Button } from '@atom63/ui-react'\nexport const P = () => <main className="p-4"><Button${variant}>Buy</Button></main>\n`
+  // A builder run that changed `files`, typechecked, built and took every screenshot.
+  const built = files => ({
+    files: [...files.keys()],
+    measures: measureSources(files),
+    typecheck: { ok: true, out: '' },
+    build: { ok: true, out: '' },
+  })
+  const shots = { desktop: true, mobile: true }
+
+  it('accepts a built, rule-clean case with every screenshot', () => {
+    const result = built(new Map([['src/pages/p.tsx', page(' variant="primary"')]]))
+    assert.deepEqual(caseValidity(result, { screenshots: shots }), { ok: true, reasons: [] })
+  })
+
+  it('rejects a case that builds with a raw color', () => {
+    const result = built(
+      new Map([
+        ['src/pages/p.tsx', page(' variant="primary"')],
+        ['src/styles.css', '.hero { background: oklch(0.7 0.1 140); }\n'],
+      ])
+    )
+    assert.equal(result.build.ok, true)
+    assert.deepEqual(caseValidity(result, { screenshots: shots }), {
+      ok: false,
+      reasons: ['craft: 1 (raw-color)', 'literal colors: 1'],
+    })
+  })
+
+  it('rejects a case that builds with a Button without a variant', () => {
+    const result = built(new Map([['src/pages/p.tsx', page('')]]))
+    assert.equal(result.build.ok, true)
+    assert.deepEqual(caseValidity(result, { screenshots: shots }), {
+      ok: false,
+      reasons: ['warnings: 1 (button-without-variant)'],
+    })
+  })
+
+  it('rejects a case whose builder changed no source', () => {
+    const result = built(new Map())
+    assert.deepEqual(caseValidity(result, { screenshots: shots }).reasons, ['no source change'])
+  })
+
+  it('rejects a failed typecheck, a failed build, a builder error and a missing screenshot', () => {
+    const result = {
+      ...built(new Map([['src/pages/p.tsx', page(' variant="primary"')]])),
+      error: 'claude exited 1',
+      typecheck: { ok: false, out: 'error TS2322' },
+      build: { ok: false, out: '' },
+    }
+    assert.deepEqual(
+      caseValidity(result, { screenshots: { desktop: true, mobile: false } }).reasons,
+      [
+        'builder error: claude exited 1',
+        'typecheck failed',
+        'build failed',
+        'missing screenshot: mobile',
+      ]
+    )
   })
 })
