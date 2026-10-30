@@ -18,7 +18,7 @@ const meta = {
     variant: { control: 'inline-radio', options: badgeVariants },
     size: { control: 'inline-radio', options: badgeSizes },
   },
-  args: { children: 'Badge', variant: 'default', size: 'md' },
+  args: { children: 'Badge visual gate test', variant: 'default', size: 'md' },
 } satisfies Meta<typeof Badge>
 
 export default meta
