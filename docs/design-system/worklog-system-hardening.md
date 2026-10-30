@@ -34,8 +34,11 @@ Verification:
   (20 raw-color), `audio-player-codex-r1` (6 raw-color) and `product-buy-codex-r1`
   (button-without-variant) are now invalid. `validity.mjs` exits 1 for those three and 0 for
   `settings-grouped-r11`, `send-money-r11`, `store-menu-r11` and `place-card-codex-r1`.
-- Not verified: that a broken visual baseline fails `ci-status` on GitHub. That needs a draft test PR
-  pushed; YZ asked to be consulted first.
+- Gate on GitHub (#251, #252): on #251 the `visual` job ran inside CI and passed (5m42s). Draft
+  #252 changed only the Badge Playground story text (plus the agent index it feeds, so `verify`
+  stayed green). Run `41133841240`: `visual` failed with "Screenshot does not match the stored
+  reference" (1 failed, 828 passed), and `ci-status` printed `visual: failure` and failed while
+  every other job passed. #252 was closed and its branch deleted.
 
 Open:
 
@@ -48,8 +51,9 @@ Open:
 - Not covered: the audit's requirement 7 (record the exact tarballs, commits, builder and model);
   product-token extensions (PR 4) that would let lesson and audio pass; iOS literal colors.
 
-Next: with YZ's approval, push the branch, open the PR and a draft PR that breaks one baseline to
-prove `ci-status` fails; then PR 2 (installable CLI path).
+Next: YZ reviews and merges #251, then the main checkout moves to `main` (it is on
+`codex/full-mobile-ios-rerun`). Then PR 2 (installable CLI path): read-only check and a proposal
+first.
 
 ---
 
@@ -71,7 +75,7 @@ prove `ci-status` fails; then PR 2 (installable CLI path).
 
 - `pnpm test:scripts`：158 个测试全部通过。`pnpm check:craft` 通过。改动文件 Prettier 干净。两个 workflow 都能解析；`ci-status` 依赖 `changes, verify, docs, storybook, cross-browser, visual, ios, ios-snapshots`。
 - 回放所有已测 warning 的 Web 结果：25 个有效。`lesson-path-codex-r1`（20 个 raw-color）、`audio-player-codex-r1`（6 个 raw-color）、`product-buy-codex-r1`（button-without-variant）现在都判为无效。`validity.mjs` 对这三个退出 1，对 `settings-grouped-r11`、`send-money-r11`、`store-menu-r11`、`place-card-codex-r1` 退出 0。
-- 未验证：GitHub 上基线被破坏时 `ci-status` 是否失败。这需要推一个 draft 测试 PR，YZ 要求先问。
+- GitHub 上的门禁（#251、#252）：#251 上 `visual` job 在 CI 内运行并通过（5m42s）。draft #252 只改了 Badge Playground story 的文案（外加它影响的 agent index，以保持 `verify` 为绿）。运行 `41133841240`：`visual` 报 "Screenshot does not match the stored reference" 失败（1 失败、828 通过），`ci-status` 输出 `visual: failure` 并失败，其余 job 全部通过。#252 已关闭并删除分支。
 
 遗留：
 
@@ -79,4 +83,4 @@ prove `ci-status` fails; then PR 2 (installable CLI path).
 - `validity.mjs` 从主 checkout 导入 `caseValidity`，PR 合并并更新主 checkout 之前那里没有这个函数。在那之前用 `ATOM63_REPO=<本 worktree>` 运行。
 - 未覆盖：审计第 7 条（记录 tarball、commit、builder、model）；让 lesson/audio 能通过的产品 token 扩展（PR 4）；iOS 的 literal color。
 
-下一步：YZ 同意后，推分支、开 PR，再开一个故意破坏一张基线的 draft PR，证明 `ci-status` 会失败；然后做 PR 2（可安装的 CLI 路径）。
+下一步：YZ 审阅并合并 #251，然后把主 checkout 切回 `main`（目前在 `codex/full-mobile-ios-rerun`）。之后做 PR 2（可安装的 CLI 路径）：先只读检查并出方案。
