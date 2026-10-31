@@ -283,7 +283,7 @@ jobs:
 
   # Storybook render, axe, runtime craft and SSR tests. The Playwright image ships the
   # browsers, so nothing is downloaded. Keep it in step with the root
-  # `playwright` version, like visual.yml.
+  # `playwright` version, like the visual job and visual.yml.
   storybook:
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -341,6 +341,44 @@ jobs:
 
       - name: Render stories in Firefox and WebKit
         run: pnpm --filter @atom63/storybook test:cross-browser
+
+  # Compares every story against its committed Linux baseline. Baselines are
+  # generated and compared only inside this pinned container, because font
+  # rendering differs across operating systems; visual.yml regenerates them.
+  visual:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container: mcr.microsoft.com/playwright:v1.61.1-noble
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Enable pnpm with Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Compare stories with baselines
+        run: pnpm --filter @atom63/storybook test:visual
+
+      # Diffs for failed comparisons. On CI Vitest does not write a missing
+      # baseline into __screenshots__; it saves the capture here as
+      # `<story>-reference-chromium-linux.png`, so this artifact is also how a
+      # new story's first baseline gets into a pull request.
+      - name: Upload screenshot results
+        if: failure()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: visual-results
+          path: apps/storybook/visual/__diff__
+          if-no-files-found: ignore
 
   ios:
     needs: changes
@@ -445,7 +483,7 @@ jobs:
   # adding or splitting jobs never needs a settings change.
   ci-status:
     if: always()
-    needs: [changes, verify, docs, storybook, cross-browser, ios, ios-snapshots]
+    needs: [changes, verify, docs, storybook, cross-browser, visual, ios, ios-snapshots]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
