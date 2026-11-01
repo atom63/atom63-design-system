@@ -5,7 +5,7 @@ Query the Atom63 design system from the command line or an MCP host: components,
 examples, docs pages and the rules for building UI with the system. The plan and its decisions
 are in [`docs/design-system/agent-interface-plan.md`](../../docs/design-system/agent-interface-plan.md).
 
-Private while the interface settles. Status by step:
+Released on the `beta` tag with the other packages, starting at `0.1.0-beta.0`. Status by step:
 
 1. **Agent index and query core.** `generated/agent-index.json` holds every answer, so queries
    need no repo, network or build. `src/core.mjs` exposes `search`, `component`, `example`,
@@ -40,6 +40,13 @@ pnpm atom63 token --a63-surface-page
 pnpm atom63 docs theme-system
 pnpm atom63 rules
 pnpm atom63 manifest --json
+```
+
+In another project, install it as a dev dependency and run it with `pnpm exec`:
+
+```bash
+pnpm add -D @atom63/cli@beta
+pnpm exec atom63 build billing settings page
 ```
 
 Every command takes `--json` and prints one typed envelope on stdout, `{ "type": …, "data": … }`.

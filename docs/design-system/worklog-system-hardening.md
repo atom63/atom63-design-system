@@ -55,6 +55,25 @@ Next: YZ reviews and merges #251, then the main checkout moves to `main` (it is 
 `codex/full-mobile-ios-rerun`). Then PR 2 (installable CLI path): read-only check and a proposal
 first.
 
+[claude] PR 2a on `claude/system-hardening-pr2a`, from `main` `ca525b0f` (#251 merged). YZ chose
+publishing `@atom63/cli` (audit option A), split into PR 2a, a first publish, and PR 2b, with
+`0.1.0-beta.0` as the first version. The proposal is
+`docs/design-system/proposal-system-hardening-pr2-cli.md` (local, not committed).
+
+Done:
+
+- `packages/cli` is publishable: no `private`, version `0.1.0-beta.0`, `repository` and
+  `publishConfig.access: public` like the other packages, and the tests left out of `files`.
+- `check:ds-pack-smoke` packs the CLI with the other three packages, installs it in the consumer
+  project, and runs `atom63 build`, `component`, `example` and `token` there.
+- The CLI README says how to install it in another project.
+
+Verification: `pnpm check:ds-pack-smoke` passes with all four tarballs and the `cli` step.
+
+Next: YZ runs `pnpm release:bootstrap packages/cli` on `main` after PR 2a merges. Then PR 2b adds
+`packages/cli` to both published-package lists and makes the registry smoke install
+`@atom63/cli@beta` and run the same four commands.
+
 ---
 
 # 工作日志：系统加固
@@ -84,3 +103,15 @@ first.
 - 未覆盖：审计第 7 条（记录 tarball、commit、builder、model）；让 lesson/audio 能通过的产品 token 扩展（PR 4）；iOS 的 literal color。
 
 下一步：YZ 审阅并合并 #251，然后把主 checkout 切回 `main`（目前在 `codex/full-mobile-ios-rerun`）。之后做 PR 2（可安装的 CLI 路径）：先只读检查并出方案。
+
+[claude] PR 2a 在 `claude/system-hardening-pr2a`，从 `main` `ca525b0f`（#251 已合并）拉出。YZ 选定发布 `@atom63/cli`（审计方案 A），拆成 PR 2a、首发、PR 2b，首个版本 `0.1.0-beta.0`。方案在 `docs/design-system/proposal-system-hardening-pr2-cli.md`（本地，未提交）。
+
+已完成：
+
+- `packages/cli` 可发布：去掉 `private`，版本 `0.1.0-beta.0`，像其他包一样加 `repository` 和 `publishConfig.access: public`，`files` 不再包含测试。
+- `check:ds-pack-smoke` 把 CLI 和另外三个包一起 pack，装进消费者项目，并在那里跑 `atom63 build`、`component`、`example`、`token`。
+- CLI README 写明在其他项目里怎么安装。
+
+验证：`pnpm check:ds-pack-smoke` 通过，四个 tarball 和 `cli` 步骤都过。
+
+下一步：PR 2a 合并后，YZ 在 `main` 上跑 `pnpm release:bootstrap packages/cli`。之后 PR 2b 把 `packages/cli` 加进两份发布包列表，并让 registry smoke 安装 `@atom63/cli@beta`、跑同样四条命令。

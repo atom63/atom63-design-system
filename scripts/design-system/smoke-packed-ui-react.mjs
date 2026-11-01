@@ -19,6 +19,7 @@ const packageDefinitions = [
     required: true,
   },
   { name: '@atom63/ui-react', directory: 'packages/ui-react', required: true },
+  { name: '@atom63/cli', directory: 'packages/cli', required: true },
 ]
 
 const tarballSearchDirectories = [
@@ -178,6 +179,15 @@ async function writeHarness(harnessDirectory, packedPackages) {
     packageManager: 'pnpm@10.29.2',
     scripts: {
       check: 'tsc --noEmit && vite build && node dev-resolve.mjs',
+      // The query path AGENTS.md prescribes, answered from the packed index alone.
+      cli: [
+        'atom63 build settings screen --json',
+        'atom63 component button --json',
+        'atom63 example button --json',
+        'atom63 token --a63-surface-page --json',
+      ]
+        .map(command => `${command} > /dev/null`)
+        .join(' && '),
     },
     dependencies: {
       '@atom63/styles': tarballSpec('@atom63/styles'),
@@ -187,6 +197,7 @@ async function writeHarness(harnessDirectory, packedPackages) {
       'react-dom': installedVersion('react-dom'),
     },
     devDependencies: {
+      '@atom63/cli': tarballSpec('@atom63/cli'),
       '@types/react': installedVersion('@types/react'),
       '@types/react-dom': installedVersion('@types/react-dom'),
       typescript: installedVersion('typescript'),
@@ -424,6 +435,7 @@ async function main() {
     await writeHarness(harnessDirectory, packedPackages)
     const installCommand = await installHarness(harnessDirectory)
     await run(pnpmCommand, ['run', 'check'], { cwd: harnessDirectory })
+    await run(pnpmCommand, ['run', 'cli'], { cwd: harnessDirectory })
 
     const requiredTarballs = packedPackages
       .filter(item => item.required)
@@ -434,6 +446,7 @@ async function main() {
     console.log(`Tarballs: ${requiredTarballs}`)
     console.log(`Install: ${installCommand}`)
     console.log('Command: pnpm run check (tsc --noEmit && vite build && vite dev resolve)')
+    console.log('Command: pnpm run cli (atom63 build, component, example, token)')
     succeeded = true
   } catch (error) {
     console.error(`\nAtom63 packed package smoke failed. Harness preserved at: ${harnessDirectory}`)
