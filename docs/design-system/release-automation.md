@@ -53,7 +53,7 @@ pnpm release:bootstrap packages/<name> [packages/<other> …]
 
 For each package, `scripts/design-system/bootstrap-npm-package.mjs`:
 
-1. builds it;
+1. builds it, if it has a `build` script;
 2. publishes it to the `beta` tag, if npm does not have that version yet;
 3. waits until npm serves it;
 4. adds this repository's GitHub Actions trusted publisher with `npm trust github` (npm 11.15 or later; the script runs the latest npm for this step).
