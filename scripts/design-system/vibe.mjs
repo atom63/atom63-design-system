@@ -3,9 +3,9 @@
  * better UI with the Atom63 tools than without them?
  *
  * For each brief in scripts/design-system/vibe/briefs, a fresh `claude -p`
- * agent builds the page twice, each time in a new temporary project:
- * - `ds`: an `@atom63/create` site installed against freshly packed tarballs,
- *   with its AGENTS.md and the `atom63` MCP server;
+ * agent builds the page in three arms, each time in a new temporary project:
+ * - `ds-core`: an `@atom63/create` site with components, tokens and contracts but no templates;
+ * - `ds-guided`: the same site with Atom63 templates, build kits and examples;
  * - `plain`: Vite, React, TypeScript and Tailwind v4 at the same versions,
  *   with no design system, no AGENTS.md and no MCP server.
  * Then it measures what each agent wrote (craft rules, type errors, the build,
@@ -17,8 +17,9 @@
  * Needs the design system packages built (dist is packed), the network for
  * third-party dependencies, Playwright's Chromium, and a logged-in `claude`.
  *
- * Usage: node scripts/design-system/vibe.mjs [--brief <id>] [--arms ds,plain]
- *   [--model <id>] [--dry-run] [--keep] [--yes]
+ * Usage: node scripts/design-system/vibe.mjs [--brief <id>]
+ *   [--arms plain,ds-core,ds-guided] [--track generalization|reference]
+ *   [--artifacts <dir>] [--model <id>] [--dry-run] [--keep] [--yes]
  */
 import { spawn } from 'node:child_process'
 import {
@@ -52,6 +53,8 @@ import {
 import {
   builderArgs,
   builderPrompt,
+  captureViewports,
+  coreAgentGuide,
   formatCommand,
   judgeArgs,
   pagePath,
@@ -68,6 +71,7 @@ const knownTokens = JSON.parse(
   readFileSync(path.join(root, 'packages/styles/generated/atom63.tokens.json'), 'utf8')
 ).entries.map(entry => entry.cssVar)
 const briefsDir = path.join(root, 'scripts/design-system/vibe/briefs')
+const referencesDir = path.join(root, 'scripts/design-system/vibe/references')
 const auditsDir = path.join(root, 'docs/design-system/audits')
 const cliBin = path.join(root, 'packages/cli/src/bin.mjs')
 const packages = {
@@ -76,7 +80,8 @@ const packages = {
   '@atom63/ui-react': 'packages/ui-react',
   '@atom63/mdx': 'packages/mdx',
 }
-const allArms = ['ds', 'plain']
+const defaultArms = ['plain', 'ds-core', 'ds-guided']
+const supportedArms = [...defaultArms, 'ds']
 const limits = { builderTurns: 80, builderBudgetUsd: 5, judgeTurns: 30, judgeBudgetUsd: 2 }
 const agentTimeoutMs = 45 * 60 * 1000
 
@@ -94,8 +99,15 @@ const option = name => {
 const dryRun = flag('--dry-run')
 const keep = flag('--keep')
 const model = option('--model')
-const arms = (option('--arms') ?? allArms.join(',')).split(',').map(arm => arm.trim())
-for (const arm of arms) if (!allArms.includes(arm)) throw new Error(`Unknown arm "${arm}"`)
+const track = option('--track') ?? 'generalization'
+if (!['generalization', 'reference'].includes(track))
+  throw new Error('--track must be generalization or reference')
+const artifactsOption = option('--artifacts')
+const artifactsDir = artifactsOption ? path.resolve(root, artifactsOption) : null
+if (artifactsDir && existsSync(artifactsDir))
+  throw new Error(`Artifacts directory already exists: ${artifactsDir}`)
+const arms = (option('--arms') ?? defaultArms.join(',')).split(',').map(arm => arm.trim())
+for (const arm of arms) if (!supportedArms.includes(arm)) throw new Error(`Unknown arm "${arm}"`)
 const briefFlag = option('--brief')
 
 const briefs = readdirSync(briefsDir)
@@ -105,13 +117,14 @@ const briefs = readdirSync(briefsDir)
     parseBrief(file.replace(/\.md$/, ''), readFileSync(path.join(briefsDir, file), 'utf8'))
   )
   .filter(brief => !briefFlag || brief.id === briefFlag)
+  .filter(brief => track !== 'reference' || existsSync(path.join(referencesDir, brief.id)))
 if (briefs.length === 0) {
   throw new Error(`No brief "${briefFlag}". Briefs: ${readdirSync(briefsDir).join(', ')}`)
 }
 
 const ceiling = briefs.length * (arms.length * limits.builderBudgetUsd + limits.judgeBudgetUsd)
 process.stdout.write(
-  `Vibe run: ${briefs.length} brief(s) (${briefs.map(({ id }) => id).join(', ')}) × ${arms.join(', ')}, model ${model ?? 'the CLI default'}.\n` +
+  `Vibe run: ${briefs.length} brief(s) (${briefs.map(({ id }) => id).join(', ')}) × ${arms.join(', ')}, track ${track}, model ${model ?? 'the CLI default'}.\n` +
     `Cost ceiling: $${ceiling.toFixed(2)} (each builder is capped at $${limits.builderBudgetUsd} and ${limits.builderTurns} turns, each judge at $${limits.judgeBudgetUsd}); a typical run spends well under it.\n`
 )
 if (!dryRun && briefs.length > 1 && !flag('--yes')) {
@@ -219,43 +232,45 @@ async function preview(directory) {
 }
 
 /**
- * Open the brief's page at desktop and phone widths in light mode: run axe on
- * the desktop render and take full-page PNGs for the judge plus small JPEG
- * thumbnails of the first screen for the report.
+ * Open the brief's page at every benchmark viewport in light mode: run axe and
+ * take full-page PNGs for the judge plus small JPEG thumbnails for the report.
  */
 async function inspectPage(browser, url, outDir) {
   mkdirSync(outDir, { recursive: true })
-  const result = { consoleErrors: [], textLength: 0 }
-  const widths = { desktop: { width: 1280, height: 800 }, mobile: { width: 375, height: 812 } }
-  for (const [name, viewport] of Object.entries(widths)) {
+  const result = { consoleErrors: [], textLength: 0, axe: { violations: [], nodes: 0 } }
+  for (const [name, viewport] of Object.entries(captureViewports)) {
     const context = await browser.newContext({ viewport, colorScheme: 'light' })
     const page = await context.newPage()
-    if (name === 'desktop') {
-      page.on('console', message => {
-        if (message.type() === 'error') result.consoleErrors.push(message.text().slice(0, 300))
-      })
-      page.on('pageerror', error => result.consoleErrors.push(String(error).slice(0, 300)))
-    }
+    page.on('console', message => {
+      if (message.type() === 'error')
+        result.consoleErrors.push(`${name}: ${message.text().slice(0, 300)}`)
+    })
+    page.on('pageerror', error =>
+      result.consoleErrors.push(`${name}: ${String(error).slice(0, 300)}`)
+    )
     await page.goto(url, { waitUntil: 'networkidle' })
     await page.waitForTimeout(500)
     await page.screenshot({ path: path.join(outDir, `${name}.png`), fullPage: true })
     await page.screenshot({ path: path.join(outDir, `${name}.jpg`), type: 'jpeg', quality: 55 })
-    if (name === 'desktop') {
+    if (name === 'desktop')
       result.textLength = (await page.evaluate(() => document.body.innerText)).trim().length
-      await page.addScriptTag({ content: axe.source })
-      const axeResult = await page.evaluate(() =>
-        window.axe.run(document, { resultTypes: ['violations'] })
-      )
-      result.axe = {
-        violations: axeResult.violations.map(violation => ({
-          id: violation.id,
-          impact: violation.impact,
-          nodes: violation.nodes.length,
-          help: violation.help,
-        })),
-        nodes: axeResult.violations.reduce((sum, violation) => sum + violation.nodes.length, 0),
-      }
-    }
+    await page.addScriptTag({ content: axe.source })
+    const axeResult = await page.evaluate(() =>
+      window.axe.run(document, { resultTypes: ['violations'] })
+    )
+    result.axe.violations.push(
+      ...axeResult.violations.map(violation => ({
+        viewport: name,
+        id: violation.id,
+        impact: violation.impact,
+        nodes: violation.nodes.length,
+        help: violation.help,
+      }))
+    )
+    result.axe.nodes += axeResult.violations.reduce(
+      (sum, violation) => sum + violation.nodes.length,
+      0
+    )
     await context.close()
   }
   return result
@@ -292,11 +307,16 @@ const tarballFor = name => {
 function setupProject(arm, brief, directory) {
   const name = `vibe-${brief.id}-${arm}`
   let files
-  if (arm === 'ds') {
+  if (arm !== 'plain') {
     files = planProject({ name, kind: 'site', title: 'Vibe', versions })
     // The agent has the atom63 MCP server, so its AGENTS.md points at the CLI
     // commands instead of the published docs.
-    files.set('AGENTS.md', syncAgentsBlock(files.get('AGENTS.md')))
+    files.set(
+      'AGENTS.md',
+      arm === 'ds-core'
+        ? coreAgentGuide(files.get('AGENTS.md'))
+        : syncAgentsBlock(files.get('AGENTS.md'))
+    )
     const manifest = JSON.parse(files.get('package.json'))
     const overrides = Object.fromEntries(Object.keys(packages).map(pkg => [pkg, tarballFor(pkg)]))
     for (const pkg of Object.keys(packages)) manifest.dependencies[pkg] = overrides[pkg]
@@ -306,7 +326,14 @@ function setupProject(arm, brief, directory) {
     files = planPlainProject({ name, versions })
   }
   writeProject(directory, files)
+  if (track === 'reference') {
+    cpSync(path.join(referencesDir, brief.id), path.join(directory, '.vibe/reference'), {
+      recursive: true,
+    })
+  }
+  process.stdout.write(`Setting up ${brief.id}/${arm}: installing dependencies…\n`)
   run('pnpm', ['install', '--no-frozen-lockfile', '--silent'], directory)
+  process.stdout.write(`Set up ${brief.id}/${arm}.\n`)
   return snapshot(directory)
 }
 
@@ -319,27 +346,31 @@ const report = {
   dirty: capture('git', ['status', '--porcelain'], root).output.trim().length > 0,
   claudeVersion: capture('claude', ['--version'], root).output.trim(),
   modelFlag: model ?? null,
+  track,
   models: [],
   arms,
   limits,
-  promptTemplate: builderPrompt({
-    id: '<brief id>',
-    title: '<brief title>',
-    body: '<brief body>',
-  }),
+  promptTemplate: builderPrompt(
+    {
+      id: '<brief id>',
+      title: '<brief title>',
+      body: '<brief body>',
+    },
+    { track }
+  ),
   briefs: [],
 }
 
 let failed = false
 let browser
 try {
-  if (arms.includes('ds')) packTarballs()
+  if (arms.some(arm => arm !== 'plain')) packTarballs()
 
   for (const brief of briefs) {
     process.stdout.write(`\n=== ${brief.id} ===\n`)
     const entry = { brief, arms: {}, judge: null, thumbnails: [] }
     report.briefs.push(entry)
-    const prompt = builderPrompt(brief)
+    const prompt = builderPrompt(brief, { track })
     const projects = Object.fromEntries(arms.map(arm => [arm, path.join(work, brief.id, arm)]))
     const before = {}
     for (const arm of arms) before[arm] = setupProject(arm, brief, projects[arm])
@@ -446,8 +477,8 @@ try {
       for (const [label, arm] of Object.entries(mapping)) {
         const target = path.join(judgeDir, label)
         mkdirSync(path.join(target, 'source'), { recursive: true })
-        cpSync(path.join(shots[arm], 'desktop.png'), path.join(target, 'desktop.png'))
-        cpSync(path.join(shots[arm], 'mobile.png'), path.join(target, 'mobile.png'))
+        for (const name of Object.keys(captureViewports))
+          cpSync(path.join(shots[arm], `${name}.png`), path.join(target, `${name}.png`))
         labelSources[label] = [...sources[arm].keys()]
         for (const [relative, text] of sources[arm]) {
           const file = path.join(target, 'source', relative)
@@ -484,7 +515,7 @@ try {
     const thumbDir = path.join(auditsDir, 'vibe', date)
     for (const arm of judged) {
       mkdirSync(thumbDir, { recursive: true })
-      for (const width of ['desktop', 'mobile']) {
+      for (const width of Object.keys(captureViewports)) {
         const name = `${brief.id}-${arm}-${width}.jpg`
         cpSync(path.join(shots[arm], `${width}.jpg`), path.join(thumbDir, name))
         entry.thumbnails.push(`vibe/${date}/${name}`)
@@ -510,6 +541,17 @@ try {
   process.stderr.write(`\nVibe run failed: ${error.stack ?? error.message}\n`)
 } finally {
   await browser?.close()
+  if (artifactsDir) {
+    mkdirSync(path.dirname(artifactsDir), { recursive: true })
+    cpSync(work, artifactsDir, {
+      recursive: true,
+      filter: source => {
+        const parts = path.relative(work, source).split(path.sep)
+        return !parts.some(part => ['node_modules', 'dist', 'tarballs'].includes(part))
+      },
+    })
+    process.stdout.write(`Preserved artifacts in ${artifactsDir}\n`)
+  }
   if (keep) process.stdout.write(`Kept ${work}\n`)
   else rmSync(work, { recursive: true, force: true })
 }

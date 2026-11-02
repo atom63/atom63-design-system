@@ -5,6 +5,13 @@
 
 /** @typedef {{ id: string, title: string, body: string, markdown: string }} Brief */
 
+export const captureViewports = {
+  desktop: { width: 1440, height: 960 },
+  compact: { width: 1024, height: 768 },
+  tablet: { width: 768, height: 1024 },
+  phone: { width: 390, height: 844 },
+}
+
 /**
  * A brief file: a `# Title` line, then product language only.
  * @returns {Brief}
@@ -22,14 +29,27 @@ export function parseBrief(id, markdown) {
 /** The URL path each arm must serve the brief's page at. */
 export const pagePath = brief => `/${brief.id}`
 
-/** The builder prompt. Both arms get exactly this text. */
-export function builderPrompt(brief) {
+/** The builder prompt. Every arm in one track gets exactly this text. */
+export function builderPrompt(brief, { track = 'generalization' } = {}) {
+  const reference =
+    track === 'reference'
+      ? [
+          '',
+          '## Reference reconstruction',
+          '',
+          'Read `.vibe/reference/target-desktop.svg`, `.vibe/reference/layout.md`, and `.vibe/reference/states.md` before writing UI.',
+          'Reconstruct the target structure with the neutral product copy and data in the brief. Preserve the target’s information density, region proportions, alignment, and control hierarchy.',
+          'Do not embed the target image in the page. Implement the interface as real HTML and controls.',
+          'The desktop target is the fidelity reference. Adapt the same information priorities at narrower viewports without scaling the desktop canvas.',
+        ]
+      : []
   return [
     `Build the following as a new page of this app, reachable at the URL path \`${pagePath(brief)}\`. Keep the pages that already exist working.`,
     '',
     `## ${brief.title}`,
     '',
     brief.body,
+    ...reference,
     '',
     '## Constraints',
     '',
@@ -38,6 +58,29 @@ export function builderPrompt(brief) {
     '- Use realistic mock data where the page needs data; there is no backend.',
     '- When you are done, `pnpm typecheck` and `pnpm build` must both pass.',
   ].join('\n')
+}
+
+/** Replace the starter's template-led instructions for the component-only DS arm. */
+export function coreAgentGuide(markdown) {
+  const core = `<!-- atom63:core:start -->
+
+## Building UI with Atom63 core
+
+Use the Atom63 MCP tools available in this session before writing UI:
+
+- \`atom63 component <slug>\` for a component contract and import.
+- \`atom63 example <slug> [story]\` for a known-good component usage.
+- \`atom63 token <name or words>\` for tokens and theme values.
+- \`atom63 rules\` for the system rules.
+
+This benchmark arm measures the component and token system without page templates, blocks, build
+kits, or copied recipes. Compose the public components directly. Keep every color, space, radius,
+shadow, and duration on the Atom63 token scale, preserve native semantics, and use only contract
+axis values.
+
+<!-- atom63:core:end -->`
+  const generated = /<!-- atom63:agents:start[\s\S]*?<!-- atom63:agents:end -->/
+  return `${markdown.replace(generated, '').trim()}\n\n${core}\n`
 }
 
 /** The package versions the plain arm takes from the starter's resolved versions. */
@@ -190,6 +233,14 @@ export const builderAllowed = [
   'Bash(pnpm run build)',
 ]
 
+const coreMcpTools = [
+  'mcp__atom63__component',
+  'mcp__atom63__example',
+  'mcp__atom63__token',
+  'mcp__atom63__rules',
+  'mcp__atom63__manifest',
+]
+
 /**
  * Arguments shared by every run: headless JSON output, no user settings,
  * skills or memory, only the MCP servers passed here, and permission mode
@@ -221,20 +272,21 @@ function baseArgs({ prompt, model, maxTurns, maxBudgetUsd, mcpConfig }) {
 /**
  * `claude` arguments for a builder. The `ds` arm also gets the `atom63` MCP
  * server from this repo's CLI.
- * @param {{ arm: 'ds' | 'plain', prompt: string, cliBin: string, model?: string, maxTurns: number, maxBudgetUsd: number }} options
+ * @param {{ arm: 'ds' | 'ds-core' | 'ds-guided' | 'plain', prompt: string, cliBin: string, model?: string, maxTurns: number, maxBudgetUsd: number }} options
  */
 export function builderArgs({ arm, prompt, cliBin, model, maxTurns, maxBudgetUsd }) {
-  const mcpConfig =
-    arm === 'ds'
-      ? { mcpServers: { atom63: { command: 'node', args: [cliBin, 'mcp'] } } }
-      : { mcpServers: {} }
+  const usesDesignSystem = arm !== 'plain'
+  const mcpConfig = usesDesignSystem
+    ? { mcpServers: { atom63: { command: 'node', args: [cliBin, 'mcp'] } } }
+    : { mcpServers: {} }
+  const mcpTools = arm === 'ds-core' ? coreMcpTools : usesDesignSystem ? ['mcp__atom63'] : []
   return [
     ...baseArgs({ prompt, model, maxTurns, maxBudgetUsd, mcpConfig }),
     '--tools',
     builderTools.join(','),
     '--allowedTools',
     ...builderAllowed,
-    ...(arm === 'ds' ? ['mcp__atom63'] : []),
+    ...mcpTools,
   ]
 }
 

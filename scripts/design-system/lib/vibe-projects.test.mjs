@@ -8,6 +8,8 @@ import { scanCss, scanSource } from './craft-rules.mjs'
 import {
   builderArgs,
   builderPrompt,
+  captureViewports,
+  coreAgentGuide,
   formatCommand,
   judgeArgs,
   parseBrief,
@@ -46,6 +48,36 @@ describe('builderPrompt', () => {
     assert.match(prompt, /URL path `\/sign-in`/)
     assert.match(prompt, /## Sign in\n\nA card\./)
     assert.match(prompt, /`pnpm typecheck` and `pnpm build`/)
+  })
+
+  it('points a reference reconstruction at the copied reference pack', () => {
+    const prompt = builderPrompt(
+      { id: 'crm-contacts', title: 'Contacts', body: 'A contact workspace.' },
+      { track: 'reference' }
+    )
+    assert.match(prompt, /reference reconstruction/i)
+    assert.match(prompt, /\.vibe\/reference\/target-desktop\.svg/)
+    assert.match(prompt, /\.vibe\/reference\/layout\.md/)
+    assert.match(prompt, /Do not embed the target image/)
+  })
+})
+
+describe('captureViewports', () => {
+  it('covers primary desktop, constrained desktop, tablet and phone', () => {
+    assert.deepEqual(Object.keys(captureViewports), ['desktop', 'compact', 'tablet', 'phone'])
+    assert.deepEqual(captureViewports.desktop, { width: 1440, height: 960 })
+    assert.deepEqual(captureViewports.phone, { width: 390, height: 844 })
+  })
+})
+
+describe('coreAgentGuide', () => {
+  it('keeps component guidance while removing templates and build kits', () => {
+    const guide = coreAgentGuide(
+      '# App\n\n<!-- atom63:agents:start -->\nold\n<!-- atom63:agents:end -->'
+    )
+    assert.match(guide, /atom63 component/)
+    assert.match(guide, /atom63 token/)
+    assert.doesNotMatch(guide, /atom63 (?:build|template|copy)/)
   })
 })
 
@@ -100,13 +132,28 @@ describe('builderArgs', () => {
     assert.ok(!args.some(arg => /^(Edit|Write)\(\.\//.test(arg)))
   })
 
-  it('gives only the ds arm the atom63 MCP server', () => {
+  it('gives guided and core DS arms different Atom63 tool access', () => {
+    const guided = builderArgs({ ...options, arm: 'ds-guided', model: 'sonnet' })
+    assert.deepEqual(JSON.parse(value(guided, '--mcp-config')), {
+      mcpServers: { atom63: { command: 'node', args: ['/repo/cli.mjs', 'mcp'] } },
+    })
+    assert.ok(guided.includes('mcp__atom63'))
+    assert.equal(value(guided, '--model'), 'sonnet')
+
+    const core = builderArgs({ ...options, arm: 'ds-core' })
+    assert.deepEqual(JSON.parse(value(core, '--mcp-config')), {
+      mcpServers: { atom63: { command: 'node', args: ['/repo/cli.mjs', 'mcp'] } },
+    })
+    assert.ok(core.includes('mcp__atom63__component'))
+    assert.ok(core.includes('mcp__atom63__token'))
+    assert.ok(!core.includes('mcp__atom63__build'))
+    assert.ok(!core.includes('mcp__atom63__template'))
+
     const ds = builderArgs({ ...options, arm: 'ds', model: 'sonnet' })
     assert.deepEqual(JSON.parse(value(ds, '--mcp-config')), {
       mcpServers: { atom63: { command: 'node', args: ['/repo/cli.mjs', 'mcp'] } },
     })
     assert.ok(ds.includes('mcp__atom63'))
-    assert.equal(value(ds, '--model'), 'sonnet')
     const plain = builderArgs({ ...options, arm: 'plain' })
     assert.deepEqual(JSON.parse(value(plain, '--mcp-config')), { mcpServers: {} })
     assert.ok(!plain.includes('mcp__atom63'))

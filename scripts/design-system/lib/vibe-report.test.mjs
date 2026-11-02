@@ -26,6 +26,17 @@ describe('blindArms', () => {
     )
     assert.deepEqual(blindArms(['plain']), { A: 'plain' })
   })
+
+  it('supports the three benchmark arms', () => {
+    assert.deepEqual(
+      blindArms(['plain', 'ds-core', 'ds-guided'], () => 0.9),
+      {
+        A: 'plain',
+        B: 'ds-core',
+        C: 'ds-guided',
+      }
+    )
+  })
 })
 
 describe('judgePrompt', () => {
@@ -36,7 +47,7 @@ describe('judgePrompt', () => {
       sources: { A: ['src/pages/sign-in.tsx'], B: ['src/App.tsx'] },
     })
     assert.match(prompt, /A\/desktop\.png/)
-    assert.match(prompt, /B\/mobile\.png/)
+    assert.match(prompt, /B\/phone\.png/)
     assert.match(prompt, /`src\/pages\/sign-in\.tsx`/)
     assert.match(prompt, /A sign-in card\./)
     for (const { id } of craftCriteria) assert.ok(prompt.includes(`\`${id}\``), id)
@@ -161,9 +172,15 @@ describe('renderReport', () => {
     assert.match(markdown, /## Totals/)
     assert.match(markdown, /\| System-component share \| 75% \| 0% \|/)
     assert.match(markdown, /## Sign in \(`sign-in`\)/)
-    assert.match(markdown, /plain \(React \+ Tailwind\) as A and ds \(Atom63\) as B/)
+    assert.match(
+      markdown,
+      /plain \(React \+ Tailwind\) as A and ds \(Atom63, legacy guided arm\) as B/
+    )
     assert.match(markdown, /\*\*21 of 21\*\*, pass \(as B\)/)
-    assert.match(markdown, /\| Builder, ds \(Atom63\) \| \$1\.25 \| 2m 0s \| 20 \|/)
+    assert.match(
+      markdown,
+      /\| Builder, ds \(Atom63, legacy guided arm\) \| \$1\.25 \| 2m 0s \| 20 \|/
+    )
     assert.match(markdown, /`abc123`/)
     assert.match(markdown, /```markdown\n# Sign in\n\nA card\.\n```/)
     assert.match(markdown, /sign-in-ds-desktop\.jpg/)

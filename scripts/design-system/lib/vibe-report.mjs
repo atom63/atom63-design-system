@@ -4,8 +4,14 @@
  * craft rubric, and rendering `docs/design-system/audits/vibe-<date>.md`.
  */
 import { craftCriteria, summarizeCraftScores } from './craft-rubric.mjs'
+import { captureViewports } from './vibe-projects.mjs'
 
-export const armNames = { ds: 'ds (Atom63)', plain: 'plain (React + Tailwind)' }
+export const armNames = {
+  ds: 'ds (Atom63, legacy guided arm)',
+  'ds-core': 'ds-core (Atom63 components and tokens)',
+  'ds-guided': 'ds-guided (Atom63 templates and build kits)',
+  plain: 'plain (React + Tailwind)',
+}
 
 /**
  * Random labels for the arms, so the judge cannot tell which is which from the
@@ -45,7 +51,7 @@ export function judgeRubricMarkdown() {
 
 /**
  * The judge prompt. The judge runs in a directory with one folder per label,
- * each holding `desktop.png`, `mobile.png` and `source/`.
+ * each holding one PNG per capture viewport and `source/`.
  * @param {{ brief: { title: string, body: string }, labels: string[], sources: Record<string, string[]> }} options
  */
 export function judgePrompt({ brief, labels, sources }) {
@@ -59,11 +65,13 @@ export function judgePrompt({ brief, labels, sources }) {
     'Each result has a folder in the current directory:',
     '',
     ...labels.flatMap(label => [
-      `- \`${label}/desktop.png\` (1280 px wide) and \`${label}/mobile.png\` (375 px wide): full-page screenshots in light mode.`,
+      `- Full-page light-mode screenshots: ${Object.entries(captureViewports)
+        .map(([name, { width }]) => `\`${label}/${name}.png\` (${width} px wide)`)
+        .join(', ')}.`,
       `- \`${label}/source/\`: the files the author added or changed: ${sources[label].map(file => `\`${file}\``).join(', ') || '(none)'}.`,
     ]),
     '',
-    'Read both screenshots and every source file of each result before you score it. Judge what the page shows and what the code does.',
+    'Read every screenshot and source file of each result before you score it. Judge what the page shows and what the code does.',
     '',
     '# Brief',
     '',
@@ -206,6 +214,7 @@ export function renderReport(run) {
     `- **Commit:** \`${run.commit}\`${run.dirty ? ' (with uncommitted changes)' : ''}`,
     `- **Model:** ${run.models.length ? run.models.map(model => `\`${model}\``).join(', ') : 'the CLI default'}${run.modelFlag ? ` (\`--model ${run.modelFlag}\`)` : ' (the `claude` CLI default)'}`,
     `- **Runtime:** \`claude\` ${run.claudeVersion}, headless (\`claude -p\`), at most ${run.limits.builderTurns} turns and ${dollars(run.limits.builderBudgetUsd)} per builder, ${run.limits.judgeTurns} turns and ${dollars(run.limits.judgeBudgetUsd)} for the judge`,
+    `- **Track:** \`${run.track ?? 'generalization'}\``,
     `- **Briefs:** ${run.briefs.map(({ brief }) => `\`${brief.id}\``).join(', ')}`,
     `- **Arms:** ${heading.join(', ')}`,
     '',
@@ -347,7 +356,7 @@ export function renderReport(run) {
     '',
     '## Briefs',
     '',
-    'Each builder got the brief inside this prompt, identical for both arms:',
+    'Each builder got the brief inside this prompt, identical for every arm:',
     '',
     '```text',
     run.promptTemplate,
