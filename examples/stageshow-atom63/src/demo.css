@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  background: var(--a63-surface-page);
+}
+
+.demo {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 32px 16px;
+  box-sizing: border-box;
+}
+
+#example {
+  width: 100%;
+  max-width: 640px;
+}

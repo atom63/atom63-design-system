@@ -1,0 +1,49 @@
+/* The Atom63 look for Stageshow: every --ss-* role read from an Atom63 token,
+   so a stage follows the theme, brand, mode and density around it. Stageshow's
+   shadows and placeholder inks stay its own; they belong to the framing. */
+/* A subtree with its own data-a63-brand re-reads the tokens, so a brand picked
+   inside the stage restyles only that subtree. */
+.look-atom63 .ss-stage,
+.look-atom63 .ss-stage [data-a63-brand] {
+  --ss-canvas: var(--a63-surface-page);
+  --ss-surface: var(--a63-surface-panel);
+  --ss-chrome: var(--a63-surface-sidebar);
+  --ss-well: var(--a63-surface-recessed);
+  --ss-raised: var(--a63-surface-overlay);
+
+  --ss-line: var(--a63-border-control);
+  --ss-line-faint: var(--a63-border-subtle);
+
+  --ss-text-strong: var(--a63-text-primary);
+  --ss-text: var(--a63-text-secondary);
+  --ss-text-faint: var(--a63-text-tertiary);
+  --ss-icon: var(--a63-text-secondary);
+  --ss-icon-faint: var(--a63-text-tertiary);
+
+  --ss-accent: var(--a63-action-primary);
+  --ss-accent-2: var(--a63-action-primary-hover);
+  --ss-accent-soft: color-mix(in oklab, var(--a63-action-primary) 14%, var(--a63-surface-panel));
+  --ss-accent-text: var(--a63-text-accent);
+
+  --ss-success: var(--a63-status-success);
+  --ss-success-soft: var(--a63-status-success-subtle);
+  --ss-success-text: var(--a63-status-success-subtle-foreground);
+  --ss-warning: var(--a63-status-warning);
+  --ss-warning-soft: var(--a63-status-warning-subtle);
+  --ss-warning-text: var(--a63-status-warning-subtle-foreground);
+  --ss-danger: var(--a63-action-danger);
+  --ss-danger-soft: var(--a63-action-danger-subtle);
+  --ss-danger-text: var(--a63-text-danger);
+
+  --ss-font: var(--a63-font-app);
+  --ss-mono: var(--font-family-mono);
+
+  --ss-radius-sm: var(--radius-sm);
+  --ss-radius-md: var(--radius-md);
+  --ss-radius-lg: var(--radius-lg);
+  --ss-radius-window: var(--radius-xl);
+  --ss-radius-pill: var(--radius-full);
+
+  --ss-control: var(--a63-control-height-md);
+  --ss-row: var(--a63-control-height-sm);
+}

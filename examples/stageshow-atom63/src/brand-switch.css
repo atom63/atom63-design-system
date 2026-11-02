@@ -1,0 +1,160 @@
+.ts .ss-stage {
+  overflow: hidden;
+  background: var(--ss-well);
+}
+
+/* The product: pinned top-left, off the bottom */
+.ts-win {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  width: 340px;
+  height: 460px;
+}
+
+.ts-checkout {
+  display: grid;
+  gap: 6px;
+  padding: 24px 28px;
+  background: var(--ss-surface);
+  height: 100%;
+}
+
+.ts-merchant {
+  color: var(--ss-text);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.ts-amount {
+  margin-bottom: 12px;
+  color: var(--ss-text-strong);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ts-fields {
+  display: grid;
+  gap: 10px;
+}
+
+.ts-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ts-pay {
+  display: grid;
+  place-items: center;
+  height: 38px;
+  margin-top: 14px;
+  border-radius: 8px;
+  background: var(--ss-accent);
+  color: var(--a63-action-primary-foreground);
+  font-size: 13px;
+  font-weight: 600;
+  transition: background-color 0.45s ease;
+}
+
+/* The tool: smaller, in front, straddling the checkout's right edge over its
+   margin; a level above, so a stronger shadow */
+.ts-panel {
+  position: absolute;
+  top: 84px;
+  left: 352px;
+  width: 248px;
+  display: grid;
+  gap: 2px;
+  padding: 16px 18px 14px;
+  border-radius: 12px;
+  background: var(--ss-surface);
+  box-shadow: var(--ss-shadow-satellite);
+}
+
+.ts-title {
+  color: var(--ss-text-strong);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.ts-hint {
+  margin-bottom: 8px;
+  color: var(--ss-text);
+  font-size: 11px;
+}
+
+.ts-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 36px;
+  border-top: 1px solid var(--ss-line);
+}
+
+.ts-label {
+  color: var(--ss-text-strong);
+  font-size: 12px;
+}
+
+.ts-value {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 3px 8px 3px 4px;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px var(--ss-line);
+  color: var(--ss-text);
+  font: 500 11px var(--ss-mono);
+}
+
+.ts-chip {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  background: var(--a63-action-primary);
+  transition: background-color 0.45s ease;
+}
+
+.ts-swatches {
+  display: flex;
+  gap: 8px;
+  padding: 2px 0 12px;
+}
+
+.ts-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--a63-action-primary);
+  box-shadow:
+    0 0 0 2px var(--ss-surface),
+    0 0 0 2px transparent;
+  transition: box-shadow 0.25s ease;
+}
+
+.ts-swatch[data-on] {
+  box-shadow:
+    0 0 0 2px var(--ss-surface),
+    0 0 0 3.5px var(--ss-text-strong);
+}
+
+/* Narrow: the panel on top, the checkout under it full width with only its
+   chrome covered, so the form and Pay stay whole */
+.ts .ss-stage[data-layout='compact'] .ts-win {
+  top: 196px;
+  left: 16px;
+  width: 326px;
+}
+
+.ts .ss-stage[data-layout='compact'] .ts-panel {
+  top: 16px;
+  left: 94px;
+}
+
+/* The leader is annotation, not product: neutral ink, so it never reads as
+   the brand the panel just picked */
+.ts .ss-connector {
+  --ss-accent: var(--ss-text-strong);
+}
