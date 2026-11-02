@@ -21,6 +21,12 @@
       "requested": "beta",
       "resolved": "0.2.0-beta.11",
       "manifest": "node_modules/@atom63/ui-react/package.json"
+    },
+    {
+      "name": "@atom63/cli",
+      "requested": "beta",
+      "resolved": "0.1.0-beta.0",
+      "manifest": "node_modules/@atom63/cli/package.json"
     }
   ],
   "requestedSpecs": {
@@ -32,6 +38,7 @@
       "react-dom": "19.2.7"
     },
     "devDependencies": {
+      "@atom63/cli": "beta",
       "@types/react": "19.2.17",
       "@types/react-dom": "19.2.3",
       "@vitejs/plugin-react": "6.1.0",
@@ -42,7 +49,11 @@
   "commands": [
     "pnpm install --ignore-workspace --registry=https://registry.npmjs.org/ --no-frozen-lockfile",
     "pnpm exec tsc --noEmit",
-    "pnpm exec vite build"
+    "pnpm exec vite build",
+    "pnpm exec atom63 build settings screen --json",
+    "pnpm exec atom63 component button",
+    "pnpm exec atom63 example button",
+    "pnpm exec atom63 token --a63-surface-page"
   ],
   "imports": [
     "@atom63/styles",
@@ -56,6 +67,7 @@
     "installedManifestsFromNodeModules": "passed",
     "installedPackageRuntimeSpecsRegistryCompatible": "passed",
     "typescriptNoEmit": "passed",
-    "viteProductionBuild": "passed"
+    "viteProductionBuild": "passed",
+    "cliCommands": "passed"
   }
 }

@@ -253,7 +253,8 @@ pnpm check:package-correctness   # publint and arethetypeswrong on the packed pa
 
 A change that affects a published package needs a changeset. The published packages are listed in
 `scripts/design-system/published-packages.mjs`: `@atom63/styles`, `@atom63/ui-foundation`,
-`@atom63/ui-react`, `@atom63/mdx`, `@atom63/inform`, `@atom63/agent` and `@atom63/widgets`.
+`@atom63/ui-react`, `@atom63/mdx`, `@atom63/inform`, `@atom63/agent`, `@atom63/widgets` and
+`@atom63/cli`.
 
 ```bash
 pnpm changeset

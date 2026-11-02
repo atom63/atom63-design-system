@@ -74,6 +74,31 @@ Next: YZ runs `pnpm release:bootstrap packages/cli` on `main` after PR 2a merges
 `packages/cli` to both published-package lists and makes the registry smoke install
 `@atom63/cli@beta` and run the same four commands.
 
+## 2026-11-02
+
+[claude] First publish done: YZ ran `pnpm release:bootstrap packages/cli` on `main`. npm has
+`@atom63/cli@0.1.0-beta.0` on `beta` and `latest`, and the trusted publisher for
+`release-beta.yml` (environment `npm-publish`). npm also created its own `0.0.0-stage`
+placeholder version.
+
+PR 2b on `claude/cli-registry`, from `main` `9282de1b`. Done:
+
+- `packages/cli` is in `published-packages.mjs` and `PUBLISHED_PACKAGES` in `release-beta.yml`,
+  and in the package lists in `AGENTS.md` and `CONTRIBUTING.md`.
+- `@atom63/cli` is a coordinated package in the dependency version policy, with policies for its
+  two runtime dependencies.
+- `check:ds-registry-smoke` installs `@atom63/cli@beta` as a dev dependency and runs
+  `atom63 build`, `component`, `example` and `token`. Evidence regenerated.
+- The package-surface and dependency-policy audits regenerated.
+
+Verification: `pnpm check:ds-registry-smoke -- --write` (resolved `@atom63/cli@beta` ->
+`0.1.0-beta.0`), `check:package-correctness` (publint passes for the CLI),
+`check:package-surface`, `check:dependency-version-policy`, `test:scripts` (158 pass),
+`publish-beta.mjs --dry-run` (skips the CLI as published).
+
+Next: the case-study harness template installs the CLI from npm. Then PR 3 (AppView layout
+contract), proposal first.
+
 ---
 
 # 工作日志：系统加固
@@ -115,3 +140,18 @@ Next: YZ runs `pnpm release:bootstrap packages/cli` on `main` after PR 2a merges
 验证：`pnpm check:ds-pack-smoke` 通过，四个 tarball 和 `cli` 步骤都过。
 
 下一步：PR 2a 合并后，YZ 在 `main` 上跑 `pnpm release:bootstrap packages/cli`。之后 PR 2b 把 `packages/cli` 加进两份发布包列表，并让 registry smoke 安装 `@atom63/cli@beta`、跑同样四条命令。
+
+## 2026-11-02
+
+[claude] 首发完成：YZ 在 `main` 上跑了 `pnpm release:bootstrap packages/cli`。npm 上 `@atom63/cli@0.1.0-beta.0` 在 `beta` 和 `latest` 两个 tag，`release-beta.yml`（environment `npm-publish`）的 trusted publisher 已建好。npm 还自己建了一个 `0.0.0-stage` 占位版本。
+
+PR 2b 在 `claude/cli-registry`，从 `main` `9282de1b` 拉出。已完成：
+
+- `packages/cli` 加进 `published-packages.mjs`、`release-beta.yml` 的 `PUBLISHED_PACKAGES`，以及 `AGENTS.md`、`CONTRIBUTING.md` 的包列表。
+- 依赖版本策略把 `@atom63/cli` 列为协同包，并给它的两个运行时依赖定了策略。
+- `check:ds-registry-smoke` 把 `@atom63/cli@beta` 装成 dev 依赖，跑 `atom63 build`、`component`、`example`、`token`；证据已重新生成。
+- package-surface 和依赖策略两份审计已重新生成。
+
+验证：`pnpm check:ds-registry-smoke -- --write`（`@atom63/cli@beta` 解析为 `0.1.0-beta.0`）、`check:package-correctness`（CLI 的 publint 通过）、`check:package-surface`、`check:dependency-version-policy`、`test:scripts`（158 通过）、`publish-beta.mjs --dry-run`（CLI 已发布，跳过）。
+
+下一步：case-study harness 模板改为从 npm 安装 CLI。然后是 PR 3（AppView 布局契约），先出方案。
