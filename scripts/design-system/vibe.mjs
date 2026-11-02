@@ -47,8 +47,8 @@ import { execCommandSync, spawnCommand, stopCommand } from './lib/command.mjs'
 import {
   changedFiles,
   countTypeErrors,
-  isMeasuredFile,
   measureSources,
+  requireMeasuredSourceChanges,
 } from './lib/vibe-measure.mjs'
 import {
   builderPrompt,
@@ -481,9 +481,7 @@ try {
         const after = snapshot(directory)
         const files = changedFiles(before[arm], after)
         const measured = new Map(
-          [...files.added, ...files.changed]
-            .filter(isMeasuredFile)
-            .map(relative => [relative, after.get(relative)])
+          requireMeasuredSourceChanges(files).map(relative => [relative, after.get(relative)])
         )
         const typecheck = capture('pnpm', ['exec', 'tsc', '--noEmit'], directory)
         const build = capture('pnpm', ['exec', 'vite', 'build'], directory)

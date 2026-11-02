@@ -25,6 +25,13 @@ export function isMeasuredFile(relative) {
   )
 }
 
+/** Measured source files a builder added or changed, or an error for a no-op run. */
+export function requireMeasuredSourceChanges(files) {
+  const measured = [...files.added, ...files.changed].filter(isMeasuredFile)
+  if (!measured.length) throw new Error('Builder changed no measured source files.')
+  return measured
+}
+
 /**
  * Files added or changed between two snapshots (`Map<relative path, content>`).
  * @param {Map<string, string>} before

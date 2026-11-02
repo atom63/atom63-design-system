@@ -50,6 +50,9 @@ describe('builderPrompt', () => {
     assert.match(prompt, /URL path `\/sign-in`/)
     assert.match(prompt, /## Sign in\n\nA card\./)
     assert.match(prompt, /`pnpm typecheck` and `pnpm build`/)
+    assert.match(prompt, /unattended benchmark/i)
+    assert.match(prompt, /do not ask for confirmation/i)
+    assert.match(prompt, /implement the page now/i)
   })
 
   it('points a reference reconstruction at the copied reference pack', () => {

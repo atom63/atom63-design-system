@@ -60,6 +60,8 @@ export function builderPrompt(brief, { track = 'generalization' } = {}) {
   return [
     `Build the following as a new page of this app, reachable at the URL path \`${pagePath(brief)}\`. Keep the pages that already exist working.`,
     '',
+    'This is an unattended benchmark run. You are already authorized to edit files inside this temporary project. Implement the page now, and do not ask for confirmation or stop after presenting a plan. Treat this prompt as confirmation for all in-scope project edits and validation commands below.',
+    '',
     `## ${brief.title}`,
     '',
     brief.body,

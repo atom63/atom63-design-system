@@ -10,6 +10,7 @@ import {
   findWarnings,
   isMeasuredFile,
   measureSources,
+  requireMeasuredSourceChanges,
   systemShare,
 } from './vibe-measure.mjs'
 
@@ -40,6 +41,26 @@ describe('isMeasuredFile', () => {
     assert.ok(!isMeasuredFile('src/vite-env.d.ts'))
     assert.ok(!isMeasuredFile('vite.config.ts'))
     assert.ok(!isMeasuredFile('src/content/post.mdx'))
+  })
+})
+
+describe('requireMeasuredSourceChanges', () => {
+  it('returns changed source and rejects a builder that only wrote run metadata', () => {
+    assert.deepEqual(
+      requireMeasuredSourceChanges({
+        added: ['.vibe/codex-events.jsonl', 'src/pages/contacts.tsx'],
+        changed: ['src/styles.css'],
+      }),
+      ['src/pages/contacts.tsx', 'src/styles.css']
+    )
+    assert.throws(
+      () =>
+        requireMeasuredSourceChanges({
+          added: ['.vibe/codex-events.jsonl'],
+          changed: [],
+        }),
+      /changed no measured source files/
+    )
   })
 })
 
