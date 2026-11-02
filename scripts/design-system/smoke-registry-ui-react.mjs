@@ -21,12 +21,17 @@ const atom63Dependencies = {
   '@atom63/ui-foundation': 'beta',
   '@atom63/ui-react': 'beta',
 }
+const atom63DevDependencies = {
+  '@atom63/cli': 'beta',
+}
+const atom63Packages = { ...atom63Dependencies, ...atom63DevDependencies }
 const dependencies = {
   ...atom63Dependencies,
   react: '19.2.7',
   'react-dom': '19.2.7',
 }
 const devDependencies = {
+  ...atom63DevDependencies,
   '@types/react': '19.2.17',
   '@types/react-dom': '19.2.3',
   '@vitejs/plugin-react': '6.1.0',
@@ -34,7 +39,18 @@ const devDependencies = {
   vite: '8.1.4',
 }
 const installCommand = `pnpm install --ignore-workspace --registry=${registry} --no-frozen-lockfile`
-const verificationCommands = [installCommand, 'pnpm exec tsc --noEmit', 'pnpm exec vite build']
+const cliCommands = [
+  ['build', 'settings', 'screen', '--json'],
+  ['component', 'button'],
+  ['example', 'button'],
+  ['token', '--a63-surface-page'],
+]
+const verificationCommands = [
+  installCommand,
+  'pnpm exec tsc --noEmit',
+  'pnpm exec vite build',
+  ...cliCommands.map(args => `pnpm exec atom63 ${args.join(' ')}`),
+]
 const consumerImports = [
   '@atom63/styles',
   '@atom63/ui-react/styles.css',
@@ -46,13 +62,13 @@ function assert(condition, message) {
   if (!condition) throw new Error(message)
 }
 
-function run(command, args, { cwd } = {}) {
+function run(command, args, { cwd, stdio = 'inherit' } = {}) {
   return new Promise((resolvePromise, reject) => {
     const child = spawnCommand(command, args, {
       cwd,
       env: process.env,
       shell: false,
-      stdio: 'inherit',
+      stdio,
     })
 
     child.on('error', reject)
@@ -101,7 +117,7 @@ async function writeHarness(harnessDirectory) {
     devDependencies,
   }
   assertRegistrySpecs(manifest, 'consumer manifest')
-  for (const [name, spec] of Object.entries(atom63Dependencies)) {
+  for (const [name, spec] of Object.entries(atom63Packages)) {
     assert(spec === 'beta', `${name} must be requested through the beta tag`)
   }
 
@@ -177,7 +193,7 @@ createRoot(rootElement).render(
 
 async function inspectInstalledPackages(harnessDirectory) {
   const installedPackages = []
-  for (const [name, requested] of Object.entries(atom63Dependencies)) {
+  for (const [name, requested] of Object.entries(atom63Packages)) {
     const manifestPath = resolve(
       harnessDirectory,
       'node_modules',
@@ -263,6 +279,12 @@ async function main() {
     await run(pnpmCommand, ['exec', 'vite', 'build'], {
       cwd: harnessDirectory,
     })
+    for (const args of cliCommands) {
+      await run(pnpmCommand, ['exec', 'atom63', ...args], {
+        cwd: harnessDirectory,
+        stdio: ['ignore', 'ignore', 'inherit'],
+      })
+    }
 
     const evidence = {
       schemaVersion: 1,
@@ -283,6 +305,7 @@ async function main() {
         installedPackageRuntimeSpecsRegistryCompatible: 'passed',
         typescriptNoEmit: 'passed',
         viteProductionBuild: 'passed',
+        cliCommands: 'passed',
       },
     }
     await checkOrWriteEvidence(evidence)
