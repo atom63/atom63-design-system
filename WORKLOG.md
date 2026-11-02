@@ -2,14 +2,15 @@
 
 Owner: codex
 Branch: codex/batch-case-study-review
-Goal: Re-review Claude's four Atom63 vibe case studies across DS/plain, pre-template/template, and desktop/mobile variants.
-Done when: A bilingual batch review records per-case pairwise verdicts, cross-case findings, evidence limits, and actionable next steps grounded in the committed screenshots and raw reports.
-May write: WORKLOG.md, docs/design-system/audits/, .impeccable/critique/
-Off limits: Component and application source code; rerunning paid builders or judges; releases and publishing.
-Next first step: Ask YZ whether to fix the evaluation harness first or redesign the next benchmark first.
+Goal: Design a Mobbin-grounded visual benchmark that tests Atom63 reconstruction fidelity and pattern generalization.
+Done when: YZ approves the cases, arms, scoring, and CRM pilot slice in the bilingual benchmark plan.
+May write: WORKLOG.md, docs/design-system/
+Off limits: Benchmark implementation, paid builder or judge runs, component source, releases, and publishing until YZ approves the plan.
+Next first step: Get YZ's decision on the proposed three-case pilot and CRM Track R first slice.
 Blocked on YZ: none
 
 ## Log
 
+- 2026-11-01 [codex] Rescoped after YZ requested a Mobbin-grounded reconstruction benchmark; researched five product patterns and wrote the proposed two-track, three-arm plan · checks: Mobbin references inspected as images; no benchmark code changed
 - 2026-11-01 [codex] Completed independent visual and evidence assessments and wrote the bilingual batch review · checks: both raw JSON files parse; both screenshot sets contain all 16 expected files
 - 2026-11-01 [codex] Started batch review after YZ approved independent sub-agents · checks: agent-relay check identified detached HEAD and missing WORKLOG; created task branch
