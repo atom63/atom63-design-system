@@ -129,12 +129,12 @@ describe('duration', () => {
 const armResult = ({ system, html, craft = 0, palette = [], build = true }) => ({
   status: 'ok',
   agent: {
-    costUsd: 1.25,
     durationMs: 120_000,
-    turns: 20,
-    stopReason: 'success',
-    permissionDenials: [],
-    models: ['claude-test'],
+    turns: 1,
+    stopReason: 'completed',
+    failedTools: 0,
+    models: ['gpt-test'],
+    usage: { inputTokens: 1200, cachedInputTokens: 800, outputTokens: 300 },
   },
   files: { added: ['src/pages/sign-in.tsx'], changed: ['src/router.tsx'], removed: [] },
   measures: {
@@ -153,11 +153,11 @@ const run = {
   date: '2026-09-26',
   commit: 'abc123',
   dirty: false,
-  claudeVersion: '2.1.0 (Claude Code)',
+  codexVersion: 'codex-cli 0.149.0',
   modelFlag: null,
-  models: ['claude-test'],
+  models: ['gpt-test'],
   arms: ['ds', 'plain'],
-  limits: { builderTurns: 80, builderBudgetUsd: 5, judgeTurns: 30, judgeBudgetUsd: 2 },
+  limits: { agentTimeoutMs: 2_700_000 },
   promptTemplate: 'Build <brief>',
   briefs: [
     {
@@ -174,12 +174,12 @@ const run = {
       judge: {
         mapping: { A: 'plain', B: 'ds' },
         agent: {
-          costUsd: 0.4,
           durationMs: 60_000,
-          turns: 5,
-          stopReason: 'success',
-          permissionDenials: [],
-          models: ['claude-test'],
+          turns: 1,
+          stopReason: 'completed',
+          failedTools: 0,
+          models: ['gpt-test'],
+          usage: { inputTokens: 2000, cachedInputTokens: 1400, outputTokens: 400 },
         },
         scores: {
           ds: { total: 100, max: 100, scores: scores(1) },
@@ -206,7 +206,7 @@ describe('totals', () => {
 describe('renderReport', () => {
   const markdown = renderReport(run)
 
-  it('has totals, a section per brief, the blinding, costs and the briefs', () => {
+  it('has totals, a section per brief, the blinding, usage and the briefs', () => {
     assert.match(markdown, /^# Vibe report, 2026-09-26/)
     assert.match(markdown, /## Totals/)
     assert.match(markdown, /\| System-component share \| 75% \| 0% \|/)
@@ -221,7 +221,7 @@ describe('renderReport', () => {
     assert.match(markdown, /Implementation gates and DS leverage/)
     assert.match(
       markdown,
-      /\| Builder, ds \(Atom63, legacy guided arm\) \| \$1\.25 \| 2m 0s \| 20 \|/
+      /\| Builder, ds \(Atom63, legacy guided arm\) \| 1,200 \| 800 \| 300 \| 2m 0s \| 1 \|/
     )
     assert.match(markdown, /`abc123`/)
     assert.match(markdown, /```markdown\n# Sign in\n\nA card\.\n```/)
@@ -234,13 +234,13 @@ describe('renderReport', () => {
       briefs: [
         {
           ...run.briefs[0],
-          arms: { ds: run.briefs[0].arms.ds, plain: { status: 'error', error: 'claude exited 1' } },
+          arms: { ds: run.briefs[0].arms.ds, plain: { status: 'error', error: 'codex exited 1' } },
           judge: { mapping: { A: 'ds' }, error: 'The judge returned no JSON object.' },
           thumbnails: [],
         },
       ],
     })
-    assert.match(failed, /failed: claude exited 1/)
+    assert.match(failed, /failed: codex exited 1/)
     assert.match(failed, /Not judged: The judge returned no JSON object\./)
   })
 })

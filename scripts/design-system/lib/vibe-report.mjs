@@ -181,7 +181,7 @@ export function parseJudgeOutput(text, labels) {
 
 const percent = value =>
   value === null || value === undefined ? '–' : `${Math.round(value * 100)}%`
-const dollars = value => `$${value.toFixed(2)}`
+const tokens = value => value.toLocaleString('en-US')
 export const duration = ms => {
   const seconds = Math.round(ms / 1000)
   return seconds >= 60 ? `${Math.floor(seconds / 60)}m ${seconds % 60}s` : `${seconds}s`
@@ -257,7 +257,9 @@ export function totals(run, arm) {
     visual: scored.reduce((total, summary) => total + summary.total, 0),
     visualMax: scored.reduce((total, summary) => total + summary.max, 0),
     judged: scored.length,
-    costUsd: sum(result => result.agent.costUsd),
+    inputTokens: sum(result => result.agent.usage.inputTokens),
+    cachedInputTokens: sum(result => result.agent.usage.cachedInputTokens),
+    outputTokens: sum(result => result.agent.usage.outputTokens),
     durationMs: sum(result => result.agent.durationMs),
   }
 }
@@ -276,8 +278,8 @@ export function renderReport(run) {
       `\`docs/design-system/audits/vibe/vibe-${run.date}.json\`.`,
     '',
     `- **Commit:** \`${run.commit}\`${run.dirty ? ' (with uncommitted changes)' : ''}`,
-    `- **Model:** ${run.models.length ? run.models.map(model => `\`${model}\``).join(', ') : 'the CLI default'}${run.modelFlag ? ` (\`--model ${run.modelFlag}\`)` : ' (the `claude` CLI default)'}`,
-    `- **Runtime:** \`claude\` ${run.claudeVersion}, headless (\`claude -p\`), at most ${run.limits.builderTurns} turns and ${dollars(run.limits.builderBudgetUsd)} per builder, ${run.limits.judgeTurns} turns and ${dollars(run.limits.judgeBudgetUsd)} for the judge`,
+    `- **Model:** ${run.models.length ? run.models.map(model => `\`${model}\``).join(', ') : 'the Codex CLI default'}${run.modelFlag ? ` (\`--model ${run.modelFlag}\`)` : ''}`,
+    `- **Runtime:** ${run.codexVersion}, headless (\`codex exec\`), ${Math.round(run.limits.agentTimeoutMs / 60_000)}-minute timeout per agent`,
     `- **Track:** \`${run.track ?? 'generalization'}\``,
     `- **Briefs:** ${run.briefs.map(({ brief }) => `\`${brief.id}\``).join(', ')}`,
     `- **Arms:** ${heading.join(', ')}`,
@@ -308,7 +310,12 @@ export function renderReport(run) {
             return total.judged ? `${total.visual} of ${total.visualMax}` : '–'
           }),
         ],
-        ['Builder cost', ...arms.map(arm => dollars(totals(run, arm).costUsd))],
+        ['Builder input tokens', ...arms.map(arm => tokens(totals(run, arm).inputTokens))],
+        [
+          'Builder cached input tokens',
+          ...arms.map(arm => tokens(totals(run, arm).cachedInputTokens)),
+        ],
+        ['Builder output tokens', ...arms.map(arm => tokens(totals(run, arm).outputTokens))],
         ['Builder time', ...arms.map(arm => duration(totals(run, arm).durationMs))],
       ]
     ),
@@ -372,34 +379,47 @@ export function renderReport(run) {
       )
     }
 
-    out.push('', '### Cost and time', '')
+    out.push('', '### Usage and time', '')
     out.push(
       table(
-        ['Run', 'Cost', 'Time', 'Turns', 'Stop', 'Denied tool calls'],
+        [
+          'Run',
+          'Input tokens',
+          'Cached input',
+          'Output tokens',
+          'Time',
+          'Turns',
+          'Stop',
+          'Failed tools',
+        ],
         [
           ...arms.map(arm => {
             const agent = entry.arms[arm]?.agent
             return agent
               ? [
                   `Builder, ${armNames[arm] ?? arm}`,
-                  dollars(agent.costUsd),
+                  tokens(agent.usage.inputTokens),
+                  tokens(agent.usage.cachedInputTokens),
+                  tokens(agent.usage.outputTokens),
                   duration(agent.durationMs),
                   String(agent.turns),
                   agent.stopReason,
-                  String(agent.permissionDenials.length),
+                  String(agent.failedTools),
                 ]
-              : [`Builder, ${armNames[arm] ?? arm}`, '–', '–', '–', '–', '–']
+              : [`Builder, ${armNames[arm] ?? arm}`, '–', '–', '–', '–', '–', '–', '–']
           }),
           judge?.agent
             ? [
                 'Visual judge',
-                dollars(judge.agent.costUsd),
+                tokens(judge.agent.usage.inputTokens),
+                tokens(judge.agent.usage.cachedInputTokens),
+                tokens(judge.agent.usage.outputTokens),
                 duration(judge.agent.durationMs),
                 String(judge.agent.turns),
                 judge.agent.stopReason,
-                String(judge.agent.permissionDenials.length),
+                String(judge.agent.failedTools),
               ]
-            : ['Visual judge', '–', '–', '–', '–', '–'],
+            : ['Visual judge', '–', '–', '–', '–', '–', '–', '–'],
         ]
       )
     )

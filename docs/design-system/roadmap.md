@@ -237,7 +237,7 @@ widgets foundation 已迁入 `packages/widgets`（`@atom63/widgets`：layout、p
 
 **E 进度（2026-09-26）：** Web 端的 a11y 规格合约已上线（计划见 `quality-plan.md` 的 E2）：dialog、alert dialog、menu button、tabs 四个 APG pattern 写成 `@atom63/ui-foundation` 里的数据，Dialog、AlertDialog、DropdownMenu、Tabs 在 contract 里声明所实现的 pattern，Storybook 的 `a11y` Vitest 项目据此生成测试，逐条检查结构和键盘交互（已接入 CI），Dialog 缺少 `aria-modal` 记为已知缺口。第二批（2026-09-26）加入 select-only combobox、switch、checkbox、accordion、radio group 五个 pattern，绑定 Select、Switch、Checkbox、Accordion、RadioGroup；Base UI 造成的偏差（Select 不用 `aria-activedescendant`、Tab 不提交选项，Accordion 折叠时的标题没有 `aria-controls` 等）记为已知缺口。
 craft rubric 已上线（E5）：docs 站的 Foundations 下新增 "Craft rubric" 页，间距节奏、层级、对齐、状态完整、动效克制、无障碍、token 使用七条标准各有 1–3 分描述、自动检查覆盖范围和现场好坏示例，标准数据放在 `scripts/design-system/lib/craft-rubric.mjs`，供设计评审和 E4 的模型评分共用。
-vibe tests 已上线（E4）：`pnpm vibe` 让无头 `claude -p` 按固定 brief 分别用 Atom63（starter + AGENTS.md + `atom63` MCP）和纯 React + Tailwind 各做一遍页面，测 craft 违规、类型错误、构建、axe、系统组件占比和字面颜色，再由盲评模型按 craft rubric 打分，报告提交在 `docs/design-system/audits/vibe-<日期>.md`。
+vibe tests 已上线（E4）：`pnpm vibe` 让隔离的 `codex exec` session 按固定 brief 分别用 Atom63（starter + AGENTS.md + `atom63` MCP）和纯 React + Tailwind 各做一遍页面，测 craft 违规、类型错误、构建、axe、系统组件占比和字面颜色，再由只看匿名截图的 Codex visual judge 打分，报告提交在 `docs/design-system/audits/vibe-<日期>.md`。
 E3 iOS 截图测试已接入 CI：演示 app 的测试 target 用 swift-snapshot-testing 给目录里每个 showcase 拍亮色、暗色和大字号三张图，只在固定的模拟器（iPhone 17 Pro，iOS 26.2）上和提交的基线比较，基线由 iOS snapshots workflow 的 update 开关录制。
 vibe 完整基线（2026-09-27，`audits/vibe-2026-09-27.md`）：四个 brief 中，Atom63 组 craft 违规、类型错误、axe 违规均为 0，系统组件占比 92%，rubric 84 分得 79、四个全部通过；纯 React + Tailwind 组 84 分得 68、全部因 token 使用不及格。Atom63 组的扣分点（移动端宽表格溢出、link 按钮内边距造成的错位、空状态缺少下一步操作）作为模板库的输入。
 

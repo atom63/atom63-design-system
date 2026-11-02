@@ -1,5 +1,5 @@
 /**
- * Projects, prompts and `claude -p` arguments for the vibe runner (E4). Pure
+ * Projects, prompts and `codex exec` arguments for the vibe runner (E4). Pure
  * functions, so the dry run and the tests see exactly what a real run sends.
  */
 
@@ -231,90 +231,54 @@ createRoot(root).render(
   return new Map([...files].sort(([left], [right]) => left.localeCompare(right)))
 }
 
-/** Tools a builder may use. Bash is limited to the project's own scripts. */
-export const builderTools = ['Read', 'Edit', 'Write', 'Glob', 'Grep', 'Bash']
-/* `/**` anchors at the session's working directory, the project. `./**` follows
-   the shell's current directory, so a builder that ran `cd node_modules` lost
-   every write for the rest of its run. */
-export const builderAllowed = [
-  'Read',
-  'Glob',
-  'Grep',
-  'Edit(/**)',
-  'Write(/**)',
-  'Bash(pnpm typecheck)',
-  'Bash(pnpm build)',
-  'Bash(pnpm run typecheck)',
-  'Bash(pnpm run build)',
-]
+const coreMcpTools = 'component,example,token,rules,manifest'
 
-const coreMcpTools = [
-  'mcp__atom63__component',
-  'mcp__atom63__example',
-  'mcp__atom63__token',
-  'mcp__atom63__rules',
-  'mcp__atom63__manifest',
-]
-
-/**
- * Arguments shared by every run: headless JSON output, no user settings,
- * skills or memory, only the MCP servers passed here, and permission mode
- * `dontAsk`, which denies anything the allowlist does not name.
- */
-function baseArgs({ prompt, model, maxTurns, maxBudgetUsd, mcpConfig }) {
+function codexBaseArgs({ prompt, model, sandbox, outputPath, mcp = [] }) {
   return [
-    '-p',
-    prompt,
-    '--output-format',
-    'json',
-    '--permission-mode',
-    'dontAsk',
-    '--setting-sources',
-    'project,local',
-    '--disable-slash-commands',
-    '--no-session-persistence',
-    '--strict-mcp-config',
-    '--mcp-config',
-    JSON.stringify(mcpConfig ?? { mcpServers: {} }),
-    '--max-turns',
-    String(maxTurns),
-    '--max-budget-usd',
-    String(maxBudgetUsd),
+    'exec',
+    '--ignore-user-config',
+    '--disable',
+    'plugins',
+    '--disable',
+    'apps',
+    '--disable',
+    'browser_use',
+    '--disable',
+    'computer_use',
+    '--disable',
+    'multi_agent',
+    '--ephemeral',
+    '--skip-git-repo-check',
+    '--sandbox',
+    sandbox,
+    '--json',
+    ...(outputPath ? ['--output-last-message', outputPath] : []),
     ...(model ? ['--model', model] : []),
+    ...mcp,
+    prompt,
   ]
 }
 
-/**
- * `claude` arguments for a builder. The `ds` arm also gets the `atom63` MCP
- * server from this repo's CLI.
- * @param {{ arm: 'ds' | 'ds-core' | 'ds-guided' | 'plain', prompt: string, cliBin: string, model?: string, maxTurns: number, maxBudgetUsd: number }} options
- */
-export function builderArgs({ arm, prompt, cliBin, model, maxTurns, maxBudgetUsd }) {
+/** Codex arguments for one builder arm. */
+export function codexBuilderArgs({ arm, prompt, cliBin, model, outputPath }) {
   const usesDesignSystem = arm !== 'plain'
-  const mcpConfig = usesDesignSystem
-    ? { mcpServers: { atom63: { command: 'node', args: [cliBin, 'mcp'] } } }
-    : { mcpServers: {} }
-  const mcpTools = arm === 'ds-core' ? coreMcpTools : usesDesignSystem ? ['mcp__atom63'] : []
-  return [
-    ...baseArgs({ prompt, model, maxTurns, maxBudgetUsd, mcpConfig }),
-    '--tools',
-    builderTools.join(','),
-    '--allowedTools',
-    ...builderAllowed,
-    ...mcpTools,
-  ]
+  const mcp = usesDesignSystem
+    ? [
+        '--config',
+        'mcp_servers.atom63.command="node"',
+        '--config',
+        `mcp_servers.atom63.args=${JSON.stringify([cliBin, 'mcp'])}`,
+        ...(arm === 'ds-core'
+          ? ['--config', `mcp_servers.atom63.env={ ATOM63_MCP_TOOLS="${coreMcpTools}" }`]
+          : []),
+      ]
+    : []
+  return codexBaseArgs({ prompt, model, sandbox: 'workspace-write', outputPath, mcp })
 }
 
-/** `claude` arguments for the judge: it can only read files in its directory. */
-export function judgeArgs({ prompt, model, maxTurns, maxBudgetUsd }) {
-  return [
-    ...baseArgs({ prompt, model, maxTurns, maxBudgetUsd }),
-    '--tools',
-    'Read,Glob',
-    '--allowedTools',
-    'Read',
-    'Glob',
-  ]
+/** Codex arguments for the visual judge: its sandbox is read-only. */
+export function codexJudgeArgs({ prompt, model, outputPath }) {
+  return codexBaseArgs({ prompt, model, sandbox: 'read-only', outputPath })
 }
 
 /** A shell-quoted command line, for the dry run. */
@@ -326,20 +290,26 @@ export function formatCommand(command, args) {
 }
 
 /**
- * The fields of a `claude -p --output-format json` result the report keeps.
- * @param {any} result
+ * Summarize `codex exec --json` events for the report.
  */
-export function summarizeClaudeResult(result) {
+export function summarizeCodexEvents(events, { durationMs, model }) {
+  const turns = events.filter(event => event.type === 'turn.completed')
+  const usage = turns.reduce(
+    (total, event) => ({
+      inputTokens: total.inputTokens + (event.usage?.input_tokens ?? 0),
+      cachedInputTokens: total.cachedInputTokens + (event.usage?.cached_input_tokens ?? 0),
+      outputTokens: total.outputTokens + (event.usage?.output_tokens ?? 0),
+    }),
+    { inputTokens: 0, cachedInputTokens: 0, outputTokens: 0 }
+  )
   return {
-    costUsd: result.total_cost_usd ?? 0,
-    durationMs: result.duration_ms ?? 0,
-    isError: Boolean(result.is_error),
-    models: Object.keys(result.modelUsage ?? {}),
-    permissionDenials: (result.permission_denials ?? []).map(({ tool_name, tool_input }) => ({
-      tool: tool_name,
-      input: tool_input?.command ?? tool_input?.file_path ?? '',
-    })),
-    stopReason: result.subtype ?? result.terminal_reason ?? '',
-    turns: result.num_turns ?? 0,
+    durationMs,
+    models: [model ?? 'Codex CLI default'],
+    failedTools: events.filter(
+      event => event.type === 'item.completed' && event.item?.status === 'failed'
+    ).length,
+    stopReason: turns.length ? 'completed' : 'error',
+    turns: turns.length,
+    usage,
   }
 }

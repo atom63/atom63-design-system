@@ -2,20 +2,20 @@
  * Vibe tests (E4 in docs/design-system/quality-plan.md): do agents build
  * better UI with the Atom63 tools than without them?
  *
- * For each brief in scripts/design-system/vibe/briefs, a fresh `claude -p`
+ * For each brief in scripts/design-system/vibe/briefs, a fresh `codex exec`
  * agent builds the page in three arms, each time in a new temporary project:
  * - `ds-core`: an `@atom63/create` site with components, tokens and contracts but no templates;
  * - `ds-guided`: the same site with Atom63 templates, build kits and examples;
  * - `plain`: Vite, React, TypeScript and Tailwind v4 at the same versions,
  *   with no design system, no AGENTS.md and no MCP server.
  * Then it measures what each agent wrote (craft rules, type errors, the build,
- * axe, the system-component share, literal colors), has a blinded `claude -p`
+ * axe, the system-component share, literal colors), has a blinded `codex exec`
  * visual judge score the anonymous screenshots against the reference target, and
  * writes docs/design-system/audits/vibe-<date>.md with the raw JSON and
  * thumbnails in docs/design-system/audits/vibe/.
  *
  * Needs the design system packages built (dist is packed), the network for
- * third-party dependencies, Playwright's Chromium, and a logged-in `claude`.
+ * third-party dependencies, Playwright's Chromium, and a logged-in `codex`.
  *
  * Usage: node scripts/design-system/vibe.mjs [--brief <id>]
  *   [--arms plain,ds-core,ds-guided] [--track generalization|reference]
@@ -51,18 +51,18 @@ import {
   measureSources,
 } from './lib/vibe-measure.mjs'
 import {
-  builderArgs,
   builderPrompt,
   captureFiles,
   captureViewports,
+  codexBuilderArgs,
+  codexJudgeArgs,
   coreAgentGuide,
   formatCommand,
-  judgeArgs,
   pagePath,
   parseBrief,
   parseReferenceStates,
   planPlainProject,
-  summarizeClaudeResult,
+  summarizeCodexEvents,
 } from './lib/vibe-projects.mjs'
 import { blindArms, judgePrompt, parseJudgeOutput, renderReport } from './lib/vibe-report.mjs'
 import { pnpmOverridesYaml } from './lib/pnpm-overrides.mjs'
@@ -84,8 +84,8 @@ const packages = {
 }
 const defaultArms = ['plain', 'ds-core', 'ds-guided']
 const supportedArms = [...defaultArms, 'ds']
-const limits = { builderTurns: 80, builderBudgetUsd: 5, judgeTurns: 30, judgeBudgetUsd: 2 }
 const agentTimeoutMs = 45 * 60 * 1000
+const limits = { agentTimeoutMs }
 
 // Arguments ------------------------------------------------------------------
 
@@ -124,14 +124,13 @@ if (briefs.length === 0) {
   throw new Error(`No brief "${briefFlag}". Briefs: ${readdirSync(briefsDir).join(', ')}`)
 }
 
-const ceiling = briefs.length * (arms.length * limits.builderBudgetUsd + limits.judgeBudgetUsd)
 process.stdout.write(
   `Vibe run: ${briefs.length} brief(s) (${briefs.map(({ id }) => id).join(', ')}) × ${arms.join(', ')}, track ${track}, model ${model ?? 'the CLI default'}.\n` +
-    `Cost ceiling: $${ceiling.toFixed(2)} (each builder is capped at $${limits.builderBudgetUsd} and ${limits.builderTurns} turns, each judge at $${limits.judgeBudgetUsd}); a typical run spends well under it.\n`
+    `Runtime: Codex CLI only, 45-minute timeout per agent, token usage recorded; no Claude calls.\n`
 )
 if (!dryRun && briefs.length > 1 && !flag('--yes')) {
   process.stderr.write(
-    'More than one brief spends real money. Pass --yes to go ahead, or --brief <id> for one.\n'
+    'More than one brief uses substantial model quota. Pass --yes to go ahead, or --brief <id> for one.\n'
   )
   process.exit(1)
 }
@@ -167,7 +166,7 @@ const capture = (command, args, cwd) => {
 function snapshot(directory, prefix = '') {
   const files = new Map()
   for (const entry of readdirSync(path.join(directory, prefix), { withFileTypes: true })) {
-    if (['node_modules', 'dist', '.git', '.claude'].includes(entry.name)) continue
+    if (['node_modules', 'dist', '.git', '.claude', '.codex'].includes(entry.name)) continue
     const relative = prefix ? `${prefix}/${entry.name}` : entry.name
     if (entry.isDirectory()) {
       for (const [key, value] of snapshot(directory, relative)) files.set(key, value)
@@ -179,13 +178,13 @@ function snapshot(directory, prefix = '') {
 }
 
 /**
- * `claude -p` with JSON output; resolves with the parsed result. Started
- * directly, not through lib/command.mjs: `claude` is not a `.cmd` shim, and its
- * multi-line prompts and JSON flags cannot pass through cmd.exe intact.
+ * `codex exec --json`; resolves with its JSONL events and final message.
  */
-function claude(args, cwd) {
+function codex(args, cwd, { outputPath, eventsPath }) {
   return new Promise((resolve, reject) => {
-    const child = spawn('claude', args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] })
+    const started = Date.now()
+    mkdirSync(path.dirname(outputPath), { recursive: true })
+    const child = spawn('codex', args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] })
     let stdout = ''
     let stderr = ''
     child.stdout.on('data', chunk => (stdout += chunk))
@@ -194,9 +193,20 @@ function claude(args, cwd) {
     child.on('close', code => {
       clearTimeout(timer)
       try {
-        resolve(JSON.parse(stdout))
-      } catch {
-        reject(new Error(`claude exited ${code}: ${(stderr || stdout).slice(0, 500)}`))
+        mkdirSync(path.dirname(eventsPath), { recursive: true })
+        writeFileSync(eventsPath, stdout)
+        const events = stdout
+          .split('\n')
+          .filter(line => line.trim().startsWith('{'))
+          .map(line => JSON.parse(line))
+        if (code !== 0) throw new Error(`codex exited ${code}: ${(stderr || stdout).slice(-1000)}`)
+        resolve({
+          events,
+          finalMessage: existsSync(outputPath) ? readFileSync(outputPath, 'utf8') : '',
+          durationMs: Date.now() - started,
+        })
+      } catch (error) {
+        reject(error)
       }
     })
   })
@@ -367,7 +377,7 @@ const report = {
   date,
   commit: capture('git', ['rev-parse', 'HEAD'], root).output.trim(),
   dirty: capture('git', ['status', '--porcelain'], root).output.trim().length > 0,
-  claudeVersion: capture('claude', ['--version'], root).output.trim(),
+  codexVersion: capture('codex', ['--version'], root).output.trim(),
   modelFlag: model ?? null,
   track,
   models: [],
@@ -408,28 +418,27 @@ try {
     const commands = Object.fromEntries(
       arms.map(arm => [
         arm,
-        builderArgs({
+        codexBuilderArgs({
           arm,
           prompt,
           cliBin,
           model,
-          maxTurns: limits.builderTurns,
-          maxBudgetUsd: limits.builderBudgetUsd,
+          outputPath: path.join(projects[arm], '.vibe', 'codex-last-message.txt'),
         }),
       ])
     )
     if (dryRun) {
       for (const arm of arms) {
         process.stdout.write(
-          `\n[${arm}] in ${projects[arm]}\n${formatCommand('claude', commands[arm])}\n`
+          `\n[${arm}] in ${projects[arm]}\n${formatCommand('codex', commands[arm])}\n`
         )
       }
       const judgeDir = path.join(work, brief.id, 'judge')
       const labels = Object.keys(blindArms(arms))
       process.stdout.write(
         `\n[judge] in ${judgeDir}\n${formatCommand(
-          'claude',
-          judgeArgs({
+          'codex',
+          codexJudgeArgs({
             prompt: judgePrompt({
               brief,
               labels,
@@ -437,8 +446,7 @@ try {
               hasReference: track === 'reference',
             }),
             model,
-            maxTurns: limits.judgeTurns,
-            maxBudgetUsd: limits.judgeBudgetUsd,
+            outputPath: path.join(judgeDir, 'codex-last-message.json'),
           })
         )}\n`
       )
@@ -446,7 +454,14 @@ try {
     }
 
     process.stdout.write(`\nBuilding ${brief.id} with ${arms.join(' and ')} in parallel…\n`)
-    const outcomes = await Promise.allSettled(arms.map(arm => claude(commands[arm], projects[arm])))
+    const outcomes = await Promise.allSettled(
+      arms.map(arm =>
+        codex(commands[arm], projects[arm], {
+          outputPath: path.join(projects[arm], '.vibe', 'codex-last-message.txt'),
+          eventsPath: path.join(projects[arm], '.vibe', 'codex-events.jsonl'),
+        })
+      )
+    )
 
     browser ??= await chromium.launch()
     const shots = {}
@@ -456,7 +471,10 @@ try {
         entry.arms[arm] = { status: 'error', error: outcome.reason.message }
         continue
       }
-      const agent = summarizeClaudeResult(outcome.value)
+      const agent = summarizeCodexEvents(outcome.value.events, {
+        durationMs: outcome.value.durationMs,
+        model,
+      })
       report.models.push(...agent.models)
       const directory = projects[arm]
       try {
@@ -472,7 +490,7 @@ try {
         const result = {
           status: 'ok',
           agent,
-          agentResult: excerptText(outcome.value.result),
+          agentResult: excerptText(outcome.value.finalMessage),
           files,
           measures: measureSources(measured, { knownTokens }),
           typecheck: { ok: typecheck.ok, errors: countTypeErrors(typecheck.output) },
@@ -527,8 +545,9 @@ try {
       process.stdout.write(`\nJudging ${brief.id} (${labels.join(', ')})…\n`)
       entry.judge = { mapping }
       try {
-        const reply = await claude(
-          judgeArgs({
+        const judgeOutput = path.join(judgeDir, 'codex-last-message.json')
+        const reply = await codex(
+          codexJudgeArgs({
             prompt: judgePrompt({
               brief,
               labels,
@@ -536,15 +555,18 @@ try {
               hasReference: track === 'reference',
             }),
             model,
-            maxTurns: limits.judgeTurns,
-            maxBudgetUsd: limits.judgeBudgetUsd,
+            outputPath: judgeOutput,
           }),
-          judgeDir
+          judgeDir,
+          { outputPath: judgeOutput, eventsPath: path.join(judgeDir, 'codex-events.jsonl') }
         )
-        entry.judge.agent = summarizeClaudeResult(reply)
+        entry.judge.agent = summarizeCodexEvents(reply.events, {
+          durationMs: reply.durationMs,
+          model,
+        })
         report.models.push(...entry.judge.agent.models)
-        entry.judge.raw = reply.result
-        const byLabel = parseJudgeOutput(reply.result ?? '', labels)
+        entry.judge.raw = reply.finalMessage
+        const byLabel = parseJudgeOutput(reply.finalMessage, labels)
         entry.judge.scores = Object.fromEntries(
           Object.entries(byLabel).map(([label, summary]) => [mapping[label], summary])
         )

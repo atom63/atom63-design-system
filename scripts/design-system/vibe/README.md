@@ -8,10 +8,10 @@ scheduled workflow. Each run writes a report that you commit.
 
 ```bash
 pnpm --filter "@atom63/mdx..." --filter "@atom63/ui-react..." build   # the ds arm packs dist
-pnpm vibe --dry-run                  # set up every project and print the claude commands
+pnpm vibe --dry-run                  # set up every project and print the Codex commands
 pnpm vibe --brief sign-in            # one brief, three arms and the judge
 pnpm vibe --brief crm-contacts --track reference --dry-run
-pnpm vibe --yes                      # every brief (spends real money)
+pnpm vibe --yes                      # every brief (uses real Codex quota)
 ```
 
 | Flag | Effect |
@@ -20,18 +20,19 @@ pnpm vibe --yes                      # every brief (spends real money)
 | `--arms plain,ds-core,ds-guided` | Pick the arms. `ds` remains as a legacy alias for the guided arm. |
 | `--track <name>` | `generalization` (the default) or `reference`. Reference cases must have a matching folder in `references/`. |
 | `--artifacts <dir>` | Preserve generated source, screenshots and logs outside the temporary directory, excluding dependencies, build output and tarballs. The directory must not exist. |
-| `--model <id>` | Model for the builders and the judge. Default: the `claude` CLI default. |
+| `--model <id>` | Model for the builders and the judge. Default: the Codex CLI default. |
 | `--dry-run` | Pack, generate and install the projects, print the planned commands, call no agent. |
 | `--keep` | Keep the temporary directory (projects, full-size screenshots, judge folder). |
 | `--yes` | Required to run more than one brief. |
 
-It needs a logged-in `claude` CLI, Playwright's Chromium (`pnpm exec playwright install chromium`)
-and the network for third-party dependencies. Before it starts, it prints the cost ceiling: each
-builder is capped at $5 and 80 turns and each judge at $2 (`--max-budget-usd`, `--max-turns`).
+It needs a logged-in `codex` CLI, Playwright's Chromium (`pnpm exec playwright install chromium`)
+and the network for third-party dependencies. Each builder and judge runs in a fresh ephemeral
+session with a 45-minute process timeout. The report records input, cached-input and output tokens;
+the runner does not call Claude or estimate a dollar cost.
 
 ## What a run does
 
-For each brief, three fresh `claude -p` agents get the same product prompt: build the brief as a new
+For each brief, three fresh `codex exec` agents get the same product prompt: build the brief as a new
 page at `/<brief id>`, add no dependencies, and leave `pnpm typecheck` and `pnpm build` passing.
 
 - **`plain`:** Vite, React, TypeScript, Tailwind v4 and lucide-react at the versions the starter
@@ -49,11 +50,11 @@ reference. Reference runs parse the state table and capture every listed state a
 the CRM pack therefore produces 20 screenshots per arm. The benchmark route must replace the
 starter site's navigation and appearance controls so they do not contaminate the comparison.
 
-Both run with `--permission-mode dontAsk` and an allowlist: read, search and edit files inside the
-project, and run `pnpm typecheck` and `pnpm build`. Everything else, including other shell
-commands and writes outside the project, is denied. `--setting-sources project,local` keeps the
-user's own `CLAUDE.md`, skills and settings out of the runs, and `--strict-mcp-config` keeps other
-MCP servers out.
+All arms use `--ignore-user-config --ephemeral` with Codex plugins, apps, browser/computer use and
+multi-agent features disabled. Builders receive a workspace-write sandbox. The plain arm receives
+no MCP server; `ds-core` receives only Atom63 component, example, token, rules and manifest tools;
+`ds-guided` receives the complete read-only Atom63 MCP server. Every arm otherwise uses the same
+Codex runtime and model selection.
 
 Then, on the source files each agent added or changed:
 
@@ -73,7 +74,7 @@ Then, on the source files each agent added or changed:
 - **Literal values:** Tailwind palette or arbitrary color utilities (`bg-blue-500`,
   `bg-[#fafafa]`), and hex, `rgb()`, `hsl()` or `oklch()` colors elsewhere.
 
-Finally a visual-only `claude -p` judge reads the rendered reference target and anonymous full-page
+Finally a visual-only `codex exec` judge in a read-only sandbox reads the rendered reference target and anonymous full-page
 screenshots at 1440, 1024, 768 and 390 px for every captured state. It cannot read source, imports,
 tokens, component names or arm names. It returns a 100-point visual score: reference fidelity 35,
 hierarchy and composition 20, density/spacing/alignment 15, typography/color/surfaces 15,
@@ -85,12 +86,16 @@ images in its own folder.
 only the labels; the mapping is recorded in the report. No generated source is copied into the
 judge folder, so implementation technology cannot reveal an arm.
 
+The builders and judge currently use the same Codex model family. Image-only blinding reduces arm
+leakage but does not remove shared-family or self-preference bias. Treat the judge as comparative
+evidence, repeat samples, and do not use one score as a release gate.
+
 ## Read the report
 
 `docs/design-system/audits/vibe-<date>.md` has a totals table, then per brief the implementation
-gates, DS leverage, visual scores with the judge's evidence, and the cost, time and turns. The briefs and
-the builder prompt are at the end. Raw results (every measure, the judge's full reply and the
-denied tool calls) are in `docs/design-system/audits/vibe/vibe-<date>.json`, and JPEG thumbnails of
+gates, DS leverage, visual scores with the judge's evidence, and token use, time and turns. The briefs
+and the builder prompt are at the end. Raw results (every measure, the judge's full reply and Codex
+JSONL usage events) are in `docs/design-system/audits/vibe/vibe-<date>.json`, and JPEG thumbnails of
 the first screen of each page in `docs/design-system/audits/vibe/<date>/`.
 
 Build, typecheck, axe and screenshot completeness are qualification gates. Token use, craft findings,

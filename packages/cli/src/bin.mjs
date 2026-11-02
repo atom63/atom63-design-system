@@ -145,7 +145,8 @@ const invoked = process.argv[1] ? realpathSync(process.argv[1]) : ''
 if (invoked === fileURLToPath(import.meta.url) && process.argv[2] === 'mcp') {
   // Loaded only here, so plain queries never pay for the MCP SDK.
   const { serve } = await import('./mcp.mjs')
-  serve()
+  const tools = process.env.ATOM63_MCP_TOOLS?.split(',').filter(Boolean)
+  serve({ tools })
 } else if (invoked === fileURLToPath(import.meta.url)) {
   const { exitCode, json, output } = runCli(process.argv.slice(2))
   ;(exitCode === 0 || json ? process.stdout : process.stderr).write(`${output}\n`)

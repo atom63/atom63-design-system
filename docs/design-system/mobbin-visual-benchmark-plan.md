@@ -183,8 +183,8 @@ findings are qualification gates, not points. `token-use` is not part of the vis
 - contract violations;
 - template or block IDs queried and copied;
 - percentage of copied template code changed;
-- builder time, turns, and cost;
-- denied tool calls;
+- builder time, turns, and Codex token use;
+- failed tool calls;
 - build and typecheck result.
 
 This report shows whether Atom63 reaches the target through its public system or through local repair.
@@ -212,8 +212,10 @@ masked or scored by region.
 2. Deterministic build, state, overflow and accessibility failures are qualification gates.
 3. Contract use and override burden are reported under DS leverage, not visual quality.
 
-Pairwise visual judging runs in both orders. The builder and visual judge use different model
-families. Each arm and case is repeated at least three times in the pilot.
+Pairwise visual judging runs in both orders. To avoid Claude quota use, the builder and visual judge
+currently run as separate sessions in the same Codex model family. Anonymous image-only judging and
+repeated samples reduce, but do not eliminate, shared-family or self-preference bias. Each arm and
+case is repeated at least three times in the pilot.
 
 ## Pilot size
 
@@ -380,8 +382,8 @@ Build、typecheck、截图完整性、横向溢出、必需状态和严重 axe �
 - contract violation；
 - 查询和复制的 template / block ID；
 - 复制模板后的改动比例；
-- builder 时间、turn、成本；
-- denied tool call；
+- builder 时间、turn、Codex token 用量；
+- failed tool call；
 - build 与 typecheck。
 
 视觉好但 override 很重，表示 Atom63 表达力有缺口，不能算纯粹的 DS 胜利。
@@ -399,8 +401,9 @@ Pixel diff 只是证据。字体渲染和合理响应式变化需要 mask 或按
 2. Build、状态、溢出和无障碍的确定性失败作为资格门槛。
 3. Contract 使用和 override 成本只进入 DS leverage，不进入视觉分。
 
-Pairwise visual judge 交换顺序跑两次。Builder 与 visual judge 使用不同模型家族。Pilot 中每个 arm / case
-至少重复三次。
+Pairwise visual judge 交换顺序跑两次。为了不消耗 Claude quota，builder 与 visual judge 当前使用同一
+Codex 模型家族中的独立 session。匿名纯图片评审和重复采样能降低、但不能消除同家族与自偏好偏差。
+Pilot 中每个 arm / case 至少重复三次。
 
 ## Pilot 规模
 

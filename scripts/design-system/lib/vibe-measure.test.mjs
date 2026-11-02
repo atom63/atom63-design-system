@@ -316,14 +316,14 @@ describe('caseValidity', () => {
   it('rejects a failed typecheck, a failed build, a builder error and a missing screenshot', () => {
     const result = {
       ...built(new Map([['src/pages/p.tsx', page(' variant="primary"')]])),
-      error: 'claude exited 1',
+      error: 'codex exited 1',
       typecheck: { ok: false, out: 'error TS2322' },
       build: { ok: false, out: '' },
     }
     assert.deepEqual(
       caseValidity(result, { screenshots: { desktop: true, mobile: false } }).reasons,
       [
-        'builder error: claude exited 1',
+        'builder error: codex exited 1',
         'typecheck failed',
         'build failed',
         'missing screenshot: mobile',

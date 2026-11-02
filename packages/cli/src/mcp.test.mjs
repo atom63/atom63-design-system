@@ -88,6 +88,26 @@ describe('atom63 MCP server', () => {
   })
 })
 
+describe('filtered Atom63 MCP server', () => {
+  it('registers only the requested read-only tools', async () => {
+    const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair()
+    await createAtomServer(undefined, { tools: ['component', 'token', 'rules'] }).connect(
+      serverTransport
+    )
+    const client = new Client({ name: 'filtered-test', version: '0.0.0' })
+    await client.connect(clientTransport)
+    try {
+      const { tools } = await client.listTools()
+      assert.deepEqual(
+        tools.map(tool => tool.name),
+        ['component', 'token', 'rules']
+      )
+    } finally {
+      await client.close()
+    }
+  })
+})
+
 describe('atom63 mcp over stdio', () => {
   it('serves a host that launches `atom63 mcp`', async () => {
     const bin = fileURLToPath(new URL('./bin.mjs', import.meta.url))
@@ -100,6 +120,28 @@ describe('atom63 mcp over stdio', () => {
       assert.equal(tools.length, readCommands.length)
       const result = await stdioClient.callTool({ name: 'component', arguments: { slug: 'kbd' } })
       assert.equal(result.structuredContent.type, 'component.detail')
+    } finally {
+      await stdioClient.close()
+    }
+  })
+
+  it('honors the tool filter from the host environment', async () => {
+    const bin = fileURLToPath(new URL('./bin.mjs', import.meta.url))
+    const stdioClient = new Client({ name: 'filtered-stdio-test', version: '0.0.0' })
+    await stdioClient.connect(
+      new StdioClientTransport({
+        command: process.execPath,
+        args: [bin, 'mcp'],
+        env: { ...process.env, ATOM63_MCP_TOOLS: 'component,token,rules' },
+        stderr: 'pipe',
+      })
+    )
+    try {
+      const { tools } = await stdioClient.listTools()
+      assert.deepEqual(
+        tools.map(tool => tool.name),
+        ['component', 'token', 'rules']
+      )
     } finally {
       await stdioClient.close()
     }
