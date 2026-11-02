@@ -53,12 +53,14 @@ import {
 import {
   builderArgs,
   builderPrompt,
+  captureFiles,
   captureViewports,
   coreAgentGuide,
   formatCommand,
   judgeArgs,
   pagePath,
   parseBrief,
+  parseReferenceStates,
   planPlainProject,
   summarizeClaudeResult,
 } from './lib/vibe-projects.mjs'
@@ -235,43 +237,52 @@ async function preview(directory) {
  * Open the brief's page at every benchmark viewport in light mode: run axe and
  * take full-page PNGs for the judge plus small JPEG thumbnails for the report.
  */
-async function inspectPage(browser, url, outDir) {
+async function inspectPage(browser, url, outDir, states = []) {
   mkdirSync(outDir, { recursive: true })
   const result = { consoleErrors: [], textLength: 0, axe: { violations: [], nodes: 0 } }
-  for (const [name, viewport] of Object.entries(captureViewports)) {
-    const context = await browser.newContext({ viewport, colorScheme: 'light' })
-    const page = await context.newPage()
-    page.on('console', message => {
-      if (message.type() === 'error')
-        result.consoleErrors.push(`${name}: ${message.text().slice(0, 300)}`)
-    })
-    page.on('pageerror', error =>
-      result.consoleErrors.push(`${name}: ${String(error).slice(0, 300)}`)
-    )
-    await page.goto(url, { waitUntil: 'networkidle' })
-    await page.waitForTimeout(500)
-    await page.screenshot({ path: path.join(outDir, `${name}.png`), fullPage: true })
-    await page.screenshot({ path: path.join(outDir, `${name}.jpg`), type: 'jpeg', quality: 55 })
-    if (name === 'desktop')
-      result.textLength = (await page.evaluate(() => document.body.innerText)).trim().length
-    await page.addScriptTag({ content: axe.source })
-    const axeResult = await page.evaluate(() =>
-      window.axe.run(document, { resultTypes: ['violations'] })
-    )
-    result.axe.violations.push(
-      ...axeResult.violations.map(violation => ({
-        viewport: name,
-        id: violation.id,
-        impact: violation.impact,
-        nodes: violation.nodes.length,
-        help: violation.help,
-      }))
-    )
-    result.axe.nodes += axeResult.violations.reduce(
-      (sum, violation) => sum + violation.nodes.length,
-      0
-    )
-    await context.close()
+  const scenarios = states.length ? states : [null]
+  for (const state of scenarios) {
+    for (const [name, viewport] of Object.entries(captureViewports)) {
+      const relative = state ? path.join(state, `${name}.png`) : `${name}.png`
+      const jpegRelative = relative.replace(/\.png$/, '.jpg')
+      mkdirSync(path.dirname(path.join(outDir, relative)), { recursive: true })
+      const context = await browser.newContext({ viewport, colorScheme: 'light' })
+      const page = await context.newPage()
+      page.on('console', message => {
+        if (message.type() === 'error')
+          result.consoleErrors.push(
+            `${state ?? 'default'}/${name}: ${message.text().slice(0, 300)}`
+          )
+      })
+      page.on('pageerror', error =>
+        result.consoleErrors.push(`${state ?? 'default'}/${name}: ${String(error).slice(0, 300)}`)
+      )
+      const captureUrl = state ? `${url}?state=${encodeURIComponent(state)}` : url
+      await page.goto(captureUrl, { waitUntil: 'networkidle' })
+      await page.waitForTimeout(500)
+      await page.screenshot({ path: path.join(outDir, relative), fullPage: true })
+      await page.screenshot({ path: path.join(outDir, jpegRelative), type: 'jpeg', quality: 55 })
+      if (name === 'desktop' && (!states.length || state === 'complete'))
+        result.textLength = (await page.evaluate(() => document.body.innerText)).trim().length
+      await page.addScriptTag({ content: axe.source })
+      const axeResult = await page.evaluate(() =>
+        window.axe.run(document, { resultTypes: ['violations'] })
+      )
+      result.axe.violations.push(
+        ...axeResult.violations.map(violation => ({
+          viewport: name,
+          id: violation.id,
+          impact: violation.impact,
+          nodes: violation.nodes.length,
+          help: violation.help,
+        }))
+      )
+      result.axe.nodes += axeResult.violations.reduce(
+        (sum, violation) => sum + violation.nodes.length,
+        0
+      )
+      await context.close()
+    }
   }
   return result
 }
@@ -369,6 +380,13 @@ try {
   for (const brief of briefs) {
     process.stdout.write(`\n=== ${brief.id} ===\n`)
     const entry = { brief, arms: {}, judge: null, thumbnails: [] }
+    const captureStates =
+      track === 'reference'
+        ? parseReferenceStates(
+            readFileSync(path.join(referencesDir, brief.id, 'states.md'), 'utf8')
+          )
+        : []
+    entry.captureStates = captureStates
     report.briefs.push(entry)
     const prompt = builderPrompt(brief, { track })
     const projects = Object.fromEntries(arms.map(arm => [arm, path.join(work, brief.id, arm)]))
@@ -404,6 +422,7 @@ try {
               brief,
               labels,
               sources: Object.fromEntries(labels.map(label => [label, []])),
+              states: captureStates,
             }),
             model,
             maxTurns: limits.judgeTurns,
@@ -455,7 +474,12 @@ try {
           const server = await preview(directory)
           try {
             shots[arm] = path.join(work, brief.id, 'shots', arm)
-            const page = await inspectPage(browser, `${server.url}${pagePath(brief)}`, shots[arm])
+            const page = await inspectPage(
+              browser,
+              `${server.url}${pagePath(brief)}`,
+              shots[arm],
+              captureStates
+            )
             result.axe = page.axe
             result.page = { textLength: page.textLength, consoleErrors: page.consoleErrors }
           } finally {
@@ -477,8 +501,11 @@ try {
       for (const [label, arm] of Object.entries(mapping)) {
         const target = path.join(judgeDir, label)
         mkdirSync(path.join(target, 'source'), { recursive: true })
-        for (const name of Object.keys(captureViewports))
-          cpSync(path.join(shots[arm], `${name}.png`), path.join(target, `${name}.png`))
+        for (const relative of captureFiles(captureStates)) {
+          const destination = path.join(target, relative)
+          mkdirSync(path.dirname(destination), { recursive: true })
+          cpSync(path.join(shots[arm], relative), destination)
+        }
         labelSources[label] = [...sources[arm].keys()]
         for (const [relative, text] of sources[arm]) {
           const file = path.join(target, 'source', relative)
@@ -492,7 +519,7 @@ try {
       try {
         const reply = await claude(
           judgeArgs({
-            prompt: judgePrompt({ brief, labels, sources: labelSources }),
+            prompt: judgePrompt({ brief, labels, sources: labelSources, states: captureStates }),
             model,
             maxTurns: limits.judgeTurns,
             maxBudgetUsd: limits.judgeBudgetUsd,
@@ -515,9 +542,13 @@ try {
     const thumbDir = path.join(auditsDir, 'vibe', date)
     for (const arm of judged) {
       mkdirSync(thumbDir, { recursive: true })
+      const thumbnailState = captureStates.includes('complete') ? 'complete' : null
       for (const width of Object.keys(captureViewports)) {
         const name = `${brief.id}-${arm}-${width}.jpg`
-        cpSync(path.join(shots[arm], `${width}.jpg`), path.join(thumbDir, name))
+        cpSync(
+          path.join(shots[arm], thumbnailState ? thumbnailState : '', `${width}.jpg`),
+          path.join(thumbDir, name)
+        )
         entry.thumbnails.push(`vibe/${date}/${name}`)
       }
     }

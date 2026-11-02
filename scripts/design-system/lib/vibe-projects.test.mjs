@@ -8,11 +8,13 @@ import { scanCss, scanSource } from './craft-rules.mjs'
 import {
   builderArgs,
   builderPrompt,
+  captureFiles,
   captureViewports,
   coreAgentGuide,
   formatCommand,
   judgeArgs,
   parseBrief,
+  parseReferenceStates,
   planPlainProject,
   plainDependencies,
   plainDevDependencies,
@@ -67,6 +69,25 @@ describe('captureViewports', () => {
     assert.deepEqual(Object.keys(captureViewports), ['desktop', 'compact', 'tablet', 'phone'])
     assert.deepEqual(captureViewports.desktop, { width: 1440, height: 960 })
     assert.deepEqual(captureViewports.phone, { width: 390, height: 844 })
+  })
+})
+
+describe('reference captures', () => {
+  it('parses table state ids and expands every state across every viewport', () => {
+    const states = parseReferenceStates(
+      '| State | Result |\n| --- | --- |\n| `empty` | Empty |\n| `complete` | Done |'
+    )
+    assert.deepEqual(states, ['empty', 'complete'])
+    assert.deepEqual(captureFiles(states), [
+      'empty/desktop.png',
+      'empty/compact.png',
+      'empty/tablet.png',
+      'empty/phone.png',
+      'complete/desktop.png',
+      'complete/compact.png',
+      'complete/tablet.png',
+      'complete/phone.png',
+    ])
   })
 })
 

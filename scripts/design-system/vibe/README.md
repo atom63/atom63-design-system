@@ -45,7 +45,9 @@ page at `/<brief id>`, add no dependencies, and leave `pnpm typecheck` and `pnpm
 The `reference` track copies `references/<brief id>/` into every generated project at
 `.vibe/reference/`. The prompt requires the builder to inspect the target, layout map and state list,
 then implement real UI rather than embed the target. The `generalization` track supplies no visual
-reference.
+reference. Reference runs parse the state table and capture every listed state at every viewport;
+the CRM pack therefore produces 20 screenshots per arm. The benchmark route must replace the
+starter site's navigation and appearance controls so they do not contaminate the comparison.
 
 Both run with `--permission-mode dontAsk` and an allowlist: read, search and edit files inside the
 project, and run `pnpm typecheck` and `pnpm build`. Everything else, including other shell
@@ -73,8 +75,8 @@ Then, on the source files each agent added or changed:
 
 Finally another `claude -p` run judges the results against the craft rubric
 (`scripts/design-system/lib/craft-rubric.mjs`). It reads full-page light-mode screenshots at
-1440, 1024, 768 and 390 px and the changed source, and returns one score (1–3) with evidence per
-criterion.
+1440, 1024, 768 and 390 px for every captured state, plus the changed source, and returns one score
+(1–3) with evidence per criterion.
 `summarizeCraftScores()` validates the reply. The judge can only read files in its own folder.
 
 **Blinding:** the arms are copied to folders `A`, `B` and `C` in random order, and the prompt names

@@ -4,7 +4,7 @@
  * craft rubric, and rendering `docs/design-system/audits/vibe-<date>.md`.
  */
 import { craftCriteria, summarizeCraftScores } from './craft-rubric.mjs'
-import { captureViewports } from './vibe-projects.mjs'
+import { captureFiles, captureViewports } from './vibe-projects.mjs'
 
 export const armNames = {
   ds: 'ds (Atom63, legacy guided arm)',
@@ -52,9 +52,9 @@ export function judgeRubricMarkdown() {
 /**
  * The judge prompt. The judge runs in a directory with one folder per label,
  * each holding one PNG per capture viewport and `source/`.
- * @param {{ brief: { title: string, body: string }, labels: string[], sources: Record<string, string[]> }} options
+ * @param {{ brief: { title: string, body: string }, labels: string[], sources: Record<string, string[]>, states?: string[] }} options
  */
-export function judgePrompt({ brief, labels, sources }) {
+export function judgePrompt({ brief, labels, sources, states = [] }) {
   const ids = craftCriteria.map(({ id }) => `\`${id}\``).join(', ')
   const example = Object.fromEntries(
     labels.map(label => [label, [{ criterion: craftCriteria[0].id, score: 2, evidence: '…' }]])
@@ -65,8 +65,11 @@ export function judgePrompt({ brief, labels, sources }) {
     'Each result has a folder in the current directory:',
     '',
     ...labels.flatMap(label => [
-      `- Full-page light-mode screenshots: ${Object.entries(captureViewports)
-        .map(([name, { width }]) => `\`${label}/${name}.png\` (${width} px wide)`)
+      `- Full-page light-mode screenshots: ${captureFiles(states)
+        .map(relative => {
+          const viewport = relative.split('/').at(-1).replace('.png', '')
+          return `\`${label}/${relative}\` (${captureViewports[viewport].width} px wide)`
+        })
         .join(', ')}.`,
       `- \`${label}/source/\`: the files the author added or changed: ${sources[label].map(file => `\`${file}\``).join(', ') || '(none)'}.`,
     ]),

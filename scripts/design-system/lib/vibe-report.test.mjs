@@ -45,9 +45,10 @@ describe('judgePrompt', () => {
       brief: { title: 'Sign in', body: 'A sign-in card.' },
       labels: ['A', 'B'],
       sources: { A: ['src/pages/sign-in.tsx'], B: ['src/App.tsx'] },
+      states: ['empty', 'complete'],
     })
-    assert.match(prompt, /A\/desktop\.png/)
-    assert.match(prompt, /B\/phone\.png/)
+    assert.match(prompt, /A\/empty\/desktop\.png/)
+    assert.match(prompt, /B\/complete\/phone\.png/)
     assert.match(prompt, /`src\/pages\/sign-in\.tsx`/)
     assert.match(prompt, /A sign-in card\./)
     for (const { id } of craftCriteria) assert.ok(prompt.includes(`\`${id}\``), id)

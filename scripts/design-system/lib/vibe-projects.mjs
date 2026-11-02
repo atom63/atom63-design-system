@@ -12,6 +12,20 @@ export const captureViewports = {
   phone: { width: 390, height: 844 },
 }
 
+/** State ids from the first column of a reference pack's Markdown table. */
+export function parseReferenceStates(markdown) {
+  return [...markdown.matchAll(/^\|\s*`([^`]+)`\s*\|/gm)].map(match => match[1])
+}
+
+/** Screenshot paths relative to one rendered arm. */
+export function captureFiles(states = []) {
+  return (states.length ? states : [null]).flatMap(state =>
+    Object.keys(captureViewports).map(viewport =>
+      state ? `${state}/${viewport}.png` : `${viewport}.png`
+    )
+  )
+}
+
 /**
  * A brief file: a `# Title` line, then product language only.
  * @returns {Brief}
@@ -55,6 +69,7 @@ export function builderPrompt(brief, { track = 'generalization' } = {}) {
     '',
     '- Work only inside this project directory.',
     '- Use only the dependencies that are already installed; do not add packages.',
+    '- On this benchmark route, replace the starter site chrome with the product interface from the brief. Starter navigation and appearance controls must not appear in screenshots.',
     '- Use realistic mock data where the page needs data; there is no backend.',
     '- When you are done, `pnpm typecheck` and `pnpm build` must both pass.',
   ].join('\n')

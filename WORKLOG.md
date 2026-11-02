@@ -6,11 +6,12 @@ Goal: Implement the CRM reference-track pilot for the Mobbin-grounded Atom63 vis
 Done when: The neutral CRM brief and frozen reference pack exist; plain, ds-core, and ds-guided arms are isolated; four viewports are captured; the dry-run and focused tests pass.
 May write: WORKLOG.md, scripts/design-system/vibe*, docs/design-system/, .changeset/
 Off limits: Paid builder or judge runs, component source, releases, and publishing.
-Next first step: Add scripted capture for all five CRM states and split the visual-only score from DS leverage before asking YZ to approve the paid nine-builder pilot.
+Next first step: Split the visual-only 100-point score from the existing craft/DS-leverage judge before asking YZ to approve the paid nine-builder pilot.
 Blocked on YZ: none
 
 ## Log
 
+- 2026-11-01 [codex] Added the five-state by four-viewport CRM capture matrix and excluded starter chrome from benchmark routes · checks: unit tests 46/46; runner syntax passed; three-arm dry-run passed and artifacts preserved at `/tmp/atom63-vibe-crm-states-dry-20261101`
 - 2026-11-01 [codex] Completed the executable CRM Track R infrastructure slice and preserved a verified dry-run artifact at `/tmp/atom63-vibe-crm-dry-20261101` · checks: dry-run 3/3 arms; unit tests 45/45; syntax, diff and Prettier checks passed; target SVG rendered and inspected at 1440×960
 - 2026-11-01 [codex] Implemented the CRM reference-pack slice with three benchmark arms, four capture viewports, all-viewport axe checks, and optional artifact preservation · checks: baseline 41/41; focused project/report tests 25/25; package build passed; full dry-run pending after quiet-install diagnosis
 - 2026-11-01 [codex] Rescoped after YZ requested a Mobbin-grounded reconstruction benchmark; researched five product patterns and wrote the proposed two-track, three-arm plan · checks: Mobbin references inspected as images; no benchmark code changed
