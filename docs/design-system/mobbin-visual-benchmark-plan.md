@@ -159,19 +159,19 @@ moves into disclosure, or becomes a separate details view.
 
 ## Evaluation
 
-### Visual and product score, 100 points
+### Visual score, 100 points
 
 | Category | Points | Evidence |
 | --- | ---: | --- |
-| Reference fidelity | 25 | Region geometry, relative spacing, density, typography roles, and control placement |
-| Task structure | 20 | Required information, primary task path, and domain context |
-| Responsive adaptation | 15 | No overflow, preserved priorities, first-screen density, and touch layout |
-| State completeness | 15 | Scripted states render, explain the state, and preserve layout |
-| Interaction quality | 10 | Keyboard path, focus return, feedback timing, cancel and retry behavior |
-| Accessibility | 10 | axe, names, headings, focus visibility, contrast, zoom, and target size |
+| Reference fidelity | 35 | Region proportions, geometry, control placement, relative scale and overall resemblance |
+| Hierarchy and composition | 20 | Reading order, emphasis, grouping, balance and primary-task clarity |
+| Density, spacing and alignment | 15 | Information density, rhythm, shared edges, table alignment and near misses |
+| Typography, color and surfaces | 15 | Type roles, contrast, color restraint, borders, fills, shadows and coherence |
+| Responsive visual adaptation | 10 | Visual priority and composition at 1024, 768 and 390 pixels |
 | Product specificity | 5 | The result reads as the named product task rather than a component gallery |
 
-`token-use` is not part of this 100-point score.
+Build, typecheck, screenshot completeness, horizontal overflow, required states and serious axe
+findings are qualification gates, not points. `token-use` is not part of the visual score.
 
 ### Design-system leverage, reported separately
 
@@ -207,12 +207,10 @@ masked or scored by region.
 
 ### Judges
 
-1. A visual-only judge sees screenshots, the target, and the required-state checklist. It cannot see
-   source, imports, arm names, or token data.
-2. A behavior and accessibility judge sees interaction recordings, axe output, and the accessibility
-   tree. Deterministic failures override model claims.
-3. A code judge reviews contract use and override burden. Its score is reported under DS leverage,
-   not visual quality.
+1. The visual-only judge sees the rendered target, anonymous screenshots and product brief. It
+   cannot see source, imports, arm names, token data or component names.
+2. Deterministic build, state, overflow and accessibility failures are qualification gates.
+3. Contract use and override burden are reported under DS leverage, not visual quality.
 
 Pairwise visual judging runs in both orders. The builder and visual judge use different model
 families. Each arm and case is repeated at least three times in the pilot.
@@ -235,7 +233,7 @@ the larger pilot spends money.
 
 Atom63 is strong for a case when:
 
-1. DS core matches or beats plain on the visual and product score within the confidence interval.
+1. DS core matches or beats plain on the visual score within the confidence interval.
 2. DS guided improves median score, time, or override burden over DS core.
 3. No required state, viewport, keyboard path, or deterministic accessibility check fails.
 4. The result uses the public component and token system without a large local styling layer.
@@ -358,19 +356,19 @@ Track R 以桌面目标图做 fidelity 基准。本轮 Mobbin web 参考没有�
 
 ## 评分
 
-### 视觉与产品分，100 分
+### 视觉分，100 分
 
 | 类别 | 分值 | 证据 |
 | --- | ---: | --- |
-| 参考还原 | 25 | 区域几何、相对间距、密度、字级角色、控件位置 |
-| 任务结构 | 20 | 必要信息、主任务路径、领域上下文 |
-| 响应式适配 | 15 | 无溢出、优先级保持、首屏密度、触控布局 |
-| 状态完整性 | 15 | 脚本状态可达、解释状态、布局稳定 |
-| 交互质量 | 10 | 键盘、focus return、反馈时机、cancel 与 retry |
-| 无障碍 | 10 | axe、name、heading、focus、contrast、zoom、target size |
+| 参考还原 | 35 | 区域比例、几何、控件位置、相对尺度和整体相似度 |
+| 层级与构图 | 20 | 阅读顺序、强调、分组、平衡和主任务清晰度 |
+| 密度、间距与对齐 | 15 | 信息密度、节奏、共享边、表格对齐和近似错位 |
+| 字体、颜色与表面 | 15 | 字级角色、对比、色彩克制、边框、填充、阴影和一致性 |
+| 响应式视觉适配 | 10 | 1024、768、390 像素下的视觉优先级和构图 |
 | 产品特异性 | 5 | 像指定产品任务，而不是组件展厅 |
 
-`token-use` 不进入这 100 分。
+Build、typecheck、截图完整性、横向溢出、必需状态和严重 axe 问题是资格门槛，不计分。
+`token-use` 不进入视觉分。
 
 ### 设计系统杠杆，单独报告
 
@@ -397,9 +395,9 @@ Pixel diff 只是证据。字体渲染和合理响应式变化需要 mask 或按
 
 ### Judge
 
-1. Visual-only judge 只看截图、目标图和状态清单，看不到源码、import、arm 名和 token 数据。
-2. Behavior / accessibility judge 看交互录像、axe 和 accessibility tree。确定性失败优先于模型判断。
-3. Code judge 只评 contract 使用和 override 成本，结果进入 DS leverage，不进入视觉分。
+1. Visual-only judge 只看渲染后的目标图、匿名截图和产品 brief，看不到源码、import、arm 名、token 或组件名。
+2. Build、状态、溢出和无障碍的确定性失败作为资格门槛。
+3. Contract 使用和 override 成本只进入 DS leverage，不进入视觉分。
 
 Pairwise visual judge 交换顺序跑两次。Builder 与 visual judge 使用不同模型家族。Pilot 中每个 arm / case
 至少重复三次。
@@ -415,7 +413,7 @@ Pairwise visual judge 交换顺序跑两次。Builder 与 visual judge 使用不
 
 一个 case 中 Atom63 足够强，需要同时满足：
 
-1. DS core 的视觉与产品分在置信区间内不低于 plain。
+1. DS core 的视觉分在置信区间内不低于 plain。
 2. DS guided 相比 DS core 改善中位分数、时间或 override 成本。
 3. 没有 required state、viewport、键盘路径或确定性无障碍检查失败。
 4. 主要通过公开组件和 token 达到目标，不依赖大块本地样式修补。

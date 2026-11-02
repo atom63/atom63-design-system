@@ -10,7 +10,7 @@
  *   with no design system, no AGENTS.md and no MCP server.
  * Then it measures what each agent wrote (craft rules, type errors, the build,
  * axe, the system-component share, literal colors), has a blinded `claude -p`
- * judge score both against the craft rubric from screenshots and source, and
+ * visual judge score the anonymous screenshots against the reference target, and
  * writes docs/design-system/audits/vibe-<date>.md with the raw JSON and
  * thumbnails in docs/design-system/audits/vibe/.
  *
@@ -36,7 +36,7 @@ import { createServer } from 'node:net'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import process from 'node:process'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 
 import axe from 'axe-core'
 import { chromium } from 'playwright'
@@ -287,6 +287,18 @@ async function inspectPage(browser, url, outDir, states = []) {
   return result
 }
 
+async function renderReferenceTarget(browser, source, destination) {
+  mkdirSync(path.dirname(destination), { recursive: true })
+  const context = await browser.newContext({ viewport: captureViewports.desktop })
+  try {
+    const page = await context.newPage()
+    await page.goto(pathToFileURL(source).href, { waitUntil: 'load' })
+    await page.screenshot({ path: destination })
+  } finally {
+    await context.close()
+  }
+}
+
 // Setup ----------------------------------------------------------------------
 
 const work = mkdtempSync(path.join(tmpdir(), 'atom63-vibe-'))
@@ -421,8 +433,8 @@ try {
             prompt: judgePrompt({
               brief,
               labels,
-              sources: Object.fromEntries(labels.map(label => [label, []])),
               states: captureStates,
+              hasReference: track === 'reference',
             }),
             model,
             maxTurns: limits.judgeTurns,
@@ -438,7 +450,6 @@ try {
 
     browser ??= await chromium.launch()
     const shots = {}
-    const sources = {}
     for (const [index, arm] of arms.entries()) {
       const outcome = outcomes[index]
       if (outcome.status === 'rejected') {
@@ -456,7 +467,6 @@ try {
             .filter(isMeasuredFile)
             .map(relative => [relative, after.get(relative)])
         )
-        sources[arm] = measured
         const typecheck = capture('pnpm', ['exec', 'tsc', '--noEmit'], directory)
         const build = capture('pnpm', ['exec', 'vite', 'build'], directory)
         const result = {
@@ -497,20 +507,20 @@ try {
     if (judged.length) {
       const mapping = blindArms(judged)
       const judgeDir = path.join(work, brief.id, 'judge')
-      const labelSources = {}
+      if (track === 'reference') {
+        await renderReferenceTarget(
+          browser,
+          path.join(referencesDir, brief.id, 'target-desktop.svg'),
+          path.join(judgeDir, 'reference', 'target-desktop.png')
+        )
+      }
       for (const [label, arm] of Object.entries(mapping)) {
         const target = path.join(judgeDir, label)
-        mkdirSync(path.join(target, 'source'), { recursive: true })
+        mkdirSync(target, { recursive: true })
         for (const relative of captureFiles(captureStates)) {
           const destination = path.join(target, relative)
           mkdirSync(path.dirname(destination), { recursive: true })
           cpSync(path.join(shots[arm], relative), destination)
-        }
-        labelSources[label] = [...sources[arm].keys()]
-        for (const [relative, text] of sources[arm]) {
-          const file = path.join(target, 'source', relative)
-          mkdirSync(path.dirname(file), { recursive: true })
-          writeFileSync(file, text)
         }
       }
       const labels = Object.keys(mapping)
@@ -519,7 +529,12 @@ try {
       try {
         const reply = await claude(
           judgeArgs({
-            prompt: judgePrompt({ brief, labels, sources: labelSources, states: captureStates }),
+            prompt: judgePrompt({
+              brief,
+              labels,
+              states: captureStates,
+              hasReference: track === 'reference',
+            }),
             model,
             maxTurns: limits.judgeTurns,
             maxBudgetUsd: limits.judgeBudgetUsd,

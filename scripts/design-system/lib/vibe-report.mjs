@@ -1,10 +1,53 @@
 /**
  * The judged half of the vibe runner (E4) and its report: blinding the arms,
  * the judge prompt, parsing and validating the judge's scores against the
- * craft rubric, and rendering `docs/design-system/audits/vibe-<date>.md`.
+ * visual rubric, and rendering `docs/design-system/audits/vibe-<date>.md`.
  */
-import { craftCriteria, summarizeCraftScores } from './craft-rubric.mjs'
 import { captureFiles, captureViewports } from './vibe-projects.mjs'
+
+export const visualCriteria = [
+  {
+    id: 'reference-fidelity',
+    name: 'Reference fidelity',
+    max: 35,
+    guidance:
+      'Region proportions, geometry, control placement, relative scale and overall resemblance to the desktop target.',
+  },
+  {
+    id: 'hierarchy-composition',
+    name: 'Hierarchy and composition',
+    max: 20,
+    guidance: 'Reading order, emphasis, grouping, balance and clarity of the primary task.',
+  },
+  {
+    id: 'density-spacing-alignment',
+    name: 'Density, spacing and alignment',
+    max: 15,
+    guidance:
+      'Information density, repeated rhythm, shared edges, table alignment and absence of near misses.',
+  },
+  {
+    id: 'type-color-surfaces',
+    name: 'Typography, color and surfaces',
+    max: 15,
+    guidance:
+      'Type roles, contrast, color restraint, borders, fills, shadows and surface coherence.',
+  },
+  {
+    id: 'responsive-adaptation',
+    name: 'Responsive visual adaptation',
+    max: 10,
+    guidance:
+      'Priority and composition at 1024, 768 and 390 pixels without looking like a scaled desktop.',
+  },
+  {
+    id: 'product-specificity',
+    name: 'Product specificity',
+    max: 5,
+    guidance:
+      'The result reads as a credible CRM workspace rather than a component gallery or generic dashboard.',
+  },
+]
 
 export const armNames = {
   ds: 'ds (Atom63, legacy guided arm)',
@@ -29,39 +72,35 @@ export function blindArms(arms, random = Math.random) {
 }
 
 /**
- * The rubric as the judge reads it: each criterion's definition, levels and
- * what is left to judgment. The "checked automatically" notes describe this
- * repo's CI and are left out.
+ * The visual rubric as the judge reads it: a point budget and visible evidence
+ * for each criterion.
  */
 export function judgeRubricMarkdown() {
-  return craftCriteria
-    .map(criterion =>
-      [
-        `## ${criterion.name} (\`${criterion.id}\`)`,
-        '',
-        criterion.definition,
-        '',
-        ...[3, 2, 1].map(score => `- **${score}:** ${criterion.levels[score]}`),
-        '',
-        `Judge especially: ${criterion.judged}`,
-      ].join('\n')
+  return visualCriteria
+    .map(
+      criterion =>
+        `## ${criterion.name} (\`${criterion.id}\`, 0–${criterion.max} points)\n\n${criterion.guidance}`
     )
     .join('\n\n')
 }
 
 /**
  * The judge prompt. The judge runs in a directory with one folder per label,
- * each holding one PNG per capture viewport and `source/`.
- * @param {{ brief: { title: string, body: string }, labels: string[], sources: Record<string, string[]>, states?: string[] }} options
+ * each holding one PNG per capture viewport. The target is at
+ * `reference/target-desktop.png`; no source is present.
+ * @param {{ brief: { title: string, body: string }, labels: string[], states?: string[], hasReference?: boolean }} options
  */
-export function judgePrompt({ brief, labels, sources, states = [] }) {
-  const ids = craftCriteria.map(({ id }) => `\`${id}\``).join(', ')
+export function judgePrompt({ brief, labels, states = [], hasReference = false }) {
+  const ids = visualCriteria.map(({ id }) => `\`${id}\``).join(', ')
   const example = Object.fromEntries(
-    labels.map(label => [label, [{ criterion: craftCriteria[0].id, score: 2, evidence: '…' }]])
+    labels.map(label => [label, [{ criterion: visualCriteria[0].id, score: 28, evidence: '…' }]])
   )
   return [
-    `You are reviewing user interfaces built from one product brief. There ${labels.length === 1 ? 'is one result, labelled' : `are ${labels.length} results, labelled`} ${labels.join(' and ')}. Score each result against the craft rubric below, on its own merits.`,
+    `You are a visual design judge reviewing anonymous user interfaces. There ${labels.length === 1 ? 'is one result, labelled' : `are ${labels.length} results, labelled`} ${labels.join(' and ')}. Score only what is visible in the images.`,
     '',
+    ...(hasReference
+      ? ['Use `reference/target-desktop.png` as the desktop fidelity target.']
+      : ['There is no fidelity target; judge the visible product response to the brief.']),
     'Each result has a folder in the current directory:',
     '',
     ...labels.flatMap(label => [
@@ -71,10 +110,9 @@ export function judgePrompt({ brief, labels, sources, states = [] }) {
           return `\`${label}/${relative}\` (${captureViewports[viewport].width} px wide)`
         })
         .join(', ')}.`,
-      `- \`${label}/source/\`: the files the author added or changed: ${sources[label].map(file => `\`${file}\``).join(', ') || '(none)'}.`,
     ]),
     '',
-    'Read every screenshot and source file of each result before you score it. Judge what the page shows and what the code does.',
+    'Read the target and every screenshot before scoring. Do not infer implementation quality or technology.',
     '',
     '# Brief',
     '',
@@ -82,13 +120,13 @@ export function judgePrompt({ brief, labels, sources, states = [] }) {
     '',
     brief.body,
     '',
-    '# Craft rubric',
+    '# Visual rubric',
     '',
     judgeRubricMarkdown(),
     '',
     '# Output',
     '',
-    `Return only a JSON object, with no prose before or after it and no code fence. It has one key per label (${labels.join(', ')}). Each value is an array with exactly one entry per criterion id (${ids}): \`{ "criterion": "<id>", "score": 1 | 2 | 3, "evidence": "<one or two sentences>" }\`. The evidence names what in the result earned the score (an element, a class, a state), not an opinion.`,
+    `Return only a JSON object, with no prose before or after it and no code fence. It has one key per label (${labels.join(', ')}). Each value is an array with exactly one entry per criterion id (${ids}): \`{ "criterion": "<id>", "score": <integer from 0 through that criterion's maximum>, "evidence": "<one or two sentences naming visible evidence>" }\`. The six scores total at most 100 points.`,
     '',
     `Shape: ${JSON.stringify(example)}`,
   ].join('\n')
@@ -110,7 +148,31 @@ export function parseJudgeOutput(text, labels) {
   return Object.fromEntries(
     labels.map(label => {
       if (!(label in parsed)) throw new TypeError(`The judge returned no scores for ${label}.`)
-      return [label, summarizeCraftScores(parsed[label])]
+      const scores = parsed[label]
+      if (!Array.isArray(scores))
+        throw new TypeError(`The judge returned invalid scores for ${label}.`)
+      const byId = new Map(scores.map(score => [score.criterion, score]))
+      const normalized = visualCriteria.map(criterion => {
+        const score = byId.get(criterion.id)
+        if (!score) throw new TypeError(`Missing visual criterion ${criterion.id} for ${label}.`)
+        if (!Number.isInteger(score.score) || score.score < 0 || score.score > criterion.max)
+          throw new TypeError(
+            `Visual score for ${criterion.id} must be an integer from 0 to ${criterion.max}.`
+          )
+        if (typeof score.evidence !== 'string' || !score.evidence.trim())
+          throw new TypeError(`Visual evidence for ${criterion.id} is required.`)
+        return { criterion: criterion.id, score: score.score, evidence: score.evidence.trim() }
+      })
+      if (scores.length !== visualCriteria.length)
+        throw new TypeError(`The judge returned extra visual criteria for ${label}.`)
+      return [
+        label,
+        {
+          total: normalized.reduce((sum, score) => sum + score.score, 0),
+          max: 100,
+          scores: normalized,
+        },
+      ]
     })
   )
 }
@@ -192,9 +254,8 @@ export function totals(run, arm) {
     share: denominator === 0 ? null : system / denominator,
     palette: sum(result => result.measures.literals.paletteUtilities.length),
     literal: sum(result => result.measures.literals.literalColors.length),
-    rubric: scored.reduce((total, summary) => total + summary.total, 0),
-    rubricMax: scored.reduce((total, summary) => total + summary.max, 0),
-    rubricPasses: scored.filter(summary => summary.passed).length,
+    visual: scored.reduce((total, summary) => total + summary.total, 0),
+    visualMax: scored.reduce((total, summary) => total + summary.max, 0),
     judged: scored.length,
     costUsd: sum(result => result.agent.costUsd),
     durationMs: sum(result => result.agent.durationMs),
@@ -241,12 +302,10 @@ export function renderReport(run) {
         ],
         ['Literal colors', ...arms.map(arm => String(totals(run, arm).literal))],
         [
-          'Craft rubric (judged)',
+          'Visual score (judged)',
           ...arms.map(arm => {
             const total = totals(run, arm)
-            return total.judged
-              ? `${total.rubric} of ${total.rubricMax}; ${total.rubricPasses} of ${total.judged} pass`
-              : '–'
+            return total.judged ? `${total.visual} of ${total.visualMax}` : '–'
           }),
         ],
         ['Builder cost', ...arms.map(arm => dollars(totals(run, arm).costUsd))],
@@ -254,12 +313,13 @@ export function renderReport(run) {
       ]
     ),
     '',
-    'A result passes the rubric when no criterion scores 1.',
+    'The visual score is judged from the anonymous screenshots and reference target only. The remaining rows report implementation gates and design-system leverage separately.',
   ]
 
   for (const entry of run.briefs) {
     const { brief, judge } = entry
     out.push('', `## ${brief.title} (\`${brief.id}\`)`, '')
+    out.push('### Implementation gates and DS leverage', '')
     const cells = Object.fromEntries(arms.map(arm => [arm, measureCells(entry.arms[arm])]))
     out.push(
       table(
@@ -276,7 +336,7 @@ export function renderReport(run) {
     )
     if (axeRules.length) out.push('', `axe rules: ${axeRules.join('; ')}.`)
 
-    out.push('', '### Craft rubric', '')
+    out.push('', '### Visual score', '')
     if (!judge || judge.error) {
       out.push(`Not judged${judge?.error ? `: ${judge.error}` : ''}.`)
     } else {
@@ -284,15 +344,15 @@ export function renderReport(run) {
         Object.entries(judge.mapping).map(([label, arm]) => [arm, label])
       )
       out.push(
-        `The judge saw ${Object.entries(judge.mapping)
+        `The visual judge saw ${Object.entries(judge.mapping)
           .map(([label, arm]) => `${armNames[arm] ?? arm} as ${label}`)
-          .join(' and ')}. Scores are 1–3, with the judge's evidence.`,
+          .join(' and ')}. Scores total 100 points and use visible evidence only.`,
         '',
         table(
           ['Criterion', ...heading],
           [
-            ...craftCriteria.map(criterion => [
-              criterion.name,
+            ...visualCriteria.map(criterion => [
+              `${criterion.name} (${criterion.max})`,
               ...arms.map(arm => {
                 const score = judge.scores[arm]?.scores.find(
                   item => item.criterion === criterion.id
@@ -304,9 +364,7 @@ export function renderReport(run) {
               '**Total**',
               ...arms.map(arm => {
                 const summary = judge.scores[arm]
-                return summary
-                  ? `**${summary.total} of ${summary.max}**, ${summary.passed ? 'pass' : 'fail'} (as ${byLabel[arm]})`
-                  : '–'
+                return summary ? `**${summary.total} of ${summary.max}** (as ${byLabel[arm]})` : '–'
               }),
             ],
           ]
@@ -334,14 +392,14 @@ export function renderReport(run) {
           }),
           judge?.agent
             ? [
-                'Judge',
+                'Visual judge',
                 dollars(judge.agent.costUsd),
                 duration(judge.agent.durationMs),
                 String(judge.agent.turns),
                 judge.agent.stopReason,
                 String(judge.agent.permissionDenials.length),
               ]
-            : ['Judge', '–', '–', '–', '–', '–'],
+            : ['Visual judge', '–', '–', '–', '–', '–'],
         ]
       )
     )

@@ -73,29 +73,31 @@ Then, on the source files each agent added or changed:
 - **Literal values:** Tailwind palette or arbitrary color utilities (`bg-blue-500`,
   `bg-[#fafafa]`), and hex, `rgb()`, `hsl()` or `oklch()` colors elsewhere.
 
-Finally another `claude -p` run judges the results against the craft rubric
-(`scripts/design-system/lib/craft-rubric.mjs`). It reads full-page light-mode screenshots at
-1440, 1024, 768 and 390 px for every captured state, plus the changed source, and returns one score
-(1–3) with evidence per criterion.
-`summarizeCraftScores()` validates the reply. The judge can only read files in its own folder.
+Finally a visual-only `claude -p` judge reads the rendered reference target and anonymous full-page
+screenshots at 1440, 1024, 768 and 390 px for every captured state. It cannot read source, imports,
+tokens, component names or arm names. It returns a 100-point visual score: reference fidelity 35,
+hierarchy and composition 20, density/spacing/alignment 15, typography/color/surfaces 15,
+responsive adaptation 10 and product specificity 5.
+The parser validates every criterion, point range and evidence string. The judge can only read
+images in its own folder.
 
 **Blinding:** the arms are copied to folders `A`, `B` and `C` in random order, and the prompt names
-only the labels; the mapping is recorded in the report. The source still shows its imports, so a
-careful judge can tell the arms apart; the labels only remove order and naming effects.
+only the labels; the mapping is recorded in the report. No generated source is copied into the
+judge folder, so implementation technology cannot reveal an arm.
 
 ## Read the report
 
-`docs/design-system/audits/vibe-<date>.md` has a totals table, then per brief the measures, the
-rubric scores with the judge's evidence, and the cost, time and turns of each run. The briefs and
+`docs/design-system/audits/vibe-<date>.md` has a totals table, then per brief the implementation
+gates, DS leverage, visual scores with the judge's evidence, and the cost, time and turns. The briefs and
 the builder prompt are at the end. Raw results (every measure, the judge's full reply and the
 denied tool calls) are in `docs/design-system/audits/vibe/vibe-<date>.json`, and JPEG thumbnails of
 the first screen of each page in `docs/design-system/audits/vibe/<date>/`.
 
-The rubric's token-use criterion asks for `--a63-*` tokens, so the plain arm scores low on it by
-construction. Treat token use, craft findings and system-component share as design-system leverage,
-not as a neutral visual-quality verdict. Compare the other six criteria for a like-for-like view.
-One run is one sample per arm. Treat a single report as a smoke test and compare repeated samples
-before drawing conclusions. A run on the same day overwrites that day's report.
+Build, typecheck, axe and screenshot completeness are qualification gates. Token use, craft findings,
+system-component share and literal values are reported separately as design-system leverage and do
+not change the visual score. One run is one sample per arm. Treat a single report as a smoke test and
+compare repeated samples before drawing conclusions. A run on the same day overwrites that day's
+report.
 
 ## Add a brief
 

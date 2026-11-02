@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 
-import { craftCriteria } from './craft-rubric.mjs'
 import {
   blindArms,
   duration,
@@ -9,10 +8,15 @@ import {
   parseJudgeOutput,
   renderReport,
   totals,
+  visualCriteria,
 } from './vibe-report.mjs'
 
-const scores = score =>
-  craftCriteria.map(({ id }) => ({ criterion: id, score, evidence: `Evidence for ${id}.` }))
+const scores = ratio =>
+  visualCriteria.map(({ id, max }) => ({
+    criterion: id,
+    score: Math.round(max * ratio),
+    evidence: `Visible evidence for ${id}.`,
+  }))
 
 describe('blindArms', () => {
   it('labels every arm once, in an order set by the random source', () => {
@@ -40,43 +44,77 @@ describe('blindArms', () => {
 })
 
 describe('judgePrompt', () => {
-  it('names the labels, the files, the brief and every criterion, but not the arms', () => {
+  it('names the labels, screenshots, brief and every visual criterion, but not the arms', () => {
     const prompt = judgePrompt({
       brief: { title: 'Sign in', body: 'A sign-in card.' },
       labels: ['A', 'B'],
-      sources: { A: ['src/pages/sign-in.tsx'], B: ['src/App.tsx'] },
       states: ['empty', 'complete'],
+      hasReference: true,
     })
     assert.match(prompt, /A\/empty\/desktop\.png/)
     assert.match(prompt, /B\/complete\/phone\.png/)
-    assert.match(prompt, /`src\/pages\/sign-in\.tsx`/)
     assert.match(prompt, /A sign-in card\./)
-    for (const { id } of craftCriteria) assert.ok(prompt.includes(`\`${id}\``), id)
-    assert.doesNotMatch(prompt, /\bds\b|\bplain\b|atom63|design system/i)
+    for (const { id } of visualCriteria) assert.ok(prompt.includes(`\`${id}\``), id)
+    assert.doesNotMatch(prompt, /source\/|\.tsx|token|\bds\b|\bplain\b|atom63|design system/i)
+  })
+})
+
+describe('visual-only rubric', () => {
+  it('allocates exactly 100 points to visual criteria', () => {
+    assert.deepEqual(
+      visualCriteria.map(({ id, max }) => [id, max]),
+      [
+        ['reference-fidelity', 35],
+        ['hierarchy-composition', 20],
+        ['density-spacing-alignment', 15],
+        ['type-color-surfaces', 15],
+        ['responsive-adaptation', 10],
+        ['product-specificity', 5],
+      ]
+    )
+    assert.equal(
+      visualCriteria.reduce((sum, criterion) => sum + criterion.max, 0),
+      100
+    )
+  })
+
+  it('shows only the target, brief and anonymous screenshots to the judge', () => {
+    const prompt = judgePrompt({
+      brief: { title: 'Contacts', body: 'A CRM workspace.' },
+      labels: ['A', 'B'],
+      states: ['complete'],
+      hasReference: true,
+    })
+    assert.match(prompt, /target-desktop\.png/)
+    assert.match(prompt, /A\/complete\/desktop\.png/)
+    assert.match(prompt, /reference-fidelity/)
+    assert.doesNotMatch(prompt, /source\/|\.tsx|token|atom63|design system|\bds\b|\bplain\b/i)
   })
 })
 
 describe('parseJudgeOutput', () => {
-  const reply = JSON.stringify({ A: scores(3), B: scores(2) })
+  const reply = JSON.stringify({ A: scores(1), B: scores(0.7) })
 
   it('validates each label against the rubric', () => {
     const parsed = parseJudgeOutput(reply, ['A', 'B'])
-    assert.equal(parsed.A.total, craftCriteria.length * 3)
-    assert.equal(parsed.B.passed, true)
+    assert.equal(parsed.A.total, 100)
+    assert.equal(parsed.B.total, 72)
   })
 
   it('accepts a code fence or prose around the object', () => {
     const parsed = parseJudgeOutput(`Here you go:\n\`\`\`json\n${reply}\n\`\`\`\n`, ['A', 'B'])
-    assert.equal(parsed.B.total, craftCriteria.length * 2)
+    assert.equal(parsed.B.total, 72)
   })
 
   it('rejects missing labels, missing criteria and bad scores', () => {
-    assert.throws(() => parseJudgeOutput(JSON.stringify({ A: scores(3) }), ['A', 'B']), /for B/)
+    assert.throws(() => parseJudgeOutput(JSON.stringify({ A: scores(1) }), ['A', 'B']), /for B/)
     assert.throws(
-      () => parseJudgeOutput(JSON.stringify({ A: scores(3).slice(1) }), ['A']),
-      /Missing craft criteria/
+      () => parseJudgeOutput(JSON.stringify({ A: scores(1).slice(1) }), ['A']),
+      /Missing visual criterion/
     )
-    assert.throws(() => parseJudgeOutput(JSON.stringify({ A: scores(4) }), ['A']), /1, 2 or 3/)
+    const tooHigh = scores(1)
+    tooHigh[0].score = 36
+    assert.throws(() => parseJudgeOutput(JSON.stringify({ A: tooHigh }), ['A']), /0 to 35/)
     assert.throws(() => parseJudgeOutput('I cannot score these.', ['A']), /no JSON/)
   })
 })
@@ -144,8 +182,8 @@ const run = {
           models: ['claude-test'],
         },
         scores: {
-          ds: { total: 21, max: 21, passed: true, scores: scores(3) },
-          plain: { total: 14, max: 21, passed: true, scores: scores(2) },
+          ds: { total: 100, max: 100, scores: scores(1) },
+          plain: { total: 72, max: 100, scores: scores(0.7) },
         },
       },
       thumbnails: ['vibe/2026-09-26/sign-in-ds-desktop.jpg'],
@@ -157,7 +195,7 @@ describe('totals', () => {
   it('adds the measures of every brief per arm', () => {
     const ds = totals(run, 'ds')
     assert.equal(ds.share, 0.75)
-    assert.equal(ds.rubric, 21)
+    assert.equal(ds.visual, 100)
     const plain = totals(run, 'plain')
     assert.equal(plain.share, 0)
     assert.equal(plain.palette, 2)
@@ -177,7 +215,10 @@ describe('renderReport', () => {
       markdown,
       /plain \(React \+ Tailwind\) as A and ds \(Atom63, legacy guided arm\) as B/
     )
-    assert.match(markdown, /\*\*21 of 21\*\*, pass \(as B\)/)
+    assert.match(markdown, /\*\*100 of 100\*\* \(as B\)/)
+    assert.match(markdown, /Visual score \(judged\)/)
+    assert.match(markdown, /design-system leverage separately/)
+    assert.match(markdown, /Implementation gates and DS leverage/)
     assert.match(
       markdown,
       /\| Builder, ds \(Atom63, legacy guided arm\) \| \$1\.25 \| 2m 0s \| 20 \|/
