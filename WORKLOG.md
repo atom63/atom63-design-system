@@ -2,15 +2,16 @@
 
 Owner: codex
 Branch: codex/batch-case-study-review
-Goal: Produce and inspect a third independent three-arm CRM benchmark entirely with Codex.
-Done when: Sample 3 has an isolated report, all three Codex builders change measured source, 60 implementation screenshots are present and inspected, and the three-sample comparison identifies stable and unstable findings.
-May write: WORKLOG.md, scripts/design-system/vibe*, docs/design-system/audits/, and an external artifact directory for the run.
-Off limits: Component source, releases, publishing, and Claude calls.
-Next first step: Propose the narrow responsive list/detail pattern slice identified by the three-sample synthesis before changing component source.
+Goal: Shape a confirmed responsive list/detail template slice from the three-sample CRM evidence.
+Done when: `packages/templates/PRODUCT.md` records confirmed product truth and YZ confirms a brief with explicit desktop, tablet, phone, state and accessibility behavior.
+May write: WORKLOG.md and packages/templates/PRODUCT.md during shaping; implementation paths only after brief confirmation.
+Off limits: Component source, releases, publishing, benchmark prompts or scoring, and Claude calls.
+Next first step: Complete the required product-context record, then shape the smallest responsive list/detail brief without writing UI code.
 Blocked on YZ: none
 
 ## Log
 
+- 2026-11-03 [codex] Started shaping the responsive list/detail slice with `packages/templates` as the confirmed primary target; YZ confirmed the user, purpose, web-only scope, existing-component boundary and benchmark evidence for PRODUCT.md · checks: relay check clean; Atom63 build kit identifies the existing list-page, data-table-section, detail-panel and Sheet capabilities
 - 2026-11-03 [codex] Completed sample 3 and the three-sample synthesis; plain scored 92/94/95 with a 3-point range, while core scored 64/78/79 and guided 61/84/85, so Atom63's stable advantage is implementation discipline rather than visual fidelity or responsive reliability · checks: sample 3 has 20 PNG per arm and 12 thumbnails; all typechecks/builds passed with no console errors; JSON parses; all 60 screenshots inspected in contact sheets plus full-resolution phone overlays; artifacts preserved at `/tmp/atom63-vibe-codex-crm-full-20261102-s3`
 - 2026-11-02 [codex] Started CRM sample 3 after YZ confirmed continuation; prompt, arms, rubric and judge remain unchanged so the third sample is directly comparable · checks: relay check clean; focused Node test suite 65/65
 - 2026-11-02 [codex] Completed and visually inspected CRM sample 2; plain scored 95, core 64 and guided 61, with both DS arms showing severe selected/complete overlay collisions at tablet and phone widths · checks: 20 PNG per arm; 12 report thumbnails; all typechecks/builds passed with no console errors; JSON parses; all 60 screenshots inspected in contact sheets plus four full-resolution DS failure cases; artifacts preserved at `/tmp/atom63-vibe-codex-crm-full-20261102-s2`
