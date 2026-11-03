@@ -162,15 +162,15 @@ export function isPhoneIdea(idea) {
   return terms.some(term => phoneWords.has(term)) || /\b(3[2-9]\d|4[0-3]\d) ?px\b/i.test(idea)
 }
 
-/* What a phone idea is told to build on: the app-view template's phone layout. */
+/* What a phone idea is told to build on: AppView's phone layout. */
 const phoneScreen = {
   template: 'app-view',
-  use: 'Use AppView layout="phone" for the screen: edge to edge with no card or inset, safe-area aware, the top bar optional, and the tab bar docked at the bottom. It sets phone-sized type and controls inside it (data-a63-form-factor="phone": body 17px, subhead 15px, footnote 13px, 44px controls), so keep rows and labels on the defaults or the text roles (text-body, text-subhead, text-footnote) instead of shrinking them with text-sm or text-xs. Only the main region scrolls, so its last row stays visible above the tab bar. On a screen with no tab bar (a chat, a detail or a checkout step), leave tabBar out and dock the composer or action bar as bottomBar. The default layout ("window") is a padded desktop window with a rounded main card; do not use it on a phone.',
+  use: 'Use AppView layout="phone" for the screen: edge to edge with no card or inset, safe-area aware, the top bar optional, and the tab bar docked at the bottom. It sets phone-sized type and controls inside it (data-a63-form-factor="phone": body 17px, subhead 15px, footnote 13px, 44px controls), so keep rows and labels on the defaults or the text roles (text-body, text-subhead, text-footnote) instead of shrinking them with text-sm or text-xs. Only the main region scrolls, so its last row stays visible above the tab bar. On a screen with no tab bar (a chat, a detail or a checkout step), leave tabBar out and dock the composer or action bar as bottomBar. Put a control that floats over the content, such as a scroll-to-bottom button, in overlay. The default layout ("window") is a padded desktop window with a rounded main card; do not use it on a phone.',
   files:
-    'AppView ships in no package: it is the app-view page template. Paste pages/app-view/app-view.tsx and blocks/tab-bar/tab-bar.tsx, which `atom63 template app-view` prints in full (or run `atom63 copy app-view src`). Its AppViewPhonePage is the phone sample to start from.',
+    'Import AppView from @atom63/ui-react/layout. The tab bar is the tab-bar block: paste blocks/tab-bar/tab-bar.tsx, which `atom63 template app-view` prints with the sample pages (or run `atom63 copy app-view src`). Its AppViewPhonePage is the phone sample to start from.',
   imports: [
     "import { House, Search } from 'lucide-react'",
-    "import { AppView } from './pages/app-view/app-view'",
+    "import { AppView } from '@atom63/ui-react/layout'",
     "import { TabBar } from './blocks/tab-bar/tab-bar'",
   ],
   snippet: [
@@ -318,7 +318,8 @@ export function build(index, idea) {
   const named = found.map(result => result.id)
   // A topic note ("track list" → Table variant="plain") replaces the summary.
   const summaries = new Map(found.map(result => [result.id, result.summary]))
-  const components = [...new Set([...used, ...named])].slice(0, 8).map(slug => ({
+  // Nine: the app-view page brings eight, with its AppView frame, and the idea's own pick still fits.
+  const components = [...new Set([...used, ...named])].slice(0, 9).map(slug => ({
     slug,
     summary: summaries.get(slug) ?? bySlug.get(slug).summary,
     next: `atom63 component ${slug}`,

@@ -1,0 +1,162 @@
+/*
+ * AppView recipe — the SURFACE archetype. The frame of a full-window view:
+ * the root is a column as tall as the viewport, and only the main region
+ * scrolls. The contract levers are data-layout (window, phone) and
+ * data-chrome (inset, flush). Each safe-area inset has one owner: the root
+ * takes the inline insets, the top bar the top one, and data-bottom-inset
+ * names the owner of the bottom one (tab-bar, bottom-bar or main).
+ */
+
+.a63-AppView {
+  --a63-app-view-inset-top: var(--a63-safe-area-top, env(safe-area-inset-top, 0px));
+  --a63-app-view-inset-bottom: var(--a63-safe-area-bottom, env(safe-area-inset-bottom, 0px));
+  --a63-app-view-inset-inline: max(
+    var(--a63-safe-area-left, env(safe-area-inset-left, 0px)),
+    var(--a63-safe-area-right, env(safe-area-inset-right, 0px))
+  );
+
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  block-size: 100dvh;
+  padding-inline: var(--a63-app-view-inset-inline);
+  overflow: hidden;
+  background-color: var(--a63-surface-page);
+  color: var(--a63-text-primary);
+}
+
+.a63-AppView > [data-slot='app-view-top-bar'],
+.a63-AppView > [data-slot='app-view-bottom-bar'],
+.a63-AppView > [data-slot='app-view-tab-bar'] {
+  flex-shrink: 0;
+}
+
+.a63-AppView > [data-slot='app-view-top-bar'] {
+  display: flex;
+  align-items: center;
+  gap: var(--a63-space-2);
+  padding-block-start: var(--a63-app-view-inset-top);
+}
+
+.a63-AppView > [data-slot='app-view-body'] {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-block-size: 0;
+}
+
+.a63-AppView [data-slot='app-view-main'] {
+  flex: 1;
+  min-inline-size: 0;
+  overflow-y: auto;
+}
+
+.a63-AppView [data-slot='app-view-panel'] {
+  display: none;
+  flex-direction: column;
+  flex-shrink: 0;
+  inline-size: 18rem;
+  overflow-y: auto;
+}
+
+.a63-AppView [data-slot='app-view-main']:focus-visible,
+.a63-AppView [data-slot='app-view-panel']:focus-visible {
+  outline: var(--a63-control-focus-ring-width, 2px) solid var(--a63-focus-ring);
+  outline-offset: calc(-1 * var(--a63-control-focus-ring-width, 2px));
+}
+
+/* A Sidebar in the panel fills it instead of the viewport. */
+.a63-AppView [data-slot='app-view-panel'] [data-slot='sidebar-wrapper'] {
+  min-block-size: 0;
+  block-size: 100%;
+}
+
+.a63-AppView [data-slot='app-view-overlay'] {
+  position: absolute;
+  inset-block-end: var(--a63-space-4);
+  inset-inline-end: var(--a63-space-4);
+  display: flex;
+  gap: var(--a63-space-2);
+}
+
+.a63-AppView > [data-slot='app-view-bottom-bar'] {
+  display: flex;
+  align-items: center;
+  gap: var(--a63-space-4);
+}
+
+.a63-AppView[data-bottom-inset='tab-bar'] > [data-slot='app-view-tab-bar'],
+.a63-AppView[data-bottom-inset='bottom-bar'] > [data-slot='app-view-bottom-bar'],
+.a63-AppView[data-bottom-inset='main'] [data-slot='app-view-main'] {
+  padding-block-end: var(--a63-app-view-inset-bottom);
+}
+
+/* Window: the side panel from md up, the tab bar below md only. */
+@media (min-width: 48rem) {
+  .a63-AppView[data-layout='window'] [data-slot='app-view-panel'] {
+    display: flex;
+  }
+
+  .a63-AppView[data-layout='window'] > [data-slot='app-view-tab-bar'] {
+    display: none;
+  }
+}
+
+/* Window, inset: a padded window with the panel and main on rounded cards. */
+.a63-AppView[data-chrome='inset'] {
+  gap: var(--a63-space-2);
+  padding: var(--a63-space-2) max(var(--a63-space-2), var(--a63-app-view-inset-inline));
+}
+
+.a63-AppView[data-chrome='inset'] > [data-slot='app-view-body'] {
+  gap: var(--a63-space-2);
+}
+
+.a63-AppView[data-chrome='inset'] [data-slot='app-view-panel'],
+.a63-AppView[data-chrome='inset'] [data-slot='app-view-main'] {
+  border-radius: var(--radius-xl);
+  background-color: var(--a63-surface-panel);
+}
+
+.a63-AppView[data-chrome='inset'] [data-slot='app-view-panel'] {
+  padding: var(--a63-space-2);
+}
+
+.a63-AppView[data-chrome='inset'] > [data-slot='app-view-bottom-bar'] {
+  padding-inline: var(--a63-space-2);
+}
+
+/* The tab bar runs to the window edges and the bottom. */
+.a63-AppView[data-chrome='inset'] > [data-slot='app-view-tab-bar'] {
+  margin-inline: calc(-1 * max(var(--a63-space-2), var(--a63-app-view-inset-inline)));
+  margin-block-end: calc(-1 * var(--a63-space-2));
+}
+
+/* Flush (a flush window and every phone): edge to edge, split by borders. */
+.a63-AppView[data-chrome='flush'] > [data-slot='app-view-top-bar'] {
+  min-block-size: calc(3.5rem + var(--a63-app-view-inset-top));
+  padding-inline: var(--a63-space-4);
+  border-block-end: 1px solid var(--a63-border-subtle);
+}
+
+.a63-AppView[data-chrome='flush'] [data-slot='app-view-panel'] {
+  border-inline-end: 1px solid var(--a63-border-subtle);
+  background-color: var(--a63-surface-sidebar);
+}
+
+.a63-AppView[data-chrome='flush'] > [data-slot='app-view-bottom-bar'] {
+  padding-block: var(--a63-space-2);
+  padding-inline: var(--a63-space-4);
+  border-block-start: 1px solid var(--a63-border-subtle);
+}
+
+.a63-AppView[data-chrome='flush'][data-bottom-inset='bottom-bar']
+  > [data-slot='app-view-bottom-bar'] {
+  padding-block-end: max(var(--a63-space-2), var(--a63-app-view-inset-bottom));
+}
+
+/* Phone: body-size text, so the screen inherits the phone type step. */
+.a63-AppView[data-layout='phone'] {
+  font-size: var(--typography-base-font-size);
+  line-height: var(--typography-base-line-height);
+}

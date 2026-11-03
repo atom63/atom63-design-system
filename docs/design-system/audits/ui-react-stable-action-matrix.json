@@ -95,18 +95,18 @@
       "P1": 12,
       "P2": 38
     },
-    "packageSubpaths": 79,
+    "packageSubpaths": 80,
     "subpathActionCounts": {
       "assign-owner-and-evidence": 1,
       "keep-preview-subpath-or-add-evidence": 2,
       "keep-preview-labeled": 1,
       "document-subpath-contract": 2,
-      "keep-import-path-stable": 73
+      "keep-import-path-stable": 74
     },
     "subpathPriorityCounts": {
       "P0": 4,
       "P1": 2,
-      "P2": 73
+      "P2": 74
     }
   },
   "sourceActions": [
@@ -2661,6 +2661,15 @@
       "subpath": "./recipes/amount.css",
       "kind": "css",
       "target": "./src/components/amount/amount.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/app-view.css",
+      "kind": "css",
+      "target": "./src/components/app-view/app-view.css",
       "recommendedAction": "keep-import-path-stable",
       "priority": "P2",
       "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",

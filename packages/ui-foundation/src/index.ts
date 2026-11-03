@@ -187,6 +187,20 @@ export type {
   AmountVisualArchetype,
 } from './components/amount/amount-contract'
 export {
+  appViewChromes,
+  appViewContract,
+  appViewLayouts,
+  appViewSlots,
+  appViewVisualArchetypes,
+} from './components/app-view/app-view-contract'
+export type {
+  AppViewChrome,
+  AppViewContract,
+  AppViewLayout,
+  AppViewSlot,
+  AppViewVisualArchetype,
+} from './components/app-view/app-view-contract'
+export {
   badgeContract,
   badgeDotColors,
   badgePaletteVariants,

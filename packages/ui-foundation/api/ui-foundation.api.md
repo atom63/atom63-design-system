@@ -456,6 +456,56 @@ export type AnimatedCheckVisualArchetype = (typeof animatedCheckVisualArchetypes
 export const animatedCheckVisualArchetypes: readonly [];
 
 // @public (undocumented)
+export type AppViewChrome = (typeof appViewChromes)[number];
+
+// @public (undocumented)
+export const appViewChromes: readonly ["inset", "flush"];
+
+// @public (undocumented)
+export interface AppViewContract {
+    // (undocumented)
+    chromes: readonly AppViewChrome[];
+    // (undocumented)
+    defaultChrome: AppViewChrome;
+    // (undocumented)
+    defaultLayout: AppViewLayout;
+    // (undocumented)
+    layouts: readonly AppViewLayout[];
+    // (undocumented)
+    slots: readonly AppViewSlot[];
+    // (undocumented)
+    visualArchetypes: readonly AppViewVisualArchetype[];
+}
+
+// @public (undocumented)
+export const appViewContract: {
+    defaultLayout: "window";
+    defaultChrome: "inset";
+    layouts: readonly ["window", "phone"];
+    chromes: readonly ["inset", "flush"];
+    slots: readonly ["app-view", "app-view-top-bar", "app-view-body", "app-view-panel", "app-view-main", "app-view-overlay", "app-view-bottom-bar", "app-view-tab-bar"];
+    visualArchetypes: readonly ["surface"];
+};
+
+// @public (undocumented)
+export type AppViewLayout = (typeof appViewLayouts)[number];
+
+// @public (undocumented)
+export const appViewLayouts: readonly ["window", "phone"];
+
+// @public (undocumented)
+export type AppViewSlot = (typeof appViewSlots)[number];
+
+// @public (undocumented)
+export const appViewSlots: readonly ["app-view", "app-view-top-bar", "app-view-body", "app-view-panel", "app-view-main", "app-view-overlay", "app-view-bottom-bar", "app-view-tab-bar"];
+
+// @public (undocumented)
+export type AppViewVisualArchetype = (typeof appViewVisualArchetypes)[number];
+
+// @public (undocumented)
+export const appViewVisualArchetypes: readonly ["surface"];
+
+// @public (undocumented)
 export interface AutocompleteContract {
     // (undocumented)
     defaultSize: AutocompleteSize;
@@ -5477,7 +5527,7 @@ export const visualArchetypes: {
         readonly id: "surface";
         readonly label: "Static content surfaces";
         readonly description: "In-flow containers and content surfaces that do not inherently manipulate state.";
-        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps", "Amount"];
+        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps", "Amount", "AppView"];
         readonly contracts: readonly ["surface"];
     };
 };

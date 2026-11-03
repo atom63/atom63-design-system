@@ -17,7 +17,7 @@ export type ComponentCatalogItem = {
   additionalValueExports?: readonly string[]
   axisGuidance?: ComponentAxisGuidance
   category: string
-  importPath: '@atom63/ui-react' | '@atom63/ui-react/calendar'
+  importPath: '@atom63/ui-react' | '@atom63/ui-react/calendar' | '@atom63/ui-react/layout'
   previewProfile: ComponentPreviewProfile
   relatedSlugs: readonly string[]
   slug: string
@@ -77,6 +77,15 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     usage:
       'Pair it with visible status text; the glyph is intentionally hidden from assistive technology.',
     usageExports: ['AnimatedCheck'],
+  },
+  'app-view': {
+    importPath: '@atom63/ui-react/layout',
+    relatedSlugs: ['sidebar', 'tabs'],
+    summary:
+      'A full-window app frame: a top bar, a side panel, the scrolling main region and docked bars, for a window or a phone screen.',
+    usage:
+      'Wrap a product view that has no site header or footer; pass layout="phone" for a phone app screen.',
+    usageExports: ['AppView'],
   },
   autocomplete: {
     relatedSlugs: ['input', 'command', 'select'],
@@ -805,6 +814,7 @@ export const componentCatalogGroups = [
       'accordion',
       'alert',
       'amount',
+      'app-view',
       'avatar',
       'badge',
       'card',

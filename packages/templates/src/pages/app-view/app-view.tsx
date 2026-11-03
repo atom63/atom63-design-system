@@ -17,6 +17,7 @@ import {
   TableRow,
   Toggle,
 } from '@atom63/ui-react'
+import { AppView } from '@atom63/ui-react/layout'
 import {
   Bell,
   House,
@@ -31,7 +32,7 @@ import {
   SkipForward,
   Volume2,
 } from 'lucide-react'
-import { type ReactNode, useState } from 'react'
+import { useState } from 'react'
 
 import { TabBar } from '../../blocks/tab-bar/tab-bar'
 
@@ -40,7 +41,7 @@ export const template = {
   kind: 'page',
   title: 'App view',
   description:
-    'A full-window product view with no site header or footer: a top bar across the window, a side panel and the main region below it, and an optional bar docked at the bottom, such as a media player or a status bar. layout="phone" makes it a phone app screen: edge to edge with no card or inset, the top bar optional, safe-area aware, phone-sized type and controls (body 17px, 44px controls), and the tab-bar block docked at the bottom. For a dense product view (a table, an inbox, an issue tracker, an admin dashboard, a file list), wrap it in <UIProvider density="compact">: spacing and control heights scale once by 0.875 (32px controls become 28px) and text keeps its size. Copy-only: paste the files `atom63 template app-view` prints.',
+    'A full-window product view with no site header or footer, built on the AppView frame from @atom63/ui-react/layout: a top bar across the window, a side panel and the main region below it, and an optional bar docked at the bottom, such as a media player or a status bar. chrome="flush" runs the columns to the window edges, split by borders, instead of rounded cards. layout="phone" makes it a phone app screen: edge to edge, the top bar optional, safe-area aware, phone-sized type and controls (body 17px, 44px controls), and the tab-bar block docked at the bottom. overlay floats content over the main region, such as a scroll-to-bottom button. For a dense product view (a table, an inbox, an issue tracker, an admin dashboard, a file list), wrap it in <UIProvider density="compact">. Import AppView; copy only the sample pages to adapt them.',
   category: 'layout',
   tags: [
     'app',
@@ -63,111 +64,6 @@ export const template = {
   ],
   readiness: 'draft',
 } as const
-
-export interface AppViewProps {
-  /** The main region; it scrolls on its own. */
-  children: ReactNode
-  /**
-   * `window` (the default): a padded window with the main region on a rounded
-   * card, the side panel from `md` up and the tab bar on phones only.
-   * `phone`: a phone app screen. The main region runs edge to edge with no
-   * card or inset, the side panel is not drawn, and the tab bar always shows.
-   * It stamps `data-a63-form-factor="phone"`, which sets phone-sized type and
-   * controls inside it (the iOS text sizes: body 17px, subhead 15px, footnote
-   * 13px, and 44px controls), so text-* utilities, text roles and components
-   * all follow without extra classes.
-   * The top bar is optional and takes the top safe-area inset; without one the
-   * content reaches the top edge (under the status bar with
-   * `viewport-fit=cover`), so give its first block `pt-[env(safe-area-inset-top)]`.
-   */
-  layout?: 'phone' | 'window'
-  /** A bar docked at the bottom of the window, such as a player or a status bar. */
-  bottomBar?: ReactNode
-  /** The accessible name of the bottom bar's region. */
-  bottomBarLabel?: string
-  /** A side panel next to the main region, hidden on phones. */
-  panel?: ReactNode
-  /** The accessible name of the side panel. */
-  panelLabel?: string
-  /** Bottom navigation shown on phones only, under the docked bar, such as the tab-bar block. */
-  tabBar?: ReactNode
-  /** The bar across the top of the window. Optional with `layout="phone"`. */
-  topBar?: ReactNode
-}
-
-/*
- * The window is a three-row grid: the top bar, the body (side panel and main,
- * each scrolling on its own) and the docked bar. Both bars span the full width,
- * which the app shell's sidebar layout cannot do.
- * For a dense product view (a table, an inbox, an issue tracker, an admin
- * dashboard, a file list), wrap it in <UIProvider density="compact"> from
- * @atom63/ui-react: the space steps, gaps, paddings and control heights scale
- * once by 0.875 and text keeps its size.
- */
-export function AppView({
-  bottomBar,
-  bottomBarLabel = 'Player',
-  children,
-  layout = 'window',
-  panel,
-  panelLabel = 'Library',
-  tabBar,
-  topBar,
-}: AppViewProps) {
-  if (layout === 'phone') {
-    /*
-     * A column, no gaps or radius: the top bar, the main region (the only part
-     * that scrolls), the docked bar, then the tab bar, which pads itself for
-     * the home indicator. Without a tab bar the docked bar takes that inset.
-     * data-a63-form-factor="phone" sets the phone type steps and control sizes
-     * for everything inside; text-base sets the body size the screen inherits.
-     */
-    return (
-      <div
-        className="bg-background text-foreground flex h-dvh flex-col text-base"
-        data-a63-form-factor="phone"
-      >
-        {topBar ? (
-          <header className="border-border flex min-h-14 shrink-0 items-center gap-2 border-b px-4 pt-[env(safe-area-inset-top)]">
-            {topBar}
-          </header>
-        ) : null}
-        <main className="min-h-0 flex-1 overflow-y-auto">{children}</main>
-        {bottomBar ? (
-          <section
-            aria-label={bottomBarLabel}
-            className={`border-border flex shrink-0 items-center gap-3 border-t px-4 py-2 ${tabBar ? '' : 'pb-[max(env(safe-area-inset-bottom),--spacing(2))]'}`}
-          >
-            {bottomBar}
-          </section>
-        ) : null}
-        {tabBar ? <div className="shrink-0">{tabBar}</div> : null}
-      </div>
-    )
-  }
-  return (
-    <div className="bg-background text-foreground grid h-dvh grid-rows-[auto_minmax(0,1fr)_auto_auto] gap-2 p-2">
-      <header className="flex items-center gap-2">{topBar}</header>
-      <div className="flex min-h-0 gap-2">
-        {panel ? (
-          <aside
-            aria-label={panelLabel}
-            className="bg-card hidden w-72 shrink-0 flex-col overflow-y-auto rounded-xl p-2 md:flex"
-          >
-            {panel}
-          </aside>
-        ) : null}
-        <main className="bg-card min-w-0 flex-1 overflow-y-auto rounded-xl">{children}</main>
-      </div>
-      {bottomBar ? (
-        <section aria-label={bottomBarLabel} className="flex items-center gap-4 px-2">
-          {bottomBar}
-        </section>
-      ) : null}
-      {tabBar ? <div className="-mx-2 -mb-2 md:hidden">{tabBar}</div> : null}
-    </div>
-  )
-}
 
 const library = [
   { current: false, kind: 'Playlist', title: 'Morning rotation' },

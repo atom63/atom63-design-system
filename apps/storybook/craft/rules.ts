@@ -372,9 +372,18 @@ function labelsOf(element: Element): HTMLLabelElement[] {
   return [...((element as HTMLInputElement).labels ?? [])]
 }
 
+/** A landmark that takes focus only so a keyboard can scroll it (AppView's main region and panel). */
+const SCROLL_REGION_SELECTOR = 'main[tabindex], aside[tabindex]'
+
 export function checkTargetSize(root: ParentNode): CraftViolation[] {
   const targets = [...root.querySelectorAll(INTERACTIVE_SELECTOR)]
-    .filter(element => !isDisabled(element) && isVisible(element) && !isCovered(element))
+    .filter(
+      element =>
+        !element.matches(SCROLL_REGION_SELECTOR) &&
+        !isDisabled(element) &&
+        isVisible(element) &&
+        !isCovered(element)
+    )
     .slice(0, LIMITS.targets)
     .map(element => {
       const box = targetBox(element)

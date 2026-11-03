@@ -89,6 +89,16 @@ describe('target-size', () => {
     ])
   })
 
+  it('does not count a focusable scroll region as a target', () => {
+    const root = mount(
+      '<div>' +
+        '<main tabindex="0" style="height: 40px; overflow-y: auto">Content</main>' +
+        '<button aria-label="Close" style="width: 16px; height: 16px; padding: 0"></button>' +
+        '</div>'
+    )
+    expect(checkTargetSize(root)).toEqual([])
+  })
+
   it('passes a 24px button', () => {
     const root = mount(
       '<div style="display: flex; gap: 0">' +

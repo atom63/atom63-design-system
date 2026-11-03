@@ -3,6 +3,7 @@
   "inputs": [
     "packages/ui-react/src/index.ts",
     "packages/ui-react/src/calendar/index.ts",
+    "packages/ui-react/src/layout/index.ts",
     "packages/ui-react/package.json",
     "docs/design-system/ui-react-support-policy.json"
   ],
@@ -47,8 +48,8 @@
   "counts": {
     "rootValueExports": 434,
     "rootTypeExports": 197,
-    "packageExportKeys": 79,
-    "cssExportKeys": 72
+    "packageExportKeys": 80,
+    "cssExportKeys": 73
   },
   "packageExportKeys": [
     ".",
@@ -62,6 +63,7 @@
     "./recipes/alert-dialog.css",
     "./recipes/alert.css",
     "./recipes/amount.css",
+    "./recipes/app-view.css",
     "./recipes/autocomplete.css",
     "./recipes/avatar.css",
     "./recipes/badge.css",
@@ -137,6 +139,7 @@
     "./recipes/alert-dialog.css",
     "./recipes/alert.css",
     "./recipes/amount.css",
+    "./recipes/app-view.css",
     "./recipes/autocomplete.css",
     "./recipes/avatar.css",
     "./recipes/badge.css",
@@ -284,6 +287,11 @@
       "subpath": "./recipes/amount.css",
       "kind": "css",
       "target": "./src/components/amount/amount.css"
+    },
+    {
+      "subpath": "./recipes/app-view.css",
+      "kind": "css",
+      "target": "./src/components/app-view/app-view.css"
     },
     {
       "subpath": "./recipes/autocomplete.css",
@@ -3726,6 +3734,242 @@
             {
               "name": "CalendarProps",
               "proposedTier": "monitor-high-risk"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subpath": "./layout",
+      "source": "packages/ui-react/src/layout/index.ts",
+      "exports": [
+        {
+          "source": "./components/app-view",
+          "values": [
+            {
+              "name": "AppView",
+              "proposedTier": "beta-supported-core"
+            }
+          ],
+          "types": [
+            {
+              "name": "AppViewProps",
+              "proposedTier": "beta-supported-core"
+            }
+          ]
+        },
+        {
+          "source": "./layout/container",
+          "values": [
+            {
+              "name": "Container",
+              "proposedTier": "beta-supported-core"
+            }
+          ],
+          "types": [
+            {
+              "name": "ContainerChrome",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "ContainerMaxWidth",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "ContainerPadding",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "ContainerProps",
+              "proposedTier": "beta-supported-core"
+            }
+          ]
+        },
+        {
+          "source": "./layout/grid",
+          "values": [
+            {
+              "name": "GRID_CHROME_VARS",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "GRID_HAIRLINE_CENTER_PX",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "GRID_HAIRLINE_PX",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "GridChrome",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "gridChromeStyle",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "GridCrosshair",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "GridGuides",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "GridRule",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "useGridChrome",
+              "proposedTier": "beta-supported-core"
+            }
+          ],
+          "types": [
+            {
+              "name": "GridChromeContextValue",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "GridChromeCssVars",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "GridChromeLineStyle",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "GridChromeProps",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "GridChromeStyle",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "GridChromeTone",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "GridGuidesColumns",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "GridGuidesProps",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "GridRuleProps",
+              "proposedTier": "beta-supported-core"
+            }
+          ]
+        },
+        {
+          "source": "./layout/max-width",
+          "values": [
+            {
+              "name": "containerFrameClassName",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "containerMaxWidthStyles",
+              "proposedTier": "beta-supported-core"
+            }
+          ],
+          "types": []
+        },
+        {
+          "source": "./layout/page",
+          "values": [
+            {
+              "name": "Page",
+              "proposedTier": "beta-supported-core"
+            }
+          ],
+          "types": [
+            {
+              "name": "PageProps",
+              "proposedTier": "beta-supported-core"
+            }
+          ]
+        },
+        {
+          "source": "./layout/page-skeleton",
+          "values": [
+            {
+              "name": "DEFAULT_PAGE_SKELETON_COUNT",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "PageSkeleton",
+              "proposedTier": "beta-supported-core"
+            }
+          ],
+          "types": [
+            {
+              "name": "PageSkeletonProps",
+              "proposedTier": "beta-supported-core"
+            }
+          ]
+        },
+        {
+          "source": "./layout/reader-layout",
+          "values": [
+            {
+              "name": "ReaderLayout",
+              "proposedTier": "beta-supported-core"
+            }
+          ],
+          "types": [
+            {
+              "name": "ReaderLayoutProps",
+              "proposedTier": "beta-supported-core"
+            }
+          ]
+        },
+        {
+          "source": "./layout/section",
+          "values": [
+            {
+              "name": "Section",
+              "proposedTier": "beta-supported-core"
+            }
+          ],
+          "types": [
+            {
+              "name": "SectionProps",
+              "proposedTier": "beta-supported-core"
+            }
+          ]
+        },
+        {
+          "source": "./layout/section-header",
+          "values": [
+            {
+              "name": "pageIndexHeroDescriptionClassName",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "pageIndexHeroTitleClassName",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "SectionHeader",
+              "proposedTier": "beta-supported-core"
+            }
+          ],
+          "types": [
+            {
+              "name": "SectionHeaderLevel",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "SectionHeaderProps",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "SectionHeaderVariant",
+              "proposedTier": "beta-supported-core"
             }
           ]
         }

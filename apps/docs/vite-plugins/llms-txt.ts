@@ -160,10 +160,10 @@ function expandComponentGuidance(source: string): string {
     )
 }
 
-/** The root entry and the `./calendar` entry, which together export every component family. */
+/** The root, `./calendar` and `./layout` entries, which together export every component family. */
 async function readUiReactIndexSource(pagesDir: string): Promise<string> {
   const sources = await Promise.all(
-    ['index.ts', 'calendar/index.ts'].map(file =>
+    ['index.ts', 'calendar/index.ts', 'layout/index.ts'].map(file =>
       fs.readFile(path.resolve(pagesDir, '../../../../packages/ui-react/src', file), 'utf8')
     )
   )
