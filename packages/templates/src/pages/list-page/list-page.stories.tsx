@@ -3,7 +3,7 @@ import { within } from 'storybook/test'
 
 import {
   compactGlobals,
-  phoneGlobals,
+  responsivePhoneGlobals,
   tabletGlobals,
   ThemeMatrix,
   themeMatrixParameters,
@@ -29,7 +29,7 @@ export const Compact: Story = { globals: compactGlobals }
 
 export const Tablet: Story = { globals: tabletGlobals }
 
-export const Phone: Story = { globals: phoneGlobals }
+export const Phone: Story = { globals: responsivePhoneGlobals }
 
 const selectedArgs = { defaultOpenId: 'INV-1044' }
 
@@ -39,7 +39,7 @@ export const SelectedCompact: Story = { args: selectedArgs, globals: compactGlob
 
 export const SelectedTablet: Story = { args: selectedArgs, globals: tabletGlobals }
 
-export const SelectedPhone: Story = { args: selectedArgs, globals: phoneGlobals }
+export const SelectedPhone: Story = { args: selectedArgs, globals: responsivePhoneGlobals }
 
 const emptyArgs = { defaultQuery: 'No matching invoice' }
 
@@ -49,7 +49,7 @@ export const EmptyCompact: Story = { args: emptyArgs, globals: compactGlobals }
 
 export const EmptyTablet: Story = { args: emptyArgs, globals: tabletGlobals }
 
-export const EmptyPhone: Story = { args: emptyArgs, globals: phoneGlobals }
+export const EmptyPhone: Story = { args: emptyArgs, globals: responsivePhoneGlobals }
 
 const progressArgs = {
   operationStatus: (
@@ -68,7 +68,7 @@ export const ProgressCompact: Story = { args: progressArgs, globals: compactGlob
 
 export const ProgressTablet: Story = { args: progressArgs, globals: tabletGlobals }
 
-export const ProgressPhone: Story = { args: progressArgs, globals: phoneGlobals }
+export const ProgressPhone: Story = { args: progressArgs, globals: responsivePhoneGlobals }
 
 const successArgs = {
   operationStatus: (
@@ -86,7 +86,7 @@ export const SuccessCompact: Story = { args: successArgs, globals: compactGlobal
 
 export const SuccessTablet: Story = { args: successArgs, globals: tabletGlobals }
 
-export const SuccessPhone: Story = { args: successArgs, globals: phoneGlobals }
+export const SuccessPhone: Story = { args: successArgs, globals: responsivePhoneGlobals }
 
 /* Nothing to list yet: the empty state offers the page's primary action. */
 export const NoInvoices: Story = { args: { invoices: [] } }
