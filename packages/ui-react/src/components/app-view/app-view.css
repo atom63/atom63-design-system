@@ -148,6 +148,7 @@
   padding-block: var(--a63-space-2);
   padding-inline: var(--a63-space-4);
   border-block-start: 1px solid var(--a63-border-subtle);
+  gap: var(--a63-space-3);
 }
 
 .a63-AppView[data-chrome='flush'][data-bottom-inset='bottom-bar']
