@@ -27,6 +27,11 @@ export type AppViewProps = Omit<React.ComponentProps<'div'>, 'children'> & {
   /** The accessible name of the side panel. */
   panelLabel?: string
   /**
+   * The side panel's width as a CSS length, such as `'12.5rem'` (18rem by
+   * default). It sets `--a63-app-view-panel-width`, which a stylesheet can set too.
+   */
+  panelWidth?: string
+  /**
    * Content floating over the main region, anchored to its bottom end and
    * above the docked bar, such as a scroll-to-bottom button. It does not scroll.
    */
@@ -58,6 +63,8 @@ export function AppView({
   overlay,
   panel,
   panelLabel = 'Library',
+  panelWidth,
+  style,
   tabBar,
   topBar,
   ...props
@@ -71,6 +78,11 @@ export function AppView({
       data-chrome={layout === 'phone' ? 'flush' : chrome}
       data-layout={layout}
       data-slot="app-view"
+      style={
+        panelWidth
+          ? ({ '--a63-app-view-panel-width': panelWidth, ...style } as React.CSSProperties)
+          : style
+      }
       {...props}
     >
       {topBar ? <header data-slot="app-view-top-bar">{topBar}</header> : null}

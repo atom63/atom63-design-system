@@ -61,6 +61,17 @@ describe('AppView', () => {
     expect(owner(<AppView>Content</AppView>)).toBe('main')
   })
 
+  it('sets the side panel width and keeps the caller style', () => {
+    const { container } = render(
+      <AppView panel="Playlists" panelWidth="12.5rem" style={{ color: 'inherit' }}>
+        Content
+      </AppView>
+    )
+    const root = slot(container, '') as HTMLElement
+    expect(root.style.getPropertyValue('--a63-app-view-panel-width')).toBe('12.5rem')
+    expect(root.style.color).toBe('inherit')
+  })
+
   it('places the overlay beside the main region, not inside it', () => {
     const { container } = render(<AppView overlay="Jump">Content</AppView>)
     const overlay = slot(container, 'overlay')

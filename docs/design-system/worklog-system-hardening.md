@@ -134,6 +134,22 @@ PR 3 on `claude/app-view-layout`: YZ chose the recommended options of
 Next: record the visual baselines for the new stories, then a case round (one desktop, three phone)
 checks that builders import AppView instead of copying it.
 
+[claude] #258 merged. Case round on a template rebuilt from `main` `88bf7961`
+(`tmp/atom63-vibe-3E12wP`), web only, no judge: analytics-overview, chat-thread, listing-detail
+and fintech-home, each with Claude (`-av-claude`) and Codex (`-av-codex`).
+
+- All eight import AppView from `@atom63/ui-react/layout`; none copies it. Both analytics-overview
+  runs use `chrome="flush"`, both chat-thread runs use `overlay`.
+- Four are invalid, none because of AppView: three Button warnings (`button-without-variant`,
+  `multiple-primary`), and fintech-home-av-claude fails typecheck after rewriting the routes to
+  drop the site header and footer.
+- Gaps left on AppView: the side panel is a fixed 18rem (analytics-overview-av-claude overrode it
+  with a slot selector), and a full-window page cannot leave the site header and footer without
+  editing the router (chat-thread, fintech-home).
+
+On `claude/app-view-panel-width`: AppView takes `panelWidth`, which sets
+`--a63-app-view-panel-width` (18rem by default). The route question gets its own proposal.
+
 ---
 
 # 工作日志：系统加固
@@ -209,3 +225,11 @@ PR 3 在 `claude/app-view-layout`：YZ 选了 `docs/design-system/proposal-syste
 - 组件目录、文档、CLI 索引和导出审计都读 `./layout` 入口。craft 的 target-size 规则跳过只为滚动而可聚焦的 `main` 或 `aside`。
 
 下一步：给新 story 录视觉基线，然后跑一轮 case（一个桌面、三个手机），确认 builder 是 import AppView 而不是复制。
+
+[claude] #258 已合并。用 `main` `88bf7961` 重建的模板（`tmp/atom63-vibe-3E12wP`）跑了一轮 case，只跑 web、不跑 judge：analytics-overview、chat-thread、listing-detail、fintech-home，Claude（`-av-claude`）和 Codex（`-av-codex`）各一遍。
+
+- 8 个全部从 `@atom63/ui-react/layout` import AppView，没有一个复制。两次 analytics-overview 都用了 `chrome="flush"`，两次 chat-thread 都用了 `overlay`。
+- 4 个无效，都不是 AppView 的问题：3 个是 Button warning（`button-without-variant`、`multiple-primary`）；fintech-home-av-claude 为了去掉站点 header 和 footer 改写了路由，typecheck 失败。
+- AppView 剩下的缺口：侧栏固定 18rem（analytics-overview-av-claude 用 slot 选择器覆盖）；全窗口页面不改路由就去不掉站点 header 和 footer（chat-thread、fintech-home）。
+
+在 `claude/app-view-panel-width`：AppView 新增 `panelWidth`，设置 `--a63-app-view-panel-width`（默认 18rem）。路由问题单独出方案。
