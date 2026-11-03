@@ -5,7 +5,7 @@
  * For each brief in scripts/design-system/vibe/briefs, a fresh `claude -p`
  * agent builds the page twice, each time in a new temporary project:
  * - `ds`: an `@atom63/create` site installed against freshly packed tarballs,
- *   with its AGENTS.md and the `atom63` MCP server;
+ *   with its AGENTS.md, the `atom63` CLI as a dev dependency and its MCP server;
  * - `plain`: Vite, React, TypeScript and Tailwind v4 at the same versions,
  *   with no design system, no AGENTS.md and no MCP server.
  * Then it measures what each agent wrote (craft rules, type errors, the build,
@@ -69,13 +69,13 @@ const knownTokens = JSON.parse(
 ).entries.map(entry => entry.cssVar)
 const briefsDir = path.join(root, 'scripts/design-system/vibe/briefs')
 const auditsDir = path.join(root, 'docs/design-system/audits')
-const cliBin = path.join(root, 'packages/cli/src/bin.mjs')
 const packages = {
   '@atom63/styles': 'packages/styles',
   '@atom63/ui-foundation': 'packages/ui-foundation',
   '@atom63/ui-react': 'packages/ui-react',
   '@atom63/mdx': 'packages/mdx',
 }
+const devPackages = { '@atom63/cli': 'packages/cli' }
 const allArms = ['ds', 'plain']
 const limits = { builderTurns: 80, builderBudgetUsd: 5, judgeTurns: 30, judgeBudgetUsd: 2 }
 const agentTimeoutMs = 45 * 60 * 1000
@@ -268,7 +268,7 @@ const tarballs = path.join(work, 'tarballs')
 const versions = resolveVersions()
 
 function packTarballs() {
-  for (const [name, directory] of Object.entries(packages)) {
+  for (const [name, directory] of Object.entries({ ...packages, ...devPackages })) {
     const manifest = JSON.parse(readFileSync(path.join(root, directory, 'package.json'), 'utf8'))
     if (manifest.files?.includes('dist') && !existsSync(path.join(root, directory, 'dist'))) {
       throw new Error(
@@ -294,12 +294,13 @@ function setupProject(arm, brief, directory) {
   let files
   if (arm === 'ds') {
     files = planProject({ name, kind: 'site', title: 'Vibe', versions })
-    // The agent has the atom63 MCP server, so its AGENTS.md points at the CLI
-    // commands instead of the published docs.
+    // The agent has the atom63 CLI and its MCP server, so its AGENTS.md points
+    // at the CLI commands instead of the published docs.
     files.set('AGENTS.md', syncAgentsBlock(files.get('AGENTS.md')))
     const manifest = JSON.parse(files.get('package.json'))
     const overrides = Object.fromEntries(Object.keys(packages).map(pkg => [pkg, tarballFor(pkg)]))
     for (const pkg of Object.keys(packages)) manifest.dependencies[pkg] = overrides[pkg]
+    for (const pkg of Object.keys(devPackages)) manifest.devDependencies[pkg] = tarballFor(pkg)
     files.set('package.json', `${JSON.stringify(manifest, null, 2)}\n`)
     files.set('pnpm-workspace.yaml', pnpmOverridesYaml(overrides))
   } else {
@@ -350,7 +351,8 @@ try {
         builderArgs({
           arm,
           prompt,
-          cliBin,
+          // The ds arm's MCP server runs the CLI its project installed; the plain arm has none.
+          cliBin: path.join(projects[arm], 'node_modules/@atom63/cli/src/bin.mjs'),
           model,
           maxTurns: limits.builderTurns,
           maxBudgetUsd: limits.builderBudgetUsd,

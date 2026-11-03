@@ -99,6 +99,21 @@ Verification: `pnpm check:ds-registry-smoke -- --write` (resolved `@atom63/cli@b
 Next: the case-study harness template installs the CLI from npm. Then PR 3 (AppView layout
 contract), proposal first.
 
+[claude] #256 merged. Case-study builders and the CLI, on `claude/vibe-cli`: YZ chose option A of
+`docs/design-system/proposal-harness-cli.md` (local, not committed). Done:
+
+- `vibe.mjs` packs `@atom63/cli` with the other tarballs, installs it as a dev dependency in the `ds`
+  arm, and starts the MCP server from the project's own copy.
+- A new case template, `tmp/atom63-vibe-dMqbCo/invoice-list/ds`, built with
+  `vibe.mjs --dry-run --keep --arms ds --brief invoice-list`. In it, `pnpm exec atom63` works,
+  `pnpm typecheck` and `pnpm build` pass, and the MCP server answers `initialize`. A `cp -a` copy,
+  as `batch.sh` makes, runs the CLI too.
+- Harness, outside git (backup in `backup-2026-11-02-cli/`): `batch.sh` uses the new template, and
+  `run.mjs` starts the MCP server from each case's `node_modules`. `run-ios.mjs` keeps the repo
+  CLI, because the iOS template builds against this repo's `packages/ui-ios`.
+
+Next: a small Codex round checks that builders call `atom63` and that `validity.mjs` passes.
+
 ---
 
 # 工作日志：系统加固
@@ -155,3 +170,11 @@ PR 2b 在 `claude/cli-registry`，从 `main` `9282de1b` 拉出。已完成：
 验证：`pnpm check:ds-registry-smoke -- --write`（`@atom63/cli@beta` 解析为 `0.1.0-beta.0`）、`check:package-correctness`（CLI 的 publint 通过）、`check:package-surface`、`check:dependency-version-policy`、`test:scripts`（158 通过）、`publish-beta.mjs --dry-run`（CLI 已发布，跳过）。
 
 下一步：case-study harness 模板改为从 npm 安装 CLI。然后是 PR 3（AppView 布局契约），先出方案。
+
+[claude] #256 已合并。case-study builder 接入 CLI，在 `claude/vibe-cli`：YZ 选了 `docs/design-system/proposal-harness-cli.md`（本地，未提交）的方案 A。已完成：
+
+- `vibe.mjs` 把 `@atom63/cli` 和其他 tarball 一起 pack，在 `ds` 组装成 dev 依赖，MCP server 从项目自己装的那份启动。
+- 用 `vibe.mjs --dry-run --keep --arms ds --brief invoice-list` 生成了新的 case 模板 `tmp/atom63-vibe-dMqbCo/invoice-list/ds`。模板里 `pnpm exec atom63` 能用，`pnpm typecheck` 和 `pnpm build` 通过，MCP server 能响应 `initialize`。按 `batch.sh` 的方式 `cp -a` 出来的副本也能跑 CLI。
+- harness（不在 git 里，备份在 `backup-2026-11-02-cli/`）：`batch.sh` 改用新模板，`run.mjs` 从每个 case 的 `node_modules` 启动 MCP server。`run-ios.mjs` 仍用仓库里的 CLI，因为 iOS 模板编译的是本仓库的 `packages/ui-ios`。
+
+下一步：跑一小轮 Codex case，确认 builder 调用了 `atom63`，并且 `validity.mjs` 通过。
