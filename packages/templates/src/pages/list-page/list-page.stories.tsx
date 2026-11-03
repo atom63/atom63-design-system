@@ -1,4 +1,12 @@
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Progress,
+} from '@atom63/ui-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { CheckCircle2, Upload } from 'lucide-react'
 import { within } from 'storybook/test'
 
 import {
@@ -9,7 +17,7 @@ import {
   themeMatrixParameters,
   wideGlobals,
 } from '../../story-matrix'
-import { ListOperationStatus, ListPage } from './list-page'
+import { ListPage } from './list-page'
 
 const meta = {
   title: 'Templates/Pages/List page',
@@ -20,6 +28,38 @@ const meta = {
 export default meta
 
 type Story = StoryObj<typeof meta>
+
+function OperationStatus({
+  description,
+  progress,
+  title,
+  variant,
+}: {
+  description: string
+  progress?: number
+  title: string
+  variant: 'info' | 'success'
+}) {
+  const Icon = variant === 'success' ? CheckCircle2 : Upload
+  return (
+    <Alert
+      className="fixed end-4 bottom-4 z-[var(--z-layer-popover)] w-[min(24rem,calc(100vw-2rem))] bg-[var(--a63-surface-overlay)]"
+      role="status"
+      variant={variant}
+    >
+      <AlertIcon>
+        <Icon aria-hidden />
+      </AlertIcon>
+      <AlertTitle>{title}</AlertTitle>
+      <AlertDescription>
+        <p>{description}</p>
+        {progress === undefined ? null : (
+          <Progress aria-label={`${title}: ${progress}%`} className="mt-2" value={progress} />
+        )}
+      </AlertDescription>
+    </Alert>
+  )
+}
 
 export const Desktop: Story = {}
 
@@ -53,7 +93,7 @@ export const EmptyPhone: Story = { args: emptyArgs, globals: responsivePhoneGlob
 
 const progressArgs = {
   operationStatus: (
-    <ListOperationStatus
+    <OperationStatus
       description="8 of 12 invoices processed"
       progress={67}
       title="Importing invoices"
@@ -72,7 +112,7 @@ export const ProgressPhone: Story = { args: progressArgs, globals: responsivePho
 
 const successArgs = {
   operationStatus: (
-    <ListOperationStatus
+    <OperationStatus
       description="The new invoices are ready to review."
       title="12 invoices imported"
       variant="success"

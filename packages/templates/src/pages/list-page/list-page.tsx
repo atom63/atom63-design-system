@@ -1,8 +1,4 @@
 import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
   Badge,
   Button,
   DropdownMenu,
@@ -15,19 +11,9 @@ import {
   ItemContent,
   ItemDescription,
   ItemTitle,
-  Progress,
 } from '@atom63/ui-react'
 import { Container } from '@atom63/ui-react/layout'
-import {
-  CheckCircle2,
-  ChevronRight,
-  Ellipsis,
-  FileText,
-  LayoutDashboard,
-  Plus,
-  Settings,
-  Upload,
-} from 'lucide-react'
+import { ChevronRight, Ellipsis, FileText, LayoutDashboard, Plus, Settings } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 
 import { AppShell } from '../../blocks/app-shell/app-shell'
@@ -106,40 +92,6 @@ export interface ListPageProps {
   invoices?: readonly Invoice[]
   /** A transient operation surface such as import progress or completion. */
   operationStatus?: ReactNode
-}
-
-export interface ListOperationStatusProps {
-  description: string
-  progress?: number
-  title: string
-  variant: 'info' | 'success'
-}
-
-export function ListOperationStatus({
-  description,
-  progress,
-  title,
-  variant,
-}: ListOperationStatusProps) {
-  const Icon = variant === 'success' ? CheckCircle2 : Upload
-  return (
-    <Alert
-      className="fixed end-4 bottom-4 z-[var(--z-layer-popover)] w-[min(24rem,calc(100vw-2rem))] bg-[var(--a63-surface-overlay)]"
-      role="status"
-      variant={variant}
-    >
-      <AlertIcon>
-        <Icon aria-hidden />
-      </AlertIcon>
-      <AlertTitle>{title}</AlertTitle>
-      <AlertDescription>
-        <p>{description}</p>
-        {progress === undefined ? null : (
-          <Progress aria-label={`${title}: ${progress}%`} className="mt-2" value={progress} />
-        )}
-      </AlertDescription>
-    </Alert>
-  )
 }
 
 export function ListContent({
