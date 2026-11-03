@@ -2,15 +2,16 @@
 
 Owner: codex
 Branch: codex/batch-case-study-review
-Goal: Produce and inspect a second independent three-arm CRM benchmark entirely with Codex.
-Done when: Sample 2 has an isolated report, all three Codex builders change measured source, 60 implementation screenshots are present and inspected, and the judge report contains valid scores, gates and token usage.
+Goal: Produce and inspect a third independent three-arm CRM benchmark entirely with Codex.
+Done when: Sample 3 has an isolated report, all three Codex builders change measured source, 60 implementation screenshots are present and inspected, and the three-sample comparison identifies stable and unstable findings.
 May write: WORKLOG.md, scripts/design-system/vibe*, docs/design-system/audits/, and an external artifact directory for the run.
 Off limits: Component source, releases, publishing, and Claude calls.
-Next first step: Run sample 3 with `--run-id s3`, then compare all three samples before changing the design system.
+Next first step: Run sample 3 with `--run-id s3`, inspect its full visual matrix, then compare all three samples before changing the design system.
 Blocked on YZ: none
 
 ## Log
 
+- 2026-11-02 [codex] Started CRM sample 3 after YZ confirmed continuation; prompt, arms, rubric and judge remain unchanged so the third sample is directly comparable · checks: relay check clean; focused Node test suite 65/65
 - 2026-11-02 [codex] Completed and visually inspected CRM sample 2; plain scored 95, core 64 and guided 61, with both DS arms showing severe selected/complete overlay collisions at tablet and phone widths · checks: 20 PNG per arm; 12 report thumbnails; all typechecks/builds passed with no console errors; JSON parses; all 60 screenshots inspected in contact sheets plus four full-resolution DS failure cases; artifacts preserved at `/tmp/atom63-vibe-codex-crm-full-20261102-s2`
 - 2026-11-02 [codex] Started CRM sample 2 after YZ confirmed the next round; the runner needs isolated output naming so the same-day sample does not overwrite sample 1 · checks: relay check clean; focused Node test suite 64/64
 - 2026-11-02 [codex] Completed the first valid all-Codex CRM reference sample and manually inspected the full 3-arm × 5-state × 4-viewport matrix; visual scores were plain 94, guided 85 and core 79, while every arm still failed the serious contrast qualification gate · checks: 20 PNG per arm; all typechecks/builds passed with no console errors; raw JSON parses; report has 12 thumbnails; full evidence preserved at `/tmp/atom63-vibe-codex-crm-full-20261102-r2`
