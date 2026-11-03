@@ -84,7 +84,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'A full-window app frame: a top bar, a side panel, the scrolling main region and docked bars, for a window or a phone screen.',
     usage:
-      'Wrap a product view that has no site header or footer; pass layout="phone" for a phone app screen.',
+      'Wrap a product view that has no site header or footer; pass layout="phone" for a phone app screen. A window takes chrome="flush" for columns to its edges, panelWidth for the side panel (18rem by default), and overlay for a control floating over the main region.',
     usageExports: ['AppView'],
   },
   autocomplete: {

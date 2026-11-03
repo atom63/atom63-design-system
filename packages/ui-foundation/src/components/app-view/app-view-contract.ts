@@ -5,11 +5,12 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 
 // The full-window frame of a product view: the bar across the top, a side panel, the main region
 // (the only part that scrolls), content floating over it, a bar docked at the bottom and bottom
-// navigation. layout="window" draws a desktop window, layout="phone" a phone app screen. Each
-// safe-area inset has one owner: the top bar takes the top inset (with no top bar, the first block
-// of the main region pads itself); the tab bar takes the bottom inset, else the docked bar, else the
-// main region; the root takes the inline insets. On iOS the frame is native structure
-// (NavigationStack, toolbar, safeAreaInset with AtomActionBar and AtomTabRow), not a component.
+// navigation. layout="window" draws a desktop window, layout="phone" a phone app screen. The side
+// panel is 18rem wide; panelWidth (or --a63-app-view-panel-width) changes it. Each safe-area inset
+// has one owner: the top bar takes the top inset (with no top bar, the first block of the main
+// region pads itself); the tab bar takes the bottom inset, else the docked bar, else the main
+// region; the root takes the inline insets. On iOS the frame is native structure (NavigationStack,
+// toolbar, safeAreaInset with AtomActionBar and AtomTabRow), not a component.
 
 export const appViewLayouts = ['window', 'phone'] as const
 export const appViewChromes = ['inset', 'flush'] as const

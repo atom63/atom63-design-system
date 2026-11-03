@@ -24,6 +24,7 @@ export type AppViewProps = Omit<React_2.ComponentProps<'div'>, 'children'> & {
     topBar?: React_2.ReactNode;
     panel?: React_2.ReactNode;
     panelLabel?: string;
+    panelWidth?: string;
     overlay?: React_2.ReactNode;
     bottomBar?: React_2.ReactNode;
     bottomBarLabel?: string;

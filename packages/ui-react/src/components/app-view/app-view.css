@@ -55,7 +55,7 @@
   display: none;
   flex-direction: column;
   flex-shrink: 0;
-  inline-size: 18rem;
+  inline-size: var(--a63-app-view-panel-width, 18rem);
   overflow-y: auto;
 }
 
