@@ -5,6 +5,7 @@ import {
   Outlet,
   ScrollRestoration,
 } from '@tanstack/react-router'
+import type { ReactNode } from 'react'
 
 import { SiteFooter } from './components/site-footer'
 import { type NavItem, SiteHeader } from './components/site-header'
@@ -19,34 +20,59 @@ const nav: NavItem[] = [
   { label: 'Blog', to: '/blog' },
 ]
 
-const rootRoute = createRootRoute({
-  component: () => (
+function SiteLayout({ children }: { children: ReactNode }) {
+  return (
     <div className="flex min-h-screen flex-col">
-      <ScrollRestoration />
       <SiteHeader nav={nav} title={site.title} />
-      <div className="flex-1">
-        <Outlet />
-      </div>
+      <div className="flex-1">{children}</div>
       <SiteFooter title={site.title} />
     </div>
+  )
+}
+
+const rootRoute = createRootRoute({
+  component: () => (
+    <>
+      <ScrollRestoration />
+      <Outlet />
+    </>
   ),
-  notFoundComponent: NotFoundPage,
+  notFoundComponent: () => (
+    <SiteLayout>
+      <NotFoundPage />
+    </SiteLayout>
+  ),
 })
 
-const homeRoute = createRoute({ getParentRoute: () => rootRoute, path: '/', component: HomePage })
-const blogRoute = createRoute({
+/*
+ * The site pages share the header and footer through this pathless layout
+ * route. A full-window page, such as an AppView, is a child of rootRoute
+ * instead, so it draws no site chrome.
+ */
+const siteRoute = createRoute({
   getParentRoute: () => rootRoute,
+  id: 'site',
+  component: () => (
+    <SiteLayout>
+      <Outlet />
+    </SiteLayout>
+  ),
+})
+
+const homeRoute = createRoute({ getParentRoute: () => siteRoute, path: '/', component: HomePage })
+const blogRoute = createRoute({
+  getParentRoute: () => siteRoute,
   path: '/blog',
   component: BlogIndexPage,
 })
 const postRoute = createRoute({
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => siteRoute,
   path: '/blog/$slug',
   component: BlogPostPage,
 })
 
 export const router = createRouter({
-  routeTree: rootRoute.addChildren([homeRoute, blogRoute, postRoute]),
+  routeTree: rootRoute.addChildren([siteRoute.addChildren([homeRoute, blogRoute, postRoute])]),
 })
 
 declare module '@tanstack/react-router' {

@@ -5,6 +5,7 @@ import {
   Outlet,
   ScrollRestoration,
 } from '@tanstack/react-router'
+import type { ReactNode } from 'react'
 
 import { DocsSidebar } from './components/docs-sidebar'
 import { SiteFooter } from './components/site-footer'
@@ -20,10 +21,9 @@ const nav: NavItem[] = [
   ...(docs[0] ? [{ label: 'Docs', to: `/docs/${docs[0].slug}` }] : []),
 ]
 
-const rootRoute = createRootRoute({
-  component: () => (
+function SiteLayout({ children }: { children: ReactNode }) {
+  return (
     <div className="flex min-h-screen flex-col">
-      <ScrollRestoration />
       <SiteHeader nav={nav} title={site.title} />
       <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col md:flex-row">
         <aside
@@ -32,24 +32,52 @@ const rootRoute = createRootRoute({
         >
           <DocsSidebar />
         </aside>
-        <div className="min-w-0 flex-1">
-          <Outlet />
-        </div>
+        <div className="min-w-0 flex-1">{children}</div>
       </div>
       <SiteFooter title={site.title} />
     </div>
+  )
+}
+
+const rootRoute = createRootRoute({
+  component: () => (
+    <>
+      <ScrollRestoration />
+      <Outlet />
+    </>
   ),
-  notFoundComponent: NotFoundPage,
+  notFoundComponent: () => (
+    <SiteLayout>
+      <NotFoundPage />
+    </SiteLayout>
+  ),
 })
 
-const homeRoute = createRoute({ getParentRoute: () => rootRoute, path: '/', component: HomePage })
-const docRoute = createRoute({
+/*
+ * The docs pages share the header, sidebar and footer through this pathless
+ * layout route. A full-window page, such as an AppView, is a child of
+ * rootRoute instead, so it draws no site chrome.
+ */
+const siteRoute = createRoute({
   getParentRoute: () => rootRoute,
+  id: 'site',
+  component: () => (
+    <SiteLayout>
+      <Outlet />
+    </SiteLayout>
+  ),
+})
+
+const homeRoute = createRoute({ getParentRoute: () => siteRoute, path: '/', component: HomePage })
+const docRoute = createRoute({
+  getParentRoute: () => siteRoute,
   path: '/docs/$slug',
   component: DocPage,
 })
 
-export const router = createRouter({ routeTree: rootRoute.addChildren([homeRoute, docRoute]) })
+export const router = createRouter({
+  routeTree: rootRoute.addChildren([siteRoute.addChildren([homeRoute, docRoute])]),
+})
 
 declare module '@tanstack/react-router' {
   interface Register {
