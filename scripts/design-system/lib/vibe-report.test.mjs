@@ -228,6 +228,11 @@ describe('renderReport', () => {
     assert.match(markdown, /sign-in-ds-desktop\.jpg/)
   })
 
+  it('links to an isolated output key when the run has one', () => {
+    const isolated = renderReport({ ...run, outputKey: '2026-09-26-s2' })
+    assert.match(isolated, /vibe-2026-09-26-s2\.json/)
+  })
+
   it('reports an arm that failed and a judge that did not run', () => {
     const failed = renderReport({
       ...run,

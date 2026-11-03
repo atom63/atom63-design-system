@@ -19,7 +19,7 @@
  *
  * Usage: node scripts/design-system/vibe.mjs [--brief <id>]
  *   [--arms plain,ds-core,ds-guided] [--track generalization|reference]
- *   [--artifacts <dir>] [--model <id>] [--dry-run] [--keep] [--yes]
+ *   [--artifacts <dir>] [--run-id <id>] [--model <id>] [--dry-run] [--keep] [--yes]
  */
 import { spawn } from 'node:child_process'
 import {
@@ -108,6 +108,9 @@ const artifactsOption = option('--artifacts')
 const artifactsDir = artifactsOption ? path.resolve(root, artifactsOption) : null
 if (artifactsDir && existsSync(artifactsDir))
   throw new Error(`Artifacts directory already exists: ${artifactsDir}`)
+const runId = option('--run-id')
+if (runId && !/^[a-z0-9][a-z0-9-]*$/.test(runId))
+  throw new Error('--run-id must contain only lowercase letters, numbers and hyphens')
 const arms = (option('--arms') ?? defaultArms.join(',')).split(',').map(arm => arm.trim())
 for (const arm of arms) if (!supportedArms.includes(arm)) throw new Error(`Unknown arm "${arm}"`)
 const briefFlag = option('--brief')
@@ -373,8 +376,10 @@ function setupProject(arm, brief, directory) {
 // Main -----------------------------------------------------------------------
 
 const date = new Date().toISOString().slice(0, 10)
+const outputKey = runId ? `${date}-${runId}` : date
 const report = {
   date,
+  outputKey,
   commit: capture('git', ['rev-parse', 'HEAD'], root).output.trim(),
   dirty: capture('git', ['status', '--porcelain'], root).output.trim().length > 0,
   codexVersion: capture('codex', ['--version'], root).output.trim(),
@@ -574,7 +579,7 @@ try {
     }
 
     // Thumbnails for the report.
-    const thumbDir = path.join(auditsDir, 'vibe', date)
+    const thumbDir = path.join(auditsDir, 'vibe', outputKey)
     for (const arm of judged) {
       mkdirSync(thumbDir, { recursive: true })
       const thumbnailState = captureStates.includes('complete') ? 'complete' : null
@@ -584,7 +589,7 @@ try {
           path.join(shots[arm], thumbnailState ? thumbnailState : '', `${width}.jpg`),
           path.join(thumbDir, name)
         )
-        entry.thumbnails.push(`vibe/${date}/${name}`)
+        entry.thumbnails.push(`vibe/${outputKey}/${name}`)
       }
     }
   }
@@ -592,9 +597,9 @@ try {
   if (!dryRun) {
     report.models = [...new Set(report.models)].sort()
     mkdirSync(path.join(auditsDir, 'vibe'), { recursive: true })
-    const jsonPath = path.join(auditsDir, 'vibe', `vibe-${date}.json`)
+    const jsonPath = path.join(auditsDir, 'vibe', `vibe-${outputKey}.json`)
     writeFileSync(jsonPath, `${JSON.stringify(report, null, 2)}\n`)
-    const reportPath = path.join(auditsDir, `vibe-${date}.md`)
+    const reportPath = path.join(auditsDir, `vibe-${outputKey}.md`)
     writeFileSync(reportPath, renderReport(report))
     process.stdout.write(
       `\nWrote ${path.relative(root, reportPath)} and ${path.relative(root, jsonPath)}\n`
