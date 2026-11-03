@@ -16,6 +16,16 @@ describe('ScrollableList', () => {
     expect(container).toHaveTextContent('Two')
   })
 
+  it('scrolls only along the row: the viewport hides vertical overflow', () => {
+    const { container } = render(
+      <ScrollableList>
+        <button type="button">One</button>
+      </ScrollableList>
+    )
+    const viewport = container.querySelector<HTMLElement>('[data-slot="scroll-area-viewport"]')
+    expect(viewport?.style.overflowY).toBe('hidden')
+  })
+
   it('exposes disabled and draggable state without enabling the disabled drag cursor', () => {
     const { container } = render(
       <ScrollableList disabled draggable>
