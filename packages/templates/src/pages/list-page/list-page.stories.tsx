@@ -1,10 +1,4 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  Progress,
-} from '@atom63/ui-react'
+import { Alert, AlertDescription, AlertIcon, AlertTitle, Progress } from '@atom63/ui-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { CheckCircle2, Upload } from 'lucide-react'
 import { within } from 'storybook/test'
