@@ -5,7 +5,7 @@ export const template = {
   kind: 'block',
   title: 'Tab bar',
   description:
-    'The bottom navigation of a phone app: four or five destinations as an icon over a label, with the safe-area inset, the current one marked with aria-current. The app-view page places it last on phones.',
+    'The bottom navigation of a phone app: four or five destinations as an icon over a label, the current one marked with aria-current. Pass it to the AppView tabBar slot, which gives it the bottom safe-area inset.',
   category: 'layout',
   tags: ['tab bar', 'bottom navigation', 'mobile', 'phone', 'app', 'navigation', 'bottom bar'],
   readiness: 'draft',
@@ -43,10 +43,7 @@ const anchor = ({ children, ...props }: TabBarLinkProps) => <a {...props}>{child
  */
 export function TabBar({ items, label = 'Main', renderLink = anchor }: TabBarProps) {
   return (
-    <nav
-      aria-label={label}
-      className="border-border bg-background border-t pb-[env(safe-area-inset-bottom)]"
-    >
+    <nav aria-label={label} className="border-border bg-background border-t">
       <ul className="mx-auto flex max-w-lg">
         {items.map(item => (
           <li className="flex-1" key={item.href}>

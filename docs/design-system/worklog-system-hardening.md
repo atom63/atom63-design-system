@@ -114,6 +114,26 @@ contract), proposal first.
 
 Next: a small Codex round checks that builders call `atom63` and that `validity.mjs` passes.
 
+[claude] #257 merged. Codex round (`BUILDER=codex SUF=-codex-cli JUDGE=0`, web only) on
+audio-player, chat-thread and place-card: all three build. chat-thread and place-card copied the
+AppView template (`src/components/app-view.tsx`), which no `-codex-r1` run did, and no gap says
+`atom63` is unavailable. audio-player fails `validity.mjs` on one `button-without-variant` warning.
+
+PR 3 on `claude/app-view-layout`: YZ chose the recommended options of
+`docs/design-system/proposal-system-hardening-pr3-app-view.md` (local, not committed). Done:
+
+- `AppView` ships from `@atom63/ui-react/layout`, with a component contract (layouts `window` /
+  `phone`, chromes `inset` / `flush`, slots). It adds `chrome="flush"` and `overlay`, and gives each
+  safe-area inset one owner; its scrolling regions take focus so a keyboard can scroll them.
+- Five stories with play checks: one scroll owner and one owner per inset, under emulated insets.
+- The `app-view` template keeps the sample pages and imports AppView; the tab-bar block no longer
+  pads itself for the home indicator. The CLI's phone kit imports AppView from the package.
+- The catalog, docs, CLI index and export audit read the `./layout` entry. The craft target-size
+  rule skips a `main` or `aside` that takes focus only to scroll.
+
+Next: record the visual baselines for the new stories, then a case round (one desktop, three phone)
+checks that builders import AppView instead of copying it.
+
 ---
 
 # 工作日志：系统加固
@@ -178,3 +198,14 @@ PR 2b 在 `claude/cli-registry`，从 `main` `9282de1b` 拉出。已完成：
 - harness（不在 git 里，备份在 `backup-2026-11-02-cli/`）：`batch.sh` 改用新模板，`run.mjs` 从每个 case 的 `node_modules` 启动 MCP server。`run-ios.mjs` 仍用仓库里的 CLI，因为 iOS 模板编译的是本仓库的 `packages/ui-ios`。
 
 下一步：跑一小轮 Codex case，确认 builder 调用了 `atom63`，并且 `validity.mjs` 通过。
+
+[claude] #257 已合并。Codex 一轮（`BUILDER=codex SUF=-codex-cli JUDGE=0`，只跑 web）跑了 audio-player、chat-thread、place-card：三个都能 build。chat-thread 和 place-card 拷了 AppView 模板（`src/components/app-view.tsx`），`-codex-r1` 一个都没有；也没有 gap 再说 `atom63` 不可用。audio-player 因为一个 `button-without-variant` warning 没过 `validity.mjs`。
+
+PR 3 在 `claude/app-view-layout`：YZ 选了 `docs/design-system/proposal-system-hardening-pr3-app-view.md`（本地，未提交）的推荐项。已完成：
+
+- `AppView` 从 `@atom63/ui-react/layout` 发布，带组件契约（layout `window` / `phone`，chrome `inset` / `flush`，slots）。新增 `chrome="flush"` 和 `overlay`，每个 safe-area inset 只有一个归属者；滚动区可以聚焦，键盘能滚动。
+- 五个 story 带 play 检查：在模拟 inset 下，只有一个滚动归属者，每条边只有一个 inset 归属者。
+- `app-view` 模板只留示例页并改为 import AppView；tab-bar block 不再自己给 home indicator 留空。CLI 的手机套件改为从包里 import AppView。
+- 组件目录、文档、CLI 索引和导出审计都读 `./layout` 入口。craft 的 target-size 规则跳过只为滚动而可聚焦的 `main` 或 `aside`。
+
+下一步：给新 story 录视觉基线，然后跑一轮 case（一个桌面、三个手机），确认 builder 是 import AppView 而不是复制。

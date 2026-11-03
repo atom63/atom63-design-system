@@ -59,7 +59,7 @@ export {
   type TabBarLinkProps,
   type TabBarProps,
 } from './blocks/tab-bar/tab-bar'
-export { AppView, type AppViewProps, AppViewPage } from './pages/app-view/app-view'
+export { AppViewPage } from './pages/app-view/app-view'
 export {
   type ChatConversation,
   ChatPage,

@@ -2,6 +2,7 @@ import { mdxComponents } from '@atom63/mdx'
 import { Link } from '@tanstack/react-router'
 import { ChevronDown } from 'lucide-react'
 import uiReactCalendarSource from '../../../../packages/ui-react/src/calendar/index.ts?raw'
+import uiReactLayoutSource from '../../../../packages/ui-react/src/layout/index.ts?raw'
 import uiReactRootSource from '../../../../packages/ui-react/src/index.ts?raw'
 import { componentDocPath, componentLabel } from '../lib/component-catalog'
 import {
@@ -10,8 +11,8 @@ import {
   type ComponentExportSurface,
 } from '../lib/component-docs'
 
-// The root entry and the `./calendar` entry together export every component family.
-const uiReactIndexSource = `${uiReactRootSource}\n${uiReactCalendarSource}`
+// The root, `./calendar` and `./layout` entries together export every component family.
+const uiReactIndexSource = `${uiReactRootSource}\n${uiReactCalendarSource}\n${uiReactLayoutSource}`
 
 export function ComponentReferenceUtilities({ componentSlug }: { componentSlug: string }) {
   const doc = getComponentDoc(componentSlug)

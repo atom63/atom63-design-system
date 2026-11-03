@@ -4,12 +4,31 @@
 
 ```ts
 
+import { AppViewChrome } from '@atom63/ui-foundation';
+import { AppViewLayout } from '@atom63/ui-foundation';
 import { ComponentPropsWithoutRef } from 'react';
 import { CSSProperties } from 'react';
 import * as React_2 from 'react';
 import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { useRender } from '@base-ui/react/use-render';
+
+// @public (undocumented)
+export function AppView(input: AppViewProps): React_2.ReactElement;
+
+// @public (undocumented)
+export type AppViewProps = Omit<React_2.ComponentProps<'div'>, 'children'> & {
+    children: React_2.ReactNode;
+    layout?: AppViewLayout;
+    chrome?: AppViewChrome;
+    topBar?: React_2.ReactNode;
+    panel?: React_2.ReactNode;
+    panelLabel?: string;
+    overlay?: React_2.ReactNode;
+    bottomBar?: React_2.ReactNode;
+    bottomBarLabel?: string;
+    tabBar?: React_2.ReactNode;
+};
 
 // @public (undocumented)
 export function Container(input: ContainerProps): React_2.JSX.Element;

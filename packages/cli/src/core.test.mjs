@@ -337,7 +337,7 @@ describe('templates', () => {
     const appView = template(index, 'app-view').data
     assert.ok(appView.blockFiles.some(file => file.path === 'blocks/tab-bar/tab-bar.tsx'))
     assert.ok(appView.packages.includes('@atom63/ui-react'))
-    assert.match(appView.files[0].source, /layout\?: 'phone' \| 'window'/)
+    assert.match(appView.files[0].source, /import \{ AppView \} from '@atom63\/ui-react\/layout'/)
     const text = formatEnvelope(template(index, 'app-view'))
     assert.match(text, /^\/\/ blocks\/tab-bar\/tab-bar\.tsx$/m)
     assert.match(text, /copy-only/)
@@ -380,8 +380,9 @@ describe('templates', () => {
     assert.match(source, /export function AppViewPhonePage/)
     assert.match(source, /<AppView[\s\S]*?layout="phone"/)
     for (const prop of ['layout', 'tabBar', 'bottomBar', 'topBar']) {
-      assert.match(source, new RegExp(`${prop}\\?:`), prop)
+      assert.match(source, new RegExp(`${prop}=`), prop)
     }
+    assert.ok(phone.imports.includes("import { AppView } from '@atom63/ui-react/layout'"))
     const { files, blockFiles } = template(index, 'app-view').data
     const paths = [...files, ...blockFiles].map(entry => entry.path)
     for (const [, file] of phone.imports.join('\n').matchAll(/'\.\/(.+)'/g)) {

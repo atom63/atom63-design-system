@@ -46,10 +46,11 @@ try {
   const contracts = await load('apps/docs/src/lib/component-contract.ts')
   const llms = await load('apps/docs/vite-plugins/llms-txt.ts')
 
-  // The root entry and the `./calendar` entry together export every component family.
+  // The root, `./calendar` and `./layout` entries together export every component family.
   const uiReactIndexSource = [
     read('packages/ui-react/src/index.ts'),
     read('packages/ui-react/src/calendar/index.ts'),
+    read('packages/ui-react/src/layout/index.ts'),
   ].join('\n')
   const pagesDir = path.join(root, 'apps/docs/src/pages')
 

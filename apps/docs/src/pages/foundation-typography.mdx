@@ -90,7 +90,7 @@ Text roles name what text is for, after the Apple HIG text styles, so one intent
 
 ## Phone screens
 
-The web scale is set for pages and desktop apps: body is 15px and compact control labels are 12–13px. A phone app screen reads at the iOS sizes instead, so `[data-a63-form-factor="phone"]` gives a subtree the type steps and control sizing of a phone. `AppView layout="phone"` (the app-view page template) stamps it on the screen; stamp it yourself on the root of a phone-only web app. Viewport width does not apply it, so a docs page or a marketing page on a phone keeps the web sizes.
+The web scale is set for pages and desktop apps: body is 15px and compact control labels are 12–13px. A phone app screen reads at the iOS sizes instead, so `[data-a63-form-factor="phone"]` gives a subtree the type steps and control sizing of a phone. `AppView layout="phone"` (from `@atom63/ui-react/layout`) stamps it on the screen; stamp it yourself on the root of a phone-only web app. Viewport width does not apply it, so a docs page or a marketing page on a phone keeps the web sizes.
 
 | Role | Web, under 640px | Phone (`data-a63-form-factor="phone"`) | iOS text style |
 |------|------------------|-----------------------------------------|----------------|
