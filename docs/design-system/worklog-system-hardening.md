@@ -170,6 +170,11 @@ on component defaults. The two disagree about a Button with the default variant.
 
 From now on, YZ asked for auto-merge on every PR Claude opens (not the Version Packages PR).
 
+[claude] Resolved the open question in #263: `caseValidity` fails a case on `multiple-primary` only;
+`button-without-variant` stays a diagnostic, since a Button with no variant draws `default`, the
+neutral main action rule 5 describes. Replaying the last 13 runs, the six invalid only on that warning
+are valid; a failed typecheck and a multiple-primary run stay invalid. #261, #262 and #263 merged.
+
 ---
 
 # 工作日志：系统加固
@@ -263,3 +268,5 @@ PR 3 在 `claude/app-view-layout`：YZ 选了 `docs/design-system/proposal-syste
 待定：`button-without-variant` 每一轮都会让 case 无效，而规则 3 要 builder 依赖组件默认值。两者对「用默认 variant 的 Button」说法不一致。
 
 从现在起，YZ 要求 Claude 开的每个 PR 都开 auto-merge（Version Packages PR 除外）。
+
+[claude] 上面的待定问题已在 #263 解决：`caseValidity` 只在 `multiple-primary` 时判 case 无效；`button-without-variant` 保留为诊断，因为不写 variant 的 Button 画的是 `default`，正是规则 5 说的中性主操作。重放最近 13 个 run：6 个仅因这条 warning 无效的现在有效；typecheck 失败和多 primary 的仍然无效。#261、#262、#263 都已合并。
