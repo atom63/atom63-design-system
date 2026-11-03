@@ -1,4 +1,8 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Badge,
   Button,
   DropdownMenu,
@@ -6,10 +10,25 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  Item,
+  ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemTitle,
+  Progress,
 } from '@atom63/ui-react'
 import { Container } from '@atom63/ui-react/layout'
-import { Ellipsis, FileText, LayoutDashboard, Plus, Settings } from 'lucide-react'
-import { useState } from 'react'
+import {
+  CheckCircle2,
+  ChevronRight,
+  Ellipsis,
+  FileText,
+  LayoutDashboard,
+  Plus,
+  Settings,
+  Upload,
+} from 'lucide-react'
+import { useState, type ReactNode } from 'react'
 
 import { AppShell } from '../../blocks/app-shell/app-shell'
 import {
@@ -63,24 +82,75 @@ const columns: readonly DataTableColumn<Invoice>[] = [
   { cell: invoice => invoice.id, header: 'Invoice', key: 'id' },
   { cell: invoice => invoice.customer, header: 'Customer', key: 'customer' },
   { cell: invoice => <StatusBadge status={invoice.status} />, header: 'Status', key: 'status' },
-  { cell: invoice => date.format(new Date(invoice.issued)), header: 'Issued', key: 'issued' },
+  {
+    cell: invoice => date.format(new Date(invoice.issued)),
+    header: 'Issued',
+    key: 'issued',
+    showFrom: 'md',
+  },
   {
     align: 'end',
     cell: invoice => currency.format(invoice.amount),
     header: 'Amount',
     key: 'amount',
+    showFrom: 'lg',
   },
 ]
 
 export interface ListPageProps {
+  /** Initial record shown in the detail sheet, useful for a routed selection. */
+  defaultOpenId?: string
+  /** Initial search text, useful when the URL restores filter state. */
+  defaultQuery?: string
   /** The rows to list; the page filters them in memory. */
   invoices?: readonly Invoice[]
+  /** A transient operation surface such as import progress or completion. */
+  operationStatus?: ReactNode
 }
 
-export function ListContent({ invoices = sampleInvoices }: ListPageProps) {
-  const [query, setQuery] = useState('')
+export interface ListOperationStatusProps {
+  description: string
+  progress?: number
+  title: string
+  variant: 'info' | 'success'
+}
+
+export function ListOperationStatus({
+  description,
+  progress,
+  title,
+  variant,
+}: ListOperationStatusProps) {
+  const Icon = variant === 'success' ? CheckCircle2 : Upload
+  return (
+    <Alert
+      className="fixed end-4 bottom-4 z-[var(--z-layer-popover)] w-[min(24rem,calc(100vw-2rem))] bg-[var(--a63-surface-overlay)]"
+      role="status"
+      variant={variant}
+    >
+      <AlertIcon>
+        <Icon aria-hidden />
+      </AlertIcon>
+      <AlertTitle>{title}</AlertTitle>
+      <AlertDescription>
+        <p>{description}</p>
+        {progress === undefined ? null : (
+          <Progress aria-label={`${title}: ${progress}%`} className="mt-2" value={progress} />
+        )}
+      </AlertDescription>
+    </Alert>
+  )
+}
+
+export function ListContent({
+  defaultOpenId,
+  defaultQuery = '',
+  invoices = sampleInvoices,
+  operationStatus,
+}: ListPageProps) {
+  const [query, setQuery] = useState(defaultQuery)
   const [status, setStatus] = useState('all')
-  const [openId, setOpenId] = useState<string | null>(null)
+  const [openId, setOpenId] = useState<string | null>(defaultOpenId ?? null)
   const open = invoices.find(invoice => invoice.id === openId)
 
   const needle = query.trim().toLowerCase()
@@ -96,6 +166,24 @@ export function ListContent({ invoices = sampleInvoices }: ListPageProps) {
     setQuery('')
     setStatus('all')
   }
+  const rowMenu = (invoice: Invoice) => (
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        render={
+          <Button aria-label={`Actions for ${invoice.id}`} size="icon-sm" variant="ghost">
+            <Ellipsis aria-hidden />
+          </Button>
+        }
+      />
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => setOpenId(invoice.id)}>View invoice</DropdownMenuItem>
+        <DropdownMenuItem>Download PDF</DropdownMenuItem>
+        {invoice.status === 'paid' ? null : <DropdownMenuItem>Mark as paid</DropdownMenuItem>}
+        <DropdownMenuSeparator />
+        <DropdownMenuItem variant="destructive">Void invoice</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
 
   return (
     <>
@@ -144,29 +232,35 @@ export function ListContent({ invoices = sampleInvoices }: ListPageProps) {
           }
           getRowKey={invoice => invoice.id}
           label="Invoices"
-          rowActions={invoice => (
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                render={
-                  <Button aria-label={`Actions for ${invoice.id}`} size="icon-sm" variant="ghost">
-                    <Ellipsis aria-hidden />
-                  </Button>
-                }
-              />
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => setOpenId(invoice.id)}>
-                  View invoice
-                </DropdownMenuItem>
-                <DropdownMenuItem>Download PDF</DropdownMenuItem>
-                {invoice.status === 'paid' ? null : (
-                  <DropdownMenuItem>Mark as paid</DropdownMenuItem>
-                )}
-                <DropdownMenuSeparator />
-                <DropdownMenuItem variant="destructive">Void invoice</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+          renderPhoneRow={invoice => (
+            <Item
+              className="rounded-none"
+              data-selected={openId === invoice.id ? '' : undefined}
+              size="sm"
+            >
+              <ItemContent>
+                <ItemTitle>{invoice.customer}</ItemTitle>
+                <ItemDescription>
+                  {invoice.id} · {date.format(new Date(invoice.issued))}
+                </ItemDescription>
+              </ItemContent>
+              <ItemActions className="gap-1">
+                <StatusBadge status={invoice.status} />
+                <Button
+                  aria-label={`View ${invoice.id}`}
+                  onClick={() => setOpenId(invoice.id)}
+                  size="icon-sm"
+                  variant="ghost"
+                >
+                  <ChevronRight aria-hidden />
+                </Button>
+                {rowMenu(invoice)}
+              </ItemActions>
+            </Item>
           )}
+          rowActions={rowMenu}
           rows={visible}
+          selectedRowKey={openId ?? undefined}
           summary={
             filtered
               ? `${visible.length} of ${invoices.length} invoices`
@@ -197,6 +291,7 @@ export function ListContent({ invoices = sampleInvoices }: ListPageProps) {
         open={open !== undefined}
         title={open?.id ?? ''}
       />
+      {operationStatus}
     </>
   )
 }

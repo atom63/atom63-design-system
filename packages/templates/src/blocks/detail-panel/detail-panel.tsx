@@ -46,7 +46,7 @@ export function DetailPanel({
 }: DetailPanelProps) {
   return (
     <Sheet onOpenChange={onOpenChange} open={open}>
-      <SheetContent side="right">
+      <SheetContent className="max-sm:w-full max-sm:max-w-none" side="right">
         <SheetHeader>
           <SheetTitle>{title}</SheetTitle>
           {description ? <SheetDescription>{description}</SheetDescription> : null}
