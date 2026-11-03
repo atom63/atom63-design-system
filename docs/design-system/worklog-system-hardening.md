@@ -150,6 +150,26 @@ and fintech-home, each with Claude (`-av-claude`) and Codex (`-av-codex`).
 On `claude/app-view-panel-width`: AppView takes `panelWidth`, which sets
 `--a63-app-view-panel-width` (18rem by default). The route question gets its own proposal.
 
+[claude] #259 merged (`panelWidth`). #260 merged: YZ chose option A of
+`docs/design-system/proposal-full-window-routes.md` (local, not committed). The `site` and `docs`
+starters draw the header and footer in a pathless `site` layout route, as the `app` starter draws its
+shell; the root route draws only the outlet, so a full-window page is a child of `rootRoute`. The
+not-found page keeps the chrome, and the post and doc pages read params from `/site/...`.
+
+Rerun on a template from `main` `a588fc14` (`tmp/atom63-vibe-9g2qO6`), web only, no judge:
+chat-thread and fintech-home with Claude (`-rt-claude`) and Codex (`-rt-codex`). All four typecheck
+and build, add the page as a child of `rootRoute`, and record no gap about the site header or footer.
+Both fintech-home runs are invalid on one `button-without-variant` warning each.
+
+#261 (auto-merge on): YZ found the suggested-prompts row scrolling vertically. `ScrollableList`
+passed `overflow-y-hidden` as a class, but Base UI sets `overflow: scroll` inline on the viewport;
+the list now sets `overflow-y: hidden` inline.
+
+Open: `button-without-variant` invalidates a run on every round, while rule 3 tells builders to rely
+on component defaults. The two disagree about a Button with the default variant.
+
+From now on, YZ asked for auto-merge on every PR Claude opens (not the Version Packages PR).
+
 ---
 
 # 工作日志：系统加固
@@ -233,3 +253,13 @@ PR 3 在 `claude/app-view-layout`：YZ 选了 `docs/design-system/proposal-syste
 - AppView 剩下的缺口：侧栏固定 18rem（analytics-overview-av-claude 用 slot 选择器覆盖）；全窗口页面不改路由就去不掉站点 header 和 footer（chat-thread、fintech-home）。
 
 在 `claude/app-view-panel-width`：AppView 新增 `panelWidth`，设置 `--a63-app-view-panel-width`（默认 18rem）。路由问题单独出方案。
+
+[claude] #259 已合并（`panelWidth`）。#260 已合并：YZ 选了 `docs/design-system/proposal-full-window-routes.md`（本地，未提交）的方案 A。`site` 和 `docs` starter 改为在无路径的 `site` layout route 里画 header 和 footer，和 `app` starter 画外壳的方式一样；根路由只画 outlet，全窗口页面挂在 `rootRoute` 下。404 页面保留外框，文章页和文档页从 `/site/...` 读参数。
+
+用 `main` `a588fc14` 的模板（`tmp/atom63-vibe-9g2qO6`）重跑，只跑 web、不跑 judge：chat-thread 和 fintech-home，Claude（`-rt-claude`）和 Codex（`-rt-codex`）各一遍。四个都能 typecheck 和 build，新页面都挂在 `rootRoute` 下，GAPS 里没有再提站点 header 或 footer。两个 fintech-home 各因一个 `button-without-variant` warning 无效。
+
+#261（已开 auto-merge）：YZ 发现 suggested prompts 那一行能竖向滚动。`ScrollableList` 用 class 传 `overflow-y-hidden`，但 Base UI 在 viewport 上用行内样式写了 `overflow: scroll`；现在改为用行内样式设置 `overflow-y: hidden`。
+
+待定：`button-without-variant` 每一轮都会让 case 无效，而规则 3 要 builder 依赖组件默认值。两者对「用默认 variant 的 Button」说法不一致。
+
+从现在起，YZ 要求 Claude 开的每个 PR 都开 auto-merge（Version Packages PR 除外）。
