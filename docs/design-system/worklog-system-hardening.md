@@ -74,6 +74,107 @@ Next: YZ runs `pnpm release:bootstrap packages/cli` on `main` after PR 2a merges
 `packages/cli` to both published-package lists and makes the registry smoke install
 `@atom63/cli@beta` and run the same four commands.
 
+## 2026-11-02
+
+[claude] First publish done: YZ ran `pnpm release:bootstrap packages/cli` on `main`. npm has
+`@atom63/cli@0.1.0-beta.0` on `beta` and `latest`, and the trusted publisher for
+`release-beta.yml` (environment `npm-publish`). npm also created its own `0.0.0-stage`
+placeholder version.
+
+PR 2b on `claude/cli-registry`, from `main` `9282de1b`. Done:
+
+- `packages/cli` is in `published-packages.mjs` and `PUBLISHED_PACKAGES` in `release-beta.yml`,
+  and in the package lists in `AGENTS.md` and `CONTRIBUTING.md`.
+- `@atom63/cli` is a coordinated package in the dependency version policy, with policies for its
+  two runtime dependencies.
+- `check:ds-registry-smoke` installs `@atom63/cli@beta` as a dev dependency and runs
+  `atom63 build`, `component`, `example` and `token`. Evidence regenerated.
+- The package-surface and dependency-policy audits regenerated.
+
+Verification: `pnpm check:ds-registry-smoke -- --write` (resolved `@atom63/cli@beta` ->
+`0.1.0-beta.0`), `check:package-correctness` (publint passes for the CLI),
+`check:package-surface`, `check:dependency-version-policy`, `test:scripts` (158 pass),
+`publish-beta.mjs --dry-run` (skips the CLI as published).
+
+Next: the case-study harness template installs the CLI from npm. Then PR 3 (AppView layout
+contract), proposal first.
+
+[claude] #256 merged. Case-study builders and the CLI, on `claude/vibe-cli`: YZ chose option A of
+`docs/design-system/proposal-harness-cli.md` (local, not committed). Done:
+
+- `vibe.mjs` packs `@atom63/cli` with the other tarballs, installs it as a dev dependency in the `ds`
+  arm, and starts the MCP server from the project's own copy.
+- A new case template, `tmp/atom63-vibe-dMqbCo/invoice-list/ds`, built with
+  `vibe.mjs --dry-run --keep --arms ds --brief invoice-list`. In it, `pnpm exec atom63` works,
+  `pnpm typecheck` and `pnpm build` pass, and the MCP server answers `initialize`. A `cp -a` copy,
+  as `batch.sh` makes, runs the CLI too.
+- Harness, outside git (backup in `backup-2026-11-02-cli/`): `batch.sh` uses the new template, and
+  `run.mjs` starts the MCP server from each case's `node_modules`. `run-ios.mjs` keeps the repo
+  CLI, because the iOS template builds against this repo's `packages/ui-ios`.
+
+Next: a small Codex round checks that builders call `atom63` and that `validity.mjs` passes.
+
+[claude] #257 merged. Codex round (`BUILDER=codex SUF=-codex-cli JUDGE=0`, web only) on
+audio-player, chat-thread and place-card: all three build. chat-thread and place-card copied the
+AppView template (`src/components/app-view.tsx`), which no `-codex-r1` run did, and no gap says
+`atom63` is unavailable. audio-player fails `validity.mjs` on one `button-without-variant` warning.
+
+PR 3 on `claude/app-view-layout`: YZ chose the recommended options of
+`docs/design-system/proposal-system-hardening-pr3-app-view.md` (local, not committed). Done:
+
+- `AppView` ships from `@atom63/ui-react/layout`, with a component contract (layouts `window` /
+  `phone`, chromes `inset` / `flush`, slots). It adds `chrome="flush"` and `overlay`, and gives each
+  safe-area inset one owner; its scrolling regions take focus so a keyboard can scroll them.
+- Five stories with play checks: one scroll owner and one owner per inset, under emulated insets.
+- The `app-view` template keeps the sample pages and imports AppView; the tab-bar block no longer
+  pads itself for the home indicator. The CLI's phone kit imports AppView from the package.
+- The catalog, docs, CLI index and export audit read the `./layout` entry. The craft target-size
+  rule skips a `main` or `aside` that takes focus only to scroll.
+
+Next: record the visual baselines for the new stories, then a case round (one desktop, three phone)
+checks that builders import AppView instead of copying it.
+
+[claude] #258 merged. Case round on a template rebuilt from `main` `88bf7961`
+(`tmp/atom63-vibe-3E12wP`), web only, no judge: analytics-overview, chat-thread, listing-detail
+and fintech-home, each with Claude (`-av-claude`) and Codex (`-av-codex`).
+
+- All eight import AppView from `@atom63/ui-react/layout`; none copies it. Both analytics-overview
+  runs use `chrome="flush"`, both chat-thread runs use `overlay`.
+- Four are invalid, none because of AppView: three Button warnings (`button-without-variant`,
+  `multiple-primary`), and fintech-home-av-claude fails typecheck after rewriting the routes to
+  drop the site header and footer.
+- Gaps left on AppView: the side panel is a fixed 18rem (analytics-overview-av-claude overrode it
+  with a slot selector), and a full-window page cannot leave the site header and footer without
+  editing the router (chat-thread, fintech-home).
+
+On `claude/app-view-panel-width`: AppView takes `panelWidth`, which sets
+`--a63-app-view-panel-width` (18rem by default). The route question gets its own proposal.
+
+[claude] #259 merged (`panelWidth`). #260 merged: YZ chose option A of
+`docs/design-system/proposal-full-window-routes.md` (local, not committed). The `site` and `docs`
+starters draw the header and footer in a pathless `site` layout route, as the `app` starter draws its
+shell; the root route draws only the outlet, so a full-window page is a child of `rootRoute`. The
+not-found page keeps the chrome, and the post and doc pages read params from `/site/...`.
+
+Rerun on a template from `main` `a588fc14` (`tmp/atom63-vibe-9g2qO6`), web only, no judge:
+chat-thread and fintech-home with Claude (`-rt-claude`) and Codex (`-rt-codex`). All four typecheck
+and build, add the page as a child of `rootRoute`, and record no gap about the site header or footer.
+Both fintech-home runs are invalid on one `button-without-variant` warning each.
+
+#261 (auto-merge on): YZ found the suggested-prompts row scrolling vertically. `ScrollableList`
+passed `overflow-y-hidden` as a class, but Base UI sets `overflow: scroll` inline on the viewport;
+the list now sets `overflow-y: hidden` inline.
+
+Open: `button-without-variant` invalidates a run on every round, while rule 3 tells builders to rely
+on component defaults. The two disagree about a Button with the default variant.
+
+From now on, YZ asked for auto-merge on every PR Claude opens (not the Version Packages PR).
+
+[claude] Resolved the open question in #263: `caseValidity` fails a case on `multiple-primary` only;
+`button-without-variant` stays a diagnostic, since a Button with no variant draws `default`, the
+neutral main action rule 5 describes. Replaying the last 13 runs, the six invalid only on that warning
+are valid; a failed typecheck and a multiple-primary run stay invalid. #261, #262 and #263 merged.
+
 ---
 
 # 工作日志：系统加固
@@ -115,3 +216,57 @@ Next: YZ runs `pnpm release:bootstrap packages/cli` on `main` after PR 2a merges
 验证：`pnpm check:ds-pack-smoke` 通过，四个 tarball 和 `cli` 步骤都过。
 
 下一步：PR 2a 合并后，YZ 在 `main` 上跑 `pnpm release:bootstrap packages/cli`。之后 PR 2b 把 `packages/cli` 加进两份发布包列表，并让 registry smoke 安装 `@atom63/cli@beta`、跑同样四条命令。
+
+## 2026-11-02
+
+[claude] 首发完成：YZ 在 `main` 上跑了 `pnpm release:bootstrap packages/cli`。npm 上 `@atom63/cli@0.1.0-beta.0` 在 `beta` 和 `latest` 两个 tag，`release-beta.yml`（environment `npm-publish`）的 trusted publisher 已建好。npm 还自己建了一个 `0.0.0-stage` 占位版本。
+
+PR 2b 在 `claude/cli-registry`，从 `main` `9282de1b` 拉出。已完成：
+
+- `packages/cli` 加进 `published-packages.mjs`、`release-beta.yml` 的 `PUBLISHED_PACKAGES`，以及 `AGENTS.md`、`CONTRIBUTING.md` 的包列表。
+- 依赖版本策略把 `@atom63/cli` 列为协同包，并给它的两个运行时依赖定了策略。
+- `check:ds-registry-smoke` 把 `@atom63/cli@beta` 装成 dev 依赖，跑 `atom63 build`、`component`、`example`、`token`；证据已重新生成。
+- package-surface 和依赖策略两份审计已重新生成。
+
+验证：`pnpm check:ds-registry-smoke -- --write`（`@atom63/cli@beta` 解析为 `0.1.0-beta.0`）、`check:package-correctness`（CLI 的 publint 通过）、`check:package-surface`、`check:dependency-version-policy`、`test:scripts`（158 通过）、`publish-beta.mjs --dry-run`（CLI 已发布，跳过）。
+
+下一步：case-study harness 模板改为从 npm 安装 CLI。然后是 PR 3（AppView 布局契约），先出方案。
+
+[claude] #256 已合并。case-study builder 接入 CLI，在 `claude/vibe-cli`：YZ 选了 `docs/design-system/proposal-harness-cli.md`（本地，未提交）的方案 A。已完成：
+
+- `vibe.mjs` 把 `@atom63/cli` 和其他 tarball 一起 pack，在 `ds` 组装成 dev 依赖，MCP server 从项目自己装的那份启动。
+- 用 `vibe.mjs --dry-run --keep --arms ds --brief invoice-list` 生成了新的 case 模板 `tmp/atom63-vibe-dMqbCo/invoice-list/ds`。模板里 `pnpm exec atom63` 能用，`pnpm typecheck` 和 `pnpm build` 通过，MCP server 能响应 `initialize`。按 `batch.sh` 的方式 `cp -a` 出来的副本也能跑 CLI。
+- harness（不在 git 里，备份在 `backup-2026-11-02-cli/`）：`batch.sh` 改用新模板，`run.mjs` 从每个 case 的 `node_modules` 启动 MCP server。`run-ios.mjs` 仍用仓库里的 CLI，因为 iOS 模板编译的是本仓库的 `packages/ui-ios`。
+
+下一步：跑一小轮 Codex case，确认 builder 调用了 `atom63`，并且 `validity.mjs` 通过。
+
+[claude] #257 已合并。Codex 一轮（`BUILDER=codex SUF=-codex-cli JUDGE=0`，只跑 web）跑了 audio-player、chat-thread、place-card：三个都能 build。chat-thread 和 place-card 拷了 AppView 模板（`src/components/app-view.tsx`），`-codex-r1` 一个都没有；也没有 gap 再说 `atom63` 不可用。audio-player 因为一个 `button-without-variant` warning 没过 `validity.mjs`。
+
+PR 3 在 `claude/app-view-layout`：YZ 选了 `docs/design-system/proposal-system-hardening-pr3-app-view.md`（本地，未提交）的推荐项。已完成：
+
+- `AppView` 从 `@atom63/ui-react/layout` 发布，带组件契约（layout `window` / `phone`，chrome `inset` / `flush`，slots）。新增 `chrome="flush"` 和 `overlay`，每个 safe-area inset 只有一个归属者；滚动区可以聚焦，键盘能滚动。
+- 五个 story 带 play 检查：在模拟 inset 下，只有一个滚动归属者，每条边只有一个 inset 归属者。
+- `app-view` 模板只留示例页并改为 import AppView；tab-bar block 不再自己给 home indicator 留空。CLI 的手机套件改为从包里 import AppView。
+- 组件目录、文档、CLI 索引和导出审计都读 `./layout` 入口。craft 的 target-size 规则跳过只为滚动而可聚焦的 `main` 或 `aside`。
+
+下一步：给新 story 录视觉基线，然后跑一轮 case（一个桌面、三个手机），确认 builder 是 import AppView 而不是复制。
+
+[claude] #258 已合并。用 `main` `88bf7961` 重建的模板（`tmp/atom63-vibe-3E12wP`）跑了一轮 case，只跑 web、不跑 judge：analytics-overview、chat-thread、listing-detail、fintech-home，Claude（`-av-claude`）和 Codex（`-av-codex`）各一遍。
+
+- 8 个全部从 `@atom63/ui-react/layout` import AppView，没有一个复制。两次 analytics-overview 都用了 `chrome="flush"`，两次 chat-thread 都用了 `overlay`。
+- 4 个无效，都不是 AppView 的问题：3 个是 Button warning（`button-without-variant`、`multiple-primary`）；fintech-home-av-claude 为了去掉站点 header 和 footer 改写了路由，typecheck 失败。
+- AppView 剩下的缺口：侧栏固定 18rem（analytics-overview-av-claude 用 slot 选择器覆盖）；全窗口页面不改路由就去不掉站点 header 和 footer（chat-thread、fintech-home）。
+
+在 `claude/app-view-panel-width`：AppView 新增 `panelWidth`，设置 `--a63-app-view-panel-width`（默认 18rem）。路由问题单独出方案。
+
+[claude] #259 已合并（`panelWidth`）。#260 已合并：YZ 选了 `docs/design-system/proposal-full-window-routes.md`（本地，未提交）的方案 A。`site` 和 `docs` starter 改为在无路径的 `site` layout route 里画 header 和 footer，和 `app` starter 画外壳的方式一样；根路由只画 outlet，全窗口页面挂在 `rootRoute` 下。404 页面保留外框，文章页和文档页从 `/site/...` 读参数。
+
+用 `main` `a588fc14` 的模板（`tmp/atom63-vibe-9g2qO6`）重跑，只跑 web、不跑 judge：chat-thread 和 fintech-home，Claude（`-rt-claude`）和 Codex（`-rt-codex`）各一遍。四个都能 typecheck 和 build，新页面都挂在 `rootRoute` 下，GAPS 里没有再提站点 header 或 footer。两个 fintech-home 各因一个 `button-without-variant` warning 无效。
+
+#261（已开 auto-merge）：YZ 发现 suggested prompts 那一行能竖向滚动。`ScrollableList` 用 class 传 `overflow-y-hidden`，但 Base UI 在 viewport 上用行内样式写了 `overflow: scroll`；现在改为用行内样式设置 `overflow-y: hidden`。
+
+待定：`button-without-variant` 每一轮都会让 case 无效，而规则 3 要 builder 依赖组件默认值。两者对「用默认 variant 的 Button」说法不一致。
+
+从现在起，YZ 要求 Claude 开的每个 PR 都开 auto-merge（Version Packages PR 除外）。
+
+[claude] 上面的待定问题已在 #263 解决：`caseValidity` 只在 `multiple-primary` 时判 case 无效；`button-without-variant` 保留为诊断，因为不写 variant 的 Button 画的是 `default`，正是规则 5 说的中性主操作。重放最近 13 个 run：6 个仅因这条 warning 无效的现在有效；typecheck 失败和多 primary 的仍然无效。#261、#262、#263 都已合并。

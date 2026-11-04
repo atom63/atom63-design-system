@@ -5,6 +5,8 @@ from `@atom63/styles`, and long-form content from `@atom63/mdx`.
 
 - `pnpm dev` runs the site; `pnpm typecheck` and `pnpm build` must pass before a change is done.
 - Routes live in `src/router.tsx`, pages in `src/pages`, and shared pieces in `src/components`.
+  A site page is a child of `siteRoute`, which draws the header and footer; a full-window page,
+  such as an AppView, is a child of `rootRoute` and draws no site chrome.
 - Content is MDX in `src/content`. The file name is the slug; the frontmatter fields are the ones
   the loader next to the folder reads (`posts.ts` or `docs.ts`).
 - Mode and theme are set once in `src/theme.tsx` through `Atom63Theme`. Style with tokens and the

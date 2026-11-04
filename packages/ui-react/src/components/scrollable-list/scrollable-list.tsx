@@ -260,7 +260,8 @@ function ScrollableList({
           className="[&_[data-slot=scroll-area-scrollbar][data-orientation=vertical]]:hidden"
           ref={scrollAreaRef}
           scrollFade={mask}
-          viewportClassName="overflow-y-hidden"
+          // Base UI sets `overflow: scroll` inline on the viewport, which a class cannot override.
+          viewportProps={{ style: { overflowY: 'hidden' } }}
         >
           <div className="a63-ScrollableList-content" data-slot="scrollable-list-content">
             {children}

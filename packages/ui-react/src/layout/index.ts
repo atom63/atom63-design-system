@@ -47,5 +47,8 @@ export {
 } from './section-header'
 export type { SectionHeaderLevel, SectionHeaderProps, SectionHeaderVariant } from './section-header'
 
+export { AppView } from '../components/app-view'
+export type { AppViewProps } from '../components/app-view'
+
 export { ReaderLayout } from './reader-layout'
 export type { ReaderLayoutProps } from './reader-layout'

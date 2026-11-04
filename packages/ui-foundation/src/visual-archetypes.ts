@@ -147,6 +147,7 @@ export const visualArchetypes = {
       'ChatMessage',
       'ChatSteps',
       'Amount',
+      'AppView',
     ],
     contracts: ['surface'],
   },

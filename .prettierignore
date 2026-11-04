@@ -36,3 +36,6 @@ docs/design-system/audits/
 
 # A byte-for-byte copy of atom63-site-template/src/styles/tokens; buildTemplateFiles edits it by pattern.
 packages/figma/template/
+
+# Copied unchanged from the Stageshow skill (benjitaylor/skills); kept in its own format so a refresh is a plain copy.
+examples/stageshow-atom63/stageshow/

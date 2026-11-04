@@ -13,7 +13,7 @@ import { NotFoundPage } from './not-found'
 const components = createMdxComponents()
 
 export function DocPage() {
-  const { slug } = useParams({ from: '/docs/$slug' })
+  const { slug } = useParams({ from: '/site/docs/$slug' })
   const doc = findDoc(slug)
   if (!doc) {
     return <NotFoundPage />

@@ -315,9 +315,11 @@ export function measureSources(files, { knownTokens } = {}) {
 /**
  * Whether a case-study run counts as a valid result: the builder changed
  * source, the project typechecks and builds, the changed source breaks no
- * craft rule, has no literal color or palette utility and no warning, and
- * every declared viewport has a screenshot. The system-component share stays
- * diagnostic: some references are legitimately product-specific.
+ * craft rule, has no literal color or palette utility and no
+ * `multiple-primary` warning, and every declared viewport has a screenshot.
+ * The system-component share and `button-without-variant` stay diagnostic:
+ * some references are legitimately product-specific, and a Button with no
+ * variant draws `default`, which is the right look for a main action.
  * @param {{ error?: string, files: string[], measures: ReturnType<typeof measureSources>, typecheck?: { ok: boolean }, build?: { ok: boolean } }} result
  *   a `run.mjs` result
  * @param {{ screenshots: Record<string, boolean> }} options whether each declared viewport's screenshot exists
@@ -335,7 +337,8 @@ export function caseValidity(result, { screenshots }) {
     reasons.push(`literal colors: ${literals.literalColors.length}`)
   if (literals.paletteUtilities.length)
     reasons.push(`palette utilities: ${literals.paletteUtilities.length}`)
-  if (warnings.length) reasons.push(`warnings: ${warnings.length} (${rules(warnings)})`)
+  const gating = warnings.filter(({ rule }) => rule === 'multiple-primary')
+  if (gating.length) reasons.push(`warnings: ${gating.length} (${rules(gating)})`)
   for (const [name, exists] of Object.entries(screenshots))
     if (!exists) reasons.push(`missing screenshot: ${name}`)
   return { ok: reasons.length === 0, reasons }

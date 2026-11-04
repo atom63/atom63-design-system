@@ -13,4 +13,5 @@ export const publishedPackageDirs = [
   'packages/inform',
   'packages/agent',
   'packages/widgets',
+  'packages/cli',
 ]

@@ -6,7 +6,10 @@ const scriptDirectory = dirname(fileURLToPath(import.meta.url))
 const repositoryRoot = resolve(scriptDirectory, '../..')
 const rootSourcePath = 'packages/ui-react/src/index.ts'
 // Component families published on their own subpath instead of the root.
-const subpathSourcePaths = { './calendar': 'packages/ui-react/src/calendar/index.ts' }
+const subpathSourcePaths = {
+  './calendar': 'packages/ui-react/src/calendar/index.ts',
+  './layout': 'packages/ui-react/src/layout/index.ts',
+}
 const packageManifestPath = 'packages/ui-react/package.json'
 const supportPolicyPath = 'docs/design-system/ui-react-support-policy.json'
 const outputPath = 'docs/design-system/audits/ui-react-export-inventory.json'

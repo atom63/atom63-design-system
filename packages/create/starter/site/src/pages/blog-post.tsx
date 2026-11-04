@@ -11,7 +11,7 @@ import { NotFoundPage } from './not-found'
 const components = createMdxComponents()
 
 export function BlogPostPage() {
-  const { slug } = useParams({ from: '/blog/$slug' })
+  const { slug } = useParams({ from: '/site/blog/$slug' })
   const post = findPost(slug)
   if (!post) {
     return <NotFoundPage />

@@ -320,12 +320,22 @@ describe('caseValidity', () => {
     })
   })
 
-  it('rejects a case that builds with a Button without a variant', () => {
+  it('accepts a Button without a variant, which still shows as a warning', () => {
     const result = built(new Map([['src/pages/p.tsx', page('')]]))
-    assert.equal(result.build.ok, true)
+    assert.deepEqual(
+      result.measures.warnings.map(({ rule }) => rule),
+      ['button-without-variant']
+    )
+    assert.deepEqual(caseValidity(result, { screenshots: shots }), { ok: true, reasons: [] })
+  })
+
+  it('rejects a case with two primary Buttons in one file', () => {
+    const twoPrimaries =
+      'import { Button } from \'@atom63/ui-react\'\nexport const P = () => <main><Button variant="primary">Buy</Button><Button variant="primary">Save</Button></main>\n'
+    const result = built(new Map([['src/pages/p.tsx', twoPrimaries]]))
     assert.deepEqual(caseValidity(result, { screenshots: shots }), {
       ok: false,
-      reasons: ['warnings: 1 (button-without-variant)'],
+      reasons: ['warnings: 1 (multiple-primary)'],
     })
   })
 

@@ -82,7 +82,8 @@ for (const pkg of packages) {
   if (onNpm(pkg.name, pkg.version)) {
     process.stdout.write(`${pkg.name}@${pkg.version} is already on npm; skipping the publish.\n`)
   } else {
-    run('pnpm', ['--filter', pkg.name, 'build'])
+    // Packages without a build step, such as @atom63/cli, publish their sources.
+    run('pnpm', ['--filter', pkg.name, 'run', '--if-present', 'build'])
     run(
       'pnpm',
       ['publish', '--access', 'public', '--tag', 'beta', '--no-git-checks'],
