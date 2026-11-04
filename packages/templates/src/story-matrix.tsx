@@ -47,6 +47,9 @@ export const themeMatrixParameters = {
   },
 }
 
-/* Shows `Phone` stories in Storybook's large-phone viewport. The visual project
-   captures any story whose id ends in `-phone` at 390 px wide. */
+/* Keeps authored viewport stories and visual baselines on the same four widths. */
+export const wideGlobals = { viewport: { value: 'a63-wide', isRotated: false } }
+export const compactGlobals = { viewport: { value: 'a63-compact', isRotated: false } }
+export const tabletGlobals = { viewport: { value: 'a63-tablet', isRotated: false } }
+export const responsivePhoneGlobals = { viewport: { value: 'a63-phone', isRotated: false } }
 export const phoneGlobals = { viewport: { value: 'mobile2', isRotated: false } }

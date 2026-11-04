@@ -1,9 +1,30 @@
 /**
- * Projects, prompts and `claude -p` arguments for the vibe runner (E4). Pure
+ * Projects, prompts and `codex exec` arguments for the vibe runner (E4). Pure
  * functions, so the dry run and the tests see exactly what a real run sends.
  */
 
 /** @typedef {{ id: string, title: string, body: string, markdown: string }} Brief */
+
+export const captureViewports = {
+  desktop: { width: 1440, height: 960 },
+  compact: { width: 1024, height: 768 },
+  tablet: { width: 768, height: 1024 },
+  phone: { width: 390, height: 844 },
+}
+
+/** State ids from the first column of a reference pack's Markdown table. */
+export function parseReferenceStates(markdown) {
+  return [...markdown.matchAll(/^\|\s*`([^`]+)`\s*\|/gm)].map(match => match[1])
+}
+
+/** Screenshot paths relative to one rendered arm. */
+export function captureFiles(states = []) {
+  return (states.length ? states : [null]).flatMap(state =>
+    Object.keys(captureViewports).map(viewport =>
+      state ? `${state}/${viewport}.png` : `${viewport}.png`
+    )
+  )
+}
 
 /**
  * A brief file: a `# Title` line, then product language only.
@@ -22,22 +43,61 @@ export function parseBrief(id, markdown) {
 /** The URL path each arm must serve the brief's page at. */
 export const pagePath = brief => `/${brief.id}`
 
-/** The builder prompt. Both arms get exactly this text. */
-export function builderPrompt(brief) {
+/** The builder prompt. Every arm in one track gets exactly this text. */
+export function builderPrompt(brief, { track = 'generalization' } = {}) {
+  const reference =
+    track === 'reference'
+      ? [
+          '',
+          '## Reference reconstruction',
+          '',
+          'Read `.vibe/reference/target-desktop.svg`, `.vibe/reference/layout.md`, and `.vibe/reference/states.md` before writing UI.',
+          'Reconstruct the target structure with the neutral product copy and data in the brief. Preserve the target’s information density, region proportions, alignment, and control hierarchy.',
+          'Do not embed the target image in the page. Implement the interface as real HTML and controls.',
+          'The desktop target is the fidelity reference. Adapt the same information priorities at narrower viewports without scaling the desktop canvas.',
+        ]
+      : []
   return [
     `Build the following as a new page of this app, reachable at the URL path \`${pagePath(brief)}\`. Keep the pages that already exist working.`,
+    '',
+    'This is an unattended benchmark run. You are already authorized to edit files inside this temporary project. Implement the page now, and do not ask for confirmation or stop after presenting a plan. Treat this prompt as confirmation for all in-scope project edits and validation commands below.',
     '',
     `## ${brief.title}`,
     '',
     brief.body,
+    ...reference,
     '',
     '## Constraints',
     '',
     '- Work only inside this project directory.',
     '- Use only the dependencies that are already installed; do not add packages.',
+    '- On this benchmark route, replace the starter site chrome with the product interface from the brief. Starter navigation and appearance controls must not appear in screenshots.',
     '- Use realistic mock data where the page needs data; there is no backend.',
     '- When you are done, `pnpm typecheck` and `pnpm build` must both pass.',
   ].join('\n')
+}
+
+/** Replace the starter's template-led instructions for the component-only DS arm. */
+export function coreAgentGuide(markdown) {
+  const core = `<!-- atom63:core:start -->
+
+## Building UI with Atom63 core
+
+Use the Atom63 MCP tools available in this session before writing UI:
+
+- \`atom63 component <slug>\` for a component contract and import.
+- \`atom63 example <slug> [story]\` for a known-good component usage.
+- \`atom63 token <name or words>\` for tokens and theme values.
+- \`atom63 rules\` for the system rules.
+
+This benchmark arm measures the component and token system without page templates, blocks, build
+kits, or copied recipes. Compose the public components directly. Keep every color, space, radius,
+shadow, and duration on the Atom63 token scale, preserve native semantics, and use only contract
+axis values.
+
+<!-- atom63:core:end -->`
+  const generated = /<!-- atom63:agents:start[\s\S]*?<!-- atom63:agents:end -->/
+  return `${markdown.replace(generated, '').trim()}\n\n${core}\n`
 }
 
 /** The package versions the plain arm takes from the starter's resolved versions. */
@@ -173,81 +233,54 @@ createRoot(root).render(
   return new Map([...files].sort(([left], [right]) => left.localeCompare(right)))
 }
 
-/** Tools a builder may use. Bash is limited to the project's own scripts. */
-export const builderTools = ['Read', 'Edit', 'Write', 'Glob', 'Grep', 'Bash']
-/* `/**` anchors at the session's working directory, the project. `./**` follows
-   the shell's current directory, so a builder that ran `cd node_modules` lost
-   every write for the rest of its run. */
-export const builderAllowed = [
-  'Read',
-  'Glob',
-  'Grep',
-  'Edit(/**)',
-  'Write(/**)',
-  'Bash(pnpm typecheck)',
-  'Bash(pnpm build)',
-  'Bash(pnpm run typecheck)',
-  'Bash(pnpm run build)',
-]
+const coreMcpTools = 'component,example,token,rules,manifest'
 
-/**
- * Arguments shared by every run: headless JSON output, no user settings,
- * skills or memory, only the MCP servers passed here, and permission mode
- * `dontAsk`, which denies anything the allowlist does not name.
- */
-function baseArgs({ prompt, model, maxTurns, maxBudgetUsd, mcpConfig }) {
+function codexBaseArgs({ prompt, model, sandbox, outputPath, mcp = [] }) {
   return [
-    '-p',
-    prompt,
-    '--output-format',
-    'json',
-    '--permission-mode',
-    'dontAsk',
-    '--setting-sources',
-    'project,local',
-    '--disable-slash-commands',
-    '--no-session-persistence',
-    '--strict-mcp-config',
-    '--mcp-config',
-    JSON.stringify(mcpConfig ?? { mcpServers: {} }),
-    '--max-turns',
-    String(maxTurns),
-    '--max-budget-usd',
-    String(maxBudgetUsd),
+    'exec',
+    '--ignore-user-config',
+    '--disable',
+    'plugins',
+    '--disable',
+    'apps',
+    '--disable',
+    'browser_use',
+    '--disable',
+    'computer_use',
+    '--disable',
+    'multi_agent',
+    '--ephemeral',
+    '--skip-git-repo-check',
+    '--sandbox',
+    sandbox,
+    '--json',
+    ...(outputPath ? ['--output-last-message', outputPath] : []),
     ...(model ? ['--model', model] : []),
+    ...mcp,
+    prompt,
   ]
 }
 
-/**
- * `claude` arguments for a builder. The `ds` arm also gets the `atom63` MCP
- * server from this repo's CLI.
- * @param {{ arm: 'ds' | 'plain', prompt: string, cliBin: string, model?: string, maxTurns: number, maxBudgetUsd: number }} options
- */
-export function builderArgs({ arm, prompt, cliBin, model, maxTurns, maxBudgetUsd }) {
-  const mcpConfig =
-    arm === 'ds'
-      ? { mcpServers: { atom63: { command: 'node', args: [cliBin, 'mcp'] } } }
-      : { mcpServers: {} }
-  return [
-    ...baseArgs({ prompt, model, maxTurns, maxBudgetUsd, mcpConfig }),
-    '--tools',
-    builderTools.join(','),
-    '--allowedTools',
-    ...builderAllowed,
-    ...(arm === 'ds' ? ['mcp__atom63'] : []),
-  ]
+/** Codex arguments for one builder arm. */
+export function codexBuilderArgs({ arm, prompt, cliBin, model, outputPath }) {
+  const usesDesignSystem = arm !== 'plain'
+  const mcp = usesDesignSystem
+    ? [
+        '--config',
+        'mcp_servers.atom63.command="node"',
+        '--config',
+        `mcp_servers.atom63.args=${JSON.stringify([cliBin, 'mcp'])}`,
+        ...(arm === 'ds-core'
+          ? ['--config', `mcp_servers.atom63.env={ ATOM63_MCP_TOOLS="${coreMcpTools}" }`]
+          : []),
+      ]
+    : []
+  return codexBaseArgs({ prompt, model, sandbox: 'workspace-write', outputPath, mcp })
 }
 
-/** `claude` arguments for the judge: it can only read files in its directory. */
-export function judgeArgs({ prompt, model, maxTurns, maxBudgetUsd }) {
-  return [
-    ...baseArgs({ prompt, model, maxTurns, maxBudgetUsd }),
-    '--tools',
-    'Read,Glob',
-    '--allowedTools',
-    'Read',
-    'Glob',
-  ]
+/** Codex arguments for the visual judge: its sandbox is read-only. */
+export function codexJudgeArgs({ prompt, model, outputPath }) {
+  return codexBaseArgs({ prompt, model, sandbox: 'read-only', outputPath })
 }
 
 /** A shell-quoted command line, for the dry run. */
@@ -259,20 +292,26 @@ export function formatCommand(command, args) {
 }
 
 /**
- * The fields of a `claude -p --output-format json` result the report keeps.
- * @param {any} result
+ * Summarize `codex exec --json` events for the report.
  */
-export function summarizeClaudeResult(result) {
+export function summarizeCodexEvents(events, { durationMs, model }) {
+  const turns = events.filter(event => event.type === 'turn.completed')
+  const usage = turns.reduce(
+    (total, event) => ({
+      inputTokens: total.inputTokens + (event.usage?.input_tokens ?? 0),
+      cachedInputTokens: total.cachedInputTokens + (event.usage?.cached_input_tokens ?? 0),
+      outputTokens: total.outputTokens + (event.usage?.output_tokens ?? 0),
+    }),
+    { inputTokens: 0, cachedInputTokens: 0, outputTokens: 0 }
+  )
   return {
-    costUsd: result.total_cost_usd ?? 0,
-    durationMs: result.duration_ms ?? 0,
-    isError: Boolean(result.is_error),
-    models: Object.keys(result.modelUsage ?? {}),
-    permissionDenials: (result.permission_denials ?? []).map(({ tool_name, tool_input }) => ({
-      tool: tool_name,
-      input: tool_input?.command ?? tool_input?.file_path ?? '',
-    })),
-    stopReason: result.subtype ?? result.terminal_reason ?? '',
-    turns: result.num_turns ?? 0,
+    durationMs,
+    models: [model ?? 'Codex CLI default'],
+    failedTools: events.filter(
+      event => event.type === 'item.completed' && event.item?.status === 'failed'
+    ).length,
+    stopReason: turns.length ? 'completed' : 'error',
+    turns: turns.length,
+    usage,
   }
 }

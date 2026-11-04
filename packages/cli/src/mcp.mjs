@@ -41,10 +41,13 @@ const result = (envelope, isError = false) => ({
   ...(isError ? { isError: true } : {}),
 })
 
-/** A new server instance with one read-only tool per query command. */
-export function createAtomServer(index = loadIndex()) {
+/** A new server instance with the selected read-only query tools. */
+export function createAtomServer(index = loadIndex(), { tools } = {}) {
   const server = new McpServer({ name: 'atom63', version: packageVersion })
-  for (const command of commands.filter(candidate => !candidate.writes)) {
+  const allowed = tools ? new Set(tools) : null
+  for (const command of commands.filter(
+    candidate => !candidate.writes && (!allowed || allowed.has(candidate.name))
+  )) {
     server.registerTool(
       command.name,
       {
@@ -67,6 +70,6 @@ export function createAtomServer(index = loadIndex()) {
 }
 
 /** Serve over stdio until the host closes the connection. */
-export function serve() {
-  return serveStdio(() => createAtomServer())
+export function serve({ tools } = {}) {
+  return serveStdio(() => createAtomServer(undefined, { tools }))
 }

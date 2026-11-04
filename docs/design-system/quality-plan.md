@@ -130,7 +130,8 @@ Turn craft and taste into checks that fail CI, and apply them the same way on bo
   measurement.
 - **Recommendation: A** now. Consider B once a few runs show the numbers are stable and useful.
 - **Status:** built. `pnpm vibe` runs four briefs (sign-in, notification settings, invoices, first
-  project), a `ds` and a `plain` arm per brief through headless `claude -p`, and a blinded judge.
+  project), a `ds` and a `plain` arm per brief through isolated `codex exec` sessions, and a blinded
+  Codex visual judge.
   `scripts/design-system/vibe/README.md` explains how to run it and read the report; the first
   report is `docs/design-system/audits/vibe-2026-09-26.md`.
 

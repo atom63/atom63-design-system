@@ -21,6 +21,8 @@ export interface DataTableColumn<Row> {
   cell: (row: Row) => ReactNode
   header: string
   key: string
+  /** The table width at which this column first appears. */
+  showFrom?: 'sm' | 'md' | 'lg'
 }
 
 export interface DataTableEmpty {
@@ -39,14 +41,27 @@ export interface DataTableSectionProps<Row> {
   getRowKey: (row: Row) => string
   /** Heading level of the empty state's title: one below the heading above the section. */
   headingLevel?: 2 | 3 | 4
+  /** Product-specific phone composition; the table remains column-driven. */
+  renderPhoneRow?: (row: Row) => ReactNode
   rowActions?: (row: Row) => ReactNode
   rows: readonly Row[]
+  /** Highlights the open record without making the row itself interactive. */
+  selectedRowKey?: string
   /** A short count such as "12 of 25 invoices", announced when it changes. */
   summary: string
 }
 
 const alignClass = (align: DataTableColumn<unknown>['align']) =>
   align === 'end' ? 'text-end tabular-nums' : 'text-start'
+
+const showFromClass = {
+  sm: '',
+  md: 'hidden md:table-cell',
+  lg: 'hidden lg:table-cell',
+} as const
+
+const columnClass = <Row,>(column: DataTableColumn<Row>) =>
+  `${alignClass(column.align)} ${showFromClass[column.showFrom ?? 'sm']}`.trim()
 
 /*
  * A wide table does not fit a phone, so below `sm` each row becomes a stacked
@@ -60,8 +75,10 @@ export function DataTableSection<Row>({
   getRowKey,
   headingLevel = 2,
   label,
+  renderPhoneRow,
   rowActions,
   rows,
+  selectedRowKey,
   summary,
 }: DataTableSectionProps<Row>) {
   const [titleColumn, ...detailColumns] = columns
@@ -86,7 +103,7 @@ export function DataTableSection<Row>({
               <TableHeader>
                 <TableRow>
                   {columns.map(column => (
-                    <TableHead className={alignClass(column.align)} key={column.key}>
+                    <TableHead className={columnClass(column)} key={column.key}>
                       {column.header}
                     </TableHead>
                   ))}
@@ -99,9 +116,12 @@ export function DataTableSection<Row>({
               </TableHeader>
               <TableBody>
                 {rows.map(row => (
-                  <TableRow key={getRowKey(row)}>
+                  <TableRow
+                    data-selected={getRowKey(row) === selectedRowKey ? '' : undefined}
+                    key={getRowKey(row)}
+                  >
                     {columns.map(column => (
-                      <TableCell className={alignClass(column.align)} key={column.key}>
+                      <TableCell className={columnClass(column)} key={column.key}>
                         {column.cell(row)}
                       </TableCell>
                     ))}
@@ -118,23 +138,32 @@ export function DataTableSection<Row>({
             className="divide-border border-border flex flex-col divide-y rounded-lg border sm:hidden"
           >
             {rows.map(row => (
-              <li className="flex items-start gap-3 p-4" key={getRowKey(row)}>
-                <div className="flex min-w-0 flex-1 flex-col gap-2">
-                  {titleColumn ? (
-                    <div className="text-foreground font-medium">{titleColumn.cell(row)}</div>
-                  ) : null}
-                  <dl className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1 text-sm">
-                    {detailColumns.map(column => (
-                      <div className="contents" key={column.key}>
-                        <dt className="text-muted-foreground">{column.header}</dt>
-                        <dd className={column.align === 'end' ? 'tabular-nums' : undefined}>
-                          {column.cell(row)}
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-                {rowActions ? rowActions(row) : null}
+              <li
+                className={renderPhoneRow ? undefined : 'flex items-start gap-3 p-4'}
+                key={getRowKey(row)}
+              >
+                {renderPhoneRow ? (
+                  renderPhoneRow(row)
+                ) : (
+                  <>
+                    <div className="flex min-w-0 flex-1 flex-col gap-2">
+                      {titleColumn ? (
+                        <div className="text-foreground font-medium">{titleColumn.cell(row)}</div>
+                      ) : null}
+                      <dl className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1 text-sm">
+                        {detailColumns.map(column => (
+                          <div className="contents" key={column.key}>
+                            <dt className="text-muted-foreground">{column.header}</dt>
+                            <dd className={column.align === 'end' ? 'tabular-nums' : undefined}>
+                              {column.cell(row)}
+                            </dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </div>
+                    {rowActions ? rowActions(row) : null}
+                  </>
+                )}
               </li>
             ))}
           </ul>

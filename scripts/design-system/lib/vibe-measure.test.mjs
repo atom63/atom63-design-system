@@ -10,6 +10,7 @@ import {
   findWarnings,
   isMeasuredFile,
   measureSources,
+  requireMeasuredSourceChanges,
   systemShare,
 } from './vibe-measure.mjs'
 
@@ -40,6 +41,26 @@ describe('isMeasuredFile', () => {
     assert.ok(!isMeasuredFile('src/vite-env.d.ts'))
     assert.ok(!isMeasuredFile('vite.config.ts'))
     assert.ok(!isMeasuredFile('src/content/post.mdx'))
+  })
+})
+
+describe('requireMeasuredSourceChanges', () => {
+  it('returns changed source and rejects a builder that only wrote run metadata', () => {
+    assert.deepEqual(
+      requireMeasuredSourceChanges({
+        added: ['.vibe/codex-events.jsonl', 'src/pages/contacts.tsx'],
+        changed: ['src/styles.css'],
+      }),
+      ['src/pages/contacts.tsx', 'src/styles.css']
+    )
+    assert.throws(
+      () =>
+        requireMeasuredSourceChanges({
+          added: ['.vibe/codex-events.jsonl'],
+          changed: [],
+        }),
+      /changed no measured source files/
+    )
   })
 })
 
@@ -326,14 +347,14 @@ describe('caseValidity', () => {
   it('rejects a failed typecheck, a failed build, a builder error and a missing screenshot', () => {
     const result = {
       ...built(new Map([['src/pages/p.tsx', page(' variant="primary"')]])),
-      error: 'claude exited 1',
+      error: 'codex exited 1',
       typecheck: { ok: false, out: 'error TS2322' },
       build: { ok: false, out: '' },
     }
     assert.deepEqual(
       caseValidity(result, { screenshots: { desktop: true, mobile: false } }).reasons,
       [
-        'builder error: claude exited 1',
+        'builder error: codex exited 1',
         'typecheck failed',
         'build failed',
         'missing screenshot: mobile',

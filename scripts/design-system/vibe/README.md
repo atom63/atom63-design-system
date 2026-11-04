@@ -8,40 +8,53 @@ scheduled workflow. Each run writes a report that you commit.
 
 ```bash
 pnpm --filter "@atom63/mdx..." --filter "@atom63/ui-react..." build   # the ds arm packs dist
-pnpm vibe --dry-run                  # set up every project and print the claude commands
-pnpm vibe --brief sign-in            # one brief, both arms and the judge
-pnpm vibe --yes                      # every brief (spends real money)
+pnpm vibe --dry-run                  # set up every project and print the Codex commands
+pnpm vibe --brief sign-in            # one brief, three arms and the judge
+pnpm vibe --brief crm-contacts --track reference --dry-run
+pnpm vibe --yes                      # every brief (uses real Codex quota)
 ```
 
 | Flag | Effect |
 | --- | --- |
 | `--brief <id>` | Run one brief (a file name in `briefs/` without `.md`). |
-| `--arms ds,plain` | Pick the arms. Default: both. |
-| `--model <id>` | Model for the builders and the judge. Default: the `claude` CLI default. |
+| `--arms plain,ds-core,ds-guided` | Pick the arms. `ds` remains as a legacy alias for the guided arm. |
+| `--track <name>` | `generalization` (the default) or `reference`. Reference cases must have a matching folder in `references/`. |
+| `--artifacts <dir>` | Preserve generated source, screenshots and logs outside the temporary directory, excluding dependencies, build output and tarballs. The directory must not exist. |
+| `--model <id>` | Model for the builders and the judge. Default: the Codex CLI default. |
 | `--dry-run` | Pack, generate and install the projects, print the planned commands, call no agent. |
 | `--keep` | Keep the temporary directory (projects, full-size screenshots, judge folder). |
 | `--yes` | Required to run more than one brief. |
 
-It needs a logged-in `claude` CLI, Playwright's Chromium (`pnpm exec playwright install chromium`)
-and the network for third-party dependencies. Before it starts, it prints the cost ceiling: each
-builder is capped at $5 and 80 turns and each judge at $2 (`--max-budget-usd`, `--max-turns`).
+It needs a logged-in `codex` CLI, Playwright's Chromium (`pnpm exec playwright install chromium`)
+and the network for third-party dependencies. Each builder and judge runs in a fresh ephemeral
+session with a 45-minute process timeout. The report records input, cached-input and output tokens;
+the runner does not call Claude or estimate a dollar cost.
 
 ## What a run does
 
-For each brief, two fresh `claude -p` agents get the same prompt: build the brief as a new page at
-`/<brief id>`, add no dependencies, and leave `pnpm typecheck` and `pnpm build` passing.
+For each brief, three fresh `codex exec` agents get the same product prompt: build the brief as a new
+page at `/<brief id>`, add no dependencies, and leave `pnpm typecheck` and `pnpm build` passing.
 
-- **`ds`:** a site from `@atom63/create`, installed against freshly packed tarballs of the design
-  system packages (as `check:starter` does). Its `AGENTS.md` carries the `atom63` CLI rules block,
-  and the agent gets the `atom63` MCP server from this repo.
 - **`plain`:** Vite, React, TypeScript, Tailwind v4 and lucide-react at the versions the starter
   uses. No design system, no `AGENTS.md`, no MCP server, no router.
+- **`ds-core`:** the Atom63 starter and freshly packed design-system packages. Its MCP allowlist
+  exposes component contracts, examples, tokens and rules, but not build kits or templates. Its
+  `AGENTS.md` says to compose the public components directly.
+- **`ds-guided`:** the same Atom63 commit with the full MCP server, generated agent rules, build
+  kits, page templates, blocks and examples.
 
-Both run with `--permission-mode dontAsk` and an allowlist: read, search and edit files inside the
-project, and run `pnpm typecheck` and `pnpm build`. Everything else, including other shell
-commands and writes outside the project, is denied. `--setting-sources project,local` keeps the
-user's own `CLAUDE.md`, skills and settings out of the runs, and `--strict-mcp-config` keeps other
-MCP servers out.
+The `reference` track copies `references/<brief id>/` into every generated project at
+`.vibe/reference/`. The prompt requires the builder to inspect the target, layout map and state list,
+then implement real UI rather than embed the target. The `generalization` track supplies no visual
+reference. Reference runs parse the state table and capture every listed state at every viewport;
+the CRM pack therefore produces 20 screenshots per arm. The benchmark route must replace the
+starter site's navigation and appearance controls so they do not contaminate the comparison.
+
+All arms use `--ignore-user-config --ephemeral` with Codex plugins, apps, browser/computer use and
+multi-agent features disabled. Builders receive a workspace-write sandbox. The plain arm receives
+no MCP server; `ds-core` receives only Atom63 component, example, token, rules and manifest tools;
+`ds-guided` receives the complete read-only Atom63 MCP server. Every arm otherwise uses the same
+Codex runtime and model selection.
 
 Then, on the source files each agent added or changed:
 
@@ -51,8 +64,8 @@ Then, on the source files each agent added or changed:
 - **Warnings:** a `<Button>` from `@atom63/*` with no `variant` (and no spread props), which
   draws the `default` neutral solid. Reported on its own row, not counted as a craft violation.
 - **Type errors:** `tsc --noEmit`; and whether `vite build` succeeds.
-- **axe violations:** the build is served with `vite preview`, the page opened in Chromium at
-  1280 px, and axe-core run on it.
+- **axe violations:** the build is served with `vite preview`, the page opened in Chromium at each
+  capture viewport, and axe-core run on every render.
 - **System-component share:** JSX elements imported from `@atom63/*`, divided by those plus
   third-party components and interactive HTML elements (`button`, `input`, `a`, `select` and so
   on). Icons and components defined in the project are left out of both sides; their bodies are
@@ -61,26 +74,35 @@ Then, on the source files each agent added or changed:
 - **Literal values:** Tailwind palette or arbitrary color utilities (`bg-blue-500`,
   `bg-[#fafafa]`), and hex, `rgb()`, `hsl()` or `oklch()` colors elsewhere.
 
-Finally a third `claude -p` run judges both results against the craft rubric
-(`scripts/design-system/lib/craft-rubric.mjs`). It reads full-page light-mode screenshots at
-1280 px and 375 px and the changed source, and returns one score (1–3) with evidence per criterion.
-`summarizeCraftScores()` validates the reply. The judge can only read files in its own folder.
+Finally a visual-only `codex exec` judge in a read-only sandbox reads the rendered reference target and anonymous full-page
+screenshots at 1440, 1024, 768 and 390 px for every captured state. It cannot read source, imports,
+tokens, component names or arm names. It returns a 100-point visual score: reference fidelity 35,
+hierarchy and composition 20, density/spacing/alignment 15, typography/color/surfaces 15,
+responsive adaptation 10 and product specificity 5.
+The parser validates every criterion, point range and evidence string. The judge can only read
+images in its own folder.
 
-**Blinding:** the arms are copied to folders `A` and `B` in random order, and the prompt names
-only the labels; the mapping is recorded in the report. The source still shows its imports, so a
-careful judge can tell the arms apart; the labels only remove order and naming effects.
+**Blinding:** the arms are copied to folders `A`, `B` and `C` in random order, and the prompt names
+only the labels; the mapping is recorded in the report. No generated source is copied into the
+judge folder, so implementation technology cannot reveal an arm.
+
+The builders and judge currently use the same Codex model family. Image-only blinding reduces arm
+leakage but does not remove shared-family or self-preference bias. Treat the judge as comparative
+evidence, repeat samples, and do not use one score as a release gate.
 
 ## Read the report
 
-`docs/design-system/audits/vibe-<date>.md` has a totals table, then per brief the measures, the
-rubric scores with the judge's evidence, and the cost, time and turns of each run. The briefs and
-the builder prompt are at the end. Raw results (every measure, the judge's full reply and the
-denied tool calls) are in `docs/design-system/audits/vibe/vibe-<date>.json`, and JPEG thumbnails of
+`docs/design-system/audits/vibe-<date>.md` has a totals table, then per brief the implementation
+gates, DS leverage, visual scores with the judge's evidence, and token use, time and turns. The briefs
+and the builder prompt are at the end. Raw results (every measure, the judge's full reply and Codex
+JSONL usage events) are in `docs/design-system/audits/vibe/vibe-<date>.json`, and JPEG thumbnails of
 the first screen of each page in `docs/design-system/audits/vibe/<date>/`.
 
-The rubric's token-use criterion asks for `--a63-*` tokens, so the plain arm scores low on it by
-construction; compare the other six criteria for a like-for-like view. One run is one sample per arm. Treat a single report as a smoke test of the tools, and compare
-several before drawing conclusions. A run on the same day overwrites that day's report.
+Build, typecheck, axe and screenshot completeness are qualification gates. Token use, craft findings,
+system-component share and literal values are reported separately as design-system leverage and do
+not change the visual score. One run is one sample per arm. Treat a single report as a smoke test and
+compare repeated samples before drawing conclusions. A run on the same day overwrites that day's
+report.
 
 ## Add a brief
 

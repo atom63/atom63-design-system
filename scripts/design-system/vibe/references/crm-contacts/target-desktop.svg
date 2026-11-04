@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="960" viewBox="0 0 1440 960">
+  <style>
+    text { font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #18202b; }
+    .muted { fill: #697386; }
+    .small { font-size: 12px; }
+    .body { font-size: 14px; }
+    .label { font-size: 13px; font-weight: 600; }
+    .title { font-size: 25px; font-weight: 650; letter-spacing: -0.4px; }
+    .nav { fill: #d7dde7; font-size: 14px; }
+    .navStrong { fill: #ffffff; font-size: 14px; font-weight: 600; }
+    .head { fill: #697386; font-size: 11px; font-weight: 650; letter-spacing: .5px; }
+    .inverse { fill: #ffffff; }
+    .inverseMuted { fill: #cbd3df; }
+  </style>
+
+  <rect width="1440" height="960" fill="#f5f7fa"/>
+  <rect x="0" y="0" width="216" height="960" fill="#17202c"/>
+  <rect x="216" y="0" width="884" height="960" fill="#ffffff"/>
+  <rect x="1100" y="0" width="340" height="960" fill="#fbfcfe"/>
+  <line x1="216" y1="0" x2="216" y2="960" stroke="#dfe4eb"/>
+  <line x1="1100" y1="0" x2="1100" y2="960" stroke="#dfe4eb"/>
+
+  <rect x="24" y="22" width="32" height="32" rx="9" fill="#4f70f7"/>
+  <text x="40" y="44" fill="#ffffff" font-size="15" font-weight="700" text-anchor="middle">R</text>
+  <text x="68" y="43" class="navStrong" font-size="16">Relay</text>
+  <text x="24" y="92" class="small" fill="#8490a2">WORKSPACE</text>
+
+  <rect x="12" y="112" width="192" height="38" rx="8" fill="#263343"/>
+  <circle cx="34" cy="131" r="7" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+  <path d="M29 136l-4 4" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="52" y="136" class="navStrong">Search</text>
+
+  <text x="52" y="185" class="nav">Activity</text>
+  <circle cx="33" cy="180" r="7" fill="none" stroke="#8f9bad" stroke-width="1.5"/>
+  <text x="52" y="225" class="navStrong">Contacts</text>
+  <rect x="12" y="204" width="192" height="38" rx="8" fill="#344155"/>
+  <circle cx="33" cy="223" r="7" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="52" y="228" class="navStrong">Contacts</text>
+  <text x="52" y="265" class="nav">Analytics</text>
+  <path d="M27 269v-8m6 8v-14m6 14v-20" stroke="#8f9bad" stroke-width="1.5"/>
+  <text x="52" y="305" class="nav">Settings</text>
+  <circle cx="33" cy="300" r="7" fill="none" stroke="#8f9bad" stroke-width="1.5"/>
+
+  <rect x="20" y="878" width="176" height="58" rx="10" fill="#202b3a"/>
+  <circle cx="43" cy="907" r="15" fill="#dfe7ff"/>
+  <text x="43" y="912" font-size="12" font-weight="700" text-anchor="middle">MC</text>
+  <text x="66" y="902" class="navStrong" font-size="13">Maya Cole</text>
+  <text x="66" y="920" class="small" fill="#8f9bad">Northstar Studio</text>
+
+  <text x="248" y="57" class="title">Contacts</text>
+  <text x="248" y="80" class="body muted">53 people across clients and partners</text>
+  <rect x="957" y="30" width="115" height="38" rx="9" fill="#1f2937"/>
+  <text x="1014" y="54" class="label inverse" text-anchor="middle">+ Add contact</text>
+
+  <rect x="248" y="112" width="430" height="40" rx="9" fill="#ffffff" stroke="#cfd6df"/>
+  <circle cx="271" cy="132" r="7" fill="none" stroke="#697386" stroke-width="1.5"/>
+  <path d="M276 137l5 5" stroke="#697386" stroke-width="1.5" stroke-linecap="round"/>
+  <text x="292" y="137" class="body muted">Search contacts</text>
+  <rect x="690" y="112" width="88" height="40" rx="9" fill="#ffffff" stroke="#cfd6df"/>
+  <text x="734" y="137" class="label" text-anchor="middle">Filter</text>
+  <rect x="790" y="112" width="102" height="40" rx="9" fill="#ffffff" stroke="#cfd6df"/>
+  <text x="841" y="137" class="label" text-anchor="middle">Columns</text>
+
+  <rect x="248" y="170" width="106" height="30" rx="15" fill="#1f2937"/>
+  <text x="301" y="190" class="small inverse" font-weight="600" text-anchor="middle">All contacts</text>
+  <rect x="364" y="170" width="104" height="30" rx="15" fill="#f3f5f8" stroke="#dfe4eb"/>
+  <text x="416" y="190" class="small" text-anchor="middle">New contacts</text>
+  <rect x="478" y="170" width="126" height="30" rx="15" fill="#f3f5f8" stroke="#dfe4eb"/>
+  <text x="541" y="190" class="small" text-anchor="middle">Needs follow-up</text>
+  <rect x="614" y="170" width="118" height="30" rx="15" fill="#f3f5f8" stroke="#dfe4eb"/>
+  <text x="673" y="190" class="small" text-anchor="middle">Recently active</text>
+
+  <rect x="248" y="222" width="824" height="40" fill="#f8fafc"/>
+  <line x1="248" y1="222" x2="1072" y2="222" stroke="#dfe4eb"/>
+  <line x1="248" y1="262" x2="1072" y2="262" stroke="#dfe4eb"/>
+  <rect x="264" y="236" width="13" height="13" rx="3" fill="#ffffff" stroke="#aeb7c4"/>
+  <text x="294" y="247" class="head">NAME</text>
+  <text x="504" y="247" class="head">COMPANY</text>
+  <text x="650" y="247" class="head">ROLE</text>
+  <text x="784" y="247" class="head">LAST ACTIVITY</text>
+  <text x="923" y="247" class="head">OWNER</text>
+  <text x="1014" y="247" class="head">STATUS</text>
+
+  <g id="rows">
+    <rect x="248" y="262" width="824" height="54" fill="#eef3ff"/>
+    <rect x="264" y="282" width="13" height="13" rx="3" fill="#ffffff" stroke="#748195"/>
+    <circle cx="305" cy="289" r="15" fill="#d9e2ff"/>
+    <text x="305" y="294" font-size="11" font-weight="700" text-anchor="middle">AC</text>
+    <text x="330" y="286" class="label">Avery Chen</text>
+    <text x="330" y="303" class="small muted">avery@harbor.co</text>
+    <text x="504" y="294" class="body">Harbor Labs</text>
+    <text x="650" y="294" class="body">Design Director</text>
+    <text x="784" y="294" class="body">Today, 9:42</text>
+    <circle cx="940" cy="289" r="13" fill="#f2ddd0"/>
+    <text x="940" y="293" font-size="10" font-weight="700" text-anchor="middle">MC</text>
+    <rect x="1007" y="278" width="52" height="22" rx="11" fill="#dff5e8"/>
+    <text x="1033" y="293" class="small" fill="#197247" text-anchor="middle">Active</text>
+    <line x1="248" y1="316" x2="1072" y2="316" stroke="#e6eaf0"/>
+
+    <g class="body">
+      <circle cx="305" cy="343" r="15" fill="#eadffc"/><text x="305" y="348" font-size="11" font-weight="700" text-anchor="middle">JM</text><text x="330" y="340" class="label">Jonas Meyer</text><text x="330" y="357" class="small muted">jonas@north.co</text><text x="504" y="348">North &amp; Co.</text><text x="650" y="348">Operations Lead</text><text x="784" y="348">Yesterday</text><text x="923" y="348">Maya</text><text x="1014" y="348">Active</text>
+      <circle cx="305" cy="397" r="15" fill="#dff0ed"/><text x="305" y="402" font-size="11" font-weight="700" text-anchor="middle">NS</text><text x="330" y="394" class="label">Nia Shah</text><text x="330" y="411" class="small muted">nia@fieldwork.io</text><text x="504" y="402">Fieldwork</text><text x="650" y="402">Founder</text><text x="784" y="402">Mon, 16:20</text><text x="923" y="402">Ari</text><text x="1014" y="402">Active</text>
+      <circle cx="305" cy="451" r="15" fill="#f6e5d5"/><text x="305" y="456" font-size="11" font-weight="700" text-anchor="middle">RL</text><text x="330" y="448" class="label">Rae Lin</text><text x="330" y="465" class="small muted">rae@commonform.com</text><text x="504" y="456">Common Form</text><text x="650" y="456">Product VP</text><text x="784" y="456">May 28</text><text x="923" y="456">Maya</text><text x="1014" y="456">Follow up</text>
+      <circle cx="305" cy="505" r="15" fill="#dce7f5"/><text x="305" y="510" font-size="11" font-weight="700" text-anchor="middle">DP</text><text x="330" y="502" class="label">Drew Park</text><text x="330" y="519" class="small muted">drew@metric.studio</text><text x="504" y="510">Metric Studio</text><text x="650" y="510">Partner</text><text x="784" y="510">May 27</text><text x="923" y="510">Ari</text><text x="1014" y="510">Active</text>
+      <circle cx="305" cy="559" r="15" fill="#f1dddf"/><text x="305" y="564" font-size="11" font-weight="700" text-anchor="middle">SO</text><text x="330" y="556" class="label">Sam Okafor</text><text x="330" y="573" class="small muted">sam@arcunit.com</text><text x="504" y="564">Arc Unit</text><text x="650" y="564">Engineering</text><text x="784" y="564">May 25</text><text x="923" y="564">Maya</text><text x="1014" y="564">New</text>
+      <circle cx="305" cy="613" r="15" fill="#e9e3d8"/><text x="305" y="618" font-size="11" font-weight="700" text-anchor="middle">IK</text><text x="330" y="610" class="label">Inez Kim</text><text x="330" y="627" class="small muted">inez@proof.house</text><text x="504" y="618">Proof House</text><text x="650" y="618">Strategy</text><text x="784" y="618">May 22</text><text x="923" y="618">Ari</text><text x="1014" y="618">Active</text>
+      <circle cx="305" cy="667" r="15" fill="#dceee0"/><text x="305" y="672" font-size="11" font-weight="700" text-anchor="middle">LB</text><text x="330" y="664" class="label">Luis Bello</text><text x="330" y="681" class="small muted">luis@lowkey.dev</text><text x="504" y="672">Lowkey</text><text x="650" y="672">CTO</text><text x="784" y="672">May 20</text><text x="923" y="672">Maya</text><text x="1014" y="672">Follow up</text>
+      <circle cx="305" cy="721" r="15" fill="#e8dff4"/><text x="305" y="726" font-size="11" font-weight="700" text-anchor="middle">TW</text><text x="330" y="718" class="label">Tara Wu</text><text x="330" y="735" class="small muted">tara@kilo.tools</text><text x="504" y="726">Kilo Tools</text><text x="650" y="726">Research Lead</text><text x="784" y="726">May 19</text><text x="923" y="726">Ari</text><text x="1014" y="726">Active</text>
+      <circle cx="305" cy="775" r="15" fill="#f5e2ce"/><text x="305" y="780" font-size="11" font-weight="700" text-anchor="middle">EW</text><text x="330" y="772" class="label">Eli Ward</text><text x="330" y="789" class="small muted">eli@stillwater.com</text><text x="504" y="780">Stillwater</text><text x="650" y="780">Finance</text><text x="784" y="780">May 17</text><text x="923" y="780">Maya</text><text x="1014" y="780">Inactive</text>
+    </g>
+    <g stroke="#e6eaf0"><line x1="248" y1="370" x2="1072" y2="370"/><line x1="248" y1="424" x2="1072" y2="424"/><line x1="248" y1="478" x2="1072" y2="478"/><line x1="248" y1="532" x2="1072" y2="532"/><line x1="248" y1="586" x2="1072" y2="586"/><line x1="248" y1="640" x2="1072" y2="640"/><line x1="248" y1="694" x2="1072" y2="694"/><line x1="248" y1="748" x2="1072" y2="748"/><line x1="248" y1="802" x2="1072" y2="802"/></g>
+  </g>
+
+  <circle cx="1140" cy="46" r="22" fill="#d9e2ff"/>
+  <text x="1140" y="52" font-size="13" font-weight="700" text-anchor="middle">AC</text>
+  <text x="1174" y="43" class="label" font-size="16">Avery Chen</text>
+  <text x="1174" y="63" class="small muted">Design Director at Harbor Labs</text>
+  <text x="1412" y="49" class="body muted" text-anchor="end">×</text>
+  <line x1="1128" y1="88" x2="1412" y2="88" stroke="#dfe4eb"/>
+
+  <rect x="1128" y="112" width="134" height="36" rx="8" fill="#1f2937"/>
+  <text x="1195" y="135" class="label inverse" text-anchor="middle">Email contact</text>
+  <rect x="1272" y="112" width="72" height="36" rx="8" fill="#ffffff" stroke="#cfd6df"/>
+  <text x="1308" y="135" class="label" text-anchor="middle">Edit</text>
+
+  <text x="1128" y="190" class="head">CONTACT</text>
+  <text x="1128" y="222" class="small muted">EMAIL</text><text x="1128" y="244" class="body">avery@harbor.co</text>
+  <text x="1128" y="278" class="small muted">PHONE</text><text x="1128" y="300" class="body">+1 415 555 0184</text>
+  <text x="1128" y="334" class="small muted">OWNER</text><text x="1128" y="356" class="body">Maya Cole</text>
+
+  <text x="1128" y="410" class="head">TAGS</text>
+  <rect x="1128" y="426" width="68" height="28" rx="14" fill="#edf1f6"/><text x="1162" y="445" class="small" text-anchor="middle">Design</text>
+  <rect x="1204" y="426" width="70" height="28" rx="14" fill="#edf1f6"/><text x="1239" y="445" class="small" text-anchor="middle">Partner</text>
+  <rect x="1282" y="426" width="86" height="28" rx="14" fill="#edf1f6"/><text x="1325" y="445" class="small" text-anchor="middle">High value</text>
+
+  <text x="1128" y="512" class="head">RECENT ACTIVITY</text>
+  <circle cx="1140" cy="550" r="5" fill="#4f70f7"/><line x1="1140" y1="555" x2="1140" y2="610" stroke="#cfd6df"/>
+  <text x="1160" y="547" class="label">Meeting notes added</text><text x="1160" y="566" class="small muted">Today at 9:42</text>
+  <circle cx="1140" cy="618" r="5" fill="#aeb7c4"/><line x1="1140" y1="623" x2="1140" y2="678" stroke="#cfd6df"/>
+  <text x="1160" y="615" class="label">Email opened</text><text x="1160" y="634" class="small muted">Yesterday at 15:08</text>
+  <circle cx="1140" cy="686" r="5" fill="#aeb7c4"/>
+  <text x="1160" y="683" class="label">Contact imported</text><text x="1160" y="702" class="small muted">May 26 at 11:20</text>
+
+  <rect x="502" y="878" width="424" height="58" rx="12" fill="#1f2937"/>
+  <circle cx="532" cy="907" r="12" fill="#36a269"/>
+  <path d="M526 907l4 4 8-9" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="556" y="903" class="label inverse">12 contacts imported</text>
+  <text x="556" y="922" class="small inverseMuted">The new contacts are ready to review.</text>
+  <text x="902" y="913" class="body inverse" text-anchor="middle">×</text>
+</svg>

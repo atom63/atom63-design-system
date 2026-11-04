@@ -2,23 +2,26 @@
  * Vibe tests (E4 in docs/design-system/quality-plan.md): do agents build
  * better UI with the Atom63 tools than without them?
  *
- * For each brief in scripts/design-system/vibe/briefs, a fresh `claude -p`
- * agent builds the page twice, each time in a new temporary project:
- * - `ds`: an `@atom63/create` site installed against freshly packed tarballs,
- *   with its AGENTS.md, the `atom63` CLI as a dev dependency and its MCP server;
+ * For each brief in scripts/design-system/vibe/briefs, a fresh `codex exec`
+ * agent builds the page in three arms, each time in a new temporary project:
+ * - `ds-core`: an `@atom63/create` site with components, tokens and contracts but no templates;
+ * - `ds-guided`: the same site with Atom63 templates, build kits and examples;
+ * Both DS arms install the packed packages and the `atom63` CLI as a dev dependency,
+ * and get its MCP server.
  * - `plain`: Vite, React, TypeScript and Tailwind v4 at the same versions,
  *   with no design system, no AGENTS.md and no MCP server.
  * Then it measures what each agent wrote (craft rules, type errors, the build,
- * axe, the system-component share, literal colors), has a blinded `claude -p`
- * judge score both against the craft rubric from screenshots and source, and
+ * axe, the system-component share, literal colors), has a blinded `codex exec`
+ * visual judge score the anonymous screenshots against the reference target, and
  * writes docs/design-system/audits/vibe-<date>.md with the raw JSON and
  * thumbnails in docs/design-system/audits/vibe/.
  *
  * Needs the design system packages built (dist is packed), the network for
- * third-party dependencies, Playwright's Chromium, and a logged-in `claude`.
+ * third-party dependencies, Playwright's Chromium, and a logged-in `codex`.
  *
- * Usage: node scripts/design-system/vibe.mjs [--brief <id>] [--arms ds,plain]
- *   [--model <id>] [--dry-run] [--keep] [--yes]
+ * Usage: node scripts/design-system/vibe.mjs [--brief <id>]
+ *   [--arms plain,ds-core,ds-guided] [--track generalization|reference]
+ *   [--artifacts <dir>] [--run-id <id>] [--model <id>] [--dry-run] [--keep] [--yes]
  */
 import { spawn } from 'node:child_process'
 import {
@@ -35,7 +38,7 @@ import { createServer } from 'node:net'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import process from 'node:process'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 
 import axe from 'axe-core'
 import { chromium } from 'playwright'
@@ -46,18 +49,22 @@ import { execCommandSync, spawnCommand, stopCommand } from './lib/command.mjs'
 import {
   changedFiles,
   countTypeErrors,
-  isMeasuredFile,
   measureSources,
+  requireMeasuredSourceChanges,
 } from './lib/vibe-measure.mjs'
 import {
-  builderArgs,
   builderPrompt,
+  captureFiles,
+  captureViewports,
+  codexBuilderArgs,
+  codexJudgeArgs,
+  coreAgentGuide,
   formatCommand,
-  judgeArgs,
   pagePath,
   parseBrief,
+  parseReferenceStates,
   planPlainProject,
-  summarizeClaudeResult,
+  summarizeCodexEvents,
 } from './lib/vibe-projects.mjs'
 import { blindArms, judgePrompt, parseJudgeOutput, renderReport } from './lib/vibe-report.mjs'
 import { pnpmOverridesYaml } from './lib/pnpm-overrides.mjs'
@@ -68,6 +75,7 @@ const knownTokens = JSON.parse(
   readFileSync(path.join(root, 'packages/styles/generated/atom63.tokens.json'), 'utf8')
 ).entries.map(entry => entry.cssVar)
 const briefsDir = path.join(root, 'scripts/design-system/vibe/briefs')
+const referencesDir = path.join(root, 'scripts/design-system/vibe/references')
 const auditsDir = path.join(root, 'docs/design-system/audits')
 const packages = {
   '@atom63/styles': 'packages/styles',
@@ -75,10 +83,11 @@ const packages = {
   '@atom63/ui-react': 'packages/ui-react',
   '@atom63/mdx': 'packages/mdx',
 }
+const defaultArms = ['plain', 'ds-core', 'ds-guided']
+const supportedArms = [...defaultArms, 'ds']
 const devPackages = { '@atom63/cli': 'packages/cli' }
-const allArms = ['ds', 'plain']
-const limits = { builderTurns: 80, builderBudgetUsd: 5, judgeTurns: 30, judgeBudgetUsd: 2 }
 const agentTimeoutMs = 45 * 60 * 1000
+const limits = { agentTimeoutMs }
 
 // Arguments ------------------------------------------------------------------
 
@@ -94,8 +103,18 @@ const option = name => {
 const dryRun = flag('--dry-run')
 const keep = flag('--keep')
 const model = option('--model')
-const arms = (option('--arms') ?? allArms.join(',')).split(',').map(arm => arm.trim())
-for (const arm of arms) if (!allArms.includes(arm)) throw new Error(`Unknown arm "${arm}"`)
+const track = option('--track') ?? 'generalization'
+if (!['generalization', 'reference'].includes(track))
+  throw new Error('--track must be generalization or reference')
+const artifactsOption = option('--artifacts')
+const artifactsDir = artifactsOption ? path.resolve(root, artifactsOption) : null
+if (artifactsDir && existsSync(artifactsDir))
+  throw new Error(`Artifacts directory already exists: ${artifactsDir}`)
+const runId = option('--run-id')
+if (runId && !/^[a-z0-9][a-z0-9-]*$/.test(runId))
+  throw new Error('--run-id must contain only lowercase letters, numbers and hyphens')
+const arms = (option('--arms') ?? defaultArms.join(',')).split(',').map(arm => arm.trim())
+for (const arm of arms) if (!supportedArms.includes(arm)) throw new Error(`Unknown arm "${arm}"`)
 const briefFlag = option('--brief')
 
 const briefs = readdirSync(briefsDir)
@@ -105,18 +124,18 @@ const briefs = readdirSync(briefsDir)
     parseBrief(file.replace(/\.md$/, ''), readFileSync(path.join(briefsDir, file), 'utf8'))
   )
   .filter(brief => !briefFlag || brief.id === briefFlag)
+  .filter(brief => track !== 'reference' || existsSync(path.join(referencesDir, brief.id)))
 if (briefs.length === 0) {
   throw new Error(`No brief "${briefFlag}". Briefs: ${readdirSync(briefsDir).join(', ')}`)
 }
 
-const ceiling = briefs.length * (arms.length * limits.builderBudgetUsd + limits.judgeBudgetUsd)
 process.stdout.write(
-  `Vibe run: ${briefs.length} brief(s) (${briefs.map(({ id }) => id).join(', ')}) × ${arms.join(', ')}, model ${model ?? 'the CLI default'}.\n` +
-    `Cost ceiling: $${ceiling.toFixed(2)} (each builder is capped at $${limits.builderBudgetUsd} and ${limits.builderTurns} turns, each judge at $${limits.judgeBudgetUsd}); a typical run spends well under it.\n`
+  `Vibe run: ${briefs.length} brief(s) (${briefs.map(({ id }) => id).join(', ')}) × ${arms.join(', ')}, track ${track}, model ${model ?? 'the CLI default'}.\n` +
+    `Runtime: Codex CLI only, 45-minute timeout per agent, token usage recorded; no Claude calls.\n`
 )
 if (!dryRun && briefs.length > 1 && !flag('--yes')) {
   process.stderr.write(
-    'More than one brief spends real money. Pass --yes to go ahead, or --brief <id> for one.\n'
+    'More than one brief uses substantial model quota. Pass --yes to go ahead, or --brief <id> for one.\n'
   )
   process.exit(1)
 }
@@ -152,7 +171,7 @@ const capture = (command, args, cwd) => {
 function snapshot(directory, prefix = '') {
   const files = new Map()
   for (const entry of readdirSync(path.join(directory, prefix), { withFileTypes: true })) {
-    if (['node_modules', 'dist', '.git', '.claude'].includes(entry.name)) continue
+    if (['node_modules', 'dist', '.git', '.claude', '.codex'].includes(entry.name)) continue
     const relative = prefix ? `${prefix}/${entry.name}` : entry.name
     if (entry.isDirectory()) {
       for (const [key, value] of snapshot(directory, relative)) files.set(key, value)
@@ -164,13 +183,13 @@ function snapshot(directory, prefix = '') {
 }
 
 /**
- * `claude -p` with JSON output; resolves with the parsed result. Started
- * directly, not through lib/command.mjs: `claude` is not a `.cmd` shim, and its
- * multi-line prompts and JSON flags cannot pass through cmd.exe intact.
+ * `codex exec --json`; resolves with its JSONL events and final message.
  */
-function claude(args, cwd) {
+function codex(args, cwd, { outputPath, eventsPath }) {
   return new Promise((resolve, reject) => {
-    const child = spawn('claude', args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] })
+    const started = Date.now()
+    mkdirSync(path.dirname(outputPath), { recursive: true })
+    const child = spawn('codex', args, { cwd, stdio: ['ignore', 'pipe', 'pipe'] })
     let stdout = ''
     let stderr = ''
     child.stdout.on('data', chunk => (stdout += chunk))
@@ -179,9 +198,20 @@ function claude(args, cwd) {
     child.on('close', code => {
       clearTimeout(timer)
       try {
-        resolve(JSON.parse(stdout))
-      } catch {
-        reject(new Error(`claude exited ${code}: ${(stderr || stdout).slice(0, 500)}`))
+        mkdirSync(path.dirname(eventsPath), { recursive: true })
+        writeFileSync(eventsPath, stdout)
+        const events = stdout
+          .split('\n')
+          .filter(line => line.trim().startsWith('{'))
+          .map(line => JSON.parse(line))
+        if (code !== 0) throw new Error(`codex exited ${code}: ${(stderr || stdout).slice(-1000)}`)
+        resolve({
+          events,
+          finalMessage: existsSync(outputPath) ? readFileSync(outputPath, 'utf8') : '',
+          durationMs: Date.now() - started,
+        })
+      } catch (error) {
+        reject(error)
       }
     })
   })
@@ -219,46 +249,69 @@ async function preview(directory) {
 }
 
 /**
- * Open the brief's page at desktop and phone widths in light mode: run axe on
- * the desktop render and take full-page PNGs for the judge plus small JPEG
- * thumbnails of the first screen for the report.
+ * Open the brief's page at every benchmark viewport in light mode: run axe and
+ * take full-page PNGs for the judge plus small JPEG thumbnails for the report.
  */
-async function inspectPage(browser, url, outDir) {
+async function inspectPage(browser, url, outDir, states = []) {
   mkdirSync(outDir, { recursive: true })
-  const result = { consoleErrors: [], textLength: 0 }
-  const widths = { desktop: { width: 1280, height: 800 }, mobile: { width: 375, height: 812 } }
-  for (const [name, viewport] of Object.entries(widths)) {
-    const context = await browser.newContext({ viewport, colorScheme: 'light' })
-    const page = await context.newPage()
-    if (name === 'desktop') {
+  const result = { consoleErrors: [], textLength: 0, axe: { violations: [], nodes: 0 } }
+  const scenarios = states.length ? states : [null]
+  for (const state of scenarios) {
+    for (const [name, viewport] of Object.entries(captureViewports)) {
+      const relative = state ? path.join(state, `${name}.png`) : `${name}.png`
+      const jpegRelative = relative.replace(/\.png$/, '.jpg')
+      mkdirSync(path.dirname(path.join(outDir, relative)), { recursive: true })
+      const context = await browser.newContext({ viewport, colorScheme: 'light' })
+      const page = await context.newPage()
       page.on('console', message => {
-        if (message.type() === 'error') result.consoleErrors.push(message.text().slice(0, 300))
+        if (message.type() === 'error')
+          result.consoleErrors.push(
+            `${state ?? 'default'}/${name}: ${message.text().slice(0, 300)}`
+          )
       })
-      page.on('pageerror', error => result.consoleErrors.push(String(error).slice(0, 300)))
-    }
-    await page.goto(url, { waitUntil: 'networkidle' })
-    await page.waitForTimeout(500)
-    await page.screenshot({ path: path.join(outDir, `${name}.png`), fullPage: true })
-    await page.screenshot({ path: path.join(outDir, `${name}.jpg`), type: 'jpeg', quality: 55 })
-    if (name === 'desktop') {
-      result.textLength = (await page.evaluate(() => document.body.innerText)).trim().length
+      page.on('pageerror', error =>
+        result.consoleErrors.push(`${state ?? 'default'}/${name}: ${String(error).slice(0, 300)}`)
+      )
+      const captureUrl = state ? `${url}?state=${encodeURIComponent(state)}` : url
+      await page.goto(captureUrl, { waitUntil: 'networkidle' })
+      await page.waitForTimeout(500)
+      await page.screenshot({ path: path.join(outDir, relative), fullPage: true })
+      await page.screenshot({ path: path.join(outDir, jpegRelative), type: 'jpeg', quality: 55 })
+      if (name === 'desktop' && (!states.length || state === 'complete'))
+        result.textLength = (await page.evaluate(() => document.body.innerText)).trim().length
       await page.addScriptTag({ content: axe.source })
       const axeResult = await page.evaluate(() =>
         window.axe.run(document, { resultTypes: ['violations'] })
       )
-      result.axe = {
-        violations: axeResult.violations.map(violation => ({
+      result.axe.violations.push(
+        ...axeResult.violations.map(violation => ({
+          viewport: name,
           id: violation.id,
           impact: violation.impact,
           nodes: violation.nodes.length,
           help: violation.help,
-        })),
-        nodes: axeResult.violations.reduce((sum, violation) => sum + violation.nodes.length, 0),
-      }
+        }))
+      )
+      result.axe.nodes += axeResult.violations.reduce(
+        (sum, violation) => sum + violation.nodes.length,
+        0
+      )
+      await context.close()
     }
-    await context.close()
   }
   return result
+}
+
+async function renderReferenceTarget(browser, source, destination) {
+  mkdirSync(path.dirname(destination), { recursive: true })
+  const context = await browser.newContext({ viewport: captureViewports.desktop })
+  try {
+    const page = await context.newPage()
+    await page.goto(pathToFileURL(source).href, { waitUntil: 'load' })
+    await page.screenshot({ path: destination })
+  } finally {
+    await context.close()
+  }
 }
 
 // Setup ----------------------------------------------------------------------
@@ -292,11 +345,16 @@ const tarballFor = name => {
 function setupProject(arm, brief, directory) {
   const name = `vibe-${brief.id}-${arm}`
   let files
-  if (arm === 'ds') {
+  if (arm !== 'plain') {
     files = planProject({ name, kind: 'site', title: 'Vibe', versions })
     // The agent has the atom63 CLI and its MCP server, so its AGENTS.md points
     // at the CLI commands instead of the published docs.
-    files.set('AGENTS.md', syncAgentsBlock(files.get('AGENTS.md')))
+    files.set(
+      'AGENTS.md',
+      arm === 'ds-core'
+        ? coreAgentGuide(files.get('AGENTS.md'))
+        : syncAgentsBlock(files.get('AGENTS.md'))
+    )
     const manifest = JSON.parse(files.get('package.json'))
     const overrides = Object.fromEntries(Object.keys(packages).map(pkg => [pkg, tarballFor(pkg)]))
     for (const pkg of Object.keys(packages)) manifest.dependencies[pkg] = overrides[pkg]
@@ -307,40 +365,60 @@ function setupProject(arm, brief, directory) {
     files = planPlainProject({ name, versions })
   }
   writeProject(directory, files)
+  if (track === 'reference') {
+    cpSync(path.join(referencesDir, brief.id), path.join(directory, '.vibe/reference'), {
+      recursive: true,
+    })
+  }
+  process.stdout.write(`Setting up ${brief.id}/${arm}: installing dependencies…\n`)
   run('pnpm', ['install', '--no-frozen-lockfile', '--silent'], directory)
+  process.stdout.write(`Set up ${brief.id}/${arm}.\n`)
   return snapshot(directory)
 }
 
 // Main -----------------------------------------------------------------------
 
 const date = new Date().toISOString().slice(0, 10)
+const outputKey = runId ? `${date}-${runId}` : date
 const report = {
   date,
+  outputKey,
   commit: capture('git', ['rev-parse', 'HEAD'], root).output.trim(),
   dirty: capture('git', ['status', '--porcelain'], root).output.trim().length > 0,
-  claudeVersion: capture('claude', ['--version'], root).output.trim(),
+  codexVersion: capture('codex', ['--version'], root).output.trim(),
   modelFlag: model ?? null,
+  track,
   models: [],
   arms,
   limits,
-  promptTemplate: builderPrompt({
-    id: '<brief id>',
-    title: '<brief title>',
-    body: '<brief body>',
-  }),
+  promptTemplate: builderPrompt(
+    {
+      id: '<brief id>',
+      title: '<brief title>',
+      body: '<brief body>',
+    },
+    { track }
+  ),
   briefs: [],
 }
 
 let failed = false
 let browser
 try {
-  if (arms.includes('ds')) packTarballs()
+  if (arms.some(arm => arm !== 'plain')) packTarballs()
 
   for (const brief of briefs) {
     process.stdout.write(`\n=== ${brief.id} ===\n`)
     const entry = { brief, arms: {}, judge: null, thumbnails: [] }
+    const captureStates =
+      track === 'reference'
+        ? parseReferenceStates(
+            readFileSync(path.join(referencesDir, brief.id, 'states.md'), 'utf8')
+          )
+        : []
+    entry.captureStates = captureStates
     report.briefs.push(entry)
-    const prompt = builderPrompt(brief)
+    const prompt = builderPrompt(brief, { track })
     const projects = Object.fromEntries(arms.map(arm => [arm, path.join(work, brief.id, arm)]))
     const before = {}
     for (const arm of arms) before[arm] = setupProject(arm, brief, projects[arm])
@@ -348,37 +426,36 @@ try {
     const commands = Object.fromEntries(
       arms.map(arm => [
         arm,
-        builderArgs({
+        codexBuilderArgs({
           arm,
           prompt,
           // The ds arm's MCP server runs the CLI its project installed; the plain arm has none.
           cliBin: path.join(projects[arm], 'node_modules/@atom63/cli/src/bin.mjs'),
           model,
-          maxTurns: limits.builderTurns,
-          maxBudgetUsd: limits.builderBudgetUsd,
+          outputPath: path.join(projects[arm], '.vibe', 'codex-last-message.txt'),
         }),
       ])
     )
     if (dryRun) {
       for (const arm of arms) {
         process.stdout.write(
-          `\n[${arm}] in ${projects[arm]}\n${formatCommand('claude', commands[arm])}\n`
+          `\n[${arm}] in ${projects[arm]}\n${formatCommand('codex', commands[arm])}\n`
         )
       }
       const judgeDir = path.join(work, brief.id, 'judge')
       const labels = Object.keys(blindArms(arms))
       process.stdout.write(
         `\n[judge] in ${judgeDir}\n${formatCommand(
-          'claude',
-          judgeArgs({
+          'codex',
+          codexJudgeArgs({
             prompt: judgePrompt({
               brief,
               labels,
-              sources: Object.fromEntries(labels.map(label => [label, []])),
+              states: captureStates,
+              hasReference: track === 'reference',
             }),
             model,
-            maxTurns: limits.judgeTurns,
-            maxBudgetUsd: limits.judgeBudgetUsd,
+            outputPath: path.join(judgeDir, 'codex-last-message.json'),
           })
         )}\n`
       )
@@ -386,35 +463,41 @@ try {
     }
 
     process.stdout.write(`\nBuilding ${brief.id} with ${arms.join(' and ')} in parallel…\n`)
-    const outcomes = await Promise.allSettled(arms.map(arm => claude(commands[arm], projects[arm])))
+    const outcomes = await Promise.allSettled(
+      arms.map(arm =>
+        codex(commands[arm], projects[arm], {
+          outputPath: path.join(projects[arm], '.vibe', 'codex-last-message.txt'),
+          eventsPath: path.join(projects[arm], '.vibe', 'codex-events.jsonl'),
+        })
+      )
+    )
 
     browser ??= await chromium.launch()
     const shots = {}
-    const sources = {}
     for (const [index, arm] of arms.entries()) {
       const outcome = outcomes[index]
       if (outcome.status === 'rejected') {
         entry.arms[arm] = { status: 'error', error: outcome.reason.message }
         continue
       }
-      const agent = summarizeClaudeResult(outcome.value)
+      const agent = summarizeCodexEvents(outcome.value.events, {
+        durationMs: outcome.value.durationMs,
+        model,
+      })
       report.models.push(...agent.models)
       const directory = projects[arm]
       try {
         const after = snapshot(directory)
         const files = changedFiles(before[arm], after)
         const measured = new Map(
-          [...files.added, ...files.changed]
-            .filter(isMeasuredFile)
-            .map(relative => [relative, after.get(relative)])
+          requireMeasuredSourceChanges(files).map(relative => [relative, after.get(relative)])
         )
-        sources[arm] = measured
         const typecheck = capture('pnpm', ['exec', 'tsc', '--noEmit'], directory)
         const build = capture('pnpm', ['exec', 'vite', 'build'], directory)
         const result = {
           status: 'ok',
           agent,
-          agentResult: excerptText(outcome.value.result),
+          agentResult: excerptText(outcome.value.finalMessage),
           files,
           measures: measureSources(measured, { knownTokens }),
           typecheck: { ok: typecheck.ok, errors: countTypeErrors(typecheck.output) },
@@ -426,7 +509,12 @@ try {
           const server = await preview(directory)
           try {
             shots[arm] = path.join(work, brief.id, 'shots', arm)
-            const page = await inspectPage(browser, `${server.url}${pagePath(brief)}`, shots[arm])
+            const page = await inspectPage(
+              browser,
+              `${server.url}${pagePath(brief)}`,
+              shots[arm],
+              captureStates
+            )
             result.axe = page.axe
             result.page = { textLength: page.textLength, consoleErrors: page.consoleErrors }
           } finally {
@@ -444,36 +532,48 @@ try {
     if (judged.length) {
       const mapping = blindArms(judged)
       const judgeDir = path.join(work, brief.id, 'judge')
-      const labelSources = {}
+      if (track === 'reference') {
+        await renderReferenceTarget(
+          browser,
+          path.join(referencesDir, brief.id, 'target-desktop.svg'),
+          path.join(judgeDir, 'reference', 'target-desktop.png')
+        )
+      }
       for (const [label, arm] of Object.entries(mapping)) {
         const target = path.join(judgeDir, label)
-        mkdirSync(path.join(target, 'source'), { recursive: true })
-        cpSync(path.join(shots[arm], 'desktop.png'), path.join(target, 'desktop.png'))
-        cpSync(path.join(shots[arm], 'mobile.png'), path.join(target, 'mobile.png'))
-        labelSources[label] = [...sources[arm].keys()]
-        for (const [relative, text] of sources[arm]) {
-          const file = path.join(target, 'source', relative)
-          mkdirSync(path.dirname(file), { recursive: true })
-          writeFileSync(file, text)
+        mkdirSync(target, { recursive: true })
+        for (const relative of captureFiles(captureStates)) {
+          const destination = path.join(target, relative)
+          mkdirSync(path.dirname(destination), { recursive: true })
+          cpSync(path.join(shots[arm], relative), destination)
         }
       }
       const labels = Object.keys(mapping)
       process.stdout.write(`\nJudging ${brief.id} (${labels.join(', ')})…\n`)
       entry.judge = { mapping }
       try {
-        const reply = await claude(
-          judgeArgs({
-            prompt: judgePrompt({ brief, labels, sources: labelSources }),
+        const judgeOutput = path.join(judgeDir, 'codex-last-message.json')
+        const reply = await codex(
+          codexJudgeArgs({
+            prompt: judgePrompt({
+              brief,
+              labels,
+              states: captureStates,
+              hasReference: track === 'reference',
+            }),
             model,
-            maxTurns: limits.judgeTurns,
-            maxBudgetUsd: limits.judgeBudgetUsd,
+            outputPath: judgeOutput,
           }),
-          judgeDir
+          judgeDir,
+          { outputPath: judgeOutput, eventsPath: path.join(judgeDir, 'codex-events.jsonl') }
         )
-        entry.judge.agent = summarizeClaudeResult(reply)
+        entry.judge.agent = summarizeCodexEvents(reply.events, {
+          durationMs: reply.durationMs,
+          model,
+        })
         report.models.push(...entry.judge.agent.models)
-        entry.judge.raw = reply.result
-        const byLabel = parseJudgeOutput(reply.result ?? '', labels)
+        entry.judge.raw = reply.finalMessage
+        const byLabel = parseJudgeOutput(reply.finalMessage, labels)
         entry.judge.scores = Object.fromEntries(
           Object.entries(byLabel).map(([label, summary]) => [mapping[label], summary])
         )
@@ -483,13 +583,17 @@ try {
     }
 
     // Thumbnails for the report.
-    const thumbDir = path.join(auditsDir, 'vibe', date)
+    const thumbDir = path.join(auditsDir, 'vibe', outputKey)
     for (const arm of judged) {
       mkdirSync(thumbDir, { recursive: true })
-      for (const width of ['desktop', 'mobile']) {
+      const thumbnailState = captureStates.includes('complete') ? 'complete' : null
+      for (const width of Object.keys(captureViewports)) {
         const name = `${brief.id}-${arm}-${width}.jpg`
-        cpSync(path.join(shots[arm], `${width}.jpg`), path.join(thumbDir, name))
-        entry.thumbnails.push(`vibe/${date}/${name}`)
+        cpSync(
+          path.join(shots[arm], thumbnailState ? thumbnailState : '', `${width}.jpg`),
+          path.join(thumbDir, name)
+        )
+        entry.thumbnails.push(`vibe/${outputKey}/${name}`)
       }
     }
   }
@@ -497,9 +601,9 @@ try {
   if (!dryRun) {
     report.models = [...new Set(report.models)].sort()
     mkdirSync(path.join(auditsDir, 'vibe'), { recursive: true })
-    const jsonPath = path.join(auditsDir, 'vibe', `vibe-${date}.json`)
+    const jsonPath = path.join(auditsDir, 'vibe', `vibe-${outputKey}.json`)
     writeFileSync(jsonPath, `${JSON.stringify(report, null, 2)}\n`)
-    const reportPath = path.join(auditsDir, `vibe-${date}.md`)
+    const reportPath = path.join(auditsDir, `vibe-${outputKey}.md`)
     writeFileSync(reportPath, renderReport(report))
     process.stdout.write(
       `\nWrote ${path.relative(root, reportPath)} and ${path.relative(root, jsonPath)}\n`
@@ -512,6 +616,17 @@ try {
   process.stderr.write(`\nVibe run failed: ${error.stack ?? error.message}\n`)
 } finally {
   await browser?.close()
+  if (artifactsDir) {
+    mkdirSync(path.dirname(artifactsDir), { recursive: true })
+    cpSync(work, artifactsDir, {
+      recursive: true,
+      filter: source => {
+        const parts = path.relative(work, source).split(path.sep)
+        return !parts.some(part => ['node_modules', 'dist', 'tarballs'].includes(part))
+      },
+    })
+    process.stdout.write(`Preserved artifacts in ${artifactsDir}\n`)
+  }
   if (keep) process.stdout.write(`Kept ${work}\n`)
   else rmSync(work, { recursive: true, force: true })
 }

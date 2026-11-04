@@ -10,6 +10,7 @@ import {
 } from '@atom63/ui-react/theme'
 import type { Decorator, Preview } from '@storybook/react-vite'
 import { useEffect, type ReactNode } from 'react'
+import { MINIMAL_VIEWPORTS } from 'storybook/viewport'
 
 import './storybook.css'
 
@@ -33,6 +34,30 @@ const DENSITY_OPTIONS = [
   { id: 'compact', name: 'Compact' },
 ] as const satisfies readonly Option<Density>[]
 const TINT_OPTIONS = ['0', '12', '24', '35', '100'].map(id => ({ id, name: `Tint ${id}` }))
+
+const a63Viewports = {
+  ...MINIMAL_VIEWPORTS,
+  'a63-wide': {
+    name: 'Atom63 wide desktop',
+    styles: { height: '960px', width: '1440px' },
+    type: 'desktop',
+  },
+  'a63-compact': {
+    name: 'Atom63 compact desktop',
+    styles: { height: '800px', width: '1024px' },
+    type: 'desktop',
+  },
+  'a63-tablet': {
+    name: 'Atom63 tablet',
+    styles: { height: '1024px', width: '768px' },
+    type: 'tablet',
+  },
+  'a63-phone': {
+    name: 'Atom63 phone',
+    styles: { height: '844px', width: '390px' },
+    type: 'mobile',
+  },
+} as const
 
 interface Axes {
   mode: (typeof MODE_OPTIONS)[number]['id']
@@ -122,6 +147,7 @@ const preview: Preview = {
     layout: 'centered',
     controls: { expanded: true },
     backgrounds: { disable: true },
+    viewport: { options: a63Viewports },
     // Every story's render test also runs axe; a violation fails the test. The
     // cross-browser project renders only and turns it off (render-only.setup.ts).
     a11y: { test: (globalThis as { __A63_A11Y_TEST__?: 'off' }).__A63_A11Y_TEST__ ?? 'error' },

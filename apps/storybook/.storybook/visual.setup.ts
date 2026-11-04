@@ -15,21 +15,26 @@ const VIEWPORT = { width: 1280, height: 800 }
 const MAX_HEIGHT = 10000
 /* A story whose id ends in `-phone` (a `Phone` export) renders and is captured
    at a phone width, so layouts that change below `sm` get a baseline too. */
-const PHONE_VIEWPORT = { width: 390, height: 844 }
-const isPhoneStory = (storyId: string | undefined) => storyId?.endsWith('-phone') ?? false
+const STORY_VIEWPORTS = {
+  wide: { width: 1440, height: 960 },
+  compact: { width: 1024, height: 800 },
+  tablet: { width: 768, height: 1024 },
+  phone: { width: 390, height: 844 },
+} as const
 
-// Restore the desktop width only after a phone story, so every other story
-// keeps the viewport it has always been captured with.
-let phoneViewportSet = false
+const viewportForStory = (storyId: string | undefined) => {
+  if (storyId?.endsWith('-phone')) return STORY_VIEWPORTS.phone
+  if (!storyId?.startsWith('templates-pages-list-page--')) return VIEWPORT
+
+  const entry = Object.entries(STORY_VIEWPORTS)
+    .filter(([suffix]) => suffix !== 'phone')
+    .find(([suffix]) => storyId.endsWith(`-${suffix}`))
+  return entry?.[1] ?? VIEWPORT
+}
 
 beforeEach(async ({ task }) => {
-  if (isPhoneStory(task.meta.storyId)) {
-    await page.viewport(PHONE_VIEWPORT.width, PHONE_VIEWPORT.height)
-    phoneViewportSet = true
-  } else if (phoneViewportSet) {
-    await page.viewport(VIEWPORT.width, VIEWPORT.height)
-    phoneViewportSet = false
-  }
+  const viewport = viewportForStory(task.meta.storyId)
+  await page.viewport(viewport.width, viewport.height)
 })
 
 afterEach(async ({ task }) => {
@@ -38,7 +43,7 @@ afterEach(async ({ task }) => {
   await settleMedia()
   // Only the viewport is painted in the capture, so a story taller than the
   // viewport would come out blank below the fold. Grow the viewport to the page.
-  const viewport = isPhoneStory(storyId) ? PHONE_VIEWPORT : VIEWPORT
+  const viewport = viewportForStory(storyId)
   const height = Math.min(
     MAX_HEIGHT,
     Math.max(viewport.height, Math.ceil(document.documentElement.scrollHeight))
