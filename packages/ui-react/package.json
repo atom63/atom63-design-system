@@ -173,7 +173,7 @@
   "peerDependencies": {
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-hook-form": "^7.91.0"
+    "react-hook-form": "^7.81.0"
   },
   "devDependencies": {
     "@atom63/eslint-config": "workspace:*",
