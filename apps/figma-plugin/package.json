@@ -18,7 +18,7 @@
     "@atom63/styles": "workspace:*",
     "@atom63/ui-foundation": "workspace:*",
     "@atom63/ui-react": "workspace:*",
-    "lucide-react": "^1.70.0",
+    "lucide-react": "^1.73.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
@@ -30,8 +30,8 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "esbuild": "^0.28.2",
-    "eslint": "10.14.0",
-    "sass": "^1.108.1",
+    "eslint": "10.15.0",
+    "sass": "^1.108.2",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }

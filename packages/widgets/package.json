@@ -66,7 +66,7 @@
   },
   "dependencies": {
     "@atom63/ui-react": "workspace:*",
-    "lucide-react": "^1.70.0",
+    "lucide-react": "^1.73.0",
     "motion": "^13.1.1"
   },
   "peerDependencies": {
@@ -76,7 +76,7 @@
   "devDependencies": {
     "@atom63/eslint-config": "workspace:*",
     "@atom63/tsconfig": "workspace:*",
-    "@storybook/react-vite": "^10.6.6",
+    "@storybook/react-vite": "^10.6.7",
     "@testing-library/jest-dom": "catalog:",
     "@testing-library/react": "catalog:",
     "@testing-library/user-event": "catalog:",
@@ -85,11 +85,11 @@
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",
     "axe-core": "~4.13.0",
-    "eslint": "10.14.0",
+    "eslint": "10.15.0",
     "jsdom": "catalog:",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "storybook": "^10.6.6",
+    "storybook": "^10.6.7",
     "tsup": "^8.3.5",
     "typescript": "catalog:",
     "vitest": "catalog:",
