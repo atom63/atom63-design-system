@@ -41,7 +41,7 @@ async function main() {
     'supportedReact.peerRange must match current beta peer range'
   )
   assert(
-    policy.supportedReact?.testedVersion === '19.2.7',
+    policy.supportedReact?.testedVersion === '19.3.1',
     'supportedReact.testedVersion must match root test version'
   )
 

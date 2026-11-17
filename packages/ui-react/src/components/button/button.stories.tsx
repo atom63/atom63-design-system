@@ -76,11 +76,14 @@ export const Playground: Story = {
   ),
 }
 
+/* The media-facing variants (overlay, glass) only read over a backdrop; OverMedia shows them. */
+const flatVariants = buttonVariants.filter(variant => variant !== 'overlay' && variant !== 'glass')
+
 export const Variants: Story = {
   render: () => (
     <EnvironmentShell>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
-        {buttonVariants.map(variant => (
+        {flatVariants.map(variant => (
           <Button key={variant} variant={variant}>
             {variant}
           </Button>

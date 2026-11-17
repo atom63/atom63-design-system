@@ -355,7 +355,9 @@
   --button-shadow: var(--a63-control-shadow-flat);
   --button-background: color-mix(in oklch, var(--a63-action-danger) 10%, transparent);
   --button-border-color: color-mix(in oklch, var(--a63-action-danger) 20%, transparent);
-  --button-foreground: var(--a63-action-danger);
+  /* The text colour made for the danger tint: AA on it in both modes, where
+     --a63-action-danger falls to 2.65:1 on the dark tint. */
+  --button-foreground: var(--a63-action-danger-subtle-foreground);
   --button-state-hover-background: color-mix(in oklch, var(--a63-action-danger) 15%, transparent);
   --button-state-hover-border-color: color-mix(in oklch, var(--a63-action-danger) 30%, transparent);
   --button-state-active-background: color-mix(in oklch, var(--a63-action-danger) 15%, transparent);
