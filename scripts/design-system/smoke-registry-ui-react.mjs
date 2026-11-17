@@ -38,6 +38,11 @@ const devDependencies = {
   typescript: '5.8.3',
   vite: '8.1.4',
 }
+// csstype 3.2.4 (published 2026-11-17) breaks framer-motion's MotionStyle type (TS2320 on
+// pathLength) for any consumer that type-checks its dependencies, with motion 13 and 14 alike.
+// csstype comes through @types/react, so our packages cannot pin it for consumers; the smoke
+// consumer pins it to 3.2.3 so it still tests our packages. Remove once a later csstype fixes it.
+const UPSTREAM_PINS = { csstype: '3.2.3' }
 const installCommand = `pnpm install --ignore-workspace --registry=${registry} --no-frozen-lockfile`
 const cliCommands = [
   ['build', 'settings', 'screen', '--json'],
@@ -115,6 +120,7 @@ async function writeHarness(harnessDirectory) {
     },
     dependencies,
     devDependencies,
+    pnpm: { overrides: UPSTREAM_PINS },
   }
   assertRegistrySpecs(manifest, 'consumer manifest')
   for (const [name, spec] of Object.entries(atom63Packages)) {
