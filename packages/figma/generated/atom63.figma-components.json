@@ -14814,7 +14814,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-xs"
@@ -14838,7 +14838,7 @@
               "alias": "--a63-control-icon-size-xs"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -14908,7 +14908,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-xs"
@@ -14932,7 +14932,7 @@
               "alias": "--a63-control-icon-size-xs"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -15002,7 +15002,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-xs"
@@ -15026,7 +15026,7 @@
               "alias": "--a63-control-icon-size-xs"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -15096,7 +15096,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-xs"
@@ -15120,7 +15120,7 @@
               "alias": "--a63-control-icon-size-xs"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -15296,7 +15296,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-xs"
@@ -15323,7 +15323,7 @@
               "alias": "--a63-control-icon-size-xs"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": true
@@ -15393,7 +15393,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-sm"
@@ -15417,7 +15417,7 @@
               "alias": "--a63-control-icon-size-sm"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -15487,7 +15487,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-sm"
@@ -15511,7 +15511,7 @@
               "alias": "--a63-control-icon-size-sm"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -15581,7 +15581,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-sm"
@@ -15605,7 +15605,7 @@
               "alias": "--a63-control-icon-size-sm"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -15675,7 +15675,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-sm"
@@ -15699,7 +15699,7 @@
               "alias": "--a63-control-icon-size-sm"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -15875,7 +15875,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-sm"
@@ -15902,7 +15902,7 @@
               "alias": "--a63-control-icon-size-sm"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": true
@@ -15972,7 +15972,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-md"
@@ -15996,7 +15996,7 @@
               "alias": "--a63-control-icon-size-md"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -16066,7 +16066,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-md"
@@ -16090,7 +16090,7 @@
               "alias": "--a63-control-icon-size-md"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -16160,7 +16160,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-md"
@@ -16184,7 +16184,7 @@
               "alias": "--a63-control-icon-size-md"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -16254,7 +16254,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-md"
@@ -16278,7 +16278,7 @@
               "alias": "--a63-control-icon-size-md"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -16454,7 +16454,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-md"
@@ -16481,7 +16481,7 @@
               "alias": "--a63-control-icon-size-md"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": true
@@ -16551,7 +16551,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-lg"
@@ -16575,7 +16575,7 @@
               "alias": "--a63-control-icon-size-lg"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -16645,7 +16645,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-lg"
@@ -16669,7 +16669,7 @@
               "alias": "--a63-control-icon-size-lg"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -16739,7 +16739,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-lg"
@@ -16763,7 +16763,7 @@
               "alias": "--a63-control-icon-size-lg"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -16833,7 +16833,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-lg"
@@ -16857,7 +16857,7 @@
               "alias": "--a63-control-icon-size-lg"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -17033,7 +17033,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-lg"
@@ -17060,7 +17060,7 @@
               "alias": "--a63-control-icon-size-lg"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": true
@@ -17130,7 +17130,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-xl"
@@ -17154,7 +17154,7 @@
               "alias": "--a63-control-icon-size-xl"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -17224,7 +17224,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-xl"
@@ -17248,7 +17248,7 @@
               "alias": "--a63-control-icon-size-xl"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -17318,7 +17318,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-xl"
@@ -17342,7 +17342,7 @@
               "alias": "--a63-control-icon-size-xl"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -17412,7 +17412,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-xl"
@@ -17436,7 +17436,7 @@
               "alias": "--a63-control-icon-size-xl"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": false
@@ -17612,7 +17612,7 @@
           "kind": "text",
           "properties": {
             "fill": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "fontSize": {
               "alias": "--a63-control-font-size-xl"
@@ -17639,7 +17639,7 @@
               "alias": "--a63-control-icon-size-xl"
             },
             "stroke": {
-              "alias": "--a63-action-danger"
+              "alias": "--a63-action-danger-subtle-foreground"
             },
             "visible": {
               "value": true
@@ -35660,6 +35660,7 @@
     "--a63-action-danger",
     "--a63-action-danger-foreground",
     "--a63-action-danger-hover",
+    "--a63-action-danger-subtle-foreground",
     "--a63-action-disabled-background",
     "--a63-action-disabled-border",
     "--a63-action-disabled-foreground",
