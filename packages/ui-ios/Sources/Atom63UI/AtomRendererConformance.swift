@@ -450,6 +450,13 @@ public enum AtomRendererConformance {
       ],
       verifiesMotionRecipe: false
     ),
+    AtomRendererConformanceEvidence(
+      contractId: "message",
+      implementedStates: ["rest"],
+      verifiedSharedOutcomes: ["direction-sets-side-and-fill", "runs-join-at-shared-corners", "status-is-named"],
+      verifiedAccessibilityOutcomes: ["names-the-sender", "names-the-delivery-status"],
+      verifiesMotionRecipe: false
+    ),
   ]
 
   public static func evidence(contractId: String) -> AtomRendererConformanceEvidence? {

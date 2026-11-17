@@ -7,7 +7,7 @@
  */
 export const synonyms = {
   bar: ['progress'],
-  bubble: ['chat-message'],
+  bubble: ['message', 'chat-message'],
   chatbot: ['chat-message', 'chat-composer'],
   checkmark: ['animated-check', 'checkbox'],
   chip: ['toggle-group', 'toggle', 'button', 'badge'],
@@ -208,6 +208,24 @@ const chatSurfaces = [
     id: 'doc:pattern-agent',
     note: '@atom63/agent, the headless runtime: map its messages and status onto the chat components.',
   },
+]
+
+// A thread between people, not an assistant: Message, not ChatMessage.
+const peopleThread = [
+  {
+    id: 'component:message',
+    note: 'Person-to-person thread: MessageList (log) and Message with direction incoming or outgoing, position in a run (single, first, middle, last), time and delivery status; MessageEvent for calls and dates. ChatMessage is for an AI assistant.',
+  },
+  { id: 'example:message/Thread' },
+  { id: 'component:avatar' },
+]
+
+const storyRings = [
+  {
+    id: 'component:avatar',
+    note: 'Story ring: Avatar ring="unseen" or "seen"; set --a63-avatar-ring-fill to a gradient of --a63-category-* for a multicolour ring. iOS: AtomAvatar(ring:ringStyle:).',
+  },
+  { id: 'example:avatar/StoryRings' },
 ]
 
 const chatComposer = [
@@ -445,6 +463,22 @@ export const topics = {
   copilot: chatSurfaces,
   'chat bubble': [{ id: 'component:chat-message' }],
   'chat message': [{ id: 'component:chat-message' }, chatSurfaces[0]],
+  messaging: peopleThread,
+  messenger: peopleThread,
+  'messages app': peopleThread,
+  'direct message': peopleThread,
+  'direct messages': peopleThread,
+  dm: peopleThread,
+  'text message': peopleThread,
+  'chat thread': peopleThread,
+  'message thread': peopleThread,
+  'read receipt': peopleThread,
+  'delivery status': peopleThread,
+  'missed call': peopleThread,
+  'group chat': peopleThread,
+  story: storyRings,
+  stories: storyRings,
+  'story ring': storyRings,
   'chat composer': chatComposer,
   'message bubble': [{ id: 'component:chat-message' }],
   'chat input': chatComposer,

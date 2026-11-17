@@ -409,6 +409,14 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
       'Use it for application commands, not ordinary site navigation or a row of unrelated buttons.',
     usageExports: ['Menubar', 'MenubarMenu', 'MenubarTrigger', 'MenubarContent', 'MenubarItem'],
   },
+  message: {
+    relatedSlugs: ['chat-message', 'avatar'],
+    summary:
+      "Message shows one message in a thread between people: a bubble on its sender's side, joined to the messages around it, with its time and delivery status. For an AI assistant, use ChatMessage.",
+    usage:
+      'Wrap the thread in MessageList (a named log region). Pass direction (incoming or outgoing), position in the run of one sender (single, first, middle, last), time and, for your own messages, status. Use MessageEvent for calls and dates, Avatar ring for stories, and ChatMessage instead for an AI assistant.',
+    usageExports: ['Message', 'MessageList', 'MessageEvent'],
+  },
   'navigation-menu': {
     relatedSlugs: ['menubar', 'breadcrumb', 'dropdown-menu'],
     summary: 'Navigation Menu composes site links with optional positioned navigation panels.',
@@ -827,6 +835,7 @@ export const componentCatalogGroups = [
       'feedback-state',
       'frame',
       'item',
+      'message',
       'scroll-area',
       'scrollable-list',
       'separator',

@@ -124,6 +124,51 @@ export const ShapesAndRing: Story = {
   ),
 }
 
+/*
+ * Story rings: unseen draws --a63-avatar-ring-fill, which a product can set to a
+ * gradient of the category palette (see the content-colors rule); seen is a
+ * thin border-coloured ring.
+ */
+export const StoryRings: Story = {
+  render: () => (
+    <div
+      style={
+        {
+          '--a63-avatar-ring-fill':
+            'conic-gradient(from 210deg, var(--a63-category-amber), var(--a63-category-orange), var(--a63-category-pink), var(--a63-category-purple), var(--a63-category-amber))',
+          alignItems: 'flex-start',
+          display: 'flex',
+          gap: 20,
+          padding: 8,
+        } as CSSProperties
+      }
+    >
+      {[
+        { name: 'Your story', ring: 'unseen', initials: 'YZ' },
+        { name: 'Ada', ring: 'unseen', initials: 'AD' },
+        { name: 'Lin', ring: 'seen', initials: 'LI' },
+        { name: 'Sam', ring: 'seen', initials: 'SA' },
+      ].map(story => (
+        <figure
+          key={story.name}
+          style={{
+            alignItems: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 8,
+            margin: 0,
+          }}
+        >
+          <Avatar ring={story.ring as 'unseen' | 'seen'} size="lg">
+            <AvatarFallback>{story.initials}</AvatarFallback>
+          </Avatar>
+          <figcaption style={{ fontSize: 12 }}>{story.name}</figcaption>
+        </figure>
+      ))}
+    </div>
+  ),
+}
+
 /* Fallback shows when no image resolves — the muted initials chip. */
 export const Fallback: Story = {
   render: () => (

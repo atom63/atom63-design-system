@@ -5868,6 +5868,13 @@
       ]
      },
      {
+      "name": "rings",
+      "values": [
+       "unseen",
+       "seen"
+      ]
+     },
+     {
       "name": "shapes",
       "values": [
        "circle",
@@ -5958,7 +5965,7 @@
    ],
    "importPath": "@atom63/ui-react",
    "label": "Avatar",
-   "markdown": "# Avatar\n\nAvatar composes an image, fallback, badge, and grouped identity presentation.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Provide meaningful image alternative text and a stable fallback for failed or missing media.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Avatar, AvatarImage, AvatarFallback } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Avatar`, `AvatarBadge`, `AvatarFallback`, `AvatarGroup`, `AvatarGroupCount`, `AvatarImage`, `AvatarPrimitive`\n\n**Types:** `AvatarProps`, `AvatarSize`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/avatar.json` (`avatarContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `compositions` | `standalone`, `badge`, `group` | — |\n| `shapes` | `circle`, `square` | `circle` |\n| `sizes` | `xs`, `sm`, `default`, `lg` | `default` |\n\n**Slots:** `avatar`, `avatar-image`, `avatar-fallback`, `avatar-badge`, `avatar-group`, `avatar-group-count`\n\n**States:** `loading`, `loaded`, `fallback`\n\n**Visual archetype:** Markers and keycaps — Compact presentational labels, statuses, and keyboard hints.\n\n### Web and iOS\n\nRepresent a person or entity with an image and identity-preserving fallback. Rendered by `AtomAvatar` in SwiftUI, with `strict` parity.\n\n**Required states:** `loading`, `loaded`, `fallback`\n\n**Shared outcomes:**\n\n- Accessible name is preserved\n- Fallback preserves identity\n- Loading does not expose empty image\n\n**Accessibility outcomes:**\n\n- Exposes accessible name\n- Fallback preserves identity\n\n**Platform adaptations:**\n\n- React: Uses browser image loading and DOM fallback composition.\n- React: The square shape and the ring are web-only for now.\n- SwiftUI: Uses native image decoding and SwiftUI loading phases.\n- SwiftUI: AtomAvatar(badge:) pins a status dot (.dot) or a count (.count) to the corner, read after the name.\n\n## Related components\n\n- [Badge](/components/component-badge)\n- [Item](/components/component-item)\n",
+   "markdown": "# Avatar\n\nAvatar composes an image, fallback, badge, and grouped identity presentation.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Provide meaningful image alternative text and a stable fallback for failed or missing media.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Avatar, AvatarImage, AvatarFallback } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Avatar`, `AvatarBadge`, `AvatarFallback`, `AvatarGroup`, `AvatarGroupCount`, `AvatarImage`, `AvatarPrimitive`\n\n**Types:** `AvatarProps`, `AvatarSize`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/avatar.json` (`avatarContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `compositions` | `standalone`, `badge`, `group` | — |\n| `rings` | `unseen`, `seen` | — |\n| `shapes` | `circle`, `square` | `circle` |\n| `sizes` | `xs`, `sm`, `default`, `lg` | `default` |\n\n**Slots:** `avatar`, `avatar-image`, `avatar-fallback`, `avatar-badge`, `avatar-group`, `avatar-group-count`\n\n**States:** `loading`, `loaded`, `fallback`\n\n**Visual archetype:** Markers and keycaps — Compact presentational labels, statuses, and keyboard hints.\n\n### Web and iOS\n\nRepresent a person or entity with an image and identity-preserving fallback. Rendered by `AtomAvatar` in SwiftUI, with `strict` parity.\n\n**Required states:** `loading`, `loaded`, `fallback`\n\n**Shared outcomes:**\n\n- Accessible name is preserved\n- Fallback preserves identity\n- Loading does not expose empty image\n\n**Accessibility outcomes:**\n\n- Exposes accessible name\n- Fallback preserves identity\n\n**Platform adaptations:**\n\n- React: Uses browser image loading and DOM fallback composition.\n- React: The square shape and the ring are web-only for now.\n- SwiftUI: Uses native image decoding and SwiftUI loading phases.\n- SwiftUI: AtomAvatar(badge:) pins a status dot (.dot) or a count (.count) to the corner, read after the name.\n\n## Related components\n\n- [Badge](/components/component-badge)\n- [Item](/components/component-item)\n",
    "related": [
     "badge",
     "item"
@@ -5974,6 +5981,7 @@
      "IconFallback",
      "LargeCircle",
      "ShapesAndRing",
+     "StoryRings",
      "Fallback",
      "WithBadge",
      "Group",
@@ -5981,7 +5989,7 @@
      "Endpoints",
      "ContractMetadata"
     ],
-    "source": "import { avatarContract, avatarSizes, themes } from '@atom63/ui-foundation'\nimport {\n  Avatar,\n  AvatarBadge,\n  AvatarFallback,\n  AvatarGroup,\n  AvatarGroupCount,\n  AvatarImage,\n  UIProvider,\n} from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\nimport { Sparkles } from 'lucide-react'\nimport type { CSSProperties } from 'react'\n\nconst meta = {\n  title: 'UI React/Avatar',\n  component: Avatar,\n  args: { size: 'default' },\n  argTypes: { size: { control: 'inline-radio', options: avatarSizes } },\n} satisfies Meta<typeof Avatar>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nconst SRC = 'https://i.pravatar.cc/80?img=12'\n\nexport const Playground: Story = {\n  render: args => (\n    <Avatar {...args}>\n      <AvatarImage src={SRC} alt=\"Ada\" />\n      <AvatarFallback>AL</AvatarFallback>\n    </Avatar>\n  ),\n}\n\nexport const Sizes: Story = {\n  render: () => (\n    <div style={{ alignItems: 'center', display: 'flex', gap: 16 }}>\n      <Avatar size=\"xs\">\n        <AvatarImage src={SRC} alt=\"Ada\" />\n        <AvatarFallback>AL</AvatarFallback>\n      </Avatar>\n      <Avatar size=\"sm\">\n        <AvatarImage src={SRC} alt=\"Ada\" />\n        <AvatarFallback>AL</AvatarFallback>\n      </Avatar>\n      <Avatar size=\"default\">\n        <AvatarImage src={SRC} alt=\"Ada\" />\n        <AvatarFallback>AL</AvatarFallback>\n      </Avatar>\n      <Avatar size=\"lg\">\n        <AvatarImage src={SRC} alt=\"Ada\" />\n        <AvatarFallback>AL</AvatarFallback>\n      </Avatar>\n    </div>\n  ),\n}\n\n/* An icon fallback, such as an assistant's sparkle, sits in the filled circle at\n   the control icon size for each size step. */\nexport const IconFallback: Story = {\n  render: () => (\n    <div style={{ alignItems: 'center', display: 'flex', gap: 16 }}>\n      {avatarSizes.map(size => (\n        <Avatar key={size} size={size}>\n          <AvatarFallback>\n            <Sparkles aria-hidden />\n          </AvatarFallback>\n        </Avatar>\n      ))}\n    </div>\n  ),\n}\n\n/* A 76px avatar stays a circle: the default reads --a63-avatar-radius (50%), and\n   without that contract the fallback is --radius-pill, not the soft --radius-full. */\nexport const LargeCircle: Story = {\n  render: () => (\n    <div style={{ alignItems: 'center', display: 'flex', gap: 16 }}>\n      <Avatar data-testid=\"contract\" style={{ '--avatar-size': '76px' } as CSSProperties}>\n        <AvatarFallback>AL</AvatarFallback>\n      </Avatar>\n      <Avatar\n        data-testid=\"fallback\"\n        style={{ '--avatar-size': '76px', '--a63-avatar-radius': 'initial' } as CSSProperties}\n      >\n        <AvatarFallback>YZ</AvatarFallback>\n      </Avatar>\n    </div>\n  ),\n  play: ({ canvasElement }) => {\n    const radius = (testId: string) => {\n      const avatar = canvasElement.querySelector<HTMLElement>(`[data-testid=\"${testId}\"]`)\n      return avatar ? getComputedStyle(avatar).borderTopLeftRadius : null\n    }\n    const actual = [radius('contract'), radius('fallback')]\n    if (actual[0] !== '50%' || actual[1] !== '9999px') {\n      throw new Error(`Expected radii 50% and 9999px, got ${actual.join(' and ')}`)\n    }\n  },\n}\n\n/* shape=\"square\" for organisations and apps; ring marks new activity. */\nexport const ShapesAndRing: Story = {\n  render: () => (\n    <div style={{ alignItems: 'center', display: 'flex', gap: 16 }}>\n      <Avatar>\n        <AvatarFallback>AL</AvatarFallback>\n      </Avatar>\n      <Avatar shape=\"square\">\n        <AvatarFallback>NW</AvatarFallback>\n      </Avatar>\n      <Avatar ring>\n        <AvatarFallback>JL</AvatarFallback>\n      </Avatar>\n      <Avatar ring shape=\"square\" size=\"lg\">\n        <AvatarFallback>PS</AvatarFallback>\n      </Avatar>\n      <Avatar shape=\"square\" size=\"xs\">\n        <AvatarFallback>A</AvatarFallback>\n      </Avatar>\n    </div>\n  ),\n}\n\n/* Fallback shows when no image resolves — the muted initials chip. */\nexport const Fallback: Story = {\n  render: () => (\n    <Avatar>\n      <AvatarFallback>YZ</AvatarFallback>\n    </Avatar>\n  ),\n}\n\n/* A status Badge pinned to the corner, ringed against the page. */\nexport const WithBadge: Story = {\n  render: () => (\n    <Avatar>\n      <AvatarImage src={SRC} alt=\"Ada\" />\n      <AvatarFallback>AL</AvatarFallback>\n      <AvatarBadge />\n    </Avatar>\n  ),\n}\n\n/* A stacked group with an overflow count. */\nexport const Group: Story = {\n  render: () => (\n    <AvatarGroup>\n      <Avatar>\n        <AvatarImage src=\"https://i.pravatar.cc/80?img=1\" alt=\"One\" />\n        <AvatarFallback>1</AvatarFallback>\n      </Avatar>\n      <Avatar>\n        <AvatarImage src=\"https://i.pravatar.cc/80?img=2\" alt=\"Two\" />\n        <AvatarFallback>2</AvatarFallback>\n      </Avatar>\n      <Avatar>\n        <AvatarImage src=\"https://i.pravatar.cc/80?img=3\" alt=\"Three\" />\n        <AvatarFallback>3</AvatarFallback>\n      </Avatar>\n      <AvatarGroupCount>+5</AvatarGroupCount>\n    </AvatarGroup>\n  ),\n}\n\n/* The avatar frame, fallback chip and status badge across all 4 DS themes × light/dark. */\nexport const Themes: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {themes.map(theme =>\n        (['light', 'dark'] as const).map(mode => (\n          <UIProvider key={theme + mode} mode={mode} theme={theme}>\n            <div\n              style={{\n                alignItems: 'center',\n                background: 'var(--a63-surface-panel)',\n                borderRadius: 'var(--radius-lg)',\n                color: 'var(--a63-text-primary)',\n                display: 'flex',\n                gap: 12,\n                padding: '0.75rem',\n              }}\n            >\n              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>\n                {theme} / {mode}\n              </span>\n              <Avatar>\n                <AvatarImage src={SRC} alt=\"Ada\" />\n                <AvatarFallback>AL</AvatarFallback>\n                <AvatarBadge />\n              </Avatar>\n              <Avatar>\n                <AvatarFallback>YZ</AvatarFallback>\n              </Avatar>\n            </div>\n          </UIProvider>\n        ))\n      )}\n    </div>\n  ),\n}\n\nexport const Endpoints: Story = {\n  render: () => (\n    <div\n      style={{\n        display: 'grid',\n        gap: '1rem',\n        gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))',\n      }}\n    >\n      {[\n        { label: 'web / pointer', props: { designLanguage: 'web', input: 'pointer' } as const },\n        { label: 'ios / touch', props: { designLanguage: 'ios', input: 'touch' } as const },\n        {\n          label: 'extension / compact',\n          props: { density: 'compact', designLanguage: 'web', input: 'pointer' } as const,\n        },\n      ].map(({ label, props }) => (\n        <UIProvider key={label} {...props}>\n          <div\n            style={{\n              background: 'var(--a63-surface-panel)',\n              border: '1px solid var(--a63-border-subtle)',\n              borderRadius: 'var(--radius-lg)',\n              color: 'var(--a63-text-primary)',\n              display: 'grid',\n              gap: '0.75rem',\n              padding: '1rem',\n            }}\n          >\n            <span style={{ color: 'var(--a63-text-secondary)', fontSize: 12 }}>{label}</span>\n            <AvatarGroup>\n              <Avatar>\n                <AvatarImage alt=\"Ada\" src={SRC} />\n                <AvatarFallback>AL</AvatarFallback>\n              </Avatar>\n              <Avatar>\n                <AvatarFallback>YZ</AvatarFallback>\n              </Avatar>\n              <AvatarGroupCount>+3</AvatarGroupCount>\n            </AvatarGroup>\n          </div>\n        </UIProvider>\n      ))}\n    </div>\n  ),\n}\n\nexport const ContractMetadata: Story = {\n  render: () => (\n    <pre style={{ fontSize: 12, margin: 0, whiteSpace: 'pre-wrap' }}>\n      {JSON.stringify(avatarContract, null, 2)}\n    </pre>\n  ),\n}\n"
+    "source": "import { avatarContract, avatarSizes, themes } from '@atom63/ui-foundation'\nimport {\n  Avatar,\n  AvatarBadge,\n  AvatarFallback,\n  AvatarGroup,\n  AvatarGroupCount,\n  AvatarImage,\n  UIProvider,\n} from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\nimport { Sparkles } from 'lucide-react'\nimport type { CSSProperties } from 'react'\n\nconst meta = {\n  title: 'UI React/Avatar',\n  component: Avatar,\n  args: { size: 'default' },\n  argTypes: { size: { control: 'inline-radio', options: avatarSizes } },\n} satisfies Meta<typeof Avatar>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nconst SRC = 'https://i.pravatar.cc/80?img=12'\n\nexport const Playground: Story = {\n  render: args => (\n    <Avatar {...args}>\n      <AvatarImage src={SRC} alt=\"Ada\" />\n      <AvatarFallback>AL</AvatarFallback>\n    </Avatar>\n  ),\n}\n\nexport const Sizes: Story = {\n  render: () => (\n    <div style={{ alignItems: 'center', display: 'flex', gap: 16 }}>\n      <Avatar size=\"xs\">\n        <AvatarImage src={SRC} alt=\"Ada\" />\n        <AvatarFallback>AL</AvatarFallback>\n      </Avatar>\n      <Avatar size=\"sm\">\n        <AvatarImage src={SRC} alt=\"Ada\" />\n        <AvatarFallback>AL</AvatarFallback>\n      </Avatar>\n      <Avatar size=\"default\">\n        <AvatarImage src={SRC} alt=\"Ada\" />\n        <AvatarFallback>AL</AvatarFallback>\n      </Avatar>\n      <Avatar size=\"lg\">\n        <AvatarImage src={SRC} alt=\"Ada\" />\n        <AvatarFallback>AL</AvatarFallback>\n      </Avatar>\n    </div>\n  ),\n}\n\n/* An icon fallback, such as an assistant's sparkle, sits in the filled circle at\n   the control icon size for each size step. */\nexport const IconFallback: Story = {\n  render: () => (\n    <div style={{ alignItems: 'center', display: 'flex', gap: 16 }}>\n      {avatarSizes.map(size => (\n        <Avatar key={size} size={size}>\n          <AvatarFallback>\n            <Sparkles aria-hidden />\n          </AvatarFallback>\n        </Avatar>\n      ))}\n    </div>\n  ),\n}\n\n/* A 76px avatar stays a circle: the default reads --a63-avatar-radius (50%), and\n   without that contract the fallback is --radius-pill, not the soft --radius-full. */\nexport const LargeCircle: Story = {\n  render: () => (\n    <div style={{ alignItems: 'center', display: 'flex', gap: 16 }}>\n      <Avatar data-testid=\"contract\" style={{ '--avatar-size': '76px' } as CSSProperties}>\n        <AvatarFallback>AL</AvatarFallback>\n      </Avatar>\n      <Avatar\n        data-testid=\"fallback\"\n        style={{ '--avatar-size': '76px', '--a63-avatar-radius': 'initial' } as CSSProperties}\n      >\n        <AvatarFallback>YZ</AvatarFallback>\n      </Avatar>\n    </div>\n  ),\n  play: ({ canvasElement }) => {\n    const radius = (testId: string) => {\n      const avatar = canvasElement.querySelector<HTMLElement>(`[data-testid=\"${testId}\"]`)\n      return avatar ? getComputedStyle(avatar).borderTopLeftRadius : null\n    }\n    const actual = [radius('contract'), radius('fallback')]\n    if (actual[0] !== '50%' || actual[1] !== '9999px') {\n      throw new Error(`Expected radii 50% and 9999px, got ${actual.join(' and ')}`)\n    }\n  },\n}\n\n/* shape=\"square\" for organisations and apps; ring marks new activity. */\nexport const ShapesAndRing: Story = {\n  render: () => (\n    <div style={{ alignItems: 'center', display: 'flex', gap: 16 }}>\n      <Avatar>\n        <AvatarFallback>AL</AvatarFallback>\n      </Avatar>\n      <Avatar shape=\"square\">\n        <AvatarFallback>NW</AvatarFallback>\n      </Avatar>\n      <Avatar ring>\n        <AvatarFallback>JL</AvatarFallback>\n      </Avatar>\n      <Avatar ring shape=\"square\" size=\"lg\">\n        <AvatarFallback>PS</AvatarFallback>\n      </Avatar>\n      <Avatar shape=\"square\" size=\"xs\">\n        <AvatarFallback>A</AvatarFallback>\n      </Avatar>\n    </div>\n  ),\n}\n\n/*\n * Story rings: unseen draws --a63-avatar-ring-fill, which a product can set to a\n * gradient of the category palette (see the content-colors rule); seen is a\n * thin border-coloured ring.\n */\nexport const StoryRings: Story = {\n  render: () => (\n    <div\n      style={\n        {\n          '--a63-avatar-ring-fill':\n            'conic-gradient(from 210deg, var(--a63-category-amber), var(--a63-category-orange), var(--a63-category-pink), var(--a63-category-purple), var(--a63-category-amber))',\n          alignItems: 'flex-start',\n          display: 'flex',\n          gap: 20,\n          padding: 8,\n        } as CSSProperties\n      }\n    >\n      {[\n        { name: 'Your story', ring: 'unseen', initials: 'YZ' },\n        { name: 'Ada', ring: 'unseen', initials: 'AD' },\n        { name: 'Lin', ring: 'seen', initials: 'LI' },\n        { name: 'Sam', ring: 'seen', initials: 'SA' },\n      ].map(story => (\n        <figure\n          key={story.name}\n          style={{\n            alignItems: 'center',\n            display: 'flex',\n            flexDirection: 'column',\n            gap: 8,\n            margin: 0,\n          }}\n        >\n          <Avatar ring={story.ring as 'unseen' | 'seen'} size=\"lg\">\n            <AvatarFallback>{story.initials}</AvatarFallback>\n          </Avatar>\n          <figcaption style={{ fontSize: 12 }}>{story.name}</figcaption>\n        </figure>\n      ))}\n    </div>\n  ),\n}\n\n/* Fallback shows when no image resolves — the muted initials chip. */\nexport const Fallback: Story = {\n  render: () => (\n    <Avatar>\n      <AvatarFallback>YZ</AvatarFallback>\n    </Avatar>\n  ),\n}\n\n/* A status Badge pinned to the corner, ringed against the page. */\nexport const WithBadge: Story = {\n  render: () => (\n    <Avatar>\n      <AvatarImage src={SRC} alt=\"Ada\" />\n      <AvatarFallback>AL</AvatarFallback>\n      <AvatarBadge />\n    </Avatar>\n  ),\n}\n\n/* A stacked group with an overflow count. */\nexport const Group: Story = {\n  render: () => (\n    <AvatarGroup>\n      <Avatar>\n        <AvatarImage src=\"https://i.pravatar.cc/80?img=1\" alt=\"One\" />\n        <AvatarFallback>1</AvatarFallback>\n      </Avatar>\n      <Avatar>\n        <AvatarImage src=\"https://i.pravatar.cc/80?img=2\" alt=\"Two\" />\n        <AvatarFallback>2</AvatarFallback>\n      </Avatar>\n      <Avatar>\n        <AvatarImage src=\"https://i.pravatar.cc/80?img=3\" alt=\"Three\" />\n        <AvatarFallback>3</AvatarFallback>\n      </Avatar>\n      <AvatarGroupCount>+5</AvatarGroupCount>\n    </AvatarGroup>\n  ),\n}\n\n/* The avatar frame, fallback chip and status badge across all 4 DS themes × light/dark. */\nexport const Themes: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {themes.map(theme =>\n        (['light', 'dark'] as const).map(mode => (\n          <UIProvider key={theme + mode} mode={mode} theme={theme}>\n            <div\n              style={{\n                alignItems: 'center',\n                background: 'var(--a63-surface-panel)',\n                borderRadius: 'var(--radius-lg)',\n                color: 'var(--a63-text-primary)',\n                display: 'flex',\n                gap: 12,\n                padding: '0.75rem',\n              }}\n            >\n              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>\n                {theme} / {mode}\n              </span>\n              <Avatar>\n                <AvatarImage src={SRC} alt=\"Ada\" />\n                <AvatarFallback>AL</AvatarFallback>\n                <AvatarBadge />\n              </Avatar>\n              <Avatar>\n                <AvatarFallback>YZ</AvatarFallback>\n              </Avatar>\n            </div>\n          </UIProvider>\n        ))\n      )}\n    </div>\n  ),\n}\n\nexport const Endpoints: Story = {\n  render: () => (\n    <div\n      style={{\n        display: 'grid',\n        gap: '1rem',\n        gridTemplateColumns: 'repeat(auto-fit, minmax(14rem, 1fr))',\n      }}\n    >\n      {[\n        { label: 'web / pointer', props: { designLanguage: 'web', input: 'pointer' } as const },\n        { label: 'ios / touch', props: { designLanguage: 'ios', input: 'touch' } as const },\n        {\n          label: 'extension / compact',\n          props: { density: 'compact', designLanguage: 'web', input: 'pointer' } as const,\n        },\n      ].map(({ label, props }) => (\n        <UIProvider key={label} {...props}>\n          <div\n            style={{\n              background: 'var(--a63-surface-panel)',\n              border: '1px solid var(--a63-border-subtle)',\n              borderRadius: 'var(--radius-lg)',\n              color: 'var(--a63-text-primary)',\n              display: 'grid',\n              gap: '0.75rem',\n              padding: '1rem',\n            }}\n          >\n            <span style={{ color: 'var(--a63-text-secondary)', fontSize: 12 }}>{label}</span>\n            <AvatarGroup>\n              <Avatar>\n                <AvatarImage alt=\"Ada\" src={SRC} />\n                <AvatarFallback>AL</AvatarFallback>\n              </Avatar>\n              <Avatar>\n                <AvatarFallback>YZ</AvatarFallback>\n              </Avatar>\n              <AvatarGroupCount>+3</AvatarGroupCount>\n            </AvatarGroup>\n          </div>\n        </UIProvider>\n      ))}\n    </div>\n  ),\n}\n\nexport const ContractMetadata: Story = {\n  render: () => (\n    <pre style={{ fontSize: 12, margin: 0, whiteSpace: 'pre-wrap' }}>\n      {JSON.stringify(avatarContract, null, 2)}\n    </pre>\n  ),\n}\n"
    },
    "summary": "Avatar composes an image, fallback, badge, and grouped identity presentation.",
    "usage": "Provide meaningful image alternative text and a stable fallback for failed or missing media.",
@@ -7416,6 +7424,142 @@
     "ItemContent",
     "ItemTitle",
     "ItemActions"
+   ]
+  },
+  {
+   "axisGuidance": null,
+   "contract": {
+    "archetypes": [
+     {
+      "description": "In-flow containers and content surfaces that do not inherently manipulate state.",
+      "id": "surface",
+      "label": "Static content surfaces"
+     }
+    ],
+    "axes": [
+     {
+      "name": "directions",
+      "values": [
+       "incoming",
+       "outgoing"
+      ],
+      "default": "incoming"
+     },
+     {
+      "name": "positions",
+      "values": [
+       "single",
+       "first",
+       "middle",
+       "last"
+      ],
+      "default": "single"
+     },
+     {
+      "name": "deliveryStates",
+      "values": [
+       "sending",
+       "sent",
+       "delivered",
+       "read",
+       "failed"
+      ]
+     }
+    ],
+    "crossRenderer": {
+     "accessibilityOutcomes": [
+      "names-the-sender",
+      "names-the-delivery-status"
+     ],
+     "intent": "Show one message between people as a bubble on its sender's side, joined to the messages around it from the same sender, with its time and delivery status.",
+     "parity": "strict",
+     "platformAdaptations": {
+      "react": [
+       "MessageList is a log region; Message is an article named by label (the sender), with logical corner radii so a thread mirrors in right-to-left scripts.",
+       "Outgoing bubbles read --a63-message-outgoing-background and -foreground, which default to the accent; a theme or a product can set them."
+      ],
+      "swiftUI": [
+       "AtomMessage takes direction, position, time and status; AtomMessageEvent is the centred row. The bubble uses UnevenRoundedRectangle for the joined corners.",
+       "The status icon is an SF Symbol with an accessibility label; the bubble combines its children into one VoiceOver element."
+      ]
+     },
+     "requiredStates": [
+      "rest"
+     ],
+     "sharedOutcomes": [
+      "direction-sets-side-and-fill",
+      "runs-join-at-shared-corners",
+      "status-is-named"
+     ],
+     "swiftUIRenderer": "AtomMessage"
+    },
+    "exportName": "messageContract",
+    "slots": [
+     "message-list",
+     "message",
+     "message-avatar",
+     "message-bubble",
+     "message-media",
+     "message-content",
+     "message-meta",
+     "message-status",
+     "message-event"
+    ],
+    "source": "packages/ui-foundation/contracts/components/message.json",
+    "states": [
+     "rest"
+    ],
+    "tokenSlots": []
+   },
+   "exports": {
+    "types": [
+     "MessageEventProps",
+     "MessageListProps",
+     "MessageProps"
+    ],
+    "values": [
+     "Message",
+     "MessageEvent",
+     "MessageList"
+    ]
+   },
+   "group": {
+    "id": "content-and-surfaces",
+    "title": "Content and surfaces"
+   },
+   "guidance": [
+    "Wrap the thread in MessageList (a named log region). Pass direction (incoming or outgoing), position in the run of one sender (single, first, middle, last), time and, for your own messages, status. Use MessageEvent for calls and dates, Avatar ring for stories, and ChatMessage instead for an AI assistant.",
+    "Keep product data and fetching outside the presentational component.",
+    "Test long, empty, and narrow content before adding local layout overrides."
+   ],
+   "importPath": "@atom63/ui-react",
+   "label": "Message",
+   "markdown": "# Message\n\nMessage shows one message in a thread between people: a bubble on its sender's side, joined to the messages around it, with its time and delivery status. For an AI assistant, use ChatMessage.\n\n**Status:** Preview\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Wrap the thread in MessageList (a named log region). Pass direction (incoming or outgoing), position in the run of one sender (single, first, middle, last), time and, for your own messages, status. Use MessageEvent for calls and dates, Avatar ring for stories, and ChatMessage instead for an AI assistant.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Message, MessageList, MessageEvent } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Message`, `MessageEvent`, `MessageList`\n\n**Types:** `MessageEventProps`, `MessageListProps`, `MessageProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/message.json` (`messageContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `directions` | `incoming`, `outgoing` | `incoming` |\n| `positions` | `single`, `first`, `middle`, `last` | `single` |\n| `deliveryStates` | `sending`, `sent`, `delivered`, `read`, `failed` | — |\n\n**Slots:** `message-list`, `message`, `message-avatar`, `message-bubble`, `message-media`, `message-content`, `message-meta`, `message-status`, `message-event`\n\n**States:** `rest`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.\n\n### Web and iOS\n\nShow one message between people as a bubble on its sender's side, joined to the messages around it from the same sender, with its time and delivery status. Rendered by `AtomMessage` in SwiftUI, with `strict` parity.\n\n**Required states:** `rest`\n\n**Shared outcomes:**\n\n- Direction sets side and fill\n- Runs join at shared corners\n- Status is named\n\n**Accessibility outcomes:**\n\n- Names the sender\n- Names the delivery status\n\n**Platform adaptations:**\n\n- React: MessageList is a log region; Message is an article named by label (the sender), with logical corner radii so a thread mirrors in right-to-left scripts.\n- React: Outgoing bubbles read --a63-message-outgoing-background and -foreground, which default to the accent; a theme or a product can set them.\n- SwiftUI: AtomMessage takes direction, position, time and status; AtomMessageEvent is the centred row. The bubble uses UnevenRoundedRectangle for the joined corners.\n- SwiftUI: The status icon is an SF Symbol with an accessibility label; the bubble combines its children into one VoiceOver element.\n\n## Related components\n\n- [Chat Message](/components/component-chat-message)\n- [Avatar](/components/component-avatar)\n",
+   "related": [
+    "chat-message",
+    "avatar"
+   ],
+   "route": "/components/component-message",
+   "slug": "message",
+   "status": "preview",
+   "stories": {
+    "file": "packages/ui-react/src/components/message/message.stories.tsx",
+    "names": [
+     "Playground",
+     "Thread",
+     "DeliveryStates",
+     "Media",
+     "LongContent",
+     "Themes"
+    ],
+    "source": "import {\n  messageDeliveryStates,\n  messageDirections,\n  messagePositions,\n  themes,\n} from '@atom63/ui-foundation'\nimport {\n  Avatar,\n  AvatarFallback,\n  Message,\n  MessageEvent,\n  MessageList,\n  UIProvider,\n} from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\nimport { PhoneMissed } from 'lucide-react'\n\nconst meta = {\n  title: 'UI React/Message',\n  component: Message,\n  argTypes: {\n    direction: { control: 'inline-radio', options: messageDirections },\n    position: { control: 'inline-radio', options: messagePositions },\n    status: { control: 'select', options: [undefined, ...messageDeliveryStates] },\n  },\n  args: {\n    children: 'Are we still on for Saturday?',\n    direction: 'incoming',\n    label: 'Ada',\n    position: 'single',\n    time: '12:04',\n  },\n} satisfies Meta<typeof Message>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nconst ada = (\n  <Avatar size=\"sm\">\n    <AvatarFallback>AD</AvatarFallback>\n  </Avatar>\n)\n\nconst Frame = ({ children }: { children: React.ReactNode }) => (\n  <div style={{ maxWidth: 390, margin: '0 auto' }}>{children}</div>\n)\n\nexport const Playground: Story = {\n  render: args => (\n    <Frame>\n      <MessageList aria-label=\"Messages with Ada\">\n        <Message {...args} />\n      </MessageList>\n    </Frame>\n  ),\n}\n\n/* A thread: runs of consecutive messages join at their shared corners, and only the last shows the avatar and the tail. */\nexport const Thread: Story = {\n  render: () => (\n    <Frame>\n      <MessageList aria-label=\"Messages with Ada\">\n        <MessageEvent>Today</MessageEvent>\n        <Message avatar={ada} label=\"Ada\" position=\"first\" time=\"12:01\">\n          Hey!\n        </Message>\n        <Message avatar={ada} label=\"Ada\" position=\"middle\" time=\"12:01\">\n          Are we still on for Saturday?\n        </Message>\n        <Message avatar={ada} label=\"Ada\" position=\"last\" time=\"12:02\">\n          I can bring the tent.\n        </Message>\n        <Message direction=\"outgoing\" label=\"You\" position=\"first\" status=\"read\" time=\"12:04\">\n          Yes, 9am at the station\n        </Message>\n        <Message direction=\"outgoing\" label=\"You\" position=\"last\" status=\"delivered\" time=\"12:04\">\n          Bring snacks too 🙂\n        </Message>\n        <MessageEvent icon={<PhoneMissed />}>Missed voice call · 12:10</MessageEvent>\n        <Message avatar={ada} label=\"Ada\" time=\"12:12\">\n          Sorry, was driving. Call you later?\n        </Message>\n        <Message direction=\"outgoing\" label=\"You\" status=\"sending\" time=\"12:13\">\n          Sure\n        </Message>\n      </MessageList>\n    </Frame>\n  ),\n}\n\n/* Every delivery status of an outgoing message, each named for assistive technology. */\nexport const DeliveryStates: Story = {\n  render: () => (\n    <Frame>\n      <MessageList aria-label=\"Delivery states\">\n        {messageDeliveryStates.map(status => (\n          <Message direction=\"outgoing\" key={status} label=\"You\" status={status} time=\"12:04\">\n            {status}\n          </Message>\n        ))}\n      </MessageList>\n    </Frame>\n  ),\n}\n\n/* A photo message: the media takes the bubble's corners, with an optional caption. */\nexport const Media: Story = {\n  render: () => (\n    <Frame>\n      <MessageList aria-label=\"Photos\">\n        <Message\n          avatar={ada}\n          label=\"Ada\"\n          media={\n            <div\n              aria-label=\"Photo of the campsite\"\n              role=\"img\"\n              style={{ aspectRatio: '4 / 3', background: 'var(--a63-category-teal)' }}\n            />\n          }\n          time=\"12:20\"\n        >\n          The view from the campsite\n        </Message>\n        <Message\n          direction=\"outgoing\"\n          label=\"You\"\n          media={\n            <div\n              aria-label=\"Photo of the trail\"\n              role=\"img\"\n              style={{ aspectRatio: '1', background: 'var(--a63-category-green)' }}\n            />\n          }\n          status=\"read\"\n          time=\"12:21\"\n        />\n      </MessageList>\n    </Frame>\n  ),\n}\n\n/* A long word or link wraps inside the bubble instead of widening the thread. */\nexport const LongContent: Story = {\n  render: () => (\n    <Frame>\n      <MessageList aria-label=\"Long content\">\n        <Message label=\"Ada\" time=\"12:30\">\n          https://example.com/a/very/long/link/that/should/wrap/inside/the/bubble/without/overflowing\n        </Message>\n        <Message direction=\"outgoing\" label=\"You\" status=\"read\" time=\"12:31\">\n          Got it — I will read the whole thing tonight and send you my notes before we leave on\n          Saturday morning.\n        </Message>\n      </MessageList>\n    </Frame>\n  ),\n}\n\nexport const Themes: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {themes.map(theme =>\n        (['light', 'dark'] as const).map(mode => (\n          <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>\n            <div style={{ background: 'var(--a63-surface-page)', padding: '0.75rem' }}>\n              <MessageList aria-label={`${theme} ${mode}`}>\n                <Message label=\"Ada\" time=\"12:04\">\n                  {theme} / {mode}\n                </Message>\n                <Message direction=\"outgoing\" label=\"You\" status=\"read\" time=\"12:05\">\n                  Outgoing in the accent\n                </Message>\n              </MessageList>\n            </div>\n          </UIProvider>\n        ))\n      )}\n    </div>\n  ),\n}\n"
+   },
+   "summary": "Message shows one message in a thread between people: a bubble on its sender's side, joined to the messages around it, with its time and delivery status. For an AI assistant, use ChatMessage.",
+   "usage": "Wrap the thread in MessageList (a named log region). Pass direction (incoming or outgoing), position in the run of one sender (single, first, middle, last), time and, for your own messages, status. Use MessageEvent for calls and dates, Avatar ring for stories, and ChatMessage instead for an AI assistant.",
+   "usageExports": [
+    "Message",
+    "MessageList",
+    "MessageEvent"
    ]
   },
   {

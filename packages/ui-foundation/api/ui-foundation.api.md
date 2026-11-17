@@ -579,6 +579,8 @@ export interface AvatarContract {
     // (undocumented)
     defaultSize: AvatarSize;
     // (undocumented)
+    rings: readonly AvatarRing[];
+    // (undocumented)
     shapes: readonly AvatarShape[];
     // (undocumented)
     sizes: readonly AvatarSize[];
@@ -595,12 +597,19 @@ export const avatarContract: {
     defaultShape: "circle";
     defaultSize: "default";
     compositions: readonly ["standalone", "badge", "group"];
+    rings: readonly ["unseen", "seen"];
     shapes: readonly ["circle", "square"];
     sizes: readonly ["xs", "sm", "default", "lg"];
     slots: readonly ["avatar", "avatar-image", "avatar-fallback", "avatar-badge", "avatar-group", "avatar-group-count"];
     states: readonly ["loading", "loaded", "fallback"];
     visualArchetypes: readonly ["marker"];
 };
+
+// @public (undocumented)
+export type AvatarRing = (typeof avatarRings)[number];
+
+// @public (undocumented)
+export const avatarRings: readonly ["unseen", "seen"];
 
 // @public (undocumented)
 export type AvatarShape = (typeof avatarShapes)[number];
@@ -2179,6 +2188,22 @@ export const crossRendererContracts: readonly [{
         readonly react: readonly ["One button per snap point, named \"Slide 2 of 5\"; the current one carries aria-current.", "`shape` and `tone` on CarouselDots pick round dots or a pill, and neutral, accent or on-media colours."];
         readonly swiftUI: readonly ["TabView with .page(indexDisplayMode: .never) pages the slides; AtomPageDots binds to its selection.", "VoiceOver reads the dots as one adjustable element; swiping up or down changes the slide.", "`shape:` and `tone:` on AtomPageDots take the same values; the round dots sit closer together, as UIPageControl does, because VoiceOver adjusts the indicator as one element."];
     };
+}, {
+    readonly id: "message";
+    readonly foundationContract: "message";
+    readonly foundationAxis: "states";
+    readonly catalogItem: "message";
+    readonly reactRenderer: "Message";
+    readonly swiftUIRenderer: "AtomMessage";
+    readonly intent: "Show one message between people as a bubble on its sender's side, joined to the messages around it from the same sender, with its time and delivery status.";
+    readonly parity: "strict";
+    readonly requiredStates: readonly ["rest"];
+    readonly sharedOutcomes: readonly ["direction-sets-side-and-fill", "runs-join-at-shared-corners", "status-is-named"];
+    readonly accessibilityOutcomes: readonly ["names-the-sender", "names-the-delivery-status"];
+    readonly platformAdaptations: {
+        readonly react: readonly ["MessageList is a log region; Message is an article named by label (the sender), with logical corner radii so a thread mirrors in right-to-left scripts.", "Outgoing bubbles read --a63-message-outgoing-background and -foreground, which default to the accent; a theme or a product can set them."];
+        readonly swiftUI: readonly ["AtomMessage takes direction, position, time and status; AtomMessageEvent is the centred row. The bubble uses UnevenRoundedRectangle for the joined corners.", "The status icon is an SF Symbol with an accessibility label; the bubble combines its children into one VoiceOver element."];
+    };
 }];
 
 // @public (undocumented)
@@ -3341,6 +3366,74 @@ export type MenuVisualArchetype = (typeof menuVisualArchetypes)[number];
 
 // @public (undocumented)
 export const menuVisualArchetypes: readonly ["menu", "overlay"];
+
+// @public (undocumented)
+export interface MessageContract {
+    // (undocumented)
+    defaultDirection: MessageDirection;
+    // (undocumented)
+    defaultPosition: MessagePosition;
+    // (undocumented)
+    deliveryStates: readonly MessageDeliveryState[];
+    // (undocumented)
+    directions: readonly MessageDirection[];
+    // (undocumented)
+    positions: readonly MessagePosition[];
+    // (undocumented)
+    slots: readonly MessageSlot[];
+    // (undocumented)
+    states: readonly MessageState[];
+    // (undocumented)
+    visualArchetypes: readonly MessageVisualArchetype[];
+}
+
+// @public (undocumented)
+export const messageContract: {
+    defaultDirection: "incoming";
+    defaultPosition: "single";
+    directions: readonly ["incoming", "outgoing"];
+    positions: readonly ["single", "first", "middle", "last"];
+    deliveryStates: readonly ["sending", "sent", "delivered", "read", "failed"];
+    slots: readonly ["message-list", "message", "message-avatar", "message-bubble", "message-media", "message-content", "message-meta", "message-status", "message-event"];
+    states: readonly ["rest"];
+    visualArchetypes: readonly ["surface"];
+};
+
+// @public (undocumented)
+export type MessageDeliveryState = (typeof messageDeliveryStates)[number];
+
+// @public (undocumented)
+export const messageDeliveryStates: readonly ["sending", "sent", "delivered", "read", "failed"];
+
+// @public (undocumented)
+export type MessageDirection = (typeof messageDirections)[number];
+
+// @public (undocumented)
+export const messageDirections: readonly ["incoming", "outgoing"];
+
+// @public (undocumented)
+export type MessagePosition = (typeof messagePositions)[number];
+
+// @public (undocumented)
+export const messagePositions: readonly ["single", "first", "middle", "last"];
+
+// @public (undocumented)
+export type MessageSlot = (typeof messageSlots)[number];
+
+// @public (undocumented)
+export const messageSlots: readonly ["message-list", "message", "message-avatar", "message-bubble", "message-media", "message-content", "message-meta", "message-status", "message-event"];
+
+// @public (undocumented)
+export type MessageState = (typeof messageStates)[number];
+
+// @public (undocumented)
+export const messageStates: readonly ["rest"];
+
+// @public (undocumented)
+export type MessageVisualArchetype = (typeof messageVisualArchetypes)[number];
+
+// @public (undocumented)
+export const messageVisualArchetypes: readonly ["surface"];
 
 // @public (undocumented)
 export type Mode = (typeof modes)[number];
@@ -5539,7 +5632,7 @@ export const visualArchetypes: {
         readonly id: "surface";
         readonly label: "Static content surfaces";
         readonly description: "In-flow containers and content surfaces that do not inherently manipulate state.";
-        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps", "Amount", "AppView"];
+        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps", "Amount", "AppView", "Message"];
         readonly contracts: readonly ["surface"];
     };
 };

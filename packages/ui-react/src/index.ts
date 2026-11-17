@@ -423,6 +423,8 @@ export {
   MenubarTrigger,
 } from './components/menubar'
 export type { MenubarCheckboxItemProps, MenubarRadioItemProps } from './components/menubar'
+export { Message, MessageEvent, MessageList } from './components/message'
+export type { MessageEventProps, MessageListProps, MessageProps } from './components/message'
 export {
   NavigationMenu,
   NavigationMenuContent,

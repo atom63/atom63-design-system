@@ -4,12 +4,16 @@
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 // The fallback holds initials or one icon (an assistant's sparkle, an app glyph) in a filled circle;
-// an icon is drawn at the control icon size for the size step.
+// an icon is drawn at the control icon size for the size step. A ring marks a story or new activity:
+// unseen draws --a63-avatar-ring-fill (the accent unless a product sets it, for example to a
+// gradient of the category palette) set off from the face by a gap of the page surface; seen draws a
+// thin border-coloured ring.
 
 export const avatarSizes = ['xs', 'sm', 'default', 'lg'] as const
 export const avatarShapes = ['circle', 'square'] as const
 export const avatarStates = ['loading', 'loaded', 'fallback'] as const
 export const avatarCompositions = ['standalone', 'badge', 'group'] as const
+export const avatarRings = ['unseen', 'seen'] as const
 export const avatarSlots = [
   'avatar',
   'avatar-image',
@@ -24,6 +28,7 @@ export type AvatarSize = (typeof avatarSizes)[number]
 export type AvatarShape = (typeof avatarShapes)[number]
 export type AvatarState = (typeof avatarStates)[number]
 export type AvatarComposition = (typeof avatarCompositions)[number]
+export type AvatarRing = (typeof avatarRings)[number]
 export type AvatarSlot = (typeof avatarSlots)[number]
 export type AvatarVisualArchetype = (typeof avatarVisualArchetypes)[number]
 
@@ -31,6 +36,7 @@ export interface AvatarContract {
   defaultShape: AvatarShape
   defaultSize: AvatarSize
   compositions: readonly AvatarComposition[]
+  rings: readonly AvatarRing[]
   shapes: readonly AvatarShape[]
   sizes: readonly AvatarSize[]
   slots: readonly AvatarSlot[]
@@ -42,6 +48,7 @@ export const avatarContract = {
   defaultShape: 'circle',
   defaultSize: 'default',
   compositions: avatarCompositions,
+  rings: avatarRings,
   shapes: avatarShapes,
   sizes: avatarSizes,
   slots: avatarSlots,

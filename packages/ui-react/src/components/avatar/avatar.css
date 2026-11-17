@@ -21,11 +21,30 @@
 .a63-Avatar[data-shape='square'] {
   --a63-avatar-radius: var(--radius-md);
 }
-/* Ring: the accent color, set off from the face by a gap of the page surface. */
+/*
+ * Ring: --a63-avatar-ring-fill (the accent by default; a product can set a
+ * gradient) behind the face, set off by a gap of the page surface. The fill is
+ * a ::before under the face; the gap is an outline, which paints above it.
+ */
 .a63-Avatar[data-ring] {
-  box-shadow:
-    0 0 0 2px var(--a63-surface-page),
-    0 0 0 4px var(--a63-action-primary);
+  isolation: isolate;
+  outline: 2px solid var(--a63-surface-page);
+}
+
+.a63-Avatar[data-ring]::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  z-index: -1;
+  border-radius: calc(var(--a63-avatar-radius, var(--radius-pill)) + 4px);
+  background: var(--a63-avatar-ring-fill, var(--a63-action-primary));
+  pointer-events: none;
+}
+
+/* Seen: a thinner ring in the control border colour. */
+.a63-Avatar[data-ring='seen']::before {
+  inset: -3px;
+  background: var(--a63-border-control);
 }
 
 .a63-Avatar::after {

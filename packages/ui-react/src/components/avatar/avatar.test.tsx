@@ -74,4 +74,15 @@ describe('Avatar', () => {
     expect(el()).toHaveAttribute('data-shape', 'square')
     expect(el()).toHaveAttribute('data-ring')
   })
+
+  it('marks the ring: true and unseen alike, and seen apart', () => {
+    const ring = (value: boolean | 'unseen' | 'seen') =>
+      render(<Avatar ring={value} />)
+        .container.querySelector('[data-slot="avatar"]')
+        ?.getAttribute('data-ring')
+    expect(ring(true)).toBe('unseen')
+    expect(ring('unseen')).toBe('unseen')
+    expect(ring('seen')).toBe('seen')
+    expect(ring(false)).toBeNull()
+  })
 })

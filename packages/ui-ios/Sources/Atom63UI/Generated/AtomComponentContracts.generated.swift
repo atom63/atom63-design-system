@@ -558,6 +558,23 @@ public enum AtomComponentContracts {
       accessibilityOutcomes: ["names-the-indicator", "exposes-the-current-position"],
       motion: nil,
       platformAdaptations: AtomPlatformAdaptations(react: ["One button per snap point, named \"Slide 2 of 5\"; the current one carries aria-current.", "`shape` and `tone` on CarouselDots pick round dots or a pill, and neutral, accent or on-media colours."], swiftUI: ["TabView with .page(indexDisplayMode: .never) pages the slides; AtomPageDots binds to its selection.", "VoiceOver reads the dots as one adjustable element; swiping up or down changes the slide.", "`shape:` and `tone:` on AtomPageDots take the same values; the round dots sit closer together, as UIPageControl does, because VoiceOver adjusts the indicator as one element."])
+    ),
+    AtomComponentContract(
+      id: "message",
+      foundationContract: "message",
+      foundationAxis: "states",
+      catalogItem: "message",
+      reactRenderer: "Message",
+      swiftUIRenderer: "AtomMessage",
+      swiftUIRendererByVariant: [],
+      intent: "Show one message between people as a bubble on its sender's side, joined to the messages around it from the same sender, with its time and delivery status.",
+      parity: .strict,
+      requiredStates: ["rest"],
+      stateTones: [:],
+      sharedOutcomes: ["direction-sets-side-and-fill", "runs-join-at-shared-corners", "status-is-named"],
+      accessibilityOutcomes: ["names-the-sender", "names-the-delivery-status"],
+      motion: nil,
+      platformAdaptations: AtomPlatformAdaptations(react: ["MessageList is a log region; Message is an article named by label (the sender), with logical corner radii so a thread mirrors in right-to-left scripts.", "Outgoing bubbles read --a63-message-outgoing-background and -foreground, which default to the accent; a theme or a product can set them."], swiftUI: ["AtomMessage takes direction, position, time and status; AtomMessageEvent is the centred row. The bubble uses UnevenRoundedRectangle for the joined corners.", "The status icon is an SF Symbol with an accessibility label; the bubble combines its children into one VoiceOver element."])
     )
   ]
 

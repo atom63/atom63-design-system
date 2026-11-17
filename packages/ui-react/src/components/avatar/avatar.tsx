@@ -1,14 +1,24 @@
 'use client'
 
-import { type AvatarShape, type AvatarSize, avatarContract } from '@atom63/ui-foundation'
+import {
+  type AvatarRing,
+  type AvatarShape,
+  type AvatarSize,
+  avatarContract,
+} from '@atom63/ui-foundation'
 import { Avatar as AvatarPrimitive } from '@base-ui/react/avatar'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
 
 export type AvatarProps = AvatarPrimitive.Root.Props & {
-  /** Draws a ring in the accent color, set off from the face by the page surface (new activity). */
-  ring?: boolean
+  /**
+   * A ring for a story or new activity, set off from the face by a gap of the
+   * page surface. `unseen` (or `true`) draws `--a63-avatar-ring-fill`, the
+   * accent unless a product sets it, for example to a gradient of the category
+   * palette; `seen` draws a thin border-coloured ring.
+   */
+  ring?: boolean | AvatarRing
   /** `square` suits organisations and apps; people stay `circle`. */
   shape?: AvatarShape
   size?: AvatarSize
@@ -27,7 +37,7 @@ export function Avatar({
   return (
     <AvatarPrimitive.Root
       className={cn('a63-Avatar', className)}
-      data-ring={ring ? '' : undefined}
+      data-ring={ring === true ? 'unseen' : ring || undefined}
       data-shape={shape}
       data-size={size}
       data-slot="avatar"

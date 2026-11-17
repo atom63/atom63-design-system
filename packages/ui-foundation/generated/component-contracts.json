@@ -233,9 +233,10 @@
       "source": "packages/ui-foundation/contracts/components/avatar.json",
       "exportName": "avatarContract",
       "maturity": "stable",
-      "description": "The fallback holds initials or one icon (an assistant's sparkle, an app glyph) in a filled circle; an icon is drawn at the control icon size for the size step.",
+      "description": "The fallback holds initials or one icon (an assistant's sparkle, an app glyph) in a filled circle; an icon is drawn at the control icon size for the size step. A ring marks a story or new activity: unseen draws --a63-avatar-ring-fill (the accent unless a product sets it, for example to a gradient of the category palette) set off from the face by a gap of the page surface; seen draws a thin border-coloured ring.",
       "axes": [
         { "name": "compositions", "values": ["standalone", "badge", "group"] },
+        { "name": "rings", "values": ["unseen", "seen"] },
         { "name": "shapes", "values": ["circle", "square"], "default": "circle" },
         { "name": "sizes", "values": ["xs", "sm", "default", "lg"], "default": "default" }
       ],
@@ -1830,6 +1831,60 @@
       "states": ["closed", "open", "highlighted", "disabled", "selected"],
       "tokenSlots": [],
       "visualArchetypes": ["surface", "trigger", "menu", "overlay"]
+    },
+    "message": {
+      "source": "packages/ui-foundation/contracts/components/message.json",
+      "exportName": "messageContract",
+      "maturity": "preview",
+      "description": "A person-to-person chat message, separate from ChatMessage (an AI assistant's turn). direction sets the side and the fill: incoming on the leading side on a muted fill, outgoing on the trailing side in the accent. position places the message in a run of consecutive messages from one sender: the corners where messages join tighten, and only single and last draw the tail and show the avatar. The meta slot sits inside the bubble at its end with the time and, for outgoing messages, a delivery status (sending, sent, delivered, read, failed) named for assistive technology. MessageEvent is a centred row for what is not a message: a call, a date, someone joining.",
+      "axes": [
+        { "name": "directions", "values": ["incoming", "outgoing"], "default": "incoming" },
+        {
+          "name": "positions",
+          "values": ["single", "first", "middle", "last"],
+          "default": "single"
+        },
+        { "name": "deliveryStates", "values": ["sending", "sent", "delivered", "read", "failed"] }
+      ],
+      "slots": [
+        "message-list",
+        "message",
+        "message-avatar",
+        "message-bubble",
+        "message-media",
+        "message-content",
+        "message-meta",
+        "message-status",
+        "message-event"
+      ],
+      "states": ["rest"],
+      "tokenSlots": [],
+      "visualArchetypes": ["surface"],
+      "crossRenderer": {
+        "foundationAxis": "states",
+        "catalogItem": "message",
+        "reactRenderer": "Message",
+        "swiftUIRenderer": "AtomMessage",
+        "intent": "Show one message between people as a bubble on its sender's side, joined to the messages around it from the same sender, with its time and delivery status.",
+        "parity": "strict",
+        "requiredStates": ["rest"],
+        "sharedOutcomes": [
+          "direction-sets-side-and-fill",
+          "runs-join-at-shared-corners",
+          "status-is-named"
+        ],
+        "accessibilityOutcomes": ["names-the-sender", "names-the-delivery-status"],
+        "platformAdaptations": {
+          "react": [
+            "MessageList is a log region; Message is an article named by label (the sender), with logical corner radii so a thread mirrors in right-to-left scripts.",
+            "Outgoing bubbles read --a63-message-outgoing-background and -foreground, which default to the accent; a theme or a product can set them."
+          ],
+          "swiftUI": [
+            "AtomMessage takes direction, position, time and status; AtomMessageEvent is the centred row. The bubble uses UnevenRoundedRectangle for the joined corners.",
+            "The status icon is an SF Symbol with an accessibility label; the bubble combines its children into one VoiceOver element."
+          ]
+        }
+      }
     },
     "navigation-menu": {
       "source": "packages/ui-foundation/contracts/components/navigation-menu.json",

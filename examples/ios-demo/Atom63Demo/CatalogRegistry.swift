@@ -80,6 +80,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
   case pagination
   case toast
   case inform
+  case message
 
   var id: Self { self }
 
@@ -99,6 +100,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
       .content
     case .contentState, .notice, .progress, .skeleton, .syncStatus, .pagination, .toast, .inform:
       .feedback
+    case .message:
+      .content
     }
   }
 
@@ -148,6 +151,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .pagination: "Pagination"
     case .toast: "Toast"
     case .inform: "Inform"
+    case .message:
+      "Message"
     }
   }
 
@@ -197,6 +202,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .pagination: "ellipsis.circle"
     case .toast: "bell.badge"
     case .inform: "megaphone"
+    case .message:
+      "bubble.left.and.bubble.right"
     }
   }
 
@@ -290,6 +297,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
       "Transient confirmation with automatic dismissal and reduced-motion support."
     case .inform:
       "One arbiter decides which messages show: a banner, a dialog, and up to three flyouts, never more than one blocking at a time."
+    case .message:
+      "Message renders one person-to-person chat message as a directional bubble."
     }
   }
 
@@ -339,6 +348,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     case .pagination: "AtomLoadMoreView / AtomPaginationIntent"
     case .toast: "AtomToast / atomToast(_:)"
     case .inform: "atomInform(_:route:store:)"
+    case .message:
+      "AtomMessage"
     }
   }
 
@@ -432,6 +443,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
       "ContentView()\n  .atomToast($toast)"
     case .inform:
       "ContentView()\n  .atomInform(messages, route: \"/projects\", store: dismissals)"
+    case .message:
+      "AtomMessage { Text(\"Content\") }"
     }
   }
 

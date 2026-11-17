@@ -1045,6 +1045,38 @@ export const crossRendererContracts = [
         "`shape:` and `tone:` on AtomPageDots take the same values; the round dots sit closer together, as UIPageControl does, because VoiceOver adjusts the indicator as one element."
       ]
     }
+  },
+  {
+    "id": "message",
+    "foundationContract": "message",
+    "foundationAxis": "states",
+    "catalogItem": "message",
+    "reactRenderer": "Message",
+    "swiftUIRenderer": "AtomMessage",
+    "intent": "Show one message between people as a bubble on its sender's side, joined to the messages around it from the same sender, with its time and delivery status.",
+    "parity": "strict",
+    "requiredStates": [
+      "rest"
+    ],
+    "sharedOutcomes": [
+      "direction-sets-side-and-fill",
+      "runs-join-at-shared-corners",
+      "status-is-named"
+    ],
+    "accessibilityOutcomes": [
+      "names-the-sender",
+      "names-the-delivery-status"
+    ],
+    "platformAdaptations": {
+      "react": [
+        "MessageList is a log region; Message is an article named by label (the sender), with logical corner radii so a thread mirrors in right-to-left scripts.",
+        "Outgoing bubbles read --a63-message-outgoing-background and -foreground, which default to the accent; a theme or a product can set them."
+      ],
+      "swiftUI": [
+        "AtomMessage takes direction, position, time and status; AtomMessageEvent is the centred row. The bubble uses UnevenRoundedRectangle for the joined corners.",
+        "The status icon is an SF Symbol with an accessibility label; the bubble combines its children into one VoiceOver element."
+      ]
+    }
   }
 ] as const satisfies readonly CrossRendererComponentContract[]
 

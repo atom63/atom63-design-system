@@ -71,6 +71,7 @@ export type {
 export {
   avatarCompositions,
   avatarContract,
+  avatarRings,
   avatarShapes,
   avatarSizes,
   avatarSlots,
@@ -80,6 +81,7 @@ export {
 export type {
   AvatarComposition,
   AvatarContract,
+  AvatarRing,
   AvatarShape,
   AvatarSize,
   AvatarSlot,
@@ -729,6 +731,24 @@ export type {
   MenubarState,
   MenubarVisualArchetype,
 } from './components/menubar/menubar-contract'
+export {
+  messageContract,
+  messageDeliveryStates,
+  messageDirections,
+  messagePositions,
+  messageSlots,
+  messageStates,
+  messageVisualArchetypes,
+} from './components/message/message-contract'
+export type {
+  MessageContract,
+  MessageDeliveryState,
+  MessageDirection,
+  MessagePosition,
+  MessageSlot,
+  MessageState,
+  MessageVisualArchetype,
+} from './components/message/message-contract'
 export {
   navigationMenuContract,
   navigationMenuSlots,
