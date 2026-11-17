@@ -47,6 +47,12 @@ export const rules = [
     why: 'Theme colors are meaningless on an unknown picture; these hold contrast on any image.',
   },
   {
+    id: 'content-colors',
+    rule: 'Draw content that carries its own colours (illustrations, game pieces, map and chart series, story rings, category marks) with the `--a63-category-{hue}` palette: 18 hues, each with `-subtle` and `-subtle-foreground`, as utilities such as `bg-category-green` and `text-category-green-subtle-foreground`. For another shade, mix two tokens with `color-mix(in oklch, var(--a63-category-green) 75%, var(--a63-text-primary))`, never a colour keyword or value.',
+    why: 'The palette follows the theme and the mode, so content stays legible in dark mode. A literal colour, or a keyword such as `black` inside `color-mix()`, fails `raw-color` and makes a vibe case invalid.',
+    check: ['raw-color'],
+  },
+  {
     id: 'logical-directions',
     rule: 'Use logical properties and utilities (`margin-inline-start`, `ps-4`, `text-start`, `border-s`), not left and right.',
     why: 'Layouts must mirror in right-to-left languages.',
