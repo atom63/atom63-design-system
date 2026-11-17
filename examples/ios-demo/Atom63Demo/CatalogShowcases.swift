@@ -12,6 +12,8 @@ struct CatalogShowcase: View {
       ThemeShowcase()
     case .density:
       DensityShowcase()
+    case .appBar:
+      AppBarShowcase()
     case .button:
       ButtonShowcase()
     case .iconButton:
@@ -96,6 +98,50 @@ struct CatalogShowcase: View {
       InformShowcase()
     case .message:
       MessageShowcase()
+    }
+  }
+}
+
+private struct AppBarShowcase: View {
+  @Environment(\.atomTheme) private var theme
+  @Environment(\.colorScheme) private var colorScheme
+
+  var body: some View {
+    VStack(alignment: .leading, spacing: AtomTokens.Space.x6) {
+      ShowcaseSection("Standard", subtitle: "On the page surface.") {
+        bar
+      }
+      ShowcaseSection("Compact", subtitle: "Smaller title and tighter insets.") {
+        bar.atomDensity(.compact)
+      }
+      ShowcaseSection("Floating", subtitle: "Controls on on-media plates over a picture.") {
+        LinearGradient(
+          colors: [
+            theme.colors.brand500.resolve(for: colorScheme),
+            theme.colors.brand800.resolve(for: colorScheme),
+          ],
+          startPoint: .topLeading,
+          endPoint: .bottomTrailing
+        )
+        .frame(height: 160)
+        .overlay(alignment: .top) {
+          AtomAppBar(style: .floating) {
+            AtomIconButton("Back", systemImage: "chevron.backward") {}
+          } trailing: {
+            AtomIconButton("Share", systemImage: "square.and.arrow.up") {}
+            AtomIconButton("Save", systemImage: "heart") {}
+          }
+        }
+        .clipShape(.rect(cornerRadius: AtomTokens.Radius.extraLarge))
+      }
+    }
+  }
+
+  private var bar: some View {
+    AtomAppBar("Inbox") {
+      AtomIconButton("Back", systemImage: "chevron.backward") {}
+    } trailing: {
+      AtomIconButton("Compose", systemImage: "square.and.pencil") {}
     }
   }
 }

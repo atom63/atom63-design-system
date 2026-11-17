@@ -89,6 +89,27 @@ ScreenContent()
   .atomDensity(.compact)
 ```
 
+### App bar
+
+`AtomAppBar` is a custom top bar, the native counterpart of the web `AppView`
+top-bar slot. Keep the native navigation bar for a plain back-and-title screen;
+use `AtomAppBar` when the bar needs what the native one cannot draw: icon
+buttons floating over a photo (`style: .floating`, on on-media plates), a search
+field across the bar (the `principal` slot), or a compact bar. `.atomAppBar`
+places it in the top safe-area inset, so content scrolls under it.
+
+```swift
+PhotoDetail()
+  .toolbar(.hidden, for: .navigationBar)
+  .atomAppBar {
+    AtomAppBar(style: .floating) {
+      AtomIconButton("Back", systemImage: "chevron.backward") { dismiss() }
+    } trailing: {
+      AtomIconButton("Share", systemImage: "square.and.arrow.up") { share() }
+    }
+  }
+```
+
 The JSON files in `tokens/` document how the platform-neutral component slots
 map to SwiftUI. Component anatomy and behavior remain native to iOS.
 Cross-renderer contracts may therefore map a React component to a native SwiftUI
