@@ -10,6 +10,8 @@ struct CatalogShowcase: View {
       TokenShowcase()
     case .theme:
       ThemeShowcase()
+    case .density:
+      DensityShowcase()
     case .button:
       ButtonShowcase()
     case .iconButton:
@@ -92,6 +94,33 @@ struct CatalogShowcase: View {
       ToastShowcase()
     case .inform:
       InformShowcase()
+    }
+  }
+}
+
+private struct DensityShowcase: View {
+  var body: some View {
+    VStack(alignment: .leading, spacing: AtomTokens.Space.x6) {
+      ShowcaseSection("Regular", subtitle: "The default rhythm.") {
+        DensitySample()
+      }
+      ShowcaseSection("Compact", subtitle: "Spacing × 0.875, text one style smaller.") {
+        DensitySample()
+          .atomDensity(.compact)
+      }
+    }
+  }
+}
+
+private struct DensitySample: View {
+  var body: some View {
+    AtomCard {
+      VStack(alignment: .leading, spacing: AtomTokens.Space.x2) {
+        AtomSectionHeader("Upcoming", subtitle: "Two trips this month")
+        AtomListRow(title: "Lisbon", subtitle: "Nov 21 – 24", systemImage: "airplane")
+        AtomValueRow("Total", value: "$1,240", emphasizesValue: true)
+        AtomButton("Book trip", variant: .primary) {}
+      }
     }
   }
 }
