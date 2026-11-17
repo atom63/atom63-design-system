@@ -119,6 +119,12 @@ async function packPackage(packageDefinition, tarballDirectory) {
   return { ...packageDefinition, tarballPath }
 }
 
+// csstype 3.2.4 (published 2026-11-17) breaks framer-motion's MotionStyle type (TS2320 on
+// pathLength) for any consumer that type-checks its dependencies, with motion 13 and 14 alike.
+// csstype comes through @types/react, so our packages cannot pin it for consumers; the smoke
+// consumer pins it to 3.2.3 so it still tests our packages. Remove once a later csstype fixes it.
+const UPSTREAM_PINS = { csstype: '3.2.3' }
+
 function installedVersion(packageName) {
   let currentPath
   try {
@@ -205,6 +211,7 @@ async function writeHarness(harnessDirectory, packedPackages) {
     },
     pnpm: {
       overrides: {
+        ...UPSTREAM_PINS,
         '@atom63/styles': tarballSpec('@atom63/styles'),
         '@atom63/ui-foundation': tarballSpec('@atom63/ui-foundation'),
         '@atom63/ui-react': tarballSpec('@atom63/ui-react'),
