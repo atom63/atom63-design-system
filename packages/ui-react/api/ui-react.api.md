@@ -3051,7 +3051,7 @@ export const useFormField: () => {
     isDirty: boolean;
     isTouched: boolean;
     isValidating: boolean;
-    error?: react_hook_form.FieldError;
+    error?: react_hook_form.FieldError | undefined;
     id: string;
     name: string;
     formItemId: string;
