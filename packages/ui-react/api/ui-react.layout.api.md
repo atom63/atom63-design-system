@@ -6,6 +6,7 @@
 
 import { AppViewChrome } from '@atom63/ui-foundation';
 import { AppViewLayout } from '@atom63/ui-foundation';
+import { AppViewTopBarSpan } from '@atom63/ui-foundation';
 import { ComponentPropsWithoutRef } from 'react';
 import { CSSProperties } from 'react';
 import * as React_2 from 'react';
@@ -22,10 +23,17 @@ export type AppViewProps = Omit<React_2.ComponentProps<'div'>, 'children'> & {
     layout?: AppViewLayout;
     chrome?: AppViewChrome;
     topBar?: React_2.ReactNode;
+    topBarSpan?: AppViewTopBarSpan;
+    rail?: React_2.ReactNode;
+    railLabel?: string;
+    railWidth?: string;
     panel?: React_2.ReactNode;
     panelLabel?: string;
     panelWidth?: string;
     overlay?: React_2.ReactNode;
+    aside?: React_2.ReactNode;
+    asideLabel?: string;
+    asideWidth?: string;
     bottomBar?: React_2.ReactNode;
     bottomBarLabel?: string;
     tabBar?: React_2.ReactNode;

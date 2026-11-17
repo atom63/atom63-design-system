@@ -191,6 +191,7 @@ export {
   appViewContract,
   appViewLayouts,
   appViewSlots,
+  appViewTopBarSpans,
   appViewVisualArchetypes,
 } from './components/app-view/app-view-contract'
 export type {
@@ -198,6 +199,7 @@ export type {
   AppViewContract,
   AppViewLayout,
   AppViewSlot,
+  AppViewTopBarSpan,
   AppViewVisualArchetype,
 } from './components/app-view/app-view-contract'
 export {
