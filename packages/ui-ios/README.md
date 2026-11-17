@@ -75,6 +75,20 @@ Slider(value: $volume).atomSliderTone(.neutral)
 AtomProgressView("Upload", value: progress, tone: .neutral)
 ```
 
+### Density
+
+`.atomDensity(.compact)` is the native counterpart of the web `data-a63-density`
+axis. Inside it, spacing in `AtomCard`, `AtomListRow`, `AtomValueRow` and
+`AtomSectionHeader` scales by 0.875, their text steps down one Dynamic Type
+style, and an `AtomButton` draws one size smaller (`.regular` as `.compact`).
+Hit areas do not shrink: buttons, tab rows and selection rows keep the 44pt
+touch target. Use it for dense phone screens; the default is `.regular`.
+
+```swift
+ScreenContent()
+  .atomDensity(.compact)
+```
+
 The JSON files in `tokens/` document how the platform-neutral component slots
 map to SwiftUI. Component anatomy and behavior remain native to iOS.
 Cross-renderer contracts may therefore map a React component to a native SwiftUI

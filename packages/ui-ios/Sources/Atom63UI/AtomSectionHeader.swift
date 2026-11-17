@@ -3,6 +3,7 @@ import SwiftUI
 public struct AtomSectionHeader: View {
   @Environment(\.atomTheme) private var theme
   @Environment(\.colorScheme) private var colorScheme
+  @Environment(\.atomDensity) private var density
 
   private let title: String
   private let subtitle: String?
@@ -22,16 +23,16 @@ public struct AtomSectionHeader: View {
   }
 
   public var body: some View {
-    HStack(alignment: .firstTextBaseline, spacing: AtomTokens.Space.x3) {
-      VStack(alignment: .leading, spacing: AtomTokens.Space.x1) {
+    HStack(alignment: .firstTextBaseline, spacing: density.space(AtomTokens.Space.x3)) {
+      VStack(alignment: .leading, spacing: density.space(AtomTokens.Space.x1)) {
         Text(title)
-          .font(.headline)
+          .font(.system(density.textStyle(.headline), weight: .semibold))
           .foregroundStyle(theme.colors.textPrimary.resolve(for: colorScheme))
           .accessibilityAddTraits(.isHeader)
 
         if let subtitle {
           Text(subtitle)
-            .font(.footnote)
+            .font(.system(density.textStyle(.footnote)))
             .foregroundStyle(theme.colors.textSecondary.resolve(for: colorScheme))
         }
       }
@@ -39,7 +40,7 @@ public struct AtomSectionHeader: View {
 
       if let actionTitle, let action {
         Button(actionTitle, action: action)
-          .font(.subheadline.weight(.semibold))
+          .font(.system(density.textStyle(.subheadline), weight: .semibold))
       }
     }
   }
