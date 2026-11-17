@@ -96,6 +96,8 @@ struct CatalogShowcase: View {
       ToastShowcase()
     case .inform:
       InformShowcase()
+    case .message:
+      MessageShowcase()
     }
   }
 }
@@ -1508,7 +1510,31 @@ private struct AvatarShowcase: View {
           badge: .count(3, accessibilityLabel: "3 unread messages")
         )
       }
+
+      ShowcaseStateLabel("ring")
+      HStack(alignment: .bottom, spacing: AtomTokens.Space.x5) {
+        AtomAvatar(name: "Your Story", size: 56, ring: .unseen, ringStyle: storyGradient)
+        AtomAvatar(name: "Ada Lovelace", size: 56, ring: .unseen)
+        AtomAvatar(name: "Lin Wu", size: 56, ring: .seen)
+      }
     }
+  }
+
+  @Environment(\.atomTheme) private var theme
+  @Environment(\.colorScheme) private var colorScheme
+
+  /// A story ring as a gradient of theme colours; a product passes its own.
+  private var storyGradient: AnyShapeStyle {
+    AnyShapeStyle(
+      AngularGradient(
+        colors: [
+          theme.colors.statusWarning.resolve(for: colorScheme),
+          theme.colors.brand500.resolve(for: colorScheme),
+          theme.colors.statusWarning.resolve(for: colorScheme),
+        ],
+        center: .center
+      )
+    )
   }
 }
 
@@ -1700,5 +1726,37 @@ private struct ToastShowcase: View {
     }
     .frame(maxWidth: .infinity, minHeight: 120, alignment: .topLeading)
     .atomToast($toast)
+  }
+}
+
+private struct MessageShowcase: View {
+  var body: some View {
+    VStack(alignment: .leading, spacing: AtomTokens.Space.x6) {
+      ShowcaseSection("Thread", subtitle: "Runs join at their shared corners; the last shows the avatar and the tail.") {
+        VStack(spacing: AtomTokens.Space.x1 / 2) {
+          AtomMessageEvent("Today")
+          AtomMessage("Hey!", from: "Ada", position: .first, time: "12:01") { avatar }
+          AtomMessage("Are we still on for Saturday?", from: "Ada", position: .middle, time: "12:01") { avatar }
+          AtomMessage("I can bring the tent.", from: "Ada", position: .last, time: "12:02") { avatar }
+          AtomMessage("Yes, 9am at the station", from: "You", direction: .outgoing, position: .first, time: "12:04", status: .read)
+            .padding(.top, AtomTokens.Space.x3)
+          AtomMessage("Bring snacks too", from: "You", direction: .outgoing, position: .last, time: "12:04", status: .delivered)
+          AtomMessageEvent("Missed voice call · 12:10", systemImage: "phone.arrow.down.left")
+            .padding(.vertical, AtomTokens.Space.x3)
+          AtomMessage("Sure", from: "You", direction: .outgoing, time: "12:13", status: .sending)
+        }
+      }
+      ShowcaseSection("Delivery states", subtitle: "Each status is named for VoiceOver.") {
+        VStack(spacing: AtomTokens.Space.x1) {
+          ForEach(AtomMessageDeliveryState.allCases, id: \.self) { state in
+            AtomMessage(state.rawValue, from: "You", direction: .outgoing, time: "12:04", status: state)
+          }
+        }
+      }
+    }
+  }
+
+  private var avatar: some View {
+    AtomAvatar(name: "Ada Lovelace", size: 28)
   }
 }

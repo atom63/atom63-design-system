@@ -100,7 +100,13 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // runs with Intl formatToParts (the fraction drawn small and raised) and its
 // single accessible label. No web run in case study round 5 drew a hero balance
 // or amount in a display role.
-const gzipBudgetBytes = 97 * 1024
+//
+// 97 kB held the earlier releases. Message takes it to 97.2 kB, so it moves to
+// 98. The addition is the person-to-person thread: MessageList, Message (the
+// directional bubble with run positions, a meta row and four delivery status
+// icons) and MessageEvent. chat-thread scored 72 web / 62 iOS in case study
+// round 12 because the AI chat components do not model this thread.
+const gzipBudgetBytes = 98 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()

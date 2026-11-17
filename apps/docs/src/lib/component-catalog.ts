@@ -82,9 +82,9 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     importPath: '@atom63/ui-react/layout',
     relatedSlugs: ['sidebar', 'tabs'],
     summary:
-      'A full-window app frame: a top bar, a side panel, the scrolling main region and docked bars, for a window or a phone screen.',
+      'A full-window app frame: a top bar, an icon rail, a side panel, the scrolling main region, a details aside and docked bars, for a window or a phone screen.',
     usage:
-      'Wrap a product view that has no site header or footer; pass layout="phone" for a phone app screen. A window takes chrome="flush" for columns to its edges, panelWidth for the side panel (18rem by default), and overlay for a control floating over the main region.',
+      'Wrap a product view that has no site header or footer; pass layout="phone" for a phone app screen. A window takes chrome="flush" for columns to its edges, panelWidth for the side panel (18rem by default), and overlay for a control floating over the main region. For a multi-pane app, add rail (an icon column before the panel), aside (a thread or details pane after the main region, from lg up) and topBarSpan="main" (the top bar starts after the panel, which runs full height).',
     usageExports: ['AppView'],
   },
   autocomplete: {
@@ -408,6 +408,14 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     usage:
       'Use it for application commands, not ordinary site navigation or a row of unrelated buttons.',
     usageExports: ['Menubar', 'MenubarMenu', 'MenubarTrigger', 'MenubarContent', 'MenubarItem'],
+  },
+  message: {
+    relatedSlugs: ['chat-message', 'avatar'],
+    summary:
+      "Message shows one message in a thread between people: a bubble on its sender's side, joined to the messages around it, with its time and delivery status. For an AI assistant, use ChatMessage.",
+    usage:
+      'Wrap the thread in MessageList (a named log region). Pass direction (incoming or outgoing), position in the run of one sender (single, first, middle, last), time and, for your own messages, status. Use MessageEvent for calls and dates, Avatar ring for stories, and ChatMessage instead for an AI assistant.',
+    usageExports: ['Message', 'MessageList', 'MessageEvent'],
   },
   'navigation-menu': {
     relatedSlugs: ['menubar', 'breadcrumb', 'dropdown-menu'],
@@ -827,6 +835,7 @@ export const componentCatalogGroups = [
       'feedback-state',
       'frame',
       'item',
+      'message',
       'scroll-area',
       'scrollable-list',
       'separator',

@@ -25,20 +25,21 @@
   color: var(--a63-text-primary);
 }
 
-.a63-AppView > [data-slot='app-view-top-bar'],
+.a63-AppView [data-slot='app-view-top-bar'],
 .a63-AppView > [data-slot='app-view-bottom-bar'],
 .a63-AppView > [data-slot='app-view-tab-bar'] {
   flex-shrink: 0;
 }
 
-.a63-AppView > [data-slot='app-view-top-bar'] {
+.a63-AppView [data-slot='app-view-top-bar'] {
   display: flex;
   align-items: center;
   gap: var(--a63-space-2);
   padding-block-start: var(--a63-app-view-inset-top);
 }
 
-.a63-AppView > [data-slot='app-view-body'] {
+.a63-AppView > [data-slot='app-view-body'],
+.a63-AppView [data-slot='app-view-content'] > [data-slot='app-view-body'] {
   position: relative;
   display: flex;
   flex: 1;
@@ -59,8 +60,34 @@
   overflow-y: auto;
 }
 
+/* topBarSpan="main": the top bar and the main region share a column after the rail and panel. */
+.a63-AppView [data-slot='app-view-content'] {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.a63-AppView [data-slot='app-view-rail'],
+.a63-AppView [data-slot='app-view-aside'] {
+  display: none;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+.a63-AppView [data-slot='app-view-rail'] {
+  inline-size: var(--a63-app-view-rail-width, 4rem);
+}
+
+.a63-AppView [data-slot='app-view-aside'] {
+  inline-size: var(--a63-app-view-aside-width, 22rem);
+}
+
 .a63-AppView [data-slot='app-view-main']:focus-visible,
-.a63-AppView [data-slot='app-view-panel']:focus-visible {
+.a63-AppView [data-slot='app-view-rail']:focus-visible,
+.a63-AppView [data-slot='app-view-panel']:focus-visible,
+.a63-AppView [data-slot='app-view-aside']:focus-visible {
   outline: var(--a63-control-focus-ring-width, 2px) solid var(--a63-focus-ring);
   outline-offset: calc(-1 * var(--a63-control-focus-ring-width, 2px));
 }
@@ -93,6 +120,7 @@
 
 /* Window: the side panel from md up, the tab bar below md only. */
 @media (min-width: 48rem) {
+  .a63-AppView[data-layout='window'] [data-slot='app-view-rail'],
   .a63-AppView[data-layout='window'] [data-slot='app-view-panel'] {
     display: flex;
   }
@@ -102,23 +130,46 @@
   }
 }
 
+/* Window, lg up: the aside, and the overlay moves clear of it. */
+@media (min-width: 64rem) {
+  .a63-AppView[data-layout='window'] [data-slot='app-view-aside'] {
+    display: flex;
+  }
+
+  .a63-AppView[data-aside] [data-slot='app-view-overlay'] {
+    inset-inline-end: calc(
+      var(--a63-space-4) + var(--a63-app-view-aside-width, 22rem) +
+        var(--a63-app-view-column-gap, 0px)
+    );
+  }
+}
+
 /* Window, inset: a padded window with the panel and main on rounded cards. */
 .a63-AppView[data-chrome='inset'] {
   gap: var(--a63-space-2);
   padding: var(--a63-space-2) max(var(--a63-space-2), var(--a63-app-view-inset-inline));
 }
 
-.a63-AppView[data-chrome='inset'] > [data-slot='app-view-body'] {
+.a63-AppView[data-chrome='inset'] {
+  --a63-app-view-column-gap: var(--a63-space-2);
+}
+
+.a63-AppView[data-chrome='inset'] [data-slot='app-view-body'],
+.a63-AppView[data-chrome='inset'] [data-slot='app-view-content'] {
   gap: var(--a63-space-2);
 }
 
+.a63-AppView[data-chrome='inset'] [data-slot='app-view-rail'],
 .a63-AppView[data-chrome='inset'] [data-slot='app-view-panel'],
-.a63-AppView[data-chrome='inset'] [data-slot='app-view-main'] {
+.a63-AppView[data-chrome='inset'] [data-slot='app-view-main'],
+.a63-AppView[data-chrome='inset'] [data-slot='app-view-aside'] {
   border-radius: var(--radius-xl);
   background-color: var(--a63-surface-panel);
 }
 
-.a63-AppView[data-chrome='inset'] [data-slot='app-view-panel'] {
+.a63-AppView[data-chrome='inset'] [data-slot='app-view-rail'],
+.a63-AppView[data-chrome='inset'] [data-slot='app-view-panel'],
+.a63-AppView[data-chrome='inset'] [data-slot='app-view-aside'] {
   padding: var(--a63-space-2);
 }
 
@@ -133,15 +184,33 @@
 }
 
 /* Flush (a flush window and every phone): edge to edge, split by borders. */
-.a63-AppView[data-chrome='flush'] > [data-slot='app-view-top-bar'] {
+.a63-AppView[data-chrome='flush'] [data-slot='app-view-top-bar'] {
   min-block-size: calc(3.5rem + var(--a63-app-view-inset-top));
   padding-inline: var(--a63-space-4);
   border-block-end: 1px solid var(--a63-border-subtle);
 }
 
+.a63-AppView[data-chrome='flush'] [data-slot='app-view-rail'],
 .a63-AppView[data-chrome='flush'] [data-slot='app-view-panel'] {
   border-inline-end: 1px solid var(--a63-border-subtle);
   background-color: var(--a63-surface-sidebar);
+}
+
+.a63-AppView[data-chrome='flush'] [data-slot='app-view-rail'] {
+  padding-block: var(--a63-space-2);
+}
+
+.a63-AppView[data-chrome='flush'] [data-slot='app-view-aside'] {
+  border-inline-start: 1px solid var(--a63-border-subtle);
+}
+
+/* With the top bar over the main region only, the rail and panel run to the top edge. */
+.a63-AppView[data-chrome='flush'][data-top-bar-span='main'] [data-slot='app-view-rail'] {
+  padding-block-start: max(var(--a63-space-2), var(--a63-app-view-inset-top));
+}
+
+.a63-AppView[data-chrome='flush'][data-top-bar-span='main'] [data-slot='app-view-panel'] {
+  padding-block-start: var(--a63-app-view-inset-top);
 }
 
 .a63-AppView[data-chrome='flush'] > [data-slot='app-view-bottom-bar'] {

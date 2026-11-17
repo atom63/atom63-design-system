@@ -12,6 +12,7 @@ import { AmountSize } from '@atom63/ui-foundation';
 import { AnimatedCheckVariant } from '@atom63/ui-foundation';
 import { Autocomplete as AutocompletePrimitive } from '@base-ui/react/autocomplete';
 import { Avatar as AvatarPrimitive } from '@base-ui/react/avatar';
+import { AvatarRing } from '@atom63/ui-foundation';
 import { AvatarShape } from '@atom63/ui-foundation';
 import { AvatarSize } from '@atom63/ui-foundation';
 import { BadgeDotColor } from '@atom63/ui-foundation';
@@ -85,6 +86,9 @@ import { LoadMoreTriggerVariant } from '@atom63/ui-foundation';
 import * as lucide_react from 'lucide-react';
 import { Menu } from '@base-ui/react/menu';
 import { Menubar as Menubar_2 } from '@base-ui/react/menubar';
+import { MessageDeliveryState } from '@atom63/ui-foundation';
+import { MessageDirection } from '@atom63/ui-foundation';
+import { MessagePosition } from '@atom63/ui-foundation';
 import { Mode } from '@atom63/ui-foundation';
 import { NavigationMenu as NavigationMenu_2 } from '@base-ui/react/navigation-menu';
 import { OTPInput } from 'input-otp';
@@ -430,7 +434,7 @@ export { AvatarPrimitive }
 
 // @public (undocumented)
 export type AvatarProps = AvatarPrimitive.Root.Props & {
-    ring?: boolean;
+    ring?: boolean | AvatarRing;
     shape?: AvatarShape;
     size?: AvatarSize;
 };
@@ -1827,6 +1831,37 @@ export function MenubarSubTrigger(input: DropdownMenuSubTriggerProps): React$1.R
 // @public (undocumented)
 export function MenubarTrigger(input: React$1.ComponentProps<typeof DropdownMenuTrigger>): React$1.ReactElement;
 
+// @public (undocumented)
+export function Message(input: MessageProps): React$1.ReactElement;
+
+// @public (undocumented)
+function MessageEvent_2(input: MessageEventProps): React$1.ReactElement;
+export { MessageEvent_2 as MessageEvent }
+
+// @public (undocumented)
+export type MessageEventProps = React$1.ComponentProps<'div'> & {
+    icon?: React$1.ReactNode;
+};
+
+// @public (undocumented)
+export function MessageList(input: MessageListProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type MessageListProps = React$1.ComponentProps<'div'>;
+
+// @public (undocumented)
+export type MessageProps = Omit<React$1.ComponentProps<'article'>, 'children'> & {
+    children?: React$1.ReactNode;
+    direction?: MessageDirection;
+    position?: MessagePosition;
+    label: string;
+    avatar?: React$1.ReactNode;
+    media?: React$1.ReactNode;
+    time?: React$1.ReactNode;
+    status?: MessageDeliveryState;
+    statusLabels?: Partial<Record<MessageDeliveryState, string>>;
+};
+
 export { Mode }
 
 // @public (undocumented)
@@ -2252,6 +2287,12 @@ export const reactRendererConformance: readonly [{
     readonly implementedStates: readonly ["rest"];
     readonly verifiedSharedOutcomes: readonly ["one-dot-per-slide", "current-slide-is-marked", "choosing-a-dot-shows-its-slide"];
     readonly verifiedAccessibilityOutcomes: readonly ["names-the-indicator", "exposes-the-current-position"];
+    readonly verifiesMotionRecipe: false;
+}, {
+    readonly contractId: "message";
+    readonly implementedStates: readonly ["rest"];
+    readonly verifiedSharedOutcomes: readonly ["direction-sets-side-and-fill", "runs-join-at-shared-corners", "status-is-named"];
+    readonly verifiedAccessibilityOutcomes: readonly ["names-the-sender", "names-the-delivery-status"];
     readonly verifiesMotionRecipe: false;
 }];
 
