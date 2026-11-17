@@ -79,4 +79,67 @@ describe('AppView', () => {
     expect(overlay?.parentElement).toBe(slot(container, 'body'))
     expect(screen.getByRole('main')).not.toContainElement(overlay as HTMLElement)
   })
+
+  it('names the rail and the aside as regions, in reading order around the main region', () => {
+    render(
+      <AppView aside="Thread" panel="Channels" rail="Workspaces">
+        Content
+      </AppView>
+    )
+    const regions = screen.getAllByRole('complementary').map(r => r.getAttribute('aria-label'))
+    expect(regions).toEqual(['Navigation', 'Library', 'Details'])
+    const main = screen.getByRole('main')
+    expect(
+      main.compareDocumentPosition(screen.getByRole('complementary', { name: 'Details' }))
+    ).toBe(Node.DOCUMENT_POSITION_FOLLOWING)
+  })
+
+  it('spans the top bar across the window by default', () => {
+    const { container } = render(
+      <AppView panel="Channels" topBar="Search">
+        Content
+      </AppView>
+    )
+    expect(slot(container, '')).toHaveAttribute('data-top-bar-span', 'window')
+    expect(slot(container, 'top-bar')?.parentElement).toBe(slot(container, ''))
+    expect(slot(container, 'content')).toBeNull()
+  })
+
+  it('puts the top bar over the main region and the aside when it spans main', () => {
+    const { container } = render(
+      <AppView aside="Thread" panel="Channels" rail="Workspaces" topBar="Search" topBarSpan="main">
+        Content
+      </AppView>
+    )
+    const content = slot(container, 'content') as HTMLElement
+    expect(slot(container, 'top-bar')?.parentElement).toBe(content)
+    expect(content).toContainElement(screen.getByRole('main'))
+    expect(content).toContainElement(screen.getByRole('complementary', { name: 'Details' }))
+    expect(content).not.toContainElement(slot(container, 'panel') as HTMLElement)
+    expect(content).not.toContainElement(slot(container, 'rail') as HTMLElement)
+  })
+
+  it('leaves the rail, the aside and the span out of a phone', () => {
+    const { container } = render(
+      <AppView aside="Thread" layout="phone" rail="Workspaces" topBar="Title" topBarSpan="main">
+        Content
+      </AppView>
+    )
+    for (const name of ['rail', 'aside', 'content']) {
+      expect(slot(container, name)).toBeNull()
+    }
+    expect(slot(container, '')).not.toHaveAttribute('data-top-bar-span')
+    expect(slot(container, '')).not.toHaveAttribute('data-aside')
+  })
+
+  it('sets the rail and aside widths', () => {
+    const { container } = render(
+      <AppView aside="Thread" asideWidth="20rem" rail="Workspaces" railWidth="3.5rem">
+        Content
+      </AppView>
+    )
+    const root = slot(container, '') as HTMLElement
+    expect(root.style.getPropertyValue('--a63-app-view-rail-width')).toBe('3.5rem')
+    expect(root.style.getPropertyValue('--a63-app-view-aside-width')).toBe('20rem')
+  })
 })

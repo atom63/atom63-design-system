@@ -470,9 +470,13 @@ export interface AppViewContract {
     // (undocumented)
     defaultLayout: AppViewLayout;
     // (undocumented)
+    defaultTopBarSpan: AppViewTopBarSpan;
+    // (undocumented)
     layouts: readonly AppViewLayout[];
     // (undocumented)
     slots: readonly AppViewSlot[];
+    // (undocumented)
+    topBarSpans: readonly AppViewTopBarSpan[];
     // (undocumented)
     visualArchetypes: readonly AppViewVisualArchetype[];
 }
@@ -481,9 +485,11 @@ export interface AppViewContract {
 export const appViewContract: {
     defaultLayout: "window";
     defaultChrome: "inset";
+    defaultTopBarSpan: "window";
     layouts: readonly ["window", "phone"];
     chromes: readonly ["inset", "flush"];
-    slots: readonly ["app-view", "app-view-top-bar", "app-view-body", "app-view-panel", "app-view-main", "app-view-overlay", "app-view-bottom-bar", "app-view-tab-bar"];
+    topBarSpans: readonly ["window", "main"];
+    slots: readonly ["app-view", "app-view-top-bar", "app-view-body", "app-view-rail", "app-view-panel", "app-view-content", "app-view-main", "app-view-overlay", "app-view-aside", "app-view-bottom-bar", "app-view-tab-bar"];
     visualArchetypes: readonly ["surface"];
 };
 
@@ -497,7 +503,13 @@ export const appViewLayouts: readonly ["window", "phone"];
 export type AppViewSlot = (typeof appViewSlots)[number];
 
 // @public (undocumented)
-export const appViewSlots: readonly ["app-view", "app-view-top-bar", "app-view-body", "app-view-panel", "app-view-main", "app-view-overlay", "app-view-bottom-bar", "app-view-tab-bar"];
+export const appViewSlots: readonly ["app-view", "app-view-top-bar", "app-view-body", "app-view-rail", "app-view-panel", "app-view-content", "app-view-main", "app-view-overlay", "app-view-aside", "app-view-bottom-bar", "app-view-tab-bar"];
+
+// @public (undocumented)
+export type AppViewTopBarSpan = (typeof appViewTopBarSpans)[number];
+
+// @public (undocumented)
+export const appViewTopBarSpans: readonly ["window", "main"];
 
 // @public (undocumented)
 export type AppViewVisualArchetype = (typeof appViewVisualArchetypes)[number];

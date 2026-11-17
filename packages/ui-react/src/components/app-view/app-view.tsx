@@ -1,4 +1,9 @@
-import { type AppViewChrome, type AppViewLayout, appViewContract } from '@atom63/ui-foundation'
+import {
+  type AppViewChrome,
+  type AppViewLayout,
+  type AppViewTopBarSpan,
+  appViewContract,
+} from '@atom63/ui-foundation'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
@@ -22,6 +27,21 @@ export type AppViewProps = Omit<React.ComponentProps<'div'>, 'children'> & {
   chrome?: AppViewChrome
   /** The bar across the top. It takes the top safe-area inset. */
   topBar?: React.ReactNode
+  /**
+   * Where the top bar runs in a `window`. `window` (the default): across the
+   * whole window. `main`: over the main region and the aside only, so the rail
+   * and the panel run the full height of the window.
+   */
+  topBarSpan?: AppViewTopBarSpan
+  /** A narrow column before the side panel, such as an icon rail; from `md` up, windows only. */
+  rail?: React.ReactNode
+  /** The accessible name of the rail. */
+  railLabel?: string
+  /**
+   * The rail's width as a CSS length (4rem by default). It sets
+   * `--a63-app-view-rail-width`, which a stylesheet can set too.
+   */
+  railWidth?: string
   /** A side panel beside the main region, hidden on phones. */
   panel?: React.ReactNode
   /** The accessible name of the side panel. */
@@ -36,6 +56,19 @@ export type AppViewProps = Omit<React.ComponentProps<'div'>, 'children'> & {
    * above the docked bar, such as a scroll-to-bottom button. It does not scroll.
    */
   overlay?: React.ReactNode
+  /**
+   * A column after the main region, such as a thread or a details pane; from
+   * `lg` up, windows only. Below `lg` it is not shown, so show its content
+   * another way there, such as in a Sheet.
+   */
+  aside?: React.ReactNode
+  /** The accessible name of the aside. */
+  asideLabel?: string
+  /**
+   * The aside's width as a CSS length (22rem by default). It sets
+   * `--a63-app-view-aside-width`, which a stylesheet can set too.
+   */
+  asideWidth?: string
   /** A bar docked at the bottom, such as a player, a status bar or an action bar. */
   bottomBar?: React.ReactNode
   /** The accessible name of the docked bar's region. */
@@ -54,6 +87,9 @@ export type AppViewProps = Omit<React.ComponentProps<'div'>, 'children'> & {
  * in <UIProvider density="compact">.
  */
 export function AppView({
+  aside,
+  asideLabel = 'Details',
+  asideWidth,
   bottomBar,
   bottomBarLabel = 'Player',
   children,
@@ -64,40 +100,74 @@ export function AppView({
   panel,
   panelLabel = 'Library',
   panelWidth,
+  rail,
+  railLabel = 'Navigation',
+  railWidth,
   style,
   tabBar,
   topBar,
+  topBarSpan = appViewContract.defaultTopBarSpan,
   ...props
 }: AppViewProps): React.ReactElement {
   const bottomInset = tabBar ? 'tab-bar' : bottomBar ? 'bottom-bar' : 'main'
+  const isWindow = layout === 'window'
+  const spansMain = isWindow && topBarSpan === 'main'
+  const widths = {
+    ...(panelWidth ? { '--a63-app-view-panel-width': panelWidth } : {}),
+    ...(railWidth ? { '--a63-app-view-rail-width': railWidth } : {}),
+    ...(asideWidth ? { '--a63-app-view-aside-width': asideWidth } : {}),
+  }
+  const header = topBar ? <header data-slot="app-view-top-bar">{topBar}</header> : null
+  const content = (
+    <>
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- a scroll region takes focus so a keyboard can scroll it. */}
+      <main data-slot="app-view-main" tabIndex={0}>
+        {children}
+      </main>
+      {overlay ? <div data-slot="app-view-overlay">{overlay}</div> : null}
+      {aside && isWindow ? (
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- a scroll region takes focus so a keyboard can scroll it.
+        <aside aria-label={asideLabel} data-slot="app-view-aside" tabIndex={0}>
+          {aside}
+        </aside>
+      ) : null}
+    </>
+  )
   return (
     <div
       className={cn('a63-AppView', className)}
       data-a63-form-factor={layout === 'phone' ? 'phone' : undefined}
+      data-aside={aside && isWindow ? '' : undefined}
       data-bottom-inset={bottomInset}
       data-chrome={layout === 'phone' ? 'flush' : chrome}
       data-layout={layout}
       data-slot="app-view"
-      style={
-        panelWidth
-          ? ({ '--a63-app-view-panel-width': panelWidth, ...style } as React.CSSProperties)
-          : style
-      }
+      data-top-bar-span={isWindow ? topBarSpan : undefined}
+      style={Object.keys(widths).length ? { ...widths, ...style } : style}
       {...props}
     >
-      {topBar ? <header data-slot="app-view-top-bar">{topBar}</header> : null}
+      {spansMain ? null : header}
       <div data-slot="app-view-body">
-        {panel && layout === 'window' ? (
+        {rail && isWindow ? (
+          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- a scroll region takes focus so a keyboard can scroll it.
+          <aside aria-label={railLabel} data-slot="app-view-rail" tabIndex={0}>
+            {rail}
+          </aside>
+        ) : null}
+        {panel && isWindow ? (
           // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- a scroll region takes focus so a keyboard can scroll it.
           <aside aria-label={panelLabel} data-slot="app-view-panel" tabIndex={0}>
             {panel}
           </aside>
         ) : null}
-        {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- a scroll region takes focus so a keyboard can scroll it. */}
-        <main data-slot="app-view-main" tabIndex={0}>
-          {children}
-        </main>
-        {overlay ? <div data-slot="app-view-overlay">{overlay}</div> : null}
+        {spansMain ? (
+          <div data-slot="app-view-content">
+            {header}
+            <div data-slot="app-view-body">{content}</div>
+          </div>
+        ) : (
+          content
+        )}
       </div>
       {bottomBar ? (
         <section aria-label={bottomBarLabel} data-slot="app-view-bottom-bar">

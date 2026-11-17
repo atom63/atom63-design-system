@@ -2,7 +2,18 @@ import { Button, Item, ItemContent, ItemDescription, ItemGroup, ItemTitle } from
 import { AppView } from '@atom63/ui-react/layout'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { ArrowDown, Bell, House, Library, Play, Search, SkipForward } from 'lucide-react'
+import {
+  ArrowDown,
+  Bell,
+  Hash,
+  House,
+  Inbox,
+  Library,
+  Play,
+  Search,
+  Settings,
+  SkipForward,
+} from 'lucide-react'
 
 const meta = {
   title: 'UI React/AppView',
@@ -133,9 +144,9 @@ function checkFrame(
     const scrollers = [root, ...root.querySelectorAll<HTMLElement>('*')].filter(element =>
       ['auto', 'scroll'].includes(getComputedStyle(element).overflowY)
     )
-    const allowed = new Set([main, part('panel')])
+    const allowed = new Set([main, part('rail'), part('panel'), part('aside')])
     if (scrollers.some(element => !allowed.has(element)) || !scrollers.includes(main)) {
-      throw new Error(`Expected only the main region (and the panel) to scroll`)
+      throw new Error(`Expected only the main region (and the rail, panel and aside) to scroll`)
     }
     if (root.scrollHeight > root.clientHeight) throw new Error('Expected the frame not to scroll')
 
@@ -163,6 +174,37 @@ function checkFrame(
     }
   }
 }
+
+function Rail() {
+  const items = [
+    { icon: <House aria-hidden />, label: 'Home' },
+    { icon: <Inbox aria-hidden />, label: 'Inbox' },
+    { icon: <Hash aria-hidden />, label: 'Channels' },
+    { icon: <Settings aria-hidden />, label: 'Settings' },
+  ]
+  return (
+    <nav aria-label="Workspace" className="flex flex-col items-center gap-1">
+      {items.map(item => (
+        <Button aria-label={item.label} key={item.label} size="icon" tone="muted" variant="ghost">
+          {item.icon}
+        </Button>
+      ))}
+    </nav>
+  )
+}
+
+const thread = (
+  <ItemGroup>
+    {['Reply from Ada', 'Reply from Lin', 'Reply from Sam'].map(title => (
+      <Item key={title} size="sm">
+        <ItemContent>
+          <ItemTitle>{title}</ItemTitle>
+          <ItemDescription>Sounds good, shipping it today.</ItemDescription>
+        </ItemContent>
+      </Item>
+    ))}
+  </ItemGroup>
+)
 
 /* A desktop window: a top bar, a side panel and the main region on rounded cards, and a docked player. */
 export const Playground: Story = {
@@ -223,4 +265,38 @@ export const PhoneWithOverlay: Story = {
     topBar: <TopBar />,
   },
   play: ({ canvasElement }) => checkFrame(canvasElement, { bottom: 'tab-bar', top: 'top-bar' }),
+}
+
+/* rail: an icon column before the side panel, from md up. */
+export const WithRail: Story = {
+  args: { ...Playground.args, rail: <Rail /> },
+  play: ({ canvasElement }) => checkFrame(canvasElement, { bottom: 'bottom-bar', top: 'top-bar' }),
+}
+
+/* aside: a details pane after the main region, from lg up. */
+export const WithAside: Story = {
+  args: { ...Playground.args, aside: thread, asideLabel: 'Thread' },
+  play: ({ canvasElement }) => checkFrame(canvasElement, { bottom: 'bottom-bar', top: 'top-bar' }),
+}
+
+/* topBarSpan="main": the top bar starts after the panel, which runs the full height. */
+export const TopBarOverMain: Story = {
+  args: { ...Playground.args, chrome: 'flush', topBarSpan: 'main' },
+  play: ({ canvasElement }) => checkFrame(canvasElement, { bottom: 'bottom-bar', top: 'top-bar' }),
+}
+
+/* All of it, as in a team chat: a workspace rail, channels, the conversation and a thread. */
+export const RailPanelAndAside: Story = {
+  args: {
+    aside: thread,
+    asideLabel: 'Thread',
+    chrome: 'flush',
+    children: <TrackList />,
+    panel,
+    panelLabel: 'Channels',
+    rail: <Rail />,
+    topBar: <TopBar />,
+    topBarSpan: 'main',
+  },
+  play: ({ canvasElement }) => checkFrame(canvasElement, { bottom: 'main', top: 'top-bar' }),
 }

@@ -82,9 +82,9 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     importPath: '@atom63/ui-react/layout',
     relatedSlugs: ['sidebar', 'tabs'],
     summary:
-      'A full-window app frame: a top bar, a side panel, the scrolling main region and docked bars, for a window or a phone screen.',
+      'A full-window app frame: a top bar, an icon rail, a side panel, the scrolling main region, a details aside and docked bars, for a window or a phone screen.',
     usage:
-      'Wrap a product view that has no site header or footer; pass layout="phone" for a phone app screen. A window takes chrome="flush" for columns to its edges, panelWidth for the side panel (18rem by default), and overlay for a control floating over the main region.',
+      'Wrap a product view that has no site header or footer; pass layout="phone" for a phone app screen. A window takes chrome="flush" for columns to its edges, panelWidth for the side panel (18rem by default), and overlay for a control floating over the main region. For a multi-pane app, add rail (an icon column before the panel), aside (a thread or details pane after the main region, from lg up) and topBarSpan="main" (the top bar starts after the panel, which runs full height).',
     usageExports: ['AppView'],
   },
   autocomplete: {
