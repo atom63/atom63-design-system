@@ -1,0 +1,170 @@
+/*
+ * Message recipe — the SURFACE archetype. A person-to-person thread: incoming
+ * bubbles on the leading side on --a63-surface-muted, outgoing bubbles on the
+ * trailing side in the accent (--a63-message-outgoing-* defaults to
+ * --a63-action-primary, so a theme or a product can set them). A run of
+ * consecutive messages from one sender joins at its shared corners, which use
+ * the small radius; single and last messages draw the tail as a sharp bottom
+ * corner on the sender's side. Corners are logical, so a thread mirrors in
+ * right-to-left scripts.
+ */
+
+.a63-MessageList {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--a63-space-1) / 2);
+  min-width: 0;
+}
+
+/* A new run starts with more room above it. */
+.a63-MessageList > [data-slot='message']:is([data-position='single'], [data-position='first']),
+.a63-MessageList > [data-slot='message-event'] {
+  margin-block-start: var(--a63-space-3);
+}
+
+.a63-MessageList > :first-child {
+  margin-block-start: 0;
+}
+
+.a63-Message {
+  --message-radius: var(--radius-2xl);
+  --message-joined-radius: var(--radius-sm);
+  --message-tail-radius: var(--radius-xs);
+
+  display: flex;
+  align-items: flex-end;
+  gap: var(--a63-space-2);
+  min-width: 0;
+  font-size: var(--typography-base-font-size);
+  line-height: var(--typography-base-line-height);
+}
+
+.a63-Message[data-direction='outgoing'] {
+  flex-direction: row-reverse;
+}
+
+.a63-Message-avatar {
+  display: flex;
+  flex: none;
+}
+
+/* The avatar shows on the last message of a run and keeps its column on the others. */
+.a63-Message:is([data-position='first'], [data-position='middle']) .a63-Message-avatar {
+  visibility: hidden;
+}
+
+.a63-Message-bubble {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  max-inline-size: min(78%, 32rem);
+  overflow: hidden;
+  border-radius: var(--message-radius);
+  overflow-wrap: anywhere;
+}
+
+.a63-Message[data-direction='incoming'] .a63-Message-bubble {
+  background-color: var(--a63-surface-muted);
+  color: var(--a63-text-primary);
+}
+
+.a63-Message[data-direction='outgoing'] .a63-Message-bubble {
+  background-color: var(--a63-message-outgoing-background, var(--a63-action-primary));
+  color: var(--a63-message-outgoing-foreground, var(--a63-action-primary-foreground));
+}
+
+/* Joined corners on the sender's side: above for middle and last, below for first and middle. */
+.a63-Message[data-direction='incoming']:is([data-position='middle'], [data-position='last'])
+  .a63-Message-bubble {
+  border-start-start-radius: var(--message-joined-radius);
+}
+
+.a63-Message[data-direction='incoming']:is([data-position='first'], [data-position='middle'])
+  .a63-Message-bubble {
+  border-end-start-radius: var(--message-joined-radius);
+}
+
+.a63-Message[data-direction='outgoing']:is([data-position='middle'], [data-position='last'])
+  .a63-Message-bubble {
+  border-start-end-radius: var(--message-joined-radius);
+}
+
+.a63-Message[data-direction='outgoing']:is([data-position='first'], [data-position='middle'])
+  .a63-Message-bubble {
+  border-end-end-radius: var(--message-joined-radius);
+}
+
+/* The tail: a sharp bottom corner on the sender's side. */
+.a63-Message[data-direction='incoming']:is([data-position='single'], [data-position='last'])
+  .a63-Message-bubble {
+  border-end-start-radius: var(--message-tail-radius);
+}
+
+.a63-Message[data-direction='outgoing']:is([data-position='single'], [data-position='last'])
+  .a63-Message-bubble {
+  border-end-end-radius: var(--message-tail-radius);
+}
+
+/* A message with media takes a set width, so a photo without intrinsic size still shows. */
+.a63-Message[data-media] .a63-Message-bubble {
+  inline-size: min(78%, 18rem);
+}
+
+.a63-Message-media > * {
+  display: block;
+  inline-size: 100%;
+  block-size: auto;
+}
+
+.a63-Message-content {
+  padding-block: var(--a63-space-2);
+  padding-inline: var(--a63-space-3);
+  white-space: pre-wrap;
+}
+
+/* The meta floats at the end of the last line, as in most messengers. */
+.a63-Message-meta {
+  display: inline-flex;
+  float: inline-end;
+  align-items: center;
+  gap: var(--a63-space-1);
+  margin-block-start: var(--a63-space-1);
+  margin-inline-start: var(--a63-space-2);
+  font-size: var(--typography-xs-font-size);
+  line-height: var(--typography-xs-line-height);
+  white-space: nowrap;
+}
+
+/* Full contrast on both fills: secondary text on the muted fill, the bubble's own foreground on the accent. */
+.a63-Message[data-direction='incoming'] .a63-Message-meta {
+  color: var(--a63-text-secondary);
+}
+
+.a63-Message-status {
+  display: inline-flex;
+}
+
+.a63-Message-status svg {
+  inline-size: var(--a63-control-icon-size-xs);
+  block-size: var(--a63-control-icon-size-xs);
+}
+
+.a63-MessageEvent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--a63-space-1);
+  color: var(--a63-text-secondary);
+  font-size: var(--typography-xs-font-size);
+  line-height: var(--typography-xs-line-height);
+  text-align: center;
+}
+
+.a63-MessageEvent-icon {
+  display: inline-flex;
+}
+
+.a63-MessageEvent-icon svg {
+  inline-size: var(--a63-control-icon-size-xs);
+  block-size: var(--a63-control-icon-size-xs);
+}

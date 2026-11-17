@@ -46,10 +46,10 @@
     ]
   },
   "counts": {
-    "rootValueExports": 434,
-    "rootTypeExports": 197,
-    "packageExportKeys": 80,
-    "cssExportKeys": 73
+    "rootValueExports": 437,
+    "rootTypeExports": 200,
+    "packageExportKeys": 81,
+    "cssExportKeys": 74
   },
   "packageExportKeys": [
     ".",
@@ -101,6 +101,7 @@
     "./recipes/marquee.css",
     "./recipes/media-lightbox.css",
     "./recipes/menubar.css",
+    "./recipes/message.css",
     "./recipes/navigation-menu.css",
     "./recipes/pagination.css",
     "./recipes/panel-setting-button.css",
@@ -177,6 +178,7 @@
     "./recipes/marquee.css",
     "./recipes/media-lightbox.css",
     "./recipes/menubar.css",
+    "./recipes/message.css",
     "./recipes/navigation-menu.css",
     "./recipes/pagination.css",
     "./recipes/panel-setting-button.css",
@@ -477,6 +479,11 @@
       "subpath": "./recipes/menubar.css",
       "kind": "css",
       "target": "./src/components/menubar/menubar.css"
+    },
+    {
+      "subpath": "./recipes/message.css",
+      "kind": "css",
+      "target": "./src/components/message/message.css"
     },
     {
       "subpath": "./recipes/navigation-menu.css",
@@ -2463,6 +2470,37 @@
         {
           "name": "MenubarRadioItemProps",
           "proposedTier": "beta-supported-composition-conditional"
+        }
+      ]
+    },
+    {
+      "source": "./components/message",
+      "values": [
+        {
+          "name": "Message",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "MessageEvent",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "MessageList",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "MessageEventProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "MessageListProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "MessageProps",
+          "proposedTier": "beta-supported-core"
         }
       ]
     },

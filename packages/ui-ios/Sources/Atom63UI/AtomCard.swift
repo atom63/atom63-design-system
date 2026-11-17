@@ -9,6 +9,7 @@ public enum AtomCardVariant: String, CaseIterable, Sendable {
 public struct AtomCard<Content: View>: View {
   @Environment(\.atomTheme) private var theme
   @Environment(\.colorScheme) private var colorScheme
+  @Environment(\.atomDensity) private var density
 
   private let action: (() -> Void)?
   private let variant: AtomCardVariant
@@ -39,7 +40,7 @@ public struct AtomCard<Content: View>: View {
 
   private var cardContent: some View {
     content
-      .padding(AtomTokens.Space.x4)
+      .padding(density.space(AtomTokens.Space.x4))
       .frame(maxWidth: .infinity, alignment: .leading)
       .background(backgroundColor)
       .overlay {

@@ -411,6 +411,17 @@ export const reactRendererConformance = [
     verifiedAccessibilityOutcomes: ['names-the-indicator', 'exposes-the-current-position'],
     verifiesMotionRecipe: false,
   },
+  {
+    contractId: 'message',
+    implementedStates: ['rest'],
+    verifiedSharedOutcomes: [
+      'direction-sets-side-and-fill',
+      'runs-join-at-shared-corners',
+      'status-is-named',
+    ],
+    verifiedAccessibilityOutcomes: ['names-the-sender', 'names-the-delivery-status'],
+    verifiesMotionRecipe: false,
+  },
 ] as const satisfies readonly ReactRendererConformanceEvidence[]
 
 export type ReactVerifiedContractId = (typeof reactRendererConformance)[number]['contractId']

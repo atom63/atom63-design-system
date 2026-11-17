@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "module": "Atom63UI",
-  "symbolCount": 539,
+  "symbolCount": 569,
   "symbols": [
     {
       "id": "s:8Atom63UI10AtomAmountV",
@@ -81,10 +81,10 @@
       "source": "AtomAvatar.swift"
     },
     {
-      "id": "s:8Atom63UI10AtomAvatarV4name8imageURL4size5badgeACSS_10Foundation0G0VSg04CoreJ07CGFloatVAA0cD5BadgeOSgtcfc",
+      "id": "s:8Atom63UI10AtomAvatarV4name8imageURL4size5badge4ring0J5StyleACSS_10Foundation0G0VSg04CoreL07CGFloatVAA0cD5BadgeOSgAA0cD4RingOSg05SwiftB008AnyShapeK0VSgtcfc",
       "kind": "swift.init",
-      "path": "AtomAvatar.init(name:imageURL:size:badge:)",
-      "declaration": "init(name: String, imageURL: URL? = nil, size: CGFloat = 44, badge: AtomAvatarBadge? = nil)",
+      "path": "AtomAvatar.init(name:imageURL:size:badge:ring:ringStyle:)",
+      "declaration": "init(name: String, imageURL: URL? = nil, size: CGFloat = 44, badge: AtomAvatarBadge? = nil, ring: AtomAvatarRing? = nil, ringStyle: AnyShapeStyle? = nil)",
       "source": "AtomAvatar.swift"
     },
     {
@@ -851,6 +851,48 @@
       "source": "Generated/Atom63Tokens.generated.swift"
     },
     {
+      "id": "s:8Atom63UI11AtomDensityO",
+      "kind": "swift.enum",
+      "path": "AtomDensity",
+      "declaration": "enum AtomDensity",
+      "source": "AtomDensity.swift"
+    },
+    {
+      "id": "s:8Atom63UI11AtomDensityO11controlSizeyAA0c7ControlF0OAFF",
+      "kind": "swift.method",
+      "path": "AtomDensity.controlSize(_:)",
+      "declaration": "func controlSize(_ size: AtomControlSize) -> AtomControlSize",
+      "source": "AtomDensity.swift"
+    },
+    {
+      "id": "s:8Atom63UI11AtomDensityO5spacey14CoreFoundation7CGFloatVSdF",
+      "kind": "swift.method",
+      "path": "AtomDensity.space(_:)",
+      "declaration": "func space(_ value: Double) -> CGFloat",
+      "source": "AtomDensity.swift"
+    },
+    {
+      "id": "s:8Atom63UI11AtomDensityO7compactyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomDensity.compact",
+      "declaration": "case compact",
+      "source": "AtomDensity.swift"
+    },
+    {
+      "id": "s:8Atom63UI11AtomDensityO7regularyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomDensity.regular",
+      "declaration": "case regular",
+      "source": "AtomDensity.swift"
+    },
+    {
+      "id": "s:8Atom63UI11AtomDensityO9textStyley05SwiftB04FontV04TextF0OAIF",
+      "kind": "swift.method",
+      "path": "AtomDensity.textStyle(_:)",
+      "declaration": "func textStyle(_ style: Font.TextStyle) -> Font.TextStyle",
+      "source": "AtomDensity.swift"
+    },
+    {
       "id": "s:8Atom63UI11AtomListRowV",
       "kind": "swift.struct",
       "path": "AtomListRow",
@@ -870,6 +912,34 @@
       "path": "AtomListRow.init(title:subtitle:systemImage:badge:badgeTone:showsDisclosure:)",
       "declaration": "init(title: String, subtitle: String? = nil, systemImage: String, badge: String? = nil, badgeTone: AtomBadgeTone = .accent, showsDisclosure: Bool = false)",
       "source": "AtomListRow.swift"
+    },
+    {
+      "id": "s:8Atom63UI11AtomMessageV",
+      "kind": "swift.struct",
+      "path": "AtomMessage",
+      "declaration": "struct AtomMessage<Content, Avatar, Media> where Content : View, Avatar : View, Media : View",
+      "source": "AtomMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI11AtomMessageV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomMessage.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI11AtomMessageV4from9direction8position4time6status6avatar5media7contentACyxq_q0_GSS_AA0cD9DirectionOAA0cD8PositionOSSSgAA0cD13DeliveryStateOSgq_yXEq0_yXExyXEtcfc",
+      "kind": "swift.init",
+      "path": "AtomMessage.init(from:direction:position:time:status:avatar:media:content:)",
+      "declaration": "init(from sender: String, direction: AtomMessageDirection = .incoming, position: AtomMessagePosition = .single, time: String? = nil, status: AtomMessageDeliveryState? = nil, @ViewBuilder avatar: () -> Avatar = { EmptyView() }, @ViewBuilder media: () -> Media = { EmptyView() }, @ViewBuilder content: () -> Content)",
+      "source": "AtomMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI11AtomMessageVAA05SwiftB04TextVRszAD9EmptyViewVRs0_rlE_4from9direction8position4time6status6avatarACyAFq_AHGSS_SSAA0cD9DirectionOAA0cD8PositionOSSSgAA0cD13DeliveryStateOSgq_yXEtcfc",
+      "kind": "swift.init",
+      "path": "AtomMessage.init(_:from:direction:position:time:status:avatar:)",
+      "declaration": "init(_ text: String, from sender: String, direction: AtomMessageDirection = .incoming, position: AtomMessagePosition = .single, time: String? = nil, status: AtomMessageDeliveryState? = nil, @ViewBuilder avatar: () -> Avatar = { EmptyView() })",
+      "source": "AtomMessage.swift"
     },
     {
       "id": "s:8Atom63UI11AtomSurfaceO",
@@ -1143,6 +1213,27 @@
       "path": "AtomAsyncImage.body",
       "declaration": "var body: some View { get }",
       "source": "AtomAsyncImage.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomAvatarRingO",
+      "kind": "swift.enum",
+      "path": "AtomAvatarRing",
+      "declaration": "enum AtomAvatarRing",
+      "source": "AtomAvatar.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomAvatarRingO4seenyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomAvatarRing.seen",
+      "declaration": "case seen",
+      "source": "AtomAvatar.swift"
+    },
+    {
+      "id": "s:8Atom63UI14AtomAvatarRingO6unseenyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomAvatarRing.unseen",
+      "declaration": "case unseen",
+      "source": "AtomAvatar.swift"
     },
     {
       "id": "s:8Atom63UI14AtomButtonToneO",
@@ -2104,6 +2195,27 @@
       "source": "AtomLoadMoreView.swift"
     },
     {
+      "id": "s:8Atom63UI16AtomMessageEventV",
+      "kind": "swift.struct",
+      "path": "AtomMessageEvent",
+      "declaration": "struct AtomMessageEvent",
+      "source": "AtomMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomMessageEventV_11systemImageACSS_SSSgtcfc",
+      "kind": "swift.init",
+      "path": "AtomMessageEvent.init(_:systemImage:)",
+      "declaration": "init(_ text: String, systemImage: String? = nil)",
+      "source": "AtomMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI16AtomMessageEventV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomMessageEvent.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomMessage.swift"
+    },
+    {
       "id": "s:8Atom63UI16AtomPageDotsToneO",
       "kind": "swift.enum",
       "path": "AtomPageDotsTone",
@@ -2902,6 +3014,41 @@
       "source": "AtomFormMessage.swift"
     },
     {
+      "id": "s:8Atom63UI19AtomMessagePositionO",
+      "kind": "swift.enum",
+      "path": "AtomMessagePosition",
+      "declaration": "enum AtomMessagePosition",
+      "source": "AtomMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomMessagePositionO4lastyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomMessagePosition.last",
+      "declaration": "case last",
+      "source": "AtomMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomMessagePositionO5firstyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomMessagePosition.first",
+      "declaration": "case first",
+      "source": "AtomMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomMessagePositionO6middleyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomMessagePosition.middle",
+      "declaration": "case middle",
+      "source": "AtomMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI19AtomMessagePositionO6singleyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomMessagePosition.single",
+      "declaration": "case single",
+      "source": "AtomMessage.swift"
+    },
+    {
       "id": "s:8Atom63UI19AtomVariantRendererV",
       "kind": "swift.struct",
       "path": "AtomVariantRenderer",
@@ -3075,6 +3222,27 @@
       "path": "AtomInformResolution.spotlight",
       "declaration": "var spotlight: AtomInformMessage?",
       "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomMessageDirectionO",
+      "kind": "swift.enum",
+      "path": "AtomMessageDirection",
+      "declaration": "enum AtomMessageDirection",
+      "source": "AtomMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomMessageDirectionO8incomingyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomMessageDirection.incoming",
+      "declaration": "case incoming",
+      "source": "AtomMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI20AtomMessageDirectionO8outgoingyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomMessageDirection.outgoing",
+      "declaration": "case outgoing",
+      "source": "AtomMessage.swift"
     },
     {
       "id": "s:8Atom63UI20AtomMotionPreferenceO",
@@ -3432,6 +3600,48 @@
       "path": "AtomInformDismissalStore.dismissed",
       "declaration": "var dismissed: Set<String> { get }",
       "source": "AtomInform.swift"
+    },
+    {
+      "id": "s:8Atom63UI24AtomMessageDeliveryStateO",
+      "kind": "swift.enum",
+      "path": "AtomMessageDeliveryState",
+      "declaration": "enum AtomMessageDeliveryState",
+      "source": "AtomMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI24AtomMessageDeliveryStateO4readyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomMessageDeliveryState.read",
+      "declaration": "case read",
+      "source": "AtomMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI24AtomMessageDeliveryStateO4sentyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomMessageDeliveryState.sent",
+      "declaration": "case sent",
+      "source": "AtomMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI24AtomMessageDeliveryStateO6failedyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomMessageDeliveryState.failed",
+      "declaration": "case failed",
+      "source": "AtomMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI24AtomMessageDeliveryStateO7sendingyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomMessageDeliveryState.sending",
+      "declaration": "case sending",
+      "source": "AtomMessage.swift"
+    },
+    {
+      "id": "s:8Atom63UI24AtomMessageDeliveryStateO9deliveredyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomMessageDeliveryState.delivered",
+      "declaration": "case delivered",
+      "source": "AtomMessage.swift"
     },
     {
       "id": "s:8Atom63UI26AtomToggleGroupOrientationO",
@@ -3854,7 +4064,7 @@
       "kind": "memberOf"
     },
     {
-      "source": "s:8Atom63UI10AtomAvatarV4name8imageURL4size5badgeACSS_10Foundation0G0VSg04CoreJ07CGFloatVAA0cD5BadgeOSgtcfc",
+      "source": "s:8Atom63UI10AtomAvatarV4name8imageURL4size5badge4ring0J5StyleACSS_10Foundation0G0VSg04CoreL07CGFloatVAA0cD5BadgeOSgAA0cD4RingOSg05SwiftB008AnyShapeK0VSgtcfc",
       "target": "s:8Atom63UI10AtomAvatarV",
       "kind": "memberOf"
     },
@@ -4419,6 +4629,46 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI11AtomDensityO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI11AtomDensityO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI11AtomDensityO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI11AtomDensityO11controlSizeyAA0c7ControlF0OAFF",
+      "target": "s:8Atom63UI11AtomDensityO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI11AtomDensityO5spacey14CoreFoundation7CGFloatVSdF",
+      "target": "s:8Atom63UI11AtomDensityO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI11AtomDensityO7compactyA2CmF",
+      "target": "s:8Atom63UI11AtomDensityO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI11AtomDensityO7regularyA2CmF",
+      "target": "s:8Atom63UI11AtomDensityO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI11AtomDensityO9textStyley05SwiftB04FontV04TextF0OAIF",
+      "target": "s:8Atom63UI11AtomDensityO",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI11AtomListRowV",
       "target": "external:Sendable",
       "kind": "conformsTo"
@@ -4436,6 +4686,31 @@
     {
       "source": "s:8Atom63UI11AtomListRowV5title8subtitle11systemImage5badge0J4Tone15showsDisclosureACSS_SSSgSSAjA0c5BadgeK0OSbtcfc",
       "target": "s:8Atom63UI11AtomListRowV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI11AtomMessageV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI11AtomMessageV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI11AtomMessageV4bodyQrvp",
+      "target": "s:8Atom63UI11AtomMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI11AtomMessageV4from9direction8position4time6status6avatar5media7contentACyxq_q0_GSS_AA0cD9DirectionOAA0cD8PositionOSSSgAA0cD13DeliveryStateOSgq_yXEq0_yXExyXEtcfc",
+      "target": "s:8Atom63UI11AtomMessageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI11AtomMessageVAA05SwiftB04TextVRszAD9EmptyViewVRs0_rlE_4from9direction8position4time6status6avatarACyAFq_AHGSS_SSAA0cD9DirectionOAA0cD8PositionOSSSgAA0cD13DeliveryStateOSgq_yXEtcfc",
+      "target": "s:8Atom63UI11AtomMessageV",
       "kind": "memberOf"
     },
     {
@@ -4716,6 +4991,41 @@
     {
       "source": "s:8Atom63UI14AtomAsyncImageV4bodyQrvp",
       "target": "s:8Atom63UI14AtomAsyncImageV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomAvatarRingO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomAvatarRingO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomAvatarRingO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomAvatarRingO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomAvatarRingO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI14AtomAvatarRingO4seenyA2CmF",
+      "target": "s:8Atom63UI14AtomAvatarRingO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI14AtomAvatarRingO6unseenyA2CmF",
+      "target": "s:8Atom63UI14AtomAvatarRingO",
       "kind": "memberOf"
     },
     {
@@ -5674,6 +5984,26 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI16AtomMessageEventV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomMessageEventV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI16AtomMessageEventV_11systemImageACSS_SSSgtcfc",
+      "target": "s:8Atom63UI16AtomMessageEventV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI16AtomMessageEventV4bodyQrvp",
+      "target": "s:8Atom63UI16AtomMessageEventV",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI16AtomPageDotsToneO",
       "target": "external:CaseIterable",
       "kind": "conformsTo"
@@ -6484,6 +6814,51 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI19AtomMessagePositionO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI19AtomMessagePositionO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI19AtomMessagePositionO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI19AtomMessagePositionO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI19AtomMessagePositionO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI19AtomMessagePositionO4lastyA2CmF",
+      "target": "s:8Atom63UI19AtomMessagePositionO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI19AtomMessagePositionO5firstyA2CmF",
+      "target": "s:8Atom63UI19AtomMessagePositionO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI19AtomMessagePositionO6middleyA2CmF",
+      "target": "s:8Atom63UI19AtomMessagePositionO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI19AtomMessagePositionO6singleyA2CmF",
+      "target": "s:8Atom63UI19AtomMessagePositionO",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI19AtomVariantRendererV",
       "target": "external:Equatable",
       "kind": "conformsTo"
@@ -6651,6 +7026,41 @@
     {
       "source": "s:8Atom63UI20AtomInformResolutionV9spotlightAA0cD7MessageVSgvp",
       "target": "s:8Atom63UI20AtomInformResolutionV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomMessageDirectionO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomMessageDirectionO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomMessageDirectionO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomMessageDirectionO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomMessageDirectionO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI20AtomMessageDirectionO8incomingyA2CmF",
+      "target": "s:8Atom63UI20AtomMessageDirectionO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI20AtomMessageDirectionO8outgoingyA2CmF",
+      "target": "s:8Atom63UI20AtomMessageDirectionO",
       "kind": "memberOf"
     },
     {
@@ -6991,6 +7401,56 @@
     {
       "source": "s:8Atom63UI24AtomInformDismissalStoreC9dismissedShySSGvp",
       "target": "s:8Atom63UI24AtomInformDismissalStoreC",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI24AtomMessageDeliveryStateO",
+      "target": "external:CaseIterable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI24AtomMessageDeliveryStateO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI24AtomMessageDeliveryStateO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI24AtomMessageDeliveryStateO",
+      "target": "external:RawRepresentable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI24AtomMessageDeliveryStateO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI24AtomMessageDeliveryStateO4readyA2CmF",
+      "target": "s:8Atom63UI24AtomMessageDeliveryStateO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI24AtomMessageDeliveryStateO4sentyA2CmF",
+      "target": "s:8Atom63UI24AtomMessageDeliveryStateO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI24AtomMessageDeliveryStateO6failedyA2CmF",
+      "target": "s:8Atom63UI24AtomMessageDeliveryStateO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI24AtomMessageDeliveryStateO7sendingyA2CmF",
+      "target": "s:8Atom63UI24AtomMessageDeliveryStateO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI24AtomMessageDeliveryStateO9deliveredyA2CmF",
+      "target": "s:8Atom63UI24AtomMessageDeliveryStateO",
       "kind": "memberOf"
     },
     {

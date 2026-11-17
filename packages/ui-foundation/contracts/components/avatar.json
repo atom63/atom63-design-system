@@ -2,12 +2,13 @@
   "$schema": "../schema/component-intent.schema.json",
   "component": "avatar",
   "maturity": "stable",
-  "description": "The fallback holds initials or one icon (an assistant's sparkle, an app glyph) in a filled circle; an icon is drawn at the control icon size for the size step.",
+  "description": "The fallback holds initials or one icon (an assistant's sparkle, an app glyph) in a filled circle; an icon is drawn at the control icon size for the size step. A ring marks a story or new activity: unseen draws --a63-avatar-ring-fill (the accent unless a product sets it, for example to a gradient of the category palette) set off from the face by a gap of the page surface; seen draws a thin border-coloured ring.",
   "lists": {
     "sizes": ["xs", "sm", "default", "lg"],
     "shapes": ["circle", "square"],
     "states": ["loading", "loaded", "fallback"],
     "compositions": ["standalone", "badge", "group"],
+    "rings": ["unseen", "seen"],
     "slots": [
       "avatar",
       "avatar-image",
@@ -23,6 +24,9 @@
     "defaultSize": "default",
     "compositions": {
       "$ref": "#/lists/compositions"
+    },
+    "rings": {
+      "$ref": "#/lists/rings"
     },
     "shapes": {
       "$ref": "#/lists/shapes"

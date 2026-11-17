@@ -4,6 +4,7 @@ export {
   appViewContract,
   appViewLayouts,
   appViewSlots,
+  appViewTopBarSpans,
   appViewVisualArchetypes,
 } from './app-view-contract'
 export type {
@@ -11,5 +12,6 @@ export type {
   AppViewContract,
   AppViewLayout,
   AppViewSlot,
+  AppViewTopBarSpan,
   AppViewVisualArchetype,
 } from './app-view-contract'

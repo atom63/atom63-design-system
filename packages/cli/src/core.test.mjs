@@ -232,6 +232,30 @@ describe('topics', () => {
     })
   }
 
+  for (const idea of [
+    'messaging app thread on a phone',
+    'a messenger inbox with stories',
+    'dm screen',
+  ]) {
+    it(`puts Message in the build kit for "${idea}", ahead of the template components`, () => {
+      const kit = build(index, idea).data
+      const slugs = kit.components.map(entry => entry.slug)
+      assert.ok(slugs.includes('message'), slugs.join(', '))
+      assert.match(
+        kit.components.find(entry => entry.slug === 'message').summary,
+        /ChatMessage is for an AI assistant/
+      )
+    })
+  }
+
+  it('keeps an assistant idea on the chat components', () => {
+    const { components } = build(index, 'an AI chatbot').data
+    const slugs = components.map(entry => entry.slug)
+    assert.equal(slugs[0], 'chat-message', slugs.join(', '))
+    const message = components.find(entry => entry.slug === 'message')
+    if (message) assert.match(message.summary, /For an AI assistant, use ChatMessage/)
+  })
+
   it('points a media list at Table variant="plain" in the build kit', () => {
     const kit = build(index, 'album page with a track list').data
     const table = kit.components.find(entry => entry.slug === 'table')

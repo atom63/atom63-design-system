@@ -5,7 +5,7 @@
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 
-import { AtomError, closest, groundFor, queryTerms, score, search } from './core.mjs'
+import { AtomError, closest, groundFor, queryTerms, score, search, topicHits } from './core.mjs'
 import { rules } from './rules.mjs'
 
 export const templateKinds = ['page', 'block']
@@ -318,8 +318,12 @@ export function build(index, idea) {
   const named = found.map(result => result.id)
   // A topic note ("track list" → Table variant="plain") replaces the summary.
   const summaries = new Map(found.map(result => [result.id, result.summary]))
+  // A component a topic names for this idea ("messaging" → Message) leads, so the
+  // templates' own components cannot crowd it out of the nine.
+  const hits = topicHits(idea)
+  const curated = named.filter(slug => hits.has(`component:${slug}`))
   // Nine: the app-view page brings eight, with its AppView frame, and the idea's own pick still fits.
-  const components = [...new Set([...used, ...named])].slice(0, 9).map(slug => ({
+  const components = [...new Set([...curated, ...used, ...named])].slice(0, 9).map(slug => ({
     slug,
     summary: summaries.get(slug) ?? bySlug.get(slug).summary,
     next: `atom63 component ${slug}`,
