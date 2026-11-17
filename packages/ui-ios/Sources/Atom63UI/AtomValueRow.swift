@@ -7,6 +7,7 @@ import SwiftUI
 public struct AtomValueRow: View {
   @Environment(\.atomTheme) private var theme
   @Environment(\.colorScheme) private var colorScheme
+  @Environment(\.atomDensity) private var density
   @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
   private let title: String
@@ -30,16 +31,16 @@ public struct AtomValueRow: View {
   }
 
   public var body: some View {
-    HStack(spacing: AtomTokens.Space.x3) {
+    HStack(spacing: density.space(AtomTokens.Space.x3)) {
       if dynamicTypeSize.isAccessibilitySize {
-        VStack(alignment: .leading, spacing: AtomTokens.Space.x2) {
+        VStack(alignment: .leading, spacing: density.space(AtomTokens.Space.x2)) {
           label
           valueText
         }
         .frame(maxWidth: .infinity, alignment: .leading)
       } else {
         label
-        Spacer(minLength: AtomTokens.Space.x3)
+        Spacer(minLength: density.space(AtomTokens.Space.x3))
         valueText
       }
 
@@ -50,7 +51,7 @@ public struct AtomValueRow: View {
           .accessibilityHidden(true)
       }
     }
-    .padding(.vertical, AtomTokens.Space.x1)
+    .padding(.vertical, density.space(AtomTokens.Space.x1))
     .atomListRowInsets()
     .contentShape(.rect)
     .accessibilityElement(children: .combine)
@@ -59,6 +60,7 @@ public struct AtomValueRow: View {
   private var label: some View {
     Label {
       Text(title)
+        .font(.system(density.textStyle(.body)))
         .foregroundStyle(theme.colors.textPrimary.resolve(for: colorScheme))
     } icon: {
       if let systemImage {
@@ -70,7 +72,7 @@ public struct AtomValueRow: View {
 
   private var valueText: some View {
     Text(value)
-      .font(.subheadline)
+      .font(.system(density.textStyle(.subheadline)))
       .fontWeight(emphasizesValue ? .semibold : nil)
       .foregroundStyle(
         (emphasizesValue ? theme.colors.textPrimary : theme.colors.textSecondary)
