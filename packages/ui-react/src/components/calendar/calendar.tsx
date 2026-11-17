@@ -1,7 +1,7 @@
 'use client'
 
 import type * as React from 'react'
-import { DayPicker } from 'react-day-picker'
+import { DayPicker, type DayPickerProps, type Labels } from 'react-day-picker'
 
 import { cn } from '../../lib/cn'
 
@@ -57,6 +57,30 @@ function ChevronsUpDownIcon({ className }: { className?: string }): React.ReactE
   )
 }
 
+/*
+ * Day buttons are named with the full date from Intl ("Sunday, December 28,
+ * 2025"), so the number on the button is a word of its name; react-day-picker's
+ * default ("December 28th") is not, and fails WCAG 2.5.3 (label in name).
+ */
+const labelDayButton: Labels['labelDayButton'] = (date, modifiers, options) => {
+  let label = new Intl.DateTimeFormat(options?.locale?.code, { dateStyle: 'full' }).format(date)
+  if (modifiers.today) label = `Today, ${label}`
+  if (modifiers.selected) label = `${label}, selected`
+  return label
+}
+
+/*
+ * react-day-picker hides the weekday row from assistive technology (each day
+ * button names its weekday) yet gives every header an aria-label ("Sunday")
+ * that does not contain its visible text ("Su"). Drop the aria-label.
+ */
+function Weekday({
+  'aria-label': _name,
+  ...props
+}: React.ThHTMLAttributes<HTMLTableCellElement>): React.ReactElement {
+  return <th {...props} />
+}
+
 export function Calendar({
   className,
   classNames,
@@ -99,6 +123,7 @@ export function Calendar({
   }
 
   const defaultComponents = {
+    Weekday,
     Chevron: ({
       className: chevronClassName,
       orientation,
@@ -133,6 +158,8 @@ export function Calendar({
     mode,
     showOutsideDays,
     ...props,
+    // After props, so a caller's own labels merge with this one instead of replacing it.
+    labels: { labelDayButton, ...props.labels } satisfies DayPickerProps['labels'],
   }
 
   return <DayPicker {...(dayPickerProps as CalendarProps)} />
