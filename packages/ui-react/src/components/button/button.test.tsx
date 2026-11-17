@@ -86,12 +86,15 @@ describe('Button', () => {
     expect(screen.getByRole('button', { name: 'Notifications, New' })).toBeInTheDocument()
     rerender(<Button indicator={4}>Inbox</Button>)
     expect(screen.getByRole('button', { name: 'Inbox, 4 new' })).toBeInTheDocument()
+    render(<Button aria-label="Alerts" indicator={120} />)
+    // The name uses the count as drawn, so the visible "99+" is part of it.
+    expect(screen.getByRole('button', { name: 'Alerts, 99+ new' })).toBeInTheDocument()
     rerender(
-      <Button aria-label="Mail" indicator={120} indicatorLabel="120 unread">
+      <Button aria-label="Mail" indicator={120} indicatorLabel="99+ unread">
         x
       </Button>
     )
-    const button = screen.getByRole('button', { name: 'Mail, 120 unread' })
+    const button = screen.getByRole('button', { name: 'Mail, 99+ unread' })
     expect(button.querySelector('[data-slot="button-indicator"]')).toHaveTextContent('99+')
   })
 

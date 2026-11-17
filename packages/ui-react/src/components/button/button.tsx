@@ -16,7 +16,7 @@ import { cn } from '../../lib/cn'
 export interface ButtonProps extends useRender.ComponentProps<'button'> {
   /** An unread dot (`true`) or a count at the top-end corner, such as unread notifications. */
   indicator?: boolean | number
-  /** What the indicator means, added to the accessible name. Defaults to "New" for a dot and "{n} new" for a count. */
+  /** What the indicator means, added to the accessible name. Defaults to "New" for a dot and "{n} new" for a count, with "99+" above 99 as drawn. Include the drawn count in your own label. */
   indicatorLabel?: string
   loading?: boolean
   /** `round` gives a full radius: a circle for icon sizes, a pill for labelled ones. */
@@ -55,9 +55,13 @@ export function Button({
 }: ButtonProps): React.ReactElement {
   const isDisabled = Boolean(disabled || loading)
   const hasIndicator = indicator === true || (typeof indicator === 'number' && indicator > 0)
+  /* The count as drawn: above 99 it reads "99+". The default name uses the same
+     text, so what a sighted voice-control user sees is part of the name (WCAG 2.5.3). */
+  const indicatorCount =
+    typeof indicator === 'number' ? (indicator > 99 ? '99+' : String(indicator)) : null
   const indicatorText = !hasIndicator
     ? undefined
-    : (indicatorLabel ?? (indicator === true ? 'New' : `${indicator} new`))
+    : (indicatorLabel ?? (indicator === true ? 'New' : `${indicatorCount} new`))
   /* An aria-label replaces the content as the accessible name, so the indicator
      text joins it there; otherwise it is visually hidden text after the label. */
   const ariaLabel = props['aria-label']
@@ -78,7 +82,7 @@ export function Button({
             data-count={typeof indicator === 'number' ? '' : undefined}
             data-slot="button-indicator"
           >
-            {typeof indicator === 'number' ? (indicator > 99 ? '99+' : indicator) : null}
+            {indicatorCount}
           </span>
         ) : null}
         {hasIndicator && !ariaLabel ? (
