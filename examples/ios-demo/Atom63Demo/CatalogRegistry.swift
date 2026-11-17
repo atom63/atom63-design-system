@@ -38,6 +38,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
 
   case tokens
   case theme
+  case density
   case button
   case iconButton
   case actionBar
@@ -85,7 +86,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
 
   var section: CatalogSection {
     switch self {
-    case .tokens, .theme:
+    case .tokens, .theme, .density:
       .foundations
     case .button, .iconButton, .actionBar, .menu, .sheet, .confirmationDialog:
       .actions
@@ -108,6 +109,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     switch self {
     case .tokens: "Tokens"
     case .theme: "Theme"
+    case .density: "Density"
     case .button: "Button"
     case .iconButton: "Icon button"
     case .actionBar: "Action bar"
@@ -158,6 +160,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     switch self {
     case .tokens: "circle.hexagongrid"
     case .theme: "circle.lefthalf.filled"
+    case .density: "rectangle.compress.vertical"
     case .button: "rectangle.and.hand.point.up.left"
     case .iconButton: "square.grid.2x2"
     case .actionBar: "rectangle.bottomthird.inset.filled"
@@ -210,6 +213,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
       "Shared color, spacing, radius, and motion primitives generated from the web foundation."
     case .theme:
       "Semantic colors resolved for the current appearance through the Atom63 environment."
+    case .density:
+      "Regular and compact rhythm: compact tightens spacing and text but keeps 44-point targets."
     case .button:
       "Primary through ghost actions with size, loading, disabled, and pressed behavior."
     case .iconButton:
@@ -301,6 +306,7 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
     switch self {
     case .tokens: "AtomTokens"
     case .theme: "AtomTheme"
+    case .density: "AtomDensity"
     case .button: "AtomButton"
     case .iconButton: "AtomIconButton"
     case .actionBar: "AtomActionBar"
@@ -353,6 +359,8 @@ enum CatalogItem: String, CaseIterable, Hashable, Identifiable {
       "VStack(spacing: AtomTokens.Space.x4) {\n  content\n}"
     case .theme:
       "RootView()\n  .atomTheme(.standard)"
+    case .density:
+      "ScreenContent()\n  .atomDensity(.compact)"
     case .button:
       "AtomButton(\"Save changes\", variant: .primary) {\n  save()\n}"
     case .iconButton:

@@ -3,6 +3,7 @@ import SwiftUI
 public struct AtomListRow: View {
   @Environment(\.atomTheme) private var theme
   @Environment(\.colorScheme) private var colorScheme
+  @Environment(\.atomDensity) private var density
 
   private let title: String
   private let subtitle: String?
@@ -28,29 +29,29 @@ public struct AtomListRow: View {
   }
 
   public var body: some View {
-    HStack(spacing: AtomTokens.Space.x3) {
+    HStack(spacing: density.space(AtomTokens.Space.x3)) {
       Image(systemName: systemImage)
-        .font(.headline)
+        .font(.system(density.textStyle(.headline)))
         .foregroundStyle(theme.colors.actionPrimary.resolve(for: colorScheme))
-        .frame(width: 32, height: 32)
+        .frame(width: iconSize, height: iconSize)
         .background(theme.colors.surfaceMuted.resolve(for: colorScheme))
         .clipShape(.rect(cornerRadius: AtomTokens.Radius.medium))
         .accessibilityHidden(true)
 
-      VStack(alignment: .leading, spacing: AtomTokens.Space.x1) {
+      VStack(alignment: .leading, spacing: density.space(AtomTokens.Space.x1)) {
         Text(title)
-          .font(.body)
+          .font(.system(density.textStyle(.body)))
           .foregroundStyle(theme.colors.textPrimary.resolve(for: colorScheme))
 
         if let subtitle {
           Text(subtitle)
-            .font(.footnote)
+            .font(.system(density.textStyle(.footnote)))
             .foregroundStyle(theme.colors.textSecondary.resolve(for: colorScheme))
             .lineLimit(2)
         }
       }
 
-      Spacer(minLength: AtomTokens.Space.x2)
+      Spacer(minLength: density.space(AtomTokens.Space.x2))
 
       if let badge {
         AtomBadge(badge, tone: badgeTone)
@@ -63,9 +64,12 @@ public struct AtomListRow: View {
           .accessibilityHidden(true)
       }
     }
-    .padding(.vertical, AtomTokens.Space.x1)
+    .padding(.vertical, density.space(AtomTokens.Space.x1))
     .atomListRowInsets()
     .contentShape(.rect)
     .accessibilityElement(children: .combine)
   }
+
+  /// The icon tile: 32pt, 28pt in compact.
+  private var iconSize: CGFloat { density == .compact ? 28 : 32 }
 }

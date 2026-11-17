@@ -153,11 +153,15 @@ public struct AtomButtonStyle: ButtonStyle {
   @Environment(\.colorScheme) private var colorScheme
   @Environment(\.accessibilityReduceMotion) private var systemReduceMotion
   @Environment(\.atomMotionPreference) private var motionPreference
+  @Environment(\.atomDensity) private var density
 
   private let tone: AtomButtonTone
   private let emphasis: AtomButtonEmphasis
-  private let size: AtomControlSize
+  private let requestedSize: AtomControlSize
   private let shape: AtomButtonShape
+
+  /// The size drawn: the requested size, stepped down in compact density.
+  private var size: AtomControlSize { density.controlSize(requestedSize) }
 
   public init(
     tone: AtomButtonTone = .neutral,
@@ -167,7 +171,7 @@ public struct AtomButtonStyle: ButtonStyle {
   ) {
     self.tone = tone
     self.emphasis = emphasis
-    self.size = size
+    self.requestedSize = size
     self.shape = shape
   }
 
