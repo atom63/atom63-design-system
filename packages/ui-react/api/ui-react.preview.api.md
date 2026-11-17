@@ -263,6 +263,12 @@ export const reactRendererConformance: readonly [{
     readonly verifiedSharedOutcomes: readonly ["one-dot-per-slide", "current-slide-is-marked", "choosing-a-dot-shows-its-slide"];
     readonly verifiedAccessibilityOutcomes: readonly ["names-the-indicator", "exposes-the-current-position"];
     readonly verifiesMotionRecipe: false;
+}, {
+    readonly contractId: "message";
+    readonly implementedStates: readonly ["rest"];
+    readonly verifiedSharedOutcomes: readonly ["direction-sets-side-and-fill", "runs-join-at-shared-corners", "status-is-named"];
+    readonly verifiedAccessibilityOutcomes: readonly ["names-the-sender", "names-the-delivery-status"];
+    readonly verifiesMotionRecipe: false;
 }];
 
 // @public (undocumented)

@@ -2,6 +2,7 @@
 export {
   avatarCompositions,
   avatarContract,
+  avatarRings,
   avatarShapes,
   avatarSizes,
   avatarSlots,
@@ -11,6 +12,7 @@ export {
 export type {
   AvatarComposition,
   AvatarContract,
+  AvatarRing,
   AvatarShape,
   AvatarSize,
   AvatarSlot,

@@ -102,6 +102,7 @@
     "./recipes/load-more-trigger.css": "./src/components/load-more-trigger/load-more-trigger.css",
     "./recipes/marquee.css": "./src/components/marquee/marquee.css",
     "./recipes/menubar.css": "./src/components/menubar/menubar.css",
+    "./recipes/message.css": "./src/components/message/message.css",
     "./recipes/navigation-menu.css": "./src/components/navigation-menu/navigation-menu.css",
     "./recipes/pagination.css": "./src/components/pagination/pagination.css",
     "./recipes/panel-setting-button.css": "./src/components/panel-setting-button/panel-setting-button.css",

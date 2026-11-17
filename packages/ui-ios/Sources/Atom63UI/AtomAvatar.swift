@@ -22,6 +22,14 @@ public enum AtomAvatarBadge: Equatable, Sendable {
   }
 }
 
+/// A ring for a story or new activity, the SwiftUI side of the web Avatar `ring`.
+public enum AtomAvatarRing: String, CaseIterable, Sendable {
+  /// The ring fill (the accent unless `ringStyle` sets another, such as a gradient of category colours).
+  case unseen
+  /// A thinner ring in the control border colour.
+  case seen
+}
+
 public struct AtomAvatar: View {
   @Environment(\.atomTheme) private var theme
   @Environment(\.colorScheme) private var colorScheme
@@ -30,17 +38,23 @@ public struct AtomAvatar: View {
   private let imageURL: URL?
   private let size: CGFloat
   private let badge: AtomAvatarBadge?
+  private let ring: AtomAvatarRing?
+  private let ringStyle: AnyShapeStyle?
 
   public init(
     name: String,
     imageURL: URL? = nil,
     size: CGFloat = 44,
-    badge: AtomAvatarBadge? = nil
+    badge: AtomAvatarBadge? = nil,
+    ring: AtomAvatarRing? = nil,
+    ringStyle: AnyShapeStyle? = nil
   ) {
     self.name = name
     self.imageURL = imageURL
     self.size = size
     self.badge = badge
+    self.ring = ring
+    self.ringStyle = ringStyle
   }
 
   public var body: some View {
@@ -68,6 +82,15 @@ public struct AtomAvatar: View {
     .frame(width: size, height: size)
     .compositingGroup()
     .clipShape(.circle)
+    // The ring sits outside the frame, set off from the face by a gap of the page surface.
+    .overlay {
+      if let ring {
+        Circle()
+          .strokeBorder(ringFill(ring), lineWidth: ring == .unseen ? 2 : 1.5)
+          .padding(ring == .unseen ? -4 : -3.5)
+          .accessibilityHidden(true)
+      }
+    }
     .accessibilityLabel(name)
     .accessibilityValue(badge?.accessibilityLabel ?? "")
     .overlay(alignment: badgeAlignment) {
@@ -76,6 +99,15 @@ public struct AtomAvatar: View {
         AtomAvatarBadgeView(badge: badge, avatarSize: size)
           .accessibilityHidden(true)
       }
+    }
+  }
+
+  private func ringFill(_ ring: AtomAvatarRing) -> AnyShapeStyle {
+    switch ring {
+    case .unseen:
+      ringStyle ?? AnyShapeStyle(theme.colors.actionPrimary.resolve(for: colorScheme))
+    case .seen:
+      AnyShapeStyle(theme.colors.borderControl.resolve(for: colorScheme))
     }
   }
 
