@@ -23,6 +23,7 @@ The package targets iOS 17+ and macOS 14+.
 - `AtomButton`
 - `AtomIconButton`
 - `AtomActionBar`
+- `AtomAppBar`, `AtomAppBarTitle` and `.atomAppBar(_:)`
 - `AtomFormField`
 - `AtomFormMessage`
 - `AtomTextField`
@@ -39,7 +40,8 @@ The package targets iOS 17+ and macOS 14+.
 - `AtomChip`
 - `AtomTabRow` and `AtomTab`
 - `AtomBadge`
-- `AtomAvatar`
+- `AtomAvatar` (with story rings: `ring:` and `ringStyle:`)
+- `AtomMessage` and `AtomMessageEvent`
 - `AtomAsyncImage`
 - `AtomContentStateView`
 - `AtomNotice`
@@ -50,6 +52,7 @@ The package targets iOS 17+ and macOS 14+.
 - `AtomSyncStatusView`
 - `AtomToast`
 - `AtomMotionPreference`
+- `AtomDensity` and `.atomDensity(_:)`
 - generated `AtomComponentContracts`
 - `AtomRendererConformance` verified renderer evidence
 - `AtomTheme` and generated `AtomTokens`
@@ -108,6 +111,24 @@ PhotoDetail()
       AtomIconButton("Share", systemImage: "square.and.arrow.up") { share() }
     }
   }
+```
+
+### Message
+
+`AtomMessage` is a message in a thread between people, the native counterpart of
+the web `Message`: a bubble per `direction` (`.incoming`, `.outgoing`), grouped by
+`position` (`.single`, `.first`, `.middle`, `.last`), with an optional time, delivery
+`status` (`.sending` to `.read`, or `.failed`), avatar and media. `AtomMessageEvent`
+is a line in the thread that is not a message (a date, "Maya joined"). Story rings go on
+`AtomAvatar(name:ring:)`: `.unseen` or `.seen`, with `ringStyle:` for a gradient.
+
+```swift
+AtomMessageEvent("Today")
+AtomMessage("Are we still on for 7?", from: "Maya", position: .first) {
+  AtomAvatar(name: "Maya", size: 28)
+}
+AtomMessage("Yes, see you there", from: "Me", direction: .outgoing,
+            time: "18:42", status: .read)
 ```
 
 The JSON files in `tokens/` document how the platform-neutral component slots
