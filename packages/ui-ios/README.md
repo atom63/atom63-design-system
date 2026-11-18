@@ -23,6 +23,7 @@ The package targets iOS 17+ and macOS 14+.
 - `AtomButton`
 - `AtomIconButton`
 - `AtomActionBar`
+- `AtomAppBar`, `AtomAppBarTitle` and `.atomAppBar(_:)`
 - `AtomFormField`
 - `AtomFormMessage`
 - `AtomTextField`
@@ -39,7 +40,8 @@ The package targets iOS 17+ and macOS 14+.
 - `AtomChip`
 - `AtomTabRow` and `AtomTab`
 - `AtomBadge`
-- `AtomAvatar`
+- `AtomAvatar` (with story rings: `ring:` and `ringStyle:`)
+- `AtomMessage` and `AtomMessageEvent`
 - `AtomAsyncImage`
 - `AtomContentStateView`
 - `AtomNotice`
@@ -50,6 +52,7 @@ The package targets iOS 17+ and macOS 14+.
 - `AtomSyncStatusView`
 - `AtomToast`
 - `AtomMotionPreference`
+- `AtomDensity` and `.atomDensity(_:)`
 - generated `AtomComponentContracts`
 - `AtomRendererConformance` verified renderer evidence
 - `AtomTheme` and generated `AtomTokens`
@@ -78,8 +81,8 @@ AtomProgressView("Upload", value: progress, tone: .neutral)
 ### Density
 
 `.atomDensity(.compact)` is the native counterpart of the web `data-a63-density`
-axis. Inside it, spacing in `AtomCard`, `AtomListRow`, `AtomValueRow` and
-`AtomSectionHeader` scales by 0.875, their text steps down one Dynamic Type
+axis. Inside it, spacing in `AtomCard`, `AtomListRow`, `AtomValueRow`,
+`AtomSectionHeader` and `AtomMessage` scales by 0.875, their text steps down one Dynamic Type
 style, and an `AtomButton` draws one size smaller (`.regular` as `.compact`).
 Hit areas do not shrink: buttons, tab rows and selection rows keep the 44pt
 touch target. Use it for dense phone screens; the default is `.regular`.
@@ -87,6 +90,45 @@ touch target. Use it for dense phone screens; the default is `.regular`.
 ```swift
 ScreenContent()
   .atomDensity(.compact)
+```
+
+### App bar
+
+`AtomAppBar` is a custom top bar, the native counterpart of the web `AppView`
+top-bar slot. Keep the native navigation bar for a plain back-and-title screen;
+use `AtomAppBar` when the bar needs what the native one cannot draw: icon
+buttons floating over a photo (`style: .floating`, on on-media plates), a search
+field across the bar (the `principal` slot), or a compact bar. `.atomAppBar`
+places it in the top safe-area inset, so content scrolls under it.
+
+```swift
+PhotoDetail()
+  .toolbar(.hidden, for: .navigationBar)
+  .atomAppBar {
+    AtomAppBar(style: .floating) {
+      AtomIconButton("Back", systemImage: "chevron.backward") { dismiss() }
+    } trailing: {
+      AtomIconButton("Share", systemImage: "square.and.arrow.up") { share() }
+    }
+  }
+```
+
+### Message
+
+`AtomMessage` is a message in a thread between people, the native counterpart of
+the web `Message`: a bubble per `direction` (`.incoming`, `.outgoing`), grouped by
+`position` (`.single`, `.first`, `.middle`, `.last`), with an optional time, delivery
+`status` (`.sending` to `.read`, or `.failed`), avatar and media. `AtomMessageEvent`
+is a line in the thread that is not a message (a date, "Maya joined"). Story rings go on
+`AtomAvatar(name:ring:)`: `.unseen` or `.seen`, with `ringStyle:` for a gradient.
+
+```swift
+AtomMessageEvent("Today")
+AtomMessage("Are we still on for 7?", from: "Maya", position: .first) {
+  AtomAvatar(name: "Maya", size: 28)
+}
+AtomMessage("Yes, see you there", from: "Me", direction: .outgoing,
+            time: "18:42", status: .read)
 ```
 
 The JSON files in `tokens/` document how the platform-neutral component slots

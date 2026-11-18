@@ -55,7 +55,12 @@ describe('ScrollableList', () => {
       vi.spyOn(window, 'getComputedStyle').mockImplementation(element => {
         const style = computed(element)
         return new Proxy(style, {
-          get: (target, key) => (key === 'direction' ? direction : Reflect.get(target, key)),
+          get: (target, key) => {
+            if (key === 'direction') return direction
+            const value = Reflect.get(target, key)
+            // jsdom checks that its methods are called on the real declaration.
+            return typeof value === 'function' ? value.bind(target) : value
+          },
         })
       })
       return render(

@@ -13,7 +13,9 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 // top inset (with no top bar, the first block of the main region pads itself); the tab bar takes the
 // bottom inset, else the docked bar, else the main region; the root takes the inline insets. On iOS
 // the frame is native structure (NavigationStack, toolbar, safeAreaInset with AtomActionBar and
-// AtomTabRow), not a component.
+// AtomTabRow), not a component; the top-bar slot is the native navigation bar for a plain
+// back-and-title screen, and AtomAppBar (placed with .atomAppBar) for a bar the native one cannot
+// draw: icon buttons floating over media, a search field across the bar, or a compact bar.
 
 export const appViewLayouts = ['window', 'phone'] as const
 export const appViewChromes = ['inset', 'flush'] as const

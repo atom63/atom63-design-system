@@ -14,11 +14,6 @@ updates:
     ignore:
       - dependency-name: '@base-ui/react'
       - dependency-name: input-otp
-      # axe-core 4.14 enables label-content-name-mismatch more widely and parses more colour
-      # syntaxes; Calendar, MediaLightbox and a dark destructive-outline Button fail it. Adopt it
-      # in its own pull request with those fixes, then remove this entry.
-      - dependency-name: axe-core
-        versions: ['>=4.14.0']
     groups:
       # Majors stay in their own pull requests: they need a changelog read.
       minor-and-patch:

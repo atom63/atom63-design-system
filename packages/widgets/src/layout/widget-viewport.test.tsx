@@ -18,9 +18,9 @@ describe('WidgetViewport', () => {
     expect(viewport.style.getPropertyValue('--widget-span')).toBe('2')
     expect(viewport.style.getPropertyValue('--widget-raw-u')).toContain('var(--widget-cell)')
     expect(viewport.style.getPropertyValue('--widget-u')).toBe('var(--widget-raw-u)')
-    expect(viewport.querySelector('[data-widget-presentation-canvas]')).toHaveStyle({
-      transform: 'scale(var(--widget-presentation-scale))',
-    })
+    expect(
+      viewport.querySelector<HTMLElement>('[data-widget-presentation-canvas]')?.style.transform
+    ).toBe('scale(var(--widget-presentation-scale))')
   })
 
   it('publishes the footprint to descendants', () => {

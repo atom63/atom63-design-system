@@ -1,6 +1,6 @@
 {
   "name": "@atom63/widgets",
-  "version": "0.1.0-beta.2",
+  "version": "0.1.0-beta.3",
   "description": "The Atom63 widget foundation: widget units and scale, the widget card and surface, loading, empty and error states, and the hosted shell",
   "license": "MIT",
   "repository": {
@@ -84,7 +84,7 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",
-    "axe-core": "~4.13.0",
+    "axe-core": "^4.14.0",
     "eslint": "10.14.0",
     "jsdom": "catalog:",
     "react": "^19.3.1",

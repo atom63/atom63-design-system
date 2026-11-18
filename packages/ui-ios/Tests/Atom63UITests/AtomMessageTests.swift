@@ -51,3 +51,17 @@ struct AtomAvatarRingTests {
     #expect(AtomAvatarRing.allCases.map(\.rawValue) == ["unseen", "seen"])
   }
 }
+
+@MainActor
+struct AtomMessageDensityTests {
+  @Test
+  func aCompactMessageIsShorterThanARegularOne() {
+    func height(_ density: AtomDensity) -> Int {
+      let view = AtomMessage("Are we still on for Saturday?", from: "Ada", time: "12:01")
+        .atomDensity(density)
+        .frame(width: 390)
+      return ImageRenderer(content: view).cgImage?.height ?? 0
+    }
+    #expect(height(.compact) < height(.regular))
+  }
+}
