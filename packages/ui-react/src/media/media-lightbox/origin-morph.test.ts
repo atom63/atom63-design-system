@@ -30,9 +30,17 @@ const ORIGIN_BOX = rect(400, 100, 300, 200)
 function parse(value: string): number[] {
   // `translate3d` carries a `3` that is not a coordinate, and a near-zero inset
   // serialises in exponent notation.
-  return [...value.replace('translate3d', 'translate').matchAll(/-?\d*\.?\d+(?:e[-+]?\d+)?/gi)].map(
-    match => Number(match[0])
-  )
+  const numbers = [
+    ...value.replace('translate3d', 'translate').matchAll(/-?\d*\.?\d+(?:e[-+]?\d+)?/gi),
+  ].map(match => Number(match[0]))
+  // An inset with equal sides serialises as one value: `inset(0px round 16px)`.
+  const [inset, radius] = numbers
+  return value.startsWith('inset(') &&
+    numbers.length === 2 &&
+    inset !== undefined &&
+    radius !== undefined
+    ? [inset, inset, radius]
+    : numbers
 }
 
 describe('measureOriginMorph', () => {
@@ -98,13 +106,14 @@ describe('paintOriginMorph', () => {
     }
 
     // The clip is in the media's own pixels, so its on-screen size is the
-    // clipped width times the scale being applied.
-    expect((MEDIA_BOX.width - insetX * 2) * scale).toBeCloseTo(ORIGIN_BOX.width, 4)
-    expect((MEDIA_BOX.height - insetY * 2) * scale).toBeCloseTo(ORIGIN_BOX.height, 4)
+    // clipped width times the scale being applied. The style serialises six
+    // significant digits, so compare to the hundredth of a pixel.
+    expect((MEDIA_BOX.width - insetX * 2) * scale).toBeCloseTo(ORIGIN_BOX.width, 2)
+    expect((MEDIA_BOX.height - insetY * 2) * scale).toBeCloseTo(ORIGIN_BOX.height, 2)
     // And the corner reads as the tile's radius once the scale is applied.
-    expect(radius * scale).toBeCloseTo(8, 4)
-    expect(x).toBeCloseTo(-250, 4)
-    expect(y).toBeCloseTo(-250, 4)
+    expect(radius * scale).toBeCloseTo(8, 2)
+    expect(x).toBeCloseTo(-250, 2)
+    expect(y).toBeCloseTo(-250, 2)
   })
 
   it('hands the media its own geometry back at progress 1', () => {

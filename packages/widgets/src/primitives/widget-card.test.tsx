@@ -108,16 +108,15 @@ describe('WidgetCard', () => {
         </WidgetCardHeader>
       </WidgetCard>
     )
-    const title = container.querySelector('[data-slot="widget-card-title-text"]')
+    const title = container.querySelector<HTMLElement>('[data-slot="widget-card-title-text"]')
     expect(title).toHaveClass('a63-WidgetCardTitle-text')
     expect(declarations('.a63-WidgetCardTitle-text').color).toBe(
       'color-mix(in oklab, var(--a63-text-secondary) 70%, transparent)'
     )
-    expect(title).toHaveStyle({
-      fontWeight: '500',
-      textTransform: 'uppercase',
-      letterSpacing: '0.025em',
-    })
+    // The inline values the role writes; getComputedStyle resolves em to px.
+    expect(title?.style.fontWeight).toBe('500')
+    expect(title?.style.textTransform).toBe('uppercase')
+    expect(title?.style.letterSpacing).toBe('0.025em')
     expect(title?.getAttribute('style') ?? '').toContain('max(10px')
   })
 
@@ -188,7 +187,8 @@ describe('WidgetCardTitle descender relief', () => {
       </WidgetCard>
     )
 
-    const text = container.querySelector('[data-slot="widget-card-title-text"]')
-    expect(text).toHaveStyle({ paddingBottom: '0.24em', marginBottom: '-0.24em' })
+    const text = container.querySelector<HTMLElement>('[data-slot="widget-card-title-text"]')
+    expect(text?.style.paddingBottom).toBe('0.24em')
+    expect(text?.style.marginBottom).toBe('-0.24em')
   })
 })
