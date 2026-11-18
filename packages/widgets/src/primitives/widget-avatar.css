@@ -36,9 +36,13 @@
   --widget-avatar-icon: var(--a63-space-6);
 }
 
-/* The avatar fills the root and rings itself against the page. */
-.a63-WidgetAvatar-avatar {
+/* The face fills the token box and rings itself against the page. The
+ * selector is more specific than the ui-react `.a63-Avatar` default so a
+ * later same-layer recipes injection cannot shrink the face to 32px. */
+.a63-WidgetAvatar .a63-WidgetAvatar-avatar {
   --avatar-size: 100%;
+  inline-size: 100%;
+  block-size: 100%;
 
   background-color: var(--a63-surface-muted);
   box-shadow:
@@ -47,7 +51,7 @@
   transition: outline-color var(--duration-normal) var(--ease-standard);
 }
 
-.a63-WidgetAvatar-avatar[data-outline] {
+.a63-WidgetAvatar .a63-WidgetAvatar-avatar[data-outline] {
   outline: 2px solid color-mix(in oklab, var(--a63-action-primary) 70%, transparent);
   outline-offset: 2px;
 }

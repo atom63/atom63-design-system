@@ -63,4 +63,16 @@ describe('@atom63/widgets/styles.css', () => {
       /prefers-reduced-motion: reduce\)\s*\{\s*\.a63-Widget-spin\s*\{\s*animation: none;/
     )
   })
+
+  it('fills the avatar face even if a later same-layer .a63-Avatar default is injected', () => {
+    const fill = declarations('.a63-WidgetAvatar .a63-WidgetAvatar-avatar')
+    expect(fill['--avatar-size']).toBe('100%')
+    expect(fill['inline-size']).toBe('100%')
+    expect(fill['block-size']).toBe('100%')
+    // A single-class fill would lose to a later same-layer `.a63-Avatar` default.
+    expect(declarations('.a63-WidgetAvatar-avatar')['--avatar-size']).toBeUndefined()
+    expect(readStylesheet('styles.css')).toContain(
+      "@import './primitives/widget-avatar.css' layer(components);"
+    )
+  })
 })

@@ -13,6 +13,7 @@ export default defineConfig({
   test: {
     ...sharedTestOptions,
     environment: 'jsdom',
+    exclude: ['**/node_modules/**', '**/dist/**', '**/*.browser.test.ts', '**/*.cascade.test.ts'],
     globals: true,
     setupFiles: ['./src/test/setup.ts'],
   },
