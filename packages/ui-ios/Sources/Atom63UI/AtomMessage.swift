@@ -54,12 +54,15 @@ public enum AtomMessageDeliveryState: String, CaseIterable, Sendable {
 /// threads. Mirrors `Message` in `@atom63/ui-react`; the shared intent lives in
 /// the cross-renderer contract.
 ///
+/// In `.atomDensity(.compact)` the text steps down one style and the bubble padding tightens.
+///
 /// Pass `position` from your own grouping of consecutive messages: the corners
 /// where messages join tighten, and only `.single` and `.last` draw the tail and
 /// show the avatar (the others keep its column).
 public struct AtomMessage<Content: View, Avatar: View, Media: View>: View {
   @Environment(\.atomTheme) private var theme
   @Environment(\.colorScheme) private var colorScheme
+  @Environment(\.atomDensity) private var density
 
   private let sender: String
   private let direction: AtomMessageDirection
@@ -117,12 +120,12 @@ public struct AtomMessage<Content: View, Avatar: View, Media: View>: View {
         HStack(alignment: .lastTextBaseline, spacing: AtomTokens.Space.x2) {
           if Content.self != EmptyView.self {
             content
-              .font(.body)
+              .font(.system(density.textStyle(.body)))
           }
           meta
         }
-        .padding(.horizontal, AtomTokens.Space.x3)
-        .padding(.vertical, AtomTokens.Space.x2)
+        .padding(.horizontal, density.space(AtomTokens.Space.x3))
+        .padding(.vertical, density.space(AtomTokens.Space.x2))
       }
     }
     .fixedSize(horizontal: false, vertical: true)
@@ -146,7 +149,7 @@ public struct AtomMessage<Content: View, Avatar: View, Media: View>: View {
             .accessibilityLabel(status.label)
         }
       }
-      .font(.caption)
+      .font(.system(density.textStyle(.caption)))
       .foregroundStyle(metaColor)
     }
   }
@@ -223,6 +226,7 @@ extension AtomMessage where Content == Text, Media == EmptyView {
 public struct AtomMessageEvent: View {
   @Environment(\.atomTheme) private var theme
   @Environment(\.colorScheme) private var colorScheme
+  @Environment(\.atomDensity) private var density
 
   private let text: String
   private let systemImage: String?
@@ -240,7 +244,7 @@ public struct AtomMessageEvent: View {
       }
       Text(text)
     }
-    .font(.caption)
+    .font(.system(density.textStyle(.caption)))
     .foregroundStyle(theme.colors.textSecondary.resolve(for: colorScheme))
     .frame(maxWidth: .infinity)
     .multilineTextAlignment(.center)

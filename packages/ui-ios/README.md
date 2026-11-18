@@ -78,8 +78,8 @@ AtomProgressView("Upload", value: progress, tone: .neutral)
 ### Density
 
 `.atomDensity(.compact)` is the native counterpart of the web `data-a63-density`
-axis. Inside it, spacing in `AtomCard`, `AtomListRow`, `AtomValueRow` and
-`AtomSectionHeader` scales by 0.875, their text steps down one Dynamic Type
+axis. Inside it, spacing in `AtomCard`, `AtomListRow`, `AtomValueRow`,
+`AtomSectionHeader` and `AtomMessage` scales by 0.875, their text steps down one Dynamic Type
 style, and an `AtomButton` draws one size smaller (`.regular` as `.compact`).
 Hit areas do not shrink: buttons, tab rows and selection rows keep the 44pt
 touch target. Use it for dense phone screens; the default is `.regular`.
