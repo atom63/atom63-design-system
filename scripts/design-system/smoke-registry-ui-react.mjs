@@ -139,6 +139,8 @@ async function writeHarness(harnessDirectory) {
       jsx: 'react-jsx',
       strict: true,
       noEmit: true,
+      // A Vite app's own tsconfig: vite/client declares the CSS imports below.
+      types: ['vite/client'],
     },
     include: ['src'],
   }
