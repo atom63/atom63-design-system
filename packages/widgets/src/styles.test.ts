@@ -75,4 +75,17 @@ describe('@atom63/widgets/styles.css', () => {
       "@import './primitives/widget-avatar.css' layer(components);"
     )
   })
+
+  it('reserves margin so WidgetAvatar rings stay inside overflow:hidden hosts', () => {
+    const root = declarations('.a63-WidgetAvatar')
+    expect(root['--widget-avatar-ring']).toBe('2px')
+    expect(root['--widget-avatar-ring-outer']).toBe('4px')
+    expect(root.margin).toBe('var(--widget-avatar-ring-outer)')
+    expect(declarations('.a63-WidgetAvatar .a63-WidgetAvatar-avatar')['box-shadow']).toContain(
+      'var(--widget-avatar-ring)'
+    )
+    expect(declarations('.a63-WidgetAvatar-busyRing')['box-shadow']).toContain(
+      'var(--widget-avatar-ring-outer)'
+    )
+  })
 })

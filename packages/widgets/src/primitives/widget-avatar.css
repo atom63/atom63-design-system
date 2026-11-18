@@ -8,11 +8,16 @@
   --widget-avatar-dot: var(--a63-space-3_5);
   --widget-avatar-dot-inset: 6%;
   --widget-avatar-icon: calc(var(--a63-space-1) * 4.5);
+  --widget-avatar-ring: 2px;
+  /* Busy ring and outline (2px stroke + 2px offset) paint 4px outside the box. */
+  --widget-avatar-ring-outer: 4px;
 
   position: relative;
   flex-shrink: 0;
   inline-size: var(--widget-avatar-size);
   block-size: var(--widget-avatar-size);
+  /* Keep the rings inside overflow:hidden widget hosts (profile md/lg sits flush). */
+  margin: var(--widget-avatar-ring-outer);
 }
 
 .a63-WidgetAvatar[data-widget-avatar-size='sm'] {
@@ -46,14 +51,14 @@
 
   background-color: var(--a63-surface-muted);
   box-shadow:
-    0 0 0 2px var(--a63-surface-page),
+    0 0 0 var(--widget-avatar-ring) var(--a63-surface-page),
     var(--shadow-sm);
   transition: outline-color var(--duration-normal) var(--ease-standard);
 }
 
 .a63-WidgetAvatar .a63-WidgetAvatar-avatar[data-outline] {
-  outline: 2px solid color-mix(in oklab, var(--a63-action-primary) 70%, transparent);
-  outline-offset: 2px;
+  outline: var(--widget-avatar-ring) solid color-mix(in oklab, var(--a63-action-primary) 70%, transparent);
+  outline-offset: var(--widget-avatar-ring);
 }
 
 .a63-WidgetAvatar-busyRing {
@@ -61,8 +66,8 @@
   inset: 0;
   border-radius: var(--a63-avatar-radius, var(--radius-pill));
   box-shadow:
-    0 0 0 2px var(--a63-surface-page),
-    0 0 0 4px color-mix(in oklab, var(--a63-action-primary) 60%, transparent);
+    0 0 0 var(--widget-avatar-ring) var(--a63-surface-page),
+    0 0 0 var(--widget-avatar-ring-outer) color-mix(in oklab, var(--a63-action-primary) 60%, transparent);
   animation: a63-widget-pulse calc(var(--duration-slower) * 2) var(--ease-inout) infinite;
   pointer-events: none;
 }
