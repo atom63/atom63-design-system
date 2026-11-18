@@ -9,6 +9,7 @@ import { defineConfig } from 'vitest/config'
 
 import { sharedTestOptions } from '../../config/vite/vitest-defaults'
 import { CRAFT_PROJECT, CraftBaselineReporter, craftCommands } from './craft/node'
+import { visualCommands } from './visual/commands'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -108,6 +109,7 @@ export default defineConfig({
               contextOptions: { reducedMotion: 'reduce', viewport: { width: 1280, height: 10000 } },
             }),
             instances: [{ browser: 'chromium', viewport: { width: 1280, height: 800 } }],
+            commands: visualCommands,
             expect: {
               toMatchScreenshot: {
                 comparatorName: 'pixelmatch',
