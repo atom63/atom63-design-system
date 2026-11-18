@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "module": "Atom63UI",
-  "symbolCount": 569,
+  "symbolCount": 579,
   "symbols": [
     {
       "id": "s:8Atom63UI10AtomAmountV",
@@ -65,6 +65,34 @@
       "path": "AtomAmount.formatted",
       "declaration": "let formatted: String",
       "source": "AtomAmountText.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomAppBarV",
+      "kind": "swift.struct",
+      "path": "AtomAppBar",
+      "declaration": "struct AtomAppBar<Leading, Principal, Trailing> where Leading : View, Principal : View, Trailing : View",
+      "source": "AtomAppBar.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomAppBarV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomAppBar.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomAppBar.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomAppBarV5style7leading9principal8trailingACyxq_q0_GAA0cdE5StyleO_xyXEq_yXEq0_yXEtcfc",
+      "kind": "swift.init",
+      "path": "AtomAppBar.init(style:leading:principal:trailing:)",
+      "declaration": "init(style: AtomAppBarStyle = .standard, @ViewBuilder leading: () -> Leading = { EmptyView() }, @ViewBuilder principal: () -> Principal = { EmptyView() }, @ViewBuilder trailing: () -> Trailing = { EmptyView() })",
+      "source": "AtomAppBar.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomAppBarVA2A0cdE5TitleVRs_rlE_5style7leading8trailingACyxAEq0_GSS_AA0cdE5StyleOxyXEq0_yXEtcfc",
+      "kind": "swift.init",
+      "path": "AtomAppBar.init(_:style:leading:trailing:)",
+      "declaration": "init(_ title: String, style: AtomAppBarStyle = .standard, @ViewBuilder leading: () -> Leading = { EmptyView() }, @ViewBuilder trailing: () -> Trailing = { EmptyView() })",
+      "source": "AtomAppBar.swift"
     },
     {
       "id": "s:8Atom63UI10AtomAvatarV",
@@ -1507,6 +1535,48 @@
       "path": "AtomWidgetSize.columns",
       "declaration": "var columns: Int { get }",
       "source": "AtomWidget.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomAppBarStyleO",
+      "kind": "swift.enum",
+      "path": "AtomAppBarStyle",
+      "declaration": "enum AtomAppBarStyle",
+      "source": "AtomAppBar.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomAppBarStyleO8floatingyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomAppBarStyle.floating",
+      "declaration": "case floating",
+      "source": "AtomAppBar.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomAppBarStyleO8standardyA2CmF",
+      "kind": "swift.enum.case",
+      "path": "AtomAppBarStyle.standard",
+      "declaration": "case standard",
+      "source": "AtomAppBar.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomAppBarTitleV",
+      "kind": "swift.struct",
+      "path": "AtomAppBarTitle",
+      "declaration": "struct AtomAppBarTitle",
+      "source": "AtomAppBar.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomAppBarTitleV4bodyQrvp",
+      "kind": "swift.property",
+      "path": "AtomAppBarTitle.body",
+      "declaration": "var body: some View { get }",
+      "source": "AtomAppBar.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomAppBarTitleVyACSScfc",
+      "kind": "swift.init",
+      "path": "AtomAppBarTitle.init(_:)",
+      "declaration": "init(_ title: String)",
+      "source": "AtomAppBar.swift"
     },
     {
       "id": "s:8Atom63UI15AtomAvatarBadgeO",
@@ -4049,6 +4119,31 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI10AtomAppBarV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAppBarV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAppBarV4bodyQrvp",
+      "target": "s:8Atom63UI10AtomAppBarV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAppBarV5style7leading9principal8trailingACyxq_q0_GAA0cdE5StyleO_xyXEq_yXEq0_yXEtcfc",
+      "target": "s:8Atom63UI10AtomAppBarV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomAppBarVA2A0cdE5TitleVRs_rlE_5style7leading8trailingACyxAEq0_GSS_AA0cdE5StyleOxyXEq0_yXEtcfc",
+      "target": "s:8Atom63UI10AtomAppBarV",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI10AtomAvatarV",
       "target": "external:Sendable",
       "kind": "conformsTo"
@@ -5316,6 +5411,51 @@
     {
       "source": "s:8Atom63UI14AtomWidgetSizeO7columnsSivp",
       "target": "s:8Atom63UI14AtomWidgetSizeO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomAppBarStyleO",
+      "target": "external:Equatable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomAppBarStyleO",
+      "target": "external:Hashable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomAppBarStyleO",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomAppBarStyleO8floatingyA2CmF",
+      "target": "s:8Atom63UI15AtomAppBarStyleO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomAppBarStyleO8standardyA2CmF",
+      "target": "s:8Atom63UI15AtomAppBarStyleO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomAppBarTitleV",
+      "target": "external:Sendable",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomAppBarTitleV",
+      "target": "external:View",
+      "kind": "conformsTo"
+    },
+    {
+      "source": "s:8Atom63UI15AtomAppBarTitleV4bodyQrvp",
+      "target": "s:8Atom63UI15AtomAppBarTitleV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomAppBarTitleVyACSScfc",
+      "target": "s:8Atom63UI15AtomAppBarTitleV",
       "kind": "memberOf"
     },
     {

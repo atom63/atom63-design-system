@@ -2,7 +2,7 @@
 // committed baseline. Baselines are generated and compared only on CI's Linux
 // runner; see apps/storybook/README.md.
 import { afterEach, beforeEach, expect } from 'vitest'
-import { page } from 'vitest/browser'
+import { commands, page } from 'vitest/browser'
 
 import { freezeMotion, pinRemoteImages, settleMedia } from './stable-media'
 
@@ -40,6 +40,8 @@ beforeEach(async ({ task }) => {
 afterEach(async ({ task }) => {
   const storyId = task.meta.storyId
   if (!storyId || task.result?.state === 'fail') return
+  // No story is captured in a hover state; see visual/commands.ts.
+  await commands.movePointerAway()
   await settleMedia()
   // Only the viewport is painted in the capture, so a story taller than the
   // viewport would come out blank below the fold. Grow the viewport to the page.
@@ -60,3 +62,9 @@ afterEach(async ({ task }) => {
     timeout: 15_000,
   })
 })
+
+declare module 'vitest/browser' {
+  interface BrowserCommands {
+    movePointerAway: () => Promise<void>
+  }
+}

@@ -190,7 +190,6 @@ function ComposedGallery({ items }: { items: MediaLightboxItem[] }) {
       <div className="grid grid-cols-3 gap-4">
         {items.map((item, itemIndex) => (
           <button
-            aria-label={`View ${item.title}`}
             className="group flex aspect-4/3 flex-col justify-end overflow-hidden rounded-2xl border border-border/60 bg-card p-4 text-left text-card-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
             key={item.id}
             onClick={event => {
@@ -203,7 +202,8 @@ function ComposedGallery({ items }: { items: MediaLightboxItem[] }) {
             }}
             type="button"
           >
-            <span className="text-xs tracking-[0.24em] text-white/70 uppercase">Custom chrome</span>
+            {/* The visible text is the name ("View Hills"), so what is seen is what is announced. */}
+            <span className="text-xs tracking-[0.24em] text-white/70 uppercase">View</span>
             <span className="mt-2 text-lg font-medium text-white transition group-hover:translate-x-0.5">
               {item.title}
             </span>

@@ -1,6 +1,6 @@
 {
   "name": "@atom63/cli",
-  "version": "0.1.0-beta.0",
+  "version": "0.1.0-beta.1",
   "description": "Query the Atom63 design system from the command line or an MCP host: components, contracts, tokens, examples and docs",
   "license": "MIT",
   "repository": {
