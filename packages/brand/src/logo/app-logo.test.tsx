@@ -34,7 +34,8 @@ describe('AppLogo', () => {
   it('paints the symbol with the primary action token when colored', () => {
     const { container } = render(<AppLogo colored variant="horizontal" />)
     const [symbol, wordmark] = container.querySelectorAll('svg')
-    expect(symbol).toHaveStyle({ color: 'var(--a63-action-primary)' })
+    // Inline, as written: getComputedStyle resolves the unset token.
+    expect(symbol?.style.color).toBe('var(--a63-action-primary)')
     expect(wordmark).not.toHaveAttribute('style')
   })
 
