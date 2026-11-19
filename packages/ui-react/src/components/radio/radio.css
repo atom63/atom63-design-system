@@ -121,6 +121,20 @@
   height: 0.4375rem;
 }
 
+/* Forced colors turn the accent fill and the dot into the same system colour as
+   an unchecked radio, so a checked radio takes the system selection colours. */
+@media (forced-colors: active) {
+  .a63-Radio[data-checked] {
+    border-color: Highlight;
+  }
+  .a63-Radio[data-checked] .a63-Radio-indicator {
+    background-color: Highlight;
+  }
+  .a63-Radio-indicator::before {
+    background-color: HighlightText;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .a63-Radio {
     transition: none;

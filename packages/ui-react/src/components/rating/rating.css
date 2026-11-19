@@ -101,3 +101,20 @@
     transition: none;
   }
 }
+
+/* Forced colors map the on and off colours to one system colour. On stars take
+   the system selection colour, and off stars draw as outlines, so the score
+   reads by shape as well as colour. */
+@media (forced-colors: active) {
+  .a63-Rating {
+    --rating-on: Highlight;
+    --rating-off: CanvasText;
+  }
+  .a63-Rating-icon > :where(svg) {
+    fill: none;
+  }
+  .a63-Rating-icon--filled > :where(svg),
+  .a63-Rating-item[data-on] .a63-Rating-icon > :where(svg) {
+    fill: currentColor;
+  }
+}

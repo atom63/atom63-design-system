@@ -2,7 +2,7 @@ import { Button } from '@atom63/ui-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { FileText, LayoutDashboard, Settings } from 'lucide-react'
 
-import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import { checkSafeArea, phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
 import { AppShell } from './app-shell'
 
 const args = {
@@ -32,7 +32,20 @@ type Story = StoryObj<typeof meta>
 
 export const Desktop: Story = { args }
 
-export const Phone: Story = { args, globals: phoneGlobals }
+/* The top bar owns the top inset; the page wrapper the bottom one; both clear the inline insets. */
+export const Phone: Story = {
+  args,
+  globals: phoneGlobals,
+  play: ({ canvasElement }) =>
+    checkSafeArea(canvasElement, {
+      'main > header': { paddingInlineStart: '47px', paddingTop: '29px' },
+      'main > header + div': {
+        paddingBottom: '63px',
+        paddingInlineStart: '47px',
+        paddingTop: '32px',
+      },
+    }),
+}
 
 export const Themes: Story = {
   args,

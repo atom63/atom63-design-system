@@ -359,3 +359,42 @@ describe('recipes.css cascade layering', () => {
     expect(resetCss).toMatch(/@layer\s+base\b/)
   })
 })
+
+describe('state that survives forced colors', () => {
+  /* Forced colors (Windows High Contrast) replace fills and text colours with
+     system colours and drop shadows and gradients, so a state drawn by colour
+     alone vanishes. These recipes repaint their selected, pressed, checked or
+     highlighted state in the system selection colours. */
+  it.each([
+    'menu',
+    'panel-setting-button',
+    'progress',
+    'radio',
+    'rating',
+    'tabs',
+    'toggle',
+    'toggle-group',
+  ])('%s repaints its state under forced colors', name => {
+    expect(readRecipe(name)).toMatch(/@media \(forced-colors: active\)[\s\S]*Highlight/)
+  })
+
+  it('draws a pressed neutral toggle in the neutral solid, not the segment plate', () => {
+    const toggle = readRecipe('toggle')
+    expect(toggle).toContain(
+      '--toggle-on-background: var(--a63-toggle-on-background, var(--a63-action-neutral))'
+    )
+    expect(toggle).not.toContain('--a63-segment-selected-background')
+  })
+
+  it('keeps menu group labels at full text-secondary contrast', () => {
+    const label = readRecipe('menu').match(/\.a63-Menu-label \{[^}]*\}/)?.[0]
+    expect(label).toBeDefined()
+    expect(label).not.toContain('opacity')
+  })
+
+  it('does not draw a still indeterminate progress bar as a partial fill', () => {
+    expect(readRecipe('progress')).toMatch(
+      /prefers-reduced-motion: reduce[\s\S]*\[data-indeterminate\] \{\s*width: 100%;/
+    )
+  })
+})

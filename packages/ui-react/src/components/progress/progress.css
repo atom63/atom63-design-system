@@ -33,8 +33,10 @@
 }
 
 .a63-Progress-indicator {
+  --progress-fill: var(--a63-action-primary);
+
   height: 100%;
-  background-color: var(--a63-action-primary);
+  background-color: var(--progress-fill);
   background-image: var(--a63-control-gloss, none);
   transition:
     transform var(--duration-slow) var(--a63-motion-ease-standard),
@@ -46,7 +48,7 @@
   background-color: var(--a63-surface-muted);
 }
 .a63-Progress[data-tone='neutral'] .a63-Progress-indicator {
-  background-color: var(--a63-text-primary);
+  --progress-fill: var(--a63-text-primary);
 }
 
 .a63-Progress-indicator[data-indeterminate] {
@@ -74,5 +76,25 @@
   .a63-Progress-indicator {
     animation: none;
     transition: none;
+  }
+  /* A still 40% bar would read as 40% done. Without the sweep, the unknown
+     amount fills the whole track with stripes instead. */
+  .a63-Progress-indicator[data-indeterminate] {
+    width: 100%;
+    background-color: transparent;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      var(--progress-fill) 0 0.25rem,
+      transparent 0.25rem 0.5rem
+    );
+  }
+}
+
+/* Forced colors replace the fill with the track colour and drop the stripes,
+   so the indicator paints itself in the system selection colour. */
+@media (forced-colors: active) {
+  .a63-Progress[data-tone] .a63-Progress-indicator {
+    --progress-fill: Highlight;
+    forced-color-adjust: none;
   }
 }

@@ -7,14 +7,15 @@
   "include": ["src"],
   // Stories depend on Storybook tooling owned by @atom63/storybook, not this
   // library; the Storybook app compiles them, so exclude from the lib typecheck.
-  // recipes.test.ts and contract-variants.test.ts are NODE-based registry checks
-  // (they read source files via node:fs) that vitest runs — they aren't shipped
-  // lib code, and pulling node globals into a browser UI library's typecheck
-  // would be wrong.
+  // recipes.test.ts, contract-variants.test.ts and toaster-styles.test.tsx are
+  // NODE-based registry checks (they read source files via node:fs) that vitest
+  // runs — they aren't shipped lib code, and pulling node globals into a browser
+  // UI library's typecheck would be wrong.
   "exclude": [
     "**/*.stories.tsx",
     "**/*.mdx",
     "src/styles/recipes.test.ts",
-    "src/components/contract-variants.test.ts"
+    "src/components/contract-variants.test.ts",
+    "src/components/toaster/toaster-styles.test.tsx"
   ]
 }

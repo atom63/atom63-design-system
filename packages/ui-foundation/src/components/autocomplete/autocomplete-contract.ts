@@ -29,9 +29,11 @@ export const autocompleteStates = [
   'closed',
   'open',
   'highlighted',
+  'hover',
   'disabled',
   'empty',
   'loading',
+  'invalid',
 ] as const
 export const autocompleteVisualArchetypes = [
   'field',

@@ -26,10 +26,12 @@ const ITEMS = [
 function Demo({
   size,
   disabled,
+  invalid,
   portalContainer,
 }: {
   size?: (typeof selectSizes)[number]
   disabled?: boolean
+  invalid?: boolean
   portalContainer?: SelectPopupProps['portalContainer']
 }) {
   const [value, setValue] = useState('all')
@@ -39,6 +41,7 @@ function Demo({
         <SelectTrigger
           aria-label={disabled ? 'Example select, disabled' : 'Example select'}
           disabled={disabled}
+          invalid={invalid}
           size={size}
         >
           <SelectValue />
@@ -81,6 +84,18 @@ export const Disabled: Story = {
   render: () => <Demo disabled />,
 }
 
+/** `invalid` (or `aria-invalid`, which FormControl sets) draws the danger edge at
+ *  every size. */
+export const Invalid: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: 16, alignItems: 'start' }}>
+      {selectSizes.map(size => (
+        <Demo invalid key={size} size={size} />
+      ))}
+    </div>
+  ),
+}
+
 const GROUPED = [
   { value: 'article', label: 'Article', group: 'Reading' },
   { value: 'post', label: 'Post', group: 'Reading' },
@@ -91,7 +106,8 @@ const GROUPED = [
 /**
  * Grouped items with labels + a separator, rendered via the `SelectContent`
  * alias (identical to `SelectPopup`). Exercises `SelectGroup`,
- * `SelectGroupLabel`, and `SelectSeparator`.
+ * `SelectGroupLabel`, and `SelectSeparator`. Opens on load so the visual and
+ * axe runs capture the popup and its selected item.
  */
 export const Grouped: Story = {
   render: () => {
@@ -99,7 +115,12 @@ export const Grouped: Story = {
       const [value, setValue] = useState('article')
       return (
         <div style={{ width: 220 }}>
-          <Select items={GROUPED} onValueChange={next => setValue(next ?? '')} value={value}>
+          <Select
+            defaultOpen
+            items={GROUPED}
+            onValueChange={next => setValue(next ?? '')}
+            value={value}
+          >
             <SelectTrigger aria-label="Example select">
               <SelectValue />
             </SelectTrigger>
@@ -138,6 +159,7 @@ const LONG = Array.from({ length: 24 }, (_, i) => ({
 /**
  * A long list that overflows the popup so the up/down scroll arrows
  * (`ScrollUpArrow` / `ScrollDownArrow`) become visible on hover near the edges.
+ * Opens on load so the visual run captures the overflowing popup.
  */
 export const Scrollable: Story = {
   render: () => {
@@ -145,7 +167,12 @@ export const Scrollable: Story = {
       const [value, setValue] = useState(LONG[0].value)
       return (
         <div style={{ width: 220 }}>
-          <Select items={LONG} onValueChange={next => setValue(next ?? '')} value={value}>
+          <Select
+            defaultOpen
+            items={LONG}
+            onValueChange={next => setValue(next ?? '')}
+            value={value}
+          >
             <SelectTrigger aria-label="Example select">
               <SelectValue />
             </SelectTrigger>

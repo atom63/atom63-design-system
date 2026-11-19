@@ -1360,6 +1360,9 @@
   .text-muted-foreground {
     color: var(--a63-text-secondary);
   }
+  .text-secondary {
+    color: var(--a63-surface-muted);
+  }
   .uppercase {
     text-transform: uppercase;
   }

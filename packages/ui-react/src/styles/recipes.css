@@ -47,6 +47,7 @@
 @import '../components/breadcrumb/breadcrumb.css' layer(components);
 @import '../components/button-group/button-group.css' layer(components);
 @import '../components/copy-button/copy-button.css' layer(components);
+@import '../components/destination-link/destination-link.css' layer(components);
 @import '../components/dialog/dialog.css' layer(components);
 @import '../components/empty/empty.css' layer(components);
 @import '../components/item/item.css' layer(components);

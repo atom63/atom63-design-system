@@ -55,6 +55,10 @@ export const Variants: Story = {
   ),
 }
 
+/* Captured with forced colors on (Windows High Contrast): the selected tab of
+   every variant takes the system selection colours. */
+export const ForcedColors: Story = { render: Variants.render }
+
 /* attached — the connected "folder": the tab row sits flush on a card panel
    body, and the active tab merges into it (no bottom border, shares the panel
    surface). Only reads with a panel present, which Variants omits. */
