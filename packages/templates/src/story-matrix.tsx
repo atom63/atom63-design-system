@@ -53,3 +53,38 @@ export const compactGlobals = { viewport: { value: 'a63-compact', isRotated: fal
 export const tabletGlobals = { viewport: { value: 'a63-tablet', isRotated: false } }
 export const responsivePhoneGlobals = { viewport: { value: 'a63-phone', isRotated: false } }
 export const phoneGlobals = { viewport: { value: 'mobile2', isRotated: false } }
+
+/*
+ * Checks a full-page template's safe-area owners with emulated insets, as on a
+ * phone in landscape: `expect` maps a CSS selector to the computed padding it
+ * must have once the insets are set (top 29px, bottom 31px, left and right 47px).
+ */
+export function checkSafeArea(
+  canvasElement: HTMLElement,
+  expect: Record<
+    string,
+    Partial<Record<'paddingBottom' | 'paddingInlineStart' | 'paddingTop', string>>
+  >
+) {
+  const insets = { bottom: '31px', left: '47px', right: '47px', top: '29px' }
+  for (const [edge, value] of Object.entries(insets)) {
+    canvasElement.style.setProperty(`--a63-safe-area-${edge}`, value)
+  }
+  try {
+    for (const [selector, paddings] of Object.entries(expect)) {
+      const element = canvasElement.querySelector<HTMLElement>(selector)
+      if (!element) throw new Error(`Expected ${selector}`)
+      const style = getComputedStyle(element)
+      for (const [property, value] of Object.entries(paddings)) {
+        const actual = style[property as keyof typeof paddings]
+        if (actual !== value) {
+          throw new Error(`Expected ${selector} ${property} ${value}, got ${actual}`)
+        }
+      }
+    }
+  } finally {
+    for (const edge of Object.keys(insets)) {
+      canvasElement.style.removeProperty(`--a63-safe-area-${edge}`)
+    }
+  }
+}

@@ -56,6 +56,10 @@ const anchor = ({ children, ...props }: AppShellLinkProps) => <a {...props}>{chi
  * On a phone the sidebar becomes a sheet the top-bar toggle opens; on wider
  * screens it collapses to icons. The current page is marked with
  * `aria-current`, not only the active style.
+ *
+ * Each safe-area inset has one owner, as in AppView: the top bar takes the top
+ * inset, the page wrapper the bottom one, and both clear the inline insets
+ * (the larger of the two, so the layout still mirrors).
  */
 export function AppShell({
   children,
@@ -66,7 +70,7 @@ export function AppShell({
   topBarActions,
 }: AppShellProps) {
   return (
-    <SidebarProvider>
+    <SidebarProvider className="[--app-shell-inset-inline:max(var(--a63-safe-area-left),var(--a63-safe-area-right))]">
       <Sidebar collapsible="icon">
         {/* One navigation landmark holds the product name and the menu, so all
             sidebar content sits in a landmark; `contents` keeps the sidebar's
@@ -109,11 +113,13 @@ export function AppShell({
         </nav>
       </Sidebar>
       <SidebarInset>
-        <header className="border-border flex h-14 items-center gap-2 border-b px-4">
+        <header className="border-border box-content flex h-14 items-center gap-2 border-b px-[max(--spacing(4),var(--app-shell-inset-inline))] pt-[var(--a63-safe-area-top)]">
           <SidebarTrigger />
           <div className="ms-auto flex items-center gap-2">{topBarActions}</div>
         </header>
-        <div className="px-4 py-8 sm:px-6">{children}</div>
+        <div className="px-[max(--spacing(4),var(--app-shell-inset-inline))] pt-8 pb-[calc(--spacing(8)+var(--a63-safe-area-bottom))] sm:px-[max(--spacing(6),var(--app-shell-inset-inline))]">
+          {children}
+        </div>
       </SidebarInset>
     </SidebarProvider>
   )
