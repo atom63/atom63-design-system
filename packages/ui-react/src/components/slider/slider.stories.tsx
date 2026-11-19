@@ -40,6 +40,43 @@ export const Ranged: Story = {
   ),
 }
 
+/* A controlled range: onValuesChange reports every thumb, so the read-out
+   follows both ends. */
+export const ControlledRange: Story = {
+  render: () => {
+    const [range, setRange] = useState([25, 75])
+    return (
+      <div style={{ display: 'grid', gap: 8, width: 280 }}>
+        <Slider
+          getThumbAriaLabel={index => (index === 0 ? 'Minimum price' : 'Maximum price')}
+          max={100}
+          min={0}
+          onValuesChange={setRange}
+          value={range}
+        />
+        <span style={{ color: 'var(--a63-text-secondary)', fontSize: 12 }}>
+          {range[0]} – {range[1]}
+        </span>
+      </div>
+    )
+  },
+}
+
+/* Right-to-left inside UIProvider dir="rtl": the minimum sits on the right, and
+   dragging or pressing the left arrow key raises the value. */
+export const RightToLeft: Story = {
+  render: () => (
+    <UIProvider dir="rtl" lang="ar">
+      <div style={{ display: 'grid', gap: 16, width: 280 }}>
+        <Slider aria-label="السطوع" defaultValue={30}>
+          <SliderValue />
+        </Slider>
+        <Slider aria-label="النطاق" defaultValue={[25, 75]} />
+      </div>
+    </UIProvider>
+  ),
+}
+
 export const Vertical: Story = {
   render: () => (
     <div style={{ height: 240 }}>

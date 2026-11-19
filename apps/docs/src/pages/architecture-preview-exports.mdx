@@ -1,0 +1,24 @@
+# Preview exports
+
+`@atom63/ui-react/preview` holds exports that are public but not yet stable: the Base UI primitives some components wrap, imperative handles, class name helpers, the React renderer conformance record and the motion constants. They can change in a minor release, so reach for them only when a component's own props cannot do the job, and prefer the component from `@atom63/ui-react`.
+
+| Group | Exports |
+|-------|---------|
+| Primitives | `AlertDialogPrimitive`, `AutocompletePrimitive`, `AvatarPrimitive`, `DialogPrimitive`, `InputPrimitive`, `ProgressPrimitive`, `SeparatorPrimitive`, `SheetPrimitive`, `TooltipPrimitive` |
+| Imperative handles | `AlertDialogCreateHandle`, `CommandCreateHandle`, `DialogCreateHandle`, `TooltipCreateHandle` |
+| Class names | `cardLinkClassName`, `navigationMenuTriggerStyle`, `scrollableListControlClassNames`, `selectTriggerDefaultClassName` |
+| Button group context | `ButtonGroupProvider`, `useButtonGroupContext` |
+| Conformance | `reactRendererConformance`, `getReactRendererConformance` |
+| Motion | `ATOM63_MOTION_EASE`, `ATOM63_FLYOUT_TRANSITION`, `ATOM63_OVERLAY_MOTION_DURATION_MS` and their `_CSS` strings |
+
+```tsx
+import { ATOM63_OVERLAY_MOTION_DURATION_MS, cardLinkClassName } from '@atom63/ui-react/preview'
+
+<a className={cardLinkClassName} href="/projects/atlas">
+  Atlas
+</a>
+
+setTimeout(cleanUp, ATOM63_OVERLAY_MOTION_DURATION_MS)
+```
+
+Look up any export with `atom63 api <name>`, and list them all with `atom63 api @atom63/ui-react/preview`.

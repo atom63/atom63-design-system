@@ -24,6 +24,12 @@ Released on the `beta` tag with the other packages, starting at `0.1.0-beta.0`. 
    project, and
    `atom63 build <idea>` returns a kit: the closest pages and blocks, the components they use,
    the foundation and the rules. `search` finds templates too.
+6. **Public API.** The index lists every public SwiftUI type of `Atom63UI` (from
+   `packages/ui-ios/api/public-api.json`, with its doc comment and members) and the exports of
+   every published JavaScript entry point, each mapped to a docs page. `atom63 api <name>` answers
+   a type, an export or a whole entry point, and `search` finds them by name. The index build
+   fails on an entry point with no docs page, and a test fails on a public `Atom*` type the index
+   does not hold. `atom63 docs ios` reads the `Atom63UI` README.
 
 ## Usage
 
@@ -38,6 +44,8 @@ pnpm atom63 component dialog
 pnpm atom63 example badge Sizes
 pnpm atom63 token --a63-surface-page
 pnpm atom63 docs theme-system
+pnpm atom63 api AtomWidgetCard
+pnpm atom63 api @atom63/ui-react/media
 pnpm atom63 rules
 pnpm atom63 manifest --json
 ```
