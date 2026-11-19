@@ -32,9 +32,16 @@ const viewportForStory = (storyId: string | undefined) => {
   return entry?.[1] ?? VIEWPORT
 }
 
+/* A story whose id ends in `--forced-colors` (a `ForcedColors` export) is
+   captured with forced colors on, so the states a component must keep in
+   Windows High Contrast get a baseline too. */
+const isForcedColorsStory = (storyId: string | undefined) =>
+  storyId?.endsWith('--forced-colors') ?? false
+
 beforeEach(async ({ task }) => {
   const viewport = viewportForStory(task.meta.storyId)
   await page.viewport(viewport.width, viewport.height)
+  await commands.emulateForcedColors(isForcedColorsStory(task.meta.storyId))
 })
 
 afterEach(async ({ task }) => {
@@ -65,6 +72,7 @@ afterEach(async ({ task }) => {
 
 declare module 'vitest/browser' {
   interface BrowserCommands {
+    emulateForcedColors: (active: boolean) => Promise<void>
     movePointerAway: () => Promise<void>
   }
 }

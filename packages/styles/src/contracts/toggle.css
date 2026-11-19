@@ -11,8 +11,8 @@
  *   --a63-toggle-background           -> transparent
  *   --a63-toggle-foreground           -> var(--a63-text-primary)
  *   --a63-toggle-hover-background     -> var(--a63-surface-control-hover)
- *   --a63-toggle-on-background        -> var(--a63-surface-muted)
- *   --a63-toggle-on-foreground        -> var(--a63-text-primary)
+ *   --a63-toggle-on-background        -> var(--a63-action-neutral)
+ *   --a63-toggle-on-foreground        -> var(--a63-action-neutral-foreground)
  *   --a63-toggle-primary-background   -> var(--a63-action-primary)
  *   --a63-toggle-primary-foreground   -> var(--a63-action-primary-foreground)
  */

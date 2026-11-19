@@ -106,4 +106,31 @@ describe('ToggleGroup', () => {
     )
     expect(group()).toHaveAttribute('data-variant', 'ghost')
   })
+
+  it('is one tab stop whose arrow keys move focus and Space presses the item', async () => {
+    const user = userEvent.setup()
+    const onValueChange = vi.fn()
+    render(
+      <>
+        <ToggleGroup aria-label="Align" onValueChange={onValueChange} value={['left']}>
+          <ToggleGroupItem value="left">L</ToggleGroupItem>
+          <ToggleGroupItem value="center">C</ToggleGroupItem>
+          <ToggleGroupItem value="right">R</ToggleGroupItem>
+        </ToggleGroup>
+        <button type="button">After</button>
+      </>
+    )
+    await user.tab()
+    expect(screen.getByRole('button', { name: 'L' })).toHaveFocus()
+    await user.keyboard('{ArrowRight}')
+    expect(screen.getByRole('button', { name: 'C' })).toHaveFocus()
+    await user.keyboard('{End}')
+    expect(screen.getByRole('button', { name: 'R' })).toHaveFocus()
+    await user.keyboard('{ArrowLeft}')
+    expect(screen.getByRole('button', { name: 'C' })).toHaveFocus()
+    await user.keyboard(' ')
+    expect(onValueChange.mock.calls[0][0]).toEqual(['center'])
+    await user.tab()
+    expect(screen.getByRole('button', { name: 'After' })).toHaveFocus()
+  })
 })

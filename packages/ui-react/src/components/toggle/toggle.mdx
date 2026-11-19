@@ -16,12 +16,12 @@ A quiet bistate pressable (Base UI Toggle) — stays pressed without borrowing B
 ## Contract
 
 - **Sizes:** `sm` `md` `lg` (default `md`).
-- **Tones (active fill):** `neutral` (muted/selected surface) · `accent` (brand primary).
+- **Tones (active fill):** `neutral` (the high-emphasis neutral solid, as on a default Button) · `accent` (brand primary) · `subtle` (accent text, no fill).
 - Source of truth: `@atom63/ui-foundation` → `contracts/components/toggle.json`.
 
 ## Tokens it reads
 
-Geometry from `--a63-control-*`. Pressed fills from `--a63-toggle-*` / `--a63-segment-*`. Focus uses `--a63-focus-ring`.
+Geometry from `--a63-control-*`. Pressed fills from `--a63-toggle-*`, falling back to `--a63-action-neutral` and `--a63-action-primary`. In forced-colors mode a pressed toggle takes the system `Highlight` colours. Focus uses `--a63-focus-ring`.
 
 <Primary />
 
