@@ -12,6 +12,13 @@ struct AtomListPatternTests {
   }
 
   @Test
+  func everySyncIntentHasItsOwnDefaultLabel() {
+    let labels = AtomSyncIntent.allCases.map(AtomSyncStatusView.defaultLabel(for:))
+    #expect(labels.allSatisfy { !$0.isEmpty })
+    #expect(Set(labels).count == AtomSyncIntent.allCases.count)
+  }
+
+  @Test
   func pageDotsShapesAndTonesMatchTheCarouselContract() {
     // The carousel contract lists dotShapes dot and pill, and dotTones neutral, accent and
     // on-media; iOS mirrors them.

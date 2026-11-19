@@ -183,7 +183,10 @@ inset:
 - Buttons, chips, selection rows, retry actions, and pagination controls expose a
   minimum 44-point hit target.
 - Transient toasts and inserted success/error form summaries post VoiceOver
-  announcements without moving or trapping focus.
+  announcements without moving or trapping focus. A toast also dismisses with a
+  swipe up or the VoiceOver escape gesture.
+- A message bubble reads as one element: the sender and text, then the time and
+  delivery status.
 - Indeterminate progress, synchronization, and loading controls expose
   frequently-updating accessibility values.
 - Native sheets retain system focus containment and restoration. Cancellation

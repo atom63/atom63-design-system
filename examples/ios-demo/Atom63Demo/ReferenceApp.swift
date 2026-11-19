@@ -69,14 +69,11 @@ final class DemoAppModel {
       projects = try repository.cachedProjects()
       resourceIntent = .content
       syncIntent = .stale
-      toast = AtomToast(message: "Project saved locally")
+      toast = AtomToast(message: "Project saved locally", tone: .success)
       return true
     } catch {
       syncIntent = .failed
-      toast = AtomToast(
-        message: "Couldn’t save project",
-        systemImage: "exclamationmark.triangle"
-      )
+      toast = AtomToast(message: "Couldn’t save project", tone: .error)
       return false
     }
   }
@@ -87,14 +84,11 @@ final class DemoAppModel {
       projects = try repository.cachedProjects()
       resourceIntent = .content
       syncIntent = .stale
-      toast = AtomToast(message: "Project changes saved")
+      toast = AtomToast(message: "Project changes saved", tone: .success)
       return true
     } catch {
       syncIntent = .failed
-      toast = AtomToast(
-        message: "Couldn’t save project changes",
-        systemImage: "exclamationmark.triangle"
-      )
+      toast = AtomToast(message: "Couldn’t save project changes", tone: .error)
       return false
     }
   }
@@ -109,10 +103,7 @@ final class DemoAppModel {
       return true
     } catch {
       syncIntent = .failed
-      toast = AtomToast(
-        message: "Couldn’t delete project",
-        systemImage: "exclamationmark.triangle"
-      )
+      toast = AtomToast(message: "Couldn’t delete project", tone: .error)
       return false
     }
   }
@@ -393,7 +384,7 @@ private struct DashboardView: View {
                   subtitle: "Choose the platform rendering strategy"
                 )
                 AtomIconButton("Runtime help", systemImage: "questionmark.circle") {
-                  model.toast = AtomToast(message: "Atom63 uses native SwiftUI rendering")
+                  model.toast = AtomToast(message: "Atom63 uses native SwiftUI rendering", tone: .info)
                 }
               }
 
@@ -805,10 +796,7 @@ private struct EditProjectSheet: View {
         return
       } catch {
         isSaving = false
-        model.toast = AtomToast(
-          message: "Couldn’t save project changes",
-          systemImage: "exclamationmark.triangle"
-        )
+        model.toast = AtomToast(message: "Couldn’t save project changes", tone: .error)
         return
       }
       let updatedProject = DemoProject(
@@ -936,10 +924,7 @@ private struct AddProjectSheet: View {
         return
       } catch {
         isSaving = false
-        model.toast = AtomToast(
-          message: "Couldn’t create project",
-          systemImage: "exclamationmark.triangle"
-        )
+        model.toast = AtomToast(message: "Couldn’t create project", tone: .error)
         return
       }
       let didCreate = model.addProject(
