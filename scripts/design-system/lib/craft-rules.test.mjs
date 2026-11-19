@@ -5,6 +5,7 @@ import {
   compareToBaseline,
   countViolations,
   declaredTokens,
+  roleTokens,
   scanCss,
   scanSource,
 } from './craft-rules.mjs'
@@ -245,5 +246,53 @@ describe('baseline', () => {
       ],
       resolved: [{ key: 'physical-properties | c.css | margin-left', count: 1 }],
     })
+  })
+})
+
+describe('token-role', () => {
+  const role = found => rules(found).filter(line => line.includes('token-role'))
+  const roles = roleTokens({
+    groups: [
+      { roles: { primary: '--a63-action-primary', muted: '--a63-surface-muted' } },
+      {
+        roles: {
+          foreground: '--a63-text-primary',
+          'muted-foreground': '--a63-text-secondary',
+          success: '--a63-status-success',
+        },
+      },
+    ],
+  })
+
+  it('flags a fill read as the text color and a text token read as a background, in CSS', () => {
+    const css = `
+      .a { color: var(--a63-action-primary); }
+      .b { background-color: var(--a63-text-primary); }
+      .c { color: var(--a63-text-accent); background: var(--a63-surface-panel); }
+      .d { color: var(--a63-action-primary-foreground); }
+      .e { color: color-mix(in oklch, var(--a63-action-primary) 80%, var(--a63-text-primary)); }
+    `
+    assert.deepEqual(role(scanCss(css)), [
+      '2 token-role color: var(--a63-action-primary)',
+      '3 token-role background-color: var(--a63-text-primary)',
+    ])
+  })
+
+  it('flags role utilities that map to the wrong kind of token, with variants and opacity', () => {
+    const source = `const a = 'text-primary hover:text-muted/80 bg-foreground'
+const b = 'text-foreground bg-primary text-success bg-muted text-muted-foreground'
+const c = 'text-(--a63-surface-page) text-[var(--a63-action-danger)] text-(--a63-text-danger)'`
+    assert.deepEqual(role(scanSource(source, { roles })), [
+      '1 token-role text-primary',
+      '1 token-role hover:text-muted/80',
+      '1 token-role bg-foreground',
+      '3 token-role text-(--a63-surface-page)',
+      '3 token-role text-[var(--a63-action-danger)]',
+    ])
+  })
+
+  it('honours craft-allow', () => {
+    const css = `.a { color: var(--a63-surface-page); /* craft-allow: token-role inverse label on the ink fill */ }`
+    assert.deepEqual(role(scanCss(css)), [])
   })
 })

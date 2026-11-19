@@ -20,6 +20,7 @@
     "check:api-report": "node scripts/design-system/api-report.mjs --check",
     "check:benchmark-parity": "node scripts/design-system/audit-benchmark-parity.mjs",
     "check:control-alignment": "node scripts/design-system/check-control-alignment.mjs",
+    "check:contract-consistency": "node scripts/design-system/check-contract-consistency.mjs",
     "check:craft": "node scripts/design-system/check-craft.mjs",
     "check:registry": "node scripts/design-system/build-registry.mjs --check",
     "check:templates": "node scripts/design-system/check-templates.mjs",

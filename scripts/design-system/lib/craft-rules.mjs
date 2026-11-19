@@ -33,6 +33,17 @@
  *   so the property silently drops. `var(--a63-…, fallback)` passes: a read
  *   with a fallback is a hook the caller may set. Runs only when the scanner
  *   is given the known names (`knownTokens`).
+ * - `token-role`: a token paints the role it was made for. Flags a fill (a
+ *   `--a63-surface-*` token, the primary, neutral or danger action fill, a
+ *   selected background) read as the text color, and a `--a63-text-*` token
+ *   read as a background. In CSS that is `color` or `background` set to one
+ *   `var()`; a `color-mix()` passes. In TS/TSX it is a `text-*` or `bg-*`
+ *   utility whose Tailwind role (`roles`, from styles' tailwind/roles.json)
+ *   maps to such a token, such as `text-primary`, and the arbitrary forms
+ *   `text-(--a63-…)` and `text-[var(--a63-…)]`. A fill is contrast-checked
+ *   against its own foreground, not against the page, so as text it can fail
+ *   (the primary action fill is 2.9:1 on the dark page); the text roles are
+ *   `--a63-text-*`, such as `--a63-text-accent` and `--a63-text-danger`.
  *
  * Some physical directions are the point: a sheet docked to the left edge, or
  * an optical nudge on a glyph that never mirrors. CSS rules scoped to
@@ -88,6 +99,18 @@ const TOKEN_DECLARATION = /(?<![\w-])(--a63-[\w-]+)['"]?\s*:|(?<=['"`])(--a63-[\
 
 const DATA_SIDE = /\[data-side=['"]?(?:left|right)\b/
 const ALLOW = /craft-allow:\s*([a-z-]+)/g
+const FILL_TOKEN =
+  /^--a63-(?:surface-[\w-]+|action-(?:primary|neutral|danger)(?:-(?:hover|active|pressed))?|selected(?:-accent)?-background)$/
+const TEXT_TOKEN = /^--a63-text-[\w-]+$/
+const TEXT_PROPERTY = /^(?:color|-webkit-text-fill-color)$/
+const FILL_PROPERTY = /^background(?:-color)?$/
+const SINGLE_TOKEN_VALUE = /^var\(\s*(--a63-[\w-]+)\s*\)(?:\s*!important)?$/
+const ROLE_UTILITY = /^(text|bg)-(.+?)(?:\/\d+)?$/
+const ARBITRARY_TOKEN = /^(?:\((--a63-[\w-]+)\)|\[var\((--a63-[\w-]+)\)\])$/
+
+/** Whether `kind` (`text` or `bg`) painting `token` puts it outside its role. */
+const misusesRole = (kind, token) =>
+  kind === 'text' ? FILL_TOKEN.test(token) : TEXT_TOKEN.test(token)
 
 /**
  * Drop violations a `craft-allow` comment exempts. A comment that shares its
@@ -202,6 +225,11 @@ export function scanCss(css, { knownTokens } = {}) {
         found.push({ rule: 'focus-ring-outline', match: `box-shadow: var(${ring[1]})`, line })
       }
     }
+    const single = value.match(SINGLE_TOKEN_VALUE)?.[1]
+    const kind = TEXT_PROPERTY.test(property) ? 'text' : FILL_PROPERTY.test(property) ? 'bg' : null
+    if (single && kind && misusesRole(kind, single)) {
+      found.push({ rule: 'token-role', match: `${property}: var(${single})`, line })
+    }
     if (CSS_MASK_PROPERTY.test(property)) continue
     for (const color of value.match(CSS_LITERAL_COLOR) ?? []) {
       if (color === '#0000') continue
@@ -217,10 +245,11 @@ export function scanCss(css, { knownTokens } = {}) {
  * `cva()` and template strings are all covered, and arbitrary values keep
  * their parentheses.
  * @param {string} source
- * @param {{ knownTokens?: Iterable<string> }} [options]
+ * @param {{ knownTokens?: Iterable<string>, roles?: Record<string, string> }} [options]
+ *   `roles` maps a Tailwind color role (`primary`) to the token it reads.
  * @returns {{ rule: string, match: string, line: number }[]}
  */
-export function scanSource(source, { knownTokens } = {}) {
+export function scanSource(source, { knownTokens, roles = {} } = {}) {
   const src = blank(source, JS_COMMENT)
   const found = unknownTokens(src, knownTokens)
   const token = /[^\s"'`{}]+/g
@@ -244,6 +273,18 @@ export function scanSource(source, { knownTokens } = {}) {
     if (MODE_VARIANT.test(variants) && utility) {
       found.push({ rule: 'mode-branch', match: raw, line: line() })
     }
+    const role = ROLE_UTILITY.exec(utility)
+    if (role) {
+      const arbitrary = ARBITRARY_TOKEN.exec(role[2])
+      const token = arbitrary
+        ? (arbitrary[1] ?? arbitrary[2])
+        : Object.hasOwn(roles, role[2])
+          ? roles[role[2]]
+          : null
+      if (token && misusesRole(role[1], token)) {
+        found.push({ rule: 'token-role', match: raw, line: line() })
+      }
+    }
     if (
       FOCUS_RING_VARIANT.test(variants) &&
       RING_UTILITY.test(utility) &&
@@ -254,6 +295,14 @@ export function scanSource(source, { knownTokens } = {}) {
   }
   return allowances(source)(found)
 }
+
+/**
+ * The Tailwind color roles from styles' `tailwind/roles.json`, as role -> token.
+ * @param {{ groups: { roles: Record<string, string> }[] }} rolesJson
+ * @returns {Record<string, string>}
+ */
+export const roleTokens = rolesJson =>
+  Object.assign({}, ...rolesJson.groups.map(group => group.roles))
 
 /**
  * Count violations per `rule | file | match`. Line numbers drift with every
