@@ -4,8 +4,8 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1144,
-    "aliasValues": 784,
+    "variables": 1146,
+    "aliasValues": 800,
     "skipped": 279,
     "computed": 64
   },
@@ -1575,6 +1575,77 @@
             }
           },
           "codeSyntax": "var(--a63-text-tertiary)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "toggle/on/background",
+          "token": "--a63-toggle-on-background",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-action-neutral"
+            },
+            "modern-dark": {
+              "alias": "--a63-action-neutral"
+            },
+            "aqua-light": {
+              "alias": "--a63-action-neutral"
+            },
+            "aqua-dark": {
+              "alias": "--a63-action-neutral"
+            },
+            "retro-light": {
+              "alias": "--a63-action-neutral"
+            },
+            "retro-dark": {
+              "alias": "--a63-action-neutral"
+            },
+            "terminal-light": {
+              "alias": "--a63-text-primary"
+            },
+            "terminal-dark": {
+              "alias": "--a63-text-primary"
+            }
+          },
+          "codeSyntax": "var(--a63-toggle-on-background)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "toggle/on/foreground",
+          "token": "--a63-toggle-on-foreground",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "modern-dark": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "aqua-light": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "aqua-dark": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "retro-light": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "retro-dark": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "terminal-light": {
+              "alias": "--a63-surface-page"
+            },
+            "terminal-dark": {
+              "alias": "--a63-surface-page"
+            }
+          },
+          "codeSyntax": "var(--a63-toggle-on-foreground)",
           "scopes": [
             "TEXT_FILL"
           ]

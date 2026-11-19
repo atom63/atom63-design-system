@@ -35,6 +35,17 @@ export const Input: Story = {
   render: () => <InputDemo />,
 }
 
+/* Captured with forced colors on (Windows High Contrast): on stars take the
+   system selection colour and off stars draw as outlines, read-only and input. */
+export const ForcedColors: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 12 }}>
+      <Rating value={3.5} />
+      <InputDemo />
+    </div>
+  ),
+}
+
 export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>

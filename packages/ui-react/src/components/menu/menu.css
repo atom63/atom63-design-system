@@ -184,7 +184,6 @@
   text-transform: uppercase;
   letter-spacing: 0;
   line-height: 1;
-  opacity: 0.75;
 }
 
 .a63-Menu-label[data-inset] {
@@ -213,5 +212,25 @@
 @media (prefers-reduced-motion: reduce) {
   .a63-Menu-popup {
     transition: none;
+  }
+}
+
+/* Forced colors drop the highlight fill, gloss and shadow, and every row sets
+   `outline: none`, so the focused row takes the system selection colours. Each
+   selector matches the specificity of the tone or variant rule it overrides. */
+@media (forced-colors: active) {
+  .a63-Menu-item[data-highlighted],
+  .a63-Menu-item[data-variant][data-highlighted],
+  .a63-Menu-popup[data-tone] .a63-Menu-item[data-highlighted],
+  .a63-Menu-sub-trigger[data-popup-open],
+  .a63-Menu-popup[data-tone] .a63-Menu-sub-trigger[data-popup-open] {
+    background-color: Highlight;
+    color: HighlightText;
+  }
+  .a63-Menu-item[data-highlighted] :is(svg, .a63-Menu-shortcut, .a63-Menu-item-indicator),
+  .a63-Menu-popup[data-tone] .a63-Menu-item[data-highlighted] :is(svg, .a63-Menu-shortcut),
+  .a63-Menu-sub-trigger[data-popup-open] :is(svg, .a63-Menu-sub-icon),
+  .a63-Menu-popup[data-tone] .a63-Menu-sub-trigger[data-popup-open] :is(svg, .a63-Menu-sub-icon) {
+    color: HighlightText;
   }
 }
