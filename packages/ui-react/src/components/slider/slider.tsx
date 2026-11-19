@@ -28,10 +28,16 @@ export interface SliderProps extends Omit<
   value?: number | readonly number[]
   defaultValue?: number | readonly number[]
   /**
-   * Convenience change handler. For a single-thumb slider you receive a plain
-   * `number`; for a ranged slider you receive the first thumb's value.
+   * Convenience change handler for a single-thumb slider: you receive a plain
+   * `number`. For a ranged slider it receives the first thumb's value only; use
+   * `onValuesChange` to control a ranged slider.
    */
   onValueChange?: (value: number) => void
+  /**
+   * Change handler that receives every thumb's value, in thumb order. Use it to
+   * control a ranged slider (`value={[from, to]}`).
+   */
+  onValuesChange?: (values: number[], eventDetails: SliderPrimitive.Root.ChangeEventDetails) => void
   /** Accessible label for each thumb, especially useful for ranged sliders. */
   getThumbAriaLabel?: (index: number) => string
   /**
@@ -59,6 +65,7 @@ export function Slider({
   defaultValue,
   getThumbAriaLabel,
   onValueChange,
+  onValuesChange,
   min = 0,
   max = 100,
   tone = sliderContract.defaultTone,
@@ -79,7 +86,13 @@ export function Slider({
       max={max}
       min={min}
       onValueChange={
-        onValueChange ? next => onValueChange(typeof next === 'number' ? next : next[0]) : undefined
+        onValueChange || onValuesChange
+          ? (next, eventDetails) => {
+              const nextValues = typeof next === 'number' ? [next] : [...next]
+              onValueChange?.(nextValues[0])
+              onValuesChange?.(nextValues, eventDetails)
+            }
+          : undefined
       }
       value={value}
       {...props}

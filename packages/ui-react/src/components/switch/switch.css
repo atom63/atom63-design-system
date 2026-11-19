@@ -74,6 +74,9 @@
 .a63-Switch-thumb {
   --thumb-x: 0;
   --thumb-sx: 1;
+  /* 1 slides the checked thumb right; -1 under dir="rtl", where the track starts
+     on the right. */
+  --thumb-dir: 1;
 
   box-sizing: border-box;
   display: grid;
@@ -85,7 +88,7 @@
   background: var(--switch-thumb-bg);
   color: var(--switch-thumb-fg);
   box-shadow: 0 1px 2px color-mix(in oklch, var(--a63-shadow-color) 20%, transparent);
-  transform: translateX(var(--thumb-x)) scaleX(var(--thumb-sx));
+  transform: translateX(calc(var(--thumb-x) * var(--thumb-dir))) scaleX(var(--thumb-sx));
   transform-origin: left center;
   transition:
     transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
@@ -117,6 +120,18 @@
   --thumb-x: var(--switch-thumb);
 
   transform-origin: right center;
+}
+
+/* Right-to-left: the thumb starts on the right and slides left, and the press
+   squash grows away from whichever edge it rests on. */
+.a63-Switch-thumb:dir(rtl) {
+  --thumb-dir: -1;
+
+  transform-origin: right center;
+}
+
+.a63-Switch[data-checked] .a63-Switch-thumb:dir(rtl) {
+  transform-origin: left center;
 }
 
 .a63-Switch:hover:not([data-disabled]):not([data-checked]) {

@@ -18,6 +18,7 @@ const samples = {
   example: { slug: 'badge', story: 'Sizes' },
   token: { query: '--a63-surface-page' },
   docs: { slug: 'theme-system' },
+  api: { name: 'MediaLightbox' },
   build: { idea: 'billing settings page' },
   template: { id: 'settings-page' },
   rules: {},
@@ -49,6 +50,7 @@ describe('atom63 MCP server', () => {
       'token',
       'doc',
       'example',
+      'api',
     ])
     assert.equal(search.inputSchema.properties.limit.type, 'integer')
     for (const tool of tools) assert.equal(tool.annotations.readOnlyHint, true, tool.name)

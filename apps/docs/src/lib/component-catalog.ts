@@ -191,7 +191,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['scrollable-list', 'scroll-area', 'button'],
     summary: 'Carousel coordinates an Embla viewport, slides, controls, and shared carousel state.',
     usage:
-      'Use stable slide labels and keep essential content reachable without relying on drag alone.',
+      'Use stable slide labels and keep essential content reachable without relying on drag alone. For a full-screen photo viewer use `MediaLightbox` from `@atom63/ui-react/media`; do not put a Carousel inside a fixed overlay, which has no scroll lock and no `touch-action` and lets the page drift vertically under a swipe.',
     usageExports: [
       'Carousel',
       'CarouselContent',
