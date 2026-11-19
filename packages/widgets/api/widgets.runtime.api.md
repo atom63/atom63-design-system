@@ -63,6 +63,7 @@ export function WidgetHostedShell(input: {
 export function WidgetHostErrorFallback(input: {
     message?: string;
     onRetry?: () => void;
+    retryLabel?: string;
     size: WidgetSize;
     title?: string;
 }): React_2.JSX.Element;
@@ -95,8 +96,8 @@ export function WidgetHostTitleTransition(input: {
 
 // Warnings were encountered during analysis:
 //
-// dist/runtime/index.d.ts:28:5 - (ae-forgotten-export) The symbol "WidgetSize" needs to be exported by the entry point index.d.ts
-// dist/runtime/index.d.ts:54:5 - (ae-forgotten-export) The symbol "WidgetHostTitleMotion" needs to be exported by the entry point index.d.ts
+// dist/runtime/index.d.ts:30:5 - (ae-forgotten-export) The symbol "WidgetSize" needs to be exported by the entry point index.d.ts
+// dist/runtime/index.d.ts:56:5 - (ae-forgotten-export) The symbol "WidgetHostTitleMotion" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

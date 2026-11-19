@@ -7,6 +7,31 @@ export interface WidgetFeedbackCopy {
 export type WidgetFeedbackState = 'loading' | 'error' | 'empty'
 
 /**
+ * The fixed strings of the error state's controls, so a host can translate
+ * them. Any field left out keeps its English default.
+ */
+export interface WidgetErrorLabels {
+  /** The retry button. Default "Try again". */
+  retry: string
+  /** Accessible name of the icon-only button that opens the details. Default "View error details". */
+  viewDetails: string
+  /** Title of the details popover, also the copy button's label. Default "Error details". */
+  detailsTitle: string
+  /** Description under the details title. */
+  detailsDescription: string
+  /** Text of the copy button. Default "Copy details". */
+  copyDetails: string
+}
+
+export const DEFAULT_WIDGET_ERROR_LABELS: WidgetErrorLabels = {
+  copyDetails: 'Copy details',
+  detailsDescription: 'Technical information you can copy when reporting this problem.',
+  detailsTitle: 'Error details',
+  retry: 'Try again',
+  viewDetails: 'View error details',
+}
+
+/**
  * The shared async-state contract for widget views.
  *
  * Top-level props on purpose: `listening` and `profile` used to carry these

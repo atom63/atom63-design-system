@@ -295,6 +295,16 @@
   transform: translateY(var(--active-tab-top));
 }
 
+/* Forced colors drop the indicator's plate, bar and shadow and flatten both
+   text colours, so the selected tab of every variant takes the system
+   selection colours. */
+@media (forced-colors: active) {
+  .a63-Tabs-list[data-variant] .a63-Tabs-tab[data-active] {
+    background-color: Highlight;
+    color: HighlightText;
+  }
+}
+
 /* ── Panel ─────────────────────────────────────────────────────────────── */
 
 .a63-Tabs-panel {

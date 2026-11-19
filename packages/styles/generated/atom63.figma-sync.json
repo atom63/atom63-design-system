@@ -4,8 +4,8 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1148,
-    "aliasValues": 789,
+    "variables": 1150,
+    "aliasValues": 806,
     "skipped": 279,
     "computed": 64
   },
@@ -1580,6 +1580,77 @@
           ]
         },
         {
+          "name": "toggle/on/background",
+          "token": "--a63-toggle-on-background",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-action-neutral"
+            },
+            "modern-dark": {
+              "alias": "--a63-action-neutral"
+            },
+            "aqua-light": {
+              "alias": "--a63-action-neutral"
+            },
+            "aqua-dark": {
+              "alias": "--a63-action-neutral"
+            },
+            "retro-light": {
+              "alias": "--a63-action-neutral"
+            },
+            "retro-dark": {
+              "alias": "--a63-action-neutral"
+            },
+            "terminal-light": {
+              "alias": "--a63-text-primary"
+            },
+            "terminal-dark": {
+              "alias": "--a63-text-primary"
+            }
+          },
+          "codeSyntax": "var(--a63-toggle-on-background)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "toggle/on/foreground",
+          "token": "--a63-toggle-on-foreground",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "modern-dark": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "aqua-light": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "aqua-dark": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "retro-light": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "retro-dark": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "terminal-light": {
+              "alias": "--a63-surface-page"
+            },
+            "terminal-dark": {
+              "alias": "--a63-surface-page"
+            }
+          },
+          "codeSyntax": "var(--a63-toggle-on-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
           "name": "track/shadow",
           "token": "--a63-track-shadow",
           "type": "STRING",
@@ -2721,21 +2792,6 @@
           "codeSyntax": "var(--a63-selection-thumb-fg)",
           "scopes": [
             "TEXT_FILL"
-          ]
-        },
-        {
-          "name": "skeleton/base",
-          "token": "--a63-skeleton-base",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "alias": "--a63-surface-muted"
-            }
-          },
-          "codeSyntax": "var(--a63-skeleton-base)",
-          "scopes": [
-            "FRAME_FILL",
-            "SHAPE_FILL"
           ]
         },
         {
@@ -17006,6 +17062,24 @@
           "codeSyntax": "var(--a63-selected-foreground)",
           "scopes": [
             "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "skeleton/base",
+          "token": "--a63-skeleton-base",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-surface-muted"
+            },
+            "dark": {
+              "alias": "--a63-surface-muted"
+            }
+          },
+          "codeSyntax": "var(--a63-skeleton-base)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
           ]
         },
         {

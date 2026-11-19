@@ -74,3 +74,17 @@
 .a63-PanelSettingButton[data-active] .a63-PanelSettingButton-label {
   color: var(--a63-text-primary);
 }
+
+/* Forced colors turn the active tint and border into the same system colours as
+   an inactive tile, so the active tile takes the system selection colours. */
+@media (forced-colors: active) {
+  .a63-Button.a63-PanelSettingButton[data-active] {
+    --button-background: Highlight;
+    --button-foreground: HighlightText;
+    --button-state-hover-background: Highlight;
+    --button-state-active-background: Highlight;
+  }
+  .a63-PanelSettingButton[data-active] .a63-PanelSettingButton-label {
+    color: HighlightText;
+  }
+}

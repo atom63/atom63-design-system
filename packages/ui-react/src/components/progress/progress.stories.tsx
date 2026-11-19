@@ -75,6 +75,19 @@ export const Tones: Story = {
   ),
 }
 
+/* Captured with forced colors on (Windows High Contrast): the fill of both
+   tones, and the indeterminate bar, paint in the system selection colour. */
+export const ForcedColors: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 16, width: 280 }}>
+      {progressTones.map(tone => (
+        <Progress aria-label={`${tone} tone`} key={tone} tone={tone} value={60} />
+      ))}
+      <Progress aria-label="Indeterminate" value={null} />
+    </div>
+  ),
+}
+
 export const Themes: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>

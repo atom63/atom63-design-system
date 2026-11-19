@@ -25,13 +25,15 @@ export interface ToasterProps extends SonnerToasterProps {
   variant?: ToasterVariant
 }
 
-/* Sonner reads its colours and corner from these variables on the host. */
+/* Sonner reads its colours and corner from these variables on the host. They
+   read --a63-* tokens only: the shadcn compat aliases are not part of
+   `@atom63/ui-react/styles.css`, so a toast drawn from them has no fill. */
 const variantStyles: Record<ToasterVariant, React.CSSProperties> = {
   default: {
-    '--border-radius': 'var(--radius)',
-    '--normal-bg': 'var(--popover)',
-    '--normal-border': 'var(--border)',
-    '--normal-text': 'var(--popover-foreground)',
+    '--border-radius': 'var(--radius-lg)',
+    '--normal-bg': 'var(--a63-surface-overlay)',
+    '--normal-border': 'var(--a63-border-subtle)',
+    '--normal-text': 'var(--a63-text-primary)',
   } as React.CSSProperties,
   inverse: {
     '--border-radius': 'var(--radius-pill)',

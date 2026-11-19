@@ -85,6 +85,7 @@ export function InformOutlet({
         <InformSpotlight
           {...contentOf(spotlight)}
           anchor={spotlight.anchor}
+          dismissable={spotlight.dismiss !== 'none'}
           onDismiss={() => {
             dismiss(spotlight.id)
           }}

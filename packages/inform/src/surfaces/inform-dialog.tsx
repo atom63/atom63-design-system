@@ -41,8 +41,11 @@ export function InformDialog({
 
   return (
     <Dialog
+      // A non-dismissable dialog shows no close button, and Escape and outside
+      // presses must not close it either: it leaves only through its actions.
+      disablePointerDismissal={!dismissable}
       onOpenChange={next => {
-        if (!next) onDismiss?.()
+        if (!next && dismissable) onDismiss?.()
       }}
       open={open}
     >

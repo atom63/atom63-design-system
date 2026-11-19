@@ -121,6 +121,17 @@ export const Tones: Story = {
   ),
 }
 
+/* Captured with forced colors on (Windows High Contrast): the highlighted row
+   and the open submenu trigger take the system selection colours in both tones. */
+export const ForcedColors: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'flex-start' }}>
+      <MenuPreview />
+      <MenuPreview tone="primary" />
+    </div>
+  ),
+}
+
 /* The menu across all four skins × light/dark. */
 export const Themes: Story = {
   parameters: { layout: 'fullscreen' },

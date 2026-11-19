@@ -109,6 +109,65 @@ describe('InformSpotlight', () => {
     expect(onDismiss).toHaveBeenCalledTimes(1)
   })
 
+  it('renders a labelled dismiss control that dismisses', async () => {
+    mountAnchor()
+    const onDismiss = vi.fn()
+    render(
+      <InformSpotlight
+        anchor="#target"
+        body="Body"
+        dismissLabel="Close tip"
+        onDismiss={onDismiss}
+        open
+        title="Tip"
+      />
+    )
+
+    await screen.findByRole('dialog')
+    await userEvent.click(screen.getByRole('button', { name: 'Close tip' }))
+
+    expect(onDismiss).toHaveBeenCalledTimes(1)
+  })
+
+  // A phone has no Escape key: a press on the scrim is the touch path out.
+  it('dismisses on a press on the scrim, but not on the bubble or the cutout', async () => {
+    mountAnchor()
+    const onDismiss = vi.fn()
+    render(<InformSpotlight anchor="#target" body="Body" onDismiss={onDismiss} open title="Tip" />)
+
+    const bubble = await screen.findByRole('dialog')
+    fireEvent.click(bubble)
+    fireEvent.click(screen.getByTestId('inform-spotlight-cutout'))
+    expect(onDismiss).not.toHaveBeenCalled()
+
+    fireEvent.click(screen.getByTestId('inform-spotlight-scrim'))
+    expect(onDismiss).toHaveBeenCalledTimes(1)
+  })
+
+  it('offers no way out but its actions when dismissal is disabled', async () => {
+    mountAnchor()
+    const onDismiss = vi.fn()
+    render(
+      <InformSpotlight
+        actions={[{ id: 'ok', label: 'Got it', onSelect: () => undefined, variant: 'primary' }]}
+        anchor="#target"
+        body="Body"
+        dismissable={false}
+        onDismiss={onDismiss}
+        open
+        title="Tip"
+      />
+    )
+
+    await screen.findByRole('dialog')
+    expect(screen.queryByRole('button', { name: 'Dismiss' })).not.toBeInTheDocument()
+
+    await userEvent.keyboard('{Escape}')
+    fireEvent.click(screen.getByTestId('inform-spotlight-scrim'))
+
+    expect(onDismiss).not.toHaveBeenCalled()
+  })
+
   it('locks page scroll while open and releases it on close', async () => {
     mountAnchor()
     const view = render(<InformSpotlight anchor="#target" body="Body" open title="Tip" />)
