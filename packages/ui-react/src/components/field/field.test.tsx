@@ -1,4 +1,6 @@
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { useState } from 'react'
 import { describe, expect, it } from 'vitest'
 
 import {
@@ -13,6 +15,7 @@ import {
   FieldSet,
   FieldTitle,
 } from './field'
+import { Input } from '../input'
 
 describe('Field', () => {
   it('renders the scaffolding parts with their data-slots', () => {
@@ -104,5 +107,57 @@ describe('Field', () => {
       'data-variant',
       'label'
     )
+  })
+
+  it('describes the control with its description and error', () => {
+    const { rerender } = render(
+      <Field>
+        <FieldLabel htmlFor="email">Email</FieldLabel>
+        <Input id="email" />
+        <FieldDescription>We only email you about releases.</FieldDescription>
+      </Field>
+    )
+    const input = screen.getByRole('textbox', { name: 'Email' })
+    expect(input).toHaveAccessibleDescription('We only email you about releases.')
+    expect(input).not.toHaveAttribute('aria-invalid')
+
+    rerender(
+      <Field>
+        <FieldLabel htmlFor="email">Email</FieldLabel>
+        <Input id="email" />
+        <FieldDescription>We only email you about releases.</FieldDescription>
+        <FieldError>Enter a valid email.</FieldError>
+      </Field>
+    )
+    expect(input).toHaveAccessibleDescription(
+      'We only email you about releases. Enter a valid email.'
+    )
+    expect(input).toHaveAttribute('aria-invalid', 'true')
+  })
+
+  it('keeps a consumer aria-describedby and drops ids of removed parts', async () => {
+    const user = userEvent.setup()
+    function Example() {
+      const [showError, setShowError] = useState(true)
+      return (
+        <>
+          <span id="hint">Hint</span>
+          <Field>
+            <FieldLabel htmlFor="name">Name</FieldLabel>
+            <Input aria-describedby="hint" id="name" />
+            {showError ? <FieldError>Required</FieldError> : null}
+          </Field>
+          <button onClick={() => setShowError(false)} type="button">
+            Fix
+          </button>
+        </>
+      )
+    }
+    render(<Example />)
+    const input = screen.getByRole('textbox', { name: 'Name' })
+    expect(input).toHaveAccessibleDescription('Hint Required')
+    await user.click(screen.getByRole('button', { name: 'Fix' }))
+    expect(input).toHaveAttribute('aria-describedby', 'hint')
+    expect(input).not.toHaveAttribute('aria-invalid')
   })
 })

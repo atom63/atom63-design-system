@@ -273,4 +273,51 @@ describe('Sidebar', () => {
       )
     })
   })
+
+  it('takes a collapsed offcanvas sidebar out of the tab order and the accessibility tree', () => {
+    const { container, rerender } = render(
+      <SidebarProvider open={false}>
+        <Sidebar collapsible="offcanvas">
+          <SidebarMenuButton>Home</SidebarMenuButton>
+        </Sidebar>
+      </SidebarProvider>
+    )
+    const panel = () => container.querySelector('[data-slot="sidebar-container"]')
+    expect(panel()).toHaveAttribute('inert')
+
+    rerender(
+      <SidebarProvider open>
+        <Sidebar collapsible="offcanvas">
+          <SidebarMenuButton>Home</SidebarMenuButton>
+        </Sidebar>
+      </SidebarProvider>
+    )
+    expect(panel()).not.toHaveAttribute('inert')
+
+    rerender(
+      <SidebarProvider open={false}>
+        <Sidebar collapsible="icon">
+          <SidebarMenuButton>Home</SidebarMenuButton>
+        </Sidebar>
+      </SidebarProvider>
+    )
+    expect(panel()).not.toHaveAttribute('inert')
+  })
+
+  it('marks the active menu button and sub button as the current page', () => {
+    const { getByRole } = render(
+      <SidebarProvider>
+        <Sidebar>
+          <SidebarMenuButton isActive render={<a href="/home">Home</a>} />
+          <SidebarMenuButton render={<a href="/inbox">Inbox</a>} />
+          <SidebarMenuSubButton href="/settings" isActive>
+            Settings
+          </SidebarMenuSubButton>
+        </Sidebar>
+      </SidebarProvider>
+    )
+    expect(getByRole('link', { name: 'Home' })).toHaveAttribute('aria-current', 'page')
+    expect(getByRole('link', { name: 'Inbox' })).not.toHaveAttribute('aria-current')
+    expect(getByRole('link', { name: 'Settings' })).toHaveAttribute('aria-current', 'page')
+  })
 })

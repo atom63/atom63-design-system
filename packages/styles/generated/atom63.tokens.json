@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 2015,
+    "declarations": 2016,
     "uniqueCssVariables": 1201,
-    "figmaMappedDeclarations": 1953
+    "figmaMappedDeclarations": 1954
   },
   "entries": [
     {
@@ -10563,11 +10563,28 @@
       "layer": "contract",
       "figma": {
         "collection": "Contract",
-        "path": "skeleton/base"
+        "path": "skeleton/base",
+        "mode": "Dark"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-surface-muted"],
-      "scope": ":root"
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-skeleton-base",
+      "cssVar": "--a63-skeleton-base",
+      "type": "color",
+      "value": "var(--a63-surface-muted)",
+      "sourceFile": "packages/styles/src/contracts/skeleton.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "skeleton/base",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-muted"],
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-skeleton-highlight",
@@ -10594,11 +10611,12 @@
       "layer": "contract",
       "figma": {
         "collection": "Contract",
-        "path": "skeleton/highlight"
+        "path": "skeleton/highlight",
+        "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--color-white-60"],
-      "scope": ":root"
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-space-0_5",
