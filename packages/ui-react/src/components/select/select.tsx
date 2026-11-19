@@ -19,19 +19,27 @@ export const selectTriggerDefaultClassName = 'a63-Select-trigger'
 
 export type SelectTriggerProps = SelectPrimitive.Trigger.Props & {
   size?: SelectSize
+  /** Draws the danger edge and sets `aria-invalid`, as `Input`'s `invalid` does.
+   *  `aria-invalid` on its own draws the same state. */
+  invalid?: boolean
 }
 
 export function SelectTrigger({
+  'aria-invalid': ariaInvalid,
   children,
   className,
+  invalid = false,
   size = selectContract.defaultSize,
   ...props
 }: SelectTriggerProps): React.ReactElement {
+  const isInvalid = invalid || ariaInvalid === true || ariaInvalid === 'true'
   return (
     <SelectPrimitive.Trigger
+      aria-invalid={isInvalid ? true : ariaInvalid}
       className={cn(selectTriggerDefaultClassName, className)}
       data-size={size}
       data-slot="select-trigger"
+      {...(isInvalid ? { 'data-invalid': '' } : null)}
       {...props}
     >
       {children}
@@ -142,10 +150,14 @@ export function SelectSeparator({
   className,
   ...props
 }: SelectPrimitive.Separator.Props): React.ReactElement {
+  // A listbox may own only options and groups, so a separator role inside the
+  // popup fails axe (aria-required-children). The rule is drawn for sight only.
   return (
     <SelectPrimitive.Separator
+      aria-orientation={undefined}
       className={cn('a63-Menu-separator', 'a63-Select-separator', className)}
       data-slot="select-separator"
+      role="none"
       {...props}
     />
   )

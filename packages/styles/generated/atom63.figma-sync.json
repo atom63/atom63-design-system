@@ -5,7 +5,7 @@
   "summary": {
     "collections": 14,
     "variables": 1146,
-    "aliasValues": 799,
+    "aliasValues": 800,
     "skipped": 279,
     "computed": 64
   },
@@ -2792,21 +2792,6 @@
           "codeSyntax": "var(--a63-selection-thumb-fg)",
           "scopes": [
             "TEXT_FILL"
-          ]
-        },
-        {
-          "name": "skeleton/base",
-          "token": "--a63-skeleton-base",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "alias": "--a63-surface-muted"
-            }
-          },
-          "codeSyntax": "var(--a63-skeleton-base)",
-          "scopes": [
-            "FRAME_FILL",
-            "SHAPE_FILL"
           ]
         },
         {
@@ -17077,6 +17062,24 @@
           "codeSyntax": "var(--a63-selected-foreground)",
           "scopes": [
             "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "skeleton/base",
+          "token": "--a63-skeleton-base",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-surface-muted"
+            },
+            "dark": {
+              "alias": "--a63-surface-muted"
+            }
+          },
+          "codeSyntax": "var(--a63-skeleton-base)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
           ]
         },
         {

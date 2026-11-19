@@ -12,7 +12,8 @@
       "disabled",
       "highlighted-item",
       "selected-item",
-      "disabled-item"
+      "disabled-item",
+      "invalid"
     ],
     "slots": [
       "select-trigger",

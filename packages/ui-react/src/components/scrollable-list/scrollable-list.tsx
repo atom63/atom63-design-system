@@ -5,8 +5,9 @@
  */
 
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { cn } from '../../lib/cn'
+import { mergeRefs } from '../../lib/merge-refs'
 import { Button } from '../button'
 import { ScrollArea } from '../scroll-area'
 
@@ -15,7 +16,7 @@ const scrollableListControlClassNames = {
   icon: 'a63-ScrollableList-controlIcon',
 } as const
 
-interface ScrollableListProps {
+interface ScrollableListProps extends Omit<React.ComponentProps<'div'>, 'children' | 'className'> {
   children: React.ReactNode
   className?: string
   /**
@@ -36,6 +37,12 @@ interface ScrollableListProps {
   draggable?: boolean
   /** Fade the edges as content overflows (the scroll mask). On by default. */
   mask?: boolean
+  /** Accessible name of the control that scrolls towards the start
+   *  (default "Scroll left", or "Scroll right" in right-to-left layouts). */
+  scrollStartLabel?: string
+  /** Accessible name of the control that scrolls towards the end
+   *  (default "Scroll right", or "Scroll left" in right-to-left layouts). */
+  scrollEndLabel?: string
   showChevrons?: boolean
   wrapLayoutBreakpoint?: number
 }
@@ -49,7 +56,13 @@ function ScrollableList({
   disabled = false,
   draggable = false,
   mask = true,
+  ref,
+  role,
+  scrollEndLabel,
+  scrollStartLabel,
+  style,
   wrapLayoutBreakpoint,
+  ...props
 }: ScrollableListProps) {
   const [canScrollStart, setCanScrollStart] = useState(false)
   const [canScrollEnd, setCanScrollEnd] = useState(false)
@@ -57,6 +70,9 @@ function ScrollableList({
   const [useWrapLayout, setUseWrapLayout] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const scrollAreaRef = useRef<HTMLDivElement>(null)
+  const startButtonRef = useRef<HTMLButtonElement>(null)
+  const endButtonRef = useRef<HTMLButtonElement>(null)
+  const rootRef = useMemo(() => mergeRefs(containerRef, ref), [ref])
 
   const getViewport = useCallback(() => {
     return scrollAreaRef.current?.querySelector<HTMLElement>('[data-slot="scroll-area-viewport"]')
@@ -220,22 +236,38 @@ function ScrollableList({
     }
   }, [checkScrollPosition, getViewport, useWrapLayout])
 
+  // A control stays mounted at its edge (hidden and inert), so a keyboard user
+  // who scrolls to the end keeps focus: it moves to the other control.
+  useLayoutEffect(() => {
+    const active = document.activeElement
+    if (!canScrollEnd && canScrollStart && active === endButtonRef.current) {
+      startButtonRef.current?.focus()
+    } else if (!canScrollStart && canScrollEnd && active === startButtonRef.current) {
+      endButtonRef.current?.focus()
+    }
+  }, [canScrollEnd, canScrollStart])
+
   const bleedStyle =
     contentPad || controlInset
       ? ({
           ...(contentPad ? { '--scrollable-list-content-pad': contentPad } : null),
           ...(controlInset ? { '--scrollable-list-control-inset': controlInset } : null),
+          ...style,
         } as React.CSSProperties)
-      : undefined
+      : style
+  // A plain div cannot carry a name, so a named list becomes a group.
+  const rootRole = role ?? (props['aria-label'] || props['aria-labelledby'] ? 'group' : undefined)
 
   // If wrap layout is enabled and we're past breakpoint
   if (wrapLayoutBreakpoint && useWrapLayout) {
     return (
       <div
+        {...props}
         className={cn('a63-ScrollableList', className)}
         data-disabled={disabled || undefined}
         data-slot="scrollable-list"
-        ref={containerRef}
+        ref={rootRef}
+        role={rootRole}
         style={bleedStyle}
       >
         <div className="a63-ScrollableList-content" data-slot="scrollable-list-content">
@@ -248,11 +280,13 @@ function ScrollableList({
   // Horizontal scroll layout
   return (
     <div
+      {...props}
       className={cn('a63-ScrollableList', className)}
       data-disabled={disabled || undefined}
       data-draggable={draggable || undefined}
       data-slot="scrollable-list"
-      ref={containerRef}
+      ref={rootRef}
+      role={rootRole}
       style={bleedStyle}
     >
       <div className="a63-ScrollableList-frame" data-slot="scrollable-list-frame">
@@ -269,17 +303,19 @@ function ScrollableList({
         </ScrollArea>
 
         {/* Start chevron (left in LTR, right in RTL; the recipe mirrors the icon) */}
-        {showChevrons && canScrollStart && !disabled && (
+        {showChevrons && !disabled && (
           <div
             className="a63-ScrollableList-control"
             data-side="start"
             data-slot="scrollable-list-control"
-            data-visible
+            data-visible={canScrollStart || undefined}
+            inert={!canScrollStart}
           >
             <Button
-              aria-label={isRtl ? 'Scroll right' : 'Scroll left'}
+              aria-label={scrollStartLabel ?? (isRtl ? 'Scroll right' : 'Scroll left')}
               className={scrollableListControlClassNames.button}
               onClick={() => scrollContent('start')}
+              ref={startButtonRef}
               size="icon-lg"
               type="button"
               variant="secondary"
@@ -290,17 +326,19 @@ function ScrollableList({
         )}
 
         {/* End chevron (right in LTR, left in RTL) */}
-        {showChevrons && canScrollEnd && !disabled && (
+        {showChevrons && !disabled && (
           <div
             className="a63-ScrollableList-control"
             data-side="end"
             data-slot="scrollable-list-control"
-            data-visible
+            data-visible={canScrollEnd || undefined}
+            inert={!canScrollEnd}
           >
             <Button
-              aria-label={isRtl ? 'Scroll left' : 'Scroll right'}
+              aria-label={scrollEndLabel ?? (isRtl ? 'Scroll left' : 'Scroll right')}
               className={scrollableListControlClassNames.button}
               onClick={() => scrollContent('end')}
+              ref={endButtonRef}
               size="icon-lg"
               type="button"
               variant="secondary"

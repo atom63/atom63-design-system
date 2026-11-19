@@ -296,6 +296,9 @@ function Sidebar({
         className={cn('a63-Sidebar-container', className)}
         data-side={side}
         data-slot="sidebar-container"
+        // Off-screen while collapsed: keep its links out of the tab order and
+        // the accessibility tree.
+        inert={state === 'collapsed' && collapsible === 'offcanvas'}
         {...props}
       >
         <div className="a63-Sidebar-inner" data-sidebar="sidebar" data-slot="sidebar-inner">
@@ -560,6 +563,7 @@ function SidebarMenuButton({
     defaultTagName: 'button',
     props: mergeProps<'button'>(
       {
+        'aria-current': isActive ? 'page' : undefined,
         className: cn('a63-Sidebar-menu-button', className),
         'data-active': isActive,
         'data-sidebar': 'menu-button',
@@ -748,6 +752,7 @@ function SidebarMenuSubButton({
     defaultTagName: 'a',
     props: mergeProps<'a'>(
       {
+        'aria-current': isActive ? 'page' : undefined,
         className: cn('a63-Sidebar-menu-sub-button', className),
         'data-active': isActive,
         'data-sidebar': 'menu-sub-button',

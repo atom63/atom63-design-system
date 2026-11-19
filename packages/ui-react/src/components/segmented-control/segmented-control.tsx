@@ -18,19 +18,27 @@ export interface SegmentedControlItem {
   value: string
 }
 
-export interface SegmentedControlProps {
+export interface SegmentedControlProps extends Omit<
+  Tabs.Root.Props,
+  'children' | 'className' | 'defaultValue' | 'onValueChange' | 'orientation' | 'value'
+> {
   /** Animate the sliding indicator between segments (default true). */
   animateBackplate?: boolean
   className?: string
+  /** The initially selected segment when the control is uncontrolled. */
+  defaultValue?: string
   /** Stretch the track to fill its container with equal-width segments. */
   fullWidth?: boolean
   items: SegmentedControlItem[]
-  onValueChange: (value: string) => void
+  onValueChange?: (value: string) => void
+  ref?: React.Ref<HTMLDivElement>
   size?: SegmentedControlSize
   /** Per-segment class escape hatch merged onto every tab. */
   tabClassName?: string
   tone?: SegmentedControlTone
-  value: string
+  /** The selected segment. Leave it out, with `defaultValue`, for an
+   *  uncontrolled control. */
+  value?: string
   variant?: SegmentedControlVariant
 }
 
@@ -43,6 +51,7 @@ export interface SegmentedControlProps {
 export function SegmentedControl({
   animateBackplate = true,
   className,
+  defaultValue,
   fullWidth,
   items,
   onValueChange,
@@ -51,9 +60,11 @@ export function SegmentedControl({
   tone = segmentedControlContract.defaultTone,
   value,
   variant = segmentedControlContract.defaultVariant,
+  ...props
 }: SegmentedControlProps): React.ReactElement {
   return (
     <Tabs.Root
+      {...props}
       className={cn('a63-SegmentedControl', className)}
       data-backplate-animation={animateBackplate ? 'on' : 'off'}
       data-full={fullWidth || undefined}
@@ -61,9 +72,10 @@ export function SegmentedControl({
       data-slot="segmented-control"
       data-tone={tone}
       data-variant={variant}
+      defaultValue={defaultValue}
       onValueChange={next => {
         if (typeof next === 'string' && next !== value) {
-          onValueChange(next)
+          onValueChange?.(next)
         }
       }}
       value={value}

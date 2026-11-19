@@ -356,6 +356,7 @@ export function AutocompleteInput(input: AutocompleteInputProps): React$1.ReactE
 export interface AutocompleteInputProps extends Omit<AutocompletePrimitive.Input.Props, 'size'> {
     // (undocumented)
     clearProps?: AutocompletePrimitive.Clear.Props;
+    invalid?: boolean;
     // (undocumented)
     ref?: React$1.Ref<HTMLInputElement>;
     // (undocumented)
@@ -2350,7 +2351,7 @@ export const scrollableListControlClassNames: {
 };
 
 // @public (undocumented)
-export interface ScrollableListProps {
+export interface ScrollableListProps extends Omit<React.ComponentProps<'div'>, 'children' | 'className'> {
     // (undocumented)
     children: React.ReactNode;
     // (undocumented)
@@ -2361,6 +2362,8 @@ export interface ScrollableListProps {
     disabled?: boolean;
     draggable?: boolean;
     mask?: boolean;
+    scrollEndLabel?: string;
+    scrollStartLabel?: string;
     // (undocumented)
     showChevrons?: boolean;
     // (undocumented)
@@ -2424,22 +2427,24 @@ export interface SegmentedControlItem {
 }
 
 // @public (undocumented)
-export interface SegmentedControlProps {
+export interface SegmentedControlProps extends Omit<Tabs_2.Root.Props, 'children' | 'className' | 'defaultValue' | 'onValueChange' | 'orientation' | 'value'> {
     animateBackplate?: boolean;
     // (undocumented)
     className?: string;
+    defaultValue?: string;
     fullWidth?: boolean;
     // (undocumented)
     items: SegmentedControlItem[];
     // (undocumented)
-    onValueChange: (value: string) => void;
+    onValueChange?: (value: string) => void;
+    // (undocumented)
+    ref?: React$1.Ref<HTMLDivElement>;
     // (undocumented)
     size?: SegmentedControlSize;
     tabClassName?: string;
     // (undocumented)
     tone?: SegmentedControlTone;
-    // (undocumented)
-    value: string;
+    value?: string;
     // (undocumented)
     variant?: SegmentedControlVariant;
 }
@@ -2486,6 +2491,7 @@ export const selectTriggerDefaultClassName = "a63-Select-trigger";
 // @public (undocumented)
 export type SelectTriggerProps = Select_2.Trigger.Props & {
     size?: SelectSize;
+    invalid?: boolean;
 };
 
 // @public (undocumented)
