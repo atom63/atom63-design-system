@@ -36,7 +36,7 @@ export function SpotlightDemo() {
       <InformSpotlight
         actions={[{ id: 'ok', label: 'Got it', onSelect: () => setOpen(false), variant: 'primary' }]}
         anchor="#inform-spotlight-demo"
-        body="A spotlight points at one control and explains it. Escape closes it."
+        body="A spotlight points at one control and explains it. Close it with its dismiss button, a press outside, or Escape."
         onDismiss={() => setOpen(false)}
         open={open}
         title="Spotlight"
