@@ -5,13 +5,18 @@
  * Skeleton appearance contract.
  *
  * Renderers may use different masking primitives, but the base surface and
- * highlight emphasis remain shared design semantics.
+ * highlight emphasis remain shared design semantics. Each mode block repeats
+ * the base alias so a nested light or dark scope resolves it against its own
+ * surface roles.
  */
-:root {
+:root,
+.light,
+[data-a63-mode='light'] {
   --a63-skeleton-base: var(--a63-surface-muted);
   --a63-skeleton-highlight: var(--color-white-60);
 }
 
 :is(.dark, [data-a63-mode='dark']) {
+  --a63-skeleton-base: var(--a63-surface-muted);
   --a63-skeleton-highlight: var(--color-white-10);
 }

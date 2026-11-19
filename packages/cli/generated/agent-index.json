@@ -5381,9 +5381,10 @@
     "names": [
      "Internal",
      "External",
-     "Dark"
+     "Dark",
+     "Themes"
     ],
-    "source": "import { DestinationIndicator, DestinationLink } from '@atom63/ui-react'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\n\nconst meta = {\n  title: 'UI React/Destination Link',\n  component: DestinationLink,\n} satisfies Meta<typeof DestinationLink>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nexport const Internal: Story = {\n  args: {\n    children: (\n      <>\n        View project\n        <DestinationIndicator className=\"size-4\" kind=\"internal\" />\n      </>\n    ),\n    href: '#internal',\n    kind: 'internal',\n  },\n}\n\nexport const External: Story = {\n  args: {\n    children: (\n      <>\n        View source\n        <DestinationIndicator className=\"size-4\" kind=\"external\" />\n      </>\n    ),\n    href: 'https://example.com',\n    kind: 'external',\n  },\n}\n\n/* Internal in dark mode, so visual regression covers dark for this component,\n   which has no Themes matrix. The global applies to <html>, so portals are dark too. */\nexport const Dark: Story = { ...Internal, globals: { mode: 'dark' } }\n"
+    "source": "import { themes } from '@atom63/ui-foundation'\nimport { DestinationIndicator, DestinationLink, UIProvider } from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\n\nconst meta = {\n  title: 'UI React/Destination Link',\n  component: DestinationLink,\n} satisfies Meta<typeof DestinationLink>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nexport const Internal: Story = {\n  args: {\n    children: (\n      <>\n        View project\n        <DestinationIndicator className=\"size-4\" kind=\"internal\" />\n      </>\n    ),\n    href: '#internal',\n    kind: 'internal',\n  },\n}\n\nexport const External: Story = {\n  args: {\n    children: (\n      <>\n        View source\n        <DestinationIndicator className=\"size-4\" kind=\"external\" />\n      </>\n    ),\n    href: 'https://example.com',\n    kind: 'external',\n  },\n}\n\n/* Internal in dark mode, with the global on <html>, so portals are dark too. */\nexport const Dark: Story = { ...Internal, globals: { mode: 'dark' } }\n\nexport const Themes: Story = {\n  args: { href: '#internal', kind: 'internal' },\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {themes.map(theme =>\n        (['light', 'dark'] as const).map(mode => (\n          <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>\n            <p style={{ background: 'var(--a63-surface-page)', margin: 0, padding: '0.75rem' }}>\n              <DestinationLink href=\"#internal\" kind=\"internal\">\n                View project\n                <DestinationIndicator className=\"size-4\" kind=\"internal\" />\n              </DestinationLink>{' '}\n              <DestinationLink href=\"https://example.com\" kind=\"external\">\n                View source\n                <DestinationIndicator className=\"size-4\" kind=\"external\" />\n              </DestinationLink>\n            </p>\n          </UIProvider>\n        ))\n      )}\n    </div>\n  ),\n}\n"
    },
    "summary": "Destination Link distinguishes internal navigation from safe external navigation.",
    "usage": "Pass the app router link through render for internal routes and preserve visible destination cues.",
@@ -21225,7 +21226,11 @@
    "type": "color",
    "values": [
     {
-     "scope": ":root",
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--a63-surface-muted)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--a63-surface-muted)"
     }
    ]
@@ -21245,7 +21250,7 @@
      "value": "var(--color-white-10)"
     },
     {
-     "scope": ":root",
+     "scope": ":root, .light, [data-a63-mode='light']",
      "value": "var(--color-white-60)"
     }
    ]

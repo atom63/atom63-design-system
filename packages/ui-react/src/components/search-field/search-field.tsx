@@ -59,14 +59,28 @@ export function SearchField({
   disabled,
   endAddon,
   inputClassName,
+  invalid,
   onClear,
   onValueChange,
+  ref,
+  size,
   spellCheck = false,
   value,
   variant = searchFieldContract.defaultVariant,
   ...props
 }: SearchFieldProps): React.ReactElement {
-  const inputRef = React.useRef<HTMLInputElement>(null)
+  const inputRef = React.useRef<HTMLInputElement | null>(null)
+  const setInputRef = React.useCallback(
+    (node: HTMLInputElement | null) => {
+      inputRef.current = node
+      if (typeof ref === 'function') {
+        ref(node)
+      } else if (ref) {
+        ref.current = node
+      }
+    },
+    [ref]
+  )
   const isControlled = value !== undefined
   const [internalValue, setInternalValue] = React.useState(defaultValue)
   const currentValue = isControlled ? value : internalValue
@@ -89,6 +103,8 @@ export function SearchField({
       data-search-state={state}
       data-slot="search-field"
       disabled={disabled}
+      invalid={invalid}
+      size={typeof size === 'number' ? undefined : size}
       variant={variant}
     >
       <InputGroupAddon data-slot="search-field-icon">
@@ -99,7 +115,8 @@ export function SearchField({
         autoComplete={autoComplete}
         inputClassName={inputClassName}
         onChange={event => updateValue(event.currentTarget.value)}
-        ref={inputRef}
+        ref={setInputRef}
+        size={typeof size === 'number' ? size : undefined}
         spellCheck={spellCheck}
         type="search"
         value={currentValue}

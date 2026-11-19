@@ -1,7 +1,7 @@
-import { render } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { ScrollableList } from './scrollable-list'
+import { ScrollableList, type ScrollableListProps } from './scrollable-list'
 
 describe('ScrollableList', () => {
   it('renders the list + content slots and its children', () => {
@@ -47,7 +47,11 @@ describe('ScrollableList', () => {
     })
 
     // jsdom has no layout: give the viewport a 300px window onto 1000px of content.
-    function renderOverflowing(direction: 'ltr' | 'rtl', scrollLeft: number) {
+    function renderOverflowing(
+      direction: 'ltr' | 'rtl',
+      scrollLeft: number,
+      props: Partial<ScrollableListProps> = {}
+    ) {
       vi.spyOn(HTMLElement.prototype, 'scrollWidth', 'get').mockReturnValue(1000)
       vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(300)
       vi.spyOn(HTMLElement.prototype, 'scrollLeft', 'get').mockReturnValue(scrollLeft)
@@ -64,7 +68,7 @@ describe('ScrollableList', () => {
         })
       })
       return render(
-        <ScrollableList>
+        <ScrollableList {...props}>
           <span>One</span>
         </ScrollableList>
       )
@@ -72,7 +76,7 @@ describe('ScrollableList', () => {
 
     function sides(container: HTMLElement) {
       return Array.from(
-        container.querySelectorAll('[data-slot="scrollable-list-control"]'),
+        container.querySelectorAll('[data-slot="scrollable-list-control"][data-visible]'),
         control => [control.getAttribute('data-side'), control.querySelector('button')?.ariaLabel]
       )
     }
@@ -107,5 +111,42 @@ describe('ScrollableList', () => {
         HTMLElement.prototype.scrollTo = original
       }
     })
+
+    it('moves focus to the other control when the focused one reaches its edge', () => {
+      const { container, getByRole } = renderOverflowing('ltr', 0)
+      const end = getByRole('button', { name: 'Scroll right' })
+      end.focus()
+      vi.spyOn(HTMLElement.prototype, 'scrollLeft', 'get').mockReturnValue(700)
+      act(() => {
+        container
+          .querySelector('[data-slot="scroll-area-viewport"]')
+          ?.dispatchEvent(new Event('scroll'))
+      })
+      expect(sides(container)).toEqual([['start', 'Scroll left']])
+      expect(getByRole('button', { name: 'Scroll left' })).toHaveFocus()
+      expect(end.closest('[data-slot="scrollable-list-control"]')).toHaveAttribute('inert')
+    })
+
+    it('takes overridable control labels', () => {
+      const { container } = renderOverflowing('ltr', 200, {
+        scrollEndLabel: 'Weiter',
+        scrollStartLabel: 'Zurück',
+      })
+      expect(sides(container)).toEqual([
+        ['start', 'Zurück'],
+        ['end', 'Weiter'],
+      ])
+    })
+  })
+
+  it('names the list and forwards props to its root', () => {
+    render(
+      <ScrollableList aria-label="Categories" data-testid="list">
+        <span>One</span>
+      </ScrollableList>
+    )
+    const list = screen.getByRole('group', { name: 'Categories' })
+    expect(list).toHaveAttribute('data-slot', 'scrollable-list')
+    expect(list).toHaveAttribute('data-testid', 'list')
   })
 })

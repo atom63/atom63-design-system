@@ -29,6 +29,11 @@
   --load-more-accent: var(--a63-action-danger);
 }
 
+/* Hidden keeps only the empty live region mounted; it takes no space. */
+.a63-LoadMoreTrigger[data-state='hidden'] {
+  padding-block: 0;
+}
+
 /* The message form reserves a minimum height so the observer target keeps a
    stable hit area as it swaps between idle + loading copy. */
 .a63-LoadMoreTrigger[data-has-message] {
