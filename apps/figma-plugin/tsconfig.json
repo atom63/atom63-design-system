@@ -4,7 +4,6 @@
     "lib": ["ES2022", "DOM"],
     "resolveJsonModule": true,
     "types": ["@figma/plugin-typings", "node"],
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
