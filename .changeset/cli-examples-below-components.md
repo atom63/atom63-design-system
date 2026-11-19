@@ -2,4 +2,4 @@
 '@atom63/cli': patch
 ---
 
-Search ranks a story example whose name matches the query below the components that match it, unless examples were asked for.
+Search gives a component that a query's synonyms name a larger boost, so a story example whose name matches the query (autocomplete/Loading) no longer outranks the skeleton component for "loading".

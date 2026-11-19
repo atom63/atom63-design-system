@@ -123,7 +123,7 @@ function synonymBoost(query, slug) {
   let best = 0
   for (const term of words(query)) {
     const rank = (synonyms[term] ?? []).indexOf(slug)
-    if (rank !== -1) best = Math.max(best, 30 - rank * 8)
+    if (rank !== -1) best = Math.max(best, 40 - rank * 8)
   }
   return best
 }
@@ -300,7 +300,7 @@ export function search(index, query, { kind, limit = 10 } = {}) {
             label: `${component.label} — ${story}`,
             summary: hit?.note ?? component.stories.file,
             // Below components unless examples are what was asked for.
-            score: hit?.score ?? total * (kind === 'example' ? 1 : 0.3),
+            score: hit?.score ?? total * (kind === 'example' ? 1 : 0.4),
             next: `atom63 example ${component.slug} ${story}`,
           })
         }
