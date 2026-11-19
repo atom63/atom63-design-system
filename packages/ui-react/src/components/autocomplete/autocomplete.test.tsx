@@ -91,4 +91,22 @@ describe('Autocomplete', () => {
       'Fruit suggestions updated.'
     )
   })
+
+  it('marks an invalid input for assistive tech and the recipe', () => {
+    render(
+      <Autocomplete items={fruits}>
+        <AutocompleteInput aria-label="Invalid fruit" invalid />
+        <AutocompleteInput aria-label="Valid fruit" />
+      </Autocomplete>
+    )
+    const invalid = screen.getByRole('combobox', { name: 'Invalid fruit' })
+    expect(invalid).toHaveAttribute('aria-invalid', 'true')
+    expect(invalid).toHaveAttribute('data-invalid')
+    expect(invalid.closest('[data-slot="autocomplete-input-group"]')).toHaveAttribute(
+      'data-invalid'
+    )
+    const valid = screen.getByRole('combobox', { name: 'Valid fruit' })
+    expect(valid).not.toHaveAttribute('aria-invalid')
+    expect(valid).not.toHaveAttribute('data-invalid')
+  })
 })

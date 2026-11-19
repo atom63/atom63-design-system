@@ -25,6 +25,36 @@ describe('Select', () => {
     expect(trigger).toHaveAttribute('data-size', selectContract.defaultSize)
   })
 
+  it('marks an invalid trigger for assistive tech and the recipe', () => {
+    render(
+      <Select items={ITEMS} value="all">
+        <SelectTrigger aria-label="Type" invalid>
+          <SelectValue />
+        </SelectTrigger>
+      </Select>
+    )
+    const trigger = screen.getByRole('combobox', { name: 'Type' })
+    expect(trigger).toHaveAttribute('aria-invalid', 'true')
+    expect(trigger).toHaveAttribute('data-invalid')
+  })
+
+  it('treats aria-invalid as invalid and leaves a valid trigger unmarked', () => {
+    render(
+      <Select items={ITEMS} value="all">
+        <SelectTrigger aria-invalid aria-label="Invalid">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectTrigger aria-label="Valid">
+          <SelectValue />
+        </SelectTrigger>
+      </Select>
+    )
+    expect(screen.getByRole('combobox', { name: 'Invalid' })).toHaveAttribute('data-invalid')
+    const valid = screen.getByRole('combobox', { name: 'Valid' })
+    expect(valid).not.toHaveAttribute('data-invalid')
+    expect(valid).not.toHaveAttribute('aria-invalid')
+  })
+
   it('shows the selected value label', () => {
     render(
       <Select items={ITEMS} value="article">

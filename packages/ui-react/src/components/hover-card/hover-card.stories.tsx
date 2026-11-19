@@ -45,7 +45,7 @@ function ReviewCell({ label, providerProps }: { label: string; providerProps: Pr
         <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>
           {label}
         </span>
-        <HoverCard>
+        <HoverCard defaultOpen>
           <HoverCardTrigger
             render={
               <a href="#a" style={{ color: 'var(--a63-text-accent)' }}>
@@ -62,12 +62,13 @@ function ReviewCell({ label, providerProps }: { label: string; providerProps: Pr
   )
 }
 
-/* Hover the trigger to reveal the overlay-archetype popover (elevation from the
-   --a63-overlay-shadow lever — themes reskin it, like the Select popup). */
+/* The overlay-archetype popover (elevation from the --a63-overlay-shadow lever —
+   themes reskin it, like the Select popup). It opens on load so the visual and
+   axe runs capture the card; hovering the trigger opens it in an app. */
 export const Playground: Story = {
   render: () => (
     <div style={{ padding: 80 }}>
-      <HoverCard>
+      <HoverCard defaultOpen>
         <HoverCardTrigger
           render={
             <a href="#a" style={{ color: 'var(--a63-text-accent)' }}>

@@ -11,11 +11,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
   Button,
+  Dialog,
   UIProvider,
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import { AlertTriangle, CheckCircle2, Info } from 'lucide-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { type CSSProperties, type ReactNode, type RefObject, useRef } from 'react'
 
 const meta = {
   title: 'UI React/AlertDialog',
@@ -40,6 +42,85 @@ function VariantIcon({ variant }: { variant: (typeof alertDialogVariants)[number
     return <Info aria-hidden />
   }
   return <AlertTriangle aria-hidden />
+}
+
+/*
+ * A fixed-height box that holds one open overlay. The transform makes the box
+ * the containing block of the popup's fixed-position backdrop and viewport, and
+ * --a63-viewport-height sizes them to the box, so the overlay lays out as it
+ * would over a short window.
+ */
+function OverlayStage({
+  children,
+  height = 320,
+}: {
+  children: (container: RefObject<HTMLDivElement | null>) => ReactNode
+  height?: number
+}) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  return (
+    <div
+      ref={containerRef}
+      style={
+        {
+          '--a63-viewport-height': `${height}px`,
+          background: 'var(--a63-surface-page)',
+          blockSize: height,
+          borderRadius: 'var(--radius-lg)',
+          color: 'var(--a63-text-primary)',
+          overflow: 'hidden',
+          position: 'relative',
+          transform: 'translateZ(0)',
+        } as CSSProperties
+      }
+    >
+      {children(containerRef)}
+    </div>
+  )
+}
+
+/*
+ * One alert dialog popup, open on load inside a stage, for the matrix stories.
+ * An alert dialog is always modal, and two open modal dialogs each hide the
+ * other from assistive tech, so these cells mount the same AlertDialogPopup
+ * under a non-modal Dialog root (the alert dialog root is a Dialog root with
+ * `modal` forced on). The Confirm story shows the real modal alert dialog.
+ */
+function StagedAlert({
+  label,
+  variant,
+}: {
+  label: string
+  variant: (typeof alertDialogVariants)[number]
+}) {
+  return (
+    <div style={{ display: 'grid', gap: 6 }}>
+      <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)' }}>{label}</span>
+      <OverlayStage>
+        {container => (
+          <Dialog defaultOpen modal={false}>
+            <AlertDialogPopup initialFocus={false} portalProps={{ container }} variant={variant}>
+              <AlertDialogHeader>
+                <AlertDialogMedia>
+                  <VariantIcon variant={variant} />
+                </AlertDialogMedia>
+                <AlertDialogTitle>{variant} alert</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This popup uses the “{variant}” variant to carry its semantic tone.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction variant={variant === 'destructive' ? 'destructive' : 'primary'}>
+                  Continue
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogPopup>
+          </Dialog>
+        )}
+      </OverlayStage>
+    </div>
+  )
 }
 
 export const Playground: Story = {
@@ -67,8 +148,7 @@ export const Playground: Story = {
 
 export const Confirm: Story = {
   render: () => (
-    <AlertDialog>
-      <AlertDialogTrigger render={<Button variant="primary">Publish</Button>} />
+    <AlertDialog defaultOpen>
       <AlertDialogPopup size="sm">
         <AlertDialogHeader>
           <AlertDialogMedia>
@@ -86,75 +166,24 @@ export const Confirm: Story = {
   ),
 }
 
-/** Every semantic popup variant, each opened from its own trigger. */
+/** Every semantic popup variant, open. */
 export const Variants: Story = {
   render: () => (
-    <>
+    <div style={{ display: 'grid', gap: 12, inlineSize: '100%' }}>
       {alertDialogVariants.map(variant => (
-        <AlertDialog key={variant}>
-          <AlertDialogTrigger render={<Button variant="outline">{variant}</Button>} />
-          <AlertDialogPopup variant={variant}>
-            <AlertDialogHeader>
-              <AlertDialogMedia>
-                <VariantIcon variant={variant} />
-              </AlertDialogMedia>
-              <AlertDialogTitle>{variant} alert</AlertDialogTitle>
-              <AlertDialogDescription>
-                This popup uses the “{variant}” variant to carry its semantic tone.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction variant={variant === 'destructive' ? 'destructive' : 'primary'}>
-                Continue
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogPopup>
-        </AlertDialog>
+        <StagedAlert key={variant} label={variant} variant={variant} />
       ))}
-    </>
+    </div>
   ),
 }
 
 export const Themes: Story = {
   render: () => (
-    <div style={{ display: 'grid', gap: 12 }}>
+    <div style={{ display: 'grid', gap: 12, inlineSize: '100%' }}>
       {themes.map(theme =>
         (['light', 'dark'] as const).map(mode => (
           <UIProvider key={theme + mode} mode={mode} theme={theme}>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 12,
-                padding: '0.75rem',
-                background: 'var(--a63-surface-panel)',
-                color: 'var(--a63-text-primary)',
-                borderRadius: '0.75rem',
-              }}
-            >
-              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
-                {theme} / {mode}
-              </span>
-              <AlertDialog>
-                <AlertDialogTrigger render={<Button variant="outline">Delete project</Button>} />
-                <AlertDialogPopup variant="destructive">
-                  <AlertDialogHeader>
-                    <AlertDialogMedia>
-                      <VariantIcon variant="destructive" />
-                    </AlertDialogMedia>
-                    <AlertDialogTitle>Delete this project?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This permanently removes the project and all of its files.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction variant="destructive">Delete</AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogPopup>
-              </AlertDialog>
-            </div>
+            <StagedAlert label={`${theme} / ${mode}`} variant="destructive" />
           </UIProvider>
         ))
       )}
@@ -165,7 +194,7 @@ export const Themes: Story = {
 /* The same confirmation pattern reviewed against target host contexts. */
 export const Endpoints: Story = {
   render: () => (
-    <div style={{ display: 'grid', gap: 12 }}>
+    <div style={{ display: 'grid', gap: 12, inlineSize: '100%' }}>
       {[
         {
           label: 'Web',
@@ -186,39 +215,7 @@ export const Endpoints: Story = {
         },
       ].map(endpoint => (
         <UIProvider key={endpoint.label} {...endpoint.props}>
-          <div
-            style={{
-              alignItems: 'center',
-              background: 'var(--a63-surface-panel)',
-              borderRadius: 'var(--radius-lg)',
-              color: 'var(--a63-text-primary)',
-              display: 'flex',
-              gap: 12,
-              padding: '0.75rem',
-            }}
-          >
-            <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>
-              {endpoint.label}
-            </span>
-            <AlertDialog>
-              <AlertDialogTrigger render={<Button variant="outline">Delete project</Button>} />
-              <AlertDialogPopup variant="destructive">
-                <AlertDialogHeader>
-                  <AlertDialogMedia>
-                    <VariantIcon variant="destructive" />
-                  </AlertDialogMedia>
-                  <AlertDialogTitle>Delete this project?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This permanently removes the project and all of its files.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction variant="destructive">Delete</AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogPopup>
-            </AlertDialog>
-          </div>
+          <StagedAlert label={endpoint.label} variant="destructive" />
         </UIProvider>
       ))}
     </div>

@@ -57,14 +57,19 @@ export interface AutocompleteInputProps extends Omit<AutocompletePrimitive.Input
   showClear?: boolean
   startAddon?: React.ReactNode
   size?: 'sm' | 'default' | 'lg' | number
+  /** Draws the danger edge and sets `aria-invalid`, as `Input`'s `invalid` does.
+   *  `aria-invalid` on its own draws the same state. */
+  invalid?: boolean
   ref?: React.Ref<HTMLInputElement>
   triggerProps?: AutocompletePrimitive.Trigger.Props
   clearProps?: AutocompletePrimitive.Clear.Props
 }
 
 export function AutocompleteInput({
+  'aria-invalid': ariaInvalid,
   className,
   clearProps,
+  invalid = false,
   showClear = false,
   showTrigger = false,
   size,
@@ -78,12 +83,15 @@ export function AutocompleteInput({
   // sizing (matches prod's <Input nativeInput size={number}>); string sizes drive
   // the recipe via data-size instead.
   const nativeSize = typeof sizeValue === 'number' ? sizeValue : undefined
+  const isInvalid = invalid || ariaInvalid === true || ariaInvalid === 'true'
+  const invalidProps = isInvalid ? { 'data-invalid': '' } : null
 
   return (
     <AutocompletePrimitive.InputGroup
       className="a63-Autocomplete-input-group"
       data-size={dataSize}
       data-slot="autocomplete-input-group"
+      {...invalidProps}
     >
       {startAddon ? (
         <div
@@ -95,10 +103,12 @@ export function AutocompleteInput({
         </div>
       ) : null}
       <AutocompletePrimitive.Input
+        aria-invalid={isInvalid ? true : ariaInvalid}
         className={cn('a63-Autocomplete-input', className)}
         data-has-start-addon={startAddon ? '' : undefined}
         data-slot="autocomplete-input"
         size={nativeSize}
+        {...invalidProps}
         {...props}
       />
       {showTrigger ? (

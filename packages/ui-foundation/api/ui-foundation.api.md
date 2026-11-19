@@ -536,7 +536,7 @@ export const autocompleteContract: {
     defaultSize: "default";
     sizes: readonly ["sm", "default", "lg"];
     slots: readonly ["autocomplete-input-group", "autocomplete-start-addon", "autocomplete-input", "autocomplete-trigger", "autocomplete-icon", "autocomplete-clear", "autocomplete-positioner", "autocomplete-surface", "autocomplete-popup", "autocomplete-list", "autocomplete-item", "autocomplete-separator", "autocomplete-group", "autocomplete-group-label", "autocomplete-empty", "autocomplete-row", "autocomplete-value", "autocomplete-status", "autocomplete-collection"];
-    states: readonly ["closed", "open", "highlighted", "disabled", "empty", "loading"];
+    states: readonly ["closed", "open", "highlighted", "hover", "disabled", "empty", "loading", "invalid"];
     visualArchetypes: readonly ["field", "trigger", "overlay", "menu"];
 };
 
@@ -556,7 +556,7 @@ export const autocompleteSlots: readonly ["autocomplete-input-group", "autocompl
 export type AutocompleteState = (typeof autocompleteStates)[number];
 
 // @public (undocumented)
-export const autocompleteStates: readonly ["closed", "open", "highlighted", "disabled", "empty", "loading"];
+export const autocompleteStates: readonly ["closed", "open", "highlighted", "hover", "disabled", "empty", "loading", "invalid"];
 
 // @public (undocumented)
 export type AutocompleteVisualArchetype = (typeof autocompleteVisualArchetypes)[number];
@@ -1579,7 +1579,7 @@ export const copyButtonContract: {
         readonly icon: "icon-xl";
         readonly label: "xl";
     }];
-    sizes: ("md" | "lg" | "sm" | "xs" | "xl" | "icon-xs" | "icon-sm" | "icon" | "icon-lg" | "icon-xl")[];
+    sizes: ("sm" | "md" | "lg" | "xs" | "xl" | "icon-xs" | "icon-sm" | "icon" | "icon-lg" | "icon-xl")[];
     slots: readonly ["button", "button-label", "copy-button-swap", "copy-button-item", "animated-check"];
     states: readonly ["rest", "hover", "pressed", "focus-visible", "copied"];
     variants: readonly ["ghost", "outline", "secondary"];
@@ -1608,7 +1608,7 @@ export const copyButtonSizePairs: readonly [{
 }];
 
 // @public (undocumented)
-export const copyButtonSizes: ("md" | "lg" | "sm" | "xs" | "xl" | "icon-xs" | "icon-sm" | "icon" | "icon-lg" | "icon-xl")[];
+export const copyButtonSizes: ("sm" | "md" | "lg" | "xs" | "xl" | "icon-xs" | "icon-sm" | "icon" | "icon-lg" | "icon-xl")[];
 
 // @public (undocumented)
 export type CopyButtonSlot = (typeof copyButtonSlots)[number];
@@ -4429,7 +4429,7 @@ export const selectContract: {
     defaultSize: "md";
     sizes: readonly ["sm", "md", "lg"];
     slots: readonly ["select-trigger", "select-value", "select-icon", "select-positioner", "select-popup", "select-surface", "select-list", "select-scroll-up-arrow", "select-scroll-down-arrow", "select-item", "select-item-indicator", "select-item-text", "select-group", "select-group-label", "select-separator"];
-    states: readonly ["closed", "open", "placeholder", "focus-visible", "disabled", "highlighted-item", "selected-item", "disabled-item"];
+    states: readonly ["closed", "open", "placeholder", "focus-visible", "disabled", "highlighted-item", "selected-item", "disabled-item", "invalid"];
     tokenSlots: readonly ["field.background", "field.border", "field.radius", "field.shadow", "field.focusRing", "field.focusBorder", "field.height", "field.paddingInline", "field.fontSize", "field.iconSize", "field.gap"];
     visualArchetypes: readonly ["field", "trigger", "overlay", "menu"];
 };
@@ -4456,7 +4456,7 @@ export const selectSlots: readonly ["select-trigger", "select-value", "select-ic
 export type SelectState = (typeof selectStates)[number];
 
 // @public (undocumented)
-export const selectStates: readonly ["closed", "open", "placeholder", "focus-visible", "disabled", "highlighted-item", "selected-item", "disabled-item"];
+export const selectStates: readonly ["closed", "open", "placeholder", "focus-visible", "disabled", "highlighted-item", "selected-item", "disabled-item", "invalid"];
 
 // @public (undocumented)
 export type SelectTokenSlot = (typeof selectTokenSlots)[number];
