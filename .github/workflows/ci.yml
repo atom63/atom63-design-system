@@ -99,12 +99,13 @@ jobs:
       - name: Check the shadcn role bridges
         run: pnpm --filter @atom63/styles check:roles
 
-      - name: Check theme authoring, token economy, craft, templates and the scaffold
+      - name: Check theme authoring, token economy, craft, contracts, templates and the scaffold
         run: |
           pnpm test:scripts
           pnpm check:theme-authoring
           pnpm check:token-economy
           pnpm check:craft
+          pnpm check:contract-consistency
           pnpm check:templates
           pnpm check:registry
           pnpm --filter @atom63/ui-foundation check:a11y-ios

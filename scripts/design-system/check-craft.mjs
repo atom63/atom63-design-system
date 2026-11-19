@@ -1,7 +1,8 @@
 /**
  * Craft lint for the design-system packages: raw colors, physical directions,
- * focus styles outside `:focus-visible`, focus rings drawn as box-shadows and
- * reads of `--a63-*` variables that do not exist (see lib/craft-rules.mjs).
+ * focus styles outside `:focus-visible`, focus rings drawn as box-shadows,
+ * reads of `--a63-*` variables that do not exist and tokens painted outside
+ * their role (see lib/craft-rules.mjs).
  * A name is known when the token manifest lists it or any styles source or
  * scanned file declares it.
  *
@@ -21,6 +22,7 @@ import {
   compareToBaseline,
   countViolations,
   declaredTokens,
+  roleTokens,
   scanCss,
   scanSource,
 } from './lib/craft-rules.mjs'
@@ -75,11 +77,15 @@ for (const absolute of walk(path.join(root, 'packages/styles/src'))) {
 }
 for (const { text } of sources) for (const name of declaredTokens(text)) knownTokens.add(name)
 
+const roles = roleTokens(
+  JSON.parse(readFileSync(path.join(root, 'packages/styles/src/tailwind/roles.json'), 'utf8'))
+)
+
 const violations = []
 for (const { file, text } of sources) {
   const found = /\.s?css$/.test(file)
     ? scanCss(text, { knownTokens })
-    : scanSource(text, { knownTokens })
+    : scanSource(text, { knownTokens, roles })
   for (const violation of found) violations.push({ file, ...violation })
 }
 
