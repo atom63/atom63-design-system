@@ -17,7 +17,7 @@ public struct AtomListRow: View {
     subtitle: String? = nil,
     systemImage: String,
     badge: String? = nil,
-    badgeTone: AtomBadgeTone = .accent,
+    badgeTone: AtomBadgeTone = .primary,
     showsDisclosure: Bool = false
   ) {
     self.title = title

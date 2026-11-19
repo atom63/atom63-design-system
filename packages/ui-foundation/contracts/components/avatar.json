@@ -44,6 +44,46 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What an avatar ring says, independent of any platform: whether the story behind it is unseen or seen.",
+    "axes": {
+      "ring": ["unseen", "seen"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "ring": {
+            "list": "rings",
+            "map": {
+              "unseen": {
+                "ring": "unseen"
+              },
+              "seen": {
+                "ring": "seen"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      },
+      "ios": {
+        "props": {
+          "ring": {
+            "swiftEnum": "AtomAvatarRing",
+            "map": {
+              "unseen": {
+                "ring": "unseen"
+              },
+              "seen": {
+                "ring": "seen"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "avatar",

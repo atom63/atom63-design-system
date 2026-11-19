@@ -356,7 +356,7 @@ public enum AtomRendererConformance {
     ),
     AtomRendererConformanceEvidence(
       contractId: "badge",
-      implementedStates: ["neutral", "accent", "success", "warning", "error"],
+      implementedStates: ["neutral", "primary", "success", "warning", "error"],
       verifiedSharedOutcomes: [
         "label-remains-readable-without-color",
         "semantic-tone-retains-meaning",
@@ -455,6 +455,13 @@ public enum AtomRendererConformance {
       implementedStates: ["rest"],
       verifiedSharedOutcomes: ["direction-sets-side-and-fill", "runs-join-at-shared-corners", "status-is-named"],
       verifiedAccessibilityOutcomes: ["names-the-sender", "names-the-delivery-status"],
+      verifiesMotionRecipe: false
+    ),
+    AtomRendererConformanceEvidence(
+      contractId: "amount",
+      implementedStates: ["rest"],
+      verifiedSharedOutcomes: ["amount-is-formatted-for-the-locale", "fraction-is-drawn-at-half-size"],
+      verifiedAccessibilityOutcomes: ["amount-reads-as-one-label"],
       verifiesMotionRecipe: false
     ),
   ]

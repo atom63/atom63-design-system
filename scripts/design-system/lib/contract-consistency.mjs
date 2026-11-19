@@ -9,7 +9,12 @@
  *   `focusVisible`). The recipes match them as `data-*` attribute values.
  * - `synonym`: a value has a canonical name. The middle size is `md`, not
  *   `default` (Button, Input and most sized controls use `md`, and a group's
- *   sizes must match the control it groups); the resting state is `rest`.
+ *   sizes must match the control it groups); the resting state is `rest`
+ *   (not `resting`, `default` or `idle`). Among states, the keyboard focus
+ *   ring is `focus-visible` (rule 11 draws rings on :focus-visible, never
+ *   :focus), the pointer state is `hover` (not `hovering`), and the current
+ *   or selected item is `current` (not `active`, which reads as pressed:
+ *   Button and Toggle call that state `pressed`).
  * - `status-set`: a list that holds the statuses `info`, `success` and
  *   `warning` names its danger member the way most such lists do.
  * - `physical-value`: values name logical sides (`start`, `end`), not `left`
@@ -22,6 +27,13 @@ const SKIP_LISTS = new Set(['slots', 'tokenSlots', 'visualArchetypes', 'dotColor
 /** Canonical names, per list (`*` for every list). */
 const SYNONYMS = {
   sizes: { default: 'md' },
+  states: {
+    active: 'current',
+    default: 'rest',
+    focus: 'focus-visible',
+    hovering: 'hover',
+    idle: 'rest',
+  },
   '*': { resting: 'rest' },
 }
 
@@ -37,7 +49,9 @@ export function checkContracts(contracts) {
   const found = []
   const statusLists = []
   for (const { component, lists } of contracts) {
-    for (const [list, values] of Object.entries(lists ?? {})) {
+    for (const [list, entry] of Object.entries(lists ?? {})) {
+      // A list is an array of values or `{ values, description, … }`.
+      const values = Array.isArray(entry) ? entry : entry?.values
       if (SKIP_LISTS.has(list) || !Array.isArray(values)) continue
       for (const value of values) {
         if (typeof value !== 'string') continue

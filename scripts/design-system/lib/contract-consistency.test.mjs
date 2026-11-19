@@ -24,6 +24,32 @@ describe('checkContracts', () => {
     ])
   })
 
+  it('flags state synonyms of rest, focus-visible, hover and current', () => {
+    const found = checkContracts([
+      {
+        component: 'a',
+        lists: {
+          states: ['default', 'idle', 'focus', 'hovering', 'active', 'rest', 'focus-visible'],
+          variants: ['default', 'active'],
+        },
+      },
+    ])
+    assert.deepEqual(lines(found), [
+      'synonym a.states default -> rest',
+      'synonym a.states idle -> rest',
+      'synonym a.states focus -> focus-visible',
+      'synonym a.states hovering -> hover',
+      'synonym a.states active -> current',
+    ])
+  })
+
+  it('reads lists written as { values }', () => {
+    const found = checkContracts([
+      { component: 'a', lists: { states: { description: 'States.', values: ['idle'] } } },
+    ])
+    assert.deepEqual(lines(found), ['synonym a.states idle -> rest'])
+  })
+
   it('flags a status list whose danger member differs from the usual one', () => {
     const status = danger => ['default', 'info', 'success', 'warning', danger]
     const found = checkContracts([

@@ -263,7 +263,7 @@ public enum AtomComponentContracts {
       swiftUIRendererByVariant: [],
       intent: "Communicate a compact label or semantic status alongside primary content.",
       parity: .strict,
-      requiredStates: ["neutral", "accent", "success", "warning", "error"],
+      requiredStates: ["neutral", "primary", "success", "warning", "error"],
       stateTones: [:],
       sharedOutcomes: ["label-remains-readable-without-color", "semantic-tone-retains-meaning"],
       accessibilityOutcomes: ["text-does-not-rely-on-color"],
@@ -575,6 +575,23 @@ public enum AtomComponentContracts {
       accessibilityOutcomes: ["names-the-sender", "names-the-delivery-status"],
       motion: nil,
       platformAdaptations: AtomPlatformAdaptations(react: ["MessageList is a log region; Message is an article named by label (the sender), with logical corner radii so a thread mirrors in right-to-left scripts.", "Outgoing bubbles read --a63-message-outgoing-background and -foreground, which default to the accent; a theme or a product can set them."], swiftUI: ["AtomMessage takes direction, position, time and status; AtomMessageEvent is the centred row. The bubble uses UnevenRoundedRectangle for the joined corners.", "The status icon is an SF Symbol with an accessibility label; the bubble combines its children into one VoiceOver element."])
+    ),
+    AtomComponentContract(
+      id: "amount",
+      foundationContract: "amount",
+      foundationAxis: "states",
+      catalogItem: "amount",
+      reactRenderer: "Amount",
+      swiftUIRenderer: "AtomAmountText",
+      swiftUIRendererByVariant: [],
+      intent: "Show a money amount in a display text role, formatted for the locale, with its fraction at half size, raised or on the baseline.",
+      parity: .strict,
+      requiredStates: ["rest"],
+      stateTones: [:],
+      sharedOutcomes: ["amount-is-formatted-for-the-locale", "fraction-is-drawn-at-half-size"],
+      accessibilityOutcomes: ["amount-reads-as-one-label"],
+      motion: nil,
+      platformAdaptations: AtomPlatformAdaptations(react: ["Formats with Intl.NumberFormat and draws tabular figures."], swiftUI: ["Formats with FormatStyle.Currency, draws monospaced digits and scales with Dynamic Type."])
     )
   ]
 

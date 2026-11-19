@@ -151,7 +151,7 @@
                 "description": "A quieter neutral on the muted surface."
               },
               "accent": {
-                "description": "A neutral on the control hover surface."
+                "description": "A neutral on the control hover surface. Not the iOS `accent`, which was the earlier name of `primary`."
               },
               "red": {
                 "description": "A palette hue for a category with no status.",
@@ -238,7 +238,7 @@
                 "tone": "neutral",
                 "emphasis": "soft"
               },
-              "accent": {
+              "primary": {
                 "tone": "primary",
                 "emphasis": "solid"
               },
@@ -261,6 +261,7 @@
             },
             "extensions": {},
             "aliases": {
+              "accent": "primary",
               "danger": "error"
             }
           }
@@ -278,7 +279,7 @@
     "swiftUIRenderer": "AtomBadge",
     "intent": "Communicate a compact label or semantic status alongside primary content.",
     "parity": "strict",
-    "requiredStates": ["neutral", "accent", "success", "warning", "error"],
+    "requiredStates": ["neutral", "primary", "success", "warning", "error"],
     "sharedOutcomes": ["label-remains-readable-without-color", "semantic-tone-retains-meaning"],
     "accessibilityOutcomes": ["text-does-not-rely-on-color"],
     "platformAdaptations": {

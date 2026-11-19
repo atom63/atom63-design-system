@@ -292,3 +292,46 @@ export function intentProblems(sources, source) {
   }
   return problems
 }
+
+/**
+ * The raw values of `enum <name>` in Swift source, in order (a case's name
+ * when it has no raw value), or null when the enum is not there.
+ */
+export function swiftEnumRawValues(swiftSource, name) {
+  const body = swiftSource.match(new RegExp(`\\benum ${name}\\b[^{]*\\{([\\s\\S]*?)\\n\\}`))?.[1]
+  if (body === undefined) return null
+  return [...body.matchAll(/^\s*case\s+`?(\w+)`?(?:\s*=\s*"([^"]*)")?\s*$/gm)].map(
+    ([, name, raw]) => raw ?? name
+  )
+}
+
+/**
+ * Where an iOS prop names a hand-written Swift enum (`swiftEnum`), its raw
+ * values must be exactly the keys of the prop's map and extensions, so the
+ * contract cannot drift from the SwiftUI renderer. `swiftSource` is every
+ * Swift file of Atom63UI, concatenated.
+ */
+export function swiftEnumProblems(sources, swiftSource) {
+  const problems = []
+  for (const source of sources.values()) {
+    const props = source.doc.intent?.platforms?.ios?.props ?? {}
+    for (const [prop, spec] of Object.entries(props)) {
+      if (!spec.swiftEnum) continue
+      const where = `${source.id} intent: ios ${prop}`
+      const actual = swiftEnumRawValues(swiftSource, spec.swiftEnum)
+      if (!actual) {
+        problems.push(`${where}: Swift enum ${spec.swiftEnum} is not in Atom63UI`)
+        continue
+      }
+      const expected = [...Object.keys(spec.map), ...Object.keys(spec.extensions)]
+      const missing = actual.filter(value => !expected.includes(value))
+      const extra = expected.filter(value => !actual.includes(value))
+      if (missing.length || extra.length) {
+        problems.push(
+          `${where}: ${spec.swiftEnum} has ${actual.join(', ')}; the contract maps ${expected.join(', ')}`
+        )
+      }
+    }
+  }
+  return problems
+}

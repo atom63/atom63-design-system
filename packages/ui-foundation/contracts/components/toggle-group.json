@@ -52,6 +52,46 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What a toggle group is, independent of any platform: the direction its items run. The ghost group (AtomGhostToggleGroup) takes it on iOS.",
+    "axes": {
+      "orientation": ["horizontal", "vertical"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "orientation": {
+            "list": "orientations",
+            "map": {
+              "horizontal": {
+                "orientation": "horizontal"
+              },
+              "vertical": {
+                "orientation": "vertical"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      },
+      "ios": {
+        "props": {
+          "orientation": {
+            "swiftEnum": "AtomToggleGroupOrientation",
+            "map": {
+              "horizontal": {
+                "orientation": "horizontal"
+              },
+              "vertical": {
+                "orientation": "vertical"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "toggleGroup",

@@ -27,6 +27,7 @@ import {
   pascal,
   resolvedComponent,
   sections,
+  swiftEnumProblems,
 } from './design-system/lib/component-contracts.mjs'
 import { schemaProblems } from './design-system/lib/component-contract-schema.mjs'
 
@@ -307,6 +308,17 @@ for (const source of sources.values()) {
     process.stderr.write(`${problem}\n`)
     stale = true
   }
+}
+// The hand-written Swift enums an iOS prop names must have exactly its mapped values.
+const swiftDir = path.join(root, 'packages/ui-ios/Sources/Atom63UI')
+const swiftSource = readdirSync(swiftDir, { recursive: true })
+  .filter(file => file.endsWith('.swift'))
+  .sort()
+  .map(file => readFileSync(path.join(swiftDir, file), 'utf8'))
+  .join('\n')
+for (const problem of swiftEnumProblems(sources, swiftSource)) {
+  process.stderr.write(`${problem}\n`)
+  stale = true
 }
 for (const name of readdirSync(componentsDir)) {
   if (![...sources.values()].some(source => source.name === name)) {
