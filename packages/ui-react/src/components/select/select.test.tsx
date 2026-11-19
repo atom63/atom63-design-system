@@ -3,7 +3,16 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import { Select, SelectItem, SelectPopup, SelectTrigger, SelectValue } from './select'
+import {
+  Select,
+  SelectGroup,
+  SelectGroupLabel,
+  SelectItem,
+  SelectPopup,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from './select'
 
 const ITEMS = [
   { value: 'all', label: 'All' },
@@ -116,5 +125,33 @@ describe('Select', () => {
     expect(document.querySelector('[data-slot="select-surface"]')).toHaveClass('a63-Menu-popup')
     expect(document.querySelector('[data-slot="select-item"]')).toHaveClass('a63-Menu-item')
     expect(document.querySelector('[data-slot="select-list"]')).toHaveClass('list-class')
+  })
+
+  it('keeps the separator between groups out of the listbox semantics', async () => {
+    render(
+      <Select defaultOpen items={ITEMS} value="all">
+        <SelectTrigger aria-label="Type">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectPopup>
+          <SelectGroup>
+            <SelectGroupLabel>First</SelectGroupLabel>
+            <SelectItem value="all">All</SelectItem>
+          </SelectGroup>
+          <SelectSeparator />
+          <SelectGroup>
+            <SelectGroupLabel>Second</SelectGroupLabel>
+            <SelectItem value="video">Video</SelectItem>
+          </SelectGroup>
+        </SelectPopup>
+      </Select>
+    )
+    const listbox = await screen.findByRole('listbox')
+    const separator = listbox.querySelector('[data-slot="select-separator"]')
+    expect(separator).not.toBeNull()
+    // A listbox may own only options and groups (axe aria-required-children).
+    expect(separator).not.toHaveAttribute('role', 'separator')
+    expect(separator).toHaveAttribute('role', 'none')
+    expect(separator).not.toHaveAttribute('aria-orientation')
   })
 })

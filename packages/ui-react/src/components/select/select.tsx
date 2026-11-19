@@ -150,10 +150,14 @@ export function SelectSeparator({
   className,
   ...props
 }: SelectPrimitive.Separator.Props): React.ReactElement {
+  // A listbox may own only options and groups, so a separator role inside the
+  // popup fails axe (aria-required-children). The rule is drawn for sight only.
   return (
     <SelectPrimitive.Separator
+      aria-orientation={undefined}
       className={cn('a63-Menu-separator', 'a63-Select-separator', className)}
       data-slot="select-separator"
+      role="none"
       {...props}
     />
   )

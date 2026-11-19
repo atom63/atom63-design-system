@@ -81,6 +81,17 @@ function RenameDialog({
   )
 }
 
+/* A labelled stage cell. It paints its own panel surface so the label reads
+   against the cell's theme and mode, not the light page behind the story. */
+const cellStyle: CSSProperties = {
+  background: 'var(--a63-surface-panel)',
+  borderRadius: 'var(--radius-lg)',
+  color: 'var(--a63-text-primary)',
+  display: 'grid',
+  gap: 6,
+  padding: 12,
+}
+
 /*
  * A fixed-height box that holds one open overlay. The transform makes the box
  * the containing block of the popup's fixed-position backdrop and viewport, and
@@ -121,7 +132,7 @@ type ProviderProps = Omit<ComponentProps<typeof UIProvider>, 'children'>
 function ReviewCell({ label, providerProps }: { label: string; providerProps: ProviderProps }) {
   return (
     <UIProvider {...providerProps}>
-      <div style={{ display: 'grid', gap: 6 }}>
+      <div style={cellStyle}>
         <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)' }}>{label}</span>
         <OverlayStage>
           {container => <RenameDialog open="inline" portalContainerRef={container} />}
@@ -149,7 +160,7 @@ export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 12, inlineSize: '100%' }}>
       {dialogSizes.map(size => (
-        <div key={size} style={{ display: 'grid', gap: 6 }}>
+        <div key={size} style={cellStyle}>
           <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)' }}>{size}</span>
           <OverlayStage>
             {container => <RenameDialog open="inline" portalContainerRef={container} size={size} />}

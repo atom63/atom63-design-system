@@ -25,6 +25,17 @@ import {
 const sides = ['right', 'left', 'top', 'bottom'] as const
 type ProviderProps = Omit<ComponentProps<typeof UIProvider>, 'children'>
 
+/* A labelled stage cell. It paints its own panel surface so the label reads
+   against the cell's theme and mode, not the light page behind the story. */
+const cellStyle: CSSProperties = {
+  background: 'var(--a63-surface-panel)',
+  borderRadius: 'var(--radius-lg)',
+  color: 'var(--a63-text-primary)',
+  display: 'grid',
+  gap: 6,
+  padding: 12,
+}
+
 /*
  * A fixed-height box that holds one open overlay. The transform makes the box
  * the containing block of the sheet's fixed-position backdrop and viewport, and
@@ -73,7 +84,7 @@ function StagedSheet({
   variant?: 'default' | 'inset'
 }) {
   return (
-    <div style={{ display: 'grid', gap: 6 }}>
+    <div style={cellStyle}>
       <span style={{ color: 'var(--a63-text-secondary)', fontSize: 12 }}>{label}</span>
       <OverlayStage>
         {container => (

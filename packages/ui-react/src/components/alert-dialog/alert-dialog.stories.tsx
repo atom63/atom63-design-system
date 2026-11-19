@@ -44,6 +44,17 @@ function VariantIcon({ variant }: { variant: (typeof alertDialogVariants)[number
   return <AlertTriangle aria-hidden />
 }
 
+/* A labelled stage cell. It paints its own panel surface so the label reads
+   against the cell's theme and mode, not the light page behind the story. */
+const cellStyle: CSSProperties = {
+  background: 'var(--a63-surface-panel)',
+  borderRadius: 'var(--radius-lg)',
+  color: 'var(--a63-text-primary)',
+  display: 'grid',
+  gap: 6,
+  padding: 12,
+}
+
 /*
  * A fixed-height box that holds one open overlay. The transform makes the box
  * the containing block of the popup's fixed-position backdrop and viewport, and
@@ -94,7 +105,7 @@ function StagedAlert({
   variant: (typeof alertDialogVariants)[number]
 }) {
   return (
-    <div style={{ display: 'grid', gap: 6 }}>
+    <div style={cellStyle}>
       <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)' }}>{label}</span>
       <OverlayStage>
         {container => (

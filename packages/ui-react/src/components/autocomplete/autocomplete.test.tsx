@@ -5,10 +5,12 @@ import { describe, expect, it } from 'vitest'
 import {
   Autocomplete,
   AutocompleteEmpty,
+  AutocompleteGroup,
   AutocompleteInput,
   AutocompleteItem,
   AutocompleteList,
   AutocompletePopup,
+  AutocompleteSeparator,
   AutocompleteStatus,
 } from './autocomplete'
 
@@ -108,5 +110,32 @@ describe('Autocomplete', () => {
     const valid = screen.getByRole('combobox', { name: 'Valid fruit' })
     expect(valid).not.toHaveAttribute('aria-invalid')
     expect(valid).not.toHaveAttribute('data-invalid')
+  })
+
+  it('keeps the separator between groups out of the listbox semantics', () => {
+    render(
+      <Autocomplete items={fruits} open>
+        <AutocompleteInput aria-label="Search fruit" />
+        <AutocompletePopup>
+          <AutocompleteList>
+            <AutocompleteGroup>
+              <AutocompleteItem value="Apple">Apple</AutocompleteItem>
+            </AutocompleteGroup>
+            <AutocompleteGroup>
+              <AutocompleteSeparator />
+              <AutocompleteItem value="Banana">Banana</AutocompleteItem>
+            </AutocompleteGroup>
+          </AutocompleteList>
+        </AutocompletePopup>
+      </Autocomplete>
+    )
+    const separator = screen
+      .getByRole('listbox')
+      .querySelector('[data-slot="autocomplete-separator"]')
+    expect(separator).not.toBeNull()
+    // A listbox may own only options and groups (axe aria-required-children).
+    expect(separator).not.toHaveAttribute('role', 'separator')
+    expect(separator).toHaveAttribute('role', 'none')
+    expect(separator).not.toHaveAttribute('aria-orientation')
   })
 })

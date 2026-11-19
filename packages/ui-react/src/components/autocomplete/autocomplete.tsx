@@ -201,10 +201,14 @@ export function AutocompleteSeparator({
   className,
   ...props
 }: AutocompletePrimitive.Separator.Props): React.ReactElement {
+  // A listbox may own only options and groups, so a separator role inside the
+  // popup fails axe (aria-required-children). The rule is drawn for sight only.
   return (
     <AutocompletePrimitive.Separator
+      aria-orientation={undefined}
       className={cn('a63-Menu-separator', 'a63-Autocomplete-separator', className)}
       data-slot="autocomplete-separator"
+      role="none"
       {...props}
     />
   )
