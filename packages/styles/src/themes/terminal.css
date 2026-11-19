@@ -83,6 +83,9 @@
   --a63-segment-primary-shadow:
     inset 0 0 0 1px color-mix(in oklch, var(--a63-action-primary) 50%, transparent),
     0 0 10px -3px color-mix(in oklch, var(--a63-action-primary) 40%, transparent);
+  /* A pressed toggle is reverse video: phosphor ink fill with page-coloured text. The neutral solid sits too close to the page in both modes. */
+  --a63-toggle-on-background: var(--a63-text-primary);
+  --a63-toggle-on-foreground: var(--a63-surface-page);
   --a63-weather-border-color: color-mix(
     in oklab,
     var(--a63-action-primary) 44%,

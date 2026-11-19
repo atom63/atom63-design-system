@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 2015,
-    "uniqueCssVariables": 1201,
-    "figmaMappedDeclarations": 1953
+    "declarations": 2019,
+    "uniqueCssVariables": 1203,
+    "figmaMappedDeclarations": 1957
   },
   "entries": [
     {
@@ -12454,6 +12454,68 @@
       "lifecycle": "preview",
       "aliases": ["--a63-segment-gap"],
       "scope": ":root"
+    },
+    {
+      "name": "a63-toggle-on-background",
+      "cssVar": "--a63-toggle-on-background",
+      "type": "color",
+      "value": "var(--a63-action-neutral)",
+      "sourceFile": "packages/styles/src/contracts/toggle.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "toggle/on/background"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-neutral"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-toggle-on-background",
+      "cssVar": "--a63-toggle-on-background",
+      "type": "color",
+      "value": "var(--a63-text-primary)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Theme",
+        "path": "toggle/on/background",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-primary"],
+      "scope": "[data-a63-theme='terminal']"
+    },
+    {
+      "name": "a63-toggle-on-foreground",
+      "cssVar": "--a63-toggle-on-foreground",
+      "type": "color",
+      "value": "var(--a63-action-neutral-foreground)",
+      "sourceFile": "packages/styles/src/contracts/toggle.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "toggle/on/foreground"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-neutral-foreground"],
+      "scope": ":root"
+    },
+    {
+      "name": "a63-toggle-on-foreground",
+      "cssVar": "--a63-toggle-on-foreground",
+      "type": "color",
+      "value": "var(--a63-surface-page)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Theme",
+        "path": "toggle/on/foreground",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-page"],
+      "scope": "[data-a63-theme='terminal']"
     },
     {
       "name": "a63-toggle-radius",

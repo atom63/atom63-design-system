@@ -28,6 +28,11 @@ const actionPairs = [
   { fg: '--a63-action-primary-foreground', bg: '--a63-action-primary', min: AA_TEXT },
   { fg: '--a63-action-neutral-foreground', bg: '--a63-action-neutral', min: AA_UI },
   { fg: '--a63-action-danger-foreground', bg: '--a63-action-danger', min: AA_UI },
+  // A pressed toggle carries its state in its fill (WCAG 1.4.11), so the fill
+  // reaches 3:1 against the page and the panel, and its label stays legible.
+  { fg: '--a63-toggle-on-background', bg: '--a63-surface-page', min: AA_UI },
+  { fg: '--a63-toggle-on-background', bg: '--a63-surface-panel', min: AA_UI },
+  { fg: '--a63-toggle-on-foreground', bg: '--a63-toggle-on-background', min: AA_TEXT },
   // WCAG exempts disabled controls from 4.5:1, but the muted label stays legible.
   { fg: '--a63-action-disabled-foreground', bg: '--a63-action-disabled-background', min: 2.5 },
 ] as const

@@ -11,10 +11,11 @@
  *   --a63-toggle-background           -> transparent
  *   --a63-toggle-foreground           -> var(--a63-text-primary)
  *   --a63-toggle-hover-background     -> var(--a63-surface-control-hover)
- *   --a63-toggle-on-background        -> var(--a63-action-neutral)
- *   --a63-toggle-on-foreground        -> var(--a63-action-neutral-foreground)
  *   --a63-toggle-primary-background   -> var(--a63-action-primary)
  *   --a63-toggle-primary-foreground   -> var(--a63-action-primary-foreground)
+ *
+ * The pressed neutral fill is a token, so a theme whose neutral solid sits
+ * close to its page (terminal) can give a pressed toggle its own fill.
  */
 :root {
   --a63-toggle-border-width: var(--a63-segment-border-width);
@@ -25,4 +26,6 @@
   --a63-toggle-shadow-active: none;
   --a63-toggle-text-shadow: none;
   --a63-toggle-disabled-opacity: 0.56;
+  --a63-toggle-on-background: var(--a63-action-neutral);
+  --a63-toggle-on-foreground: var(--a63-action-neutral-foreground);
 }

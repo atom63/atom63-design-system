@@ -17535,6 +17535,46 @@
    ]
   },
   {
+   "cssVar": "--a63-toggle-on-background",
+   "figma": {
+    "collection": "Contract",
+    "path": "toggle/on/background"
+   },
+   "layer": "contract",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--a63-action-neutral)"
+    },
+    {
+     "scope": "[data-a63-theme='terminal']",
+     "value": "var(--a63-text-primary)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-toggle-on-foreground",
+   "figma": {
+    "collection": "Contract",
+    "path": "toggle/on/foreground"
+   },
+   "layer": "contract",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--a63-action-neutral-foreground)"
+    },
+    {
+     "scope": "[data-a63-theme='terminal']",
+     "value": "var(--a63-surface-page)"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-toggle-radius",
    "figma": {
     "collection": "Contract",
