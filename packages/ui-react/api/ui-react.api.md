@@ -635,7 +635,7 @@ export type CardTitleProps = useRender.ComponentProps<'span'> & {
     lineClamp?: CardLineClamp;
 };
 
-// @public (undocumented)
+// @public
 export function Carousel(input: React$1.ComponentProps<'div'> & CarouselProps): React$1.ReactElement;
 
 // @public (undocumented)

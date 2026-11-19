@@ -12,6 +12,12 @@ import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { repeatedLandmarks } from '../story-probes'
 
+/**
+ * Carousel pages slides in place on the page. For a full-screen photo viewer
+ * use `MediaLightbox` (`@atom63/ui-react/media`), not a Carousel inside a
+ * fixed overlay: that overlay has no scroll lock and no `touch-action`, so a
+ * swipe drifts the page behind it vertically.
+ */
 const meta = {
   title: 'UI React/Carousel',
   component: Carousel,
