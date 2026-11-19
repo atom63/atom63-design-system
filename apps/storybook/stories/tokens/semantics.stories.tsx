@@ -28,7 +28,7 @@ const SEMANTIC_COLORS: SemanticToken[] = [
   { name: 'border', variable: '--border', role: 'Dividers, input outlines' },
   { name: 'input', variable: '--input', role: 'Input field borders' },
   { name: 'ring', variable: '--ring', role: 'Focus ring outlines' },
-  { name: 'destructive', variable: '--destructive', role: 'Danger actions, error states' },
+  { name: 'destructive', variable: '--destructive', role: 'Danger action fills' },
   { name: 'success', variable: '--success', role: 'Success feedback' },
   { name: 'warning', variable: '--warning', role: 'Warning feedback' },
   { name: 'info', variable: '--info', role: 'Informational highlights' },

@@ -20,7 +20,7 @@
   }
 
   .callout[data-tone='error'] {
-    --callout-tone: var(--a63-action-danger);
+    --callout-tone: var(--a63-status-danger);
   }
 
   .callout[data-tone='success'] {

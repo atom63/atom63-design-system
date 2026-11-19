@@ -16,6 +16,8 @@ modern b1 n1 light textPrimary 0.12549 0.12549 0.12549 1
 modern b1 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 modern b1 n1 light textSecondary 0.392157 0.392157 0.392157 1
 modern b1 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+modern b1 n1 light textDanger 0.733333 0.113725 0.133333 1
+modern b1 n1 dark textDanger 1 0.556863 0.513726 1
 modern b1 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 modern b1 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 modern b1 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -48,6 +50,8 @@ modern b1 n1 light statusSuccess 0 0.576471 0.345098 1
 modern b1 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 modern b1 n1 light statusWarning 0.760784 0.458824 0 1
 modern b1 n1 dark statusWarning 0.952941 0.623529 0 1
+modern b1 n1 light statusDanger 0.733333 0.113725 0.133333 1
+modern b1 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 modern b1 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 modern b1 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 modern b1 n1 light selectionThumb 1 1 1 1
@@ -84,6 +88,8 @@ modern b2 n1 light textPrimary 0.12549 0.12549 0.12549 1
 modern b2 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 modern b2 n1 light textSecondary 0.392157 0.392157 0.392157 1
 modern b2 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+modern b2 n1 light textDanger 0.733333 0.113725 0.133333 1
+modern b2 n1 dark textDanger 1 0.556863 0.513726 1
 modern b2 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 modern b2 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 modern b2 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -116,6 +122,8 @@ modern b2 n1 light statusSuccess 0 0.576471 0.345098 1
 modern b2 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 modern b2 n1 light statusWarning 0.760784 0.458824 0 1
 modern b2 n1 dark statusWarning 0.952941 0.623529 0 1
+modern b2 n1 light statusDanger 0.733333 0.113725 0.133333 1
+modern b2 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 modern b2 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 modern b2 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 modern b2 n1 light selectionThumb 1 1 1 1
@@ -152,6 +160,8 @@ modern b3 n1 light textPrimary 0.12549 0.12549 0.12549 1
 modern b3 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 modern b3 n1 light textSecondary 0.392157 0.392157 0.392157 1
 modern b3 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+modern b3 n1 light textDanger 0.733333 0.113725 0.133333 1
+modern b3 n1 dark textDanger 1 0.556863 0.513726 1
 modern b3 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 modern b3 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 modern b3 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -184,6 +194,8 @@ modern b3 n1 light statusSuccess 0 0.576471 0.345098 1
 modern b3 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 modern b3 n1 light statusWarning 0.760784 0.458824 0 1
 modern b3 n1 dark statusWarning 0.952941 0.623529 0 1
+modern b3 n1 light statusDanger 0.733333 0.113725 0.133333 1
+modern b3 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 modern b3 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 modern b3 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 modern b3 n1 light selectionThumb 1 1 1 1
@@ -220,6 +232,8 @@ modern b4 n1 light textPrimary 0.12549 0.12549 0.12549 1
 modern b4 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 modern b4 n1 light textSecondary 0.392157 0.392157 0.392157 1
 modern b4 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+modern b4 n1 light textDanger 0.733333 0.113725 0.133333 1
+modern b4 n1 dark textDanger 1 0.556863 0.513726 1
 modern b4 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 modern b4 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 modern b4 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -252,6 +266,8 @@ modern b4 n1 light statusSuccess 0 0.576471 0.345098 1
 modern b4 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 modern b4 n1 light statusWarning 0.760784 0.458824 0 1
 modern b4 n1 dark statusWarning 0.952941 0.623529 0 1
+modern b4 n1 light statusDanger 0.733333 0.113725 0.133333 1
+modern b4 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 modern b4 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 modern b4 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 modern b4 n1 light selectionThumb 1 1 1 1
@@ -288,6 +304,8 @@ modern b5 n1 light textPrimary 0.12549 0.12549 0.12549 1
 modern b5 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 modern b5 n1 light textSecondary 0.392157 0.392157 0.392157 1
 modern b5 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+modern b5 n1 light textDanger 0.733333 0.113725 0.133333 1
+modern b5 n1 dark textDanger 1 0.556863 0.513726 1
 modern b5 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 modern b5 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 modern b5 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -320,6 +338,8 @@ modern b5 n1 light statusSuccess 0 0.576471 0.345098 1
 modern b5 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 modern b5 n1 light statusWarning 0.760784 0.458824 0 1
 modern b5 n1 dark statusWarning 0.952941 0.623529 0 1
+modern b5 n1 light statusDanger 0.733333 0.113725 0.133333 1
+modern b5 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 modern b5 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 modern b5 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 modern b5 n1 light selectionThumb 1 1 1 1
@@ -356,6 +376,8 @@ modern b6 n1 light textPrimary 0.12549 0.12549 0.12549 1
 modern b6 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 modern b6 n1 light textSecondary 0.392157 0.392157 0.392157 1
 modern b6 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+modern b6 n1 light textDanger 0.733333 0.113725 0.133333 1
+modern b6 n1 dark textDanger 1 0.556863 0.513726 1
 modern b6 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 modern b6 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 modern b6 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -388,6 +410,8 @@ modern b6 n1 light statusSuccess 0 0.576471 0.345098 1
 modern b6 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 modern b6 n1 light statusWarning 0.760784 0.458824 0 1
 modern b6 n1 dark statusWarning 0.952941 0.623529 0 1
+modern b6 n1 light statusDanger 0.733333 0.113725 0.133333 1
+modern b6 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 modern b6 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 modern b6 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 modern b6 n1 light selectionThumb 1 1 1 1
@@ -424,6 +448,8 @@ aqua b1 n1 light textPrimary 0.12549 0.12549 0.12549 1
 aqua b1 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 aqua b1 n1 light textSecondary 0.392157 0.392157 0.392157 1
 aqua b1 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+aqua b1 n1 light textDanger 0.733333 0.113725 0.133333 1
+aqua b1 n1 dark textDanger 1 0.556863 0.513726 1
 aqua b1 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 aqua b1 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 aqua b1 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -456,6 +482,8 @@ aqua b1 n1 light statusSuccess 0 0.576471 0.345098 1
 aqua b1 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 aqua b1 n1 light statusWarning 0.760784 0.458824 0 1
 aqua b1 n1 dark statusWarning 0.952941 0.623529 0 1
+aqua b1 n1 light statusDanger 0.733333 0.113725 0.133333 1
+aqua b1 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 aqua b1 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 aqua b1 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 aqua b1 n1 light selectionThumb 1 1 1 1
@@ -492,6 +520,8 @@ aqua b2 n1 light textPrimary 0.12549 0.12549 0.12549 1
 aqua b2 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 aqua b2 n1 light textSecondary 0.392157 0.392157 0.392157 1
 aqua b2 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+aqua b2 n1 light textDanger 0.733333 0.113725 0.133333 1
+aqua b2 n1 dark textDanger 1 0.556863 0.513726 1
 aqua b2 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 aqua b2 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 aqua b2 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -524,6 +554,8 @@ aqua b2 n1 light statusSuccess 0 0.576471 0.345098 1
 aqua b2 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 aqua b2 n1 light statusWarning 0.760784 0.458824 0 1
 aqua b2 n1 dark statusWarning 0.952941 0.623529 0 1
+aqua b2 n1 light statusDanger 0.733333 0.113725 0.133333 1
+aqua b2 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 aqua b2 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 aqua b2 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 aqua b2 n1 light selectionThumb 1 1 1 1
@@ -560,6 +592,8 @@ aqua b3 n1 light textPrimary 0.12549 0.12549 0.12549 1
 aqua b3 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 aqua b3 n1 light textSecondary 0.392157 0.392157 0.392157 1
 aqua b3 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+aqua b3 n1 light textDanger 0.733333 0.113725 0.133333 1
+aqua b3 n1 dark textDanger 1 0.556863 0.513726 1
 aqua b3 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 aqua b3 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 aqua b3 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -592,6 +626,8 @@ aqua b3 n1 light statusSuccess 0 0.576471 0.345098 1
 aqua b3 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 aqua b3 n1 light statusWarning 0.760784 0.458824 0 1
 aqua b3 n1 dark statusWarning 0.952941 0.623529 0 1
+aqua b3 n1 light statusDanger 0.733333 0.113725 0.133333 1
+aqua b3 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 aqua b3 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 aqua b3 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 aqua b3 n1 light selectionThumb 1 1 1 1
@@ -628,6 +664,8 @@ aqua b4 n1 light textPrimary 0.12549 0.12549 0.12549 1
 aqua b4 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 aqua b4 n1 light textSecondary 0.392157 0.392157 0.392157 1
 aqua b4 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+aqua b4 n1 light textDanger 0.733333 0.113725 0.133333 1
+aqua b4 n1 dark textDanger 1 0.556863 0.513726 1
 aqua b4 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 aqua b4 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 aqua b4 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -660,6 +698,8 @@ aqua b4 n1 light statusSuccess 0 0.576471 0.345098 1
 aqua b4 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 aqua b4 n1 light statusWarning 0.760784 0.458824 0 1
 aqua b4 n1 dark statusWarning 0.952941 0.623529 0 1
+aqua b4 n1 light statusDanger 0.733333 0.113725 0.133333 1
+aqua b4 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 aqua b4 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 aqua b4 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 aqua b4 n1 light selectionThumb 1 1 1 1
@@ -696,6 +736,8 @@ aqua b5 n1 light textPrimary 0.12549 0.12549 0.12549 1
 aqua b5 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 aqua b5 n1 light textSecondary 0.392157 0.392157 0.392157 1
 aqua b5 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+aqua b5 n1 light textDanger 0.733333 0.113725 0.133333 1
+aqua b5 n1 dark textDanger 1 0.556863 0.513726 1
 aqua b5 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 aqua b5 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 aqua b5 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -728,6 +770,8 @@ aqua b5 n1 light statusSuccess 0 0.576471 0.345098 1
 aqua b5 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 aqua b5 n1 light statusWarning 0.760784 0.458824 0 1
 aqua b5 n1 dark statusWarning 0.952941 0.623529 0 1
+aqua b5 n1 light statusDanger 0.733333 0.113725 0.133333 1
+aqua b5 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 aqua b5 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 aqua b5 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 aqua b5 n1 light selectionThumb 1 1 1 1
@@ -764,6 +808,8 @@ aqua b6 n1 light textPrimary 0.12549 0.12549 0.12549 1
 aqua b6 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 aqua b6 n1 light textSecondary 0.392157 0.392157 0.392157 1
 aqua b6 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+aqua b6 n1 light textDanger 0.733333 0.113725 0.133333 1
+aqua b6 n1 dark textDanger 1 0.556863 0.513726 1
 aqua b6 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 aqua b6 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 aqua b6 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -796,6 +842,8 @@ aqua b6 n1 light statusSuccess 0 0.576471 0.345098 1
 aqua b6 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 aqua b6 n1 light statusWarning 0.760784 0.458824 0 1
 aqua b6 n1 dark statusWarning 0.952941 0.623529 0 1
+aqua b6 n1 light statusDanger 0.733333 0.113725 0.133333 1
+aqua b6 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 aqua b6 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 aqua b6 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 aqua b6 n1 light selectionThumb 1 1 1 1
@@ -832,6 +880,8 @@ retro b1 n1 light textPrimary 0.12549 0.12549 0.12549 1
 retro b1 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 retro b1 n1 light textSecondary 0.392157 0.392157 0.392157 1
 retro b1 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+retro b1 n1 light textDanger 0.733333 0.113725 0.133333 1
+retro b1 n1 dark textDanger 1 0.556863 0.513726 1
 retro b1 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 retro b1 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 retro b1 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -864,6 +914,8 @@ retro b1 n1 light statusSuccess 0 0.576471 0.345098 1
 retro b1 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 retro b1 n1 light statusWarning 0.760784 0.458824 0 1
 retro b1 n1 dark statusWarning 0.952941 0.623529 0 1
+retro b1 n1 light statusDanger 0.733333 0.113725 0.133333 1
+retro b1 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 retro b1 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 retro b1 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 retro b1 n1 light selectionThumb 1 1 1 1
@@ -900,6 +952,8 @@ retro b2 n1 light textPrimary 0.12549 0.12549 0.12549 1
 retro b2 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 retro b2 n1 light textSecondary 0.392157 0.392157 0.392157 1
 retro b2 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+retro b2 n1 light textDanger 0.733333 0.113725 0.133333 1
+retro b2 n1 dark textDanger 1 0.556863 0.513726 1
 retro b2 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 retro b2 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 retro b2 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -932,6 +986,8 @@ retro b2 n1 light statusSuccess 0 0.576471 0.345098 1
 retro b2 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 retro b2 n1 light statusWarning 0.760784 0.458824 0 1
 retro b2 n1 dark statusWarning 0.952941 0.623529 0 1
+retro b2 n1 light statusDanger 0.733333 0.113725 0.133333 1
+retro b2 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 retro b2 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 retro b2 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 retro b2 n1 light selectionThumb 1 1 1 1
@@ -968,6 +1024,8 @@ retro b3 n1 light textPrimary 0.12549 0.12549 0.12549 1
 retro b3 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 retro b3 n1 light textSecondary 0.392157 0.392157 0.392157 1
 retro b3 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+retro b3 n1 light textDanger 0.733333 0.113725 0.133333 1
+retro b3 n1 dark textDanger 1 0.556863 0.513726 1
 retro b3 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 retro b3 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 retro b3 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -1000,6 +1058,8 @@ retro b3 n1 light statusSuccess 0 0.576471 0.345098 1
 retro b3 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 retro b3 n1 light statusWarning 0.760784 0.458824 0 1
 retro b3 n1 dark statusWarning 0.952941 0.623529 0 1
+retro b3 n1 light statusDanger 0.733333 0.113725 0.133333 1
+retro b3 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 retro b3 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 retro b3 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 retro b3 n1 light selectionThumb 1 1 1 1
@@ -1036,6 +1096,8 @@ retro b4 n1 light textPrimary 0.12549 0.12549 0.12549 1
 retro b4 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 retro b4 n1 light textSecondary 0.392157 0.392157 0.392157 1
 retro b4 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+retro b4 n1 light textDanger 0.733333 0.113725 0.133333 1
+retro b4 n1 dark textDanger 1 0.556863 0.513726 1
 retro b4 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 retro b4 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 retro b4 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -1068,6 +1130,8 @@ retro b4 n1 light statusSuccess 0 0.576471 0.345098 1
 retro b4 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 retro b4 n1 light statusWarning 0.760784 0.458824 0 1
 retro b4 n1 dark statusWarning 0.952941 0.623529 0 1
+retro b4 n1 light statusDanger 0.733333 0.113725 0.133333 1
+retro b4 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 retro b4 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 retro b4 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 retro b4 n1 light selectionThumb 1 1 1 1
@@ -1104,6 +1168,8 @@ retro b5 n1 light textPrimary 0.12549 0.12549 0.12549 1
 retro b5 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 retro b5 n1 light textSecondary 0.392157 0.392157 0.392157 1
 retro b5 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+retro b5 n1 light textDanger 0.733333 0.113725 0.133333 1
+retro b5 n1 dark textDanger 1 0.556863 0.513726 1
 retro b5 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 retro b5 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 retro b5 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -1136,6 +1202,8 @@ retro b5 n1 light statusSuccess 0 0.576471 0.345098 1
 retro b5 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 retro b5 n1 light statusWarning 0.760784 0.458824 0 1
 retro b5 n1 dark statusWarning 0.952941 0.623529 0 1
+retro b5 n1 light statusDanger 0.733333 0.113725 0.133333 1
+retro b5 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 retro b5 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 retro b5 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 retro b5 n1 light selectionThumb 1 1 1 1
@@ -1172,6 +1240,8 @@ retro b6 n1 light textPrimary 0.12549 0.12549 0.12549 1
 retro b6 n1 dark textPrimary 0.933333 0.933333 0.933333 1
 retro b6 n1 light textSecondary 0.392157 0.392157 0.392157 1
 retro b6 n1 dark textSecondary 0.705882 0.705882 0.705882 1
+retro b6 n1 light textDanger 0.733333 0.113725 0.133333 1
+retro b6 n1 dark textDanger 1 0.556863 0.513726 1
 retro b6 n1 light borderSubtle 0.909804 0.909804 0.909804 1
 retro b6 n1 dark borderSubtle 0.227451 0.227451 0.227451 1
 retro b6 n1 light borderControl 0.878432 0.878431 0.878431 1
@@ -1204,6 +1274,8 @@ retro b6 n1 light statusSuccess 0 0.576471 0.345098 1
 retro b6 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 retro b6 n1 light statusWarning 0.760784 0.458824 0 1
 retro b6 n1 dark statusWarning 0.952941 0.623529 0 1
+retro b6 n1 light statusDanger 0.733333 0.113725 0.133333 1
+retro b6 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 retro b6 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 retro b6 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 retro b6 n1 light selectionThumb 1 1 1 1
@@ -1240,6 +1312,8 @@ terminal b1 n1 light textPrimary 0.006727 0.213731 0.507508 1
 terminal b1 n1 dark textPrimary 0.432813 0.617392 0.907792 1
 terminal b1 n1 light textSecondary 0.002757 0.130331 0.332936 1
 terminal b1 n1 dark textSecondary 0.601092 0.730332 0.849618 1
+terminal b1 n1 light textDanger 0.733333 0.113725 0.133333 1
+terminal b1 n1 dark textDanger 1 0.556863 0.513726 1
 terminal b1 n1 light borderSubtle 0.789245 0.840042 0.919004 1
 terminal b1 n1 dark borderSubtle 0.019611 0.364706 0.82353 0.22
 terminal b1 n1 light borderControl 0.70671 0.787969 0.914401 1
@@ -1272,6 +1346,8 @@ terminal b1 n1 light statusSuccess 0 0.576471 0.345098 1
 terminal b1 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 terminal b1 n1 light statusWarning 0.760784 0.458824 0 1
 terminal b1 n1 dark statusWarning 0.952941 0.623529 0 1
+terminal b1 n1 light statusDanger 0.733333 0.113725 0.133333 1
+terminal b1 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 terminal b1 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 terminal b1 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 terminal b1 n1 light selectionThumb 1 1 1 1
@@ -1308,6 +1384,8 @@ terminal b2 n1 light textPrimary 0.479888 0.145936 0 1
 terminal b2 n1 dark textPrimary 0.889963 0.558317 0.446935 1
 terminal b2 n1 light textSecondary 0.313888 0.083576 0 1
 terminal b2 n1 dark textSecondary 0.85415 0.680351 0.574695 1
+terminal b2 n1 light textDanger 0.733333 0.113725 0.133333 1
+terminal b2 n1 dark textDanger 1 0.556863 0.513726 1
 terminal b2 n1 light borderSubtle 0.917243 0.82443 0.793549 1
 terminal b2 n1 dark borderSubtle 0.780392 0.258823 0 0.22
 terminal b2 n1 light borderControl 0.910475 0.76284 0.713549 1
@@ -1340,6 +1418,8 @@ terminal b2 n1 light statusSuccess 0 0.576471 0.345098 1
 terminal b2 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 terminal b2 n1 light statusWarning 0.760784 0.458824 0 1
 terminal b2 n1 dark statusWarning 0.952941 0.623529 0 1
+terminal b2 n1 light statusDanger 0.733333 0.113725 0.133333 1
+terminal b2 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 terminal b2 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 terminal b2 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 terminal b2 n1 light selectionThumb 1 1 1 1
@@ -1376,6 +1456,8 @@ terminal b3 n1 light textPrimary 0 0.216242 0.108272 1
 terminal b3 n1 dark textPrimary 0.427598 0.599922 0.48451 1
 terminal b3 n1 light textSecondary 0 0.132063 0.057602 1
 terminal b3 n1 dark textSecondary 0.619377 0.794263 0.692512 1
+terminal b3 n1 light textDanger 0.733333 0.113725 0.133333 1
+terminal b3 n1 dark textDanger 1 0.556863 0.513726 1
 terminal b3 n1 light borderSubtle 0.787183 0.83236 0.800017 1
 terminal b3 n1 dark borderSubtle 0 0.368627 0.2 0.22
 terminal b3 n1 light borderControl 0.703613 0.776456 0.724813 1
@@ -1408,6 +1490,8 @@ terminal b3 n1 light statusSuccess 0 0.576471 0.345098 1
 terminal b3 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 terminal b3 n1 light statusWarning 0.760784 0.458824 0 1
 terminal b3 n1 dark statusWarning 0.952941 0.623529 0 1
+terminal b3 n1 light statusDanger 0.733333 0.113725 0.133333 1
+terminal b3 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 terminal b3 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 terminal b3 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 terminal b3 n1 light selectionThumb 1 1 1 1
@@ -1444,6 +1528,8 @@ terminal b4 n1 light textPrimary 0.444735 0.050521 0.248884 1
 terminal b4 n1 dark textPrimary 0.86073 0.493106 0.629491 1
 terminal b4 n1 light textSecondary 0.289645 0.021096 0.154575 1
 terminal b4 n1 dark textSecondary 0.858056 0.639481 0.738236 1
+terminal b4 n1 light textDanger 0.733333 0.113725 0.133333 1
+terminal b4 n1 dark textDanger 1 0.556863 0.513726 1
 terminal b4 n1 light borderSubtle 0.911348 0.807262 0.839552 1
 terminal b4 n1 dark borderSubtle 0.72549 0.109803 0.419608 0.22
 terminal b4 n1 light borderControl 0.900277 0.735222 0.788265 1
@@ -1476,6 +1562,8 @@ terminal b4 n1 light statusSuccess 0 0.576471 0.345098 1
 terminal b4 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 terminal b4 n1 light statusWarning 0.760784 0.458824 0 1
 terminal b4 n1 dark statusWarning 0.952941 0.623529 0 1
+terminal b4 n1 light statusDanger 0.733333 0.113725 0.133333 1
+terminal b4 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 terminal b4 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 terminal b4 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 terminal b4 n1 light selectionThumb 1 1 1 1
@@ -1512,6 +1600,8 @@ terminal b5 n1 light textPrimary 0.216242 0.013451 0.487421 1
 terminal b5 n1 dark textPrimary 0.573272 0.4895 0.894469 1
 terminal b5 n1 light textSecondary 0.132063 0.005514 0.319083 1
 terminal b5 n1 dark textSecondary 0.711159 0.649064 0.852512 1
+terminal b5 n1 light textDanger 0.733333 0.113725 0.133333 1
+terminal b5 n1 dark textDanger 1 0.556863 0.513726 1
 terminal b5 n1 light borderSubtle 0.820816 0.807302 0.91779 1
 terminal b5 n1 dark borderSubtle 0.368627 0.039215 0.792157 0.22
 terminal b5 n1 light borderControl 0.759122 0.735062 0.911555 1
@@ -1544,6 +1634,8 @@ terminal b5 n1 light statusSuccess 0 0.576471 0.345098 1
 terminal b5 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 terminal b5 n1 light statusWarning 0.760784 0.458824 0 1
 terminal b5 n1 dark statusWarning 0.952941 0.623529 0 1
+terminal b5 n1 light statusDanger 0.733333 0.113725 0.133333 1
+terminal b5 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 terminal b5 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 terminal b5 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 terminal b5 n1 light selectionThumb 1 1 1 1
@@ -1580,6 +1672,8 @@ terminal b6 n1 light textPrimary 0.494954 0.016292 0.133382 1
 terminal b6 n1 dark textPrimary 0.916179 0.497047 0.517247 1
 terminal b6 n1 light textSecondary 0.324278 0.006679 0.074918 1
 terminal b6 n1 dark textSecondary 0.859703 0.635655 0.650025 1
+terminal b6 n1 light textDanger 0.733333 0.113725 0.133333 1
+terminal b6 n1 dark textDanger 1 0.556863 0.513726 1
 terminal b6 n1 light borderSubtle 0.928375 0.809975 0.80984 1
 terminal b6 n1 dark borderSubtle 0.803921 0.047058 0.239216 0.22
 terminal b6 n1 light borderControl 0.92675 0.739173 0.740339 1
@@ -1612,6 +1706,8 @@ terminal b6 n1 light statusSuccess 0 0.576471 0.345098 1
 terminal b6 n1 dark statusSuccess 0.12549 0.737255 0.482353 1
 terminal b6 n1 light statusWarning 0.760784 0.458824 0 1
 terminal b6 n1 dark statusWarning 0.952941 0.623529 0 1
+terminal b6 n1 light statusDanger 0.733333 0.113725 0.133333 1
+terminal b6 n1 dark statusDanger 0.905882 0.262745 0.25098 1
 terminal b6 n1 light selectionTrackOff 0.941176 0.941176 0.941176 1
 terminal b6 n1 dark selectionTrackOff 0.133333 0.133333 0.133333 1
 terminal b6 n1 light selectionThumb 1 1 1 1
@@ -1648,6 +1744,8 @@ modern b1 n2 light textPrimary 0.129412 0.121569 0.14902 1
 modern b1 n2 dark textPrimary 0.933333 0.933333 0.941176 1
 modern b1 n2 light textSecondary 0.396078 0.388235 0.427451 1
 modern b1 n2 dark textSecondary 0.709804 0.698039 0.737255 1
+modern b1 n2 light textDanger 0.733333 0.113725 0.133333 1
+modern b1 n2 dark textDanger 1 0.556863 0.513726 1
 modern b1 n2 light borderSubtle 0.917647 0.905882 0.92549 1
 modern b1 n2 dark borderSubtle 0.235294 0.223529 0.247059 1
 modern b1 n2 light borderControl 0.890196 0.87451 0.901961 1
@@ -1680,6 +1778,8 @@ modern b1 n2 light statusSuccess 0 0.576471 0.345098 1
 modern b1 n2 dark statusSuccess 0.12549 0.737255 0.482353 1
 modern b1 n2 light statusWarning 0.760784 0.458824 0 1
 modern b1 n2 dark statusWarning 0.952941 0.623529 0 1
+modern b1 n2 light statusDanger 0.733333 0.113725 0.133333 1
+modern b1 n2 dark statusDanger 0.905882 0.262745 0.25098 1
 modern b1 n2 light selectionTrackOff 0.94902 0.937255 0.952941 1
 modern b1 n2 dark selectionTrackOff 0.137255 0.133333 0.145098 1
 modern b1 n2 light selectionThumb 1 1 1 1
@@ -1716,6 +1816,8 @@ modern b1 n3 light textPrimary 0.109804 0.12549 0.141176 1
 modern b1 n3 dark textPrimary 0.929412 0.933333 0.941176 1
 modern b1 n3 light textSecondary 0.376471 0.392157 0.423529 1
 modern b1 n3 dark textSecondary 0.690196 0.705882 0.729412 1
+modern b1 n3 light textDanger 0.733333 0.113725 0.133333 1
+modern b1 n3 dark textDanger 1 0.556863 0.513726 1
 modern b1 n3 light borderSubtle 0.909804 0.909804 0.92549 1
 modern b1 n3 dark borderSubtle 0.211765 0.227451 0.247059 1
 modern b1 n3 light borderControl 0.878432 0.882352 0.901961 1
@@ -1748,6 +1850,8 @@ modern b1 n3 light statusSuccess 0 0.576471 0.345098 1
 modern b1 n3 dark statusSuccess 0.12549 0.737255 0.482353 1
 modern b1 n3 light statusWarning 0.760784 0.458824 0 1
 modern b1 n3 dark statusWarning 0.952941 0.623529 0 1
+modern b1 n3 light statusDanger 0.733333 0.113725 0.133333 1
+modern b1 n3 dark statusDanger 0.905882 0.262745 0.25098 1
 modern b1 n3 light selectionTrackOff 0.941176 0.941176 0.952941 1
 modern b1 n3 dark selectionTrackOff 0.129412 0.133333 0.145098 1
 modern b1 n3 light selectionThumb 1 1 1 1
@@ -1784,6 +1888,8 @@ modern b1 n4 light textPrimary 0.101961 0.129412 0.117647 1
 modern b1 n4 dark textPrimary 0.92549 0.933333 0.929412 1
 modern b1 n4 light textSecondary 0.372549 0.396078 0.388235 1
 modern b1 n4 dark textSecondary 0.678431 0.709804 0.698039 1
+modern b1 n4 light textDanger 0.733333 0.113725 0.133333 1
+modern b1 n4 dark textDanger 1 0.556863 0.513726 1
 modern b1 n4 light borderSubtle 0.901961 0.913725 0.909804 1
 modern b1 n4 dark borderSubtle 0.215686 0.231372 0.223529 1
 modern b1 n4 light borderControl 0.874509 0.886275 0.878431 1
@@ -1816,6 +1922,8 @@ modern b1 n4 light statusSuccess 0 0.576471 0.345098 1
 modern b1 n4 dark statusSuccess 0.12549 0.737255 0.482353 1
 modern b1 n4 light statusWarning 0.760784 0.458824 0 1
 modern b1 n4 dark statusWarning 0.952941 0.623529 0 1
+modern b1 n4 light statusDanger 0.733333 0.113725 0.133333 1
+modern b1 n4 dark statusDanger 0.905882 0.262745 0.25098 1
 modern b1 n4 light selectionTrackOff 0.933333 0.945098 0.941176 1
 modern b1 n4 dark selectionTrackOff 0.12549 0.133333 0.129412 1
 modern b1 n4 light selectionThumb 1 1 1 1
@@ -1852,6 +1960,8 @@ modern b1 n5 light textPrimary 0.113725 0.129412 0.109804 1
 modern b1 n5 dark textPrimary 0.92549 0.933333 0.92549 1
 modern b1 n5 light textSecondary 0.376471 0.396078 0.372549 1
 modern b1 n5 dark textSecondary 0.686275 0.709804 0.678431 1
+modern b1 n5 light textDanger 0.733333 0.113725 0.133333 1
+modern b1 n5 dark textDanger 1 0.556863 0.513726 1
 modern b1 n5 light borderSubtle 0.905882 0.913726 0.905882 1
 modern b1 n5 dark borderSubtle 0.219608 0.227451 0.211765 1
 modern b1 n5 light borderControl 0.87451 0.886274 0.87451 1
@@ -1884,6 +1994,8 @@ modern b1 n5 light statusSuccess 0 0.576471 0.345098 1
 modern b1 n5 dark statusSuccess 0.12549 0.737255 0.482353 1
 modern b1 n5 light statusWarning 0.760784 0.458824 0 1
 modern b1 n5 dark statusWarning 0.952941 0.623529 0 1
+modern b1 n5 light statusDanger 0.733333 0.113725 0.133333 1
+modern b1 n5 dark statusDanger 0.905882 0.262745 0.25098 1
 modern b1 n5 light selectionTrackOff 0.937255 0.945098 0.937255 1
 modern b1 n5 dark selectionTrackOff 0.129412 0.133333 0.12549 1
 modern b1 n5 light selectionThumb 1 1 1 1
@@ -1920,6 +2032,8 @@ modern b1 n6 light textPrimary 0.129412 0.12549 0.109804 1
 modern b1 n6 dark textPrimary 0.933333 0.933333 0.92549 1
 modern b1 n6 light textSecondary 0.388235 0.388235 0.368627 1
 modern b1 n6 dark textSecondary 0.709804 0.701961 0.678431 1
+modern b1 n6 light textDanger 0.733333 0.113725 0.133333 1
+modern b1 n6 dark textDanger 1 0.556863 0.513726 1
 modern b1 n6 light borderSubtle 0.913725 0.909804 0.901961 1
 modern b1 n6 dark borderSubtle 0.231373 0.227451 0.215686 1
 modern b1 n6 light borderControl 0.886275 0.882353 0.870588 1
@@ -1952,6 +2066,8 @@ modern b1 n6 light statusSuccess 0 0.576471 0.345098 1
 modern b1 n6 dark statusSuccess 0.12549 0.737255 0.482353 1
 modern b1 n6 light statusWarning 0.760784 0.458824 0 1
 modern b1 n6 dark statusWarning 0.952941 0.623529 0 1
+modern b1 n6 light statusDanger 0.733333 0.113725 0.133333 1
+modern b1 n6 dark statusDanger 0.905882 0.262745 0.25098 1
 modern b1 n6 light selectionTrackOff 0.945098 0.941176 0.937255 1
 modern b1 n6 dark selectionTrackOff 0.133333 0.133333 0.129412 1
 modern b1 n6 light selectionThumb 1 1 1 1
@@ -1988,6 +2104,8 @@ aqua b1 n2 light textPrimary 0.129412 0.121569 0.14902 1
 aqua b1 n2 dark textPrimary 0.933333 0.933333 0.941176 1
 aqua b1 n2 light textSecondary 0.396078 0.388235 0.427451 1
 aqua b1 n2 dark textSecondary 0.709804 0.698039 0.737255 1
+aqua b1 n2 light textDanger 0.733333 0.113725 0.133333 1
+aqua b1 n2 dark textDanger 1 0.556863 0.513726 1
 aqua b1 n2 light borderSubtle 0.917647 0.905882 0.92549 1
 aqua b1 n2 dark borderSubtle 0.235294 0.223529 0.247059 1
 aqua b1 n2 light borderControl 0.890196 0.87451 0.901961 1
@@ -2020,6 +2138,8 @@ aqua b1 n2 light statusSuccess 0 0.576471 0.345098 1
 aqua b1 n2 dark statusSuccess 0.12549 0.737255 0.482353 1
 aqua b1 n2 light statusWarning 0.760784 0.458824 0 1
 aqua b1 n2 dark statusWarning 0.952941 0.623529 0 1
+aqua b1 n2 light statusDanger 0.733333 0.113725 0.133333 1
+aqua b1 n2 dark statusDanger 0.905882 0.262745 0.25098 1
 aqua b1 n2 light selectionTrackOff 0.94902 0.937255 0.952941 1
 aqua b1 n2 dark selectionTrackOff 0.137255 0.133333 0.145098 1
 aqua b1 n2 light selectionThumb 1 1 1 1
@@ -2056,6 +2176,8 @@ aqua b1 n3 light textPrimary 0.109804 0.12549 0.141176 1
 aqua b1 n3 dark textPrimary 0.929412 0.933333 0.941176 1
 aqua b1 n3 light textSecondary 0.376471 0.392157 0.423529 1
 aqua b1 n3 dark textSecondary 0.690196 0.705882 0.729412 1
+aqua b1 n3 light textDanger 0.733333 0.113725 0.133333 1
+aqua b1 n3 dark textDanger 1 0.556863 0.513726 1
 aqua b1 n3 light borderSubtle 0.909804 0.909804 0.92549 1
 aqua b1 n3 dark borderSubtle 0.211765 0.227451 0.247059 1
 aqua b1 n3 light borderControl 0.878432 0.882352 0.901961 1
@@ -2088,6 +2210,8 @@ aqua b1 n3 light statusSuccess 0 0.576471 0.345098 1
 aqua b1 n3 dark statusSuccess 0.12549 0.737255 0.482353 1
 aqua b1 n3 light statusWarning 0.760784 0.458824 0 1
 aqua b1 n3 dark statusWarning 0.952941 0.623529 0 1
+aqua b1 n3 light statusDanger 0.733333 0.113725 0.133333 1
+aqua b1 n3 dark statusDanger 0.905882 0.262745 0.25098 1
 aqua b1 n3 light selectionTrackOff 0.941176 0.941176 0.952941 1
 aqua b1 n3 dark selectionTrackOff 0.129412 0.133333 0.145098 1
 aqua b1 n3 light selectionThumb 1 1 1 1
@@ -2124,6 +2248,8 @@ aqua b1 n4 light textPrimary 0.101961 0.129412 0.117647 1
 aqua b1 n4 dark textPrimary 0.92549 0.933333 0.929412 1
 aqua b1 n4 light textSecondary 0.372549 0.396078 0.388235 1
 aqua b1 n4 dark textSecondary 0.678431 0.709804 0.698039 1
+aqua b1 n4 light textDanger 0.733333 0.113725 0.133333 1
+aqua b1 n4 dark textDanger 1 0.556863 0.513726 1
 aqua b1 n4 light borderSubtle 0.901961 0.913725 0.909804 1
 aqua b1 n4 dark borderSubtle 0.215686 0.231372 0.223529 1
 aqua b1 n4 light borderControl 0.874509 0.886275 0.878431 1
@@ -2156,6 +2282,8 @@ aqua b1 n4 light statusSuccess 0 0.576471 0.345098 1
 aqua b1 n4 dark statusSuccess 0.12549 0.737255 0.482353 1
 aqua b1 n4 light statusWarning 0.760784 0.458824 0 1
 aqua b1 n4 dark statusWarning 0.952941 0.623529 0 1
+aqua b1 n4 light statusDanger 0.733333 0.113725 0.133333 1
+aqua b1 n4 dark statusDanger 0.905882 0.262745 0.25098 1
 aqua b1 n4 light selectionTrackOff 0.933333 0.945098 0.941176 1
 aqua b1 n4 dark selectionTrackOff 0.12549 0.133333 0.129412 1
 aqua b1 n4 light selectionThumb 1 1 1 1
@@ -2192,6 +2320,8 @@ aqua b1 n5 light textPrimary 0.113725 0.129412 0.109804 1
 aqua b1 n5 dark textPrimary 0.92549 0.933333 0.92549 1
 aqua b1 n5 light textSecondary 0.376471 0.396078 0.372549 1
 aqua b1 n5 dark textSecondary 0.686275 0.709804 0.678431 1
+aqua b1 n5 light textDanger 0.733333 0.113725 0.133333 1
+aqua b1 n5 dark textDanger 1 0.556863 0.513726 1
 aqua b1 n5 light borderSubtle 0.905882 0.913726 0.905882 1
 aqua b1 n5 dark borderSubtle 0.219608 0.227451 0.211765 1
 aqua b1 n5 light borderControl 0.87451 0.886274 0.87451 1
@@ -2224,6 +2354,8 @@ aqua b1 n5 light statusSuccess 0 0.576471 0.345098 1
 aqua b1 n5 dark statusSuccess 0.12549 0.737255 0.482353 1
 aqua b1 n5 light statusWarning 0.760784 0.458824 0 1
 aqua b1 n5 dark statusWarning 0.952941 0.623529 0 1
+aqua b1 n5 light statusDanger 0.733333 0.113725 0.133333 1
+aqua b1 n5 dark statusDanger 0.905882 0.262745 0.25098 1
 aqua b1 n5 light selectionTrackOff 0.937255 0.945098 0.937255 1
 aqua b1 n5 dark selectionTrackOff 0.129412 0.133333 0.12549 1
 aqua b1 n5 light selectionThumb 1 1 1 1
@@ -2260,6 +2392,8 @@ aqua b1 n6 light textPrimary 0.129412 0.12549 0.109804 1
 aqua b1 n6 dark textPrimary 0.933333 0.933333 0.92549 1
 aqua b1 n6 light textSecondary 0.388235 0.388235 0.368627 1
 aqua b1 n6 dark textSecondary 0.709804 0.701961 0.678431 1
+aqua b1 n6 light textDanger 0.733333 0.113725 0.133333 1
+aqua b1 n6 dark textDanger 1 0.556863 0.513726 1
 aqua b1 n6 light borderSubtle 0.913725 0.909804 0.901961 1
 aqua b1 n6 dark borderSubtle 0.231373 0.227451 0.215686 1
 aqua b1 n6 light borderControl 0.886275 0.882353 0.870588 1
@@ -2292,6 +2426,8 @@ aqua b1 n6 light statusSuccess 0 0.576471 0.345098 1
 aqua b1 n6 dark statusSuccess 0.12549 0.737255 0.482353 1
 aqua b1 n6 light statusWarning 0.760784 0.458824 0 1
 aqua b1 n6 dark statusWarning 0.952941 0.623529 0 1
+aqua b1 n6 light statusDanger 0.733333 0.113725 0.133333 1
+aqua b1 n6 dark statusDanger 0.905882 0.262745 0.25098 1
 aqua b1 n6 light selectionTrackOff 0.945098 0.941176 0.937255 1
 aqua b1 n6 dark selectionTrackOff 0.133333 0.133333 0.129412 1
 aqua b1 n6 light selectionThumb 1 1 1 1
@@ -2328,6 +2464,8 @@ retro b1 n2 light textPrimary 0.129412 0.121569 0.14902 1
 retro b1 n2 dark textPrimary 0.933333 0.933333 0.941176 1
 retro b1 n2 light textSecondary 0.396078 0.388235 0.427451 1
 retro b1 n2 dark textSecondary 0.709804 0.698039 0.737255 1
+retro b1 n2 light textDanger 0.733333 0.113725 0.133333 1
+retro b1 n2 dark textDanger 1 0.556863 0.513726 1
 retro b1 n2 light borderSubtle 0.917647 0.905882 0.92549 1
 retro b1 n2 dark borderSubtle 0.235294 0.223529 0.247059 1
 retro b1 n2 light borderControl 0.890196 0.87451 0.901961 1
@@ -2360,6 +2498,8 @@ retro b1 n2 light statusSuccess 0 0.576471 0.345098 1
 retro b1 n2 dark statusSuccess 0.12549 0.737255 0.482353 1
 retro b1 n2 light statusWarning 0.760784 0.458824 0 1
 retro b1 n2 dark statusWarning 0.952941 0.623529 0 1
+retro b1 n2 light statusDanger 0.733333 0.113725 0.133333 1
+retro b1 n2 dark statusDanger 0.905882 0.262745 0.25098 1
 retro b1 n2 light selectionTrackOff 0.94902 0.937255 0.952941 1
 retro b1 n2 dark selectionTrackOff 0.137255 0.133333 0.145098 1
 retro b1 n2 light selectionThumb 1 1 1 1
@@ -2396,6 +2536,8 @@ retro b1 n3 light textPrimary 0.109804 0.12549 0.141176 1
 retro b1 n3 dark textPrimary 0.929412 0.933333 0.941176 1
 retro b1 n3 light textSecondary 0.376471 0.392157 0.423529 1
 retro b1 n3 dark textSecondary 0.690196 0.705882 0.729412 1
+retro b1 n3 light textDanger 0.733333 0.113725 0.133333 1
+retro b1 n3 dark textDanger 1 0.556863 0.513726 1
 retro b1 n3 light borderSubtle 0.909804 0.909804 0.92549 1
 retro b1 n3 dark borderSubtle 0.211765 0.227451 0.247059 1
 retro b1 n3 light borderControl 0.878432 0.882352 0.901961 1
@@ -2428,6 +2570,8 @@ retro b1 n3 light statusSuccess 0 0.576471 0.345098 1
 retro b1 n3 dark statusSuccess 0.12549 0.737255 0.482353 1
 retro b1 n3 light statusWarning 0.760784 0.458824 0 1
 retro b1 n3 dark statusWarning 0.952941 0.623529 0 1
+retro b1 n3 light statusDanger 0.733333 0.113725 0.133333 1
+retro b1 n3 dark statusDanger 0.905882 0.262745 0.25098 1
 retro b1 n3 light selectionTrackOff 0.941176 0.941176 0.952941 1
 retro b1 n3 dark selectionTrackOff 0.129412 0.133333 0.145098 1
 retro b1 n3 light selectionThumb 1 1 1 1
@@ -2464,6 +2608,8 @@ retro b1 n4 light textPrimary 0.101961 0.129412 0.117647 1
 retro b1 n4 dark textPrimary 0.92549 0.933333 0.929412 1
 retro b1 n4 light textSecondary 0.372549 0.396078 0.388235 1
 retro b1 n4 dark textSecondary 0.678431 0.709804 0.698039 1
+retro b1 n4 light textDanger 0.733333 0.113725 0.133333 1
+retro b1 n4 dark textDanger 1 0.556863 0.513726 1
 retro b1 n4 light borderSubtle 0.901961 0.913725 0.909804 1
 retro b1 n4 dark borderSubtle 0.215686 0.231372 0.223529 1
 retro b1 n4 light borderControl 0.874509 0.886275 0.878431 1
@@ -2496,6 +2642,8 @@ retro b1 n4 light statusSuccess 0 0.576471 0.345098 1
 retro b1 n4 dark statusSuccess 0.12549 0.737255 0.482353 1
 retro b1 n4 light statusWarning 0.760784 0.458824 0 1
 retro b1 n4 dark statusWarning 0.952941 0.623529 0 1
+retro b1 n4 light statusDanger 0.733333 0.113725 0.133333 1
+retro b1 n4 dark statusDanger 0.905882 0.262745 0.25098 1
 retro b1 n4 light selectionTrackOff 0.933333 0.945098 0.941176 1
 retro b1 n4 dark selectionTrackOff 0.12549 0.133333 0.129412 1
 retro b1 n4 light selectionThumb 1 1 1 1
@@ -2532,6 +2680,8 @@ retro b1 n5 light textPrimary 0.113725 0.129412 0.109804 1
 retro b1 n5 dark textPrimary 0.92549 0.933333 0.92549 1
 retro b1 n5 light textSecondary 0.376471 0.396078 0.372549 1
 retro b1 n5 dark textSecondary 0.686275 0.709804 0.678431 1
+retro b1 n5 light textDanger 0.733333 0.113725 0.133333 1
+retro b1 n5 dark textDanger 1 0.556863 0.513726 1
 retro b1 n5 light borderSubtle 0.905882 0.913726 0.905882 1
 retro b1 n5 dark borderSubtle 0.219608 0.227451 0.211765 1
 retro b1 n5 light borderControl 0.87451 0.886274 0.87451 1
@@ -2564,6 +2714,8 @@ retro b1 n5 light statusSuccess 0 0.576471 0.345098 1
 retro b1 n5 dark statusSuccess 0.12549 0.737255 0.482353 1
 retro b1 n5 light statusWarning 0.760784 0.458824 0 1
 retro b1 n5 dark statusWarning 0.952941 0.623529 0 1
+retro b1 n5 light statusDanger 0.733333 0.113725 0.133333 1
+retro b1 n5 dark statusDanger 0.905882 0.262745 0.25098 1
 retro b1 n5 light selectionTrackOff 0.937255 0.945098 0.937255 1
 retro b1 n5 dark selectionTrackOff 0.129412 0.133333 0.12549 1
 retro b1 n5 light selectionThumb 1 1 1 1
@@ -2600,6 +2752,8 @@ retro b1 n6 light textPrimary 0.129412 0.12549 0.109804 1
 retro b1 n6 dark textPrimary 0.933333 0.933333 0.92549 1
 retro b1 n6 light textSecondary 0.388235 0.388235 0.368627 1
 retro b1 n6 dark textSecondary 0.709804 0.701961 0.678431 1
+retro b1 n6 light textDanger 0.733333 0.113725 0.133333 1
+retro b1 n6 dark textDanger 1 0.556863 0.513726 1
 retro b1 n6 light borderSubtle 0.913725 0.909804 0.901961 1
 retro b1 n6 dark borderSubtle 0.231373 0.227451 0.215686 1
 retro b1 n6 light borderControl 0.886275 0.882353 0.870588 1
@@ -2632,6 +2786,8 @@ retro b1 n6 light statusSuccess 0 0.576471 0.345098 1
 retro b1 n6 dark statusSuccess 0.12549 0.737255 0.482353 1
 retro b1 n6 light statusWarning 0.760784 0.458824 0 1
 retro b1 n6 dark statusWarning 0.952941 0.623529 0 1
+retro b1 n6 light statusDanger 0.733333 0.113725 0.133333 1
+retro b1 n6 dark statusDanger 0.905882 0.262745 0.25098 1
 retro b1 n6 light selectionTrackOff 0.945098 0.941176 0.937255 1
 retro b1 n6 dark selectionTrackOff 0.133333 0.133333 0.129412 1
 retro b1 n6 light selectionThumb 1 1 1 1
@@ -2668,6 +2824,8 @@ terminal b1 n2 light textPrimary 0.006727 0.213731 0.507508 1
 terminal b1 n2 dark textPrimary 0.432813 0.617392 0.907792 1
 terminal b1 n2 light textSecondary 0.002757 0.130331 0.332936 1
 terminal b1 n2 dark textSecondary 0.604273 0.725778 0.865084 1
+terminal b1 n2 light textDanger 0.733333 0.113725 0.133333 1
+terminal b1 n2 dark textDanger 1 0.556863 0.513726 1
 terminal b1 n2 light borderSubtle 0.792826 0.838249 0.930178 1
 terminal b1 n2 dark borderSubtle 0.019611 0.364706 0.82353 0.22
 terminal b1 n2 light borderControl 0.712494 0.786048 0.924196 1
@@ -2700,6 +2858,8 @@ terminal b1 n2 light statusSuccess 0 0.576471 0.345098 1
 terminal b1 n2 dark statusSuccess 0.12549 0.737255 0.482353 1
 terminal b1 n2 light statusWarning 0.760784 0.458824 0 1
 terminal b1 n2 dark statusWarning 0.952941 0.623529 0 1
+terminal b1 n2 light statusDanger 0.733333 0.113725 0.133333 1
+terminal b1 n2 dark statusDanger 0.905882 0.262745 0.25098 1
 terminal b1 n2 light selectionTrackOff 0.94902 0.937255 0.952941 1
 terminal b1 n2 dark selectionTrackOff 0.137255 0.133333 0.145098 1
 terminal b1 n2 light selectionThumb 1 1 1 1
@@ -2736,6 +2896,8 @@ terminal b1 n3 light textPrimary 0.006727 0.213731 0.507508 1
 terminal b1 n3 dark textPrimary 0.432813 0.617392 0.907792 1
 terminal b1 n3 light textSecondary 0.002757 0.130331 0.332936 1
 terminal b1 n3 dark textSecondary 0.592012 0.729738 0.861199 1
+terminal b1 n3 light textDanger 0.733333 0.113725 0.133333 1
+terminal b1 n3 dark textDanger 1 0.556863 0.513726 1
 terminal b1 n3 light borderSubtle 0.789324 0.839862 0.930196 1
 terminal b1 n3 dark borderSubtle 0.019611 0.364706 0.82353 0.22
 terminal b1 n3 light borderControl 0.706686 0.789402 0.924293 1
@@ -2768,6 +2930,8 @@ terminal b1 n3 light statusSuccess 0 0.576471 0.345098 1
 terminal b1 n3 dark statusSuccess 0.12549 0.737255 0.482353 1
 terminal b1 n3 light statusWarning 0.760784 0.458824 0 1
 terminal b1 n3 dark statusWarning 0.952941 0.623529 0 1
+terminal b1 n3 light statusDanger 0.733333 0.113725 0.133333 1
+terminal b1 n3 dark statusDanger 0.905882 0.262745 0.25098 1
 terminal b1 n3 light selectionTrackOff 0.941176 0.941176 0.952941 1
 terminal b1 n3 dark selectionTrackOff 0.129412 0.133333 0.145098 1
 terminal b1 n3 light selectionThumb 1 1 1 1
@@ -2804,6 +2968,8 @@ terminal b1 n4 light textPrimary 0.006727 0.213731 0.507508 1
 terminal b1 n4 dark textPrimary 0.432813 0.617392 0.907792 1
 terminal b1 n4 light textSecondary 0.002757 0.130331 0.332936 1
 terminal b1 n4 dark textSecondary 0.584533 0.732154 0.845572 1
+terminal b1 n4 light textDanger 0.733333 0.113725 0.133333 1
+terminal b1 n4 dark textDanger 1 0.556863 0.513726 1
 terminal b1 n4 light borderSubtle 0.785755 0.841663 0.919027 1
 terminal b1 n4 dark borderSubtle 0.019611 0.364706 0.82353 0.22
 terminal b1 n4 light borderControl 0.704554 0.791398 0.914575 1
@@ -2836,6 +3002,8 @@ terminal b1 n4 light statusSuccess 0 0.576471 0.345098 1
 terminal b1 n4 dark statusSuccess 0.12549 0.737255 0.482353 1
 terminal b1 n4 light statusWarning 0.760784 0.458824 0 1
 terminal b1 n4 dark statusWarning 0.952941 0.623529 0 1
+terminal b1 n4 light statusDanger 0.733333 0.113725 0.133333 1
+terminal b1 n4 dark statusDanger 0.905882 0.262745 0.25098 1
 terminal b1 n4 light selectionTrackOff 0.933333 0.945098 0.941176 1
 terminal b1 n4 dark selectionTrackOff 0.12549 0.133333 0.129412 1
 terminal b1 n4 light selectionThumb 1 1 1 1
@@ -2872,6 +3040,8 @@ terminal b1 n5 light textPrimary 0.006727 0.213731 0.507508 1
 terminal b1 n5 dark textPrimary 0.432813 0.617392 0.907792 1
 terminal b1 n5 light textSecondary 0.002757 0.130331 0.332936 1
 terminal b1 n5 dark textSecondary 0.588978 0.732592 0.835973 1
+terminal b1 n5 light textDanger 0.733333 0.113725 0.133333 1
+terminal b1 n5 dark textDanger 1 0.556863 0.513726 1
 terminal b1 n5 light borderSubtle 0.785726 0.841721 0.915845 1
 terminal b1 n5 dark borderSubtle 0.019611 0.364706 0.82353 0.22
 terminal b1 n5 light borderControl 0.704527 0.791449 0.912951 1
@@ -2904,6 +3074,8 @@ terminal b1 n5 light statusSuccess 0 0.576471 0.345098 1
 terminal b1 n5 dark statusSuccess 0.12549 0.737255 0.482353 1
 terminal b1 n5 light statusWarning 0.760784 0.458824 0 1
 terminal b1 n5 dark statusWarning 0.952941 0.623529 0 1
+terminal b1 n5 light statusDanger 0.733333 0.113725 0.133333 1
+terminal b1 n5 dark statusDanger 0.905882 0.262745 0.25098 1
 terminal b1 n5 light selectionTrackOff 0.937255 0.945098 0.937255 1
 terminal b1 n5 dark selectionTrackOff 0.129412 0.133333 0.12549 1
 terminal b1 n5 light selectionThumb 1 1 1 1
@@ -2940,6 +3112,8 @@ terminal b1 n6 light textPrimary 0.006727 0.213731 0.507508 1
 terminal b1 n6 dark textPrimary 0.432813 0.617392 0.907792 1
 terminal b1 n6 light textSecondary 0.002757 0.130331 0.332936 1
 terminal b1 n6 dark textSecondary 0.603542 0.728788 0.835952 1
+terminal b1 n6 light textDanger 0.733333 0.113725 0.133333 1
+terminal b1 n6 dark textDanger 1 0.556863 0.513726 1
 terminal b1 n6 light borderSubtle 0.790909 0.840148 0.914252 1
 terminal b1 n6 dark borderSubtle 0.019611 0.364706 0.82353 0.22
 terminal b1 n6 light borderControl 0.710131 0.789865 0.911322 1
@@ -2972,6 +3146,8 @@ terminal b1 n6 light statusSuccess 0 0.576471 0.345098 1
 terminal b1 n6 dark statusSuccess 0.12549 0.737255 0.482353 1
 terminal b1 n6 light statusWarning 0.760784 0.458824 0 1
 terminal b1 n6 dark statusWarning 0.952941 0.623529 0 1
+terminal b1 n6 light statusDanger 0.733333 0.113725 0.133333 1
+terminal b1 n6 dark statusDanger 0.905882 0.262745 0.25098 1
 terminal b1 n6 light selectionTrackOff 0.945098 0.941176 0.937255 1
 terminal b1 n6 dark selectionTrackOff 0.133333 0.133333 0.129412 1
 terminal b1 n6 light selectionThumb 1 1 1 1

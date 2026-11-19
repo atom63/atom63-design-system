@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 2015,
-    "uniqueCssVariables": 1201,
-    "figmaMappedDeclarations": 1953
+    "declarations": 2022,
+    "uniqueCssVariables": 1205,
+    "figmaMappedDeclarations": 1960
   },
   "entries": [
     {
@@ -10946,6 +10946,118 @@
       "lifecycle": "preview",
       "aliases": ["--spacing-1"],
       "scope": ":root"
+    },
+    {
+      "name": "a63-status-danger",
+      "cssVar": "--a63-status-danger",
+      "type": "color",
+      "value": "var(--color-danger-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/danger",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-danger-500"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-status-danger",
+      "cssVar": "--a63-status-danger",
+      "type": "color",
+      "value": "var(--color-danger-600)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/danger",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-danger-600"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-status-danger-foreground",
+      "cssVar": "--a63-status-danger-foreground",
+      "type": "color",
+      "value": "oklch( from var(--a63-status-danger) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h )",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/danger/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-status-danger"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-status-danger-subtle",
+      "cssVar": "--a63-status-danger-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-status-danger) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/danger/subtle",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-status-danger"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-status-danger-subtle",
+      "cssVar": "--a63-status-danger-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-status-danger) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/danger/subtle",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-status-danger"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-status-danger-subtle-foreground",
+      "cssVar": "--a63-status-danger-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-danger-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/danger/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-danger-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-status-danger-subtle-foreground",
+      "cssVar": "--a63-status-danger-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-danger-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/danger/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-danger-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-status-info",

@@ -54,3 +54,6 @@ export const Grid: Story = {
     </StatGrid>
   ),
 }
+
+/* Up and down trends are status and danger text; dark mode checks their contrast. */
+export const Dark: Story = { ...Grid, globals: { mode: 'dark' } }

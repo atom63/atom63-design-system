@@ -21,6 +21,8 @@ const textPairs = [
   { fg: '--a63-text-primary', bg: '--a63-surface-panel', min: AA_TEXT },
   { fg: '--a63-text-accent', bg: '--a63-surface-page', min: AA_TEXT },
   { fg: '--a63-text-accent', bg: '--a63-surface-panel', min: AA_TEXT },
+  { fg: '--a63-text-danger', bg: '--a63-surface-page', min: AA_TEXT },
+  { fg: '--a63-text-danger', bg: '--a63-surface-panel', min: AA_TEXT },
 ] as const
 
 const actionPairs = [
@@ -38,6 +40,7 @@ const statusPairs = [
   { fg: '--a63-status-info', bg: '--a63-surface-page', min: AA_UI },
   { fg: '--a63-status-success', bg: '--a63-surface-page', min: AA_UI },
   { fg: '--a63-status-warning', bg: '--a63-surface-page', min: AA_UI },
+  { fg: '--a63-status-danger', bg: '--a63-surface-page', min: AA_UI },
 ] as const
 
 const pairs = [...textPairs, ...actionPairs, ...statusPairs] as const

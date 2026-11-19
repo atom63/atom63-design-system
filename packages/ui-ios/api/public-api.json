@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "module": "Atom63UI",
-  "symbolCount": 579,
+  "symbolCount": 583,
   "symbols": [
     {
       "id": "s:8Atom63UI10AtomAmountV",
@@ -284,6 +284,13 @@
       "source": "Generated/Atom63Tokens.generated.swift"
     },
     {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO10textDangerAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.textDanger",
+      "declaration": "static let textDanger: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
       "id": "s:8Atom63UI10AtomTokensO5ColorO11borderInputAA0c7DynamicE0VvpZ",
       "kind": "swift.type.property",
       "path": "AtomTokens.Color.borderInput",
@@ -330,6 +337,13 @@
       "kind": "swift.type.property",
       "path": "AtomTokens.Color.borderSubtle",
       "declaration": "static let borderSubtle: AtomDynamicColor",
+      "source": "Generated/Atom63Tokens.generated.swift"
+    },
+    {
+      "id": "s:8Atom63UI10AtomTokensO5ColorO12statusDangerAA0c7DynamicE0VvpZ",
+      "kind": "swift.type.property",
+      "path": "AtomTokens.Color.statusDanger",
+      "declaration": "static let statusDanger: AtomDynamicColor",
       "source": "Generated/Atom63Tokens.generated.swift"
     },
     {
@@ -1831,6 +1845,13 @@
       "source": "AtomTheme.swift"
     },
     {
+      "id": "s:8Atom63UI15AtomThemeColorsV10textDangerAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.textDanger",
+      "declaration": "var textDanger: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
       "id": "s:8Atom63UI15AtomThemeColorsV11borderInputAA0C12DynamicColorVvp",
       "kind": "swift.property",
       "path": "AtomThemeColors.borderInput",
@@ -1863,6 +1884,13 @@
       "kind": "swift.property",
       "path": "AtomThemeColors.borderSubtle",
       "declaration": "var borderSubtle: AtomDynamicColor",
+      "source": "AtomTheme.swift"
+    },
+    {
+      "id": "s:8Atom63UI15AtomThemeColorsV12statusDangerAA0C12DynamicColorVvp",
+      "kind": "swift.property",
+      "path": "AtomThemeColors.statusDanger",
+      "declaration": "var statusDanger: AtomDynamicColor",
       "source": "AtomTheme.swift"
     },
     {
@@ -4299,6 +4327,11 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO10textDangerAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI10AtomTokensO5ColorO11borderInputAA0c7DynamicE0VvpZ",
       "target": "s:8Atom63UI10AtomTokensO5ColorO",
       "kind": "memberOf"
@@ -4330,6 +4363,11 @@
     },
     {
       "source": "s:8Atom63UI10AtomTokensO5ColorO12borderSubtleAA0c7DynamicE0VvpZ",
+      "target": "s:8Atom63UI10AtomTokensO5ColorO",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI10AtomTokensO5ColorO12statusDangerAA0c7DynamicE0VvpZ",
       "target": "s:8Atom63UI10AtomTokensO5ColorO",
       "kind": "memberOf"
     },
@@ -5739,6 +5777,11 @@
       "kind": "memberOf"
     },
     {
+      "source": "s:8Atom63UI15AtomThemeColorsV10textDangerAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
       "source": "s:8Atom63UI15AtomThemeColorsV11borderInputAA0C12DynamicColorVvp",
       "target": "s:8Atom63UI15AtomThemeColorsV",
       "kind": "memberOf"
@@ -5760,6 +5803,11 @@
     },
     {
       "source": "s:8Atom63UI15AtomThemeColorsV12borderSubtleAA0C12DynamicColorVvp",
+      "target": "s:8Atom63UI15AtomThemeColorsV",
+      "kind": "memberOf"
+    },
+    {
+      "source": "s:8Atom63UI15AtomThemeColorsV12statusDangerAA0C12DynamicColorVvp",
       "target": "s:8Atom63UI15AtomThemeColorsV",
       "kind": "memberOf"
     },

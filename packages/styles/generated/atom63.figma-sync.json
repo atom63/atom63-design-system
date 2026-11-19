@@ -4,8 +4,8 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1144,
-    "aliasValues": 783,
+    "variables": 1148,
+    "aliasValues": 789,
     "skipped": 279,
     "computed": 64
   },
@@ -17024,6 +17024,92 @@
           "scopes": [
             "FRAME_FILL",
             "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "status/danger",
+          "token": "--a63-status-danger",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-danger-600"
+            },
+            "dark": {
+              "alias": "--color-danger-500"
+            }
+          },
+          "codeSyntax": "var(--a63-status-danger)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "status/danger/foreground",
+          "token": "--a63-status-danger-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "value": {
+                "r": 1,
+                "g": 0.970073,
+                "b": 0.964795,
+                "a": 1
+              }
+            },
+            "dark": {
+              "value": {
+                "r": 0.062357,
+                "g": 0.036228,
+                "b": 0.033422,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-status-danger-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "status/danger/subtle",
+          "token": "--a63-status-danger-subtle",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "composed": {
+                "alias": "--a63-status-danger",
+                "opacity": 14
+              }
+            },
+            "dark": {
+              "composed": {
+                "alias": "--a63-status-danger",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-status-danger-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "status/danger/subtle/foreground",
+          "token": "--a63-status-danger-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-danger-700"
+            },
+            "dark": {
+              "alias": "--color-danger-400"
+            }
+          },
+          "codeSyntax": "var(--a63-status-danger-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
           ]
         },
         {

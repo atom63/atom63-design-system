@@ -84,6 +84,7 @@ export const SEMANTIC_COLORS = [
   { name: 'status-success', variable: '--a63-status-success' },
   { name: 'status-warning', variable: '--a63-status-warning' },
   { name: 'status-info', variable: '--a63-status-info' },
+  { name: 'status-danger', variable: '--a63-status-danger' },
   { name: 'focus-ring', variable: '--a63-focus-ring' },
   { name: 'scrim', variable: '--a63-scrim' },
   { name: 'media-stage', variable: '--a63-media-stage' },

@@ -84,7 +84,7 @@ export function GettingStartedChecklist({
                   aria-hidden
                   className={
                     step.done || isCurrent
-                      ? 'text-primary mt-0.5 size-4 shrink-0'
+                      ? 'mt-0.5 size-4 shrink-0 text-(--a63-text-accent)'
                       : 'text-muted-foreground mt-0.5 size-4 shrink-0'
                   }
                 />

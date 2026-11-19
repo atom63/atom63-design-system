@@ -75,3 +75,6 @@ export const DenseChineseContent: Story = {
     </Compare>
   ),
 }
+
+/* The negative item's text uses the danger text color; dark mode checks its contrast. */
+export const Dark: Story = { ...BeforeAfter, globals: { mode: 'dark' } }
