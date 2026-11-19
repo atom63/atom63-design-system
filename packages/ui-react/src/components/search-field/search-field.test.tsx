@@ -1,7 +1,7 @@
 import { searchFieldContract } from '@atom63/ui-foundation'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { type FormEvent, useState } from 'react'
+import { createRef, type FormEvent, useState } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { SearchField } from './search-field'
@@ -76,5 +76,26 @@ describe('SearchField', () => {
     render(<SearchField aria-label="Search" endAddon={<button type="button">Browse</button>} />)
     const browse = screen.getByRole('button', { name: 'Browse' })
     expect(browse.closest('[data-slot="search-field-end"]')).not.toBeNull()
+  })
+
+  it('forwards a ref to the input and keeps the clear button focusing it', async () => {
+    const user = userEvent.setup()
+    const ref = createRef<HTMLInputElement>()
+    render(<SearchField aria-label="Search" defaultValue="mobile" ref={ref} />)
+    const input = screen.getByRole('searchbox', { name: 'Search' })
+    expect(ref.current).toBe(input)
+    await user.click(screen.getByRole('button', { name: 'Clear search' }))
+    expect(input).toHaveFocus()
+  })
+
+  it('passes size and invalid to the group chrome', () => {
+    const { container } = render(<SearchField aria-label="Search" invalid size="lg" />)
+    const group = container.querySelector('[data-slot="search-field"]')
+    expect(group).toHaveAttribute('data-size', 'lg')
+    expect(group).toHaveAttribute('data-invalid', '')
+    expect(screen.getByRole('searchbox', { name: 'Search' })).toHaveAttribute(
+      'aria-invalid',
+      'true'
+    )
   })
 })

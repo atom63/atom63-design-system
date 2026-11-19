@@ -106,7 +106,15 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // directional bubble with run positions, a meta row and four delivery status
 // icons) and MessageEvent. chat-thread scored 72 web / 62 iOS in case study
 // round 12 because the AI chat components do not model this thread.
-const gzipBudgetBytes = 98 * 1024
+//
+// 98 kB held 97.7 kB. Accessibility and API fixes from the readiness review
+// take it to 99.0, so it moves to 100. Most of the +1.3 kB is Field linking its
+// description and error to the control (ids, a registry context and the
+// aria-describedby merge); the rest is ScrollableList keeping its chevrons
+// mounted and handing focus across, LoadMoreTrigger's persistent live region,
+// SearchField and SegmentedControl forwarding refs and props, and Sidebar's
+// inert collapsed panel and aria-current.
+const gzipBudgetBytes = 100 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()

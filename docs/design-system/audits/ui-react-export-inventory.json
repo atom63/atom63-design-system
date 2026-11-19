@@ -48,8 +48,8 @@
   "counts": {
     "rootValueExports": 437,
     "rootTypeExports": 200,
-    "packageExportKeys": 81,
-    "cssExportKeys": 74
+    "packageExportKeys": 82,
+    "cssExportKeys": 75
   },
   "packageExportKeys": [
     ".",
@@ -83,6 +83,7 @@
     "./recipes/connected-panel.css",
     "./recipes/context-menu.css",
     "./recipes/copy-button.css",
+    "./recipes/destination-link.css",
     "./recipes/dialog.css",
     "./recipes/drawer.css",
     "./recipes/dropdown-menu.css",
@@ -160,6 +161,7 @@
     "./recipes/connected-panel.css",
     "./recipes/context-menu.css",
     "./recipes/copy-button.css",
+    "./recipes/destination-link.css",
     "./recipes/dialog.css",
     "./recipes/drawer.css",
     "./recipes/dropdown-menu.css",
@@ -389,6 +391,11 @@
       "subpath": "./recipes/copy-button.css",
       "kind": "css",
       "target": "./src/components/copy-button/copy-button.css"
+    },
+    {
+      "subpath": "./recipes/destination-link.css",
+      "kind": "css",
+      "target": "./src/components/destination-link/destination-link.css"
     },
     {
       "subpath": "./recipes/dialog.css",
