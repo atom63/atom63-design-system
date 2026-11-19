@@ -123,7 +123,7 @@ function synonymBoost(query, slug) {
   let best = 0
   for (const term of words(query)) {
     const rank = (synonyms[term] ?? []).indexOf(slug)
-    if (rank !== -1) best = Math.max(best, 30 - rank * 8)
+    if (rank !== -1) best = Math.max(best, 40 - rank * 8)
   }
   return best
 }

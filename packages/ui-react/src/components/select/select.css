@@ -68,6 +68,14 @@
   outline: var(--a63-control-focus-ring-width) solid var(--select-focus-ring);
 }
 
+/* Invalid: the same danger edge as .a63-Input[data-invalid] (input.css). */
+.a63-Select-trigger[data-invalid],
+.a63-Select-trigger[aria-invalid='true'] {
+  --select-border: color-mix(in oklch, var(--a63-action-danger) 62%, transparent);
+  --select-focus-border: var(--a63-action-danger);
+  --select-focus-ring: color-mix(in oklch, var(--a63-action-danger) 35%, transparent);
+}
+
 .a63-Select-trigger[data-disabled] {
   cursor: not-allowed;
   opacity: 0.56;

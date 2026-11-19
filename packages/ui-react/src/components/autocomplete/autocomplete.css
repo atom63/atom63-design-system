@@ -20,6 +20,9 @@
 /* ── Input (field) ─────────────────────────────────────────────────────── */
 
 .a63-Autocomplete-input {
+  --autocomplete-border: var(--a63-border-input);
+  --autocomplete-focus-border: var(--a63-action-primary);
+  --autocomplete-focus-ring: var(--a63-control-focus-ring-color, var(--a63-focus-ring));
   /* Content floor — see button.css. */
   --autocomplete-content-lh: var(--typography-sm-line-height);
   --autocomplete-content-floor: calc(var(--autocomplete-content-lh) + 2 * var(--a63-space-0_5));
@@ -32,7 +35,7 @@
     var(--autocomplete-content-floor)
   );
   padding-inline: var(--a63-control-padding-inline-md);
-  border: var(--a63-control-border-width) solid var(--a63-border-input);
+  border: var(--a63-control-border-width) solid var(--autocomplete-border);
   border-radius: var(--a63-control-radius);
   background: var(--a63-surface-control);
   box-shadow: var(--a63-field-shadow);
@@ -49,10 +52,23 @@
   color: var(--a63-text-tertiary);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .a63-Autocomplete-input:hover:not(:disabled) {
+    border-color: color-mix(in oklch, var(--autocomplete-border), var(--a63-text-primary) 18%);
+  }
+}
+
 .a63-Autocomplete-input:focus-visible {
-  border-color: var(--a63-action-primary);
-  outline: var(--a63-control-focus-ring-width) solid
-    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  border-color: var(--autocomplete-focus-border);
+  outline: var(--a63-control-focus-ring-width) solid var(--autocomplete-focus-ring);
+}
+
+/* Invalid: the same danger edge as .a63-Input[data-invalid] (input.css). */
+.a63-Autocomplete-input[data-invalid],
+.a63-Autocomplete-input[aria-invalid='true'] {
+  --autocomplete-border: color-mix(in oklch, var(--a63-action-danger) 62%, transparent);
+  --autocomplete-focus-border: var(--a63-action-danger);
+  --autocomplete-focus-ring: color-mix(in oklch, var(--a63-action-danger) 35%, transparent);
 }
 
 .a63-Autocomplete-input[data-has-start-addon] {

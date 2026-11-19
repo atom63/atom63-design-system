@@ -5,10 +5,12 @@ import { describe, expect, it } from 'vitest'
 import {
   Autocomplete,
   AutocompleteEmpty,
+  AutocompleteGroup,
   AutocompleteInput,
   AutocompleteItem,
   AutocompleteList,
   AutocompletePopup,
+  AutocompleteSeparator,
   AutocompleteStatus,
 } from './autocomplete'
 
@@ -90,5 +92,50 @@ describe('Autocomplete', () => {
     expect(document.querySelector('[data-slot="autocomplete-status"]')).toHaveTextContent(
       'Fruit suggestions updated.'
     )
+  })
+
+  it('marks an invalid input for assistive tech and the recipe', () => {
+    render(
+      <Autocomplete items={fruits}>
+        <AutocompleteInput aria-label="Invalid fruit" invalid />
+        <AutocompleteInput aria-label="Valid fruit" />
+      </Autocomplete>
+    )
+    const invalid = screen.getByRole('combobox', { name: 'Invalid fruit' })
+    expect(invalid).toHaveAttribute('aria-invalid', 'true')
+    expect(invalid).toHaveAttribute('data-invalid')
+    expect(invalid.closest('[data-slot="autocomplete-input-group"]')).toHaveAttribute(
+      'data-invalid'
+    )
+    const valid = screen.getByRole('combobox', { name: 'Valid fruit' })
+    expect(valid).not.toHaveAttribute('aria-invalid')
+    expect(valid).not.toHaveAttribute('data-invalid')
+  })
+
+  it('keeps the separator between groups out of the listbox semantics', () => {
+    render(
+      <Autocomplete items={fruits} open>
+        <AutocompleteInput aria-label="Search fruit" />
+        <AutocompletePopup>
+          <AutocompleteList>
+            <AutocompleteGroup>
+              <AutocompleteItem value="Apple">Apple</AutocompleteItem>
+            </AutocompleteGroup>
+            <AutocompleteGroup>
+              <AutocompleteSeparator />
+              <AutocompleteItem value="Banana">Banana</AutocompleteItem>
+            </AutocompleteGroup>
+          </AutocompleteList>
+        </AutocompletePopup>
+      </Autocomplete>
+    )
+    const separator = screen
+      .getByRole('listbox')
+      .querySelector('[data-slot="autocomplete-separator"]')
+    expect(separator).not.toBeNull()
+    // A listbox may own only options and groups (axe aria-required-children).
+    expect(separator).not.toHaveAttribute('role', 'separator')
+    expect(separator).toHaveAttribute('role', 'none')
+    expect(separator).not.toHaveAttribute('aria-orientation')
   })
 })

@@ -356,6 +356,7 @@ export function AutocompleteInput(input: AutocompleteInputProps): React$1.ReactE
 export interface AutocompleteInputProps extends Omit<AutocompletePrimitive.Input.Props, 'size'> {
     // (undocumented)
     clearProps?: AutocompletePrimitive.Clear.Props;
+    invalid?: boolean;
     // (undocumented)
     ref?: React$1.Ref<HTMLInputElement>;
     // (undocumented)
@@ -2490,6 +2491,7 @@ export const selectTriggerDefaultClassName = "a63-Select-trigger";
 // @public (undocumented)
 export type SelectTriggerProps = Select_2.Trigger.Props & {
     size?: SelectSize;
+    invalid?: boolean;
 };
 
 // @public (undocumented)
