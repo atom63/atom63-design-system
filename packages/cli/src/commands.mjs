@@ -8,7 +8,7 @@
  * input and returns an envelope, or throws an AtomError.
  */
 import { agentsBlock } from './agents-md.mjs'
-import { component, docsPage, example, rules, search, searchKinds, token } from './core.mjs'
+import { api, component, docsPage, example, rules, search, searchKinds, token } from './core.mjs'
 import { build, copy, template, templateKinds } from './templates.mjs'
 
 export const commands = [
@@ -92,6 +92,20 @@ export const commands = [
     run: (index, { query }) => token(index, query),
   },
   {
+    name: 'api',
+    summary:
+      'A public API name or an entry point: a SwiftUI type with its declaration, doc comment and members, or a JavaScript export with its import line and docs page; an entry point (e.g. @atom63/ui-react/media, @atom63/mdx/blocks, Atom63UI) with everything it exports.',
+    args: [
+      {
+        name: 'name',
+        description: 'e.g. AtomWidgetCard, MediaLightbox, KeyIdea or @atom63/ui-react/media.',
+      },
+    ],
+    flags: [],
+    returns: ['api.detail', 'api.entry'],
+    run: (index, { name }) => api(index, name),
+  },
+  {
     name: 'docs',
     summary: 'A docs page as Markdown.',
     args: [{ name: 'slug', description: 'Page slug, e.g. theme-system.' }],
@@ -149,6 +163,7 @@ export const errorCodes = [
   'token.not_found',
   'docs.not_found',
   'template.not_found',
+  'api.not_found',
 ]
 
 /** The self-describing manifest an agent reads once to learn the interface. */
