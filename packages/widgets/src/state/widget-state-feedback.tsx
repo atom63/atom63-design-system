@@ -13,7 +13,8 @@ import { widgetTypeStyle } from '../layout'
 import { useWidgetSurfaceSize } from '../primitives'
 import type { WidgetSize } from '../types'
 import { cn } from '../utils'
-import type { WidgetFeedbackCopy, WidgetFeedbackState } from './types'
+import { DEFAULT_WIDGET_ERROR_LABELS } from './types'
+import type { WidgetErrorLabels, WidgetFeedbackCopy, WidgetFeedbackState } from './types'
 
 const STATE_ICON = {
   empty: Inbox,
@@ -21,13 +22,13 @@ const STATE_ICON = {
   loading: LoaderCircle,
 } as const
 
-const RETRY_LABEL = 'Try again'
-
 function WidgetErrorActions({
   description,
+  labels,
   onRetry,
 }: {
   description?: string
+  labels: WidgetErrorLabels
   onRetry?: () => void
 }) {
   if (!description && !onRetry) {
@@ -51,7 +52,7 @@ function WidgetErrorActions({
           variant="outline"
         >
           <RefreshCw aria-hidden className="a63-WidgetStateFeedback-retryIcon" />
-          {RETRY_LABEL}
+          {labels.retry}
         </Button>
       ) : null}
       {description ? (
@@ -59,7 +60,7 @@ function WidgetErrorActions({
           <PopoverTrigger
             render={
               <Button
-                aria-label="View error details"
+                aria-label={labels.viewDetails}
                 className="a63-WidgetStateFeedback-action"
                 size="icon-sm"
                 type="button"
@@ -76,17 +77,15 @@ function WidgetErrorActions({
             sideOffset={8}
           >
             <div className="a63-WidgetErrorDetails-header">
-              <PopoverTitle>Error details</PopoverTitle>
-              <PopoverDescription>
-                Technical information you can copy when reporting this problem.
-              </PopoverDescription>
+              <PopoverTitle>{labels.detailsTitle}</PopoverTitle>
+              <PopoverDescription>{labels.detailsDescription}</PopoverDescription>
             </div>
             {/* Fixed type, not the widget ramp, on purpose: this sits inside a
                 portalled Popover, which renders at document level where
                 `--widget-u` is not inherited. */}
             <p className="a63-WidgetErrorDetails-message">{description}</p>
-            <CopyButton label="Error details" size="sm" value={description} variant="outline">
-              Copy details
+            <CopyButton label={labels.detailsTitle} size="sm" value={description} variant="outline">
+              {labels.copyDetails}
             </CopyButton>
           </PopoverContent>
         </Popover>
@@ -98,6 +97,11 @@ function WidgetErrorActions({
 export interface WidgetStateFeedbackProps {
   className?: string
   copy: WidgetFeedbackCopy
+  /**
+   * The error state's control strings, for translation. Fields left out keep
+   * their English defaults (`DEFAULT_WIDGET_ERROR_LABELS`).
+   */
+  labels?: Partial<WidgetErrorLabels>
   onRetry?: () => void
   /** Falls back to the nearest WidgetSurface size when omitted. */
   size?: WidgetSize
@@ -122,7 +126,7 @@ export interface WidgetStateFeedbackProps {
  * button, so technical detail never crowds the tile.
  */
 export const WidgetStateFeedback = memo<WidgetStateFeedbackProps>(
-  ({ className, copy, onRetry, size, state }) => {
+  ({ className, copy, labels, onRetry, size, state }) => {
     const surfaceSize = useWidgetSurfaceSize()
     const resolvedSize = size ?? surfaceSize ?? 'small'
     const density = resolvedSize === 'large' ? 'large' : 'compact'
@@ -161,7 +165,11 @@ export const WidgetStateFeedback = memo<WidgetStateFeedbackProps>(
           ) : null}
         </div>
         {state === 'error' ? (
-          <WidgetErrorActions description={copy.description} onRetry={onRetry} />
+          <WidgetErrorActions
+            description={copy.description}
+            labels={{ ...DEFAULT_WIDGET_ERROR_LABELS, ...labels }}
+            onRetry={onRetry}
+          />
         ) : null}
       </div>
     )

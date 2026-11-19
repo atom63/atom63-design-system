@@ -643,16 +643,18 @@ export type VideoBlockProps = {
     spacing?: MediaSpacing;
     src: string;
     title: string;
+    trackLang?: string;
+    trackLabel?: string;
 } & VideoCaptionPolicy;
 
 // Warnings were encountered during analysis:
 //
 // dist/blocks/index.d.ts:39:5 - (ae-forgotten-export) The symbol "MdxFrameItemTone" needs to be exported by the entry point index.d.ts
-// dist/video-block-D2SmUXCS.d.ts:90:5 - (ae-forgotten-export) The symbol "CalloutType" needs to be exported by the entry point index.d.ts
-// dist/video-block-D2SmUXCS.d.ts:117:5 - (ae-forgotten-export) The symbol "aspectRatioClasses" needs to be exported by the entry point index.d.ts
-// dist/video-block-D2SmUXCS.d.ts:126:5 - (ae-forgotten-export) The symbol "MediaSpacing" needs to be exported by the entry point index.d.ts
-// dist/video-block-D2SmUXCS.d.ts:180:5 - (ae-forgotten-export) The symbol "CodeBlockVariant" needs to be exported by the entry point index.d.ts
-// dist/video-block-D2SmUXCS.d.ts:457:5 - (ae-forgotten-export) The symbol "fitClasses" needs to be exported by the entry point index.d.ts
+// dist/video-block-B0IlE4Lz.d.ts:90:5 - (ae-forgotten-export) The symbol "CalloutType" needs to be exported by the entry point index.d.ts
+// dist/video-block-B0IlE4Lz.d.ts:117:5 - (ae-forgotten-export) The symbol "aspectRatioClasses" needs to be exported by the entry point index.d.ts
+// dist/video-block-B0IlE4Lz.d.ts:126:5 - (ae-forgotten-export) The symbol "MediaSpacing" needs to be exported by the entry point index.d.ts
+// dist/video-block-B0IlE4Lz.d.ts:180:5 - (ae-forgotten-export) The symbol "CodeBlockVariant" needs to be exported by the entry point index.d.ts
+// dist/video-block-B0IlE4Lz.d.ts:457:5 - (ae-forgotten-export) The symbol "fitClasses" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

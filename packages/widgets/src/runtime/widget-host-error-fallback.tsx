@@ -1,6 +1,7 @@
 import { Button } from '@atom63/ui-react'
 import { AlertCircle, RefreshCw } from 'lucide-react'
 import { widgetTypeStyle } from '../layout'
+import { DEFAULT_WIDGET_ERROR_LABELS } from '../state/types'
 import { WidgetCard, WidgetCardContent, WidgetCardHeader, WidgetCardTitle } from '../primitives'
 import type { WidgetSize } from '../types'
 import { WIDGET_FILL_STYLE } from './widget-fill'
@@ -9,11 +10,14 @@ import { WIDGET_FILL_STYLE } from './widget-fill'
 export function WidgetHostErrorFallback({
   message,
   onRetry,
+  retryLabel = DEFAULT_WIDGET_ERROR_LABELS.retry,
   size,
   title = 'Widget failed to load',
 }: {
   message?: string
   onRetry?: () => void
+  /** The retry button's text. Defaults to the widget error state's "Try again". */
+  retryLabel?: string
   size: WidgetSize
   title?: string
 }) {
@@ -39,7 +43,7 @@ export function WidgetHostErrorFallback({
           {onRetry ? (
             <Button onClick={onRetry} size="sm" type="button" variant="ghost">
               <RefreshCw aria-hidden />
-              Retry
+              {retryLabel}
             </Button>
           ) : null}
         </WidgetCardContent>

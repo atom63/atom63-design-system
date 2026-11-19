@@ -6,6 +6,18 @@ const fitClasses = {
   cover: 'object-cover',
 } as const
 
+/**
+ * The language's own name for itself ("English", "Deutsch", "日本語"), which is
+ * how a player's caption menu should list it. Falls back to the tag itself.
+ */
+function trackLabelFor(lang: string): string {
+  try {
+    return new Intl.DisplayNames([lang], { type: 'language' }).of(lang) ?? lang
+  } catch {
+    return lang
+  }
+}
+
 type VideoCaptionPolicy =
   | {
       /** Video has spoken or meaningful audio and must provide captions. */
@@ -30,6 +42,13 @@ export type VideoBlockProps = {
   spacing?: MediaSpacing
   src: string
   title: string
+  /** BCP 47 language of the caption track (`srclang`). Defaults to `en`. */
+  trackLang?: string
+  /**
+   * Name of the caption track in the player's caption menu. Defaults to the
+   * track language's own name, such as "English" or "Deutsch".
+   */
+  trackLabel?: string
 } & VideoCaptionPolicy
 
 /** Portable video player for MDX lessons and docs. */
@@ -45,6 +64,8 @@ export function VideoBlock({
   showCaption = false,
   spacing = 'default',
   src,
+  trackLabel,
+  trackLang = 'en',
   trackSrc,
 }: VideoBlockProps) {
   const shouldMute = muted || autoPlay
@@ -70,7 +91,13 @@ export function VideoBlock({
           >
             <source src={src} type="video/mp4" />
             {trackSrc ? (
-              <track default kind="captions" label="English captions" src={trackSrc} srcLang="en" />
+              <track
+                default
+                kind="captions"
+                label={trackLabel ?? trackLabelFor(trackLang)}
+                src={trackSrc}
+                srcLang={trackLang}
+              />
             ) : null}
           </video>
         </div>

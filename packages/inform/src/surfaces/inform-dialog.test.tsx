@@ -60,6 +60,20 @@ describe('InformDialog', () => {
     expect(screen.queryByRole('button', { name: 'Close' })).not.toBeInTheDocument()
   })
 
+  it('ignores Escape and outside presses when dismissal is disabled', async () => {
+    const onDismiss = vi.fn()
+    render(
+      <InformDialog body="Body" dismissable={false} onDismiss={onDismiss} open title="Heads up" />
+    )
+
+    const dialog = await screen.findByRole('dialog')
+    await userEvent.keyboard('{Escape}')
+    await userEvent.click(document.body)
+
+    expect(onDismiss).not.toHaveBeenCalled()
+    expect(dialog).toBeInTheDocument()
+  })
+
   it('invokes an action', async () => {
     const onSelect = vi.fn()
     render(
