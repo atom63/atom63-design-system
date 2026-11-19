@@ -4790,6 +4790,7 @@
     "module": "@atom63/widgets/state",
     "docs": "pattern-widgets",
     "values": [
+     "DEFAULT_WIDGET_ERROR_LABELS",
      "WidgetStateFeedback",
      "getWidgetErrorDescription",
      "resolveWidgetFeedbackState",
