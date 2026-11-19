@@ -45,6 +45,20 @@ export const Reverse: Story = {
   ),
 }
 
+/* Right-to-left: the duplicate tracks lay out to the left, so the strip scrolls
+   right and loops without a gap. */
+export const RightToLeft: Story = {
+  render: () => (
+    <UIProvider dir="rtl" lang="ar" style={{ width: 420 }}>
+      <Marquee>
+        {['تصميم', 'هندسة', 'حركة', 'أنظمة', 'خط', 'لون'].map(c => (
+          <Chip key={c} label={c} />
+        ))}
+      </Marquee>
+    </UIProvider>
+  ),
+}
+
 export const Vertical: Story = {
   render: () => (
     <div style={{ height: 200, width: 200 }}>

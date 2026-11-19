@@ -75,6 +75,42 @@ after changing a theme. A new theme also needs its generated CSS path added to
 4. Cover Storybook Themes matrix + harness scenario if app chrome is involved.
 5. Update [personalization-axes.md](./personalization-axes.md) ownership notes if the axis checklist changes.
 
+## Adding a brand
+
+A brand is one tonal ramp (`--a63-brand-50` … `--a63-brand-950`) selected by
+`[data-a63-brand="<id>"]`. Ids are `b` plus a number; the next one is `b7`. The source of
+the brand list is `packages/styles/src/tokens/brand-ramp.resolver.json`. Every other list
+below is written by hand, and `pnpm check:theme-authoring` fails while any of them
+disagrees with the resolver.
+
+1. **Palette.** Add `color.b7.50` … `color.b7.950` (11 steps) to
+   `packages/styles/src/tokens/foundation/primitives.tokens.json`.
+2. **Ramp.** Add a `b7` context to `packages/styles/src/tokens/brand-ramp.resolver.json`
+   that maps `a63.brand.<step>` to `{color.b7.<step>}`, like `b1`.
+3. **Contrast exceptions.** The base set in `brand-action.resolver.json` fills the primary
+   action with step 600 and draws brand text in 600. If white on the new 600 is below 4.5:1,
+   or 600 as text on the selected wash is, add a `b7` context there that moves the fill
+   and the text to 700, as `b3` does (or only the text, as `b2`, `b4` and `b6` do).
+4. **Hand-written lists.** Add `b7` to each:
+   - `packages/ui-foundation/src/axes.ts` (the brand axis `values`)
+   - `packages/styles/scripts/generate-figma-sync.mjs` (the Brand collection `modes`; its
+     `pattern` reads one digit, so a `b10` needs the pattern widened)
+   - `packages/ui-ios/Scripts/lib/theme-graph.mjs` (`brands`)
+   - `packages/styles/src/tokens/contrast.browser.test.ts` (`brands`)
+   - `packages/styles/src/tokens/figma-parity.browser.test.ts` (the color contexts loop)
+   - `apps/storybook/stories/tokens/color-primitives.stories.tsx` (`BRAND_SCALES`)
+   - `apps/docs/src/foundation/token-meta.ts` (`BRAND_SCALES`, with its label) and
+     `apps/docs/src/components/foundation/brand-scale-row.tsx` (`BRAND_500`)
+5. **Regenerate.** `pnpm --filter @atom63/styles generate:tokens` (brand CSS, manifest,
+   Figma model), then `pnpm --filter @atom63/ui-ios generate:swift` (the Swift token graph).
+6. **Check.** `pnpm check:theme-authoring`, `pnpm --filter @atom63/styles test` (the contrast,
+   Figma and Swift parity tests run every brand), and
+   `pnpm --filter @atom63/ui-ios check:swift-tokens`. Update the prose that names the
+   range (`b1`–`b6`) in [personalization-axes.md](./personalization-axes.md) and the docs
+   pages on foundation colors and personalization.
+7. **Changeset.** A patch or minor changeset for `@atom63/styles` and
+   `@atom63/ui-foundation`.
+
 ## Related
 
 - [authoring-surfaces.md](./authoring-surfaces.md) — value ownership + design lanes

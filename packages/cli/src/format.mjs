@@ -203,7 +203,52 @@ function buildPlaybook(data) {
   ].join('\n')
 }
 
+function apiDetail({ name, ios, web }) {
+  const lines = [`# ${name}`]
+  if (ios) {
+    lines.push(
+      '',
+      `SwiftUI (${ios.module}): ${ios.declaration}`,
+      `Source: ${ios.source}`,
+      ...(ios.summary ? ['', ios.summary] : []),
+      ...(ios.component
+        ? ['', `Renders the ${ios.component} contract: atom63 component ${ios.component}`]
+        : []),
+      ...(ios.members.length > 0
+        ? ['', 'Members:', ...ios.members.map(member => `  ${member.declaration}`)]
+        : []),
+      '',
+      `Guide: atom63 docs ${ios.docs}`
+    )
+  }
+  for (const entry of web) {
+    lines.push(
+      '',
+      entry.import,
+      entry.component
+        ? `Component: atom63 component ${entry.component}`
+        : `Docs: atom63 docs ${entry.docs}`
+    )
+  }
+  return lines.join('\n')
+}
+
+function apiEntry({ module, import: importLine, docs, symbols }) {
+  return [
+    `# ${module}`,
+    '',
+    importLine,
+    `Docs: atom63 docs ${docs}`,
+    '',
+    ...symbols.map(symbol => (symbol.summary ? `${symbol.name} — ${symbol.summary}` : symbol.name)),
+    '',
+    'Read one with: atom63 api <name>',
+  ].join('\n')
+}
+
 const renderers = {
+  'api.detail': apiDetail,
+  'api.entry': apiEntry,
   'search.results': searchResults,
   'token.results': searchResults,
   'component.detail': componentDetail,
