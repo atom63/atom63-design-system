@@ -191,6 +191,37 @@ export const Sides: Story = {
   ),
 }
 
+/* Right-to-left: `left` and `right` are screen edges, so a left sheet still
+   docks to the left edge and slides in from it, while its content reads right
+   to left. */
+export const RightToLeft: Story = {
+  render: () => {
+    const portalContainerRef = useRef<HTMLDivElement>(null)
+    return (
+      <UIProvider dir="rtl" lang="ar" ref={portalContainerRef}>
+        <Sheet defaultOpen>
+          <SheetTrigger render={<Button variant="secondary">فتح اللوحة</Button>} />
+          <SheetContent portalProps={{ container: portalContainerRef }} side="left">
+            <SheetHeader>
+              <SheetTitle>المظهر</SheetTitle>
+              <SheetDescription>تثبت اللوحة على الحافة اليسرى.</SheetDescription>
+            </SheetHeader>
+            <SheetPanel>
+              <p style={{ color: 'var(--a63-text-secondary)' }}>
+                يقرأ المحتوى من اليمين إلى اليسار.
+              </p>
+            </SheetPanel>
+            <SheetFooter>
+              <SheetClose render={<Button variant="secondary">إلغاء</Button>} />
+              <SheetClose render={<Button variant="primary">حفظ</Button>} />
+            </SheetFooter>
+          </SheetContent>
+        </Sheet>
+      </UIProvider>
+    )
+  },
+}
+
 export const Inset: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>

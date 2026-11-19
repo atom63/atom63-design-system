@@ -17,8 +17,8 @@ export type SwitchProps = Omit<SwitchPrimitive.Root.Props, 'className'> & {
  * Switch — the selection archetype (bistate on/off), the iOS-vs-web
  * design-language showcase. Two-part anatomy (mirrors production @atom63/ui):
  * `Switch.Root` is the track, `Switch.Thumb` the knob. Checked = the brand-accent
- * fill + thumb slides right; the track geometry is driven by --a63-switch-thumb-size
- * (enlarged for iOS). Base UI stamps data-checked/data-disabled.
+ * fill + thumb slides to the inline end (left under dir="rtl"); the track
+ * geometry is driven by --a63-switch-thumb-size (enlarged for iOS). Base UI stamps data-checked/data-disabled.
  *
  * Pass `children` to decorate the thumb (icons, glyphs).
  */

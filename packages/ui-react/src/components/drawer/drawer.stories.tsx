@@ -145,6 +145,32 @@ export const Directions: Story = {
   ),
 }
 
+/* Right-to-left: `left` and `right` are screen edges, so a left drawer still
+   docks to the left edge, slides in from it and swipes back towards it, while
+   its content reads right to left. */
+export const RightToLeft: Story = {
+  render: () => {
+    const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(null)
+    return (
+      <UIProvider dir="rtl" lang="ar" ref={setPortalContainer}>
+        <Drawer defaultOpen direction="left">
+          <DrawerTrigger render={<Button variant="secondary">فتح الدرج</Button>} />
+          <DrawerContent portalProps={{ container: portalContainer }}>
+            <DrawerHeader>
+              <DrawerTitle>المظهر</DrawerTitle>
+              <DrawerDescription>اسحب نحو الحافة اليسرى للإغلاق.</DrawerDescription>
+            </DrawerHeader>
+            <DrawerBody>يقرأ المحتوى من اليمين إلى اليسار.</DrawerBody>
+            <DrawerFooter>
+              <DrawerClose render={<Button variant="primary">تم</Button>} />
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+      </UIProvider>
+    )
+  },
+}
+
 /*
  * The drawer content renders in a portal (raised overlay surface), so a matrix of
  * open sheets would stack over the whole page rather than read per-theme. The

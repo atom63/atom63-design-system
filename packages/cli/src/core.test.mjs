@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict'
-import { readFileSync } from 'node:fs'
+import { readdirSync, readFileSync } from 'node:fs'
 import { describe, it } from 'node:test'
 
 import {
+  api,
   AtomError,
   component,
   docsPage,
@@ -13,6 +14,7 @@ import {
   search,
   token,
 } from './core.mjs'
+import { publishedPackageDirs } from '../../../scripts/design-system/published-packages.mjs'
 import { formatEnvelope } from './format.mjs'
 import { grounds, synonyms, topics } from './synonyms.mjs'
 import { build, template } from './templates.mjs'
@@ -699,5 +701,96 @@ describe('index', () => {
   it('measures edit distance', () => {
     assert.equal(editDistance('buton', 'button'), 1)
     assert.equal(editDistance('abc', 'xyzuvw', 2), 3)
+  })
+})
+
+const repoFile = relative => new URL(`../../../${relative}`, import.meta.url)
+
+describe('api', () => {
+  it('indexes every public Atom type in the SwiftUI sources', () => {
+    const dir = repoFile('packages/ui-ios/Sources/Atom63UI/')
+    const files = readdirSync(dir, { recursive: true }).filter(file => file.endsWith('.swift'))
+    const declared = new Set(
+      files.flatMap(file =>
+        [
+          ...readFileSync(new URL(file, dir), 'utf8').matchAll(
+            /^public\s+(?:final\s+)?(?:struct|enum|class|protocol|actor|typealias)\s+(Atom\w+)/gm
+          ),
+        ].map(match => match[1])
+      )
+    )
+    const indexed = new Set(index.api.ios.types.map(type => type.name))
+    assert.ok(declared.size >= 100)
+    assert.deepEqual(
+      [...declared].filter(name => !indexed.has(name)),
+      [],
+      'public Atom types missing from packages/ui-ios/api/public-api.json; run its check:public-api --write, then generate:index'
+    )
+  })
+
+  it('indexes every published JavaScript entry point with a docs page', () => {
+    const modules = new Set(index.api.web.map(entry => entry.module))
+    for (const dir of publishedPackageDirs) {
+      const manifest = JSON.parse(readFileSync(repoFile(`${dir}/package.json`), 'utf8'))
+      for (const [subpath, target] of Object.entries(manifest.exports ?? {})) {
+        if (typeof target !== 'object' || !target['@atom63/source']) continue
+        assert.ok(modules.has(manifest.name + subpath.slice(1)), manifest.name + subpath.slice(1))
+      }
+    }
+    for (const entry of index.api.web) {
+      assert.ok(entry.values.length > 0, entry.module)
+      assert.ok(
+        index.docs.some(doc => doc.slug === entry.docs),
+        `${entry.module} → ${entry.docs}`
+      )
+    }
+  })
+
+  it('finds Swift types, entry point exports and entry points by name', () => {
+    assert.equal(top('AtomWidgetCard')[0], 'AtomWidgetCard')
+    assert.equal(top('AtomAppBar')[0], 'AtomAppBar')
+    assert.equal(top('atomDensity')[0], 'AtomDensity')
+    assert.equal(top('KeyIdea')[0], 'KeyIdea')
+    assert.equal(top('MediaLightbox')[0], 'MediaLightbox')
+    assert.ok(top('lightbox').includes('@atom63/ui-react/media/lightbox'))
+    assert.ok(top('mdx').includes('@atom63/mdx'))
+    assert.ok(top('ios').includes('Atom63UI'))
+    // A component's own exports are found through the component, not again as API names.
+    assert.ok(!search(index, 'Dialog').data.results.some(result => result.kind === 'api'))
+  })
+
+  it('answers a Swift type with its declaration, doc comment and members', () => {
+    const { type, data } = api(index, 'AtomWidgetCard')
+    assert.equal(type, 'api.detail')
+    assert.match(data.ios.declaration, /struct AtomWidgetCard/)
+    assert.match(data.ios.summary, /widget tile/)
+    assert.ok(data.ios.members.some(member => member.name.startsWith('init')))
+    assert.equal(api(index, 'AtomButton').data.ios.component, 'button')
+  })
+
+  it('answers a JavaScript export with every entry point that exports it', () => {
+    const { data } = api(index, 'Accordion')
+    assert.deepEqual(
+      data.web.map(entry => [entry.module, entry.component]),
+      [
+        ['@atom63/ui-react', 'accordion'],
+        ['@atom63/mdx/blocks', null],
+      ]
+    )
+    assert.match(formatEnvelope(api(index, 'KeyIdea')), /from '@atom63\/mdx\/blocks'/)
+  })
+
+  it('lists an entry point and the SwiftUI module', () => {
+    const media = api(index, '@atom63/ui-react/media')
+    assert.equal(media.type, 'api.entry')
+    assert.ok(media.data.symbols.some(symbol => symbol.name === 'VideoDialog'))
+    assert.equal(api(index, 'Atom63UI').data.symbols.length, index.api.ios.types.length)
+  })
+
+  it('suggests close names for an unknown one', () => {
+    assert.throws(
+      () => api(index, 'AtomWidgetCrad'),
+      error => error.code === 'api.not_found' && error.suggestions.includes('AtomWidgetCard')
+    )
   })
 })
