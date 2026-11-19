@@ -2425,6 +2425,11 @@
        "declaration": "var statusInfo: AtomDynamicColor"
       },
       {
+       "name": "textDanger",
+       "kind": "property",
+       "declaration": "var textDanger: AtomDynamicColor"
+      },
+      {
        "name": "borderInput",
        "kind": "property",
        "declaration": "var borderInput: AtomDynamicColor"
@@ -2448,6 +2453,11 @@
        "name": "borderSubtle",
        "kind": "property",
        "declaration": "var borderSubtle: AtomDynamicColor"
+      },
+      {
+       "name": "statusDanger",
+       "kind": "property",
+       "declaration": "var statusDanger: AtomDynamicColor"
       },
       {
        "name": "surfaceMuted",
@@ -2755,6 +2765,11 @@
        "declaration": "static let textAccent: AtomDynamicColor"
       },
       {
+       "name": "Color.textDanger",
+       "kind": "type.property",
+       "declaration": "static let textDanger: AtomDynamicColor"
+      },
+      {
        "name": "Color.borderInput",
        "kind": "type.property",
        "declaration": "static let borderInput: AtomDynamicColor"
@@ -2788,6 +2803,11 @@
        "name": "Color.borderSubtle",
        "kind": "type.property",
        "declaration": "static let borderSubtle: AtomDynamicColor"
+      },
+      {
+       "name": "Color.statusDanger",
+       "kind": "type.property",
+       "declaration": "static let statusDanger: AtomDynamicColor"
       },
       {
        "name": "Color.surfaceMuted",
@@ -10489,11 +10509,13 @@
      "Variants",
      "WithAction",
      "ActionVariants",
+     "DarkActionVariants",
+     "RightToLeft",
      "Themes",
      "Endpoints",
      "ContractMetadata"
     ],
-    "source": "import { alertContract, alertVariants, themes } from '@atom63/ui-foundation'\nimport {\n  Alert,\n  AlertAction,\n  AlertDescription,\n  AlertIcon,\n  AlertTitle,\n  Button,\n  UIProvider,\n} from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport { Info } from 'lucide-react'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\n\nconst meta = {\n  title: 'UI React/Alert',\n  component: Alert,\n} satisfies Meta<typeof Alert>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nexport const Playground: Story = {\n  render: () => (\n    <Alert style={{ maxWidth: 420 }}>\n      <AlertIcon>\n        <Info aria-hidden />\n      </AlertIcon>\n      <AlertTitle>Information</AlertTitle>\n      <AlertDescription>This is a neutral, default alert callout.</AlertDescription>\n    </Alert>\n  ),\n}\n\n/* Every semantic tone. */\nexport const Variants: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 10, maxWidth: 420 }}>\n      {alertVariants.map(variant => (\n        <Alert key={variant} variant={variant}>\n          <AlertIcon>\n            <Info aria-hidden />\n          </AlertIcon>\n          <AlertTitle style={{ textTransform: 'capitalize' }}>{variant}</AlertTitle>\n          <AlertDescription>The {variant} tone recolors border, fill, and icon.</AlertDescription>\n        </Alert>\n      ))}\n    </div>\n  ),\n}\n\n/* With a trailing action slot. */\nexport const WithAction: Story = {\n  render: () => (\n    <Alert style={{ maxWidth: 460 }} variant=\"warning\">\n      <AlertIcon>\n        <Info aria-hidden />\n      </AlertIcon>\n      <AlertTitle>Unsaved changes</AlertTitle>\n      <AlertDescription>Your edits will be lost if you leave.</AlertDescription>\n      <AlertAction>\n        <Button size=\"sm\" variant=\"ghost\">\n          Discard\n        </Button>\n      </AlertAction>\n    </Alert>\n  ),\n}\n\n/* Action treatment across every alert tone. */\nexport const ActionVariants: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 10, maxWidth: 560 }}>\n      {alertVariants.map(variant => (\n        <Alert key={variant} variant={variant}>\n          <AlertIcon>\n            <Info aria-hidden />\n          </AlertIcon>\n          <AlertTitle style={{ textTransform: 'capitalize' }}>{variant}</AlertTitle>\n          <AlertDescription>\n            The action button inherits the {variant} alert tone inside the action slot.\n          </AlertDescription>\n          <AlertAction>\n            <Button size=\"sm\" variant=\"ghost\">\n              Review\n            </Button>\n          </AlertAction>\n        </Alert>\n      ))}\n    </div>\n  ),\n}\n\n/* Renders across all 4 DS themes × light/dark. */\nexport const Themes: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {themes.map(theme =>\n        (['light', 'dark'] as const).map(mode => (\n          <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>\n            <div\n              style={{\n                alignItems: 'center',\n                background: 'var(--a63-surface-panel)',\n                borderRadius: '0.75rem',\n                color: 'var(--a63-text-primary)',\n                display: 'flex',\n                gap: 12,\n                padding: '0.75rem',\n              }}\n            >\n              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>\n                {theme} / {mode}\n              </span>\n              <Alert style={{ flex: 1 }} variant=\"info\">\n                <AlertIcon>\n                  <Info aria-hidden />\n                </AlertIcon>\n                <AlertTitle>Heads up</AlertTitle>\n                <AlertDescription>Status tones recolor per theme.</AlertDescription>\n              </Alert>\n            </div>\n          </UIProvider>\n        ))\n      )}\n    </div>\n  ),\n}\n\n/* The same alert reviewed against target host contexts. */\nexport const Endpoints: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12, maxWidth: 560 }}>\n      {[\n        {\n          label: 'Web',\n          props: { density: 'comfortable', designLanguage: 'web', input: 'pointer' } as const,\n        },\n        {\n          label: 'iOS touch',\n          props: { density: 'comfortable', designLanguage: 'ios', input: 'touch' } as const,\n        },\n        {\n          label: 'Compact extension',\n          props: {\n            density: 'compact',\n            designLanguage: 'web',\n            input: 'pointer',\n            surface: 'n2',\n          } as const,\n        },\n      ].map(endpoint => (\n        <UIProvider key={endpoint.label} {...endpoint.props}>\n          <div\n            style={{\n              background: 'var(--a63-surface-panel)',\n              borderRadius: 'var(--radius-lg)',\n              color: 'var(--a63-text-primary)',\n              padding: '0.75rem',\n            }}\n          >\n            <div style={{ fontSize: 12, marginBottom: 8, opacity: 0.68 }}>{endpoint.label}</div>\n            <Alert variant=\"info\">\n              <AlertIcon>\n                <Info aria-hidden />\n              </AlertIcon>\n              <AlertTitle>Endpoint fit</AlertTitle>\n              <AlertDescription>\n                The same Alert should keep its status-surface intent in this host context.\n              </AlertDescription>\n              <AlertAction>\n                <Button size=\"sm\" variant=\"ghost\">\n                  Review\n                </Button>\n              </AlertAction>\n            </Alert>\n          </div>\n        </UIProvider>\n      ))}\n    </div>\n  ),\n}\n\nexport const ContractMetadata: Story = {\n  render: () => (\n    <pre style={{ fontSize: 12, margin: 0, whiteSpace: 'pre-wrap' }}>\n      {JSON.stringify(alertContract, null, 2)}\n    </pre>\n  ),\n}\n"
+    "source": "import { alertContract, alertVariants, themes } from '@atom63/ui-foundation'\nimport {\n  Alert,\n  AlertAction,\n  AlertDescription,\n  AlertIcon,\n  AlertTitle,\n  Button,\n  UIProvider,\n} from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport { Info } from 'lucide-react'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\n\nconst meta = {\n  title: 'UI React/Alert',\n  component: Alert,\n} satisfies Meta<typeof Alert>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nexport const Playground: Story = {\n  render: () => (\n    <Alert style={{ maxWidth: 420 }}>\n      <AlertIcon>\n        <Info aria-hidden />\n      </AlertIcon>\n      <AlertTitle>Information</AlertTitle>\n      <AlertDescription>This is a neutral, default alert callout.</AlertDescription>\n    </Alert>\n  ),\n}\n\n/* Every semantic tone. */\nexport const Variants: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 10, maxWidth: 420 }}>\n      {alertVariants.map(variant => (\n        <Alert key={variant} variant={variant}>\n          <AlertIcon>\n            <Info aria-hidden />\n          </AlertIcon>\n          <AlertTitle style={{ textTransform: 'capitalize' }}>{variant}</AlertTitle>\n          <AlertDescription>The {variant} tone recolors border, fill, and icon.</AlertDescription>\n        </Alert>\n      ))}\n    </div>\n  ),\n}\n\n/* With a trailing action slot. */\nexport const WithAction: Story = {\n  render: () => (\n    <Alert style={{ maxWidth: 460 }} variant=\"warning\">\n      <AlertIcon>\n        <Info aria-hidden />\n      </AlertIcon>\n      <AlertTitle>Unsaved changes</AlertTitle>\n      <AlertDescription>Your edits will be lost if you leave.</AlertDescription>\n      <AlertAction>\n        <Button size=\"sm\" variant=\"ghost\">\n          Discard\n        </Button>\n      </AlertAction>\n    </Alert>\n  ),\n}\n\n/* Action treatment across every alert tone. */\nexport const ActionVariants: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 10, maxWidth: 560 }}>\n      {alertVariants.map(variant => (\n        <Alert key={variant} variant={variant}>\n          <AlertIcon>\n            <Info aria-hidden />\n          </AlertIcon>\n          <AlertTitle style={{ textTransform: 'capitalize' }}>{variant}</AlertTitle>\n          <AlertDescription>\n            The action button inherits the {variant} alert tone inside the action slot.\n          </AlertDescription>\n          <AlertAction>\n            <Button size=\"sm\" variant=\"ghost\">\n              Review\n            </Button>\n          </AlertAction>\n        </Alert>\n      ))}\n    </div>\n  ),\n}\n\n/* Every tone with its action in dark mode, where the error tone moves to the\n   danger status accent and the danger text color. */\nexport const DarkActionVariants: Story = { ...ActionVariants, globals: { mode: 'dark' } }\n\n/* Right to left: the action sits at the inline end (the left), clear of the title. */\nexport const RightToLeft: Story = {\n  render: () => (\n    <div dir=\"rtl\" style={{ maxWidth: 460 }}>\n      <Alert variant=\"error\">\n        <AlertIcon>\n          <Info aria-hidden />\n        </AlertIcon>\n        <AlertTitle>تعذر حفظ التغييرات</AlertTitle>\n        <AlertDescription>تحقق من الاتصال ثم حاول مرة أخرى.</AlertDescription>\n        <AlertAction>\n          <Button size=\"sm\" variant=\"ghost\">\n            إعادة المحاولة\n          </Button>\n        </AlertAction>\n      </Alert>\n    </div>\n  ),\n}\n\n/* Renders across all 4 DS themes × light/dark. */\nexport const Themes: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {themes.map(theme =>\n        (['light', 'dark'] as const).map(mode => (\n          <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>\n            <div\n              style={{\n                alignItems: 'center',\n                background: 'var(--a63-surface-panel)',\n                borderRadius: '0.75rem',\n                color: 'var(--a63-text-primary)',\n                display: 'flex',\n                gap: 12,\n                padding: '0.75rem',\n              }}\n            >\n              <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>\n                {theme} / {mode}\n              </span>\n              <Alert style={{ flex: 1 }} variant=\"info\">\n                <AlertIcon>\n                  <Info aria-hidden />\n                </AlertIcon>\n                <AlertTitle>Heads up</AlertTitle>\n                <AlertDescription>Status tones recolor per theme.</AlertDescription>\n              </Alert>\n            </div>\n          </UIProvider>\n        ))\n      )}\n    </div>\n  ),\n}\n\n/* The same alert reviewed against target host contexts. */\nexport const Endpoints: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12, maxWidth: 560 }}>\n      {[\n        {\n          label: 'Web',\n          props: { density: 'comfortable', designLanguage: 'web', input: 'pointer' } as const,\n        },\n        {\n          label: 'iOS touch',\n          props: { density: 'comfortable', designLanguage: 'ios', input: 'touch' } as const,\n        },\n        {\n          label: 'Compact extension',\n          props: {\n            density: 'compact',\n            designLanguage: 'web',\n            input: 'pointer',\n            surface: 'n2',\n          } as const,\n        },\n      ].map(endpoint => (\n        <UIProvider key={endpoint.label} {...endpoint.props}>\n          <div\n            style={{\n              background: 'var(--a63-surface-panel)',\n              borderRadius: 'var(--radius-lg)',\n              color: 'var(--a63-text-primary)',\n              padding: '0.75rem',\n            }}\n          >\n            <div style={{ fontSize: 12, marginBottom: 8, opacity: 0.68 }}>{endpoint.label}</div>\n            <Alert variant=\"info\">\n              <AlertIcon>\n                <Info aria-hidden />\n              </AlertIcon>\n              <AlertTitle>Endpoint fit</AlertTitle>\n              <AlertDescription>\n                The same Alert should keep its status-surface intent in this host context.\n              </AlertDescription>\n              <AlertAction>\n                <Button size=\"sm\" variant=\"ghost\">\n                  Review\n                </Button>\n              </AlertAction>\n            </Alert>\n          </div>\n        </UIProvider>\n      ))}\n    </div>\n  ),\n}\n\nexport const ContractMetadata: Story = {\n  render: () => (\n    <pre style={{ fontSize: 12, margin: 0, whiteSpace: 'pre-wrap' }}>\n      {JSON.stringify(alertContract, null, 2)}\n    </pre>\n  ),\n}\n"
    },
    "summary": "Alert presents persistent inline feedback with optional icon, action, and description.",
    "usage": "Keep it in the page when the message should remain available after the triggering event.",
@@ -14668,7 +14690,7 @@
    "files": [
     {
      "path": "blocks/getting-started-checklist/getting-started-checklist.tsx",
-     "source": "import {\n  Card,\n  CardContent,\n  Progress,\n  ProgressIndicator,\n  ProgressTrack,\n  ProgressValue,\n} from '@atom63/ui-react'\nimport { SectionHeader } from '@atom63/ui-react/layout'\nimport { Circle, CircleCheck, CircleDot } from 'lucide-react'\nimport type { ReactNode } from 'react'\n\nexport const template = {\n  id: 'getting-started-checklist',\n  kind: 'block',\n  title: 'Getting started checklist',\n  description:\n    'A short list of first steps with a progress count: finished steps are checked, the first unfinished one is current and carries its action, and the rest wait.',\n  category: 'feedback',\n  tags: ['onboarding', 'getting started', 'checklist', 'steps', 'setup', 'progress', 'first run'],\n  readiness: 'ready',\n} as const\n\nexport interface ChecklistStep {\n  /** The current step's call to action, for example a button or link. */\n  action?: ReactNode\n  /** One line on why the step matters. */\n  description: string\n  done: boolean\n  id: string\n  title: string\n}\n\nexport interface GettingStartedChecklistProps {\n  description?: string\n  steps: readonly ChecklistStep[]\n  title: string\n}\n\n/*\n * The current step is the first one not done, so the list cannot mark two\n * steps current or skip ahead. Each step's state is spoken before its title,\n * since the icons are decorative.\n */\nexport function GettingStartedChecklist({\n  description,\n  steps,\n  title,\n}: GettingStartedChecklistProps) {\n  const done = steps.filter(step => step.done).length\n  const current = steps.find(step => !step.done)\n  const summary = (value: number | null) => `${value ?? 0} of ${steps.length} done`\n\n  return (\n    <Card className=\"w-full\" padding=\"none\">\n      <CardContent className=\"flex flex-col gap-4\" padding=\"lg\">\n        <SectionHeader description={description} level={2} title={title} variant=\"muted\" />\n        <Progress\n          aria-label={title}\n          getAriaValueText={(_, value) => summary(value)}\n          max={steps.length}\n          value={done}\n        >\n          <div className=\"flex justify-end\">\n            <ProgressValue className=\"text-muted-foreground text-xs\">\n              {(_, value) => summary(value)}\n            </ProgressValue>\n          </div>\n          <ProgressTrack>\n            <ProgressIndicator />\n          </ProgressTrack>\n        </Progress>\n        <ol className=\"flex flex-col gap-4\">\n          {steps.map(step => {\n            const isCurrent = step === current\n            const Icon = step.done ? CircleCheck : isCurrent ? CircleDot : Circle\n            return (\n              <li\n                aria-current={isCurrent ? 'step' : undefined}\n                className=\"flex items-start gap-3\"\n                key={step.id}\n              >\n                <Icon\n                  aria-hidden\n                  className={\n                    step.done || isCurrent\n                      ? 'text-primary mt-0.5 size-4 shrink-0'\n                      : 'text-muted-foreground mt-0.5 size-4 shrink-0'\n                  }\n                />\n                <div className=\"flex min-w-0 flex-1 flex-col gap-1 text-sm\">\n                  <p\n                    className={step.done ? 'text-muted-foreground' : 'text-foreground font-medium'}\n                  >\n                    <span className=\"sr-only\">\n                      {step.done ? 'Done: ' : isCurrent ? 'Next: ' : 'To do: '}\n                    </span>\n                    {step.title}\n                  </p>\n                  <p className=\"text-muted-foreground\">{step.description}</p>\n                  {isCurrent && step.action ? <div className=\"pt-1\">{step.action}</div> : null}\n                </div>\n              </li>\n            )\n          })}\n        </ol>\n      </CardContent>\n    </Card>\n  )\n}\n"
+     "source": "import {\n  Card,\n  CardContent,\n  Progress,\n  ProgressIndicator,\n  ProgressTrack,\n  ProgressValue,\n} from '@atom63/ui-react'\nimport { SectionHeader } from '@atom63/ui-react/layout'\nimport { Circle, CircleCheck, CircleDot } from 'lucide-react'\nimport type { ReactNode } from 'react'\n\nexport const template = {\n  id: 'getting-started-checklist',\n  kind: 'block',\n  title: 'Getting started checklist',\n  description:\n    'A short list of first steps with a progress count: finished steps are checked, the first unfinished one is current and carries its action, and the rest wait.',\n  category: 'feedback',\n  tags: ['onboarding', 'getting started', 'checklist', 'steps', 'setup', 'progress', 'first run'],\n  readiness: 'ready',\n} as const\n\nexport interface ChecklistStep {\n  /** The current step's call to action, for example a button or link. */\n  action?: ReactNode\n  /** One line on why the step matters. */\n  description: string\n  done: boolean\n  id: string\n  title: string\n}\n\nexport interface GettingStartedChecklistProps {\n  description?: string\n  steps: readonly ChecklistStep[]\n  title: string\n}\n\n/*\n * The current step is the first one not done, so the list cannot mark two\n * steps current or skip ahead. Each step's state is spoken before its title,\n * since the icons are decorative.\n */\nexport function GettingStartedChecklist({\n  description,\n  steps,\n  title,\n}: GettingStartedChecklistProps) {\n  const done = steps.filter(step => step.done).length\n  const current = steps.find(step => !step.done)\n  const summary = (value: number | null) => `${value ?? 0} of ${steps.length} done`\n\n  return (\n    <Card className=\"w-full\" padding=\"none\">\n      <CardContent className=\"flex flex-col gap-4\" padding=\"lg\">\n        <SectionHeader description={description} level={2} title={title} variant=\"muted\" />\n        <Progress\n          aria-label={title}\n          getAriaValueText={(_, value) => summary(value)}\n          max={steps.length}\n          value={done}\n        >\n          <div className=\"flex justify-end\">\n            <ProgressValue className=\"text-muted-foreground text-xs\">\n              {(_, value) => summary(value)}\n            </ProgressValue>\n          </div>\n          <ProgressTrack>\n            <ProgressIndicator />\n          </ProgressTrack>\n        </Progress>\n        <ol className=\"flex flex-col gap-4\">\n          {steps.map(step => {\n            const isCurrent = step === current\n            const Icon = step.done ? CircleCheck : isCurrent ? CircleDot : Circle\n            return (\n              <li\n                aria-current={isCurrent ? 'step' : undefined}\n                className=\"flex items-start gap-3\"\n                key={step.id}\n              >\n                <Icon\n                  aria-hidden\n                  className={\n                    step.done || isCurrent\n                      ? 'mt-0.5 size-4 shrink-0 text-(--a63-text-accent)'\n                      : 'text-muted-foreground mt-0.5 size-4 shrink-0'\n                  }\n                />\n                <div className=\"flex min-w-0 flex-1 flex-col gap-1 text-sm\">\n                  <p\n                    className={step.done ? 'text-muted-foreground' : 'text-foreground font-medium'}\n                  >\n                    <span className=\"sr-only\">\n                      {step.done ? 'Done: ' : isCurrent ? 'Next: ' : 'To do: '}\n                    </span>\n                    {step.title}\n                  </p>\n                  <p className=\"text-muted-foreground\">{step.description}</p>\n                  {isCurrent && step.action ? <div className=\"pt-1\">{step.action}</div> : null}\n                </div>\n              </li>\n            )\n          })}\n        </ol>\n      </CardContent>\n    </Card>\n  )\n}\n"
     }
    ]
   },
@@ -21499,6 +21521,82 @@
    ]
   },
   {
+   "cssVar": "--a63-status-danger",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/danger"
+   },
+   "layer": "semantic",
+   "swift": "AtomTokens.Color.statusDanger",
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-danger-500)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-danger-600)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-status-danger-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/danger/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "oklch( from var(--a63-status-danger) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h )"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-status-danger-subtle",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/danger/subtle"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "color-mix(in oklab, var(--a63-status-danger) 14%, transparent)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "color-mix(in oklab, var(--a63-status-danger) 14%, transparent)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-status-danger-subtle-foreground",
+   "figma": {
+    "collection": "Semantic",
+    "path": "status/danger/subtle/foreground"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "color",
+   "values": [
+    {
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
+     "value": "var(--color-danger-400)"
+    },
+    {
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--color-danger-700)"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-status-info",
    "figma": {
     "collection": "Semantic",
@@ -22237,7 +22335,7 @@
     "path": "text/danger"
    },
    "layer": "semantic",
-   "swift": null,
+   "swift": "AtomTokens.Color.textDanger",
    "type": "color",
    "values": [
     {

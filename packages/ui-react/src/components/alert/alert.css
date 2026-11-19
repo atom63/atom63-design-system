@@ -2,9 +2,10 @@
  * Alert recipe — a status callout. Faithful to prod @atom63/ui alert.tsx: a
  * bordered status surface that re-flows its columns for a leading icon slot and
  * a trailing action slot. The default variant is neutral; four semantic tones
- * (error/info/success/warning) recolor border/bg/icon from --a63-status-* +
- * --a63-action-danger. It uses the SURFACE contract for wrapper treatment;
- * controls inside the action slot keep their own action/control styling.
+ * (error/info/success/warning) recolor border/bg/icon from --a63-status-*; the
+ * error action label uses --a63-text-danger. It uses the SURFACE contract for
+ * wrapper treatment; controls inside the action slot keep their own
+ * action/control styling.
  */
 
 .a63-Alert {
@@ -100,8 +101,8 @@
 
 .a63-Alert-action {
   position: absolute;
-  top: var(--alert-action-inset);
-  right: var(--alert-action-inset);
+  inset-block-start: var(--alert-action-inset);
+  inset-inline-end: var(--alert-action-inset);
   display: flex;
   gap: var(--a63-space-1);
 }
@@ -129,18 +130,18 @@
 }
 
 .a63-Alert[data-variant='error'] {
-  --alert-accent: var(--a63-action-danger);
-  --alert-action-foreground: var(--a63-action-danger);
-  --alert-action-hover-background: color-mix(in oklch, var(--a63-action-danger) 10%, transparent);
+  --alert-accent: var(--a63-status-danger);
+  --alert-action-foreground: var(--a63-text-danger);
+  --alert-action-hover-background: color-mix(in oklch, var(--a63-status-danger) 10%, transparent);
 
-  border-color: color-mix(in oklch, var(--a63-action-danger) 32%, transparent);
-  background-color: color-mix(in oklch, var(--a63-action-danger) 4%, transparent);
+  border-color: color-mix(in oklch, var(--a63-status-danger) 32%, transparent);
+  background-color: color-mix(in oklch, var(--a63-status-danger) 4%, transparent);
 }
 .a63-Alert[data-variant='error'] > svg {
-  color: var(--a63-action-danger);
+  color: var(--a63-status-danger);
 }
 .a63-Alert[data-variant='error'] > [data-slot='alert-icon'] {
-  color: var(--a63-action-danger);
+  color: var(--a63-status-danger);
 }
 
 .a63-Alert[data-variant='info'] {

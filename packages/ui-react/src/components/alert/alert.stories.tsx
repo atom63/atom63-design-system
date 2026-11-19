@@ -91,6 +91,30 @@ export const ActionVariants: Story = {
   ),
 }
 
+/* Every tone with its action in dark mode, where the error tone moves to the
+   danger status accent and the danger text color. */
+export const DarkActionVariants: Story = { ...ActionVariants, globals: { mode: 'dark' } }
+
+/* Right to left: the action sits at the inline end (the left), clear of the title. */
+export const RightToLeft: Story = {
+  render: () => (
+    <div dir="rtl" style={{ maxWidth: 460 }}>
+      <Alert variant="error">
+        <AlertIcon>
+          <Info aria-hidden />
+        </AlertIcon>
+        <AlertTitle>تعذر حفظ التغييرات</AlertTitle>
+        <AlertDescription>تحقق من الاتصال ثم حاول مرة أخرى.</AlertDescription>
+        <AlertAction>
+          <Button size="sm" variant="ghost">
+            إعادة المحاولة
+          </Button>
+        </AlertAction>
+      </Alert>
+    </div>
+  ),
+}
+
 /* Renders across all 4 DS themes × light/dark. */
 export const Themes: Story = {
   render: () => (
