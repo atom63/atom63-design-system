@@ -1,0 +1,101 @@
+# Media
+
+Images, video and the media viewer ship from two entry points of `@atom63/ui-react`, apart from the root so an app that shows no media does not load them.
+
+| Entry | What it holds |
+|-------|---------------|
+| `@atom63/ui-react/media` | `Image`, `Video`, `VideoThumbnail`, `VideoDialog`, `VideoModal`, the video manager, and `MediaLightbox` with `useMediaLightbox` |
+| `@atom63/ui-react/media/lightbox` | The headless lightbox parts (`Lightbox.Root`, `Lightbox.Slides`, `Lightbox.Close` …) that `MediaLightbox` is built from, for a viewer with your own chrome |
+
+`MediaLightbox` needs its recipe: `@atom63/ui-react/recipes.css`, or `@atom63/ui-react/recipes/media-lightbox.css` on its own.
+
+## Images and video
+
+`Image` reserves its box with `aspectRatio`, lazy-loads, and shows a skeleton until the picture arrives. `Video` takes a list of `sources`; `VideoDialog` plays a file, YouTube or Vimeo video in a dialog opened by its `trigger`.
+
+```tsx
+import { Button } from '@atom63/ui-react'
+import { Image, Video, VideoDialog } from '@atom63/ui-react/media'
+
+<Image alt="Studio desk" aspectRatio="16/9" src="/desk.webp" />
+
+<Video autoPlay loop muted playsInline sources={[{ src: '/loop.mp4', type: 'video/mp4' }]} />
+
+<VideoDialog
+  isOpen={open}
+  onOpenChange={setOpen}
+  title="Talk"
+  trigger={<Button>Play the talk</Button>}
+  videoSources={[{ src: '/talk.mp4', type: 'video/mp4' }]}
+/>
+```
+
+## Media viewer
+
+`MediaLightbox` is a full-screen viewer for a gallery of images and videos, with swipe, zoom, thumbnails and a morph from the tile that opened it. `useMediaLightbox` holds its open state, index and origin.
+
+```tsx
+import { MediaLightbox, useMediaLightbox, type MediaLightboxItem } from '@atom63/ui-react/media'
+
+function Gallery({ items }: { items: MediaLightboxItem[] }) {
+  const lightbox = useMediaLightbox(items.length)
+
+  return (
+    <>
+      {items.map((item, index) => (
+        <button
+          aria-label={`View ${item.alt}`}
+          key={item.id}
+          onClick={event => lightbox.openAt(index, event.currentTarget)}
+          type="button"
+        >
+          <img alt="" src={item.src} />
+        </button>
+      ))}
+      <MediaLightbox
+        index={lightbox.index}
+        items={items}
+        onIndexChange={lightbox.setIndex}
+        onOpenChange={open => {
+          if (!open) lightbox.close()
+        }}
+        open={lightbox.isOpen}
+        origin={lightbox.origin}
+        transition={lightbox.transition}
+      />
+    </>
+  )
+}
+```
+
+## Lightbox parts
+
+`@atom63/ui-react/media/lightbox` exports each part of the viewer, also grouped as `Lightbox`. Compose them to change the chrome; the parts keep the keyboard, focus and accessible names.
+
+```tsx
+import { Lightbox } from '@atom63/ui-react/media/lightbox'
+
+<Lightbox.Root index={index} items={items} onIndexChange={setIndex} onOpenChange={setOpen} open={open}>
+  <Lightbox.Portal>
+    <Lightbox.Content>
+      <Lightbox.Viewport>
+        <Lightbox.Slides>
+          {slide => (
+            <Lightbox.Slide key={slide.item.id}>
+              <Lightbox.Frame>
+                <Lightbox.Zoom>
+                  <Lightbox.Media />
+                </Lightbox.Zoom>
+              </Lightbox.Frame>
+            </Lightbox.Slide>
+          )}
+        </Lightbox.Slides>
+      </Lightbox.Viewport>
+      <Lightbox.Counter />
+      <Lightbox.Close />
+    </Lightbox.Content>
+  </Lightbox.Portal>
+</Lightbox.Root>
+```
+
+Look up any export with `atom63 api <name>`, for example `atom63 api MediaLightbox`, and list an entry's exports with `atom63 api @atom63/ui-react/media/lightbox`.

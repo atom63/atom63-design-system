@@ -72,12 +72,16 @@
   display: flex;
 }
 
+/* `left` and `right` are physical screen edges, in right-to-left pages too: the
+   placement, the closed translate, the safe-area padding and the swipe to
+   dismiss all name the same edge. `justify-content: left/right` is physical,
+   where flex-start/flex-end would follow the text direction. */
 .a63-Drawer-viewport[data-side='left'] {
-  justify-content: flex-start;
+  justify-content: left;
 }
 
 .a63-Drawer-viewport[data-side='right'] {
-  justify-content: flex-end;
+  justify-content: right;
 }
 
 .a63-Drawer-content {

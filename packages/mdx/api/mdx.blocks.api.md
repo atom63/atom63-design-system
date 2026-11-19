@@ -284,7 +284,7 @@ export type FigureBlockProps = {
 };
 
 // @public (undocumented)
-export const ImageCompare: React_2.ForwardRefExoticComponent<Omit<HTMLAttributes<HTMLDivElement>, "children" | "title" | "onPositionChange"> & {
+export const ImageCompare: React_2.ForwardRefExoticComponent<Omit<HTMLAttributes<HTMLDivElement>, "children" | "onPositionChange" | "title"> & {
     after: ImageCompareImage;
     aspectRatio?: string;
     before: ImageCompareImage;
