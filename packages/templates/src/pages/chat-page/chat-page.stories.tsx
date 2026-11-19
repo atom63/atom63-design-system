@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import type { ChatPanelMessage } from '../../blocks/chat-panel/chat-panel'
-import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import { checkSafeArea, phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
 import { ChatPage } from './chat-page'
 
 const meta = {
@@ -47,7 +47,16 @@ const args = {
 
 export const Desktop: Story = { args }
 
-export const Phone: Story = { args, globals: phoneGlobals }
+/* The top bar owns the top inset; the page column the inline ones and the bottom one, under the composer. */
+export const Phone: Story = {
+  args,
+  globals: phoneGlobals,
+  play: ({ canvasElement }) =>
+    checkSafeArea(canvasElement, {
+      main: { paddingBottom: '31px', paddingInlineStart: '47px' },
+      'main > header': { paddingTop: '29px' },
+    }),
+}
 
 /* A new chat: the large greeting, the composer and suggestion chips. */
 export const StartScreen: Story = { args: { ...args, messages: [] } }
