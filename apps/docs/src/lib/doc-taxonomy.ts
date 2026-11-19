@@ -18,10 +18,16 @@ export const NAV_LABEL_OVERRIDES: Record<string, string> = {
   icon: 'Icons',
   'pattern-layout': 'Page layout',
   'pattern-agent': 'Agent runtime',
+  'pattern-mdx': 'MDX content',
 }
 
 export const SECTION_ORDER: Partial<Record<PageSection, string[]>> = {
-  architecture: ['architecture-overview', 'architecture-appearance-ui', 'architecture-changelog'],
+  architecture: [
+    'architecture-overview',
+    'architecture-appearance-ui',
+    'architecture-changelog',
+    'architecture-preview-exports',
+  ],
   component: ['component-overview', 'component-contract'],
   foundation: [
     'foundation-personalization',
@@ -43,6 +49,8 @@ export const SECTION_ORDER: Partial<Record<PageSection, string[]>> = {
     'pattern-inform',
     'pattern-agent',
     'pattern-widgets',
+    'pattern-media',
+    'pattern-mdx',
     'pattern-templates',
   ],
   theme: ['theme-overview', 'theme-system'],

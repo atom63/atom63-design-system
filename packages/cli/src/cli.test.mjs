@@ -21,6 +21,7 @@ const samples = {
   example: ['example', 'badge', 'Sizes'],
   token: ['token', '--a63-surface-page'],
   docs: ['docs', 'theme-system'],
+  api: ['api', 'AtomWidgetCard'],
   build: ['build', 'billing', 'settings', 'page'],
   template: ['template', 'settings-page'],
   copy: ['copy', 'settings-page', mkdtempSync(path.join(tmpdir(), 'atom63-copy-'))],
