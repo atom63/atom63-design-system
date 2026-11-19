@@ -6,6 +6,9 @@
 
 import * as React_2 from 'react';
 
+// @public (undocumented)
+export const DEFAULT_WIDGET_ERROR_LABELS: WidgetErrorLabels;
+
 // @public
 export function getWidgetErrorDescription(error: unknown): string | undefined;
 
@@ -15,6 +18,15 @@ export function resolveWidgetFeedbackState(input: {
     isEmpty?: boolean;
     isLoading?: boolean;
 }): WidgetFeedbackState | null;
+
+// @public
+export interface WidgetErrorLabels {
+    copyDetails: string;
+    detailsDescription: string;
+    detailsTitle: string;
+    retry: string;
+    viewDetails: string;
+}
 
 // @public
 export interface WidgetFeedbackCopy {
@@ -49,6 +61,7 @@ export interface WidgetStateFeedbackProps {
     className?: string;
     // (undocumented)
     copy: WidgetFeedbackCopy;
+    labels?: Partial<WidgetErrorLabels>;
     // (undocumented)
     onRetry?: () => void;
     // Warning: (ae-forgotten-export) The symbol "WidgetSize" needs to be exported by the entry point index.d.ts
