@@ -9,12 +9,18 @@
  *   node scripts/design-system/api-report.mjs --check  # fail if a report is stale
  *
  * Build the packages first (`pnpm --filter @atom63/ui-react build`).
+ *
+ * TypeScript prints the members of a string-literal union in an order that
+ * varies between runs and machines (`"md" | "lg" | "sm"` or `"sm" | "md" | "lg"`),
+ * so the reports sort them. Tuples keep their order.
  */
 import { Extractor, ExtractorConfig } from '@microsoft/api-extractor'
-import { existsSync, mkdirSync, mkdtempSync, rmSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+
+import { sortLiteralUnions } from './lib/api-report-format.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const check = process.argv.includes('--check')
@@ -46,6 +52,8 @@ const compilerOptions = {
 }
 
 const tempFolder = mkdtempSync(path.join(tmpdir(), 'atom63-api-report-'))
+const generatedFolder = path.join(tempFolder, 'generated')
+mkdirSync(generatedFolder)
 const failures = []
 
 try {
@@ -69,7 +77,8 @@ try {
           apiReport: {
             enabled: true,
             reportFileName: reportName,
-            reportFolder,
+            // Written here first, then sorted and compared with the committed report.
+            reportFolder: generatedFolder,
             reportTempFolder: tempFolder,
           },
           docModel: { enabled: false },
@@ -91,14 +100,20 @@ try {
         configObjectFullPath: path.join(projectFolder, 'api-extractor.json'),
         packageJsonFullPath: path.join(projectFolder, 'package.json'),
       })
-      const result = Extractor.invoke(config, { localBuild: !check, showVerboseMessages: false })
-      if (!result.succeeded || (check && result.apiReportChanged)) {
+      const result = Extractor.invoke(config, { localBuild: true, showVerboseMessages: false })
+      if (!result.succeeded) {
         failures.push(
-          `${packageDir}/api/${reportName}.api.md: ${
-            result.apiReportChanged ? 'report is out of date' : 'API Extractor failed'
-          } (${result.errorCount} errors, ${result.warningCount} warnings)`
+          `${packageDir}/api/${reportName}.api.md: API Extractor failed (${result.errorCount} errors, ${result.warningCount} warnings)`
         )
+        continue
       }
+      const file = `${reportName}.api.md`
+      const report = sortLiteralUnions(readFileSync(path.join(generatedFolder, file), 'utf8'))
+      const committedPath = path.join(reportFolder, file)
+      const committed = existsSync(committedPath) ? readFileSync(committedPath, 'utf8') : null
+      if (report === committed) continue
+      if (check) failures.push(`${packageDir}/api/${file}: report is out of date`)
+      else writeFileSync(committedPath, report)
     }
   }
 } finally {

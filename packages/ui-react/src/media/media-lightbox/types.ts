@@ -147,4 +147,25 @@ export interface MediaLightboxProps {
    * megabytes of decoded bitmap.
    */
   preload?: number
+  /**
+   * The caller's own buttons for the item on screen, in a row in the bottom
+   * dock, under the caption and above the thumbnails: the thumb zone on a
+   * phone. Called per item, so each one can offer different actions; return
+   * `null` for none.
+   *
+   * The row fades with the rest of the chrome (auto-hide and the
+   * pull-to-dismiss fade), clears the bottom safe area, and stays inside the
+   * focus trap. Presses there never page, zoom or close. Draw the buttons as
+   * `Button variant="overlay"`, which holds contrast on the black phone stage
+   * and on the themed backdrop above `sm` alike.
+   */
+  actions?: (item: MediaLightboxItem, index: number) => React.ReactNode
+  /**
+   * Extra controls for the item on screen, at the start of the top-right
+   * cluster beside Close: one icon button, such as a details toggle, fits
+   * best. Called per item; return `null` for none. Same chrome rules as
+   * `actions`. Draw it as `Button variant="overlay" shape="round"
+   * size="icon-xl"` with an `aria-label` to match the built-in controls.
+   */
+  toolbar?: (item: MediaLightboxItem, index: number) => React.ReactNode
 }

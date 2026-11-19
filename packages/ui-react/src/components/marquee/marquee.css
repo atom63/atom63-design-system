@@ -9,6 +9,9 @@
 .a63-Marquee {
   --gap: 1rem;
   --duration: 40s;
+  /* 1 scrolls the tracks left; -1 under dir="rtl", where the duplicate tracks
+     lay out to the left and the strip has to scroll right to loop. */
+  --marquee-dir: 1;
 
   display: flex;
   gap: var(--gap);
@@ -17,6 +20,9 @@
 }
 .a63-Marquee[data-orientation='horizontal'] {
   flex-direction: row;
+}
+.a63-Marquee:dir(rtl) {
+  --marquee-dir: -1;
 }
 .a63-Marquee[data-orientation='vertical'] {
   flex-direction: column;
@@ -53,7 +59,7 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(-100% - var(--gap)));
+    transform: translateX(calc((-100% - var(--gap)) * var(--marquee-dir)));
   }
 }
 

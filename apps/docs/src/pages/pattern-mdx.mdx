@@ -1,0 +1,75 @@
+# MDX content
+
+`@atom63/mdx` renders MDX documentation and articles with Atom63 prose styles and a set of portable blocks: callouts, key ideas, figures, steps, timelines and more. This docs site is written with it.
+
+| Entry | What it holds |
+|-------|---------------|
+| `@atom63/mdx` | `MDXContentProvider`, `DocsMDXContentProvider` and the default component map `mdxComponents` |
+| `@atom63/mdx/blocks` | The portable blocks (`Callout`, `KeyIdea`, `FigureBlock`, `Steps` …) and `portableBlockNames` |
+| `@atom63/mdx/blocks/credits-block`, `@atom63/mdx/blocks/media-caption` | `CreditsBlock` and `MediaCaption` alone, for a lighter import |
+| `@atom63/mdx/article` | `ArticleMDXContentProvider` and `createMdxComponents()` for article and portfolio pages |
+| `@atom63/mdx/editor` | `MdxSourceEditor`, `MdxSourceView` and `MdxLivePreview` |
+| `@atom63/mdx/runtime` | `compileMdx`, `useMdxRuntime` and the Shiki highlighting helpers |
+| `@atom63/mdx/lightbox` | The figure lightbox that opens `FigureBlock` images in `MediaLightbox` |
+| `@atom63/mdx/primitives` | Experimental layout, frame, motion and slot primitives for authoring new blocks |
+
+Load the styles once, after `@atom63/styles` and Tailwind: `@import "@atom63/mdx/styles/a63.css";`. The figure lightbox also needs `@atom63/ui-react/recipes/media-lightbox.css`.
+
+## Render a page
+
+Wrap compiled MDX in a provider. It maps Markdown elements to Atom63 prose and registers the blocks, so a page can use them without importing each one.
+
+```tsx
+import { DocsMDXContentProvider, mdxComponents } from '@atom63/mdx'
+
+import Page from './page.mdx'
+
+export function DocsPage() {
+  return (
+    <DocsMDXContentProvider components={mdxComponents}>
+      <Page />
+    </DocsMDXContentProvider>
+  )
+}
+```
+
+`MDXContentProvider` takes a `variant`: `article` (full-width prose), `narrow` (a text column with full-width media; the default of `ArticleMDXContentProvider`) or `docs`.
+
+## Blocks
+
+Choose a block by what the author means, not by its look:
+
+| Intent | Block |
+|--------|-------|
+| Reader notice, caveat, success state | `Callout` (`type`: `info`, `warning`, `error`, `success`) |
+| One prominent takeaway | `KeyIdea` |
+| Conceptual before and after, or options side by side | `Compare` |
+| Live before and after | `ComparisonPair` |
+| Draggable media before and after | `ImageCompare` |
+| Captioned image or video | `FigureBlock`, `VideoBlock`, `MediaCaption` |
+| Live demo surface | `ExampleContainer`, `DemoStage` |
+| Ordered sequence or dated history | `Steps`, `Timeline` |
+| Figures and links | `StatCard`, `StatGrid`, `ResourceList` |
+| Diagrams and layering | `MermaidDiagram`, `LayerStack` |
+| Code | `CodeBlock`, `Tabs` |
+| Page furniture | `PageMeta`, `PageTableOfContents`, `MdxPageSkeleton`, `Accordion`, `CreditsBlock`, `ScrollStage`, `ColorSwatchItem`, `MediaPlaceholder` |
+
+In MDX, with the provider's component map:
+
+```mdx
+<KeyIdea title="One token architecture">
+  Every renderer reads the same tokens, so a theme change reaches web, iOS and Figma at once.
+</KeyIdea>
+
+<Callout type="warning">Releases need approval before they publish.</Callout>
+```
+
+In React, import a block directly:
+
+```tsx
+import { Callout, KeyIdea } from '@atom63/mdx/blocks'
+
+<KeyIdea title="One token architecture">Every renderer reads the same tokens.</KeyIdea>
+```
+
+Look up any export with `atom63 api <name>`, for example `atom63 api KeyIdea`, and list an entry's exports with `atom63 api @atom63/mdx/blocks`.
