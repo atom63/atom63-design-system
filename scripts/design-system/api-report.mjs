@@ -11,16 +11,19 @@
  * Build the packages first (`pnpm --filter @atom63/ui-react build`).
  */
 import { Extractor, ExtractorConfig } from '@microsoft/api-extractor'
-import { existsSync, mkdirSync, mkdtempSync, rmSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+
+import { publishedPackageDirs } from './published-packages.mjs'
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const check = process.argv.includes('--check')
 
 /** Package folder -> { report name: entry .d.ts relative to the package }. */
 const packages = {
+  'packages/styles': { 'styles.z-layers': 'generated/z-layers.d.ts' },
   'packages/ui-foundation': { 'ui-foundation': 'dist/index.d.ts' },
   'packages/ui-react': {
     'ui-react': 'dist/index.d.ts',
@@ -30,6 +33,32 @@ const packages = {
     'ui-react.media-lightbox': 'dist/media/media-lightbox/parts/index.d.ts',
     'ui-react.preview': 'dist/preview/index.d.ts',
     'ui-react.theme': 'dist/theme/index.d.ts',
+  },
+  'packages/mdx': {
+    mdx: 'dist/index.d.ts',
+    'mdx.article': 'dist/article/index.d.ts',
+    'mdx.blocks': 'dist/blocks/index.d.ts',
+    'mdx.blocks-credits-block': 'dist/blocks/credits-block-entry.d.ts',
+    'mdx.blocks-media-caption': 'dist/blocks/media-caption-entry.d.ts',
+    'mdx.editor': 'dist/editor/index.d.ts',
+    'mdx.lightbox': 'dist/lightbox/index.d.ts',
+    'mdx.primitives': 'dist/primitives/index.d.ts',
+    'mdx.runtime': 'dist/runtime/index.d.ts',
+  },
+  'packages/inform': {
+    inform: 'dist/index.d.ts',
+    'inform.react': 'dist/react/index.d.ts',
+    'inform.surfaces': 'dist/surfaces/index.d.ts',
+  },
+  'packages/agent': {
+    agent: 'dist/index.d.ts',
+    'agent.react': 'dist/react/index.d.ts',
+  },
+  'packages/widgets': {
+    widgets: 'dist/index.d.ts',
+    'widgets.primitives': 'dist/primitives/index.d.ts',
+    'widgets.runtime': 'dist/runtime/index.d.ts',
+    'widgets.state': 'dist/state/index.d.ts',
   },
 }
 
@@ -45,8 +74,23 @@ const compilerOptions = {
   target: 'ES2022',
 }
 
-const tempFolder = mkdtempSync(path.join(tmpdir(), 'atom63-api-report-'))
 const failures = []
+
+/* Every typed export of a published package needs a report above. */
+for (const packageDir of publishedPackageDirs) {
+  const manifest = JSON.parse(readFileSync(path.join(repoRoot, packageDir, 'package.json'), 'utf8'))
+  const reported = new Set(Object.values(packages[packageDir] ?? {}))
+  for (const [key, target] of Object.entries(manifest.exports ?? {})) {
+    const types = typeof target === 'object' ? target?.types : undefined
+    if (types && !reported.has(types.replace(/^\.\//, ''))) {
+      failures.push(
+        `${manifest.name} export ${key} (${types}) has no API report; add it to api-report.mjs`
+      )
+    }
+  }
+}
+
+const tempFolder = mkdtempSync(path.join(tmpdir(), 'atom63-api-report-'))
 
 try {
   for (const [packageDir, entries] of Object.entries(packages)) {
