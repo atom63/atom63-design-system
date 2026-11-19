@@ -132,6 +132,7 @@ export interface MediaLightboxLabels {
 
 // @public (undocumented)
 export interface MediaLightboxProps {
+    actions?: (item: MediaLightboxItem, index: number) => React_2.ReactNode;
     appearance?: Record<string, MediaLightboxAppearance>;
     // (undocumented)
     className?: string;
@@ -152,6 +153,7 @@ export interface MediaLightboxProps {
     origin?: HTMLElement | null;
     preload?: number;
     thumbnails?: boolean;
+    toolbar?: (item: MediaLightboxItem, index: number) => React_2.ReactNode;
     transition?: MediaLightboxTransition;
 }
 

@@ -42,13 +42,17 @@
   grid-template-rows: auto 1fr;
   padding-bottom: max(3rem, var(--a63-safe-area-bottom, 0px));
 }
+/* `left` and `right` are physical screen edges, in right-to-left pages too: the
+   placement, the entrance translate, the safe-area padding and the inner border
+   all name the same edge. `justify-content: left/right` is physical, where
+   flex-start/flex-end would follow the text direction. */
 .a63-Sheet-viewport[data-side='left'] {
   display: flex;
-  justify-content: flex-start;
+  justify-content: left;
 }
 .a63-Sheet-viewport[data-side='right'] {
   display: flex;
-  justify-content: flex-end;
+  justify-content: right;
 }
 @media (min-width: 640px) {
   .a63-Sheet-viewport[data-variant='inset'] {
@@ -105,7 +109,7 @@
   width: calc(100% - 3rem);
   max-width: 28rem;
   padding-left: var(--a63-safe-area-left, 0px);
-  border-inline-end-width: var(--a63-control-border-width);
+  border-right-width: var(--a63-control-border-width);
 }
 .a63-Sheet-popup[data-side='left'][data-starting-style],
 .a63-Sheet-popup[data-side='left'][data-ending-style] {
@@ -116,7 +120,7 @@
   width: calc(100% - 3rem);
   max-width: 28rem;
   padding-right: var(--a63-safe-area-right, 0px);
-  border-inline-start-width: var(--a63-control-border-width);
+  border-left-width: var(--a63-control-border-width);
 }
 .a63-Sheet-popup[data-side='right'][data-starting-style],
 .a63-Sheet-popup[data-side='right'][data-ending-style] {
