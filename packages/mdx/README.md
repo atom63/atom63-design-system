@@ -137,7 +137,7 @@ Registered on `mdxComponents` / `blockMdxComponents`:
 | `ExampleContainer` | Live demo frame with dot grid |
 | `FigureBlock` | Captioned image figure with a connected `MediaLightbox` gallery (default on) |
 | `MediaCaption` | Centered figure caption |
-| `VideoBlock` | Captioned or explicitly decorative video figure |
+| `VideoBlock` | Captioned or explicitly decorative video figure. Set the caption track's language with `trackLang` (default `en`) and its menu name with `trackLabel` (default: the language's own name, such as "English" or "Deutsch") |
 
 Article-only components (atom63.io): `MediaBlock`, `ImageBlock`, `ImageCarousel`, `ImageGrid`, `BeforeAfter`, `LinkCard`.
 

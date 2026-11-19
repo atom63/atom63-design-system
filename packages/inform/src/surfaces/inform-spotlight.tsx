@@ -3,6 +3,7 @@ import type { ReactElement } from 'react'
 import { createPortal } from 'react-dom'
 
 import { cn } from '../lib/cn'
+import { InformDismissButton } from './dismiss-button'
 import { InformIconSlot } from './icon-slot'
 import { resolveInformIcon } from './severity-icon'
 import { InformActions } from './inform-actions'
@@ -32,6 +33,10 @@ const UNMEASURED: BubbleSize = { width: 0, height: 0 }
  * Blocking guide step: a scrim with a cutout over the anchor plus a bubble.
  * There is no primitive underneath, so focus trapping, Escape, focus
  * restoration, and scroll locking are implemented here.
+ *
+ * When `dismissable` (the default) it closes from its dismiss button, Escape,
+ * or a press on the scrim. With `dismissable={false}` none of those close it,
+ * so it must carry an action.
  */
 /**
  * Takes the rest of the page out of the accessibility tree while the spotlight
@@ -64,6 +69,8 @@ export function InformSpotlight({
   anchor,
   body,
   className,
+  dismissLabel,
+  dismissable = true,
   icon,
   onDismiss,
   open,
@@ -130,7 +137,7 @@ export function InformSpotlight({
     const onKeyDown = (event: KeyboardEvent): void => {
       if (event.key === 'Escape') {
         event.preventDefault()
-        onDismiss?.()
+        if (dismissable) onDismiss?.()
         return
       }
       if (event.key !== 'Tab') return
@@ -159,7 +166,7 @@ export function InformSpotlight({
       restoreBackground()
       restoreRef.current?.focus()
     }
-  }, [onDismiss, visible])
+  }, [dismissable, onDismiss, visible])
 
   if (!visible || rect === null) return null
 
@@ -176,7 +183,21 @@ export function InformSpotlight({
    * living inside it.
    */
   return createPortal(
-    <div className="a63-InformSpotlight" ref={rootRef}>
+    /*
+      The root covers the viewport and is the scrim's hit area. A press that
+      lands on it, not on the bubble or the cutout, dismisses: a phone has no
+      Escape key, so this and the dismiss button are the touch paths out.
+      Escape is the keyboard equivalent, handled in the effect above.
+    */
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- Escape is the keyboard path; the scrim is not a control.
+    <div
+      className="a63-InformSpotlight"
+      data-testid="inform-spotlight-scrim"
+      onClick={event => {
+        if (dismissable && event.target === event.currentTarget) onDismiss?.()
+      }}
+      ref={rootRef}
+    >
       {/*
         The cutout is an empty box over the anchor carrying a huge shadow
         spread: visually identical to a clip-path hole, without the polygon
@@ -219,6 +240,7 @@ export function InformSpotlight({
             </p>
             {actions === undefined ? null : <InformActions actions={actions} />}
           </div>
+          {dismissable ? <InformDismissButton label={dismissLabel} onDismiss={onDismiss} /> : null}
         </div>
       </div>
     </div>,
