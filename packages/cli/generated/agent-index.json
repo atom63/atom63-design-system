@@ -102,7 +102,7 @@
      "declaration": "struct AtomAmountText",
      "source": "packages/ui-ios/Sources/Atom63UI/AtomAmountText.swift",
      "summary": "A money amount in a display role, as banking and pricing screens draw a balance: \"$13.25\" with the integer part at the role size and the fraction (\".25\") smaller and raised, like the web's `text-display` with `amount-fraction`; `fraction: .baseline` keeps it on the baseline, like `amount-fraction-baseline`. The amount is formatted for the locale with `FormatStyle.Currency`, drawn with monospaced digits, scales with Dynamic Type and reads as one accessibility label. It takes the foreground style around it.",
-     "component": null,
+     "component": "amount",
      "members": [
       {
        "name": "init(_:currencyCode:role:strong:fraction:locale:)",
@@ -3727,6 +3727,11 @@
      "progressStates",
      "progressTones",
      "progressVisualArchetypes",
+     "progressiveBlurContract",
+     "progressiveBlurPositions",
+     "progressiveBlurSlots",
+     "progressiveBlurStates",
+     "progressiveBlurVisualArchetypes",
      "radii",
      "radioContract",
      "radioIndicators",
