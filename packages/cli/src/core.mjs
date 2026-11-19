@@ -269,7 +269,7 @@ export function search(index, query, { kind, limit = 10 } = {}) {
             label: `${component.label} — ${story}`,
             summary: hit?.note ?? component.stories.file,
             // Below components unless examples are what was asked for.
-            score: hit?.score ?? total * (kind === 'example' ? 1 : 0.4),
+            score: hit?.score ?? total * (kind === 'example' ? 1 : 0.3),
             next: `atom63 example ${component.slug} ${story}`,
           })
         }
