@@ -17545,11 +17545,19 @@
    "type": "color",
    "values": [
     {
-     "scope": ":root",
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
      "value": "var(--a63-action-neutral)"
     },
     {
-     "scope": "[data-a63-theme='terminal']",
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--a63-action-neutral)"
+    },
+    {
+     "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])",
+     "value": "var(--a63-text-primary)"
+    },
+    {
+     "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])",
      "value": "var(--a63-text-primary)"
     }
    ]
@@ -17565,11 +17573,19 @@
    "type": "color",
    "values": [
     {
-     "scope": ":root",
+     "scope": ":is(.dark, [data-a63-mode='dark'])",
      "value": "var(--a63-action-neutral-foreground)"
     },
     {
-     "scope": "[data-a63-theme='terminal']",
+     "scope": ":root, .light, [data-a63-mode='light']",
+     "value": "var(--a63-action-neutral-foreground)"
+    },
+    {
+     "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])",
+     "value": "var(--a63-surface-page)"
+    },
+    {
+     "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])",
      "value": "var(--a63-surface-page)"
     }
    ]

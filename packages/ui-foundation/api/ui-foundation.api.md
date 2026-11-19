@@ -1579,7 +1579,7 @@ export const copyButtonContract: {
         readonly icon: "icon-xl";
         readonly label: "xl";
     }];
-    sizes: ("md" | "lg" | "sm" | "xs" | "xl" | "icon-xs" | "icon-sm" | "icon" | "icon-lg" | "icon-xl")[];
+    sizes: ("sm" | "md" | "lg" | "xs" | "xl" | "icon-xs" | "icon-sm" | "icon" | "icon-lg" | "icon-xl")[];
     slots: readonly ["button", "button-label", "copy-button-swap", "copy-button-item", "animated-check"];
     states: readonly ["rest", "hover", "pressed", "focus-visible", "copied"];
     variants: readonly ["ghost", "outline", "secondary"];
@@ -1608,7 +1608,7 @@ export const copyButtonSizePairs: readonly [{
 }];
 
 // @public (undocumented)
-export const copyButtonSizes: ("md" | "lg" | "sm" | "xs" | "xl" | "icon-xs" | "icon-sm" | "icon" | "icon-lg" | "icon-xl")[];
+export const copyButtonSizes: ("sm" | "md" | "lg" | "xs" | "xl" | "icon-xs" | "icon-sm" | "icon" | "icon-lg" | "icon-xl")[];
 
 // @public (undocumented)
 export type CopyButtonSlot = (typeof copyButtonSlots)[number];

@@ -107,14 +107,18 @@ function contrastRatio(fg: Rgb, bg: Rgb): number {
   return (lighter + 0.05) / (darker + 0.05)
 }
 
-function resolvePaintedColor(cssVar: string, as: 'color' | 'background'): string {
+function resolvePaintedColor(
+  cssVar: string,
+  as: 'color' | 'background',
+  parent: HTMLElement = document.body
+): string {
   const probe = document.createElement('div')
   if (as === 'color') {
     probe.style.color = `var(${cssVar})`
   } else {
     probe.style.backgroundColor = `var(${cssVar})`
   }
-  document.body.appendChild(probe)
+  parent.appendChild(probe)
   const style = getComputedStyle(probe)
   const value = as === 'color' ? style.color : style.backgroundColor
   probe.remove()
@@ -153,6 +157,36 @@ describe('core semantic contrast (WCAG AA)', () => {
           if (ratio < min) {
             failures.push(
               `${theme}/${mode} ${fg} on ${bg}: ${ratio.toFixed(2)}:1 < ${min}:1 (fg=${fgCss}, bg=${bgCss})`
+            )
+          }
+        }
+      }
+    }
+
+    expect(failures, failures.join('\n')).toEqual([])
+  })
+
+  /* A custom property resolves its var() reads on the element that declares it,
+     and descendants inherit the result. A UIProvider sets theme and mode on a
+     nested element, so a token declared only on :root would keep the root's
+     mode there. Resolve every pair inside such a scope, under a light root. */
+  it('holds the same pairs inside a nested theme and mode scope', () => {
+    const failures: string[] = []
+
+    for (const theme of themes) {
+      for (const mode of modes) {
+        const scope = document.createElement('div')
+        scope.setAttribute('data-a63-theme', theme)
+        scope.setAttribute('data-a63-mode', mode)
+        document.body.replaceChildren(scope)
+
+        for (const { fg, bg, min } of pairs) {
+          const fgCss = resolvePaintedColor(fg, 'color', scope)
+          const bgCss = resolvePaintedColor(bg, 'background', scope)
+          const ratio = contrastRatio(parseCssColor(fgCss), parseCssColor(bgCss))
+          if (ratio < min) {
+            failures.push(
+              `${theme}/${mode} (nested) ${fg} on ${bg}: ${ratio.toFixed(2)}:1 < ${min}:1`
             )
           }
         }

@@ -1,5 +1,5 @@
 /*
- * Generated from src/contracts/toggle.tokens.json by scripts/build-css-from-dtcg.mjs. Do not edit;
+ * Generated from src/contracts/toggle.resolver.json by scripts/build-css-from-dtcg.mjs. Do not edit;
  * change the DTCG source and run `pnpm --filter @atom63/styles generate:tokens`.
  *
  * Toggle contract — persistent on/off controls.
@@ -15,7 +15,9 @@
  *   --a63-toggle-primary-foreground   -> var(--a63-action-primary-foreground)
  *
  * The pressed neutral fill is a token, so a theme whose neutral solid sits
- * close to its page (terminal) can give a pressed toggle its own fill.
+ * close to its page (terminal) can give a pressed toggle its own fill. Each
+ * mode block repeats it so a nested light or dark scope resolves it against
+ * its own action roles.
  */
 :root {
   --a63-toggle-border-width: var(--a63-segment-border-width);
@@ -26,6 +28,16 @@
   --a63-toggle-shadow-active: none;
   --a63-toggle-text-shadow: none;
   --a63-toggle-disabled-opacity: 0.56;
+}
+
+:root,
+.light,
+[data-a63-mode='light'] {
+  --a63-toggle-on-background: var(--a63-action-neutral);
+  --a63-toggle-on-foreground: var(--a63-action-neutral-foreground);
+}
+
+:is(.dark, [data-a63-mode='dark']) {
   --a63-toggle-on-background: var(--a63-action-neutral);
   --a63-toggle-on-foreground: var(--a63-action-neutral-foreground);
 }
