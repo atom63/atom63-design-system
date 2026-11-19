@@ -2793,6 +2793,7 @@ export interface SliderProps extends Omit<SliderRootProps, 'value' | 'defaultVal
     defaultValue?: number | readonly number[];
     getThumbAriaLabel?: (index: number) => string;
     onValueChange?: (value: number) => void;
+    onValuesChange?: (values: number[], eventDetails: Slider_2.Root.ChangeEventDetails) => void;
     tone?: SliderTone;
     value?: number | readonly number[];
 }
@@ -3039,6 +3040,7 @@ export function UIProvider(input: UIProviderProps): React$1.ReactElement;
 
 // @public (undocumented)
 export interface UIProviderProps extends useRender.ComponentProps<'div'>, Partial<UIEnvironment> {
+    dir?: 'ltr' | 'rtl' | 'auto';
 }
 
 // @public (undocumented)

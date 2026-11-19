@@ -1,6 +1,8 @@
 import { fireEvent, render, screen } from '@testing-library/react'
+import * as React from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
+import { UIProvider } from '../../provider'
 import { Slider } from './slider'
 
 describe('Slider', () => {
@@ -59,5 +61,42 @@ describe('Slider', () => {
     expect(container.querySelector('.a63-Slider')).toHaveAttribute('data-orientation', 'vertical')
     expect(screen.getByRole('slider', { name: 'Minimum' })).toBeInTheDocument()
     expect(screen.getByRole('slider', { name: 'Maximum' })).toBeInTheDocument()
+  })
+
+  it('reports every thumb to onValuesChange, so a controlled range slider works', () => {
+    const onValuesChange = vi.fn()
+    function ControlledRange() {
+      const [range, setRange] = React.useState<number[]>([25, 75])
+      return (
+        <Slider
+          getThumbAriaLabel={index => (index === 0 ? 'Minimum' : 'Maximum')}
+          onValuesChange={next => {
+            onValuesChange(next)
+            setRange(next)
+          }}
+          value={range}
+        />
+      )
+    }
+    render(<ControlledRange />)
+    const max = screen.getByRole('slider', { name: 'Maximum' })
+    max.focus()
+    fireEvent.keyDown(max, { key: 'ArrowRight' })
+    expect(onValuesChange).toHaveBeenLastCalledWith([25, 76])
+    expect(max).toHaveAttribute('aria-valuenow', '76')
+    expect(screen.getByRole('slider', { name: 'Minimum' })).toHaveAttribute('aria-valuenow', '25')
+  })
+
+  it('steps right-to-left inside UIProvider dir="rtl"', () => {
+    const onValueChange = vi.fn()
+    render(
+      <UIProvider dir="rtl">
+        <Slider aria-label="Tint" onValueChange={onValueChange} value={40} />
+      </UIProvider>
+    )
+    const thumb = screen.getByRole('slider', { name: 'Tint' })
+    thumb.focus()
+    fireEvent.keyDown(thumb, { key: 'ArrowRight' })
+    expect(onValueChange).toHaveBeenLastCalledWith(39)
   })
 })
