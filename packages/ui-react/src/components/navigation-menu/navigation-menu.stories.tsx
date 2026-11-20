@@ -100,6 +100,34 @@ export const AlignEnd: Story = {
   render: () => <Demo align="end" />,
 }
 
+/* The current page is the link with `active`: a heavier label, apart from the
+   hover fill. Captured with forced colors on (Windows High Contrast), the
+   current link takes the system selection colours. */
+export const ForcedColors: Story = {
+  render: () => (
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <div style={{ display: 'grid', gap: 4, width: 240 }}>
+              <NavigationMenuLink href="#a">Analytics</NavigationMenuLink>
+            </div>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink active href="#overview">
+            Overview
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink href="#pricing">Pricing</NavigationMenuLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  ),
+}
+
 // The trigger bar is the always-visible surface; the shared content panel is
 // portalled, so the matrix documents the trigger chrome across all 4 DS themes.
 export const Themes: Story = {

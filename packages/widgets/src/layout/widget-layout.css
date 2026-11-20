@@ -16,6 +16,40 @@
   block-size: 100%;
 }
 
+/*
+ * Touch targets. A widget pins --a63-control-min-target to 24px so controls
+ * keep their proportion in the tile (widget-scale.ts). On a coarse pointer the
+ * hit area still reaches 44 physical px: the Button's hit-area pseudo-element
+ * grows to --widget-interaction-target (44px over the presentation scale, or
+ * 44px where a host sets no scale) without growing the control.
+ */
+@media (pointer: coarse) {
+  :is(
+      .a63-WidgetViewport,
+      .a63-WidgetSurface,
+      .a63-WidgetCard,
+      .a63-WidgetStateFeedback,
+      .a63-WidgetHostFallback
+    )
+    .a63-Button:not([data-size='tile'])::before {
+    min-width: max(100%, var(--widget-interaction-target, 44px));
+    min-height: max(100%, var(--widget-interaction-target, 44px));
+  }
+}
+
+:is([data-a63-input='touch'], [data-input='touch'])
+  :is(
+    .a63-WidgetViewport,
+    .a63-WidgetSurface,
+    .a63-WidgetCard,
+    .a63-WidgetStateFeedback,
+    .a63-WidgetHostFallback
+  )
+  .a63-Button:not([data-size='tile'])::before {
+  min-width: max(100%, var(--widget-interaction-target, 44px));
+  min-height: max(100%, var(--widget-interaction-target, 44px));
+}
+
 /* ── WidgetImage ───────────────────────────────────────────────────────── */
 .a63-WidgetImage {
   position: relative;

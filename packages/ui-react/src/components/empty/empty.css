@@ -112,12 +112,10 @@
   gap: 0.375rem;
 }
 
+/* A muted ghost Button: it rests in the secondary text colour (4.5:1) and goes
+   to full contrast on hover, focus and while expanded. */
 .a63-Empty-errorToggle.a63-Button {
-  color: color-mix(in oklch, var(--a63-text-secondary) 60%, transparent);
   font-size: var(--a63-control-font-size-xs);
-}
-.a63-Empty-errorToggle.a63-Button:hover {
-  color: var(--a63-text-secondary);
 }
 
 .a63-Empty-errorBox {

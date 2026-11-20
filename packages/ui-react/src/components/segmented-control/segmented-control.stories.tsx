@@ -141,6 +141,18 @@ export const Tones: Story = {
   ),
 }
 
+/* Captured with forced colors on (Windows High Contrast): the selected segment
+   of both tones takes the system selection colours. */
+export const ForcedColors: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+      <Demo tone="neutral" />
+      <Demo tone="accent" />
+      <Demo items={ICON_ITEMS} variant="icon" />
+    </div>
+  ),
+}
+
 export const Themes: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>

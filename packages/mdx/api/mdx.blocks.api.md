@@ -639,6 +639,8 @@ export type VideoBlockProps = {
     fit?: keyof typeof fitClasses;
     loop?: boolean;
     muted?: boolean;
+    pauseLabel?: string;
+    playLabel?: string;
     showCaption?: boolean;
     spacing?: MediaSpacing;
     src: string;
@@ -650,11 +652,11 @@ export type VideoBlockProps = {
 // Warnings were encountered during analysis:
 //
 // dist/blocks/index.d.ts:39:5 - (ae-forgotten-export) The symbol "MdxFrameItemTone" needs to be exported by the entry point index.d.ts
-// dist/video-block-B0IlE4Lz.d.ts:90:5 - (ae-forgotten-export) The symbol "CalloutType" needs to be exported by the entry point index.d.ts
-// dist/video-block-B0IlE4Lz.d.ts:117:5 - (ae-forgotten-export) The symbol "aspectRatioClasses" needs to be exported by the entry point index.d.ts
-// dist/video-block-B0IlE4Lz.d.ts:126:5 - (ae-forgotten-export) The symbol "MediaSpacing" needs to be exported by the entry point index.d.ts
-// dist/video-block-B0IlE4Lz.d.ts:180:5 - (ae-forgotten-export) The symbol "CodeBlockVariant" needs to be exported by the entry point index.d.ts
-// dist/video-block-B0IlE4Lz.d.ts:457:5 - (ae-forgotten-export) The symbol "fitClasses" needs to be exported by the entry point index.d.ts
+// dist/video-block-Cg5EK_vS.d.ts:90:5 - (ae-forgotten-export) The symbol "CalloutType" needs to be exported by the entry point index.d.ts
+// dist/video-block-Cg5EK_vS.d.ts:117:5 - (ae-forgotten-export) The symbol "aspectRatioClasses" needs to be exported by the entry point index.d.ts
+// dist/video-block-Cg5EK_vS.d.ts:126:5 - (ae-forgotten-export) The symbol "MediaSpacing" needs to be exported by the entry point index.d.ts
+// dist/video-block-Cg5EK_vS.d.ts:180:5 - (ae-forgotten-export) The symbol "CodeBlockVariant" needs to be exported by the entry point index.d.ts
+// dist/video-block-Cg5EK_vS.d.ts:461:5 - (ae-forgotten-export) The symbol "fitClasses" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 
