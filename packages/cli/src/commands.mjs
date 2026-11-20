@@ -94,7 +94,7 @@ export const commands = [
   {
     name: 'api',
     summary:
-      'A public API name or an entry point: a SwiftUI type with its declaration, doc comment and members, or a JavaScript export with its import line and docs page; an entry point (e.g. @atom63/ui-react/media, @atom63/mdx/blocks, Atom63UI) with everything it exports.',
+      'A public API name or an entry point: a SwiftUI type with its declaration, doc comment and members, or a JavaScript export with its import line and docs page (for an MDX block, its purpose, an example and its props); an entry point (e.g. @atom63/ui-react/media, @atom63/mdx/blocks, Atom63UI) with everything it exports.',
     args: [
       {
         name: 'name',

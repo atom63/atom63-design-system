@@ -19,6 +19,7 @@ export const NAV_LABEL_OVERRIDES: Record<string, string> = {
   'pattern-layout': 'Page layout',
   'pattern-agent': 'Agent runtime',
   'pattern-mdx': 'MDX content',
+  'pattern-mdx-blocks': 'MDX blocks',
 }
 
 export const SECTION_ORDER: Partial<Record<PageSection, string[]>> = {
@@ -51,6 +52,7 @@ export const SECTION_ORDER: Partial<Record<PageSection, string[]>> = {
     'pattern-widgets',
     'pattern-media',
     'pattern-mdx',
+    'pattern-mdx-blocks',
     'pattern-templates',
   ],
   theme: ['theme-overview', 'theme-system'],

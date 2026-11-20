@@ -43,9 +43,9 @@ const entryDocs = {
   '@atom63/ui-react/preview': 'architecture-preview-exports',
   '@atom63/ui-react/theme': 'architecture-appearance-ui',
   '@atom63/mdx': 'pattern-mdx',
-  '@atom63/mdx/blocks': 'pattern-mdx',
-  '@atom63/mdx/blocks/credits-block': 'pattern-mdx',
-  '@atom63/mdx/blocks/media-caption': 'pattern-mdx',
+  '@atom63/mdx/blocks': 'pattern-mdx-blocks',
+  '@atom63/mdx/blocks/credits-block': 'pattern-mdx-blocks',
+  '@atom63/mdx/blocks/media-caption': 'pattern-mdx-blocks',
   '@atom63/mdx/article': 'pattern-mdx',
   '@atom63/mdx/editor': 'pattern-mdx',
   '@atom63/mdx/lightbox': 'pattern-mdx',
@@ -168,7 +168,15 @@ try {
         )
       }
       const exported = await load(path.posix.join(dir, source))
-      web.push({ module, docs: page, values: Object.keys(exported).sort() })
+      const values = Object.keys(exported).sort()
+      const markdown = docs.find(doc => doc.slug === page).markdown
+      const sections = Object.fromEntries(
+        values.flatMap(value => {
+          const section = docsSection(markdown, value)
+          return section ? [[value, section]] : []
+        })
+      )
+      web.push({ module, docs: page, values, sections })
     }
   }
 
@@ -183,6 +191,29 @@ try {
   }
 } finally {
   await server.close()
+}
+
+/**
+ * The section of a docs page headed with an export's name (`### KeyIdea`), up
+ * to the next heading at its level or above, so `atom63 api KeyIdea` can print
+ * what the page says about it.
+ */
+function docsSection(markdown, name) {
+  const lines = markdown.split('\n')
+  const start = lines.findIndex(line => line === `## ${name}` || line === `### ${name}`)
+  if (start < 0) return null
+  const level = lines[start].indexOf(' ')
+  let fenced = false
+  let end = start + 1
+  for (; end < lines.length; end++) {
+    if (/^(`{3,}|~{3,})/.test(lines[end])) fenced = !fenced
+    const heading = !fenced && /^(#{1,6}) /.exec(lines[end])
+    if (heading && heading[1].length <= level) break
+  }
+  return lines
+    .slice(start + 1, end)
+    .join('\n')
+    .trim()
 }
 
 /** Story export names in declaration order: `export const Sizes: Story = …`. */

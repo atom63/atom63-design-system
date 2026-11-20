@@ -780,6 +780,22 @@ describe('api', () => {
     assert.match(formatEnvelope(api(index, 'KeyIdea')), /from '@atom63\/mdx\/blocks'/)
   })
 
+  it('answers every MDX block with its docs section: purpose, example and props', () => {
+    const blocks = index.api.web.find(entry => entry.module === '@atom63/mdx/blocks')
+    const components = blocks.values.filter(name => /^[A-Z][a-z]/.test(name))
+    assert.ok(components.length >= 30)
+    for (const name of components) {
+      const section = blocks.sections[name]
+      assert.ok(section, `${name} has no "### ${name}" section on atom63 docs ${blocks.docs}`)
+      assert.match(section, /```/, `${name} has no example`)
+      assert.match(section, /Props of `|adds no props of its own/, `${name} has no props`)
+    }
+    const text = formatEnvelope(api(index, 'KeyIdea'))
+    assert.match(text, /Docs: atom63 docs pattern-mdx-blocks/)
+    assert.match(text, /<KeyIdea title=/)
+    assert.match(text, /- `label`: `ReactNode` \(default `'Key idea'`\)/)
+  })
+
   it('lists an entry point and the SwiftUI module', () => {
     const media = api(index, '@atom63/ui-react/media')
     assert.equal(media.type, 'api.entry')
