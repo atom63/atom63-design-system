@@ -66,7 +66,7 @@ export const badgeDotColors = [
   'neutral',
 ] as const
 export const badgeSlots = ['badge', 'badge-dot'] as const
-export const badgeStates = ['resting', 'interactive', 'disabled', 'focus-visible'] as const
+export const badgeStates = ['rest', 'interactive', 'disabled', 'focus-visible'] as const
 export const badgeVisualArchetypes = ['marker'] as const satisfies readonly VisualArchetypeId[]
 
 export type BadgeVariant = (typeof badgeVariants)[number]
@@ -75,6 +75,12 @@ export type BadgeDotColor = (typeof badgeDotColors)[number]
 export type BadgeSlot = (typeof badgeSlots)[number]
 export type BadgeState = (typeof badgeStates)[number]
 export type BadgeVisualArchetype = (typeof badgeVisualArchetypes)[number]
+
+/** Earlier names of BadgeState values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const badgeStateAliases = { resting: 'rest' } as const satisfies Record<string, BadgeState>
+
+/** @deprecated An earlier name of a value of BadgeState; use the value badgeStateAliases maps it to. */
+export type BadgeStateAlias = keyof typeof badgeStateAliases
 
 export interface BadgeContract {
   defaultVariant: BadgeVariant

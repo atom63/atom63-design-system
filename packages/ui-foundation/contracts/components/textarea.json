@@ -38,6 +38,50 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What a multi-line text field is, independent of any platform: its size and its chrome. AtomTextEditor has no size axis (its height is minHeight); the web Textarea has no variant, which only AtomTextEditor takes so far.",
+    "axes": {
+      "size": ["sm", "md", "lg"],
+      "variant": ["default", "filled"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "size": {
+            "list": "sizes",
+            "map": {
+              "sm": {
+                "size": "sm"
+              },
+              "md": {
+                "size": "md"
+              },
+              "lg": {
+                "size": "lg"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      },
+      "ios": {
+        "props": {
+          "variant": {
+            "swiftEnum": "AtomFieldVariant",
+            "map": {
+              "default": {
+                "variant": "default"
+              },
+              "filled": {
+                "variant": "filled"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "textEditor",

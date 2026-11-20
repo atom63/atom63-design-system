@@ -57,6 +57,30 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What a menu item is, independent of any platform: whether its action is destructive. iOS has no Atom63UI enum for it: Menu takes a Button with the SwiftUI role .destructive.",
+    "axes": {
+      "itemTone": ["neutral", "destructive"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "itemVariant": {
+            "list": "itemVariants",
+            "map": {
+              "default": {
+                "itemTone": "neutral"
+              },
+              "destructive": {
+                "itemTone": "destructive"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "menu",

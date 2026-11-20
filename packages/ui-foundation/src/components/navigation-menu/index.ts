@@ -2,6 +2,7 @@
 export {
   navigationMenuContract,
   navigationMenuSlots,
+  navigationMenuStateAliases,
   navigationMenuStates,
   navigationMenuVisualArchetypes,
 } from './navigation-menu-contract'
@@ -9,5 +10,6 @@ export type {
   NavigationMenuContract,
   NavigationMenuSlot,
   NavigationMenuState,
+  NavigationMenuStateAlias,
   NavigationMenuVisualArchetype,
 } from './navigation-menu-contract'

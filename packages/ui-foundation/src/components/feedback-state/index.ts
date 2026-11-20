@@ -4,6 +4,7 @@ export {
   feedbackStateKinds,
   feedbackStateSizes,
   feedbackStateSlots,
+  feedbackStateStateAliases,
   feedbackStateStates,
   feedbackStateVisualArchetypes,
 } from './feedback-state-contract'
@@ -13,5 +14,6 @@ export type {
   FeedbackStateSize,
   FeedbackStateSlot,
   FeedbackStateState,
+  FeedbackStateStateAlias,
   FeedbackStateVisualArchetype,
 } from './feedback-state-contract'

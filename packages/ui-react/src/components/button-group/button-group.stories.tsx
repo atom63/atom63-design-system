@@ -63,7 +63,7 @@ export const WithSeparator: Story = {
 export const Sizes: Story = {
   render: () => (
     <div style={{ alignItems: 'flex-start', display: 'grid', gap: 12 }}>
-      {(['xs', 'sm', 'default', 'lg', 'xl'] as const).map(size => (
+      {(['xs', 'sm', 'md', 'lg', 'xl'] as const).map(size => (
         <ButtonGroup key={size} size={size}>
           <Button variant="secondary">One</Button>
           <Button variant="secondary">Two</Button>
@@ -129,7 +129,7 @@ export const Themes: Story = {
 export const WithInput: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 16 }}>
-      {(['default', 'sm', 'lg'] as const).map(size => (
+      {(['md', 'sm', 'lg'] as const).map(size => (
         <div key={size} style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 56 }}>
             {size}
@@ -137,7 +137,7 @@ export const WithInput: Story = {
           <Input
             aria-label="Example text field"
             placeholder="Search…"
-            size={size === 'default' ? 'md' : size}
+            size={size}
             style={{ width: 180 }}
           />
           <ButtonGroup size={size}>
@@ -189,12 +189,12 @@ export const Endpoints: Story = {
             <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>
               {endpoint.label}
             </span>
-            <ButtonGroup size={endpoint.label === 'Compact extension' ? 'sm' : 'default'}>
+            <ButtonGroup size={endpoint.label === 'Compact extension' ? 'sm' : 'md'}>
               <Button variant="secondary">Cut</Button>
               <Button variant="secondary">Copy</Button>
               <Button variant="secondary">Paste</Button>
             </ButtonGroup>
-            <ButtonGroup size={endpoint.label === 'Compact extension' ? 'sm' : 'default'}>
+            <ButtonGroup size={endpoint.label === 'Compact extension' ? 'sm' : 'md'}>
               <Button variant="ghost">Bold</Button>
               <Button variant="ghost">Italic</Button>
               <Button variant="ghost">Under</Button>

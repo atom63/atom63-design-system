@@ -4,7 +4,12 @@
   "maturity": "stable",
   "lists": {
     "iconVariants": ["chevron", "plus-minus"],
-    "states": ["closed", "open", "focusVisible", "disabled"],
+    "states": {
+      "values": ["closed", "open", "focus-visible", "disabled"],
+      "deprecatedAliases": {
+        "focusVisible": "focus-visible"
+      }
+    },
     "slots": [
       "accordion",
       "accordion-item",
@@ -35,6 +40,30 @@
     },
     "visualArchetypes": {
       "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "intent": {
+    "description": "What an accordion is, independent of any platform: the glyph its trigger shows. iOS has no icon axis: DisclosureGroup draws the platform's disclosure chevron.",
+    "axes": {
+      "icon": ["chevron", "plus-minus"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "icon": {
+            "list": "iconVariants",
+            "map": {
+              "chevron": {
+                "icon": "chevron"
+              },
+              "plus-minus": {
+                "icon": "plus-minus"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
     }
   },
   "crossRenderer": {

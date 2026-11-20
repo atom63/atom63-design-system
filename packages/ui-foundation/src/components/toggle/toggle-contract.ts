@@ -5,7 +5,15 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 
 export const toggleSizes = ['sm', 'md', 'lg'] as const
 export const toggleTones = ['neutral', 'accent', 'subtle'] as const
-export const toggleStates = ['off', 'on', 'rest', 'hover', 'pressed', 'disabled', 'focus'] as const
+export const toggleStates = [
+  'off',
+  'on',
+  'rest',
+  'hover',
+  'pressed',
+  'disabled',
+  'focus-visible',
+] as const
 export const toggleSlots = ['toggle', 'toggle-content'] as const
 export const toggleTokenSlots = [
   'toggle.background',
@@ -30,6 +38,15 @@ export type ToggleState = (typeof toggleStates)[number]
 export type ToggleSlot = (typeof toggleSlots)[number]
 export type ToggleTokenSlot = (typeof toggleTokenSlots)[number]
 export type ToggleVisualArchetype = (typeof toggleVisualArchetypes)[number]
+
+/** Earlier names of ToggleState values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const toggleStateAliases = { focus: 'focus-visible' } as const satisfies Record<
+  string,
+  ToggleState
+>
+
+/** @deprecated An earlier name of a value of ToggleState; use the value toggleStateAliases maps it to. */
+export type ToggleStateAlias = keyof typeof toggleStateAliases
 
 export interface ToggleContract {
   defaultSize: ToggleSize

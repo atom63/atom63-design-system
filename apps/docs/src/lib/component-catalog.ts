@@ -151,7 +151,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
         rest: 'Resting appearance.',
         hover: 'Pointer over an enabled button.',
         pressed: 'While pressed, or held with data-pressed.',
-        focusVisible: 'Keyboard focus only; drawn as an outline.',
+        'focus-visible': 'Keyboard focus only; drawn as an outline.',
         disabled:
           'A neutral grey fill and muted label; ghost, link, overlay and glass fade only the label.',
         loading: 'Label keeps its width; the spinner overlays it.',

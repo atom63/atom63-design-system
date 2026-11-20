@@ -14,7 +14,12 @@
       "feedback-state-description",
       "feedback-state-content"
     ],
-    "states": ["idle", "busy", "actionable"],
+    "states": {
+      "values": ["rest", "busy", "actionable"],
+      "deprecatedAliases": {
+        "idle": "rest"
+      }
+    },
     "visualArchetypes": ["action"]
   },
   "contract": {

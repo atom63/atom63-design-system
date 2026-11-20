@@ -3,6 +3,7 @@
 import {
   type ButtonGroupOrientation,
   type ButtonGroupSize,
+  type ButtonGroupSizeAlias,
   buttonGroupContract,
 } from '@atom63/ui-foundation'
 import { mergeProps } from '@base-ui/react/merge-props'
@@ -15,7 +16,8 @@ import { ButtonGroupProvider } from './button-group-context'
 
 export type ButtonGroupProps = React.ComponentProps<'div'> & {
   orientation?: ButtonGroupOrientation
-  size?: ButtonGroupSize
+  /** `'default'` is a deprecated alias of `'md'`. */
+  size?: ButtonGroupSize | ButtonGroupSizeAlias
 }
 
 /* ButtonGroup — welds a run of controls (Button / Input / Select / text) into a
@@ -33,7 +35,7 @@ export function ButtonGroup({
       <div
         className={cn('a63-ButtonGroup', className)}
         data-orientation={orientation}
-        data-size={size}
+        data-size={size === 'default' ? 'md' : size}
         data-slot="button-group"
         role="group"
         {...props}

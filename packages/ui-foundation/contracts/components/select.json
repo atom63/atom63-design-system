@@ -90,6 +90,33 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What a select is, independent of any platform: its trigger size. iOS has no size axis: Picker draws at the platform size.",
+    "axes": {
+      "size": ["sm", "md", "lg"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "size": {
+            "list": "sizes",
+            "map": {
+              "sm": {
+                "size": "sm"
+              },
+              "md": {
+                "size": "md"
+              },
+              "lg": {
+                "size": "lg"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "picker",

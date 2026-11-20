@@ -4,6 +4,7 @@ export {
   scrollableListLayouts,
   scrollableListOptions,
   scrollableListSlots,
+  scrollableListStateAliases,
   scrollableListStates,
   scrollableListVisualArchetypes,
 } from './scrollable-list-contract'
@@ -13,5 +14,6 @@ export type {
   ScrollableListOption,
   ScrollableListSlot,
   ScrollableListState,
+  ScrollableListStateAlias,
   ScrollableListVisualArchetype,
 } from './scrollable-list-contract'

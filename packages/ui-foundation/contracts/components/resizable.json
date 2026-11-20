@@ -5,7 +5,12 @@
   "lists": {
     "orientations": ["horizontal", "vertical"],
     "variants": ["line", "grip"],
-    "states": ["idle", "hover", "focus-visible", "dragging", "disabled"],
+    "states": {
+      "values": ["rest", "hover", "focus-visible", "dragging", "disabled"],
+      "deprecatedAliases": {
+        "idle": "rest"
+      }
+    },
     "slots": [
       "resizable-panel-group",
       "resizable-panel",

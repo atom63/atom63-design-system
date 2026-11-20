@@ -18,7 +18,8 @@
  * - `status-set`: a list that holds the statuses `info`, `success` and
  *   `warning` names its danger member the way most such lists do.
  * - `physical-value`: values name logical sides (`start`, `end`), not `left`
- *   and `right`, so a contract reads the same in right-to-left layouts.
+ *   and `right`, so a contract reads the same in right-to-left layouts. A list
+ *   in PHYSICAL_SIDES names physical screen edges on purpose, with the reason.
  */
 
 /** Lists whose values are names, not slot or token paths. */
@@ -35,6 +36,21 @@ const SYNONYMS = {
     idle: 'rest',
   },
   '*': { resting: 'rest' },
+}
+
+/**
+ * Lists whose `left` and `right` are physical screen edges, not reading-order
+ * sides, keyed `component.list`, with the reason they stay physical.
+ */
+export const PHYSICAL_SIDES = {
+  'drawer.directions':
+    'The edge of the screen the drawer slides from, and the direction it is swiped to dismiss; a swipe direction does not mirror in right-to-left layouts.',
+  'sheet.sides':
+    'The edge of the viewport the sheet is anchored to. Base UI Dialog has no logical side; a caller wanting the reading-order edge picks it from the document direction.',
+  'sidebar.sides':
+    'The viewport edge the fixed sidebar container is pinned to; it is passed on to the mobile Sheet `side`. Making it follow the reading direction is a behaviour change for right-to-left layouts, tracked separately.',
+  'tooltip.sides':
+    "Base UI Positioner's `side`, which takes physical `left` and `right`; the logical `inline-start` and `inline-end` are not in the contract yet.",
 }
 
 const STATUS = ['info', 'success', 'warning']
@@ -59,7 +75,7 @@ export function checkContracts(contracts) {
         const canonical = SYNONYMS[list]?.[value] ?? SYNONYMS['*'][value]
         if (canonical)
           found.push({ rule: 'synonym', component, list, match: `${value} -> ${canonical}` })
-        if (value === 'left' || value === 'right') {
+        if ((value === 'left' || value === 'right') && !PHYSICAL_SIDES[`${component}.${list}`]) {
           found.push({ rule: 'physical-value', component, list, match: value })
         }
       }

@@ -3,9 +3,19 @@
   "component": "alert-dialog",
   "maturity": "stable",
   "lists": {
-    "variants": ["default", "destructive", "info", "success", "warning"],
+    "variants": {
+      "values": ["default", "error", "info", "success", "warning"],
+      "deprecatedAliases": {
+        "destructive": "error"
+      }
+    },
     "footerVariants": ["default", "bare"],
-    "sizes": ["default", "sm"],
+    "sizes": {
+      "values": ["md", "sm"],
+      "deprecatedAliases": {
+        "default": "md"
+      }
+    },
     "states": ["closed", "open"],
     "slots": [
       "alert-dialog-portal",
@@ -29,7 +39,7 @@
       "pattern": "alertdialog"
     },
     "defaultFooterVariant": "default",
-    "defaultSize": "default",
+    "defaultSize": "md",
     "defaultVariant": "default",
     "footerVariants": {
       "$ref": "#/lists/footerVariants"
@@ -48,6 +58,65 @@
     },
     "visualArchetypes": {
       "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "intent": {
+    "description": "What an alert dialog is, independent of any platform: the tone of the consequence it asks about, its width step and its footer chrome. iOS has none of these axes: the system alert(_:isPresented:actions:message:) draws one style, and a destructive action is a Button with role .destructive.",
+    "axes": {
+      "tone": ["neutral", "error", "info", "success", "warning"],
+      "size": ["md", "sm"],
+      "footer": ["default", "bare"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "variant": {
+            "list": "variants",
+            "map": {
+              "default": {
+                "tone": "neutral"
+              },
+              "error": {
+                "tone": "error"
+              },
+              "info": {
+                "tone": "info"
+              },
+              "success": {
+                "tone": "success"
+              },
+              "warning": {
+                "tone": "warning"
+              }
+            },
+            "extensions": {}
+          },
+          "size": {
+            "list": "sizes",
+            "map": {
+              "md": {
+                "size": "md"
+              },
+              "sm": {
+                "size": "sm"
+              }
+            },
+            "extensions": {}
+          },
+          "footerVariant": {
+            "list": "footerVariants",
+            "map": {
+              "default": {
+                "footer": "default"
+              },
+              "bare": {
+                "footer": "bare"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
     }
   },
   "crossRenderer": {

@@ -5,7 +5,7 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 
 export const scrollAreaOrientations = ['vertical', 'horizontal', 'both'] as const
 export const scrollAreaOptions = ['scroll-fade', 'scrollbar-gutter', 'show-on-hover'] as const
-export const scrollAreaStates = ['idle', 'hovering', 'scrolling', 'focus-visible'] as const
+export const scrollAreaStates = ['rest', 'hover', 'scrolling', 'focus-visible'] as const
 export const scrollAreaSlots = [
   'scroll-area',
   'scroll-area-viewport',
@@ -20,6 +20,15 @@ export type ScrollAreaOption = (typeof scrollAreaOptions)[number]
 export type ScrollAreaState = (typeof scrollAreaStates)[number]
 export type ScrollAreaSlot = (typeof scrollAreaSlots)[number]
 export type ScrollAreaVisualArchetype = (typeof scrollAreaVisualArchetypes)[number]
+
+/** Earlier names of ScrollAreaState values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const scrollAreaStateAliases = { hovering: 'hover', idle: 'rest' } as const satisfies Record<
+  string,
+  ScrollAreaState
+>
+
+/** @deprecated An earlier name of a value of ScrollAreaState; use the value scrollAreaStateAliases maps it to. */
+export type ScrollAreaStateAlias = keyof typeof scrollAreaStateAliases
 
 export interface ScrollAreaContract {
   defaultOrientation: ScrollAreaOrientation

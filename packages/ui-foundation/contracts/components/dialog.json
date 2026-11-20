@@ -3,7 +3,12 @@
   "component": "dialog",
   "maturity": "stable",
   "lists": {
-    "sizes": ["sm", "default", "lg"],
+    "sizes": {
+      "values": ["sm", "md", "lg"],
+      "deprecatedAliases": {
+        "default": "md"
+      }
+    },
     "mobilePlacements": ["bottom", "center"],
     "footerVariants": ["default", "bare"],
     "states": ["closed", "open", "starting", "ending", "focus-visible"],
@@ -29,7 +34,7 @@
     },
     "defaultFooterVariant": "default",
     "defaultMobilePlacement": "bottom",
-    "defaultSize": "default",
+    "defaultSize": "md",
     "footerVariants": {
       "$ref": "#/lists/footerVariants"
     },
@@ -47,6 +52,59 @@
     },
     "visualArchetypes": {
       "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "intent": {
+    "description": "What a dialog is, independent of any platform: its width step, where it sits on a narrow screen and its footer chrome. iOS has none of these axes: the sheet's height comes from presentationDetents(_:) and its placement and footer from the platform.",
+    "axes": {
+      "size": ["sm", "md", "lg"],
+      "mobilePlacement": ["bottom", "center"],
+      "footer": ["default", "bare"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "size": {
+            "list": "sizes",
+            "map": {
+              "sm": {
+                "size": "sm"
+              },
+              "md": {
+                "size": "md"
+              },
+              "lg": {
+                "size": "lg"
+              }
+            },
+            "extensions": {}
+          },
+          "mobilePlacement": {
+            "list": "mobilePlacements",
+            "map": {
+              "bottom": {
+                "mobilePlacement": "bottom"
+              },
+              "center": {
+                "mobilePlacement": "center"
+              }
+            },
+            "extensions": {}
+          },
+          "footerVariant": {
+            "list": "footerVariants",
+            "map": {
+              "default": {
+                "footer": "default"
+              },
+              "bare": {
+                "footer": "bare"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
     }
   },
   "crossRenderer": {

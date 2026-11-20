@@ -95,11 +95,13 @@ describe('Table', () => {
   it('puts size and variant on the container, defaulting from the contract', () => {
     const { container, rerender } = render(<Table />)
     const wrapper = () => container.querySelector('[data-slot="table-container"]')
-    expect(wrapper()).toHaveAttribute('data-size', 'default')
+    expect(wrapper()).toHaveAttribute('data-size', 'md')
     expect(wrapper()).toHaveAttribute('data-variant', 'default')
     rerender(<Table size="sm" variant="plain" />)
     expect(wrapper()).toHaveAttribute('data-size', 'sm')
     expect(wrapper()).toHaveAttribute('data-variant', 'plain')
+    rerender(<Table size="default" />)
+    expect(wrapper()).toHaveAttribute('data-size', 'md')
   })
 
   it('marks sticky head and body cells, and leaves others unmarked', () => {

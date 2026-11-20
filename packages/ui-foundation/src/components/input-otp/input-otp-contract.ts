@@ -3,7 +3,7 @@
 
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
-export const inputOTPStates = ['rest', 'active', 'disabled', 'invalid'] as const
+export const inputOTPStates = ['rest', 'current', 'disabled', 'invalid'] as const
 export const inputOTPSlots = [
   'input-otp',
   'input-otp-group',
@@ -15,6 +15,15 @@ export const inputOTPVisualArchetypes = ['field'] as const satisfies readonly Vi
 export type InputOTPState = (typeof inputOTPStates)[number]
 export type InputOTPSlot = (typeof inputOTPSlots)[number]
 export type InputOTPVisualArchetype = (typeof inputOTPVisualArchetypes)[number]
+
+/** Earlier names of InputOTPState values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const inputOTPStateAliases = { active: 'current' } as const satisfies Record<
+  string,
+  InputOTPState
+>
+
+/** @deprecated An earlier name of a value of InputOTPState; use the value inputOTPStateAliases maps it to. */
+export type InputOTPStateAlias = keyof typeof inputOTPStateAliases
 
 export interface InputOTPContract {
   slots: readonly InputOTPSlot[]

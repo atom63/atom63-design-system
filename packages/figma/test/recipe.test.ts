@@ -310,7 +310,7 @@ describe('the real Button recipe', () => {
       const [root] = v.layers
       const ring = v.layers.find(l => l.name === 'Focus ring')!
       const expected =
-        v.coord.state === 'focusVisible'
+        v.coord.state === 'focus-visible'
           ? {
               visible: { value: true },
               stroke: { alias: '--a63-control-focus-ring-color' },
@@ -343,7 +343,7 @@ describe('the real Button recipe', () => {
         for (const key of Object.keys(anatomyLayer.reads) as (keyof typeof properties)[]) {
           if (`${anatomyLayer.name}.${key}` in exemptions) continue
           // An outline that is not drawn (`outline: none`) has no color, width or offset.
-          if (outlineOnly.has(`${anatomyLayer.name}.${key}`) && v.coord.state !== 'focusVisible')
+          if (outlineOnly.has(`${anatomyLayer.name}.${key}`) && v.coord.state !== 'focus-visible')
             continue
           const value = properties[key]
           if (!value || 'skipped' in value) missing.push(`${v.name} ${anatomyLayer.name}.${key}`)

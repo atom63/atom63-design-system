@@ -252,11 +252,11 @@ export const InsetGroupMuted: Story = {
   ),
 }
 
-/* Every size tightens the row density (default · sm · xs). */
+/* Every size tightens the row density (md · sm · xs). */
 export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 12, width: 360 }}>
-      {(['default', 'sm', 'xs'] as const).map(size => (
+      {(['md', 'sm', 'xs'] as const).map(size => (
         <Item key={size} size={size} variant="outline">
           <ItemMedia variant="icon">
             <Bookmark aria-hidden />

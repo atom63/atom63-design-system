@@ -29,6 +29,33 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What a load-more trigger is, independent of any platform: how prominently it is drawn. iOS has no variant axis: AtomLoadMoreView takes only its AtomPaginationIntent state.",
+    "axes": {
+      "emphasis": ["default", "minimal", "prominent"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "variant": {
+            "list": "variants",
+            "map": {
+              "default": {
+                "emphasis": "default"
+              },
+              "minimal": {
+                "emphasis": "minimal"
+              },
+              "prominent": {
+                "emphasis": "prominent"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "pagination",

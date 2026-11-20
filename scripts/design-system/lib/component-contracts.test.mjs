@@ -5,6 +5,7 @@ import { describe, it } from 'node:test'
 import { fileURLToPath } from 'node:url'
 
 import {
+  aliasProblems,
   contractFields,
   intentProblems,
   listInfo,
@@ -126,6 +127,40 @@ describe('resolved components', () => {
     assert.deepEqual(resolved.slots, ['root'])
     assert.equal(resolved.source, 'packages/ui-foundation/contracts/components/button.json')
     assert.equal(resolved.maturity, 'stable')
+  })
+
+  it('carries deprecated aliases on the axis and the states', () => {
+    const tabs = source('tabs', {
+      component: 'tabs',
+      maturity: 'stable',
+      lists: {
+        sizes: { values: ['sm', 'md'], deprecatedAliases: { default: 'md' } },
+        states: {
+          values: ['rest', 'focus-visible'],
+          deprecatedAliases: { focus: 'focus-visible' },
+        },
+      },
+      contract: {
+        defaultSize: 'md',
+        sizes: { $ref: '#/lists/sizes' },
+        states: { $ref: '#/lists/states' },
+      },
+    })
+    const resolved = resolvedComponent(new Map([[tabs.id, tabs]]), tabs)
+    assert.deepEqual(resolved.axes, [
+      { name: 'sizes', values: ['sm', 'md'], deprecatedAliases: { default: 'md' }, default: 'md' },
+    ])
+    assert.deepEqual(resolved.stateAliases, { focus: 'focus-visible' })
+    assert.equal(listInfo(sections(tabs)[0], 'sizes').aliasesName, 'tabsSizeAliases')
+    assert.deepEqual(aliasProblems(tabs), [])
+  })
+
+  it('reports an alias that is still a value or names no value', () => {
+    const tabs = source('tabs', {
+      component: 'tabs',
+      lists: { sizes: { values: ['sm', 'md'], deprecatedAliases: { sm: 'md', default: 'lg' } } },
+    })
+    assert.equal(aliasProblems(tabs).length, 2)
   })
 })
 

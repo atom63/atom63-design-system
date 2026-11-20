@@ -3,7 +3,12 @@
   "component": "autocomplete",
   "maturity": "stable",
   "lists": {
-    "sizes": ["sm", "default", "lg"],
+    "sizes": {
+      "values": ["sm", "md", "lg"],
+      "deprecatedAliases": {
+        "default": "md"
+      }
+    },
     "slots": [
       "autocomplete-input-group",
       "autocomplete-start-addon",
@@ -29,7 +34,7 @@
     "visualArchetypes": ["field", "trigger", "overlay", "menu"]
   },
   "contract": {
-    "defaultSize": "default",
+    "defaultSize": "md",
     "sizes": {
       "$ref": "#/lists/sizes"
     },

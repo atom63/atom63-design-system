@@ -3,7 +3,12 @@
   "component": "navigation-menu",
   "maturity": "stable",
   "lists": {
-    "states": ["closed", "open", "active", "disabled", "starting", "ending"],
+    "states": {
+      "values": ["closed", "open", "current", "disabled", "starting", "ending"],
+      "deprecatedAliases": {
+        "active": "current"
+      }
+    },
     "slots": [
       "navigation-menu",
       "navigation-menu-list",

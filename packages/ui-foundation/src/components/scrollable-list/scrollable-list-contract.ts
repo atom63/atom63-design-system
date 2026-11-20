@@ -6,7 +6,7 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 export const scrollableListLayouts = ['scroll', 'wrap'] as const
 export const scrollableListOptions = ['mask', 'chevrons', 'draggable', 'column-aligned'] as const
 export const scrollableListStates = [
-  'idle',
+  'rest',
   'can-scroll-start',
   'can-scroll-end',
   'dragging',
@@ -28,6 +28,15 @@ export type ScrollableListOption = (typeof scrollableListOptions)[number]
 export type ScrollableListState = (typeof scrollableListStates)[number]
 export type ScrollableListSlot = (typeof scrollableListSlots)[number]
 export type ScrollableListVisualArchetype = (typeof scrollableListVisualArchetypes)[number]
+
+/** Earlier names of ScrollableListState values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const scrollableListStateAliases = { idle: 'rest' } as const satisfies Record<
+  string,
+  ScrollableListState
+>
+
+/** @deprecated An earlier name of a value of ScrollableListState; use the value scrollableListStateAliases maps it to. */
+export type ScrollableListStateAlias = keyof typeof scrollableListStateAliases
 
 export interface ScrollableListContract {
   defaultLayout: ScrollableListLayout
