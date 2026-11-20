@@ -32,7 +32,6 @@
     "toaster",
     "item",
     "carousel",
-    "message",
-    "amount"
+    "message"
   ]
 }

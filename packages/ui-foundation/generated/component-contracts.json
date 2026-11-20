@@ -196,64 +196,7 @@
       "slots": ["amount", "amount-fraction"],
       "states": ["rest"],
       "tokenSlots": [],
-      "visualArchetypes": ["surface"],
-      "intent": {
-        "description": "What an amount is, independent of any platform: its display size and where its fraction sits. On iOS the size is the display role (AtomDisplayRole).",
-        "axes": { "size": ["md", "lg"], "fraction": ["raised", "baseline"] },
-        "platforms": {
-          "web": {
-            "props": {
-              "size": {
-                "list": "sizes",
-                "map": { "md": { "size": "md" }, "lg": { "size": "lg" } },
-                "extensions": {}
-              },
-              "fraction": {
-                "list": "fractions",
-                "map": {
-                  "raised": { "fraction": "raised" },
-                  "baseline": { "fraction": "baseline" }
-                },
-                "extensions": {}
-              }
-            }
-          },
-          "ios": {
-            "props": {
-              "role": {
-                "swiftEnum": "AtomDisplayRole",
-                "map": { "display": { "size": "md" }, "displayLarge": { "size": "lg" } },
-                "extensions": {}
-              },
-              "fraction": {
-                "swiftEnum": "AtomAmountFraction",
-                "map": {
-                  "raised": { "fraction": "raised" },
-                  "baseline": { "fraction": "baseline" }
-                },
-                "extensions": {}
-              }
-            }
-          }
-        }
-      },
-      "crossRenderer": {
-        "foundationAxis": "states",
-        "catalogItem": "amount",
-        "reactRenderer": "Amount",
-        "swiftUIRenderer": "AtomAmountText",
-        "intent": "Show a money amount in a display text role, formatted for the locale, with its fraction at half size, raised or on the baseline.",
-        "parity": "strict",
-        "requiredStates": ["rest"],
-        "sharedOutcomes": ["amount-is-formatted-for-the-locale", "fraction-is-drawn-at-half-size"],
-        "accessibilityOutcomes": ["amount-reads-as-one-label"],
-        "platformAdaptations": {
-          "react": ["Formats with Intl.NumberFormat and draws tabular figures."],
-          "swiftUI": [
-            "Formats with FormatStyle.Currency, draws monospaced digits and scales with Dynamic Type."
-          ]
-        }
-      }
+      "visualArchetypes": ["surface"]
     },
     "animated-check": {
       "source": "packages/ui-foundation/contracts/components/animated-check.json",
@@ -501,9 +444,7 @@
                     "description": "A translucent surface with a hairline, for badges over imagery."
                   },
                   "muted": { "description": "A quieter neutral on the muted surface." },
-                  "accent": {
-                    "description": "A neutral on the control hover surface. Not the iOS `accent`, which was the earlier name of `primary`."
-                  },
+                  "accent": { "description": "A neutral on the control hover surface." },
                   "red": {
                     "description": "A palette hue for a category with no status.",
                     "group": "hue"
@@ -586,14 +527,14 @@
                 "swiftType": "AtomBadgeTone",
                 "map": {
                   "neutral": { "tone": "neutral", "emphasis": "soft" },
-                  "primary": { "tone": "primary", "emphasis": "solid" },
+                  "accent": { "tone": "primary", "emphasis": "solid" },
                   "info": { "tone": "info", "emphasis": "soft" },
                   "success": { "tone": "success", "emphasis": "soft" },
                   "warning": { "tone": "warning", "emphasis": "soft" },
                   "error": { "tone": "error", "emphasis": "soft" }
                 },
                 "extensions": {},
-                "aliases": { "accent": "primary", "danger": "error" }
+                "aliases": { "danger": "error" }
               }
             }
           }
@@ -607,7 +548,7 @@
         "swiftUIRenderer": "AtomBadge",
         "intent": "Communicate a compact label or semantic status alongside primary content.",
         "parity": "strict",
-        "requiredStates": ["neutral", "primary", "success", "warning", "error"],
+        "requiredStates": ["neutral", "accent", "success", "warning", "error"],
         "sharedOutcomes": ["label-remains-readable-without-color", "semantic-tone-retains-meaning"],
         "accessibilityOutcomes": ["text-does-not-rely-on-color"],
         "platformAdaptations": {

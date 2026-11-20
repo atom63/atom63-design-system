@@ -102,7 +102,7 @@
      "declaration": "struct AtomAmountText",
      "source": "packages/ui-ios/Sources/Atom63UI/AtomAmountText.swift",
      "summary": "A money amount in a display role, as banking and pricing screens draw a balance: \"$13.25\" with the integer part at the role size and the fraction (\".25\") smaller and raised, like the web's `text-display` with `amount-fraction`; `fraction: .baseline` keeps it on the baseline, like `amount-fraction-baseline`. The amount is formatted for the locale with `FormatStyle.Currency`, drawn with monospaced digits, scales with Dynamic Type and reads as one accessibility label. It takes the foreground style around it.",
-     "component": "amount",
+     "component": null,
      "members": [
       {
        "name": "init(_:currencyCode:role:strong:fraction:locale:)",
@@ -10558,29 +10558,6 @@
       "default": "raised"
      }
     ],
-    "crossRenderer": {
-     "accessibilityOutcomes": [
-      "amount-reads-as-one-label"
-     ],
-     "intent": "Show a money amount in a display text role, formatted for the locale, with its fraction at half size, raised or on the baseline.",
-     "parity": "strict",
-     "platformAdaptations": {
-      "react": [
-       "Formats with Intl.NumberFormat and draws tabular figures."
-      ],
-      "swiftUI": [
-       "Formats with FormatStyle.Currency, draws monospaced digits and scales with Dynamic Type."
-      ]
-     },
-     "requiredStates": [
-      "rest"
-     ],
-     "sharedOutcomes": [
-      "amount-is-formatted-for-the-locale",
-      "fraction-is-drawn-at-half-size"
-     ],
-     "swiftUIRenderer": "AtomAmountText"
-    },
     "exportName": "amountContract",
     "slots": [
      "amount",
@@ -10611,7 +10588,7 @@
    ],
    "importPath": "@atom63/ui-react",
    "label": "Amount",
-   "markdown": "# Amount\n\nAmount draws a money amount in a display text role, with the fraction smaller and raised, as banking and pricing screens draw a balance.\n\n**Status:** Preview\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Use Amount for a balance, a price or the amount being sent: the hero number of a screen. It formats the value for the locale with Intl.NumberFormat and reads as one label. Body-size amounts in rows stay plain text with tabular-nums. iOS: AtomAmountText.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Amount } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Amount`\n\n**Types:** `AmountProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/amount.json` (`amountContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `sizes` | `md`, `lg` | `md` |\n| `fractions` | `raised`, `baseline` | `raised` |\n\n**Slots:** `amount`, `amount-fraction`\n\n**States:** `rest`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.\n\n### Web and iOS\n\nShow a money amount in a display text role, formatted for the locale, with its fraction at half size, raised or on the baseline. Rendered by `AtomAmountText` in SwiftUI, with `strict` parity.\n\n**Required states:** `rest`\n\n**Shared outcomes:**\n\n- Amount is formatted for the locale\n- Fraction is drawn at half size\n\n**Accessibility outcomes:**\n\n- Amount reads as one label\n\n**Platform adaptations:**\n\n- React: Formats with Intl.NumberFormat and draws tabular figures.\n- SwiftUI: Formats with FormatStyle.Currency, draws monospaced digits and scales with Dynamic Type.\n\n## Related components\n\n- [Badge](/components/component-badge)\n- [Text Ticker](/components/component-text-ticker)\n",
+   "markdown": "# Amount\n\nAmount draws a money amount in a display text role, with the fraction smaller and raised, as banking and pricing screens draw a balance.\n\n**Status:** Preview\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Use Amount for a balance, a price or the amount being sent: the hero number of a screen. It formats the value for the locale with Intl.NumberFormat and reads as one label. Body-size amounts in rows stay plain text with tabular-nums. iOS: AtomAmountText.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Amount } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Amount`\n\n**Types:** `AmountProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/amount.json` (`amountContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `sizes` | `md`, `lg` | `md` |\n| `fractions` | `raised`, `baseline` | `raised` |\n\n**Slots:** `amount`, `amount-fraction`\n\n**States:** `rest`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.\n\n## Related components\n\n- [Badge](/components/component-badge)\n- [Text Ticker](/components/component-text-ticker)\n",
    "related": [
     "badge",
     "text-ticker"
@@ -10987,7 +10964,7 @@
      },
      "requiredStates": [
       "neutral",
-      "primary",
+      "accent",
       "success",
       "warning",
       "error"
@@ -11031,7 +11008,7 @@
    ],
    "importPath": "@atom63/ui-react",
    "label": "Badge",
-   "markdown": "# Badge\n\nBadge carries compact status or classification metadata beside primary content.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Keep badges short and non-interactive unless the surrounding semantic element owns the action.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Badge } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Badge`\n\n**Types:** `BadgeProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/badge.json` (`badgeContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `variants` | `default`, `primary`, `secondary`, `destructive`, `outline`, `glass`, `muted`, `accent`, `error`, `info`, `success`, `warning`, `red`, `orange`, `amber`, `yellow`, `lime`, `green`, `emerald`, `teal`, `cyan`, `sky`, `blue`, `indigo`, `violet`, `purple`, `fuchsia`, `pink`, `rose`, `neutral` | `default` |\n| `sizes` | `sm`, `md`, `lg` | `md` |\n| `dotColors` | `red`, `orange`, `amber`, `yellow`, `lime`, `green`, `emerald`, `teal`, `cyan`, `sky`, `blue`, `indigo`, `violet`, `purple`, `fuchsia`, `pink`, `rose`, `neutral` | — |\n\n**Slots:** `badge`, `badge-dot`\n\n**States:** `resting`, `interactive`, `disabled`, `focus-visible`\n\n**Visual archetype:** Markers and keycaps — Compact presentational labels, statuses, and keyboard hints.\n\n### Web and iOS\n\nCommunicate a compact label or semantic status alongside primary content. Rendered by `AtomBadge` in SwiftUI, with `strict` parity.\n\n**Required states:** `neutral`, `primary`, `success`, `warning`, `error`\n\n**Shared outcomes:**\n\n- Label remains readable without color\n- Semantic tone retains meaning\n\n**Accessibility outcomes:**\n\n- Text does not rely on color\n\n**Platform adaptations:**\n\n- React: May expose palette-only decorative variants outside the shared semantic subset.\n- React: May show a leading category dot (dot prop).\n- SwiftUI: Uses a compact capsule that expands for Dynamic Type.\n\n## Related components\n\n- [Avatar](/components/component-avatar)\n- [Kbd](/components/component-kbd)\n- [Alert](/components/component-alert)\n",
+   "markdown": "# Badge\n\nBadge carries compact status or classification metadata beside primary content.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Keep badges short and non-interactive unless the surrounding semantic element owns the action.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { Badge } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Badge`\n\n**Types:** `BadgeProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/badge.json` (`badgeContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `variants` | `default`, `primary`, `secondary`, `destructive`, `outline`, `glass`, `muted`, `accent`, `error`, `info`, `success`, `warning`, `red`, `orange`, `amber`, `yellow`, `lime`, `green`, `emerald`, `teal`, `cyan`, `sky`, `blue`, `indigo`, `violet`, `purple`, `fuchsia`, `pink`, `rose`, `neutral` | `default` |\n| `sizes` | `sm`, `md`, `lg` | `md` |\n| `dotColors` | `red`, `orange`, `amber`, `yellow`, `lime`, `green`, `emerald`, `teal`, `cyan`, `sky`, `blue`, `indigo`, `violet`, `purple`, `fuchsia`, `pink`, `rose`, `neutral` | — |\n\n**Slots:** `badge`, `badge-dot`\n\n**States:** `resting`, `interactive`, `disabled`, `focus-visible`\n\n**Visual archetype:** Markers and keycaps — Compact presentational labels, statuses, and keyboard hints.\n\n### Web and iOS\n\nCommunicate a compact label or semantic status alongside primary content. Rendered by `AtomBadge` in SwiftUI, with `strict` parity.\n\n**Required states:** `neutral`, `accent`, `success`, `warning`, `error`\n\n**Shared outcomes:**\n\n- Label remains readable without color\n- Semantic tone retains meaning\n\n**Accessibility outcomes:**\n\n- Text does not rely on color\n\n**Platform adaptations:**\n\n- React: May expose palette-only decorative variants outside the shared semantic subset.\n- React: May show a leading category dot (dot prop).\n- SwiftUI: Uses a compact capsule that expands for Dynamic Type.\n\n## Related components\n\n- [Avatar](/components/component-avatar)\n- [Kbd](/components/component-kbd)\n- [Alert](/components/component-alert)\n",
    "related": [
     "avatar",
     "kbd",

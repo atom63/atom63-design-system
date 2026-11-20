@@ -1884,7 +1884,7 @@ export const crossRendererContracts: readonly [{
     readonly swiftUIRenderer: "AtomBadge";
     readonly intent: "Communicate a compact label or semantic status alongside primary content.";
     readonly parity: "strict";
-    readonly requiredStates: readonly ["neutral", "primary", "success", "warning", "error"];
+    readonly requiredStates: readonly ["neutral", "accent", "success", "warning", "error"];
     readonly sharedOutcomes: readonly ["label-remains-readable-without-color", "semantic-tone-retains-meaning"];
     readonly accessibilityOutcomes: readonly ["text-does-not-rely-on-color"];
     readonly platformAdaptations: {
@@ -2203,22 +2203,6 @@ export const crossRendererContracts: readonly [{
     readonly platformAdaptations: {
         readonly react: readonly ["MessageList is a log region; Message is an article named by label (the sender), with logical corner radii so a thread mirrors in right-to-left scripts.", "Outgoing bubbles read --a63-message-outgoing-background and -foreground, which default to the accent; a theme or a product can set them."];
         readonly swiftUI: readonly ["AtomMessage takes direction, position, time and status; AtomMessageEvent is the centred row. The bubble uses UnevenRoundedRectangle for the joined corners.", "The status icon is an SF Symbol with an accessibility label; the bubble combines its children into one VoiceOver element."];
-    };
-}, {
-    readonly id: "amount";
-    readonly foundationContract: "amount";
-    readonly foundationAxis: "states";
-    readonly catalogItem: "amount";
-    readonly reactRenderer: "Amount";
-    readonly swiftUIRenderer: "AtomAmountText";
-    readonly intent: "Show a money amount in a display text role, formatted for the locale, with its fraction at half size, raised or on the baseline.";
-    readonly parity: "strict";
-    readonly requiredStates: readonly ["rest"];
-    readonly sharedOutcomes: readonly ["amount-is-formatted-for-the-locale", "fraction-is-drawn-at-half-size"];
-    readonly accessibilityOutcomes: readonly ["amount-reads-as-one-label"];
-    readonly platformAdaptations: {
-        readonly react: readonly ["Formats with Intl.NumberFormat and draws tabular figures."];
-        readonly swiftUI: readonly ["Formats with FormatStyle.Currency, draws monospaced digits and scales with Dynamic Type."];
     };
 }];
 

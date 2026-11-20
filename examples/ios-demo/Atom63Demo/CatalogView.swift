@@ -53,7 +53,7 @@ private struct CatalogIntroduction: View {
       .foregroundStyle(.secondary)
 
       HStack(spacing: AtomTokens.Space.x2) {
-        AtomBadge("\(CatalogRegistry.items.count) entries", tone: .primary)
+        AtomBadge("\(CatalogRegistry.items.count) entries", tone: .accent)
         AtomBadge("iOS 17+", tone: .neutral)
         AtomBadge("Native", tone: .success)
       }
@@ -441,7 +441,7 @@ private struct CatalogContractCard: View {
   private var parityTone: AtomBadgeTone {
     switch contract.parity {
     case .strict: .success
-    case .recipe: .primary
+    case .recipe: .accent
     case .platformAdaptive: .neutral
     }
   }

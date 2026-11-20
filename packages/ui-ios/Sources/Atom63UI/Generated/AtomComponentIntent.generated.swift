@@ -4,14 +4,11 @@
 /// The tone values of Badge on iOS, from packages/ui-foundation/contracts/components/badge.json.
 public enum AtomBadgeTone: Sendable {
   case neutral
-  case primary
+  case accent
   case info
   case success
   case warning
   case error
-
-  @available(*, deprecated, renamed: "primary")
-  public static var accent: AtomBadgeTone { .primary }
 
   @available(*, deprecated, renamed: "error")
   public static var danger: AtomBadgeTone { .error }

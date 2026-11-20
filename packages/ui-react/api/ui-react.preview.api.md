@@ -223,7 +223,7 @@ export const reactRendererConformance: readonly [{
     readonly verifiesMotionRecipe: false;
 }, {
     readonly contractId: "badge";
-    readonly implementedStates: readonly ["neutral", "primary", "success", "warning", "error"];
+    readonly implementedStates: readonly ["neutral", "accent", "success", "warning", "error"];
     readonly verifiedSharedOutcomes: readonly ["label-remains-readable-without-color", "semantic-tone-retains-meaning"];
     readonly verifiedAccessibilityOutcomes: readonly ["text-does-not-rely-on-color"];
     readonly verifiesMotionRecipe: false;
@@ -268,12 +268,6 @@ export const reactRendererConformance: readonly [{
     readonly implementedStates: readonly ["rest"];
     readonly verifiedSharedOutcomes: readonly ["direction-sets-side-and-fill", "runs-join-at-shared-corners", "status-is-named"];
     readonly verifiedAccessibilityOutcomes: readonly ["names-the-sender", "names-the-delivery-status"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "amount";
-    readonly implementedStates: readonly ["rest"];
-    readonly verifiedSharedOutcomes: readonly ["amount-is-formatted-for-the-locale", "fraction-is-drawn-at-half-size"];
-    readonly verifiedAccessibilityOutcomes: readonly ["amount-reads-as-one-label"];
     readonly verifiesMotionRecipe: false;
 }];
 

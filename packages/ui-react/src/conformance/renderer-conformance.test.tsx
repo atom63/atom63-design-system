@@ -1,8 +1,4 @@
-import {
-  amountContract,
-  crossRendererContracts,
-  getCrossRendererContract,
-} from '@atom63/ui-foundation'
+import { crossRendererContracts, getCrossRendererContract } from '@atom63/ui-foundation'
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { type FormEvent, useState } from 'react'
@@ -16,7 +12,6 @@ import {
   AccordionTrigger,
 } from '../components/accordion'
 import { Alert, AlertDescription, AlertTitle } from '../components/alert'
-import { Amount } from '../components/amount'
 import { Avatar, AvatarFallback } from '../components/avatar'
 import { Badge } from '../components/badge'
 import {
@@ -252,23 +247,9 @@ describe('React renderer conformance', () => {
   })
 
   it('verifies semantic badges retain readable text labels', () => {
-    for (const variant of ['default', 'primary', 'success', 'warning', 'error'] as const) {
+    for (const variant of ['default', 'accent', 'success', 'warning', 'error'] as const) {
       const { unmount } = render(<Badge variant={variant}>{variant}</Badge>)
       expect(screen.getByText(variant)).toHaveAttribute('data-variant', variant)
-      unmount()
-    }
-  })
-
-  it('verifies amount fractions, locale formatting and a single label', () => {
-    for (const fraction of amountContract.fractions) {
-      const { container, unmount } = render(
-        <Amount currency="EUR" fraction={fraction} locale="de-DE" value={1234.56} />
-      )
-      const root = container.querySelector('[data-slot="amount"]')
-      expect(root).toHaveAttribute('data-fraction', fraction)
-      expect(container.querySelector('[data-slot="amount-fraction"]')).toHaveTextContent(/^,56$/)
-      expect(root?.firstElementChild).toHaveAttribute('aria-hidden', 'true')
-      expect(root?.lastElementChild).toHaveTextContent(/^1\.234,56\s€$/)
       unmount()
     }
   })
