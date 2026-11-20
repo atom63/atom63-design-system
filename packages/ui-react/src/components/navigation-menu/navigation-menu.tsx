@@ -5,6 +5,7 @@ import { ChevronDown } from 'lucide-react'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
+import { usePortalContainer } from '../portal-container'
 
 /*
  * NavigationMenu — a horizontal navigation bar whose items reveal a shared,
@@ -116,8 +117,12 @@ export function NavigationMenuPositioner({
   sideOffset = 8,
   ...props
 }: NavigationMenuPositionerProps): React.ReactElement {
+  const contextPortalContainer = usePortalContainer()
   return (
-    <NavigationMenuPrimitive.Portal container={portalContainer} data-slot="navigation-menu-portal">
+    <NavigationMenuPrimitive.Portal
+      container={portalContainer ?? contextPortalContainer}
+      data-slot="navigation-menu-portal"
+    >
       <NavigationMenuPrimitive.Positioner
         align={align}
         alignOffset={alignOffset}

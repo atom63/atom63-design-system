@@ -3,6 +3,7 @@
 import { AlertDialog as AlertDialogPrimitive } from '@base-ui/react/alert-dialog'
 import type * as React from 'react'
 import { cn } from '../../lib/cn'
+import { usePortalContainer } from '../portal-container'
 import { Button, type ButtonProps } from '../button'
 
 /*
@@ -28,7 +29,15 @@ export const AlertDialogCreateHandle: typeof AlertDialogPrimitive.createHandle =
 export const AlertDialog: typeof AlertDialogPrimitive.Root = AlertDialogPrimitive.Root
 
 export function AlertDialogPortal(props: AlertDialogPrimitive.Portal.Props): React.ReactElement {
-  return <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />
+  const { container, ...portalProps } = props
+  const contextPortalContainer = usePortalContainer()
+  return (
+    <AlertDialogPrimitive.Portal
+      container={container ?? contextPortalContainer}
+      data-slot="alert-dialog-portal"
+      {...portalProps}
+    />
+  )
 }
 
 export function AlertDialogTrigger({

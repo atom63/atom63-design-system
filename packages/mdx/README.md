@@ -10,7 +10,10 @@ fixtures are repository-only implementation detail.
 
 See `API.md` for the maintained public export snapshot.
 
-Public import paths:
+Public import paths. The stability column is the API tier of each entry: a Stable entry keeps
+its exports and props without breaking changes between releases, an Experimental one can change.
+The package itself is still beta (`0.x-beta` on npm), so a release can still change a Stable
+entry; such a change is called out in the changelog.
 
 | Subpath | Stability | Use |
 |---------|-----------|-----|

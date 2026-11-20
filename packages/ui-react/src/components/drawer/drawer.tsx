@@ -6,6 +6,7 @@ import * as React from 'react'
 import { cloneElement, isValidElement, type ReactElement, type ReactNode } from 'react'
 
 import { cn } from '../../lib/cn'
+import { usePortalContainer } from '../portal-container'
 
 /*
  * Drawer — a Base UI-backed bottom/side drawer (swipe-to-dismiss, scrim, a11y).
@@ -122,7 +123,15 @@ export function DrawerTrigger({
 }
 
 export function DrawerPortal(props: DrawerPrimitive.Portal.Props): React.ReactElement | null {
-  return <DrawerPrimitive.Portal data-slot="drawer-portal" {...props} />
+  const { container, ...portalProps } = props
+  const contextPortalContainer = usePortalContainer()
+  return (
+    <DrawerPrimitive.Portal
+      container={container ?? contextPortalContainer}
+      data-slot="drawer-portal"
+      {...portalProps}
+    />
+  )
 }
 
 export type DrawerCloseProps = DrawerPrimitive.Close.Props & DrawerAsChildProps
