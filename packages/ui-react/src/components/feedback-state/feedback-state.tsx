@@ -52,6 +52,8 @@ export interface FeedbackStateProps {
   description?: string
   error?: unknown
   icon?: FeedbackStateIcon
+  /** Heading level of the title, to fit the page outline. Defaults to 3. */
+  level?: 1 | 2 | 3 | 4 | 5 | 6
   query?: string
   showIcon?: boolean
   size?: FeedbackStateSize
@@ -151,13 +153,19 @@ function FeedbackStateActionButton({ action }: { action: FeedbackStateAction }) 
 /* FeedbackState — the empty/error/loading/not-found/no-results pattern, ported
    from prod @atom63/ui. Prod composed a separate `Empty` (which pulled in
    CopyButton → sonner); here the empty-state layout is inlined as
-   `.a63-FeedbackState-*` elements so this pattern stays self-contained. */
+   `.a63-FeedbackState-*` elements so this pattern stays self-contained.
+   The root is one live region that stays mounted across states, so a change of
+   state only changes its text and screen readers announce it: polite
+   (role=status) for loading and the result states, assertive (role=alert) for
+   an error. It is never aria-busy, which would silence it; mark the content
+   being loaded busy instead. */
 export function FeedbackState({
   actions,
   className,
   description,
   error,
   icon,
+  level = 3,
   query,
   showIcon = true,
   size = feedbackStateContract.defaultSize,
@@ -171,13 +179,12 @@ export function FeedbackState({
 
   return (
     <div
-      aria-busy={state === 'loading' ? true : undefined}
-      aria-live={state === 'error' ? 'assertive' : state === 'loading' ? 'polite' : undefined}
+      aria-live={state === 'error' ? 'assertive' : 'polite'}
       className={cn('a63-FeedbackState', className)}
       data-size={size}
       data-slot="feedback-state"
       data-state={state}
-      role={state === 'error' ? 'alert' : state === 'loading' ? 'status' : undefined}
+      role={state === 'error' ? 'alert' : 'status'}
     >
       <div className="a63-FeedbackState-header" data-slot="feedback-state-header">
         {showIcon && iconNode ? (
@@ -186,7 +193,12 @@ export function FeedbackState({
           </div>
         ) : null}
 
-        <div className="a63-FeedbackState-title" data-slot="feedback-state-title">
+        <div
+          aria-level={level}
+          className="a63-FeedbackState-title"
+          data-slot="feedback-state-title"
+          role="heading"
+        >
           {finalTitle}
         </div>
         <div className="a63-FeedbackState-description" data-slot="feedback-state-description">

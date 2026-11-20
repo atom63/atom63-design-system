@@ -315,7 +315,7 @@ describe('React renderer conformance', () => {
     expect(currentAction).toHaveFocus()
   })
 
-  it('verifies every alert tone keeps text and alert semantics', () => {
+  it('verifies every alert tone keeps text and live-region semantics', () => {
     for (const tone of getCrossRendererContract('alert').requiredStates) {
       const { unmount } = render(
         <Alert variant={tone}>
@@ -324,7 +324,9 @@ describe('React renderer conformance', () => {
         </Alert>
       )
 
-      expect(screen.getByRole('alert')).toHaveAttribute('data-variant', tone)
+      // Error and warning interrupt; info and success are polite.
+      const role = tone === 'error' || tone === 'warning' ? 'alert' : 'status'
+      expect(screen.getByRole(role)).toHaveAttribute('data-variant', tone)
       expect(screen.getByText('Status copy')).toBeVisible()
       unmount()
     }

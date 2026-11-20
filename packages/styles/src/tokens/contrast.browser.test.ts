@@ -23,6 +23,14 @@ const textPairs = [
   { fg: '--a63-text-accent', bg: '--a63-surface-panel', min: AA_TEXT },
   { fg: '--a63-text-danger', bg: '--a63-surface-page', min: AA_TEXT },
   { fg: '--a63-text-danger', bg: '--a63-surface-panel', min: AA_TEXT },
+  // Status text (Alert action labels, tinted badges) uses the -subtle-foreground
+  // step, not the 3:1 status accent.
+  { fg: '--a63-status-info-subtle-foreground', bg: '--a63-surface-page', min: AA_TEXT },
+  { fg: '--a63-status-info-subtle-foreground', bg: '--a63-surface-panel', min: AA_TEXT },
+  { fg: '--a63-status-success-subtle-foreground', bg: '--a63-surface-page', min: AA_TEXT },
+  { fg: '--a63-status-success-subtle-foreground', bg: '--a63-surface-panel', min: AA_TEXT },
+  { fg: '--a63-status-warning-subtle-foreground', bg: '--a63-surface-page', min: AA_TEXT },
+  { fg: '--a63-status-warning-subtle-foreground', bg: '--a63-surface-panel', min: AA_TEXT },
 ] as const
 
 const actionPairs = [
