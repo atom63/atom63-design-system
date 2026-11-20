@@ -1,5 +1,35 @@
 # @atom63/mdx
 
+## 0.4.0-beta.4
+
+### Minor Changes
+
+- [#304](https://github.com/atom63/atom63-design-system/pull/304) [`2c9247b`](https://github.com/atom63/atom63-design-system/commit/2c9247b6a597171efd84e0eecfd1fc61ab4b09e3) Thanks [@atom63](https://github.com/atom63)! - Fix feedback, status and media accessibility gaps from the readiness review:
+  
+  - `Alert`'s info, success and warning action labels use their status `-subtle-foreground` text step, so they reach 4.5:1 on the tinted fill in every theme and mode. The live region follows the tone: error and warning render `role="alert"` (assertive); default, info and success render `role="status"` (polite). Pass `role` to override.
+  - `EmptyErrorDetail`'s "Show details" toggle is a muted ghost Button, so its label rests in the secondary text colour (4.5:1) instead of a 60% mix of it.
+  - `FeedbackState` keeps one live region mounted in every state: polite (`role="status"`) for loading and the result states, assertive (`role="alert"`) for an error. It is no longer `aria-busy` while loading, which silenced it. Its title is a heading, level 3 unless `level` sets another.
+  - `LoadMoreTrigger`'s Retry action gets a hit area of `--a63-control-min-target` (44px on coarse pointers) around its text.
+  - `@atom63/mdx` `VideoBlock` does not autoplay when the reader prefers reduced motion. An autoplaying video without `controls` gets a pause and play toggle (an overlay Button named by `pauseLabel` and `playLabel`), and a decorative video without controls is `aria-hidden` instead of labelled.
+  - `@atom63/widgets` controls reach a 44 physical px hit area on coarse pointers: inside a widget, a Button's hit area grows to `--widget-interaction-target` while the control keeps its 24px proportion.
+
+### Patch Changes
+
+- [#288](https://github.com/atom63/atom63-design-system/pull/288) [`adc4b50`](https://github.com/atom63/atom63-design-system/commit/adc4b5086f4f3da6c651fad03471f4f6875d8071) Thanks [@atom63](https://github.com/atom63)! - Add the danger status role: `--a63-status-danger` (step 600 in light mode, 500 in dark mode) with `-foreground`, `-subtle` and `-subtle-foreground`, for error icons, borders and tints. `--a63-action-danger` stays the danger button fill. The contrast test now checks `--a63-status-danger` (3:1) and `--a63-text-danger` (4.5:1) in every theme and mode, and `compat/a63-from-shadcn.css` maps both from `--destructive`.
+  
+  Alert's error tone draws its icon, border and fill from `--a63-status-danger` and its action label in `--a63-text-danger`, and its action sits at the inline end, so it no longer covers the title in right-to-left layouts. In `@atom63/mdx`, KeyIdea's eyebrow and the active PageTableOfContents link use `--a63-text-accent`; Compare's negative item, StatCard's down trend, the MermaidDiagram and live-preview error text use `--a63-text-danger`; the error Callout and Compare's negative marker use `--a63-status-danger`. The CLI agent index lists the new tokens.
+
+- [#306](https://github.com/atom63/atom63-design-system/pull/306) [`bdcee47`](https://github.com/atom63/atom63-design-system/commit/bdcee4751d28defbc59ef3f5aefad0aad4bfc89a) Thanks [@atom63](https://github.com/atom63)! - Document every `@atom63/mdx` block. A new docs page, "MDX blocks" (`atom63 docs pattern-mdx-blocks`), gives each of the 30 blocks what it is for, a working example and its props, read from the block's TypeScript types with defaults and doc comments. `atom63 api <Block>` now prints that section, so `atom63 api KeyIdea` answers with the purpose, an example and the props, not only the import line. The `@atom63/mdx` README points to the page.
+
+- [#293](https://github.com/atom63/atom63-design-system/pull/293) [`66a0aca`](https://github.com/atom63/atom63-design-system/commit/66a0aca3394b62efe3530e34919fd31327fdf8b8) Thanks [@atom63](https://github.com/atom63)! - `VideoBlock` takes `trackLang` (default `en`) and `trackLabel` for its caption track. The default label is the language's own name ("English", "Deutsch"), replacing the fixed "English captions". Adds render and accessibility tests for `ColorSwatchItem`, `KeyIdea`, `MdxPageSkeleton`, `MediaCaption`, `MediaPlaceholder`, `PageMeta`, `ResourceList`, `VideoBlock` and `ExampleContainer`.
+
+- [#279](https://github.com/atom63/atom63-design-system/pull/279) [`b3410a1`](https://github.com/atom63/atom63-design-system/commit/b3410a1e54be91f79db37d01758b017dc1467a65) Thanks [@dependabot](https://github.com/apps/dependabot)! - Depend on motion ^14.14.0 instead of ^13.1.1. Motion 14 has no breaking changes to its public API.
+
+- [#305](https://github.com/atom63/atom63-design-system/pull/305) [`eef5f6f`](https://github.com/atom63/atom63-design-system/commit/eef5f6f4072ad0d64e366d9a325d8e2fde1742ba) Thanks [@atom63](https://github.com/atom63)! - The README says the stability column is the API tier of each entry while the package is still beta.
+- Updated dependencies [[`5304568`](https://github.com/atom63/atom63-design-system/commit/5304568ca070b05305f865b2b8d411c8667c48b9), [`9d419a3`](https://github.com/atom63/atom63-design-system/commit/9d419a3c93fb3bd92cbecff32176b0c637ce402c), [`7ab4fc9`](https://github.com/atom63/atom63-design-system/commit/7ab4fc97d5ce63f3f3c7237e4db61a3dc6954582), [`adc4b50`](https://github.com/atom63/atom63-design-system/commit/adc4b5086f4f3da6c651fad03471f4f6875d8071), [`2c9247b`](https://github.com/atom63/atom63-design-system/commit/2c9247b6a597171efd84e0eecfd1fc61ab4b09e3), [`09a3299`](https://github.com/atom63/atom63-design-system/commit/09a3299b1e7c1ce2498e3c1ed10a6f6f4ee4e7c8), [`426b77e`](https://github.com/atom63/atom63-design-system/commit/426b77e7399bca33758193001e29c3cd498ae4f1), [`2cea63d`](https://github.com/atom63/atom63-design-system/commit/2cea63dc522d9597dfccea2f61410c6f36ece136), [`77fd109`](https://github.com/atom63/atom63-design-system/commit/77fd109bb3277687a709be96abb7a0b280525ea9), [`a4188c4`](https://github.com/atom63/atom63-design-system/commit/a4188c47cab00e73439be61c39be0c2424644176), [`b3410a1`](https://github.com/atom63/atom63-design-system/commit/b3410a1e54be91f79db37d01758b017dc1467a65), [`524fd93`](https://github.com/atom63/atom63-design-system/commit/524fd93260a5405a3becfe9e8ceb9e35d6bf6754), [`eef5f6f`](https://github.com/atom63/atom63-design-system/commit/eef5f6f4072ad0d64e366d9a325d8e2fde1742ba), [`eef5f6f`](https://github.com/atom63/atom63-design-system/commit/eef5f6f4072ad0d64e366d9a325d8e2fde1742ba), [`34d8578`](https://github.com/atom63/atom63-design-system/commit/34d85787157a079355820596ddb437dea0962d97)]:
+  - @atom63/ui-react@0.2.0-beta.13
+  - @atom63/styles@0.1.0-beta.9
+
 ## 0.4.0-beta.3
 
 ### Patch Changes
