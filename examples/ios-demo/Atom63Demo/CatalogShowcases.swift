@@ -1285,7 +1285,7 @@ private struct ListSectionShowcase: View {
           title: "Face ID",
           systemImage: "faceid",
           badge: "Set Up",
-          badgeTone: .accent,
+          badgeTone: .primary,
           showsDisclosure: true
         )
       }
@@ -1427,7 +1427,7 @@ private struct BadgeShowcase: View {
   var body: some View {
     FlowLayout(spacing: AtomTokens.Space.x2) {
       AtomBadge("Neutral")
-      AtomBadge("Accent", tone: .accent)
+      AtomBadge("Primary", tone: .primary)
       AtomBadge("Success", tone: .success)
       AtomBadge("Warning", tone: .warning)
       AtomBadge("Danger", tone: .danger)

@@ -727,6 +727,13 @@ function component(slug: string, category: string): ComponentCatalogItem {
   if (!definition) {
     throw new Error(`Missing component catalog definition: ${slug}`)
   }
+  // Every catalog component has a contract that declares its maturity; none defaults to stable.
+  const status = getComponentMaturity(slug)
+  if (!status) {
+    throw new Error(
+      `${slug} has no contract maturity: add packages/ui-foundation/contracts/components/${slug}.json`
+    )
+  }
 
   return {
     ...definition,
@@ -738,8 +745,7 @@ function component(slug: string, category: string): ComponentCatalogItem {
         ? 'standard'
         : 'compact',
     slug,
-    // From the contract's maturity; a component with no contract (Progressive Blur) is stable.
-    status: getComponentMaturity(slug) ?? 'stable',
+    status,
     storyExport: storyExportOverrides[slug] ?? 'Playground',
   }
 }

@@ -43,6 +43,126 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What a message bubble is, independent of any platform: who sent it, where it sits in a run of messages, and its delivery status.",
+    "axes": {
+      "direction": ["incoming", "outgoing"],
+      "position": ["single", "first", "middle", "last"],
+      "deliveryState": ["sending", "sent", "delivered", "read", "failed"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "direction": {
+            "list": "directions",
+            "map": {
+              "incoming": {
+                "direction": "incoming"
+              },
+              "outgoing": {
+                "direction": "outgoing"
+              }
+            },
+            "extensions": {}
+          },
+          "position": {
+            "list": "positions",
+            "map": {
+              "single": {
+                "position": "single"
+              },
+              "first": {
+                "position": "first"
+              },
+              "middle": {
+                "position": "middle"
+              },
+              "last": {
+                "position": "last"
+              }
+            },
+            "extensions": {}
+          },
+          "status": {
+            "list": "deliveryStates",
+            "map": {
+              "sending": {
+                "deliveryState": "sending"
+              },
+              "sent": {
+                "deliveryState": "sent"
+              },
+              "delivered": {
+                "deliveryState": "delivered"
+              },
+              "read": {
+                "deliveryState": "read"
+              },
+              "failed": {
+                "deliveryState": "failed"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      },
+      "ios": {
+        "props": {
+          "direction": {
+            "swiftEnum": "AtomMessageDirection",
+            "map": {
+              "incoming": {
+                "direction": "incoming"
+              },
+              "outgoing": {
+                "direction": "outgoing"
+              }
+            },
+            "extensions": {}
+          },
+          "position": {
+            "swiftEnum": "AtomMessagePosition",
+            "map": {
+              "single": {
+                "position": "single"
+              },
+              "first": {
+                "position": "first"
+              },
+              "middle": {
+                "position": "middle"
+              },
+              "last": {
+                "position": "last"
+              }
+            },
+            "extensions": {}
+          },
+          "status": {
+            "swiftEnum": "AtomMessageDeliveryState",
+            "map": {
+              "sending": {
+                "deliveryState": "sending"
+              },
+              "sent": {
+                "deliveryState": "sent"
+              },
+              "delivered": {
+                "deliveryState": "delivered"
+              },
+              "read": {
+                "deliveryState": "read"
+              },
+              "failed": {
+                "deliveryState": "failed"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "message",

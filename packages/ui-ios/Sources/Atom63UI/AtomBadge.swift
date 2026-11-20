@@ -1,7 +1,8 @@
 import SwiftUI
 
 // AtomBadgeTone is generated from the badge contract in
-// AtomComponentIntent.generated.swift; `danger` is a deprecated name for `error`.
+// AtomComponentIntent.generated.swift; `accent` and `danger` are deprecated names for
+// `primary` and `error`.
 
 public struct AtomBadge: View {
   @Environment(\.atomTheme) private var theme
@@ -30,7 +31,7 @@ public struct AtomBadge: View {
     switch tone {
     case .neutral:
       theme.colors.textPrimary.resolve(for: colorScheme)
-    case .accent:
+    case .primary:
       theme.colors.actionPrimaryForeground.resolve(for: colorScheme)
     case .info, .success, .warning, .error:
       theme.colors.textPrimary.resolve(for: colorScheme)
@@ -41,7 +42,7 @@ public struct AtomBadge: View {
     switch tone {
     case .neutral:
       theme.colors.surfaceMuted.resolve(for: colorScheme)
-    case .accent:
+    case .primary:
       theme.colors.actionPrimary.resolve(for: colorScheme)
     case .success:
       theme.colors.statusSuccess.resolve(for: colorScheme).opacity(0.14)

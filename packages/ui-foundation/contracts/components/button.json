@@ -83,7 +83,8 @@
     "axes": {
       "tone": ["neutral", "muted", "primary", "destructive"],
       "emphasis": ["solid", "soft", "outline", "ghost", "raised"],
-      "content": ["label", "icon-only"]
+      "content": ["label", "icon-only"],
+      "shape": ["default", "round"]
     },
     "sizes": {
       "sm": {
@@ -224,6 +225,18 @@
                 "description": "An icon-only button at the xl step."
               }
             }
+          },
+          "shape": {
+            "list": "shapes",
+            "map": {
+              "default": {
+                "shape": "default"
+              },
+              "round": {
+                "shape": "round"
+              }
+            },
+            "extensions": {}
           }
         }
       },
@@ -287,6 +300,18 @@
               "icon": {
                 "size": "md",
                 "content": "icon-only"
+              }
+            },
+            "extensions": {}
+          },
+          "shape": {
+            "swiftEnum": "AtomButtonShape",
+            "map": {
+              "default": {
+                "shape": "default"
+              },
+              "round": {
+                "shape": "round"
               }
             },
             "extensions": {}

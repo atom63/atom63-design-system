@@ -95,6 +95,7 @@ import { OTPInput } from 'input-otp';
 import { PointerInput } from '@atom63/ui-foundation';
 import { Popover as Popover_2 } from '@base-ui/react/popover';
 import { PreviewCard as PreviewCard_2 } from '@base-ui/react/preview-card';
+import { ProgressiveBlurPosition } from '@atom63/ui-foundation';
 import { Progress as ProgressPrimitive } from '@base-ui/react/progress';
 import { ProgressTone } from '@atom63/ui-foundation';
 import { Radio as Radio_2 } from '@base-ui/react/radio';
@@ -2045,8 +2046,7 @@ export function ProgressIndicator(input: ProgressPrimitive.Indicator.Props): Rea
 // @public
 export function ProgressiveBlur(input: ProgressiveBlurProps): React$1.JSX.Element;
 
-// @public (undocumented)
-export type ProgressiveBlurPosition = 'both' | 'bottom' | 'top';
+export { ProgressiveBlurPosition }
 
 // @public (undocumented)
 export interface ProgressiveBlurProps {
@@ -2249,7 +2249,7 @@ export const reactRendererConformance: readonly [{
     readonly verifiesMotionRecipe: false;
 }, {
     readonly contractId: "badge";
-    readonly implementedStates: readonly ["neutral", "accent", "success", "warning", "error"];
+    readonly implementedStates: readonly ["neutral", "primary", "success", "warning", "error"];
     readonly verifiedSharedOutcomes: readonly ["label-remains-readable-without-color", "semantic-tone-retains-meaning"];
     readonly verifiedAccessibilityOutcomes: readonly ["text-does-not-rely-on-color"];
     readonly verifiesMotionRecipe: false;
@@ -2294,6 +2294,12 @@ export const reactRendererConformance: readonly [{
     readonly implementedStates: readonly ["rest"];
     readonly verifiedSharedOutcomes: readonly ["direction-sets-side-and-fill", "runs-join-at-shared-corners", "status-is-named"];
     readonly verifiedAccessibilityOutcomes: readonly ["names-the-sender", "names-the-delivery-status"];
+    readonly verifiesMotionRecipe: false;
+}, {
+    readonly contractId: "amount";
+    readonly implementedStates: readonly ["rest"];
+    readonly verifiedSharedOutcomes: readonly ["amount-is-formatted-for-the-locale", "fraction-is-drawn-at-half-size"];
+    readonly verifiedAccessibilityOutcomes: readonly ["amount-reads-as-one-label"];
     readonly verifiesMotionRecipe: false;
 }];
 

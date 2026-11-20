@@ -427,7 +427,7 @@ export const crossRendererContracts = [
     "parity": "strict",
     "requiredStates": [
       "neutral",
-      "accent",
+      "primary",
       "success",
       "warning",
       "error"
@@ -1075,6 +1075,34 @@ export const crossRendererContracts = [
       "swiftUI": [
         "AtomMessage takes direction, position, time and status; AtomMessageEvent is the centred row. The bubble uses UnevenRoundedRectangle for the joined corners.",
         "The status icon is an SF Symbol with an accessibility label; the bubble combines its children into one VoiceOver element."
+      ]
+    }
+  },
+  {
+    "id": "amount",
+    "foundationContract": "amount",
+    "foundationAxis": "states",
+    "catalogItem": "amount",
+    "reactRenderer": "Amount",
+    "swiftUIRenderer": "AtomAmountText",
+    "intent": "Show a money amount in a display text role, formatted for the locale, with its fraction at half size, raised or on the baseline.",
+    "parity": "strict",
+    "requiredStates": [
+      "rest"
+    ],
+    "sharedOutcomes": [
+      "amount-is-formatted-for-the-locale",
+      "fraction-is-drawn-at-half-size"
+    ],
+    "accessibilityOutcomes": [
+      "amount-reads-as-one-label"
+    ],
+    "platformAdaptations": {
+      "react": [
+        "Formats with Intl.NumberFormat and draws tabular figures."
+      ],
+      "swiftUI": [
+        "Formats with FormatStyle.Currency, draws monospaced digits and scales with Dynamic Type."
       ]
     }
   }

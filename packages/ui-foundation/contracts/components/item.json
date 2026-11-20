@@ -60,6 +60,46 @@
       "$ref": "#/lists/tones"
     }
   },
+  "intent": {
+    "description": "What an item group surface is, independent of any platform: the card or muted surface behind its rows (ItemGroup `surface`, AtomListSection `surface`).",
+    "axes": {
+      "groupSurface": ["card", "muted"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "surface": {
+            "list": "groupSurfaces",
+            "map": {
+              "card": {
+                "groupSurface": "card"
+              },
+              "muted": {
+                "groupSurface": "muted"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      },
+      "ios": {
+        "props": {
+          "surface": {
+            "swiftEnum": "AtomListSectionSurface",
+            "map": {
+              "card": {
+                "groupSurface": "card"
+              },
+              "muted": {
+                "groupSurface": "muted"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "listSection",

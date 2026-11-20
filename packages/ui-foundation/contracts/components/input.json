@@ -75,7 +75,7 @@
     }
   },
   "intent": {
-    "description": "What a text field is, independent of any platform: its size. Chrome options and the native character-width size are web extensions. The SwiftUI text field draws the md size only.",
+    "description": "What a text field is, independent of any platform: its size and its chrome. The plain chrome and the native character-width size are web extensions. The SwiftUI text field draws the md size only.",
     "sizes": {
       "sm": {
         "platforms": {
@@ -126,14 +126,15 @@
           },
           "variant": {
             "list": "variants",
-            "map": {},
-            "extensions": {
+            "map": {
               "default": {
-                "description": "The outlined field, for form fields; iOS draws only this chrome today."
+                "variant": "default"
               },
               "filled": {
-                "description": "A muted fill with no resting border; the border shows on hover and focus."
-              },
+                "variant": "filled"
+              }
+            },
+            "extensions": {
               "plain": {
                 "description": "No border or fill and a separator below, for a field inside a menu, popover or command palette."
               }
@@ -148,11 +149,28 @@
         }
       },
       "ios": {
-        "minHitTarget": 44
+        "minHitTarget": 44,
+        "props": {
+          "variant": {
+            "swiftEnum": "AtomFieldVariant",
+            "map": {
+              "default": {
+                "variant": "default"
+              },
+              "filled": {
+                "variant": "filled"
+              }
+            },
+            "extensions": {}
+          }
+        }
       }
     },
     "stateAliases": {
       "focus": "focus-visible"
+    },
+    "axes": {
+      "variant": ["default", "filled"]
     }
   },
   "crossRenderer": {
