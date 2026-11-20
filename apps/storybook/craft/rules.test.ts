@@ -2,7 +2,7 @@
 // pointer and keyboard input. Each rule has a probe that breaks it and must be
 // caught, and a fixture that follows it and must pass.
 import { afterEach, describe, expect, it } from 'vitest'
-import { userEvent } from 'vitest/browser'
+import { commands, userEvent } from 'vitest/browser'
 
 import {
   checkDisabledHover,
@@ -15,12 +15,19 @@ import {
   runCraftChecks,
 } from './rules'
 
+declare module 'vitest/browser' {
+  interface BrowserCommands {
+    emulateForcedColors: (active: boolean) => Promise<void>
+  }
+}
+
 const POINTER = { force: true, timeout: 2_000 } as const
 const driver: CraftDriver = {
   hover: element => userEvent.hover(element, POINTER),
   resetPointer: () => userEvent.hover(pointerRest(document), POINTER),
   tab: () => userEvent.tab(),
   click: element => userEvent.click(element, POINTER),
+  forcedColors: active => commands.emulateForcedColors(active),
 }
 
 function mount(html: string, css = '') {
@@ -207,6 +214,59 @@ describe('focus-visible', () => {
   it('passes the default :focus-visible outline', async () => {
     mount('<button>One</button><a href="#two">Two</a>')
     expect(await checkFocusVisible(document, driver)).toEqual([])
+  })
+
+  /* A listbox or menu popup: options take focus and show it with a fill. */
+  const listbox = (css: string) =>
+    mount(
+      '<div role="listbox" aria-label="Fruit" class="popup">' +
+        '<div role="option" tabindex="0" class="item">Apple</div>' +
+        '</div>' +
+        '<div role="menu" aria-label="File" class="popup">' +
+        '<div role="menuitem" tabindex="0" class="item">Open</div>' +
+        '</div>',
+      `.popup { background: rgb(255, 255, 255); }
+       .item { outline: none; }
+       ${css}`
+    )
+  const FORCED_HIGHLIGHT =
+    '@media (forced-colors: active) { .item:focus { background-color: Highlight; color: HighlightText; } }'
+
+  it('accepts a highlight fill on options and menu items at 3:1 with a forced-colors Highlight', async () => {
+    listbox(
+      `.item:focus { background: rgb(110, 110, 110); color: rgb(255, 255, 255); } ${FORCED_HIGHLIGHT}`
+    )
+    expect(await checkFocusVisible(document, driver)).toEqual([])
+  })
+
+  it('catches an option highlight under 3:1 against the popup surface', async () => {
+    listbox(`.item:focus { background: rgb(235, 235, 235); } ${FORCED_HIGHLIGHT}`)
+    const violations = await checkFocusVisible(document, driver)
+    expect(violations.map(v => v.element)).toEqual([
+      'div[role=option] "Apple"',
+      'div[role=menuitem] "Open"',
+    ])
+    expect(violations[0].detail).toContain('under 3:1')
+  })
+
+  it('catches an option highlight that forced colors do not paint with Highlight', async () => {
+    listbox('.item:focus { background: rgb(110, 110, 110); color: rgb(255, 255, 255); }')
+    const violations = await checkFocusVisible(document, driver)
+    expect(violations.map(v => v.element)).toEqual([
+      'div[role=option] "Apple"',
+      'div[role=menuitem] "Open"',
+    ])
+    expect(violations[0].detail).toContain('Highlight')
+  })
+
+  it('does not accept a highlight fill alone on a button', async () => {
+    mount(
+      '<div style="background: rgb(255, 255, 255)"><button class="item">Save</button></div>',
+      `.item { outline: none; } .item:focus-visible { background: rgb(110, 110, 110); } ${FORCED_HIGHLIGHT}`
+    )
+    expect((await checkFocusVisible(document, driver)).map(v => v.element)).toEqual([
+      'button "Save"',
+    ])
   })
 })
 

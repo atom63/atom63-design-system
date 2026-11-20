@@ -26,6 +26,10 @@ export const InMessage: Story = {
   ),
 }
 
+/* Captured with forced colors on (Windows High Contrast): the dots are drawn in
+   the system text colour instead of vanishing with their fill. */
+export const ForcedColors: Story = { render: InMessage.render }
+
 export const Themes: Story = {
   render: args => (
     <ThemeMatrix>

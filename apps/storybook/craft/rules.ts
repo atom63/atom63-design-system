@@ -5,7 +5,10 @@
  * - `disabled-hover`: a disabled control does not react to a real pointer hover.
  * - `target-size`: a pointer target is at least 24 × 24 CSS px (WCAG 2.5.8).
  * - `focus-visible`: an element reached with Tab shows a focus indicator, and a
- *   pointer press on a button does not.
+ *   pointer press on a button does not. An option or menu item may show focus
+ *   with a highlight fill instead, the standard listbox and menu pattern, when
+ *   the fill reaches 3:1 against the popup surface and forced colors paint it
+ *   with `Highlight`.
  *
  * The rules take the pointer and keyboard as a `CraftDriver`, so the unit tests
  * and the story hook drive them through the same real input (Vitest browser
@@ -29,6 +32,8 @@ export interface CraftDriver {
   resetPointer(): Promise<void>
   tab(): Promise<void>
   click(element: Element): Promise<void>
+  /** Turns forced-colors emulation on or off. Without it no highlight fill passes. */
+  forcedColors?(active: boolean): Promise<void>
 }
 
 /**
@@ -491,6 +496,85 @@ function isPlainButton(element: Element): boolean {
   return true
 }
 
+/** Roles that may show focus with a highlight fill instead of a ring. */
+const HIGHLIGHT_ROLES = ['option', 'menuitem', 'menuitemcheckbox', 'menuitemradio']
+/** WCAG 1.4.11: a highlight fill must reach 3:1 against the popup surface. */
+export const MIN_HIGHLIGHT_CONTRAST = 3
+
+type Rgba = [number, number, number, number]
+let colorContext: CanvasRenderingContext2D | null = null
+
+/** Paints `colors` in order (alpha-composited) on one pixel and reads it back. */
+function paint(colors: readonly string[]): Rgba {
+  colorContext ??= Object.assign(document.createElement('canvas'), {
+    width: 1,
+    height: 1,
+  }).getContext('2d', { willReadFrequently: true })
+  const context = colorContext!
+  context.clearRect(0, 0, 1, 1)
+  for (const color of colors) {
+    context.fillStyle = color
+    context.fillRect(0, 0, 1, 1)
+  }
+  const [r, g, b, a] = context.getImageData(0, 0, 1, 1).data
+  return [r, g, b, a]
+}
+
+/** The background colours from `element` up to the first opaque one, outermost first. */
+function backgroundLayers(element: Element | null): string[] {
+  const layers: string[] = []
+  for (let node = element; node; node = node.parentElement) {
+    const color = getComputedStyle(node).backgroundColor
+    const alpha = paint([color])[3]
+    if (alpha === 0) continue
+    layers.unshift(color)
+    if (alpha === 255) return layers
+  }
+  return ['rgb(255, 255, 255)', ...layers]
+}
+
+function luminance([r, g, b]: Rgba) {
+  const linear = (channel: number) => {
+    const c = channel / 255
+    return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
+  }
+  return 0.2126 * linear(r) + 0.7152 * linear(g) + 0.0722 * linear(b)
+}
+
+export function contrastRatio(a: Rgba, b: Rgba) {
+  const [light, dark] = [luminance(a), luminance(b)].sort((x, y) => y - x)
+  return (light + 0.05) / (dark + 0.05)
+}
+
+/**
+ * Why a focused option's or menu item's highlight fill does not count as its
+ * focus indicator, or null when it does: the fill must reach 3:1 against the
+ * popup surface, and forced colors must paint it with `Highlight`.
+ */
+async function highlightProblem(element: Element, driver: CraftDriver): Promise<string | null> {
+  const surface = backgroundLayers(element.parentElement)
+  const fill = paint([...surface, getComputedStyle(element).backgroundColor])
+  const ratio = contrastRatio(fill, paint(surface))
+  if (ratio < MIN_HIGHLIGHT_CONTRAST) {
+    return `the highlight fill is ${Math.round(ratio * 100) / 100}:1 against the popup surface, under ${MIN_HIGHLIGHT_CONTRAST}:1`
+  }
+  if (!driver.forcedColors) return 'forced colors could not be checked for a Highlight fill'
+  const probe = document.createElement('span')
+  probe.style.backgroundColor = 'Highlight'
+  document.body.append(probe)
+  await driver.forcedColors(true)
+  try {
+    const forced = getComputedStyle(element).backgroundColor
+    if (forced !== getComputedStyle(probe).backgroundColor) {
+      return `forced colors paint the highlight ${forced}, not Highlight`
+    }
+    return null
+  } finally {
+    await driver.forcedColors(false)
+    probe.remove()
+  }
+}
+
 function activeElement(document: Document): Element | null {
   const active = document.activeElement
   return active && active !== document.body && active !== document.documentElement ? active : null
@@ -518,17 +602,19 @@ export async function checkFocusVisible(
   const visited: Element[] = []
   // Elements without a snapshot from before the tabbing (they appeared on
   // focus) are compared with themselves once focus has moved on.
-  const pending: { element: Element; focused: StyleSnapshot }[] = []
-  const settle = ({ element, focused }: { element: Element; focused: StyleSnapshot }) => {
+  type Entry = { element: Element; focused: StyleSnapshot; highlight?: string | null }
+  const pending: Entry[] = []
+  const settle = ({ element, focused, highlight }: Entry) => {
     if (!element.isConnected) return
     const before = unfocused.get(element) ?? readFocusIndicator(element)
-    if (diffStyles(before, focused).length === 0) {
-      violations.push({
-        rule: 'focus-visible',
-        element: describeElement(element),
-        detail: 'keyboard focus changes no outline, box-shadow or ring pseudo-element',
-      })
-    }
+    if (diffStyles(before, focused).length > 0 || highlight === null) return
+    violations.push({
+      rule: 'focus-visible',
+      element: describeElement(element),
+      detail:
+        'keyboard focus changes no outline, box-shadow or ring pseudo-element' +
+        (highlight ? `, and ${highlight}` : ''),
+    })
   }
 
   for (let stop = 0; stop < LIMITS.tabStops; stop++) {
@@ -538,7 +624,10 @@ export async function checkFocusVisible(
     // Focus left the story: Tab moved out of the frame, or it wrapped around.
     if (!element || element === start || visited.includes(element) || !document.hasFocus()) break
     visited.push(element)
-    const entry = { element, focused: readFocusIndicator(element) }
+    const entry: Entry = { element, focused: readFocusIndicator(element) }
+    if (HIGHLIGHT_ROLES.includes(element.getAttribute('role') ?? '')) {
+      entry.highlight = await highlightProblem(element, driver)
+    }
     if (unfocused.has(element)) settle(entry)
     else pending.push(entry)
   }

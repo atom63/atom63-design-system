@@ -203,6 +203,18 @@
   opacity: var(--a63-menu-disabled-opacity, 0.56);
 }
 
+/* Forced colors (Windows High Contrast) drop the highlight fill, and focus stays
+   in the input, so the option Enter runs takes the system selection colours. */
+@media (forced-colors: active) {
+  .a63-Command-item[data-highlighted] {
+    background-color: Highlight;
+    color: HighlightText;
+  }
+  .a63-Command-item[data-highlighted] :is(svg, .a63-Command-shortcut) {
+    color: HighlightText;
+  }
+}
+
 /* ── Separator ─────────────────────────────────────────────────────────── */
 .a63-Command-separator {
   height: 1px;

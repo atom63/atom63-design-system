@@ -36,6 +36,7 @@ const driver: CraftDriver = {
   resetPointer: () => userEvent.hover(pointerRest(document), POINTER).then(nextFrame),
   tab: () => userEvent.tab().then(nextFrame),
   click: element => userEvent.click(element, POINTER).then(nextFrame),
+  forcedColors: active => commands.emulateForcedColors(active),
 }
 
 /**
