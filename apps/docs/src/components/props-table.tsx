@@ -4,6 +4,7 @@ export type PropsTableRow = {
   defaultValue?: string
   description?: string
   name: string
+  required?: boolean
   type: string
 }
 
@@ -40,6 +41,11 @@ export function PropsTable({ rows }: PropsTableProps) {
             <TableRow key={row.name}>
               <TableCell className="align-top font-mono text-xs text-foreground">
                 {row.name}
+                {row.required ? (
+                  <span className="ms-1.5 font-sans text-[11px] text-muted-foreground">
+                    required
+                  </span>
+                ) : null}
               </TableCell>
               <TableCell className="align-top font-mono text-xs leading-relaxed text-muted-foreground">
                 {row.type}

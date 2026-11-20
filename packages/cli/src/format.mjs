@@ -230,6 +230,9 @@ function apiDetail({ name, ios, web }) {
         : `Docs: atom63 docs ${entry.docs}`
     )
   }
+  // Entries that re-export a name share its docs section; print it once.
+  const reference = web.find(entry => entry.reference)?.reference
+  if (reference) lines.push('', reference)
   return lines.join('\n')
 }
 

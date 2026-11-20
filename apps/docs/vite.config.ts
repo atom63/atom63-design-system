@@ -11,6 +11,7 @@ import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import { defaultClientConditions, defineConfig } from 'vite'
 import { changelogDataPlugin } from './vite-plugins/changelog-data'
 import { llmsTxtPlugin } from './vite-plugins/llms-txt'
+import { mdxBlockPropsPlugin } from './vite-plugins/mdx-block-props'
 
 const docsRoot = path.dirname(fileURLToPath(import.meta.url))
 const workspaceRoot = path.resolve(docsRoot, '../..')
@@ -45,6 +46,7 @@ export default defineConfig({
     tailwindcss(),
     changelogDataPlugin(workspaceRoot),
     llmsTxtPlugin(docsRoot),
+    mdxBlockPropsPlugin(),
   ],
   server: {
     port: 6200,
