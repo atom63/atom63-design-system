@@ -7,31 +7,31 @@
     {
       "name": "@atom63/styles",
       "requested": "beta",
-      "resolved": "0.1.0-beta.8",
+      "resolved": "0.1.0-beta.9",
       "manifest": "node_modules/@atom63/styles/package.json"
     },
     {
       "name": "@atom63/ui-foundation",
       "requested": "beta",
-      "resolved": "0.2.0-beta.5",
+      "resolved": "0.2.0-beta.6",
       "manifest": "node_modules/@atom63/ui-foundation/package.json"
     },
     {
       "name": "@atom63/ui-react",
       "requested": "beta",
-      "resolved": "0.2.0-beta.12",
+      "resolved": "0.2.0-beta.13",
       "manifest": "node_modules/@atom63/ui-react/package.json"
     },
     {
       "name": "@atom63/mdx",
       "requested": "beta",
-      "resolved": "0.4.0-beta.3",
+      "resolved": "0.4.0-beta.4",
       "manifest": "node_modules/@atom63/mdx/package.json"
     },
     {
       "name": "@atom63/inform",
       "requested": "beta",
-      "resolved": "0.2.0-beta.3",
+      "resolved": "0.2.0-beta.4",
       "manifest": "node_modules/@atom63/inform/package.json"
     },
     {
@@ -43,13 +43,13 @@
     {
       "name": "@atom63/widgets",
       "requested": "beta",
-      "resolved": "0.1.0-beta.3",
+      "resolved": "0.1.0-beta.4",
       "manifest": "node_modules/@atom63/widgets/package.json"
     },
     {
       "name": "@atom63/cli",
       "requested": "beta",
-      "resolved": "0.1.0-beta.1",
+      "resolved": "0.1.0-beta.2",
       "manifest": "node_modules/@atom63/cli/package.json"
     }
   ],
