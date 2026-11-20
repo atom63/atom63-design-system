@@ -28,15 +28,24 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-type DemoProps = Pick<ComponentProps<typeof NavigationMenu>, 'align' | 'portalContainer'> & {
+type DemoProps = Pick<
+  ComponentProps<typeof NavigationMenu>,
+  'align' | 'defaultValue' | 'portalContainer'
+> & {
   width?: number
 }
 
-function Demo({ align, portalContainer, width = 240 }: DemoProps) {
+function Demo({ align, defaultValue, portalContainer, width = 240 }: DemoProps) {
   return (
-    <NavigationMenu align={align} portalContainer={portalContainer}>
+    // The open panel is a second <nav>, so the bar is named to keep both landmarks distinct.
+    <NavigationMenu
+      align={align}
+      aria-label="Main"
+      defaultValue={defaultValue}
+      portalContainer={portalContainer}
+    >
       <NavigationMenuList>
-        <NavigationMenuItem>
+        <NavigationMenuItem value="products">
           <NavigationMenuTrigger>Products</NavigationMenuTrigger>
           <NavigationMenuContent>
             <div style={{ display: 'grid', gap: 4, width }}>
@@ -46,7 +55,7 @@ function Demo({ align, portalContainer, width = 240 }: DemoProps) {
             </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
-        <NavigationMenuItem>
+        <NavigationMenuItem value="company">
           <NavigationMenuTrigger>Company</NavigationMenuTrigger>
           <NavigationMenuContent>
             <div style={{ display: 'grid', gap: 4, width }}>
@@ -62,6 +71,27 @@ function Demo({ align, portalContainer, width = 240 }: DemoProps) {
 
 export const Playground: Story = {
   render: () => <Demo />,
+}
+
+// The Products panel starts open, so the visual baselines capture the shared
+// popup, its viewport and the links inside it, not only the closed trigger bar.
+// While the panel is open, Base UI brackets it with aria-hidden focus-guard
+// spans that hand focus straight on to the next real target; axe's
+// aria-hidden-focus rule skips only those guards, and still runs on the rest.
+export const Open: Story = {
+  parameters: {
+    a11y: {
+      config: {
+        rules: [
+          {
+            id: 'aria-hidden-focus',
+            selector: '[aria-hidden="true"]:not([data-base-ui-focus-guard])',
+          },
+        ],
+      },
+    },
+  },
+  render: () => <Demo defaultValue="products" />,
 }
 
 // The Root forwards `align` to the shared Positioner, so the popup can anchor
