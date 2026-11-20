@@ -124,22 +124,42 @@ describe('atom63 CLI', () => {
   })
 })
 
+const templateIds = JSON.parse(
+  readFileSync(new URL('../generated/agent-index.json', import.meta.url), 'utf8')
+).templates.map(template => template.id)
+
 describe('atom63 copy', () => {
-  it('writes the template and every block it uses, keeping their imports resolvable', () => {
+  it('writes the template and every block it uses', () => {
     const dir = mkdtempSync(path.join(tmpdir(), 'atom63-copy-'))
     const { exitCode, envelope } = json(['copy', 'list-page', dir])
     assert.equal(exitCode, 0)
     const written = envelope.data.written.map(file => path.resolve(file))
     assert.ok(written.some(file => file.endsWith(path.join('pages/list-page/list-page.tsx'))))
     assert.ok(written.some(file => file.endsWith(path.join('blocks/empty-state/empty-state.tsx'))))
-    for (const file of written) {
-      const source = readFileSync(file, 'utf8')
-      for (const [, specifier] of source.matchAll(/from '(\.[^']+)'/g)) {
-        const target = path.resolve(path.dirname(file), specifier)
-        assert.ok(
-          ['.tsx', '.ts'].some(extension => existsSync(target + extension)),
-          `${path.relative(dir, file)} imports ${specifier}, which was not copied`
-        )
+  })
+
+  it('copies the sibling modules a page imports from another page', () => {
+    const dir = mkdtempSync(path.join(tmpdir(), 'atom63-copy-'))
+    const written = json(['copy', 'dashboard-page', dir]).envelope.data.written
+    assert.ok(written.some(file => file.endsWith(path.join('pages/list-page/list-page-data.ts'))))
+  })
+
+  it('keeps every relative import resolvable for every template', () => {
+    assert.ok(templateIds.length > 0)
+    for (const id of templateIds) {
+      const dir = mkdtempSync(path.join(tmpdir(), 'atom63-copy-'))
+      const { exitCode, envelope } = json(['copy', id, dir])
+      assert.equal(exitCode, 0, id)
+      const written = envelope.data.written.map(file => path.resolve(file))
+      for (const file of written) {
+        const source = readFileSync(file, 'utf8')
+        for (const [, specifier] of source.matchAll(/from '(\.[^']+)'/g)) {
+          const target = path.resolve(path.dirname(file), specifier)
+          assert.ok(
+            ['.tsx', '.ts'].some(extension => existsSync(target + extension)),
+            `${id}: ${path.relative(dir, file)} imports ${specifier}, which was not copied`
+          )
+        }
       }
     }
   })

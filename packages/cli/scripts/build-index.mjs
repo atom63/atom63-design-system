@@ -264,6 +264,23 @@ function templates(components) {
           path: `${dir}/${id}/${name}`,
           source: readFileSync(path.join(folder, name), 'utf8'),
         }))
+      // A relative import outside the folder that is not a block (a block is
+      // copied as its own entry) is copied with the template: for example the
+      // dashboard's sample rows from pages/list-page/list-page-data.ts.
+      for (let position = 0; position < files.length; position++) {
+        for (const specifier of importSpecifiers(files[position].source)) {
+          if (!specifier.startsWith('.')) continue
+          const target = path.posix.join(path.posix.dirname(files[position].path), specifier)
+          if (target.startsWith('blocks/') || target.startsWith(`${dir}/${id}/`)) continue
+          const file = ['.ts', '.tsx']
+            .map(extension => target + extension)
+            .find(candidate => existsSync(path.join(srcDir, candidate)))
+          if (!file)
+            throw new Error(`${files[position].path} imports ${specifier}, which does not exist`)
+          if (files.some(known => known.path === file)) continue
+          files.push({ path: file, source: readFileSync(path.join(srcDir, file), 'utf8') })
+        }
+      }
       const main = files.find(file => file.path.endsWith(`/${id}.tsx`))
       const metadata = parseTemplateMetadata(main.source)
       const sources = files.map(file => file.source)

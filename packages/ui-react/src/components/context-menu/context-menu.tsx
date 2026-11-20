@@ -4,6 +4,7 @@ import { ContextMenu as ContextMenuPrimitive } from '@base-ui/react/context-menu
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
+import { usePortalContainer } from '../portal-container'
 
 /*
  * ContextMenu — a right-click / long-press actionable menu popup (Base UI
@@ -75,7 +76,15 @@ export function ContextMenuGroup(props: ContextMenuPrimitive.Group.Props): React
 }
 
 export function ContextMenuPortal(props: ContextMenuPrimitive.Portal.Props): React.ReactElement {
-  return <ContextMenuPrimitive.Portal data-slot="context-menu-portal" {...props} />
+  const { container, ...portalProps } = props
+  const contextPortalContainer = usePortalContainer()
+  return (
+    <ContextMenuPrimitive.Portal
+      container={container ?? contextPortalContainer}
+      data-slot="context-menu-portal"
+      {...portalProps}
+    />
+  )
 }
 
 export function ContextMenuSub(props: ContextMenuPrimitive.SubmenuRoot.Props): React.ReactElement {
@@ -104,7 +113,7 @@ export function ContextMenuContent({
   ...props
 }: ContextMenuContentProps): React.ReactElement {
   return (
-    <ContextMenuPrimitive.Portal {...portalProps}>
+    <ContextMenuPortal {...portalProps}>
       <ContextMenuPrimitive.Positioner
         className="a63-Menu-positioner"
         collisionPadding={collisionPadding}
@@ -118,7 +127,7 @@ export function ContextMenuContent({
           {...props}
         />
       </ContextMenuPrimitive.Positioner>
-    </ContextMenuPrimitive.Portal>
+    </ContextMenuPortal>
   )
 }
 
@@ -181,7 +190,7 @@ export function ContextMenuSubContent({
   ...props
 }: ContextMenuSubContentProps): React.ReactElement {
   return (
-    <ContextMenuPrimitive.Portal {...portalProps}>
+    <ContextMenuPortal {...portalProps}>
       <ContextMenuPrimitive.Positioner
         className="a63-Menu-positioner"
         data-slot="context-menu-sub-positioner"
@@ -193,7 +202,7 @@ export function ContextMenuSubContent({
           {...props}
         />
       </ContextMenuPrimitive.Positioner>
-    </ContextMenuPrimitive.Portal>
+    </ContextMenuPortal>
   )
 }
 

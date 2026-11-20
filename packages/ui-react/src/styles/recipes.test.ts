@@ -81,6 +81,37 @@ describe('recipes.css cascade layering', () => {
       expect(reverseCompatCss).toContain('--a63-editable-font-size-min: 1rem')
     })
 
+    it('defines every token the recipes read without a fallback in the shadcn bridge', () => {
+      // A shadcn host loads only compat/a63-from-shadcn.css and recipes.css. A
+      // token neither defines resolves to nothing: padding collapses to 0 and
+      // selected states go transparent.
+      const collect = (file: string, seen = new Set<string>()): Set<string> => {
+        if (seen.has(file)) return seen
+        seen.add(file)
+        for (const [, path] of readFileSync(file, 'utf8').matchAll(/@import\s+['"]([^'"]+)['"]/g)) {
+          if (path.startsWith('.')) collect(join(dirname(file), path), seen)
+        }
+        return seen
+      }
+      const files = [
+        ...collect(join(stylesDir, 'recipes.css')),
+        ...collect(join(styleSystemDir, 'compat', 'a63-from-shadcn.css')),
+      ]
+      const declared = new Set<string>()
+      const reads = new Map<string, string>()
+      for (const file of files) {
+        const css = readFileSync(file, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '')
+        for (const [, name] of css.matchAll(/(--a63-[\w-]+)\s*:/g)) declared.add(name)
+        for (const [, name] of css.matchAll(/var\(\s*(--a63-[\w-]+)\s*\)/g)) {
+          if (!reads.has(name)) reads.set(name, file.slice(repoDir.length + 1))
+        }
+      }
+      const missing = [...reads]
+        .filter(([name]) => !declared.has(name))
+        .map(([name, file]) => `${name} (read in ${file})`)
+      expect(missing, 'add these to packages/styles/src/compat/a63-from-shadcn.css').toEqual([])
+    })
+
     it('exposes safe-area and dynamic viewport contracts', () => {
       expect(environmentContractCss).toContain('--a63-safe-area-top: env(safe-area-inset-top, 0px)')
       expect(environmentContractCss).toContain(
