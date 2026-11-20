@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 const reducedMotion = vi.hoisted(() => vi.fn(() => false))
@@ -68,6 +68,62 @@ describe('Marquee', () => {
   })
 })
 
+describe('Marquee pause (WCAG 2.2.2)', () => {
+  it('pauses on hover and focus by default', () => {
+    const { container } = render(
+      <Marquee repeat={1}>
+        <span>x</span>
+      </Marquee>
+    )
+    expect(container.querySelector('.a63-Marquee-track')).toHaveAttribute('data-pause-on-hover')
+  })
+
+  it('renders a pause toggle that stops and restarts every track', () => {
+    const { container } = render(
+      <Marquee repeat={2}>
+        <span>x</span>
+      </Marquee>
+    )
+    const toggle = screen.getByRole('button', { name: 'Pause' })
+    expect(toggle).toHaveAttribute('aria-pressed', 'false')
+    expect(toggle).toHaveClass('a63-Marquee-control')
+    expect(container.querySelectorAll('.a63-Marquee-track[data-paused]')).toHaveLength(0)
+
+    fireEvent.click(toggle)
+    expect(toggle).toHaveAttribute('aria-pressed', 'true')
+    expect(container.querySelectorAll('.a63-Marquee-track[data-paused]')).toHaveLength(2)
+
+    fireEvent.click(toggle)
+    expect(toggle).toHaveAttribute('aria-pressed', 'false')
+    expect(container.querySelectorAll('.a63-Marquee-track[data-paused]')).toHaveLength(0)
+  })
+
+  it('takes a translated label for the toggle', () => {
+    render(
+      <Marquee pauseLabel="暂停">
+        <span>x</span>
+      </Marquee>
+    )
+    expect(screen.getByRole('button', { name: '暂停' })).toBeInTheDocument()
+  })
+
+  it('hands pausing to the caller when paused is passed', () => {
+    const { container, rerender } = render(
+      <Marquee paused={false} repeat={1}>
+        <span>x</span>
+      </Marquee>
+    )
+    expect(screen.queryByRole('button')).toBeNull()
+    expect(container.querySelector('.a63-Marquee-track')).not.toHaveAttribute('data-paused')
+    rerender(
+      <Marquee paused repeat={1}>
+        <span>x</span>
+      </Marquee>
+    )
+    expect(container.querySelector('.a63-Marquee-track')).toHaveAttribute('data-paused')
+  })
+})
+
 describe('Marquee under reduced motion', () => {
   afterEach(() => {
     reducedMotion.mockReturnValue(false)
@@ -84,6 +140,16 @@ describe('Marquee under reduced motion', () => {
     expect(root).toHaveAttribute('tabindex', '0')
     expect(root).toHaveAttribute('role', 'group')
     expect(root).toHaveAttribute('aria-label', 'Scrolling content')
+  })
+
+  it('shows no pause toggle, since nothing moves', () => {
+    reducedMotion.mockReturnValue(true)
+    render(
+      <Marquee>
+        <span>item</span>
+      </Marquee>
+    )
+    expect(screen.queryByRole('button')).toBeNull()
   })
 
   it('adds no tab stop while the strip animates', () => {

@@ -2,7 +2,8 @@
  * Marquee recipe — an infinitely scrolling strip. The container clips overflow
  * and lays out `repeat` duplicate tracks; each track scrolls one --gap-adjusted
  * span via the a63-marquee keyframes (prod's animate-marquee). data-orientation
- * switches axis; reverse/paused/pauseOnHover drive the animation play-state.
+ * switches axis; reverse/paused/pauseOnHover drive the animation play-state, and
+ * .a63-Marquee-control is the built-in pause toggle.
  * Animation is suppressed under prefers-reduced-motion.
  */
 
@@ -13,6 +14,7 @@
      lay out to the left and the strip has to scroll right to loop. */
   --marquee-dir: 1;
 
+  position: relative;
   display: flex;
   gap: var(--gap);
   padding: var(--a63-space-2);
@@ -54,6 +56,19 @@
   animation-play-state: paused;
 }
 
+/* Built-in pause toggle (WCAG 2.2.2), pinned to the inline end over the strip. */
+.a63-Marquee > .a63-Marquee-control {
+  position: absolute;
+  z-index: 1;
+  inset-block-start: 50%;
+  inset-inline-end: var(--a63-space-2);
+  translate: 0 -50%;
+}
+.a63-Marquee[data-orientation='vertical'] > .a63-Marquee-control {
+  inset-block-start: var(--a63-space-2);
+  translate: none;
+}
+
 @keyframes a63-marquee {
   0% {
     transform: translateX(0);
@@ -79,7 +94,8 @@
   .a63-Marquee-track {
     animation: none;
   }
-  .a63-Marquee-track:not(:first-child) {
+  .a63-Marquee-track:not(:first-child),
+  .a63-Marquee-control {
     display: none;
   }
 }

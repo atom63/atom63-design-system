@@ -98,6 +98,17 @@ export const Themes: Story = {
       )}
     </div>
   ),
+  // The rows have no set height: a vertical separator stretches to the row.
+  play: ({ canvasElement }) => {
+    const separators = canvasElement.querySelectorAll('[data-orientation="vertical"]')
+    if (separators.length !== themes.length * 4) {
+      throw new Error(`Expected ${themes.length * 4} vertical separators, got ${separators.length}`)
+    }
+    for (const separator of separators) {
+      const { height } = separator.getBoundingClientRect()
+      if (height <= 8) throw new Error(`Expected a stretched vertical separator, got ${height}px`)
+    }
+  },
 }
 
 export const Endpoints: Story = {
