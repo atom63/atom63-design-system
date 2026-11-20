@@ -20,7 +20,6 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { CreditCard, FileText, Inbox, LineChart } from 'lucide-react'
 import { forwardRef, useState } from 'react'
 import type { ComponentProps } from 'react'
-import { expect } from 'storybook/test'
 
 const meta = {
   title: 'UI React/SidebarNavTree',
@@ -296,11 +295,14 @@ export const Themes: Story = {
     </div>
   ),
   // Each theme x mode row stays compact, so all eight fit in the capture.
-  play: async ({ canvasElement }) => {
+  play: ({ canvasElement }) => {
     const rows = canvasElement.querySelectorAll('[data-testid="theme-row"]')
-    await expect(rows).toHaveLength(themes.length * 2)
+    if (rows.length !== themes.length * 2) {
+      throw new Error(`Expected ${themes.length * 2} theme rows, got ${rows.length}`)
+    }
     for (const row of rows) {
-      await expect(row.getBoundingClientRect().height).toBeLessThan(400)
+      const { height } = row.getBoundingClientRect()
+      if (height >= 400) throw new Error(`Expected a compact theme row, got ${height}px`)
     }
   },
 }

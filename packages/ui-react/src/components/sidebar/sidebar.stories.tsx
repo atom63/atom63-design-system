@@ -28,7 +28,6 @@ import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { FileText, Inbox, MoreHorizontal, Send, Star } from 'lucide-react'
 import { type ReactNode, useLayoutEffect, useState } from 'react'
-import { expect, within } from 'storybook/test'
 
 const meta = {
   title: 'UI React/Sidebar',
@@ -184,10 +183,18 @@ export const IconRail: Story = {
       </Sidebar>
     </SidebarProvider>
   ),
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-    for (const { label } of railItems) {
-      await expect(canvas.getByRole('button', { name: label })).toBeVisible()
+  // A label hidden with display: none drops out of innerText and the accessible
+  // name; a visually hidden one stays in both.
+  play: ({ canvasElement }) => {
+    const buttons = Array.from(
+      canvasElement.querySelectorAll<HTMLElement>('[data-sidebar="menu-button"]')
+    )
+    const names = buttons.map(button => button.innerText.trim())
+    if (names.join('|') !== railItems.map(item => item.label).join('|')) {
+      throw new Error(`Expected every rail button to keep its label, got ${names.join(', ')}`)
+    }
+    for (const button of buttons) {
+      if (button.getBoundingClientRect().width === 0) throw new Error('Expected a visible button')
     }
   },
 }
@@ -228,7 +235,7 @@ export const RightToLeft: Story = {
       </SidebarProvider>
     </UIProvider>
   ),
-  play: async ({ canvasElement }) => {
+  play: ({ canvasElement }) => {
     for (const selector of ['[data-sidebar="menu-badge"]', '[data-sidebar="menu-action"]']) {
       const extra = canvasElement.querySelector<HTMLElement>(selector)
       const item = extra?.closest<HTMLElement>('[data-sidebar="menu-item"]')
@@ -237,8 +244,12 @@ export const RightToLeft: Story = {
       const box = extra.getBoundingClientRect()
       const itemBox = item.getBoundingClientRect()
       // Inline end is the left edge under dir="rtl".
-      await expect(box.left - itemBox.left).toBeLessThan(8)
-      await expect(box.right).toBeLessThanOrEqual(label.getBoundingClientRect().left + 0.5)
+      if (box.left - itemBox.left >= 8) {
+        throw new Error(`Expected ${selector} at the inline end (left) under dir="rtl"`)
+      }
+      if (box.right > label.getBoundingClientRect().left + 0.5) {
+        throw new Error(`Expected ${selector} clear of the label`)
+      }
     }
   },
 }

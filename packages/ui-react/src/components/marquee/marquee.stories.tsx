@@ -2,7 +2,6 @@ import { marqueeContract, themes } from '@atom63/ui-foundation'
 import { Badge, Marquee, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { expect, userEvent, within } from 'storybook/test'
 
 const meta = {
   title: 'UI React/Marquee',
@@ -49,12 +48,20 @@ export const PauseToggle: Story = {
     </div>
   ),
   play: async ({ canvasElement }) => {
-    const toggle = within(canvasElement).getByRole('button', { name: 'Pause' })
-    await userEvent.click(toggle)
-    await expect(toggle).toHaveAttribute('aria-pressed', 'true')
+    const toggle = canvasElement.querySelector<HTMLButtonElement>('button[aria-label="Pause"]')
+    if (!toggle) throw new Error('Expected the built-in pause toggle')
+    toggle.click()
+    await new Promise(resolve => setTimeout(resolve, 50))
+    if (toggle.getAttribute('aria-pressed') !== 'true') {
+      throw new Error('Expected the pause toggle to be pressed')
+    }
     for (const track of canvasElement.querySelectorAll('.a63-Marquee-track')) {
-      await expect(track).toHaveAttribute('data-paused')
-      await expect(getComputedStyle(track).animationPlayState).toBe('paused')
+      if (
+        !track.hasAttribute('data-paused') ||
+        getComputedStyle(track).animationPlayState !== 'paused'
+      ) {
+        throw new Error('Expected every track to be paused')
+      }
     }
   },
 }
