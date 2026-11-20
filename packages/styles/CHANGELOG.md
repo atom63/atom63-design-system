@@ -1,5 +1,31 @@
 # @atom63/styles
 
+## 0.1.0-beta.9
+
+### Minor Changes
+
+- [#288](https://github.com/atom63/atom63-design-system/pull/288) [`adc4b50`](https://github.com/atom63/atom63-design-system/commit/adc4b5086f4f3da6c651fad03471f4f6875d8071) Thanks [@atom63](https://github.com/atom63)! - Add the danger status role: `--a63-status-danger` (step 600 in light mode, 500 in dark mode) with `-foreground`, `-subtle` and `-subtle-foreground`, for error icons, borders and tints. `--a63-action-danger` stays the danger button fill. The contrast test now checks `--a63-status-danger` (3:1) and `--a63-text-danger` (4.5:1) in every theme and mode, and `compat/a63-from-shadcn.css` maps both from `--destructive`.
+  
+  Alert's error tone draws its icon, border and fill from `--a63-status-danger` and its action label in `--a63-text-danger`, and its action sits at the inline end, so it no longer covers the title in right-to-left layouts. In `@atom63/mdx`, KeyIdea's eyebrow and the active PageTableOfContents link use `--a63-text-accent`; Compare's negative item, StatCard's down trend, the MermaidDiagram and live-preview error text use `--a63-text-danger`; the error Callout and Compare's negative marker use `--a63-status-danger`. The CLI agent index lists the new tokens.
+
+### Patch Changes
+
+- [#291](https://github.com/atom63/atom63-design-system/pull/291) [`9d419a3`](https://github.com/atom63/atom63-design-system/commit/9d419a3c93fb3bd92cbecff32176b0c637ce402c) Thanks [@atom63](https://github.com/atom63)! - Fix component behaviour and accessibility gaps from the readiness review:
+  
+  - `SearchField` forwards a consumer `ref` to its input and draws `size` and `invalid` on its chrome.
+  - `Field` links its `FieldDescription` and `FieldError` to the control with `aria-describedby` (and sets `aria-invalid` while an error shows), keeping any ids the control already lists.
+  - `SegmentedControl` spreads extra props onto its root, forwards a `ref`, and works uncontrolled with `defaultValue`; `value` and `onValueChange` are now optional.
+  - `ScrollableList` keeps both chevron controls mounted (hidden and inert at an edge) and moves focus to the other control when the focused one reaches its edge; it takes `scrollStartLabel` and `scrollEndLabel`, and spreads extra props onto its root, so `aria-label` names the list.
+  - A collapsed `offcanvas` `Sidebar` is inert, so its links leave the tab order and the accessibility tree.
+  - An active `SidebarMenuButton` or `SidebarMenuSubButton` (and so an active `SidebarNavTree` link) sets `aria-current="page"`.
+  - `LoadMoreTrigger` keeps one live region mounted in every state (empty while hidden), so a change of state is announced.
+  - `DestinationLink` gets a recipe (`.a63-DestinationLink`, also at `@atom63/ui-react/recipes/destination-link.css`): primary text, underline, accent on hover, an outline focus ring and a gap before the indicator.
+  - `--a63-skeleton-base` is declared on every light and dark scope, so a Skeleton inside a dark-scoped `UIProvider` uses the dark muted surface.
+
+- [#287](https://github.com/atom63/atom63-design-system/pull/287) [`426b77e`](https://github.com/atom63/atom63-design-system/commit/426b77e7399bca33758193001e29c3cd498ae4f1) Thanks [@atom63](https://github.com/atom63)! - A pressed neutral Toggle now uses the high-emphasis neutral solid (`--a63-action-neutral`), so it is clearly different from an unpressed one in every theme. Before, it used the segment plate and looked the same as an unpressed toggle. The fill is now the `--a63-toggle-on-background` and `--a63-toggle-on-foreground` tokens, and the terminal theme sets them to reverse video (phosphor ink fill, page-coloured text), because its neutral solid is close to its page. Toggle, ToggleGroup, PanelSettingButton, Radio, Rating, Progress, the shared menu recipe and Tabs now repaint their selected, pressed, checked or highlighted state in the system `Highlight` colours in forced-colors mode. Under reduced motion, an indeterminate Progress fills its track with stripes instead of a still 40% bar. Menu group labels drop their 0.75 opacity, so they meet text contrast.
+
+- [#305](https://github.com/atom63/atom63-design-system/pull/305) [`eef5f6f`](https://github.com/atom63/atom63-design-system/commit/eef5f6f4072ad0d64e366d9a325d8e2fde1742ba) Thanks [@atom63](https://github.com/atom63)! - The reverse shadcn bridge (`@atom63/styles/compat/a63-from-shadcn`) now defines every `--a63-*` token the `@atom63/ui-react` recipes read without a fallback: the space half steps, selected and disabled roles, subtle status and category colors, the display type roles, the app font, control feedback motion, icon sizes and the flat surface and overlay archetype slots. Colors derive from the shadcn variables, so they follow the host's light and dark mode. A shadcn host that loads only the bridge and the recipes no longer gets collapsed spacing or transparent selected states.
+
 ## 0.1.0-beta.8
 
 ### Minor Changes

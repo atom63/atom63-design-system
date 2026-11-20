@@ -1,5 +1,76 @@
 # @atom63/ui-react
 
+## 0.2.0-beta.13
+
+### Minor Changes
+
+- [#301](https://github.com/atom63/atom63-design-system/pull/301) [`5304568`](https://github.com/atom63/atom63-design-system/commit/5304568ca070b05305f865b2b8d411c8667c48b9) Thanks [@atom63](https://github.com/atom63)! - Fix the app frame findings from the readiness review. An icon-collapsed `Sidebar` hides its menu button labels visually instead of with `display: none`, so each icon-only button keeps its accessible name. The sidebar menu action and badge sit at the inline end (`inset-inline-end`) and the menu button tooltip opens on the `inline-end` side, so they no longer cover the label in right-to-left layouts. A vertical `Separator` stretches to the height of a flex row that has no set height, with a `1em` floor, instead of collapsing to zero. `Marquee` now meets WCAG 2.2.2: `pauseOnHover` defaults to `true` (hover and focus pause it), and it renders a pause toggle at the inline end, named by the new `pauseLabel` prop (default "Pause"). Passing `paused` hands pausing to the caller and the toggle is not rendered; under reduced motion the strip does not move and shows no toggle.
+
+- [#291](https://github.com/atom63/atom63-design-system/pull/291) [`9d419a3`](https://github.com/atom63/atom63-design-system/commit/9d419a3c93fb3bd92cbecff32176b0c637ce402c) Thanks [@atom63](https://github.com/atom63)! - Fix component behaviour and accessibility gaps from the readiness review:
+  
+  - `SearchField` forwards a consumer `ref` to its input and draws `size` and `invalid` on its chrome.
+  - `Field` links its `FieldDescription` and `FieldError` to the control with `aria-describedby` (and sets `aria-invalid` while an error shows), keeping any ids the control already lists.
+  - `SegmentedControl` spreads extra props onto its root, forwards a `ref`, and works uncontrolled with `defaultValue`; `value` and `onValueChange` are now optional.
+  - `ScrollableList` keeps both chevron controls mounted (hidden and inert at an edge) and moves focus to the other control when the focused one reaches its edge; it takes `scrollStartLabel` and `scrollEndLabel`, and spreads extra props onto its root, so `aria-label` names the list.
+  - A collapsed `offcanvas` `Sidebar` is inert, so its links leave the tab order and the accessibility tree.
+  - An active `SidebarMenuButton` or `SidebarMenuSubButton` (and so an active `SidebarNavTree` link) sets `aria-current="page"`.
+  - `LoadMoreTrigger` keeps one live region mounted in every state (empty while hidden), so a change of state is announced.
+  - `DestinationLink` gets a recipe (`.a63-DestinationLink`, also at `@atom63/ui-react/recipes/destination-link.css`): primary text, underline, accent on hover, an outline focus ring and a gap before the indicator.
+  - `--a63-skeleton-base` is declared on every light and dark scope, so a Skeleton inside a dark-scoped `UIProvider` uses the dark muted surface.
+
+- [#304](https://github.com/atom63/atom63-design-system/pull/304) [`2c9247b`](https://github.com/atom63/atom63-design-system/commit/2c9247b6a597171efd84e0eecfd1fc61ab4b09e3) Thanks [@atom63](https://github.com/atom63)! - Fix feedback, status and media accessibility gaps from the readiness review:
+  
+  - `Alert`'s info, success and warning action labels use their status `-subtle-foreground` text step, so they reach 4.5:1 on the tinted fill in every theme and mode. The live region follows the tone: error and warning render `role="alert"` (assertive); default, info and success render `role="status"` (polite). Pass `role` to override.
+  - `EmptyErrorDetail`'s "Show details" toggle is a muted ghost Button, so its label rests in the secondary text colour (4.5:1) instead of a 60% mix of it.
+  - `FeedbackState` keeps one live region mounted in every state: polite (`role="status"`) for loading and the result states, assertive (`role="alert"`) for an error. It is no longer `aria-busy` while loading, which silenced it. Its title is a heading, level 3 unless `level` sets another.
+  - `LoadMoreTrigger`'s Retry action gets a hit area of `--a63-control-min-target` (44px on coarse pointers) around its text.
+  - `@atom63/mdx` `VideoBlock` does not autoplay when the reader prefers reduced motion. An autoplaying video without `controls` gets a pause and play toggle (an overlay Button named by `pauseLabel` and `playLabel`), and a decorative video without controls is `aria-hidden` instead of labelled.
+  - `@atom63/widgets` controls reach a 44 physical px hit area on coarse pointers: inside a widget, a Button's hit area grows to `--widget-interaction-target` while the control keeps its 24px proportion.
+
+- [#286](https://github.com/atom63/atom63-design-system/pull/286) [`2cea63d`](https://github.com/atom63/atom63-design-system/commit/2cea63dc522d9597dfccea2f61410c6f36ece136) Thanks [@atom63](https://github.com/atom63)! - Add `actions` and `toolbar` to `MediaLightbox`. `actions(item, index)` renders the caller's buttons in a row in the bottom dock, above the thumbnails; `toolbar(item, index)` adds controls at the start of the top-right cluster beside Close. Both are chosen per item, fade with the rest of the chrome, clear the safe areas, stay inside the focus trap, and never page, zoom or close on a press. The `Carousel` docs now point full-screen viewers to `MediaLightbox`, and the package README lists it.
+
+- [#292](https://github.com/atom63/atom63-design-system/pull/292) [`34d8578`](https://github.com/atom63/atom63-design-system/commit/34d85787157a079355820596ddb437dea0962d97) Thanks [@atom63](https://github.com/atom63)! - Right-to-left fixes and a controlled range Slider:
+  
+  - `UIProvider` takes `dir` (`'ltr' | 'rtl' | 'auto'`). It sets the `dir` attribute and, for `ltr`
+    and `rtl`, provides Base UI's direction to the parts inside, so a Slider under `dir="rtl"` drags
+    and steps right to left. Before, Base UI parts always behaved left to right.
+  - `Slider` adds `onValuesChange(values, eventDetails)`, which reports every thumb, so a ranged
+    slider can be controlled. `onValueChange` still reports a plain number (the first thumb).
+  - `Switch`: under `dir="rtl"` the checked thumb slides left and stays inside the track.
+  - `Drawer` and `Sheet`: `left` and `right` are physical screen edges in right-to-left pages too.
+    A left drawer or sheet now docks to the left edge, matching its slide, safe-area padding, swipe
+    direction and inner border; before, it docked to the right.
+  - `Marquee`: under `dir="rtl"` the strip scrolls right, so the loop no longer opens a gap.
+
+### Patch Changes
+
+- [#298](https://github.com/atom63/atom63-design-system/pull/298) [`7ab4fc9`](https://github.com/atom63/atom63-design-system/commit/7ab4fc97d5ce63f3f3c7237e4db61a3dc6954582) Thanks [@atom63](https://github.com/atom63)! - Add the Progressive Blur contract (`progressiveBlurContract`, `progressiveBlurPositions`, `ProgressiveBlurPosition`), marked preview; `ProgressiveBlur` takes its defaults and position type from it. Map the iOS axes of Alert, Avatar, Button shape, Card, Carousel dots, Input, Item group surface, Message, Progress, Toaster and Toggle Group onto the contract intent; the contract check fails when a mapped Swift enum drifts. The catalog and the agent index now fail on a component without a contract maturity instead of calling it stable.
+
+- [#288](https://github.com/atom63/atom63-design-system/pull/288) [`adc4b50`](https://github.com/atom63/atom63-design-system/commit/adc4b5086f4f3da6c651fad03471f4f6875d8071) Thanks [@atom63](https://github.com/atom63)! - Add the danger status role: `--a63-status-danger` (step 600 in light mode, 500 in dark mode) with `-foreground`, `-subtle` and `-subtle-foreground`, for error icons, borders and tints. `--a63-action-danger` stays the danger button fill. The contrast test now checks `--a63-status-danger` (3:1) and `--a63-text-danger` (4.5:1) in every theme and mode, and `compat/a63-from-shadcn.css` maps both from `--destructive`.
+  
+  Alert's error tone draws its icon, border and fill from `--a63-status-danger` and its action label in `--a63-text-danger`, and its action sits at the inline end, so it no longer covers the title in right-to-left layouts. In `@atom63/mdx`, KeyIdea's eyebrow and the active PageTableOfContents link use `--a63-text-accent`; Compare's negative item, StatCard's down trend, the MermaidDiagram and live-preview error text use `--a63-text-danger`; the error Callout and Compare's negative marker use `--a63-status-danger`. The CLI agent index lists the new tokens.
+
+- [#302](https://github.com/atom63/atom63-design-system/pull/302) [`09a3299`](https://github.com/atom63/atom63-design-system/commit/09a3299b1e7c1ce2498e3c1ed10a6f6f4ee4e7c8) Thanks [@atom63](https://github.com/atom63)! - SegmentedControl, NavigationMenu and Command now repaint their selected segment, open trigger, current link and highlighted option in the system `Highlight` colours in forced-colors mode. NavigationMenuLink draws the control focus ring as an inset outline on `:focus-visible`, and the current link (`active`) gets a heavier label, so it no longer looks like the hover fill. ChatTypingIndicator mounts its `status` region empty and then adds the label as visually hidden text, so screen readers announce it, and its dots stay visible in forced-colors mode. A streaming ChatMessage leaves off `aria-busy` while one of its direct children is a ChatTypingIndicator.
+  
+  Menu, DropdownMenu, ContextMenu, Menubar and Select items now draw the control focus ring as an inset outline on `:focus-visible`, on top of the highlight fill. A pointer hover still shows only the fill. Autocomplete and Command options keep focus in the input, so the highlighted option, the one Enter picks, always carries the inset ring.
+
+- [#287](https://github.com/atom63/atom63-design-system/pull/287) [`426b77e`](https://github.com/atom63/atom63-design-system/commit/426b77e7399bca33758193001e29c3cd498ae4f1) Thanks [@atom63](https://github.com/atom63)! - A pressed neutral Toggle now uses the high-emphasis neutral solid (`--a63-action-neutral`), so it is clearly different from an unpressed one in every theme. Before, it used the segment plate and looked the same as an unpressed toggle. The fill is now the `--a63-toggle-on-background` and `--a63-toggle-on-foreground` tokens, and the terminal theme sets them to reverse video (phosphor ink fill, page-coloured text), because its neutral solid is close to its page. Toggle, ToggleGroup, PanelSettingButton, Radio, Rating, Progress, the shared menu recipe and Tabs now repaint their selected, pressed, checked or highlighted state in the system `Highlight` colours in forced-colors mode. Under reduced motion, an indeterminate Progress fills its track with stripes instead of a still 40% bar. Menu group labels drop their 0.75 opacity, so they meet text contrast.
+
+- [#300](https://github.com/atom63/atom63-design-system/pull/300) [`77fd109`](https://github.com/atom63/atom63-design-system/commit/77fd109bb3277687a709be96abb7a0b280525ea9) Thanks [@atom63](https://github.com/atom63)! - An `overlay` Button in the `MediaLightbox` `toolbar` slot now takes the lightbox's own glass, the same fill, border, shadow and blur as the built-in controls beside it, instead of Button's lighter overlay fill.
+
+- [#299](https://github.com/atom63/atom63-design-system/pull/299) [`a4188c4`](https://github.com/atom63/atom63-design-system/commit/a4188c47cab00e73439be61c39be0c2424644176) Thanks [@atom63](https://github.com/atom63)! - Icon buttons in the `MediaLightbox` `toolbar` slot now render at 44px, the same size as the built-in controls beside them, instead of Button's 40px `icon-xl` step.
+
+- [#279](https://github.com/atom63/atom63-design-system/pull/279) [`b3410a1`](https://github.com/atom63/atom63-design-system/commit/b3410a1e54be91f79db37d01758b017dc1467a65) Thanks [@dependabot](https://github.com/apps/dependabot)! - Depend on motion ^14.14.0 instead of ^13.1.1. Motion 14 has no breaking changes to its public API.
+
+- [#295](https://github.com/atom63/atom63-design-system/pull/295) [`524fd93`](https://github.com/atom63/atom63-design-system/commit/524fd93260a5405a3becfe9e8ceb9e35d6bf6754) Thanks [@atom63](https://github.com/atom63)! - `SelectTrigger` and `AutocompleteInput` take an `invalid` prop and draw the same danger edge as `Input` when it or `aria-invalid` is set; the Autocomplete input gains a hover border. The Select contract lists an `invalid` state and the Autocomplete contract lists `hover` and `invalid`. The default `Toaster` now reads `--a63-surface-overlay`, `--a63-border-subtle`, `--a63-text-primary` and `--radius-lg` instead of the shadcn compat variables, so its toast has a fill with only `@atom63/ui-react/styles.css` installed.
+  
+  `SelectSeparator` and `AutocompleteSeparator` render with `role="none"`, so a separator between groups inside the open listbox no longer fails axe `aria-required-children`.
+
+- [#305](https://github.com/atom63/atom63-design-system/pull/305) [`eef5f6f`](https://github.com/atom63/atom63-design-system/commit/eef5f6f4072ad0d64e366d9a325d8e2fde1742ba) Thanks [@atom63](https://github.com/atom63)! - `Dialog`, `AlertDialog`, `Drawer`, `CommandDialog`, `ContextMenu`, `NavigationMenu` and `Autocomplete` now portal into the node from `PortalContainerProvider` when one is set, as the other overlays already did; an explicit portal `container` (or `portalContainer`) still wins. `CommandDialogPortal` is now a component instead of an alias of the Base UI part.
+- Updated dependencies [[`9d419a3`](https://github.com/atom63/atom63-design-system/commit/9d419a3c93fb3bd92cbecff32176b0c637ce402c), [`7ab4fc9`](https://github.com/atom63/atom63-design-system/commit/7ab4fc97d5ce63f3f3c7237e4db61a3dc6954582), [`adc4b50`](https://github.com/atom63/atom63-design-system/commit/adc4b5086f4f3da6c651fad03471f4f6875d8071), [`426b77e`](https://github.com/atom63/atom63-design-system/commit/426b77e7399bca33758193001e29c3cd498ae4f1), [`524fd93`](https://github.com/atom63/atom63-design-system/commit/524fd93260a5405a3becfe9e8ceb9e35d6bf6754), [`eef5f6f`](https://github.com/atom63/atom63-design-system/commit/eef5f6f4072ad0d64e366d9a325d8e2fde1742ba)]:
+  - @atom63/styles@0.1.0-beta.9
+  - @atom63/ui-foundation@0.2.0-beta.6
+
 ## 0.2.0-beta.12
 
 ### Minor Changes
