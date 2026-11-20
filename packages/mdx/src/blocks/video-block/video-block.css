@@ -8,4 +8,11 @@
   .mdx-video-stage {
     background-color: var(--a63-surface-muted);
   }
+
+  /* The pause and play toggle of an autoplaying video without controls. */
+  .mdx-video-toggle {
+    position: absolute;
+    inset-block-end: var(--a63-space-3);
+    inset-inline-end: var(--a63-space-3);
+  }
 }

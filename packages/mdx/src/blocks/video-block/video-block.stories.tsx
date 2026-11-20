@@ -47,6 +47,8 @@ export const CoverFit: Story = {
   },
 }
 
+/* Without native controls, an autoplaying loop gets a pause and play toggle
+   (WCAG 2.2.2). Under reduced motion it does not start by itself. */
 export const AutoplayLoop: Story = {
   name: 'Autoplay + loop (muted)',
   args: {
