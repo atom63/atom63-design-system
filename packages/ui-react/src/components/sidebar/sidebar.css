@@ -524,7 +524,8 @@
   color: var(--sidebar-accent-fg);
   box-shadow: 0 0 0 1px var(--sidebar-accent);
 }
-/* collapsed icon rail: square the button + hide labels */
+/* collapsed icon rail: square the button + hide labels visually (they stay
+   the button's accessible name) */
 .a63-Sidebar-root[data-collapsible='icon'] .a63-Sidebar-menu-button {
   margin-inline: auto;
   width: max(
@@ -545,14 +546,20 @@
 .a63-Sidebar-root[data-collapsible='icon']
   .a63-Sidebar-menu-button
   > span:not(.a63-Sidebar-sr-only) {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* ── Menu action ─────────────────────────────────────────────────────────── */
 .a63-Sidebar-menu-action {
   position: absolute;
   top: 50%;
-  right: 0;
+  inset-inline-end: 0;
   display: flex;
   aspect-ratio: 1 / 1;
   width: var(--a63-control-min-target);
@@ -602,7 +609,7 @@
 .a63-Sidebar-menu-badge {
   pointer-events: none;
   position: absolute;
-  right: 0.25rem;
+  inset-inline-end: 0.25rem;
   display: flex;
   height: 1.25rem;
   min-width: 1.25rem;

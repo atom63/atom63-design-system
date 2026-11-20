@@ -399,7 +399,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Marquee loops arbitrary content horizontally or vertically with pause and direction controls.',
     usage:
-      'Use it only for non-essential repeated content and preserve the reduced-motion behavior.',
+      'Use it only for non-essential repeated content and preserve the reduced-motion behavior. It pauses on hover and focus and renders a pause toggle (WCAG 2.2.2); if you pass `paused`, the toggle is not rendered and you provide the control.',
     usageExports: ['Marquee'],
   },
   menubar: {

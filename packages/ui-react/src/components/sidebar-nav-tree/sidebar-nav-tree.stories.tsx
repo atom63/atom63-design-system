@@ -20,6 +20,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { CreditCard, FileText, Inbox, LineChart } from 'lucide-react'
 import { forwardRef, useState } from 'react'
 import type { ComponentProps } from 'react'
+import { expect } from 'storybook/test'
 
 const meta = {
   title: 'UI React/SidebarNavTree',
@@ -224,7 +225,7 @@ export const LinkProps: Story = {
 function CompactTree() {
   const [open, setOpen] = useState(true)
   return (
-    <SidebarProvider>
+    <SidebarProvider style={{ minHeight: 0 }}>
       <Sidebar collapsible="none">
         <SidebarContent>
           <SidebarNavGroup label="Docs">
@@ -271,6 +272,7 @@ export const Themes: Story = {
         (['light', 'dark'] as const).map(mode => (
           <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>
             <div
+              data-testid="theme-row"
               style={{
                 alignItems: 'flex-start',
                 background: 'var(--a63-surface-panel)',
@@ -293,6 +295,14 @@ export const Themes: Story = {
       )}
     </div>
   ),
+  // Each theme x mode row stays compact, so all eight fit in the capture.
+  play: async ({ canvasElement }) => {
+    const rows = canvasElement.querySelectorAll('[data-testid="theme-row"]')
+    await expect(rows).toHaveLength(themes.length * 2)
+    for (const row of rows) {
+      await expect(row.getBoundingClientRect().height).toBeLessThan(400)
+    }
+  },
 }
 
 export const Endpoints: Story = {

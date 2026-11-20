@@ -2,6 +2,7 @@ import { separatorContract, themes } from '@atom63/ui-foundation'
 import { Separator, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect } from 'storybook/test'
 
 const meta = {
   title: 'UI React/Separator',
@@ -98,6 +99,14 @@ export const Themes: Story = {
       )}
     </div>
   ),
+  // The rows have no set height: a vertical separator stretches to the row.
+  play: async ({ canvasElement }) => {
+    const separators = canvasElement.querySelectorAll('[data-orientation="vertical"]')
+    await expect(separators).toHaveLength(themes.length * 4)
+    for (const separator of separators) {
+      await expect(separator.getBoundingClientRect().height).toBeGreaterThan(8)
+    }
+  },
 }
 
 export const Endpoints: Story = {

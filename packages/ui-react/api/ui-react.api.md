@@ -1767,6 +1767,7 @@ export type MarqueeProps = ComponentPropsWithoutRef<'div'> & {
     reverse?: boolean;
     pauseOnHover?: boolean;
     paused?: boolean;
+    pauseLabel?: string;
     children: ReactNode;
     vertical?: boolean;
     repeat?: number;

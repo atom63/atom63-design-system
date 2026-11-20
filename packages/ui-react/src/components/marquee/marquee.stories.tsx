@@ -2,6 +2,7 @@ import { marqueeContract, themes } from '@atom63/ui-foundation'
 import { Badge, Marquee, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect, userEvent, within } from 'storybook/test'
 
 const meta = {
   title: 'UI React/Marquee',
@@ -21,16 +22,41 @@ function Chip({ label }: { label: string }): React.ReactElement {
 export const Playground: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 8, width: 'min(420px, 100%)' }}>
-      <Marquee aria-label="Design disciplines; hover or focus to pause" pauseOnHover tabIndex={0}>
+      <Marquee aria-label="Design disciplines">
         {chips.map(c => (
           <Chip key={c} label={c} />
         ))}
       </Marquee>
       <span style={{ color: 'var(--a63-text-secondary)', fontSize: 12 }}>
-        Hover or focus to pause
+        Hover, focus or press the pause button to stop it
       </span>
     </div>
   ),
+}
+
+/*
+ * WCAG 2.2.2: the strip pauses on hover and focus, and the built-in toggle at the
+ * inline end pauses it until pressed again. This story presses it.
+ */
+export const PauseToggle: Story = {
+  render: () => (
+    <div style={{ width: 'min(420px, 100%)' }}>
+      <Marquee aria-label="Design disciplines">
+        {chips.map(c => (
+          <Chip key={c} label={c} />
+        ))}
+      </Marquee>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const toggle = within(canvasElement).getByRole('button', { name: 'Pause' })
+    await userEvent.click(toggle)
+    await expect(toggle).toHaveAttribute('aria-pressed', 'true')
+    for (const track of canvasElement.querySelectorAll('.a63-Marquee-track')) {
+      await expect(track).toHaveAttribute('data-paused')
+      await expect(getComputedStyle(track).animationPlayState).toBe('paused')
+    }
+  },
 }
 
 export const Reverse: Story = {
@@ -71,6 +97,8 @@ export const Vertical: Story = {
   ),
 }
 
+/* Passing `paused` hands pausing to the caller, so the built-in toggle is not
+   rendered: give users your own control. */
 export const Paused: Story = {
   render: () => (
     <div style={{ width: 420 }}>
