@@ -95,6 +95,7 @@ import { OTPInput } from 'input-otp';
 import { PointerInput } from '@atom63/ui-foundation';
 import { Popover as Popover_2 } from '@base-ui/react/popover';
 import { PreviewCard as PreviewCard_2 } from '@base-ui/react/preview-card';
+import { ProgressiveBlurPosition } from '@atom63/ui-foundation';
 import { Progress as ProgressPrimitive } from '@base-ui/react/progress';
 import { ProgressTone } from '@atom63/ui-foundation';
 import { Radio as Radio_2 } from '@base-ui/react/radio';
@@ -2045,8 +2046,7 @@ export function ProgressIndicator(input: ProgressPrimitive.Indicator.Props): Rea
 // @public
 export function ProgressiveBlur(input: ProgressiveBlurProps): React$1.JSX.Element;
 
-// @public (undocumented)
-export type ProgressiveBlurPosition = 'both' | 'bottom' | 'top';
+export { ProgressiveBlurPosition }
 
 // @public (undocumented)
 export interface ProgressiveBlurProps {

@@ -127,6 +127,42 @@
       "states": [],
       "tokenSlots": [],
       "visualArchetypes": ["surface"],
+      "intent": {
+        "description": "What an alert says, independent of any platform: its status tone. The neutral default is a web extension; AtomNotice always carries a status.",
+        "axes": { "tone": ["info", "success", "warning", "error"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "variant": {
+                "list": "variants",
+                "map": {
+                  "error": { "tone": "error" },
+                  "info": { "tone": "info" },
+                  "success": { "tone": "success" },
+                  "warning": { "tone": "warning" }
+                },
+                "extensions": {
+                  "default": { "description": "A neutral alert with no status. Web-only." }
+                }
+              }
+            }
+          },
+          "ios": {
+            "props": {
+              "tone": {
+                "swiftEnum": "AtomNoticeTone",
+                "map": {
+                  "info": { "tone": "info" },
+                  "success": { "tone": "success" },
+                  "warning": { "tone": "warning" },
+                  "error": { "tone": "error" }
+                },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "variants",
         "catalogItem": "notice",
@@ -260,6 +296,30 @@
       "states": ["loading", "loaded", "fallback"],
       "tokenSlots": [],
       "visualArchetypes": ["marker"],
+      "intent": {
+        "description": "What an avatar ring says, independent of any platform: whether the story behind it is unseen or seen.",
+        "axes": { "ring": ["unseen", "seen"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "ring": {
+                "list": "rings",
+                "map": { "unseen": { "ring": "unseen" }, "seen": { "ring": "seen" } },
+                "extensions": {}
+              }
+            }
+          },
+          "ios": {
+            "props": {
+              "ring": {
+                "swiftEnum": "AtomAvatarRing",
+                "map": { "unseen": { "ring": "unseen" }, "seen": { "ring": "seen" } },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "avatar",
@@ -613,7 +673,8 @@
         "axes": {
           "tone": ["neutral", "muted", "primary", "destructive"],
           "emphasis": ["solid", "soft", "outline", "ghost", "raised"],
-          "content": ["label", "icon-only"]
+          "content": ["label", "icon-only"],
+          "shape": ["default", "round"]
         },
         "sizes": {
           "sm": {
@@ -687,6 +748,11 @@
                   "icon-xs": { "description": "An icon-only button at the xs step." },
                   "icon-xl": { "description": "An icon-only button at the xl step." }
                 }
+              },
+              "shape": {
+                "list": "shapes",
+                "map": { "default": { "shape": "default" }, "round": { "shape": "round" } },
+                "extensions": {}
               }
             }
           },
@@ -716,6 +782,11 @@
                   "large": { "size": "lg", "content": "label" },
                   "icon": { "size": "md", "content": "icon-only" }
                 },
+                "extensions": {}
+              },
+              "shape": {
+                "swiftEnum": "AtomButtonShape",
+                "map": { "default": { "shape": "default" }, "round": { "shape": "round" } },
                 "extensions": {}
               }
             }
@@ -856,6 +927,48 @@
       "states": ["rest", "hover", "focus-visible", "interactive", "cursor-active"],
       "tokenSlots": [],
       "visualArchetypes": ["surface"],
+      "intent": {
+        "description": "What a card surface is, independent of any platform: how its boundary is drawn. Ghost, interactive and overlay are web extensions.",
+        "axes": { "variant": ["default", "filled", "elevated"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "variant": {
+                "list": "variants",
+                "map": {
+                  "default": { "variant": "default" },
+                  "filled": { "variant": "filled" },
+                  "elevated": { "variant": "elevated" }
+                },
+                "extensions": {
+                  "ghost": {
+                    "description": "No boundary, for a card inside another surface. Web-only."
+                  },
+                  "interactive": {
+                    "description": "A whole-card action with hover and press feedback. Web-only."
+                  },
+                  "overlay": {
+                    "description": "Media with content drawn over it on the on-media tokens. Web-only."
+                  }
+                }
+              }
+            }
+          },
+          "ios": {
+            "props": {
+              "variant": {
+                "swiftEnum": "AtomCardVariant",
+                "map": {
+                  "default": { "variant": "default" },
+                  "filled": { "variant": "filled" },
+                  "elevated": { "variant": "elevated" }
+                },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "card",
@@ -901,6 +1014,48 @@
       "states": ["rest", "hover", "focus-visible", "disabled", "cursor-active", "can-scroll"],
       "tokenSlots": [],
       "visualArchetypes": ["surface", "overlay", "action"],
+      "intent": {
+        "description": "What the page dots are, independent of any platform: their shape and their tone (CarouselDots `shape` and `tone`, AtomPageDots `shape` and `tone`).",
+        "axes": { "dotShape": ["dot", "pill"], "dotTone": ["neutral", "accent", "on-media"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "shape": {
+                "list": "dotShapes",
+                "map": { "dot": { "dotShape": "dot" }, "pill": { "dotShape": "pill" } },
+                "extensions": {}
+              },
+              "tone": {
+                "list": "dotTones",
+                "map": {
+                  "neutral": { "dotTone": "neutral" },
+                  "accent": { "dotTone": "accent" },
+                  "on-media": { "dotTone": "on-media" }
+                },
+                "extensions": {}
+              }
+            }
+          },
+          "ios": {
+            "props": {
+              "shape": {
+                "swiftEnum": "AtomPageDotsShape",
+                "map": { "dot": { "dotShape": "dot" }, "pill": { "dotShape": "pill" } },
+                "extensions": {}
+              },
+              "tone": {
+                "swiftEnum": "AtomPageDotsTone",
+                "map": {
+                  "neutral": { "dotTone": "neutral" },
+                  "accent": { "dotTone": "accent" },
+                  "on-media": { "dotTone": "on-media" }
+                },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "pageDots",
@@ -1578,7 +1733,7 @@
       ],
       "visualArchetypes": ["field"],
       "intent": {
-        "description": "What a text field is, independent of any platform: its size. Chrome options and the native character-width size are web extensions. The SwiftUI text field draws the md size only.",
+        "description": "What a text field is, independent of any platform: its size and its chrome. The plain chrome and the native character-width size are web extensions. The SwiftUI text field draws the md size only.",
         "sizes": {
           "sm": { "platforms": { "web": { "visualHeight": "--a63-control-height-sm" } } },
           "md": {
@@ -1600,14 +1755,8 @@
               },
               "variant": {
                 "list": "variants",
-                "map": {},
+                "map": { "default": { "variant": "default" }, "filled": { "variant": "filled" } },
                 "extensions": {
-                  "default": {
-                    "description": "The outlined field, for form fields; iOS draws only this chrome today."
-                  },
-                  "filled": {
-                    "description": "A muted fill with no resting border; the border shows on hover and focus."
-                  },
                   "plain": {
                     "description": "No border or fill and a separator below, for a field inside a menu, popover or command palette."
                   }
@@ -1621,9 +1770,19 @@
               "size": "A number is forwarded to the native size attribute for character-width sizing."
             }
           },
-          "ios": { "minHitTarget": 44 }
+          "ios": {
+            "minHitTarget": 44,
+            "props": {
+              "variant": {
+                "swiftEnum": "AtomFieldVariant",
+                "map": { "default": { "variant": "default" }, "filled": { "variant": "filled" } },
+                "extensions": {}
+              }
+            }
+          }
         },
-        "stateAliases": { "focus": "focus-visible" }
+        "stateAliases": { "focus": "focus-visible" },
+        "axes": { "variant": ["default", "filled"] }
       },
       "crossRenderer": {
         "foundationAxis": "states",
@@ -1677,6 +1836,30 @@
       "states": ["rest", "hover", "focus", "selected", "current"],
       "tokenSlots": [],
       "visualArchetypes": ["surface"],
+      "intent": {
+        "description": "What an item group surface is, independent of any platform: the card or muted surface behind its rows (ItemGroup `surface`, AtomListSection `surface`).",
+        "axes": { "groupSurface": ["card", "muted"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "surface": {
+                "list": "groupSurfaces",
+                "map": { "card": { "groupSurface": "card" }, "muted": { "groupSurface": "muted" } },
+                "extensions": {}
+              }
+            }
+          },
+          "ios": {
+            "props": {
+              "surface": {
+                "swiftEnum": "AtomListSectionSurface",
+                "map": { "card": { "groupSurface": "card" }, "muted": { "groupSurface": "muted" } },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "listSection",
@@ -1869,6 +2052,82 @@
       "states": ["rest"],
       "tokenSlots": [],
       "visualArchetypes": ["surface"],
+      "intent": {
+        "description": "What a message bubble is, independent of any platform: who sent it, where it sits in a run of messages, and its delivery status.",
+        "axes": {
+          "direction": ["incoming", "outgoing"],
+          "position": ["single", "first", "middle", "last"],
+          "deliveryState": ["sending", "sent", "delivered", "read", "failed"]
+        },
+        "platforms": {
+          "web": {
+            "props": {
+              "direction": {
+                "list": "directions",
+                "map": {
+                  "incoming": { "direction": "incoming" },
+                  "outgoing": { "direction": "outgoing" }
+                },
+                "extensions": {}
+              },
+              "position": {
+                "list": "positions",
+                "map": {
+                  "single": { "position": "single" },
+                  "first": { "position": "first" },
+                  "middle": { "position": "middle" },
+                  "last": { "position": "last" }
+                },
+                "extensions": {}
+              },
+              "status": {
+                "list": "deliveryStates",
+                "map": {
+                  "sending": { "deliveryState": "sending" },
+                  "sent": { "deliveryState": "sent" },
+                  "delivered": { "deliveryState": "delivered" },
+                  "read": { "deliveryState": "read" },
+                  "failed": { "deliveryState": "failed" }
+                },
+                "extensions": {}
+              }
+            }
+          },
+          "ios": {
+            "props": {
+              "direction": {
+                "swiftEnum": "AtomMessageDirection",
+                "map": {
+                  "incoming": { "direction": "incoming" },
+                  "outgoing": { "direction": "outgoing" }
+                },
+                "extensions": {}
+              },
+              "position": {
+                "swiftEnum": "AtomMessagePosition",
+                "map": {
+                  "single": { "position": "single" },
+                  "first": { "position": "first" },
+                  "middle": { "position": "middle" },
+                  "last": { "position": "last" }
+                },
+                "extensions": {}
+              },
+              "status": {
+                "swiftEnum": "AtomMessageDeliveryState",
+                "map": {
+                  "sending": { "deliveryState": "sending" },
+                  "sent": { "deliveryState": "sent" },
+                  "delivered": { "deliveryState": "delivered" },
+                  "read": { "deliveryState": "read" },
+                  "failed": { "deliveryState": "failed" }
+                },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "message",
@@ -2023,6 +2282,30 @@
       "states": ["indeterminate", "progressing", "complete"],
       "tokenSlots": [],
       "visualArchetypes": ["range"],
+      "intent": {
+        "description": "What a progress bar is, independent of any platform: the colour of its indicator.",
+        "axes": { "tone": ["accent", "neutral"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "tone": {
+                "list": "tones",
+                "map": { "accent": { "tone": "accent" }, "neutral": { "tone": "neutral" } },
+                "extensions": {}
+              }
+            }
+          },
+          "ios": {
+            "props": {
+              "tone": {
+                "swiftEnum": "AtomTrackTone",
+                "map": { "accent": { "tone": "accent" }, "neutral": { "tone": "neutral" } },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "progress",
@@ -2045,6 +2328,20 @@
           ]
         }
       }
+    },
+    "progressive-blur": {
+      "source": "packages/ui-foundation/contracts/components/progressive-blur.json",
+      "exportName": "progressiveBlurContract",
+      "maturity": "preview",
+      "description": "Stacked backdrop-filter layers, each masked to its own band, so a blur ramps across an edge instead of switching on. It is decorative (aria-hidden) and takes no pointer events. Preview until its stable evidence is recorded.",
+      "axes": [
+        { "name": "positions", "values": ["bottom", "top", "both"], "default": "bottom" },
+        { "name": "heights", "values": [], "default": "30%" }
+      ],
+      "slots": ["progressive-blur"],
+      "states": ["rest"],
+      "tokenSlots": [],
+      "visualArchetypes": []
     },
     "radio": {
       "source": "packages/ui-foundation/contracts/components/radio.json",
@@ -2748,6 +3045,30 @@
       "states": ["visible", "dismissing", "reduced-motion"],
       "tokenSlots": [],
       "visualArchetypes": ["surface"],
+      "intent": {
+        "description": "What a toast surface is, independent of any platform: the standard surface or the inverse one. The status tones are web extensions of the toast content.",
+        "axes": { "variant": ["default", "inverse"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "variant": {
+                "list": "variants",
+                "map": { "default": { "variant": "default" }, "inverse": { "variant": "inverse" } },
+                "extensions": {}
+              }
+            }
+          },
+          "ios": {
+            "props": {
+              "variant": {
+                "swiftEnum": "AtomToastVariant",
+                "map": { "default": { "variant": "default" }, "inverse": { "variant": "inverse" } },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "toast",
@@ -2803,6 +3124,36 @@
         "segment.primaryShadow"
       ],
       "visualArchetypes": ["toggle", "segment"],
+      "intent": {
+        "description": "What a toggle group is, independent of any platform: the direction its items run. The ghost group (AtomGhostToggleGroup) takes it on iOS.",
+        "axes": { "orientation": ["horizontal", "vertical"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "orientation": {
+                "list": "orientations",
+                "map": {
+                  "horizontal": { "orientation": "horizontal" },
+                  "vertical": { "orientation": "vertical" }
+                },
+                "extensions": {}
+              }
+            }
+          },
+          "ios": {
+            "props": {
+              "orientation": {
+                "swiftEnum": "AtomToggleGroupOrientation",
+                "map": {
+                  "horizontal": { "orientation": "horizontal" },
+                  "vertical": { "orientation": "vertical" }
+                },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "toggleGroup",

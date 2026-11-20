@@ -499,6 +499,11 @@
                         "additionalProperties": false
                       }
                     },
+                    "swiftEnum": {
+                      "description": "A Swift enum written by hand in Atom63UI that this prop maps. The contract check reads its raw values from the Swift source and fails unless they are exactly the keys of map and extensions.",
+                      "type": "string",
+                      "pattern": "^Atom[A-Za-z]+$"
+                    },
                     "swiftType": {
                       "description": "The Swift enum generated from this prop.",
                       "type": "string",

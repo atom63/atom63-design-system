@@ -89,6 +89,20 @@ try {
   ].join('\n')
   const pagesDir = path.join(root, 'apps/docs/src/pages')
 
+  // Every exported or catalogued component has a contract: the index never publishes `contract: null`.
+  const exportedSlugs = [...uiReactIndexSource.matchAll(/from '\.\.?\/components\/([a-z0-9-]+)'/g)]
+  const withoutContract = [
+    ...new Set([
+      ...exportedSlugs.map(match => match[1]),
+      ...catalog.componentCatalogItems.map(item => item.slug),
+    ]),
+  ].filter(slug => !contracts.getComponentContractDoc(slug))
+  if (withoutContract.length > 0) {
+    throw new Error(
+      `No contract for ${withoutContract.join(', ')}. Add packages/ui-foundation/contracts/components/<name>.json and run \`pnpm --filter @atom63/ui-foundation generate:contracts\`.`
+    )
+  }
+
   const components = catalog.componentCatalogItems.map(item => {
     const doc = componentDocs.getComponentDoc(item.slug)
     const group = catalog.componentCatalogGroupForSlug(item.slug)

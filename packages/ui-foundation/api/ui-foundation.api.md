@@ -3966,6 +3966,53 @@ export const progressContract: {
 };
 
 // @public (undocumented)
+export interface ProgressiveBlurContract {
+    // (undocumented)
+    defaultHeight: string;
+    // (undocumented)
+    defaultPosition: ProgressiveBlurPosition;
+    // (undocumented)
+    positions: readonly ProgressiveBlurPosition[];
+    // (undocumented)
+    slots: readonly ProgressiveBlurSlot[];
+    // (undocumented)
+    states: readonly ProgressiveBlurState[];
+    // (undocumented)
+    visualArchetypes: readonly VisualArchetypeId[];
+}
+
+// @public (undocumented)
+export const progressiveBlurContract: {
+    defaultPosition: "bottom";
+    defaultHeight: string;
+    positions: readonly ["bottom", "top", "both"];
+    slots: readonly ["progressive-blur"];
+    states: readonly ["rest"];
+    visualArchetypes: readonly [];
+};
+
+// @public (undocumented)
+export type ProgressiveBlurPosition = (typeof progressiveBlurPositions)[number];
+
+// @public (undocumented)
+export const progressiveBlurPositions: readonly ["bottom", "top", "both"];
+
+// @public (undocumented)
+export type ProgressiveBlurSlot = (typeof progressiveBlurSlots)[number];
+
+// @public (undocumented)
+export const progressiveBlurSlots: readonly ["progressive-blur"];
+
+// @public (undocumented)
+export type ProgressiveBlurState = (typeof progressiveBlurStates)[number];
+
+// @public (undocumented)
+export const progressiveBlurStates: readonly ["rest"];
+
+// @public (undocumented)
+export const progressiveBlurVisualArchetypes: readonly [];
+
+// @public (undocumented)
 export type ProgressSlot = (typeof progressSlots)[number];
 
 // @public (undocumented)

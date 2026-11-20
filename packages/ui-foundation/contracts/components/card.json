@@ -53,6 +53,62 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What a card surface is, independent of any platform: how its boundary is drawn. Ghost, interactive and overlay are web extensions.",
+    "axes": {
+      "variant": ["default", "filled", "elevated"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "variant": {
+            "list": "variants",
+            "map": {
+              "default": {
+                "variant": "default"
+              },
+              "filled": {
+                "variant": "filled"
+              },
+              "elevated": {
+                "variant": "elevated"
+              }
+            },
+            "extensions": {
+              "ghost": {
+                "description": "No boundary, for a card inside another surface. Web-only."
+              },
+              "interactive": {
+                "description": "A whole-card action with hover and press feedback. Web-only."
+              },
+              "overlay": {
+                "description": "Media with content drawn over it on the on-media tokens. Web-only."
+              }
+            }
+          }
+        }
+      },
+      "ios": {
+        "props": {
+          "variant": {
+            "swiftEnum": "AtomCardVariant",
+            "map": {
+              "default": {
+                "variant": "default"
+              },
+              "filled": {
+                "variant": "filled"
+              },
+              "elevated": {
+                "variant": "elevated"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "card",

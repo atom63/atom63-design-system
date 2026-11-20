@@ -3747,6 +3747,11 @@
      "progressStates",
      "progressTones",
      "progressVisualArchetypes",
+     "progressiveBlurContract",
+     "progressiveBlurPositions",
+     "progressiveBlurSlots",
+     "progressiveBlurStates",
+     "progressiveBlurVisualArchetypes",
      "radii",
      "radioContract",
      "radioIndicators",
@@ -13382,7 +13387,34 @@
   },
   {
    "axisGuidance": null,
-   "contract": null,
+   "contract": {
+    "archetypes": [],
+    "axes": [
+     {
+      "name": "positions",
+      "values": [
+       "bottom",
+       "top",
+       "both"
+      ],
+      "default": "bottom"
+     },
+     {
+      "name": "heights",
+      "values": [],
+      "default": "30%"
+     }
+    ],
+    "exportName": "progressiveBlurContract",
+    "slots": [
+     "progressive-blur"
+    ],
+    "source": "packages/ui-foundation/contracts/components/progressive-blur.json",
+    "states": [
+     "rest"
+    ],
+    "tokenSlots": []
+   },
    "exports": {
     "types": [
      "ProgressiveBlurPosition",
@@ -13403,7 +13435,7 @@
    ],
    "importPath": "@atom63/ui-react",
    "label": "Progressive Blur",
-   "markdown": "# Progressive Blur\n\nProgressive Blur ramps stacked backdrop blur across a band so text can sit over imagery.\n\n**Status:** Stable\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Pair it with a scrim — blur removes detail but does not darken — and clip the parent with clip-path rather than overflow hidden.\n- Keep the utility’s semantic purpose explicit instead of relying on visual treatment alone.\n- For animated or transient members, preserve reduced-motion behavior and surrounding layout.\n\n## Usage\n\n```tsx\nimport { ProgressiveBlur } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `ProgressiveBlur`\n\n**Types:** `ProgressiveBlurPosition`, `ProgressiveBlurProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Related components\n\n- [Skeleton](/components/component-skeleton)\n- [Scroll Area](/components/component-scroll-area)\n- [Marquee](/components/component-marquee)\n",
+   "markdown": "# Progressive Blur\n\nProgressive Blur ramps stacked backdrop blur across a band so text can sit over imagery.\n\n**Status:** Preview\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Pair it with a scrim — blur removes detail but does not darken — and clip the parent with clip-path rather than overflow hidden.\n- Keep the utility’s semantic purpose explicit instead of relying on visual treatment alone.\n- For animated or transient members, preserve reduced-motion behavior and surrounding layout.\n\n## Usage\n\n```tsx\nimport { ProgressiveBlur } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `ProgressiveBlur`\n\n**Types:** `ProgressiveBlurPosition`, `ProgressiveBlurProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/progressive-blur.json` (`progressiveBlurContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `positions` | `bottom`, `top`, `both` | `bottom` |\n| `heights` | — | `30%` |\n\n**Slots:** `progressive-blur`\n\n**States:** `rest`\n\n## Related components\n\n- [Skeleton](/components/component-skeleton)\n- [Scroll Area](/components/component-scroll-area)\n- [Marquee](/components/component-marquee)\n",
    "related": [
     "skeleton",
     "scroll-area",
@@ -13411,7 +13443,7 @@
    ],
    "route": "/components/component-progressive-blur",
    "slug": "progressive-blur",
-   "status": "stable",
+   "status": "preview",
    "stories": {
     "file": "packages/ui-react/src/components/progressive-blur/progressive-blur.stories.tsx",
     "names": [

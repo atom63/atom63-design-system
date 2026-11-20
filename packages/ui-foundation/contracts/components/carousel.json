@@ -48,6 +48,77 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What the page dots are, independent of any platform: their shape and their tone (CarouselDots `shape` and `tone`, AtomPageDots `shape` and `tone`).",
+    "axes": {
+      "dotShape": ["dot", "pill"],
+      "dotTone": ["neutral", "accent", "on-media"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "shape": {
+            "list": "dotShapes",
+            "map": {
+              "dot": {
+                "dotShape": "dot"
+              },
+              "pill": {
+                "dotShape": "pill"
+              }
+            },
+            "extensions": {}
+          },
+          "tone": {
+            "list": "dotTones",
+            "map": {
+              "neutral": {
+                "dotTone": "neutral"
+              },
+              "accent": {
+                "dotTone": "accent"
+              },
+              "on-media": {
+                "dotTone": "on-media"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      },
+      "ios": {
+        "props": {
+          "shape": {
+            "swiftEnum": "AtomPageDotsShape",
+            "map": {
+              "dot": {
+                "dotShape": "dot"
+              },
+              "pill": {
+                "dotShape": "pill"
+              }
+            },
+            "extensions": {}
+          },
+          "tone": {
+            "swiftEnum": "AtomPageDotsTone",
+            "map": {
+              "neutral": {
+                "dotTone": "neutral"
+              },
+              "accent": {
+                "dotTone": "accent"
+              },
+              "on-media": {
+                "dotTone": "on-media"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "pageDots",
