@@ -1,12 +1,1 @@
-{
-  "ui-react-select--grouped": {
-    "focus-visible": {
-      "div[role=option] \"Article\"": 1
-    }
-  },
-  "ui-react-select--scrollable": {
-    "focus-visible": {
-      "div[role=option] \"Option 1\"": 1
-    }
-  }
-}
+{}

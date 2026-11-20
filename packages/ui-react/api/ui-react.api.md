@@ -186,7 +186,7 @@ export interface AccordionTriggerProps extends Accordion_2.Trigger.Props {
     icon?: 'chevron' | 'plus-minus';
 }
 
-// @public (undocumented)
+// @public
 export function Alert(input: AlertProps): React$1.ReactElement;
 
 // @public (undocumented)
@@ -1394,6 +1394,7 @@ export interface FeedbackStateProps {
     error?: unknown;
     // (undocumented)
     icon?: FeedbackStateIcon;
+    level?: 1 | 2 | 3 | 4 | 5 | 6;
     // (undocumented)
     query?: string;
     // (undocumented)

@@ -102,6 +102,7 @@ export function EmptyErrorDetail({
         data-slot="empty-error-toggle"
         onClick={() => setExpanded(value => !value)}
         size="sm"
+        tone="muted"
         type="button"
         variant="ghost"
       >

@@ -234,6 +234,20 @@
   min-width: var(--a63-control-min-target-lg, var(--a63-control-min-target));
 }
 
+/* Forced colors (Windows High Contrast) drop the plate's fill and shadow and
+   the selected label colour, so the selected segment takes the system
+   selection colours. */
+@media (forced-colors: active) {
+  .a63-SegmentedControl-indicator,
+  .a63-SegmentedControl[data-tone='accent'] .a63-SegmentedControl-indicator {
+    background-color: Highlight;
+  }
+  .a63-SegmentedControl-item[data-active],
+  .a63-SegmentedControl[data-tone='accent'] .a63-SegmentedControl-item[data-active] {
+    color: HighlightText;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .a63-SegmentedControl-item,
   .a63-SegmentedControl-indicator {

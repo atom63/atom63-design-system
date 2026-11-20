@@ -323,33 +323,33 @@ export function useMdxStyle(style: string, className?: string): string;
 
 // Warnings were encountered during analysis:
 //
-// dist/mdx-provider-DB0cPEyo.d.ts:17:5 - (ae-forgotten-export) The symbol "Accordion" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:18:5 - (ae-forgotten-export) The symbol "Callout" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:19:5 - (ae-forgotten-export) The symbol "CodeBlock" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:20:5 - (ae-forgotten-export) The symbol "ColorSwatchItem" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:21:5 - (ae-forgotten-export) The symbol "ComparisonPair" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:22:5 - (ae-forgotten-export) The symbol "CreditsBlock" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:23:5 - (ae-forgotten-export) The symbol "DemoStageProps" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:24:5 - (ae-forgotten-export) The symbol "ExampleContainer" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:25:5 - (ae-forgotten-export) The symbol "FigureBlock" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:26:5 - (ae-forgotten-export) The symbol "MediaCaption" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:27:5 - (ae-forgotten-export) The symbol "MediaPlaceholder" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:28:5 - (ae-forgotten-export) The symbol "MermaidDiagram" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:29:5 - (ae-forgotten-export) The symbol "PageMeta" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:30:5 - (ae-forgotten-export) The symbol "PageTableOfContents" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:31:5 - (ae-forgotten-export) The symbol "ResourceList" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:32:5 - (ae-forgotten-export) The symbol "ScrollStage" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:33:5 - (ae-forgotten-export) The symbol "StatCard" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:34:5 - (ae-forgotten-export) The symbol "StatGrid" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:35:5 - (ae-forgotten-export) The symbol "Steps" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:36:5 - (ae-forgotten-export) The symbol "Tabs" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:37:5 - (ae-forgotten-export) The symbol "Timeline" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:38:5 - (ae-forgotten-export) The symbol "VideoBlock" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:86:5 - (ae-forgotten-export) The symbol "MdxParagraph" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:90:5 - (ae-forgotten-export) The symbol "MdxCode" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:101:5 - (ae-forgotten-export) The symbol "MdxAnchor" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:121:5 - (ae-forgotten-export) The symbol "MdxImage" needs to be exported by the entry point index.d.ts
-// dist/mdx-provider-DB0cPEyo.d.ts:180:5 - (ae-forgotten-export) The symbol "MdxComponentsMap" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:17:5 - (ae-forgotten-export) The symbol "Accordion" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:18:5 - (ae-forgotten-export) The symbol "Callout" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:19:5 - (ae-forgotten-export) The symbol "CodeBlock" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:20:5 - (ae-forgotten-export) The symbol "ColorSwatchItem" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:21:5 - (ae-forgotten-export) The symbol "ComparisonPair" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:22:5 - (ae-forgotten-export) The symbol "CreditsBlock" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:23:5 - (ae-forgotten-export) The symbol "DemoStageProps" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:24:5 - (ae-forgotten-export) The symbol "ExampleContainer" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:25:5 - (ae-forgotten-export) The symbol "FigureBlock" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:26:5 - (ae-forgotten-export) The symbol "MediaCaption" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:27:5 - (ae-forgotten-export) The symbol "MediaPlaceholder" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:28:5 - (ae-forgotten-export) The symbol "MermaidDiagram" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:29:5 - (ae-forgotten-export) The symbol "PageMeta" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:30:5 - (ae-forgotten-export) The symbol "PageTableOfContents" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:31:5 - (ae-forgotten-export) The symbol "ResourceList" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:32:5 - (ae-forgotten-export) The symbol "ScrollStage" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:33:5 - (ae-forgotten-export) The symbol "StatCard" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:34:5 - (ae-forgotten-export) The symbol "StatGrid" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:35:5 - (ae-forgotten-export) The symbol "Steps" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:36:5 - (ae-forgotten-export) The symbol "Tabs" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:37:5 - (ae-forgotten-export) The symbol "Timeline" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:38:5 - (ae-forgotten-export) The symbol "VideoBlock" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:86:5 - (ae-forgotten-export) The symbol "MdxParagraph" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:90:5 - (ae-forgotten-export) The symbol "MdxCode" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:101:5 - (ae-forgotten-export) The symbol "MdxAnchor" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:121:5 - (ae-forgotten-export) The symbol "MdxImage" needs to be exported by the entry point index.d.ts
+// dist/mdx-provider-FJp99Azd.d.ts:180:5 - (ae-forgotten-export) The symbol "MdxComponentsMap" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

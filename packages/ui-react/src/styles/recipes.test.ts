@@ -366,16 +366,52 @@ describe('state that survives forced colors', () => {
      alone vanishes. These recipes repaint their selected, pressed, checked or
      highlighted state in the system selection colours. */
   it.each([
+    'command',
     'menu',
+    'navigation-menu',
     'panel-setting-button',
     'progress',
     'radio',
     'rating',
+    'segmented-control',
     'tabs',
     'toggle',
     'toggle-group',
   ])('%s repaints its state under forced colors', name => {
     expect(readRecipe(name)).toMatch(/@media \(forced-colors: active\)[\s\S]*Highlight/)
+  })
+
+  it('keeps the typing indicator dots visible under forced colors', () => {
+    expect(readRecipe('chat-typing-indicator')).toMatch(
+      /@media \(forced-colors: active\)[\s\S]*\.a63-ChatTypingIndicator-dot[\s\S]*CanvasText/
+    )
+  })
+
+  it('draws a navigation menu link focus ring as an inset outline', () => {
+    const focus = readRecipe('navigation-menu').match(
+      /\.a63-NavigationMenu-link:focus-visible \{[^}]*\}/
+    )?.[0]
+    expect(focus).toContain('outline: var(--a63-control-focus-ring-width) solid')
+    expect(focus).toContain('outline-offset: calc(-1 * var(--a63-control-focus-ring-width))')
+  })
+
+  it.each([
+    [
+      'menu',
+      /\.a63-Menu-item:focus-visible,\s*\.a63-Autocomplete-item\[data-highlighted\] \{[^}]*\}/,
+    ],
+    ['command', /\.a63-Command-item\[data-highlighted\]:not\(\[data-disabled\]\) \{[^}]*\}/],
+  ])('%s draws the keyboard target of its options with an inset focus outline', (name, rule) => {
+    const focus = readRecipe(name).match(rule)?.[0]
+    expect(focus).toContain('outline: var(--a63-control-focus-ring-width) solid')
+    expect(focus).toContain('outline-offset: calc(-1 * var(--a63-control-focus-ring-width))')
+  })
+
+  it('marks the current navigation menu link apart from its hover fill', () => {
+    const active = readRecipe('navigation-menu').match(
+      /\.a63-NavigationMenu-link\[data-active\] \{[^}]*\}/
+    )?.[0]
+    expect(active).toContain('font-weight')
   })
 
   it('draws a pressed neutral toggle in the neutral solid, not the segment plate', () => {

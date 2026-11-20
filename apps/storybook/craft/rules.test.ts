@@ -204,6 +204,18 @@ describe('focus-visible', () => {
     ])
   })
 
+  it('catches an option or menu item that shows focus with a highlight fill alone', async () => {
+    mount(
+      '<div role="listbox" aria-label="Fruit"><div role="option" tabindex="0" class="item">Apple</div></div>' +
+        '<div role="menu" aria-label="File"><div role="menuitem" tabindex="0" class="item">Open</div></div>',
+      '.item { outline: none; } .item:focus { background: rgb(235, 235, 235); }'
+    )
+    expect((await checkFocusVisible(document, driver)).map(v => v.element)).toEqual([
+      'div[role=option] "Apple"',
+      'div[role=menuitem] "Open"',
+    ])
+  })
+
   it('passes the default :focus-visible outline', async () => {
     mount('<button>One</button><a href="#two">Two</a>')
     expect(await checkFocusVisible(document, driver)).toEqual([])
