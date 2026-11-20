@@ -28,7 +28,7 @@
       "rest",
       "hover",
       "pressed",
-      "focusVisible",
+      "focus-visible",
       "disabled",
       "loading"
     ]
@@ -323,11 +323,11 @@
       ]
     },
     {
-      "name": "Variant=default, Size=xs, State=focusVisible",
+      "name": "Variant=default, Size=xs, State=focus-visible",
       "coord": {
         "variant": "default",
         "size": "xs",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -396,9 +396,6 @@
             },
             "stroke": {
               "alias": "--a63-action-neutral-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -407,19 +404,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -902,11 +890,11 @@
       ]
     },
     {
-      "name": "Variant=default, Size=sm, State=focusVisible",
+      "name": "Variant=default, Size=sm, State=focus-visible",
       "coord": {
         "variant": "default",
         "size": "sm",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -975,9 +963,6 @@
             },
             "stroke": {
               "alias": "--a63-action-neutral-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -986,19 +971,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -1481,11 +1457,11 @@
       ]
     },
     {
-      "name": "Variant=default, Size=md, State=focusVisible",
+      "name": "Variant=default, Size=md, State=focus-visible",
       "coord": {
         "variant": "default",
         "size": "md",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -1554,9 +1530,6 @@
             },
             "stroke": {
               "alias": "--a63-action-neutral-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -1565,19 +1538,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -2060,11 +2024,11 @@
       ]
     },
     {
-      "name": "Variant=default, Size=lg, State=focusVisible",
+      "name": "Variant=default, Size=lg, State=focus-visible",
       "coord": {
         "variant": "default",
         "size": "lg",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -2133,9 +2097,6 @@
             },
             "stroke": {
               "alias": "--a63-action-neutral-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -2144,19 +2105,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -2639,11 +2591,11 @@
       ]
     },
     {
-      "name": "Variant=default, Size=xl, State=focusVisible",
+      "name": "Variant=default, Size=xl, State=focus-visible",
       "coord": {
         "variant": "default",
         "size": "xl",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -2712,9 +2664,6 @@
             },
             "stroke": {
               "alias": "--a63-action-neutral-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -2723,19 +2672,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -3218,11 +3158,11 @@
       ]
     },
     {
-      "name": "Variant=primary, Size=xs, State=focusVisible",
+      "name": "Variant=primary, Size=xs, State=focus-visible",
       "coord": {
         "variant": "primary",
         "size": "xs",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -3291,9 +3231,6 @@
             },
             "stroke": {
               "alias": "--a63-action-primary-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -3302,19 +3239,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -3797,11 +3725,11 @@
       ]
     },
     {
-      "name": "Variant=primary, Size=sm, State=focusVisible",
+      "name": "Variant=primary, Size=sm, State=focus-visible",
       "coord": {
         "variant": "primary",
         "size": "sm",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -3870,9 +3798,6 @@
             },
             "stroke": {
               "alias": "--a63-action-primary-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -3881,19 +3806,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -4376,11 +4292,11 @@
       ]
     },
     {
-      "name": "Variant=primary, Size=md, State=focusVisible",
+      "name": "Variant=primary, Size=md, State=focus-visible",
       "coord": {
         "variant": "primary",
         "size": "md",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -4449,9 +4365,6 @@
             },
             "stroke": {
               "alias": "--a63-action-primary-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -4460,19 +4373,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -4955,11 +4859,11 @@
       ]
     },
     {
-      "name": "Variant=primary, Size=lg, State=focusVisible",
+      "name": "Variant=primary, Size=lg, State=focus-visible",
       "coord": {
         "variant": "primary",
         "size": "lg",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -5028,9 +4932,6 @@
             },
             "stroke": {
               "alias": "--a63-action-primary-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -5039,19 +4940,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -5534,11 +5426,11 @@
       ]
     },
     {
-      "name": "Variant=primary, Size=xl, State=focusVisible",
+      "name": "Variant=primary, Size=xl, State=focus-visible",
       "coord": {
         "variant": "primary",
         "size": "xl",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -5607,9 +5499,6 @@
             },
             "stroke": {
               "alias": "--a63-action-primary-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -5618,19 +5507,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -6128,11 +6008,11 @@
       ]
     },
     {
-      "name": "Variant=secondary, Size=xs, State=focusVisible",
+      "name": "Variant=secondary, Size=xs, State=focus-visible",
       "coord": {
         "variant": "secondary",
         "size": "xs",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -6206,9 +6086,6 @@
             },
             "stroke": {
               "alias": "--a63-text-secondary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -6217,19 +6094,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -6732,11 +6600,11 @@
       ]
     },
     {
-      "name": "Variant=secondary, Size=sm, State=focusVisible",
+      "name": "Variant=secondary, Size=sm, State=focus-visible",
       "coord": {
         "variant": "secondary",
         "size": "sm",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -6810,9 +6678,6 @@
             },
             "stroke": {
               "alias": "--a63-text-secondary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -6821,19 +6686,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -7336,11 +7192,11 @@
       ]
     },
     {
-      "name": "Variant=secondary, Size=md, State=focusVisible",
+      "name": "Variant=secondary, Size=md, State=focus-visible",
       "coord": {
         "variant": "secondary",
         "size": "md",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -7414,9 +7270,6 @@
             },
             "stroke": {
               "alias": "--a63-text-secondary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -7425,19 +7278,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -7940,11 +7784,11 @@
       ]
     },
     {
-      "name": "Variant=secondary, Size=lg, State=focusVisible",
+      "name": "Variant=secondary, Size=lg, State=focus-visible",
       "coord": {
         "variant": "secondary",
         "size": "lg",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -8018,9 +7862,6 @@
             },
             "stroke": {
               "alias": "--a63-text-secondary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -8029,19 +7870,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -8544,11 +8376,11 @@
       ]
     },
     {
-      "name": "Variant=secondary, Size=xl, State=focusVisible",
+      "name": "Variant=secondary, Size=xl, State=focus-visible",
       "coord": {
         "variant": "secondary",
         "size": "xl",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -8622,9 +8454,6 @@
             },
             "stroke": {
               "alias": "--a63-text-secondary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -8633,19 +8462,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -9148,11 +8968,11 @@
       ]
     },
     {
-      "name": "Variant=raised, Size=xs, State=focusVisible",
+      "name": "Variant=raised, Size=xs, State=focus-visible",
       "coord": {
         "variant": "raised",
         "size": "xs",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -9226,9 +9046,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -9237,19 +9054,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -9752,11 +9560,11 @@
       ]
     },
     {
-      "name": "Variant=raised, Size=sm, State=focusVisible",
+      "name": "Variant=raised, Size=sm, State=focus-visible",
       "coord": {
         "variant": "raised",
         "size": "sm",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -9830,9 +9638,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -9841,19 +9646,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -10356,11 +10152,11 @@
       ]
     },
     {
-      "name": "Variant=raised, Size=md, State=focusVisible",
+      "name": "Variant=raised, Size=md, State=focus-visible",
       "coord": {
         "variant": "raised",
         "size": "md",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -10434,9 +10230,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -10445,19 +10238,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -10960,11 +10744,11 @@
       ]
     },
     {
-      "name": "Variant=raised, Size=lg, State=focusVisible",
+      "name": "Variant=raised, Size=lg, State=focus-visible",
       "coord": {
         "variant": "raised",
         "size": "lg",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -11038,9 +10822,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -11049,19 +10830,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -11564,11 +11336,11 @@
       ]
     },
     {
-      "name": "Variant=raised, Size=xl, State=focusVisible",
+      "name": "Variant=raised, Size=xl, State=focus-visible",
       "coord": {
         "variant": "raised",
         "size": "xl",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -11642,9 +11414,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -11653,19 +11422,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -12153,11 +11913,11 @@
       ]
     },
     {
-      "name": "Variant=destructive, Size=xs, State=focusVisible",
+      "name": "Variant=destructive, Size=xs, State=focus-visible",
       "coord": {
         "variant": "destructive",
         "size": "xs",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -12226,9 +11986,6 @@
             },
             "stroke": {
               "alias": "--a63-action-danger-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -12237,19 +11994,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -12732,11 +12480,11 @@
       ]
     },
     {
-      "name": "Variant=destructive, Size=sm, State=focusVisible",
+      "name": "Variant=destructive, Size=sm, State=focus-visible",
       "coord": {
         "variant": "destructive",
         "size": "sm",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -12805,9 +12553,6 @@
             },
             "stroke": {
               "alias": "--a63-action-danger-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -12816,19 +12561,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -13311,11 +13047,11 @@
       ]
     },
     {
-      "name": "Variant=destructive, Size=md, State=focusVisible",
+      "name": "Variant=destructive, Size=md, State=focus-visible",
       "coord": {
         "variant": "destructive",
         "size": "md",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -13384,9 +13120,6 @@
             },
             "stroke": {
               "alias": "--a63-action-danger-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -13395,19 +13128,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -13890,11 +13614,11 @@
       ]
     },
     {
-      "name": "Variant=destructive, Size=lg, State=focusVisible",
+      "name": "Variant=destructive, Size=lg, State=focus-visible",
       "coord": {
         "variant": "destructive",
         "size": "lg",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -13963,9 +13687,6 @@
             },
             "stroke": {
               "alias": "--a63-action-danger-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -13974,19 +13695,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -14469,11 +14181,11 @@
       ]
     },
     {
-      "name": "Variant=destructive, Size=xl, State=focusVisible",
+      "name": "Variant=destructive, Size=xl, State=focus-visible",
       "coord": {
         "variant": "destructive",
         "size": "xl",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -14542,9 +14254,6 @@
             },
             "stroke": {
               "alias": "--a63-action-danger-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -14553,19 +14262,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -15048,11 +14748,11 @@
       ]
     },
     {
-      "name": "Variant=destructive-outline, Size=xs, State=focusVisible",
+      "name": "Variant=destructive-outline, Size=xs, State=focus-visible",
       "coord": {
         "variant": "destructive-outline",
         "size": "xs",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -15121,9 +14821,6 @@
             },
             "stroke": {
               "alias": "--a63-action-danger-subtle-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -15132,19 +14829,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -15627,11 +15315,11 @@
       ]
     },
     {
-      "name": "Variant=destructive-outline, Size=sm, State=focusVisible",
+      "name": "Variant=destructive-outline, Size=sm, State=focus-visible",
       "coord": {
         "variant": "destructive-outline",
         "size": "sm",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -15700,9 +15388,6 @@
             },
             "stroke": {
               "alias": "--a63-action-danger-subtle-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -15711,19 +15396,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -16206,11 +15882,11 @@
       ]
     },
     {
-      "name": "Variant=destructive-outline, Size=md, State=focusVisible",
+      "name": "Variant=destructive-outline, Size=md, State=focus-visible",
       "coord": {
         "variant": "destructive-outline",
         "size": "md",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -16279,9 +15955,6 @@
             },
             "stroke": {
               "alias": "--a63-action-danger-subtle-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -16290,19 +15963,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -16785,11 +16449,11 @@
       ]
     },
     {
-      "name": "Variant=destructive-outline, Size=lg, State=focusVisible",
+      "name": "Variant=destructive-outline, Size=lg, State=focus-visible",
       "coord": {
         "variant": "destructive-outline",
         "size": "lg",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -16858,9 +16522,6 @@
             },
             "stroke": {
               "alias": "--a63-action-danger-subtle-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -16869,19 +16530,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -17364,11 +17016,11 @@
       ]
     },
     {
-      "name": "Variant=destructive-outline, Size=xl, State=focusVisible",
+      "name": "Variant=destructive-outline, Size=xl, State=focus-visible",
       "coord": {
         "variant": "destructive-outline",
         "size": "xl",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -17437,9 +17089,6 @@
             },
             "stroke": {
               "alias": "--a63-action-danger-subtle-foreground"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -17448,19 +17097,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -17943,11 +17583,11 @@
       ]
     },
     {
-      "name": "Variant=outline, Size=xs, State=focusVisible",
+      "name": "Variant=outline, Size=xs, State=focus-visible",
       "coord": {
         "variant": "outline",
         "size": "xs",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -18016,9 +17656,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -18027,19 +17664,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -18522,11 +18150,11 @@
       ]
     },
     {
-      "name": "Variant=outline, Size=sm, State=focusVisible",
+      "name": "Variant=outline, Size=sm, State=focus-visible",
       "coord": {
         "variant": "outline",
         "size": "sm",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -18595,9 +18223,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -18606,19 +18231,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -19101,11 +18717,11 @@
       ]
     },
     {
-      "name": "Variant=outline, Size=md, State=focusVisible",
+      "name": "Variant=outline, Size=md, State=focus-visible",
       "coord": {
         "variant": "outline",
         "size": "md",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -19174,9 +18790,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -19185,19 +18798,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -19680,11 +19284,11 @@
       ]
     },
     {
-      "name": "Variant=outline, Size=lg, State=focusVisible",
+      "name": "Variant=outline, Size=lg, State=focus-visible",
       "coord": {
         "variant": "outline",
         "size": "lg",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -19753,9 +19357,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -19764,19 +19365,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -20259,11 +19851,11 @@
       ]
     },
     {
-      "name": "Variant=outline, Size=xl, State=focusVisible",
+      "name": "Variant=outline, Size=xl, State=focus-visible",
       "coord": {
         "variant": "outline",
         "size": "xl",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -20332,9 +19924,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -20343,19 +19932,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -20843,11 +20423,11 @@
       ]
     },
     {
-      "name": "Variant=dashed, Size=xs, State=focusVisible",
+      "name": "Variant=dashed, Size=xs, State=focus-visible",
       "coord": {
         "variant": "dashed",
         "size": "xs",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -20921,9 +20501,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -20932,19 +20509,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--radius-pill"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -21437,11 +21005,11 @@
       ]
     },
     {
-      "name": "Variant=dashed, Size=sm, State=focusVisible",
+      "name": "Variant=dashed, Size=sm, State=focus-visible",
       "coord": {
         "variant": "dashed",
         "size": "sm",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -21515,9 +21083,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -21526,19 +21091,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--radius-pill"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -22031,11 +21587,11 @@
       ]
     },
     {
-      "name": "Variant=dashed, Size=md, State=focusVisible",
+      "name": "Variant=dashed, Size=md, State=focus-visible",
       "coord": {
         "variant": "dashed",
         "size": "md",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -22109,9 +21665,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -22120,19 +21673,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--radius-pill"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -22625,11 +22169,11 @@
       ]
     },
     {
-      "name": "Variant=dashed, Size=lg, State=focusVisible",
+      "name": "Variant=dashed, Size=lg, State=focus-visible",
       "coord": {
         "variant": "dashed",
         "size": "lg",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -22703,9 +22247,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -22714,19 +22255,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--radius-pill"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -23219,11 +22751,11 @@
       ]
     },
     {
-      "name": "Variant=dashed, Size=xl, State=focusVisible",
+      "name": "Variant=dashed, Size=xl, State=focus-visible",
       "coord": {
         "variant": "dashed",
         "size": "xl",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -23297,9 +22829,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -23308,19 +22837,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--radius-pill"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -23828,11 +23348,11 @@
       ]
     },
     {
-      "name": "Variant=ghost, Size=xs, State=focusVisible",
+      "name": "Variant=ghost, Size=xs, State=focus-visible",
       "coord": {
         "variant": "ghost",
         "size": "xs",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -23911,9 +23431,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -23922,19 +23439,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -24457,11 +23965,11 @@
       ]
     },
     {
-      "name": "Variant=ghost, Size=sm, State=focusVisible",
+      "name": "Variant=ghost, Size=sm, State=focus-visible",
       "coord": {
         "variant": "ghost",
         "size": "sm",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -24540,9 +24048,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -24551,19 +24056,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -25086,11 +24582,11 @@
       ]
     },
     {
-      "name": "Variant=ghost, Size=md, State=focusVisible",
+      "name": "Variant=ghost, Size=md, State=focus-visible",
       "coord": {
         "variant": "ghost",
         "size": "md",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -25169,9 +24665,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -25180,19 +24673,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -25715,11 +25199,11 @@
       ]
     },
     {
-      "name": "Variant=ghost, Size=lg, State=focusVisible",
+      "name": "Variant=ghost, Size=lg, State=focus-visible",
       "coord": {
         "variant": "ghost",
         "size": "lg",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -25798,9 +25282,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -25809,19 +25290,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -26344,11 +25816,11 @@
       ]
     },
     {
-      "name": "Variant=ghost, Size=xl, State=focusVisible",
+      "name": "Variant=ghost, Size=xl, State=focus-visible",
       "coord": {
         "variant": "ghost",
         "size": "xl",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -26427,9 +25899,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -26438,19 +25907,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -26983,11 +26443,11 @@
       ]
     },
     {
-      "name": "Variant=link, Size=xs, State=focusVisible",
+      "name": "Variant=link, Size=xs, State=focus-visible",
       "coord": {
         "variant": "link",
         "size": "xs",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -27066,9 +26526,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -27077,19 +26534,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -27622,11 +27070,11 @@
       ]
     },
     {
-      "name": "Variant=link, Size=sm, State=focusVisible",
+      "name": "Variant=link, Size=sm, State=focus-visible",
       "coord": {
         "variant": "link",
         "size": "sm",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -27705,9 +27153,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -27716,19 +27161,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -28261,11 +27697,11 @@
       ]
     },
     {
-      "name": "Variant=link, Size=md, State=focusVisible",
+      "name": "Variant=link, Size=md, State=focus-visible",
       "coord": {
         "variant": "link",
         "size": "md",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -28344,9 +27780,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -28355,19 +27788,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -28900,11 +28324,11 @@
       ]
     },
     {
-      "name": "Variant=link, Size=lg, State=focusVisible",
+      "name": "Variant=link, Size=lg, State=focus-visible",
       "coord": {
         "variant": "link",
         "size": "lg",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -28983,9 +28407,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -28994,19 +28415,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -29539,11 +28951,11 @@
       ]
     },
     {
-      "name": "Variant=link, Size=xl, State=focusVisible",
+      "name": "Variant=link, Size=xl, State=focus-visible",
       "coord": {
         "variant": "link",
         "size": "xl",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -29622,9 +29034,6 @@
             },
             "stroke": {
               "alias": "--a63-text-primary"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -29633,19 +29042,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -30148,11 +29548,11 @@
       ]
     },
     {
-      "name": "Variant=overlay, Size=xs, State=focusVisible",
+      "name": "Variant=overlay, Size=xs, State=focus-visible",
       "coord": {
         "variant": "overlay",
         "size": "xs",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -30221,9 +29621,6 @@
             },
             "stroke": {
               "alias": "--surface-light-1"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -30232,19 +29629,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -30727,11 +30115,11 @@
       ]
     },
     {
-      "name": "Variant=overlay, Size=sm, State=focusVisible",
+      "name": "Variant=overlay, Size=sm, State=focus-visible",
       "coord": {
         "variant": "overlay",
         "size": "sm",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -30800,9 +30188,6 @@
             },
             "stroke": {
               "alias": "--surface-light-1"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -30811,19 +30196,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -31306,11 +30682,11 @@
       ]
     },
     {
-      "name": "Variant=overlay, Size=md, State=focusVisible",
+      "name": "Variant=overlay, Size=md, State=focus-visible",
       "coord": {
         "variant": "overlay",
         "size": "md",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -31379,9 +30755,6 @@
             },
             "stroke": {
               "alias": "--surface-light-1"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -31390,19 +30763,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -31885,11 +31249,11 @@
       ]
     },
     {
-      "name": "Variant=overlay, Size=lg, State=focusVisible",
+      "name": "Variant=overlay, Size=lg, State=focus-visible",
       "coord": {
         "variant": "overlay",
         "size": "lg",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -31958,9 +31322,6 @@
             },
             "stroke": {
               "alias": "--surface-light-1"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -31969,19 +31330,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -32464,11 +31816,11 @@
       ]
     },
     {
-      "name": "Variant=overlay, Size=xl, State=focusVisible",
+      "name": "Variant=overlay, Size=xl, State=focus-visible",
       "coord": {
         "variant": "overlay",
         "size": "xl",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -32537,9 +31889,6 @@
             },
             "stroke": {
               "alias": "--surface-light-1"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -32548,19 +31897,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -33043,11 +32383,11 @@
       ]
     },
     {
-      "name": "Variant=glass, Size=xs, State=focusVisible",
+      "name": "Variant=glass, Size=xs, State=focus-visible",
       "coord": {
         "variant": "glass",
         "size": "xs",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -33116,9 +32456,6 @@
             },
             "stroke": {
               "alias": "--surface-light-1"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -33127,19 +32464,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -33622,11 +32950,11 @@
       ]
     },
     {
-      "name": "Variant=glass, Size=sm, State=focusVisible",
+      "name": "Variant=glass, Size=sm, State=focus-visible",
       "coord": {
         "variant": "glass",
         "size": "sm",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -33695,9 +33023,6 @@
             },
             "stroke": {
               "alias": "--surface-light-1"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -33706,19 +33031,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -34201,11 +33517,11 @@
       ]
     },
     {
-      "name": "Variant=glass, Size=md, State=focusVisible",
+      "name": "Variant=glass, Size=md, State=focus-visible",
       "coord": {
         "variant": "glass",
         "size": "md",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -34274,9 +33590,6 @@
             },
             "stroke": {
               "alias": "--surface-light-1"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -34285,19 +33598,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -34780,11 +34084,11 @@
       ]
     },
     {
-      "name": "Variant=glass, Size=lg, State=focusVisible",
+      "name": "Variant=glass, Size=lg, State=focus-visible",
       "coord": {
         "variant": "glass",
         "size": "lg",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -34853,9 +34157,6 @@
             },
             "stroke": {
               "alias": "--surface-light-1"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -34864,19 +34165,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -35359,11 +34651,11 @@
       ]
     },
     {
-      "name": "Variant=glass, Size=xl, State=focusVisible",
+      "name": "Variant=glass, Size=xl, State=focus-visible",
       "coord": {
         "variant": "glass",
         "size": "xl",
-        "state": "focusVisible"
+        "state": "focus-visible"
       },
       "layers": [
         {
@@ -35432,9 +34724,6 @@
             },
             "stroke": {
               "alias": "--surface-light-1"
-            },
-            "visible": {
-              "value": false
             }
           }
         },
@@ -35443,19 +34732,10 @@
           "kind": "outline",
           "properties": {
             "visible": {
-              "value": true
-            },
-            "stroke": {
-              "alias": "--a63-control-focus-ring-color"
-            },
-            "strokeWeight": {
-              "alias": "--a63-control-focus-ring-width"
+              "value": false
             },
             "cornerRadius": {
               "alias": "--a63-control-radius"
-            },
-            "outlineOffset": {
-              "value": 0
             }
           }
         }
@@ -35671,8 +34951,6 @@
     "--a63-action-primary-hover",
     "--a63-border-control",
     "--a63-control-border-width",
-    "--a63-control-focus-ring-color",
-    "--a63-control-focus-ring-width",
     "--a63-control-font-family",
     "--a63-control-font-size-lg",
     "--a63-control-font-size-md",
@@ -35949,7 +35227,7 @@
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=default, Size=xs, State=focusVisible",
+      "variant": "Variant=default, Size=xs, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -35985,7 +35263,7 @@
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=default, Size=sm, State=focusVisible",
+      "variant": "Variant=default, Size=sm, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -36021,7 +35299,7 @@
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=default, Size=md, State=focusVisible",
+      "variant": "Variant=default, Size=md, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -36057,7 +35335,7 @@
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=default, Size=lg, State=focusVisible",
+      "variant": "Variant=default, Size=lg, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -36093,7 +35371,7 @@
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=default, Size=xl, State=focusVisible",
+      "variant": "Variant=default, Size=xl, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -36129,7 +35407,7 @@
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=primary, Size=xs, State=focusVisible",
+      "variant": "Variant=primary, Size=xs, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -36165,7 +35443,7 @@
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=primary, Size=sm, State=focusVisible",
+      "variant": "Variant=primary, Size=sm, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -36201,7 +35479,7 @@
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=primary, Size=md, State=focusVisible",
+      "variant": "Variant=primary, Size=md, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -36237,7 +35515,7 @@
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=primary, Size=lg, State=focusVisible",
+      "variant": "Variant=primary, Size=lg, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -36273,7 +35551,7 @@
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=primary, Size=xl, State=focusVisible",
+      "variant": "Variant=primary, Size=xl, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -36309,7 +35587,7 @@
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=secondary, Size=xs, State=focusVisible",
+      "variant": "Variant=secondary, Size=xs, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -36345,7 +35623,7 @@
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=secondary, Size=sm, State=focusVisible",
+      "variant": "Variant=secondary, Size=sm, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -36381,7 +35659,7 @@
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=secondary, Size=md, State=focusVisible",
+      "variant": "Variant=secondary, Size=md, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -36417,7 +35695,7 @@
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=secondary, Size=lg, State=focusVisible",
+      "variant": "Variant=secondary, Size=lg, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -36453,7 +35731,7 @@
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=secondary, Size=xl, State=focusVisible",
+      "variant": "Variant=secondary, Size=xl, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -36489,7 +35767,7 @@
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=raised, Size=xs, State=focusVisible",
+      "variant": "Variant=raised, Size=xs, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -36525,7 +35803,7 @@
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=raised, Size=sm, State=focusVisible",
+      "variant": "Variant=raised, Size=sm, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -36561,7 +35839,7 @@
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=raised, Size=md, State=focusVisible",
+      "variant": "Variant=raised, Size=md, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -36597,7 +35875,7 @@
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=raised, Size=lg, State=focusVisible",
+      "variant": "Variant=raised, Size=lg, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -36633,7 +35911,7 @@
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=raised, Size=xl, State=focusVisible",
+      "variant": "Variant=raised, Size=xl, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -36669,7 +35947,7 @@
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=destructive, Size=xs, State=focusVisible",
+      "variant": "Variant=destructive, Size=xs, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -36705,7 +35983,7 @@
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=destructive, Size=sm, State=focusVisible",
+      "variant": "Variant=destructive, Size=sm, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -36741,7 +36019,7 @@
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=destructive, Size=md, State=focusVisible",
+      "variant": "Variant=destructive, Size=md, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -36777,7 +36055,7 @@
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=destructive, Size=lg, State=focusVisible",
+      "variant": "Variant=destructive, Size=lg, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -36813,7 +36091,7 @@
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=destructive, Size=xl, State=focusVisible",
+      "variant": "Variant=destructive, Size=xl, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -36849,7 +36127,7 @@
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=destructive-outline, Size=xs, State=focusVisible",
+      "variant": "Variant=destructive-outline, Size=xs, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -36885,7 +36163,7 @@
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=destructive-outline, Size=sm, State=focusVisible",
+      "variant": "Variant=destructive-outline, Size=sm, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -36921,7 +36199,7 @@
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=destructive-outline, Size=md, State=focusVisible",
+      "variant": "Variant=destructive-outline, Size=md, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -36957,7 +36235,7 @@
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=destructive-outline, Size=lg, State=focusVisible",
+      "variant": "Variant=destructive-outline, Size=lg, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -36993,7 +36271,7 @@
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=destructive-outline, Size=xl, State=focusVisible",
+      "variant": "Variant=destructive-outline, Size=xl, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -37029,7 +36307,7 @@
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=outline, Size=xs, State=focusVisible",
+      "variant": "Variant=outline, Size=xs, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -37065,7 +36343,7 @@
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=outline, Size=sm, State=focusVisible",
+      "variant": "Variant=outline, Size=sm, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -37101,7 +36379,7 @@
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=outline, Size=md, State=focusVisible",
+      "variant": "Variant=outline, Size=md, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -37137,7 +36415,7 @@
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=outline, Size=lg, State=focusVisible",
+      "variant": "Variant=outline, Size=lg, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -37173,7 +36451,7 @@
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=outline, Size=xl, State=focusVisible",
+      "variant": "Variant=outline, Size=xl, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -37209,7 +36487,7 @@
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=dashed, Size=xs, State=focusVisible",
+      "variant": "Variant=dashed, Size=xs, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -37245,7 +36523,7 @@
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=dashed, Size=sm, State=focusVisible",
+      "variant": "Variant=dashed, Size=sm, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -37281,7 +36559,7 @@
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=dashed, Size=md, State=focusVisible",
+      "variant": "Variant=dashed, Size=md, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -37317,7 +36595,7 @@
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=dashed, Size=lg, State=focusVisible",
+      "variant": "Variant=dashed, Size=lg, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -37353,7 +36631,7 @@
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=dashed, Size=xl, State=focusVisible",
+      "variant": "Variant=dashed, Size=xl, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -37389,7 +36667,7 @@
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=ghost, Size=xs, State=focusVisible",
+      "variant": "Variant=ghost, Size=xs, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -37425,7 +36703,7 @@
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=ghost, Size=sm, State=focusVisible",
+      "variant": "Variant=ghost, Size=sm, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -37461,7 +36739,7 @@
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=ghost, Size=md, State=focusVisible",
+      "variant": "Variant=ghost, Size=md, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -37497,7 +36775,7 @@
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=ghost, Size=lg, State=focusVisible",
+      "variant": "Variant=ghost, Size=lg, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -37533,7 +36811,7 @@
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=ghost, Size=xl, State=focusVisible",
+      "variant": "Variant=ghost, Size=xl, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -37569,7 +36847,7 @@
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=link, Size=xs, State=focusVisible",
+      "variant": "Variant=link, Size=xs, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -37605,7 +36883,7 @@
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=link, Size=sm, State=focusVisible",
+      "variant": "Variant=link, Size=sm, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -37641,7 +36919,7 @@
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=link, Size=md, State=focusVisible",
+      "variant": "Variant=link, Size=md, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -37677,7 +36955,7 @@
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=link, Size=lg, State=focusVisible",
+      "variant": "Variant=link, Size=lg, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -37713,7 +36991,7 @@
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=link, Size=xl, State=focusVisible",
+      "variant": "Variant=link, Size=xl, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -37749,7 +37027,7 @@
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=overlay, Size=xs, State=focusVisible",
+      "variant": "Variant=overlay, Size=xs, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -37785,7 +37063,7 @@
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=overlay, Size=sm, State=focusVisible",
+      "variant": "Variant=overlay, Size=sm, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -37821,7 +37099,7 @@
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=overlay, Size=md, State=focusVisible",
+      "variant": "Variant=overlay, Size=md, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -37857,7 +37135,7 @@
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=overlay, Size=lg, State=focusVisible",
+      "variant": "Variant=overlay, Size=lg, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -37893,7 +37171,7 @@
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=overlay, Size=xl, State=focusVisible",
+      "variant": "Variant=overlay, Size=xl, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -37929,7 +37207,7 @@
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=glass, Size=xs, State=focusVisible",
+      "variant": "Variant=glass, Size=xs, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -37965,7 +37243,7 @@
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=glass, Size=sm, State=focusVisible",
+      "variant": "Variant=glass, Size=sm, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -38001,7 +37279,7 @@
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=glass, Size=md, State=focusVisible",
+      "variant": "Variant=glass, Size=md, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)), var(--a63-control-min-size), var(--button-content-floor) )"
@@ -38037,7 +37315,7 @@
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=glass, Size=lg, State=focusVisible",
+      "variant": "Variant=glass, Size=lg, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)), var(--a63-control-min-size-lg, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -38073,7 +37351,7 @@
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
     },
     {
-      "variant": "Variant=glass, Size=xl, State=focusVisible",
+      "variant": "Variant=glass, Size=xl, State=focus-visible",
       "layer": "Button",
       "property": "height",
       "expression": "max( calc(var(--a63-control-height-xl) * var(--a63-density-scale, 1)), var(--a63-control-min-size-xl, var(--a63-control-min-size)), var(--button-content-floor) )"
@@ -38242,7 +37520,7 @@
         "rest": "Resting appearance.",
         "hover": "Pointer over an enabled button.",
         "pressed": "While pressed, or held with data-pressed.",
-        "focusVisible": "Keyboard focus only; drawn as an outline.",
+        "focus-visible": "Keyboard focus only; drawn as an outline.",
         "disabled": "A neutral grey fill and muted label; ghost, link, overlay and glass fade only the label.",
         "loading": "Label keeps its width; the spinner overlays it."
       }

@@ -97,7 +97,8 @@ Badge, Avatar, Empty/ContentUnavailableView, Progress, Toaster/AtomToast,
 Item/AtomListSection, and Carousel/AtomPageDots:
 
 - React evidence:
-  `packages/ui-react/src/conformance/renderer-conformance.ts`
+  `packages/ui-react/src/conformance/renderer-conformance.test.tsx` (the verified list; the export
+  `reactRendererConformance` is read from the contracts)
 - React executable harness:
   `packages/ui-react/src/conformance/renderer-conformance.test.tsx`
 - SwiftUI evidence:

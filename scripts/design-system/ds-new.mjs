@@ -104,7 +104,7 @@ const paths = {
   component: `packages/ui-react/src/components/${slug}`,
   changeset: `.changeset/add-${slug}.md`,
   crossRenderer: 'packages/ui-foundation/contracts/cross-renderer.json',
-  reactConformance: 'packages/ui-react/src/conformance/renderer-conformance.ts',
+  reactConformance: 'packages/ui-react/src/conformance/renderer-conformance.test.tsx',
   swiftConformance: 'packages/ui-ios/Sources/Atom63UI/AtomRendererConformance.swift',
   swiftView: `packages/ui-ios/Sources/Atom63UI/Atom${pascal}.swift`,
   demoCatalog: 'examples/ios-demo/Atom63Demo/CatalogRegistry.swift',

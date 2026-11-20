@@ -227,7 +227,7 @@ describe('iOS tier', () => {
   })
 
   it('adds React evidence before the end of the list', () => {
-    const source = `export const reactRendererConformance = [
+    const source = `const verifiedEvidence = [
   { contractId: 'badge' },
 ] as const satisfies readonly ReactRendererConformanceEvidence[]
 `
