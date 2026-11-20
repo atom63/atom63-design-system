@@ -198,9 +198,29 @@
   box-shadow: var(--a63-menu-highlight-shadow, none);
   color: var(--a63-menu-highlight-foreground, var(--a63-text-primary));
 }
+/* Focus stays in the input, so the highlighted option is the keyboard target
+   (the one Enter runs). The fill alone is too faint to mark it (WCAG 1.4.11),
+   so it carries the inset focus ring too. */
+.a63-Command-item[data-highlighted]:not([data-disabled]) {
+  outline: var(--a63-control-focus-ring-width) solid
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline-offset: calc(-1 * var(--a63-control-focus-ring-width));
+}
 .a63-Command-item[data-disabled] {
   pointer-events: none;
   opacity: var(--a63-menu-disabled-opacity, 0.56);
+}
+
+/* Forced colors (Windows High Contrast) drop the highlight fill, and focus stays
+   in the input, so the option Enter runs takes the system selection colours. */
+@media (forced-colors: active) {
+  .a63-Command-item[data-highlighted] {
+    background-color: Highlight;
+    color: HighlightText;
+  }
+  .a63-Command-item[data-highlighted] :is(svg, .a63-Command-shortcut) {
+    color: HighlightText;
+  }
 }
 
 /* ── Separator ─────────────────────────────────────────────────────────── */
