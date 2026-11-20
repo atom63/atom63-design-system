@@ -627,6 +627,8 @@ export function api(index, name) {
               module: candidate.module,
               import: `import { ${webName} } from '${candidate.module}'`,
               docs: candidate.docs,
+              // What the docs page says about this export: purpose, example and props.
+              reference: candidate.sections?.[webName] ?? null,
               // Only ui-react's catalog components; @atom63/mdx has its own `Tabs`.
               component: candidate.module.startsWith('@atom63/ui-react')
                 ? (componentOf.get(webName) ?? null)

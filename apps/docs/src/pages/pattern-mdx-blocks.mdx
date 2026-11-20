@@ -1,0 +1,640 @@
+import {
+  Accordion,
+  Callout,
+  CodeBlock,
+  ColorSwatchItem,
+  Compare,
+  ComparisonPair,
+  CreditsBlock,
+  DemoStage,
+  DocExample,
+  ExampleContainer,
+  FigureBlock,
+  KeyIdea,
+  LayerStack,
+  MediaCaption,
+  MediaPlaceholder,
+  MdxPageSkeleton,
+  MermaidDiagram,
+  PageMeta,
+  ResourceList,
+  StatCard,
+  StatGrid,
+  Steps,
+  Tabs,
+  Timeline,
+} from '@atom63/mdx/blocks'
+import { Button } from '@atom63/ui-react'
+import { MdxBlockProps } from '../components/mdx-block-props'
+
+# MDX blocks
+
+Every block `@atom63/mdx/blocks` exports, with what it is for, a working example and its props. The props tables are read from each block's TypeScript types. For setup and the providers, see [MDX content](/patterns/pattern-mdx).
+
+Inside a provider (`MDXContentProvider`, `DocsMDXContentProvider` or `ArticleMDXContentProvider`), most blocks need no import: the provider's component map registers them. `KeyIdea`, `Compare`, `ImageCompare`, `LayerStack`, `DocExample`, `DocExampleCode` and `DemoConfigPanel` are not in the map; import them from `@atom63/mdx/blocks`. In React, import any block from there.
+
+Look a block up from the terminal with `atom63 api <Block>`, for example `atom63 api KeyIdea`.
+
+## Notices
+
+### Callout
+
+A notice beside the text: a tip, a caveat, an error to avoid or a success state. Pick `type` by what the reader should feel; one callout per point.
+
+<DocExample
+  title="Warning callout"
+  code={`<Callout type="warning">Releases need approval before they publish.</Callout>`}
+>
+  <Callout type="warning">Releases need approval before they publish.</Callout>
+</DocExample>
+
+<MdxBlockProps name="Callout" />
+
+### KeyIdea
+
+The one takeaway of a section, set apart with a label and an optional title. Use it once or twice per page; a page of key ideas has none.
+
+<DocExample
+  title="Key idea"
+  code={`<KeyIdea title="One token architecture">
+  Every renderer reads the same tokens, so a theme change reaches web, iOS and Figma at once.
+</KeyIdea>`}
+>
+  <KeyIdea title="One token architecture">
+    Every renderer reads the same tokens, so a theme change reaches web, iOS and Figma at once.
+  </KeyIdea>
+</DocExample>
+
+<MdxBlockProps name="KeyIdea" />
+
+## Comparison
+
+### Compare
+
+Two or more options side by side, each with an eyebrow, a title and a tone. Use it to explain a difference in words or code; for pictures use `ImageCompare`.
+
+<DocExample
+  title="Before and after"
+  code={`<Compare title="Patch CSS vs system CSS">
+  <Compare.Item eyebrow="Before" title="Local patch" tone="negative">
+    Values are invented for the screen at hand.
+  </Compare.Item>
+  <Compare.Item eyebrow="After" title="System contract" tone="positive">
+    Values come from tokens that change together.
+  </Compare.Item>
+</Compare>`}
+  wide
+>
+  <Compare title="Patch CSS vs system CSS">
+    <Compare.Item eyebrow="Before" title="Local patch" tone="negative">
+      Values are invented for the screen at hand.
+    </Compare.Item>
+    <Compare.Item eyebrow="After" title="System contract" tone="positive">
+      Values come from tokens that change together.
+    </Compare.Item>
+  </Compare>
+</DocExample>
+
+<MdxBlockProps name="Compare" />
+
+### ComparisonPair
+
+Two live panels, before and after, that the reader toggles between. Use it for interaction or motion differences; `speedControl` adds a slow-motion switch.
+
+<DocExample
+  title="Live before and after"
+  code={`<ComparisonPair label="Spacing">
+  <ComparisonPair.Before label="Before">Cramped 4px gaps</ComparisonPair.Before>
+  <ComparisonPair.After label="After">Comfortable 16px gaps</ComparisonPair.After>
+</ComparisonPair>`}
+>
+  <ComparisonPair label="Spacing">
+    <ComparisonPair.Before label="Before">Cramped 4px gaps</ComparisonPair.Before>
+    <ComparisonPair.After label="After">Comfortable 16px gaps</ComparisonPair.After>
+  </ComparisonPair>
+</DocExample>
+
+<MdxBlockProps name="ComparisonPair" />
+
+### ImageCompare
+
+Two images in one frame with a draggable divider. Use it when the visual difference is the point; give both images real `alt` text. The slider loads on demand.
+
+```mdx
+<ImageCompare
+  title="Ad hoc layout vs system layout"
+  before={{ src: '/images/before.webp', alt: 'Form with uneven spacing', label: 'Before' }}
+  after={{ src: '/images/after.webp', alt: 'Form on the spacing scale', label: 'After' }}
+  caption="Drag the divider to compare."
+/>
+```
+
+<MdxBlockProps name="ImageCompare" />
+
+## Media
+
+### FigureBlock
+
+An image with a caption. Clicking it opens the page's `MediaLightbox` gallery, which the provider hosts; set `enableLightbox={false}` to turn that off. Put rich captions in `FigureBlock.Caption` and a source line in `FigureBlock.Aside`.
+
+<DocExample
+  title="Captioned figure"
+  code={`<FigureBlock
+  alt="The Atom63 design system social card"
+  aspectRatio="16/9"
+  caption="Figure 1. The social card for this site."
+  src="/og.png"
+/>`}
+>
+  <FigureBlock
+    alt="The Atom63 design system social card"
+    aspectRatio="16/9"
+    caption="Figure 1. The social card for this site."
+    src="/og.png"
+  />
+</DocExample>
+
+<MdxBlockProps name="FigureBlock" />
+
+### VideoBlock
+
+A video figure with native controls and an optional caption. A video with speech needs a caption track (`trackSrc`); mark a purely visual loop `captionPolicy="decorative"` instead. With `autoPlay` and no `controls`, it draws its own pause button and stays still under reduced motion.
+
+```mdx
+<VideoBlock src="/media/talk.mp4" title="Design tokens talk" trackSrc="/media/talk.en.vtt" />
+
+<VideoBlock
+  autoPlay
+  captionPolicy="decorative"
+  controls={false}
+  loop
+  muted
+  src="/media/loop.mp4"
+  title="Theme switching loop"
+/>
+```
+
+<MdxBlockProps name="VideoBlock" />
+
+### MediaCaption
+
+The caption line the media blocks use, on its own: for a custom figure, an embed or a chart.
+
+<DocExample
+  title="Caption"
+  code={`<MediaCaption>Figure 2. Token layers, from primitive to product.</MediaCaption>`}
+>
+  <MediaCaption>Figure 2. Token layers, from primitive to product.</MediaCaption>
+</DocExample>
+
+<MdxBlockProps name="MediaCaption" />
+
+### MediaPlaceholder
+
+A labelled frame that stands in for an image, video or diagram that is not made yet. The label says what the real asset should show.
+
+<DocExample
+  title="Placeholder"
+  code={`<MediaPlaceholder kind="diagram" label="Token flow from DTCG source to each renderer" />`}
+>
+  <MediaPlaceholder kind="diagram" label="Token flow from DTCG source to each renderer" />
+</DocExample>
+
+<MdxBlockProps name="MediaPlaceholder" />
+
+## Demos
+
+### DocExample
+
+A live example with Preview and Code tabs and a copy button. Every example on this page is one. Pass the source as `code` and render the same thing as children.
+
+```mdx
+<DocExample title="Primary button" code={`<Button variant="primary">Save</Button>`}>
+  <Button variant="primary">Save</Button>
+</DocExample>
+```
+
+<MdxBlockProps name="DocExample" />
+
+### DocExampleCode
+
+The highlighted code panel of `DocExample`, on its own, for showing code that has no preview.
+
+```tsx
+import { DocExampleCode } from '@atom63/mdx/blocks'
+
+<DocExampleCode code={`pnpm add @atom63/mdx`} lang="bash" />
+```
+
+<MdxBlockProps name="DocExampleCode" />
+
+### ExampleContainer
+
+A plain demo frame on a dot grid, with an optional title, description and spec line. Use it for a preview without a code tab.
+
+<ExampleContainer description="The main action of a view." title="Primary variant">
+  <Button variant="primary">Save</Button>
+</ExampleContainer>
+
+```mdx
+<ExampleContainer description="The main action of a view." title="Primary variant">
+  <Button variant="primary">Save</Button>
+</ExampleContainer>
+```
+
+<MdxBlockProps name="ExampleContainer" />
+
+### DemoStage
+
+A framed stage for a centrepiece demo or visual, with header slots for a title (`headerStart`) and controls (`headerEnd`).
+
+<DocExample
+  title="Stage"
+  code={`<DemoStage headerStart="Live demo">
+  <Button>Try me</Button>
+</DemoStage>`}
+>
+  <DemoStage headerStart="Live demo">
+    <Button>Try me</Button>
+  </DemoStage>
+</DocExample>
+
+<MdxBlockProps name="DemoStage" />
+
+### DemoConfigPanel
+
+The controls panel for a `DemoStage`: a popover beside the stage, a sheet on small screens. Put it in `headerEnd` and pass the stage's ref.
+
+```tsx
+import { DemoConfigPanel, DemoStage } from '@atom63/mdx/blocks'
+import { Switch } from '@atom63/ui-react'
+import { useRef, useState } from 'react'
+
+function TunableDemo() {
+  const stageRef = useRef<HTMLElement>(null)
+  const [dense, setDense] = useState(false)
+
+  return (
+    <DemoStage
+      ref={stageRef}
+      headerEnd={
+        <DemoConfigPanel stageRef={stageRef} title="Demo controls">
+          <label>
+            <Switch checked={dense} onCheckedChange={setDense} /> Dense
+          </label>
+        </DemoConfigPanel>
+      }
+    >
+      <p>{dense ? 'Dense' : 'Comfortable'}</p>
+    </DemoStage>
+  )
+}
+```
+
+<MdxBlockProps name="DemoConfigPanel" />
+
+## Sequences
+
+### Steps
+
+Numbered steps for a procedure. Numbers and the connecting line come from document order; do not number titles by hand.
+
+<DocExample
+  title="Steps"
+  code={`<Steps>
+  <Steps.Step title="Install the package">Run pnpm add @atom63/mdx.</Steps.Step>
+  <Steps.Step title="Load the styles">Import @atom63/mdx/styles/a63.css once.</Steps.Step>
+  <Steps.Step title="Wrap the page">Render it inside MDXContentProvider.</Steps.Step>
+</Steps>`}
+>
+  <Steps>
+    <Steps.Step title="Install the package">Run pnpm add @atom63/mdx.</Steps.Step>
+    <Steps.Step title="Load the styles">Import @atom63/mdx/styles/a63.css once.</Steps.Step>
+    <Steps.Step title="Wrap the page">Render it inside MDXContentProvider.</Steps.Step>
+  </Steps>
+</DocExample>
+
+<MdxBlockProps name="Steps" />
+
+### Timeline
+
+Dated events in order: a release history, a project log. Each item has a date, a title and a short body.
+
+<DocExample
+  title="Timeline"
+  code={`<Timeline>
+  <Timeline.Item date="2025" title="Primitive layer">Colour ramps, type scale, spacing.</Timeline.Item>
+  <Timeline.Item date="2026" title="Semantic layer">Tokens map primitives to intent.</Timeline.Item>
+</Timeline>`}
+>
+  <Timeline>
+    <Timeline.Item date="2025" title="Primitive layer">Colour ramps, type scale, spacing.</Timeline.Item>
+    <Timeline.Item date="2026" title="Semantic layer">Tokens map primitives to intent.</Timeline.Item>
+  </Timeline>
+</DocExample>
+
+<MdxBlockProps name="Timeline" />
+
+### ScrollStage
+
+Scroll-driven storytelling: text steps scroll past while each step's `media` stays pinned beside them, and the media changes with the step in view. On narrow screens the media sits above its text.
+
+```mdx
+<ScrollStage>
+  <ScrollStage.Step media={<img alt="Primitive tokens" src="/images/primitives.webp" />}>
+    ### Primitive layer
+
+    Raw values: colour ramps, the type scale, spacing and radius.
+  </ScrollStage.Step>
+  <ScrollStage.Step media={<img alt="Semantic tokens" src="/images/semantic.webp" />}>
+    ### Semantic layer
+
+    Tokens that name intent, so one theme change restyles everything.
+  </ScrollStage.Step>
+</ScrollStage>
+```
+
+<MdxBlockProps name="ScrollStage" />
+
+## Figures and links
+
+### StatCard
+
+One metric with a label and an optional change. `trend` colours the change: `up` and `down` use status colours, `neutral` stays muted.
+
+<DocExample
+  title="Stat card"
+  code={`<StatCard change="+1 this quarter" label="Themes" trend="up" value="4" />`}
+>
+  <StatCard change="+1 this quarter" label="Themes" trend="up" value="4" />
+</DocExample>
+
+<MdxBlockProps name="StatCard" />
+
+### StatGrid
+
+A responsive grid of `StatCard`s.
+
+<DocExample
+  title="Stat grid"
+  code={`<StatGrid>
+  <StatCard label="Blocks" value="30" />
+  <StatCard change="-5" label="Open issues" trend="down" value="3" />
+  <StatCard label="Themes" value="4" />
+</StatGrid>`}
+  wide
+>
+  <StatGrid>
+    <StatCard label="Blocks" value="30" />
+    <StatCard change="-5" label="Open issues" trend="down" value="3" />
+    <StatCard label="Themes" value="4" />
+  </StatGrid>
+</DocExample>
+
+<MdxBlockProps name="StatGrid" />
+
+### ResourceList
+
+A list of outside links, each with a name and an optional note. Links open in a new tab.
+
+<DocExample
+  title="Resources"
+  code={`<ResourceList
+  items={[
+    { name: 'DTCG format', url: 'https://www.designtokens.org', note: 'The token file format' },
+    { name: 'WCAG 2.2', url: 'https://www.w3.org/TR/WCAG22/', note: 'Accessibility criteria' },
+  ]}
+/>`}
+>
+  <ResourceList
+    items={[
+      { name: 'DTCG format', url: 'https://www.designtokens.org', note: 'The token file format' },
+      { name: 'WCAG 2.2', url: 'https://www.w3.org/TR/WCAG22/', note: 'Accessibility criteria' },
+    ]}
+  />
+</DocExample>
+
+<MdxBlockProps name="ResourceList" />
+
+## Diagrams
+
+### MermaidDiagram
+
+A Mermaid chart drawn in the theme's colours, with zoom controls. A fenced `mermaid` code block in MDX renders as one too.
+
+<DocExample
+  title="Flowchart"
+  code={`<MermaidDiagram
+  chart="flowchart LR
+    Tokens --> Contracts --> Components"
+  title="Build order"
+/>`}
+>
+  <MermaidDiagram
+    chart="flowchart LR
+    Tokens --> Contracts --> Components"
+    title="Build order"
+  />
+</DocExample>
+
+<MdxBlockProps name="MermaidDiagram" />
+
+### LayerStack
+
+A layered model, top to bottom, with a label, title and optional metaphor, description and constraint per layer. Use it to explain an architecture in layers.
+
+<DocExample
+  title="Layers"
+  code={`<LayerStack
+  title="Primitive / Procedure / Product"
+  layers={[
+    { label: 'Primitive', title: 'Stable materials', description: 'Raw tokens and scales.' },
+    { label: 'Procedure', title: 'Semantic rules', description: 'Semantic tokens and states.' },
+    { label: 'Product', title: 'Rendered experience', description: 'Pages and flows.' },
+  ]}
+/>`}
+  wide
+>
+  <LayerStack
+    title="Primitive / Procedure / Product"
+    layers={[
+      { label: 'Primitive', title: 'Stable materials', description: 'Raw tokens and scales.' },
+      { label: 'Procedure', title: 'Semantic rules', description: 'Semantic tokens and states.' },
+      { label: 'Product', title: 'Rendered experience', description: 'Pages and flows.' },
+    ]}
+  />
+</DocExample>
+
+<MdxBlockProps name="LayerStack" />
+
+### ColorSwatchItem
+
+A colour swatch for a CSS variable, with its name and variable. Use it on token and theme pages.
+
+<DocExample
+  title="Swatches"
+  code={`<ColorSwatchItem name="Page surface" variable="--a63-surface-page" />
+<ColorSwatchItem name="Primary text" variable="--a63-text-primary" />`}
+>
+  <div className="flex flex-wrap gap-4">
+    <ColorSwatchItem name="Page surface" variable="--a63-surface-page" />
+    <ColorSwatchItem name="Primary text" variable="--a63-text-primary" />
+  </div>
+</DocExample>
+
+<MdxBlockProps name="ColorSwatchItem" />
+
+## Code
+
+### CodeBlock
+
+Highlighted code with a copy button and a language label. A fenced code block in MDX renders as one; use the component for code held in a variable.
+
+<DocExample
+  title="Code block"
+  code={`<CodeBlock code="pnpm add @atom63/mdx" lang="bash" />`}
+>
+  <CodeBlock code="pnpm add @atom63/mdx" lang="bash" />
+</DocExample>
+
+<MdxBlockProps name="CodeBlock" />
+
+### Tabs
+
+Tabbed panels in prose, such as the same step for npm and pnpm. It is the `Tabs` component of `@atom63/ui-react` with MDX spacing, and takes its props: `atom63 component tabs`.
+
+<DocExample
+  title="Tabs"
+  code={`<Tabs defaultValue="pnpm">
+  <Tabs.List>
+    <Tabs.Tab value="pnpm">pnpm</Tabs.Tab>
+    <Tabs.Tab value="npm">npm</Tabs.Tab>
+  </Tabs.List>
+  <Tabs.Panel value="pnpm">pnpm add @atom63/mdx</Tabs.Panel>
+  <Tabs.Panel value="npm">npm install @atom63/mdx</Tabs.Panel>
+</Tabs>`}
+>
+  <Tabs defaultValue="pnpm">
+    <Tabs.List>
+      <Tabs.Tab value="pnpm">pnpm</Tabs.Tab>
+      <Tabs.Tab value="npm">npm</Tabs.Tab>
+    </Tabs.List>
+    <Tabs.Panel value="pnpm">pnpm add @atom63/mdx</Tabs.Panel>
+    <Tabs.Panel value="npm">npm install @atom63/mdx</Tabs.Panel>
+  </Tabs>
+</DocExample>
+
+<MdxBlockProps name="Tabs" />
+
+## Page furniture
+
+### Accordion
+
+Collapsible questions and answers, such as an FAQ. It is the `Accordion` component of `@atom63/ui-react` with MDX spacing, and takes its props: `atom63 component accordion`.
+
+<DocExample
+  title="Accordion"
+  code={`<Accordion collapsible type="single">
+  <Accordion.Item value="token">
+    <Accordion.Trigger>What is a design token?</Accordion.Trigger>
+    <Accordion.Content>A named value that components read instead of a literal.</Accordion.Content>
+  </Accordion.Item>
+</Accordion>`}
+>
+  <Accordion collapsible type="single">
+    <Accordion.Item value="token">
+      <Accordion.Trigger>What is a design token?</Accordion.Trigger>
+      <Accordion.Content>A named value that components read instead of a literal.</Accordion.Content>
+    </Accordion.Item>
+  </Accordion>
+</DocExample>
+
+<MdxBlockProps name="Accordion" />
+
+### PageMeta
+
+The header of an article or lesson: eyebrow, title, description and a meta line such as the reading time.
+
+<DocExample
+  title="Page header"
+  code={`<PageMeta
+  description="How semantic tokens keep colour and spacing consistent."
+  eyebrow="Guide"
+  meta="8 min read"
+  title="Designing with tokens"
+/>`}
+>
+  <PageMeta
+    description="How semantic tokens keep colour and spacing consistent."
+    eyebrow="Guide"
+    meta="8 min read"
+    title="Designing with tokens"
+  />
+</DocExample>
+
+<MdxBlockProps name="PageMeta" />
+
+### PageTableOfContents
+
+The page's table of contents, built from its `h2` and `h3` headings, with the current section highlighted. `rail` sits beside the text; `inline`, `menu` and `embedded` fit narrow layouts.
+
+```tsx
+import { PageTableOfContents } from '@atom63/mdx/blocks'
+
+<aside>
+  <PageTableOfContents label="On this page" variant="rail" />
+</aside>
+```
+
+<MdxBlockProps name="PageTableOfContents" />
+
+### MdxPageSkeleton
+
+The loading state of an MDX page while its content loads, in the `docs` or `lesson` layout.
+
+<DocExample
+  title="Loading page"
+  code={`<MdxPageSkeleton showRail={false} variant="docs" />`}
+  wide
+>
+  <MdxPageSkeleton showRail={false} variant="docs" />
+</DocExample>
+
+<MdxBlockProps name="MdxPageSkeleton" />
+
+### CreditsBlock
+
+A collapsible list of credits, one role per row, at the end of an article or project page.
+
+<DocExample
+  title="Credits"
+  code={`<CreditsBlock
+  credits={[
+    { role: 'Design', credits: 'ATOM63' },
+    { role: 'Photography', credits: 'Unsplash contributors' },
+  ]}
+/>`}
+>
+  <CreditsBlock
+    credits={[
+      { role: 'Design', credits: 'ATOM63' },
+      { role: 'Photography', credits: 'Unsplash contributors' },
+    ]}
+  />
+</DocExample>
+
+<MdxBlockProps name="CreditsBlock" />
+
+## Prose elements
+
+The provider's component map also styles plain Markdown, so most of a page needs no blocks:
+
+| Markdown | Renders as |
+|----------|------------|
+| `#` to `######` | Headings on the type scale; `h2` and `h3` feed `PageTableOfContents` |
+| Paragraphs, `**strong**`, `*em*`, `<kbd>` | Body text at prose measure |
+| `[link](url)` | A link; an external one opens in a new tab |
+| `` `code` `` | Inline code |
+| Fenced code | `CodeBlock`; a `mermaid` fence renders `MermaidDiagram` |
+| Lists, `>` quotes, `---` | Lists, a quote, a rule |
+| Tables | The `Table` of `@atom63/ui-react`, scrolling when wide |

@@ -28,8 +28,10 @@ import {
   pathForDoc,
   sortSlugs,
 } from '../src/lib/doc-taxonomy'
+import { mdxBlockPropsMarkdown } from '../src/lib/mdx-block-props'
 import { mdxToMarkdown } from '../src/lib/mdx-to-markdown'
 import { buildChangelogMarkdown } from './changelog-data'
+import { readMdxBlockProps } from './mdx-block-props'
 
 const SITE_TITLE = 'ATOM63 Design System'
 const SITE_SUMMARY =
@@ -147,6 +149,13 @@ function expandCraftCriteria(source: string): string {
   })
 }
 
+/** The MDX blocks page renders props tables from the blocks' types; spell them out for the Markdown twin. */
+function expandMdxBlockProps(source: string): string {
+  return source.replace(/^<MdxBlockProps name="([^"]+)" \/>$/gm, (_tag, name: string) =>
+    mdxBlockPropsMarkdown(readMdxBlockProps(), name)
+  )
+}
+
 /** Authored component pages render catalog text through components; spell it out for the Markdown twin. */
 function expandComponentGuidance(source: string): string {
   return source
@@ -184,7 +193,9 @@ export async function readEntryMarkdown(
   }
 
   const source = await fs.readFile(path.join(pagesDir, `${entry.slug}.mdx`), 'utf8')
-  const markdown = mdxToMarkdown(expandComponentGuidance(expandCraftCriteria(source)))
+  const markdown = mdxToMarkdown(
+    expandMdxBlockProps(expandComponentGuidance(expandCraftCriteria(source)))
+  )
   if (!isComponentDocSlug(entry.slug)) {
     return markdown
   }

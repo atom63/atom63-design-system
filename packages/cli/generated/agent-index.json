@@ -3912,7 +3912,8 @@
      "typeScales",
      "visualArchetypeIds",
      "visualArchetypes"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/ui-react",
@@ -4355,14 +4356,16 @@
      "usePortalContainer",
      "useSidebar",
      "useUIEnvironment"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/ui-react/calendar",
     "docs": "component-overview",
     "values": [
      "Calendar"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/ui-react/layout",
@@ -4389,7 +4392,8 @@
      "pageIndexHeroDescriptionClassName",
      "pageIndexHeroTitleClassName",
      "useGridChrome"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/ui-react/media",
@@ -4410,7 +4414,8 @@
      "useMediaLightbox",
      "useMediaLightboxZoomCursor",
      "useVideoManager"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/ui-react/media/lightbox",
@@ -4444,7 +4449,8 @@
      "useLightboxSlide",
      "useLightboxState",
      "useOptionalLightboxConfig"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/ui-react/preview",
@@ -4479,7 +4485,8 @@
      "scrollableListControlClassNames",
      "selectTriggerDefaultClassName",
      "useButtonGroupContext"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/ui-react/theme",
@@ -4511,7 +4518,8 @@
      "createThemeProvider",
      "extractDominantColor",
      "isAutoPrimary"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/mdx",
@@ -4535,11 +4543,12 @@
      "useComparisonContext",
      "useIsInsideExample",
      "useMdxStyle"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/mdx/blocks",
-    "docs": "pattern-mdx",
+    "docs": "pattern-mdx-blocks",
     "values": [
      "Accordion",
      "Callout",
@@ -4574,21 +4583,59 @@
      "VideoBlock",
      "defaultMermaidDiagramLabels",
      "portableBlockNames"
-    ]
+    ],
+    "sections": {
+     "Accordion": "Collapsible questions and answers, such as an FAQ. It is the `Accordion` component of `@atom63/ui-react` with MDX spacing, and takes its props: `atom63 component accordion`.\n\n```tsx\n<Accordion collapsible type=\"single\">\n  <Accordion.Item value=\"token\">\n    <Accordion.Trigger>What is a design token?</Accordion.Trigger>\n    <Accordion.Content>A named value that components read instead of a literal.</Accordion.Content>\n  </Accordion.Item>\n</Accordion>\n```\n\nProps of `Accordion`:\n\n- `collapsible`: `boolean`\n- `defaultValue`: `string | string[]`\n- `onValueChange`: `(value: string | string[]) => void`\n- `type`: `'multiple' | 'single'`\n- `value`: `string | string[]`\n\nProps of `Accordion.Trigger`:\n\n- `icon`: `'chevron' | 'plus-minus'` (default `'chevron'`)",
+     "Callout": "A notice beside the text: a tip, a caveat, an error to avoid or a success state. Pick `type` by what the reader should feel; one callout per point.\n\n```tsx\n<Callout type=\"warning\">Releases need approval before they publish.</Callout>\n```\n\nProps of `Callout`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n- `type`: `'info' | 'warning' | 'error' | 'success'` (default `'info'`)\n\nSlots, each taking `children`: `Callout.Actions`, `Callout.Body`, `Callout.Icon`, `Callout.Title`.",
+     "CodeBlock": "Highlighted code with a copy button and a language label. A fenced code block in MDX renders as one; use the component for code held in a variable.\n\n```tsx\n<CodeBlock code=\"pnpm add @atom63/mdx\" lang=\"bash\" />\n```\n\nProps of `CodeBlock`:\n\n- `code`: `string` (required)\n- `children`: `ReactNode`\n- `className`: `string`\n- `copyLabel`: `string`\n- `fallbackLangLabel`: `string`. Label shown in place of an unknown language in the article header.\n- `lang`: `string` (default `'tsx'`)\n- `loadingLabel`: `string` (default `'Highlighting code'`). Visually-hidden status text announced while syntax highlighting runs.\n- `maxHeight`: `string`\n- `showCopyButton`: `boolean`\n- `showLineNumbers`: `boolean`. Show a numbered gutter. Defaults to a smart heuristic: on for `article` blocks longer than 6 lines, off for short snippets and embedded blocks.\n- `spacing`: `'component' | 'none'`\n- `variant`: `'article' | 'embedded'`",
+     "ColorSwatchItem": "A colour swatch for a CSS variable, with its name and variable. Use it on token and theme pages.\n\n```tsx\n<ColorSwatchItem name=\"Page surface\" variable=\"--a63-surface-page\" />\n<ColorSwatchItem name=\"Primary text\" variable=\"--a63-text-primary\" />\n```\n\nProps of `ColorSwatchItem`:\n\n- `name`: `string` (required)\n- `variable`: `string` (required)",
+     "Compare": "Two or more options side by side, each with an eyebrow, a title and a tone. Use it to explain a difference in words or code; for pictures use `ImageCompare`.\n\n```tsx\n<Compare title=\"Patch CSS vs system CSS\">\n  <Compare.Item eyebrow=\"Before\" title=\"Local patch\" tone=\"negative\">\n    Values are invented for the screen at hand.\n  </Compare.Item>\n  <Compare.Item eyebrow=\"After\" title=\"System contract\" tone=\"positive\">\n    Values come from tokens that change together.\n  </Compare.Item>\n</Compare>\n```\n\nProps of `Compare`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n- `description`: `ReactNode`\n- `title`: `ReactNode`\n\nProps of `Compare.Item`:\n\n- `children`: `ReactNode` (required)\n- `title`: `ReactNode` (required)\n- `className`: `string`\n- `eyebrow`: `ReactNode`\n- `tone`: `'warning' | 'neutral' | 'negative' | 'positive'` (default `'neutral'`)\n\nSlots, each taking `children`: `Compare.Description`, `Compare.Title`.",
+     "ComparisonPair": "Two live panels, before and after, that the reader toggles between. Use it for interaction or motion differences; `speedControl` adds a slow-motion switch.\n\n```tsx\n<ComparisonPair label=\"Spacing\">\n  <ComparisonPair.Before label=\"Before\">Cramped 4px gaps</ComparisonPair.Before>\n  <ComparisonPair.After label=\"After\">Comfortable 16px gaps</ComparisonPair.After>\n</ComparisonPair>\n```\n\nProps of `ComparisonPair`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n- `label`: `string`\n- `slowMotionLabel`: `string` (default `'Slow motion'`)\n- `speedControl`: `boolean` (default `false`)\n\nProps of `ComparisonPair.After`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n- `label`: `string`\n\nProps of `ComparisonPair.Before`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n- `label`: `string`",
+     "CreditsBlock": "A collapsible list of credits, one role per row, at the end of an article or project page.\n\n```tsx\n<CreditsBlock\n  credits={[\n    { role: 'Design', credits: 'ATOM63' },\n    { role: 'Photography', credits: 'Unsplash contributors' },\n  ]}\n/>\n```\n\nProps of `CreditsBlock`:\n\n- `credits`: `CreditEntry[]` (required)\n- `className`: `string`\n- `label`: `string` (default `'Credits'`)",
+     "DemoConfigPanel": "The controls panel for a `DemoStage`: a popover beside the stage, a sheet on small screens. Put it in `headerEnd` and pass the stage's ref.\n\n```tsx\nimport { DemoConfigPanel, DemoStage } from '@atom63/mdx/blocks'\nimport { Switch } from '@atom63/ui-react'\nimport { useRef, useState } from 'react'\n\nfunction TunableDemo() {\n  const stageRef = useRef<HTMLElement>(null)\n  const [dense, setDense] = useState(false)\n\n  return (\n    <DemoStage\n      ref={stageRef}\n      headerEnd={\n        <DemoConfigPanel stageRef={stageRef} title=\"Demo controls\">\n          <label>\n            <Switch checked={dense} onCheckedChange={setDense} /> Dense\n          </label>\n        </DemoConfigPanel>\n      }\n    >\n      <p>{dense ? 'Dense' : 'Comfortable'}</p>\n    </DemoStage>\n  )\n}\n```\n\nProps of `DemoConfigPanel`:\n\n- `children`: `ReactNode` (required)\n- `stageRef`: `RefObject<HTMLElement | null>` (required)\n- `defaultOpen`: `boolean`\n- `label`: `ReactNode` (default `'Tune'`)\n- `mobileQuery`: `string` (default `'(max-width: 767px)'`)\n- `onOpenChange`: `(open: boolean) => void`\n- `open`: `boolean`\n- `panelClassName`: `string`\n- `panelInset`: `number` (default `16`)\n- `panelWidth`: `number` (default `320`)\n- `sheetClassName`: `string`\n- `sheetPanelClassName`: `string`\n- `title`: `string` (default `'Demo controls'`)",
+     "DemoStage": "A framed stage for a centrepiece demo or visual, with header slots for a title (`headerStart`) and controls (`headerEnd`).\n\n```tsx\n<DemoStage headerStart=\"Live demo\">\n  <Button>Try me</Button>\n</DemoStage>\n```\n\nProps of `DemoStage`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n- `headerEnd`: `ReactNode`\n- `headerStart`: `ReactNode`\n- `panelClassName`: `string`",
+     "DocExample": "A live example with Preview and Code tabs and a copy button. Every example on this page is one. Pass the source as `code` and render the same thing as children.\n\n```mdx\n<DocExample title=\"Primary button\" code={`<Button variant=\"primary\">Save</Button>`}>\n  <Button variant=\"primary\">Save</Button>\n</DocExample>\n```\n\nProps of `DocExample`:\n\n- `children`: `ReactNode` (required)\n- `code`: `string` (required)\n- `align`: `'center' | 'left'` (default `'center'`)\n- `className`: `string`\n- `codeLabel`: `string` (default `'Code'`). Label for the code tab (default: \"Code\").\n- `copiedAnnouncement`: `string` (default `'Example code copied'`). Visually-hidden live-region text announced after copying (default: \"Example code copied\").\n- `copiedLabel`: `string` (default `'Copied to clipboard'`). aria-label for the copy control right after copying (default: \"Copied to clipboard\").\n- `copyCodeLabel`: `string` (default `'Copy example code'`). aria-label for the copy control when idle (default: \"Copy example code\").\n- `lang`: `string`\n- `previewLabel`: `string` (default `'Preview'`). Label for the preview tab (default: \"Preview\").\n- `title`: `string`\n- `wide`: `boolean` (default `false`)\n\nSlots, each taking `children`: `DocExample.Code`, `DocExample.Preview`, `DocExample.Title`.",
+     "DocExampleCode": "The highlighted code panel of `DocExample`, on its own, for showing code that has no preview.\n\n```tsx\nimport { DocExampleCode } from '@atom63/mdx/blocks'\n\n<DocExampleCode code={`pnpm add @atom63/mdx`} lang=\"bash\" />\n```\n\nProps of `DocExampleCode`:\n\n- `code`: `string` (required)\n- `lang`: `string` (default `'tsx'`)",
+     "ExampleContainer": "A plain demo frame on a dot grid, with an optional title, description and spec line. Use it for a preview without a code tab.\n\n```mdx\n<ExampleContainer description=\"The main action of a view.\" title=\"Primary variant\">\n  <Button variant=\"primary\">Save</Button>\n</ExampleContainer>\n```\n\nProps of `ExampleContainer`:\n\n- `children`: `React.ReactNode` (required)\n- `align`: `'center' | 'left'` (default `'center'`)\n- `className`: `string`\n- `description`: `string`\n- `embedded`: `boolean` (default `false`). Nested inside DocExample — drops outer margin and border (parent supplies chrome).\n- `spec`: `React.ReactNode`\n- `title`: `string`\n- `wide`: `boolean` (default `false`). Use wide layout to break out of narrow prose constraints",
+     "FigureBlock": "An image with a caption. Clicking it opens the page's `MediaLightbox` gallery, which the provider hosts; set `enableLightbox={false}` to turn that off. Put rich captions in `FigureBlock.Caption` and a source line in `FigureBlock.Aside`.\n\n```tsx\n<FigureBlock\n  alt=\"The Atom63 design system social card\"\n  aspectRatio=\"16/9\"\n  caption=\"Figure 1. The social card for this site.\"\n  src=\"/og.png\"\n/>\n```\n\nProps of `FigureBlock`:\n\n- `alt`: `string` (required)\n- `src`: `string` (required)\n- `aspectRatio`: `'1/1' | '4/3' | '3/4' | '16/9' | '9/16'`\n- `bordered`: `boolean` (default `true`)\n- `caption`: `string`\n- `children`: `ReactNode`\n- `className`: `string`\n- `enableLightbox`: `boolean` (default `true`). Click-to-zoom; multiple figures on a page share one connected gallery.\n- `lightboxGalleryId`: `string` (default `MDX_FIGURE_LIGHTBOX_GALLERY_ID`). Gallery id for connected lightbox (default: all FigureBlocks on the page).\n- `loading`: `'eager' | 'lazy'` (default `'lazy'`)\n- `spacing`: `'none' | 'sm' | 'default' | 'lg'` (default `'default'`)\n\nSlots, each taking `children`: `FigureBlock.Aside`, `FigureBlock.Caption`.",
+     "ImageCompare": "Two images in one frame with a draggable divider. Use it when the visual difference is the point; give both images real `alt` text. The slider loads on demand.\n\n```mdx\n<ImageCompare\n  title=\"Ad hoc layout vs system layout\"\n  before={{ src: '/images/before.webp', alt: 'Form with uneven spacing', label: 'Before' }}\n  after={{ src: '/images/after.webp', alt: 'Form on the spacing scale', label: 'After' }}\n  caption=\"Drag the divider to compare.\"\n/>\n```\n\nProps of `ImageCompare`:\n\n- `after`: `ImageCompareImage` (required)\n- `before`: `ImageCompareImage` (required)\n- `aspectRatio`: `string` (default `'16/9'`)\n- `bordered`: `boolean` (default `true`)\n- `caption`: `string`\n- `changePositionOnHover`: `boolean` (default `false`)\n- `description`: `string`\n- `handle`: `ReactNode`\n- `idleResetMs`: `number` (default `2500`). Idle ms before restoring to center when `resetAfterIdle` is on.\n- `objectFit`: `'none' | 'contain' | 'cover' | 'fill' | 'scale-down'` (default `'cover'`)\n- `onPositionChange`: `(position: number) => void`\n- `position`: `number` (default `50`). Initial slider position (0-100).\n- `resetAfterIdle`: `boolean` (default `false`). Restore to center after the user stops interacting.\n- `resetDelay`: `number` (default `500`)\n- `resetOnLeave`: `boolean` (default `false`)\n- `title`: `ReactNode`\n- `transition`: `string` (default `'0.25s cubic-bezier(.17,.67,.83,.67)'`)\n- `vertical`: `boolean` (default `false`)",
+     "KeyIdea": "The one takeaway of a section, set apart with a label and an optional title. Use it once or twice per page; a page of key ideas has none.\n\n```tsx\n<KeyIdea title=\"One token architecture\">\n  Every renderer reads the same tokens, so a theme change reaches web, iOS and Figma at once.\n</KeyIdea>\n```\n\nProps of `KeyIdea`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n- `label`: `ReactNode` (default `'Key idea'`)\n- `title`: `ReactNode`",
+     "LayerStack": "A layered model, top to bottom, with a label, title and optional metaphor, description and constraint per layer. Use it to explain an architecture in layers.\n\n```tsx\n<LayerStack\n  title=\"Primitive / Procedure / Product\"\n  layers={[\n    { label: 'Primitive', title: 'Stable materials', description: 'Raw tokens and scales.' },\n    { label: 'Procedure', title: 'Semantic rules', description: 'Semantic tokens and states.' },\n    { label: 'Product', title: 'Rendered experience', description: 'Pages and flows.' },\n  ]}\n/>\n```\n\nProps of `LayerStack`:\n\n- `layers`: `LayerStackItem[]` (required)\n- `className`: `string`\n- `description`: `ReactNode`\n- `labels`: `Partial<LayerStackLabels>`\n- `title`: `ReactNode`",
+     "MdxPageSkeleton": "The loading state of an MDX page while its content loads, in the `docs` or `lesson` layout.\n\n```tsx\n<MdxPageSkeleton showRail={false} variant=\"docs\" />\n```\n\nProps of `MdxPageSkeleton`:\n\n- `className`: `string`\n- `showInlineToc`: `boolean` (default `true`)\n- `showRail`: `boolean` (default `true`)\n- `variant`: `'docs' | 'lesson'` (default `'docs'`)",
+     "MediaCaption": "The caption line the media blocks use, on its own: for a custom figure, an embed or a chart.\n\n```tsx\n<MediaCaption>Figure 2. Token layers, from primitive to product.</MediaCaption>\n```\n\nProps of `MediaCaption`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`",
+     "MediaPlaceholder": "A labelled frame that stands in for an image, video or diagram that is not made yet. The label says what the real asset should show.\n\n```tsx\n<MediaPlaceholder kind=\"diagram\" label=\"Token flow from DTCG source to each renderer\" />\n```\n\nProps of `MediaPlaceholder`:\n\n- `aspectRatio`: `string` (default `'16 / 9'`). CSS aspect-ratio for the frame (e.g. `16 / 9`, `4 / 3`, `1 / 1`).\n- `className`: `string`\n- `kind`: `'video' | 'image' | 'diagram'` (default `'image'`). Picks the icon + kind tag. Defaults to `image`.\n- `label`: `string`. What the real asset should show — surfaced as the frame's caption.",
+     "MermaidDiagram": "A Mermaid chart drawn in the theme's colours, with zoom controls. A fenced `mermaid` code block in MDX renders as one too.\n\n```tsx\n<MermaidDiagram\n  chart=\"flowchart LR\n    Tokens --> Contracts --> Components\"\n  title=\"Build order\"\n/>\n```\n\nProps of `MermaidDiagram`:\n\n- `chart`: `string` (required)\n- `animated`: `boolean` (default `false`). When true, animate the diagram's paths with a stroke draw-on-reveal. Off by default.\n- `labels`: `Partial<MermaidDiagramLabels>`\n- `title`: `string`",
+     "PageMeta": "The header of an article or lesson: eyebrow, title, description and a meta line such as the reading time.\n\n```tsx\n<PageMeta\n  description=\"How semantic tokens keep colour and spacing consistent.\"\n  eyebrow=\"Guide\"\n  meta=\"8 min read\"\n  title=\"Designing with tokens\"\n/>\n```\n\nProps of `PageMeta`:\n\n- `title`: `ReactNode` (required)\n- `children`: `ReactNode`\n- `className`: `string`\n- `description`: `ReactNode`\n- `eyebrow`: `ReactNode`\n- `meta`: `ReactNode`",
+     "PageTableOfContents": "The page's table of contents, built from its `h2` and `h3` headings, with the current section highlighted. `rail` sits beside the text; `inline`, `menu` and `embedded` fit narrow layouts.\n\n```tsx\nimport { PageTableOfContents } from '@atom63/mdx/blocks'\n\n<aside>\n  <PageTableOfContents label=\"On this page\" variant=\"rail\" />\n</aside>\n```\n\nProps of `PageTableOfContents`:\n\n- `activeOffset`: `number` (default `120`)\n- `className`: `string`\n- `containerSelector`: `string` (default `'[data-mdx-scroll-root], #learn-main, main'`)\n- `headingSelector`: `string` (default `'[data-mdx-content] h2, [data-mdx-content] h3, article h2, article h3'`)\n- `inlinePositionClassName`: `string` (default `'fixed top-[calc(--spacing(14)+--spacing(3))] right-4 z-30 xl:hidden'`)\n- `label`: `string` (default `'On this page'`)\n- `onActiveLabelChange`: `(label: string) => void`\n- `onNavigate`: `() => void`\n- `scrollOffset`: `number` (default `96`)\n- `showProgress`: `boolean` (default `true`)\n- `smoothScrollDuration`: `number` (default `420`)\n- `variant`: `'menu' | 'embedded' | 'inline' | 'rail'` (default `'rail'`)",
+     "ResourceList": "A list of outside links, each with a name and an optional note. Links open in a new tab.\n\n```tsx\n<ResourceList\n  items={[\n    { name: 'DTCG format', url: 'https://www.designtokens.org', note: 'The token file format' },\n    { name: 'WCAG 2.2', url: 'https://www.w3.org/TR/WCAG22/', note: 'Accessibility criteria' },\n  ]}\n/>\n```\n\nProps of `ResourceList`:\n\n- `items`: `ResourceItem[]` (required)\n- `className`: `string`",
+     "ScrollStage": "Scroll-driven storytelling: text steps scroll past while each step's `media` stays pinned beside them, and the media changes with the step in view. On narrow screens the media sits above its text.\n\n```mdx\n<ScrollStage>\n  <ScrollStage.Step media={<img alt=\"Primitive tokens\" src=\"/images/primitives.webp\" />}>\n    ### Primitive layer\n\n    Raw values: colour ramps, the type scale, spacing and radius.\n  </ScrollStage.Step>\n  <ScrollStage.Step media={<img alt=\"Semantic tokens\" src=\"/images/semantic.webp\" />}>\n    ### Semantic layer\n\n    Tokens that name intent, so one theme change restyles everything.\n  </ScrollStage.Step>\n</ScrollStage>\n```\n\nProps of `ScrollStage`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n\nProps of `ScrollStage.Step`:\n\n- `children`: `ReactNode` (required)\n- `media`: `ReactNode` (required). The visual (image, diagram, JSX) shown for this step. Keep it cheap — in the pinned path it re-renders whenever the active step changes, so prefer static images/JSX over heavy live components. Avoid putting anchor `id`s inside `media` or the prose: both the pinned (`lg+`) and stacked (below `lg`) copies render into the DOM, so an `id` would be duplicated.\n- `className`: `string`",
+     "StatCard": "One metric with a label and an optional change. `trend` colours the change: `up` and `down` use status colours, `neutral` stays muted.\n\n```tsx\n<StatCard change=\"+1 this quarter\" label=\"Themes\" trend=\"up\" value=\"4\" />\n```\n\nProps of `StatCard`:\n\n- `label`: `string` (required). Small muted caption above the value.\n- `value`: `ReactNode` (required). The prominent metric.\n- `change`: `ReactNode`. Optional secondary change indicator, colored by `trend`.\n- `className`: `string`\n- `trend`: `'neutral' | 'up' | 'down'` (default `'neutral'`). Semantic direction of `change`; drives the token color.",
+     "StatGrid": "A responsive grid of `StatCard`s.\n\n```tsx\n<StatGrid>\n  <StatCard label=\"Blocks\" value=\"30\" />\n  <StatCard change=\"-5\" label=\"Open issues\" trend=\"down\" value=\"3\" />\n  <StatCard label=\"Themes\" value=\"4\" />\n</StatGrid>\n```\n\nProps of `StatGrid`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`",
+     "Steps": "Numbered steps for a procedure. Numbers and the connecting line come from document order; do not number titles by hand.\n\n```tsx\n<Steps>\n  <Steps.Step title=\"Install the package\">Run pnpm add @atom63/mdx.</Steps.Step>\n  <Steps.Step title=\"Load the styles\">Import @atom63/mdx/styles/a63.css once.</Steps.Step>\n  <Steps.Step title=\"Wrap the page\">Render it inside MDXContentProvider.</Steps.Step>\n</Steps>\n```\n\nProps of `Steps`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n\nProps of `Steps.Step`:\n\n- `children`: `ReactNode` (required)\n- `title`: `ReactNode` (required). Bold heading for the step.\n- `className`: `string`\n- `index`: `number` (default `1`). Injected by `Steps` — the 1-indexed position in document order.",
+     "Tabs": "Tabbed panels in prose, such as the same step for npm and pnpm. It is the `Tabs` component of `@atom63/ui-react` with MDX spacing, and takes its props: `atom63 component tabs`.\n\n```tsx\n<Tabs defaultValue=\"pnpm\">\n  <Tabs.List>\n    <Tabs.Tab value=\"pnpm\">pnpm</Tabs.Tab>\n    <Tabs.Tab value=\"npm\">npm</Tabs.Tab>\n  </Tabs.List>\n  <Tabs.Panel value=\"pnpm\">pnpm add @atom63/mdx</Tabs.Panel>\n  <Tabs.Panel value=\"npm\">npm install @atom63/mdx</Tabs.Panel>\n</Tabs>\n```\n\n`Tabs` adds no props of its own.\n\nProps of `Tabs.List`:\n\n- `size`: `'sm' | 'default' | 'lg' | 'xs'` (default `tabsContract.defaultSize`)\n- `variant`: `'default' | 'underline' | 'attached'` (default `tabsContract.defaultVariant`)\n\nProps of `Tabs.Panel`:\n\n- `animated`: `boolean` (default `false`)\n\nProps of `Tabs.Tab`:\n\n- `size`: `'sm' | 'default' | 'lg' | 'xs'`",
+     "Timeline": "Dated events in order: a release history, a project log. Each item has a date, a title and a short body.\n\n```tsx\n<Timeline>\n  <Timeline.Item date=\"2025\" title=\"Primitive layer\">Colour ramps, type scale, spacing.</Timeline.Item>\n  <Timeline.Item date=\"2026\" title=\"Semantic layer\">Tokens map primitives to intent.</Timeline.Item>\n</Timeline>\n```\n\nProps of `Timeline`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n\nProps of `Timeline.Item`:\n\n- `children`: `ReactNode` (required)\n- `date`: `ReactNode` (required). Date or label shown in the left column (e.g. a year).\n- `title`: `ReactNode` (required). Bold heading for the event.\n- `className`: `string`",
+     "VideoBlock": "A video figure with native controls and an optional caption. A video with speech needs a caption track (`trackSrc`); mark a purely visual loop `captionPolicy=\"decorative\"` instead. With `autoPlay` and no `controls`, it draws its own pause button and stays still under reduced motion.\n\n```mdx\n<VideoBlock src=\"/media/talk.mp4\" title=\"Design tokens talk\" trackSrc=\"/media/talk.en.vtt\" />\n\n<VideoBlock\n  autoPlay\n  captionPolicy=\"decorative\"\n  controls={false}\n  loop\n  muted\n  src=\"/media/loop.mp4\"\n  title=\"Theme switching loop\"\n/>\n```\n\nProps of `VideoBlock`:\n\n- `src`: `string` (required)\n- `title`: `string` (required)\n- `autoPlay`: `boolean` (default `false`). Start playing, muted, on load. Ignored when the reader prefers reduced motion. Without `controls`, a pause and play toggle sits over the video.\n- `caption`: `string`\n- `captionPolicy`: `'required' | 'decorative'`. Video has spoken or meaningful audio and must provide captions. Video is decorative or purely visual; no caption track is required.\n- `className`: `string`\n- `controls`: `boolean` (default `true`)\n- `fit`: `'contain' | 'cover'` (default `'contain'`)\n- `loop`: `boolean` (default `false`)\n- `muted`: `boolean` (default `false`)\n- `pauseLabel`: `string` (default `'Pause video'`). Name of the toggle while the video plays. Defaults to \"Pause video\".\n- `playLabel`: `string` (default `'Play video'`). Name of the toggle while the video is paused. Defaults to \"Play video\".\n- `showCaption`: `boolean` (default `false`)\n- `spacing`: `'none' | 'sm' | 'default' | 'lg'` (default `'default'`)\n- `trackLabel`: `string`. Name of the caption track in the player's caption menu. Defaults to the track language's own name, such as \"English\" or \"Deutsch\".\n- `trackLang`: `string` (default `'en'`). BCP 47 language of the caption track (`srclang`). Defaults to `en`.\n- `trackSrc`: `string`"
+    }
    },
    {
     "module": "@atom63/mdx/blocks/credits-block",
-    "docs": "pattern-mdx",
+    "docs": "pattern-mdx-blocks",
     "values": [
      "CreditsBlock"
-    ]
+    ],
+    "sections": {
+     "CreditsBlock": "A collapsible list of credits, one role per row, at the end of an article or project page.\n\n```tsx\n<CreditsBlock\n  credits={[\n    { role: 'Design', credits: 'ATOM63' },\n    { role: 'Photography', credits: 'Unsplash contributors' },\n  ]}\n/>\n```\n\nProps of `CreditsBlock`:\n\n- `credits`: `CreditEntry[]` (required)\n- `className`: `string`\n- `label`: `string` (default `'Credits'`)"
+    }
    },
    {
     "module": "@atom63/mdx/blocks/media-caption",
-    "docs": "pattern-mdx",
+    "docs": "pattern-mdx-blocks",
     "values": [
      "MediaCaption"
-    ]
+    ],
+    "sections": {
+     "MediaCaption": "The caption line the media blocks use, on its own: for a custom figure, an embed or a chart.\n\n```tsx\n<MediaCaption>Figure 2. Token layers, from primitive to product.</MediaCaption>\n```\n\nProps of `MediaCaption`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`"
+    }
    },
    {
     "module": "@atom63/mdx/article",
@@ -4601,7 +4648,8 @@
      "mediaSpacingStyles",
      "useIsInsideExample",
      "useMdxStyle"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/mdx/editor",
@@ -4610,7 +4658,8 @@
      "MdxLivePreview",
      "MdxSourceEditor",
      "MdxSourceView"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/mdx/lightbox",
@@ -4628,7 +4677,8 @@
      "loadImageDimensions",
      "resolveLightboxTrigger",
      "usePhotoSwipe"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/mdx/runtime",
@@ -4641,7 +4691,8 @@
      "useMdxRuntime",
      "useShikiHighlight",
      "useShikiHighlightResult"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/mdx/primitives",
@@ -4675,7 +4726,8 @@
      "pickRest",
      "pickSlot",
      "useMdxReducedMotion"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/inform",
@@ -4693,7 +4745,8 @@
      "dismissalKey",
      "resolveContent",
      "resolveInform"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/inform/react",
@@ -4703,7 +4756,8 @@
      "InformProvider",
      "useInform",
      "useInformContext"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/inform/surfaces",
@@ -4723,7 +4777,8 @@
      "SEVERITY_TEXT_CLASS",
      "SLOT_SIZE_CLASS",
      "useAnchorRect"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/agent",
@@ -4733,7 +4788,8 @@
      "createAgentRuntime",
      "createAgentStore",
      "getMessageText"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/agent/react",
@@ -4742,7 +4798,8 @@
      "DEFAULT_AGENT_CHROME_LABELS",
      "useAgentChromeController",
      "useOwnedAgentRuntime"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/widgets",
@@ -4783,7 +4840,8 @@
      "wuClamp",
      "wuMerge",
      "wuStyle"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/widgets/primitives",
@@ -4809,7 +4867,8 @@
      "WidgetSurface",
      "WidgetSurfaceSizeProvider",
      "useWidgetSurfaceSize"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/widgets/state",
@@ -4820,7 +4879,8 @@
      "getWidgetErrorDescription",
      "resolveWidgetFeedbackState",
      "widgetStateCopy"
-    ]
+    ],
+    "sections": {}
    },
    {
     "module": "@atom63/widgets/runtime",
@@ -4840,7 +4900,8 @@
      "getWidgetHostSlideFadeMotion",
      "shouldReduceWidgetHostMotion",
      "widgetHostSizeMotionTransition"
-    ]
+    ],
+    "sections": {}
    }
   ]
  },
@@ -14106,9 +14167,16 @@
   {
    "area": "patterns",
    "label": "MDX content",
-   "markdown": "# MDX content\n\n`@atom63/mdx` renders MDX documentation and articles with Atom63 prose styles and a set of portable blocks: callouts, key ideas, figures, steps, timelines and more. This docs site is written with it.\n\n| Entry | What it holds |\n|-------|---------------|\n| `@atom63/mdx` | `MDXContentProvider`, `DocsMDXContentProvider` and the default component map `mdxComponents` |\n| `@atom63/mdx/blocks` | The portable blocks (`Callout`, `KeyIdea`, `FigureBlock`, `Steps` …) and `portableBlockNames` |\n| `@atom63/mdx/blocks/credits-block`, `@atom63/mdx/blocks/media-caption` | `CreditsBlock` and `MediaCaption` alone, for a lighter import |\n| `@atom63/mdx/article` | `ArticleMDXContentProvider` and `createMdxComponents()` for article and portfolio pages |\n| `@atom63/mdx/editor` | `MdxSourceEditor`, `MdxSourceView` and `MdxLivePreview` |\n| `@atom63/mdx/runtime` | `compileMdx`, `useMdxRuntime` and the Shiki highlighting helpers |\n| `@atom63/mdx/lightbox` | The figure lightbox that opens `FigureBlock` images in `MediaLightbox` |\n| `@atom63/mdx/primitives` | Experimental layout, frame, motion and slot primitives for authoring new blocks |\n\nLoad the styles once, after `@atom63/styles` and Tailwind: `@import \"@atom63/mdx/styles/a63.css\";`. The figure lightbox also needs `@atom63/ui-react/recipes/media-lightbox.css`.\n\n## Render a page\n\nWrap compiled MDX in a provider. It maps Markdown elements to Atom63 prose and registers the blocks, so a page can use them without importing each one.\n\n```tsx\nimport { DocsMDXContentProvider, mdxComponents } from '@atom63/mdx'\n\nimport Page from './page.mdx'\n\nexport function DocsPage() {\n  return (\n    <DocsMDXContentProvider components={mdxComponents}>\n      <Page />\n    </DocsMDXContentProvider>\n  )\n}\n```\n\n`MDXContentProvider` takes a `variant`: `article` (full-width prose), `narrow` (a text column with full-width media; the default of `ArticleMDXContentProvider`) or `docs`.\n\n## Blocks\n\nChoose a block by what the author means, not by its look:\n\n| Intent | Block |\n|--------|-------|\n| Reader notice, caveat, success state | `Callout` (`type`: `info`, `warning`, `error`, `success`) |\n| One prominent takeaway | `KeyIdea` |\n| Conceptual before and after, or options side by side | `Compare` |\n| Live before and after | `ComparisonPair` |\n| Draggable media before and after | `ImageCompare` |\n| Captioned image or video | `FigureBlock`, `VideoBlock`, `MediaCaption` |\n| Live demo surface | `ExampleContainer`, `DemoStage` |\n| Ordered sequence or dated history | `Steps`, `Timeline` |\n| Figures and links | `StatCard`, `StatGrid`, `ResourceList` |\n| Diagrams and layering | `MermaidDiagram`, `LayerStack` |\n| Code | `CodeBlock`, `Tabs` |\n| Page furniture | `PageMeta`, `PageTableOfContents`, `MdxPageSkeleton`, `Accordion`, `CreditsBlock`, `ScrollStage`, `ColorSwatchItem`, `MediaPlaceholder` |\n\nIn MDX, with the provider's component map:\n\n```mdx\n<KeyIdea title=\"One token architecture\">\n  Every renderer reads the same tokens, so a theme change reaches web, iOS and Figma at once.\n</KeyIdea>\n\n<Callout type=\"warning\">Releases need approval before they publish.</Callout>\n```\n\nIn React, import a block directly:\n\n```tsx\nimport { Callout, KeyIdea } from '@atom63/mdx/blocks'\n\n<KeyIdea title=\"One token architecture\">Every renderer reads the same tokens.</KeyIdea>\n```\n\nLook up any export with `atom63 api <name>`, for example `atom63 api KeyIdea`, and list an entry's exports with `atom63 api @atom63/mdx/blocks`.",
+   "markdown": "# MDX content\n\n`@atom63/mdx` renders MDX documentation and articles with Atom63 prose styles and a set of portable blocks: callouts, key ideas, figures, steps, timelines and more. This docs site is written with it.\n\n| Entry | What it holds |\n|-------|---------------|\n| `@atom63/mdx` | `MDXContentProvider`, `DocsMDXContentProvider` and the default component map `mdxComponents` |\n| `@atom63/mdx/blocks` | The portable blocks (`Callout`, `KeyIdea`, `FigureBlock`, `Steps` …) and `portableBlockNames` |\n| `@atom63/mdx/blocks/credits-block`, `@atom63/mdx/blocks/media-caption` | `CreditsBlock` and `MediaCaption` alone, for a lighter import |\n| `@atom63/mdx/article` | `ArticleMDXContentProvider` and `createMdxComponents()` for article and portfolio pages |\n| `@atom63/mdx/editor` | `MdxSourceEditor`, `MdxSourceView` and `MdxLivePreview` |\n| `@atom63/mdx/runtime` | `compileMdx`, `useMdxRuntime` and the Shiki highlighting helpers |\n| `@atom63/mdx/lightbox` | The figure lightbox that opens `FigureBlock` images in `MediaLightbox` |\n| `@atom63/mdx/primitives` | Experimental layout, frame, motion and slot primitives for authoring new blocks |\n\nLoad the styles once, after `@atom63/styles` and Tailwind: `@import \"@atom63/mdx/styles/a63.css\";`. The figure lightbox also needs `@atom63/ui-react/recipes/media-lightbox.css`.\n\n## Render a page\n\nWrap compiled MDX in a provider. It maps Markdown elements to Atom63 prose and registers the blocks, so a page can use them without importing each one.\n\n```tsx\nimport { DocsMDXContentProvider, mdxComponents } from '@atom63/mdx'\n\nimport Page from './page.mdx'\n\nexport function DocsPage() {\n  return (\n    <DocsMDXContentProvider components={mdxComponents}>\n      <Page />\n    </DocsMDXContentProvider>\n  )\n}\n```\n\n`MDXContentProvider` takes a `variant`: `article` (full-width prose), `narrow` (a text column with full-width media; the default of `ArticleMDXContentProvider`) or `docs`.\n\n## Blocks\n\nChoose a block by what the author means, not by its look:\n\n| Intent | Block |\n|--------|-------|\n| Reader notice, caveat, success state | `Callout` (`type`: `info`, `warning`, `error`, `success`) |\n| One prominent takeaway | `KeyIdea` |\n| Conceptual before and after, or options side by side | `Compare` |\n| Live before and after | `ComparisonPair` |\n| Draggable media before and after | `ImageCompare` |\n| Captioned image or video | `FigureBlock`, `VideoBlock`, `MediaCaption` |\n| Live demo surface | `ExampleContainer`, `DemoStage` |\n| Ordered sequence or dated history | `Steps`, `Timeline` |\n| Figures and links | `StatCard`, `StatGrid`, `ResourceList` |\n| Diagrams and layering | `MermaidDiagram`, `LayerStack` |\n| Code | `CodeBlock`, `Tabs` |\n| Page furniture | `PageMeta`, `PageTableOfContents`, `MdxPageSkeleton`, `Accordion`, `CreditsBlock`, `ScrollStage`, `ColorSwatchItem`, `MediaPlaceholder` |\n\nIn MDX, with the provider's component map:\n\n```mdx\n<KeyIdea title=\"One token architecture\">\n  Every renderer reads the same tokens, so a theme change reaches web, iOS and Figma at once.\n</KeyIdea>\n\n<Callout type=\"warning\">Releases need approval before they publish.</Callout>\n```\n\nIn React, import a block directly:\n\n```tsx\nimport { Callout, KeyIdea } from '@atom63/mdx/blocks'\n\n<KeyIdea title=\"One token architecture\">Every renderer reads the same tokens.</KeyIdea>\n```\n\n[MDX blocks](/patterns/pattern-mdx-blocks) documents each block: what it is for, a working example and its props. From the terminal, `atom63 api KeyIdea` prints the same for one block, and `atom63 api @atom63/mdx/blocks` lists the entry's exports.",
    "route": "/patterns/pattern-mdx",
    "slug": "pattern-mdx"
+  },
+  {
+   "area": "patterns",
+   "label": "MDX blocks",
+   "markdown": "# MDX blocks\n\nEvery block `@atom63/mdx/blocks` exports, with what it is for, a working example and its props. The props tables are read from each block's TypeScript types. For setup and the providers, see [MDX content](/patterns/pattern-mdx).\n\nInside a provider (`MDXContentProvider`, `DocsMDXContentProvider` or `ArticleMDXContentProvider`), most blocks need no import: the provider's component map registers them. `KeyIdea`, `Compare`, `ImageCompare`, `LayerStack`, `DocExample`, `DocExampleCode` and `DemoConfigPanel` are not in the map; import them from `@atom63/mdx/blocks`. In React, import any block from there.\n\nLook a block up from the terminal with `atom63 api <Block>`, for example `atom63 api KeyIdea`.\n\n## Notices\n\n### Callout\n\nA notice beside the text: a tip, a caveat, an error to avoid or a success state. Pick `type` by what the reader should feel; one callout per point.\n\n```tsx\n<Callout type=\"warning\">Releases need approval before they publish.</Callout>\n```\n\nProps of `Callout`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n- `type`: `'info' | 'warning' | 'error' | 'success'` (default `'info'`)\n\nSlots, each taking `children`: `Callout.Actions`, `Callout.Body`, `Callout.Icon`, `Callout.Title`.\n\n### KeyIdea\n\nThe one takeaway of a section, set apart with a label and an optional title. Use it once or twice per page; a page of key ideas has none.\n\n```tsx\n<KeyIdea title=\"One token architecture\">\n  Every renderer reads the same tokens, so a theme change reaches web, iOS and Figma at once.\n</KeyIdea>\n```\n\nProps of `KeyIdea`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n- `label`: `ReactNode` (default `'Key idea'`)\n- `title`: `ReactNode`\n\n## Comparison\n\n### Compare\n\nTwo or more options side by side, each with an eyebrow, a title and a tone. Use it to explain a difference in words or code; for pictures use `ImageCompare`.\n\n```tsx\n<Compare title=\"Patch CSS vs system CSS\">\n  <Compare.Item eyebrow=\"Before\" title=\"Local patch\" tone=\"negative\">\n    Values are invented for the screen at hand.\n  </Compare.Item>\n  <Compare.Item eyebrow=\"After\" title=\"System contract\" tone=\"positive\">\n    Values come from tokens that change together.\n  </Compare.Item>\n</Compare>\n```\n\nProps of `Compare`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n- `description`: `ReactNode`\n- `title`: `ReactNode`\n\nProps of `Compare.Item`:\n\n- `children`: `ReactNode` (required)\n- `title`: `ReactNode` (required)\n- `className`: `string`\n- `eyebrow`: `ReactNode`\n- `tone`: `'warning' | 'neutral' | 'negative' | 'positive'` (default `'neutral'`)\n\nSlots, each taking `children`: `Compare.Description`, `Compare.Title`.\n\n### ComparisonPair\n\nTwo live panels, before and after, that the reader toggles between. Use it for interaction or motion differences; `speedControl` adds a slow-motion switch.\n\n```tsx\n<ComparisonPair label=\"Spacing\">\n  <ComparisonPair.Before label=\"Before\">Cramped 4px gaps</ComparisonPair.Before>\n  <ComparisonPair.After label=\"After\">Comfortable 16px gaps</ComparisonPair.After>\n</ComparisonPair>\n```\n\nProps of `ComparisonPair`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n- `label`: `string`\n- `slowMotionLabel`: `string` (default `'Slow motion'`)\n- `speedControl`: `boolean` (default `false`)\n\nProps of `ComparisonPair.After`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n- `label`: `string`\n\nProps of `ComparisonPair.Before`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n- `label`: `string`\n\n### ImageCompare\n\nTwo images in one frame with a draggable divider. Use it when the visual difference is the point; give both images real `alt` text. The slider loads on demand.\n\n```mdx\n<ImageCompare\n  title=\"Ad hoc layout vs system layout\"\n  before={{ src: '/images/before.webp', alt: 'Form with uneven spacing', label: 'Before' }}\n  after={{ src: '/images/after.webp', alt: 'Form on the spacing scale', label: 'After' }}\n  caption=\"Drag the divider to compare.\"\n/>\n```\n\nProps of `ImageCompare`:\n\n- `after`: `ImageCompareImage` (required)\n- `before`: `ImageCompareImage` (required)\n- `aspectRatio`: `string` (default `'16/9'`)\n- `bordered`: `boolean` (default `true`)\n- `caption`: `string`\n- `changePositionOnHover`: `boolean` (default `false`)\n- `description`: `string`\n- `handle`: `ReactNode`\n- `idleResetMs`: `number` (default `2500`). Idle ms before restoring to center when `resetAfterIdle` is on.\n- `objectFit`: `'none' | 'contain' | 'cover' | 'fill' | 'scale-down'` (default `'cover'`)\n- `onPositionChange`: `(position: number) => void`\n- `position`: `number` (default `50`). Initial slider position (0-100).\n- `resetAfterIdle`: `boolean` (default `false`). Restore to center after the user stops interacting.\n- `resetDelay`: `number` (default `500`)\n- `resetOnLeave`: `boolean` (default `false`)\n- `title`: `ReactNode`\n- `transition`: `string` (default `'0.25s cubic-bezier(.17,.67,.83,.67)'`)\n- `vertical`: `boolean` (default `false`)\n\n## Media\n\n### FigureBlock\n\nAn image with a caption. Clicking it opens the page's `MediaLightbox` gallery, which the provider hosts; set `enableLightbox={false}` to turn that off. Put rich captions in `FigureBlock.Caption` and a source line in `FigureBlock.Aside`.\n\n```tsx\n<FigureBlock\n  alt=\"The Atom63 design system social card\"\n  aspectRatio=\"16/9\"\n  caption=\"Figure 1. The social card for this site.\"\n  src=\"/og.png\"\n/>\n```\n\nProps of `FigureBlock`:\n\n- `alt`: `string` (required)\n- `src`: `string` (required)\n- `aspectRatio`: `'1/1' | '4/3' | '3/4' | '16/9' | '9/16'`\n- `bordered`: `boolean` (default `true`)\n- `caption`: `string`\n- `children`: `ReactNode`\n- `className`: `string`\n- `enableLightbox`: `boolean` (default `true`). Click-to-zoom; multiple figures on a page share one connected gallery.\n- `lightboxGalleryId`: `string` (default `MDX_FIGURE_LIGHTBOX_GALLERY_ID`). Gallery id for connected lightbox (default: all FigureBlocks on the page).\n- `loading`: `'eager' | 'lazy'` (default `'lazy'`)\n- `spacing`: `'none' | 'sm' | 'default' | 'lg'` (default `'default'`)\n\nSlots, each taking `children`: `FigureBlock.Aside`, `FigureBlock.Caption`.\n\n### VideoBlock\n\nA video figure with native controls and an optional caption. A video with speech needs a caption track (`trackSrc`); mark a purely visual loop `captionPolicy=\"decorative\"` instead. With `autoPlay` and no `controls`, it draws its own pause button and stays still under reduced motion.\n\n```mdx\n<VideoBlock src=\"/media/talk.mp4\" title=\"Design tokens talk\" trackSrc=\"/media/talk.en.vtt\" />\n\n<VideoBlock\n  autoPlay\n  captionPolicy=\"decorative\"\n  controls={false}\n  loop\n  muted\n  src=\"/media/loop.mp4\"\n  title=\"Theme switching loop\"\n/>\n```\n\nProps of `VideoBlock`:\n\n- `src`: `string` (required)\n- `title`: `string` (required)\n- `autoPlay`: `boolean` (default `false`). Start playing, muted, on load. Ignored when the reader prefers reduced motion. Without `controls`, a pause and play toggle sits over the video.\n- `caption`: `string`\n- `captionPolicy`: `'required' | 'decorative'`. Video has spoken or meaningful audio and must provide captions. Video is decorative or purely visual; no caption track is required.\n- `className`: `string`\n- `controls`: `boolean` (default `true`)\n- `fit`: `'contain' | 'cover'` (default `'contain'`)\n- `loop`: `boolean` (default `false`)\n- `muted`: `boolean` (default `false`)\n- `pauseLabel`: `string` (default `'Pause video'`). Name of the toggle while the video plays. Defaults to \"Pause video\".\n- `playLabel`: `string` (default `'Play video'`). Name of the toggle while the video is paused. Defaults to \"Play video\".\n- `showCaption`: `boolean` (default `false`)\n- `spacing`: `'none' | 'sm' | 'default' | 'lg'` (default `'default'`)\n- `trackLabel`: `string`. Name of the caption track in the player's caption menu. Defaults to the track language's own name, such as \"English\" or \"Deutsch\".\n- `trackLang`: `string` (default `'en'`). BCP 47 language of the caption track (`srclang`). Defaults to `en`.\n- `trackSrc`: `string`\n\n### MediaCaption\n\nThe caption line the media blocks use, on its own: for a custom figure, an embed or a chart.\n\n```tsx\n<MediaCaption>Figure 2. Token layers, from primitive to product.</MediaCaption>\n```\n\nProps of `MediaCaption`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n\n### MediaPlaceholder\n\nA labelled frame that stands in for an image, video or diagram that is not made yet. The label says what the real asset should show.\n\n```tsx\n<MediaPlaceholder kind=\"diagram\" label=\"Token flow from DTCG source to each renderer\" />\n```\n\nProps of `MediaPlaceholder`:\n\n- `aspectRatio`: `string` (default `'16 / 9'`). CSS aspect-ratio for the frame (e.g. `16 / 9`, `4 / 3`, `1 / 1`).\n- `className`: `string`\n- `kind`: `'video' | 'image' | 'diagram'` (default `'image'`). Picks the icon + kind tag. Defaults to `image`.\n- `label`: `string`. What the real asset should show — surfaced as the frame's caption.\n\n## Demos\n\n### DocExample\n\nA live example with Preview and Code tabs and a copy button. Every example on this page is one. Pass the source as `code` and render the same thing as children.\n\n```mdx\n<DocExample title=\"Primary button\" code={`<Button variant=\"primary\">Save</Button>`}>\n  <Button variant=\"primary\">Save</Button>\n</DocExample>\n```\n\nProps of `DocExample`:\n\n- `children`: `ReactNode` (required)\n- `code`: `string` (required)\n- `align`: `'center' | 'left'` (default `'center'`)\n- `className`: `string`\n- `codeLabel`: `string` (default `'Code'`). Label for the code tab (default: \"Code\").\n- `copiedAnnouncement`: `string` (default `'Example code copied'`). Visually-hidden live-region text announced after copying (default: \"Example code copied\").\n- `copiedLabel`: `string` (default `'Copied to clipboard'`). aria-label for the copy control right after copying (default: \"Copied to clipboard\").\n- `copyCodeLabel`: `string` (default `'Copy example code'`). aria-label for the copy control when idle (default: \"Copy example code\").\n- `lang`: `string`\n- `previewLabel`: `string` (default `'Preview'`). Label for the preview tab (default: \"Preview\").\n- `title`: `string`\n- `wide`: `boolean` (default `false`)\n\nSlots, each taking `children`: `DocExample.Code`, `DocExample.Preview`, `DocExample.Title`.\n\n### DocExampleCode\n\nThe highlighted code panel of `DocExample`, on its own, for showing code that has no preview.\n\n```tsx\nimport { DocExampleCode } from '@atom63/mdx/blocks'\n\n<DocExampleCode code={`pnpm add @atom63/mdx`} lang=\"bash\" />\n```\n\nProps of `DocExampleCode`:\n\n- `code`: `string` (required)\n- `lang`: `string` (default `'tsx'`)\n\n### ExampleContainer\n\nA plain demo frame on a dot grid, with an optional title, description and spec line. Use it for a preview without a code tab.\n\n```mdx\n<ExampleContainer description=\"The main action of a view.\" title=\"Primary variant\">\n  <Button variant=\"primary\">Save</Button>\n</ExampleContainer>\n```\n\nProps of `ExampleContainer`:\n\n- `children`: `React.ReactNode` (required)\n- `align`: `'center' | 'left'` (default `'center'`)\n- `className`: `string`\n- `description`: `string`\n- `embedded`: `boolean` (default `false`). Nested inside DocExample — drops outer margin and border (parent supplies chrome).\n- `spec`: `React.ReactNode`\n- `title`: `string`\n- `wide`: `boolean` (default `false`). Use wide layout to break out of narrow prose constraints\n\n### DemoStage\n\nA framed stage for a centrepiece demo or visual, with header slots for a title (`headerStart`) and controls (`headerEnd`).\n\n```tsx\n<DemoStage headerStart=\"Live demo\">\n  <Button>Try me</Button>\n</DemoStage>\n```\n\nProps of `DemoStage`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n- `headerEnd`: `ReactNode`\n- `headerStart`: `ReactNode`\n- `panelClassName`: `string`\n\n### DemoConfigPanel\n\nThe controls panel for a `DemoStage`: a popover beside the stage, a sheet on small screens. Put it in `headerEnd` and pass the stage's ref.\n\n```tsx\nimport { DemoConfigPanel, DemoStage } from '@atom63/mdx/blocks'\nimport { Switch } from '@atom63/ui-react'\nimport { useRef, useState } from 'react'\n\nfunction TunableDemo() {\n  const stageRef = useRef<HTMLElement>(null)\n  const [dense, setDense] = useState(false)\n\n  return (\n    <DemoStage\n      ref={stageRef}\n      headerEnd={\n        <DemoConfigPanel stageRef={stageRef} title=\"Demo controls\">\n          <label>\n            <Switch checked={dense} onCheckedChange={setDense} /> Dense\n          </label>\n        </DemoConfigPanel>\n      }\n    >\n      <p>{dense ? 'Dense' : 'Comfortable'}</p>\n    </DemoStage>\n  )\n}\n```\n\nProps of `DemoConfigPanel`:\n\n- `children`: `ReactNode` (required)\n- `stageRef`: `RefObject<HTMLElement | null>` (required)\n- `defaultOpen`: `boolean`\n- `label`: `ReactNode` (default `'Tune'`)\n- `mobileQuery`: `string` (default `'(max-width: 767px)'`)\n- `onOpenChange`: `(open: boolean) => void`\n- `open`: `boolean`\n- `panelClassName`: `string`\n- `panelInset`: `number` (default `16`)\n- `panelWidth`: `number` (default `320`)\n- `sheetClassName`: `string`\n- `sheetPanelClassName`: `string`\n- `title`: `string` (default `'Demo controls'`)\n\n## Sequences\n\n### Steps\n\nNumbered steps for a procedure. Numbers and the connecting line come from document order; do not number titles by hand.\n\n```tsx\n<Steps>\n  <Steps.Step title=\"Install the package\">Run pnpm add @atom63/mdx.</Steps.Step>\n  <Steps.Step title=\"Load the styles\">Import @atom63/mdx/styles/a63.css once.</Steps.Step>\n  <Steps.Step title=\"Wrap the page\">Render it inside MDXContentProvider.</Steps.Step>\n</Steps>\n```\n\nProps of `Steps`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n\nProps of `Steps.Step`:\n\n- `children`: `ReactNode` (required)\n- `title`: `ReactNode` (required). Bold heading for the step.\n- `className`: `string`\n- `index`: `number` (default `1`). Injected by `Steps` — the 1-indexed position in document order.\n\n### Timeline\n\nDated events in order: a release history, a project log. Each item has a date, a title and a short body.\n\n```tsx\n<Timeline>\n  <Timeline.Item date=\"2025\" title=\"Primitive layer\">Colour ramps, type scale, spacing.</Timeline.Item>\n  <Timeline.Item date=\"2026\" title=\"Semantic layer\">Tokens map primitives to intent.</Timeline.Item>\n</Timeline>\n```\n\nProps of `Timeline`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n\nProps of `Timeline.Item`:\n\n- `children`: `ReactNode` (required)\n- `date`: `ReactNode` (required). Date or label shown in the left column (e.g. a year).\n- `title`: `ReactNode` (required). Bold heading for the event.\n- `className`: `string`\n\n### ScrollStage\n\nScroll-driven storytelling: text steps scroll past while each step's `media` stays pinned beside them, and the media changes with the step in view. On narrow screens the media sits above its text.\n\n```mdx\n<ScrollStage>\n  <ScrollStage.Step media={<img alt=\"Primitive tokens\" src=\"/images/primitives.webp\" />}>\n    ### Primitive layer\n\n    Raw values: colour ramps, the type scale, spacing and radius.\n  </ScrollStage.Step>\n  <ScrollStage.Step media={<img alt=\"Semantic tokens\" src=\"/images/semantic.webp\" />}>\n    ### Semantic layer\n\n    Tokens that name intent, so one theme change restyles everything.\n  </ScrollStage.Step>\n</ScrollStage>\n```\n\nProps of `ScrollStage`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n\nProps of `ScrollStage.Step`:\n\n- `children`: `ReactNode` (required)\n- `media`: `ReactNode` (required). The visual (image, diagram, JSX) shown for this step. Keep it cheap — in the pinned path it re-renders whenever the active step changes, so prefer static images/JSX over heavy live components. Avoid putting anchor `id`s inside `media` or the prose: both the pinned (`lg+`) and stacked (below `lg`) copies render into the DOM, so an `id` would be duplicated.\n- `className`: `string`\n\n## Figures and links\n\n### StatCard\n\nOne metric with a label and an optional change. `trend` colours the change: `up` and `down` use status colours, `neutral` stays muted.\n\n```tsx\n<StatCard change=\"+1 this quarter\" label=\"Themes\" trend=\"up\" value=\"4\" />\n```\n\nProps of `StatCard`:\n\n- `label`: `string` (required). Small muted caption above the value.\n- `value`: `ReactNode` (required). The prominent metric.\n- `change`: `ReactNode`. Optional secondary change indicator, colored by `trend`.\n- `className`: `string`\n- `trend`: `'neutral' | 'up' | 'down'` (default `'neutral'`). Semantic direction of `change`; drives the token color.\n\n### StatGrid\n\nA responsive grid of `StatCard`s.\n\n```tsx\n<StatGrid>\n  <StatCard label=\"Blocks\" value=\"30\" />\n  <StatCard change=\"-5\" label=\"Open issues\" trend=\"down\" value=\"3\" />\n  <StatCard label=\"Themes\" value=\"4\" />\n</StatGrid>\n```\n\nProps of `StatGrid`:\n\n- `children`: `ReactNode` (required)\n- `className`: `string`\n\n### ResourceList\n\nA list of outside links, each with a name and an optional note. Links open in a new tab.\n\n```tsx\n<ResourceList\n  items={[\n    { name: 'DTCG format', url: 'https://www.designtokens.org', note: 'The token file format' },\n    { name: 'WCAG 2.2', url: 'https://www.w3.org/TR/WCAG22/', note: 'Accessibility criteria' },\n  ]}\n/>\n```\n\nProps of `ResourceList`:\n\n- `items`: `ResourceItem[]` (required)\n- `className`: `string`\n\n## Diagrams\n\n### MermaidDiagram\n\nA Mermaid chart drawn in the theme's colours, with zoom controls. A fenced `mermaid` code block in MDX renders as one too.\n\n```tsx\n<MermaidDiagram\n  chart=\"flowchart LR\n    Tokens --> Contracts --> Components\"\n  title=\"Build order\"\n/>\n```\n\nProps of `MermaidDiagram`:\n\n- `chart`: `string` (required)\n- `animated`: `boolean` (default `false`). When true, animate the diagram's paths with a stroke draw-on-reveal. Off by default.\n- `labels`: `Partial<MermaidDiagramLabels>`\n- `title`: `string`\n\n### LayerStack\n\nA layered model, top to bottom, with a label, title and optional metaphor, description and constraint per layer. Use it to explain an architecture in layers.\n\n```tsx\n<LayerStack\n  title=\"Primitive / Procedure / Product\"\n  layers={[\n    { label: 'Primitive', title: 'Stable materials', description: 'Raw tokens and scales.' },\n    { label: 'Procedure', title: 'Semantic rules', description: 'Semantic tokens and states.' },\n    { label: 'Product', title: 'Rendered experience', description: 'Pages and flows.' },\n  ]}\n/>\n```\n\nProps of `LayerStack`:\n\n- `layers`: `LayerStackItem[]` (required)\n- `className`: `string`\n- `description`: `ReactNode`\n- `labels`: `Partial<LayerStackLabels>`\n- `title`: `ReactNode`\n\n### ColorSwatchItem\n\nA colour swatch for a CSS variable, with its name and variable. Use it on token and theme pages.\n\n```tsx\n<ColorSwatchItem name=\"Page surface\" variable=\"--a63-surface-page\" />\n<ColorSwatchItem name=\"Primary text\" variable=\"--a63-text-primary\" />\n```\n\nProps of `ColorSwatchItem`:\n\n- `name`: `string` (required)\n- `variable`: `string` (required)\n\n## Code\n\n### CodeBlock\n\nHighlighted code with a copy button and a language label. A fenced code block in MDX renders as one; use the component for code held in a variable.\n\n```tsx\n<CodeBlock code=\"pnpm add @atom63/mdx\" lang=\"bash\" />\n```\n\nProps of `CodeBlock`:\n\n- `code`: `string` (required)\n- `children`: `ReactNode`\n- `className`: `string`\n- `copyLabel`: `string`\n- `fallbackLangLabel`: `string`. Label shown in place of an unknown language in the article header.\n- `lang`: `string` (default `'tsx'`)\n- `loadingLabel`: `string` (default `'Highlighting code'`). Visually-hidden status text announced while syntax highlighting runs.\n- `maxHeight`: `string`\n- `showCopyButton`: `boolean`\n- `showLineNumbers`: `boolean`. Show a numbered gutter. Defaults to a smart heuristic: on for `article` blocks longer than 6 lines, off for short snippets and embedded blocks.\n- `spacing`: `'component' | 'none'`\n- `variant`: `'article' | 'embedded'`\n\n### Tabs\n\nTabbed panels in prose, such as the same step for npm and pnpm. It is the `Tabs` component of `@atom63/ui-react` with MDX spacing, and takes its props: `atom63 component tabs`.\n\n```tsx\n<Tabs defaultValue=\"pnpm\">\n  <Tabs.List>\n    <Tabs.Tab value=\"pnpm\">pnpm</Tabs.Tab>\n    <Tabs.Tab value=\"npm\">npm</Tabs.Tab>\n  </Tabs.List>\n  <Tabs.Panel value=\"pnpm\">pnpm add @atom63/mdx</Tabs.Panel>\n  <Tabs.Panel value=\"npm\">npm install @atom63/mdx</Tabs.Panel>\n</Tabs>\n```\n\n`Tabs` adds no props of its own.\n\nProps of `Tabs.List`:\n\n- `size`: `'sm' | 'default' | 'lg' | 'xs'` (default `tabsContract.defaultSize`)\n- `variant`: `'default' | 'underline' | 'attached'` (default `tabsContract.defaultVariant`)\n\nProps of `Tabs.Panel`:\n\n- `animated`: `boolean` (default `false`)\n\nProps of `Tabs.Tab`:\n\n- `size`: `'sm' | 'default' | 'lg' | 'xs'`\n\n## Page furniture\n\n### Accordion\n\nCollapsible questions and answers, such as an FAQ. It is the `Accordion` component of `@atom63/ui-react` with MDX spacing, and takes its props: `atom63 component accordion`.\n\n```tsx\n<Accordion collapsible type=\"single\">\n  <Accordion.Item value=\"token\">\n    <Accordion.Trigger>What is a design token?</Accordion.Trigger>\n    <Accordion.Content>A named value that components read instead of a literal.</Accordion.Content>\n  </Accordion.Item>\n</Accordion>\n```\n\nProps of `Accordion`:\n\n- `collapsible`: `boolean`\n- `defaultValue`: `string | string[]`\n- `onValueChange`: `(value: string | string[]) => void`\n- `type`: `'multiple' | 'single'`\n- `value`: `string | string[]`\n\nProps of `Accordion.Trigger`:\n\n- `icon`: `'chevron' | 'plus-minus'` (default `'chevron'`)\n\n### PageMeta\n\nThe header of an article or lesson: eyebrow, title, description and a meta line such as the reading time.\n\n```tsx\n<PageMeta\n  description=\"How semantic tokens keep colour and spacing consistent.\"\n  eyebrow=\"Guide\"\n  meta=\"8 min read\"\n  title=\"Designing with tokens\"\n/>\n```\n\nProps of `PageMeta`:\n\n- `title`: `ReactNode` (required)\n- `children`: `ReactNode`\n- `className`: `string`\n- `description`: `ReactNode`\n- `eyebrow`: `ReactNode`\n- `meta`: `ReactNode`\n\n### PageTableOfContents\n\nThe page's table of contents, built from its `h2` and `h3` headings, with the current section highlighted. `rail` sits beside the text; `inline`, `menu` and `embedded` fit narrow layouts.\n\n```tsx\nimport { PageTableOfContents } from '@atom63/mdx/blocks'\n\n<aside>\n  <PageTableOfContents label=\"On this page\" variant=\"rail\" />\n</aside>\n```\n\nProps of `PageTableOfContents`:\n\n- `activeOffset`: `number` (default `120`)\n- `className`: `string`\n- `containerSelector`: `string` (default `'[data-mdx-scroll-root], #learn-main, main'`)\n- `headingSelector`: `string` (default `'[data-mdx-content] h2, [data-mdx-content] h3, article h2, article h3'`)\n- `inlinePositionClassName`: `string` (default `'fixed top-[calc(--spacing(14)+--spacing(3))] right-4 z-30 xl:hidden'`)\n- `label`: `string` (default `'On this page'`)\n- `onActiveLabelChange`: `(label: string) => void`\n- `onNavigate`: `() => void`\n- `scrollOffset`: `number` (default `96`)\n- `showProgress`: `boolean` (default `true`)\n- `smoothScrollDuration`: `number` (default `420`)\n- `variant`: `'menu' | 'embedded' | 'inline' | 'rail'` (default `'rail'`)\n\n### MdxPageSkeleton\n\nThe loading state of an MDX page while its content loads, in the `docs` or `lesson` layout.\n\n```tsx\n<MdxPageSkeleton showRail={false} variant=\"docs\" />\n```\n\nProps of `MdxPageSkeleton`:\n\n- `className`: `string`\n- `showInlineToc`: `boolean` (default `true`)\n- `showRail`: `boolean` (default `true`)\n- `variant`: `'docs' | 'lesson'` (default `'docs'`)\n\n### CreditsBlock\n\nA collapsible list of credits, one role per row, at the end of an article or project page.\n\n```tsx\n<CreditsBlock\n  credits={[\n    { role: 'Design', credits: 'ATOM63' },\n    { role: 'Photography', credits: 'Unsplash contributors' },\n  ]}\n/>\n```\n\nProps of `CreditsBlock`:\n\n- `credits`: `CreditEntry[]` (required)\n- `className`: `string`\n- `label`: `string` (default `'Credits'`)\n\n## Prose elements\n\nThe provider's component map also styles plain Markdown, so most of a page needs no blocks:\n\n| Markdown | Renders as |\n|----------|------------|\n| `#` to `######` | Headings on the type scale; `h2` and `h3` feed `PageTableOfContents` |\n| Paragraphs, `**strong**`, `*em*`, `<kbd>` | Body text at prose measure |\n| `[link](url)` | A link; an external one opens in a new tab |\n| `` `code` `` | Inline code |\n| Fenced code | `CodeBlock`; a `mermaid` fence renders `MermaidDiagram` |\n| Lists, `>` quotes, `---` | Lists, a quote, a rule |\n| Tables | The `Table` of `@atom63/ui-react`, scrolling when wide |",
+   "route": "/patterns/pattern-mdx-blocks",
+   "slug": "pattern-mdx-blocks"
   },
   {
    "area": "patterns",

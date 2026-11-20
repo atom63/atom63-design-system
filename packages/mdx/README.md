@@ -126,6 +126,11 @@ Site-specific media (`MediaBlock`, carousels, Compare) stays in atom63.io — se
 
 ## Block inventory
 
+Each block's purpose, a working example and its props (read from its TypeScript types) are on
+the docs page [MDX blocks](https://system.atom63.io/patterns/pattern-mdx-blocks),
+and from the terminal with `atom63 api <Block>` (for example `atom63 api KeyIdea`) or
+`atom63 docs pattern-mdx-blocks`.
+
 Registered on `mdxComponents` / `blockMdxComponents`:
 
 | Component | Purpose |
