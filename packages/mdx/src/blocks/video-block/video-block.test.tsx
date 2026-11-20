@@ -1,7 +1,33 @@
-import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { fireEvent, render, screen } from '@testing-library/react'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { axe } from 'vitest-axe'
 import { VideoBlock } from './video-block'
+
+vi.mock('../../primitives/use-reduced-motion', () => ({
+  useMdxReducedMotion: () => mockReducedMotion,
+}))
+
+let mockReducedMotion = false
+
+beforeEach(() => {
+  mockReducedMotion = false
+  // jsdom has no media playback: play() and pause() only fire their events.
+  vi.spyOn(HTMLMediaElement.prototype, 'play').mockImplementation(function (
+    this: HTMLMediaElement
+  ) {
+    this.dispatchEvent(new Event('play'))
+    return Promise.resolve()
+  })
+  vi.spyOn(HTMLMediaElement.prototype, 'pause').mockImplementation(function (
+    this: HTMLMediaElement
+  ) {
+    this.dispatchEvent(new Event('pause'))
+  })
+})
+
+afterEach(() => {
+  vi.restoreAllMocks()
+})
 
 function getVideo(container: HTMLElement): HTMLVideoElement {
   const video = container.querySelector('video')
@@ -75,6 +101,105 @@ describe('VideoBlock', () => {
     expect(video.autoplay).toBe(true)
   })
 
+  it('does not autoplay when the reader prefers reduced motion', () => {
+    mockReducedMotion = true
+    const { container } = render(
+      <VideoBlock
+        autoPlay
+        captionPolicy="decorative"
+        loop
+        src="/loop.mp4"
+        title="Background loop"
+      />
+    )
+
+    expect(getVideo(container).autoplay).toBe(false)
+  })
+
+  it('gives an autoplaying video without controls a pause and play toggle', () => {
+    const { container } = render(
+      <VideoBlock
+        autoPlay
+        captionPolicy="decorative"
+        controls={false}
+        loop
+        src="/loop.mp4"
+        title="Background loop"
+      />
+    )
+    const video = getVideo(container)
+    fireEvent.play(video)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Pause video' }))
+    expect(video.pause).toHaveBeenCalled()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Play video' }))
+    expect(video.play).toHaveBeenCalled()
+    expect(screen.getByRole('button', { name: 'Pause video' })).toBeInTheDocument()
+  })
+
+  it('offers play on a reduced-motion autoplay video without controls', () => {
+    mockReducedMotion = true
+    render(
+      <VideoBlock
+        autoPlay
+        captionPolicy="decorative"
+        controls={false}
+        loop
+        src="/loop.mp4"
+        title="Background loop"
+      />
+    )
+
+    expect(screen.getByRole('button', { name: 'Play video' })).toBeInTheDocument()
+  })
+
+  it('takes the toggle labels from props', () => {
+    render(
+      <VideoBlock
+        autoPlay
+        captionPolicy="decorative"
+        controls={false}
+        pauseLabel="Video anhalten"
+        playLabel="Video abspielen"
+        src="/loop.mp4"
+        title="Hintergrund"
+      />
+    )
+
+    expect(screen.getByRole('button', { name: 'Video abspielen' })).toBeInTheDocument()
+  })
+
+  it('adds no toggle when the native controls are shown', () => {
+    render(
+      <VideoBlock
+        autoPlay
+        captionPolicy="decorative"
+        loop
+        src="/loop.mp4"
+        title="Background loop"
+      />
+    )
+
+    expect(screen.queryByRole('button')).not.toBeInTheDocument()
+  })
+
+  it('hides a decorative video without controls from assistive technology', () => {
+    const { container } = render(
+      <VideoBlock
+        autoPlay
+        captionPolicy="decorative"
+        controls={false}
+        src="/loop.mp4"
+        title="Background loop"
+      />
+    )
+
+    const video = getVideo(container)
+    expect(video).toHaveAttribute('aria-hidden', 'true')
+    expect(video).not.toHaveAttribute('aria-label')
+  })
+
   it('shows the caption only when asked', () => {
     const { rerender } = render(
       <VideoBlock
@@ -101,6 +226,21 @@ describe('VideoBlock', () => {
   it('has no axe violations', async () => {
     const { container } = render(
       <VideoBlock src="/clip.mp4" title="Product tour" trackSrc="/clip.vtt" />
+    )
+
+    expect(await axe(container)).toHaveNoViolations()
+  })
+
+  it('has no axe violations with the pause toggle', async () => {
+    const { container } = render(
+      <VideoBlock
+        autoPlay
+        captionPolicy="decorative"
+        controls={false}
+        loop
+        src="/loop.mp4"
+        title="Background loop"
+      />
     )
 
     expect(await axe(container)).toHaveNoViolations()
