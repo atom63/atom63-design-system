@@ -50,8 +50,7 @@ export default defineConfig({
             headless: true,
             provider: playwright(),
             instances: [{ browser: 'chromium' }],
-            // Forced colors, to check that an option's highlight survives them.
-            commands: { ...craftCommands, emulateForcedColors: visualCommands.emulateForcedColors },
+            commands: craftCommands,
           },
         },
       },
@@ -65,7 +64,6 @@ export default defineConfig({
             headless: true,
             provider: playwright(),
             instances: [{ browser: 'chromium' }],
-            commands: { emulateForcedColors: visualCommands.emulateForcedColors },
           },
         },
       },
