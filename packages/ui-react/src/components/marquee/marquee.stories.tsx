@@ -49,6 +49,11 @@ export const PauseToggle: Story = {
   ),
   play: async ({ canvasElement }) => {
     const toggle = canvasElement.querySelector<HTMLButtonElement>('button[aria-label="Pause"]')
+    // Under reduced motion (the visual run sets it) the marquee stands still and shows no toggle.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (toggle) throw new Error('Expected no pause toggle under reduced motion')
+      return
+    }
     if (!toggle) throw new Error('Expected the built-in pause toggle')
     toggle.click()
     await new Promise(resolve => setTimeout(resolve, 50))
