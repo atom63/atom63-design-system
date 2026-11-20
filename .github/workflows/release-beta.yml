@@ -134,6 +134,10 @@ jobs:
           git config user.email "333482271+atom63-ds-bot[bot]@users.noreply.github.com"
           git checkout -B "$BRANCH"
           git add -A
+          if git diff --cached --quiet; then
+            echo "No version changes to commit; the pending changesets are already consumed (pre mode keeps them)."
+            exit 0
+          fi
           versions=$(for dir in ${PUBLISHED_PACKAGES}; do node -p "const p=require('./${dir}/package.json'); '- ' + p.name + '@' + p.version"; done)
           git commit -m "chore: version packages" -m "${versions}"
           git push --force origin "$BRANCH"
