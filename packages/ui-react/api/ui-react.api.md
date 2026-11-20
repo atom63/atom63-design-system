@@ -18,7 +18,6 @@ import { AvatarSize } from '@atom63/ui-foundation';
 import { BadgeDotColor } from '@atom63/ui-foundation';
 import { BadgeSize } from '@atom63/ui-foundation';
 import { BadgeVariant } from '@atom63/ui-foundation';
-import * as _base_ui_react from '@base-ui/react';
 import { ButtonGroupOrientation } from '@atom63/ui-foundation';
 import { ButtonGroupSize } from '@atom63/ui-foundation';
 import { ButtonShape } from '@atom63/ui-foundation';
@@ -825,7 +824,7 @@ export function CommandDialogBackdrop(input: Dialog_2.Backdrop.Props): React$1.R
 export function CommandDialogPopup(input: Dialog_2.Popup.Props): React$1.ReactElement;
 
 // @public (undocumented)
-export const CommandDialogPortal: React$1.ForwardRefExoticComponent<Omit<_base_ui_react.AlertDialogPortalProps, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+export function CommandDialogPortal(props: Dialog_2.Portal.Props): React$1.ReactElement;
 
 // @public (undocumented)
 export function CommandDialogTrigger(props: Dialog_2.Trigger.Props): React$1.ReactElement;

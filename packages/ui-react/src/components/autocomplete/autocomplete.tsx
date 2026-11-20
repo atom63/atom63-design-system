@@ -4,6 +4,7 @@ import { Autocomplete as AutocompletePrimitive } from '@base-ui/react/autocomple
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
+import { usePortalContainer } from '../portal-container'
 import { ScrollArea } from '../scroll-area/scroll-area'
 
 /*
@@ -156,8 +157,12 @@ export function AutocompletePopup({
   sideOffset = 4,
   ...props
 }: AutocompletePopupProps): React.ReactElement {
+  const contextPortalContainer = usePortalContainer()
   return (
-    <AutocompletePrimitive.Portal {...portalProps}>
+    <AutocompletePrimitive.Portal
+      {...portalProps}
+      container={portalProps?.container ?? contextPortalContainer}
+    >
       <AutocompletePrimitive.Positioner
         align={align}
         alignOffset={alignOffset}

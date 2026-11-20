@@ -132,6 +132,263 @@
   --a63-brand-800: color-mix(in oklch, var(--primary) 60%, black);
   --a63-brand-900: color-mix(in oklch, var(--primary) 46%, black);
   --a63-brand-950: color-mix(in oklch, var(--primary) 34%, black);
+
+  /* ── Every other token the ui-react recipes read without a fallback ───── *
+   * recipes.test.ts fails when a recipe reads an --a63-* token this file does
+   * not define. Colors derive from shadcn variables, so they follow the
+   * host's light and dark mode; scales copy the foundation's default values. */
+
+  /* Text, surface and selection roles. */
+  --a63-text-accent: var(--primary);
+  --a63-surface-recessed: var(--muted);
+  --a63-selected-background: var(--a63-surface-muted);
+  --a63-selected-foreground: var(--a63-text-primary);
+  --a63-selected-accent-background: color-mix(in oklch, var(--primary) 12%, transparent);
+  --a63-selected-accent-foreground: var(--a63-text-accent);
+  --a63-selection-thumb: white;
+  --a63-alert-background: transparent;
+  --a63-choice-card-checked-border: color-mix(in oklch, var(--primary) 30%, transparent);
+  --a63-choice-card-checked-background: color-mix(in oklch, var(--primary) 5%, transparent);
+  --a63-control-outline-background: var(--background);
+  --a63-control-outline-hover-background: color-mix(in oklab, var(--accent) 50%, transparent);
+  --a63-control-outline-hover-border: var(--border);
+  --a63-skeleton-base: var(--a63-surface-muted);
+  --a63-skeleton-highlight: color-mix(in oklch, var(--background) 60%, transparent);
+
+  /* Disabled and subtle action / status roles. Subtle foregrounds mix the hue
+     toward --foreground, so they darken in light mode and lighten in dark. */
+  --a63-action-disabled-background: var(--a63-surface-muted);
+  --a63-action-disabled-border: var(--a63-border-subtle);
+  --a63-action-disabled-foreground: var(--muted-foreground);
+  --a63-action-danger-subtle: color-mix(in oklab, var(--a63-action-danger) 14%, transparent);
+  --a63-action-danger-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-action-danger) 75%,
+    var(--foreground)
+  );
+  --a63-status-info-subtle: color-mix(in oklab, var(--a63-status-info) 14%, transparent);
+  --a63-status-info-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-status-info) 70%,
+    var(--foreground)
+  );
+  --a63-status-success-subtle: color-mix(in oklab, var(--a63-status-success) 14%, transparent);
+  --a63-status-success-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-status-success) 65%,
+    var(--foreground)
+  );
+  --a63-status-warning-subtle: color-mix(in oklab, var(--a63-status-warning) 14%, transparent);
+  --a63-status-warning-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-status-warning) 60%,
+    var(--foreground)
+  );
+
+  /* Category palette: the foundation's 500 hues; -subtle washes and
+     -subtle-foreground text derive from them as above. */
+  --a63-category-red: oklch(0.637 0.237 25.331);
+  --a63-category-orange: oklch(0.705 0.213 47.604);
+  --a63-category-amber: rgb(243 159 0);
+  --a63-category-yellow: oklch(0.795 0.184 86.047);
+  --a63-category-lime: oklch(0.768 0.233 130.85);
+  --a63-category-green: oklch(0.723 0.219 149.579);
+  --a63-category-emerald: oklch(0.696 0.17 162.48);
+  --a63-category-teal: oklch(0.704 0.14 182.503);
+  --a63-category-cyan: oklch(0.715 0.143 215.221);
+  --a63-category-sky: oklch(0.685 0.169 237.323);
+  --a63-category-blue: oklch(0.623 0.214 259.815);
+  --a63-category-indigo: oklch(0.585 0.233 277.117);
+  --a63-category-violet: oklch(0.606 0.25 292.717);
+  --a63-category-purple: oklch(0.627 0.265 303.9);
+  --a63-category-fuchsia: oklch(0.667 0.295 322.15);
+  --a63-category-pink: oklch(0.656 0.241 354.308);
+  --a63-category-rose: oklch(0.645 0.246 16.439);
+  --a63-category-neutral: oklch(0.556 0 0);
+  --a63-category-red-subtle: color-mix(in oklab, var(--a63-category-red) 14%, transparent);
+  --a63-category-orange-subtle: color-mix(in oklab, var(--a63-category-orange) 14%, transparent);
+  --a63-category-amber-subtle: color-mix(in oklab, var(--a63-category-amber) 14%, transparent);
+  --a63-category-yellow-subtle: color-mix(in oklab, var(--a63-category-yellow) 14%, transparent);
+  --a63-category-lime-subtle: color-mix(in oklab, var(--a63-category-lime) 14%, transparent);
+  --a63-category-green-subtle: color-mix(in oklab, var(--a63-category-green) 14%, transparent);
+  --a63-category-emerald-subtle: color-mix(in oklab, var(--a63-category-emerald) 14%, transparent);
+  --a63-category-teal-subtle: color-mix(in oklab, var(--a63-category-teal) 14%, transparent);
+  --a63-category-cyan-subtle: color-mix(in oklab, var(--a63-category-cyan) 14%, transparent);
+  --a63-category-sky-subtle: color-mix(in oklab, var(--a63-category-sky) 14%, transparent);
+  --a63-category-blue-subtle: color-mix(in oklab, var(--a63-category-blue) 14%, transparent);
+  --a63-category-indigo-subtle: color-mix(in oklab, var(--a63-category-indigo) 14%, transparent);
+  --a63-category-violet-subtle: color-mix(in oklab, var(--a63-category-violet) 14%, transparent);
+  --a63-category-purple-subtle: color-mix(in oklab, var(--a63-category-purple) 14%, transparent);
+  --a63-category-fuchsia-subtle: color-mix(in oklab, var(--a63-category-fuchsia) 14%, transparent);
+  --a63-category-pink-subtle: color-mix(in oklab, var(--a63-category-pink) 14%, transparent);
+  --a63-category-rose-subtle: color-mix(in oklab, var(--a63-category-rose) 14%, transparent);
+  --a63-category-neutral-subtle: color-mix(in oklab, var(--a63-category-neutral) 14%, transparent);
+  --a63-category-red-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-red) 70%,
+    var(--foreground)
+  );
+  --a63-category-orange-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-orange) 60%,
+    var(--foreground)
+  );
+  --a63-category-amber-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-amber) 60%,
+    var(--foreground)
+  );
+  --a63-category-yellow-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-yellow) 55%,
+    var(--foreground)
+  );
+  --a63-category-lime-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-lime) 55%,
+    var(--foreground)
+  );
+  --a63-category-green-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-green) 60%,
+    var(--foreground)
+  );
+  --a63-category-emerald-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-emerald) 60%,
+    var(--foreground)
+  );
+  --a63-category-teal-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-teal) 60%,
+    var(--foreground)
+  );
+  --a63-category-cyan-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-cyan) 60%,
+    var(--foreground)
+  );
+  --a63-category-sky-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-sky) 65%,
+    var(--foreground)
+  );
+  --a63-category-blue-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-blue) 70%,
+    var(--foreground)
+  );
+  --a63-category-indigo-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-indigo) 70%,
+    var(--foreground)
+  );
+  --a63-category-violet-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-violet) 70%,
+    var(--foreground)
+  );
+  --a63-category-purple-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-purple) 70%,
+    var(--foreground)
+  );
+  --a63-category-fuchsia-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-fuchsia) 70%,
+    var(--foreground)
+  );
+  --a63-category-pink-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-pink) 70%,
+    var(--foreground)
+  );
+  --a63-category-rose-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-rose) 70%,
+    var(--foreground)
+  );
+  --a63-category-neutral-subtle-foreground: color-mix(
+    in oklch,
+    var(--a63-category-neutral) 60%,
+    var(--foreground)
+  );
+
+  /* Flat surface and overlay archetype: no gloss, texture or backdrop blur. */
+  --a63-surface-backdrop: none;
+  --a63-surface-gloss: none;
+  --a63-surface-texture-image: none;
+  --a63-surface-texture-blend: normal;
+  --a63-surface-border-style: solid;
+  --a63-surface-border-width: 1px;
+  --a63-surface-raised-shadow: var(--a63-overlay-shadow);
+  --a63-overlay-backdrop: none;
+  --a63-overlay-gloss: none;
+  --a63-overlay-texture-image: none;
+  --a63-overlay-texture-blend: normal;
+  --a63-overlay-border-style: solid;
+  --a63-overlay-border-width: 1px;
+  --a63-menu-highlight-gloss: none;
+  --a63-menu-highlight-shadow: none;
+  --a63-menu-disabled-opacity: 0.56;
+  --a63-trigger-open-shadow: 0 0 #0000;
+  --a63-trigger-focus-ring-width: var(--a63-control-focus-ring-width);
+  --a63-trigger-feedback-duration: var(--a63-control-feedback-duration);
+  --a63-trigger-feedback-ease: var(--a63-control-feedback-ease);
+
+  /* Control details. */
+  --a63-control-text-shadow: none;
+  --a63-control-shadow-tint: 0%;
+  --a63-control-press-transform: translateY(1px);
+  --a63-control-feedback-duration: var(--a63-motion-duration-fast);
+  --a63-control-feedback-ease: var(--a63-motion-ease-standard);
+  --a63-control-icon-size-xs: 0.75rem;
+  --a63-control-icon-size-sm: 0.875rem;
+  --a63-control-icon-size-md: 1rem;
+  --a63-control-icon-size-lg: 1.125rem;
+  --a63-control-icon-size-xl: 1.25rem;
+  --a63-control-icon-only-size-xs: 0.875rem;
+  --a63-control-icon-only-size-sm: 1rem;
+  --a63-control-icon-only-size-md: 1.125rem;
+  --a63-control-icon-only-size-lg: 1.25rem;
+  --a63-control-icon-only-size-xl: 1.375rem;
+  --a63-switch-thumb-size: 1rem;
+  --a63-row-padding-block-xs: var(--a63-space-2);
+  --a63-row-padding-block-sm: var(--a63-space-3);
+  --a63-row-padding-block-md: var(--a63-space-4);
+  --a63-inset-row-min-size: calc(var(--a63-space-unit) * 13);
+
+  /* Space half steps, type and motion. */
+  --a63-space-0_5: 0.125rem;
+  --a63-space-1_5: 0.375rem;
+  --a63-space-2_5: 0.625rem;
+  --a63-space-3_5: 0.875rem;
+  --a63-font-app: inherit;
+  --a63-type-display-font-size: 2.5rem;
+  --a63-type-display-line-height: 2.75rem;
+  --a63-type-display-font-weight: 600;
+  --a63-type-display-font-weight-strong: 700;
+  --a63-type-display-large-font-size: 3.5rem;
+  --a63-type-display-large-line-height: 3.75rem;
+  --a63-type-display-large-font-weight: 600;
+  --a63-type-display-large-font-weight-strong: 700;
+  --a63-motion-duration-fast: 150ms;
+  --a63-motion-duration-overlay: 450ms;
+  --a63-motion-duration-swipe-dismiss: 400ms;
+  --a63-motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --a63-motion-ease-emphasized: cubic-bezier(0.3, 0, 0, 1);
+  --a63-motion-ease-overlay: cubic-bezier(0.22, 1, 0.36, 1);
+  --a63-motion-ease-scrim: cubic-bezier(0.32, 0.72, 0, 1);
+  --a63-motion-skeleton-shimmer-duration: 1500ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --a63-motion-duration-fast: 0ms;
+    --a63-motion-duration-overlay: 0ms;
+    --a63-motion-duration-swipe-dismiss: 0ms;
+    --a63-motion-skeleton-shimmer-duration: 0ms;
+  }
 }
 
 @media (pointer: coarse) {

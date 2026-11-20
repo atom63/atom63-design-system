@@ -7,6 +7,7 @@ import type { DialogFooterVariant, DialogMobilePlacement, DialogSize } from '@at
 import * as React from 'react'
 
 import { cn } from '../../lib/cn'
+import { usePortalContainer } from '../portal-container'
 
 /*
  * Dialog — a modal overlay (Base UI Dialog). The popup is the OVERLAY archetype
@@ -46,7 +47,15 @@ export function Dialog<Payload>(props: DialogPrimitive.Root.Props<Payload>): Rea
 }
 
 export function DialogPortal(props: DialogPrimitive.Portal.Props): React.ReactElement {
-  return <DialogPrimitive.Portal data-slot="dialog-portal" {...props} />
+  const { container, ...portalProps } = props
+  const contextPortalContainer = usePortalContainer()
+  return (
+    <DialogPrimitive.Portal
+      container={container ?? contextPortalContainer}
+      data-slot="dialog-portal"
+      {...portalProps}
+    />
+  )
 }
 
 export function DialogTrigger({
