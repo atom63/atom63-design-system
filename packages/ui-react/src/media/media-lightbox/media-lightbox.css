@@ -42,6 +42,15 @@
 }
 
 /*
+ * Icon buttons the caller puts in the toolbar slot match the built-in ones
+ * beside them (`size-11`). Button's largest icon step is 40px, and a 4px
+ * smaller circle in the same row reads as a mistake rather than a choice.
+ */
+[data-slot='media-lightbox-toolbar'] .a63-Button:is([data-size^='icon']) {
+  --button-height: 2.75rem;
+}
+
+/*
  * Nothing blurred sits over the track while it moves. A `backdrop-filter`
  * has to re-sample the photo moving beneath it on every frame, and a blur over
  * the moving photo is what made paging judder before. The controls keep their
