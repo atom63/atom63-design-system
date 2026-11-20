@@ -8,7 +8,8 @@
     "packages/inform/package.json",
     "packages/agent/package.json",
     "packages/widgets/package.json",
-    "packages/cli/package.json"
+    "packages/cli/package.json",
+    "docs/design-system/package-export-tiers.json"
   ],
   "summary": {
     "packageCount": 8,
@@ -171,7 +172,8 @@
       "publishConfig": {
         "access": "public"
       },
-      "publishAccess": "public"
+      "publishAccess": "public",
+      "exportTiers": null
     },
     {
       "directory": "packages/ui-foundation",
@@ -198,7 +200,8 @@
       "publishConfig": {
         "access": "public"
       },
-      "publishAccess": "public"
+      "publishAccess": "public",
+      "exportTiers": null
     },
     {
       "directory": "packages/ui-react",
@@ -263,6 +266,7 @@
         "./recipes/connected-panel.css": "./src/components/connected-panel/connected-panel.css",
         "./recipes/context-menu.css": "./src/components/menu/menu.css",
         "./recipes/copy-button.css": "./src/components/copy-button/copy-button.css",
+        "./recipes/destination-link.css": "./src/components/destination-link/destination-link.css",
         "./recipes/dialog.css": "./src/components/dialog/dialog.css",
         "./recipes/drawer.css": "./src/components/drawer/drawer.css",
         "./recipes/dropdown-menu.css": "./src/components/menu/menu.css",
@@ -349,6 +353,7 @@
         "./recipes/connected-panel.css",
         "./recipes/context-menu.css",
         "./recipes/copy-button.css",
+        "./recipes/destination-link.css",
         "./recipes/dialog.css",
         "./recipes/drawer.css",
         "./recipes/dropdown-menu.css",
@@ -417,7 +422,8 @@
       "publishConfig": {
         "access": "public"
       },
-      "publishAccess": "public"
+      "publishAccess": "public",
+      "exportTiers": null
     },
     {
       "directory": "packages/mdx",
@@ -509,7 +515,23 @@
       "publishConfig": {
         "access": "public"
       },
-      "publishAccess": "public"
+      "publishAccess": "public",
+      "exportTiers": {
+        ".": "stable",
+        "./blocks": "stable",
+        "./blocks/credits-block": "stable",
+        "./blocks/media-caption": "stable",
+        "./article": "stable",
+        "./editor": "stable",
+        "./lightbox": "stable",
+        "./runtime": "stable",
+        "./primitives": "experimental",
+        "./styles/index.css": "stable",
+        "./styles/a63.css": "stable",
+        "./styles/shadcn.css": "stable",
+        "./styles/mdx-blocks.css": "stable",
+        "./styles/consumer.css": "stable"
+      }
     },
     {
       "directory": "packages/inform",
@@ -552,7 +574,13 @@
       "publishConfig": {
         "access": "public"
       },
-      "publishAccess": "public"
+      "publishAccess": "public",
+      "exportTiers": {
+        ".": "beta",
+        "./react": "beta",
+        "./surfaces": "beta",
+        "./styles.css": "beta"
+      }
     },
     {
       "directory": "packages/agent",
@@ -588,7 +616,11 @@
       "publishConfig": {
         "access": "public"
       },
-      "publishAccess": "public"
+      "publishAccess": "public",
+      "exportTiers": {
+        ".": "beta",
+        "./react": "beta"
+      }
     },
     {
       "directory": "packages/widgets",
@@ -636,7 +668,14 @@
       "publishConfig": {
         "access": "public"
       },
-      "publishAccess": "public"
+      "publishAccess": "public",
+      "exportTiers": {
+        ".": "beta",
+        "./primitives": "beta",
+        "./state": "beta",
+        "./runtime": "beta",
+        "./styles.css": "beta"
+      }
     },
     {
       "directory": "packages/cli",
@@ -659,7 +698,8 @@
       "publishConfig": {
         "access": "public"
       },
-      "publishAccess": "public"
+      "publishAccess": "public",
+      "exportTiers": null
     }
   ]
 }

@@ -11,4 +11,13 @@ const movePointerAway: BrowserCommand<[]> = async context => {
   await context.page.mouse.move(1, 9999)
 }
 
-export const visualCommands = { movePointerAway }
+/*
+ * Turns forced-colors emulation (Windows High Contrast) on or off for the page,
+ * so a story can be captured the way a forced-colors user sees it.
+ */
+const emulateForcedColors: BrowserCommand<[active: boolean]> = async (context, active) => {
+  if (context.provider.name !== 'playwright') return
+  await context.page.emulateMedia({ forcedColors: active ? 'active' : 'none' })
+}
+
+export const visualCommands = { emulateForcedColors, movePointerAway }

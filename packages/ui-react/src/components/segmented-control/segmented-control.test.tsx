@@ -1,6 +1,7 @@
 import { segmentedControlContract } from '@atom63/ui-foundation'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { createRef } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { SegmentedControl, type SegmentedControlItem } from './segmented-control'
@@ -82,5 +83,33 @@ describe('SegmentedControl', () => {
     expect(disabled).toHaveAttribute('data-disabled')
     await userEvent.click(disabled)
     expect(onValueChange).not.toHaveBeenCalled()
+  })
+
+  it('switches segments uncontrolled from defaultValue', async () => {
+    const onValueChange = vi.fn()
+    render(<SegmentedControl defaultValue="grid" items={ITEMS} onValueChange={onValueChange} />)
+    expect(screen.getByRole('tab', { name: 'Grid' })).toHaveAttribute('aria-selected', 'true')
+    await userEvent.click(screen.getByRole('tab', { name: 'Tree' }))
+    expect(screen.getByRole('tab', { name: 'Tree' })).toHaveAttribute('aria-selected', 'true')
+    expect(onValueChange).toHaveBeenCalledWith('tree')
+  })
+
+  it('spreads props onto the root and forwards its ref', () => {
+    const ref = createRef<HTMLDivElement>()
+    const { container } = render(
+      <SegmentedControl
+        aria-label="View"
+        data-testid="view"
+        id="view"
+        items={ITEMS}
+        ref={ref}
+        value="list"
+      />
+    )
+    const root = container.querySelector('[data-slot="segmented-control"]')
+    expect(root).toHaveAttribute('id', 'view')
+    expect(root).toHaveAttribute('data-testid', 'view')
+    expect(root).toHaveAttribute('aria-label', 'View')
+    expect(ref.current).toBe(root)
   })
 })

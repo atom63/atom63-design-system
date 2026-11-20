@@ -14,6 +14,7 @@ export const selectStates = [
   'highlighted-item',
   'selected-item',
   'disabled-item',
+  'invalid',
 ] as const
 export const selectSlots = [
   'select-trigger',

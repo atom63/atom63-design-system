@@ -9,6 +9,7 @@ import {
   AutocompleteList,
   AutocompletePopup,
   AutocompleteSeparator,
+  AutocompleteStatus,
   UIProvider,
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
@@ -48,10 +49,26 @@ const groupedFruits = {
   Berries: ['Blackberry', 'Blueberry', 'Strawberry'],
 }
 
-function Demo({ size }: { size?: 'sm' | 'default' | 'lg' | number }) {
+function Demo({
+  disabled,
+  invalid,
+  size,
+}: {
+  disabled?: boolean
+  invalid?: boolean
+  size?: 'sm' | 'default' | 'lg' | number
+}) {
   return (
     <Autocomplete items={fruits}>
-      <AutocompleteInput placeholder="Search fruit…" showClear showTrigger size={size} />
+      <AutocompleteInput
+        aria-label="Search fruit"
+        disabled={disabled}
+        invalid={invalid}
+        placeholder="Search fruit…"
+        showClear
+        showTrigger
+        size={size}
+      />
       <AutocompletePopup>
         <AutocompleteEmpty>No fruit found.</AutocompleteEmpty>
         <AutocompleteList>
@@ -62,9 +79,13 @@ function Demo({ size }: { size?: 'sm' | 'default' | 'lg' | number }) {
   )
 }
 
-function GroupedDemo({ size }: { size?: 'sm' | 'default' | 'lg' }) {
+function GroupedDemo({ open, size }: { open?: boolean; size?: 'sm' | 'default' | 'lg' }) {
   return (
-    <Autocomplete items={Object.values(groupedFruits).flat()}>
+    <Autocomplete
+      autoHighlight={open ? 'always' : undefined}
+      defaultOpen={open}
+      items={Object.values(groupedFruits).flat()}
+    >
       <AutocompleteInput placeholder="Search fruit…" showClear showTrigger size={size} />
       <AutocompletePopup>
         <AutocompleteEmpty>No fruit found.</AutocompleteEmpty>
@@ -90,8 +111,49 @@ export const Playground: Story = {
   render: () => <Demo />,
 }
 
+/** Open on load with the first item highlighted, so the visual and axe runs
+ *  capture the popup, its groups and the highlighted row. */
 export const MenuAnatomy: Story = {
-  render: () => <GroupedDemo />,
+  render: () => <GroupedDemo open />,
+}
+
+/** A query with no match shows the empty message in the open popup. */
+export const Empty: Story = {
+  render: () => (
+    <Autocomplete defaultOpen defaultValue="Kiwano" items={fruits}>
+      <AutocompleteInput aria-label="Search fruit" placeholder="Search fruit…" showClear />
+      <AutocompletePopup>
+        <AutocompleteEmpty>No fruit found.</AutocompleteEmpty>
+        <AutocompleteList>
+          {(fruit: string) => <AutocompleteItem key={fruit}>{fruit}</AutocompleteItem>}
+        </AutocompleteList>
+      </AutocompletePopup>
+    </Autocomplete>
+  ),
+}
+
+/** While results load, the popup shows the status line in place of the list. */
+export const Loading: Story = {
+  render: () => (
+    <Autocomplete defaultOpen defaultValue="Ber" items={[] as string[]}>
+      <AutocompleteInput aria-label="Search fruit" placeholder="Search fruit…" />
+      <AutocompletePopup>
+        <AutocompleteStatus>Searching fruit…</AutocompleteStatus>
+        <AutocompleteList>
+          {(fruit: string) => <AutocompleteItem key={fruit}>{fruit}</AutocompleteItem>}
+        </AutocompleteList>
+      </AutocompletePopup>
+    </Autocomplete>
+  ),
+}
+
+export const Disabled: Story = {
+  render: () => <Demo disabled />,
+}
+
+/** `invalid` (or `aria-invalid`, which FormControl sets) draws the danger edge. */
+export const Invalid: Story = {
+  render: () => <Demo invalid />,
 }
 
 // The `size` prop on AutocompleteInput accepts named recipe sizes

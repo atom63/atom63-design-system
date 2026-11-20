@@ -370,6 +370,19 @@
                   }
                 }
               }
+            },
+            "toggle": {
+              "on": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.text.primary}",
+                  "$description": "A pressed toggle is reverse video: phosphor ink fill with page-coloured text. The neutral solid sits too close to the page in both modes."
+                },
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.surface.page}"
+                }
+              }
             }
           }
         }
@@ -522,6 +535,18 @@
                   "$extensions": {
                     "io.atom63.derive": "0 0 8px color-mix(in oklch, {a63.action.primary} 38%, transparent)"
                   }
+                }
+              }
+            },
+            "toggle": {
+              "on": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{a63.text.primary}"
+                },
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.surface.page}"
                 }
               }
             }

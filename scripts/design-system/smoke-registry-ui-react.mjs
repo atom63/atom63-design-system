@@ -20,6 +20,10 @@ const atom63Dependencies = {
   '@atom63/styles': 'beta',
   '@atom63/ui-foundation': 'beta',
   '@atom63/ui-react': 'beta',
+  '@atom63/mdx': 'beta',
+  '@atom63/inform': 'beta',
+  '@atom63/agent': 'beta',
+  '@atom63/widgets': 'beta',
 }
 const atom63DevDependencies = {
   '@atom63/cli': 'beta',
@@ -53,6 +57,7 @@ const cliCommands = [
 const verificationCommands = [
   installCommand,
   'pnpm exec tsc --noEmit',
+  'pnpm exec tsc --noEmit -p tsconfig.other.json',
   'pnpm exec vite build',
   ...cliCommands.map(args => `pnpm exec atom63 ${args.join(' ')}`),
 ]
@@ -61,6 +66,13 @@ const consumerImports = [
   '@atom63/ui-react/styles.css',
   '@atom63/ui-react',
   '@atom63/ui-foundation',
+  '@atom63/mdx/styles/mdx-blocks.css',
+  '@atom63/mdx',
+  '@atom63/inform/styles.css',
+  '@atom63/inform',
+  '@atom63/agent',
+  '@atom63/widgets/styles.css',
+  '@atom63/widgets',
 ]
 
 function assert(condition, message) {
@@ -143,7 +155,33 @@ async function writeHarness(harnessDirectory) {
       types: ['vite/client'],
     },
     include: ['src'],
+    exclude: ['src/other-packages.ts'],
   }
+  // shiki and @types/mdx (through @atom63/mdx) ship declarations that need lib
+  // esnext and the global JSX namespace React 19 dropped, so the other packages'
+  // entry type-checks the way a default Vite app does (skipLibCheck).
+  const otherTsconfig = {
+    extends: './tsconfig.json',
+    compilerOptions: { skipLibCheck: true },
+    include: ['src/other-packages.ts'],
+    exclude: [],
+  }
+  const otherPackagesSource = `import '@atom63/mdx/styles/mdx-blocks.css'
+import '@atom63/inform/styles.css'
+import '@atom63/widgets/styles.css'
+
+import { createAgentRuntime } from '@atom63/agent'
+import { createInformStore } from '@atom63/inform'
+import { mdxComponents } from '@atom63/mdx'
+import { resolveDestination } from '@atom63/widgets'
+
+export const otherPackageReferences = {
+  createAgentRuntime,
+  createInformStore,
+  mdxComponents,
+  resolveDestination,
+}
+`
 
   const source = `import '@atom63/styles'
 import '@atom63/ui-react/styles.css'
@@ -188,14 +226,19 @@ createRoot(rootElement).render(
     writeFile(resolve(harnessDirectory, 'package.json'), `${JSON.stringify(manifest, null, 2)}\n`),
     writeFile(resolve(harnessDirectory, 'tsconfig.json'), `${JSON.stringify(tsconfig, null, 2)}\n`),
     writeFile(
+      resolve(harnessDirectory, 'tsconfig.other.json'),
+      `${JSON.stringify(otherTsconfig, null, 2)}\n`
+    ),
+    writeFile(
       resolve(harnessDirectory, 'vite.config.ts'),
       "import react from '@vitejs/plugin-react'\nimport { defineConfig } from 'vite'\n\nexport default defineConfig({ plugins: [react()] })\n"
     ),
     writeFile(
       resolve(harnessDirectory, 'index.html'),
-      '<!doctype html>\n<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Atom63 registry smoke</title></head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body></html>\n'
+      '<!doctype html>\n<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Atom63 registry smoke</title></head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script><script type="module" src="/src/other-packages.ts"></script></body></html>\n'
     ),
     writeFile(resolve(harnessDirectory, 'src/main.tsx'), source),
+    writeFile(resolve(harnessDirectory, 'src/other-packages.ts'), otherPackagesSource),
   ])
 }
 
@@ -282,6 +325,9 @@ async function main() {
     )
     const installedPackages = await inspectInstalledPackages(harnessDirectory)
     await run(pnpmCommand, ['exec', 'tsc', '--noEmit'], {
+      cwd: harnessDirectory,
+    })
+    await run(pnpmCommand, ['exec', 'tsc', '--noEmit', '-p', 'tsconfig.other.json'], {
       cwd: harnessDirectory,
     })
     await run(pnpmCommand, ['exec', 'vite', 'build'], {

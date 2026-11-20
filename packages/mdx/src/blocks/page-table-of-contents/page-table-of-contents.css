@@ -49,7 +49,7 @@
   }
 
   .mdx-toc-link-rail[data-active='true'] {
-    color: var(--a63-action-primary);
+    color: var(--a63-text-accent);
   }
 
   .mdx-toc-link-rail[data-active='false'] {

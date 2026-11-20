@@ -173,7 +173,7 @@ ramp). Together these are the single source of semantic truth.
 | Text | `--a63-text-primary`, `--a63-text-secondary`, `--a63-text-danger` (error and destructive text; `--a63-action-danger` is the fill) | `semantics.css` |
 | Border | `--a63-border-subtle`, `--a63-border-control` | `semantics.css` |
 | Action | `--a63-action-primary` (+ `-hover`, `-foreground`), `--a63-action-danger` (+ `-hover`, `-foreground`), `--a63-action-neutral` (+ `-foreground`) | primary in `brand-action.css`; danger/neutral in `semantics.css` |
-| Status | `--a63-status-info`, `--a63-status-success`, `--a63-status-warning` (+ `-foreground`) | `semantics.css` |
+| Status | `--a63-status-info`, `--a63-status-success`, `--a63-status-warning`, `--a63-status-danger` (+ `-foreground`) | `semantics.css` |
 | Focus | `--a63-focus-ring` (brand step 600 in light, 400 in dark: 3:1 against surfaces, WCAG 1.4.11) | `semantics.css` |
 | Scrim | `--a63-scrim` | `semantics.css` |
 | Media | `--a63-media-stage`, `--a63-media-scrim` (behind full-screen photos and video, black in every theme) | `semantics.css` |

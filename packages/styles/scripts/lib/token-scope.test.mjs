@@ -31,7 +31,6 @@ const KNOWN = [
   '--a63-choice-switch-thumb-size',
   '--a63-menu-item-font-size',
   '--a63-segment-border-width',
-  '--a63-skeleton-base',
   '--a63-toggle-radius',
   '--a63-trigger-border-width',
   '--a63-trigger-feedback-ease',

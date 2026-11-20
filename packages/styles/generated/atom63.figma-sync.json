@@ -4,8 +4,8 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1144,
-    "aliasValues": 783,
+    "variables": 1150,
+    "aliasValues": 806,
     "skipped": 279,
     "computed": 64
   },
@@ -1580,6 +1580,77 @@
           ]
         },
         {
+          "name": "toggle/on/background",
+          "token": "--a63-toggle-on-background",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-action-neutral"
+            },
+            "modern-dark": {
+              "alias": "--a63-action-neutral"
+            },
+            "aqua-light": {
+              "alias": "--a63-action-neutral"
+            },
+            "aqua-dark": {
+              "alias": "--a63-action-neutral"
+            },
+            "retro-light": {
+              "alias": "--a63-action-neutral"
+            },
+            "retro-dark": {
+              "alias": "--a63-action-neutral"
+            },
+            "terminal-light": {
+              "alias": "--a63-text-primary"
+            },
+            "terminal-dark": {
+              "alias": "--a63-text-primary"
+            }
+          },
+          "codeSyntax": "var(--a63-toggle-on-background)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "toggle/on/foreground",
+          "token": "--a63-toggle-on-foreground",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "modern-dark": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "aqua-light": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "aqua-dark": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "retro-light": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "retro-dark": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "terminal-light": {
+              "alias": "--a63-surface-page"
+            },
+            "terminal-dark": {
+              "alias": "--a63-surface-page"
+            }
+          },
+          "codeSyntax": "var(--a63-toggle-on-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
           "name": "track/shadow",
           "token": "--a63-track-shadow",
           "type": "STRING",
@@ -2721,21 +2792,6 @@
           "codeSyntax": "var(--a63-selection-thumb-fg)",
           "scopes": [
             "TEXT_FILL"
-          ]
-        },
-        {
-          "name": "skeleton/base",
-          "token": "--a63-skeleton-base",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "alias": "--a63-surface-muted"
-            }
-          },
-          "codeSyntax": "var(--a63-skeleton-base)",
-          "scopes": [
-            "FRAME_FILL",
-            "SHAPE_FILL"
           ]
         },
         {
@@ -17009,6 +17065,24 @@
           ]
         },
         {
+          "name": "skeleton/base",
+          "token": "--a63-skeleton-base",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-surface-muted"
+            },
+            "dark": {
+              "alias": "--a63-surface-muted"
+            }
+          },
+          "codeSyntax": "var(--a63-skeleton-base)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
           "name": "skeleton/highlight",
           "token": "--a63-skeleton-highlight",
           "type": "COLOR",
@@ -17024,6 +17098,92 @@
           "scopes": [
             "FRAME_FILL",
             "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "status/danger",
+          "token": "--a63-status-danger",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-danger-600"
+            },
+            "dark": {
+              "alias": "--color-danger-500"
+            }
+          },
+          "codeSyntax": "var(--a63-status-danger)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "status/danger/foreground",
+          "token": "--a63-status-danger-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "value": {
+                "r": 1,
+                "g": 0.970073,
+                "b": 0.964795,
+                "a": 1
+              }
+            },
+            "dark": {
+              "value": {
+                "r": 0.062357,
+                "g": 0.036228,
+                "b": 0.033422,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-status-danger-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "status/danger/subtle",
+          "token": "--a63-status-danger-subtle",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "composed": {
+                "alias": "--a63-status-danger",
+                "opacity": 14
+              }
+            },
+            "dark": {
+              "composed": {
+                "alias": "--a63-status-danger",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-status-danger-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "status/danger/subtle/foreground",
+          "token": "--a63-status-danger-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-danger-700"
+            },
+            "dark": {
+              "alias": "--color-danger-400"
+            }
+          },
+          "codeSyntax": "var(--a63-status-danger-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
           ]
         },
         {

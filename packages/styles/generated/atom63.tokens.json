@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 2015,
-    "uniqueCssVariables": 1201,
-    "figmaMappedDeclarations": 1953
+    "declarations": 2031,
+    "uniqueCssVariables": 1207,
+    "figmaMappedDeclarations": 1969
   },
   "entries": [
     {
@@ -10563,11 +10563,28 @@
       "layer": "contract",
       "figma": {
         "collection": "Contract",
-        "path": "skeleton/base"
+        "path": "skeleton/base",
+        "mode": "Dark"
       },
       "lifecycle": "preview",
       "aliases": ["--a63-surface-muted"],
-      "scope": ":root"
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-skeleton-base",
+      "cssVar": "--a63-skeleton-base",
+      "type": "color",
+      "value": "var(--a63-surface-muted)",
+      "sourceFile": "packages/styles/src/contracts/skeleton.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "skeleton/base",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-muted"],
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-skeleton-highlight",
@@ -10594,11 +10611,12 @@
       "layer": "contract",
       "figma": {
         "collection": "Contract",
-        "path": "skeleton/highlight"
+        "path": "skeleton/highlight",
+        "mode": "Light"
       },
       "lifecycle": "preview",
       "aliases": ["--color-white-60"],
-      "scope": ":root"
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-space-0_5",
@@ -10946,6 +10964,118 @@
       "lifecycle": "preview",
       "aliases": ["--spacing-1"],
       "scope": ":root"
+    },
+    {
+      "name": "a63-status-danger",
+      "cssVar": "--a63-status-danger",
+      "type": "color",
+      "value": "var(--color-danger-500)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/danger",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-danger-500"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-status-danger",
+      "cssVar": "--a63-status-danger",
+      "type": "color",
+      "value": "var(--color-danger-600)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/danger",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-danger-600"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-status-danger-foreground",
+      "cssVar": "--a63-status-danger-foreground",
+      "type": "color",
+      "value": "oklch( from var(--a63-status-danger) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h )",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/danger/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-status-danger"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-status-danger-subtle",
+      "cssVar": "--a63-status-danger-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-status-danger) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/danger/subtle",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-status-danger"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-status-danger-subtle",
+      "cssVar": "--a63-status-danger-subtle",
+      "type": "color",
+      "value": "color-mix(in oklab, var(--a63-status-danger) 14%, transparent)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/danger/subtle",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-status-danger"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-status-danger-subtle-foreground",
+      "cssVar": "--a63-status-danger-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-danger-400)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/danger/subtle/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-danger-400"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-status-danger-subtle-foreground",
+      "cssVar": "--a63-status-danger-subtle-foreground",
+      "type": "color",
+      "value": "var(--color-danger-700)",
+      "sourceFile": "packages/styles/src/tokens/semantics.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "status/danger/subtle/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--color-danger-700"],
+      "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-status-info",
@@ -12454,6 +12584,134 @@
       "lifecycle": "preview",
       "aliases": ["--a63-segment-gap"],
       "scope": ":root"
+    },
+    {
+      "name": "a63-toggle-on-background",
+      "cssVar": "--a63-toggle-on-background",
+      "type": "color",
+      "value": "var(--a63-action-neutral)",
+      "sourceFile": "packages/styles/src/contracts/toggle.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "toggle/on/background",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-neutral"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-toggle-on-background",
+      "cssVar": "--a63-toggle-on-background",
+      "type": "color",
+      "value": "var(--a63-action-neutral)",
+      "sourceFile": "packages/styles/src/contracts/toggle.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "toggle/on/background",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-neutral"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-toggle-on-background",
+      "cssVar": "--a63-toggle-on-background",
+      "type": "color",
+      "value": "var(--a63-text-primary)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Theme",
+        "path": "toggle/on/background",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-primary"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-toggle-on-background",
+      "cssVar": "--a63-toggle-on-background",
+      "type": "color",
+      "value": "var(--a63-text-primary)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Theme",
+        "path": "toggle/on/background",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-primary"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-toggle-on-foreground",
+      "cssVar": "--a63-toggle-on-foreground",
+      "type": "color",
+      "value": "var(--a63-action-neutral-foreground)",
+      "sourceFile": "packages/styles/src/contracts/toggle.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "toggle/on/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-neutral-foreground"],
+      "scope": ":is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-toggle-on-foreground",
+      "cssVar": "--a63-toggle-on-foreground",
+      "type": "color",
+      "value": "var(--a63-action-neutral-foreground)",
+      "sourceFile": "packages/styles/src/contracts/toggle.css",
+      "layer": "contract",
+      "figma": {
+        "collection": "Contract",
+        "path": "toggle/on/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-neutral-foreground"],
+      "scope": ":root, .light, [data-a63-mode='light']"
+    },
+    {
+      "name": "a63-toggle-on-foreground",
+      "cssVar": "--a63-toggle-on-foreground",
+      "type": "color",
+      "value": "var(--a63-surface-page)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Theme",
+        "path": "toggle/on/foreground",
+        "mode": "Light"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-page"],
+      "scope": "[data-a63-theme='terminal']:is(:root, .light, [data-a63-mode='light']), [data-a63-theme='terminal'] :is(.light, [data-a63-mode='light'])"
+    },
+    {
+      "name": "a63-toggle-on-foreground",
+      "cssVar": "--a63-toggle-on-foreground",
+      "type": "color",
+      "value": "var(--a63-surface-page)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Theme",
+        "path": "toggle/on/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-surface-page"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-toggle-radius",

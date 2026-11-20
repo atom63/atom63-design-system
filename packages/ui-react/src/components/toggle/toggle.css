@@ -22,14 +22,11 @@
     --a63-toggle-hover-background,
     var(--a63-segment-hover-background, var(--a63-surface-control-hover))
   );
-  --toggle-on-background: var(
-    --a63-toggle-on-background,
-    var(--a63-segment-selected-background, var(--a63-surface-muted))
-  );
-  --toggle-on-foreground: var(
-    --a63-toggle-on-foreground,
-    var(--a63-segment-selected-foreground, var(--a63-text-primary))
-  );
+  /* A standalone pressed toggle sits on the page, not on a segment track, so it
+     takes the high-emphasis neutral solid (Button `default`, the pressed pill)
+     rather than the segment plate, which matches the page in several themes. */
+  --toggle-on-background: var(--a63-toggle-on-background, var(--a63-action-neutral));
+  --toggle-on-foreground: var(--a63-toggle-on-foreground, var(--a63-action-neutral-foreground));
   --toggle-primary-background: var(
     --a63-toggle-primary-background,
     var(--a63-segment-primary-background, var(--a63-selection-accent, var(--a63-action-primary)))
@@ -182,6 +179,15 @@
   --toggle-icon-size: var(--a63-control-font-size-lg);
   min-width: var(--a63-control-min-target-lg, var(--a63-control-min-target));
   font-size: var(--a63-control-font-size-lg);
+}
+
+/* Forced colors replace fills and text colours with the same system colours,
+   so a pressed toggle of any tone takes the system selection colours. */
+@media (forced-colors: active) {
+  .a63-Toggle[data-pressed][data-tone] {
+    background-color: Highlight;
+    color: HighlightText;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

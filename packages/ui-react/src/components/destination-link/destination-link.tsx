@@ -41,6 +41,7 @@ export function DestinationLink({
       {
         'aria-label': resolvedAriaLabel,
         children: resolvedChildren,
+        className: 'a63-DestinationLink',
         rel: external ? 'noopener noreferrer' : undefined,
         target: external ? '_blank' : undefined,
       },

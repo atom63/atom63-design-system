@@ -48,10 +48,9 @@ Working review of public `@atom63/mdx/blocks` components by author intent.
 | `Steps` | Keep | Design-system catalog / globally registered authoring block | Static sequence; shares sequence foundation. |
 | `Tabs` | Keep | Design-system catalog / globally registered authoring block | Thin MDX spacing wrapper over `@atom63/ui-react`; distinct from `DocExample` tabs. |
 | `Timeline` | Keep | Design-system catalog / globally registered authoring block | Static dated sequence; shares sequence foundation. |
-| `VideoBlock` | Keep | Provider-mapped docs/media authoring | Media foundation consumer with explicit caption policy. Add tests if expanded. |
+| `VideoBlock` | Keep | Provider-mapped docs/media authoring | Media foundation consumer with explicit caption policy; `trackLang` and `trackLabel` set the caption track's language and name. Covered by `video-block.test.tsx`. |
 
 ## Follow-Up Candidates
 
 - Decide whether `MediaPlaceholder` should become a `MediaFigure` variant.
 - Add an optional `id` to `LayerStackItem` if stable keys matter for dynamic lists.
-- Add focused tests for `VideoBlock` caption-policy rendering.

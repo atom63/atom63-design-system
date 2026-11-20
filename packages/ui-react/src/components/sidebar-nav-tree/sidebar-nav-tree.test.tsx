@@ -232,4 +232,30 @@ describe('SidebarNavTree', () => {
     const row = getByRole('button', { name: 'Payments' })
     expect(row.querySelector('[data-testid="section-icon"]')).not.toBeNull()
   })
+
+  it('marks the active link as the current page, but not a section toggle', () => {
+    const { container, getByRole } = render(
+      <SidebarProvider>
+        <SidebarNavGroup label="Docs">
+          <SidebarNavLinkItem href="/intro" isActive>
+            Introduction
+          </SidebarNavLinkItem>
+          <SidebarNavLinkItem href="/install">Installation</SidebarNavLinkItem>
+          <SidebarNavCollapsibleItem isActive label="Guides" onOpenChange={() => {}} open>
+            <SidebarNavSubList>
+              <SidebarNavSubLinkItem isActive>
+                <a href="/guides/theming">Theming</a>
+              </SidebarNavSubLinkItem>
+            </SidebarNavSubList>
+          </SidebarNavCollapsibleItem>
+        </SidebarNavGroup>
+      </SidebarProvider>
+    )
+    const current = Array.from(container.querySelectorAll('[aria-current="page"]'))
+    expect(current.map(element => element.getAttribute('href'))).toEqual([
+      '/intro',
+      '/guides/theming',
+    ])
+    expect(getByRole('button', { name: 'Guides' })).not.toHaveAttribute('aria-current')
+  })
 })

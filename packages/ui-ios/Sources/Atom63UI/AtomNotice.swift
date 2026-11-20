@@ -60,7 +60,7 @@ public struct AtomNotice: View {
         Button(actionTitle, action: action)
           .font(.subheadline.weight(.semibold))
           .buttonStyle(.plain)
-          .foregroundStyle(tint)
+          .foregroundStyle(actionForeground)
           .frame(minWidth: 44, minHeight: 44)
       }
     }
@@ -88,6 +88,12 @@ public struct AtomNotice: View {
 
   private var tint: Color {
     semanticTone.tint(in: theme, colorScheme: colorScheme)
+  }
+
+  /// The action label is text, so the error tone uses the danger text color,
+  /// which keeps 4.5:1 on the muted fill in both modes.
+  private var actionForeground: Color {
+    tone == .error ? theme.colors.textDanger.resolve(for: colorScheme) : tint
   }
 
   private var semanticTone: AtomSemanticTone {

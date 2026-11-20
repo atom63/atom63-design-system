@@ -43,6 +43,9 @@
   --a63-status-success-foreground: white;
   --a63-status-warning: var(--warning, oklch(0.75 0.15 80));
   --a63-status-warning-foreground: white;
+  --a63-status-danger: var(--destructive);
+  --a63-status-danger-foreground: var(--destructive-foreground, white);
+  --a63-text-danger: var(--destructive);
 
   --a63-scrim: color-mix(in oklch, black 40%, transparent);
   /* Shadow, media and on-media colors hold in every theme; same values as semantics.css. */

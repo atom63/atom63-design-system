@@ -95,18 +95,18 @@
       "P1": 12,
       "P2": 39
     },
-    "packageSubpaths": 81,
+    "packageSubpaths": 82,
     "subpathActionCounts": {
       "assign-owner-and-evidence": 1,
       "keep-preview-subpath-or-add-evidence": 2,
       "keep-preview-labeled": 1,
       "document-subpath-contract": 2,
-      "keep-import-path-stable": 75
+      "keep-import-path-stable": 76
     },
     "subpathPriorityCounts": {
       "P0": 4,
       "P1": 2,
-      "P2": 75
+      "P2": 76
     }
   },
   "sourceActions": [
@@ -2871,6 +2871,15 @@
       "subpath": "./recipes/copy-button.css",
       "kind": "css",
       "target": "./src/components/copy-button/copy-button.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/destination-link.css",
+      "kind": "css",
+      "target": "./src/components/destination-link/destination-link.css",
       "recommendedAction": "keep-import-path-stable",
       "priority": "P2",
       "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",

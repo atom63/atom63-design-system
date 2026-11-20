@@ -223,7 +223,7 @@
   --a63-action-disabled-foreground: var(--surface-light-9);
   /* A disabled action's border. */
   --a63-action-disabled-border: var(--a63-border-subtle);
-  /* Status (danger's status role is served by --a63-action-danger). The base is
+  /* Status (info, success, warning and danger). The base is
      the accent used for tinted callouts (bg = mix toward transparent, text/border
      = the accent); -foreground is the text/icon color ON a SOLID status fill.
      Step 600 on light surfaces and 500 on dark ones (the .dark block), so icons
@@ -252,6 +252,18 @@
   );
   --a63-status-warning-subtle: color-mix(in oklab, var(--a63-status-warning) 14%, transparent);
   --a63-status-warning-subtle-foreground: var(--color-warning-800);
+  /* The danger status accent: error icons, borders and tints (Alert, form and
+     sync errors). --a63-action-danger stays the fill for danger buttons and does
+     not change with the mode; this one moves to step 500 on dark surfaces so it
+     reaches 3:1 there. Error text uses --a63-text-danger. */
+  --a63-status-danger: var(--color-danger-600);
+  /* Text and icons on a solid fill of this status. Same auto-contrast step as
+     the primary foreground: near-black on bright fills, near-white on dark ones. */
+  --a63-status-danger-foreground: oklch(
+    from var(--a63-status-danger) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h
+  );
+  --a63-status-danger-subtle: color-mix(in oklab, var(--a63-status-danger) 14%, transparent);
+  --a63-status-danger-subtle-foreground: var(--color-danger-700);
   /* Chart series colors. Series 1 is the primary; 2–5 are fixed hues that stay
      distinct from it and from each other (500 on light surfaces, 400 on dark). */
   --a63-chart-1: var(--a63-action-primary);
@@ -398,6 +410,9 @@
   --a63-status-warning: var(--color-warning-500);
   --a63-status-warning-subtle: color-mix(in oklab, var(--a63-status-warning) 14%, transparent);
   --a63-status-warning-subtle-foreground: var(--color-warning-400);
+  --a63-status-danger: var(--color-danger-500);
+  --a63-status-danger-subtle: color-mix(in oklab, var(--a63-status-danger) 14%, transparent);
+  --a63-status-danger-subtle-foreground: var(--color-danger-400);
   --a63-chart-1: var(--a63-action-primary);
   --a63-chart-2: var(--color-teal-400);
   --a63-chart-3: var(--color-amber-400);

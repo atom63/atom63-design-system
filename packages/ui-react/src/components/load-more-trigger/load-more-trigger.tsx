@@ -29,9 +29,11 @@ export interface LoadMoreTriggerProps {
 const stateTones = getCrossRendererContract('load-more-trigger').stateTones
 
 /* LoadMoreTrigger — a sentinel row for infinite scroll, ported from prod
-   @atom63/ui. It renders only while there's more to load (or a load is in
+   @atom63/ui. It shows only while there's more to load (or a load is in
    flight); the consumer wires an IntersectionObserver to the forwarded ref to
-   fire the fetch when the row scrolls into view. */
+   fire the fetch when the row scrolls into view. The row is one live region
+   that stays mounted (empty while hidden, with no ref), so a change of state
+   only changes its text and screen readers announce it. */
 export const LoadMoreTrigger = forwardRef<HTMLDivElement, LoadMoreTriggerProps>(
   (
     {
@@ -51,12 +53,9 @@ export const LoadMoreTrigger = forwardRef<HTMLDivElement, LoadMoreTriggerProps>(
     ref
   ) => {
     const resolvedState = state ?? (isLoading ? 'loading' : hasMore ? 'idle' : 'hidden')
+    const isHidden = resolvedState === 'hidden'
 
-    if (resolvedState === 'hidden') {
-      return null
-    }
-
-    if (children) {
+    if (children && !isHidden) {
       return (
         <div
           className={cn('a63-LoadMoreTrigger', className)}
@@ -70,69 +69,70 @@ export const LoadMoreTrigger = forwardRef<HTMLDivElement, LoadMoreTriggerProps>(
       )
     }
 
-    const tone = stateTones[resolvedState] ?? 'neutral'
-    const isStatus = resolvedState !== 'idle'
+    const tone = isHidden ? undefined : (stateTones[resolvedState] ?? 'neutral')
 
     return (
       <div
-        aria-live={isStatus ? 'polite' : undefined}
+        aria-live="polite"
         className={cn('a63-LoadMoreTrigger', className)}
-        data-has-message=""
+        data-has-message={isHidden ? undefined : ''}
         data-state={resolvedState}
         data-slot="load-more-trigger"
         data-tone={tone}
         data-variant={variant}
-        ref={ref}
-        role={isStatus ? 'status' : undefined}
+        ref={isHidden ? undefined : ref}
+        role="status"
       >
-        <div
-          className="a63-LoadMoreTrigger-message"
-          data-slot="load-more-trigger-message"
-          data-variant={variant}
-        >
-          {resolvedState === 'loading' ? (
-            <span
-              aria-hidden
-              className="a63-LoadMoreTrigger-spinner"
-              data-slot="load-more-trigger-spinner"
-            >
-              <LoaderCircle />
+        {isHidden ? null : (
+          <div
+            className="a63-LoadMoreTrigger-message"
+            data-slot="load-more-trigger-message"
+            data-variant={variant}
+          >
+            {resolvedState === 'loading' ? (
+              <span
+                aria-hidden
+                className="a63-LoadMoreTrigger-spinner"
+                data-slot="load-more-trigger-spinner"
+              >
+                <LoaderCircle />
+              </span>
+            ) : null}
+            {resolvedState === 'failed' ? (
+              <AlertCircle
+                aria-hidden
+                className="a63-LoadMoreTrigger-icon"
+                data-slot="load-more-trigger-icon"
+              />
+            ) : null}
+            {resolvedState === 'exhausted' ? (
+              <CheckCircle
+                aria-hidden
+                className="a63-LoadMoreTrigger-icon"
+                data-slot="load-more-trigger-icon"
+              />
+            ) : null}
+            <span>
+              {resolvedState === 'loading'
+                ? loadingMessage
+                : resolvedState === 'failed'
+                  ? failedMessage
+                  : resolvedState === 'exhausted'
+                    ? exhaustedMessage
+                    : idleMessage}
             </span>
-          ) : null}
-          {resolvedState === 'failed' ? (
-            <AlertCircle
-              aria-hidden
-              className="a63-LoadMoreTrigger-icon"
-              data-slot="load-more-trigger-icon"
-            />
-          ) : null}
-          {resolvedState === 'exhausted' ? (
-            <CheckCircle
-              aria-hidden
-              className="a63-LoadMoreTrigger-icon"
-              data-slot="load-more-trigger-icon"
-            />
-          ) : null}
-          <span>
-            {resolvedState === 'loading'
-              ? loadingMessage
-              : resolvedState === 'failed'
-                ? failedMessage
-                : resolvedState === 'exhausted'
-                  ? exhaustedMessage
-                  : idleMessage}
-          </span>
-          {resolvedState === 'failed' && onRetry ? (
-            <button
-              className="a63-LoadMoreTrigger-action"
-              data-slot="load-more-trigger-action"
-              onClick={onRetry}
-              type="button"
-            >
-              {retryLabel}
-            </button>
-          ) : null}
-        </div>
+            {resolvedState === 'failed' && onRetry ? (
+              <button
+                className="a63-LoadMoreTrigger-action"
+                data-slot="load-more-trigger-action"
+                onClick={onRetry}
+                type="button"
+              >
+                {retryLabel}
+              </button>
+            ) : null}
+          </div>
+        )}
       </div>
     )
   }

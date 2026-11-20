@@ -318,7 +318,16 @@
         "autocomplete-status",
         "autocomplete-collection"
       ],
-      "states": ["closed", "open", "highlighted", "disabled", "empty", "loading"],
+      "states": [
+        "closed",
+        "open",
+        "highlighted",
+        "hover",
+        "disabled",
+        "empty",
+        "loading",
+        "invalid"
+      ],
       "tokenSlots": [],
       "visualArchetypes": ["field", "trigger", "overlay", "menu"]
     },
@@ -2624,7 +2633,8 @@
         "disabled",
         "highlighted-item",
         "selected-item",
-        "disabled-item"
+        "disabled-item",
+        "invalid"
       ],
       "tokenSlots": [
         "field.background",

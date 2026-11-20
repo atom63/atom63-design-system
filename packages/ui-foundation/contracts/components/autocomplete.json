@@ -25,7 +25,7 @@
       "autocomplete-status",
       "autocomplete-collection"
     ],
-    "states": ["closed", "open", "highlighted", "disabled", "empty", "loading"],
+    "states": ["closed", "open", "highlighted", "hover", "disabled", "empty", "loading", "invalid"],
     "visualArchetypes": ["field", "trigger", "overlay", "menu"]
   },
   "contract": {
