@@ -2,6 +2,7 @@
 export {
   inputOTPContract,
   inputOTPSlots,
+  inputOTPStateAliases,
   inputOTPStates,
   inputOTPVisualArchetypes,
 } from './input-otp-contract'
@@ -9,5 +10,6 @@ export type {
   InputOTPContract,
   InputOTPSlot,
   InputOTPState,
+  InputOTPStateAlias,
   InputOTPVisualArchetype,
 } from './input-otp-contract'

@@ -10,12 +10,18 @@ export const formSlots = [
   'form-description',
   'form-message',
 ] as const
-export const formStates = ['default', 'invalid'] as const
+export const formStates = ['rest', 'invalid'] as const
 export const formVisualArchetypes = ['field'] as const satisfies readonly VisualArchetypeId[]
 
 export type FormSlot = (typeof formSlots)[number]
 export type FormState = (typeof formStates)[number]
 export type FormVisualArchetype = (typeof formVisualArchetypes)[number]
+
+/** Earlier names of FormState values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const formStateAliases = { default: 'rest' } as const satisfies Record<string, FormState>
+
+/** @deprecated An earlier name of a value of FormState; use the value formStateAliases maps it to. */
+export type FormStateAlias = keyof typeof formStateAliases
 
 export interface FormContract {
   slots: readonly FormSlot[]

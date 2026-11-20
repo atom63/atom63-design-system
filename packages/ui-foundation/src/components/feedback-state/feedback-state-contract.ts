@@ -24,7 +24,7 @@ export const feedbackStateSlots = [
   'feedback-state-description',
   'feedback-state-content',
 ] as const
-export const feedbackStateStates = ['idle', 'busy', 'actionable'] as const
+export const feedbackStateStates = ['rest', 'busy', 'actionable'] as const
 export const feedbackStateVisualArchetypes = [
   'action',
 ] as const satisfies readonly VisualArchetypeId[]
@@ -34,6 +34,15 @@ export type FeedbackStateSize = (typeof feedbackStateSizes)[number]
 export type FeedbackStateSlot = (typeof feedbackStateSlots)[number]
 export type FeedbackStateState = (typeof feedbackStateStates)[number]
 export type FeedbackStateVisualArchetype = (typeof feedbackStateVisualArchetypes)[number]
+
+/** Earlier names of FeedbackStateState values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const feedbackStateStateAliases = { idle: 'rest' } as const satisfies Record<
+  string,
+  FeedbackStateState
+>
+
+/** @deprecated An earlier name of a value of FeedbackStateState; use the value feedbackStateStateAliases maps it to. */
+export type FeedbackStateStateAlias = keyof typeof feedbackStateStateAliases
 
 export interface FeedbackStateContract {
   defaultKind: FeedbackStateKind

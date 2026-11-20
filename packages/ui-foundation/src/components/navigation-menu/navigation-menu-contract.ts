@@ -6,7 +6,7 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 export const navigationMenuStates = [
   'closed',
   'open',
-  'active',
+  'current',
   'disabled',
   'starting',
   'ending',
@@ -33,6 +33,15 @@ export const navigationMenuVisualArchetypes = [
 export type NavigationMenuState = (typeof navigationMenuStates)[number]
 export type NavigationMenuSlot = (typeof navigationMenuSlots)[number]
 export type NavigationMenuVisualArchetype = (typeof navigationMenuVisualArchetypes)[number]
+
+/** Earlier names of NavigationMenuState values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const navigationMenuStateAliases = { active: 'current' } as const satisfies Record<
+  string,
+  NavigationMenuState
+>
+
+/** @deprecated An earlier name of a value of NavigationMenuState; use the value navigationMenuStateAliases maps it to. */
+export type NavigationMenuStateAlias = keyof typeof navigationMenuStateAliases
 
 export interface NavigationMenuContract {
   slots: readonly NavigationMenuSlot[]

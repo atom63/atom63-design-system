@@ -1,6 +1,11 @@
 'use client'
 
-import { type TabsSize, type TabsVariant, tabsContract } from '@atom63/ui-foundation'
+import {
+  type TabsSize,
+  type TabsSizeAlias,
+  type TabsVariant,
+  tabsContract,
+} from '@atom63/ui-foundation'
 import { Tabs as TabsPrimitive } from '@base-ui/react/tabs'
 import * as React from 'react'
 
@@ -23,17 +28,19 @@ export function Tabs({ className, ...props }: TabsPrimitive.Root.Props): React.R
 }
 
 export interface TabsListProps extends TabsPrimitive.List.Props {
-  size?: TabsSize
+  /** `'default'` is a deprecated alias of `'md'`. */
+  size?: TabsSize | TabsSizeAlias
   variant?: TabsVariant
 }
 
 export function TabsList({
   children,
   className,
-  size = tabsContract.defaultSize,
+  size: sizeProp = tabsContract.defaultSize,
   variant = tabsContract.defaultVariant,
   ...props
 }: TabsListProps): React.ReactElement {
+  const size = sizeProp === 'default' ? 'md' : sizeProp
   return (
     <TabsPrimitive.List
       className={cn('a63-Tabs-list', className)}
@@ -53,12 +60,13 @@ export function TabsList({
 }
 
 export interface TabsTabProps extends TabsPrimitive.Tab.Props {
-  size?: TabsSize
+  /** `'default'` is a deprecated alias of `'md'`. */
+  size?: TabsSize | TabsSizeAlias
 }
 
 export function TabsTab({ className, size, ...props }: TabsTabProps): React.ReactElement {
   const contextSize = React.useContext(TabsSizeContext)
-  const resolvedSize = size ?? contextSize
+  const resolvedSize = size === 'default' ? 'md' : (size ?? contextSize)
   return (
     <TabsPrimitive.Tab
       className={cn('a63-Tabs-tab', className)}

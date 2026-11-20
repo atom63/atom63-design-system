@@ -92,17 +92,47 @@ export function listInfo(section, key) {
         ? 'flatten'
         : 'values'
   const objects = kind === 'values' && entry.values.some(value => typeof value === 'object')
+  const typeName =
+    kind === 'map' || objects || entry.typed === false
+      ? null
+      : (entry.typeName ?? `${pascal(section.prefix)}${pascal(singular(key))}`)
   return {
     section,
     key,
     entry,
     kind,
     exportName: entry.exportName ?? `${section.prefix}${pascal(key)}`,
-    typeName:
-      kind === 'map' || objects || entry.typed === false
-        ? null
-        : (entry.typeName ?? `${pascal(section.prefix)}${pascal(singular(key))}`),
+    typeName,
+    aliasesName:
+      typeName && entry.deprecatedAliases
+        ? `${section.prefix}${pascal(singular(key))}Aliases`
+        : null,
   }
+}
+
+/**
+ * What is wrong with a source's deprecated aliases: each must be a name the
+ * list no longer has, and map to a value it does have.
+ */
+export function aliasProblems(source) {
+  const problems = []
+  for (const section of sections(source)) {
+    for (const key of Object.keys(section.lists)) {
+      const info = listInfo(section, key)
+      const aliases = info.entry.deprecatedAliases
+      if (!aliases) continue
+      if (!info.aliasesName) problems.push(`${source.id}: ${key} has aliases but no union type`)
+      const values = listValues(info) ?? []
+      for (const [alias, target] of Object.entries(aliases)) {
+        if (values.includes(alias) || !values.includes(target)) {
+          problems.push(
+            `${source.id}: ${key} alias "${alias}" must not be a value and must name one ("${target}")`
+          )
+        }
+      }
+    }
+  }
+  return problems
 }
 
 /** The values of a list, with concat and flatten resolved; a map has none. */
@@ -190,9 +220,11 @@ export function resolvedComponent(sources, source) {
   const fields = contractFields(sources, main)
   const values = info => (listValues(info) ?? []).map(describeValue)
   const listOf = field => fields.find(item => item.field === field)?.list
+  const aliases = info =>
+    info?.entry.deprecatedAliases ? { deprecatedAliases: info.entry.deprecatedAliases } : {}
   const axes = fields
     .filter(item => item.list && item.list.kind !== 'map' && !NON_AXIS_FIELDS.has(item.field))
-    .map(item => ({ name: item.field, values: values(item.list) }))
+    .map(item => ({ name: item.field, values: values(item.list), ...aliases(item.list) }))
   for (const item of fields) {
     const axis = /^default([A-Z]\w*)$/.exec(item.field)?.[1]
     if (!axis || item.accessibility) continue
@@ -203,6 +235,7 @@ export function resolvedComponent(sources, source) {
       axes.push({
         name,
         values: item.defaultOf ? values(item.defaultOf) : [],
+        ...aliases(item.defaultOf),
         default: describeValue(item.value),
       })
     }
@@ -217,6 +250,9 @@ export function resolvedComponent(sources, source) {
     axes,
     slots: named('slots'),
     states: named('states'),
+    ...(listOf('states')?.entry.deprecatedAliases
+      ? { stateAliases: listOf('states').entry.deprecatedAliases }
+      : {}),
     tokenSlots: named('tokenSlots'),
     visualArchetypes: named('visualArchetypes'),
     ...(contract.accessibility ? { accessibility: contract.accessibility } : {}),

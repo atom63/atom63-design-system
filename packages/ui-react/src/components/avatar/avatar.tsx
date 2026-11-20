@@ -4,6 +4,7 @@ import {
   type AvatarRing,
   type AvatarShape,
   type AvatarSize,
+  type AvatarSizeAlias,
   avatarContract,
 } from '@atom63/ui-foundation'
 import { Avatar as AvatarPrimitive } from '@base-ui/react/avatar'
@@ -21,7 +22,8 @@ export type AvatarProps = AvatarPrimitive.Root.Props & {
   ring?: boolean | AvatarRing
   /** `square` suits organisations and apps; people stay `circle`. */
   shape?: AvatarShape
-  size?: AvatarSize
+  /** `'default'` is a deprecated alias of `'md'`. */
+  size?: AvatarSize | AvatarSizeAlias
 }
 
 /* Avatar — a user/entity image with a graceful fallback (Base UI Avatar).
@@ -39,7 +41,7 @@ export function Avatar({
       className={cn('a63-Avatar', className)}
       data-ring={ring === true ? 'unseen' : ring || undefined}
       data-shape={shape}
-      data-size={size}
+      data-size={size === 'default' ? 'md' : size}
       data-slot="avatar"
       {...props}
     />

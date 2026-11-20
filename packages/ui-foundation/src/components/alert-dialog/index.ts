@@ -2,9 +2,11 @@
 export {
   alertDialogContract,
   alertDialogFooterVariants,
+  alertDialogSizeAliases,
   alertDialogSizes,
   alertDialogSlots,
   alertDialogStates,
+  alertDialogVariantAliases,
   alertDialogVariants,
   alertDialogVisualArchetypes,
 } from './alert-dialog-contract'
@@ -12,8 +14,10 @@ export type {
   AlertDialogContract,
   AlertDialogFooterVariant,
   AlertDialogSize,
+  AlertDialogSizeAlias,
   AlertDialogSlot,
   AlertDialogState,
   AlertDialogVariant,
+  AlertDialogVariantAlias,
   AlertDialogVisualArchetype,
 } from './alert-dialog-contract'

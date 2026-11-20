@@ -3,7 +3,12 @@
   "component": "sidebar-nav-tree",
   "maturity": "stable",
   "lists": {
-    "states": ["rest", "hover", "active", "expanded", "collapsed", "focus-visible"],
+    "states": {
+      "values": ["rest", "hover", "current", "expanded", "collapsed", "focus-visible"],
+      "deprecatedAliases": {
+        "active": "current"
+      }
+    },
     "tones": ["neutral", "accent"],
     "parts": [
       "group",

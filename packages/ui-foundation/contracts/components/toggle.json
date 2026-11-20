@@ -5,7 +5,12 @@
   "lists": {
     "sizes": ["sm", "md", "lg"],
     "tones": ["neutral", "accent", "subtle"],
-    "states": ["off", "on", "rest", "hover", "pressed", "disabled", "focus"],
+    "states": {
+      "values": ["off", "on", "rest", "hover", "pressed", "disabled", "focus-visible"],
+      "deprecatedAliases": {
+        "focus": "focus-visible"
+      }
+    },
     "slots": ["toggle", "toggle-content"],
     "tokenSlots": [
       "toggle.background",
@@ -44,6 +49,49 @@
     },
     "visualArchetypes": {
       "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "intent": {
+    "description": "What a toggle is, independent of any platform: its size and the tone of its pressed state. iOS has neither axis: AtomChip takes isSelected only, at one touch size and tint.",
+    "axes": {
+      "size": ["sm", "md", "lg"],
+      "tone": ["neutral", "accent", "subtle"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "size": {
+            "list": "sizes",
+            "map": {
+              "sm": {
+                "size": "sm"
+              },
+              "md": {
+                "size": "md"
+              },
+              "lg": {
+                "size": "lg"
+              }
+            },
+            "extensions": {}
+          },
+          "tone": {
+            "list": "tones",
+            "map": {
+              "neutral": {
+                "tone": "neutral"
+              },
+              "accent": {
+                "tone": "accent"
+              },
+              "subtle": {
+                "tone": "subtle"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
     }
   },
   "crossRenderer": {

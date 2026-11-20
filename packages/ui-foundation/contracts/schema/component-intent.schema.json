@@ -158,6 +158,13 @@
         "typed": {
           "description": "false exports the list without a union type.",
           "const": false
+        },
+        "deprecatedAliases": {
+          "description": "Earlier names of values, each mapped to the value that replaced it. Generated as <prefix><Singular key>Aliases and a deprecated <Type>Alias type; the React components still accept them until a breaking release.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       },
       "additionalProperties": false

@@ -4,13 +4,13 @@
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 // The tabular-data set: a horizontally scrollable container around a semantic <table>. The container
-// takes size (default/sm) and variant (default/plain); TableHead and TableCell can pin to the start
-// or end edge. The DS recipe reads these off data-size / data-variant / data-sticky. The container
-// also takes tone (neutral/accent, data-tone), which colours selected rows: neutral is the muted
-// fill with primary text, accent the opt-in primary wash with accent text.
+// takes size (md/sm) and variant (default/plain); TableHead and TableCell can pin to the start or
+// end edge. The DS recipe reads these off data-size / data-variant / data-sticky. The container also
+// takes tone (neutral/accent, data-tone), which colours selected rows: neutral is the muted fill
+// with primary text, accent the opt-in primary wash with accent text.
 
 export const tableVariants = ['default', 'plain'] as const
-export const tableSizes = ['default', 'sm'] as const
+export const tableSizes = ['md', 'sm'] as const
 export const tableTones = ['neutral', 'accent'] as const
 export const tableStickyEdges = ['start', 'end'] as const
 export const tableStates = ['rest', 'row-hover', 'row-selected'] as const
@@ -35,6 +35,12 @@ export type TableState = (typeof tableStates)[number]
 export type TableSlot = (typeof tableSlots)[number]
 export type TableVisualArchetype = (typeof tableVisualArchetypes)[number]
 
+/** Earlier names of TableSize values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const tableSizeAliases = { default: 'md' } as const satisfies Record<string, TableSize>
+
+/** @deprecated An earlier name of a value of TableSize; use the value tableSizeAliases maps it to. */
+export type TableSizeAlias = keyof typeof tableSizeAliases
+
 export interface TableContract {
   defaultVariant: TableVariant
   defaultSize: TableSize
@@ -50,7 +56,7 @@ export interface TableContract {
 
 export const tableContract = {
   defaultVariant: 'default',
-  defaultSize: 'default',
+  defaultSize: 'md',
   defaultTone: 'neutral',
   variants: tableVariants,
   sizes: tableSizes,

@@ -56,7 +56,7 @@ function Demo({
 }: {
   disabled?: boolean
   invalid?: boolean
-  size?: 'sm' | 'default' | 'lg' | number
+  size?: 'sm' | 'md' | 'lg' | number
 }) {
   return (
     <Autocomplete items={fruits}>
@@ -79,7 +79,7 @@ function Demo({
   )
 }
 
-function GroupedDemo({ open, size }: { open?: boolean; size?: 'sm' | 'default' | 'lg' }) {
+function GroupedDemo({ open, size }: { open?: boolean; size?: 'sm' | 'md' | 'lg' }) {
   return (
     <Autocomplete
       autoHighlight={open ? 'always' : undefined}
@@ -157,7 +157,7 @@ export const Invalid: Story = {
 }
 
 // The `size` prop on AutocompleteInput accepts named recipe sizes
-// ('sm' | 'default' | 'lg') OR a number. A numeric value is forwarded to the
+// ('sm' | 'md' | 'lg') OR a number. A numeric value is forwarded to the
 // native <input size> attribute for character-width sizing.
 export const Sizes: Story = {
   render: () => (
@@ -167,10 +167,8 @@ export const Sizes: Story = {
         <Demo size="sm" />
       </div>
       <div>
-        <div style={{ fontSize: 12, color: 'var(--a63-text-secondary)', marginBottom: 6 }}>
-          default
-        </div>
-        <Demo size="default" />
+        <div style={{ fontSize: 12, color: 'var(--a63-text-secondary)', marginBottom: 6 }}>md</div>
+        <Demo size="md" />
       </div>
       <div>
         <div style={{ fontSize: 12, color: 'var(--a63-text-secondary)', marginBottom: 6 }}>lg</div>
@@ -289,7 +287,7 @@ export const Endpoints: Story = {
             <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 112 }}>
               {endpoint.label}
             </span>
-            <GroupedDemo size={endpoint.label === 'Compact extension' ? 'sm' : 'default'} />
+            <GroupedDemo size={endpoint.label === 'Compact extension' ? 'sm' : 'md'} />
           </div>
         </UIProvider>
       ))}

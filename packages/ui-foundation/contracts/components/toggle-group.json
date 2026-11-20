@@ -7,7 +7,12 @@
     "variants": ["segmented", "pills", "ghost"],
     "orientations": ["horizontal", "vertical"],
     "selectionModes": ["single", "multiple"],
-    "states": ["rest", "hover", "focus", "selected", "disabled"],
+    "states": {
+      "values": ["rest", "hover", "focus-visible", "selected", "disabled"],
+      "deprecatedAliases": {
+        "focus": "focus-visible"
+      }
+    },
     "slots": ["toggle-group", "toggle-group-item", "toggle-group-separator"],
     "tokenSlots": [
       "segment.gap",

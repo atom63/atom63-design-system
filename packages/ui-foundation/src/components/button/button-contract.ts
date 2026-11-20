@@ -42,7 +42,7 @@ export const buttonStates = [
   'rest',
   'hover',
   'pressed',
-  'focusVisible',
+  'focus-visible',
   'disabled',
   'loading',
 ] as const
@@ -71,6 +71,15 @@ export type ButtonState = (typeof buttonStates)[number]
 export type ButtonSlot = (typeof buttonSlots)[number]
 export type ButtonTokenSlot = (typeof buttonTokenSlots)[number]
 export type ButtonVisualArchetype = (typeof buttonVisualArchetypes)[number]
+
+/** Earlier names of ButtonState values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const buttonStateAliases = { focusVisible: 'focus-visible' } as const satisfies Record<
+  string,
+  ButtonState
+>
+
+/** @deprecated An earlier name of a value of ButtonState; use the value buttonStateAliases maps it to. */
+export type ButtonStateAlias = keyof typeof buttonStateAliases
 
 export interface ButtonContract {
   defaultShape: ButtonShape

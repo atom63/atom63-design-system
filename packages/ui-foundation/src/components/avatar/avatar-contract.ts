@@ -9,7 +9,7 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 // gradient of the category palette) set off from the face by a gap of the page surface; seen draws a
 // thin border-coloured ring.
 
-export const avatarSizes = ['xs', 'sm', 'default', 'lg'] as const
+export const avatarSizes = ['xs', 'sm', 'md', 'lg'] as const
 export const avatarShapes = ['circle', 'square'] as const
 export const avatarStates = ['loading', 'loaded', 'fallback'] as const
 export const avatarCompositions = ['standalone', 'badge', 'group'] as const
@@ -32,6 +32,12 @@ export type AvatarRing = (typeof avatarRings)[number]
 export type AvatarSlot = (typeof avatarSlots)[number]
 export type AvatarVisualArchetype = (typeof avatarVisualArchetypes)[number]
 
+/** Earlier names of AvatarSize values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const avatarSizeAliases = { default: 'md' } as const satisfies Record<string, AvatarSize>
+
+/** @deprecated An earlier name of a value of AvatarSize; use the value avatarSizeAliases maps it to. */
+export type AvatarSizeAlias = keyof typeof avatarSizeAliases
+
 export interface AvatarContract {
   defaultShape: AvatarShape
   defaultSize: AvatarSize
@@ -46,7 +52,7 @@ export interface AvatarContract {
 
 export const avatarContract = {
   defaultShape: 'circle',
-  defaultSize: 'default',
+  defaultSize: 'md',
   compositions: avatarCompositions,
   rings: avatarRings,
   shapes: avatarShapes,

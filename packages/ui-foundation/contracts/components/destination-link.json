@@ -26,6 +26,30 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What a destination link is, independent of any platform: whether it stays in the product or leaves it. iOS has no Atom63UI enum for it: the kind picks NavigationLink or Link.",
+    "axes": {
+      "kind": ["internal", "external"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "kind": {
+            "list": "kinds",
+            "map": {
+              "internal": {
+                "kind": "internal"
+              },
+              "external": {
+                "kind": "external"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "destinationLink",

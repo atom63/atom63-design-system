@@ -3,7 +3,7 @@
 
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
-export const autocompleteSizes = ['sm', 'default', 'lg'] as const
+export const autocompleteSizes = ['sm', 'md', 'lg'] as const
 export const autocompleteSlots = [
   'autocomplete-input-group',
   'autocomplete-start-addon',
@@ -47,6 +47,15 @@ export type AutocompleteSlot = (typeof autocompleteSlots)[number]
 export type AutocompleteState = (typeof autocompleteStates)[number]
 export type AutocompleteVisualArchetype = (typeof autocompleteVisualArchetypes)[number]
 
+/** Earlier names of AutocompleteSize values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const autocompleteSizeAliases = { default: 'md' } as const satisfies Record<
+  string,
+  AutocompleteSize
+>
+
+/** @deprecated An earlier name of a value of AutocompleteSize; use the value autocompleteSizeAliases maps it to. */
+export type AutocompleteSizeAlias = keyof typeof autocompleteSizeAliases
+
 export interface AutocompleteContract {
   defaultSize: AutocompleteSize
   sizes: readonly AutocompleteSize[]
@@ -56,7 +65,7 @@ export interface AutocompleteContract {
 }
 
 export const autocompleteContract = {
-  defaultSize: 'default',
+  defaultSize: 'md',
   sizes: autocompleteSizes,
   slots: autocompleteSlots,
   states: autocompleteStates,

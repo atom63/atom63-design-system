@@ -49,7 +49,7 @@ type OpenMode = 'modal' | 'inline'
 function RenameDialog({
   open,
   portalContainerRef,
-  size = 'default',
+  size = 'md',
   triggerLabel = 'Rename project',
 }: {
   open?: OpenMode

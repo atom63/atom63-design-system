@@ -33,7 +33,12 @@
     ],
     "shapes": ["default", "round"],
     "tones": ["neutral", "muted"],
-    "states": ["rest", "hover", "pressed", "focusVisible", "disabled", "loading"],
+    "states": {
+      "values": ["rest", "hover", "pressed", "focus-visible", "disabled", "loading"],
+      "deprecatedAliases": {
+        "focusVisible": "focus-visible"
+      }
+    },
     "slots": ["root", "label", "icon", "spinner", "indicator"],
     "tokenSlots": [
       "button.background",
@@ -318,9 +323,6 @@
           }
         }
       }
-    },
-    "stateAliases": {
-      "focusVisible": "focus-visible"
     }
   },
   "crossRenderer": {

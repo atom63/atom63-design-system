@@ -2,6 +2,7 @@
 export {
   buttonGroupContract,
   buttonGroupOrientations,
+  buttonGroupSizeAliases,
   buttonGroupSizes,
   buttonGroupSlots,
   buttonGroupStates,
@@ -11,6 +12,7 @@ export type {
   ButtonGroupContract,
   ButtonGroupOrientation,
   ButtonGroupSize,
+  ButtonGroupSizeAlias,
   ButtonGroupSlot,
   ButtonGroupState,
   ButtonGroupVisualArchetype,

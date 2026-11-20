@@ -18,7 +18,7 @@ function Example() {
   return (
     <AlertDialog defaultOpen>
       <AlertDialogTrigger>Delete</AlertDialogTrigger>
-      <AlertDialogPopup variant="destructive">
+      <AlertDialogPopup variant="error">
         <AlertDialogHeader>
           <AlertDialogMedia>!</AlertDialogMedia>
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
@@ -45,11 +45,25 @@ describe('AlertDialog', () => {
     const popup = document.querySelector('[data-slot="alert-dialog-popup"]')
     expect(popup).not.toBeNull()
     expect(popup).toHaveClass('a63-AlertDialog-popup')
-    expect(popup).toHaveAttribute('data-variant', 'destructive')
+    expect(popup).toHaveAttribute('data-variant', 'error')
+    expect(popup).toHaveAttribute('data-size', 'md')
     expect(document.querySelector('[data-slot="alert-dialog-backdrop"]')).not.toBeNull()
     expect(document.querySelector('[data-slot="alert-dialog-media"]')).not.toBeNull()
     expect(document.querySelector('[data-slot="alert-dialog-title"]')).not.toBeNull()
     expect(document.querySelector('[data-slot="alert-dialog-description"]')).not.toBeNull()
+  })
+
+  it('accepts the deprecated variant and size names', () => {
+    render(
+      <AlertDialog defaultOpen>
+        <AlertDialogPopup size="default" variant="destructive">
+          <AlertDialogTitle>Delete?</AlertDialogTitle>
+        </AlertDialogPopup>
+      </AlertDialog>
+    )
+    const popup = document.querySelector('[data-slot="alert-dialog-popup"]')
+    expect(popup).toHaveAttribute('data-variant', 'error')
+    expect(popup).toHaveAttribute('data-size', 'md')
   })
 
   it('renders action + cancel as Buttons', () => {

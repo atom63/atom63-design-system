@@ -4,7 +4,12 @@
   "maturity": "stable",
   "exportPrefix": "inputOTP",
   "lists": {
-    "states": ["rest", "active", "disabled", "invalid"],
+    "states": {
+      "values": ["rest", "current", "disabled", "invalid"],
+      "deprecatedAliases": {
+        "active": "current"
+      }
+    },
     "slots": ["input-otp", "input-otp-group", "input-otp-slot", "input-otp-separator"],
     "visualArchetypes": ["field"]
   },

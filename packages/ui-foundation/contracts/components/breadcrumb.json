@@ -4,7 +4,12 @@
   "maturity": "stable",
   "lists": {
     "compositions": ["full", "collapsed", "custom-separator"],
-    "states": ["rest", "hover", "focus", "current"],
+    "states": {
+      "values": ["rest", "hover", "focus-visible", "current"],
+      "deprecatedAliases": {
+        "focus": "focus-visible"
+      }
+    },
     "slots": [
       "breadcrumb",
       "breadcrumb-list",

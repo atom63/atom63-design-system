@@ -43,14 +43,18 @@ declared adaptation boundary. An undeclared difference is a conformance gap.
 
 ## Semantic axes
 
-Button, Badge and Input also declare an `intent` block in their contract source:
-platform-neutral axes (`tone`, `emphasis`, `content`), sizes with the token that
-sets their rendered height on each platform and, for Button, the text role of the
-label, and how each platform's props map onto them. On the web, every value of a
+Every component with a cross-renderer contract except Search Field and Skeleton,
+which have no axes, also declares an `intent` block in its contract source:
+platform-neutral axes (Button's `tone`, `emphasis`, `content`), sizes with the
+token that sets their rendered height on each platform where one is declared,
+and how each platform's props map onto them. An iOS prop names the hand-written
+Swift enum it maps (`swiftEnum`), and the generator fails unless the enum's raw
+values are exactly the mapped ones. Where iOS has no such axis, the intent
+`description` says so. On the web, every value of a
 mapped prop is either mapped (`destructive-outline` → destructive × soft) or listed
 as a web extension with a reason (`link`, the palette hues); the generator fails
 when a value is neither. `stateAliases` records state names that differ from the
-canonical ones (`focusVisible` → `focus-visible`) until a breaking release renames
+canonical ones (Input's `focus` → `focus-visible`) until a breaking release renames
 them. A test checks that the hit target, the larger of the rendered height and the
 platform's interaction floor, meets WCAG 2.5.8 on the web and 44pt on iOS at every
 size and density.

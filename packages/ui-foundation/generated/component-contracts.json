@@ -16,12 +16,28 @@
         "accordion-content",
         "accordion-content-inner"
       ],
-      "states": ["closed", "open", "focusVisible", "disabled"],
+      "states": ["closed", "open", "focus-visible", "disabled"],
+      "stateAliases": { "focusVisible": "focus-visible" },
       "tokenSlots": [],
       "visualArchetypes": ["surface", "trigger"],
       "accessibility": {
         "pattern": "accordion",
         "options": { "collapse": "collapsible", "expand": "single" }
+      },
+      "intent": {
+        "description": "What an accordion is, independent of any platform: the glyph its trigger shows. iOS has no icon axis: DisclosureGroup draws the platform's disclosure chevron.",
+        "axes": { "icon": ["chevron", "plus-minus"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "icon": {
+                "list": "iconVariants",
+                "map": { "chevron": { "icon": "chevron" }, "plus-minus": { "icon": "plus-minus" } },
+                "extensions": {}
+              }
+            }
+          }
+        }
       },
       "crossRenderer": {
         "foundationAxis": "states",
@@ -57,10 +73,16 @@
       "maturity": "stable",
       "axes": [
         { "name": "footerVariants", "values": ["default", "bare"], "default": "default" },
-        { "name": "sizes", "values": ["default", "sm"], "default": "default" },
+        {
+          "name": "sizes",
+          "values": ["md", "sm"],
+          "deprecatedAliases": { "default": "md" },
+          "default": "md"
+        },
         {
           "name": "variants",
-          "values": ["default", "destructive", "info", "success", "warning"],
+          "values": ["default", "error", "info", "success", "warning"],
+          "deprecatedAliases": { "destructive": "error" },
           "default": "default"
         }
       ],
@@ -83,6 +105,41 @@
       "tokenSlots": [],
       "visualArchetypes": ["overlay", "surface", "trigger", "action"],
       "accessibility": { "pattern": "alertdialog" },
+      "intent": {
+        "description": "What an alert dialog is, independent of any platform: the tone of the consequence it asks about, its width step and its footer chrome. iOS has none of these axes: the system alert(_:isPresented:actions:message:) draws one style, and a destructive action is a Button with role .destructive.",
+        "axes": {
+          "tone": ["neutral", "error", "info", "success", "warning"],
+          "size": ["md", "sm"],
+          "footer": ["default", "bare"]
+        },
+        "platforms": {
+          "web": {
+            "props": {
+              "variant": {
+                "list": "variants",
+                "map": {
+                  "default": { "tone": "neutral" },
+                  "error": { "tone": "error" },
+                  "info": { "tone": "info" },
+                  "success": { "tone": "success" },
+                  "warning": { "tone": "warning" }
+                },
+                "extensions": {}
+              },
+              "size": {
+                "list": "sizes",
+                "map": { "md": { "size": "md" }, "sm": { "size": "sm" } },
+                "extensions": {}
+              },
+              "footerVariant": {
+                "list": "footerVariants",
+                "map": { "default": { "footer": "default" }, "bare": { "footer": "bare" } },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "confirmationDialog",
@@ -239,7 +296,14 @@
       "source": "packages/ui-foundation/contracts/components/autocomplete.json",
       "exportName": "autocompleteContract",
       "maturity": "stable",
-      "axes": [{ "name": "sizes", "values": ["sm", "default", "lg"], "default": "default" }],
+      "axes": [
+        {
+          "name": "sizes",
+          "values": ["sm", "md", "lg"],
+          "deprecatedAliases": { "default": "md" },
+          "default": "md"
+        }
+      ],
       "slots": [
         "autocomplete-input-group",
         "autocomplete-start-addon",
@@ -283,7 +347,12 @@
         { "name": "compositions", "values": ["standalone", "badge", "group"] },
         { "name": "rings", "values": ["unseen", "seen"] },
         { "name": "shapes", "values": ["circle", "square"], "default": "circle" },
-        { "name": "sizes", "values": ["xs", "sm", "default", "lg"], "default": "default" }
+        {
+          "name": "sizes",
+          "values": ["xs", "sm", "md", "lg"],
+          "deprecatedAliases": { "default": "md" },
+          "default": "md"
+        }
       ],
       "slots": [
         "avatar",
@@ -414,7 +483,8 @@
         }
       ],
       "slots": ["badge", "badge-dot"],
-      "states": ["resting", "interactive", "disabled", "focus-visible"],
+      "states": ["rest", "interactive", "disabled", "focus-visible"],
+      "stateAliases": { "resting": "rest" },
       "tokenSlots": [],
       "visualArchetypes": ["marker"],
       "intent": {
@@ -538,8 +608,7 @@
               }
             }
           }
-        },
-        "stateAliases": { "resting": "rest" }
+        }
       },
       "crossRenderer": {
         "foundationAxis": "variants",
@@ -574,7 +643,8 @@
         "breadcrumb-separator",
         "breadcrumb-ellipsis"
       ],
-      "states": ["rest", "hover", "focus", "current"],
+      "states": ["rest", "hover", "focus-visible", "current"],
+      "stateAliases": { "focus": "focus-visible" },
       "tokenSlots": [],
       "visualArchetypes": []
     },
@@ -590,7 +660,7 @@
           "values": [
             "xs",
             "sm",
-            "default",
+            "md",
             "lg",
             "xl",
             "icon-xs",
@@ -599,7 +669,8 @@
             "icon-lg",
             "icon-xl"
           ],
-          "default": "default"
+          "deprecatedAliases": { "default": "md" },
+          "default": "md"
         }
       ],
       "slots": ["button-group", "button-group-text", "button-group-separator"],
@@ -652,7 +723,8 @@
         }
       ],
       "slots": ["root", "label", "icon", "spinner", "indicator"],
-      "states": ["rest", "hover", "pressed", "focusVisible", "disabled", "loading"],
+      "states": ["rest", "hover", "pressed", "focus-visible", "disabled", "loading"],
+      "stateAliases": { "focusVisible": "focus-visible" },
       "tokenSlots": [
         "button.background",
         "button.foreground",
@@ -791,8 +863,7 @@
               }
             }
           }
-        },
-        "stateAliases": { "focusVisible": "focus-visible" }
+        }
       },
       "crossRenderer": {
         "foundationAxis": "states",
@@ -863,6 +934,25 @@
       ],
       "tokenSlots": [],
       "visualArchetypes": ["surface", "action", "choice"],
+      "intent": {
+        "description": "What a calendar is, independent of any platform: whether it picks one date, several or a range. iOS has no Atom63UI enum for it: the mode is the choice of DatePicker or MultiDatePicker.",
+        "axes": { "selectionMode": ["single", "multiple", "range"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "mode": {
+                "list": "selectionModes",
+                "map": {
+                  "single": { "selectionMode": "single" },
+                  "multiple": { "selectionMode": "multiple" },
+                  "range": { "selectionMode": "range" }
+                },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "datePicker",
@@ -1350,6 +1440,21 @@
       "states": ["rest", "focus-visible"],
       "tokenSlots": [],
       "visualArchetypes": ["action"],
+      "intent": {
+        "description": "What a destination link is, independent of any platform: whether it stays in the product or leaves it. iOS has no Atom63UI enum for it: the kind picks NavigationLink or Link.",
+        "axes": { "kind": ["internal", "external"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "kind": {
+                "list": "kinds",
+                "map": { "internal": { "kind": "internal" }, "external": { "kind": "external" } },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "destinationLink",
@@ -1385,7 +1490,12 @@
       "axes": [
         { "name": "footerVariants", "values": ["default", "bare"], "default": "default" },
         { "name": "mobilePlacements", "values": ["bottom", "center"], "default": "bottom" },
-        { "name": "sizes", "values": ["sm", "default", "lg"], "default": "default" }
+        {
+          "name": "sizes",
+          "values": ["sm", "md", "lg"],
+          "deprecatedAliases": { "default": "md" },
+          "default": "md"
+        }
       ],
       "slots": [
         "dialog-portal",
@@ -1405,6 +1515,38 @@
       "tokenSlots": [],
       "visualArchetypes": ["overlay", "surface", "trigger", "action"],
       "accessibility": { "pattern": "dialog-modal" },
+      "intent": {
+        "description": "What a dialog is, independent of any platform: its width step, where it sits on a narrow screen and its footer chrome. iOS has none of these axes: the sheet's height comes from presentationDetents(_:) and its placement and footer from the platform.",
+        "axes": {
+          "size": ["sm", "md", "lg"],
+          "mobilePlacement": ["bottom", "center"],
+          "footer": ["default", "bare"]
+        },
+        "platforms": {
+          "web": {
+            "props": {
+              "size": {
+                "list": "sizes",
+                "map": { "sm": { "size": "sm" }, "md": { "size": "md" }, "lg": { "size": "lg" } },
+                "extensions": {}
+              },
+              "mobilePlacement": {
+                "list": "mobilePlacements",
+                "map": {
+                  "bottom": { "mobilePlacement": "bottom" },
+                  "center": { "mobilePlacement": "center" }
+                },
+                "extensions": {}
+              },
+              "footerVariant": {
+                "list": "footerVariants",
+                "map": { "default": { "footer": "default" }, "bare": { "footer": "bare" } },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "sheet",
@@ -1499,6 +1641,24 @@
       "tokenSlots": [],
       "visualArchetypes": ["menu", "overlay", "trigger", "action", "choice"],
       "accessibility": { "pattern": "menu-button", "options": { "wrap": "wrap" } },
+      "intent": {
+        "description": "What a menu item is, independent of any platform: whether its action is destructive. iOS has no Atom63UI enum for it: Menu takes a Button with the SwiftUI role .destructive.",
+        "axes": { "itemTone": ["neutral", "destructive"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "itemVariant": {
+                "list": "itemVariants",
+                "map": {
+                  "default": { "itemTone": "neutral" },
+                  "destructive": { "itemTone": "destructive" }
+                },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "menu",
@@ -1550,6 +1710,30 @@
       "states": ["empty", "error", "collapsed", "expanded"],
       "tokenSlots": [],
       "visualArchetypes": ["surface", "action"],
+      "intent": {
+        "description": "What an empty state is, independent of any platform: how its media is drawn and its tone. AtomContentStateView always shows an SF Symbol, so iOS has no media axis; the web Empty has no tone, which only AtomContentStateView takes so far.",
+        "axes": { "media": ["default", "icon"], "tone": ["neutral", "error"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "mediaVariant": {
+                "list": "mediaVariants",
+                "map": { "default": { "media": "default" }, "icon": { "media": "icon" } },
+                "extensions": {}
+              }
+            }
+          },
+          "ios": {
+            "props": {
+              "tone": {
+                "swiftEnum": "AtomContentStateTone",
+                "map": { "neutral": { "tone": "neutral" }, "error": { "tone": "error" } },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "contentState",
@@ -1595,7 +1779,8 @@
         "feedback-state-description",
         "feedback-state-content"
       ],
-      "states": ["idle", "busy", "actionable"],
+      "states": ["rest", "busy", "actionable"],
+      "stateAliases": { "idle": "rest" },
       "tokenSlots": [],
       "visualArchetypes": ["action"]
     },
@@ -1627,6 +1812,43 @@
       "states": ["default", "invalid", "disabled"],
       "tokenSlots": [],
       "visualArchetypes": ["field", "choice"],
+      "intent": {
+        "description": "What a form field is, independent of any platform: how its label and control are laid out, how a fieldset legend is drawn, and its chrome. iOS has no orientation or legend axis (native Form layout reflows for Dynamic Type); the web Field has no variant, which only AtomFormField takes so far.",
+        "axes": {
+          "orientation": ["vertical", "horizontal", "responsive"],
+          "legend": ["legend", "label"],
+          "variant": ["default", "filled"]
+        },
+        "platforms": {
+          "web": {
+            "props": {
+              "orientation": {
+                "list": "orientations",
+                "map": {
+                  "vertical": { "orientation": "vertical" },
+                  "horizontal": { "orientation": "horizontal" },
+                  "responsive": { "orientation": "responsive" }
+                },
+                "extensions": {}
+              },
+              "legendVariant": {
+                "list": "legendVariants",
+                "map": { "legend": { "legend": "legend" }, "label": { "legend": "label" } },
+                "extensions": {}
+              }
+            }
+          },
+          "ios": {
+            "props": {
+              "variant": {
+                "swiftEnum": "AtomFieldVariant",
+                "map": { "default": { "variant": "default" }, "filled": { "variant": "filled" } },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "formField",
@@ -1653,7 +1875,8 @@
       "maturity": "stable",
       "axes": [],
       "slots": ["form-item", "form-label", "form-control", "form-description", "form-message"],
-      "states": ["default", "invalid"],
+      "states": ["rest", "invalid"],
+      "stateAliases": { "default": "rest" },
       "tokenSlots": [],
       "visualArchetypes": ["field"]
     },
@@ -1680,7 +1903,8 @@
         "frame-panel-description",
         "frame-panel-footer"
       ],
-      "states": ["default", "border-off", "border-subtle", "border-strong"],
+      "states": ["rest", "border-off", "border-subtle", "border-strong"],
+      "stateAliases": { "default": "rest" },
       "tokenSlots": [],
       "visualArchetypes": ["surface"]
     },
@@ -1706,7 +1930,8 @@
       "maturity": "stable",
       "axes": [],
       "slots": ["input-otp", "input-otp-group", "input-otp-slot", "input-otp-separator"],
-      "states": ["rest", "active", "disabled", "invalid"],
+      "states": ["rest", "current", "disabled", "invalid"],
+      "stateAliases": { "active": "current" },
       "tokenSlots": [],
       "visualArchetypes": ["field"]
     },
@@ -1812,10 +2037,15 @@
       "source": "packages/ui-foundation/contracts/components/item.json",
       "exportName": "itemContract",
       "maturity": "stable",
-      "description": "Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size (default/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off data-variant / data-size, and styles a row with aria-current or data-selected as current or selected. ItemGroup takes variant (default/inset): inset is a rounded card with hairline dividers, the grouped settings list. ItemGroup surface (card/muted, data-surface) fills an inset group: card (the default) is the panel fill for a grey page, muted is the grey fill for a white page. A selected or current row follows tone (neutral/accent, data-tone): neutral is the muted fill with primary text, accent is the opt-in primary wash with accent text.",
+      "description": "Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size (md/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off data-variant / data-size, and styles a row with aria-current or data-selected as current or selected. ItemGroup takes variant (default/inset): inset is a rounded card with hairline dividers, the grouped settings list. ItemGroup surface (card/muted, data-surface) fills an inset group: card (the default) is the panel fill for a grey page, muted is the grey fill for a white page. A selected or current row follows tone (neutral/accent, data-tone): neutral is the muted fill with primary text, accent is the opt-in primary wash with accent text.",
       "axes": [
         { "name": "variants", "values": ["default", "outline", "muted"], "default": "default" },
-        { "name": "sizes", "values": ["default", "sm", "xs"], "default": "default" },
+        {
+          "name": "sizes",
+          "values": ["md", "sm", "xs"],
+          "deprecatedAliases": { "default": "md" },
+          "default": "md"
+        },
         { "name": "mediaVariants", "values": ["default", "icon", "image"], "default": "default" },
         { "name": "groupVariants", "values": ["default", "inset"], "default": "default" },
         { "name": "groupSurfaces", "values": ["card", "muted"], "default": "card" },
@@ -1833,7 +2063,8 @@
         "item-footer",
         "item-separator"
       ],
-      "states": ["rest", "hover", "focus", "selected", "current"],
+      "states": ["rest", "hover", "focus-visible", "selected", "current"],
+      "stateAliases": { "focus": "focus-visible" },
       "tokenSlots": [],
       "visualArchetypes": ["surface"],
       "intent": {
@@ -1927,6 +2158,25 @@
       "states": ["idle", "loading", "failed", "exhausted", "hidden", "custom"],
       "tokenSlots": [],
       "visualArchetypes": ["surface", "action"],
+      "intent": {
+        "description": "What a load-more trigger is, independent of any platform: how prominently it is drawn. iOS has no variant axis: AtomLoadMoreView takes only its AtomPaginationIntent state.",
+        "axes": { "emphasis": ["default", "minimal", "prominent"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "variant": {
+                "list": "variants",
+                "map": {
+                  "default": { "emphasis": "default" },
+                  "minimal": { "emphasis": "minimal" },
+                  "prominent": { "emphasis": "prominent" }
+                },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "pagination",
@@ -2172,7 +2422,8 @@
         "navigation-menu-link",
         "navigation-menu-indicator"
       ],
-      "states": ["closed", "open", "active", "disabled", "starting", "ending"],
+      "states": ["closed", "open", "current", "disabled", "starting", "ending"],
+      "stateAliases": { "active": "current" },
       "tokenSlots": [],
       "visualArchetypes": ["trigger", "overlay", "surface"]
     },
@@ -2356,6 +2607,29 @@
       "tokenSlots": [],
       "visualArchetypes": ["choice"],
       "accessibility": { "pattern": "radio" },
+      "intent": {
+        "description": "What a radio is, independent of any platform: its size and whether its indicator is drawn. iOS has neither axis: Picker(.inline) and AtomSelectionRow draw a checkmark row at one size.",
+        "axes": { "size": ["sm", "md"], "indicator": ["visible", "hidden"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "size": {
+                "list": "sizes",
+                "map": { "sm": { "size": "sm" }, "md": { "size": "md" } },
+                "extensions": {}
+              },
+              "indicator": {
+                "list": "indicators",
+                "map": {
+                  "visible": { "indicator": "visible" },
+                  "hidden": { "indicator": "hidden" }
+                },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "radioGroup",
@@ -2409,7 +2683,8 @@
         "resizable-handle",
         "resizable-handle-grip"
       ],
-      "states": ["idle", "hover", "focus-visible", "dragging", "disabled"],
+      "states": ["rest", "hover", "focus-visible", "dragging", "disabled"],
+      "stateAliases": { "idle": "rest" },
       "tokenSlots": [],
       "visualArchetypes": []
     },
@@ -2428,7 +2703,8 @@
         "scroll-area-thumb",
         "scroll-area-corner"
       ],
-      "states": ["idle", "hovering", "scrolling", "focus-visible"],
+      "states": ["rest", "hover", "scrolling", "focus-visible"],
+      "stateAliases": { "hovering": "hover", "idle": "rest" },
       "tokenSlots": [],
       "visualArchetypes": ["range"]
     },
@@ -2446,7 +2722,8 @@
         "scrollable-list-content",
         "scrollable-list-control"
       ],
-      "states": ["idle", "can-scroll-start", "can-scroll-end", "dragging", "disabled"],
+      "states": ["rest", "can-scroll-start", "can-scroll-end", "dragging", "disabled"],
+      "stateAliases": { "idle": "rest" },
       "tokenSlots": [],
       "visualArchetypes": ["action", "range"]
     },
@@ -2516,6 +2793,35 @@
       "states": ["rest", "hover", "selected", "disabled", "focus-visible"],
       "tokenSlots": [],
       "visualArchetypes": ["segment"],
+      "intent": {
+        "description": "What a segmented control is, independent of any platform: its size, whether segments show icons or labels, and the tone of the selected segment. iOS has none of these axes: Picker(.segmented) draws at the platform size and tint, and a segment is whatever label view it is given.",
+        "axes": {
+          "size": ["sm", "md", "lg"],
+          "content": ["icon", "label"],
+          "tone": ["neutral", "accent"]
+        },
+        "platforms": {
+          "web": {
+            "props": {
+              "size": {
+                "list": "sizes",
+                "map": { "sm": { "size": "sm" }, "md": { "size": "md" }, "lg": { "size": "lg" } },
+                "extensions": {}
+              },
+              "variant": {
+                "list": "variants",
+                "map": { "icon": { "content": "icon" }, "label": { "content": "label" } },
+                "extensions": {}
+              },
+              "tone": {
+                "list": "tones",
+                "map": { "neutral": { "tone": "neutral" }, "accent": { "tone": "accent" } },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "segmentedControl",
@@ -2616,6 +2922,21 @@
           }
         ]
       },
+      "intent": {
+        "description": "What a select is, independent of any platform: its trigger size. iOS has no size axis: Picker draws at the platform size.",
+        "axes": { "size": ["sm", "md", "lg"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "size": {
+                "list": "sizes",
+                "map": { "sm": { "size": "sm" }, "md": { "size": "md" }, "lg": { "size": "lg" } },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "picker",
@@ -2708,7 +3029,8 @@
         { "name": "tones", "values": ["neutral", "accent"], "default": "neutral" }
       ],
       "slots": [],
-      "states": ["rest", "hover", "active", "expanded", "collapsed", "focus-visible"],
+      "states": ["rest", "hover", "current", "expanded", "collapsed", "focus-visible"],
+      "stateAliases": { "active": "current" },
       "tokenSlots": [],
       "visualArchetypes": ["action", "trigger"]
     },
@@ -2817,6 +3139,47 @@
       "states": ["rest", "focus-visible", "dragging", "disabled"],
       "tokenSlots": [],
       "visualArchetypes": ["range"],
+      "intent": {
+        "description": "What a slider is, independent of any platform: its direction, whether it picks one value or a range, and the tone of its track. atomSliderTone(_:) takes the tone on iOS; the native Slider is horizontal and single-valued only, so iOS has no orientation or mode axis.",
+        "axes": {
+          "orientation": ["horizontal", "vertical"],
+          "mode": ["single", "range"],
+          "tone": ["accent", "neutral"]
+        },
+        "platforms": {
+          "web": {
+            "props": {
+              "orientation": {
+                "list": "orientations",
+                "map": {
+                  "horizontal": { "orientation": "horizontal" },
+                  "vertical": { "orientation": "vertical" }
+                },
+                "extensions": {}
+              },
+              "mode": {
+                "list": "modes",
+                "map": { "single": { "mode": "single" }, "range": { "mode": "range" } },
+                "extensions": {}
+              },
+              "tone": {
+                "list": "tones",
+                "map": { "accent": { "tone": "accent" }, "neutral": { "tone": "neutral" } },
+                "extensions": {}
+              }
+            }
+          },
+          "ios": {
+            "props": {
+              "tone": {
+                "swiftEnum": "AtomTrackTone",
+                "map": { "accent": { "tone": "accent" }, "neutral": { "tone": "neutral" } },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "slider",
@@ -2873,6 +3236,21 @@
       ],
       "visualArchetypes": ["choice"],
       "accessibility": { "pattern": "switch" },
+      "intent": {
+        "description": "What a switch is, independent of any platform: its size. iOS has no size axis: AtomToggle draws the system switch at one size.",
+        "axes": { "size": ["sm", "md"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "size": {
+                "list": "sizes",
+                "map": { "sm": { "size": "sm" }, "md": { "size": "md" } },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "toggle",
@@ -2901,10 +3279,15 @@
       "source": "packages/ui-foundation/contracts/components/table.json",
       "exportName": "tableContract",
       "maturity": "stable",
-      "description": "The tabular-data set: a horizontally scrollable container around a semantic <table>. The container takes size (default/sm) and variant (default/plain); TableHead and TableCell can pin to the start or end edge. The DS recipe reads these off data-size / data-variant / data-sticky. The container also takes tone (neutral/accent, data-tone), which colours selected rows: neutral is the muted fill with primary text, accent the opt-in primary wash with accent text.",
+      "description": "The tabular-data set: a horizontally scrollable container around a semantic <table>. The container takes size (md/sm) and variant (default/plain); TableHead and TableCell can pin to the start or end edge. The DS recipe reads these off data-size / data-variant / data-sticky. The container also takes tone (neutral/accent, data-tone), which colours selected rows: neutral is the muted fill with primary text, accent the opt-in primary wash with accent text.",
       "axes": [
         { "name": "variants", "values": ["default", "plain"], "default": "default" },
-        { "name": "sizes", "values": ["default", "sm"], "default": "default" },
+        {
+          "name": "sizes",
+          "values": ["md", "sm"],
+          "deprecatedAliases": { "default": "md" },
+          "default": "md"
+        },
         { "name": "stickyEdges", "values": ["start", "end"] },
         { "name": "tones", "values": ["neutral", "accent"], "default": "neutral" }
       ],
@@ -2934,7 +3317,12 @@
           "values": ["default", "underline", "attached"],
           "default": "default"
         },
-        { "name": "sizes", "values": ["xs", "sm", "default", "lg"], "default": "default" },
+        {
+          "name": "sizes",
+          "values": ["xs", "sm", "md", "lg"],
+          "deprecatedAliases": { "default": "md" },
+          "default": "md"
+        },
         { "name": "orientations", "values": ["horizontal", "vertical"] }
       ],
       "slots": ["tabs", "tabs-list", "tabs-tab", "tab-indicator", "tabs-content"],
@@ -2942,6 +3330,47 @@
       "tokenSlots": [],
       "visualArchetypes": ["segment", "surface"],
       "accessibility": { "pattern": "tabs", "options": { "activation": "manual" } },
+      "intent": {
+        "description": "What a tab list is, independent of any platform: its style, size and direction. iOS has no Atom63UI enum for any of them: the style picks the renderer (swiftUIRendererByVariant: Picker(.segmented) or AtomTabRow), both draw at one size, and both run horizontally.",
+        "axes": {
+          "style": ["default", "underline", "attached"],
+          "size": ["xs", "sm", "md", "lg"],
+          "orientation": ["horizontal", "vertical"]
+        },
+        "platforms": {
+          "web": {
+            "props": {
+              "variant": {
+                "list": "variants",
+                "map": {
+                  "default": { "style": "default" },
+                  "underline": { "style": "underline" },
+                  "attached": { "style": "attached" }
+                },
+                "extensions": {}
+              },
+              "size": {
+                "list": "sizes",
+                "map": {
+                  "xs": { "size": "xs" },
+                  "sm": { "size": "sm" },
+                  "md": { "size": "md" },
+                  "lg": { "size": "lg" }
+                },
+                "extensions": {}
+              },
+              "orientation": {
+                "list": "orientations",
+                "map": {
+                  "horizontal": { "orientation": "horizontal" },
+                  "vertical": { "orientation": "vertical" }
+                },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "tabs",
@@ -3009,6 +3438,30 @@
         "field.minHeight"
       ],
       "visualArchetypes": ["field"],
+      "intent": {
+        "description": "What a multi-line text field is, independent of any platform: its size and its chrome. AtomTextEditor has no size axis (its height is minHeight); the web Textarea has no variant, which only AtomTextEditor takes so far.",
+        "axes": { "size": ["sm", "md", "lg"], "variant": ["default", "filled"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "size": {
+                "list": "sizes",
+                "map": { "sm": { "size": "sm" }, "md": { "size": "md" }, "lg": { "size": "lg" } },
+                "extensions": {}
+              }
+            }
+          },
+          "ios": {
+            "props": {
+              "variant": {
+                "swiftEnum": "AtomFieldVariant",
+                "map": { "default": { "variant": "default" }, "filled": { "variant": "filled" } },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "textEditor",
@@ -3107,7 +3560,8 @@
         { "name": "selectionModes", "values": ["single", "multiple"], "default": "single" }
       ],
       "slots": ["toggle-group", "toggle-group-item", "toggle-group-separator"],
-      "states": ["rest", "hover", "focus", "selected", "disabled"],
+      "states": ["rest", "hover", "focus-visible", "selected", "disabled"],
+      "stateAliases": { "focus": "focus-visible" },
       "tokenSlots": [
         "segment.gap",
         "segment.radius",
@@ -3187,7 +3641,8 @@
         { "name": "tones", "values": ["neutral", "accent", "subtle"], "default": "neutral" }
       ],
       "slots": ["toggle", "toggle-content"],
-      "states": ["off", "on", "rest", "hover", "pressed", "disabled", "focus"],
+      "states": ["off", "on", "rest", "hover", "pressed", "disabled", "focus-visible"],
+      "stateAliases": { "focus": "focus-visible" },
       "tokenSlots": [
         "toggle.background",
         "toggle.foreground",
@@ -3204,6 +3659,30 @@
         "toggle.textShadow"
       ],
       "visualArchetypes": ["toggle"],
+      "intent": {
+        "description": "What a toggle is, independent of any platform: its size and the tone of its pressed state. iOS has neither axis: AtomChip takes isSelected only, at one touch size and tint.",
+        "axes": { "size": ["sm", "md", "lg"], "tone": ["neutral", "accent", "subtle"] },
+        "platforms": {
+          "web": {
+            "props": {
+              "size": {
+                "list": "sizes",
+                "map": { "sm": { "size": "sm" }, "md": { "size": "md" }, "lg": { "size": "lg" } },
+                "extensions": {}
+              },
+              "tone": {
+                "list": "tones",
+                "map": {
+                  "neutral": { "tone": "neutral" },
+                  "accent": { "tone": "accent" },
+                  "subtle": { "tone": "subtle" }
+                },
+                "extensions": {}
+              }
+            }
+          }
+        }
+      },
       "crossRenderer": {
         "foundationAxis": "states",
         "catalogItem": "chip",

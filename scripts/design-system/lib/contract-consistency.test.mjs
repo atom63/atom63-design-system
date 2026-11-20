@@ -24,6 +24,14 @@ describe('checkContracts', () => {
     ])
   })
 
+  it('leaves the physical screen edges in PHYSICAL_SIDES alone', () => {
+    const found = checkContracts([
+      { component: 'sheet', lists: { sides: ['left', 'right'] } },
+      { component: 'other', lists: { sides: ['left'] } },
+    ])
+    assert.deepEqual(lines(found), ['physical-value other.sides left'])
+  })
+
   it('flags state synonyms of rest, focus-visible, hover and current', () => {
     const found = checkContracts([
       {

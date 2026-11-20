@@ -1,5 +1,6 @@
 import {
   type TableSize,
+  type TableSizeAlias,
   type TableStickyEdge,
   type TableTone,
   type TableVariant,
@@ -18,7 +19,8 @@ import { cn } from '../../lib/cn'
    inline edge while the container scrolls. */
 
 export type TableProps = React.ComponentProps<'table'> & {
-  size?: TableSize
+  /** `'default'` is a deprecated alias of `'md'`. */
+  size?: TableSize | TableSizeAlias
   /**
    * How selected rows (`data-state="selected"`) are coloured. `neutral` (the
    * default) is a muted fill with primary text; `accent` is a light primary wash
@@ -38,7 +40,7 @@ export function Table({
   return (
     <div
       className="a63-Table-container"
-      data-size={size}
+      data-size={size === 'default' ? 'md' : size}
       data-slot="table-container"
       data-tone={tone}
       data-variant={variant}

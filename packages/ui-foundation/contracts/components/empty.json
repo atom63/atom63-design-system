@@ -36,6 +36,47 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What an empty state is, independent of any platform: how its media is drawn and its tone. AtomContentStateView always shows an SF Symbol, so iOS has no media axis; the web Empty has no tone, which only AtomContentStateView takes so far.",
+    "axes": {
+      "media": ["default", "icon"],
+      "tone": ["neutral", "error"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "mediaVariant": {
+            "list": "mediaVariants",
+            "map": {
+              "default": {
+                "media": "default"
+              },
+              "icon": {
+                "media": "icon"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      },
+      "ios": {
+        "props": {
+          "tone": {
+            "swiftEnum": "AtomContentStateTone",
+            "map": {
+              "neutral": {
+                "tone": "neutral"
+              },
+              "error": {
+                "tone": "error"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "contentState",

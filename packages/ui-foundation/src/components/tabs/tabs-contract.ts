@@ -9,7 +9,7 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 // TabsTab also takes the size so items scale with the list.
 
 export const tabsVariants = ['default', 'underline', 'attached'] as const
-export const tabsSizes = ['xs', 'sm', 'default', 'lg'] as const
+export const tabsSizes = ['xs', 'sm', 'md', 'lg'] as const
 export const tabsOrientations = ['horizontal', 'vertical'] as const
 export const tabsStates = ['rest', 'hover', 'selected', 'focus-visible', 'disabled'] as const
 export const tabsSlots = ['tabs', 'tabs-list', 'tabs-tab', 'tab-indicator', 'tabs-content'] as const
@@ -24,6 +24,12 @@ export type TabsOrientation = (typeof tabsOrientations)[number]
 export type TabsState = (typeof tabsStates)[number]
 export type TabsSlot = (typeof tabsSlots)[number]
 export type TabsVisualArchetype = (typeof tabsVisualArchetypes)[number]
+
+/** Earlier names of TabsSize values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const tabsSizeAliases = { default: 'md' } as const satisfies Record<string, TabsSize>
+
+/** @deprecated An earlier name of a value of TabsSize; use the value tabsSizeAliases maps it to. */
+export type TabsSizeAlias = keyof typeof tabsSizeAliases
 
 export interface TabsContract {
   /** The WAI-ARIA APG pattern the component implements. */
@@ -41,7 +47,7 @@ export interface TabsContract {
 export const tabsContract = {
   accessibility: { pattern: 'tabs', options: { activation: 'manual' } },
   defaultVariant: 'default',
-  defaultSize: 'default',
+  defaultSize: 'md',
   variants: tabsVariants,
   sizes: tabsSizes,
   slots: tabsSlots,

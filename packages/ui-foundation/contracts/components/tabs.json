@@ -5,7 +5,12 @@
   "description": "Faithful to prod @atom63/ui tabs.tsx: the TabsList carries a `variant` (default = a filled pill track, underline = an underline indicator, attached = borderless folder tabs) and a `size` ramp. TabsTab also takes the size so items scale with the list.",
   "lists": {
     "variants": ["default", "underline", "attached"],
-    "sizes": ["xs", "sm", "default", "lg"],
+    "sizes": {
+      "values": ["xs", "sm", "md", "lg"],
+      "deprecatedAliases": {
+        "default": "md"
+      }
+    },
     "orientations": ["horizontal", "vertical"],
     "states": ["rest", "hover", "selected", "focus-visible", "disabled"],
     "slots": ["tabs", "tabs-list", "tabs-tab", "tab-indicator", "tabs-content"],
@@ -19,7 +24,7 @@
       }
     },
     "defaultVariant": "default",
-    "defaultSize": "default",
+    "defaultSize": "md",
     "variants": {
       "$ref": "#/lists/variants"
     },
@@ -37,6 +42,65 @@
     },
     "visualArchetypes": {
       "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "intent": {
+    "description": "What a tab list is, independent of any platform: its style, size and direction. iOS has no Atom63UI enum for any of them: the style picks the renderer (swiftUIRendererByVariant: Picker(.segmented) or AtomTabRow), both draw at one size, and both run horizontally.",
+    "axes": {
+      "style": ["default", "underline", "attached"],
+      "size": ["xs", "sm", "md", "lg"],
+      "orientation": ["horizontal", "vertical"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "variant": {
+            "list": "variants",
+            "map": {
+              "default": {
+                "style": "default"
+              },
+              "underline": {
+                "style": "underline"
+              },
+              "attached": {
+                "style": "attached"
+              }
+            },
+            "extensions": {}
+          },
+          "size": {
+            "list": "sizes",
+            "map": {
+              "xs": {
+                "size": "xs"
+              },
+              "sm": {
+                "size": "sm"
+              },
+              "md": {
+                "size": "md"
+              },
+              "lg": {
+                "size": "lg"
+              }
+            },
+            "extensions": {}
+          },
+          "orientation": {
+            "list": "orientations",
+            "map": {
+              "horizontal": {
+                "orientation": "horizontal"
+              },
+              "vertical": {
+                "orientation": "vertical"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
     }
   },
   "crossRenderer": {

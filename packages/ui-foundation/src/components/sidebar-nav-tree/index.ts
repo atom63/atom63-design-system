@@ -2,6 +2,7 @@
 export {
   sidebarNavTreeContract,
   sidebarNavTreeParts,
+  sidebarNavTreeStateAliases,
   sidebarNavTreeStates,
   sidebarNavTreeTones,
   sidebarNavTreeVisualArchetypes,
@@ -10,6 +11,7 @@ export type {
   SidebarNavTreeContract,
   SidebarNavTreePart,
   SidebarNavTreeState,
+  SidebarNavTreeStateAlias,
   SidebarNavTreeTone,
   SidebarNavTreeVisualArchetype,
 } from './sidebar-nav-tree-contract'

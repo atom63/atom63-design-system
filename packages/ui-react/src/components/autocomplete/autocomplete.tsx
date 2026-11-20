@@ -1,5 +1,6 @@
 'use client'
 
+import type { AutocompleteSize, AutocompleteSizeAlias } from '@atom63/ui-foundation'
 import { Autocomplete as AutocompletePrimitive } from '@base-ui/react/autocomplete'
 import type * as React from 'react'
 
@@ -57,7 +58,9 @@ export interface AutocompleteInputProps extends Omit<AutocompletePrimitive.Input
   showTrigger?: boolean
   showClear?: boolean
   startAddon?: React.ReactNode
-  size?: 'sm' | 'default' | 'lg' | number
+  /** A contract size, or a number for the native character width. `'default'` is a deprecated
+   *  alias of `'md'`. */
+  size?: AutocompleteSize | AutocompleteSizeAlias | number
   /** Draws the danger edge and sets `aria-invalid`, as `Input`'s `invalid` does.
    *  `aria-invalid` on its own draws the same state. */
   invalid?: boolean
@@ -78,7 +81,7 @@ export function AutocompleteInput({
   triggerProps,
   ...props
 }: AutocompleteInputProps): React.ReactElement {
-  const sizeValue = size ?? 'default'
+  const sizeValue = size === undefined || size === 'default' ? 'md' : size
   const dataSize = typeof sizeValue === 'number' ? undefined : sizeValue
   // Numeric size maps to the native <input size> attribute for character-width
   // sizing (matches prod's <Input nativeInput size={number}>); string sizes drive

@@ -5,7 +5,7 @@ import type { A11yPatternBinding } from '../../a11y/types'
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 export const accordionIconVariants = ['chevron', 'plus-minus'] as const
-export const accordionStates = ['closed', 'open', 'focusVisible', 'disabled'] as const
+export const accordionStates = ['closed', 'open', 'focus-visible', 'disabled'] as const
 export const accordionSlots = [
   'accordion',
   'accordion-item',
@@ -23,6 +23,15 @@ export type AccordionIconVariant = (typeof accordionIconVariants)[number]
 export type AccordionState = (typeof accordionStates)[number]
 export type AccordionSlot = (typeof accordionSlots)[number]
 export type AccordionVisualArchetype = (typeof accordionVisualArchetypes)[number]
+
+/** Earlier names of AccordionState values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const accordionStateAliases = { focusVisible: 'focus-visible' } as const satisfies Record<
+  string,
+  AccordionState
+>
+
+/** @deprecated An earlier name of a value of AccordionState; use the value accordionStateAliases maps it to. */
+export type AccordionStateAlias = keyof typeof accordionStateAliases
 
 export interface AccordionContract {
   /** The WAI-ARIA APG pattern the component implements. */

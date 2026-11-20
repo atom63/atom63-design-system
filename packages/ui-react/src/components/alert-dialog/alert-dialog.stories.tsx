@@ -122,7 +122,7 @@ function StagedAlert({
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction variant={variant === 'destructive' ? 'destructive' : 'primary'}>
+                <AlertDialogAction variant={variant === 'error' ? 'destructive' : 'primary'}>
                   Continue
                 </AlertDialogAction>
               </AlertDialogFooter>
@@ -138,10 +138,10 @@ export const Playground: Story = {
   render: () => (
     <AlertDialog>
       <AlertDialogTrigger render={<Button variant="outline">Delete project</Button>} />
-      <AlertDialogPopup variant="destructive">
+      <AlertDialogPopup variant="error">
         <AlertDialogHeader>
           <AlertDialogMedia>
-            <VariantIcon variant="destructive" />
+            <VariantIcon variant="error" />
           </AlertDialogMedia>
           <AlertDialogTitle>Delete this project?</AlertDialogTitle>
           <AlertDialogDescription>
@@ -194,7 +194,7 @@ export const Themes: Story = {
       {themes.map(theme =>
         (['light', 'dark'] as const).map(mode => (
           <UIProvider key={theme + mode} mode={mode} theme={theme}>
-            <StagedAlert label={`${theme} / ${mode}`} variant="destructive" />
+            <StagedAlert label={`${theme} / ${mode}`} variant="error" />
           </UIProvider>
         ))
       )}
@@ -226,7 +226,7 @@ export const Endpoints: Story = {
         },
       ].map(endpoint => (
         <UIProvider key={endpoint.label} {...endpoint.props}>
-          <StagedAlert label={endpoint.label} variant="destructive" />
+          <StagedAlert label={endpoint.label} variant="error" />
         </UIProvider>
       ))}
     </div>

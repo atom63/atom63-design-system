@@ -12,7 +12,7 @@ export const buttonGroupOrientations = ['horizontal', 'vertical'] as const
 export const buttonGroupSizes = [
   'xs',
   'sm',
-  'default',
+  'md',
   'lg',
   'xl',
   'icon-xs',
@@ -38,6 +38,15 @@ export type ButtonGroupSlot = (typeof buttonGroupSlots)[number]
 export type ButtonGroupState = (typeof buttonGroupStates)[number]
 export type ButtonGroupVisualArchetype = (typeof buttonGroupVisualArchetypes)[number]
 
+/** Earlier names of ButtonGroupSize values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const buttonGroupSizeAliases = { default: 'md' } as const satisfies Record<
+  string,
+  ButtonGroupSize
+>
+
+/** @deprecated An earlier name of a value of ButtonGroupSize; use the value buttonGroupSizeAliases maps it to. */
+export type ButtonGroupSizeAlias = keyof typeof buttonGroupSizeAliases
+
 export interface ButtonGroupContract {
   defaultOrientation: ButtonGroupOrientation
   defaultSize: ButtonGroupSize
@@ -50,7 +59,7 @@ export interface ButtonGroupContract {
 
 export const buttonGroupContract = {
   defaultOrientation: 'horizontal',
-  defaultSize: 'default',
+  defaultSize: 'md',
   orientations: buttonGroupOrientations,
   sizes: buttonGroupSizes,
   slots: buttonGroupSlots,

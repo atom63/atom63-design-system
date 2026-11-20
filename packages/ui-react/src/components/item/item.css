@@ -47,11 +47,11 @@
    row) for default and sm rows, static ones included. Elsewhere the variable is
    unset: the static rule then computes to no minimum, and the interactive rule
    keeps its control-height floor, so nothing changes outside a phone. */
-.a63-ItemGroup[data-variant='inset'] > .a63-Item:is([data-size='default'], [data-size='sm']) {
+.a63-ItemGroup[data-variant='inset'] > .a63-Item:is([data-size='md'], [data-size='sm']) {
   min-height: calc(var(--a63-inset-row-min-size) * var(--a63-density-scale, 1));
 }
 .a63-ItemGroup[data-variant='inset']
-  > :where(a, button, [role='button'], [role='link']).a63-Item[data-size='default'] {
+  > :where(a, button, [role='button'], [role='link']).a63-Item[data-size='md'] {
   min-height: max(
     calc(var(--a63-inset-row-min-size, 0px) * var(--a63-density-scale, 1)),
     calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
@@ -109,7 +109,7 @@
 }
 /* Each size sits on its own rung — they all read `sm` before, so `default` and
    `xs` rows were floored by the wrong one. */
-:where(a, button, [role='button'], [role='link']).a63-Item[data-size='default'] {
+:where(a, button, [role='button'], [role='link']).a63-Item[data-size='md'] {
   min-height: max(
     calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
     var(--a63-control-min-size)
@@ -156,7 +156,7 @@
 
 /* Sizes (gap + padding). Block padding comes from the row contract so the
    design-language axis can retune row density; inline padding stays local. */
-.a63-Item[data-size='default'] {
+.a63-Item[data-size='md'] {
   gap: var(--a63-space-4);
   padding: var(--a63-row-padding-block-md) var(--a63-space-4);
 }

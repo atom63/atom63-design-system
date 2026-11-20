@@ -3,7 +3,12 @@
 import { Dialog as DialogPrimitive } from '@base-ui/react/dialog'
 import { mergeProps } from '@base-ui/react/merge-props'
 import { useRender } from '@base-ui/react/use-render'
-import type { DialogFooterVariant, DialogMobilePlacement, DialogSize } from '@atom63/ui-foundation'
+import type {
+  DialogFooterVariant,
+  DialogMobilePlacement,
+  DialogSize,
+  DialogSizeAlias,
+} from '@atom63/ui-foundation'
 import * as React from 'react'
 
 import { cn } from '../../lib/cn'
@@ -121,14 +126,15 @@ export function DialogPopup({
   showCloseButton = true,
   bottomStickOnMobile = true,
   mobilePlacement,
-  size = 'default',
+  size = 'md',
   closeProps,
   portalProps,
   ...props
 }: DialogPrimitive.Popup.Props & {
   showCloseButton?: boolean
   mobilePlacement?: DialogMobilePlacement
-  size?: DialogSize
+  /** The popup width. `'default'` is a deprecated alias of `'md'`. */
+  size?: DialogSize | DialogSizeAlias
   /** @deprecated Use `mobilePlacement="bottom"` or `"center"` instead. */
   bottomStickOnMobile?: boolean
   closeProps?: DialogPrimitive.Close.Props
@@ -146,7 +152,7 @@ export function DialogPopup({
           aria-modal={modal === false ? undefined : true}
           className={cn('a63-Dialog-popup', className)}
           data-mobile-placement={resolvedMobilePlacement}
-          data-size={size}
+          data-size={size === 'default' ? 'md' : size}
           data-slot="dialog-popup"
           data-stick-bottom={stickToBottomOnMobile ? '' : undefined}
           {...props}

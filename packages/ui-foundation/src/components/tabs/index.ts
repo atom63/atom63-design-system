@@ -2,6 +2,7 @@
 export {
   tabsContract,
   tabsOrientations,
+  tabsSizeAliases,
   tabsSizes,
   tabsSlots,
   tabsStates,
@@ -12,6 +13,7 @@ export type {
   TabsContract,
   TabsOrientation,
   TabsSize,
+  TabsSizeAlias,
   TabsSlot,
   TabsState,
   TabsVariant,

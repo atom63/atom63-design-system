@@ -22,7 +22,7 @@ describe('Item', () => {
     expect(el?.tagName).toBe('DIV')
     expect(el).toHaveAttribute('data-slot', 'item')
     expect(el).toHaveAttribute('data-variant', 'default')
-    expect(el).toHaveAttribute('data-size', 'default')
+    expect(el).toHaveAttribute('data-size', 'md')
   })
 
   it('defaults the selection tone to neutral and forwards tone="accent"', () => {
@@ -48,6 +48,11 @@ describe('Item', () => {
     const el = container.querySelector('.a63-Item')
     expect(el).toHaveAttribute('data-variant', 'outline')
     expect(el).toHaveAttribute('data-size', 'sm')
+  })
+
+  it('accepts the deprecated size name default as md', () => {
+    const { container } = render(<Item size="default">row</Item>)
+    expect(container.querySelector('.a63-Item')).toHaveAttribute('data-size', 'md')
   })
 
   it('render prop swaps the container to an anchor', () => {

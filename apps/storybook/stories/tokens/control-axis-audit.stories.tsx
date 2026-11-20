@@ -53,19 +53,17 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 /**
  * The size ramps are NOT spelled the same across these components, so the row
  * maps one step onto each component's own union rather than interpolating a
- * name. Button's medium icon step is `icon` (there is no `icon-md`) and Tabs
- * calls its medium step `default` (there is no `md`) — both are type errors
- * waiting to happen if this is built by string concatenation.
+ * name. Button's medium icon step is `icon` (there is no `icon-md`), a type
+ * error waiting to happen if this is built by string concatenation.
  */
 const STEPS = [
-  { button: 'sm', icon: 'icon-sm', shared: 'sm', tabs: 'sm' },
-  { button: 'md', icon: 'icon', shared: 'md', tabs: 'default' },
-  { button: 'lg', icon: 'icon-lg', shared: 'lg', tabs: 'lg' },
+  { button: 'sm', icon: 'icon-sm', shared: 'sm' },
+  { button: 'md', icon: 'icon', shared: 'md' },
+  { button: 'lg', icon: 'icon-lg', shared: 'lg' },
 ] as const satisfies readonly {
   button: ButtonSize
   icon: ButtonSize
-  shared: SelectSize & InputSize & ToggleSize & SegmentedControlSize
-  tabs: TabsSize
+  shared: SelectSize & InputSize & ToggleSize & SegmentedControlSize & TabsSize
 }[]
 
 /** `SegmentedControl` is controlled and takes `items`, not children. */
@@ -96,7 +94,7 @@ function ControlRow({ step }: { step: (typeof STEPS)[number] }) {
       {/* Static sheet — the value never changes, so the handler is a no-op. */}
       <SegmentedControl items={SEGMENTS} onValueChange={() => {}} size={step.shared} value="a" />
       <Tabs defaultValue="a">
-        <TabsList size={step.tabs}>
+        <TabsList size={step.shared}>
           <TabsTab value="a">Tab</TabsTab>
           <TabsTab value="b">Tab</TabsTab>
         </TabsList>
