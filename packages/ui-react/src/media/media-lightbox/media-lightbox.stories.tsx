@@ -381,6 +381,9 @@ function ComposedGallery({ items }: { items: MediaLightboxItem[] }) {
 const meta = {
   title: 'UI React/MediaLightbox',
   component: MediaLightbox,
+  // Full width: centred, a grid of tiles has no width to share out and the
+  // tiles collapse to nothing, so there is nothing to click open.
+  parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof MediaLightbox>
 
 export default meta
@@ -406,9 +409,6 @@ export const LightAndDarkVariants: Story = {
  * keys to page; on a phone, tap to show or hide the controls.
  */
 export const HomePageRow: Story = {
-  // Full width, so the row scrolls inside the page as it does on the site
-  // instead of widening a centred story past a phone's viewport.
-  parameters: { layout: 'fullscreen' },
   render: () => <WallpaperRow items={WALLPAPERS} />,
 }
 
@@ -418,8 +418,6 @@ export const HomePageRow: Story = {
  * and star it: the press does not page, zoom or close.
  */
 export const WithActions: Story = {
-  // Full width: centred, the grid of tiles has no width to share out.
-  parameters: { layout: 'fullscreen' },
   render: () => <GalleryWithActions items={GALLERY} />,
 }
 
