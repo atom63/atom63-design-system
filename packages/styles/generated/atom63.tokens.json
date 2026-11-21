@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 2039,
+    "declarations": 2043,
     "uniqueCssVariables": 1215,
-    "figmaMappedDeclarations": 1977
+    "figmaMappedDeclarations": 1981
   },
   "entries": [
     {
@@ -7993,6 +7993,70 @@
       "lifecycle": "preview",
       "aliases": ["--a63-font-app"],
       "scope": ":root"
+    },
+    {
+      "name": "a63-font-display",
+      "cssVar": "--a63-font-display",
+      "type": "typography",
+      "value": "var(--a63-font-app)",
+      "sourceFile": "packages/styles/src/tokens/font.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "font/display",
+        "mode": "font: mono"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-font-app"],
+      "scope": "[data-a63-font='mono']"
+    },
+    {
+      "name": "a63-font-display",
+      "cssVar": "--a63-font-display",
+      "type": "typography",
+      "value": "var(--a63-font-app)",
+      "sourceFile": "packages/styles/src/tokens/font.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "font/display",
+        "mode": "font: pixel"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-font-app"],
+      "scope": "[data-a63-font='pixel']"
+    },
+    {
+      "name": "a63-font-display",
+      "cssVar": "--a63-font-display",
+      "type": "typography",
+      "value": "var(--a63-font-app)",
+      "sourceFile": "packages/styles/src/tokens/font.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "font/display",
+        "mode": "font: sans"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-font-app"],
+      "scope": "[data-a63-font='sans']"
+    },
+    {
+      "name": "a63-font-display",
+      "cssVar": "--a63-font-display",
+      "type": "typography",
+      "value": "var(--a63-font-app)",
+      "sourceFile": "packages/styles/src/tokens/font.css",
+      "layer": "semantic",
+      "figma": {
+        "collection": "Semantic",
+        "path": "font/display",
+        "mode": "font: serif"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-font-app"],
+      "scope": "[data-a63-font='serif']"
     },
     {
       "name": "a63-gradient-brand",

@@ -5,7 +5,7 @@
   "summary": {
     "collections": 14,
     "variables": 1158,
-    "aliasValues": 807,
+    "aliasValues": 810,
     "skipped": 279,
     "computed": 64
   },
@@ -3861,20 +3861,6 @@
           "scopes": [
             "FRAME_FILL",
             "SHAPE_FILL"
-          ]
-        },
-        {
-          "name": "font/display",
-          "token": "--a63-font-display",
-          "type": "STRING",
-          "values": {
-            "Value": {
-              "alias": "--a63-font-app"
-            }
-          },
-          "codeSyntax": "var(--a63-font-display)",
-          "scopes": [
-            "FONT_FAMILY"
           ]
         },
         {
@@ -20493,6 +20479,29 @@
             }
           },
           "codeSyntax": "var(--a63-font-app)",
+          "scopes": [
+            "FONT_FAMILY"
+          ]
+        },
+        {
+          "name": "font/display",
+          "token": "--a63-font-display",
+          "type": "STRING",
+          "values": {
+            "sans": {
+              "alias": "--a63-font-app"
+            },
+            "serif": {
+              "alias": "--a63-font-app"
+            },
+            "mono": {
+              "alias": "--a63-font-app"
+            },
+            "pixel": {
+              "alias": "--a63-font-app"
+            }
+          },
+          "codeSyntax": "var(--a63-font-display)",
           "scopes": [
             "FONT_FAMILY"
           ]
