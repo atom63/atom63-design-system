@@ -1,6 +1,7 @@
 /**
  * Contract consistency lint over packages/ui-foundation/contracts/components
- * (see lib/contract-consistency.mjs for the rules).
+ * (see lib/contract-consistency.mjs for the rules), including that every
+ * contract slot is a data-slot value in the ui-react renderer's source.
  *
  * Existing findings live in
  * docs/design-system/audits/contract-consistency-baseline.json. The check
@@ -10,13 +11,13 @@
  *
  * Usage: node scripts/design-system/check-contract-consistency.mjs [--write]
  */
-import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
 
 import { compareToBaseline } from './lib/craft-rules.mjs'
-import { checkContracts, countFindings } from './lib/contract-consistency.mjs'
+import { checkContracts, checkSlots, countFindings } from './lib/contract-consistency.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const dir = path.join(root, 'packages/ui-foundation/contracts/components')
@@ -29,7 +30,39 @@ const contracts = readdirSync(dir)
     lists: JSON.parse(readFileSync(path.join(dir, file), 'utf8')).lists,
   }))
 
-const current = countFindings(checkContracts(contracts))
+const componentsDir = path.join(root, 'packages/ui-react/src/components')
+
+/** Non-story, non-test sources of a component directory. */
+const sourceFiles = dirPath =>
+  readdirSync(dirPath, { recursive: true })
+    .filter(file => /\.tsx?$/.test(file) && !/\.(stories|test)\.tsx?$/.test(file))
+    .map(file => readFileSync(path.join(dirPath, file), 'utf8'))
+
+/**
+ * The web renderer source for a component: its own directory plus the sibling
+ * component directories it imports (`../button`), transitively, since a
+ * composed component renders its parts' slots (CopyButton renders `button`).
+ */
+function sourceFor(component) {
+  if (!existsSync(path.join(componentsDir, component))) return null
+  const seen = new Set([component])
+  const queue = [component]
+  const sources = []
+  while (queue.length > 0) {
+    for (const source of sourceFiles(path.join(componentsDir, queue.shift()))) {
+      sources.push(source)
+      for (const [, name] of source.matchAll(/from '\.\.\/([a-z0-9-]+)(?:\/[^']*)?'/g)) {
+        if (!seen.has(name) && existsSync(path.join(componentsDir, name))) {
+          seen.add(name)
+          queue.push(name)
+        }
+      }
+    }
+  }
+  return sources.join('\n')
+}
+
+const current = countFindings([...checkContracts(contracts), ...checkSlots(contracts, sourceFor)])
 
 if (process.argv.includes('--write')) {
   writeFileSync(baselinePath, `${JSON.stringify(current, null, 2)}\n`)
@@ -45,7 +78,9 @@ const { added, resolved } = compareToBaseline(current, baseline)
 if (added.length > 0) {
   process.stderr.write('New contract consistency findings:\n')
   for (const { key } of added) process.stderr.write(`  ${key}\n`)
-  process.stderr.write('Rename the value to its canonical name (lib/contract-consistency.mjs).\n')
+  process.stderr.write(
+    'Rename the value to its canonical name, or a slot to the data-slot the renderer sets (lib/contract-consistency.mjs).\n'
+  )
 }
 if (resolved.length > 0) {
   process.stderr.write('Baseline entries that no longer occur:\n')
