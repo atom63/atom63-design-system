@@ -31,9 +31,14 @@ export function ProjectPage() {
   const { Content } = project
   const others = projects.filter(other => other.slug !== project.slug).slice(0, 2)
 
+  /*
+   * One column: the header, the facts, the MDX body (prose and blocks alike)
+   * and more projects share the reading column's left edge. Only the cover
+   * breaks out, as a wide band.
+   */
   return (
     <Page>
-      <Container maxWidth="narrow">
+      <Container maxWidth="narrower">
         <Section removeTopSpacing>
           <Button render={<Link to="/projects" />} size="sm" tone="muted" variant="ghost">
             <ArrowLeft aria-hidden />
@@ -46,7 +51,7 @@ export function ProjectPage() {
             title={project.title}
             variant="display"
           />
-          <dl className="mt-10 grid grid-cols-2 gap-6 md:grid-cols-4">
+          <dl className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-4">
             <Fact label="Role">{project.role}</Fact>
             <Fact label="Timeline">{project.timeline}</Fact>
             <Fact label="Team">{project.team}</Fact>
@@ -60,15 +65,21 @@ export function ProjectPage() {
               </span>
             </Fact>
           </dl>
-          <img
-            alt={project.coverAlt}
-            className="mt-10 aspect-video w-full rounded-3xl object-cover"
-            src={project.cover}
-          />
         </Section>
+      </Container>
 
-        <article>
-          <ArticleMDXContentProvider components={mdxComponents}>
+      <Container maxWidth="wide">
+        <img
+          alt={project.coverAlt}
+          className="aspect-video w-full rounded-3xl object-cover"
+          src={project.cover}
+        />
+      </Container>
+
+      <Container maxWidth="narrower">
+        <article className="mt-12">
+          {/* `article` keeps blocks in the text column instead of breaking out wide. */}
+          <ArticleMDXContentProvider components={mdxComponents} variant="article">
             <Content />
           </ArticleMDXContentProvider>
         </article>
@@ -76,7 +87,7 @@ export function ProjectPage() {
         {others.length > 0 ? (
           <Section>
             <SectionHeader level={2} title="More projects" variant="secondary" />
-            <ul className="mt-6 grid gap-6 md:grid-cols-2">
+            <ul className="mt-6 grid gap-6 sm:grid-cols-2">
               {others.map(other => (
                 <li key={other.slug}>
                   <ProjectCard project={other} />

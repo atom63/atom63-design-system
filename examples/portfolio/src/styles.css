@@ -35,4 +35,15 @@
 /* The site frame stamps data-a63-font (portfolio.config.ts); this applies it. */
 .portfolio-root {
   font-family: var(--a63-font-app);
+  /* One boundary per element: framed blocks (KeyIdea, Steps, Timeline) draw a
+     tray around a panel, each with its own ring, fill and shadow. Drop the
+     rings here, through the frame's border-width lever… */
+  --a63-frame-border-width: 0;
+}
+
+/* …and flatten the inner panel, so the tray's fill and shadow are the one
+   boundary and the content sits straight on it. */
+.portfolio-root .a63-Frame-panel {
+  --a63-surface-shadow: none;
+  background-color: transparent;
 }

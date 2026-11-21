@@ -19,10 +19,10 @@ export function WritingPostPage() {
 
   return (
     <Page>
-      <Container maxWidth="narrow">
+      <Container maxWidth="narrower">
         <article>
-          <ArticleMDXContentProvider components={mdxComponents}>
-            {/* PageMeta follows the provider's reading column, like the post body. */}
+          <ArticleMDXContentProvider components={mdxComponents} variant="article">
+            {/* `article`: the header, prose, code and blocks share one column and one left edge. */}
             <PageMeta
               description={post.description}
               eyebrow={<time dateTime={post.date}>{formatDate(post.date)}</time>}
@@ -31,7 +31,7 @@ export function WritingPostPage() {
             <Content />
           </ArticleMDXContentProvider>
         </article>
-        <div className="mx-auto mt-12 w-full max-w-xl">
+        <div className="mt-12">
           <Button render={<Link to="/writing" />} size="sm" tone="muted" variant="ghost">
             <ArrowLeft aria-hidden />
             All writing
