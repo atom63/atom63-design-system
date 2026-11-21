@@ -1,7 +1,12 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 
-import { checkContracts, countFindings } from './contract-consistency.mjs'
+import {
+  checkContracts,
+  checkSlots,
+  countFindings,
+  renderedSlots,
+} from './contract-consistency.mjs'
 
 const lines = found =>
   found.map(({ rule, component, list, match }) => `${rule} ${component}.${list} ${match}`)
@@ -77,5 +82,32 @@ describe('checkContracts', () => {
       'synonym | a.sizes | default -> md': 1,
       'synonym | a.states | resting -> rest': 1,
     })
+  })
+})
+
+describe('checkSlots', () => {
+  it('reads data-slot literals and contract slot references', () => {
+    const source = [
+      `<span data-slot="a-label" />`,
+      `{ 'data-slot': 'a' }`,
+      `<span data-slot={bThingContract.slots[1]} />`,
+    ].join('\n')
+    const found = renderedSlots(source, { 'b-thing': ['b-thing', 'b-thing-icon'] })
+    assert.deepEqual([...found].sort(), ['a', 'a-label', 'b-thing-icon'])
+  })
+
+  it('flags contract slots the renderer never sets, and every slot without a renderer', () => {
+    const contracts = [
+      { component: 'button', lists: { slots: ['root', 'button', 'label'] } },
+      { component: 'ios-only', lists: { slots: { values: ['ios-only'] } } },
+      { component: 'no-slots', lists: { states: ['rest'] } },
+    ]
+    const sources = { button: `{ 'data-slot': 'button' }<span data-slot="button-label" />` }
+    const found = checkSlots(contracts, component => sources[component] ?? null)
+    assert.deepEqual(lines(found), [
+      'slot-not-rendered button.slots root',
+      'slot-not-rendered button.slots label',
+      'slot-not-rendered ios-only.slots ios-only',
+    ])
   })
 })

@@ -39,7 +39,7 @@
         "focusVisible": "focus-visible"
       }
     },
-    "slots": ["root", "label", "icon", "spinner", "indicator"],
+    "slots": ["button", "button-label", "button-spinner", "button-indicator"],
     "tokenSlots": [
       "button.background",
       "button.foreground",

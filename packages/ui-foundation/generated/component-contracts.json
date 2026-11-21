@@ -722,7 +722,7 @@
           "default": "md"
         }
       ],
-      "slots": ["root", "label", "icon", "spinner", "indicator"],
+      "slots": ["button", "button-label", "button-spinner", "button-indicator"],
       "states": ["rest", "hover", "pressed", "focus-visible", "disabled", "loading"],
       "stateAliases": { "focusVisible": "focus-visible" },
       "tokenSlots": [
@@ -2737,7 +2737,7 @@
       "slots": [
         "search-field",
         "search-field-icon",
-        "search-field-input",
+        "input",
         "search-field-clear",
         "search-field-end"
       ],

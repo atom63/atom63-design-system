@@ -8,7 +8,7 @@ export const searchFieldStates = ['empty', 'query', 'focus', 'disabled'] as cons
 export const searchFieldSlots = [
   'search-field',
   'search-field-icon',
-  'search-field-input',
+  'input',
   'search-field-clear',
   'search-field-end',
 ] as const
